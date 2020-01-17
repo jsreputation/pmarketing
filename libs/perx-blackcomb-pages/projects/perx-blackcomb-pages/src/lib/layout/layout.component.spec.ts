@@ -89,9 +89,9 @@ describe('LayoutComponent', () => {
   }));
 
   it('should location back', () => {
-    component.leftIcon = 'back';
+    component.backArrowIcon = 'back';
     spyOn(location, 'back');
-    component.leftClick();
+    component.backArrowClick();
     expect(location.back).toHaveBeenCalled();
   });
 });

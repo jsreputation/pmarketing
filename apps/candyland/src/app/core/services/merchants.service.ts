@@ -1,34 +1,43 @@
 import { Injectable } from '@angular/core';
-import { DataStore } from '@cl-core/http-adapters/datastore';
 import { MerchantHttpAdapter } from '@cl-core/http-adapters/merchant-http-adapter';
-import { Merchant, MerchantBranch } from '@cl-core/http-adapters/merchant';
 import { MerchantHttpService } from '@cl-core/http-services/merchant-http.service';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { combineLatest, Observable, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
-import { IWMerchantAttributes, IWMerchantBranchAttributes, IJsonApiItemPayload } from '@perx/whistler';
+import {
+  IWMerchantAttributes,
+  IWMerchantBranchAttributes,
+  IJsonApiItemPayload,
+  IJsonApiListPayload
+} from '@perx/whistler';
+import { JsonApiParser } from '@cl-helpers/json-api-parser';
+import { ClHttpParams } from '@cl-helpers/http-params';
 
 @Injectable({
   providedIn: 'root'
 })
-export class MerchantsService implements ITableService<Merchant> {
+export class MerchantsService implements ITableService<IMerchantForm> {
 
-  constructor(
-    private merchantHttpService: MerchantHttpService,
-    private datastore: DataStore
-  ) {
-  }
+  constructor(private merchantHttpService: MerchantHttpService) { }
 
-  public getTableData(params: HttpParamsOptions): Observable<ITableData<Merchant>> {
+  public getTableData(params: HttpParamsOptions): Observable<ITableData<IMerchantForm>> {
     params.include = 'branches';
-    return this.datastore.findAll<Merchant>(Merchant, params)
-      .pipe(
-        map(response => ({ data: response.getModels(), meta: response.getMeta().meta }))
-      );
+    return this.merchantHttpService.getMerchants(params)
+      .pipe(map((data) => {
+        const res = this.getTransformMerchant(data);
+        return { data: res, meta: data.meta };
+      }));
   }
 
-  public getMerchant(id: string): Observable<Merchant | null> {
-    return id !== null ? this.datastore.findRecord<Merchant>(Merchant, id, { include: 'branches' }) : of(null);
+  public getMerchant(id: string): Observable<IMerchantForm | null> {
+    return id !== null
+      ? this.merchantHttpService.getMerchant(
+        ClHttpParams.createHttpParams({ include: 'branches' }),
+        id)
+        .pipe(
+          map(
+            (merchant => this.getTransformMerchant(merchant))))
+      : of(null);
   }
 
   public createMerchant(data: IMerchantForm): Observable<number> {
@@ -49,56 +58,46 @@ export class MerchantsService implements ITableService<Merchant> {
     return request.pipe(map(() => merchantId));
   }
 
-  public createMerchantBranch(merchantId: string, data: MerchantBranch): Observable<IJsonApiItemPayload<IWMerchantBranchAttributes>> {
+  public createMerchantBranch(merchantId: string, data: IBranch): Observable<IJsonApiItemPayload<IWMerchantBranchAttributes>> {
     const sendData = MerchantHttpAdapter.transformFromMerchantBranchForm(data, merchantId);
     return this.merchantHttpService.createMerchantBranch({ data: sendData });
   }
 
-  public updateMerchantBranch(id: string, data: MerchantBranch): Observable<IJsonApiItemPayload<IWMerchantBranchAttributes>> {
-    const sendData = { ...MerchantHttpAdapter.transformFromMerchantBranchForm(data, id), id: data.id };
+  public updateMerchantBranch(merchantId: string, data: IBranch): Observable<IJsonApiItemPayload<IWMerchantBranchAttributes>> {
+    const sendData = { ...MerchantHttpAdapter.transformFromMerchantBranchForm(data, merchantId), id: data.id };
     return this.merchantHttpService.updateMerchantBranch(data.id, { data: sendData });
+  }
+
+  public deleteMerchantBranch(id: string): Observable<void> {
+    return this.merchantHttpService.deleteMerchantBranch(id);
   }
 
   public updateMerchant(
     id: string,
     data: IMerchantForm
-  ): Observable<IJsonApiItemPayload<IWMerchantAttributes | IWMerchantBranchAttributes[]>> {
+  ): Observable<IJsonApiItemPayload<IWMerchantAttributes>> {
     const sendData = { ...MerchantHttpAdapter.transformFromMerchantForm(data), id };
-    let request$: any = this.merchantHttpService.updateMerchant(id, { data: sendData });
-    if ('branches' in data && data.branches && data.branches.length > 0) {
-      request$ = request$.pipe(
-        switchMap((merchant: IJsonApiItemPayload<IWMerchantAttributes>) => {
-          const merchantId = merchant.data.id;
-          const branchRequests$ = data.branches.map(branch => {
-            if (branch.id) {
-              return this.updateMerchantBranch(merchantId, branch);
-            }
-            return this.createMerchantBranch(merchantId, branch);
-          });
-          return combineLatest(branchRequests$);
-        })
-      );
-    }
-    if ('deletedBranches' in data && data.deletedBranches && data.deletedBranches.length > 0) {
-      request$ = request$.pipe(
-        switchMap(() => {
-          const branchRequests$ = data.deletedBranches.map((branchId: string) => {
-            return this.merchantHttpService.deleteMerchantBranch(branchId);
-          });
-          return combineLatest(branchRequests$);
-        })
-      );
-    }
-    return request$;
+    return this.merchantHttpService.updateMerchant(id, { data: sendData });
   }
 
-  public deleteMerchant(id: string): Observable<Response> {
-    return this.datastore.deleteRecord(Merchant, id);
+  public deleteMerchant(id: string): Observable<any> {
+    return this.merchantHttpService.deleteMerchant(id);
   }
 
-  public duplicateMerchant(merchant: Merchant): Observable<Merchant> {
-    return this.datastore
-      .createRecord(Merchant, merchant)
-      .save();
+  public duplicateMerchant(merchant: IMerchantForm): Observable<number> {
+    return this.createMerchant(merchant);
+  }
+
+  private getTransformMerchant(data:
+    IJsonApiItemPayload<IWMerchantAttributes> | IJsonApiListPayload<IWMerchantAttributes>
+  ): IMerchantForm[] {
+    return JsonApiParser.parseDataWithIncludes(
+      data,
+      MerchantHttpAdapter.transformToMerchant, {
+      branches: {
+        fieldName: 'branches',
+        adapterFunction: MerchantHttpAdapter.transformToBranch
+      }
+    });
   }
 }
