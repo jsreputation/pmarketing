@@ -29,8 +29,12 @@ export class NewsFeedComponent implements OnInit {
   public newsBeforeScroll: number[];
   public newsAfterScroll: number[];
 
-  private async initNewsFeedItems(): Promise<FeedItem> {
+  private async initNewsFeedItems(): Promise<void> {
     const appConfig: IConfig<void> = await this.configService.readAppConfig().toPromise();
+    if (!appConfig.rssFeeds) {
+      return ;
+    }
+
     this.reader.getFromUrl(appConfig.rssFeeds)
       .subscribe(items => {
         this.items = items;
