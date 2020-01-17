@@ -15,9 +15,11 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header="name" class="column-featured"><span
           translate>REWARD_NAME</span></th>
       <td mat-cell *matCellDef="let element" class="column-featured">
+
         <a class="name-cell__link" (click)="clickDetailItem(element)">
           {{element?.name}}
         </a>
+        <span class="name-cell__sub" *ngIf="element?.merchantName">{{element.merchantName}}</span>
       </td>
     </ng-container>
 
