@@ -16,7 +16,7 @@ describe('RewardsCollectionComponent', () => {
   let component: RewardsCollectionComponent;
   let fixture: ComponentFixture<RewardsCollectionComponent>;
 
-  const themesServiceStub = {
+  const themesServiceStub: Partial<ThemesService> = {
     getThemeSetting: () => of()
   };
 
@@ -91,17 +91,14 @@ describe('RewardsCollectionComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RewardsCollectionComponent ],
+      declarations: [RewardsCollectionComponent],
       imports: [
         MaterialModule,
         NgxMultiLineEllipsisModule,
         UtilsModule
       ],
       providers: [
-        {
-          provide: ThemesService,
-          useValue: themesServiceStub,
-        },
+        { provide: ThemesService, useValue: themesServiceStub },
       ],
     })
       .compileComponents();
