@@ -50,7 +50,7 @@ describe('V4AuthenticationService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should get app access token', (done: DoneFn) => {
+  it('should get app access token', (done: jest.DoneCallback) => {
     service.getAppToken()
       .subscribe((res) => {
         expect(res.access_token).toBe('test-token');
@@ -71,7 +71,7 @@ describe('V4AuthenticationService', () => {
     httpTestingController.verify();
   });
 
-  it('should send forgot password token', (done: DoneFn) => {
+  it('should send forgot password token', (done: jest.DoneCallback) => {
     service.forgotPassword('6398898888')
       .subscribe((res: { message: string }) => {
         expect(res.message).toBe('Confirmation to reset password has been sent');
@@ -87,7 +87,7 @@ describe('V4AuthenticationService', () => {
     httpTestingController.verify();
   });
 
-  it('should reset password', (done: DoneFn) => {
+  it('should reset password', (done: jest.DoneCallback) => {
     service.resetPassword({ phone: '6398898888', newPassword: '1237', otp: '8888', passwordConfirmation: '1237' })
       .subscribe((res: { message: string }) => {
         expect(res.message).toBe('Password has been reset!');

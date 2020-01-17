@@ -34,7 +34,7 @@ describe('V4ConfigService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should readAppConfig', (done: DoneFn) => {
+  it('should readAppConfig', (done: jest.DoneCallback) => {
     service.readAppConfig()
       .subscribe((res) => {
         expect(res.apiHost).toBe('http://test.com');

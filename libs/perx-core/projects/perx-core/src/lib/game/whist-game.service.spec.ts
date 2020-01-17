@@ -20,10 +20,10 @@ import { RewardsService } from '../rewards/rewards.service';
 describe('WhistlerGameService', () => {
   let httpTestingController: HttpTestingController;
   let service: WhistlerGameService;
-  const vouchersServiceMock = jasmine.createSpyObj('IVoucherService', {
+  const vouchersServiceMock: Partial<IVoucherService> = {
     get: of({}),
     getFullVoucher: of({})
-  });
+  };
   const environment = {
     apiHost: 'https://blabla',
     production: false,
@@ -118,7 +118,7 @@ describe('WhistlerGameService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should get a tree from its id', (done: DoneFn) => {
+  it('should get a tree from its id', (done: jest.DoneCallback) => {
     service.get(42, 1)
       .subscribe(
         (g: IGame) => {
@@ -139,7 +139,7 @@ describe('WhistlerGameService', () => {
     httpTestingController.verify();
   });
 
-  it('should get a pinata from its id', (done: DoneFn) => {
+  it('should get a pinata from its id', (done: jest.DoneCallback) => {
     service.get(42, 1)
       .subscribe(
         (g: IGame) => {
@@ -160,7 +160,7 @@ describe('WhistlerGameService', () => {
     httpTestingController.verify();
   });
 
-  it('should get a scratch card from its id', (done: DoneFn) => {
+  it('should get a scratch card from its id', (done: jest.DoneCallback) => {
     service.get(42, 1)
       .subscribe(
         (g: IGame) => {

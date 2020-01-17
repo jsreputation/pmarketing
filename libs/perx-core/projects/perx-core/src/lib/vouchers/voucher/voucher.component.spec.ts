@@ -98,11 +98,11 @@ describe('VoucherComponent', () => {
     expect(voucherServiceSpy).toHaveBeenCalled();
     expect(mockVoucher.reward).not.toBeNull();
     // @ts-ignore
-    expect(fixture.nativeElement.querySelector('.reward-name').innerText).toEqual(mockVoucher.reward.name);
+    expect(fixture.nativeElement.querySelector('.reward-name').textContent.trim()).toEqual(mockVoucher.reward.name);
     // @ts-ignore
-    expect(fixture.nativeElement.querySelector('.merchant-name').innerText).toEqual(mockVoucher.reward.merchantName);
+    expect(fixture.nativeElement.querySelector('.merchant-name').textContent.trim()).toEqual(mockVoucher.reward.merchantName);
     // @ts-ignore
-    expect(fixture.nativeElement.querySelector('#rewardDescription').innerText).toEqual(mockVoucher.reward.description);
+    expect(fixture.nativeElement.querySelector('#rewardDescription').textContent.trim()).toEqual(mockVoucher.reward.description);
     // @ts-ignore
     expect(fixture.nativeElement.querySelector('.merchant-image').src).toEqual(mockVoucher.reward.merchantImg);
     // @ts-ignore

@@ -60,7 +60,7 @@ describe('WhistlerMerchantsService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should get a merchant from its id', (done: DoneFn) => {
+  it('should get a merchant from its id', (done: jest.DoneCallback) => {
     service.getMerchant(42)
       .subscribe((m: IMerchant) => {
         expect(`${m.id}`).toEqual(mockMerchant.id);

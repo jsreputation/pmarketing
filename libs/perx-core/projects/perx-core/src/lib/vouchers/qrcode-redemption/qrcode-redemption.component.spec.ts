@@ -80,6 +80,6 @@ describe('QrcodeRedemptionComponent', () => {
     fixture.detectChanges();
     tick();
     expect(voucherServiceSpy).toHaveBeenCalled();
-    expect(fixture.nativeElement.querySelector('.voucher-name').innerText).toEqual(oc(mockVoucher).reward.name());
+    expect(fixture.nativeElement.querySelector('.voucher-name').textContent.trim()).toEqual(oc(mockVoucher).reward.name());
   }));
 });

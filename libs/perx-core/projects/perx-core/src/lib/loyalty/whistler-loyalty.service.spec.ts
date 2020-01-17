@@ -36,7 +36,7 @@ describe('WhistlerLoyaltyService', () => {
 
   // it('should getLoyalties', fakeAsync(inject([WhistlerLoyaltyService, HttpClient],
   //   (loyaltyService: WhistlerLoyaltyService, http: HttpClient) => {
-  //     spyOn(http, 'get').and.returnValue(of({
+  //     spyOn(http, 'get').mockReturnValue(of({
   //       data: [{
   //         attributes: {}
   //       }]

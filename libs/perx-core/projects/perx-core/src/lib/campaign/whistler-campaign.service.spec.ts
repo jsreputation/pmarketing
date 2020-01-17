@@ -112,7 +112,7 @@ describe('WhistlerCampaignService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should get empty campaigns', (done: DoneFn) => {
+  it('should get empty campaigns', (done: jest.DoneCallback) => {
     service.getCampaigns()
       .subscribe((campaigns: ICampaign[]) => {
         expect(campaigns.length).toBe(0);
@@ -132,7 +132,7 @@ describe('WhistlerCampaignService', () => {
     httpTestingController.verify();
   });
 
-  it('should get campaigns pages', (done: DoneFn) => {
+  it('should get campaigns pages', (done: jest.DoneCallback) => {
     service.getCampaigns()
       .subscribe((campaigns: ICampaign[]) => {
         // only one campaign is expected
@@ -157,7 +157,7 @@ describe('WhistlerCampaignService', () => {
     httpTestingController.verify();
   });
 
-  it('should get one campaign', (done: DoneFn) => {
+  it('should get one campaign', (done: jest.DoneCallback) => {
     service.getCampaign(42)
       .subscribe((campaign: ICampaign) => {
         expect(`${campaign.id}`).toEqual(mockCampaign.id);

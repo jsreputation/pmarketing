@@ -54,7 +54,7 @@ describe('PinService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should get pin from voucher Id', (done: DoneFn) => {
+  it('should get pin from voucher Id', (done: jest.DoneCallback) => {
     const mockReturn: IVoucher = {
       id: 1,
       reward: {

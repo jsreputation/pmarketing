@@ -46,7 +46,7 @@ describe('V4GameService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should play one game', (done: DoneFn) => {
+  it('should play one game', (done: jest.DoneCallback) => {
     const service: V4GameService = TestBed.get(V4GameService);
     service.play(1)
       .subscribe(() => {
@@ -63,7 +63,7 @@ describe('V4GameService', () => {
     httpTestingController.verify();
   });
 
-  it('should get games from campaign Id', (done: DoneFn) => {
+  it('should get games from campaign Id', (done: jest.DoneCallback) => {
     const service: V4GameService = TestBed.get(V4GameService);
     service.getGamesFromCampaign(1)
       .subscribe((games: IGame[]) => {
@@ -89,7 +89,7 @@ describe('V4GameService', () => {
     httpTestingController.verify();
   });
 
-  it('should get many games from campaign Id', (done: DoneFn) => {
+  it('should get many games from campaign Id', (done: jest.DoneCallback) => {
     const service: V4GameService = TestBed.get(V4GameService);
     service.getGamesFromCampaign(1)
       .subscribe((games: IGame[]) => {
@@ -165,7 +165,7 @@ describe('V4GameService', () => {
     httpTestingController.verify();
   });
 
-  it('should get a shake the tree game from its id', (done: DoneFn) => {
+  it('should get a shake the tree game from its id', (done: jest.DoneCallback) => {
     const service: V4GameService = TestBed.get(V4GameService);
     service.get(42)
       .subscribe((game: IGame) => {
@@ -211,7 +211,7 @@ describe('V4GameService', () => {
     httpTestingController.verify();
   });
 
-  it('should get a pinata game from its id', (done: DoneFn) => {
+  it('should get a pinata game from its id', (done: jest.DoneCallback) => {
     const service: V4GameService = TestBed.get(V4GameService);
     service.get(42)
       .subscribe((game: IGame) => {

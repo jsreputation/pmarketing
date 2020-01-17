@@ -20,8 +20,8 @@ import { IReward } from '../rewards/models/reward.model';
 import { RewardsService } from '../rewards/rewards.service';
 
 describe('WhistlerVouchersService', () => {
-  let httpClientSpy: { get: jasmine.Spy };
-
+  let httpClientSpy: Partial<HttpClient>;
+  let getSpy: jest.Mock;
   let service: WhistlerVouchersService;
   const environment = {
     apiHost: 'https://blabla',
@@ -69,7 +69,8 @@ describe('WhistlerVouchersService', () => {
   };
 
   beforeEach(() => {
-    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
+    getSpy = jest.fn();
+    httpClientSpy = { get: getSpy };
 
     TestBed.configureTestingModule({
       imports: [
@@ -89,11 +90,11 @@ describe('WhistlerVouchersService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should get a voucher from its number', (done: DoneFn) => {
+  it('should get a voucher from its number', (done: jest.DoneCallback) => {
     const res: IJsonApiItemPayload<IWAssignedAttributes> = {
       data: mockVoucherApi
     };
-    httpClientSpy.get.and.returnValue(of(res));
+    getSpy.mockReturnValue(of(res));
 
     service.get(42)
       .subscribe((v: IVoucher) => {
@@ -101,18 +102,18 @@ describe('WhistlerVouchersService', () => {
         done();
       });
 
-    expect(httpClientSpy.get.calls.argsFor(0)).toEqual(['https://blabla/voucher-service/vouchers/42']);
-    expect(httpClientSpy.get.calls.count()).toBe(1, 'one call');
+    expect(getSpy.mock.calls[0]).toEqual(['https://blabla/voucher-service/vouchers/42']);
+    expect(getSpy.mock.calls.length).toBe(1/*, 'one call'*/);
   });
 
-  it('should get all vouchers', (done: DoneFn) => {
+  it('should get all vouchers', (done: jest.DoneCallback) => {
     const res: IJsonApiListPayload<IWAssignedAttributes> = {
       data: [mockVoucherApi],
       meta: {
         page_count: 2
       }
     };
-    httpClientSpy.get.and.returnValue(of(res));
+    getSpy.mockReturnValue(of(res));
 
     service.getAll()
       // make sure that we look at the final result
@@ -123,8 +124,8 @@ describe('WhistlerVouchersService', () => {
         done();
       });
 
-    expect(httpClientSpy.get.calls.argsFor(0)).toEqual(['https://blabla/voucher-service/vouchers?page[number]=1&page[size]=10']);
-    expect(httpClientSpy.get.calls.argsFor(1)).toEqual(['https://blabla/voucher-service/vouchers?page[number]=2&page[size]=10']);
-    expect(httpClientSpy.get.calls.count()).toBe(2, 'Two pages');
+    expect(getSpy.mock.calls[0]).toEqual(['https://blabla/voucher-service/vouchers?page[number]=1&page[size]=10']);
+    expect(getSpy.mock.calls[1]).toEqual(['https://blabla/voucher-service/vouchers?page[number]=2&page[size]=10']);
+    expect(getSpy.mock.calls.length).toBe(2/*, 'Two pages'*/);
   });
 });
