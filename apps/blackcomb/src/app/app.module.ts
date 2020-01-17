@@ -56,6 +56,7 @@ import fr from '@angular/common/locales/fr';
 import localesFrExtra from '@angular/common/locales/extra/fr';
 
 import * as Sentry from '@sentry/browser';
+import {MatButtonModule} from '@angular/material/button';
 
 Sentry.init({
   dsn: 'https://736f7fc0afd74f4383fdc760f7c81e5a@sentry.io/1827240'
@@ -87,7 +88,9 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
   resolve();
 });
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent
+  ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
     BrowserModule,
@@ -106,6 +109,7 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
     PerxCampaignModule,
     HttpClientModule,
     MatDialogModule,
+    MatButtonModule,
     MatSnackBarModule,
     RewardsModule,
     TranslateModule.forRoot({
@@ -131,7 +135,6 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
       provide: HAMMER_GESTURE_CONFIG,
       useClass: MyHammerConfig,
     }
-  ],
-  entryComponents: []
+  ]
 })
 export class AppModule { }

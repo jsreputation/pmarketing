@@ -13,6 +13,7 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
 
   public puzzles: IStampCard[] | null;
 
+  @Input()
   public repeatGhostCount: number = 10;
 
   @Input()
@@ -22,11 +23,13 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
   public iconDisplay: string;
 
   @Input()
-  public titleFn: (index?: number) => string;
+  public titleFn: (index?: number, totalCount?: number) => string;
 
   @Input()
-  public puzzleTextFn: (len?: string) => string;
+  public puzzleTextFn: (puzzle?: IStampCard) => string;
 
+  @Input()
+  public thumbnailDefault: string = '';
   public total: number | null = null;
 
   @Output()
@@ -49,7 +52,7 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
 
   public ngOnInit(): void {
     if (!this.titleFn) {
-      this.titleFn = (index: number) => 'Puzzle #' + this.indexToLetter(index);
+      this.titleFn = (index: number) => `Puzzle #${this.indexToLetter(index)}`;
     }
 
     if (!this.puzzleTextFn) {

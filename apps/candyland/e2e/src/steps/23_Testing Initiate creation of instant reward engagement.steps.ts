@@ -1,9 +1,17 @@
-import { Given, Then, When } from 'cucumber';
-import { expect } from 'chai';
+import {
+  Given,
+  Then,
+  When,
+} from 'cucumber';
 import { browser, protractor } from 'protractor';
-import { EngagementAppPage, ElementApp, CreateInstantRewardAppPage } from '../pages/candylandApp.po';
-let EngagementApp: EngagementAppPage;
-const Element = ElementApp;
+import { expect } from 'chai';
+
+import {
+  EngagementAppPage,
+  ElementApp,
+  CreateInstantRewardAppPage,
+} from '../pages/candylandApp.po';
+
 // Ensure that instant reward engagement type option is present.
 
 Then(/^1_The instant reward option should be present.$/, async () => {
@@ -17,13 +25,12 @@ Then(/^1_The instant reward option should be present.$/, async () => {
 
 // Ensure that selecting the instant reward option and clicking next navigates to instant reward template creation.
 Given(/^2_I click on the instant reward option$/, async () => {
-  EngagementApp = new EngagementAppPage();
   const ec = protractor.ExpectedConditions;
-  await EngagementApp.navigateToEngagement();
+  await EngagementAppPage.navigateToEngagement();
   // waiting for the create new button to load
-  await browser.wait(ec.elementToBeClickable(Element.clButton()), 6000);
+  await browser.wait(ec.elementToBeClickable(ElementApp.clButton()), 6000);
   // clicking on the create new button
-  await Element.clButton().click();
+  await ElementApp.clButton().click();
   // waiting for the instant reward button to load
   await browser.wait(ec.presenceOf(CreateInstantRewardAppPage.instantRewardBtn()), 6000);
   // clicking on the instant reward option
@@ -33,9 +40,9 @@ Given(/^2_I click on the instant reward option$/, async () => {
 When(/^2_I click next button on the engagement dialog.$/, async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for the next button to load
-  await browser.wait(ec.elementToBeClickable(Element.clButtonArray().get(2)), 6000);
+  await browser.wait(ec.elementToBeClickable(ElementApp.clButtonArray().get(2)), 6000);
   // clicking on the next button
-  await Element.clButtonArray().get(2).click();
+  await ElementApp.clButtonArray().get(2).click();
   await browser.sleep(3000);
   // stopping the walkme widget
   // await browser.executeScript('WalkMeAPI.stopFlow()');
@@ -50,20 +57,20 @@ Then(/^3_I should see the relevant elements for instant reward.$/, async () => {
   const ec = protractor.ExpectedConditions;
   // waiting for the relevant text fields to load
   // header field
-  await browser.wait(ec.presenceOf(Element.inputTextArray().get(0)), 6000);
+  await browser.wait(ec.presenceOf(ElementApp.inputTextArray().get(0)), 6000);
   // headline field
-  await browser.wait(ec.presenceOf(Element.inputTextArray().get(1)), 6000);
+  await browser.wait(ec.presenceOf(ElementApp.inputTextArray().get(1)), 6000);
   // sub-headline field
-  await browser.wait(ec.presenceOf(Element.inputTextArray().get(2)), 6000);
+  await browser.wait(ec.presenceOf(ElementApp.inputTextArray().get(2)), 6000);
   // button text field
-  await browser.wait(ec.presenceOf(Element.inputTextArray().get(3)), 6000);
+  await browser.wait(ec.presenceOf(ElementApp.inputTextArray().get(3)), 6000);
   // asserting the presence of the element
   // header field
-  expect(await Element.inputTextArray().get(0).isDisplayed()).to.equal(true);
+  expect(await ElementApp.inputTextArray().get(0).isDisplayed()).to.equal(true);
   // headline field
-  expect(await Element.inputTextArray().get(1).isDisplayed()).to.equal(true);
+  expect(await ElementApp.inputTextArray().get(1).isDisplayed()).to.equal(true);
   // sub-headline field
-  expect(await Element.inputTextArray().get(2).isDisplayed()).to.equal(true);
+  expect(await ElementApp.inputTextArray().get(2).isDisplayed()).to.equal(true);
   // button text field
-  expect(await Element.inputTextArray().get(3).isDisplayed()).to.equal(true);
+  expect(await ElementApp.inputTextArray().get(3).isDisplayed()).to.equal(true);
 });

@@ -8,7 +8,8 @@ import {
   IJsonApiListPayload,
   IJsonApiItemPayload,
   IJsonApiPatchItem,
-  IJsonApiPostItem
+  IJsonApiPostItem,
+  IWCommMessageAttributes
 } from '@perx/whistler';
 
 @Injectable({
@@ -56,5 +57,17 @@ export class CommsHttpsService {
 
   public deleteCommsTemplate(id: string): Observable<void> {
     return this.http.delete<void>(`${ApiConfig.commsTemplatesPath}/${id}`);
+  }
+
+  public createMessage(data: IJsonApiPostItem<IWCommMessageAttributes>): Observable<IJsonApiItemPayload<IWCommMessageAttributes>> {
+    return this.http.post<IJsonApiItemPayload<IWCommMessageAttributes>>(ApiConfig.commsMessagesPath, data);
+  }
+
+  public getMessages(params: HttpParams): Observable<IJsonApiListPayload<IWCommMessageAttributes>> {
+    return this.http.get<IJsonApiListPayload<IWCommMessageAttributes>>(ApiConfig.commsMessagesPath, { params });
+  }
+
+  public getMessage(id: string): Observable<IJsonApiItemPayload<IWCommMessageAttributes>> {
+    return this.http.get<IJsonApiItemPayload<IWCommMessageAttributes>>(`${ApiConfig.commsMessagesPath}/${id}`);
   }
 }

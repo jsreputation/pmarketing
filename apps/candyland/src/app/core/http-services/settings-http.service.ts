@@ -9,7 +9,6 @@ import {
   IJsonApiItemPayload,
   IJsonApiPostItem,
   IJsonApiPatchItem,
-  IJsonApiPostData,
   IJsonApiPatchData
 } from '@perx/whistler';
 import { RoleLabelConfig } from '@cl-shared';
@@ -21,14 +20,6 @@ import { IWCognitoEndpointAttributes } from '@perx/whistler';
 export class SettingsHttpService {
 
   constructor(private http: HttpClient) {
-  }
-
-  public getTimeZone(): Observable<ITimeZone[]> {
-    return this.http.get<ITimeZone[]>('assets/actives/settings/time-zone.json');
-  }
-
-  public getCurrency(): Observable<Currency[]> {
-    return this.http.get<Currency[]>('assets/actives/settings/currency.json');
   }
 
   public getRoles(): Observable<any> {
@@ -47,23 +38,8 @@ export class SettingsHttpService {
     return this.http.get<IJsonApiListPayload<IWIAMUserAttributes>>(ApiConfig.IAMUsersPath, { params });
   }
 
-  public inviteNewUser(body: IJsonApiPostData<IWIAMUserAttributes>): Observable<IJsonApiItemPayload<IWIAMUserAttributes>> {
-    return this.http.post<IJsonApiItemPayload<IWIAMUserAttributes>>(ApiConfig.IAMUsersPath, { data: body });
-  }
-
-  public patchUser(
-    id: string,
-    patchValue: IJsonApiPatchData<IWIAMUserAttributes>
-  ): Observable<IJsonApiItemPayload<IWIAMUserAttributes>> {
-    return this.http.patch<IJsonApiItemPayload<IWIAMUserAttributes>>(`${ApiConfig.IAMUsersPath}/${id}`, { data: patchValue });
-  }
-
-  public deleteUser(id: string): Observable<void> {
-    return this.http.delete<void>(`${ApiConfig.IAMUsersPath}/${id}`);
-  }
-
-  public getAllGroups(): Observable<IJsonApiListPayload<any>> {
-    return this.http.get<IJsonApiListPayload<any>>(ApiConfig.IAMGroupsPath);
+  public getAllGroups(params?: HttpParams ): Observable<IJsonApiListPayload<any>> {
+    return this.http.get<IJsonApiListPayload<any>>(ApiConfig.IAMGroupsPath, { params });
   }
 
   public patchSettings(data: IJsonApiPatchData<any>): Observable<any> {

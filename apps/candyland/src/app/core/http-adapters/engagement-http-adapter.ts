@@ -23,6 +23,7 @@ import {
   IEngagementTapType,
   IEngagementType
 } from '@cl-core/models/engagement/engagement.interface';
+import { IPinataForm } from '@cl-core/models/games/pinata/pinate-form.interface';
 
 export class EngagementHttpAdapter {
   // tslint:disable
@@ -225,7 +226,8 @@ export class EngagementHttpAdapter {
       reward_icon: data.attributes.display_properties.reward_icon,
       wheel_img: data.attributes.display_properties.wheel_img,
       wheel_position: data.attributes.display_properties.wheel_position,
-      pointer_img: data.attributes.display_properties.pointer_img
+      pointer_img: data.attributes.display_properties.pointer_img,
+      background_img_url: data.attributes.display_properties.background_img_url
     };
   }
 
@@ -296,6 +298,7 @@ export class EngagementHttpAdapter {
       attributes_type: engagementType,
       created_at: data.attributes.created_at,
       updated_at: data.attributes.updated_at,
+      background_img_url: data.attributes.display_properties.background_img_url,
       closed_pinata_img_url:
         data.attributes.display_properties.closed_pinata_img_url,
       opened_pinata_img_url:
@@ -394,8 +397,8 @@ export class EngagementHttpAdapter {
           title: data.headlineMessage,
           button: data.buttonText,
           sub_title: data.subHeadlineMessage,
-          cracking_pinata_img_url: "https://picsum.photos/200/300",
-          opened_pinata_img_url: "https://picsum.photos/200/300",
+          cracking_pinata_img_url: data.crackingPinata ? ImageControlValue.getImagePath(data.crackingPinata) : undefined,
+          opened_pinata_img_url: data.openedPinata ? ImageControlValue.getImagePath(data.openedPinata) : ImageControlValue.getImagePath(data.pinata),
           closed_pinata_img_url: ImageControlValue.getImagePath(data.pinata),
           background_img_url: ImageControlValue.getImagePath(data.background)
         }

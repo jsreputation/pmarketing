@@ -15,6 +15,10 @@ import { filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
+interface IRewardConfig {
+  showVoucherBookingFromRewardsPage: boolean;
+}
+
 @Component({
   selector: 'perx-blackcomb-reward-details',
   templateUrl: './reward-details.component.html',
@@ -27,7 +31,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   public descriptionLabel: string = 'Description';
   public tncLabel: string = 'Terms and Conditions';
   public buttonLabel: string = 'Redeem';
-  public appConfig: IConfig;
+  public appConfig: IConfig<IRewardConfig>;
   public rewardData: IReward;
   public loyalty: ILoyalty;
   public maxRewardCost?: number;
@@ -54,8 +58,8 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    this.configService.readAppConfig()
-      .subscribe((config: IConfig) => this.appConfig = config);
+    this.configService.readAppConfig<IRewardConfig>()
+      .subscribe((config: IConfig<IRewardConfig>) => this.appConfig = config);
 
     this.initTranslate();
     this.loyaltyService.getLoyalties().pipe(
@@ -73,7 +77,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
           if (reward.displayProperties) {
             this.buttonLabel = reward.displayProperties.CTAButtonTxt || this.buttonLabel;
           }
-          this.maxRewardCost = reward.rewardPrice ? reward.rewardPrice
+          this.maxRewardCost = reward.rewardPrice && reward.rewardPrice.length > 0 ? reward.rewardPrice
             .map((price) => price.points)
             .reduce((acc = 0, points) => acc >= (points || 0) ? acc : points) : 0;
         }),
@@ -82,7 +86,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   }
 
   public buyReward(): void {
-    if (this.appConfig.showVoucherBookingFromRewardsPage) {
+    if (this.appConfig.custom && this.appConfig.custom.showVoucherBookingFromRewardsPage) {
       this.router.navigateByUrl(`booking/${this.rewardData.id}`);
     } else {
       this.vouchersService.issueReward(this.rewardData.id, undefined, undefined, this.loyalty.cardId)

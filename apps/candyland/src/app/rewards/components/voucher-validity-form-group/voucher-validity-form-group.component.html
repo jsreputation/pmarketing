@@ -12,13 +12,17 @@
   <div class="input-group">
     <cl-date-picker [formControl]="formGroup.get('period.startDate')"
                     [max]="formGroup.get('period.endDate').value"></cl-date-picker>
+    <mat-error *ngIf="formGroup.get('period.startDate').touched && formGroup.get('period.startDate').hasError('required')">required</mat-error>
     <cl-time-picker [formControl]="formGroup.get('period.startTime')"></cl-time-picker>
+    <mat-error *ngIf="formGroup.get('period.startTime').touched && formGroup.get('period.startTime').hasError('required')">required</mat-error>
   </div>
   <span translate="">TO</span>
   <div class="input-group">
     <cl-date-picker [formControl]="formGroup.get('period.endDate')"
                     [min]="formGroup.get('period.startDate').value"></cl-date-picker>
+    <mat-error *ngIf="formGroup.get('period.endDate').touched && formGroup.get('period.endDate').hasError('required')">required</mat-error>
     <cl-time-picker [formControl]="formGroup.get('period.endTime')"></cl-time-picker>
+    <mat-error *ngIf="formGroup.get('period.endTime').touched && formGroup.get('period.endTime').hasError('required')">required</mat-error>
   </div>
   <mat-checkbox color="primary" [formControl]="formGroup.get('period.disabledEndDate')"><span translate>DOES_NOT_END</span></mat-checkbox>
 </div>

@@ -3,9 +3,9 @@
   <div class="login-image">
     <img class="logo" [attr.src]="th?.properties['--logo']" [attr.alt]="th?.properties['--title']" />
   </div>
-  <div *ngIf="appConfig" class="login-form">
+  <div *ngIf="appConfig.custom" class="login-form">
     <h1 translate>LOGIN</h1>
-    <div class="subtitle" *ngIf="appConfig.showSubtitleLogin">
+    <div class="subtitle" *ngIf="appConfig.custom.showSubtitleLogin">
       Not a member? <a class="link" [routerLink]="'/signup'">Sign up</a>
     </div>
     <div class="error_msg">

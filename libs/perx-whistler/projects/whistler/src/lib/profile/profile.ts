@@ -1,23 +1,20 @@
 export interface IWProfileAttributes {
+  urn?: string;
+  created_at?: string;
+  updated_at?: string;
+  title?: string | null;
   first_name: string | null;
   last_name: string | null;
   phone_number: string | null;
   email_address: string | null;
   primary_identifier?: string | null;
-  id?: string;
-  urn?: string;
-  created_at?: string;
-  updated_at?: string;
-  type?: string;
-  self?: string;
-  title?: string | null;
-  pools?: any;
-  properties?: IWCustomProperties;
+  properties?: IWCustomProperties | null;
   anonymous?: boolean;
-}
-
-export interface IWPoolsAttributes {
-  name: string;
+  birthday?: string | null;
+  gender?: string;
+  time_zone?: string;
+  email?: string;
+  username?: string;
 }
 
 export interface IWCognitoLogin {
@@ -31,7 +28,9 @@ export interface IWUserJWTRequest {
 }
 
 export interface IWCustomProperties {
+  /** @deprecated */
   gender?: string | null;
+  /** @deprecated */
   birthday?: string | null;
   race?: string | null;
   country?: string | null;

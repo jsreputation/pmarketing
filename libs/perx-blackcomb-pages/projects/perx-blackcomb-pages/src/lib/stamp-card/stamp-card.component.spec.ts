@@ -1,11 +1,30 @@
-import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
-import { StampCardComponent } from './stamp-card.component';
+import { Type } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { PuzzlesModule, StampService, IStampCard, StampCardState, NotificationService } from '@perx/core';
+import {
+  ActivatedRoute,
+  convertToParamMap,
+} from '@angular/router';
+import {
+  async,
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
+
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
-import { convertToParamMap, ActivatedRoute } from '@angular/router';
-import { Type } from '@angular/core';
+
+import {
+  IStampCard,
+  NotificationService,
+  PuzzlesModule,
+  StampCardState,
+  StampService,
+} from '@perx/core';
+
+import { StampCardComponent } from './stamp-card.component';
+import {stamps} from '../mock/stamp.mock';
 
 describe('StampCardComponent', () => {
   let component: StampCardComponent;
@@ -13,7 +32,8 @@ describe('StampCardComponent', () => {
 
   const stampServiceStub: Partial<StampService> = {
     getCurrentCard: () => of(),
-    play: () => of()
+    // @ts-ignore
+    putStamp: () => of(stampCard.stamps[0])
   };
 
   const notificationStub = {
@@ -130,34 +150,15 @@ describe('StampCardComponent', () => {
   });
 
   describe('handleStamp', () => {
-    it('should call stampServiceSpy and noticationServiceSpy.addPopup with rewardSuccessPopUp data', fakeAsync(() => {
-      const stampService: StampService = fixture.debugElement.injector.get<StampService>(
-        StampService as Type<StampService>
-      );
-      const stampServiceSpy = spyOn(stampService, 'play').and.returnValue(of(true));
-
-      const notificationService: NotificationService = fixture.debugElement.injector.get<NotificationService>(
-        NotificationService as Type<NotificationService>
-      );
-      const noticationServiceSpy = spyOn(notificationService, 'addPopup');
-      component.handleStamp();
-      expect(stampServiceSpy).toHaveBeenCalled();
-      expect(noticationServiceSpy).toHaveBeenCalledWith({title: 'STAMP_SUCCESS_TITLE', buttonTxt: 'VIEW_REWARD'});
-    }));
-
-    it('should call stampServiceSpy and noticationServiceSpy.addPopup with errorPopUp data', fakeAsync(() => {
-      const stampService: StampService = fixture.debugElement.injector.get<StampService>(
-        StampService as Type<StampService>
-      );
-      const stampServiceSpy = spyOn(stampService, 'play').and.returnValue(of(false));
-
-      const notificationService: NotificationService = fixture.debugElement.injector.get<NotificationService>(
-        NotificationService as Type<NotificationService>
-      );
-      const noticationServiceSpy = spyOn(notificationService, 'addPopup');
-      component.handleStamp();
-      expect(stampServiceSpy).toHaveBeenCalled();
-      expect(noticationServiceSpy).toHaveBeenCalledWith({title: 'STAMP_ERROR_TITLE', buttonTxt: 'TRY_AGAIN'});
-    }));
+    it('should throw error if card is empty ', async () => {
+      component.stampCard = null;
+      let errorMessage = `No error thrown`;
+      try {
+        await component.handleStamp(stamps[0]);
+      } catch (error) {
+        errorMessage = error.message;
+      }
+      expect(errorMessage).toBe(`card or stamps is required`);
+    });
   });
 });

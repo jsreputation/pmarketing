@@ -1,4 +1,5 @@
 import * as moment from 'moment';
+import { ITimeZone } from '@cl-core/models/settings/time-zone';
 
 export class DateTimeParser {
 
@@ -22,7 +23,7 @@ export class DateTimeParser {
 
   public static setTime(date: string, time: any): any {
     const [hours, minutes] = time.split(':');
-    return moment(date).set({hours, minutes}).utc().toDate();
+    return moment(date).set({ hours, minutes }).utc().toDate();
   }
 
   public static getTime(date?: string, format?: string): any {
@@ -41,13 +42,13 @@ export class DateTimeParser {
     return date ? DateTimeParser.getTime(date, format) : '';
   }
 
-  public static getDateMountsAgo(numberMonth: number = 1): Date {
+  public static getDateMonthsAgo(numberMonth: number = 1): Date {
     const date = new Date();
     date.setMonth(date.getMonth() - numberMonth);
     return date;
   }
 
-  public static getNextDay( numberDays: number = 1, date: Date = null): Date {
+  public static getNextDay(numberDays: number = 1, date: Date = null): Date {
     const resDate = date || new Date();
     resDate.setDate(resDate.getDate() + numberDays);
     return resDate;
@@ -55,5 +56,12 @@ export class DateTimeParser {
 
   public static getPreviousDay(numberDays: number = 1, date: Date = null): Date {
     return DateTimeParser.getNextDay(-1 * numberDays, date);
+  }
+
+  public static isDatepickerRangeValue(value: any): boolean {
+    if (!(value && typeof value === 'object')) {
+      return false;
+    }
+    return 'begin' in value && 'end' in value;
   }
 }

@@ -39,6 +39,7 @@ export class DatePickerComponent implements OnInit, OnChanges, OnDestroy, Contro
   @Input() public placeholder: string = 'choose date';
   @Input() public max: Date | null = null;
   @Input() public min: Date | null = null;
+  @Input() public appearance: string = '';
   public disabledState: boolean = false;
 
   @Input() set disabled(value: boolean) {
@@ -81,7 +82,7 @@ export class DatePickerComponent implements OnInit, OnChanges, OnDestroy, Contro
   public minMaxFilter(d: Date): boolean {
     const from = this.min;
     const to = this.max;
-    return !((!!from && (d <= from)) || (!!to && (d >= to)));
+    return !((!!from && (d < from)) || (!!to && (d > to)));
   }
 
   public registerOnChange(fn: any): void {

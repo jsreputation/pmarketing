@@ -99,6 +99,32 @@ interface IV4StampCard {
         image_url?: string;
       }
     };
+    //  todo: temporarily map this until v4 dashboard fixes naming
+    card_background_image?: {
+      value?: {
+        image_url?: string;
+      }
+    };
+    gift_active_image?: {
+      value?: {
+        image_url?: string;
+      }
+    };
+    stamp_active_image?: {
+      value?: {
+        image_url?: string;
+      }
+    };
+    gift_inactive_image?: {
+      value?: {
+        image_url?: string;
+      }
+    };
+    stamp_inactive_image?: {
+      value?: {
+        image_url?: string;
+      }
+    };
     total_slots?: number;
     display_campaign_as: string;
     background_img?: {
@@ -106,7 +132,7 @@ interface IV4StampCard {
         image_url?: string;
       }
     };
-    thumbnail_img?: {
+    thumbnail_image?: {
       value?: {
         image_url?: string;
       }
@@ -167,6 +193,13 @@ export class V4StampService implements StampService {
   private static v4StampCardToStampCard(stampCard: IV4StampCard): IStampCard {
     const cardImageUrl = oc(stampCard).display_properties.card_image.value.image_url();
     const cardImage = cardImageUrl ? { value: { imageUrl: cardImageUrl } } : undefined;
+    //  todo: temporarily map this until v4 dashboard fixes naming
+    const cardBackgroundImageUrl = oc(stampCard).display_properties.card_background_image.value.image_url();
+    const cardBackgroundImage = cardBackgroundImageUrl ? { value: { imageUrl: cardBackgroundImageUrl } } : undefined;
+    const rewardPreStamp = oc(stampCard).display_properties.gift_inactive_image.value.image_url(undefined);
+    const rewardPostStamp = oc(stampCard).display_properties.gift_active_image.value.image_url(undefined);
+    const preStampImg = oc(stampCard).display_properties.stamp_inactive_image.value.image_url(undefined);
+    const postStampImg = oc(stampCard).display_properties.stamp_active_image.value.image_url(undefined);
     const backgroundImgUrl = oc(stampCard).display_properties.background_img.value.image_url();
     const backgroundImg = backgroundImgUrl ? { value: { imageUrl: backgroundImgUrl } } : undefined;
     return {
@@ -184,11 +217,17 @@ export class V4StampService implements StampService {
         numberOfCols: stampCard.display_properties.number_of_cols,
         numberOfRows: stampCard.display_properties.number_of_rows,
         cardImage,
+        // todo: temporarily map this until v4 dashboard fixes naming
+        cardBackgroundImage,
+        rewardPreStamp,
+        rewardPostStamp,
+        preStampImg,
+        postStampImg,
         totalSlots: stampCard.display_properties.total_slots,
         displayCampaignAs: stampCard.display_properties.display_campaign_as,
         backgroundImg,
         rewardPositions: stampCard.display_properties.reward_positions,
-        thumbnailImg: oc(stampCard).display_properties.thumbnail_img.value.image_url()
+        thumbnailImg: oc(stampCard).display_properties.thumbnail_image.value.image_url()
       },
       stamps: stampCard.stamps ? stampCard.stamps.map((stamp: IV4Stamp) => V4StampService.v4StampToStamp(stamp)) : undefined
     };

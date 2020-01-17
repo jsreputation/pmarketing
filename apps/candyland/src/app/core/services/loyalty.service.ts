@@ -7,20 +7,38 @@ import { LoyaltyHttpAdapter } from '@cl-core/http-adapters/loyalty-http-adapter'
 import { map, switchMap } from 'rxjs/operators';
 import { IWBasicTierAttributes, IJsonApiItemPayload } from '@perx/whistler';
 import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
+import { JsonApiParser } from '@cl-helpers/json-api-parser';
+import { IAudiencesLoyalty } from '@cl-core/models/audiences/audiences-loyalty.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoyaltyService implements ITableService {
+export class LoyaltyService implements ITableService<ILoyaltyForm> {
 
   constructor(private loyaltyHttpService: LoyaltyHttpService) {
   }
 
-  public getLoyalties(params: HttpParamsOptions): Observable<{ data: ILoyaltyForm[] }> {
+  public getLoyalties(params: HttpParamsOptions = {}): Observable<{ data: ILoyaltyForm[] }> {
     params.include = 'pool,basic_tier,custom_tiers';
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.loyaltyHttpService.getLoyalties(httpParams).pipe(
       map(response => LoyaltyHttpAdapter.transformToLoyalties(response))
+    );
+  }
+
+  public getAudiencesLoyaltyOption(params: HttpParamsOptions = {}): Observable<IAudiencesLoyalty[]> {
+    params.include = 'basic_tier,custom_tiers';
+    const httpParams = ClHttpParams.createHttpParams(params);
+    return this.loyaltyHttpService.getLoyalties(httpParams).pipe(
+      map(response => JsonApiParser.parseDataWithIncludes(
+        response,
+        null,
+        {
+          basic_tiers: {fieldName: 'basicTier', adapterFunction: LoyaltyHttpAdapter.transformToBasicTierForAudience},
+          custom_tiers: {fieldName: 'customTiers', adapterFunction: LoyaltyHttpAdapter.transformToCustomTierForAudience}
+        }
+      )),
+      map(data => data.map(LoyaltyHttpAdapter.transformToLoyaltyForAudience))
     );
   }
 
@@ -46,7 +64,7 @@ export class LoyaltyService implements ITableService {
 
   public createLoyalty(data: ILoyaltyForm): Observable<ILoyaltyForm> {
     const sendData = LoyaltyHttpAdapter.transformFromLoyaltyForm(data);
-    return this.loyaltyHttpService.createLoyalty({ data: sendData }).pipe(
+    return this.loyaltyHttpService.createLoyalty({data: sendData}).pipe(
       map(response => LoyaltyHttpAdapter.transformToLoyaltyForm(response.data))
     );
   }
@@ -54,14 +72,14 @@ export class LoyaltyService implements ITableService {
   public updateLoyalty(id: string, data: ILoyaltyForm): Observable<ILoyaltyForm> {
     const sendData: any = LoyaltyHttpAdapter.transformFromLoyaltyForm(data);
     sendData.id = id;
-    return this.loyaltyHttpService.updateLoyalty(id, { data: sendData }).pipe(
+    return this.loyaltyHttpService.updateLoyalty(id, {data: sendData}).pipe(
       map(response => LoyaltyHttpAdapter.transformToLoyaltyForm(response.data))
     );
   }
 
   public updateLoyaltyStatus(id: string, status: string): Observable<ILoyaltyForm> {
     const sendData: any = LoyaltyHttpAdapter.transformLoyaltyStatus(status, id);
-    return this.loyaltyHttpService.updateLoyalty(id, { data: sendData }).pipe(
+    return this.loyaltyHttpService.updateLoyalty(id, {data: sendData}).pipe(
       map(response => LoyaltyHttpAdapter.transformToLoyaltyForm(response.data))
     );
   }
@@ -75,7 +93,7 @@ export class LoyaltyService implements ITableService {
 
   public createBasicTier(data: ILoyaltyForm, loyaltyId: string): Observable<IJsonApiItemPayload<IWBasicTierAttributes>> {
     const sendData: any = LoyaltyHttpAdapter.transformFromBasicTierForm(data, loyaltyId);
-    return this.loyaltyHttpService.createBasicTier({ data: sendData });
+    return this.loyaltyHttpService.createBasicTier({data: sendData});
   }
 
   public updateBasicTier(
@@ -85,7 +103,7 @@ export class LoyaltyService implements ITableService {
   ): Observable<IJsonApiItemPayload<IWBasicTierAttributes>> {
     const sendData: any = LoyaltyHttpAdapter.transformFromBasicTierForm(data, loyaltyId);
     sendData.id = basicTierId;
-    return this.loyaltyHttpService.updateBasicTier(basicTierId, { data: sendData });
+    return this.loyaltyHttpService.updateBasicTier(basicTierId, {data: sendData});
   }
 
   public deleteBasicTier(id: string): Observable<void> {

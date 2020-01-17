@@ -3,13 +3,25 @@ import { MatDialog, MatPaginator, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import Utils from '@cl-helpers/utils';
 
-import { of, combineLatest, Subject } from 'rxjs';
-import { map, switchMap, filter, takeUntil } from 'rxjs/operators';
+import { of, combineLatest, Subject, throwError } from 'rxjs';
+import { map, switchMap, takeUntil, filter, catchError } from 'rxjs/operators';
 
 import { PrepareTableFilters } from '@cl-helpers/prepare-table-filters';
 import { RewardReplenishPopupComponent } from 'src/app/rewards/containers/reward-replenish-popup/reward-replenish-popup.component';
-import {RewardsService, MerchantsService, MessageService} from '@cl-core/services';
+import { RewardsService, MerchantsService, MessageService } from '@cl-core/services';
 import { VouchersService } from '@cl-core/services/vouchers.service';
+import { IWVouchersApi } from '@perx/whistler';
+import { oc } from 'ts-optchain';
+import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.interface';
+
+interface IRewardDetailData {
+  name?: string;
+  rewardInfo?: any;
+  merchantInfo?: IMerchantForm | null;
+  vouchers?: any;
+  limits?: any;
+  vouchersStatistics?: { type: string, value: number }[];
+}
 
 @Component({
   selector: 'cl-reward-detail-page',
@@ -21,17 +33,10 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
 
   public dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
   public id: string;
-  public data: {
-    name?: string;
-    rewardInfo?: any;
-    merchantInfo?: any;
-    vouchers?: any;
-    limits?: any;
-    vouchersStatistics?: { type: string, value: number }[];
-  } = {};
+  public data: IRewardDetailData = {};
   public statusFilterConfig: OptionConfig[];
 
-  public rewardData: any;
+  // public rewardData: any;
 
   @ViewChild(MatPaginator, { static: false }) private paginator: MatPaginator;
 
@@ -60,16 +65,32 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
     this.destroy$.complete();
   }
 
+  private updateVoucherStat(): void {
+    this.vouchersService.getStats(this.id)
+      .subscribe((stats: { [k: string]: number }) => {
+        this.data.vouchersStatistics = [];
+        // tslint:disable-next-line: forin
+        for (const k in stats) {
+          this.data.vouchersStatistics.push({ type: k, value: stats[k] });
+        }
+        this.cd.detectChanges();
+      });
+  }
+
   public openDialogReplenish(): void {
-    const dialogRef = this.dialog.open(RewardReplenishPopupComponent, { panelClass: 'reward-replenish-dialog', data: this.data });
-    dialogRef.afterClosed()
+    this.dialog.open<RewardReplenishPopupComponent, any, IWVouchersApi>(
+      RewardReplenishPopupComponent,
+      { panelClass: 'reward-replenish-dialog', data: this.data }
+    )
+      .afterClosed()
       .pipe(
-        filter(Boolean),
-        switchMap((data: any) => this.vouchersService.createVoucher(data))
+        filter(Boolean), // what is the use of this? useless
+        switchMap((data: IWVouchersApi) => this.vouchersService.createVoucher(data)), // this svc not working?
       )
       .subscribe(
-        () => this.messageService.show('Vouchers succesfully replenished.', 'success'),
-        () => this.messageService.show('Could not replenish vouchers. Make sure that the configuration is correct.', 'warning')
+        () => this.messageService.show('Voucher replenishing in progress.', 'success'),
+        () => this.messageService.show('Could not replenish vouchers. Make sure that the configuration is correct.', 'warning'),
+        () => this.updateVoucherStat()
       );
   }
 
@@ -86,33 +107,38 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
       map((params: ParamMap) => params.get('id')),
       takeUntil(this.destroy$),
     );
-    $id.subscribe(id => this.id = id);
+    // get the id and update voucher stats
+    $id.subscribe(id => {
+      this.id = id;
+      this.updateVoucherStat();
+    });
+    // get reward and merchant information
     $id
       .pipe(
         switchMap(id => this.rewardsService.getRewardToForm(id)),
         switchMap(reward => {
-          const merchantQuery = reward.rewardInfo.merchantId !== null ?
-            this.merchantsService.getMerchant(reward.rewardInfo.merchantId) : of(null);
+          let merchantQuery = null;
+          if (reward.rewardInfo.merchantId !== null) {
+            merchantQuery = this.merchantsService.getMerchant(reward.rewardInfo.merchantId)
+              .pipe(catchError((err) => {
+                const errCode = oc(err).errors[0].code(oc(err).status(0));
+                if (['404', 404].includes(errCode)) {
+                  return of(null);
+                }
+                return throwError(err);
+              }));
+          } else {
+            merchantQuery = of(null);
+          }
           return combineLatest(of(reward), merchantQuery);
         }),
       ).subscribe(
-        ([reward, merchant]) => {
+        ([reward, merchant]: [IRewardEntityForm, IMerchantForm | null]) => {
           this.data = Utils.nestedObjectAssign(this.data, reward);
           this.data.merchantInfo = merchant;
           this.cd.detectChanges();
         },
         (err) => { console.error(err); this.router.navigateByUrl('/rewards'); }
       );
-    $id.pipe(switchMap(id => this.vouchersService.getStats(id)))
-      .subscribe((stats: { [k: string]: number }) => {
-        if (!this.data.vouchersStatistics) {
-          this.data.vouchersStatistics = [];
-        }
-        // tslint:disable-next-line: forin
-        for (const k in stats) {
-          this.data.vouchersStatistics.push({ type: k, value: stats[k] });
-        }
-        this.cd.detectChanges();
-      });
   }
 }

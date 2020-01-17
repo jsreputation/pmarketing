@@ -17,9 +17,10 @@ import {
 } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { SnakeComponent } from './snake/snake.component';
+import { SweepComponent } from './sweep/sweep.component';
 
 @NgModule({
-  declarations: [ShakeComponent, TapComponent, GamesComponent, ScratchComponent, SpinComponent, SnakeComponent],
+  declarations: [ShakeComponent, TapComponent, GamesComponent, ScratchComponent, SpinComponent, SnakeComponent, SweepComponent],
   imports: [
     CommonModule,
     GamesRoutingModule,

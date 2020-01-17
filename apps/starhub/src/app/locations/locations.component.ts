@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { ILocation, LocationsService, RewardsService, IReward } from '@perx/core';
+import { ILocation, LocationsService, IReward, filterDuplicateLocations, IVoucherService } from '@perx/core';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Params } from '@angular/router';
-import { filter, map, switchMap } from 'rxjs/operators';
+import { filter, map, tap } from 'rxjs/operators';
 import { AnalyticsService, PageType } from '../analytics.service';
 
 @Component({
@@ -12,34 +12,35 @@ import { AnalyticsService, PageType } from '../analytics.service';
   styleUrls: ['./locations.component.scss']
 })
 export class LocationsComponent implements OnInit {
-  public locations: Observable<ILocation[]>;
+  public locations$: Observable<ILocation[]>;
 
   constructor(
     private location: Location,
     private locationService: LocationsService,
     private activeRoute: ActivatedRoute,
-    private rewardsService: RewardsService,
-    private analytics: AnalyticsService
+    private analytics: AnalyticsService,
+    public voucherService: IVoucherService
   ) {
   }
 
   public ngOnInit(): void {
     this.activeRoute.queryParams
       .pipe(
-        filter((params: Params) => params.mid),
-        map((params: Params) => params.mid)
+        filter((params: Params) => params.merchantId),
+        map((params: Params) => params.merchantId)
       )
       .subscribe(
-        (mid: number) => {
-          this.locations = this.locationService.getFromMerchant(mid);
+        (merchantId: number) => {
+          this.locations$ = this.locationService.getFromMerchant(merchantId).pipe(map(filterDuplicateLocations));
         }
       );
     this.activeRoute.queryParams
       .pipe(
-        filter((params: Params) => params.rid),
-        map((params: Params) => params.rid),
-        switchMap((rid: number) => this.rewardsService.getReward(rid)),
-        filter((reward: IReward) => !!reward.categoryTags && reward.categoryTags.length > 0)
+        filter((params: Params) => params.voucherId),
+        map((params: Params) => params.voucherId),
+        tap((voucherId) => this.voucherService.get(voucherId)),
+        map((voucher) => voucher.reward),
+        filter((reward: IReward) => reward && !!reward.categoryTags && reward.categoryTags.length > 0)
       )
       .subscribe(
         (reward: IReward) => {

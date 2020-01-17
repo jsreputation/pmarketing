@@ -1,6 +1,5 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { Merchant } from '@cl-core/http-adapters/merchant';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material';
 import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
 import { MerchantsService } from '@cl-core-services';
 
@@ -11,15 +10,15 @@ import { MerchantsService } from '@cl-core-services';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SelectMerchantPopupComponent {
-  public dataSource: CustomDataSource<Merchant>;
+  public dataSource: CustomDataSource<IMerchantForm>;
   public selectMerchant: IMerchant;
   public displayedColumns: string[] = ['logo', 'name', 'date', 'phone', 'branches'];
 
   constructor(
     public dialogRef: MatDialogRef<SelectMerchantPopupComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private merchantService: MerchantsService) {
-    this.dataSource = new CustomDataSource<Merchant>(this.merchantService);
+    private merchantService: MerchantsService
+  ) {
+    this.dataSource = new CustomDataSource<IMerchantForm>(this.merchantService);
   }
 
   public selectedMerchant(merchant: IMerchant): void {

@@ -1,19 +1,19 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { FormArray, AbstractControl, FormGroup } from '@angular/forms';
+import { FormArray, AbstractControl, FormGroup, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { BehaviorSubject, combineLatest, forkJoin, Observable, of, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter, map, switchMap, tap, takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, forkJoin, Observable, of, Subject, throwError } from 'rxjs';
+import { filter, map, switchMap, tap, takeUntil, distinctUntilChanged, debounceTime, catchError, mergeMap } from 'rxjs/operators';
 import { RewardsService, MerchantsService } from '@cl-core/services';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { NewRewardFormService } from '../../services/new-reward-form.service';
 import { CreateMerchantPopupComponent, SelectMerchantPopupComponent, ToggleControlService } from '@cl-shared';
-import { Merchant } from '@cl-core/http-adapters/merchant';
 import { LoyaltyService } from '@cl-core/services/loyalty.service';
 import { ICustomTireForm, ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateDefaultLanguageService } from '@cl-core/translate-services/translate-default-language.service';
 import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.interface';
 import { IWTierRewardCostsAttributes, IJsonApiItem } from '@perx/whistler';
+import { oc } from 'ts-optchain';
 
 @Component({
   selector: 'cl-manage-rewards',
@@ -27,18 +27,19 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   public reward: IRewardEntityForm;
   public form: FormGroup;
   public config: OptionConfig[];
-  public selectedMerchant: Merchant;
+  public selectedMerchant: IMerchantForm | null;
   public loyalties: ILoyaltyForm[];
   public rewardLoyaltyForm: FormArray;
   public getRewardLoyaltyData$: BehaviorSubject<ILoyaltyFormGroup[] | null> = new BehaviorSubject<ILoyaltyFormGroup[] | null>(null);
-  public tierForSent: any = {
+
+  private tierForSent: any = {
     update: [],
     delete: [],
     create: []
   };
 
-  public get merchantId(): AbstractControl {
-    return this.form.get('rewardInfo.merchantId');
+  private get merchantId(): FormControl {
+    return this.form.get('rewardInfo.merchantId') as FormControl;
   }
 
   constructor(
@@ -53,8 +54,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     private loyaltyService: LoyaltyService,
     private readonly translate: TranslateService,
     private translateDefaultLanguage: TranslateDefaultLanguageService
-  ) {
-  }
+  ) { }
 
   public ngOnInit(): void {
     this.initConfig();
@@ -76,9 +76,13 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   }
 
   public save(): void {
-    if (this.form.invalid || this.rewardLoyaltyForm.invalid) {
+    if (this.form && this.form.invalid) {
       this.form.markAllAsTouched();
+    }
+    if (this.rewardLoyaltyForm && this.rewardLoyaltyForm.invalid) {
       this.rewardLoyaltyForm.markAllAsTouched();
+    }
+    if (!(this.form && this.form.valid && this.rewardLoyaltyForm && this.rewardLoyaltyForm.valid)) {
       return;
     }
 
@@ -96,7 +100,6 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   }
 
   public subscribeToSaveRequest(request: Observable<any>): void {
-    let id: string;
     request
       .pipe(
         switchMap(res => {
@@ -105,47 +108,44 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
           }
 
           if (res && res.data.id) {
-            id = res.data.id;
-            return this.createRewardTiers(this.rewardLoyaltyForm.value, id);
+            this.id = res.data.id;
+            return this.createRewardTiers(this.rewardLoyaltyForm.value, this.id);
           }
         })
       )
       .subscribe(
         () => {
-          if (id || this.id) {
-            this.router.navigateByUrl(`/rewards/detail/${id ? id : this.id}`);
+          if (this.id) {
+            this.router.navigateByUrl(`/rewards/detail/${this.id}`);
           }
         },
         error => console.warn('error', error));
   }
 
   public openDialogCreateMerchant(): void {
-    const dialogRef = this.dialog.open(CreateMerchantPopupComponent);
-
-    dialogRef.afterClosed()
+    this.dialog.open(CreateMerchantPopupComponent)
+      .afterClosed()
       .pipe(
         filter(Boolean),
         switchMap((merchant: any) => this.merchantsService.createMerchant(merchant)),
         filter(Boolean),
         takeUntil(this.destroy$),
       )
-      .subscribe((id) => {
-        this.merchantId.patchValue(id);
-      });
+      .subscribe((id) => this.merchantId.setValue(id));
   }
 
   public openDialogSelectMerchant(): void {
-    const dialogRef = this.dialog.open(SelectMerchantPopupComponent);
-
-    dialogRef.afterClosed().subscribe((merchant) => {
-      if (merchant) {
-        this.merchantId.patchValue(merchant.id);
-      }
-    });
+    this.dialog.open<SelectMerchantPopupComponent, void, IMerchant>(SelectMerchantPopupComponent)
+      .afterClosed()
+      .pipe(
+        filter(Boolean),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((merchant: IMerchant) => this.merchantId.setValue(Number.parseInt(merchant.id, 10)));
   }
 
   public deleteMerchant(): void {
-    this.merchantId.patchValue(null);
+    this.merchantId.setValue(null);
     this.selectedMerchant = null;
   }
 
@@ -180,10 +180,16 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
         distinctUntilChanged(),
         debounceTime(500),
         filter(Boolean),
-        switchMap((id: string) => this.merchantsService.getMerchant(id)),
+        tap(() => this.selectedMerchant = null),
+        // use mergeMap to make sure, we do not subscribing to valueChanges after one call
+        mergeMap(
+          (id: string) => this.merchantsService.getMerchant(id)
+            // catchError is done here, to make sure that 404 errors do not stop subscribing to valueChanges on errors
+            .pipe(catchError(err => (oc(err).errors[0].code() === '404') ? of(null) : throwError(err)))
+        ),
         takeUntil(this.destroy$),
       )
-      .subscribe((merchant) => {
+      .subscribe((merchant: IMerchantForm | null) => {
         this.selectedMerchant = merchant;
         this.updateForm();
       });
@@ -255,15 +261,19 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     return this.rewardsService.getRewardTierList(id);
   }
 
-  private createRewardTiers(rewardLoyaltyForm: ILoyaltyFormGroup[], id: string)
-    : Observable<IJsonApiItem<Partial<IWTierRewardCostsAttributes>>[]> {
+  private createRewardTiers(
+    rewardLoyaltyForm: ILoyaltyFormGroup[],
+    id: string
+  ): Observable<IJsonApiItem<Partial<IWTierRewardCostsAttributes>>[]> {
     const result: Observable<IJsonApiItem<Partial<IWTierRewardCostsAttributes>>>[] = [];
     rewardLoyaltyForm.forEach((item: ILoyaltyFormGroup) => {
-
       if (!item.basicTier.tierId) {
         return;
       }
-      result.push(this.rewardsService.createRewardTier(item.basicTier, id));
+
+      if (item.basicTier.statusTiers) {
+        result.push(this.rewardsService.createRewardTier(item.basicTier, id));
+      }
 
       item.tiers.forEach((tier: ILoyaltyTiersFormGroup) => {
         if (tier.statusTiers) {
@@ -272,21 +282,16 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
       });
     });
 
-    return forkJoin(result);
+    return result.length ? forkJoin(result) : of(void 0);
   }
 
-  private updateRewardTiers(rewardLoyaltyForm: ILoyaltyFormGroup[])
-    : Observable<IJsonApiItem<Partial<IWTierRewardCostsAttributes>>[]> {
-
+  private updateRewardTiers(rewardLoyaltyForm: ILoyaltyFormGroup[]): Observable<IJsonApiItem<Partial<IWTierRewardCostsAttributes>>[]> {
     rewardLoyaltyForm.forEach((item) => {
       // this need for update basicTier
       this.handlerTierUpdate(item.basicTier);
-      item.tiers.forEach((tier) => {
-        // this need for update customTier
-        this.handlerTierUpdate(tier);
-      });
+      // this need for update customTier
+      item.tiers.forEach((tier) => this.handlerTierUpdate(tier));
     });
-
     const result: Observable<IJsonApiItem<Partial<IWTierRewardCostsAttributes>>>[] = this.sendTiers();
 
     return result.length ? forkJoin(result) : of(null);
@@ -304,7 +309,8 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     const result: { [key: string]: ITierRewardCost } = {};
     rewardTierList.forEach((rewardTier) => {
       if ('' + this.id === '' + rewardTier.rewardId) {
-        result[rewardTier.tierId] = rewardTier;
+        const prefix = rewardTier.tierType === this.newRewardFormService.tierTypes.basicType ? 'basic' : 'custom';
+        result[prefix + rewardTier.tierId] = rewardTier;
       }
     });
     return result;
@@ -314,57 +320,53 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     this.rewardLoyaltyForm = this.newRewardFormService.getRewardLoyaltyForm();
     loyalties.data.forEach((loyalty: ILoyaltyForm) => {
       const loyaltyFormGroup = this.newRewardFormService.getLoyaltyFormGroup();
-
-      const basicTier = rewardTierMap[loyalty.basicTierId];
+      let programStatus;
+      const basicTier = rewardTierMap['basic' + loyalty.basicTierId];
       // handler of custom tears
       this.setCustomTiers(loyalty, loyaltyFormGroup);
 
-      if (basicTier) {
+      if (basicTier && basicTier.tierType === this.newRewardFormService.tierTypes.basicType) {
+        programStatus = true;
+        basicTier['statusTiers'] = true;
         this.newRewardFormService.setDefaultRewardTiers(basicTier);
-
-        loyaltyFormGroup.patchValue({
-          programId: loyalty.id,
-          basicTier: {
-            ...basicTier,
-            tierId: loyalty.basicTierId,
-            entityId: this.id,
-          }
-        });
       }
       loyaltyFormGroup.patchValue({
         programId: loyalty.id,
+        programStatus,
         basicTier: {
+          ...(basicTier || {}),
           tierId: loyalty.basicTierId,
           entityId: this.id,
         }
       });
-
       this.rewardLoyaltyForm.push(loyaltyFormGroup);
     });
-
     // patch with if exist savedLoyalties
     if (rewardTierMap) {
       this.patchWithSavedLoyalties(rewardTierMap, this.rewardLoyaltyForm);
     }
-
     this.loyalties = loyalties.data;
     this.cd.detectChanges();
   }
 
-  private patchWithSavedLoyalties(rewardTierMap: { [key: string]: ITierRewardCost }, form: FormArray): void {
-    for (let index = 0; index < form.controls.length - 1; index++) {
-      const loyaltyGroup: AbstractControl = form.at(index);
+  private patchWithSavedLoyalties(rewardTierMap: { [key: string]: ITierRewardCost }, rewardLoyaltyForm: FormArray): void {
+    for (let index = 0; index < rewardLoyaltyForm.controls.length; index++) {
+      const loyaltyGroup: AbstractControl = rewardLoyaltyForm.at(index);
       if (rewardTierMap) {
+        let hasSelectedCustomTier = false;
         (loyaltyGroup.get('tiers') as FormArray).controls.forEach((tier) => {
-          const rewardTier = rewardTierMap[tier.value.tierId];
-          if (rewardTier) {
+          const rewardTier = rewardTierMap['custom' + tier.value.tierId];
+          if (rewardTier && rewardTier.tierType === this.newRewardFormService.tierTypes.customType) {
             // add to object for know what to do next remove or update
-
+            hasSelectedCustomTier = true;
             rewardTier['statusTiers'] = true;
             this.newRewardFormService.setDefaultRewardTiers(rewardTier);
             tier.patchValue({ ...rewardTier });
           }
         });
+        if (hasSelectedCustomTier) {
+          loyaltyGroup.get('programStatus').patchValue(true);
+        }
       }
     }
   }

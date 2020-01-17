@@ -16,6 +16,7 @@
   "NAV_LINK_OVERVIEW": "Overview",
   "NAV_LINK_REWARD": "Rewards",
   "NAV_LINK_CAMPAIGNS": "Campaigns",
+  "NAV_LINK_LOYALTY": "Loyalty",
   "OVERVIEW_GRAPHIC_PAGE": {
     "TOTAL_ACTIVE_CUSTOMERS": "Total Active Customers",
     "TOTAL_ISSUED_REWARDS": "Total Issued Rewards",
@@ -62,6 +63,7 @@
     "SEARCH_FOR_STAMPS_CAMPAIGNS": "Search for stamps campaigns",
     "INSTANT_REWARD_ENGAGEMENT_RATE": "Instant Reward Engagement Rate",
     "STAMPS_REWARDS_LISTS": "Stamps Rewards lists",
+    "INSTANT_REWARDS_LIST": "Instant Reward list",
     "SEARCH_FOR_SURVEY_CAMPAIGNS": "Search for survey campaigns",
     "SEARCH_FOR_REWARDS_CAMPAIGNS": "Search for rewards campaigns"
   }

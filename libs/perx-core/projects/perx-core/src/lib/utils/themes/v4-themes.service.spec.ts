@@ -6,7 +6,7 @@ import { V4ThemesService } from './v4-themes.service';
 import { IConfig } from '../../config/models/config.model';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
-import { DARK } from './themes.model';
+import { DARK, ITheme } from './themes.model';
 
 describe('ThemesService', () => {
   let service: V4ThemesService;
@@ -25,7 +25,7 @@ describe('ThemesService', () => {
 
   it('should get theme setting', fakeAsync(inject([HttpClient], (http: HttpClient) => {
     spyOn(http, 'get').and.returnValue(of(DARK));
-    service.getThemeSetting({ sourceType: 'test', baseHref: 'test' } as IConfig)
+    service.getThemeSetting({ sourceType: 'test', baseHref: 'test' } as IConfig<ITheme>)
       .subscribe((val) => expect(val).toEqual(DARK));
     tick();
     service.getThemeSetting()

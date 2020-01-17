@@ -7,7 +7,7 @@
           [matRippleDisabled]="notClickable(voucher)" (click)="onClick(voucher)">
           <div [ngClass]="'voucher-content ' + imageSize">
             <div class="voucher-img__wrapper">
-              <img class="voucher-thumbnail" src="{{voucher?.reward?.rewardThumbnail}}">
+              <img class="voucher-thumbnail" src="{{voucher?.reward?.rewardThumbnail}}" [alt]="voucher?.reward?.name">
             </div>
             <div class="voucher-details">
               <h1 *ngIf="showTitle">
@@ -35,7 +35,7 @@
     <ng-template #noVouchersBlock>
       <div class="vouchers-content">
         <div class="no-vouchers">
-          <h3>No vouchers in this category!</h3>
+          <h3>No vouchers here yet!</h3>
           <div class="img-container">
             <img src="assets/empty_list.svg" />
           </div>

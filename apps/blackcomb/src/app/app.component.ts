@@ -1,6 +1,34 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { MatDialog, MatSnackBar } from '@angular/material';
-import { PopupComponent, NotificationService, IPopupConfig, ITheme, AuthenticationService, ConfigService } from '@perx/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectorRef,
+} from '@angular/core';
+import {
+  MatDialog,
+  MatSnackBar,
+} from '@angular/material';
+import {
+  Router,
+  NavigationEnd,
+  Event,
+} from '@angular/router';
+import { Location } from '@angular/common';
+
+import {
+  filter,
+  map,
+  switchMap,
+} from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
+
+import {
+  PopupComponent,
+  NotificationService,
+  IPopupConfig,
+  ITheme,
+  AuthenticationService,
+  ConfigService,
+} from '@perx/core';
 import {
   HomeComponent,
   HistoryComponent,
@@ -8,11 +36,9 @@ import {
   SignIn2Component,
   WalletComponent
 } from '@perx/blackcomb-pages';
-import { Location } from '@angular/common';
-import { Router, NavigationEnd, Event } from '@angular/router';
-import { filter, map, switchMap } from 'rxjs/operators';
+
 import { environment } from 'src/environments/environment';
-import { TranslateService } from '@ngx-translate/core';
+import { BACK_ARROW_URLS } from './app.constants';
 
 @Component({
   selector: 'app-root',
@@ -22,10 +48,14 @@ import { TranslateService } from '@ngx-translate/core';
 export class AppComponent implements OnInit {
   public showHeader: boolean;
   public showToolbar: boolean;
-  public leftIcon: string = '';
+  public backArrowIcon: string = '';
   public preAuth: boolean;
   public theme: ITheme;
   public translationLoaded: boolean = false;
+
+  private initBackArrow(url: string): void {
+    this.backArrowIcon = BACK_ARROW_URLS.some(test => url.startsWith(test)) ? 'arrow_backward' : '';
+  }
 
   constructor(
     private notificationService: NotificationService,
@@ -71,20 +101,10 @@ export class AppComponent implements OnInit {
         filter((event: Event) => event instanceof NavigationEnd),
         map((event: NavigationEnd) => event.urlAfterRedirects)
       )
-      .subscribe((url: string) => {
-        const urlsWithBack: string[] = [
-          '/voucher-detail',
-          '/redeem',
-          '/tnc',
-          '/contact-us',
-          '/reward-detail',
-          '/c'
-        ];
-        // if current url starts with any of the above segments, use arrow_backward
-        this.leftIcon = urlsWithBack.some(test => url.startsWith(test)) ? 'arrow_backward' : '';
-      });
-
+      .subscribe(url => this.initBackArrow(url));
+    this.initBackArrow(this.router.url);
   }
+
   public onActivate(ref: any): void {
     this.showHeader = !(ref instanceof SignIn2Component);
     this.showToolbar = ref instanceof HomeComponent ||
@@ -94,9 +114,10 @@ export class AppComponent implements OnInit {
     this.cd.detectChanges();
   }
 
-  public leftClick(): void {
-    if (this.leftIcon !== '') {
+  public backArrowClick(): void {
+    if (this.backArrowIcon !== '') {
       this.location.back();
     }
   }
+
 }

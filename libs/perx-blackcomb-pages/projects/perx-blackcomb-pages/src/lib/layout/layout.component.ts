@@ -1,15 +1,30 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectorRef,
+} from '@angular/core';
+import {
+  Router,
+  NavigationEnd,
+  Event,
+} from '@angular/router';
+import { Location } from '@angular/common';
+import { Title } from '@angular/platform-browser';
+
+import {
+  filter,
+  map,
+} from 'rxjs/operators';
+
 import {
   ThemesService,
   ITheme,
   AuthenticationService,
   Config,
   ConfigService,
-  IConfig
+  IConfig,
 } from '@perx/core';
-import { Location } from '@angular/common';
-import { Router, NavigationEnd, Event } from '@angular/router';
-import { filter, map } from 'rxjs/operators';
+
 import { SignIn2Component } from '../sign-in-2/sign-in-2.component';
 import { HomeComponent } from '../home/home.component';
 import { HistoryComponent } from '../history/history.component';
@@ -17,7 +32,7 @@ import { AccountComponent } from '../account/account.component';
 import { WalletComponent } from '../wallet/wallet.component';
 import { WalletHistoryComponent } from '../wallet-history/wallet-history.component';
 import { ProfileComponent } from '../profile/profile.component';
-import { Title } from '@angular/platform-browser';
+import { BACK_ARROW_URLS } from '../perx-blackcomb-pages.constants';
 
 export interface ShowTitleInHeader {
   getTitle(): string;
@@ -33,10 +48,14 @@ export class LayoutComponent implements OnInit {
   public showHeader: boolean;
   public headerTitle: string;
   public showToolbar: boolean;
-  public leftIcon: string = '';
+  public backArrowIcon: string = '';
   public preAuth: boolean;
   public theme: ITheme;
-  public appConfig: IConfig;
+  public appConfig: IConfig<void>;
+
+  private initBackArrow(url: string): void {
+    this.backArrowIcon = BACK_ARROW_URLS.some(test => url.startsWith(test)) ? 'arrow_backward' : '';
+  }
 
   constructor(
     private location: Location,
@@ -63,7 +82,7 @@ export class LayoutComponent implements OnInit {
     );
 
     this.configService.readAppConfig().subscribe(
-      (config: IConfig) => this.appConfig = config
+      (config: IConfig<void>) => this.appConfig = config
     );
 
     this.authService.$failedAuth.subscribe(
@@ -79,26 +98,8 @@ export class LayoutComponent implements OnInit {
         filter((event: Event) => event instanceof NavigationEnd),
         map((event: NavigationEnd) => event.urlAfterRedirects)
       )
-      .subscribe((url: string) => {
-        const urlsWithBack: string[] = [
-          '/voucher-detail',
-          '/redeem',
-          '/tnc',
-          '/contact-us',
-          '/reward-detail',
-          '/c',
-          '/qr',
-          '/profile',
-          '/transaction-history',
-          '/change-password',
-          '/enter-pin',
-          '/booking',
-          '/edit-profile'
-        ];
-        // if current url starts with any of the above segments, use arrow_backward
-        this.leftIcon = urlsWithBack.some(test => url.startsWith(test)) ? 'arrow_backward' : '';
-      });
-
+      .subscribe(url => this.initBackArrow(url));
+    this.initBackArrow(this.router.url);
   }
 
   public onActivate(ref: any): void {
@@ -113,8 +114,8 @@ export class LayoutComponent implements OnInit {
     this.cd.detectChanges();
   }
 
-  public leftClick(): void {
-    if (this.leftIcon !== '') {
+  public backArrowClick(): void {
+    if (this.backArrowIcon !== '') {
       this.location.back();
     }
   }

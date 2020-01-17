@@ -149,6 +149,10 @@ h1, h2, h3, h4, h5, p {
   }
 }
 
+textarea {
+  min-height: 3em;
+}
+
 // INVALID FORM NEXT FIELD CLEAR GAP
 .mat-form-field-invalid {
   transition: 0.3s cubic-bezier(0.35, 0, 0.25, 1);
@@ -373,7 +377,8 @@ h1, h2, h3, h4, h5, p {
 }
 
 ::-webkit-resizer {
-  background-color: $secondary-color;
+  background: url("assets/images/icons/drag-dots.svg") no-repeat center right;
+  background-size: 40%;
 }
 
 .custom-scroll {
@@ -406,7 +411,8 @@ h1, h2, h3, h4, h5, p {
   }
 
   &::-webkit-resizer {
-    background-color: #666;
+    background: url("assets/images/icons/drag-dots.svg") no-repeat center right;
+    background-size: 40%;
   }
 }
 
@@ -429,4 +435,8 @@ h1, h2, h3, h4, h5, p {
     position: absolute;
     bottom: -0.5rem;
   }
+}
+
+.mat-menu-panel {
+  max-height: 40vh !important;
 }

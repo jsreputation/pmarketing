@@ -2,7 +2,6 @@ import { DOCUMENT } from '@angular/common';
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, Inject, Renderer2 } from '@angular/core';
 import { DashboardService } from '@cl-core/services';
 import { FormControl } from '@angular/forms';
-
 import { Observable, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 
@@ -23,6 +22,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
   public dateRange: FormControl = new FormControl();
   public gameCard$: Observable<DashboardGameCard[]>;
   public userName$: string;
+  public isOpen: boolean = true;
   public navLinks: { path: string, label: string }[] = [
     {
       path: 'overview',
@@ -35,7 +35,11 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     {
       path: 'campaigns',
       label: 'NAV_LINK_CAMPAIGNS'
-    }
+    },
+    // {
+    //   path: 'loyalty',
+    //   label: 'NAV_LINK_LOYALTY'
+    // }
   ];
 
   constructor(
@@ -53,6 +57,12 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
     this.handelDateRangeChanges();
     this.dateRange.patchValue(this.defaultDateRange);
     this.renderer.addClass(this.document.body, 'no-cta');
+    if (!localStorage.getItem('hideIntro')) {
+      this.isOpen = this.isOpen;
+    } else if (localStorage.getItem('hideIntro') === 'true') {
+      this.isOpen = !this.isOpen;
+    }
+    localStorage.setItem('hideIntro', 'true');
   }
 
   public ngOnDestroy(): void {
@@ -74,12 +84,16 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
 
   private get defaultDateRange(): DatepickerRangeValue<Date> {
     return {
-      begin: DateTimeParser.getDateMountsAgo(3),
+      begin: DateTimeParser.getDateMonthsAgo(1),
       end: new Date()
     };
   }
 
   private getGameCard(): void {
     this.gameCard$ = this.dashboardService.getDashboardGameCard();
+  }
+
+  public toggle(): void {
+    this.isOpen = !this.isOpen;
   }
 }

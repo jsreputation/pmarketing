@@ -39,7 +39,13 @@ describe('RewardComponent', () => {
   let component: RewardDetailsComponent;
   let fixture: ComponentFixture<RewardDetailsComponent>;
   const configServiceStub: Partial<ConfigService> = {
-    readAppConfig: () => of({})
+    readAppConfig: () => of({
+      apiHost: '',
+      production: false,
+      preAuth: false,
+      isWhistler: false,
+      baseHref: '',
+    })
   };
   const vouchersServiceStub: Partial<IVoucherService>  = {
     issueReward: () => of()

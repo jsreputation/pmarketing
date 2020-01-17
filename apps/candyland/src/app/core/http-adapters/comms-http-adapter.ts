@@ -1,6 +1,13 @@
 import * as moment from 'moment';
-import { IWCommTemplateAttributes, IWCommEventAttributes, IJsonApiItem, IJsonApiPostData } from '@perx/whistler';
-import { IComm } from '@cl-core/models/comm/schedule';
+import {
+  IWCommTemplateAttributes,
+  IWCommEventAttributes,
+  IJsonApiItem,
+  IJsonApiPostData,
+  IWCommMessageAttributes,
+  IJsonApiListPayload
+} from '@perx/whistler';
+import { IComm, ICommMessage } from '@cl-core/models/comm/schedule';
 import { ICampaign } from '@cl-core/models/campaign/campaign';
 
 export class CommsHttpAdapter {
@@ -20,6 +27,27 @@ export class CommsHttpAdapter {
         sendDate: data.attributes.send_at ? new Date(data.attributes.send_at) : null,
         sendTime: data.attributes.send_at ? moment(data.attributes.send_at).format('LT') : null
       }
+    };
+  }
+
+  public static transformTableData(data: IJsonApiListPayload<IWCommMessageAttributes>): ITableData<ICommMessage> {
+    return {
+      data: data.data.map(item => CommsHttpAdapter.transformMessageAPIResponse(item)), meta: data.meta
+    };
+  }
+
+  public static transformMessageAPIResponse(data: IJsonApiItem<IWCommMessageAttributes>): ICommMessage {
+    const attr = data.attributes;
+    return {
+      id: data.id,
+      from: attr.from,
+      to: attr.to,
+      providerId: attr.provider_id,
+      message: attr.body,
+      sendDate: attr.created_at ? new Date(attr.created_at) : null,
+      ownerId: attr.owner_id,
+      ownerType: attr.owner_type,
+      channel: attr.channel
     };
   }
 
@@ -49,6 +77,22 @@ export class CommsHttpAdapter {
       type: 'templates',
       attributes: {
         content: data.message
+      }
+    };
+  }
+
+  public static transformFromCommsMessage(data: ICommMessage): IJsonApiPostData<IWCommMessageAttributes> {
+    return {
+      type: 'messages',
+      attributes: {
+        body: data.message,
+        from: data.from,
+        to: data.to,
+        recipient_id: data.recipientId,
+        provider_id: data.providerId,
+        owner_id: data.ownerId,
+        owner_type: data.ownerType,
+        channel: data.channel
       }
     };
   }

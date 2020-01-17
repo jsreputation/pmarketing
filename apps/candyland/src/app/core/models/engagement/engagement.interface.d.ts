@@ -1,7 +1,7 @@
 import { IWQuestion } from '@perx/whistler';
-import {ImageControlValue} from '@cl-helpers/image-control-value';
+import { ImageControlValue } from '@cl-helpers/image-control-value';
 
-declare type  IEngagementType =
+declare type IEngagementType =
   IEngagementShakeType |
   IEngagementTapType |
   IEngagementStamps |
@@ -82,7 +82,8 @@ declare interface IEngagementTapType extends IEngagementCommon {
   sub_title: string;
   closed_pinata_img_url: string;
   opened_pinata_img_url: string;
-  cracking_pinata_img_url: string;
+  cracking_pinata_img_url?: string;
+  background_img_url: string;
   attributes_type: string;
   created_at: string;
   updated_at: string;

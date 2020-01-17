@@ -19,7 +19,8 @@ import {
   MatSelectModule,
   MatDatepickerModule,
   MatToolbarModule,
-  MatListModule
+  MatListModule,
+  MatDialogModule
 } from '@angular/material';
 import { GameModule } from './game/game.module';
 import { HistoryComponent } from './history/history.component';
@@ -49,7 +50,8 @@ import {
   LoyaltyTransactionsListComponent,
   NewsfeedComponent,
   PinInputComponent,
-  PasswordComponent
+  PasswordComponent,
+  PuzzleListComponent
 } from '@perx/core';
 
 import { RewardComponent } from './reward/reward.component';
@@ -133,7 +135,8 @@ const comps: any[] = [
   PinInputComponent,
   RewardsBookingComponent,
   ProfileBarcodeComponent,
-  EditProfileFieldComponent
+  EditProfileFieldComponent,
+  PuzzleListComponent
 ];
 
 @NgModule({
@@ -162,7 +165,8 @@ const comps: any[] = [
     TranslateModule.forChild(),
     MatToolbarModule,
     MatListModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    MatDialogModule
   ],
   exports: [
     ...comps,

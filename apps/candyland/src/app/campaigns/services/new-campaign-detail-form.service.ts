@@ -23,7 +23,7 @@ export class NewCampaignDetailFormService {
       audience: this.fb.group({
         type: ['select'],
         file: [],
-        select: [null, [Validators.required]],
+        select: [null],
         filters: this.fb.group({
           agesEnabled: [false],
           genderEnabled: [false],
@@ -47,6 +47,14 @@ export class NewCampaignDetailFormService {
         condition: form.get('campaignInfo.disabledEndDate').value === false,
         controls: [form.get('campaignInfo.endDate'), form.get('campaignInfo.endTime')],
         resetValue: true
+      },
+      {
+        condition: form.get('audience.filters.agesEnabled').value === true,
+        controls: [form.get('audience.filters.ages')]
+      },
+      {
+        condition: form.get('audience.filters.genderEnabled').value === true,
+        controls: [form.get('audience.filters.gender')]
       },
       // {
       //   condition: form.get('channel.type').value === 'sms',

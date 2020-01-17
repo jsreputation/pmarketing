@@ -34,7 +34,7 @@ export class CreateMerchantPopupComponent implements OnInit {
 
   public addMerchant(): void {
     if (this.formMerchant.valid) {
-      this.dialogRef.close({ ...this.formMerchant.value, deletedBranches: this.deletedBranches });
+      this.dialogRef.close({ ...this.formMerchant.value });
     } else {
       this.formMerchant.markAllAsTouched();
     }
@@ -42,14 +42,10 @@ export class CreateMerchantPopupComponent implements OnInit {
 
   public removeBranches(i?: number): void {
     const branches = this.formMerchant.get('branches') as FormArray;
-    if (!i) {
+    if (i === null) {
       branches.clear();
       this.formMerchant.updateValueAndValidity();
       return;
-    }
-    const deletedBranchId = branches.at(i).value.id;
-    if (deletedBranchId) {
-      this.deletedBranches.push(deletedBranchId);
     }
     branches.removeAt(i);
   }

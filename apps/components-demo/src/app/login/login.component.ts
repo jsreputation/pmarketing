@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
       });
     }
     this.configService.readAppConfig().subscribe(
-      (config: IConfig) => {
+      (config: IConfig<void>) => {
         this.preAuth = config.preAuth as boolean;
       }
     );

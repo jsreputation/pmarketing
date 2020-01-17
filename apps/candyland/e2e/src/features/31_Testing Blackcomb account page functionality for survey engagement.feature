@@ -15,7 +15,7 @@ Scenario: Ensuring the functionality of the account tab on the navigation bar
 Scenario: Ensuring the relevant elements of the account page is present
   Given 21_I am at the blackcomb wallet page
   When  21_I click on the account tab
-  Then  21_I should see the contact us link and  t&c link.
+  Then  21_I should see the contact us link and t&c link.
 
 Scenario: Ensuring the contact us link is functional
   Given 22_I am at the blackcomb account page

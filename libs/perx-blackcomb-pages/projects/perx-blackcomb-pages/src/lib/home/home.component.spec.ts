@@ -15,10 +15,12 @@ import {
   IGameService,
   ThemesService,
   ConfigService,
-  IReward
+  IReward,
+  AuthenticationService,
+  TokenStorage
 } from '@perx/core';
 import { of } from 'rxjs';
-import { MatCardModule } from '@angular/material';
+import { MatCardModule, MatDialogModule } from '@angular/material';
 import { GamesCollectionComponent } from './games-collection/games-collection.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { profile } from '../mock/profile.mock';
@@ -31,17 +33,26 @@ const rewardsServiceStub: Partial<RewardsService> = {
   getRewards: () => of([])
 };
 
+const tokenStorageStub: Partial<TokenStorage> = {
+  getAppInfoProperty: () => undefined,
+  setAppInfoProperty: () => { }
+};
+
 const profileService: Partial<ProfileService> = {
   whoAmI: () => of(profile)
 };
-
+const authServiceStub = {
+  isAuthorized: () => of(true)
+};
 const loyaltyServiceStub: Partial<LoyaltyService> = {
   getLoyalties: () => of([])
 };
 
-const gameSvcStub: Partial<IGameService> = {};
+const gameSvcStub: Partial<IGameService> = {
+  getActiveGames: () => of([])
+};
 
-const themesServiceStub = { getThemeSetting: () => of({})};
+const themesServiceStub = { getThemeSetting: () => of({}) };
 
 const configServiceStub = { readAppConfig: () => of() };
 
@@ -77,7 +88,8 @@ describe('HomeComponent', () => {
         HttpClientModule,
         RouterTestingModule.withRoutes([]),
         TranslateModule.forRoot(),
-        InfiniteScrollModule
+        InfiniteScrollModule,
+        MatDialogModule
       ],
       providers: [
         Title,
@@ -87,7 +99,12 @@ describe('HomeComponent', () => {
         { provide: ProfileService, useValue: profileService },
         { provide: IGameService, useValue: gameSvcStub },
         { provide: ThemesService, useValue: themesServiceStub },
-        { provide: ConfigService, useValue: configServiceStub }
+        { provide: ConfigService, useValue: configServiceStub },
+        {
+          provide: AuthenticationService,
+          useValue: authServiceStub
+        },
+        { provide: TokenStorage, useValue: tokenStorageStub },
       ]
     })
       .compileComponents();

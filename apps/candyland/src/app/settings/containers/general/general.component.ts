@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { SettingsService } from '@cl-core/services';
 
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
 
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Tenants } from '@cl-core/http-adapters/setting-json-adapter';
+import { TenantService } from '@cl-core/services/tenant.service';
+import { ITimeZone } from '@cl-core/models/settings/time-zone';
 
 @Component({
   selector: 'cl-general',
@@ -18,10 +18,10 @@ export class GeneralComponent implements OnInit, OnDestroy {
   public timeZones$: Observable<ITimeZone[]>;
   public currency$: Observable<Currency[]>;
   public formGeneral: FormGroup;
-  public tenants: Tenants;
+  public tenants: ITenant;
   constructor(
-    private settingsService: SettingsService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private tenantService: TenantService
   ) { }
 
   public ngOnInit(): void {
@@ -43,25 +43,31 @@ export class GeneralComponent implements OnInit, OnDestroy {
       .valueChanges
       .pipe(
         debounceTime(300),
-        switchMap((value => this.settingsService.updateTenants(value))),
+        switchMap((value => {
+          this.tenants = {
+            ...this.tenants,
+            ...value
+          };
+          return this.tenantService.updateTenant(this.tenants);
+        })),
         takeUntil(this.destroy$),
       )
       .subscribe(() => { });
   }
 
   private getTimeZone(): void {
-    this.timeZones$ = this.settingsService.getTimeZone();
+    this.timeZones$ = this.tenantService.getTimeZone();
   }
 
   private getCurrency(): void {
-    this.currency$ = this.settingsService.getCurrency();
+    this.currency$ = this.tenantService.getCurrency();
   }
 
   private initTenantSettings(): void {
-    this.settingsService.findTenant()
-      .subscribe((res: Tenants) => {
+    this.tenantService.findTenant()
+      .subscribe((res: ITenant) => {
         this.tenants = res;
-        this.patchValue(res.display_properties);
+        this.patchValue(res);
         this.subscribeFormChanges();
       });
   }
