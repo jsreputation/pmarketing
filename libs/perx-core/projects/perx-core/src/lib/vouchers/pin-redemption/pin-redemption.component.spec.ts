@@ -58,7 +58,7 @@ describe('PinRedemptionComponent', () => {
     };
     component.voucher = voucher;
     const pinService: PinService = fixture.debugElement.injector.get<PinService>(PinService as Type<PinService>);
-    const spy = spyOn(pinService, 'getPin').and.returnValue( of('1234') );
+    const spy = spyOn(pinService, 'getPin').and.returnValue(of('1234'));
     component.ngOnChanges({
       voucher: new SimpleChange(null, null, true)
     });
@@ -69,7 +69,7 @@ describe('PinRedemptionComponent', () => {
   describe('redeemVoucher', () => {
     it('should call redeemVoucher and emit full', fakeAsync(() => {
       const voucherService: IVoucherService = fixture.debugElement.injector.get<IVoucherService>(IVoucherService as Type<IVoucherService>);
-      const spy = spyOn(voucherService, 'redeemVoucher').and.returnValue( of('Redeem success') );
+      const spy = spyOn(voucherService, 'redeemVoucher').and.returnValue(of('Redeem success'));
       const fullEmitSpy = spyOn(component.full, 'emit');
       component.redeemVoucher();
       tick();
@@ -146,7 +146,7 @@ describe('PinRedemptionComponent', () => {
 
   it('should get new pin once voucherId from parent changed', () => {
     const pinService: PinService = fixture.debugElement.injector.get<PinService>(PinService as Type<PinService>);
-    const spy = spyOn(pinService, 'getPin').and.returnValue( of('1234') );
+    const spy = spyOn(pinService, 'getPin').and.returnValue(of('1234'));
     component.ngOnChanges({
       voucherId: new SimpleChange(null, 1, true)
     });
