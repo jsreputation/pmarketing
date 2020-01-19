@@ -54,6 +54,8 @@ export class SnakeGameComponent implements OnChanges, OnDestroy {
   @Input()
   public snake: string;
   @Input()
+  public colorSnake: string = 'lime';
+  @Input()
   public background: string;
   @Input()
   public rateOfExpansion: number = 10;
@@ -181,9 +183,11 @@ export class SnakeGameComponent implements OnChanges, OnDestroy {
     // render board
     this.ctx.drawImage(this.backgroundImgLoaded, 0, 0, this.canv.width, this.canv.height);
     // render snake
-    this.ctx.fillStyle = this.ctx.createPattern(this.snakeImgLoaded as HTMLImageElement, 'repeat') || 'lime';
+    this.ctx.fillStyle = this.colorSnake;
+    this.ctx.fillRect(this.trail[0].x * this.gs, this.trail[0].y * this.gs, this.gs - 2 , this.gs - 2);
     // tslint:disable-next-line:prefer-for-of
-    for (let i = 0; i < this.trail.length; i++) {
+    this.ctx.fillStyle = this.ctx.createPattern(this.snakeImgLoaded as HTMLImageElement, 'repeat') || 'lime';
+    for (let i = 1; i < this.trail.length; i++) {
       this.ctx.fillRect(this.trail[i].x * this.gs, this.trail[i].y * this.gs, this.gs - 2 , this.gs - 2);
     }
     // render target
