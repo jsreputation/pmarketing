@@ -1,3 +1,4 @@
+<button [disabled]="!allImagesLoaded" (click)="startAnimating()">START</button>
 <div class="container"
      (swipeleft)="left()"
      (swiperight)="right()"
