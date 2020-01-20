@@ -26,25 +26,19 @@
 </mat-checkbox>
 
 <perx-core-puzzle-collect-stamps
-  *ngIf="card"
   [nbSlots]="nbSlots.value"
-  [stamps]="card.stamps"
   [preStampImg]="'assets/stamps/pre_stamp.png'"
   [postStampImg]="'assets/stamps/post_stamp_redeemed.png'"
-  [rewardPreStamp]="'assets/stamps/pre_reward.png'"
+  [rewardPreStamp]="'assets/stamps/pre_stamp.png'"
   [rewardPostStamp]="'assets/stamps/post_reward.png'"
   [rewards]="rewardArr"
   [showStampsCounter]="showCounter"
-
   [availableStampImg]="'assets/stamps/stamp-available.png'"
   [availableRewardImg]="'assets/stamps/stamp-available.png'"
-  
-  [cardBgImage]="card.displayProperties.cardBackgroundImage?.value.imageUrl"
   [showStampsCounter]="true"
-  [title]="card.title || 'Stamp Card'"
-  [subTitle]="card.subTitle || 'Tap the stamps to earn your reward!'"
+  [title]="'Stamp Card'"
+  [subTitle]="'Tap the stamps to earn your reward!'"
   (availableStampClicked)="stampClicked($event)">
-
 </perx-core-puzzle-collect-stamps>
 <!-- [backgroundImage]="card.displayProperties.cardImage?.value.imageUrl" 
 -->
