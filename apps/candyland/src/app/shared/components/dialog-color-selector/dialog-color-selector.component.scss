@@ -18,24 +18,26 @@
 
 #snake-pic-container {
   position: relative;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+  ////might not be needed styles
+  //margin: 0;
+  //padding: 0;
+  //height: 100%;
+  //box-sizing: border-box;
 }
 
 #snake-svg {
   position: relative;
-  z-index: 2;
   mix-blend-mode: multiply;
 }
 
-#bg-snake-face {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: auto;
-}
+//#bg-snake-face {
+//  position: absolute;
+//  top: 0;
+//}
 
+#snake-bg-container {
+  position: absolute;
+}
 //#snake-shape {
 //  fill: #4d8cff;
 //}
