@@ -56,6 +56,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   private lastURL: string;
   private retries: number = 0;
   private maxRetries: number = 2;
+  public isSignUpEnded: boolean = true;
   public preauth: boolean = false;
   constructor(
     config: Config,
@@ -268,7 +269,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   }
 
   // @todo merge createUserAndAutoLogin with signup
-  public createUserAndAutoLogin(pi: string, userObj?: { [key: string]: any }, anonymous?: boolean): Observable<void> {
+  public createUserAndAutoLogin(pi: string, userObj?: { [key: string]: any }, anonymous?: boolean): Observable<void | null> {
     const profile: ISignUpData = {
       phone: pi,
       firstName: oc(userObj).firstName(undefined),
@@ -285,13 +286,23 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     };
     const otp$ = throwError(new RequiresOtpError());
     const success$ = of(void 0);
-    return this.signup(profile)
+    const profileData: Observable<IProfile | null> = this.signup(profile);
+    if (!profileData) {
+      return of(null);
+    }
+
+    return profileData
       .pipe(
         switchMap((p: IProfile) => iif(() => p.state === 'initial', otp$, success$))
       );
   }
 
-  public signup(profile: ISignUpData): Observable<IProfile> {
+  public signup(profile: ISignUpData): Observable<IProfile | null> {
+    if (!this.isSignUpEnded) {
+      return of(null);
+    }
+
+    this.isSignUpEnded = false;
     const profileV4 = this.signUpDataToV4SignUpData(profile);
     return this.http.post<IV4ProfileResponse>(`${this.customersEndPoint}/signup`, profileV4)
       .pipe(
@@ -299,7 +310,10 @@ export class V4AuthenticationService extends AuthenticationService implements Au
           data => console.log(data),
           error => console.log(error)
         ),
-        map((resp: IV4ProfileResponse) => V4ProfileService.v4ProfileToProfile(resp.data))
+        map((resp: IV4ProfileResponse) => {
+          this.isSignUpEnded = true;
+          return V4ProfileService.v4ProfileToProfile(resp.data);
+        })
       );
   }
 

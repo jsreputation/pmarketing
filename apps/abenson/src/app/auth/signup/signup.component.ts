@@ -1,10 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+} from '@angular/core';
+import {
+  Validators,
+  FormBuilder,
+  FormGroup,
+} from '@angular/forms';
 import { Router } from '@angular/router';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { AuthenticationService, ISignUpData, ProfileService } from '@perx/core';
-import { SharedDataService } from 'src/app/services/shared-data.service';
-import { of, throwError } from 'rxjs';
+
+import {
+  of,
+  throwError,
+} from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
+
+import {
+  AuthenticationService,
+  ISignUpData,
+  ProfileService,
+} from '@perx/core';
+
+import { SharedDataService } from 'src/app/services/shared-data.service';
 
 @Component({
   selector: 'app-signup',
@@ -21,7 +38,7 @@ export class SignUpComponent implements OnInit {
     private authService: AuthenticationService,
     private router: Router,
     private sharedDataService: SharedDataService,
-    private profileService: ProfileService
+    private profileService: ProfileService,
   ) { }
 
   public ngOnInit(): void {
