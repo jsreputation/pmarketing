@@ -24,16 +24,21 @@
 >
   Show stamps left
 </mat-checkbox>
+
 <perx-core-puzzle-collect-stamps
-  [nbSlots]="nbSlots.value"
   [stamps]="stamps"
+  [nbSlots]="nbSlots.value"
   [preStampImg]="'assets/stamps/pre_stamp.png'"
   [postStampImg]="'assets/stamps/post_stamp_redeemed.png'"
-  [rewardPreStamp]="'assets/stamps/pre_reward.png'"
+  [rewardPreStamp]="'assets/stamps/pre_stamp.png'"
   [rewardPostStamp]="'assets/stamps/post_reward.png'"
   [rewards]="rewardArr"
   [showStampsCounter]="showCounter"
->
+  [availableStampImg]="'assets/stamps/stamp-available.png'"
+  [availableRewardImg]="'assets/stamps/stamp-available.png'"
+  [showStampsCounter]="true"
+  [title]="'Stamp Card'"
+  [subTitle]="'Tap the stamps to earn your reward!'">
 </perx-core-puzzle-collect-stamps>
 
 <p>Reward Position</p>
