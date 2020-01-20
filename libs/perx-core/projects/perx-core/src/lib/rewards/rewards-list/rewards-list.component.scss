@@ -5,7 +5,6 @@
   flex-basis: auto;
   flex-grow: 1;
   justify-content: center;
-  height: 100%;
 
   .reward-img__wrapper {
     flex: 0 0 10.5rem;
@@ -33,11 +32,11 @@
   .reward-preview-details {
     font-size: 1.4rem;
     display: flex;
-    margin: 1.6rem 0;
-    margin-left: 0.8rem;
-    padding-left: 0;
     flex-direction: column;
     flex: 1;
+    padding: 1.6rem 0;
+    padding-left: 0.8rem;
+    box-sizing: border-box;
 
     &:nth-child(1) {
       margin-top: 0;
@@ -61,7 +60,6 @@
     }
 
     .description {
-      height: 100%;
       width: 70%;
       font-size: 1.2rem;
     }
