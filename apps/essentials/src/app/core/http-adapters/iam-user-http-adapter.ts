@@ -10,7 +10,7 @@ export class IamUserHttpAdapter {
     return {
       type: 'users',
       attributes: {
-        username: data.name,
+        username: data.username,
         api: true,
         console: true,
         email: data.email || null
@@ -27,7 +27,7 @@ export class IamUserHttpAdapter {
     return {
       id: data.id,
       type: data.type,
-      links: data.links.self,
+      links: data.links ? data.links.self : undefined,
       urn: data.attributes.urn,
       created_at: data.attributes.created_at,
       update_at: data.attributes.created_at,
@@ -37,12 +37,11 @@ export class IamUserHttpAdapter {
       time_zone: data.attributes.time_zone,
       properties: data.attributes.properties,
       display_properties: data.attributes.display_properties,
-      jwt_payload_iss: data.attributes.jwt_payload.iss,
-      jwt_payload_sub: data.attributes.jwt_payload.sub,
+      jwt_payload_iss: data.attributes.jwt_payload ? data.attributes.jwt_payload.iss : undefined,
+      jwt_payload_sub: data.attributes.jwt_payload ? data.attributes.jwt_payload.sub  : undefined,
       attached_policies: data.attributes.attached_policies,
       relationships_groups_id: IamUserHttpAdapter.setGroupId(data),
-      // tslint:disable-next-line: deprecation
-      email: data.attributes.email || data.attributes.properties.email
+      email: data.attributes.email || (data.attributes.properties ? data.attributes.properties.email : undefined)
     };
   }
 

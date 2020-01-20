@@ -19,7 +19,7 @@ import { IJsonApiItemPayload, IWMerchantBranchAttributes } from '@perx/whistler'
 })
 export class ListMerchantComponent implements OnDestroy {
   private destroy$: Subject<void> = new Subject();
-  public dataSource: CustomDataSource<Partial<IMerchantForm>>;
+  public dataSource: CustomDataSource<IMerchantForm>;
   public dataSourceStates: typeof DataSourceStates = DataSourceStates;
 
   constructor(
@@ -29,7 +29,7 @@ export class ListMerchantComponent implements OnDestroy {
     private translateDefaultLanguage: TranslateDefaultLanguageService
   ) {
     this.setTranslateLanguage();
-    this.dataSource = new CustomDataSource<Partial<IMerchantForm>>(this.merchantService);
+    this.dataSource = new CustomDataSource<IMerchantForm>(this.merchantService);
   }
 
   public ngOnDestroy(): void {
@@ -111,8 +111,7 @@ export class ListMerchantComponent implements OnDestroy {
       delete: this.deleteMerchant.bind(this),
       duplicate: this.duplicateMerchant.bind(this)
     };
-    // tslint:disable
-    (typeof actions[data.action] === 'function') && actions[data.action](data.merchant);
+    if (typeof actions[data.action] === 'function') { actions[data.action](data.merchant); }
   }
 
   private setTranslateLanguage(): void {
