@@ -24,7 +24,7 @@ export class RewardsListPageComponent {
     'rewardType',
     'category',
     // temporary hide until api provides this data
-    // 'balance',
+    'balance',
     'actions'
   ];
 

@@ -18,7 +18,7 @@ export class RewardsListComponent implements AfterViewInit {
     'category',
     'validity',
     // temporarily hide balance as it is not available from the api yet
-    // 'balance',
+    'balance',
     'actions'
   ];
   @Input() public selectable: boolean = false;
