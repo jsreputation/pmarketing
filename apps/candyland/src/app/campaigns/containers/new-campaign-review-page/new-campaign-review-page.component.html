@@ -13,6 +13,18 @@
     </mat-card>
     <!--rewards-->
     <mat-card class="card" *ngIf="stampsHasRewards">
+
+      <div class="card-content" *ngIf="specialProbDisplay$ | async as outcome">
+        <div class="card-header"></div>
+        <cl-reward-item-preview
+          class="item"
+          [data]="outcome?.reward"
+          [probability]="outcome?.outcome?.probability"
+          [enableProbability]="campaign?.enabledProb">
+        </cl-reward-item-preview>
+      </div>
+
+
       <div *ngFor="let slot of slots">
         <div *ngIf="hasRewardsInSlot(slot)">
           <div class="card-header">
