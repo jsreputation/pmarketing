@@ -1,7 +1,6 @@
 import {
   IWVoucherStatsApi,
   IWVouchersApi,
-  IJsonApiItemPayload,
   IJsonApiPostData,
 } from '@perx/whistler';
 
