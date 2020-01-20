@@ -20,3 +20,13 @@
 @import "styles/report";
 @import "styles/campaign-channels";
 @import "styles/snack-bar";
+// https://stackoverflow.com/questions/46271898/overriding-angular-material-size-and-styling-of-md-dialog-container
+.custom-dialog-container .mat-dialog-container {
+  /* add your styles */
+  box-shadow: none !important;
+  border: 1px solid #3E4E73 !important;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,0 +1,41 @@
+.transparent-backdrop {
+  background: rgba(255, 255, 255, 0);
+}
+
+:host {
+  display: flex;
+}
+
+#expand-arrow {
+  position: absolute;
+
+  svg {
+    position: absolute;
+    right: 7px;
+    top: 17px;
+  }
+}
+
+#snake-pic-container {
+  position: relative;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+#snake-svg {
+  position: relative;
+  z-index: 2;
+  mix-blend-mode: multiply;
+}
+
+#bg-snake-face {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: auto;
+}
+
+//#snake-shape {
+//  fill: #4d8cff;
+//}
