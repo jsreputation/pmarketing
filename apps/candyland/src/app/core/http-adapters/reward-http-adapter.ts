@@ -1,4 +1,4 @@
-import { IWRewardEntityAttributes, IWTierRewardCostsAttributes, IJsonApiItem, IJsonApiPostData } from '@perx/whistler';
+import { IWRewardEntityAttributes, IWTierRewardCostsAttributes, IJsonApiItem, IJsonApiPostData, IJsonApiListPayload } from '@perx/whistler';
 import { DateTimeParser } from '@cl-helpers/date-time-parser';
 import {
   IRewardEntityForm,
@@ -7,9 +7,10 @@ import {
 } from '@cl-core/models/reward/reward-entity-form.interface';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 import { oc } from 'ts-optchain';
+import { VouchersHttpAdapter } from './vouchers-http-adapter';
 
 export class RewardHttpAdapter {
-  public static transformToTableData(data: any): ITableData<IRewardEntity> {
+  public static transformToTableData(data: IJsonApiListPayload<IWRewardEntityAttributes>): ITableData<IRewardEntity> {
     const formatData = data.data.map((item) => {
       const formatItem = RewardHttpAdapter.transformToReward(item);
       formatItem.merchantName = RewardHttpAdapter.includeOrganization(item, data);
@@ -30,6 +31,8 @@ export class RewardHttpAdapter {
   }
 
   public static transformToReward(data: IJsonApiItem<IWRewardEntityAttributes>): IRewardEntity {
+    const stats = VouchersHttpAdapter.transformToVoucherStatsObj(data.attributes.stats);
+    const total = Object.values(stats).reduce((acc, curr) => acc + curr, 0);
     return {
       id: data.id,
       image: data.attributes.image_url,
@@ -38,8 +41,8 @@ export class RewardHttpAdapter {
       rewardType: data.attributes.reward_type,
       redemptionType: data.attributes.redemption_type,
       merchantId: data.attributes.organization_id || null,
-      current: data.attributes.cost_of_reward,
-      total: 100,
+      current: stats.available,
+      total,
       category: data.attributes.category,
       tags: data.attributes.tags || []
     };
