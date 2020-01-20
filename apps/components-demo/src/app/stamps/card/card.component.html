@@ -26,6 +26,7 @@
 </mat-checkbox>
 
 <perx-core-puzzle-collect-stamps
+  [stamps]="stamps"
   [nbSlots]="nbSlots.value"
   [preStampImg]="'assets/stamps/pre_stamp.png'"
   [postStampImg]="'assets/stamps/post_stamp_redeemed.png'"
@@ -37,11 +38,9 @@
   [availableRewardImg]="'assets/stamps/stamp-available.png'"
   [showStampsCounter]="true"
   [title]="'Stamp Card'"
-  [subTitle]="'Tap the stamps to earn your reward!'"
-  (availableStampClicked)="stampClicked($event)">
+  [subTitle]="'Tap the stamps to earn your reward!'">
 </perx-core-puzzle-collect-stamps>
-<!-- [backgroundImage]="card.displayProperties.cardImage?.value.imageUrl" 
--->
+
 <p>Reward Position</p>
 <div #cbContainer class="checkboxContainer">
   <mat-checkbox
