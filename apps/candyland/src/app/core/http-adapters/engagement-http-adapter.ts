@@ -23,6 +23,7 @@ import {
   IEngagementTapType,
   IEngagementType
 } from '@cl-core/models/engagement/engagement.interface';
+import { IPinataForm } from '@cl-core/models/games/pinata/pinate-form.interface';
 
 export class EngagementHttpAdapter {
   // tslint:disable
@@ -396,8 +397,8 @@ export class EngagementHttpAdapter {
           title: data.headlineMessage,
           button: data.buttonText,
           sub_title: data.subHeadlineMessage,
-          cracking_pinata_img_url: "https://picsum.photos/200/300",
-          opened_pinata_img_url: "https://picsum.photos/200/300",
+          cracking_pinata_img_url: data.crackingPinata ? ImageControlValue.getImagePath(data.crackingPinata) : undefined,
+          opened_pinata_img_url: data.openedPinata ? ImageControlValue.getImagePath(data.openedPinata) : ImageControlValue.getImagePath(data.pinata),
           closed_pinata_img_url: ImageControlValue.getImagePath(data.pinata),
           background_img_url: ImageControlValue.getImagePath(data.background)
         }

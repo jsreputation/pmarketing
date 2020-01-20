@@ -84,7 +84,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
 
   private get defaultDateRange(): DatepickerRangeValue<Date> {
     return {
-      begin: DateTimeParser.getDateMountsAgo(3),
+      begin: DateTimeParser.getDateMonthsAgo(1),
       end: new Date()
     };
   }

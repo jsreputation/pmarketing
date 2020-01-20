@@ -37,7 +37,7 @@ import {
   IWCommMessageAttributes,
 } from '@perx/whistler';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
-import { CustomDataSource } from '@cl-shared';
+import { CustomDataSource, DataSourceStates } from '@cl-shared';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 import { MessageService } from '@cl-core/services';
 import { ChangeExpiryDatePopupComponent } from '../change-expiry-date-popup/change-expiry-date-popup.component';
@@ -65,6 +65,7 @@ import { IAudiencesLoyalty, IAudiencesLoyaltyCard, IAudiencesTier } from '@cl-co
 })
 export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, OnDestroy {
   private destroy$: Subject<void> = new Subject();
+  public dataSourceStates: typeof DataSourceStates = DataSourceStates;
 
   public userId: string;
   public user: IAudiencesUserForm;
@@ -150,8 +151,10 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
         })
       )
       .subscribe(
-        () => { },
-        () => { }
+        () => {
+        },
+        () => {
+        }
       );
   }
 
@@ -198,10 +201,16 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
   }
 
   public openAddLoyaltyPopup(): void {
+    const freeLoyaltySelectOptions = this.getFreeLoyaltySelectOptions();
+    if (freeLoyaltySelectOptions.length === 0) {
+      this.messageService.show('You do not have any active loyalty program.', 'warning', 4000);
+      return;
+    }
+
     const dialogRef = this.dialog.open(AddLoyaltyPopupComponent, {
       panelClass: 'change-expiry-date-dialog',
       data: {
-        loyaltySelectOptions: this.getFreeLoyaltySelectOptions(),
+        loyaltySelectOptions: freeLoyaltySelectOptions,
         userId: this.userId
       }
     });
@@ -273,7 +282,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
       );
   }
 
-  public handleAudiencesUserInfoActions(data: { action: AudiencesUserInfoActions, payload?: IAudiencesLoyaltyCard }): void {
+  public handleAudiencesUserInfoActions(data: { action: AudiencesUserInfoActions, payload?: any }): void {
     switch (data.action) {
       case AudiencesUserInfoActions.adjustLoyaltyTier:
         this.openAdjustLoyaltyTierPopup(data.payload);
