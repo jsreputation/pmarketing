@@ -5,6 +5,7 @@ const async = require('async');
 // Configure Angular `environment.ts` file path
 const targetPath = `./src/environments/environment.ts`;
 const appConfigPath = `./src/assets/config/app-config.json`;
+const rssFeedsPath = `./src/assets/config/RSS_FEEDS.json`;
 
 // Load node modules
 const colors = require('colors');
@@ -12,7 +13,7 @@ require('dotenv').config();
 
 // Debug environment variables
 
-const rssFeeds = `"rssFeeds": [
+const rssFeeds = `[
   {
     "url": "${process.env.RSS_FEEDS ? process.env.RSS_FEEDS : 'https://cdn.perxtech.io/content/starhub/rss.xml'}",
     "page": "home"
@@ -72,7 +73,7 @@ const appConfigFile = `{
 }
 `;
 
-async.each([[targetPath, envConfigFile], [appConfigPath, appConfigFile]],
+async.each([[targetPath, envConfigFile], [appConfigPath, appConfigFile], [rssFeedsPath, rssFeeds]],
   (item: [[string, string], [string, string]], callback: any) => {
 
     console.log(colors.magenta(`The file '${item[0]}' will be written with the following content: \n`));
