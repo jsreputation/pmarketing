@@ -44,7 +44,7 @@
       <mat-form-field appearance="fill" class="full-width__input">
         <mat-label>16 Digit Plus! Card Number (optional)</mat-label>
         <input matInput placeholder="16 Digit Plus! Card Number (optional)" formControlName="cardNumber">
-        <mat-error *ngIf="signUpForm.get('phone').hasError('required')">
+        <mat-error *ngIf="phone && phone.hasError('required')">
           Mobile Number is <strong>required</strong>
         </mat-error>
       </mat-form-field>
