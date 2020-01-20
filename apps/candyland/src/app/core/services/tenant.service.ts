@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TenantHttpService } from '@cl-core/http-services/tenant-http.service';
+import { TenantHttpService } from '@perx/whistler-services';
 import { Observable, of } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
 import { ClHttpParams } from '@cl-helpers/http-params';
@@ -7,6 +7,7 @@ import { TenantHttpAdapterService } from '@cl-core/http-adapters/tenant-http-ada
 import { DefaultSetting, TenantStoreService } from '@cl-core-services';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DateTimeParser } from '@cl-helpers/date-time-parser';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ export class TenantService {
   private tenant: ITenant;
   constructor(private tenantHttpService: TenantHttpService,
               private fb: FormBuilder,
+              private http: HttpClient,
               private tenantStoreService: TenantStoreService) { }
 
   public findTenant(params: HttpParamsOptions = {}): Observable<ITenant> {
@@ -68,14 +70,14 @@ export class TenantService {
   }
 
   public getTimeZone(): Observable<ITimeZone[]> {
-    return this.tenantHttpService.getTimeZone()
+    return this.http.get<ITimeZone[]>('assets/actives/settings/time-zone.json')
       .pipe(
         map((zones: ITimeZone[]) => zones.sort(DateTimeParser.compareTimeZone))
       );
   }
 
   public getCurrency(): Observable<Currency[]> {
-    return this.tenantHttpService.getCurrency()
+    return this.http.get<Currency[]>('assets/actives/settings/currency.json')
     .pipe(
       map((data: Currency[]) => data.sort((a, b) => {
         const nameA = a.country.toLowerCase();

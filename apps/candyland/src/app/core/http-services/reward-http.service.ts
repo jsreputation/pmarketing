@@ -30,14 +30,6 @@ export class RewardHttpService {
     return this.http.get<IJsonApiItemPayload<IWRewardEntityAttributes>>(ApiConfig.rewardsPath + '/' + id, { params });
   }
 
-  // public getMockRewardDetail(): Observable<any> {
-  //   return this.http.get('assets/actives/rewards/reward-detail.json');
-  // }
-
-  public getreward(): Observable<OptionConfig[]> {
-    return this.http.get<OptionConfig[]>('assets/actives/rewards/rewards-options.json');
-  }
-
   public createReward(data: IJsonApiPostItem<IWRewardEntityAttributes>): Observable<IJsonApiItemPayload<IWRewardEntityAttributes>> {
     return this.http.post<IJsonApiItemPayload<IWRewardEntityAttributes>>(ApiConfig.rewardsPath + '/', data);
   }

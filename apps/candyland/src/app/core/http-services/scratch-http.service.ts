@@ -11,10 +11,6 @@ export class ScratchHttpService {
 
   constructor(private http: HttpClient) { }
 
-  public getScratchData(): Observable<IGameDefaultData> {
-    return this.http.get<IGameDefaultData>('assets/actives/scratch/scratch-data.json');
-  }
-
   public createScratch(
     data: IJsonApiPostItem<IWScratchGameEngagementAttributes>
   ): Observable<IJsonApiItemPayload<IWScratchGameEngagementAttributes>> {

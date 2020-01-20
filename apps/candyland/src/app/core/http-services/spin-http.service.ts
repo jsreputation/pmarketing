@@ -12,10 +12,6 @@ export class SpinHttpService {
   constructor(private http: HttpClient) {
   }
 
-  public getSpinData(): Observable<ISpinDefaultValue> {
-    return this.http.get<ISpinDefaultValue>('assets/actives/spin/spin-data.json');
-  }
-
   public createSpin(
     data: IJsonApiPostItem<IWSpinGameEngagementAttributes>
   ): Observable<IJsonApiItemPayload<IWSpinGameEngagementAttributes>> {

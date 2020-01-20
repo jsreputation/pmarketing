@@ -20,6 +20,8 @@ import {ClColorPickerModule} from '@cl-shared/components/cl-color-picker/cl-colo
 import {LocalStorageService} from '@cl-core/services/local-storage.service';
 import { TenantStoreService } from '@cl-core-services';
 import { TenantMockStore } from '@cl-shared/test-components/tenant-mock-store/tenant-mock-store';
+import { SpinService } from '@cl-core/services/spin.service';
+import { MockSpinSevice } from '@cl-shared/test-components/providers/mock-spin.sevice';
 
 describe('NewSpinPageComponent', () => {
   let component: NewSpinPageComponent;
@@ -52,7 +54,8 @@ describe('NewSpinPageComponent', () => {
       ],
       providers: [
         LocalStorageService,
-        { provide: TenantStoreService, useClass: TenantMockStore }
+        { provide: TenantStoreService, useClass: TenantMockStore },
+        { provide: SpinService, useClass: MockSpinSevice },
       ]
     }).compileComponents();
   }));

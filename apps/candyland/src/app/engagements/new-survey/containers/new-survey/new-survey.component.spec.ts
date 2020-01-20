@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NewSurveyComponent } from './new-survey.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { StampHttpService } from '@cl-core/http-services/stamp-http.service';
-import { RoutingStateService, TenantStoreService } from '@cl-core/services';
+import { RoutingStateService, SurveyService, TenantStoreService } from '@cl-core/services';
 import { StampDataService } from '../../../new-stamp/shared/stamp-data.service';
 import { QuestionTypeModule } from '@cl-shared/questions/question-type/question-type.module';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -21,6 +21,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { TenantMockStore } from '@cl-shared/test-components/tenant-mock-store/tenant-mock-store';
+import { MockSurveyService } from '@cl-shared/test-components/providers/mock-survey.service';
 describe('NewSurveyPageComponent', () => {
   let component: NewSurveyComponent;
   let fixture: ComponentFixture<NewSurveyComponent>;
@@ -60,7 +61,8 @@ describe('NewSurveyPageComponent', () => {
           provide: StampDataService, useValue: {}
         },
         { provide: LocalStorageService, useValue: {}},
-        { provide: TenantStoreService, useClass: TenantMockStore }
+        { provide: TenantStoreService, useClass: TenantMockStore },
+        { provide: SurveyService, useClass: MockSurveyService }
       ]
     })
     .compileComponents();

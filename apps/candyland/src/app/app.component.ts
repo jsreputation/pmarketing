@@ -17,7 +17,6 @@ export class AppComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    console.log(this.authService);
     if (!this.authService) {
       return;
     }

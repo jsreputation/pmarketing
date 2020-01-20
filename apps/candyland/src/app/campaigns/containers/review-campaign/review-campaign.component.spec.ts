@@ -12,8 +12,11 @@ import { StepConditionService } from '../../services/step-condition.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { TenantStoreService } from '@cl-core-services';
+import { CampaignsService, EngagementsService, RewardsService, TenantStoreService } from '@cl-core-services';
 import { TenantMockStore } from '@cl-shared/test-components/tenant-mock-store/tenant-mock-store';
+import { MockCampaignService } from '@cl-shared/test-components/providers/mock-campaign.service';
+import { MockEngagementsService } from '@cl-shared/test-components/providers/mock-engagements.service';
+import { MockRewardsServices } from '@cl-shared/test-components/providers/mock-rewards.services';
 
 describe('ReviewCampaignComponent', () => {
   let component: ReviewCampaignComponent;
@@ -40,7 +43,10 @@ describe('ReviewCampaignComponent', () => {
         },
         {provide: StepConditionService, useValue: {registerStepCondition: () => ({})}},
         {provide: LocalStorageService, useValue: {}},
-        { provide: TenantStoreService, useClass: TenantMockStore }
+        { provide: TenantStoreService, useClass: TenantMockStore },
+        { provide: CampaignsService, useClass: MockCampaignService },
+        { provide: EngagementsService, useClass: MockEngagementsService },
+        { provide: RewardsService, useClass: MockRewardsServices },
       ],
       declarations: [ReviewCampaignComponent],
       schemas: [NO_ERRORS_SCHEMA]

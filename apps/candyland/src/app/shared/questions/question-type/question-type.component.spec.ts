@@ -6,6 +6,8 @@ import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { MatIconModule, MatSelectModule } from '@angular/material';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { environment } from '@cl-environments/environment';
+import { HttpServicesModule } from '@perx/whistler-services';
 
 describe('QuestionTypeComponent', () => {
   let component: QuestionTypeComponent;
@@ -20,7 +22,11 @@ describe('QuestionTypeComponent', () => {
 
         MatSelectModule,
         MatIconModule,
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
+        HttpServicesModule.forRoot(
+          environment.apiHost,
+          environment.apiCdn
+        ),
       ],
       declarations: [ QuestionTypeComponent ]
     })

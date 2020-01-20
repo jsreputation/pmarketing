@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { VouchersHttpService } from '@cl-core/http-services/vouchers-https.service';
+import { VouchersHttpService } from '@perx/whistler-services';
 import { VouchersHttpAdapter } from '@cl-core/http-adapters/vouchers-http-adapter';
 import { map } from 'rxjs/operators';
 import { IWVouchersApi, IJsonApiPostData } from '@perx/whistler';

@@ -11,7 +11,6 @@ import {
   IJsonApiPatchItem,
   IJsonApiPatchData
 } from '@perx/whistler';
-import { RoleLabelConfig } from '@cl-shared';
 import { IWCognitoEndpointAttributes } from '@perx/whistler';
 
 @Injectable({
@@ -20,14 +19,6 @@ import { IWCognitoEndpointAttributes } from '@perx/whistler';
 export class SettingsHttpService {
 
   constructor(private http: HttpClient) {
-  }
-
-  public getRoles(): Observable<any> {
-    return this.http.get('assets/actives/settings/roles.json');
-  }
-
-  public getRolesOptions(): Observable<any> {
-    return this.http.get<OptionConfig[]>('assets/actives/settings/roles-options.json');
   }
 
   public getAllCredential(params: any): Observable<any> {
@@ -48,10 +39,6 @@ export class SettingsHttpService {
 
   public getTenants(): Observable<IJsonApiListPayload<IWTenantAttributes>> {
     return this.http.get<IJsonApiListPayload<IWTenantAttributes>>(ApiConfig.tenantsPath);
-  }
-
-  public getRoleLabel(): Observable<{ [key: string]: RoleLabelConfig }> {
-    return this.http.get<{ [key: string]: RoleLabelConfig }>('assets/actives/role-label/role-label.json');
   }
 
   public getCognitoEndpoint(id: string, params: HttpParams): Observable<IJsonApiItemPayload<IWCognitoEndpointAttributes>> {

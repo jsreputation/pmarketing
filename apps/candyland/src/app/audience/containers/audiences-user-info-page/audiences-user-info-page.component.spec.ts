@@ -19,8 +19,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { MessageService } from '@cl-core-services';
+import { CommsService, MessageService, RewardsService } from '@cl-core-services';
 import { AudiencesCommunicationsListComponent } from '../../components/audiences-communications-list/audiences-communications-list.component';
+import { MockRewardsServices } from '@cl-shared/test-components/providers/mock-rewards.services';
+import { MockCommsServices } from '@cl-shared/test-components/providers/mock-comms.services';
 
 describe('AudiencesUserInfoPageComponent', () => {
   let component: AudiencesUserInfoPageComponent;
@@ -65,7 +67,10 @@ describe('AudiencesUserInfoPageComponent', () => {
         AudiencesUserService,
         AudiencesVouchersService,
         { provide: MatDialogRef, useValue: matDialodRefStub },
-        { provide: MAT_DIALOG_DATA, useValue: matDialogDataStub }
+        { provide: MAT_DIALOG_DATA, useValue: matDialogDataStub },
+        { provide: RewardsService, useClass: MockRewardsServices },
+        { provide: CommsService, useClass: MockCommsServices },
+
       ],
       declarations: [
         AudiencesUserInfoPageComponent,

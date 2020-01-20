@@ -12,10 +12,6 @@ export class ShakeHttpService {
   constructor(private http: HttpClient) {
   }
 
-  public getData(): Observable<IGameDefaultData> {
-    return this.http.get<IGameDefaultData>('assets/actives/shake-tree/data.json');
-  }
-
   public createShakeTree(data: IJsonApiPostItem<IWTreeGameEngagementAttributes>):
     Observable<IJsonApiItemPayload<IWTreeGameEngagementAttributes>> {
     return this.http.post<IJsonApiItemPayload<IWTreeGameEngagementAttributes>>(ApiConfig.engagementsPath + '/', data);

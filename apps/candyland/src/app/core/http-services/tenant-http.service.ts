@@ -18,12 +18,4 @@ export class TenantHttpService {
   public patchTenant(data: IJsonApiItemPayload<IWTenant>, id: string): Observable<IJsonApiItemPayload<IWTenant>> {
     return this.http.patch<IJsonApiItemPayload<IWTenant>>( `${ApiConfig.tenantsPath}/${id}`, data);
   }
-
-  public getTimeZone(): Observable<ITimeZone[]> {
-    return this.http.get<ITimeZone[]>('assets/actives/settings/time-zone.json');
-  }
-
-  public getCurrency(): Observable<Currency[]> {
-    return this.http.get<Currency[]>('assets/actives/settings/currency.json');
-  }
 }

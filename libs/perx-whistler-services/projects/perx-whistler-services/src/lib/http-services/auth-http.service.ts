@@ -7,9 +7,7 @@ import { ApiConfigServices } from '../configs/api-config';
 @Injectable()
 export class AuthHttpService {
   constructor(private http: HttpClient,
-              private apiConfig: ApiConfigServices
-              ) {
-  }
+              private apiConfig: ApiConfigServices) {}
 
   public signIn(data: Partial<IJsonApiPostData<IWProfileAttributes>>): Observable<HttpResponse<IJsonApiItemPayload<IWLoginAttributes>>> {
     return this.http.post<IJsonApiItemPayload<IWLoginAttributes>>(

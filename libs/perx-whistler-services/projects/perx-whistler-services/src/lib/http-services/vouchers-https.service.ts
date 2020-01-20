@@ -14,14 +14,13 @@ import {
   IJsonApiPostItem,
 } from '@perx/whistler';
 import { SOURCE_TYPE } from '../app.constants';
-// import { ApiConfigServices } from '../configs/api-config';
+import { ApiConfigServices } from '../configs/api-config';
 
 @Injectable()
 export class VouchersHttpService {
   constructor(private http: HttpClient,
+              private apiConfig: ApiConfigServices
               ) { }
-              public apiConfig: any = {};
-// private apiConfig: ApiConfigServices
   public getVouchers(params: HttpParams): Observable<IJsonApiListPayload<IWVouchersApi>> {
     return this.http.get<IJsonApiListPayload<IWVouchersApi>>(this.apiConfig.vouchersEntitiesPath + '/', { params });
   }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { DataStore } from '@cl-core/http-adapters/datastore';
 import { MerchantHttpAdapter } from '@cl-core/http-adapters/merchant-http-adapter';
 import { Merchant, MerchantBranch } from '@cl-core/http-adapters/merchant';
-import { MerchantHttpService } from '@cl-core/http-services/merchant-http.service';
+import { MerchantHttpService } from '@perx/whistler-services';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { combineLatest, Observable, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';

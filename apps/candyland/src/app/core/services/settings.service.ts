@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
-import { SettingsHttpService } from '@cl-core/http-services/settings-http.service';
+import { SettingsHttpService } from '@perx/whistler-services';
 import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { DataStore } from '@cl-core/http-adapters/datastore';
@@ -10,7 +10,7 @@ import { Role } from '@cl-helpers/role.enum';
 import { JsonApiQueryData } from 'angular2-jsonapi';
 import { IReward } from '@perx/core';
 import { RoleLabelConfig } from '@cl-shared';
-import { HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 export enum DefaultSetting {
   style = 'Light',
@@ -42,16 +42,17 @@ export class SettingsService {
 
   constructor(
     private settingsHttpService: SettingsHttpService,
-    private dataStore: DataStore
+    private dataStore: DataStore,
+    private http: HttpClient
   ) {
   }
 
   public getRoles(): Observable<Role[]> {
-    return this.settingsHttpService.getRoles();
+    return this.http.get<Role[]>('assets/actives/settings/roles.json');
   }
 
   public getRolesOptions(): Observable<Role[]> {
-    return this.settingsHttpService.getRolesOptions();
+    return this.http.get<Role[]>('assets/actives/settings/roles-options.json');
   }
 
   public getAllCredential(data: any): any {
@@ -89,7 +90,7 @@ export class SettingsService {
   }
 
   public getRoleLabel(): Observable<{ [key: string]: RoleLabelConfig }> {
-    return this.settingsHttpService.getRoleLabel();
+    return this.http.get<{ [key: string]: RoleLabelConfig }>('assets/actives/role-label/role-label.json');
   }
 
   public getCognitoEndpoint(id: string, params: HttpParams): Observable<ICognitoEndpoint> {

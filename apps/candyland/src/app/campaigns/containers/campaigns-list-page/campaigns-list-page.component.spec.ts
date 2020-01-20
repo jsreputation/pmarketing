@@ -10,8 +10,9 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
-import {MessageService} from '@cl-core-services';
+import { CampaignsService, MessageService } from '@cl-core-services';
 import { CsvReportService } from '@cl-core-services';
+import { MockCampaignService } from '@cl-shared/test-components/providers/mock-campaign.service';
 
 describe('CampaignsListPageComponent', () => {
   let component: CampaignsListPageComponent;
@@ -39,7 +40,8 @@ describe('CampaignsListPageComponent', () => {
       schemas: [NO_ERRORS_SCHEMA],
       providers: [
         { provide: MessageService, useValue: msgSvcStub },
-        { provide: CsvReportService, useValue: csvReportServiceStub }
+        { provide: CsvReportService, useValue: csvReportServiceStub },
+        { provide: CampaignsService, useClass: MockCampaignService }
       ]
     })
       .compileComponents();

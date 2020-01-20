@@ -12,16 +12,6 @@ export class PinataHttpService {
   constructor(private http: HttpClient) {
   }
 
-  public getPinataData(): Observable<{
-    pinata: IGraphic[],
-    background: IGraphic[]
-  }> {
-    return this.http.get<{
-      pinata: IGraphic[],
-      background: IGraphic[]
-    }>('assets/actives/pinata/pinata-data.json');
-  }
-
   public createPinata(
     data: IJsonApiPostItem<IWPinataGameEngagementAttributes>
   ): Observable<IJsonApiItemPayload<IWPinataGameEngagementAttributes>> {

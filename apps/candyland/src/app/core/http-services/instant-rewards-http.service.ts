@@ -10,10 +10,6 @@ import { IWInstantOutcomeEngagementAttributes, IJsonApiItemPayload, IJsonApiPatc
 export class InstantRewardsHttpService {
   constructor(private http: HttpClient) { }
 
-  public getRewardData(): Observable<IRewardDefaultValue> {
-    return this.http.get<IRewardDefaultValue>('assets/actives/reward/reward-data.json');
-  }
-
   public createRewardGame(
     data: IJsonApiPostItem<IWInstantOutcomeEngagementAttributes>
   ): Observable<IJsonApiItemPayload<IWInstantOutcomeEngagementAttributes>> {

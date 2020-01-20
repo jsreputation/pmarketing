@@ -21,8 +21,12 @@ import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view
 import { ConfirmModalModule } from '@cl-shared';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { TranslateModule } from '@ngx-translate/core';
-import { TenantStoreService } from '@cl-core-services';
+import { PinataService, TenantStoreService } from '@cl-core-services';
 import { TenantMockStore } from '@cl-shared/test-components/tenant-mock-store/tenant-mock-store';
+import { MockPinataService } from '@cl-shared/test-components/providers/mock-pinata.service';
+// tslint:disable-next-line
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { WINDOW_PROVIDERS } from '@cl-core/services/window.service';
 
 describe('NewPinataPageComponent', () => {
   let component: NewPinataPageComponent;
@@ -52,9 +56,12 @@ describe('NewPinataPageComponent', () => {
       ],
       declarations: [ NewPinataPageComponent ],
       providers: [
-        {provide: LocalStorageService, useValue: {}},
-        { provide: TenantStoreService, useClass: TenantMockStore }
-      ]
+        { provide: LocalStorageService, useValue: {} },
+        { provide: TenantStoreService, useClass: TenantMockStore },
+        { provide: PinataService, useClass: MockPinataService },
+        WINDOW_PROVIDERS
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
     })
     .compileComponents();
   }));

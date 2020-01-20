@@ -13,6 +13,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PipesModule } from '@cl-shared/pipes/pipes.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { EngagementsService } from '@cl-core-services';
+import { MockEngagementsService } from '@cl-shared/test-components/providers/mock-engagements.service';
 
 describe('NewCampaignSelectEngagementPageComponent', () => {
   let component: NewCampaignSelectEngagementPageComponent;
@@ -39,6 +41,7 @@ describe('NewCampaignSelectEngagementPageComponent', () => {
             currentCampaign: {template: null},
             currentCampaign$: new Subject()}},
         {provide: StepConditionService, useValue: {registerStepCondition: () => ({}) }},
+        { provide: EngagementsService, useClass: MockEngagementsService }
       ],
       schemas: [NO_ERRORS_SCHEMA]
     })

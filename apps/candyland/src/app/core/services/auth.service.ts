@@ -25,7 +25,6 @@ export class AuthService {
     private iamUserService: IamUserService,
     private router: Router,
   ) {
-    // console.log(injector.get(AuthHttpService))
   }
 
   public get userId(): string {

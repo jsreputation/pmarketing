@@ -29,6 +29,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
+import { MockAudiencesUserService } from '@cl-shared/test-components/providers/mock-audiences-user.service';
+import { MockAudienceService } from '@cl-shared/test-components/providers/mock-audience.service';
 
 describe('AudiencesPageComponent', () => {
   let component: AudiencesPageComponent;
@@ -65,13 +67,13 @@ describe('AudiencesPageComponent', () => {
       ],
       providers: [
         SettingsService,
-        AudiencesService,
-        AudiencesUserService,
         LocalStorageService,
         {
           provide: MessageService, useValue: msgSvcStub
         },
-        AuthService
+        { provide: AudiencesUserService, useClass: MockAudiencesUserService },
+        { provide: AudiencesService, useClass: MockAudienceService },
+        { provide: SettingsService, useClass: MockAudienceService },
       ],
       declarations: [
         AudiencesPageComponent,

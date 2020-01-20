@@ -9,8 +9,9 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { TranslateModule } from '@ngx-translate/core';
-import { TenantStoreService } from '@cl-core-services';
+import { InstantRewardsService, TenantStoreService } from '@cl-core-services';
 import { TenantMockStore } from '@cl-shared/test-components/tenant-mock-store/tenant-mock-store';
+import { MockInstantRewardsService } from '@cl-shared/test-components/providers/mock-instant-rewards.service';
 
 describe('NewInstantRewardManagePageComponent', () => {
   let component: NewInstantRewardManagePageComponent;
@@ -28,7 +29,8 @@ describe('NewInstantRewardManagePageComponent', () => {
       ],
       providers: [
         {provide: LocalStorageService, useValue: {}},
-        { provide: TenantStoreService, useClass: TenantMockStore }
+        { provide: TenantStoreService, useClass: TenantMockStore },
+        { provide: InstantRewardsService, useClass: MockInstantRewardsService },
       ],
       declarations: [NewInstantRewardManagePageComponent],
       schemas: [NO_ERRORS_SCHEMA]

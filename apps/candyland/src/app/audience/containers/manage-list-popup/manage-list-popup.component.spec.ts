@@ -12,6 +12,8 @@ import {
 import { ButtonModule } from '@cl-shared';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { AudiencesService } from '@cl-core-services';
+import { MockAudienceService } from '@cl-shared/test-components/providers/mock-audience.service';
 
 describe('ManageListPopupComponent', () => {
   let component: ManageListPopupComponent;
@@ -35,7 +37,8 @@ describe('ManageListPopupComponent', () => {
               }
             }
           },
-          {provide: MAT_DIALOG_DATA, useValue: {}}
+          {provide: MAT_DIALOG_DATA, useValue: {}},
+          {provide: AudiencesService, useClass: MockAudienceService }
         ],
         declarations: [ManageListPopupComponent]
       })
