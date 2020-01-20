@@ -24,17 +24,7 @@
 >
   Show stamps left
 </mat-checkbox>
-<!-- <perx-core-puzzle-collect-stamps
-  [nbSlots]="nbSlots.value"
-  [stamps]="stamps"
-  [preStampImg]="'assets/stamps/pre_stamp.png'"
-  [postStampImg]="'assets/stamps/post_stamp_redeemed.png'"
-  [rewardPreStamp]="'assets/stamps/pre_reward.png'"
-  [rewardPostStamp]="'assets/stamps/post_reward.png'"
-  [rewards]="rewardArr"
-  [showStampsCounter]="showCounter">
 
-</perx-core-puzzle-collect-stamps> -->
 <perx-core-puzzle-collect-stamps
   *ngIf="card"
   [nbSlots]="nbSlots.value"
@@ -46,9 +36,9 @@
   [rewards]="rewardArr"
   [showStampsCounter]="showCounter"
 
-  [availableStampImg]="card.displayProperties.preStampImg"
-  [availableRewardImg]="card.displayProperties.rewardPreStamp"
-  [backgroundImage]="card.displayProperties.cardImage?.value.imageUrl"
+  [availableStampImg]="'assets/stamps/stamp-available.png'"
+  [availableRewardImg]="'assets/stamps/stamp-available.png'"
+  
   [cardBgImage]="card.displayProperties.cardBackgroundImage?.value.imageUrl"
   [showStampsCounter]="true"
   [title]="card.title || 'Stamp Card'"
@@ -56,6 +46,8 @@
   (availableStampClicked)="stampClicked($event)">
 
 </perx-core-puzzle-collect-stamps>
+<!-- [backgroundImage]="card.displayProperties.cardImage?.value.imageUrl" 
+-->
 <p>Reward Position</p>
 <div #cbContainer class="checkboxContainer">
   <mat-checkbox
