@@ -22,6 +22,7 @@ import { LoyaltyRuleService } from '@cl-core/services/loyalty-rule.service';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { ILoyaltyRule, ILoyaltyRuleSet } from '@cl-core/models/loyalty/loyalty-rules.model';
 import { LoyaltyConfigService } from '../../services/loyalty-config.service';
+import {LoyaltyFormStepDetailsComponent} from '../../components/loyalty-form-step-details/loyalty-form-step-details.component';
 
 @Component({
   selector: 'cl-manage-loyalty-page',
@@ -50,6 +51,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   private stepProgress$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   private loading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   @ViewChild('stepper', {static: false}) private stepper: MatStepper;
+  @ViewChild(LoyaltyFormStepDetailsComponent, { static: false}) public loyaltyFormStepComp: LoyaltyFormStepDetailsComponent;
   private loyaltyFormType: typeof LoyaltyStepForm = LoyaltyStepForm;
   protected destroy$: Subject<void> = new Subject();
 
@@ -168,6 +170,9 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
 
   public clickGoNext(): void {
     this.setLoading(true);
+    if (this.stepper.selectedIndex === 0) {
+      this.loyaltyFormStepComp.prgmImgComp.expandForce = true;
+    }
     this.getSaveByStep(this.currentStepIndex)
       .pipe(
         finalize(() => this.setLoading(false)),

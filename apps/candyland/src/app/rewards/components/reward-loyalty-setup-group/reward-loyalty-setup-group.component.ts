@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -6,13 +6,10 @@ import { FormGroup } from '@angular/forms';
   templateUrl: './reward-loyalty-setup-group.component.html',
   styleUrls: ['./reward-loyalty-setup-group.component.scss']
 })
-export class RewardLoyaltySetupGroupComponent implements OnInit {
+export class RewardLoyaltySetupGroupComponent {
   @Input() public loyalty: any;
   @Input() public group: FormGroup;
   @Input() public currency: string;
-
-  public ngOnInit(): void {
-  }
 
   public get tiers(): FormGroup {
     return (this.group.get('tiers') as any).controls;
@@ -29,10 +26,9 @@ export class RewardLoyaltySetupGroupComponent implements OnInit {
   public getPercentCalculate(item: any, index: number): void {
     const valuePoints = item.get('tierValue').value;
     if (!item.get('statusDiscount').value) {
-      return valuePoints;
+      return;
     }
-    const value =  Math.floor(1 - this.getDiscount(index) * valuePoints);
+    const value = Math.floor(1 - this.getDiscount(index) * valuePoints);
     item.get('tireDiscountValue').patchValue(value < 0 ? 0 : value);
   }
-
 }

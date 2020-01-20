@@ -13,7 +13,8 @@ export class LocalStorageService {
 
   public get(key: string): any {
     try {
-      return JSON.parse(localStorage.getItem(key));
+      const item = localStorage.getItem(key);
+      return item ? JSON.parse(item) : null;
     } catch (e) {
       console.error('Error getting data from localStorage', e);
       return null;
@@ -25,7 +26,7 @@ export class LocalStorageService {
       return localStorage.removeItem(key);
     } catch (e) {
       console.error('Error removing data from localStorage', e);
-      return null;
+      return;
     }
   }
 }

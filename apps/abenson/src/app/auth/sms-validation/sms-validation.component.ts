@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { switchMap, takeUntil } from 'rxjs/operators';
-import { AuthenticationService } from '@perx/core';
+import { Subject, Observable, of } from 'rxjs';
+import { takeUntil, map, filter, catchError, mergeMap } from 'rxjs/operators';
+import { AuthenticationService, LoyaltyService, isEmptyArray, ILoyalty, ProfileService, NotificationService } from '@perx/core';
+import { SharedDataService } from 'src/app/services/shared-data.service';
 
 @Component({
   selector: 'app-sms-validation',
@@ -13,11 +14,15 @@ export class SmsValidationComponent implements OnInit {
   private identifier: string;
   private destroy$: Subject<void> = new Subject<void>();
   public code: string;
-
+  private appAccessTokenFetched: boolean = false;
   constructor(
     private authenticationService: AuthenticationService,
     private route: ActivatedRoute,
     private router: Router,
+    private loyaltyService: LoyaltyService,
+    private profileService: ProfileService,
+    private notification: NotificationService,
+    private sharedDataService: SharedDataService
   ) {
     this.redirectToLogin = this.redirectToLogin.bind(this);
   }
@@ -27,6 +32,18 @@ export class SmsValidationComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+
+    const token = this.authenticationService.getAppAccessToken();
+    if (token) {
+      this.appAccessTokenFetched = true;
+    } else {
+      this.authenticationService.getAppToken().subscribe(() => {
+        this.appAccessTokenFetched = true;
+      }, (err) => {
+        console.error('Error' + err);
+      });
+    }
+
     this.route.queryParams.pipe(
       takeUntil(this.destroy$)
     ).subscribe((params) => {
@@ -43,8 +60,10 @@ export class SmsValidationComponent implements OnInit {
 
   public onSubmit(): void {
     this.authenticationService.verifyOTP(this.identifier, this.code)
-      .pipe(switchMap(() => new BehaviorSubject(null)))
-      .subscribe(this.redirectToLogin);
+      .pipe(
+        mergeMap(() => this.sharedDataService.data),
+        mergeMap((data) => this.setCardNumber(data)))
+      .subscribe((result) => this.redirectToLogin(result));
   }
 
   public resendSms(): void {
@@ -52,7 +71,37 @@ export class SmsValidationComponent implements OnInit {
     });
   }
 
-  public redirectToLogin(): void {
-    this.router.navigate(['/login']);
+  public redirectToLogin(result: boolean): void {
+    if (result) {
+      this.router.navigate(['/home']);
+    } else {
+      this.router.navigate(['/login']);
+    }
+
+  }
+
+  private setCardNumber(data: any): Observable<any> {
+    if (!data || !data.cardNumber || !this.appAccessTokenFetched) {
+      return of(false);
+    }
+    return this.authenticationService.login(data.phone, data.password).pipe(
+      map((val) => val),
+      mergeMap(() => this.loyaltyService.getLoyalties()),
+      map((loyalties) => !isEmptyArray(loyalties) && loyalties[0]),
+      filter((loyalty) => !!loyalty),
+      mergeMap((loyalty: ILoyalty) => {
+        const cardNumberData = {
+          cardNumber: parseInt(data.cardNumber, 10),
+          loyaltyProgramId: loyalty.id,
+        };
+        return this.profileService.setCardNumber(cardNumberData);
+      }),
+      map(() => true),
+      catchError((err) => {
+        this.notification.addSnack(err.message);
+        return of(false);
+      })
+    );
+
   }
 }
