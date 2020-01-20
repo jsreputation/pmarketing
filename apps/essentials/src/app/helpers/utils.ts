@@ -39,7 +39,7 @@ export default class Utils {
       .reduce((res, key) => (res[key] = obj[key], res), {});
   }
 
-  static uniqValuesMap(arr: any[], field: string = null): { [value: string]: number } {
+  static uniqValuesMap(arr: any[], field: string | null = null): { [value: string]: number } {
     return arr.reduce((acc, item) => {
       const value = field ? item[field] : item;
       acc[value] = acc[value] === undefined ? 1 : acc[value] += 1;

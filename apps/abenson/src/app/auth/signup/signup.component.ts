@@ -9,13 +9,21 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { Observable } from 'rxjs';
+import {
+  Observable,
+  of,
+  throwError,
+} from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
 
 import {
   AuthenticationService,
   ISignUpData,
   IProfile,
+  ProfileService,
 } from '@perx/core';
+
+import { SharedDataService } from 'src/app/services/shared-data.service';
 
 @Component({
   selector: 'app-signup',
@@ -31,6 +39,8 @@ export class SignUpComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthenticationService,
     private router: Router,
+    private sharedDataService: SharedDataService,
+    private profileService: ProfileService,
   ) { }
 
   public ngOnInit(): void {
@@ -53,7 +63,8 @@ export class SignUpComponent implements OnInit {
       lastName: ['', Validators.required],
       phone: ['', Validators.required],
       password: ['', [Validators.required, Validators.maxLength(4), Validators.minLength(4)]],
-      accept_terms: [false, Validators.requiredTrue]
+      accept_terms: [false, Validators.requiredTrue],
+      cardNumber: ['', [Validators.minLength(16), Validators.maxLength(16)]]
     });
   }
 
@@ -65,20 +76,25 @@ export class SignUpComponent implements OnInit {
     }
 
     this.errorMessage = undefined;
-    const profile = this.signUpForm.value;
+    const profile = { ...this.signUpForm.value };
     delete profile.accept_terms;
+    delete profile.cardNumber;
+    const cardNumber: string = this.signUpForm.value.cardNumber;
     (profile as ISignUpData).passwordConfirmation = password;
-    const profileData: Observable<IProfile | null> = this.authService.signup(profile);
-
-    profileData.subscribe((data: IProfile | null) => {
-      if (!data) {
-        return;
-      }
-
-      this.router.navigate(['sms-validation'], { queryParams: { identifier: profile.phone } });
-    },
-    (e) => {
-      console.log(e);
-    });
+    (cardNumber && cardNumber.length ? this.profileService.verifyCardNumber(cardNumber, profile.lastName, '1') : of(true))
+      .pipe(mergeMap((success) => success ? this.authService.signup(profile) : throwError(('err-or')))).subscribe(() => {
+        if (this.signUpForm.value.cardNumber) {
+          this.sharedDataService.addData({
+            phone: profile.phone,
+            password: profile.password,
+            cardNumber
+          });
+        }
+        this.router.navigate(['sms-validation'], {
+          queryParams: { identifier: profile.phone }
+        });
+      }, () => {
+        // card error handling
+      });
   }
 }

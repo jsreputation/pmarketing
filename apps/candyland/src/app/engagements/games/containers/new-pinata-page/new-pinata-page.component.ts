@@ -13,6 +13,7 @@ import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.component';
 import { IWEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
 import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
+import { IPinataForm } from '@cl-core/models/games/pinata/pinate-form.interface';
 
 @Component({
   selector: 'cl-new-pinata-page',
@@ -107,8 +108,9 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
                 this.availableNewEngagementService.transformAndSetNewEngagement(engagement)
             )
           );
-        })
-      ).pipe(takeUntil(this.destroy$))
+        }),
+        takeUntil(this.destroy$)
+      )
       .subscribe(() => this.router.navigateByUrl('/engagements'));
   }
 

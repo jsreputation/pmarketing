@@ -10,7 +10,6 @@ import { PrepareTableFilters } from '@cl-helpers/prepare-table-filters';
 import { RewardReplenishPopupComponent } from 'src/app/rewards/containers/reward-replenish-popup/reward-replenish-popup.component';
 import { RewardsService, MerchantsService, MessageService } from '@cl-core/services';
 import { VouchersService } from '@cl-core/services/vouchers.service';
-import { Merchant } from '@cl-core/http-adapters/merchant';
 import { IWVouchersApi } from '@perx/whistler';
 import { oc } from 'ts-optchain';
 import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.interface';
@@ -18,7 +17,7 @@ import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.int
 interface IRewardDetailData {
   name?: string;
   rewardInfo?: any;
-  merchantInfo?: Merchant | null;
+  merchantInfo?: IMerchantForm | null;
   vouchers?: any;
   limits?: any;
   vouchersStatistics?: { type: string, value: number }[];
@@ -118,12 +117,12 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
       .pipe(
         switchMap(id => this.rewardsService.getRewardToForm(id)),
         switchMap(reward => {
-
           let merchantQuery = null;
           if (reward.rewardInfo.merchantId !== null) {
             merchantQuery = this.merchantsService.getMerchant(reward.rewardInfo.merchantId)
               .pipe(catchError((err) => {
-                if (oc(err).errors[0].code() === '404') {
+                const errCode = oc(err).errors[0].code(oc(err).status(0));
+                if (['404', 404].includes(errCode)) {
                   return of(null);
                 }
                 return throwError(err);
@@ -134,7 +133,7 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
           return combineLatest(of(reward), merchantQuery);
         }),
       ).subscribe(
-        ([reward, merchant]: [IRewardEntityForm, Merchant | null]) => {
+        ([reward, merchant]: [IRewardEntityForm, IMerchantForm | null]) => {
           this.data = Utils.nestedObjectAssign(this.data, reward);
           this.data.merchantInfo = merchant;
           this.cd.detectChanges();
