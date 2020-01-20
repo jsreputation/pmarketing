@@ -4,12 +4,13 @@ import { takeUntil } from 'rxjs/operators';
 
 import { CampaignCreationStoreService } from 'src/app/campaigns/services/campaigns-creation-store.service';
 import { AbstractStepWithForm } from '../../step-page-with-form';
-import { ICampaign } from '@cl-core/models/campaign/campaign';
+import {ICampaign, ICampaignOutcome} from '@cl-core/models/campaign/campaign';
 import { oc } from 'ts-optchain';
 import {getEngagementRouterLink} from '@cl-helpers/get-engagement-router-link';
 import {Router} from '@angular/router';
 import { CampaignChannelsLaunchType } from '../../models/campaign-channels-launch-type.enum';
 import {AudiencesService} from '@cl-core-services';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'cl-new-campaign-review-page',
@@ -22,6 +23,9 @@ export class NewCampaignReviewPageComponent extends AbstractStepWithForm impleme
   public pools: any[];
   public stampsHasRewards: boolean = false;
   public launchType: typeof CampaignChannelsLaunchType = CampaignChannelsLaunchType;
+  public specialProbDisplay$: Subject<ICampaignOutcome> = new Subject<ICampaignOutcome>();
+  public nullOutcome: ICampaignOutcome;
+
   constructor(
     public store: CampaignCreationStoreService,
     public audSvc: AudiencesService,
@@ -37,12 +41,15 @@ export class NewCampaignReviewPageComponent extends AbstractStepWithForm impleme
       .asObservable()
       .pipe(takeUntil(this.destroy$))
       .subscribe((data: ICampaign) => {
-        this.checkStampsHasRewards(data);
+        if (data) {
+          this.specialProbDisplay$.next(this.checkSpecialProbRemainingSlot(data));
+          this.checkStampsHasRewards(data);
+        }
       });
     this.audSvc.getAudiencesList()
-        .subscribe((data) => {
-          this.pools = data;
-        });
+      .subscribe((data) => {
+        this.pools = data;
+      });
   }
 
   public get informationCollectionSettingTitle(): string {
@@ -78,10 +85,25 @@ export class NewCampaignReviewPageComponent extends AbstractStepWithForm impleme
     this.cd.detectChanges();
   }
 
+  public checkSpecialProbRemainingSlot(campaign: ICampaign): ICampaignOutcome {
+    // saves configuring extra special slot to map with current interface of passing down valid outcomes,
+    // reduces bugs, send it in when finalised time
+    if (!campaign.enabledProb || campaign.template.game_type !== 'spin') {return; }
+    const campaignOutcomesProb: number[] = campaign
+      .outcomes.filter(outcome => outcome.outcome.slotNumber !== 0).map(outcome => outcome.outcome.probability || 0);
+    // not add up to 100 means there is a special ctrl
+    const checkSpecialSlot = campaignOutcomesProb.reduce((acc, curr) => acc + curr , 0);
+    if (checkSpecialSlot !== 100) {
+      this.nullOutcome = { outcome: { probability: 100 - checkSpecialSlot, slotNumber: 0, limit: null }};
+      return this.nullOutcome; // slotNumber 0 to be standardized
+    }
+    return;
+  }
+
   public navigateToEdit(): void {
     const gameType = 'game_type' in this.campaign.template ? this.campaign.template.game_type : null;
     let path = getEngagementRouterLink(this.campaign.engagement_type, gameType);
-    path += '/' + this.campaign.template.id;
+    path += `/${this.campaign.template.id}`;
     this.router.navigate([path]);
   }
 

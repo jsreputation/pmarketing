@@ -38,6 +38,23 @@ export class ClValidators extends Validators {
     };
   }
 
+  public static minPercent(percent: number): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: boolean } | null => {
+      const controlTyped: FormGroup = control as FormGroup;
+      if (!control || !control.value) {
+        return null;
+      }
+      let totalNum = 0;
+      Object.keys(controlTyped.controls).forEach(key => {
+        totalNum += controlTyped.controls[key].value;
+      });
+      if (totalNum !== percent) {
+        return {percentNotMet: true};
+      }
+      return null;
+    };
+  }
+
   public static rewardPatched(slots: number): ValidatorFn {
     return (control: AbstractControl): { [key: string]: boolean } | null => {
       const controlTyped: FormGroup = control as FormGroup;

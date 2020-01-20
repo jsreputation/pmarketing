@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthenticationService, NotificationService } from '@perx/core';
+import { AuthenticationService, NotificationService, IProfile } from '@perx/core';
 import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
 
 @Component({
@@ -58,7 +58,6 @@ export class SignupComponent implements PageAppearence {
   }
 
   public onSubmit(): void {
-
     try {
       const passwordString = this.signupForm.value.password as string;
       const confirmPassword = this.signupForm.value.confirmPassword as string;
@@ -100,7 +99,11 @@ export class SignupComponent implements PageAppearence {
       };
 
       this.authService.signup(signUpData).subscribe(
-        () => {
+        (data: IProfile | null) => {
+          if (!data) {
+            return;
+          }
+
           this.router.navigate(['enter-pin/register'], { state: { mobileNo: cleanedMobileNo } });
         },
         err => {
