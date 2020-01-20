@@ -40,6 +40,7 @@ import { NotificationService } from '@cl-core/services/notification.service';
 import { IChannel, ICampaignNotificationGroup } from '@cl-core/models/campaign/channel-interface';
 import { Location } from '@angular/common';
 import { NewCampaignNotificationsComponent } from '../new-campaign-notifications/new-campaign-notifications.component';
+import {NewCampaignReviewPageComponent} from '../new-campaign-review-page/new-campaign-review-page.component';
 
 @Component({
   selector: 'cl-new-campaign',
@@ -54,6 +55,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   public tenantSettings: ITenantsProperties;
   @ViewChild('stepper', { static: false }) private stepper: MatStepper;
   @ViewChild(NewCampaignNotificationsComponent, { static: false }) private campaignNotification: NewCampaignNotificationsComponent;
+  @ViewChild(NewCampaignReviewPageComponent, { static: false }) private campaignReview: NewCampaignReviewPageComponent;
   public currentNotifications: Partial<IChannel>;
   public campaignId: string;
 
@@ -162,19 +164,30 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     return this.stepper && this.stepper.selectedIndex === this.stepper._steps.length - 1;
   }
 
+  // this.campaignReview.nullOutcome, from review component to avoid computing again, direct access
   public save(): void {
-
     let saveCampaign$: Observable<IJsonApiItemPayload<IWCampaignAttributes>>;
     this.store.updateCampaign(this.form.value);
-    if (this.store.currentCampaign.id) {
-      saveCampaign$ = this.campaignsService.updateCampaign(this.store.currentCampaign);
+    // find if special slot exists if present include outcome object
+    // else pass in unmodified copy of current campaign
+    // duplicate current campaign
+    const copyCurrentCampaign = {...this.store.currentCampaign};
+    const foundSlot = copyCurrentCampaign.outcomes.find((outcome => outcome.outcome.slotNumber === 0));
+    // if existing slot 0 patch it.
+    if (foundSlot) {
+      foundSlot.outcome.probability = 100 - this.campaignReview.nullOutcome.outcome.probability;
     } else {
-      saveCampaign$ = this.campaignsService.createCampaign(this.store.currentCampaign);
+      copyCurrentCampaign.outcomes = copyCurrentCampaign.outcomes.concat(this.campaignReview.nullOutcome);
+    }
+    if (this.store.currentCampaign.id) {
+      saveCampaign$ = this.campaignsService.updateCampaign(copyCurrentCampaign);
+    } else {
+      saveCampaign$ = this.campaignsService.createCampaign(copyCurrentCampaign);
     }
 
     saveCampaign$.pipe(
       // tap((res: IJsonApiItemPayload<IWCampaignAttributes>) => this.campaignBaseURL = `${this.campaignBaseURL}?cid=${res.data.id}`),
-      map((res: IJsonApiItemPayload<IWCampaignAttributes>) => ({ ...this.store.currentCampaign, id: res.data.id } as ICampaign)),
+      map((res: IJsonApiItemPayload<IWCampaignAttributes>) => ({ ...copyCurrentCampaign, id: res.data.id } as ICampaign)),
       switchMap(
         (campaign: ICampaign) => {
           const data = [
@@ -230,7 +243,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
   private updateOutcomes(campaign: ICampaign): Observable<any> {
     let updateOutcomesArr$ = [];
-    const rewardsCollection = this.store.currentCampaign.outcomes;
+    const rewardsCollection = campaign.outcomes;
     const updateOutcomeList = this.updateOutcomeWhenEdit(campaign, rewardsCollection);
     updateOutcomesArr$ = [...updateOutcomesArr$, ...updateOutcomeList];
 
@@ -249,8 +262,10 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     }
     const slots = this.store.currentCampaign.template && this.store.currentCampaign.template.slots || [0];
     const updateOutcomesArr$ = [];
-    const oldCampaignListToDelete = data.filter(outcomeData => !slots.includes(outcomeData.outcome.slotNumber));
-    const campaignList = data.filter(outcomeData => slots.includes(outcomeData.outcome.slotNumber));
+    const oldCampaignListToDelete = data
+      .filter(outcomeData => !slots.includes(outcomeData.outcome.slotNumber) && outcomeData.outcome.slotNumber !== 0);
+    const campaignList = data
+      .filter(outcomeData => slots.includes(outcomeData.outcome.slotNumber) || outcomeData.outcome.slotNumber === 0 );
     const deletedOutcome$ = outcomeId => this.outcomesService.deleteOutcome(outcomeId);
     const updatedOutcome$ = outcomeData =>
       this.outcomesService.updateOutcome(

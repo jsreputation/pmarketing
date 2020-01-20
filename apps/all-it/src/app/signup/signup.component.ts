@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthenticationService, NotificationService, ISignUpData } from '@perx/core';
+import { AuthenticationService, NotificationService, ISignUpData, IProfile } from '@perx/core';
 
 @Component({
   selector: 'app-signup',
@@ -54,7 +54,6 @@ export class SignupComponent {
   }
 
   public onSubmit(): void {
-
     if (!this.appAccessTokenFetched) {
       this.errorMessage = 'Unknown error occurerd.';
       return;
@@ -92,7 +91,11 @@ export class SignupComponent {
 
     this.authService.signup(signUpData)
     .subscribe(
-      () => {
+      (data: IProfile | null) => {
+        if (!data) {
+          return;
+        }
+
         this.router.navigateByUrl('enter-pin/register', { state: { mobileNo: codeAndMobile } });
       },
       err => {
