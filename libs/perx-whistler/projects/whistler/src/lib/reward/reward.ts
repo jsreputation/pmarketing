@@ -1,3 +1,5 @@
+import { IWVoucherStatsApi } from '../voucher/stats';
+
 export enum WRedemptionType {
   promoCode = 'Promo Code',
   qrCode = 'QR Code',
@@ -44,6 +46,7 @@ export interface IWRewardEntityAttributes {
     loyalties: any;
   };
   organization_id?: string;
+  stats?: IWVoucherStatsApi;
 }
 
 export interface IWMetaData {
