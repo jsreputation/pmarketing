@@ -96,8 +96,7 @@ export class WhistlerVouchersService implements IVoucherService {
     });
   }
 
-  private getPage(page: number): Observable<IJsonApiListPayload<IWAssignedAttributes>> {
-    const size = 10;
+  private getPage(page: number, size: number = 10): Observable<IJsonApiListPayload<IWAssignedAttributes>> {
     return this.http.get<IJsonApiListPayload<IWAssignedAttributes>>(`${this.vouchersUrl}?page[number]=${page}&page[size]=${size}`);
   }
 
@@ -165,5 +164,9 @@ export class WhistlerVouchersService implements IVoucherService {
 
   private get vouchersUrl(): string {
     return `${this.config.apiHost}/voucher-service/vouchers`;
+  }
+  // @ts-ignore
+  public getFromPage(page: number, voucherParams?: IGetVoucherParams, locale?: string): Observable<IVoucher[]> {
+    throw new Error('Method not implemented.');
   }
 }
