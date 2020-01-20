@@ -13,12 +13,14 @@ require('dotenv').config();
 
 // Debug environment variables
 
-const rssFeeds = `[
-  {
-    "url": "${process.env.RSS_FEEDS ? process.env.RSS_FEEDS : 'https://cdn.perxtech.io/content/starhub/rss.xml'}",
-    "page": "home"
-  }
-]`;
+const rssFeeds = `{
+  "data": [
+    {
+      "url": "${process.env.RSS_FEEDS ? process.env.RSS_FEEDS : 'https://cdn.perxtech.io/content/starhub/rss.xml'}",
+      "page": "home"
+    }
+  ]
+}`
 
 const displayProperties = `"display_properties": {
   "account": {
