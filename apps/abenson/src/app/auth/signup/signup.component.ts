@@ -10,7 +10,6 @@ import {
 import { Router } from '@angular/router';
 
 import {
-  Observable,
   of,
   throwError,
 } from 'rxjs';
@@ -19,7 +18,6 @@ import { mergeMap } from 'rxjs/operators';
 import {
   AuthenticationService,
   ISignUpData,
-  IProfile,
   ProfileService,
 } from '@perx/core';
 
