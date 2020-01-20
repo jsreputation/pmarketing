@@ -11,6 +11,13 @@ require('dotenv').config();
 
 // Debug environment variables
 
+const rssFeeds = `"rssFeeds": [
+  {
+    "url": "${process.env.RSS_FEEDS ? process.env.RSS_FEEDS : 'https://cdn.perxtech.io/content/starhub/rss.xml'}",
+    "page": "home"
+  }
+]`;
+
 // `environment.ts` file structure that uses the environment variables
 const envConfigFile = `export const environment = {
   apiHost: '${ process.env.APIHOST ? process.env.APIHOST : 'https://api.getperx.io' }',
@@ -27,7 +34,7 @@ const appConfigFile = `{
   "preAuth": ${process.env.PREAUTH ? process.env.PREAUTH : false},
   "isWhistler": ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : false},
   "baseHref": "${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}",
-  "rssFeeds": "${process.env.RSS_FEEDS ? process.env.RSS_FEEDS : 'https://cdn.perxtech.io/content/starhub/rss.xml'}"
+  ${rssFeeds}
 }
 `;
 
