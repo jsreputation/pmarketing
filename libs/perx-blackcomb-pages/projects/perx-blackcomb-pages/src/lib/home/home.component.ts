@@ -40,7 +40,8 @@ import {
   ICampaignService,
   ICampaign,
   CampaignType,
-  RewardPopupComponent
+  RewardPopupComponent,
+  IRssFeeds,
 } from '@perx/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
@@ -147,12 +148,13 @@ export class HomeComponent implements OnInit, OnDestroy {
         tap((games: IGame[]) => this.showGames = games.length > 0),
         takeLast(1)
       );
-    const appConfig: IConfig<void> = await this.configService.readAppConfig().toPromise();
-    if (!appConfig.rssFeeds) {
+    const rssFeeds: IRssFeeds = await this.configService.readRssFeeds().toPromise();
+    if (!(rssFeeds && rssFeeds.data[0] && rssFeeds.data[0].url)) {
       return ;
     }
 
-    this.newsFeedItems = this.feedService.getFromUrl(appConfig.rssFeeds);
+    const rssFeedsUrl: string = rssFeeds.data[0].url;
+    this.newsFeedItems = this.feedService.getFromUrl(rssFeedsUrl);
   }
 
   constructor(

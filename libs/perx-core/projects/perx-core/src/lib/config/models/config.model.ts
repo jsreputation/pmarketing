@@ -24,7 +24,6 @@ export interface IConfig<T> {
   showUserInfoOnAccountsPage?: boolean;
   showTransactionHistoryOnAccountsPage?: boolean;
   showVoucherBookingFromRewardsPage?: boolean;
-  rssFeeds?: string;
 }
 
 export interface IMicrositeSettings {
@@ -32,6 +31,15 @@ export interface IMicrositeSettings {
   key: string;
   stringValue: string;
   jsonValue: { [key: string]: string | number | boolean | TokenType };
+}
+
+export interface IRssFeeds {
+  data: IRssFeedsData[];
+}
+
+export interface IRssFeedsData {
+  url: string;
+  page: string;
 }
 
 export interface AccountPageObject {
