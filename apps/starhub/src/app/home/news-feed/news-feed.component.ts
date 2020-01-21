@@ -9,7 +9,7 @@ import {
   ConfigService,
   FeedItem,
   FeedReaderService,
-  IConfig,
+  IRssFeeds,
 } from '@perx/core';
 
 import {
@@ -30,12 +30,13 @@ export class NewsFeedComponent implements OnInit {
   public newsAfterScroll: number[];
 
   private async initNewsFeedItems(): Promise<void> {
-    const appConfig: IConfig<void> = await this.configService.readAppConfig().toPromise();
-    if (!appConfig.rssFeeds) {
+    const rssFeeds: IRssFeeds = await this.configService.readRssFeeds().toPromise();
+    if (!(rssFeeds && rssFeeds.data[0] && rssFeeds.data[0].url)) {
       return ;
     }
 
-    this.reader.getFromUrl(appConfig.rssFeeds)
+    const rssFeedsUrl: string = rssFeeds.data[0].url;
+    this.reader.getFromUrl(rssFeedsUrl)
       .subscribe(items => {
         this.items = items;
         this.newsAfterScroll = Array.from(Array(items.length > 0 ? items.length - 1 : 1).keys());
