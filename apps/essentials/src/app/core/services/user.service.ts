@@ -7,21 +7,21 @@ import { IAMUser } from '@es-core/models/auth/IAMUser.interface';
   providedIn: 'root'
 })
 export class UserService {
-  private userSubject$: BehaviorSubject<IAMUser> = new BehaviorSubject<IAMUser>(null);
+  private userSubject$: BehaviorSubject<IAMUser | null> = new BehaviorSubject<IAMUser | null>(null);
 
-  public set user(user: IAMUser) {
+  public set user(user: IAMUser | null) {
     this.userSubject$.next(user);
   }
 
-  public get user(): IAMUser {
+  public get user(): IAMUser | null {
     return this.userSubject$.value;
   }
 
-  public get user$(): Observable<IAMUser> {
+  public get user$(): Observable<IAMUser | null> {
     return this.userSubject$.asObservable();
   }
 
-  public get userId(): string {
+  public get userId(): string | null {
     return this.userSubject$.value ? this.userSubject$.value.id : null;
   }
 

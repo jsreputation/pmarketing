@@ -58,7 +58,7 @@ describe('VouchersComponent', () => {
     const voucherService: IVoucherService = fixture.debugElement.injector.get<IVoucherService>
       (IVoucherService as Type<IVoucherService>);
 
-    const voucherServiceSpy = spyOn(voucherService, 'getAll').and.returnValue(of(vouchers));
+    const voucherServiceSpy = spyOn(voucherService, 'getFromPage').and.returnValue(of(vouchers));
     component.ngOnInit();
     tick();
     expect(voucherServiceSpy).toHaveBeenCalled();

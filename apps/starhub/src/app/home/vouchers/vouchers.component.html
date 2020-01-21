@@ -3,6 +3,7 @@
   [infiniteScrollDistance]="3" 
   [infiniteScrollThrottle]="500"
   (scrolled)="onScroll()" 
+  [alwaysCallback]="true"
   [scrollWindow]="false">
   <div class="saved-rewards" *ngIf="(issuedVoucher | async) as vouchers">
     <h1 *ngIf="vouchers.length > 0">Saved rewards</h1>
