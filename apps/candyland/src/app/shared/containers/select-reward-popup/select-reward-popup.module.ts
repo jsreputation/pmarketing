@@ -5,7 +5,8 @@ import {
   MatDialogModule,
   MatFormFieldModule,
   MatIconModule,
-  MatTableModule
+  MatTableModule,
+  MatProgressBarModule
 } from '@angular/material';
 import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { RewardsListModule } from '@cl-shared/components/rewards-list/rewards-list.module';
@@ -31,7 +32,8 @@ import { TranslateModule } from '@ngx-translate/core';
     MatFormFieldModule,
     TableFiltersModule,
     PaginationModule,
-    TranslateModule
+    TranslateModule,
+    MatProgressBarModule
   ],
   entryComponents: [
     SelectRewardPopupComponent
