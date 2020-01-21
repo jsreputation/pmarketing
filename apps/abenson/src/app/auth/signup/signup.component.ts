@@ -17,7 +17,7 @@ import { mergeMap } from 'rxjs/operators';
 
 import {
   AuthenticationService,
-  ISignUpData,
+  ISignUpData, NotificationService,
   ProfileService,
 } from '@perx/core';
 
@@ -39,6 +39,7 @@ export class SignUpComponent implements OnInit {
     private router: Router,
     private sharedDataService: SharedDataService,
     private profileService: ProfileService,
+    private notificationService: NotificationService,
   ) { }
 
   public ngOnInit(): void {
@@ -93,6 +94,11 @@ export class SignUpComponent implements OnInit {
         });
       }, () => {
         // card error handling
+      this.notificationService.addPopup({
+        title: 'PROFILE NOT FOUND',
+        text: `Please check that your Plus! Card number and last name are correct and try again. \nIf you need help, you may reach us at +63 (02) 981 0025`,
+        buttonTxt: 'OK'
+      });
       });
   }
 }
