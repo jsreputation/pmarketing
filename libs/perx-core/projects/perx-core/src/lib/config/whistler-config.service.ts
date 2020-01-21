@@ -5,7 +5,7 @@ import {
   Observable,
   of,
 } from 'rxjs';
-import { map } from 'rxjs/operators'
+import { map } from 'rxjs/operators';
 
 import {
   IJsonApiListPayload,
@@ -19,7 +19,7 @@ import {
   IRssFeeds,
   PagesObject,
 } from './models/config.model';
-import { ConfigService } from './config.service';;
+import { ConfigService } from './config.service';
 import { Config } from './config';
 
 @Injectable({
