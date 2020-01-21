@@ -16,6 +16,7 @@ import {
 import {
   map,
   switchMap,
+  tap,
 } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 import { Config } from '../config/config';
@@ -128,7 +129,7 @@ interface IV4GameCampaigns {
 })
 export class V4GameService implements IGameService {
   private hostName: string;
-
+  private cacheResponse: { [gId: number]: IEngagementTransaction } = {};
   constructor(
     private httpClient: HttpClient,
     config: Config,
@@ -243,11 +244,16 @@ export class V4GameService implements IGameService {
 
   // @ts-ignore
   public prePlay(engagementId: number, campaignId?: number): Observable<IEngagementTransaction> {
-    throw new Error('Not implemented.');
+    return this.play(engagementId)
+      .pipe(map((outcome: IPlayOutcome) => this.playOutcomeToEngagementTransaction(outcome)),
+        tap((transaction) => this.cacheResponse[transaction.id] = transaction))
   }
-  // @ts-ignore
+
   public prePlayConfirm(transactionId: number): Observable<void> {
-    throw new Error('Not implemented.');
+    if(this.cacheResponse[transactionId]){
+      throw new Error('Not implemented.');
+    }
+    return of();
   }
 
   public getActiveGames(): Observable<IGame[]> {
@@ -289,5 +295,20 @@ export class V4GameService implements IGameService {
           return res;
         })
       );
+  }
+
+  private playOutcomeToEngagementTransaction(outcome: IPlayOutcome): IEngagementTransaction {
+    const transaction = {
+      voucherIds: [] as number[],
+      id: outcome.rawPayload.id,
+      rewardIds: [] as number[]
+    }
+    outcome.vouchers.forEach((el) => {
+      transaction.voucherIds.push(el.id);
+      if (el.reward) {
+        transaction.rewardIds.push(el.reward.id);
+      }
+    })
+    return transaction;
   }
 }
