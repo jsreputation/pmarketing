@@ -42,6 +42,7 @@ import {
   CampaignType,
   RewardPopupComponent,
   IRssFeeds,
+  IRssFeedsData,
 } from '@perx/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
@@ -149,11 +150,16 @@ export class HomeComponent implements OnInit, OnDestroy {
         takeLast(1)
       );
     const rssFeeds: IRssFeeds = await this.configService.readRssFeeds().toPromise();
-    if (!(rssFeeds && rssFeeds.data[0] && rssFeeds.data[0].url)) {
+    if (!(rssFeeds && rssFeeds.data.length > 0)) {
       return ;
     }
 
-    const rssFeedsUrl: string = rssFeeds.data[0].url;
+    const rssFeedsHome: IRssFeedsData | undefined = rssFeeds.data.find(feed => feed.page === 'home');
+    if (!rssFeedsHome) {
+      return ;
+    }
+
+    const rssFeedsUrl: string = rssFeedsHome.url;
     this.newsFeedItems = this.feedService.getFromUrl(rssFeedsUrl);
   }
 

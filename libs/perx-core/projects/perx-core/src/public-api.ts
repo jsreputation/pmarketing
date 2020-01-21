@@ -216,6 +216,7 @@ export { ConfigService } from './lib/config/config.service';
 export {
   IConfig,
   IRssFeeds,
+  IRssFeedsData,
   IMicrositeSettings,
   PagesObject,
   AccountPageObject,

@@ -10,6 +10,7 @@ import {
   FeedItem,
   FeedReaderService,
   IRssFeeds,
+  IRssFeedsData,
 } from '@perx/core';
 
 import {
@@ -31,11 +32,16 @@ export class NewsFeedComponent implements OnInit {
 
   private async initNewsFeedItems(): Promise<void> {
     const rssFeeds: IRssFeeds = await this.configService.readRssFeeds().toPromise();
-    if (!(rssFeeds && rssFeeds.data[0] && rssFeeds.data[0].url)) {
+    if (!(rssFeeds && rssFeeds.data.length > 0)) {
       return ;
     }
 
-    const rssFeedsUrl: string = rssFeeds.data[0].url;
+    const rssFeedsHome: IRssFeedsData | undefined = rssFeeds.data.find(feed => feed.page === 'home');
+    if (!rssFeedsHome) {
+      return ;
+    }
+
+    const rssFeedsUrl: string = rssFeedsHome.url;
     this.reader.getFromUrl(rssFeedsUrl)
       .subscribe(items => {
         this.items = items;
