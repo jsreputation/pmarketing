@@ -1,7 +1,7 @@
 import { Voucher, VoucherState, IVoucherService, RedemptionType } from '@perx/core';
 import { of, BehaviorSubject } from 'rxjs';
 
-export const vouchersServiceStub: IVoucherService = {
+export const vouchersServiceStub: Partial<IVoucherService> = {
   getAll: () => of(vouchers),
   get: (id) => of(vouchers.find(voucher => voucher.id === id)),
   reset: () => vouchers.forEach((_, key) => delete vouchers[key]),

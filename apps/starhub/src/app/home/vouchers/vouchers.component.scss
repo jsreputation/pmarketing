@@ -60,6 +60,8 @@ h1 {
 
 .rewards-container {
   padding: 0 1.5rem;
+  overflow-y: scroll;
+  height: 100%;
 
   .empty-wallet {
     display: flex;
