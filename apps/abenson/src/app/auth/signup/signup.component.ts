@@ -98,7 +98,7 @@ export class SignUpComponent implements OnInit {
       // card error handling
       this.notificationService.addPopup({
         title: 'PROFILE NOT FOUND',
-        text: `Please check that your Plus! Card number and last name are correct and try again. \nIf you need help, you may reach us at +63 (02) 981 0025`,
+        text: 'Please check that your Plus! Card number and last name are correct and try again. If you need help, you may reach us at +63 (02) 981 0025',
         buttonTxt: 'OK'
       });
     });
