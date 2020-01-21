@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthService, SessionService, LocalStorageService } from '@es-core';
+import { TestAuthService } from '@es-shared/test-components/providers/test-auth.service';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -28,7 +29,14 @@ describe('LoginComponent', () => {
           HttpClientModule,
           TranslateModule.forRoot()
         ],
-        providers: [AuthService, LocalStorageService, SessionService],
+        providers: [
+          LocalStorageService,
+          SessionService,
+          {
+            provide: AuthService,
+            useClass: TestAuthService
+          }
+        ],
         declarations: [
           LoginComponent,
           LoginFormComponent

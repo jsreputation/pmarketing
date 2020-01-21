@@ -22,6 +22,7 @@ import { environment } from '../environments/environment';
 import { GestureConfig } from '@angular/material/core';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TestPageComponent } from './test-page/test-page.component';
+import { HttpServicesModule } from '../../../../libs/perx-whistler-services/dist/perx-whistler-services';
 
 // import * as Sentry from '@sentry/browser';
 
@@ -50,6 +51,10 @@ import { TestPageComponent } from './test-page/test-page.component';
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
+    HttpServicesModule.forRoot(
+      environment.apiHost,
+      environment.apiCdn
+    ),
     AuthModule,
     MatSnackBarModule,
     MatButtonModule,
