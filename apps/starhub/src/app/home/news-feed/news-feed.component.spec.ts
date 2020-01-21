@@ -16,14 +16,7 @@ describe('NewsFeedComponent', () => {
   };
 
   const configServiceStub: Partial<ConfigService> = {
-    readAppConfig: () => of({
-      apiHost: '',
-      production: false,
-      preAuth: false,
-      isWhistler: false,
-      baseHref: '',
-      rssFeeds: '',
-    })
+    readRssFeeds: () => of()
   };
 
   const items = [
