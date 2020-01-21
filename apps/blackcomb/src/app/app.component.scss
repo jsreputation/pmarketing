@@ -5,6 +5,7 @@
   height: 100%;
   width: 100%;
 }
+
 .app-root {
   display: block;
   height: 100%;
@@ -36,7 +37,7 @@
     justify-content: space-around;
     height: 7rem;
     z-index: 800;
-    background: #fff !important;
+    background: var(--surface_colour) !important;
     font-size: 1rem;
     line-height: 1.6rem;
 
@@ -58,5 +59,45 @@
 
   .logo {
     height: 100%;
+  }
+}
+
+.dark-theme {
+  ::ng-deep {
+    perx-core-rewards-collection {
+      .subtitle-1 {
+        color: unset;
+      }
+
+      .description {
+        color: unset;
+      }
+    }
+
+    perx-core-vouchers {
+      .voucher-details {
+        h1 {
+          color: unset !important;
+        }
+      }
+    }
+
+    perx-core-survey {
+      .question-container .question-content .question {
+        color: unset !important;
+      }
+    }
+
+    perx-blackcomb-games-collection {
+      mat-card-content {
+        .main-reward-title {
+          color: unset;
+        }
+
+        .reward-subtitle {
+          color: unset;
+        }
+      }
+    }
   }
 }
