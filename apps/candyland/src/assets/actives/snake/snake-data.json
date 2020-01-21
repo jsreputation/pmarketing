@@ -2,19 +2,19 @@
   "snakeType": [
     {
       "id": 1,
-      "type": "state1",
+      "type": "snake1",
       "title": "icon",
-      "img": "global/assets/game/mini_pinata_1.png",
-      "fullImg": "global/assets/game/full_pinata_1.png",
+      "img": "global/assets/game/snake/snake-1.png",
+      "fullImg": "global/assets/game/snake/setup-snake-1.png",
       "format": ".png",
       "active": "false"
     },
     {
       "id": 2,
-      "type": "state2",
+      "type": "snake2",
       "title": "icon",
-      "img": "global/assets/game/mini_pinata_2.png",
-      "fullImg": "global/assets/game/full_pinata_2.png",
+      "img": "global/assets/game/snake/snake-2.png",
+      "fullImg": "global/assets/game/snake/setup-snake-2.png",
       "format": ".png",
       "active": "false"
     },
@@ -22,8 +22,8 @@
       "id": 3,
       "type": "state3",
       "title": "icon",
-      "img": "global/assets/game/mini_pinata_3.png",
-      "fullImg": "global/assets/game/full_pinata_3.png",
+      "img": "global/assets/game/snake/snake-3.png",
+      "fullImg": "global/assets/game/snake/setup-snake-3.png",
       "format": ".png",
       "active": "false"
     }
@@ -33,8 +33,8 @@
       "id": 1,
       "type": "bg1",
       "title": "icon",
-      "img": "global/assets/background/stamp-bg-7.png",
-      "fullImg": "global/assets/background/full_bg_7.jpg",
+      "img": "global/assets/background/snake-wrapbg-1.png",
+      "fullImg": "global/assets/background/snake-wrapbg-1.png",
       "format": ".png",
       "active": "false"
     },
@@ -42,8 +42,8 @@
       "id": 2,
       "type": "bg2",
       "title": "icon",
-      "img": "global/assets/background/stamp-bg-8.png",
-      "fullImg": "global/assets/background/full_bg_8.jpg",
+      "img": "global/assets/background/snake-wrapbg-2.png",
+      "fullImg": "global/assets/background/snake-wrapbg-2.png",
       "format": ".png",
       "active": "false"
     },
@@ -51,8 +51,8 @@
       "id": 3,
       "type": "bg3",
       "title": "icon",
-      "img": "global/assets/background/stamp-bg-9.png",
-      "fullImg": "global/assets/background/full_bg_9.jpg",
+      "img": "global/assets/background/snake-wrapbg-3.png",
+      "fullImg": "global/assets/background/snake-wrapbg-3.png",
       "format": ".png",
       "active": "false"
     }
@@ -60,28 +60,28 @@
   "targetIcon": [
     {
       "id": 1,
-      "type": "bg1",
+      "type": "food1",
       "title": "icon",
-      "img": "global/assets/background/stamp-bg-7.png",
-      "fullImg": "global/assets/background/full_bg_7.jpg",
+      "img": "global/assets/game/snake/food-1.png",
+      "fullImg": "global/assets/game/snake/setup-food-1.png",
       "format": ".png",
       "active": "false"
     },
     {
       "id": 2,
-      "type": "bg2",
+      "type": "food2",
       "title": "icon",
-      "img": "global/assets/background/stamp-bg-8.png",
-      "fullImg": "global/assets/background/full_bg_8.jpg",
+      "img": "global/assets/game/snake/food-2.png",
+      "fullImg": "global/assets/game/snake/setup-food-2.png",
       "format": ".png",
       "active": "false"
     },
     {
       "id": 3,
-      "type": "bg3",
+      "type": "food3",
       "title": "icon",
-      "img": "global/assets/background/stamp-bg-9.png",
-      "fullImg": "global/assets/background/full_bg_9.jpg",
+      "img": "global/assets/game/snake/food-3.png",
+      "fullImg": "global/assets/game/snake/setup-food-3.png",
       "format": ".png",
       "active": "false"
     }
@@ -89,31 +89,21 @@
   "gameArea": [
     {
       "id": 1,
-      "type": "bg1",
+      "type": "snakebg1",
       "title": "icon",
-      "img": "global/assets/background/stamp-bg-7.png",
-      "fullImg": "global/assets/background/full_bg_7.jpg",
+      "img": "global/assets/background/snake_bg_1.png",
+      "fullImg": "global/assets/background/snake_bg_1.png",
       "format": ".png",
       "active": "false"
     },
     {
       "id": 2,
-      "type": "bg2",
+      "type": "snakebg2",
       "title": "icon",
-      "img": "global/assets/background/stamp-bg-8.png",
-      "fullImg": "global/assets/background/full_bg_8.jpg",
-      "format": ".png",
-      "active": "false"
-    },
-    {
-      "id": 3,
-      "type": "bg3",
-      "title": "icon",
-      "img": "global/assets/background/stamp-bg-9.png",
-      "fullImg": "global/assets/background/full_bg_9.jpg",
+      "img": "global/assets/background/snake_bg_2.png",
+      "fullImg": "global/assets/background/snake_bg_2.png",
       "format": ".png",
       "active": "false"
     }
   ]
-
 }

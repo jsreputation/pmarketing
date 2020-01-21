@@ -1,4 +1,4 @@
-<article class="pinata-wrap" *ngIf="pinataData" [formGroup]="form">
+<article class="snake-wrap" *ngIf="snakeData" [formGroup]="form">
   <header class="page-header full-with">
     <mat-form-field class="pagetitle-input" floatLabel="never">
       <input type="text" matInput formControlName="name" [placeholder]="'ENTER_TITLE_HERE' | translate">
@@ -8,7 +8,7 @@
     </mat-form-field>
     <div class="btn-group">
       <cl-button [classList]="'secondary'"
-                 class="pinata-btn-cancel"
+                 class="snake-btn-cancel"
                  (click)="comeBack()"
       >
        <span translate>
@@ -26,12 +26,12 @@
   </header>
   <section class="content form-limiter">
     <div class="phonepreview-wrapper">
-      <div class="pinata-form">
+      <div class="snake-form">
         <mat-card class="card-fieldset">
           <h2 class="card-fieldset-title sub-title" translate>
             MESSAGES
           </h2>
-          <div class="pinata-form">
+          <div class="snake-form">
             <div class="control-input">
               <mat-form-field class="messages-input">
                 <input type="text" [placeholder]="'HEADLINE_MESSAGE' | translate" matInput formControlName="headlineMessage">
@@ -61,15 +61,15 @@
 
             <div class="control-img_asset">
               <h3 class="card-fieldset-label" translate>
-                PINATA
+                snake
               </h3>
               <div class="game-tree-wrap">
-                <cl-select-graphic
-                  *ngIf="pinataData.pinata"
-                  formControlName="pinata"
-                  [graphicList]="pinataData.pinata"
+                <cl-select-graphic-wrap-dialog
+                  *ngIf="snakeData.snakeType"
+                  formControlName="snake"
+                  [graphicList]="snakeData.snakeType"
                 >
-                </cl-select-graphic>
+                </cl-select-graphic-wrap-dialog>
               </div>
             </div>
 
@@ -79,10 +79,10 @@
               </h3>
               <div class="game-gift-box_field">
                 <cl-select-graphic-wrap
-                  *ngIf="pinataData.background"
+                  *ngIf="snakeData.background"
                   formControlName="background"
                   [isRequired]="form.get('background').hasError('required') && form.get('background').touched"
-                  [graphicList]="pinataData.background"
+                  [graphicList]="snakeData.background"
                 >
                 </cl-select-graphic-wrap>
               </div>
@@ -126,13 +126,8 @@
           </p>
         </div>
         <div class="plugin-block">
-          <perx-core-pinata class="mobile-preview-plugin"
-                            [enabled]="false"
-                            [stillImg]="getImgLink(pinata, 'assets/images/pinata/pinata1.png')"
-                            [openedImg]="'assets/images/games/pinata/opened-pinata.png'"
-                            [nbTaps]="5"
-          >
-          </perx-core-pinata>
+          <perx-core-snake-game class="mobile-preview-plugin">
+          </perx-core-snake-game>
         </div>
         <div class="mobile-preview-btn-wrap mobile-btn-block">
           <button class="mobile-preview-btn"
@@ -149,3 +144,4 @@
     </div>
   </section>
 </article>
+

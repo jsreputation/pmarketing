@@ -2,16 +2,16 @@ import { Component, ElementRef, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogConfig, MatDialogRef } from '@angular/material';
 
 @Component({
-  selector: 'cl-dialog-color-selector',
-  templateUrl: './dialog-color-selector.component.html',
-  styleUrls: ['./dialog-color-selector.component.scss']
+  selector: 'cl-dialog-preview-selector',
+  templateUrl: './dialog-preview-selector.component.html',
+  styleUrls: ['./dialog-preview-selector.component.scss']
 })
-export class DialogColorSelectorComponent implements OnInit {
+export class DialogPreviewSelectorComponent implements OnInit {
   // tslint:disable-next-line:variable-name
-  private readonly _matDialogRef: MatDialogRef<DialogColorSelectorComponent>;
+  private readonly _matDialogRef: MatDialogRef<DialogPreviewSelectorComponent>;
   private readonly triggerElementRef: ElementRef;
   public colorOfSnake: string = '#7A409E';
-  constructor(matDialogRef: MatDialogRef<DialogColorSelectorComponent>,
+  constructor(matDialogRef: MatDialogRef<DialogPreviewSelectorComponent>,
               @Inject(MAT_DIALOG_DATA) data: { trigger: ElementRef }) {
     this._matDialogRef = matDialogRef;
     this.triggerElementRef = data.trigger;

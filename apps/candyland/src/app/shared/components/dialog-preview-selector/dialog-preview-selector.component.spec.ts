@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DialogColorSelectorComponent } from './dialog-color-selector.component';
+import { DialogPreviewSelectorComponent } from './dialog-preview-selector.component';
 
 describe('DialogColorSelectorComponent', () => {
-  let component: DialogColorSelectorComponent;
-  let fixture: ComponentFixture<DialogColorSelectorComponent>;
+  let component: DialogPreviewSelectorComponent;
+  let fixture: ComponentFixture<DialogPreviewSelectorComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DialogColorSelectorComponent ]
+      declarations: [ DialogPreviewSelectorComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DialogColorSelectorComponent);
+    fixture = TestBed.createComponent(DialogPreviewSelectorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
