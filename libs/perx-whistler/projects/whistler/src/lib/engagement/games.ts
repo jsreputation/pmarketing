@@ -2,7 +2,8 @@ export const enum WGameType {
   shakeTheTree = 'shake',
   pinata = 'tap',
   scratch = 'scratch',
-  spin = 'spin'
+  spin = 'spin',
+  snake = 'snake'
 }
 
 export interface IWGameDisplayProperties {
@@ -40,4 +41,12 @@ export interface IWSpinDisplayProperties extends IWGameDisplayProperties {
   wheel_img: string;
   wheel_position: string;
   pointer_img: string;
+}
+
+export interface IWSnakeDisplayProperties extends IWGameDisplayProperties {
+  target_icon_img_url: string;
+  target_required: number;
+  snake_color: string;
+  snake_type_img_url: string;
+  game_area_img_url: string;
 }
