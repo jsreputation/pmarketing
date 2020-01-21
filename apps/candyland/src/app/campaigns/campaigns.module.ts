@@ -27,7 +27,8 @@ import {
   MatSlideToggleModule,
   MatSortModule,
   MatStepperModule,
-  MatTableModule
+  MatTableModule,
+  MatProgressBarModule
 } from '@angular/material';
 import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
@@ -182,6 +183,7 @@ import { MessageService } from '@cl-core-services';
     PuzzlesModule,
     PerxRewardsModule,
     TranslateModule,
+    MatProgressBarModule
   ],
   entryComponents: [
     NewCampaignDonePopupComponent
