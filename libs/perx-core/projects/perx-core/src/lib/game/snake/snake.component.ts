@@ -1,5 +1,3 @@
-// import get = Reflect.get;
-
 export class Number2 {
   constructor(public x: number, public y: number) { }
 
@@ -18,7 +16,7 @@ export class Number2 {
   }
 }
 
-import {Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild, OnDestroy, Output, EventEmitter} from '@angular/core';
+import {Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild, Output, EventEmitter} from '@angular/core';
 import { getImageCors } from '../../utils/getImageCors';
 // https://codepen.io/mexitalian/pen/pNQgae // not very useful, not hammer js
 @Component({
@@ -26,7 +24,7 @@ import { getImageCors } from '../../utils/getImageCors';
   templateUrl: './snake.component.html',
   styleUrls: ['./snake.component.scss']
 })
-export class SnakeGameComponent implements OnChanges, OnDestroy {
+export class SnakeGameComponent implements OnChanges {
   private get canv(): HTMLCanvasElement { return this.canvasEl.nativeElement; }
   // public gameStarted: boolean = false;
 
@@ -58,9 +56,9 @@ export class SnakeGameComponent implements OnChanges, OnDestroy {
   @Input()
   public background: string;
   @Input()
-  public rateOfExpansion: number = 10;
+  public rateOfExpansion: number = 3;
   @Input()
-  public targetsToWin: number = 1;
+  public targetsToWin: number = 5;
   @Input()
   public fps: number = 40;
 
@@ -68,6 +66,8 @@ export class SnakeGameComponent implements OnChanges, OnDestroy {
 
   @ViewChild('canvasSnake', { static: true })
   public canvasEl: ElementRef<HTMLCanvasElement>;
+  @ViewChild('scoreBoard', { static: true })
+  public scoreEl: ElementRef<HTMLDivElement>;
 
   // tslint:disable-next-line:variable-name
   private ctx_: CanvasRenderingContext2D;
@@ -82,7 +82,7 @@ export class SnakeGameComponent implements OnChanges, OnDestroy {
   // direction
   private v: Number2 = new Number2(0, 0);
   // speed
-  private speed: number = 0.5;
+  private speed: number = 1;
   // private intervals: any[] = [];
   private trail: Number2[] = [];
   // tail length
@@ -108,7 +108,7 @@ export class SnakeGameComponent implements OnChanges, OnDestroy {
   public gameStop: boolean = false;
 
   public startAnimating(): void {
-    this.fpsInterval = 1000 / this.fps;
+    this.fpsInterval = 1000 / 5;
     this.then = window.performance.now();
     this.startTime = this.then;
     this.startGameAndRender();
@@ -126,10 +126,11 @@ export class SnakeGameComponent implements OnChanges, OnDestroy {
 
     if (this.elapsed > this.fpsInterval) {
       this.then = this.now - (this.elapsed % this.fpsInterval);
+      // draw
+      this.game();
+      this.render();
     }
-    // draw
-    this.game();
-    this.render();
+
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -166,7 +167,7 @@ export class SnakeGameComponent implements OnChanges, OnDestroy {
       this.trail.shift();
     }
 
-    // update target
+    // update target check eat food
     if (this.a.equals(this.p)) {
       this.tail += this.rateOfExpansion;
       this.score += 1;
@@ -175,7 +176,9 @@ export class SnakeGameComponent implements OnChanges, OnDestroy {
         // end game
         this.broken.emit();
       }
-      this.a.randomize(this.tc);
+      while (this.a.equals(this.p)) {
+        this.a.randomize(this.tc);
+      }
     }
   }
 
@@ -183,20 +186,13 @@ export class SnakeGameComponent implements OnChanges, OnDestroy {
     // render board
     this.ctx.drawImage(this.backgroundImgLoaded, 0, 0, this.canv.width, this.canv.height);
     // render snake
-    this.ctx.fillStyle = this.colorSnake;
-    this.ctx.fillRect(this.trail[0].x * this.gs, this.trail[0].y * this.gs, this.gs - 2 , this.gs - 2);
     // tslint:disable-next-line:prefer-for-of
     this.ctx.fillStyle = this.ctx.createPattern(this.snakeImgLoaded as HTMLImageElement, 'repeat') || 'lime';
-    for (let i = 1; i < this.trail.length; i++) {
+    for (let i = 0; i < this.trail.length; i++) {
       this.ctx.fillRect(this.trail[i].x * this.gs, this.trail[i].y * this.gs, this.gs - 2 , this.gs - 2);
     }
-    // render target
-    if (!this.target) {
-      this.ctx.fillStyle = this.ctx.createPattern(this.targetImgLoaded as HTMLImageElement, 'no-repeat') || 'red';
-      this.ctx.fillRect(this.a.x * this.gs, this.a.y * this.gs, this.gs, this.gs);
-    } else {
-      this.ctx.drawImage(this.targetImgLoaded, this.a.x * this.gs, this.a.y * this.gs, this.gs - 2, this.gs - 2);
-    }
+    this.ctx.drawImage(this.targetImgLoaded, this.a.x * this.gs, this.a.y * this.gs, this.gs - 2, this.gs - 2);
+
   }
 
   private onloadCallBack(): null {
@@ -265,8 +261,4 @@ export class SnakeGameComponent implements OnChanges, OnDestroy {
     }
   }
 
-  public ngOnDestroy(): void {
-    // it will cancel itself  if closed, not on the tab
-    // window.cancelAnimationFrame(this.request);
-  }
 }
