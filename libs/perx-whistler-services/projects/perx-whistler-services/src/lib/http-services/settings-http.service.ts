@@ -30,8 +30,8 @@ export class SettingsHttpService {
     return this.http.get<IJsonApiListPayload<IWIAMUserAttributes>>(this.apiConfig.IAMUsersPath, { params });
   }
 
-  public getAllGroups(): Observable<IJsonApiListPayload<any>> {
-    return this.http.get<IJsonApiListPayload<any>>(this.apiConfig.IAMGroupsPath);
+  public getAllGroups(params?: HttpParams ): Observable<IJsonApiListPayload<any>> {
+    return this.http.get<IJsonApiListPayload<any>>(this.apiConfig.IAMGroupsPath, { params });
   }
 
   public patchSettings(data: IJsonApiPatchData<any>): Observable<any> {

@@ -27,8 +27,8 @@ export class MockAudienceService {
     console.log(params);
     return of([{
       name: 'test',
-    checked: false,
-    value: { id: 'test', type: 'test' }
+      checked: false,
+      value: { id: 'test', type: 'test' }
     }]);
   }
 
@@ -37,7 +37,10 @@ export class MockAudienceService {
     return of({
       data: [{
         id: 5, updated_at: '5555', name: 'test', users_count: 5,
-      }], meta: {}
+      }], meta: {
+        page_count: 1,
+        record_count: 1
+      }
     });
   }
 }

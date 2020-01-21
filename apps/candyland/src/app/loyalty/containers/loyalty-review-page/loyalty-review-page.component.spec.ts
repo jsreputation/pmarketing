@@ -10,11 +10,12 @@ import { LoyaltyService } from '@cl-core/services/loyalty.service';
 import { LoyaltyRuleService } from '@cl-core/services/loyalty-rule.service';
 import { of, Subject } from 'rxjs';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
-import { TenantStoreService } from '@cl-core-services';
+import { TenantStoreService, UploadFileService } from '@cl-core-services';
 import { TenantMockStore } from '@cl-shared/test-components/tenant-mock-store/tenant-mock-store';
 import { MockLoyaltyServices } from '@cl-shared/test-components/providers/mock-loyalty.services';
 import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.service';
 import { MockLoyaltyCustomTierService } from '@cl-shared/test-components/providers/mock-loyalty-custom-tier.service';
+import { MockUploadFileService } from '@cl-shared/test-components/providers/mock-upload-file.service';
 
 describe('LoyaltyReviewComponent', () => {
   let component: LoyaltyReviewPageComponent;
@@ -46,6 +47,7 @@ describe('LoyaltyReviewComponent', () => {
         { provide: TenantStoreService, useClass: TenantMockStore },
         { provide: LoyaltyService, useClass: MockLoyaltyServices },
         { provide: LoyaltyCustomTierService, useClass: MockLoyaltyCustomTierService },
+        { provide: UploadFileService, useClass: MockUploadFileService },
       ],
       declarations: [LoyaltyReviewPageComponent],
       schemas: [NO_ERRORS_SCHEMA]

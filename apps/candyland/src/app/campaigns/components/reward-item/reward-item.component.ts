@@ -12,17 +12,20 @@ import {takeUntil} from 'rxjs/operators';
   styleUrls: ['./reward-item.component.scss'],
 })
 export class RewardItemComponent implements OnInit {
+  @Input() public templateID: number;
   @Input() public outcomeData: ICampaignOutcome;
-  @Input() public enableProbability: boolean = false;
+  @Input() public enableProbability: boolean;
   @Input() public isInvalid: boolean;
+  @Input() public overWriteProb: AbstractControl;
+
   @Output() private clickDelete: EventEmitter<any> = new EventEmitter<any>();
   @Output() private updateOutcome: EventEmitter<{ probability: number, limit: number }> =
     new EventEmitter<{ probability: number, limit: number }>();
 
   public group: FormGroup = new FormGroup({
-    probability: new FormControl(null, {updateOn: 'blur'}),
-    limit: new FormControl(null , {updateOn: 'blur'})
-  });
+    probability: new FormControl(null),
+    limit: new FormControl(null)
+  }, {updateOn: 'blur'});
   private destroy$: Subject<void> = new Subject();
 
   public get probability(): AbstractControl {
@@ -56,9 +59,9 @@ export class RewardItemComponent implements OnInit {
     this.group.patchValue({ probability: this.outcome.probability, limit: this.outcome.limit });
   }
 
-  public updateOutcomeData(): void {
+  public updateOutcomeData(resetProb?: boolean): void {
     const updateData = {
-      probability: this.group.get('probability').value || null,
+      probability: resetProb ? null : (this.group.get('probability').value || null),
       limit: this.group.get('limit').value || null,
     };
     this.updateOutcome.emit(updateData);
@@ -66,4 +69,5 @@ export class RewardItemComponent implements OnInit {
   public delete(): void {
     this.clickDelete.emit(this.outcomeData);
   }
+
 }

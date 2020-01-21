@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 
 import { Subject } from 'rxjs';
-import { switchMap, tap, takeUntil, filter } from 'rxjs/operators';
+import { switchMap, tap, takeUntil, filter, map } from 'rxjs/operators';
 
 import { DashboardService } from '@cl-core/services';
 import { DashboardChartsParametersService } from '../../services/dashboard-charts-parameters.service';
@@ -26,7 +26,7 @@ export class DashboardLoyaltyPageComponent implements OnInit, OnDestroy {
     { id: 'loyalty_programs_new_members', name: 'new_members', title: 'New Members' }
   ];
   public tabsValue: any;
-  public loyaltyTabValue: number | null;
+  public loyaltyTabValue: number | null = null;
   public ct: typeof CardType = CardType;
 
   public get tabsIds(): string[] {
@@ -57,25 +57,18 @@ export class DashboardLoyaltyPageComponent implements OnInit, OnDestroy {
     this.activeTab = tab;
   }
 
-  public get LoyaltyValue(): number | null {
-    return this.loyaltyTabValue || null;
-  }
-
   private handelChartsParamsChanges(): void {
     this.chartsParametersService.params$.pipe(
       tap(params => {
         this.params = params;
       }),
       switchMap(params => this.dashboardService.getTabValues('loyalty_total_loyalty', params)),
-      tap(value => {
-        /* tslint:disable-next-line */
-        this.loyaltyTabValue = value.flat().filter(v => typeof v === 'number').reduce(
-          (acc, curr) => acc + curr
-          , 0);
-      }),
+      map(value => value.flat()
+        .filter(v => typeof v === 'number')
+        .reduce((acc: number, curr: number) => acc + curr, 0)
+      ),
       takeUntil(this.destroy$)
-      /* tslint:disable-next-line */
-    ).subscribe();
+    ).subscribe((value: number) => this.loyaltyTabValue = value);
   }
 
   private handleActiveCampaigns(): void {

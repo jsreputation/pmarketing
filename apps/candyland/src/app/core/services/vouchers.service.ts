@@ -49,7 +49,7 @@ export class VouchersService {
   public getStats(rewardId: string): Observable<{ [k: string]: number }> {
     return this.vouchersHttp.getStats(rewardId)
       .pipe(
-        map(VouchersHttpAdapter.transformToVoucherStatsObj)
+        map((res) => VouchersHttpAdapter.transformToVoucherStatsObj(res.data.attributes))
       );
   }
 }

@@ -12,11 +12,11 @@ export class MockCommsServices {
       id: '1',
     from: 'test',
     to: 'test',
-    provider_id: 5,
+    providerId: 5,
     message: 'test',
     sendDate: null,
-    owner_id: '5',
-    owner_type: 'test',
+    ownerId: '5',
+    ownerType: 'test',
     channel: WMessageChannel.sms
     };
   }

@@ -26,6 +26,7 @@ import { StampHttpService } from './stamp-http.service';
 import { SurveyHttpService } from './survey-http.service';
 import { TenantHttpService } from './tenant-http.service';
 import { UploadFileHttpService } from './upload-file-http.service';
+import { LoyaltyCardHttpService } from './loyalty-cards-http.service';
 
 export const BASE_URL_WS = new InjectionToken<string>('BaseUrl');
 export const BASE_CDN_URL_WS = new InjectionToken<string>('BaseCDNUrl');
@@ -56,6 +57,7 @@ const providers: any[] = [
   SurveyHttpService,
   TenantHttpService,
   UploadFileHttpService,
+  LoyaltyCardHttpService,
   ];
 
 @NgModule({

@@ -27,11 +27,11 @@ export class DashboardCampaignPageComponent implements OnInit, OnDestroy {
   public activeTab: string = 'survey';
   public tabs: ITotal[] = [
     { id: 'campaigns_total_running_survey_campaigns', name: 'survey', title: 'CAMPAIGN_GRAPHIC_PAGE.NAV_TITLE_SURVEY' },
-    { id: 'campaigns_survey_engagement_rate', name: 'games', title: 'CAMPAIGN_GRAPHIC_PAGE.NAV_TITLE_GAMES' },
-    { id: 'campaigns_active_stamps_campaign', name: 'stamps', title: 'CAMPAIGN_GRAPHIC_PAGE.NAV_TITLE_STAMPS' },
-    { id: 'campaigns_active_instant_rewards_campaigns', name: 'reward', title: 'CAMPAIGN_GRAPHIC_PAGE.NAV_TITLE_INSTANT_REWARD' }
+    { id: 'campaigns_total_games', name: 'games', title: 'CAMPAIGN_GRAPHIC_PAGE.NAV_TITLE_GAMES' },
+    { id: 'campaigns_total_active_stamps_campaign', name: 'stamps', title: 'CAMPAIGN_GRAPHIC_PAGE.NAV_TITLE_STAMPS' },
+    { id: 'campaigns_total_active_instant_rewards_campaigns', name: 'reward', title: 'CAMPAIGN_GRAPHIC_PAGE.NAV_TITLE_INSTANT_REWARD' }
   ];
-  public tabsValue: any;
+  public tabsValue: (string | number)[];
   public activeCampaigns: number;
   public ct: typeof CardType = CardType;
   public tableSearch: FormControl = new FormControl();
@@ -40,7 +40,7 @@ export class DashboardCampaignPageComponent implements OnInit, OnDestroy {
     return this.tabs.map(tab => tab.id);
   }
 
-  public getTabValue(index: number): number {
+  public getTabValue(index: number): string | number | null {
     return this.tabsValue ? this.tabsValue[index] : null;
   }
 

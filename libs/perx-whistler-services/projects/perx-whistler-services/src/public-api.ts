@@ -25,3 +25,4 @@ export { StampHttpService } from './lib/http-services/stamp-http.service';
 export { SurveyHttpService } from './lib/http-services/survey-http.service';
 export { TenantHttpService } from './lib/http-services/tenant-http.service';
 export { UploadFileHttpService } from './lib/http-services/upload-file-http.service';
+export { LoyaltyCardHttpService } from './lib/http-services/loyalty-cards-http.service';

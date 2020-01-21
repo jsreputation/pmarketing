@@ -15,7 +15,6 @@ import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { SessionService } from '@cl-core/services/session.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { JsonApiModule } from 'angular2-jsonapi';
 import { PerxChartModule } from '@perx/chart';
 import { WINDOW_PROVIDERS } from '@cl-core/services/window.service';
 import { GestureConfig } from '@angular/material/core';
@@ -62,7 +61,6 @@ export class SentryErrorHandler implements ErrorHandler {
     MatNativeDateModule,
     PerxChartModule.forRoot({ tokenBasePath: environment.apiHost }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    JsonApiModule,
     MatSnackBarModule,
     TranslateModule.forRoot({
       loader: {

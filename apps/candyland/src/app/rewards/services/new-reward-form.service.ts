@@ -153,10 +153,11 @@ export class NewRewardFormService {
   public getLoyaltyFormGroup(): FormGroup {
     return new FormGroup({
       programId: new FormControl(null),
-
+      programStatus: new FormControl(null),
       tiers: new FormArray([]),
       basicTier: new FormGroup({
         tierRewardCostsId: new FormControl(null),
+        statusTiers: new FormControl(null),
         tierValue: new FormControl(1, [Validators.min(0)]),
         tierType: new FormControl(this.tierTypes.basicType),
         tierId: new FormControl(null),
@@ -180,44 +181,32 @@ export class NewRewardFormService {
 
   public handlerTierUpdate(tier: ILoyaltyTiersFormGroup | IBasicTier, tiersMap: any): void {
     const tempTier = this.defaultRewardTiers[tier.tierId];
-
     if (
       tempTier
       && !tier.statusTiers
-      && tier.tierRewardCostsId
-      && tier.tierType === this.tierTypes.customType) {
+      && tier.tierRewardCostsId) {
       return tiersMap.delete.push(tier);
     }
 
-    // create custom tier
-    if (
-      !tier.tierRewardCostsId
+    // create tier
+    if (tier
+      && !tier.tierRewardCostsId
       && tier.statusTiers
-      && tier.tierType === this.tierTypes.customType
     ) {
       return tiersMap.create.push(tier);
     }
 
-    // update custom tier
+    // update tier
     if (
       tempTier
+      && tier.statusTiers
       && tier.tierRewardCostsId
-      && tier.tierType === this.tierTypes.customType
       && (
         tier.tierValue !== tempTier.tierValue
         || tier.statusDiscount !== tempTier.statusDiscount
       )
     ) {
       return tiersMap.update.push(tier);
-    }
-
-    // update basic tier
-    if (
-      tempTier
-      && tempTier.tierValue !== tier.tierValue
-      && tempTier.tierType === this.tierTypes.basicType
-    ) {
-      tiersMap.update.push(tier);
     }
   }
 }

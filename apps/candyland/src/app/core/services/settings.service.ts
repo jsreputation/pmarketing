@@ -3,11 +3,8 @@ import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapte
 import { SettingsHttpService } from '@perx/whistler-services';
 import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { DataStore } from '@cl-core/http-adapters/datastore';
-import { Groups } from '@cl-core/http-adapters/iam-groups';
 import { ClHttpParams } from '@cl-helpers/http-params';
 import { Role } from '@cl-helpers/role.enum';
-import { JsonApiQueryData } from 'angular2-jsonapi';
 import { IReward } from '@perx/core';
 import { RoleLabelConfig } from '@cl-shared';
 import { HttpClient, HttpParams } from '@angular/common/http';
@@ -42,7 +39,6 @@ export class SettingsService {
 
   constructor(
     private settingsHttpService: SettingsHttpService,
-    private dataStore: DataStore,
     private http: HttpClient
   ) {
   }
@@ -59,8 +55,17 @@ export class SettingsService {
     return this.settingsHttpService.getAllCredential(data);
   }
 
-  public getAllGroups(): Observable<JsonApiQueryData<Groups>> {
-    return this.dataStore.findAll(Groups, { page: { size: 10, number: 1 } });
+  public getGroups(params: HttpParamsOptions = {}): Observable<IAMGroup[]> {
+    params = {
+      ...params,
+      'page[number]': '1',
+      'page[size]': '20'
+    };
+    const httpParams = ClHttpParams.createHttpParams(params);
+    return this.settingsHttpService.getAllGroups(httpParams)
+      .pipe(
+        map(groups => groups.data.map((group) => SettingsHttpAdapter.transformToGroup(group))
+        ));
   }
 
   public getMockReward(): IReward {

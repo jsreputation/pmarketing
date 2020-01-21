@@ -1,6 +1,7 @@
 import { Observable, of } from 'rxjs';
 import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
 import { IJsonApiItemPayload, IWBasicTierAttributes } from '@perx/whistler';
+import { IAudiencesLoyalty } from '@cl-core/models/audiences/audiences-loyalty.model';
 
 export class MockLoyaltyServices {
 
@@ -8,6 +9,11 @@ export class MockLoyaltyServices {
     return {
         id: '1', name: 'test'
       };
+  }
+
+  public getAudiencesLoyaltyOption(params: HttpParamsOptions = {}): Observable<IAudiencesLoyalty[]> {
+    console.log(params);
+    return of([(this.getMockLoyaltyForm() as any)]);
   }
 
   public getLoyalties(params: HttpParamsOptions): Observable<{ data: ILoyaltyForm[] }> {

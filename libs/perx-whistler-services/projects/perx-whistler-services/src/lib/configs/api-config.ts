@@ -149,4 +149,8 @@ export class ApiConfigServices {
   public get getLoyaltyRulePointsCalculator(): string {
     return `${this.baseApiPath}/loyalty/point_calculators`;
   }
+
+  public get getLoyaltyCards(): string {
+    return `${this.baseApiPath}/loyalty/cards`;
+  }
 }

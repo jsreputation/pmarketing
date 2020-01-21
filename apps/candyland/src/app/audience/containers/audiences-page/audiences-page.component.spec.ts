@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AudiencesPageComponent } from './audiences-page.component';
-import { SettingsService, AudiencesService, AuthService, MessageService } from '@cl-core-services';
+import { SettingsService, AudiencesService, MessageService } from '@cl-core-services';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import {
   ButtonModule,
@@ -20,8 +20,6 @@ import {
   MatMenuModule,
   MatDialogModule
 } from '@angular/material';
-import { AudiencesListComponent } from '../../components/audiences-list/audiences-list.component';
-import { AudiencesUsersListComponent } from '../../components/audiences-users-list/audiences-users-list.component';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -31,7 +29,11 @@ import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform
 import { TranslateModule } from '@ngx-translate/core';
 import { MockAudiencesUserService } from '@cl-shared/test-components/providers/mock-audiences-user.service';
 import { MockAudienceService } from '@cl-shared/test-components/providers/mock-audience.service';
-
+import { MockSettingsService } from '@cl-shared/test-components/providers/mock-settings.service';
+// tslint:disable-next-line:import-blacklist
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { LoyaltyService } from '@cl-core/services/loyalty.service';
+import { MockLoyaltyServices } from '@cl-shared/test-components/providers/mock-loyalty.services';
 describe('AudiencesPageComponent', () => {
   let component: AudiencesPageComponent;
   let fixture: ComponentFixture<AudiencesPageComponent>;
@@ -66,20 +68,19 @@ describe('AudiencesPageComponent', () => {
         TranslateModule.forRoot(),
       ],
       providers: [
-        SettingsService,
         LocalStorageService,
         {
           provide: MessageService, useValue: msgSvcStub
         },
         { provide: AudiencesUserService, useClass: MockAudiencesUserService },
         { provide: AudiencesService, useClass: MockAudienceService },
-        { provide: SettingsService, useClass: MockAudienceService },
+        { provide: SettingsService, useClass: MockSettingsService },
+        { provide: LoyaltyService, useClass: MockLoyaltyServices },
       ],
       declarations: [
         AudiencesPageComponent,
-        AudiencesListComponent,
-        AudiencesUsersListComponent
-      ]
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
       .compileComponents();
   }));

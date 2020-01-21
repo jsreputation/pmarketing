@@ -2,6 +2,7 @@ import { Observable, of } from 'rxjs';
 import {
   IJsonApiItemPayload, IWPinataGameEngagementAttributes
 } from '@perx/whistler';
+import { IPinataForm } from '@cl-core/models/games/pinata/pinate-form.interface';
 
 export class MockPinataService {
   public getPinataData(): Observable<IGameDefaultData> {

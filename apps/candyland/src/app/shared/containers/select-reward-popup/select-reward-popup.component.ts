@@ -16,7 +16,7 @@ export class SelectRewardPopupComponent {
     'name',
     'rewardType',
     'category',
-    //  'balance'
+    'balance'
   ];
   public selectedReward: IRewardEntity;
 

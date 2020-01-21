@@ -48,6 +48,23 @@ describe('ManageListPopupComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ManageListPopupComponent);
     component = fixture.componentInstance;
+    component.data = {
+      id: '1',
+      pi: 'string;',
+      firstName: 'string;',
+      lastName: 'string;',
+      email: 'string;',
+      phone: 'string;',
+      gender: 'string;',
+      birthday: new Date(),
+      race: 'string;',
+      country: 'string;',
+      nationality: 'string;',
+      city: 'string;',
+      state: 'string;',
+      audienceList: ['test'],
+      file: 'string;',
+    };
     fixture.detectChanges();
   });
 

@@ -43,7 +43,10 @@ export class MockAudiencesUserService {
     console.log(params);
     return of({
       data: [this.getMockData()],
-      meta: {}
+      meta: {
+        page_count: 1,
+        record_count: 1
+      }
     });
   }
 

@@ -12,6 +12,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { InstantRewardsService, TenantStoreService } from '@cl-core-services';
 import { TenantMockStore } from '@cl-shared/test-components/tenant-mock-store/tenant-mock-store';
 import { MockInstantRewardsService } from '@cl-shared/test-components/providers/mock-instant-rewards.service';
+import { TestComponentsModule } from '@cl-shared/test-components/test-components.module';
 
 describe('NewInstantRewardManagePageComponent', () => {
   let component: NewInstantRewardManagePageComponent;
@@ -26,6 +27,7 @@ describe('NewInstantRewardManagePageComponent', () => {
         HttpClientTestingModule,
         RouterTestingModule,
         TranslateModule.forRoot(),
+        TestComponentsModule,
       ],
       providers: [
         {provide: LocalStorageService, useValue: {}},

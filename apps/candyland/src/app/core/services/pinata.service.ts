@@ -5,6 +5,7 @@ import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-ad
 import { map } from 'rxjs/operators';
 import { IWPinataGameEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
 import { HttpClient } from '@angular/common/http';
+import { IPinataForm } from '@cl-core/models/games/pinata/pinate-form.interface';
 
 @Injectable({
   providedIn: 'root'

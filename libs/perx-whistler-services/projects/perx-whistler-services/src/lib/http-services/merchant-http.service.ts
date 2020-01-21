@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
-import { IWMerchantAttributes, IWMerchantBranchAttributes, IJsonApiItemPayload, IJsonApiPostItem, IJsonApiPatchItem } from '@perx/whistler';
+import { IWMerchantAttributes, IWMerchantBranchAttributes, IJsonApiItemPayload, IJsonApiPostItem, IJsonApiPatchItem, IJsonApiListPayload } from '@perx/whistler';
 import { ApiConfigServices } from '../configs/api-config';
 
 @Injectable()
@@ -10,6 +10,13 @@ export class MerchantHttpService {
 
   constructor(private http: HttpClient,
               private apiConfig: ApiConfigServices) {
+  }
+
+  public getMerchant(params: HttpParams, id: string): Observable<IJsonApiItemPayload<IWMerchantAttributes>> {
+    return this.http.get<IJsonApiItemPayload<IWMerchantAttributes>>(`${this.apiConfig.merchantsPath}/orgs/${id}`, { params });
+  }
+  public getMerchants(params: HttpParams): Observable<IJsonApiListPayload<IWMerchantAttributes>> {
+    return this.http.get<IJsonApiListPayload<IWMerchantAttributes>>(this.apiConfig.merchantsPath + '/orgs/', { params });
   }
 
   public createMerchant(data: IJsonApiPostItem<IWMerchantAttributes>): Observable<IJsonApiItemPayload<IWMerchantAttributes>> {

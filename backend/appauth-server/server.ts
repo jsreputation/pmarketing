@@ -14,6 +14,7 @@ import { v2Token } from './ctrl/v2-token';
 import { themes } from './ctrl/themes';
 import { manifest } from './ctrl/manifest';
 import { language } from './ctrl/language';
+import { merchantForgotPassword } from './ctrl/merchantAdmin';
 import { getCredentials } from './utils/credentials';
 import { getCredential } from './utils/autoGenerateTenantToken';
 
@@ -48,6 +49,10 @@ app.post(`${BASE_HREF}cognito/login`, login(getTokens));
 app.post(`${BASE_HREF}cognito/users`, users(getTokens));
 
 app.post(`${BASE_HREF}themes`, themes(getTokens));
+
+// temporary intercept until v4 backend migrates away from using client secrets.
+// the way this query performs the API call is the v4 way forward and will be moved to the core service.
+app.post(`${BASE_HREF}v4/merchant_admin/forgot_password`, merchantForgotPassword(getTokens));
 
 app.get(`${BASE_HREF}manifest.webmanifest`, manifest(getTokens, appPath));
 
