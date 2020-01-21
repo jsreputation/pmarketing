@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 export class SessionService {
 
   public isActiveSession$: Observable<any>;
-  private authToken$: BehaviorSubject<string> = new BehaviorSubject(null);
+  private authToken$: BehaviorSubject<string | null> = new BehaviorSubject(null);
 
   constructor() {
     this.isActiveSession$ = this.authToken$
@@ -17,11 +17,11 @@ export class SessionService {
       );
   }
 
-  public get token(): string {
+  public get token(): string | null {
     return this.authToken$.getValue();
   }
 
-  public set token(value: string) {
+  public set token(value: string | null) {
     this.authToken$.next(value);
   }
 

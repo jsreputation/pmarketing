@@ -10,6 +10,7 @@ export interface TypeConfigMap {
 }
 
 // tslint:disable
+// eslint:disable
 export class JsonApiParser {
 
   public static parseData(source: any, adapterFunction: (data: any) => any) {
@@ -40,8 +41,8 @@ export class JsonApiParser {
   }
 
   public static parseSingleInclude(source: any, target: any, type: string, config: TypeConfig): any {
-    const fieldName = config.fieldName || null;
-    const adapterFunction = config.adapterFunction || null;
+    const fieldName = config.fieldName;
+    const adapterFunction = config.adapterFunction;
     const mapIncludes = JsonApiParser.getMapIncludes(source, type, adapterFunction);
 
     if (Utils.isEmptyObject(mapIncludes)) {
@@ -114,7 +115,7 @@ export class JsonApiParser {
     }
   }
 
-  public static getMapIncludes(source, type, adapterFunction?: (data: any) => any) {
+  public static getMapIncludes(source, type, adapterFunction?: (data: any) => any | undefined) {
     if (!('included' in source) || !source.included) {
       return {};
     }
@@ -180,9 +181,10 @@ export class JsonApiParser {
       const relationArrayResult = [];
       // handler as array for relations
       for (const relationDataItem of relationData) {
-        if (!relationDataItem.type.includes(type)) {
+        if (relationDataItem.type.includes(type)) {
           return;
         }
+        // @ts-ignore
         relationArrayResult.push(mapIncludes[relationDataItem.id]);
       }
       // relationData.forEach((relationDataItem: any) => {
