@@ -11,7 +11,7 @@ import {
   IPrePlayStateData
 } from '@perx/core';
 import { map, tap, first, filter, switchMap, bufferCount, catchError, takeUntil } from 'rxjs/operators';
-import { Observable, interval, throwError, Subject, of, combineLatest } from 'rxjs';
+import { Observable, interval, throwError, Subject, combineLatest } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -24,7 +24,7 @@ export class GameComponent implements OnInit, OnDestroy {
   public gameData$: Observable<IGame>;
   public gt: typeof GameType = GameType;
   private campaignId: number;
-  private transactionId: number | null = null;
+  private transactionId: number;
   public progressValue: number;
   private destroy$: Subject<any> = new Subject();
   private popupData: IPopupConfig;
@@ -65,6 +65,7 @@ export class GameComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.initTranslate();
     this.isAnonymousUser = this.auth.getAnonymous();
+    console.log('6556757',  this.isAnonymousUser  )
     this.gameData$ = this.route.params.pipe(
       filter((params: Params) => params.id),
       map((params: Params) => params.id),
@@ -144,15 +145,13 @@ export class GameComponent implements OnInit, OnDestroy {
         bufferCount(nbSteps),
         first()
       );
-    const isCollectDataRequired = !!(this.informationCollectionSetting === 'pi_required' || this.informationCollectionSetting === 'signup_required');
-    const userAction$: Observable<void> = !this.transactionId || (this.isAnonymousUser && isCollectDataRequired) ?
-      of(void 0) :
-      this.gameService.prePlayConfirm(this.transactionId).pipe(
-        catchError((err: HttpErrorResponse) => {
-          this.popupData = this.noRewardsPopUp;
-          throw err;
-        })
-      );
+
+    const userAction$: Observable<void> = this.gameService.prePlayConfirm(this.transactionId, this.informationCollectionSetting).pipe(
+      catchError((err: HttpErrorResponse) => {
+        this.popupData = this.noRewardsPopUp;
+        throw err;
+      })
+    );
     combineLatest(processBar$, userAction$).subscribe(
       () => this.redirectUrlAndPopUp(),
       () => this.redirectUrlAndPopUp()

@@ -13,16 +13,18 @@ import { SpinTheWheelComponent } from './spin-the-wheel/spin-the-wheel.component
 import { SnakeGameComponent } from './snake/snake.component';
 import { MineSweeperComponent } from './mine-sweeper/mine-sweeper.component';
 import { ICampaignService } from '../campaign/icampaign.service';
+import { AuthenticationService } from '../auth/authentication/authentication.service';
 
 export function gameServiceFactory(
   http: HttpClient,
   config: Config,
   vouchSvc: IVoucherService,
-  campaignService?: ICampaignService
+  campaignService?: ICampaignService,
+  auth?: AuthenticationService
 ): IGameService {
   // Make decision on what to instantiate base on config
   if (config.isWhistler) {
-    return new WhistlerGameService(http, config, vouchSvc, campaignService);
+    return new WhistlerGameService(http, config, vouchSvc, campaignService, auth);
   }
   return new V4GameService(http, config);
 }
@@ -48,7 +50,8 @@ export function gameServiceFactory(
         HttpClient,
         Config,
         IVoucherService,
-        [new Optional(), ICampaignService]
+        [new Optional(), ICampaignService],
+        [new Optional(), AuthenticationService]
       ]
     }
   ],
