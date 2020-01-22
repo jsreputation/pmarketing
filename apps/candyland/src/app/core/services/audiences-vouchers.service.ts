@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AudiencesHttpAdapter } from '@cl-core/http-adapters/audiences-http-adapter';
-import { AudiencesHttpsService } from '@cl-core/http-services/audiences-https.service';
+import { AudiencesHttpsService } from '@perx/whistler-services';
 import { combineLatest, Observable, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';

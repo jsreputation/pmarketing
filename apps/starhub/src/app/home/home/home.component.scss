@@ -51,9 +51,10 @@ mat-toolbar {
 .content {
   padding-top: 17rem;
   flex: 1;
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 100%;
   width: 100%;
+  box-sizing: border-box;
   // padding: 1.2rem;
 }
 

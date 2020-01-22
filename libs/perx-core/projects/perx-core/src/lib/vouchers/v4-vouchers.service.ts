@@ -308,4 +308,9 @@ export class V4VouchersService implements IVoucherService {
         switchMap((minVoucher: IV4MinifiedVoucher) => this.get(minVoucher.id, undefined, undefined, locale)),
       );
   }
+
+  public getFromPage(page: number, voucherParams?: IGetVoucherParams, locale: string = 'en'): Observable<IVoucher[]> {
+    return this.getAllFromPage(page, voucherParams, locale)
+      .pipe(map((resp: IV4Voucher[]) => resp.map(v => V4VouchersService.v4VoucherToVoucher(v))));
+  }
 }

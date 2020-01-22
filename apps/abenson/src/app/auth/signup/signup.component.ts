@@ -19,6 +19,7 @@ import { mergeMap } from 'rxjs/operators';
 import {
   AuthenticationService,
   ISignUpData,
+  NotificationService,
   ProfileService,
 } from '@perx/core';
 
@@ -61,7 +62,9 @@ export class SignUpComponent implements OnInit {
     private router: Router,
     private sharedDataService: SharedDataService,
     private profileService: ProfileService,
-  ) { }
+    private notificationService: NotificationService,
+  ) {
+  }
 
   public ngOnInit(): void {
     this.initForm();
@@ -96,25 +99,30 @@ export class SignUpComponent implements OnInit {
     }
 
     this.errorMessage = undefined;
-    const profile = { ...this.signUpForm.value };
+    const profile = {...this.signUpForm.value};
     delete profile.accept_terms;
     delete profile.cardNumber;
     const cardNumber: string = this.signUpForm.value.cardNumber;
     (profile as ISignUpData).passwordConfirmation = password;
     (cardNumber && cardNumber.length ? this.profileService.verifyCardNumber(cardNumber, profile.lastName, '1') : of(true))
       .pipe(mergeMap((success) => success ? this.authService.signup(profile) : throwError(('err-or')))).subscribe(() => {
-        if (this.signUpForm.value.cardNumber) {
-          this.sharedDataService.addData({
-            phone: profile.phone,
-            password: profile.password,
-            cardNumber
-          });
-        }
-        this.router.navigate(['sms-validation'], {
-          queryParams: { identifier: profile.phone }
+      if (this.signUpForm.value.cardNumber) {
+        this.sharedDataService.addData({
+          phone: profile.phone,
+          password: profile.password,
+          cardNumber
         });
-      }, () => {
-        // card error handling
+      }
+      this.router.navigate(['sms-validation'], {
+        queryParams: {identifier: profile.phone}
       });
+    }, () => {
+      // card error handling
+      this.notificationService.addPopup({
+        title: 'PROFILE NOT FOUND',
+        text: 'Please check that your Plus! Card number and last name are correct and try again. If you need help, you may reach us at +63 (02) 981 0025',
+        buttonTxt: 'OK'
+      });
+    });
   }
 }

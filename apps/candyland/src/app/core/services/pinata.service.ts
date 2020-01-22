@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { PinataHttpService } from '@cl-core/http-services/pinata-http.service';
+import { PinataHttpService } from '@perx/whistler-services';
 import { Observable } from 'rxjs';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 import { map } from 'rxjs/operators';
 import { IWPinataGameEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
+import { HttpClient } from '@angular/common/http';
 import { IPinataForm } from '@cl-core/models/games/pinata/pinate-form.interface';
 
 @Injectable({
@@ -11,11 +12,15 @@ import { IPinataForm } from '@cl-core/models/games/pinata/pinate-form.interface'
 })
 export class PinataService {
 
-  constructor(private pinataHttpService: PinataHttpService) {
+  constructor(private pinataHttpService: PinataHttpService,
+              private http: HttpClient) {
   }
 
   public getPinataData(): Observable<IGameDefaultData> {
-    return this.pinataHttpService.getPinataData();
+    return this.http.get<{
+      pinata: IGraphic[],
+      background: IGraphic[]
+    }>('assets/actives/pinata/pinata-data.json');
   }
 
   public getPinata(id: string): Observable<IPinataForm> {
