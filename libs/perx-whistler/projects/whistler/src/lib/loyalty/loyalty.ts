@@ -6,7 +6,7 @@ export interface IWLoyalty {
 }
 
 export interface IWLoyaltyCard {
-  created_at: string;
+  created_at?: string;
   balance: string;
   user_id: number;
   tier_id?: number;
