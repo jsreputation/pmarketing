@@ -6,8 +6,12 @@ import {
 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { oc } from 'ts-optchain';
 
-import { IMerchantAdminService } from './imerchant-admin.service';
+import {
+  IMerchantAdminService,
+  IRes,
+} from './imerchant-admin.service';
 import {
   IMerchantAdminTransaction,
   IMerchantProfile,
@@ -30,7 +34,6 @@ import {
   VoucherState,
 } from '../vouchers/models/voucher.model';
 import { RedemptionType } from '../perx-core.models';
-import { oc } from 'ts-optchain';
 
 interface IV4MerchantAdminTransaction {
   id: number;
@@ -171,12 +174,14 @@ interface IV4MerchantTransactionHistoryResponse {
 })
 export class V4MerchantAdminService implements IMerchantAdminService {
   public apiHost: string;
+  private merchantEndPoint: string | null = null;
 
   constructor(
     private http: HttpClient,
     private config: Config,
   ) {
     this.apiHost = config.apiHost as string;
+    this.merchantEndPoint = `${this.apiHost}/v4/merchant_admin`;
   }
 
   public static v4TransactionHistoryToTransactionHistory(transactionHistory: IV4MerchantTransactionHistory): IMerchantTransactionHistory {
@@ -380,5 +385,9 @@ export class V4MerchantAdminService implements IMerchantAdminService {
           V4MerchantAdminService.v4TransactionHistoryToTransactionHistory(transactionHistory)
       ))
     );
+  }
+
+  public forgotPassword(email: string): Observable<IRes> {
+    return this.http.post<IRes>(`${this.merchantEndPoint}/forget_password`, { email });
   }
 }
