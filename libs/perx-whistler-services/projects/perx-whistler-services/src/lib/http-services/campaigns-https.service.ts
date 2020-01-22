@@ -12,9 +12,10 @@ import { ApiConfigServices } from '../configs/api-config';
 
 @Injectable()
 export class CampaignsHttpsService {
-  constructor(private http: HttpClient,
-              private apiConfig: ApiConfigServices) {
-  }
+  constructor(
+    private http: HttpClient,
+    private apiConfig: ApiConfigServices
+  ) { }
 
   public getCampaigns(params: HttpParams): Observable<IJsonApiListPayload<IWCampaignAttributes>> {
     return this.http.get<IJsonApiListPayload<IWCampaignAttributes>>(this.apiConfig.campaignsPath, { params });
@@ -28,7 +29,7 @@ export class CampaignsHttpsService {
     id: string,
     data: IJsonApiPatchItem<IWCampaignAttributes>
   ): Observable<IJsonApiItemPayload<IWCampaignAttributes>> {
-    return this.http.patch<IJsonApiItemPayload<IWCampaignAttributes>>(this.apiConfig.campaignsPath + '/' + id, data);
+    return this.http.patch<IJsonApiItemPayload<IWCampaignAttributes>>(`${this.apiConfig.campaignsPath}/${id}`, data);
   }
 
   public createCampaign(data: IJsonApiPostItem<IWCampaignAttributes>): Observable<IJsonApiItemPayload<IWCampaignAttributes>> {

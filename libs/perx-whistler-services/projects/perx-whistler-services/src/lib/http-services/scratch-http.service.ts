@@ -6,24 +6,25 @@ import { ApiConfigServices } from '../configs/api-config';
 
 @Injectable()
 export class ScratchHttpService {
-
-  constructor(private http: HttpClient,
-              private apiConfig: ApiConfigServices) { }
+  constructor(
+    private http: HttpClient,
+    private apiConfig: ApiConfigServices
+  ) { }
 
   public createScratch(
     data: IJsonApiPostItem<IWScratchGameEngagementAttributes>
   ): Observable<IJsonApiItemPayload<IWScratchGameEngagementAttributes>> {
-    return this.http.post<IJsonApiItemPayload<IWScratchGameEngagementAttributes>>(this.apiConfig.engagementsPath + '/', data);
+    return this.http.post<IJsonApiItemPayload<IWScratchGameEngagementAttributes>>(`${this.apiConfig.engagementsPath}/`, data);
   }
 
   public updateScratch(
     id: string,
     data: IJsonApiPatchItem<IWScratchGameEngagementAttributes>
   ): Observable<IJsonApiItemPayload<IWScratchGameEngagementAttributes>> {
-    return this.http.patch<IJsonApiItemPayload<IWScratchGameEngagementAttributes>>(this.apiConfig.engagementsPath + '/game/' + id, data);
+    return this.http.patch<IJsonApiItemPayload<IWScratchGameEngagementAttributes>>(`${this.apiConfig.engagementsPath}/game/${id}`, data);
   }
 
   public getScratch(id: string): Observable<IJsonApiItemPayload<IWScratchGameEngagementAttributes>> {
-    return this.http.get<IJsonApiItemPayload<IWScratchGameEngagementAttributes>>(this.apiConfig.engagementsPath + '/game/' + id);
+    return this.http.get<IJsonApiItemPayload<IWScratchGameEngagementAttributes>>(`${this.apiConfig.engagementsPath}/game/${id}`);
   }
 }

@@ -6,25 +6,25 @@ import { ApiConfigServices } from '../configs/api-config';
 
 @Injectable()
 export class PinataHttpService {
-
-  constructor(private http: HttpClient,
-              private apiConfig: ApiConfigServices) {
-  }
+  constructor(
+    private http: HttpClient,
+    private apiConfig: ApiConfigServices
+  ) { }
 
   public createPinata(
     data: IJsonApiPostItem<IWPinataGameEngagementAttributes>
   ): Observable<IJsonApiItemPayload<IWPinataGameEngagementAttributes>> {
-    return this.http.post<IJsonApiItemPayload<IWPinataGameEngagementAttributes>>(this.apiConfig.engagementsPath + '/', data);
+    return this.http.post<IJsonApiItemPayload<IWPinataGameEngagementAttributes>>(`${this.apiConfig.engagementsPath}/`, data);
   }
 
   public updatePinata(
     id: string,
     data: IJsonApiPatchItem<IWPinataGameEngagementAttributes>
   ): Observable<IJsonApiItemPayload<IWPinataGameEngagementAttributes>> {
-    return this.http.patch<IJsonApiItemPayload<IWPinataGameEngagementAttributes>>(this.apiConfig.engagementsPath + '/game/' + id, data);
+    return this.http.patch<IJsonApiItemPayload<IWPinataGameEngagementAttributes>>(`${this.apiConfig.engagementsPath}/game/${id}`, data);
   }
 
   public getPinata(id: string): Observable<IJsonApiItemPayload<IWPinataGameEngagementAttributes>> {
-    return this.http.get<IJsonApiItemPayload<IWPinataGameEngagementAttributes>>(this.apiConfig.engagementsPath + '/game/' + id);
+    return this.http.get<IJsonApiItemPayload<IWPinataGameEngagementAttributes>>(`${this.apiConfig.engagementsPath}/game/${id}`);
   }
 }

@@ -19,21 +19,19 @@ export class TenantService {
     private tenantHttpService: TenantHttpService,
     private fb: FormBuilder,
     private http: HttpClient,
-              private tenantStoreService: TenantStoreService
+    private tenantStoreService: TenantStoreService
   ) { }
 
   public findTenant(params: HttpParamsOptions = {}): Observable<ITenant> {
     params = {
       ...params,
       'page[number]': '1',
-      'page[size]': '20'
+      'page[size]': '1'
     };
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.tenantHttpService.getTenant(httpParams)
       .pipe(
-        map(tenant => {
-          return TenantHttpAdapterService.transformToTenant(tenant.data[0]);
-        }),
+        map(tenant => TenantHttpAdapterService.transformToTenant(tenant.data[0])),
         tap(tenant => this.tenant = tenant)
       );
   }
