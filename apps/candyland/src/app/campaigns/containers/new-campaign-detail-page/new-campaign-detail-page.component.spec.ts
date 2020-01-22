@@ -24,6 +24,8 @@ import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform
 import { TranslateModule } from '@ngx-translate/core';
 import { ICampaign } from '@cl-core/models/campaign/campaign';
 import { ActivatedRoute } from '@angular/router';
+import { MockAudienceService } from '@cl-shared/test-components/providers/mock-audience.service';
+import { AudiencesService } from '@cl-core-services';
 
 describe('NewCampaignDetailPageComponent', () => {
   let component: NewCampaignDetailPageComponent;
@@ -81,7 +83,8 @@ describe('NewCampaignDetailPageComponent', () => {
         { provide: CampaignCreationStoreService, useValue: campaignCreationStoreServiceStub },
         { provide: StepConditionService, useValue: stepConditionServiceStub },
         { provide: NewCampaignDetailFormService, useValue: newCampaignDetailFormServiceStub },
-        { provide: ActivatedRoute, useValue: activatedRouteStub }
+        { provide: ActivatedRoute, useValue: activatedRouteStub },
+        { provide: AudiencesService, useClass: MockAudienceService }
       ],
       declarations: [NewCampaignDetailPageComponent],
       schemas: [NO_ERRORS_SCHEMA]

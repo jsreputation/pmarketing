@@ -7,6 +7,8 @@ import { PipesModule } from '@cl-shared/pipes/pipes.module';
 import { MatMenuModule, MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { MockUploadFileService } from '@cl-shared/test-components/providers/mock-upload-file.service';
+import { UploadFileService } from '@cl-core-services';
 
 describe('LoyaltyItemComponent', () => {
   let component: LoyaltyItemComponent;
@@ -22,6 +24,7 @@ describe('LoyaltyItemComponent', () => {
         MatIconModule,
         TranslateModule.forRoot()
       ],
+      providers: [{ provide: UploadFileService, useClass: MockUploadFileService }],
       schemas: [NO_ERRORS_SCHEMA]
     })
       .compileComponents();
