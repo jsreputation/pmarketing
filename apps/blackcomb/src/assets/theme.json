@@ -1,18 +1,18 @@
 {
-    "name": "Dark",
+    "name": "Light",
     "properties": {
       "--font": "Roboto",
-      "--logo": "assets/the-1-logo.svg",
-      "--title": "The 1",
-      "--accent": "#EDEDED",
-      "--primary": "#DB1E2B",
+      "--logo": "assets/header_logo.png",
+      "--title": "Oracle",
+      "--accent": "#082B2F",
+      "--primary": "#C54839",
       "--button_text_color": "#ffffff",
-      "--button_background_color": "#DB1E2B",
-      "--header_color": "#000",
-      "--background": "#2C2C2C",
-      "--font_color": "#EDEDED",
+      "--button_background_color": "#C54839",
+      "--header_color": "#C54839",
+      "--background": "#e8e8e8",
+      "--font_color": "#212121",
       "--login_background_colour": "#000",
-      "--surface_colour": "#231F20",
-      "--popup_background_colour": "#333333"
+      "--surface_colour": "#ffffff",
+      "--popup_background_colour": "#ffffff"
     }
 }
