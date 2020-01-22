@@ -1,11 +1,11 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Subject } from 'rxjs';
-import {switchMap, takeUntil, tap} from 'rxjs/operators';
+import { switchMap, takeUntil, tap, map } from 'rxjs/operators';
 
 import { DashboardChartsParametersService } from '../../services/dashboard-charts-parameters.service';
 import { CardType } from '@perx/chart';
-import {DashboardService} from '@cl-core-services';
+import { DashboardService } from '@cl-core-services';
 
 @Component({
   selector: 'cl-dashboard-rewards-page',
@@ -15,7 +15,7 @@ import {DashboardService} from '@cl-core-services';
 export class DashboardRewardsPageComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject();
 
-  public rewardTabValue: number | null;
+  public rewardTabValue: number | null = null;
   public params: { [key: string]: string };
   public ct: typeof CardType = CardType;
 
@@ -31,25 +31,16 @@ export class DashboardRewardsPageComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  public get RewardValue(): number | null {
-    return this.rewardTabValue || null;
-  }
-
   private handelChartsParamsChanges(): void {
     this.chartsParametersService.params$.pipe(
-      tap(params => {
-        this.params = params;
-      }),
+      tap(params => this.params = params),
       switchMap(params => this.dashboardService.getTabValues('rewards_total_rewards', params)),
-      tap(value => {
-        /* tslint:disable-next-line */
-        this.rewardTabValue = value.flat().filter(v => typeof v === 'number').reduce(
-          (acc, curr) => acc + curr
-          , 0);
-      }),
+      map(value => value.flat()
+        .filter(v => typeof v === 'number')
+        .reduce((acc: number, curr: number) => acc + curr, 0)
+      ),
       takeUntil(this.destroy$)
-      /* tslint:disable-next-line */
-    ).subscribe();
+    ).subscribe((value: number) => this.rewardTabValue = value);
   }
 
 }

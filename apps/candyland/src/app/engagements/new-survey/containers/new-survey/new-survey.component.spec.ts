@@ -2,18 +2,16 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NewSurveyComponent } from './new-survey.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { StampHttpService } from '@cl-core/http-services/stamp-http.service';
-import { RoutingStateService } from '@cl-core/services';
+import { RoutingStateService, SurveyService, TenantStoreService, UploadFileService } from '@cl-core/services';
 import { StampDataService } from '../../../new-stamp/shared/stamp-data.service';
 import { QuestionTypeModule } from '@cl-shared/questions/question-type/question-type.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { QuestionFormFieldModule } from '@cl-shared/questions/question-form-field/question-form-field.module';
-import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wrap/select-graphic-wrap.module';
 import { MatCardModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatSelectModule } from '@angular/material';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { of } from 'rxjs';
+
 import { ConfirmModalModule, SimpleMobileViewModule } from '@cl-shared';
 // tslint:disable
 import { NO_ERRORS_SCHEMA } from '@angular/core';
@@ -21,6 +19,11 @@ import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonModule } from '@perx/candyshop';
 
+import { TenantMockStore } from '@cl-shared/test-components/tenant-mock-store/tenant-mock-store';
+import { MockSurveyService } from '@cl-shared/test-components/providers/mock-survey.service';
+import { MockUploadFileService } from '@cl-shared/test-components/providers/mock-upload-file.service';
+import { WINDOW } from '@cl-core/services/window.service';
+import { TestComponentsModule } from '@cl-shared/test-components/test-components.module';
 describe('NewSurveyPageComponent', () => {
   let component: NewSurveyComponent;
   let fixture: ComponentFixture<NewSurveyComponent>;
@@ -34,7 +37,6 @@ describe('NewSurveyPageComponent', () => {
         ReactiveFormsModule,
         ButtonModule,
         QuestionFormFieldModule,
-        SelectGraphicWrapModule,
         HttpClientTestingModule,
         SimpleMobileViewModule,
         // PerxSurveyModule,
@@ -47,19 +49,23 @@ describe('NewSurveyPageComponent', () => {
         MatDialogModule,
         ConfirmModalModule,
         TranslateModule.forRoot(),
+        TestComponentsModule,
       ],
       schemas: [ NO_ERRORS_SCHEMA ],
       declarations: [ NewSurveyComponent ],
       providers: [
-        {provide: StampHttpService, useValue: {
-          getCardBackground: () => of([]),
-          getBackground: () => of([]),
-          }} ,
         {provide: RoutingStateService, useValue: {}},
         {
           provide: StampDataService, useValue: {}
         },
-        { provide: LocalStorageService, useValue: {}}
+        { provide: LocalStorageService, useValue: {}},
+        { provide: TenantStoreService, useClass: TenantMockStore },
+        { provide: SurveyService, useClass: MockSurveyService },
+        { provide: UploadFileService, useClass: MockUploadFileService },
+        { provide: WINDOW, useValue: {
+            scrollTo(a: any, b: any): any { return {a, b}; }
+          }
+        }
       ]
     })
     .compileComponents();

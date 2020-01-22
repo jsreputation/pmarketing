@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { StatusLabelMapping, Voucher, IVoucherService, VoucherState, ConfigService } from '@perx/core';
 import { Router } from '@angular/router';
+import { IAbensonConfig } from '../model/IAbenson.model';
 
 @Component({
   selector: 'app-wallet',
@@ -11,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class WalletComponent implements OnInit {
   public issuedVouchers: Observable<Voucher[]>;
-  public comingSoon: boolean = false;
+  public comingSoon: boolean = true;
   public redeemedVouchers: Observable<Voucher[]>;
 
   public mapping: StatusLabelMapping = {
@@ -30,7 +31,9 @@ export class WalletComponent implements OnInit {
 
   public ngOnInit(): void {
     const feed = this.vouchersService.getAll();
-    this.configService.readAppConfig().subscribe((config) => this.comingSoon = config.comingSoon as boolean);
+    this.configService.readAppConfig<IAbensonConfig>().subscribe((config) => {
+      this.comingSoon = config.custom ? config.custom.comingSoon as boolean : false;
+    });
     this.issuedVouchers = feed
       .pipe(
         map((vouchers: Voucher[]) => vouchers.filter(voucher => voucher.state === VoucherState.issued))

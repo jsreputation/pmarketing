@@ -5,24 +5,34 @@ const async = require('async');
 // Configure Angular `environment.ts` file path
 const targetPath = `./src/environments/environment.ts`;
 const appConfigPath = `./src/assets/config/app-config.json`;
+const rssFeedsPath = `./src/assets/config/RSS_FEEDS.json`;
 // Load node modules
 const colors = require('colors');
 require('dotenv').config();
 
 // Debug environment variables
 
-const displayProperties = `"display_properties": {
+const rssFeeds = `{
+  "data": [
+    {
+      "url": "${process.env.RSS_FEEDS ? process.env.RSS_FEEDS : 'https://cdn.perxtech.io/content/starhub/rss.xml'}",
+      "page": "home"
+    }
+  ]
+}`;
+
+const displayProperties = `"displayProperties": {
     "account": {
         "pages": [
             {
                 "key": "contact-us",
                 "title": "Contact Us",
-                "content_url": "https://cdn.uat.whistler.perxtech.io/dev1/tenants/222222222/762b80fa-e4b3-11e9-81b4-2a2ae2dbcce4"
+                "content_url": ""
             },
             {
                 "key": "tnc",
                 "title": "Terms and Conditions",
-                "content_url": "https://cdn.uat.whistler.perxtech.io/dev1/tenants/222222222/762b84ba-e4b3-11e9-81b4-2a2ae2dbcce4"
+                "content_url": ""
             }
         ]
     },
@@ -62,6 +72,7 @@ const appConfigFile = `{
   "showSubtitleLogin": ${process.env.SHOW_LOGIN_SUBTITLE ? process.env.SHOW_LOGIN_SUBTITLE : true},
   "showHomePage": ${process.env.SHOW_HOME_PAGE ? process.env.SHOW_HOME_PAGE : true},
   "showHistoryPage": ${process.env.SHOW_HISTORY_PAGE ? process.env.SHOW_HISTORY_PAGE : false},
+  "showAccountsPage": ${process.env.SHOW_ACCOUNTS_PAGE ? process.env.SHOW_ACCOUNTS_PAGE : true},
   "showNewsfeedOnHomepage": ${process.env.SHOW_NEWSFEED_HOMEPAGE ? process.env.SHOW_NEWSFEED_HOMEPAGE : true},
   "showQrPageSubtitle": ${process.env.SHOW_QRPAGE_SUBTITLE ? process.env.SHOW_QRPAGE_SUBTITLE : true},
   "showUserQR": ${process.env.SHOW_USER_QR ? process.env.SHOW_USER_QR : true},
@@ -70,12 +81,13 @@ const appConfigFile = `{
   "showTransactionHistoryOnAccountsPage": ${process.env.SHOW_TRANSANCTION_HISTORY_ACCOUNTS ? process.env.SHOW_TRANSANCTION_HISTORY_ACCOUNTS : true},
   "showVoucherBookingFromRewardsPage": ${process.env.SHOW_TRANSANCTION_HISTORY_ACCOUNTS ? process.env.SHOW_TRANSANCTION_HISTORY_ACCOUNTS : true},
   "showBarcodeOnHomeProfilePage": ${process.env.SHOW_TRANSANCTION_HISTORY_ACCOUNTS ? process.env.SHOW_TRANSANCTION_HISTORY_ACCOUNTS : true},
-  "redirectAfterLogin": "${process.env.REDIRECT_AFTER_LOGIN ? process.env.REDIRECT_AFTER_LOGIN : '/wallet'}",
+  "redirectAfterLogin": "${process.env.REDIRECT_AFTER_LOGIN ? process.env.REDIRECT_AFTER_LOGIN : '/home'}",
+  "custom": {"stampsType": "${process.env.STAMPS_TYPE ? process.env.STAMPS_TYPE : 'stamp_card'}"},
   ${displayProperties}
 }
 `;
 
-async.each([[targetPath, envConfigFile], [appConfigPath, appConfigFile]],
+async.each([[targetPath, envConfigFile], [appConfigPath, appConfigFile], [rssFeedsPath, rssFeeds]],
   (item: [[string, string], [string, string]], callback: any) => {
 
     console.log(colors.magenta(`The file '${item[0]}' will be written with the following content: \n`));

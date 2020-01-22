@@ -6,7 +6,7 @@ import { filter } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class TranslateDefaultLanguageService {
-  private _defaultLanguage$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+  private _defaultLanguage$: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
 
   public get defaultLanguage$(): Observable<string> {
     return this._defaultLanguage$

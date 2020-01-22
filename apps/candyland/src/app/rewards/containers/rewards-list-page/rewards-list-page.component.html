@@ -12,23 +12,22 @@
       <!--filters-->
       <cl-table-filters [dataSource]="dataSource" classList="block">
         <ng-container *clTableFilter="'name'; let filter">
-          <cl-search-filter class="search-block" [control]="filter" [placeholder]="'SEARCH_FOR_REWARDS' | translate"></cl-search-filter>
+          <cl-search-filter class="search-block" [control]="filter" [placeholder]="'SEARCH_FOR_REWARDS' | translate">
+          </cl-search-filter>
         </ng-container>
       </cl-table-filters>
       <div class="table-card">
         <!--table-->
         <cl-rewards-list [dataSource]="dataSource"
-                         [displayedColumns]="displayedColumns"
-                         [selectable]="false"
-                         (clickDetailReward)="detailReward($event)"
-                         (itemAction)="actionHandler($event)"
-        ></cl-rewards-list>
+          [displayedColumns]="displayedColumns"
+          [selectable]="false"
+          (clickDetailReward)="detailReward($event)"
+          (itemAction)="actionHandler($event)"></cl-rewards-list>
         <!--/ table-->
         <!--paginator-->
         <cl-paginator [dataSource]="dataSource"
-                      [pageSize]="5"
-                      [pageSizeOptions]="[5, 10, 20]"
-        ></cl-paginator>
+          [pageSize]="5"
+          [pageSizeOptions]="[5, 10, 20]"></cl-paginator>
         <!--/ paginator-->
       </div>
     </ng-container>
@@ -42,6 +41,13 @@
         LETS_BEGIN_BY_CREATING_YOUR_FIRST_REWARD
       </p>
     </cl-no-data>
+    <div *ngSwitchCase="dataSourceStates.firstLoading">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+    <cl-no-data *ngSwitchCase="dataSourceStates.errorApi">
+      <h2 class="no-data-title">
+        <span>Something broke</span> <span style="display: inline-block;">:(</span>
+      </h2>
+    </cl-no-data>
   </ng-container>
 </section>
-

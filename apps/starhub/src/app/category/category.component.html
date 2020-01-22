@@ -11,18 +11,17 @@
 <div
   *ngIf="(rewards$ | rewardsSort: selectedSortingCraeteria | async) as rewards"
   class="content"
-  cdkScrollable
+  #contentScroll
+  infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="500"
+  (scrolled)="onScroll()"
+  [scrollWindow]="false"
 >
   <h1 class="catergory-title">{{selectedCategory}}</h1>
   <div
     *ngIf="rewards.length > 0"
-    class="scroll-content"
-    infiniteScroll
-    [infiniteScrollDistance]="2"
-    [infiniteScrollThrottle]="500"
-    (scrolled)="onScroll()"
-    [scrollWindow]="false"
-  >
+    class="scroll-content">
     <mat-card *ngFor="let reward of rewards" (click)="selected(reward)" matRipple>
       <div class="featured-image">
         <img mat-card-image [src]="reward.rewardBanner">

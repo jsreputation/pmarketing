@@ -11,9 +11,10 @@ import {
   ProfileService,
   LoyaltyService,
   IProfile,
-  ConfigService
+  ConfigService,
+  IConfig
 } from '@perx/core';
-import { of } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import { MatCardModule } from '@angular/material';
 
 describe('HomeComponent', () => {
@@ -23,13 +24,13 @@ describe('HomeComponent', () => {
     navigate: jasmine.createSpy('navigate')
   };
   const configServiceStub: Partial<ConfigService> = {
-    readAppConfig: () => of({})
+    readAppConfig: <T>(): Observable<IConfig<T>> => of()
   };
-  const vouchersServiceStub = {
+  const vouchersServiceStub: Partial<IVoucherService> = {
     getAll: () => of()
   };
 
-  const campaignServiceStub = {
+  const campaignServiceStub: Partial<ICampaignService> = {
     getCampaigns: () => of()
   };
 
@@ -44,6 +45,7 @@ describe('HomeComponent', () => {
   };
 
   const loyaltyServiceStub: Partial<LoyaltyService> = {
+    getLoyalty: () => of(),
     getLoyalties: () => of([])
   };
 

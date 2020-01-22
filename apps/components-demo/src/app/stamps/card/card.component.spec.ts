@@ -1,11 +1,26 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CardComponent } from './card.component';
-import { PuzzlesModule } from '@perx/core';
+import { PuzzlesModule, ConfigService, ThemesService, ICampaignService, StampService } from '@perx/core';
 import { MatSliderModule, MatCheckboxModule, MatIconModule } from '@angular/material';
+import { of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('CardComponent', () => {
   let component: CardComponent;
   let fixture: ComponentFixture<CardComponent>;
+
+  const configServiceStub = {
+    readAppConfig: () => of()
+  };
+  const themesServiceStub = {
+    getThemeSetting: () => of()
+  };
+  const campaignServiceStub = {
+    getCampaigns: () => of()
+  };
+  const stampServiceStub = {
+    getStamps: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -14,7 +29,14 @@ describe('CardComponent', () => {
         PuzzlesModule,
         MatSliderModule,
         MatCheckboxModule,
-        MatIconModule
+        MatIconModule,
+        RouterTestingModule
+      ],
+      providers: [
+        { provide: ConfigService, useValue: configServiceStub },
+        { provide: ThemesService, useValue: themesServiceStub },
+        { provide: ICampaignService, useValue: campaignServiceStub },
+        { provide: StampService, useValue: stampServiceStub }
       ]
     })
       .compileComponents();

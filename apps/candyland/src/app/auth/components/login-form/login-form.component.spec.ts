@@ -7,10 +7,9 @@ import { MatFormFieldModule, MatIconModule, MatInputModule } from '@angular/mate
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthService } from '@cl-core-services';
-import { LocalStorageService } from '@cl-core/services/local-storage.service';
-import { SessionService } from '@cl-core/services/session.service';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
+import { TestAuthServisec } from '@cl-shared/test-components/providers/test-auth.servisec';
 
 describe('LoginFormComponent', () => {
   let component: LoginFormComponent;
@@ -32,7 +31,12 @@ describe('LoginFormComponent', () => {
         HttpClientModule,
         TranslateModule.forRoot()
       ],
-      providers: [ AuthService, LocalStorageService, SessionService ],
+      providers: [
+        {
+          provide: AuthService,
+          useClass: TestAuthServisec
+        }
+        ],
       declarations: [ LoginFormComponent ]
     })
     .compileComponents();

@@ -61,7 +61,7 @@ export abstract class AuthenticationService implements AuthService {
 
   public abstract autoLogin(): Observable<void>;
 
-  public abstract createUserAndAutoLogin(pi: string, userObj?: { [key: string]: any }, anonymous?: boolean): Observable<void>;
+  public abstract createUserAndAutoLogin(pi: string, userObj?: { [key: string]: any }, anonymous?: boolean): Observable<void | null>;
 
   /**
    * This is important, for those public pages, API require app level access token in request header
@@ -85,7 +85,7 @@ export abstract class AuthenticationService implements AuthService {
 
   public abstract resendOTP(phone: string): Observable<IMessageResponse>;
 
-  public abstract signup(profile: ISignUpData): Observable<IProfile>;
+  public abstract signup(profile: ISignUpData): Observable<IProfile | null>;
 
   public abstract verifyOTP(phone: string, otp: string): Observable<IMessageResponse>;
 

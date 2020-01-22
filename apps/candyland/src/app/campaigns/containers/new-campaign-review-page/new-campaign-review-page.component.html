@@ -1,7 +1,7 @@
 <div class="phonepreview-wrapper">
   <div class="forms-container">
     <!--template-->
-    <mat-card class="card linkable" *ngIf="campaign?.template" (click)="navigateToEdit()">
+    <mat-card class="card linkable" *ngIf="campaign?.template" (click)="navigateToEngagement()">
       <div class="card-header">
         <h2 class="card-title">
           {{'CAMPAIGN.TEMPLATE' | translate}}
@@ -13,15 +13,27 @@
     </mat-card>
     <!--rewards-->
     <mat-card class="card" *ngIf="stampsHasRewards">
+
+      <div class="card-content" *ngIf="specialProbDisplay$ | async as outcome">
+        <div class="card-header"></div>
+        <cl-reward-item-preview
+          class="item"
+          [data]="outcome?.reward"
+          [probability]="outcome?.outcome?.probability"
+          [enableProbability]="campaign?.enabledProb">
+        </cl-reward-item-preview>
+      </div>
+
+
       <div *ngFor="let slot of slots">
         <div *ngIf="hasRewardsInSlot(slot)">
           <div class="card-header">
             <p class="card-title" *ngIf="slot > 0">
-                {{'CAMPAIGN.REWARDS_FOR_SLOT' | translate}}
-                {{slot}}
+              {{'CAMPAIGN.REWARDS_FOR_SLOT' | translate}}
+              {{slot}}
             </p>
             <p class="card-title" *ngIf="slot === 0">
-                {{'CAMPAIGN.REWARDS' | translate}}
+              {{'CAMPAIGN.REWARDS' | translate}}
             </p>
           </div>
           <div *ngFor="let outcome of campaign?.outcomes">
@@ -148,21 +160,21 @@
       <ng-container *ngIf="campaign?.notification?.launch?.length">
         <!--Message-->
         <div class="card-content">
-          <div class="card-section" *ngFor="let launch of campaign.notification.launch; let index = index;" >
+          <div class="card-section" *ngFor="let launch of campaign.notification.launch; let index = index;">
             <div class="card-header">
               <div class="card-title">
-                <section >
+                <section>
                   <h2 class="card-title message-title">
                     {{'CAMPAIGN.ON_CAMPAIGN_LAUNCH_MESSAGE' | translate}}
                     <span>{{index + 1}}</span>
                   </h2>
                   <div class="input-group notification-row">
-                  <span>
-                    {{'CAMPAIGN.MESSAGE_WILL_BE_SENT_ON' | translate}}
-                  </span>
                     <span>
-                    {{getSendType(launch.sentType) | translate}}
-                  </span>
+                      {{'CAMPAIGN.MESSAGE_WILL_BE_SENT_ON' | translate}}
+                    </span>
+                    <span>
+                      {{getSendType(launch.sentType) | translate}}
+                    </span>
                   </div>
                   <div *ngIf="launch.sentType === launchType.launchDate" class="notification-date-time">
                     {{'CAMPAIGN.MESSAGE_WILL_BE_SENT_ON' | translate}}
@@ -172,26 +184,26 @@
                   </div>
 
                   <section *ngIf="launch.sentType === launchType.usersDateBirth"
-                           class="notification-date-time input-group notification-row">
-                  <span>
-                    {{'CAMPAIGN.MESSAGE_SENT_ON_BIRTHDAY' | translate}}
-                  </span>
+                    class="notification-date-time input-group notification-row">
+                    <span>
+                      {{'CAMPAIGN.MESSAGE_SENT_ON_BIRTHDAY' | translate}}
+                    </span>
                     <div class="date-field">
                       {{launch.birthdayTime}}
                     </div>
                   </section>
 
                   <section *ngIf="launch.sentType === launchType.usersMonthBirth"
-                           class="notification-date-time input-group notification-row">
-                  <span>
-                    {{'CAMPAIGN.MESSAGE_SENT_ON_DAY' | translate}}
-                  </span>
+                    class="notification-date-time input-group notification-row">
                     <span>
-                    {{launch.monthDay}}
-                  </span>
+                      {{'CAMPAIGN.MESSAGE_SENT_ON_DAY' | translate}}
+                    </span>
                     <span>
-                    {{'CAMPAIGN.OF_THE_USER_BIRTH_MONTH_AT' | translate}}
-                  </span>
+                      {{launch.monthDay}}
+                    </span>
+                    <span>
+                      {{'CAMPAIGN.OF_THE_USER_BIRTH_MONTH_AT' | translate}}
+                    </span>
                     <div class="date-field">
                       {{launch.birthdayTime}}
                     </div>
@@ -207,7 +219,7 @@
       <ng-container *ngIf="campaign?.notification?.completed?.length">
         <!--Message-->
         <div class="card-content">
-          <div class="card-section" *ngFor="let completed of campaign.notification.completed; let index = index;" >
+          <div class="card-section" *ngFor="let completed of campaign.notification.completed; let index = index;">
             <div class="card-header">
               <div class="card-title">
                 <!--start completed-->
@@ -258,7 +270,7 @@
       <ng-container *ngIf="campaign?.notification?.campaignEnds?.length">
         <!--Message-->
         <div class="card-content">
-          <div class="card-section" *ngFor="let campaignEnds of campaign.notification.campaignEnds; let index = index;" >
+          <div class="card-section" *ngFor="let campaignEnds of campaign.notification.campaignEnds; let index = index;">
             <div class="card-header">
               <div class="card-title">
                 <!--start campaignEnds-->
@@ -324,7 +336,8 @@
         </h3>
       </div>
 
-      <div class="card-content"> <!--*ngIf="campaign?.audience?.filters?.genderEnabled"-->
+      <div class="card-content">
+        <!--*ngIf="campaign?.audience?.filters?.genderEnabled"-->
         <div class="card-section" *ngIf="campaign?.audience?.filters?.agesEnabled">
           <div class="card-header">
             <h3 class="card-title">

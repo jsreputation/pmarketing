@@ -6,7 +6,8 @@ import { MatFormFieldModule, MatRadioModule, MatSelectModule } from '@angular/ma
 import { ButtonModule } from '@perx/candyshop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-
+// tslint:disable
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 describe('GamesComponent', () => {
   let component: GamesComponent;
   let fixture: ComponentFixture<GamesComponent>;
@@ -24,7 +25,8 @@ describe('GamesComponent', () => {
       declarations: [
         GamesComponent,
         GameComponent
-      ]
+      ],
+      schemas: [ NO_ERRORS_SCHEMA ],
     })
     .compileComponents();
   }));

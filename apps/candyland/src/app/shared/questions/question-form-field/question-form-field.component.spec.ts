@@ -21,6 +21,8 @@ import { QuestionFormFieldService } from '@cl-shared/questions/question-form-fie
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
+import { environment } from '@cl-environments/environment';
+import { HttpServicesModule } from '@perx/whistler-services';
 
 describe('QuestionFormFieldComponent', () => {
   let component: QuestionFormFieldComponent;
@@ -46,7 +48,11 @@ describe('QuestionFormFieldComponent', () => {
         MatInputModule,
         MatSlideToggleModule,
         DragDropModule,
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
+        HttpServicesModule.forRoot(
+          environment.apiHost,
+          environment.apiCdn
+        ),
       ],
       declarations: [
         QuestionFormFieldComponent,

@@ -107,9 +107,9 @@ export class V4VouchersService implements IVoucherService {
 
   public getAll(voucherParams?: IGetVoucherParams, locale: string = 'en'): Observable<IVoucher[]> {
     const headers = new HttpHeaders().set('Accept-Language', locale);
-    if (this.vouchers.length > 0) {
-      return of(this.vouchers);
-    }
+    // if (this.vouchers.length > 0) {
+    //   return of(this.vouchers);
+    // }
     let params = new HttpParams()
       .set('sort_by', 'id')
       .set('order', 'desc');
@@ -307,5 +307,10 @@ export class V4VouchersService implements IVoucherService {
         map(res => res.data),
         switchMap((minVoucher: IV4MinifiedVoucher) => this.get(minVoucher.id, undefined, undefined, locale)),
       );
+  }
+
+  public getFromPage(page: number, voucherParams?: IGetVoucherParams, locale: string = 'en'): Observable<IVoucher[]> {
+    return this.getAllFromPage(page, voucherParams, locale)
+      .pipe(map((resp: IV4Voucher[]) => resp.map(v => V4VouchersService.v4VoucherToVoucher(v))));
   }
 }

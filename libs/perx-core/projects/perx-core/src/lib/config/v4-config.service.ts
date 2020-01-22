@@ -1,12 +1,28 @@
 import { Injectable } from '@angular/core';
-import { of, Observable } from 'rxjs';
-import { IConfig, IMicrositeSettings, PagesObject } from './models/config.model';
 import { HttpClient } from '@angular/common/http';
-import { AuthenticationService } from '../auth/authentication/authentication.service';
-import { map, switchMap, tap } from 'rxjs/operators';
-import { ICustomProperties } from '../profile/profile.model';
-import { ConfigService } from './config.service';
+
+import {
+  of,
+  Observable,
+} from 'rxjs';
+import {
+  map,
+  switchMap,
+  tap,
+} from 'rxjs/operators';
+
 import { IWSetting } from '@perx/whistler';
+
+import {
+  IConfig,
+  IMicrositeSettings,
+  IRssFeeds,
+  PagesObject,
+} from './models/config.model';
+import { ConfigService } from './config.service';
+
+import { AuthenticationService } from '../auth/authentication/authentication.service';
+import { ICustomProperties } from '../profile/profile.model';
 
 interface IV4MicrositeSettingsResponse {
   data: IV4MicrositeSettings;
@@ -23,7 +39,7 @@ interface IV4MicrositeSettings {
   providedIn: 'root'
 })
 export class V4ConfigService extends ConfigService {
-  private appConfig: IConfig;
+  private appConfig: IConfig<{}>;
   private settings: any;
 
   constructor(
@@ -42,10 +58,14 @@ export class V4ConfigService extends ConfigService {
     };
   }
 
-  public readAppConfig(): Observable<IConfig> {
-    return this.http.get<IConfig>('assets/config/app-config.json').pipe(
-      tap((appConfig: IConfig) => this.appConfig = appConfig)
+  public readAppConfig<T>(): Observable<IConfig<T>> {
+    return this.http.get<IConfig<T>>('assets/config/app-config.json').pipe(
+      tap((appConfig: IConfig<T>) => this.appConfig = appConfig)
     );
+  }
+
+  public readRssFeeds(): Observable<IRssFeeds> {
+    return this.http.get<IRssFeeds>('assets/config/RSS_FEEDS.json');
   }
 
   public getTenantAppSettings(key: string): Observable<IMicrositeSettings> {
@@ -62,9 +82,9 @@ export class V4ConfigService extends ConfigService {
     );
   }
 
-  public getAccountSettings(): Observable<PagesObject> {
-    return this.http.get<IConfig>('assets/config/app-config.json').pipe(
-      map(res => res.display_properties),
+  public getAccountSettings<T>(): Observable<PagesObject> {
+    return this.http.get<IConfig<T>>('assets/config/app-config.json').pipe(
+      map(res => res.displayProperties),
       map((displayProps: IWSetting) => displayProps && displayProps.account ? displayProps.account : { pages: [] }),
       map((account) => this.settings = account)
     );

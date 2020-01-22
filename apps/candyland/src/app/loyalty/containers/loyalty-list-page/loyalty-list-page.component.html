@@ -12,17 +12,15 @@
   <ng-container [ngSwitch]="dataSource.state$ | async">
     <ng-container *ngSwitchCase="dataSourceStates.hasDataApi">
       <cl-loyalty-grid [dataSource]="dataSource"
-                       [statusLabel]="statusLabel"
-                       [menuOptions]="menuOptions"
-                       (menuTapped)="menuOptTapped($event)"
-      >
+        [statusLabel]="statusLabel"
+        [menuOptions]="menuOptions"
+        (menuTapped)="menuOptTapped($event)">
       </cl-loyalty-grid>
       <!--paginator-->
       <div class="table-card">
         <cl-paginator [dataSource]="dataSource"
-                      [pageSize]="5"
-                      [pageSizeOptions]="[5, 10, 20]"
-        ></cl-paginator>
+          [pageSize]="5"
+          [pageSizeOptions]="[5, 10, 20]"></cl-paginator>
       </div>
       <!--/ paginator-->
     </ng-container>
@@ -36,6 +34,15 @@
         {{'LOYALTY_FEATURE.NO_DATA_TEXT' | translate}}
       </p>
     </cl-no-data>
+
+    <div *ngSwitchCase="dataSourceStates.firstLoading">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+
+    <cl-no-data *ngSwitchCase="dataSourceStates.errorApi">
+      <h2 class="no-data-title">
+        <span>Something broke</span> <span style="display: inline-block;">:(</span>
+      </h2>
+    </cl-no-data>
   </ng-container>
 </section>
-

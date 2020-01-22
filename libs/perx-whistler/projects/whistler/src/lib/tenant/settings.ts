@@ -9,17 +9,21 @@ export interface IWSetting {
   'theme.logo': string;
   'theme.primary': string;
   'theme.style': string;
-  'theme.title': string;
+  'theme.title'?: string;
   'theme.login_background_colour'?: string;
+  'theme.color'?: string;
   account: IWPagesObject;
-  showHistoryPage: boolean;
-  showHomePage: boolean;
+  showHistoryPage?: boolean;
+  showAccountsPage?: boolean;
+  showUserInfoOnAccountsPage?: boolean;
+  showHomePage?: boolean;
+  campaign_base_url?: string;
 }
 
 export interface IWTenant {
-  account_id: number;
-  alias: string;
-  created_at: string;
+  account_id?: number;
+  alias?: string;
+  created_at?: string;
   name: string;
   display_properties: IWSetting;
 }

@@ -28,6 +28,8 @@ import {
   TokenStorage,
   isEmptyString,
 } from '@perx/core';
+import { IHsbcConfig } from '../model/IHsbc.model';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -41,7 +43,7 @@ export class LoginComponent implements OnInit {
   public errorMessage: string | null;
   public sourceType: string;
   public isLoading: boolean = true;
-  private campaignId: string;
+  private campaignId: string | null;
   public appAccessTokenFetched: boolean;
 
   constructor(
@@ -82,9 +84,9 @@ export class LoginComponent implements OnInit {
         console.error('Error' + err);
       });
     }
-    this.configService.readAppConfig().pipe(
-      tap((config: IConfig) => {
-        this.campaignId = config.campaignId as string;
+    this.configService.readAppConfig<IHsbcConfig>().pipe(
+      tap((config: IConfig<IHsbcConfig>) => {
+        this.campaignId = config.custom ? config.custom.campaignId as string : null;
         this.preAuth = config.preAuth as boolean;
         if (this.preAuth && isPlatformBrowser(this.platformId) && !this.authService.getUserAccessToken()) {
           this.authService.autoLogin().subscribe(
@@ -95,7 +97,7 @@ export class LoginComponent implements OnInit {
         }
       }),
       tap(() => this.tokenStorage.clearAppInfoProperty(['userAccessToken', 'appAccessToken'])),
-      switchMap((config: IConfig) => this.configService.getTenantAppSettings(config.sourceType as string))
+      switchMap((config: IConfig<IHsbcConfig>) => this.configService.getTenantAppSettings(config.sourceType as string))
     ).subscribe((settings: IMicrositeSettings) => {
       this.loginBackgroundUrl = settings.jsonValue.background as string;
       this.sourceType = settings.jsonValue.source_type as string;

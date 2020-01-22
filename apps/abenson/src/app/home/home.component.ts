@@ -1,8 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { ICampaign, ICampaignService, IVoucherService, VoucherState, Voucher, CampaignType, ConfigService } from '@perx/core';
+import {
+  ICampaign,
+  ICampaignService,
+  IVoucherService,
+  VoucherState,
+  Voucher,
+  CampaignType,
+  ConfigService,
+  IConfig
+} from '@perx/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { IAbensonConfig } from '../model/IAbenson.model';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +23,7 @@ export class HomeComponent implements OnInit {
   public campaigns$: Observable<ICampaign[]>;
   public vouchers$: Observable<Voucher[]>;
   public filter: string[];
-  public comingSoon: boolean = false;
+  public comingSoon: boolean = true;
   constructor(
     private router: Router,
     private vouchersService: IVoucherService,
@@ -22,7 +32,9 @@ export class HomeComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.configService.readAppConfig().subscribe((val) => this.comingSoon = val.comingSoon as boolean);
+    this.configService.readAppConfig<IAbensonConfig>().subscribe((config: IConfig<IAbensonConfig>) => {
+      this.comingSoon = config.custom ? config.custom.comingSoon as boolean : false;
+    });
     this.campaigns$ = this.campaignService.getCampaigns()
       .pipe(map((campaign) => campaign.filter(el => el.type === CampaignType.game)));
     this.vouchers$ = this.vouchersService.getAll();

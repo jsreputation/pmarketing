@@ -36,8 +36,9 @@ describe('CardComponent', () => {
   let component: CardComponent;
   let fixture: ComponentFixture<CardComponent>;
   let loyaltyService: LoyaltyService;
-  const loyaltyServiceStub = {
+  const loyaltyServiceStub: Partial<LoyaltyService> = {
     getLoyalties: () => of([loyalty]),
+    getLoyalty: () => of(loyalty),
     getTransactions: () => of([])
   };
   const mockProfile: IProfile = {
@@ -46,7 +47,7 @@ describe('CardComponent', () => {
     firstName: '',
     lastName: ''
   };
-  const profileServiceStub = {
+  const profileServiceStub: Partial<ProfileService> = {
     whoAmI: () => of(mockProfile)
   };
 

@@ -13,7 +13,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Type } from '@angular/core';
 
-import { of } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 
 import {
@@ -24,6 +24,7 @@ import {
   NotificationService,
   SurveyService,
   ConfigService,
+  IConfig,
 } from '@perx/core';
 
 import { SignInComponent } from './sign-in.component';
@@ -63,7 +64,9 @@ describe('SignInComponent', () => {
   };
 
   const configServiceStub: Partial<ConfigService> = {
-    readAppConfig: () => of({ redirectAfterLogin: '/home' })
+    readAppConfig: <T>(): Observable<IConfig<T>> => of({
+      custom: {}
+    } as IConfig<T>)
   };
 
   const surveyServiceStub: Partial<SurveyService> = {

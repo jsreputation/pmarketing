@@ -12,6 +12,8 @@ import {
 import { ButtonModule } from '@perx/candyshop';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { AudiencesService } from '@cl-core-services';
+import { MockAudienceService } from '@cl-shared/test-components/providers/mock-audience.service';
 
 describe('ManageListPopupComponent', () => {
   let component: ManageListPopupComponent;
@@ -35,7 +37,8 @@ describe('ManageListPopupComponent', () => {
               }
             }
           },
-          {provide: MAT_DIALOG_DATA, useValue: {}}
+          {provide: MAT_DIALOG_DATA, useValue: {}},
+          {provide: AudiencesService, useClass: MockAudienceService }
         ],
         declarations: [ManageListPopupComponent]
       })
@@ -45,6 +48,23 @@ describe('ManageListPopupComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ManageListPopupComponent);
     component = fixture.componentInstance;
+    component.data = {
+      id: '1',
+      pi: 'string;',
+      firstName: 'string;',
+      lastName: 'string;',
+      email: 'string;',
+      phone: 'string;',
+      gender: 'string;',
+      birthday: new Date(),
+      race: 'string;',
+      country: 'string;',
+      nationality: 'string;',
+      city: 'string;',
+      state: 'string;',
+      audienceList: ['test'],
+      file: 'string;',
+    };
     fixture.detectChanges();
   });
 

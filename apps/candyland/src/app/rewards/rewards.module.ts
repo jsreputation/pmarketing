@@ -21,7 +21,8 @@ import {
   MatSelectModule,
   MatSlideToggleModule,
   MatSortModule,
-  MatTableModule
+  MatTableModule,
+  MatProgressBarModule
 } from '@angular/material';
 import { RewardInfoFormGroupComponent } from './components/reward-info-form-group/reward-info-form-group.component';
 import { RewardMerchantCardComponent } from 'src/app/rewards/components/reward-merchant-card/reward-merchant-card.component';
@@ -64,7 +65,7 @@ import { RewardLoyaltySetupGroupComponent } from './components/reward-loyalty-se
 import { TranslateModule } from '@ngx-translate/core';
 import { VouchersUploadService } from '@cl-core/services/vouchers-upload.service';
 import { IAdvancedUploadFileService } from '@cl-core/services/iadvanced-upload-file.service';
-import {MessageService} from '@cl-core-services';
+import { MessageService } from '@cl-core-services';
 import { DownloadButtonModule } from '@perx/candyshop';
 
 @NgModule({
@@ -130,7 +131,8 @@ import { DownloadButtonModule } from '@perx/candyshop';
     PipesModule,
     TagListModule,
     MatTabsModule,
-    TranslateModule
+    TranslateModule,
+    MatProgressBarModule
   ],
   entryComponents: [
     RewardReplenishPopupComponent

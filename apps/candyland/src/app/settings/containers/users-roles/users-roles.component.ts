@@ -6,6 +6,7 @@ import { filter, switchMap } from 'rxjs/operators';
 import { CustomDataSource, DataSourceStates } from '@cl-shared/table/data-source/custom-data-source';
 import { IAMUser } from '@cl-core/models/settings/IAMUser.interface';
 import { Role } from '@cl-helpers/role.enum';
+import { IamUserService } from '@cl-core/services/iam-user.service';
 
 @Component({
   selector: 'cl-users-roles',
@@ -23,9 +24,10 @@ export class UsersRolesComponent implements AfterViewInit {
     private authService: AuthService,
     public cd: ChangeDetectorRef,
     private dialog: MatDialog,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private iamUserService: IamUserService
   ) {
-    this.dataSource = new CustomDataSource<IAMUser>(this.settingsService);
+    this.dataSource = new CustomDataSource<IAMUser>(this.iamUserService);
   }
 
   public ngAfterViewInit(): void {
@@ -44,7 +46,7 @@ export class UsersRolesComponent implements AfterViewInit {
       .afterClosed()
       .pipe(
         filter(Boolean),
-        switchMap((newUser: IAMUser) => this.settingsService.inviteNewUser(newUser))
+        switchMap((newUser: IAMUser) => this.iamUserService.inviteNewUser(newUser))
       )
       .subscribe(() => this.dataSource.updateData());
   }
@@ -63,19 +65,19 @@ export class UsersRolesComponent implements AfterViewInit {
       .afterClosed()
       .pipe(
         filter(Boolean),
-        switchMap((updatedUser: IAMUser) => this.settingsService.patchUser(user, updatedUser))
+        switchMap((updatedUser: IAMUser) => this.iamUserService.patchUser(user, updatedUser))
       )
       .subscribe(() => this.dataSource.updateData());
   }
 
   public deleteUser(id: string): void {
-    this.settingsService.deleteUser(id)
+    this.iamUserService.deleteUser(id)
       .subscribe(() => this.dataSource.updateData());
   }
 
   private getAllGroups(): void {
-    this.settingsService.getAllGroups()
-      .subscribe((res) => this.groups = res.getModels());
+    this.settingsService.getGroups()
+      .subscribe(groups => this.groups = groups);
   }
 
   public resetPassword(user: IAMUser): void {

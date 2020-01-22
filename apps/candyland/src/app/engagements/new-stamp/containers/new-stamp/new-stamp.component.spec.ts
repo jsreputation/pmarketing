@@ -6,6 +6,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ImagesPreviewModule } from '@cl-shared/components/images-preview/images-preview.module';
 import { SelectGraphicModule } from '@cl-shared/components/select-graphic/select-graphic.module';
 import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wrap/select-graphic-wrap.module';
+import { ButtonModule } from '@cl-shared/components/button/button.module';
+import { InfoHintModule } from '@cl-shared/components/info-hint/info-hint.module';
 import { GameMobilePreviewStampModule } from '@cl-shared/components/game-mobile-preview-stamp/game-mobile-preview-stamp.module';
 import { MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatTabsModule } from '@angular/material';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -20,6 +22,14 @@ import { CheckboxGroupModule } from '@cl-shared/components/checkbox-group/checkb
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonModule, InfoHintModule } from '@perx/candyshop';
 
+import { StampsService, TenantStoreService, UploadFileService } from '@cl-core-services';
+import { TenantMockStore } from '@cl-shared/test-components/tenant-mock-store/tenant-mock-store';
+import { MockStampsService } from '@cl-shared/test-components/providers/mock-stamps.service';
+import { MockUploadFileService } from '@cl-shared/test-components/providers/mock-upload-file.service';
+import { WINDOW } from '@cl-core/services/window.service';
+// tslint:disable
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { TestComponentsModule } from '@cl-shared/test-components/test-components.module';
 describe('NewStampPageComponent', () => {
   let component: NewStampComponent;
   let fixture: ComponentFixture<NewStampComponent>;
@@ -30,8 +40,6 @@ describe('NewStampPageComponent', () => {
         ReactiveFormsModule,
         ImagesPreviewModule,
         ButtonModule,
-        SelectGraphicModule,
-        SelectGraphicWrapModule,
         InfoHintModule,
         GameMobilePreviewStampModule,
         HttpClientTestingModule,
@@ -50,11 +58,20 @@ describe('NewStampPageComponent', () => {
         DirectivesModule,
         CheckboxGroupModule,
         TranslateModule.forRoot(),
+        TestComponentsModule,
       ],
       declarations: [ NewStampComponent ],
       providers: [
-        {provide: LocalStorageService, useValue: {}}
-      ]
+        {provide: LocalStorageService, useValue: {}},
+        { provide: TenantStoreService, useClass: TenantMockStore },
+        { provide: StampsService, useClass: MockStampsService },
+        { provide: UploadFileService, useClass: MockUploadFileService },
+        { provide: WINDOW, useValue: {
+            scrollTo(a: any, b: any): any { return {a, b}; }
+          }
+        }
+      ],
+      schemas: [ NO_ERRORS_SCHEMA ],
     })
     .compileComponents();
   }));
