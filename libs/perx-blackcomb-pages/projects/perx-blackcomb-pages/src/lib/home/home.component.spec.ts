@@ -54,7 +54,10 @@ const gameSvcStub: Partial<IGameService> = {
 
 const themesServiceStub = { getThemeSetting: () => of({}) };
 
-const configServiceStub = { readAppConfig: () => of() };
+const configServiceStub = {
+  readAppConfig: () => of(),
+  readRssFeeds: () => of()
+};
 
 const reward: IReward = {
   id: 1,
