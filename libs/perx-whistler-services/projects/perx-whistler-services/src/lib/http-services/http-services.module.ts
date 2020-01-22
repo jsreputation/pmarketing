@@ -58,7 +58,7 @@ const providers: any[] = [
   TenantHttpService,
   UploadFileHttpService,
   LoyaltyCardHttpService,
-  ];
+];
 
 @NgModule({
   declarations: [],
@@ -83,8 +83,8 @@ export class HttpServicesModule {
       ngModule: HttpServicesModule,
       providers: [
         ...providers,
-        {provide: BASE_URL_WS, useValue: baseUrl},
-        {provide: BASE_CDN_URL_WS, useValue: baseCDN},
+        { provide: BASE_URL_WS, useValue: baseUrl },
+        { provide: BASE_CDN_URL_WS, useValue: baseCDN },
       ]
     };
   }

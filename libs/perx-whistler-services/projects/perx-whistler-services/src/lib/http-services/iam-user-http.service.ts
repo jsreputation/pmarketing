@@ -21,7 +21,7 @@ export class IamUserHttpService {
   }
 
   public getIMAUser(id: string, params: HttpParams): Observable<IJsonApiItemPayload<IWIAMUserAttributes>> {
-    return this.http.get<IJsonApiItemPayload<IWIAMUserAttributes>>(this.apiConfig.IAMUsersPath + '/' + id, {params});
+    return this.http.get<IJsonApiItemPayload<IWIAMUserAttributes>>(`${this.apiConfig.IAMUsersPath  }/${  id}`, {params});
   }
 
   public inviteNewUser(body: IJsonApiPostData<IWIAMUserAttributes>): Observable<IJsonApiItemPayload<IWIAMUserAttributes>> {

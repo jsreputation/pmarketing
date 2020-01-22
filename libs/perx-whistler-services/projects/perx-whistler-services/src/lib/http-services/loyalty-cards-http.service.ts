@@ -12,10 +12,10 @@ import { ApiConfigServices } from '../configs/api-config';
 
 @Injectable()
 export class LoyaltyCardHttpService {
-
-  constructor(private http: HttpClient,
-              private apiConfig: ApiConfigServices) {
-  }
+  constructor(
+    private http: HttpClient,
+    private apiConfig: ApiConfigServices
+  ) { }
 
   public getLoyaltyCard(id: string, params: HttpParams): Observable<IJsonApiItemPayload<IWLoyaltyCard>> {
     return this.http.get<IJsonApiItemPayload<IWLoyaltyCard>>(`${this.apiConfig.getLoyaltyCards}/${id}`, { params });
@@ -26,14 +26,14 @@ export class LoyaltyCardHttpService {
   }
 
   public createLoyaltyCard(data: IJsonApiPostItem<IWLoyaltyCard>): Observable<IJsonApiItemPayload<IWLoyaltyCard>> {
-    return this.http.post<IJsonApiItemPayload<IWLoyaltyCard>>(this.apiConfig.getLoyaltyCards + '/', data);
+    return this.http.post<IJsonApiItemPayload<IWLoyaltyCard>>(`${this.apiConfig.getLoyaltyCards}/`, data);
   }
 
   public updateLoyaltyCard(id: string, data: IJsonApiPatchItem<IWLoyaltyCard>): Observable<IJsonApiItemPayload<IWLoyaltyCard>> {
-    return this.http.patch<IJsonApiItemPayload<IWLoyaltyCard>>(this.apiConfig.getLoyaltyCards + '/' + id, data);
+    return this.http.patch<IJsonApiItemPayload<IWLoyaltyCard>>(`${this.apiConfig.getLoyaltyCards}/${id}`, data);
   }
 
   public deleteLoyaltyCard(id: string): Observable<void> {
-    return this.http.delete<void>(this.apiConfig.getLoyaltyCards + '/' + id);
+    return this.http.delete<void>(`${this.apiConfig.getLoyaltyCards}/${id}`);
   }
 }

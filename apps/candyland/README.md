@@ -18,8 +18,8 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
+## Folder structures
 
-##  Folder structures
     ./
     ├── .circleci
     ├── backend 
@@ -116,14 +116,17 @@ Models - interfaces and enums, used in the project.
 And also for work with browser API, storage of state of separate parts of the application. 
 
 ## Existing libraries and use their
+
 - Interaction between the application and the server is conducted in the format [JSON:API](https://jsonapi.org/).
 - In the application for requests [angular2-jsonapi](https://github.com/ghidoz/angular2-jsonapi) library is used.
 - To work with date and time [moment.js](https://momentjs.com/) library is used.
 
 ## Mock data in the project
+
 Mocks for features are in the following path assets/actives/{feature-name}/file-name.json”
 
-##Styles rules
+## Styles rules
+
 - Common global styles SCSS - are added to file _common.scss.
 - When developing new features for common global styles a new file with name {_feature name.scss} in the folder “styles”  is created. This file is linked to in the file styles.scss.
 - Icons - is linked in the following way:
@@ -133,4 +136,3 @@ Mocks for features are in the following path assets/actives/{feature-name}/file-
 - Tslint and StyleLint - are common and are used for all projects in the folder apps.
 - Variables - should be with access modificator and with set type.
 - Methods - should be with access modificator and with type of return data.
-

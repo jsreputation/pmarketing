@@ -16,9 +16,10 @@ import { ApiConfigServices } from '../configs/api-config';
 
 @Injectable()
 export class AudiencesHttpsService {
-  constructor(private http: HttpClient,
-              private apiConfig: ApiConfigServices) {
-  }
+  constructor(
+    private http: HttpClient,
+    private apiConfig: ApiConfigServices
+  ) { }
 
   public getUser(id: string, params: HttpParams): Observable<IJsonApiItemPayload<IWProfileAttributes>> {
     return this.http.get<IJsonApiItemPayload<IWProfileAttributes>>(`${this.apiConfig.getAllUsers}/${id}`, { params });
@@ -41,7 +42,7 @@ export class AudiencesHttpsService {
   }
 
   public updateUser(id: string, data: IJsonApiPatchData<IWProfileAttributes>): Observable<IJsonApiItemPayload<IWProfileAttributes>> {
-    return this.http.patch<IJsonApiItemPayload<IWProfileAttributes>>(this.apiConfig.getAllUsers + '/' + id, { data });
+    return this.http.patch<IJsonApiItemPayload<IWProfileAttributes>>(`${this.apiConfig.getAllUsers}/${id}`, { data });
   }
 
   public updateUserPools(data: IJsonApiPatchData<IWProfileAttributes>): Observable<IJsonApiListPayload<IWProfileAttributes, IWAudiences>> {

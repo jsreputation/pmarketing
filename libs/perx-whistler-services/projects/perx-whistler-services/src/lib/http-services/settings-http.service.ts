@@ -17,10 +17,10 @@ import { ApiConfigServices } from '../configs/api-config';
   providedIn: 'root'
 })
 export class SettingsHttpService {
-
-  constructor(private http: HttpClient,
-              private apiConfig: ApiConfigServices) {
-  }
+  constructor(
+    private http: HttpClient,
+    private apiConfig: ApiConfigServices
+  ) { }
 
   public getAllCredential(params: any): Observable<any> {
     return this.http.get(this.apiConfig.allCredentialPath, params);
@@ -30,7 +30,7 @@ export class SettingsHttpService {
     return this.http.get<IJsonApiListPayload<IWIAMUserAttributes>>(this.apiConfig.IAMUsersPath, { params });
   }
 
-  public getAllGroups(params?: HttpParams ): Observable<IJsonApiListPayload<any>> {
+  public getAllGroups(params?: HttpParams): Observable<IJsonApiListPayload<any>> {
     return this.http.get<IJsonApiListPayload<any>>(this.apiConfig.IAMGroupsPath, { params });
   }
 
@@ -52,15 +52,15 @@ export class SettingsHttpService {
 
   public createCognitoEndpoint(data: IJsonApiPostItem<IWCognitoEndpointAttributes>):
     Observable<IJsonApiItemPayload<IWCognitoEndpointAttributes>> {
-    return this.http.post<IJsonApiItemPayload<IWCognitoEndpointAttributes>>(this.apiConfig.cognitoEndpoints + '/', data);
+    return this.http.post<IJsonApiItemPayload<IWCognitoEndpointAttributes>>(`${this.apiConfig.cognitoEndpoints}/`, data);
   }
 
   public updateCognitoEndpoint(id: string, data: IJsonApiPatchItem<IWCognitoEndpointAttributes>):
     Observable<IJsonApiItemPayload<IWCognitoEndpointAttributes>> {
-    return this.http.patch<IJsonApiItemPayload<IWCognitoEndpointAttributes>>(this.apiConfig.cognitoEndpoints + '/' + id, data);
+    return this.http.patch<IJsonApiItemPayload<IWCognitoEndpointAttributes>>(`${this.apiConfig.cognitoEndpoints}/${id}`, data);
   }
 
   public deleteCognitoEndpoin(id: string): Observable<void> {
-    return this.http.delete<void>(this.apiConfig.cognitoEndpoints + '/' + id);
+    return this.http.delete<void>(`${this.apiConfig.cognitoEndpoints}/${id}`);
   }
 }
