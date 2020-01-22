@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ClHttpParams } from '@cl-helpers/http-params';
-import { OutcomesHttpsService } from '@cl-core/http-services/outcomes-https.service';
+import { OutcomesHttpsService } from '@perx/whistler-services';
 import { map } from 'rxjs/operators';
 import { OutcomesHttpAdapter } from '@cl-core/http-adapters/outcomes-http-adapter';
 import { IWOutcomeAttributes, IJsonApiItem, IJsonApiListPayload, IJsonApiItemPayload } from '@perx/whistler';
