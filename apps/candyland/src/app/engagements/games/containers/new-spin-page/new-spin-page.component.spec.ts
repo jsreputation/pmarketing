@@ -7,7 +7,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ImagesPreviewModule} from '@cl-shared/components/images-preview/images-preview.module';
 import {ButtonModule} from '@cl-shared/components/button/button.module';
 import {SelectGraphicModule} from '@cl-shared/components/select-graphic/select-graphic.module';
-import {SelectGraphicWrapModule} from '@cl-shared/components/select-graphic-wrap/select-graphic-wrap.module';
 import {GameModule} from '@perx/core';
 import {SimpleMobileViewModule} from '@cl-shared/components/simple-mobile-view/simple-mobile-view.module';
 import {MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatTabsModule} from '@angular/material';
@@ -18,8 +17,15 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { CheckboxGroupModule } from '@cl-shared/components/checkbox-group/checkbox-group.module';
 import {ClColorPickerModule} from '@cl-shared/components/cl-color-picker/cl-color-picker.module';
 import {LocalStorageService} from '@cl-core/services/local-storage.service';
-import { TenantStoreService } from '@cl-core-services';
+import { TenantStoreService, UploadFileService } from '@cl-core-services';
 import { TenantMockStore } from '@cl-shared/test-components/tenant-mock-store/tenant-mock-store';
+import { SpinService } from '@cl-core/services/spin.service';
+import { MockSpinService } from '@cl-shared/test-components/providers/mock-spin.service';
+// tslint:disable
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { TestComponentsModule } from '@cl-shared/test-components/test-components.module';
+import { MockUploadFileService } from '@cl-shared/test-components/providers/mock-upload-file.service';
+import { WINDOW } from '@cl-core/services/window.service';
 
 describe('NewSpinPageComponent', () => {
   let component: NewSpinPageComponent;
@@ -37,7 +43,6 @@ describe('NewSpinPageComponent', () => {
         ButtonModule,
         MatCheckboxModule,
         SelectGraphicModule,
-        SelectGraphicWrapModule,
         GameModule,
         SimpleMobileViewModule,
         MatTabsModule,
@@ -49,11 +54,19 @@ describe('NewSpinPageComponent', () => {
         MatSliderModule,
         CheckboxGroupModule,
         TranslateModule.forRoot(),
+        TestComponentsModule,
       ],
       providers: [
         LocalStorageService,
-        { provide: TenantStoreService, useClass: TenantMockStore }
-      ]
+        { provide: TenantStoreService, useClass: TenantMockStore },
+        { provide: SpinService, useClass: MockSpinService },
+        { provide: UploadFileService, useClass: MockUploadFileService },
+        { provide: WINDOW, useValue: {
+            scrollTo(a: any, b: any): any { return {a, b}; }
+          }
+        }
+      ],
+      schemas: [ NO_ERRORS_SCHEMA ],
     }).compileComponents();
   }));
 

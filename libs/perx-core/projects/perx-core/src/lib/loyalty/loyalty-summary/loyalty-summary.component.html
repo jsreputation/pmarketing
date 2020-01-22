@@ -7,8 +7,8 @@
     </div>
   </ng-container>
   <ng-container *ngIf="loyalty$ | async as loyalty; else elseBlockLoyalty">
-    <div class="points">
-      {{loyalty.pointsBalance ? loyalty.pointsBalance.toLocaleString('en-sg') : 0 }}
+    <div class="points" *ngIf="loyalty">
+      {{loyalty.pointsBalance | number}}
     </div>
     <div>
       {{subTitleFn(loyalty)}}
@@ -23,7 +23,9 @@
   </ng-template>
 
   <ng-template #elseBlockLoyalty>
-    <div class="points ghost"></div>
+    <div class="points ghost">
+      <mat-spinner diameter="50" color="primary"></mat-spinner>
+    </div>
     <div class="expiring-points ghost"></div>
   </ng-template>
 </div>

@@ -7,21 +7,21 @@ import {
   FormBuilder,
   FormGroup,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
 
 import {
   of,
   throwError,
 } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
+import {mergeMap} from 'rxjs/operators';
 
 import {
   AuthenticationService,
-  ISignUpData,
+  ISignUpData, NotificationService,
   ProfileService,
 } from '@perx/core';
 
-import { SharedDataService } from 'src/app/services/shared-data.service';
+import {SharedDataService} from 'src/app/services/shared-data.service';
 
 @Component({
   selector: 'app-signup',
@@ -33,13 +33,16 @@ export class SignUpComponent implements OnInit {
   public errorMessage?: string;
   public hide: boolean = true;
   public appAccessTokenFetched: boolean;
+
   constructor(
     private fb: FormBuilder,
     private authService: AuthenticationService,
     private router: Router,
     private sharedDataService: SharedDataService,
     private profileService: ProfileService,
-  ) { }
+    private notificationService: NotificationService,
+  ) {
+  }
 
   public ngOnInit(): void {
     this.initForm();
@@ -74,25 +77,30 @@ export class SignUpComponent implements OnInit {
     }
 
     this.errorMessage = undefined;
-    const profile = { ...this.signUpForm.value };
+    const profile = {...this.signUpForm.value};
     delete profile.accept_terms;
     delete profile.cardNumber;
     const cardNumber: string = this.signUpForm.value.cardNumber;
     (profile as ISignUpData).passwordConfirmation = password;
     (cardNumber && cardNumber.length ? this.profileService.verifyCardNumber(cardNumber, profile.lastName, '1') : of(true))
       .pipe(mergeMap((success) => success ? this.authService.signup(profile) : throwError(('err-or')))).subscribe(() => {
-        if (this.signUpForm.value.cardNumber) {
-          this.sharedDataService.addData({
-            phone: profile.phone,
-            password: profile.password,
-            cardNumber
-          });
-        }
-        this.router.navigate(['sms-validation'], {
-          queryParams: { identifier: profile.phone }
+      if (this.signUpForm.value.cardNumber) {
+        this.sharedDataService.addData({
+          phone: profile.phone,
+          password: profile.password,
+          cardNumber
         });
-      }, () => {
-        // card error handling
+      }
+      this.router.navigate(['sms-validation'], {
+        queryParams: {identifier: profile.phone}
       });
+    }, () => {
+      // card error handling
+      this.notificationService.addPopup({
+        title: 'PROFILE NOT FOUND',
+        text: 'Please check that your Plus! Card number and last name are correct and try again. If you need help, you may reach us at +63 (02) 981 0025',
+        buttonTxt: 'OK'
+      });
+    });
   }
 }

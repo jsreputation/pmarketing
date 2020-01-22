@@ -17,6 +17,9 @@ export class AppComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    if (!this.authService) {
+      return;
+    }
     this.authService.initAuth();
     if (this.authService.userId) {
       this.authService.updateUser()

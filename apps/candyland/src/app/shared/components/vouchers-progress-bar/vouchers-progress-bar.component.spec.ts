@@ -4,6 +4,8 @@ import { VouchersProgressBarComponent } from './vouchers-progress-bar.component'
 // tslint:disable
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { MockUploadFileService } from '@cl-shared/test-components/providers/mock-upload-file.service';
+import { UploadFileService } from '@cl-core-services';
 
 describe('VouchersProgressBarComponent', () => {
   let component: VouchersProgressBarComponent;
@@ -12,6 +14,7 @@ describe('VouchersProgressBarComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [VouchersProgressBarComponent],
+      providers: [{ provide: UploadFileService, useClass: MockUploadFileService }],
       schemas: [NO_ERRORS_SCHEMA],
       imports: [
         TranslateModule.forRoot()
