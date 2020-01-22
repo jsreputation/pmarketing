@@ -8,6 +8,7 @@ import { LoyaltyModule } from '../loyalty.module';
 import { LoyaltyService } from '../loyalty.service';
 import { of } from 'rxjs';
 import { ProfileService } from '../../profile/profile.service';
+import { MatProgressSpinnerModule } from '@angular/material';
 
 describe('LoyaltySummaryComponent', () => {
   let component: LoyaltySummaryComponent;
@@ -20,16 +21,18 @@ describe('LoyaltySummaryComponent', () => {
       id: 1,
       state: '',
       firstName: '',
-      lastName: ''})
+      lastName: ''
+    })
   };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         ProfileModule,
         LoyaltyModule,
+        MatProgressSpinnerModule
       ],
       providers: [
-        { provide: LoyaltyService , useValue: loyaltyServiceStub },
+        { provide: LoyaltyService, useValue: loyaltyServiceStub },
         { provide: ProfileService, useValue: profileServiceStub }
       ]
     })
