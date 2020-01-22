@@ -93,7 +93,6 @@ export class RewardHttpAdapter {
     return {
       name: data.attributes.name,
       id: data.id,
-      currency: data.attributes.currency,
       rewardInfo: {
         image: data.attributes.image_url,
         rewardType: data.attributes.reward_type,
@@ -103,7 +102,8 @@ export class RewardHttpAdapter {
         description: data.attributes.description,
         termsAndCondition: data.attributes.terms_conditions,
         tags: data.attributes.tags,
-        merchantId: data.attributes.organization_id
+        merchantId: data.attributes.organization_id,
+        currency: data.attributes.display_properties.currency,
       },
       vouchers,
       displayProperties: data.attributes.display_properties,
@@ -127,6 +127,7 @@ export class RewardHttpAdapter {
         organization_id: data.rewardInfo.merchantId,
         display_properties: {
           ...(data.displayProperties || {}),
+          currency: data.rewardInfo.currency,
           voucher_properties: {
             ...RewardHttpAdapter.getVoucherProperties(data),
             validity: {

@@ -22,6 +22,7 @@ export interface IWRewardEntityAttributes {
   description?: string;
   terms_conditions?: string;
   display_properties?: {
+    currency?: string;
     voucher_properties?: {
       code_type: string,
       code?: string,
