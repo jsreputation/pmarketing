@@ -388,6 +388,6 @@ export class V4MerchantAdminService implements IMerchantAdminService {
   }
 
   public forgotPassword(email: string): Observable<IRes> {
-    return this.http.post<IRes>(`${this.merchantEndPoint}/forget_password`, { email });
+    return this.http.post<IRes>(`${this.merchantEndPoint}/forgot_password`, { email });
   }
 }

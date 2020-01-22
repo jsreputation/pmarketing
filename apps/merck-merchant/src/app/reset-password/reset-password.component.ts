@@ -13,6 +13,7 @@ import {
   IMessageResponse,
   NotificationService,
 } from '@perx/core';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-reset-password',
@@ -41,10 +42,10 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    const email = (this.loginForm.value.email as string);
+    const email: string = this.loginForm.value.email as string;
     this.merchantAdminService.forgotPassword(email).subscribe(
       (res: IMessageResponse) => this.notificationService.addSnack(res.message),
-      (err) => this.notificationService.addSnack(err.message)
+      (err: HttpErrorResponse) => this.notificationService.addSnack(err.error.message)
     );
   }
 
