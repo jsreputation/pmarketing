@@ -20,7 +20,8 @@ import {
   mergeMap,
   takeLast,
   catchError,
-  switchMap
+  switchMap,
+  filter
 } from 'rxjs/operators';
 
 import {
@@ -259,19 +260,22 @@ export class HomeComponent implements OnInit, OnDestroy {
   private fetchPopupCampaigns(): void {
     this.campaignService.getCampaigns()
       .pipe(
-        catchError(() => {
-          this.router.navigateByUrl('error');
-          return of([]);
-        })
+        catchError(() => of([]))
       )
       .pipe(
         // for each campaign, get detailed version
-        switchMap((campaigns: ICampaign[]) => combineLatest(...campaigns.map(campaign => this.campaignService.getCampaign(campaign.id)))),
+        mergeMap((campaigns: ICampaign[]) => combineLatest(
+          ...campaigns.map(campaign => this.campaignService.getCampaign(campaign.id).pipe(catchError(() => of(void 0))))
+        )),
       )
       .subscribe(
-        (campaigns: ICampaign[]) => {
+        (campaigns: (ICampaign | void)[]) => {
+          campaigns = campaigns
+            .filter(campaign => campaign !== undefined);
+          console.log(campaigns);
+          // @ts-ignore
           const firstComeFirstServed: ICampaign[] = campaigns
-            .filter(campaign => campaign.type === CampaignType.give_reward);
+            .filter((campaign: ICampaign) => campaign.type === CampaignType.give_reward);
           // if there is a 1st come 1st served campaign, display the popup
           if (firstComeFirstServed.length > 0) {
             this.firstComefirstServeCampaign = firstComeFirstServed[0];
@@ -287,9 +291,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             return;
           }
         },
-        (err) => {
-          console.error(`Something fishy, we should not be here, without any reward or game. ERR print: ${err.error.message}`);
-        }
+        (err) => console.error('Something fishy, we should not be here, without any reward or game. ERR print', err)
       );
   }
 
