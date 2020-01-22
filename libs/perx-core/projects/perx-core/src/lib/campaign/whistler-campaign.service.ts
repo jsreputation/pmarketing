@@ -65,7 +65,7 @@ export class WhistlerCampaignService implements ICampaignService {
     return {
       id: Number.parseInt(campaign.id, 10),
       name: cAttributes.name,
-      description: cAttributes.goal || null,
+      description: null,
       type: WhistlerCampaignService.WhistlerTypeToType(cAttributes.engagement_type),
       state: WhistlerCampaignService.WCStatus2CampaignState(cAttributes.status),
       endsAt: cAttributes.end_date_time ? new Date(cAttributes.end_date_time) : null,
@@ -128,8 +128,9 @@ export class WhistlerCampaignService implements ICampaignService {
         map((campaign: IJsonApiItem<IWCampaignAttributes>) => WhistlerCampaignService.WhistlerCampaignToCampaign(campaign)),
       );
   }
+
   // @ts-ignore
-  public issueAll(id: number): Observable<IVoucher[]> {
+  public issueAll(campaignId: number): Observable<IVoucher[]> {
     throw new Error('Method not implemented');
   }
 }
