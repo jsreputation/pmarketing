@@ -10,8 +10,7 @@ import {
   ContentComponent,
   LayoutComponent,
   SignInComponent,
-  RewardsBookingComponent,
-  WalletComponent
+  RewardsBookingComponent
 } from '@perx/blackcomb-pages';
 import { HomeModule } from '../home/home.module';
 
@@ -32,8 +31,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     RewardDetailsComponent,
     ContentComponent,
     SignInComponent,
-    RewardsBookingComponent,
-    WalletComponent
+    RewardsBookingComponent
   ],
   imports: [
     // LayoutRoutingModule must be listed first to use its '' routing paths

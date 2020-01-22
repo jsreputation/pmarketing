@@ -22,8 +22,7 @@ const routes: Routes = [
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'home' },
       { path: 'home', component: HomeComponent },
-      { path: 'wallet', component: WalletHistoryComponent, canActivate: [ WalletGuard ] },
-      { path: 'wallet-new', component: WalletComponent },
+      { path: 'wallet', component: WalletHistoryComponent, canActivate: [ WalletGuard ] },     
       { path: 'history', component: HistoryComponent },
       { path: 'redeem/:id', component: RedeemComponent },
       { path: 'voucher-detail/:id', component: VoucherDetailComponent },
