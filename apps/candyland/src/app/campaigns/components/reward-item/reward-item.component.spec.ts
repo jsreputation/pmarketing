@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RewardItemComponent } from './reward-item.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 // tslint:disable
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
@@ -27,7 +27,11 @@ describe('RewardItemComponent', () => {
         probability: 0,
         limit: null,
       }
-    }
+    };
+    component.group = new FormGroup({
+      probability: new FormControl(null),
+      limit: new FormControl(null)
+    });
     fixture.detectChanges();
   });
 

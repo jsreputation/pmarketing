@@ -25,6 +25,7 @@ import {
   translateLoader
 } from '@cl-core/translate-services/multiple-translate-loader-service';
 import * as Sentry from '@sentry/browser';
+import { HttpServicesModule } from '@perx/whistler-services';
 
 Sentry.init({
   dsn: 'https://18cd39b4f761401d9a8de7d2cd4398ed@sentry.io/1827238'
@@ -48,11 +49,15 @@ export class SentryErrorHandler implements ErrorHandler {
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
+    HttpServicesModule.forRoot(
+      environment.apiHost,
+      environment.apiCdn
+    ),
     AppRoutingModule,
     AuthModule,
     MatButtonModule,
     SideNavModule,
-    HttpClientModule,
     MatNativeDateModule,
     PerxChartModule.forRoot({ tokenBasePath: environment.apiHost }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
@@ -84,7 +89,7 @@ export class SentryErrorHandler implements ErrorHandler {
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig },
     { provide: APP_INITIALIZER, useFactory: setLanguage, deps: [TranslateService, TranslateDefaultLanguageService], multi: true },
-    { provide: ErrorHandler, useClass: SentryErrorHandler }
+    { provide: ErrorHandler, useClass: SentryErrorHandler },
   ],
   bootstrap: [AppComponent]
 })

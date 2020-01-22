@@ -97,8 +97,8 @@ export class CampaignCreationStoreService {
   public get template$(): any {
     return this.currentCampaign$
       .pipe(
-        filter((value: ICampaign) => value && value.template),
-        map(value => value.template)
+        filter((c: ICampaign) => (c !== undefined && c.template !== undefined)),
+        map((c: ICampaign) => c.template)
       );
   }
 
