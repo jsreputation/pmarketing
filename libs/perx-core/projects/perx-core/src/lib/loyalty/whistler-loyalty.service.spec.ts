@@ -8,15 +8,23 @@ import {
 import { WhistlerLoyaltyService } from './whistler-loyalty.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ConfigModule } from '../config/config.module';
-import { AuthenticationService } from '../auth/authentication/authentication.service';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 import { IJsonApiItem, IWLoyalty, IWLoyaltyCard } from '@perx/whistler';
 import { ILoyalty } from './models/loyalty.model';
+import { skip } from 'rxjs/operators';
 
-describe('WhistlerLoyaltyService', () => {
-  const authServiceStub: Partial<AuthenticationService> = {
-    getUserId: () => 0
+fdescribe('WhistlerLoyaltyService', () => {
+  const mockCard: IJsonApiItem<IWLoyaltyCard> = { id: '1', type: 'cards', attributes: { user_id: 1, balance: '42' } };
+  const mockLoyalty: IJsonApiItem<IWLoyalty> = {
+    id: '1',
+    type: 'test',
+    attributes: {
+      name: 'test',
+      unit: 'test',
+      status: 'test',
+      custom_tiers_count: 5
+    }
   };
 
   beforeEach(() => TestBed.configureTestingModule({
@@ -25,7 +33,6 @@ describe('WhistlerLoyaltyService', () => {
       ConfigModule.forRoot({})
     ],
     providers: [
-      { provide: AuthenticationService, useValue: authServiceStub }
     ]
   }));
 
@@ -46,37 +53,26 @@ describe('WhistlerLoyaltyService', () => {
   //   })));
 
   it('test static WLoyaltyToLoyalty', () => {
-    const val = WhistlerLoyaltyService.WLoyaltyToLoyalty({
-      id: '1',
-      type: 'test',
-      attributes: {
-        user_id: 1,
-        name: 'test',
-        unit: 'test',
-        status: 'test',
-        custom_tiers_count: 5
-      },
-      relationships: {
-        cards: {
-          data: [{
-            type: 'cards',
-            id: '1'
-          }]
-        }
-      }
-    } as IJsonApiItem<IWLoyalty>, 1, [{ id: '1', type: 'cards', attributes: { user_id: 1 } } as IJsonApiItem<IWLoyaltyCard>]);
+    const val = WhistlerLoyaltyService.WLoyaltyToLoyalty(mockCard, [mockLoyalty]);
     expect(val).toBeTruthy();
+    expect(val.id).toBe(1);
+    expect(val.pointsBalance).toBe(42.0);
   });
 
-  it('', fakeAsync(inject([WhistlerLoyaltyService, HttpClient],
-    (loyaltyService: WhistlerLoyaltyService, http: HttpClient) => {
-      spyOn(http, 'get').and.returnValue(of({
-        data: {
-          attributes: {}
-        }
-      }));
+  it('call getLoyalties when querrying getLoyalty without argument', fakeAsync(inject([WhistlerLoyaltyService, HttpClient],
+    (loyaltyService: WhistlerLoyaltyService) => {
       spyOn(loyaltyService, 'getLoyalties').and.returnValue(of([{ id: 1 } as ILoyalty]));
-      loyaltyService.getLoyalty(1).subscribe(() => { });
       loyaltyService.getLoyalty().subscribe((loyalty) => expect(loyalty.id).toBe(1));
+    })));
+
+  it('call http when querrying getLoyalty with an argument', fakeAsync(inject([WhistlerLoyaltyService, HttpClient],
+    (loyaltyService: WhistlerLoyaltyService, http: HttpClient) => {
+      const spy = spyOn(http, 'get').and.returnValue(of({ data: mockCard }));
+      loyaltyService.getLoyalty(1).subscribe((l: ILoyalty) => { expect(l.id).toBe(1); });
+      expect(spy.calls.count()).toBe(1);
+      loyaltyService.getLoyalty(1)
+        // now that it is in cache, it should tick twice, once with the cache value, once with the http request based value
+        .pipe(skip(1))
+        .subscribe((l: ILoyalty) => { expect(l.id).toBe(1); });
     })));
 });

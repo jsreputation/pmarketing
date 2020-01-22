@@ -107,11 +107,19 @@ export class WhistlerLoyaltyService extends LoyaltyService {
         );
     }
 
-    return this.http.get<IJsonApiItemPayload<IWLoyaltyCard, IWLoyalty>>(
-      `${this.hostName}/loyalty/cards/${id}?include=program,tier`
-    ).pipe(
-      map((res: IJsonApiItemPayload<IWLoyaltyCard, IWLoyalty>) => WhistlerLoyaltyService.WLoyaltyToLoyalty(res.data, res.included))
-    );
+    return new Observable(subscriber => {
+      if (this.loyalties[id]) {
+        subscriber.next(this.loyalties[id]);
+      }
+      const sub = this.http.get<IJsonApiItemPayload<IWLoyaltyCard, IWLoyalty>>(
+        `${this.hostName}/loyalty/cards/${id}?include=program,tier`
+      ).pipe(
+        map((res: IJsonApiItemPayload<IWLoyaltyCard, IWLoyalty>) => WhistlerLoyaltyService.WLoyaltyToLoyalty(res.data, res.included)),
+        tap((l: ILoyalty) => this.loyalties[l.id] = l)
+      ).subscribe((l: ILoyalty) => subscriber.next(l));
+      return () => sub.unsubscribe();
+    });
+
   }
 
   // @ts-ignore

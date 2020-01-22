@@ -9,14 +9,21 @@ import { LoyaltyService } from '../loyalty.service';
 import { of } from 'rxjs';
 import { ProfileService } from '../../profile/profile.service';
 import { MatProgressSpinnerModule } from '@angular/material';
+import { ILoyalty } from '../models/loyalty.model';
 
 describe('LoyaltySummaryComponent', () => {
   let component: LoyaltySummaryComponent;
   let fixture: ComponentFixture<LoyaltySummaryComponent>;
-  const loyaltyServiceStub = {
-    getLoyalties: () => of({})
+  const mockLoyalty: ILoyalty = {
+    id: 42,
+    name: 'joe',
+    pointsBalance: 42
   };
-  const profileServiceStub = {
+  const loyaltyServiceStub: Partial<LoyaltyService> = {
+    getLoyalties: () => of([mockLoyalty]),
+    getLoyalty: () => of(mockLoyalty)
+  };
+  const profileServiceStub: Partial<ProfileService> = {
     whoAmI: () => of({
       id: 1,
       state: '',
