@@ -6,12 +6,13 @@ import { ApiConfigServices } from '../configs/api-config';
 
 @Injectable()
 export class EngagementsHttpsService {
-  constructor(public http: HttpClient,
-              private apiConfig: ApiConfigServices) {
-  }
+  constructor(
+    public http: HttpClient,
+    private apiConfig: ApiConfigServices
+  ) { }
 
   public getEngagements(): Observable<IJsonApiListPayload<IWEngagementAttributes>> {
-    return this.http.get<IJsonApiListPayload<IWEngagementAttributes>>(this.apiConfig.engagementsPath + '/');
+    return this.http.get<IJsonApiListPayload<IWEngagementAttributes>>(`${this.apiConfig.engagementsPath}/`);
   }
 
   public getEngagement(id: string, type: string): Observable<IJsonApiItemPayload<IWEngagementAttributes>> {

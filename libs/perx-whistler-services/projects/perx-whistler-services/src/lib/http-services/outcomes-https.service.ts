@@ -6,16 +6,17 @@ import { ApiConfigServices } from '../configs/api-config';
 
 @Injectable()
 export class OutcomesHttpsService {
-  constructor(private http: HttpClient,
-              private apiConfig: ApiConfigServices) {
-  }
+  constructor(
+    private http: HttpClient,
+    private apiConfig: ApiConfigServices
+  ) { }
 
   public getOutcomes(params: HttpParams): Observable<IJsonApiListPayload<IWOutcomeAttributes>> {
     return this.http.get<IJsonApiListPayload<IWOutcomeAttributes>>(this.apiConfig.outcomesPath, { params });
   }
 
   public updateOutcome(id: string, data: IJsonApiPatchItem<IWOutcomeAttributes>): Observable<IJsonApiItemPayload<IWOutcomeAttributes>> {
-    return this.http.patch<IJsonApiItemPayload<IWOutcomeAttributes>>(this.apiConfig.outcomesPath + '/' + id, data);
+    return this.http.patch<IJsonApiItemPayload<IWOutcomeAttributes>>(`${this.apiConfig.outcomesPath}/${id}`, data);
   }
 
   public createOutcome(data: IJsonApiPostItem<IWOutcomeAttributes>): Observable<IJsonApiItemPayload<IWOutcomeAttributes>> {

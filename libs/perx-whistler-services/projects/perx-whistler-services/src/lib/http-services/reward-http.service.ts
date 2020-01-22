@@ -13,28 +13,30 @@ import {
   IJsonApiPostData
 } from '@perx/whistler';
 import { ApiConfigServices } from '../configs/api-config';
-// tslint:disable
+
 @Injectable()
 export class RewardHttpService {
-
-  constructor(private http: HttpClient,
-              private apiConfig: ApiConfigServices) {
-  }
+  constructor(
+    private http: HttpClient,
+    private apiConfig: ApiConfigServices
+  ) { }
 
   public getRewards(params: HttpParams): Observable<IJsonApiListPayload<IWRewardEntityAttributes>> {
-    return this.http.get<IJsonApiListPayload<IWRewardEntityAttributes>>(this.apiConfig.rewardsPath + '/', { params });
+    return this.http.get<IJsonApiListPayload<IWRewardEntityAttributes>>(`${this.apiConfig.rewardsPath}/`, { params });
   }
 
   public getReward(id: string, params: HttpParams): Observable<IJsonApiItemPayload<IWRewardEntityAttributes>> {
-    return this.http.get<IJsonApiItemPayload<IWRewardEntityAttributes>>(this.apiConfig.rewardsPath + '/' + id, { params });
+    return this.http.get<IJsonApiItemPayload<IWRewardEntityAttributes>>(`${this.apiConfig.rewardsPath}/${id}`, { params });
   }
 
   public createReward(data: IJsonApiPostItem<IWRewardEntityAttributes>): Observable<IJsonApiItemPayload<IWRewardEntityAttributes>> {
-    return this.http.post<IJsonApiItemPayload<IWRewardEntityAttributes>>(this.apiConfig.rewardsPath + '/', data);
+    return this.http.post<IJsonApiItemPayload<IWRewardEntityAttributes>>(`${this.apiConfig.rewardsPath}/`, data);
   }
 
-  public updateReward(id: string, data: IJsonApiPatchItem<IWRewardEntityAttributes>): Observable<IJsonApiItemPayload<IWRewardEntityAttributes>> {
-    return this.http.patch<IJsonApiItemPayload<IWRewardEntityAttributes>>(this.apiConfig.rewardsPath + '/' + id, data);
+  public updateReward(
+    id: string, data: IJsonApiPatchItem<IWRewardEntityAttributes>
+  ): Observable<IJsonApiItemPayload<IWRewardEntityAttributes>> {
+    return this.http.patch<IJsonApiItemPayload<IWRewardEntityAttributes>>(`${this.apiConfig.rewardsPath}/${id}`, data);
   }
 
   public getRewardTierList(page: number, id: string): Observable<IJsonApiListPayload<IWTierRewardCostsAttributes, void>> {
@@ -47,7 +49,7 @@ export class RewardHttpService {
   }
 
   public getRewardTier(id: string): Observable<IJsonApiItemPayload<IWTierRewardCostsAttributes>> {
-    return this.http.get<IJsonApiItemPayload<any>>(this.apiConfig.rewardsTierPath + `/${id}`);
+    return this.http.get<IJsonApiItemPayload<any>>(`${this.apiConfig.rewardsTierPath}/${id}`);
   }
 
   public createRewardTier(data: IJsonApiPostData<IWTierRewardCostsAttributes>): Observable<IJsonApiItem<IWTierRewardCostsAttributes>> {
@@ -59,6 +61,6 @@ export class RewardHttpService {
   }
 
   public deleteRewardTier(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiConfig.rewardsTierPath}/${id}`)
+    return this.http.delete<void>(`${this.apiConfig.rewardsTierPath}/${id}`);
   }
 }

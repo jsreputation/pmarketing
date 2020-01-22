@@ -18,15 +18,17 @@ import { ApiConfigServices } from '../configs/api-config';
 
 @Injectable()
 export class VouchersHttpService {
-  constructor(private http: HttpClient,
-              private apiConfig: ApiConfigServices
-              ) { }
+  constructor(
+    private http: HttpClient,
+    private apiConfig: ApiConfigServices
+  ) { }
+
   public getVouchers(params: HttpParams): Observable<IJsonApiListPayload<IWVouchersApi>> {
-    return this.http.get<IJsonApiListPayload<IWVouchersApi>>(this.apiConfig.vouchersEntitiesPath + '/', { params });
+    return this.http.get<IJsonApiListPayload<IWVouchersApi>>(`${this.apiConfig.vouchersEntitiesPath}/`, { params });
   }
 
   public getVoucher(id: string): Observable<IJsonApiItemPayload<IWVouchersApi>> {
-    return this.http.get<IJsonApiItemPayload<IWVouchersApi>>(this.apiConfig.vouchersEntitiesPath + '/' + id);
+    return this.http.get<IJsonApiItemPayload<IWVouchersApi>>(`${this.apiConfig.vouchersEntitiesPath}/${id}`);
   }
 
   public createVoucher(data: IJsonApiPostItem<IWVouchersApi>): Observable<IJsonApiItemPayload<IWVouchersApi>> {

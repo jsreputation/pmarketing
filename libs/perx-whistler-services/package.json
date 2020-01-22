@@ -7,9 +7,8 @@
     "build:lib": "ng build",
     "clean": "rm -rf ./dist ./node_modules",
     "test": "ng test",
-    "lint": "ng lint && stylelint \"projects/**/*.*css\" && eslint \"projects/**/*.ts\"",
-    "lint:fix": "ng lint --fix && stylelint \"projects/**/*.*css\" --fix && ng lint --fix && eslint \"projects/**/*.ts\" --fix",
-    "e2e~": "ng e2e"
+    "lint": "ng lint && eslint \"projects/**/*.ts\"",
+    "lint:fix": "ng lint --fix && eslint \"projects/**/*.ts\" --fix"
   },
   "private": true,
   "dependencies": {
@@ -57,8 +56,6 @@
     "protractor": "~5.4.0",
     "scss-bundle": "^3.0.2",
     "cpx": "^1.5.0",
-    "stylelint": "^10.1.0",
-    "stylelint-config-standard": "^18.3.0",
     "ts-node": "~8.3.0",
     "tsickle": "^0.35.0",
     "tslint": "~5.19.0",

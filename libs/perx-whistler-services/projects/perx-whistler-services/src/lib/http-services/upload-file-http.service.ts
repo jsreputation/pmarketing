@@ -6,9 +6,10 @@ import { ApiConfigServices } from '../configs/api-config';
 
 @Injectable()
 export class UploadFileHttpService {
-
-  constructor(private http: HttpClient,
-              private apiConfig: ApiConfigServices) { }
+  constructor(
+    private http: HttpClient,
+    private apiConfig: ApiConfigServices
+  ) { }
 
   public uploadImage(formData: FormData): Observable<any> {
     return this.http.post(this.apiConfig.uploadImagePath, formData);
@@ -19,6 +20,6 @@ export class UploadFileHttpService {
   }
 
   public getFile(id: string): Observable<IJsonApiItemPayload<IWDocumentAttributes>> {
-    return this.http.get<IJsonApiItemPayload<IWDocumentAttributes>>(this.apiConfig.uploadFilePath + '/' + id);
+    return this.http.get<IJsonApiItemPayload<IWDocumentAttributes>>(`${this.apiConfig.uploadFilePath}/${id}`);
   }
 }
