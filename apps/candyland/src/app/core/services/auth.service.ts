@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthHttpService } from '@cl-core/http-services/auth-http.service';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { SessionService } from '@cl-core/services/session.service';
 import { UserService } from '@cl-core/services/user.service';
@@ -12,6 +11,7 @@ import { parseJwt } from '@cl-helpers/parse-jwt';
 import { HttpResponse } from '@angular/common/http';
 import { IamUserService } from './iam-user.service';
 import { IamUserHttpAdapter } from '@cl-core/http-adapters/iam-user-http-adapter';
+import { AuthHttpService } from '@perx/whistler-services';
 
 @Injectable({
   providedIn: 'root'
@@ -55,7 +55,7 @@ export class AuthService {
   }
 
   public signIn(data: ILogin): Observable<IJsonApiItemPayload<IWLoginAttributes>> {
-    const sendData = AuthHttpAdapter.transformFromLogin(data);
+    const sendData: any = AuthHttpAdapter.transformFromLogin(data);
     return this.http.signIn(sendData).pipe(
       tap(res => {
         if (res.headers.get('authorization')) {
