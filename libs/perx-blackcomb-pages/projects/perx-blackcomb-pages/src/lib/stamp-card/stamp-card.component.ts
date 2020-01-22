@@ -8,9 +8,9 @@ import {
   IStamp,
   StampState
 } from '@perx/core';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {filter, switchMap, takeUntil, map} from 'rxjs/operators';
-import { Observable, Subject } from 'rxjs';
+import {Observable, of, Subject} from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
 export interface IRewardPopupConfig extends IPopupConfig {
@@ -34,6 +34,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
   public background: string;
   public cardBackground: string;
   public isEnabled: boolean = false;
+  public stamps: IStamp[] | undefined;
   public stampCard$: Observable<IStampCard>;
   public stampCard: IStampCard | null;
   private destroy$: Subject<any> = new Subject();
@@ -88,11 +89,23 @@ export class StampCardComponent implements OnInit, OnDestroy {
           const idN = Number.parseInt(id, 10);
           return this.stampService.getCurrentCard(idN);
         }),
+        switchMap((stampCard: IStampCard) => {
+          // tslint:disable-next-line:max-line-length
+          if ( !!stampCard.stamps && !!stampCard.displayProperties.totalSlots && (stampCard.stamps.length < stampCard.displayProperties.totalSlots) ) {
+            return this.stampService.stampsChangedForStampCard(stampCard);
+          }
+          return of(stampCard);
+        }),
         takeUntil(this.destroy$)
       );
     this.stampCard$.subscribe(
       (stampCard: IStampCard) => {
+        if (this.stamps && stampCard.stamps && this.stamps.length < stampCard.stamps.length) {
+          this.notificationService.addSnack('You got a new stamp!');
+        }
+        // The initialization still needs to be here since the state references need to be updated after subscribed stampcard changes
         this.stampCard = stampCard;
+        this.stamps = stampCard.stamps;
         this.title = stampCard.title || '';
         this.subTitle = stampCard.subTitle;
         this.background = stampCard.displayProperties.bgImage || '';
