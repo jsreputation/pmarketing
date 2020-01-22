@@ -37,7 +37,7 @@ import { Type } from '../../audience.model';
 export class UpsertUserPopupComponent implements OnInit {
   public form: FormGroup;
   public pools: any;
-  public countriesList$: Observable<ICountries>;
+  public countriesList$: Observable<ICountries[]>;
   public genders: OptionConfig[] = [
     { title: 'Male', value: 'male' },
     { title: 'Female', value: 'female' }

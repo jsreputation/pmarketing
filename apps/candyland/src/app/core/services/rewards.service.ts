@@ -1,6 +1,6 @@
-import { HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { RewardHttpService } from '@cl-core/http-services/reward-http.service';
+import { RewardHttpService } from '@perx/whistler-services';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
@@ -23,7 +23,9 @@ import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.int
 })
 export class RewardsService implements ITableService<IRewardEntity> {
 
-  constructor(private rewardHttp: RewardHttpService) {
+  constructor(private rewardHttp: RewardHttpService,
+              private http: HttpClient,
+              ) {
   }
 
   public getTableData(params: HttpParamsOptions): Observable<ITableData<IRewardEntity>> {
@@ -39,7 +41,7 @@ export class RewardsService implements ITableService<IRewardEntity> {
   }
 
   public getreward(): Observable<OptionConfig[]> {
-    return this.rewardHttp.getreward();
+    return this.http.get<OptionConfig[]>('assets/actives/rewards/rewards-options.json');
   }
 
   public getReward(id: string): Observable<IRewardEntity> {

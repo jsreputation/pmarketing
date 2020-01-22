@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ClHttpParams } from '@cl-helpers/http-params';
-import { CommsHttpsService } from '@cl-core/http-services/comms-https.service';
+import { CommsHttpsService } from '@perx/whistler-services';
 import { map } from 'rxjs/operators';
 import { CommsHttpAdapter } from '@cl-core/http-adapters/comms-http-adapter';
 import {
