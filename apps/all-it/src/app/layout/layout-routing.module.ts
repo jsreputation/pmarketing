@@ -10,7 +10,8 @@ import {
   RewardDetailsComponent,
   LayoutComponent,
   SignInComponent,
-  RewardsBookingComponent
+  RewardsBookingComponent,
+  WalletComponent
 } from '@perx/blackcomb-pages';
 import { WalletGuard } from '../wallet.guard';
 
@@ -22,6 +23,7 @@ const routes: Routes = [
       { path: '', pathMatch: 'full', redirectTo: 'home' },
       { path: 'home', component: HomeComponent },
       { path: 'wallet', component: WalletHistoryComponent, canActivate: [ WalletGuard ] },
+      { path: 'wallet-new', component: WalletComponent },
       { path: 'history', component: HistoryComponent },
       { path: 'redeem/:id', component: RedeemComponent },
       { path: 'voucher-detail/:id', component: VoucherDetailComponent },

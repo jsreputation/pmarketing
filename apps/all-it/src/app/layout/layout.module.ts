@@ -10,16 +10,18 @@ import {
   ContentComponent,
   LayoutComponent,
   SignInComponent,
-  RewardsBookingComponent
+  RewardsBookingComponent,
+  WalletComponent
 } from '@perx/blackcomb-pages';
 import { HomeModule } from '../home/home.module';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { VouchersModule, RewardsModule, GameModule, LocationModule } from '@perx/core';
+import { VouchersModule, RewardsModule, GameModule, LocationModule, PuzzlesModule } from '@perx/core';
 import { WalletModule } from '../wallet/wallet.module';
 import { SharedModule } from '../shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatSelectModule, MatCheckboxModule, MatRadioModule } from '@angular/material';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import { MatSelectModule, MatCheckboxModule, MatRadioModule } from '@angular/mat
     RewardDetailsComponent,
     ContentComponent,
     SignInComponent,
-    RewardsBookingComponent
+    RewardsBookingComponent,
+    WalletComponent
   ],
   imports: [
     // LayoutRoutingModule must be listed first to use its '' routing paths
@@ -48,7 +51,9 @@ import { MatSelectModule, MatCheckboxModule, MatRadioModule } from '@angular/mat
     MatSelectModule,
     MatCheckboxModule,
     MatRadioModule,
-    LocationModule
+    LocationModule,
+    PuzzlesModule,
+    InfiniteScrollModule
   ]
 })
 export class LayoutModule { }

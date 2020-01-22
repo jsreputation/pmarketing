@@ -27,6 +27,7 @@ import { DatePipe } from '@angular/common';
 import { Type } from '@angular/core';
 import { VoucherDetailComponent } from '../voucher-detail/voucher-detail.component';
 import { Router } from '@angular/router';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 describe('WalletComponent', () => {
   let component: WalletComponent;
@@ -42,6 +43,7 @@ describe('WalletComponent', () => {
   ];
 
   const vouchersServiceStub: Partial<IVoucherService> = {
+    getFromPage: () => of([]),
     getAll: () => of([])
   };
 
@@ -74,7 +76,8 @@ describe('WalletComponent', () => {
         }]),
         MatRippleModule,
         MatIconModule,
-        PuzzlesModule
+        PuzzlesModule,
+        InfiniteScrollModule
       ],
       providers: [
         DatePipe,
@@ -150,18 +153,11 @@ describe('WalletComponent', () => {
       StampService as Type<StampService>
     );
     const stampServiceSpy = spyOn(stampService, 'getCurrentCard').and.returnValue(of(stampCard));
-
-    const voucherService: IVoucherService = fixture.debugElement.injector.get<IVoucherService>(
-      IVoucherService as Type<IVoucherService>
-    );
-    const voucherServiceSpy = spyOn(voucherService, 'getAll').and.returnValue(of(voucher));
-
     component.ngOnInit();
     tick();
     fixture.detectChanges();
     expect(getCampaignsSpy).toHaveBeenCalled();
     expect(stampServiceSpy).toHaveBeenCalled();
-    expect(voucherServiceSpy).toHaveBeenCalled();
   }));
 
   it('should redirect to voucher detail on voucher selected', () => {
@@ -170,4 +166,15 @@ describe('WalletComponent', () => {
     component.voucherSelected(voucher[0]);
     expect(routerSpy).toHaveBeenCalledWith([`/voucher-detail/1`]);
   });
+
+  it('should call voucher serivce after scroll', fakeAsync(() => {
+    component.completed = false;
+    component.currentPage = 0;
+    const voucherService: IVoucherService = fixture.debugElement.injector.get<IVoucherService>(
+      IVoucherService as Type<IVoucherService>
+    );
+    const voucherServiceSpy = spyOn(voucherService, 'getFromPage').and.returnValue(of(voucher));
+    component.onScroll();
+    expect(voucherServiceSpy).toHaveBeenCalled();
+  }));
 });
