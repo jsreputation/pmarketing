@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ClHttpParams } from '@cl-helpers/http-params';
 import { map } from 'rxjs/operators';
-import { LoyaltyCardHttpService } from '@cl-core/http-services/loyalty-cards-http.service';
+import { LoyaltyCardHttpService } from '@perx/whistler-services';
 import { ITableService } from '@cl-shared/table';
 import { JsonApiParser } from '@cl-helpers/json-api-parser';
 import { LoyaltyCardHttpAdapter } from '@cl-core/http-adapters/loyalty-card-http-adapter';
