@@ -15,7 +15,7 @@ import {
   IRes,
 } from './imerchant-admin.service';
 
-import { IVoucher } from '../vouchers/models/voucher.model';;
+import { IVoucher } from '../vouchers/models/voucher.model';
 
 @Injectable({
   providedIn: 'root'
