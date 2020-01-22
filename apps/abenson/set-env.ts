@@ -29,7 +29,7 @@ const appConfigFile = `{
   "baseHref": "${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}",
   "sourceType": "${process.env.SOURCE_TYPE ? process.env.SOURCE_TYPE : ''}",
   "redirectAfterLogin": "${process.env.redirectAfterLogin ? process.env.redirectAfterLogin : '/wallet'}",
-  "custom": {"comingSoon": ${process.env.COMING_SOON ? process.env.COMING_SOON : true}}
+  "custom": {"comingSoon": ${process.env.COMING_SOON ? process.env.COMING_SOON : false}}
 }
 `;
 
