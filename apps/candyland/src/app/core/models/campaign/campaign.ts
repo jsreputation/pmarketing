@@ -23,7 +23,14 @@ export interface ICampaign {
     disabledEndDate: boolean;
     labels?: string[];
   };
-  template?: any;
+  template?: {
+    id?: any;
+    attributes_type?: any;
+    slots?: any;
+    game_type?: any;
+    nb_of_wedges?: any;
+    nb_of_slots?: any;
+  };
   enabledProb?: boolean;
   outcomes?: ICampaignOutcome[];
   limits?: any;

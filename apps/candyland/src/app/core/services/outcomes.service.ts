@@ -44,8 +44,7 @@ export class OutcomesService {
     return this.outcomesHttpsService.createOutcome({ data: sendData });
   }
 
-  public deleteOutcome(id: string): Observable<any> {
+  public deleteOutcome(id: string): Observable<void> {
     return this.outcomesHttpsService.deleteOutcome(id);
   }
-
 }
