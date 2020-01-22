@@ -99,5 +99,17 @@
         }
       }
     }
+
+    perx-core-loyalty-transactions-list {
+      .transaction .transaction-date {
+        color: unset;
+      }
+    }
+
+    perx-blackcomb-pages-profile {
+      .mat-list-item .mat-list-text p {
+        color: unset;
+      }
+    }
   }
 }
