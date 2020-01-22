@@ -10,6 +10,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
 import { MessageService } from '@cl-core-services';
+import { LoyaltyCardService } from '@cl-core/services/loyalty-card.service';
+import { MockLoyaltyCardService } from '@cl-shared/test-components/providers/mock-loyalty-card.service';
 
 describe('AddLoyaltyPopupComponent', () => {
   let component: AddLoyaltyPopupComponent;
@@ -45,7 +47,8 @@ describe('AddLoyaltyPopupComponent', () => {
         {
           provide: MessageService, useValue: msgSvcStub
         },
-        {provide: MAT_DIALOG_DATA, useValue: {}}
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+        { provide: LoyaltyCardService, useClass: MockLoyaltyCardService }
       ],
       schemas: [NO_ERRORS_SCHEMA],
       declarations: [AddLoyaltyPopupComponent]
