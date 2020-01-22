@@ -19,7 +19,7 @@ import {
   RewardsModule,
   ProfileService,
   LoyaltyService,
-  IReward, ThemesService
+  IReward, ThemesService, ILoyalty
 } from '@perx/core';
 
 import { HomeComponent } from './home.component';
@@ -28,13 +28,14 @@ describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
 
-  const themesServiceStub = {
+  const themesServiceStub: Partial<ThemesService> = {
     getThemeSetting: () => of()
   };
+
   const reward: IReward = {
     id: 149,
     name: '100 HSBC Bonus Points',
-    description:  '',
+    description: '',
     subtitle: '',
     validFrom: new Date('2019-07-04T09:58:07.000Z'),
     validTo: new Date('2020-07-19T16:00:00Z'),
@@ -55,6 +56,23 @@ describe('HomeComponent', () => {
     howToRedeem: '',
   };
 
+  const mockLoyalty: ILoyalty = {
+    id: 1,
+    name: 'test',
+    description: 'test',
+    beginDate: '',
+    membershipTierName: '',
+    membershipIdentifier: '1',
+    pointsBalance: 1,
+    currencyBalance: 1,
+    currency: 'SGD',
+  };
+
+  const loyaltyServiceStub: Partial<LoyaltyService> = {
+    getLoyalties: () => of([mockLoyalty]),
+    getLoyalty: () => of(mockLoyalty)
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [HomeComponent],
@@ -69,19 +87,7 @@ describe('HomeComponent', () => {
       providers: [
         {
           provide: LoyaltyService,
-          useValue: {
-            getLoyalties: () => of({
-              id: 1,
-              name: 'test',
-              description: 'test',
-              beginDate: '',
-              membershipTierName: '',
-              membershipIdentifier: '1',
-              pointsBalance: 1,
-              currencyBalance: 1,
-              currency: 'SGD',
-            })
-          }
+          useValue: loyaltyServiceStub
         },
         {
           provide: RewardsService,
@@ -102,7 +108,8 @@ describe('HomeComponent', () => {
         },
         {
           provide: Router,
-          useValue: { navigateByUrl: () => {} } },
+          useValue: { navigateByUrl: () => { } }
+        },
         {
           provide: ThemesService,
           useValue: themesServiceStub,
