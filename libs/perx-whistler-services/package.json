@@ -9,7 +9,7 @@
     "test~": "jest",
     "test": "echo \"no test!\"",
     "lint": "ng lint && eslint \"projects/**/*.ts\"",
-    "lint:fix": "eslint \"projects/**/*.ts\" --fix",
+    "lint:fix": "eslint \"projects/**/*.ts\" --fix"
   },
   "private": true,
   "dependencies": {
