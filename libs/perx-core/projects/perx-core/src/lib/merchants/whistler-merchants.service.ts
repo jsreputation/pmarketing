@@ -45,16 +45,14 @@ export class WhistlerMerchantsService implements IMerchantsService {
     let i = 1;
     const current = {};
     return new Observable((sub) => {
-      this.getMerchantsPage(i).pipe(
+      return this.getMerchantsPage(i).pipe(
         expand((response) =>
           (response.meta && response.meta.page_count && response.meta.page_count > i) ? this.getMerchantsPage(++i) : EMPTY
         ),
         map((value) => value.data.map((el) => WhistlerMerchantsService.WMerchantToMerchant(el))),
         tap((data) => data.forEach((el) => current[el.id] = el)),
         finalize(() => this.merchants = current)
-      ).subscribe(() => {
-        sub.next(Object.values(Object.assign(current, this.merchants)));
-      });
+      ).subscribe(() => sub.next(Object.values(Object.assign(current, this.merchants))));
     });
   }
 
