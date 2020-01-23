@@ -126,11 +126,18 @@ export class NewSnakePageComponent implements OnInit, OnDestroy {
       .subscribe(() => this.router.navigateByUrl('/engagements'));
   }
 
+  public revealImgGet(): void {
+    console.log(this.form.value, ' this is the current form value');
+    console.log(this.getImgLink(this.targetIcon, ''), 'for target icon');
+    console.log(this.getImgLink(this.snakeType, ''), 'for snake image');
+    console.log(this.getImgLink(this.gameArea, ''), 'for game Area');
+  }
+
   public comeBack(): void {
     this.routingState.comeBackPreviousUrl();
   }
 
-  public getImgLink(control: FormControl, defaultImg: string): string {
+  public getImgLink(control: FormControl, defaultImg?: string): string {
     return ImageControlValue.getImgLink(control, defaultImg);
   }
 

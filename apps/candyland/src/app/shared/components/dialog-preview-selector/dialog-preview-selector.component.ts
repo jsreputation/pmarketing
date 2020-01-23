@@ -37,9 +37,9 @@ export class DialogPreviewSelectorComponent implements OnInit {
   public formImagePreviewHtml(): string {
     if (this.imageGraphic.type.includes('snake')) {
       // length of the preview is 4;
-      if (this.imageGraphic.body) {
+      if (this.imageGraphic.imageParts) {
         return `<div class="snake-preview-ext">` + `<img class="image" src=${this.apiCdnPath + this.imageGraphic.img} alt=${this.imageGraphic.title}>` +
-          Array(3).fill('').map(_ =>  `<img class="image" src=${this.apiCdnPath + this.imageGraphic.body.img} alt=${this.imageGraphic.body.title}>`)
+          Array(3).fill('').map(_ =>  `<img class="image" src=${this.apiCdnPath + this.imageGraphic.imageParts.img} alt=${this.imageGraphic.imageParts.title}>`)
             .reduce((accumStr, currStr) => accumStr + currStr, '') + `</div>`;
       }
       return `<div class="snake-preview-ext">` +

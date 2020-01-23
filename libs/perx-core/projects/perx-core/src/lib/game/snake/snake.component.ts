@@ -16,7 +16,7 @@ export class Number2 {
   }
 }
 
-import {Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild, Output, EventEmitter} from '@angular/core';
+import {Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild, Output, EventEmitter, OnInit} from '@angular/core';
 import { getImageCors } from '../../utils/getImageCors';
 // https://codepen.io/mexitalian/pen/pNQgae // not very useful, not hammer js
 @Component({
@@ -24,7 +24,7 @@ import { getImageCors } from '../../utils/getImageCors';
   templateUrl: './snake.component.html',
   styleUrls: ['./snake.component.scss']
 })
-export class SnakeGameComponent implements OnChanges {
+export class SnakeGameComponent implements OnChanges, OnInit {
   private get canv(): HTMLCanvasElement { return this.canvasEl.nativeElement; }
 
   public get ctx(): CanvasRenderingContext2D {
@@ -102,7 +102,21 @@ export class SnakeGameComponent implements OnChanges {
     document.addEventListener('keydown', this.keyPush);
   }
 
-  public startAnimating(): void {
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if ((changes.targetUrl && this.targetUrl)
+      || (changes.snakeHeadUrl && this.snakeHeadUrl)
+      || (changes.gameAreaUrl && this.gameAreaUrl)) {
+      this.fillStyles();
+      console.log('i just want to know i am being called');
+    }
+  }
+
+  public ngOnInit(): void {
+    console.log(this.targetImgLoaded, this.snakeImgLoaded, this.gameAreaUrl, 'ensure all 3 loaded');
+  }
+
+  private startAnimating(): void {
     this.fpsInterval = 1000 / this.fps;
     this.then = window.performance.now();
     this.startGameAndRender();
@@ -121,14 +135,6 @@ export class SnakeGameComponent implements OnChanges {
       this.render();
     }
     return anotherNewTime;
-  }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    if ((changes.targetUrl && this.targetUrl)
-      || (changes.snakeHeadUrl && this.snakeHeadUrl)
-      || (changes.gameAreaUrl && this.gameAreaUrl)) {
-      this.fillStyles();
-    }
   }
 
   private checkCollisionWithWall(): boolean {
@@ -194,15 +200,14 @@ export class SnakeGameComponent implements OnChanges {
 
   }
 
-  private onloadCallBack(): null {
+  private onloadCallBack(): null | undefined {
     this.counterLoaded++;
     if (this.counterLoaded < this.TOTAL_IMAGES) {
       return null;
     }
     // trigger final callback if is the last image
     console.log('FULLY LOADED');
-    this.allImagesLoaded = true;
-    return null;
+    this.startAnimating();
   }
 
   private fillStyles(): void {

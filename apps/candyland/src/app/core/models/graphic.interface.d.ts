@@ -1,5 +1,4 @@
 declare interface IGraphic {
-  body: IGraphic;
   id: number;
   type: string;
   active: boolean;
@@ -8,4 +7,5 @@ declare interface IGraphic {
   format?: string;
   description?: string;
   fullImg?: string;
+  imageParts?: IGraphic;
 }

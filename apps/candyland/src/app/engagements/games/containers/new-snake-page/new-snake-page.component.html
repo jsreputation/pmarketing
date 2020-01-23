@@ -1,4 +1,5 @@
 <article class="snake-wrap" *ngIf="snakeData" [formGroup]="form">
+  <button (click)="revealImgGet()">Reveal Get Img Links</button>
   <header class="page-header full-with">
     <mat-form-field class="pagetitle-input" floatLabel="never">
       <input type="text" matInput formControlName="name" [placeholder]="'ENTER_TITLE_HERE' | translate">
@@ -165,16 +166,19 @@
                             [fontFamily]="tenantSettings?.font"
                             clCreateImage
       >
-        <div class="mobile-preview-header">
-          <p class="mobile-preview-headline">
-            {{headlineMessage.value}}
-          </p>
-          <p class="mobile-preview-sub-headline">
-            {{subHeadlineMessage.value}}
-          </p>
-        </div>
         <div class="plugin-block">
-          <perx-core-snake-game class="mobile-preview-plugin">
+          <div class="mobile-preview-header">
+            <p class="mobile-preview-headline">
+              {{headlineMessage.value}}
+            </p>
+            <p class="mobile-preview-sub-headline">
+              {{subHeadlineMessage.value}}
+            </p>
+          </div>
+          <perx-core-snake-game class="mobile-preview-plugin"
+          [targetUrl]="getImgLink(targetIcon, '')"
+          [snakeHeadUrl]="getImgLink(snakeType, '')"
+          [gameAreaUrl]="getImgLink(gameArea, '')">
           </perx-core-snake-game>
         </div>
         <div class="mobile-preview-btn-wrap mobile-btn-block">

@@ -90,7 +90,9 @@ export class UploadGraphicExtComponent implements ControlValueAccessor {
   }
 
   public multiUploadDialog(): void {
-    const multiUploadDialogRef = this.matDialog.open(MultiUploadDialogComponent);
+    const multiUploadDialogRef = this.matDialog.open(MultiUploadDialogComponent, {
+      panelClass: 'audience-dialog'
+    });
     multiUploadDialogRef.afterClosed().subscribe(res => {
       // should get the two images here, check condition how many uploaded
       console.log(res);
