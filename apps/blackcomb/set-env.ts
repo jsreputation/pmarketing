@@ -20,7 +20,7 @@ const rssFeeds = `{
       "page": "home"
     }
   ]
-}`
+}`;
 
 const displayProperties = `"display_properties": {
   "account": {
