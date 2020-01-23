@@ -1,7 +1,6 @@
-@import '~@angular/material/theming';
-@import "variables";
+@import "../../styles/variables";
 
-.vouchers-progress-bar {
+.cs-statistics-progress-bar {
   padding-top: 2rem;
   position: relative;
   width: 100%;
@@ -19,9 +18,6 @@
     background: $progress-bar-background-color;
     border-radius: 1rem;
     margin-bottom: 0.5rem;
-    overflow: hidden;
-
-    @include mat-elevation(2);
   }
 
   &-hint {
@@ -79,8 +75,6 @@
     margin-right: 0.8rem;
     min-width: 1.2rem;
     min-height: 1.2rem;
-
-    @include mat-elevation(1);
   }
 
   .available {
@@ -97,5 +91,9 @@
 
   .redeemed {
     background-color: $pending-color;
+  }
+
+  .reserved {
+    background-color: $secondary-font-color;
   }
 }

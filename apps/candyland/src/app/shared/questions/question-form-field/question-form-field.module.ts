@@ -10,7 +10,7 @@ import { QuestionRatingFieldModule } from '@cl-shared/questions/question-rating-
 import { DynamicFieldDirective } from 'src/app/shared/questions/question-form-field/shared/dynamic-field.directive';
 import { QuestionDateFieldModule } from '@cl-shared/questions/question-date-field/question-date-field.module';
 import { QuestionCountryCodeFieldModule } from '@cl-shared/questions/question-country-code-field/question-country-code-field.module';
-import { ButtonModule } from '@cl-shared/components/button/button.module';
+import { ButtonModule } from '@perx/candyshop';
 import { QuestionGroupFieldComponent } from '@cl-shared/questions/question-group-field/question-group-field.component';
 import { QuestionLongTextFieldModule } from '@cl-shared/questions/question-long-text-field/question-long-text-field.module';
 import { QuestionPictureChoiceFieldModule } from '@cl-shared/questions/question-picture-choice-field/question-picture-choice-field.module';

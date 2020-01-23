@@ -1,7 +1,7 @@
 <aside class="dialog" role="dialog" aria-labelledby="dialogTitle-changeExpiryDate">
   <header class="dialog-header-wrap">
     <h2 class="dialog-title" id="dialogTitle-changeExpiryDate">{{'AUDIENCE_FEATURE.CHANGE_EXPIRY_DATE' | translate}}</h2>
-    <button class="dialog-closed btn-transparent" [mat-dialog-close]="true">
+    <button class="dialog-closed cs-btn-transparent" [mat-dialog-close]="true">
       <mat-icon>close</mat-icon>
     </button>
   </header>
@@ -37,20 +37,20 @@
         </div>
       </div>
     </div>
-  </mat-dialog-content> 
+  </mat-dialog-content>
   <footer class="dialog-actions">
-    <cl-button classList="secondary"
+    <cs-button classList="secondary"
                class="actions-close"
                (click)="close()"
                [disableRipple]="true">
         <span>{{'BTN_CANCEL' | translate}}</span>
-    </cl-button>
+    </cs-button>
 
-    <cl-button classList="primary"
+    <cs-button classList="primary"
                (click)="save()"
                [disableRipple]="true">
         <span>{{'BTN_ADD' | translate}}</span>
-    </cl-button>
+    </cs-button>
   </footer>
 </aside>
 
