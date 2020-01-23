@@ -92,7 +92,7 @@ export class WhistlerVouchersService implements IVoucherService {
             }
           });
       };
-      this.getPage(1).subscribe(vs => process(1, vs));
+      return this.getPage(1).subscribe(vs => process(1, vs));
     });
   }
 

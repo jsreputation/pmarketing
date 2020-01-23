@@ -27,6 +27,7 @@ export class NewRewardFormService {
         termsAndCondition: [],
         tags: [],
         merchantId: [null],
+        currency: [null, [Validators.required]]
       }),
       vouchers: this.fb.group({
         voucherCode: this.fb.group({
@@ -130,9 +131,10 @@ export class NewRewardFormService {
     ];
   }
 
-  public getDefaultValue(): { [key: string]: any } {
+  public getDefaultValue(currency: string): { [key: string]: any } {
     return {
       rewardInfo: {
+        currency,
         redemptionType: 'QR Code'
       },
       vouchers: {

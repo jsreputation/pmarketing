@@ -214,7 +214,6 @@ export class V4RewardsService extends RewardsService {
   }
 
   public getAllRewards(tags?: string[] | null, categories?: string[], locale: string = 'en'): Observable<IReward[]> {
-
     return new Observable(subject => {
       const pageSize = 10;
       let current: IReward[] = [];
@@ -234,8 +233,7 @@ export class V4RewardsService extends RewardsService {
         }
       };
       // do the first query
-      this.getRewards(1, undefined, tags, categories, locale)
-        .subscribe(process);
+      return this.getRewards(1, undefined, tags, categories, locale).subscribe(process);
     });
   }
 
@@ -298,8 +296,7 @@ export class V4RewardsService extends RewardsService {
         }
       };
       // do the first query
-      this.getCatalogs(1, pageSize, locale)
-        .subscribe(process);
+      return this.getCatalogs(1, pageSize, locale).subscribe(process);
     });
   }
 
