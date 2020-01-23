@@ -17,8 +17,7 @@ const envConfigFile = `export const environment = {
   production: ${process.env.PRODUCTION ? process.env.PRODUCTION : false},
   preAuth: ${process.env.PREAUTH ? process.env.PREAUTH : false},
   isWhistler: ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : false},
-  baseHref: '${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}',
-  custom: {comingSoon: '${process.env.COMING_SOON ? process.env.COMING_SOON : true}'}
+  baseHref: '${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}'
 };
 `;
 
@@ -29,7 +28,8 @@ const appConfigFile = `{
   "isWhistler": ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : false},
   "baseHref": "${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}",
   "sourceType": "${process.env.SOURCE_TYPE ? process.env.SOURCE_TYPE : ''}",
-  "redirectAfterLogin": "${process.env.redirectAfterLogin ? process.env.redirectAfterLogin : '/wallet'}"
+  "redirectAfterLogin": "${process.env.redirectAfterLogin ? process.env.redirectAfterLogin : '/wallet'}",
+  "custom": {"comingSoon": ${process.env.COMING_SOON ? process.env.COMING_SOON : false}}
 }
 `;
 
