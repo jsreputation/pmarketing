@@ -31,8 +31,9 @@ import { of } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 // tslint:disable
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ShakeTreeService } from '@cl-core/services';
+import { EngagementsService, ShakeTreeService } from '@cl-core/services';
 import { TranslateModule } from '@ngx-translate/core';
+import { MockEngagementsService } from '@cl-shared/test-components/providers/mock-engagements.service';
 
 describe('CreateEngagementPopupComponent', () => {
   let component: CreateEngagementPopupComponent;
@@ -83,6 +84,9 @@ describe('CreateEngagementPopupComponent', () => {
             getGamesTree: () => of([]),
             getGameNumberGifts: () => of([]),
           }
+        },
+        {
+          provide: EngagementsService, useClass: MockEngagementsService
         }
       ],
       schemas: [NO_ERRORS_SCHEMA]

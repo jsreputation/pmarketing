@@ -3,7 +3,7 @@ import { ClHttpParams } from '@cl-helpers/http-params';
 import { map } from 'rxjs/operators';
 import { JsonApiParser } from '@cl-helpers/json-api-parser';
 import { Injectable } from '@angular/core';
-import { NotificationHttpService } from '@cl-core/http-services/notification-http.service';
+import { NotificationHttpService } from '@perx/whistler-services';
 import { NotificationHttpAdapter } from '@cl-core/http-adapters/notification-http-adapter';
 import { IWNotificationAttributes, IJsonApiListPayload } from '@perx/whistler';
 import { ICampaignNotificationGroup, IChannel } from '@cl-core/models/campaign/channel-interface';

@@ -1,10 +1,25 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { IConfig, IMicrositeSettings, PagesObject } from './models/config.model';
-import { ConfigService } from './config.service';
 import { HttpClient } from '@angular/common/http';
-import { IJsonApiListPayload, IWTenant, IWSetting } from '@perx/whistler';
+
+import {
+  Observable,
+  of,
+} from 'rxjs';
 import { map } from 'rxjs/operators';
+
+import {
+  IJsonApiListPayload,
+  IWTenant,
+  IWSetting,
+} from '@perx/whistler';
+
+import {
+  IConfig,
+  IMicrositeSettings,
+  IRssFeeds,
+  PagesObject,
+} from './models/config.model';
+import { ConfigService } from './config.service';
 import { Config } from './config';
 
 @Injectable({
@@ -54,6 +69,10 @@ export class WhistlerConfigService extends ConfigService {
         map(res => res.data && res.data[0].attributes.display_properties),
         map((setting) => WhistlerConfigService.WTenantToConfig(setting, this.config)),
       );
+  }
+
+  public readRssFeeds(): Observable<IRssFeeds> {
+    return this.http.get<IRssFeeds>('assets/config/RSS_FEEDS.json');
   }
 
   public getTenantAppSettings(): Observable<IMicrositeSettings> {

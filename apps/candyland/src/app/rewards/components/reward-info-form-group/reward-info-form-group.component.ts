@@ -1,5 +1,6 @@
 import {Component, Input, ViewEncapsulation} from '@angular/core';
 import {AbstractControl} from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'cl-reward-info-form-group',
@@ -8,7 +9,7 @@ import {AbstractControl} from '@angular/forms';
   encapsulation: ViewEncapsulation.None
 })
 export class RewardInfoFormGroupComponent {
-  @Input() public currency: string = 'SGD';
   @Input() public formGroup: AbstractControl;
   @Input() public config: { [key: string]: OptionConfig[] };
+  @Input() public currency$: Observable<Currency[]>;
 }
