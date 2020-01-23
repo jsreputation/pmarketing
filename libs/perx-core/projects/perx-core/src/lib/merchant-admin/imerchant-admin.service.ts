@@ -1,6 +1,16 @@
-import {Observable} from 'rxjs';
-import {IMerchantAdminTransaction, IMerchantProfile, IMerchantTransactionHistory} from './models/merchants-admin.model';
-import {IVoucher} from '../vouchers/models/voucher.model';
+import { Observable } from 'rxjs';
+
+import {
+  IMerchantAdminTransaction,
+  IMerchantProfile,
+  IMerchantTransactionHistory,
+} from './models/merchants-admin.model';
+
+import { IVoucher } from '../vouchers/models/voucher.model';
+
+export interface IRes {
+  message: string;
+}
 
 export abstract class IMerchantAdminService {
   public abstract createTransaction(userId: number, merchantUsername: string, amount: number, currency: string,
@@ -18,4 +28,6 @@ export abstract class IMerchantAdminService {
   public abstract getMerchantProfile(): Observable<IMerchantProfile>;
 
   public abstract getTransactionHistory(page?: number, pageSize?: number, locale?: string): Observable<IMerchantTransactionHistory[]>;
+
+  public abstract forgotPassword(email: string): Observable<IRes>;
 }
