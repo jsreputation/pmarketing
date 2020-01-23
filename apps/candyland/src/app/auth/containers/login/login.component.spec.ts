@@ -8,10 +8,9 @@ import { LoginFormComponent } from '../../components/login-form/login-form.compo
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthService } from '@cl-core-services';
-import { LocalStorageService } from '@cl-core/services/local-storage.service';
-import { SessionService } from '@cl-core/services/session.service';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
+import { TestAuthServisec } from '@cl-shared/test-components/providers/test-auth.servisec';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -31,7 +30,12 @@ describe('LoginComponent', () => {
         HttpClientModule,
         TranslateModule.forRoot()
       ],
-      providers: [ AuthService, LocalStorageService, SessionService ],
+      providers: [
+        {
+          provide: AuthService,
+          useClass: TestAuthServisec
+        }
+      ],
       declarations: [
         LoginComponent,
         LoginFormComponent

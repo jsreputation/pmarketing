@@ -32,23 +32,6 @@ describe('SnakeGameComponent', () => {
     expect(spy).toHaveBeenCalled();
   });
 
-  it('should play a game', fakeAsync(() => {
-    component.up();
-    component.start();
-    tick(1000);
-    component.left();
-    component.start();
-    tick(1000);
-    component.down();
-    component.start();
-    tick(1000);
-    component.right();
-    component.start();
-    tick(1000);
-    component.ngOnDestroy();
-    expect(true).toBe(true); // all property is private, test is for coverage branches
-  }));
-
   it('should handle ngOnChanges', () => {
     component.background = 'snake';
     let vfunction;
@@ -79,7 +62,7 @@ describe('SnakeGameComponent', () => {
 
   it('render with target', fakeAsync(() => {
     component.target = 'test';
-    component.start();
+    component.startGameAndRender();
     const spy = spyOn(component.ctx, 'drawImage');
     tick(1000);
     component.ngOnDestroy();

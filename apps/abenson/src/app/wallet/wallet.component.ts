@@ -12,7 +12,7 @@ import { IAbensonConfig } from '../model/IAbenson.model';
 })
 export class WalletComponent implements OnInit {
   public issuedVouchers: Observable<Voucher[]>;
-  public comingSoon: boolean = false;
+  public comingSoon: boolean = true;
   public redeemedVouchers: Observable<Voucher[]>;
 
   public mapping: StatusLabelMapping = {

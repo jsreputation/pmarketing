@@ -16,7 +16,7 @@ export class Number2 {
   }
 }
 
-import {Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild, Output, EventEmitter} from '@angular/core';
+import {Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild, Output, EventEmitter, OnDestroy} from '@angular/core';
 import { getImageCors } from '../../utils/getImageCors';
 // https://codepen.io/mexitalian/pen/pNQgae // not very useful, not hammer js
 @Component({
@@ -24,7 +24,7 @@ import { getImageCors } from '../../utils/getImageCors';
   templateUrl: './snake.component.html',
   styleUrls: ['./snake.component.scss']
 })
-export class SnakeGameComponent implements OnChanges {
+export class SnakeGameComponent implements OnChanges, OnDestroy {
   private get canv(): HTMLCanvasElement { return this.canvasEl.nativeElement; }
   // public gameStarted: boolean = false;
 
@@ -186,8 +186,8 @@ export class SnakeGameComponent implements OnChanges {
     // render board
     this.ctx.drawImage(this.backgroundImgLoaded, 0, 0, this.canv.width, this.canv.height);
     // render snake
-    // tslint:disable-next-line:prefer-for-of
     this.ctx.fillStyle = this.ctx.createPattern(this.snakeImgLoaded as HTMLImageElement, 'repeat') || 'lime';
+    // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < this.trail.length; i++) {
       this.ctx.fillRect(this.trail[i].x * this.gs, this.trail[i].y * this.gs, this.gs - 2 , this.gs - 2);
     }
@@ -259,6 +259,9 @@ export class SnakeGameComponent implements OnChanges {
         this.down();
         break;
     }
+  }
+
+  public ngOnDestroy(): void {
   }
 
 }

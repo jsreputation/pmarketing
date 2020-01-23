@@ -11,6 +11,8 @@ import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TestComponentsModule } from '@cl-shared/test-components/test-components.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { SurveyService } from '@cl-core-services';
+import { MockSurveyService } from '@cl-shared/test-components/providers/mock-survey.service';
 
 describe('CreateMerchantFormComponent', () => {
   let component: CreateMerchantFormComponent;
@@ -28,6 +30,9 @@ describe('CreateMerchantFormComponent', () => {
         BrowserAnimationsModule,
         TestComponentsModule,
         TranslateModule.forRoot(),
+      ],
+      providers: [
+        { provide: SurveyService, useClass: MockSurveyService}
       ],
       schemas: [NO_ERRORS_SCHEMA],
     })

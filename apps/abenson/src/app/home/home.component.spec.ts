@@ -26,11 +26,11 @@ describe('HomeComponent', () => {
   const configServiceStub: Partial<ConfigService> = {
     readAppConfig: <T>(): Observable<IConfig<T>> => of()
   };
-  const vouchersServiceStub = {
+  const vouchersServiceStub: Partial<IVoucherService> = {
     getAll: () => of()
   };
 
-  const campaignServiceStub = {
+  const campaignServiceStub: Partial<ICampaignService> = {
     getCampaigns: () => of()
   };
 
@@ -45,6 +45,7 @@ describe('HomeComponent', () => {
   };
 
   const loyaltyServiceStub: Partial<LoyaltyService> = {
+    getLoyalty: () => of(),
     getLoyalties: () => of([])
   };
 

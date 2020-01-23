@@ -1,4 +1,4 @@
-import { InformationCollectionSettingType } from "./campaign.enum";
+import { InformationCollectionSettingType } from './campaign.enum';
 
 export interface IChannel {
   webNotification: {

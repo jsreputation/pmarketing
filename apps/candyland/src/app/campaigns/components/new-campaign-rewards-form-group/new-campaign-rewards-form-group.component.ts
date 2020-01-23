@@ -13,7 +13,8 @@ import { MatDialog } from '@angular/material';
 
 import {
   combineLatest,
-  of, Subject,
+  of,
+  Subject,
 } from 'rxjs';
 import {
   map,
@@ -27,7 +28,8 @@ import { RewardsService } from '@cl-core/services/rewards.service';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
 import { SOURCE_TYPE } from '../../../app.constants';
-import {RewardItemComponent} from '../reward-item/reward-item.component';
+import { RewardItemComponent } from '../reward-item/reward-item.component';
+import { ICampaign } from '@cl-core/models/campaign/campaign';
 
 @Component({
   selector: 'cl-new-campaign-rewards-form-group',
@@ -67,7 +69,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
   ) {
   }
 
-  public get campaign(): any {
+  public get campaign(): ICampaign {
     return this.store.currentCampaign;
   }
 
@@ -147,7 +149,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
       }
     );
     const possibleOutcomes$ = possibleOutcomes && possibleOutcomes.map(data =>
-      this.rewardsService.getReward(data.outcome.resultId).pipe(
+      this.rewardsService.getReward(`${data.outcome.resultId}`).pipe(
         map((reward: IRewardEntity) =>
           ({ ...data, reward })),
         catchError(() => of(null))
@@ -179,11 +181,9 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
     this.campaign.outcomes = [...otherSlotOutcomes, ...this.outcomes];
     // bypasses null/undefined/0, will scan thru the campaign outcomes for final check
     // if set to true enableProbability then just true, (from checkbox)
-    this.campaign.enabledProb = this.enableProbability ||
-      this.campaign.outcomes.some(({outcome}) => outcome.probability);
-    this.store.currentCampaign = {...this.campaign};
-    this.isSpinEngagement ?
-      (this.updateSlotCount().updateSumMoreThanCheck()) : (this.sumMoreThanError = this.updateSumMoreThanCheck());
+    this.campaign.enabledProb = this.enableProbability || this.campaign.outcomes.some(({ outcome }) => outcome.probability !== undefined);
+    this.store.currentCampaign = { ...this.campaign };
+    this.isSpinEngagement ? (this.updateSlotCount().updateSumMoreThanCheck()) : (this.sumMoreThanError = this.updateSumMoreThanCheck());
     this.formParent.updateValueAndValidity();
     this.cd.detectChanges();
   }
@@ -240,5 +240,4 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
     }
     this.updateOutcomesInCampaign();
   }
-
 }

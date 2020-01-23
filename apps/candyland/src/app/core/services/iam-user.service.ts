@@ -7,7 +7,7 @@ import {
 } from '@perx/whistler';
 import { map } from 'rxjs/operators';
 import { IamUserHttpAdapter } from '@cl-core/http-adapters/iam-user-http-adapter';
-import { IamUserHttpService } from '@cl-core/http-services/iam-user-http.service';
+import { IamUserHttpService } from '@perx/whistler-services';
 import Utils from '@cl-helpers/utils';
 import { ITableService } from '@cl-shared';
 import { ClHttpParams } from '@cl-helpers/http-params';
