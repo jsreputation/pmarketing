@@ -1,11 +1,13 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+
 @Component({
-  selector: 'cl-vouchers-progress-bar',
-  templateUrl: './vouchers-progress-bar.component.html',
-  styleUrls: ['./vouchers-progress-bar.component.scss'],
+  selector: 'cs-statistics-progress-bar',
+  templateUrl: './statistics-progress-bar.component.html',
+  styleUrls: ['./statistics-progress-bar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class VouchersProgressBarComponent {
+export class StatisticsProgressBarComponent {
+  @Input() public itemName: string = 'items';
   @Input() public options: { type: string, value: number }[];
 
   public get total(): number {

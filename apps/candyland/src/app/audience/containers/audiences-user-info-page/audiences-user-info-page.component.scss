@@ -1,18 +1,14 @@
 @import "variables";
 
-.audience-list-content {
-  margin-top: $vertical-padding;
-
-  .send-message-container {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: $vertical-padding;
-  }
-}
-
 .audience-list {
   &-content {
     margin-top: $vertical-padding;
+
+    .send-message-container {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: $vertical-padding;
+    }
   }
 
   &-loyalty-panel {

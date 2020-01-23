@@ -34,12 +34,12 @@
         {{tierName || ('LOYALTY_FEATURE.GENERAL_RULES' | translate)}}.
       </div>
     </cl-point-earn-rules-list>
-    <cl-button *ngIf="editable"
+    <cs-button *ngIf="editable"
                [classList]="'tertiary'"
                (click)="createRule()">
         <span>
          {{'LOYALTY_FEATURE.CREATE_RULE' | translate}}
         </span>
-    </cl-button>
+    </cs-button>
   </div>
 </mat-expansion-panel>

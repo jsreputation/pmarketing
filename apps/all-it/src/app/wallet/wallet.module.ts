@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { VouchersModule } from '@perx/core';
 import { TranslateModule } from '@ngx-translate/core';
-
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 @NgModule({
   declarations: [
     WalletHistoryComponent
@@ -15,7 +15,8 @@ import { TranslateModule } from '@ngx-translate/core';
     CommonModule,
     RouterModule,
     VouchersModule,
-    TranslateModule
+    TranslateModule,
+    InfiniteScrollModule
   ]
 })
 export class WalletModule { }

@@ -3,7 +3,7 @@
     <h2 class="dialog-title" id="dialogTitle-selectRewards">
       {{'CAMPAIGN.SELECT_REWARDS' | translate}}
     </h2>
-    <button class="dialog-closed btn-transparent" [mat-dialog-close]="false">
+    <button class="dialog-closed cs-btn-transparent" [mat-dialog-close]="false">
       <mat-icon>close</mat-icon>
     </button>
   </header>
@@ -34,22 +34,23 @@
     </section>
   </mat-dialog-content>
   <!--<mat-dialog-actions>-->
-  <footer class="dialog-actions">
-    <cl-button [classList]="'secondary'"
-      class="actions-close"
-      (click)="close()"
-      [disableRipple]="true">
+  <footer class="dialog-actions"
+  >
+    <cs-button [classList]="'secondary'"
+              class="actions-close"
+              (click)="close()"
+              [disableRipple]="true">
       <span>{{'BTN_CANCEL' | translate}}</span>
-    </cl-button>
+    </cs-button>
 
-    <cl-button [classList]="'primary'"
-      (click)="add()"
-      [disable]="!selectedReward"
-      [disableRipple]="true">
+    <cs-button [classList]="'primary'"
+              (click)="add()"
+              [disable]="!selectedReward"
+              [disableRipple]="true">
       <span>
         {{'CAMPAIGN.ADD_REWARD' | translate}}
       </span>
-    </cl-button>
+    </cs-button>
   </footer>
   <!--</mat-dialog-actions>-->
 </aside>

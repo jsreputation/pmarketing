@@ -6,7 +6,6 @@ import { RoutingStateService, SurveyService, TenantStoreService, UploadFileServi
 import { StampDataService } from '../../../new-stamp/shared/stamp-data.service';
 import { QuestionTypeModule } from '@cl-shared/questions/question-type/question-type.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { QuestionFormFieldModule } from '@cl-shared/questions/question-form-field/question-form-field.module';
 import { MatCardModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatSelectModule } from '@angular/material';
 import { DragDropModule } from '@angular/cdk/drag-drop';
@@ -18,6 +17,8 @@ import { ConfirmModalModule, SimpleMobileViewModule } from '@cl-shared';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { ButtonModule } from '@perx/candyshop';
+
 import { TenantMockStore } from '@cl-shared/test-components/tenant-mock-store/tenant-mock-store';
 import { MockSurveyService } from '@cl-shared/test-components/providers/mock-survey.service';
 import { MockUploadFileService } from '@cl-shared/test-components/providers/mock-upload-file.service';
