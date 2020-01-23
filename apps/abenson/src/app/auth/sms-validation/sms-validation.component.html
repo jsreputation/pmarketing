@@ -2,7 +2,7 @@
   <p class="title">Thank you for registering</p>
   <p class="description">Enter the 4-digit One-Time Password (OTP) sent to your mobile number ({{phoneDisplay}})</p>
   <div class="otp-wrapper">
-    <perx-core-pin-input [length]="4" (full)="validate($event)"></perx-core-pin-input>
+    <perx-core-pin-input [length]="5" (full)="validate($event)"></perx-core-pin-input>
     <p class="resend-link" (click)="resendSms()">Resend OTP</p>
   </div>
   <button mat-flat-button type="submit" color="primary" class="full-width" (click)="onSubmit()">Next</button>
