@@ -5,7 +5,7 @@ import {
 import { Router } from '@angular/router';
 
 import {
-  Observable, combineLatest, of
+  Observable, from
 } from 'rxjs';
 
 import {
@@ -23,8 +23,7 @@ import {
 } from '@perx/core';
 import { TranslateService } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
-import { tap, mergeMap, map, filter, catchError, take } from 'rxjs/operators';
-import { oc } from 'ts-optchain';
+import { tap, mergeMap, map, toArray } from 'rxjs/operators';
 
 interface IStampCardConfig {
   stampsType: string;
@@ -54,12 +53,7 @@ export class WalletComponent implements OnInit {
     private configService: ConfigService,
     private campaignService: ICampaignService,
     private stampService: StampService,
-  ) {
-    this.puzzleTextFn = (puzzle: IStampCard) => !puzzle.stamps ||
-      puzzle.stamps.filter(st => st.state === StampState.issued).length !== 1 ? 'new stamps' : 'new stamp';
-    this.titleFn = (index?: number, totalCount?: number) => index !== undefined ?
-      `Stamp Card ${this.puzzleIndex(index)} out of ${totalCount}` : '';
-  }
+  ) { }
 
   public ngOnInit(): void {
     this.getCampaign();
@@ -80,36 +74,42 @@ export class WalletComponent implements OnInit {
   }
 
   private getCampaign(): void {
-    this.configService.readAppConfig<IStampCardConfig>()
-      .pipe(
-        tap((config: IConfig<IStampCardConfig>) => this.stampsType = oc(config).custom.stampsType('puzzle')),
-        mergeMap(() => this.fetchCampaign()),
-        filter((card: IStampCard) => card !== undefined)
-      )
-      .subscribe((card: IStampCard) => this.campaignId = card.campaignId);
+    this.configService.readAppConfig<IStampCardConfig>().pipe(tap((config: IConfig<IStampCardConfig>) => {
+      this.stampsType = config.custom && config.custom.stampsType ? config.custom.stampsType as string : 'puzzle';
+    }), mergeMap(() => this.fetchCampaign())).subscribe((card: IStampCard) => {
+      if (card) {
+        this.campaignId = card.campaignId;
+      }
+    });
   }
-
   private fetchCampaign(): Observable<IStampCard> {
     return this.campaignService.getCampaigns()
       .pipe(
         map(campaigns => campaigns.filter(camp => camp.type === CampaignType.stamp)),
-        // map(campaigns => (this.stampsType === 'puzzle') ?
-        //   campaigns.filter(camp => camp.type === CampaignType.stamp).slice(0, 1) : campaigns
-        // ),
-        tap(cs => console.log('campaigns', cs)),
-        mergeMap((cs: ICampaign[]) =>
-          combineLatest(...cs.map((c: ICampaign) => this.stampService.getCurrentCard(c.id).pipe(catchError(() => of(void 0)))))
+        map(campaigns => {
+          if (this.stampsType === 'puzzle') {
+            return campaigns.filter(camp => camp.type === CampaignType.stamp).slice(0, 1);
+          }
+          return campaigns;
+        }),
+        mergeMap(
+          (campaigns: ICampaign[]) => from(campaigns).pipe(
+            mergeMap((campaign: ICampaign) => this.stampService.getCurrentCard(campaign.id)),
+            toArray(),
+            map((stampCards: IStampCard[]) => stampCards.filter(card =>
+              card.displayProperties.displayCampaignAs && card.displayProperties.displayCampaignAs === this.stampsType
+            )),
+            tap(() => {
+              if (this.stampsType === 'stamp_card') {
+                this.puzzleTextFn = (puzzle: IStampCard) => !puzzle.stamps ||
+                  puzzle.stamps.filter(st => st.state === StampState.issued).length !== 1 ? 'new stamps' : 'new stamp';
+                this.titleFn = (index?: number, totalCount?: number) => index !== undefined ?
+                  `Stamp Card ${this.puzzleIndex(index)} out of ${totalCount}` : '';
+              }
+            }),
+            map((cards: IStampCard[]) => cards[0])
+          )
         ),
-        tap(cs => console.log('cards', cs)),
-        map((cards: (IStampCard | undefined)[]) => cards.filter(c => c !== undefined)),
-        tap(cs => console.log(cs)),
-        // toArray(),
-        // map((stampCards: IStampCard[]) => stampCards.filter(card =>
-        //   card.displayProperties.displayCampaignAs && card.displayProperties.displayCampaignAs === this.stampsType
-        // )),
-        filter((cards: IStampCard[]) => cards.length > 0),
-        take(1),
-        map((cards: IStampCard[]) => cards[0])
       );
   }
 
