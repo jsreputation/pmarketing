@@ -181,7 +181,11 @@ export class V4MerchantAdminService implements IMerchantAdminService {
     private config: Config,
   ) {
     this.apiHost = config.apiHost as string;
-    this.merchantEndPoint = `${this.apiHost}/v4/merchant_admin`;
+    if (!config.production) {
+      this.merchantEndPoint = `http://localhost:4000/v4/merchant_admin`;
+    } else {
+      this.merchantEndPoint = `${config.baseHref}v4/merchant_admin`;
+    }
   }
 
   public static v4TransactionHistoryToTransactionHistory(transactionHistory: IV4MerchantTransactionHistory): IMerchantTransactionHistory {
