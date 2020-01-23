@@ -3,7 +3,7 @@ import { FormArray, AbstractControl, FormGroup, FormControl } from '@angular/for
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, combineLatest, forkJoin, Observable, of, Subject, throwError } from 'rxjs';
 import { filter, map, switchMap, tap, takeUntil, distinctUntilChanged, debounceTime, catchError, mergeMap } from 'rxjs/operators';
-import { RewardsService, MerchantsService } from '@cl-core/services';
+import { RewardsService, MerchantsService, TenantStoreService } from '@cl-core/services';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { NewRewardFormService } from '../../services/new-reward-form.service';
 import { CreateMerchantPopupComponent, SelectMerchantPopupComponent, ToggleControlService } from '@cl-shared';
@@ -14,6 +14,7 @@ import { TranslateDefaultLanguageService } from '@cl-core/translate-services/tra
 import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.interface';
 import { IWTierRewardCostsAttributes, IJsonApiItem } from '@perx/whistler';
 import { oc } from 'ts-optchain';
+import { TenantService } from '@cl-core/services/tenant.service';
 
 @Component({
   selector: 'cl-manage-rewards',
@@ -31,7 +32,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   public loyalties: ILoyaltyForm[];
   public rewardLoyaltyForm: FormArray;
   public getRewardLoyaltyData$: BehaviorSubject<ILoyaltyFormGroup[] | null> = new BehaviorSubject<ILoyaltyFormGroup[] | null>(null);
-
+  public currency$: Observable<Currency[]>;
   private tierForSent: any = {
     update: [],
     delete: [],
@@ -53,7 +54,9 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     private toggleControlService: ToggleControlService,
     private loyaltyService: LoyaltyService,
     private readonly translate: TranslateService,
-    private translateDefaultLanguage: TranslateDefaultLanguageService
+    private translateDefaultLanguage: TranslateDefaultLanguageService,
+    private tenantStoreService: TenantStoreService,
+    private tenantService: TenantService
   ) { }
 
   public ngOnInit(): void {
@@ -63,6 +66,8 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     this.handleMerchantIdChanges();
     this.handleRouteParams();
     this.setTranslateLanguage();
+    this.getTenantCurrency();
+    this.getCurrency();
   }
 
   public ngOnDestroy(): void {
@@ -206,20 +211,27 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
       tap((id: any) => {
         this.id = id;
         this.patchLoyaltiesForm(this.id);
+        if (!id) {
+          this.setDefaultCurrencyToRewardForm();
+        }
       }),
-      switchMap((id: string) => id ? this.rewardsService.getRewardToForm(id) : of(null)),
+      switchMap((id: string) => {
+        return id
+          ? combineLatest(...[this.rewardsService.getRewardToForm(id), this.getTenantCurrency()])
+          : of([null, this.getTenantCurrency()]);
+      }),
       takeUntil(this.destroy$),
     )
       .subscribe(
-        (reward: IRewardEntityForm | undefined) => {
+        ([reward, currency]) => {
           // handle the loyalties to patch form
           if (!reward) {
             return;
           }
+          this.setDefaultCurrencyExistReward(reward, currency);
           this.getRewardLoyaltyData$.next(reward ? reward.loyalties : null);
-
           this.reward = reward;
-          const patchData = reward || this.newRewardFormService.getDefaultValue();
+          const patchData = reward || this.newRewardFormService.getDefaultValue(currency);
           this.form.patchValue(patchData);
         },
         () => this.router.navigateByUrl('/rewards')
@@ -394,5 +406,28 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     });
 
     return result;
+  }
+
+  private getTenantCurrency(): Observable<string> {
+    return this.tenantStoreService.currency$
+      .pipe(
+        takeUntil(this.destroy$)
+      );
+  }
+
+  private getCurrency(): void {
+    this.currency$ = this.tenantService.getCurrency();
+  }
+
+  private setDefaultCurrencyToRewardForm(): void {
+    this.getTenantCurrency()
+      .subscribe((currency) => {
+        const patchData = this.newRewardFormService.getDefaultValue(currency);
+        this.form.patchValue(patchData);
+      });
+  }
+
+  private setDefaultCurrencyExistReward(reward: IRewardEntityForm, currency: string): void {
+    reward.rewardInfo.currency = reward.rewardInfo.currency ? reward.rewardInfo.currency : currency;
   }
 }
