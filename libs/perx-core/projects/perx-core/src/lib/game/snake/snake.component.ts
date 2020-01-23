@@ -85,7 +85,6 @@ export class SnakeGameComponent implements OnChanges {
   public score: number = 0;
 
   // https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
-  public request: number;
   // https://stackoverflow.com/questions/19764018/controlling-fps-with-requestanimationframe
   private fpsInterval: number;
   private now: number;
@@ -93,7 +92,7 @@ export class SnakeGameComponent implements OnChanges {
   private elapsed: number;
 
   private startedMoving: boolean = false;
-  private gameStop: boolean = false;
+  // private gameStop: boolean = false;
 
   constructor() {
     // the bindings are necessary to keep track of correct, common game state
@@ -112,10 +111,10 @@ export class SnakeGameComponent implements OnChanges {
     this.startGameAndRender();
   }
 
-  public startGameAndRender(newtime?: number): number | undefined {
-    if (this.gameStop) {
-      return;
-    }
+  private startGameAndRender(newtime?: number): void {
+    // if (this.gameStop) {
+    //   return;
+    // }
     // request another frame;
     window.requestAnimationFrame(this.startGameAndRender);
     // calc elapsed time since last loop
@@ -139,15 +138,15 @@ export class SnakeGameComponent implements OnChanges {
     }
   }
 
-  public checkCollisionWithWall(): boolean {
+  private checkCollisionWithWall(): boolean {
     return ((this.p.x < 0) || (this.p.x > this.tc) || (this.p.y < 0) || (this.p.y > this.tc));
   }
 
-  public checkCollisionWithSelf(): boolean {
+  private checkCollisionWithSelf(): boolean {
     return this.trail.some(q => q.equals(this.p));
   }
 
-  public checkGameOver(): boolean {
+  private checkGameOver(): boolean {
     return this.checkCollisionWithWall() || this.checkCollisionWithSelf();
   }
 
@@ -185,7 +184,7 @@ export class SnakeGameComponent implements OnChanges {
     }
   }
 
-  public render(): void {
+  private render(): void {
     // render board
     this.ctx.drawImage(this.gameAreaImgLoaded, 0, 0, this.canv.width, this.canv.height);
     // render snake
