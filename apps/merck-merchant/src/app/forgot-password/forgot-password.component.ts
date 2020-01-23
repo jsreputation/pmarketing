@@ -1,26 +1,23 @@
 import {
-  Component,
-  OnInit,
-} from '@angular/core';
-import {
   Validators,
   FormBuilder,
   FormGroup,
 } from '@angular/forms';
+import { Component } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 
 import {
   IMerchantAdminService,
   IMessageResponse,
   NotificationService,
 } from '@perx/core';
-import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
-  selector: 'app-reset-password',
-  templateUrl: './reset-password.component.html',
-  styleUrls: ['./reset-password.component.scss']
+  selector: 'app-forgot-password',
+  templateUrl: './forgot-password.component.html',
+  styleUrls: ['./forgot-password.component.scss']
 })
-export class ResetPasswordComponent implements OnInit {
+export class ForgotPasswordComponent {
 
   public loginForm: FormGroup;
 
@@ -30,9 +27,6 @@ export class ResetPasswordComponent implements OnInit {
     private merchantAdminService: IMerchantAdminService,
   ) {
     this.initForm();
-  }
-
-  public ngOnInit(): void {
   }
 
   private initForm(): void {
@@ -48,5 +42,4 @@ export class ResetPasswordComponent implements OnInit {
       (err: HttpErrorResponse) => this.notificationService.addSnack(err.error.message)
     );
   }
-
 }

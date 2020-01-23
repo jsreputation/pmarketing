@@ -1,8 +1,16 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-
-import { ResetPasswordComponent } from './reset-password.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Type } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
+import {
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import {
   MatButtonModule,
   MatToolbarModule,
@@ -10,14 +18,17 @@ import {
   MatInputModule,
   MatRippleModule,
 } from '@angular/material';
-import { IMerchantAdminService } from '@perx/core';
+
 import { of } from 'rxjs';
-import { Type } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 
-describe('ResetPasswordComponent', () => {
-  let component: ResetPasswordComponent;
-  let fixture: ComponentFixture<ResetPasswordComponent>;
+import { IMerchantAdminService } from '@perx/core';
+
+import { ForgotPasswordComponent } from './forgot-password.component';
+
+describe('ForgotPasswordComponent', () => {
+  let component: ForgotPasswordComponent;
+  let fixture: ComponentFixture<ForgotPasswordComponent>;
 
   const merchantAdminServiceStub = {
     forgotPassword: () => of(),
@@ -25,7 +36,9 @@ describe('ResetPasswordComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ResetPasswordComponent ],
+      declarations: [
+        ForgotPasswordComponent,
+      ],
       imports: [
         FormsModule,
         ReactiveFormsModule,
@@ -45,7 +58,7 @@ describe('ResetPasswordComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ResetPasswordComponent);
+    fixture = TestBed.createComponent(ForgotPasswordComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

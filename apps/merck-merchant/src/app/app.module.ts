@@ -33,7 +33,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
 import { HomeComponent } from './home/home.component';
-import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { QrscannerComponent } from './qrscanner/qrscanner.component';
 import { HeaderComponent } from './header/header.component';
@@ -44,7 +44,7 @@ import { OrderQuantityComponent } from './order/order-quantity/order-quantity.co
 import { RedeemComponent } from './redeem/redeem.component';
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { RegisterComponent } from './register/register.component';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslateService, TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { PerxTranslateLoader } from './custom-translate.service';
 import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
@@ -60,7 +60,7 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
     AppComponent,
     LoginComponent,
     HomeComponent,
-    ResetPasswordComponent,
+    ForgotPasswordComponent,
     QrscannerComponent,
     HeaderComponent,
     SalesContactComponent,
