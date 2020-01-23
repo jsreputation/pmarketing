@@ -1,12 +1,14 @@
 <header class="page-header full-with">
   <h1 class="title" *ngIf="campaign">{{campaign.name}}</h1>
   <div class="btn-group">
-    <cl-button classList="secondary"
+    <cs-button classList="secondary"
       (click)="comeBack()">{{'BTN_COME_BACK' | translate}}
-    </cl-button>
-    <cl-button *ngIf="campaign && campaign.status !== cs.active" classList="primary cta cta-edit"
-      [routerLink]="['/campaigns','edit',campaign.id]">{{'BTN_EDIT' | translate}}
-    </cl-button>
+    </cs-button>
+    <cs-button *ngIf="campaign && campaign.status !== cs.active" classList="primary cs-btn-mobile"
+      [routerLink]="['/campaigns','edit',campaign.id]">
+      <i class="cs-btn-mobile-icon icon edit-icon"></i>
+      {{'BTN_EDIT' | translate}}
+    </cs-button>
   </div>
 </header>
 <section class="content form-limiter">

@@ -7,7 +7,7 @@
       <mat-error *ngIf="name.hasError('maxlength')"><span translate>ERROR_MAX_LENGTH</span> 60</mat-error>
     </mat-form-field>
     <div class="btn-group">
-      <cl-button [classList]="'secondary'"
+      <cs-button [classList]="'secondary'"
                  [disableRipple]="true"
                  class="reward-btn-cancel"
                  (click)="comeBack()"
@@ -16,14 +16,14 @@
        <span translate>
         BTN_CANCEL
       </span>
-      </cl-button>
-      <cl-button [classList]="'primary cta cta-save'"
-                 (click)="save()"
-      >
+      </cs-button>
+      <cs-button classList="primary cs-btn-mobile"
+                 (click)="save()">
+        <i class="cs-btn-mobile-icon icon save-icon"></i>
         <span translate>
           BTN_SAVE
         </span>
-      </cl-button>
+      </cs-button>
     </div>
   </header>
 

@@ -29,9 +29,10 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import {
   DatePickerModule,
-  ButtonModule,
   UploadFileModule,
 } from '@cl-shared';
+
+import { ButtonModule } from '@perx/candyshop';
 
 import { UpsertUserPopupComponent } from './upsert-user-popup.component';
 import { AudiencesService, SurveyService } from '@cl-core-services';

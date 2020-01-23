@@ -1,7 +1,7 @@
 <aside class="dialog invite-new-users" role="dialog" aria-labelledby="dialogTitle-inviteNewUsers">
   <header class="dialog-header-wrap">
     <h2 class="dialog-title" id="dialogTitle-inviteNewUsers">{{'SETTINGS_FEATURE.INVITE_NEW_USER' | translate}}</h2>
-    <button class="dialog-closed btn-transparent" [mat-dialog-close]="true">
+    <button class="dialog-closed cs-btn-transparent" [mat-dialog-close]="true">
       <mat-icon>close</mat-icon>
     </button>
   </header>
@@ -84,71 +84,71 @@
     <!--        </mat-tab-group>-->
     <!--        &lt;!&ndash;/ tabs&ndash;&gt;-->
     <!--        <div class="dialog-actions">-->
-    <!--          <cl-button classList="secondary"-->
+    <!--          <cs-button classList="secondary"-->
     <!--                     class="actions-close"-->
     <!--                     (click)="goBack()"-->
     <!--                     [disableRipple]="true">-->
     <!--            <span>Back</span>-->
-    <!--          </cl-button>-->
-    <!--          <cl-button classList="primary"-->
+    <!--          </cs-button>-->
+    <!--          <cs-button classList="primary"-->
     <!--                     (click)="invite()"-->
     <!--                     [disableRipple]="true">-->
     <!--            <span>Invite</span>-->
-    <!--          </cl-button>-->
+    <!--          </cs-button>-->
     <!--        </div>-->
     <!--      </mat-step>-->
     <!--      &lt;!&ndash;/ permission&ndash;&gt;-->
     <!--    </mat-horizontal-stepper>-->
   </mat-dialog-content>
   <footer class="dialog-actions">
-    <cl-button classList="secondary"
+    <cs-button classList="secondary"
                 class="actions-close"
                 (click)="close()"
                 [disableRipple]="true">
       <span>
         {{'BTN_CANCEL' | translate}}
       </span>
-    </cl-button>
-    <!--          <cl-button classList="primary"-->
+    </cs-button>
+    <!--          <cs-button classList="primary"-->
     <!--                     (click)="goNext()"-->
     <!--                     [disable]="this.form.invalid"-->
     <!--                     [disableRipple]="true">-->
     <!--            <span>Next</span>-->
-    <!--          </cl-button>-->
-    <cl-button classList="primary"
+    <!--          </cs-button>-->
+    <cs-button classList="primary"
                 (click)="invite()"
                 [disable]="this.form.invalid"
                 [disableRipple]="true">
       <span>{{'SETTINGS_FEATURE.INVITE_NEW_USER' | translate}}</span>
-    </cl-button>
+    </cs-button>
   </footer>
   <!--  <div class="dialog-actions">-->
-  <!--    <cl-button classList="secondary"-->
+  <!--    <cs-button classList="secondary"-->
   <!--               class="actions-close"-->
   <!--               *ngIf="isFirstStep"-->
   <!--               (click)="close()"-->
   <!--               [disableRipple]="true">-->
   <!--      <span>Cancel</span>-->
-  <!--    </cl-button>-->
-  <!--    <cl-button classList="primary"-->
+  <!--    </cs-button>-->
+  <!--    <cs-button classList="primary"-->
   <!--               *ngIf="isFirstStep"-->
   <!--               (click)="goNext()"-->
   <!--               [disable]="this.form.invalid"-->
   <!--               [disableRipple]="true">-->
   <!--      <span>Next</span>-->
-  <!--    </cl-button>-->
-  <!--    <cl-button classList="secondary"-->
+  <!--    </cs-button>-->
+  <!--    <cs-button classList="secondary"-->
   <!--               *ngIf="!isFirstStep"-->
   <!--               class="actions-close"-->
   <!--               (click)="goBack()"-->
   <!--               [disableRipple]="true">-->
   <!--      <span>Back</span>-->
-  <!--    </cl-button>-->
-  <!--    <cl-button classList="primary"-->
+  <!--    </cs-button>-->
+  <!--    <cs-button classList="primary"-->
   <!--               *ngIf="!isFirstStep"-->
   <!--               (click)="invite()"-->
   <!--               [disableRipple]="true">-->
   <!--      <span>Invite</span>-->
-  <!--    </cl-button>-->
+  <!--    </cs-button>-->
   <!--  </div>-->
   </aside>

@@ -263,7 +263,7 @@ th.mat-header-cell.column-audiencelist {
 .name-cell {
   &__id,
   &__sub {
-    @include typo-caption;
+    @include cs-typo-caption;
 
     display: block;
     color: $secondary-font-color;
