@@ -108,8 +108,7 @@ export class WhistlerCampaignService implements ICampaignService {
           this.getPage(p + 1).subscribe(res => process(p + 1, res));
         }
       };
-      const sub = this.getPage(1).subscribe(cs => process(1, cs));
-      return () => sub.unsubscribe();
+      return this.getPage(1).subscribe(cs => process(1, cs));
     });
   }
 
