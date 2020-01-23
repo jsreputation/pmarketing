@@ -9,8 +9,8 @@ import {
   StampState
 } from '@perx/core';
 import {Component, OnInit, OnDestroy} from '@angular/core';
-import {filter, switchMap, takeUntil, map} from 'rxjs/operators';
-import {Observable, of, Subject} from 'rxjs';
+import {filter, switchMap, takeUntil, map, distinctUntilChanged} from 'rxjs/operators';
+import {Observable, Subject} from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
 export interface IRewardPopupConfig extends IPopupConfig {
@@ -91,14 +91,11 @@ export class StampCardComponent implements OnInit, OnDestroy {
         }),
         switchMap((stampCard: IStampCard) => {
           // tslint:disable-next-line:max-line-length
-          if ( !!stampCard.stamps && !!stampCard.displayProperties.totalSlots && (stampCard.stamps.length < stampCard.displayProperties.totalSlots) ) {
-            return this.stampService.stampsChangedForStampCard(stampCard);
-          }
-          return of(stampCard);
+          return this.stampService.stampsChangedForStampCard(stampCard);
         }),
         takeUntil(this.destroy$)
       );
-    this.stampCard$.subscribe(
+    this.stampCard$.pipe(distinctUntilChanged()).subscribe(
       (stampCard: IStampCard) => {
         if (this.stamps && stampCard.stamps && this.stamps.length < stampCard.stamps.length) {
           this.notificationService.addSnack('You got a new stamp!');

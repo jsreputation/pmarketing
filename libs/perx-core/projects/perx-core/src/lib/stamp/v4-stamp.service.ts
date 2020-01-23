@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { oc } from 'ts-optchain';
-import {interval, Observable, of, throwError} from 'rxjs';
+import {interval, Observable, of, throwError } from 'rxjs';
 import {
   map,
   flatMap,
@@ -280,7 +280,7 @@ export class V4StampService implements StampService {
 
   public stampsChangedForStampCard(stampCard: IStampCard, intervalPeriod: number = 2000): Observable<IStampCard> {
     let pass: number;
-    const numberOfStamps = stampCard.stamps ? stampCard.stamps.length : 0;
+    let numberOfStamps = stampCard.stamps ? stampCard.stamps.length : 0;
     return interval(intervalPeriod).pipe(
       map(val => {
         pass = val;
@@ -292,8 +292,11 @@ export class V4StampService implements StampService {
           return true;
         }
 
-        return !!(card.stamps && numberOfStamps < card.stamps.length);
-
+        if (card.stamps && numberOfStamps < card.stamps.length) {
+          numberOfStamps = card.stamps.length;
+          return true;
+        }
+        return false;
       })
     );
   }
