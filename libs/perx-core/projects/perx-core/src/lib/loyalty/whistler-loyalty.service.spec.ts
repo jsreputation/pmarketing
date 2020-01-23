@@ -15,7 +15,7 @@ import { ILoyalty } from './models/loyalty.model';
 import { skip } from 'rxjs/operators';
 
 describe('WhistlerLoyaltyService', () => {
-  const mockCard: IJsonApiItem<IWLoyaltyCard> = { id: '1', type: 'cards', attributes: { user_id: 1, balance: 42 } };
+  const mockCard: IJsonApiItem<IWLoyaltyCard> = { id: '1', type: 'cards', attributes: { user_id: 1, balance: '42' } };
   const mockLoyalty: IJsonApiItem<IWLoyalty> = {
     id: '1',
     type: 'test',
