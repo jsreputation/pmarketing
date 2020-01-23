@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { QuestionTypeComponent } from 'src/app/shared/questions/question-type/question-type.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule, MatSelectModule } from '@angular/material';
-import { ButtonModule } from '@cl-shared/components/button/button.module';
+import { ButtonModule } from '@perx/candyshop';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({

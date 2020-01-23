@@ -15,15 +15,14 @@ import {
 } from '@angular/material';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ReactiveFormsModule} from '@angular/forms';
-import {StatusLabelModule} from '../../../shared/components/status-label/status-label.module';
 import {TableFiltersModule} from '../../../shared/table/table-filters/table-filters.module';
 import {SearchFilterModule} from '../../../shared/table/search-filter/search-filter.module';
 import {TabsFilterModule} from '../../../shared/table/tabs-filter/tabs-filter.module';
-import {ButtonModule} from '../../../shared/components/button/button.module';
 import {NoDataModule} from '../../../shared/table/no-data/no-data.module';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import { IEngagementType } from '@cl-core/models/engagement/engagement.interface';
 import { TranslateModule } from '@ngx-translate/core';
+import { ButtonModule, StatusLabelModule } from '@perx/candyshop';
 
 describe('RewardsCampaignsListComponent', () => {
   let component: EngagementsListComponent;
