@@ -26,11 +26,10 @@ import { getImageCors } from '../../utils/getImageCors';
 })
 export class SnakeGameComponent implements OnChanges {
   private get canv(): HTMLCanvasElement { return this.canvasEl.nativeElement; }
-  // public gameStarted: boolean = false;
 
   public get ctx(): CanvasRenderingContext2D {
     if (!this.ctx_ && this.canv.getContext) {
-      this.canv.width = 400; // set as input this.inputtedHeight(if) || 400 also need update tc and gs etc
+      this.canv.width = 400; // set as input this.inputtedHeight(if) || 400 also need update tc and cellSize etc
       this.canv.height = 400;
       this.ctx_ = this.canv.getContext('2d') as CanvasRenderingContext2D;
     }
@@ -49,7 +48,7 @@ export class SnakeGameComponent implements OnChanges {
   @Input()
   public fps: number = 10;
 
-  @Output() public broken: EventEmitter<void> = new EventEmitter();
+  @Output() public gameFinished: EventEmitter<void> = new EventEmitter();
 
   @ViewChild('canvasSnake', { static: true })
   public canvasEl: ElementRef<HTMLCanvasElement>;
@@ -59,18 +58,17 @@ export class SnakeGameComponent implements OnChanges {
   // tslint:disable-next-line:variable-name
   private ctx_: CanvasRenderingContext2D;
   // snake head position
-  private p: Number2 = new Number2(10, 10);
+  private snakePos: Number2 = new Number2(10, 10);
   // square size
-  private gs: number = 20;
+  private cellSize: number = 20;
   // board size
-  private tc: number = 20;
+  private numberOfCellsInBoard: number = 20;
   // target position
-  private a: Number2 = new Number2(15, 15);
+  private foodPosition: Number2 = new Number2(15, 15);
   // direction
-  private v: Number2 = new Number2(0, 0);
+  private velocity: Number2 = new Number2(0, 0);
   // speed
   private speed: number = 1;
-  // private intervals: any[] = [];
   private trail: Number2[] = [];
   // tail length
   private tail: number = 5;
@@ -92,10 +90,9 @@ export class SnakeGameComponent implements OnChanges {
   private elapsed: number;
 
   private startedMoving: boolean = false;
-  // private gameStop: boolean = false;
 
   constructor() {
-    // the bindings are necessary to keep track of correct, common game state
+    // the bind is necessary to keep track of correct, common game state
     this.keyPush = this.keyPush.bind(this);
     this.game = this.game.bind(this);
     this.checkCollisionWithWall = this.checkCollisionWithWall.bind(this);
@@ -111,39 +108,38 @@ export class SnakeGameComponent implements OnChanges {
     this.startGameAndRender();
   }
 
-  private startGameAndRender(newtime?: number): void {
-    // if (this.gameStop) {
-    //   return;
-    // }
+  private startGameAndRender(newtime?: number): number {
     // request another frame;
-    window.requestAnimationFrame(this.startGameAndRender);
+    const anotherNewTime = window.requestAnimationFrame(this.startGameAndRender);
     // calc elapsed time since last loop
     this.now = newtime as number;
     this.elapsed = this.now - this.then;
-
     if (this.elapsed > this.fpsInterval) {
       this.then = this.now - (this.elapsed % this.fpsInterval);
       // draw
       this.game();
       this.render();
     }
-
+    return anotherNewTime;
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if ((changes.target && this.targetUrl)
-      || (changes.snake && this.snakeHeadUrl)
-      || (changes.gameArea && this.gameAreaUrl)) {
+    if ((changes.targetUrl && this.targetUrl)
+      || (changes.snakeHeadUrl && this.snakeHeadUrl)
+      || (changes.gameAreaUrl && this.gameAreaUrl)) {
       this.fillStyles();
     }
   }
 
   private checkCollisionWithWall(): boolean {
-    return ((this.p.x < 0) || (this.p.x > this.tc) || (this.p.y < 0) || (this.p.y > this.tc));
+    return ((this.snakePos.x < 0)
+      || (this.snakePos.x > this.numberOfCellsInBoard)
+      || (this.snakePos.y < 0)
+      || (this.snakePos.y > this.numberOfCellsInBoard));
   }
 
   private checkCollisionWithSelf(): boolean {
-    return this.trail.some(q => q.equals(this.p));
+    return this.trail.some(snakePart => snakePart.equals(this.snakePos));
   }
 
   private checkGameOver(): boolean {
@@ -151,11 +147,10 @@ export class SnakeGameComponent implements OnChanges {
   }
 
   private game(): void {
-
     // update snake
-    this.trail.push(new Number2(this.p.x, this.p.y));
+    this.trail.push(new Number2(this.snakePos.x, this.snakePos.y));
     // head is one step ahead, if a  is any part of the trail means it went back
-    this.p.add(this.v);
+    this.snakePos.add(this.velocity);
 
     if (this.checkGameOver() && this.startedMoving) {
       console.log('LOSER!');
@@ -169,17 +164,17 @@ export class SnakeGameComponent implements OnChanges {
     }
 
     // update target check eat food
-    if (this.a.equals(this.p)) {
+    if (this.foodPosition.equals(this.snakePos)) {
       this.tail += this.rateOfExpansion;
       this.score += 1;
       if (this.score === this.targetsToWin) {
         // alert('WIN!');
         // end game
-        this.broken.emit();
+        this.gameFinished.emit();
       }
       // still this on top of me
-      while (this.a.equals(this.p)) {
-        this.a.randomize(this.tc);
+      while (this.foodPosition.equals(this.snakePos)) {
+        this.foodPosition.randomize(this.numberOfCellsInBoard);
       }
     }
   }
@@ -191,9 +186,11 @@ export class SnakeGameComponent implements OnChanges {
     // maybe draw the head separately???
     // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < this.trail.length; i++) {
-      this.ctx.drawImage(this.snakeImgLoaded, this.trail[i].x * this.gs, this.trail[i].y * this.gs, this.gs - 2 , this.gs - 2);
+      this.ctx.drawImage(this.snakeImgLoaded,
+        this.trail[i].x * this.cellSize, this.trail[i].y * this.cellSize, this.cellSize - 2 , this.cellSize - 2);
     }
-    this.ctx.drawImage(this.targetImgLoaded, this.a.x * this.gs, this.a.y * this.gs, this.gs - 2, this.gs - 2);
+    this.ctx.drawImage(this.targetImgLoaded,
+      this.foodPosition.x * this.cellSize, this.foodPosition.y * this.cellSize, this.cellSize - 2, this.cellSize - 2);
 
   }
 
@@ -203,6 +200,7 @@ export class SnakeGameComponent implements OnChanges {
       return null;
     }
     // trigger final callback if is the last image
+    console.log('FULLY LOADED');
     this.allImagesLoaded = true;
     return null;
   }
@@ -217,29 +215,29 @@ export class SnakeGameComponent implements OnChanges {
   }
 
   public down(): void {
-    if (this.v.y === 0) {
-      this.v.x = 0;
-      this.v.y = this.speed;
+    if (this.velocity.y === 0) {
+      this.velocity.x = 0;
+      this.velocity.y = this.speed;
     }
   }
 
   public up(): void {
-    if (this.v.y === 0) {
-      this.v.x = 0;
-      this.v.y = -this.speed;
+    if (this.velocity.y === 0) {
+      this.velocity.x = 0;
+      this.velocity.y = -this.speed;
     }
   }
   public left(): void {
-    if (this.v.x === 0) {
-      this.v.x = -this.speed;
-      this.v.y = 0;
+    if (this.velocity.x === 0) {
+      this.velocity.x = -this.speed;
+      this.velocity.y = 0;
     }
   }
 
   public right(): void {
-    if (this.v.x === 0) {
-      this.v.x = this.speed;
-      this.v.y = 0;
+    if (this.velocity.x === 0) {
+      this.velocity.x = this.speed;
+      this.velocity.y = 0;
     }
   }
 
