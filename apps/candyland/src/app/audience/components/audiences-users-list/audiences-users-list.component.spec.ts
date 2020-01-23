@@ -18,6 +18,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { AudiencesUsersListComponent } from './audiences-users-list.component';
 import {MessageService} from '@cl-core-services';
+import { MockAudiencesUserService } from '@cl-shared/test-components/providers/mock-audiences-user.service';
 
 describe('AudiencesUsersListComponent', () => {
   let component: AudiencesUsersListComponent;
@@ -39,9 +40,11 @@ describe('AudiencesUsersListComponent', () => {
         TranslateModule.forRoot(),
       ],
       providers: [
-        AudiencesUserService,
         {
           provide: MessageService, useValue: msgSvcStub
+        },
+        {
+          provide: AudiencesUserService, useClass: MockAudiencesUserService
         }
       ],
       declarations: [

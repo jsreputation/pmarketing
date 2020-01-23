@@ -25,6 +25,7 @@ import {
   FeedReaderService,
   IGameService,
   IReward,
+  ConfigService,
 } from '@perx/core';
 
 import { rewards } from 'src/app/rewards.mock';
@@ -40,9 +41,20 @@ import { CampaignsComponent } from '../campaigns/campaigns.component';
 describe('DiscoverComponent', () => {
   let component: DiscoverComponent;
   let fixture: ComponentFixture<DiscoverComponent>;
+
   const rewardsServiceStub: Partial<RewardsService> = {
     getAllRewards: () => of(rewards),
     getCatalogs: () => of(catalogs),
+  };
+  const configServiceStub: Partial<ConfigService> = {
+    readAppConfig: () => of({
+      apiHost: '',
+      production: false,
+      preAuth: false,
+      isWhistler: false,
+      baseHref: '',
+      rssFeeds: '',
+    })
   };
 
   const campaignServiceStub: Partial<ICampaignService> = {
@@ -85,6 +97,7 @@ describe('DiscoverComponent', () => {
         { provide: FeedReaderService, useValue: feedReaderServiceStub },
         { provide: Router, useValue: routerStub },
         { provide: IGameService, useValue: gameServiceStub },
+        { provide: ConfigService, useValue: configServiceStub},
       ]
     })
       .compileComponents();

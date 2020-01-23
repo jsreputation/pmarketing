@@ -24,6 +24,7 @@ describe('ViewSchemeInfoComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ViewSchemeInfoComponent);
     component = fixture.componentInstance;
+    component.loyalty = null;
     fixture.detectChanges();
   });
 

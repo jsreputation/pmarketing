@@ -4,7 +4,8 @@ import { QuestionMultipleChoiceFieldComponent } from './question-multiple-choice
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatIconModule, MatInputModule, MatSelectModule, MatSlideToggleModule } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
-
+// tslint:disable
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 describe('QuestionMultipleChoiceFieldComponent', () => {
   let component: QuestionMultipleChoiceFieldComponent;
   let fixture: ComponentFixture<QuestionMultipleChoiceFieldComponent>;
@@ -21,7 +22,8 @@ describe('QuestionMultipleChoiceFieldComponent', () => {
         MatSlideToggleModule,
         TranslateModule.forRoot()
       ],
-      declarations: [QuestionMultipleChoiceFieldComponent]
+      declarations: [QuestionMultipleChoiceFieldComponent],
+      schemas: [ NO_ERRORS_SCHEMA ],
     })
       .compileComponents();
   }));

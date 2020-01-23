@@ -22,7 +22,7 @@ import { TranslateModule } from '@ngx-translate/core';
     MatInputModule,
     MatIconModule,
     MatToolbarModule,
-    TranslateModule
+    TranslateModule,
   ],
   exports: [
     LoginComponent,
