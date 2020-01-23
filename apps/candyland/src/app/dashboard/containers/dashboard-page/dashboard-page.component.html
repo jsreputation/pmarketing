@@ -14,12 +14,12 @@
       <cl-dashboard-game-card *ngFor="let gameCard of gameCard$ | async" [gameCard]="gameCard" class="game-card">
       </cl-dashboard-game-card>
     </div>
-    <cl-button (click)="toggle()"
+    <cs-button (click)="toggle()"
       [classList]="'tertiary tertiary--gray ph-0 mw-0'">
       <span>
         <i class="ascii-icon">{{isOpen ? '×': '+'}}</i> {{isOpen ? 'Dismiss Intro': 'Restore Intro'}}
       </span>
-    </cl-button>
+    </cs-button>
   </div>
   <h2 class="dashboard-title" translate>SECTION_BUSINESS</h2>
   <section class="dashboard-insights-card">

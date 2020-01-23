@@ -3,7 +3,7 @@
                 [@openClose]="isOpen ? 'open' : 'closed'"
                 [mode]="mobileQuery.matches ? 'over' : 'side'"
                 [opened]="sideNavOpened"
-                [fixedInViewport]="mobileQuery.matches" 
+                [fixedInViewport]="mobileQuery.matches"
                 fixedTopGap="64">
     <mat-toolbar class="mat-toolbar-log" [class.center]="!isOpen">
       <cl-logo [sizeClass]="isOpen ? 'medium' : 'small'"></cl-logo>
@@ -19,7 +19,7 @@
       <cl-sidenav-menu [isOpen]="isOpen"></cl-sidenav-menu>
     </div>
     <div class="sidenav-actions" [class.compressed]="!isOpen">
-      <button class="sidenav-logout btn-transparent"
+      <button class="sidenav-logout cs-btn-transparent"
               [routerLink]="['/login']"
       >
         <i class="icon logout" matListIcon></i>
@@ -29,7 +29,7 @@
               (click)="toggle()">
         <mat-icon aria-hidden="false" aria-label="Compress Navigation">{{isOpen ? 'keyboard_arrow_left': 'keyboard_arrow_right'}}</mat-icon>
       </button>
-    </div>      
+    </div>
   </mat-sidenav>
 
   <mat-sidenav-content [@position]="isOpen ? 'open' : 'closed'">
