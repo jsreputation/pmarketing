@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { tap, mergeMap, catchError, map, switchMap } from 'rxjs/operators';
 import { Observable, of, throwError, iif, Subject } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { AuthenticationService, IMessageResponse, RequiresOtpError } from './authentication.service';
+import { AuthenticationService, RequiresOtpError } from './authentication.service';
 import { IProfile } from '../../profile/profile.model';
 import {
   ISignUpData,
@@ -16,6 +16,7 @@ import { ProfileService } from '../../profile/profile.service';
 import { Config } from '../../config/config';
 import { IV4ProfileResponse, V4ProfileService } from '../../profile/v4-profile.service';
 import { TokenStorage } from '../../utils/storage/token-storage.service';
+import { IMessageResponse } from '../../perx-core.models';
 import { oc } from 'ts-optchain';
 
 interface IV4SignUpData {

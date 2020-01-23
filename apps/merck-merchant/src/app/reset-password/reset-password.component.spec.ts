@@ -10,7 +10,7 @@ import {
   MatInputModule,
   MatRippleModule,
 } from '@angular/material';
-import { AuthenticationService } from '@perx/core';
+import { IMerchantAdminService } from '@perx/core';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
@@ -18,6 +18,10 @@ import { TranslateModule } from '@ngx-translate/core';
 describe('ResetPasswordComponent', () => {
   let component: ResetPasswordComponent;
   let fixture: ComponentFixture<ResetPasswordComponent>;
+
+  const merchantAdminServiceStub = {
+    forgotPassword: () => of(),
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -34,13 +38,10 @@ describe('ResetPasswordComponent', () => {
         TranslateModule.forRoot()
       ],
       providers: [
-        {
-          provide: AuthenticationService,
-          useValue: {forgotPassword: () => {}}
-        }
+        { provide: IMerchantAdminService, useValue: merchantAdminServiceStub },
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -54,10 +55,10 @@ describe('ResetPasswordComponent', () => {
   });
 
   it('should call forgot password on from submit', fakeAsync(() => {
-    const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
-      AuthenticationService as Type<AuthenticationService>
+    const merchantAdminService: IMerchantAdminService = fixture.debugElement.injector.get<IMerchantAdminService>(
+      IMerchantAdminService as Type<IMerchantAdminService>
     );
-    const spy = spyOn(authenticationService, 'forgotPassword').and.callFake(() => of());
+    const spy = spyOn(merchantAdminService, 'forgotPassword').and.callFake(() => of());
     component.onSubmit();
     tick();
     fixture.detectChanges();
