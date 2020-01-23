@@ -34,23 +34,23 @@
     </div>
 
     <div class="login-form-action">
-      <cl-button [formId]="'login-form'"
+      <cs-button [formId]="'login-form'"
         [classList]="'primary btn-block'"
         [disable]="formLogin.invalid"
         class="btn-block">
         <span translate>
           LOGIN_PAGE.LOGIN_BUTTON
         </span>
-      </cl-button>
+      </cs-button>
     </div>
 
     <div class="login-form-action">
-      <cl-button (click)="onForget()"
+      <cs-button (click)="onForget()"
         [classList]="'tertiary ph-0'">
         <span>
           Forget Password
         </span>
-      </cl-button>
+      </cs-button>
     </div>
   </form>
 </div>

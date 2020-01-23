@@ -3,7 +3,7 @@
     <h2 class="dialog-title" id="dialogTitle-tierSetup">
       {{'LOYALTY_FEATURE.TIER_SETUP' | translate}}
     </h2>
-    <button class="dialog-closed btn-transparent" [mat-dialog-close]="false">
+    <button class="dialog-closed cs-btn-transparent" [mat-dialog-close]="false">
       <mat-icon>close</mat-icon>
     </button>
   </header>
@@ -122,21 +122,21 @@
   </div>
 
   <footer class="dialog-actions">
-    <cl-button classList="tertiary"
+    <cs-button classList="tertiary"
                class="actions-close"
                (click)="close()"
                [disableRipple]="true">
         <span>
           {{'BTN_CANCEL' | translate}}
         </span>
-    </cl-button>
+    </cs-button>
 
-    <cl-button classList="primary"
+    <cs-button classList="primary"
                (click)="apply()">
         <span>
          {{(data?.tier ? 'BTN_APPLY' : 'BTN_SAVE') | translate}}
         </span>
-    </cl-button>
+    </cs-button>
   </footer>
 </aside>
 

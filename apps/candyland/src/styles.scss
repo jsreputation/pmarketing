@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-@import '~saturn-datepicker/theming';
+//@import '~saturn-datepicker/theming';
+//@import "~@perx/candyshop/dist/perx-candyshop/_theming.scss";
 @import "styles/variables";
 @import "styles/page-header";
 @import "styles/common";
@@ -8,7 +9,7 @@
 @import "styles/item-list";
 @import "styles/btn-list";
 @import "engagement-game";
-@import "buttons";
+//@import "buttons";
 @import "engagement-question-component";
 @import "resize_common";
 @import "styles/preview";

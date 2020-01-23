@@ -1,13 +1,13 @@
 @import "./variables";
 
-.active-btn-item {
+.cs-active-btn-item {
   border-color: $secondary-font-color !important;
   background-color: $secondary-color !important;
   color: $white !important;
 }
 
-.btn-item {
-  @include typo-caption;
+.cs-btn-item {
+  @include cs-typo-caption;
 
   width: $horizontal-padding;
   height: $vertical-padding;
@@ -18,11 +18,11 @@
   border: solid 1px $secondary-font-color;
 
   &.active {
-    @extend .active-btn-item;
+    @extend .cs-active-btn-item;
   }
 }
 
-.btn-medium-list {
+.cs-btn-medium-list {
   flex-flow: row wrap;
 
   .mat-checkbox-label {
@@ -36,13 +36,13 @@
   }
 }
 
-.btn-list {
+.cs-btn-list {
   display: flex;
   flex-flow: row nowrap;
   margin: ($vertical-padding * 0.5) 0;
 
   .mat-radio-button {
-    @extend .btn-item;
+    @extend .cs-btn-item;
 
     display: flex;
     align-items: center;
@@ -72,7 +72,7 @@
   }
 
   .mat-radio-checked {
-    @extend .active-btn-item;
+    @extend .cs-active-btn-item;
   }
 
   .mat-checkbox-inner-container {
@@ -85,7 +85,7 @@
 
   .mat-checkbox-label {
     & > * {
-      @extend .btn-item;
+      @extend .cs-btn-item;
 
       display: flex;
       align-items: center;
@@ -99,7 +99,7 @@
   .mat-checkbox-checked {
     .mat-checkbox-label {
       & > * {
-        @extend .active-btn-item;
+        @extend .cs-active-btn-item;
       }
     }
   }

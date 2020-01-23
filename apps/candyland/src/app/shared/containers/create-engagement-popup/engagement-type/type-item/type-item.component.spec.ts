@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TypeItemComponent } from './type-item.component';
 import { MatFormFieldModule, MatIconModule, MatRadioModule, MatSelectModule } from '@angular/material';
-import { ButtonModule } from '../../../../components/button/button.module';
+import { ButtonModule } from '@perx/candyshop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 

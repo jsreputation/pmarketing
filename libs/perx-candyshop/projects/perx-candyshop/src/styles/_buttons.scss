@@ -7,14 +7,15 @@ button {
 @mixin cs-btn {
   @include cs-typo-button;
 
+  display: block !important;
   position: relative;
-  min-width: 10rem;
+  min-width: 10rem !important;
   height: 4.4rem;
-  line-height: 4.4rem;
-  border-radius: $border-radius;
+  line-height: 4.4rem !important;
+  border-radius: $border-radius !important;
   color: $base-font-color;
-  padding: 0 ($horizontal-padding * 0.75);
-  box-shadow: none;
+  padding: 0 ($horizontal-padding * 0.75) !important;
+  box-shadow: none !important;
 
   &.ph-0 {
     padding-left: 0 !important;
@@ -119,10 +120,19 @@ button {
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
+    justify-content: center;
   }
 
   &-mobile-icon {
-    display: none;
+    display: none !important;
+
+    span.mat-button-wrapper {
+      display: block;
+      text-transform: uppercase;
+      padding-left: 2.4rem;
+      transition: 0.15s cubic-bezier(0.35, 0, 0.25, 1);
+      opacity: 0;
+    }
   }
 
   &-block {
@@ -170,7 +180,9 @@ button {
     }
 
     .cs-btn-mobile-icon {
-      display: flex;
+      position: absolute;
+      left: ($horizontal-padding * 0.5) !important;
+      display: flex !important;
       align-items: center;
       justify-content: center;
       padding: 0 !important;
@@ -180,6 +192,8 @@ button {
       box-sizing: border-box;
       display: inline-flex;
       flex-flow: row nowrap;
+      align-items: baseline;
+      justify-content: center;
       text-transform: uppercase;
       max-width: 0;
       width: auto;
@@ -197,6 +211,11 @@ button {
     }
 
     &:hover {
+      //.cs-btn-mobile-icon {
+      //  position: relative;
+      //  left: 0;
+      //}
+
       .cs-btn-content {
         opacity: 1;
         max-width: 40rem;

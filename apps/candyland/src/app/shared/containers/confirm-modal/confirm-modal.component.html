@@ -1,6 +1,6 @@
 <aside class="dialog" role="dialog" aria-labelledby="dialogTitle-engagementConfirm">
   <div class="header-wrap">
-    <button class="btn-closed btn-transparent" [mat-dialog-close]="'isCloseButtonTrigger'">
+    <button class="btn-closed cs-btn-transparent" [mat-dialog-close]="'isCloseButtonTrigger'">
       <mat-icon>close</mat-icon>
     </button>
   </div>
@@ -15,7 +15,7 @@
   </div>
   <footer class="dialog-actions"
   >
-    <cl-button [classList]="'secondary'"
+    <cs-button [classList]="'secondary'"
               class="actions-close"
               (click)="close()"
               [disableRipple]="true"
@@ -23,15 +23,15 @@
         <span>
           Launch later
         </span>
-    </cl-button>
+    </cs-button>
 
-    <cl-button [classList]="'primary'"
+    <cs-button [classList]="'primary'"
               (click)="close(true)"
               [disableRipple]="true"
     >
         <span>
           Launch now
         </span>
-    </cl-button>
+    </cs-button>
   </footer>
 </aside>
