@@ -15,7 +15,7 @@ import {
 import { HomeModule } from '../home/home.module';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { VouchersModule, RewardsModule, GameModule, LocationModule, PuzzlesModule } from '@perx/core';
+import { VouchersModule, RewardsModule, GameModule, LocationModule } from '@perx/core';
 import { WalletModule } from '../wallet/wallet.module';
 import { SharedModule } from '../shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -50,7 +50,6 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     MatCheckboxModule,
     MatRadioModule,
     LocationModule,
-    PuzzlesModule,
     InfiniteScrollModule
   ]
 })
