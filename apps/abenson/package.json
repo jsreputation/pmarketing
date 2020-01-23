@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "npm run config && ng serve --host 0.0.0.0",
-    "start:csdisable": "COMING_SOON=false npm run config && ng serve --host 0.0.0.0",
+    "start:csenable": "COMING_SOON=true npm run config && ng serve --host 0.0.0.0",
     "start:staging": "PRODUCTION=true npm run config && ng serve --host 0.0.0.0 --configuration staging",
     "build": "npm run config && ng build",
     "build:abenson:prod": "PRODUCTION=true npm run config && ng build --prod",

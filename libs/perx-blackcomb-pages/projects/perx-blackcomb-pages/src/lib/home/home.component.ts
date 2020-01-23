@@ -41,7 +41,9 @@ import {
   ICampaignService,
   ICampaign,
   CampaignType,
-  RewardPopupComponent
+  RewardPopupComponent,
+  IRssFeeds,
+  IRssFeedsData,
 } from '@perx/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
@@ -141,14 +143,25 @@ export class HomeComponent implements OnInit, OnDestroy {
   public titleFn: (profile: IProfile) => string;
   public showGames: boolean = false;
   private firstComefirstServeCampaign: ICampaign;
-  private initCampaign(): void {
+
+  private async initCampaign(): Promise<void> {
     this.games$ = this.gamesService.getActiveGames()
       .pipe(
         tap((games: IGame[]) => this.showGames = games.length > 0),
         takeLast(1)
       );
+    const rssFeeds: IRssFeeds = await this.configService.readRssFeeds().toPromise();
+    if (!(rssFeeds && rssFeeds.data.length > 0)) {
+      return ;
+    }
 
-    this.newsFeedItems = this.feedService.getFromUrl('https://cdn.perxtech.io/content/starhub/rss.xml');
+    const rssFeedsHome: IRssFeedsData | undefined = rssFeeds.data.find(feed => feed.page === 'home');
+    if (!rssFeedsHome) {
+      return ;
+    }
+
+    const rssFeedsUrl: string = rssFeedsHome.url;
+    this.newsFeedItems = this.feedService.getFromUrl(rssFeedsUrl);
   }
 
   constructor(
