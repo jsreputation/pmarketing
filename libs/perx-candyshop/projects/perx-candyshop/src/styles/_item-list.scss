@@ -22,7 +22,7 @@
   // position: relative;
 
   & > .mat-radio-button {
-    @include check-select;
+    @include cs-check-select;
 
     border-radius: $border-radius-lg !important;
 

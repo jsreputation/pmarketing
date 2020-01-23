@@ -20,7 +20,7 @@ import {
   IJsonApiItem,
 } from '@perx/whistler';
 import { TokenStorage } from '../../utils/storage/token-storage.service';
-import { IMessageResponse } from './authentication.service';
+import { IMessageResponse } from '../../perx-core.models';
 
 interface IUserJWTRequest {
   identifier: string;

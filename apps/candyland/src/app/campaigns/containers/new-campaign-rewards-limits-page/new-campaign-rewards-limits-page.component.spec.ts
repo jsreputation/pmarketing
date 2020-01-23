@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NewCampaignRewardsLimitsPageComponent } from './new-campaign-rewards-limits-page.component';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { MatCheckboxModule } from '@angular/material';
-import { ButtonModule } from '@cl-shared';
+import { ButtonModule } from '@perx/candyshop';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 // tslint:disable-next-line:import-blacklist
 import { NO_ERRORS_SCHEMA } from '@angular/core';

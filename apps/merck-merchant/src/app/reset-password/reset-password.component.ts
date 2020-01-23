@@ -1,6 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { AuthenticationService, NotificationService } from '@perx/core';
+import {
+  Component,
+  OnInit,
+} from '@angular/core';
+import {
+  Validators,
+  FormBuilder,
+  FormGroup,
+} from '@angular/forms';
+
+import {
+  IMerchantAdminService,
+  IMessageResponse,
+  NotificationService,
+} from '@perx/core';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-reset-password',
@@ -13,8 +26,8 @@ export class ResetPasswordComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private authenticationService: AuthenticationService,
     private notificationService: NotificationService,
+    private merchantAdminService: IMerchantAdminService,
   ) {
     this.initForm();
   }
@@ -29,10 +42,10 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    const email = (this.loginForm.value.email as string).toUpperCase();
-    this.authenticationService.forgotPassword(email).subscribe(
-      () => this.notificationService.addSnack('We\'ve sent a password reset link to the email you provided'),
-      err => this.notificationService.addSnack(err)
+    const email: string = this.loginForm.value.email as string;
+    this.merchantAdminService.forgotPassword(email).subscribe(
+      (res: IMessageResponse) => this.notificationService.addSnack(res.message),
+      (err: HttpErrorResponse) => this.notificationService.addSnack(err.error.message)
     );
   }
 

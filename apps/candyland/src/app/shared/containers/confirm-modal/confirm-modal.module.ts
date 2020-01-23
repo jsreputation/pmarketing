@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ButtonModule } from '@cl-shared/components/button/button.module';
+import { ButtonModule } from '@perx/candyshop';
 import { ConfirmModalComponent } from './confirm-modal.component';
 import { MatDialogModule, MatIconModule } from '@angular/material';
 
