@@ -6,8 +6,11 @@ import {
 import { MatDialog } from '@angular/material';
 
 import {
+  ConfigService,
   FeedItem,
   FeedReaderService,
+  IRssFeeds,
+  IRssFeedsData,
 } from '@perx/core';
 
 import {
@@ -15,11 +18,6 @@ import {
   PageType,
 } from 'src/app/analytics.service';
 import { PopupComponent } from './popup/popup.component';
-
-import { environment } from '../../../environments/environment';
-
-export const URL_PROD: string = 'https://cdn.perxtech.net/content/starhub/rss.xml';
-export const URL = 'https://cdn.perxtech.io/content/starhub/rss.xml';
 
 @Component({
   selector: 'app-news-feed',
@@ -32,22 +30,34 @@ export class NewsFeedComponent implements OnInit {
   public newsBeforeScroll: number[];
   public newsAfterScroll: number[];
 
-  public get url(): string {
-    return environment.production ? URL_PROD : URL;
+  private async initNewsFeedItems(): Promise<void> {
+    const rssFeeds: IRssFeeds = await this.configService.readRssFeeds().toPromise();
+    if (!(rssFeeds && rssFeeds.data.length > 0)) {
+      return ;
+    }
+
+    const rssFeedsHome: IRssFeedsData | undefined = rssFeeds.data.find(feed => feed.page === 'home');
+    if (!rssFeedsHome) {
+      return ;
+    }
+
+    const rssFeedsUrl: string = rssFeedsHome.url;
+    this.reader.getFromUrl(rssFeedsUrl)
+      .subscribe(items => {
+        this.items = items;
+        this.newsAfterScroll = Array.from(Array(items.length > 0 ? items.length - 1 : 1).keys());
+      });
   }
 
   constructor(
     private reader: FeedReaderService,
     private dialog: MatDialog,
-    private analytics: AnalyticsService
+    private analytics: AnalyticsService,
+    private configService: ConfigService,
   ) { }
 
   public ngOnInit(): void {
-    this.reader.getFromUrl(this.url)
-      .subscribe(items => {
-        this.items = items;
-        this.newsAfterScroll = Array.from(Array(items.length > 0 ? items.length - 1 : 1).keys());
-      });
+    this.initNewsFeedItems();
     this.itemSize = window.innerWidth;
   }
 

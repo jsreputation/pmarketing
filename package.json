@@ -7,6 +7,7 @@
     "build:abenson": "lerna run build:lib && lerna run build:abenson -- ",
     "build:blackcomb": "lerna run build:lib && lerna run build:blackcomb -- ",
     "build:components-demo": "lerna run build:lib && lerna run build:components-demo -- ",
+    "build:merck-merchant": "lerna run build:lib && lerna run build:merck-merchant -- ",
     "build:abenson:prod": "lerna run build:lib && lerna run build:abenson:prod --",
     "build:abenson:staging": "lerna run build:lib && lerna run build:abenson:staging --",
     "build:blackcomb:prod": "lerna run build:lib && lerna run build:blackcomb:prod --",

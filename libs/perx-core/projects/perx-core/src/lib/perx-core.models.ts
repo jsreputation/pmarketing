@@ -6,3 +6,7 @@ export enum RedemptionType {
   none = 'none',
   offline = 'offline'
 }
+
+export interface IMessageResponse {
+  message: string;
+}
