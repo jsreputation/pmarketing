@@ -164,6 +164,7 @@ export class SnakeGameComponent implements OnChanges, OnDestroy {
     if (this.checkGameOver() && this.startedMoving) {
       console.log('LOSER!');
       // then disable controls
+      document.addEventListener('keydown', this.keyPush);
     }
 
     // remove extra tail pieces, tail is what u have eaten, keep consistent
