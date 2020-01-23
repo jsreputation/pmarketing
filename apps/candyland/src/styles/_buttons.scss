@@ -179,10 +179,7 @@ button {
   .cta {
     span.mat-button-wrapper {
       display: block;
-      text-transform: uppercase;
       padding-left: 2.4rem;
-      transition: 0.15s cubic-bezier(0.35, 0, 0.25, 1);
-      opacity: 0;
     }
 
     &:hover span.mat-button-wrapper {
@@ -191,7 +188,7 @@ button {
   }
 
   // WALKME RE-POSITION HELP
-  body:not(.no-cta) .walkme-player.walkme-css-reset.walkme-zambezi.walkme-california.walkme-theme-white-blue.walkme-position-major-bottom.walkme-position-minor-right_corner {
+  body:not(.cs-btn-mobile-icon) .walkme-player.walkme-css-reset.walkme-zambezi.walkme-california.walkme-theme-white-blue.walkme-position-major-bottom.walkme-position-minor-right_corner {
     bottom: ($vertical-padding * 0.5) + $fab-btn + ($vertical-padding * 0.5) !important;
   }
 }

@@ -12,9 +12,9 @@
     <p class="loyalty-item-group">{{data?.details?.pointsName}}</p>
     <p class="loyalty-item-tiers"
        *ngIf="data?.customTiersCount > 0">{{data?.customTiersCount}} {{'LOYALTY_FEATURE.TIERS' | translate}}</p>
-    <cl-status-label [status]="data?.status"
+    <cs-status-label [status]="data?.status"
                      [config]="statusLabel"
-    ></cl-status-label>
+    ></cs-status-label>
   </div>
   <div class="loyalty-item-actions" *ngIf="linkable || menuOptions.length > 0">
     <button mat-button [matMenuTriggerFor]="menu" class="btn-icon" aria-label="Loyalty program menu">

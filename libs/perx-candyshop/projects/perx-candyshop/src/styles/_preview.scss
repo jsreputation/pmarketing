@@ -116,7 +116,7 @@
   }
 
   &-preview-sub-headline {
-    @include typo-caption;
+    @include cs-typo-caption;
 
     margin-top: 0.4rem;
     color: rgba(51, 51, 51, 0.5);

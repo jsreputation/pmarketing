@@ -41,6 +41,7 @@ import { NotificationService } from '@cl-core/services/notification.service';
 import { IChannel, ICampaignNotificationGroup } from '@cl-core/models/campaign/channel-interface';
 import { Location } from '@angular/common';
 import { NewCampaignNotificationsComponent } from '../new-campaign-notifications/new-campaign-notifications.component';
+import { TranslateService } from '@ngx-translate/core';
 // import { NewCampaignReviewPageComponent } from '../new-campaign-review-page/new-campaign-review-page.component';
 
 @Component({
@@ -80,7 +81,8 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     private audienceService: AudiencesUserService,
     private messageService: MessageService,
     private campaignChannelsFormService: CampaignChannelsFormService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private translate: TranslateService
   ) {
     store.resetCampaign();
     this.initForm();
@@ -287,7 +289,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       'webNotification' in campaign.notification &&
       campaign.notification.webNotification.webLink
     ) ? 'weblink' : '';
-    const title: string = 'Yay! You just created a campaign';
+    const title: string = this.translate.instant('CAMPAIGN.DONE.DEFAULT_TITLE');
     if (type === 'weblink' && campaign.audience && campaign.audience.select) {
       return this.buildCampaignCsv(campaign)
         .pipe(
@@ -298,7 +300,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
             return {
               title,
-              subTitle: 'Download your individual links',
+              subTitle: this.translate.instant('CAMPAIGN.DONE.DOWNLOAD_SUBTITLE'),
               url,
               type: 'download'
             };
@@ -309,7 +311,8 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       return this.getCognitoUrl()
         .pipe(map(url => ({
           title,
-          subTitle: 'Copy the link and share your campaign.',
+          subTitle: this.translate.instant('CAMPAIGN.DONE.COPY_SUBTITLE'),
+          copyMessage: this.translate.instant('CAMPAIGN.DONE.COPY_MESSAGE'),
           url: `${url}?cid=${campaign.id}`,
           type
         })));
@@ -370,7 +373,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       tap((data: any[]) => {
         if (data.length === 0) {
           this.messageService.show(
-            'Your account does not appear to be linked to a microsite, please contact your Customer Support',
+            this.translate.instant('CAMPAIGN.DONE.LINK_WARNING_MESSAGE'),
             'warning',
             5000);
         }
