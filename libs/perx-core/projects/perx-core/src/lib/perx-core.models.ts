@@ -10,3 +10,10 @@ export enum RedemptionType {
 export interface IMessageResponse {
   message: string;
 }
+
+export interface IResetPasswordData {
+  phone: string;
+  newPassword: string;
+  otp: string;
+  passwordConfirmation: string;
+}

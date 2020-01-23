@@ -13,13 +13,6 @@ export interface ISignUpData {
   anonymous?: boolean;
 }
 
-export interface IResetPasswordData {
-  phone: string;
-  newPassword: string;
-  otp: string;
-  passwordConfirmation: string;
-}
-
 export interface IChangePasswordData {
   newPassword: string;
   passwordConfirmation: string;

@@ -9,6 +9,7 @@ import { ProtectedGuard } from 'ngx-auth';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { QrscannerComponent } from './qrscanner/qrscanner.component';
 import { OrderComponent } from './order/order.component';
 import { RedeemComponent } from './redeem/redeem.component';
@@ -30,6 +31,7 @@ const routes: Routes = [
   },
   { path: 'login', component: LoginComponent },
   { path: 'forgot', component: ForgotPasswordComponent },
+  { path: 'reset', component: ResetPasswordComponent },
   { path: 'dashboard/merchant_user_account_invitations/accept', component: RegisterComponent }
 ];
 

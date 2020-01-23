@@ -6,7 +6,6 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { IProfile } from '../../profile/profile.model';
 import { AuthenticationService } from './authentication.service';
 import {
-  IResetPasswordData,
   ISignUpData,
   IChangePasswordData,
   IChangePhoneData
@@ -20,7 +19,10 @@ import {
   IJsonApiItem,
 } from '@perx/whistler';
 import { TokenStorage } from '../../utils/storage/token-storage.service';
-import { IMessageResponse } from '../../perx-core.models';
+import {
+  IMessageResponse,
+  IResetPasswordData,
+} from '../../perx-core.models';
 
 interface IUserJWTRequest {
   identifier: string;

@@ -8,10 +8,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 
-import {
-  IMerchantAdminService,
-  IRes,
-} from './imerchant-admin.service';
+import { IMerchantAdminService } from './imerchant-admin.service';
 import {
   IMerchantAdminTransaction,
   IMerchantProfile,
@@ -33,7 +30,11 @@ import {
   IVoucher,
   VoucherState,
 } from '../vouchers/models/voucher.model';
-import { RedemptionType } from '../perx-core.models';
+import {
+  IMessageResponse,
+  IResetPasswordData,
+  RedemptionType,
+} from '../perx-core.models';
 
 interface IV4MerchantAdminTransaction {
   id: number;
@@ -391,7 +392,19 @@ export class V4MerchantAdminService implements IMerchantAdminService {
     );
   }
 
-  public forgotPassword(email: string): Observable<IRes> {
-    return this.http.post<IRes>(`${this.merchantEndPoint}/forgot_password`, { email });
+  public forgotPassword(email: string): Observable<IMessageResponse> {
+    return this.http.post<IMessageResponse>(`${this.merchantEndPoint}/forgot_password`, { email });
+  }
+
+  public resetPassword(resetPasswordInfo: IResetPasswordData): Observable<IMessageResponse> {
+    return this.http.patch<IMessageResponse>(
+      `${this.merchantEndPoint}/reset_password`,
+      {
+        phone: resetPasswordInfo.phone,
+        password: resetPasswordInfo.newPassword,
+        password_confirmation: resetPasswordInfo.passwordConfirmation,
+        confirmation_token: resetPasswordInfo.otp
+      }
+    );
   }
 }

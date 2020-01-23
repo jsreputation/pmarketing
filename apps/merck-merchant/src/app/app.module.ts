@@ -34,6 +34,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
 import { HomeComponent } from './home/home.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { QrscannerComponent } from './qrscanner/qrscanner.component';
 import { HeaderComponent } from './header/header.component';
@@ -61,6 +62,7 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
     LoginComponent,
     HomeComponent,
     ForgotPasswordComponent,
+    ResetPasswordComponent,
     QrscannerComponent,
     HeaderComponent,
     SalesContactComponent,

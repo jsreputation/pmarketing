@@ -9,13 +9,15 @@ import { AuthService } from 'ngx-auth';
 
 import {
   ISignUpData,
-  IResetPasswordData,
   IChangePasswordData,
   IChangePhoneData
 } from './models/authentication.model';
 
 import { IProfile } from '../../profile/profile.model';
-import { IMessageResponse } from '../../perx-core.models';
+import {
+  IMessageResponse,
+  IResetPasswordData,
+} from '../../perx-core.models';
 
 export class RequiresOtpError extends Error {
   constructor() {

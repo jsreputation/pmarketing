@@ -10,12 +10,13 @@ import {
   IMerchantProfile,
   IMerchantTransactionHistory,
 } from './models/merchants-admin.model';
-import {
-  IMerchantAdminService,
-  IRes,
-} from './imerchant-admin.service';
+import { IMerchantAdminService } from './imerchant-admin.service';
 
 import { IVoucher } from '../vouchers/models/voucher.model';
+import {
+  IMessageResponse,
+  IResetPasswordData,
+} from '../perx-core.models';
 
 @Injectable({
   providedIn: 'root'
@@ -72,7 +73,12 @@ export class WhistlerMerchantAdminService implements IMerchantAdminService {
   }
 
   // @ts-ignore
-  public forgotPassword(email: string): Observable<IRes> {
+  public forgotPassword(email: string): Observable<IMessageResponse> {
+    return throwError('Not implement yet');
+  }
+
+  // @ts-ignore
+  public resetPassword(resetPasswordInfo: IResetPasswordData): Observable<IMessageResponse> {
     return throwError('Not implement yet');
   }
 }
