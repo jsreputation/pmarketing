@@ -27,8 +27,8 @@ describe('SnakeGameComponent', () => {
 
   it('Number2 should randomize', () => {
     const spy = spyOn(Math, 'floor');
-    const number = new Number2(1, 2);
-    number.randomize(3);
+    const namber = new Number2(1, 2);
+    namber.randomize(3);
     expect(spy).toHaveBeenCalled();
   });
 
