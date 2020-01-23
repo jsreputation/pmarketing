@@ -65,7 +65,6 @@ export class GameComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.initTranslate();
     this.isAnonymousUser = this.auth.getAnonymous();
-    console.log('6556757',  this.isAnonymousUser  )
     this.gameData$ = this.route.params.pipe(
       filter((params: Params) => params.id),
       map((params: Params) => params.id),
