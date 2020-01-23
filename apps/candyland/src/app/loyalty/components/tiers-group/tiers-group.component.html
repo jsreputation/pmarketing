@@ -71,9 +71,9 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumnsWithEdit;"></tr>
         <tr mat-footer-row *matFooterRowDef="(dataSource.length$ | async) === 0 ? ['noRecord'] : []"></tr>
       </table>
-      <cl-button *ngIf="editable" classList="tertiary ph-0" (click)="createTier()">
+      <cs-button *ngIf="editable" classList="tertiary ph-0" (click)="createTier()">
         {{'LOYALTY_FEATURE.CREATE_NEW_TIRE' | translate}}
-      </cl-button>
+      </cs-button>
     </div>
   </div>
 </mat-expansion-panel>

@@ -13,9 +13,9 @@
         </mat-checkbox>
       </div>
       <div class="flex flex-end" *ngIf="!isSequence">
-        <cl-button classList="tertiary ph-0" (click)="addStampRule()">
+        <cs-button classList="tertiary ph-0" (click)="addStampRule()">
           {{'CAMPAIGN.ADD_RULE' | translate}}
-        </cl-button>
+        </cs-button>
       </div>
       <div class="card-section" *ngFor="let rule of rules?.controls; let i = index; let first = first">
         <div class="card-content">
