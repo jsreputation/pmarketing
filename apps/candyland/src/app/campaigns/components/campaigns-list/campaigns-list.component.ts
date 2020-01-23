@@ -3,8 +3,8 @@ import { MatSort } from '@angular/material';
 import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
 import { EngagementType } from '@cl-core/models/engagement/engagement-type.enum';
 import { ICampaignTableData } from '@cl-core/models/campaign/campaign';
-import { StatusLabelConfig } from '@cl-shared';
 import { CampaignStatus } from '@cl-core/models/campaign/campaign.enum';
+import { IStatusLabelConfig } from '@perx/candyshop';
 
 @Component({
   selector: 'cl-campaigns-list',
@@ -15,7 +15,7 @@ export class CampaignsListComponent implements AfterViewInit {
   public DATE_FORMAT: string = 'mediumDate';
   public TIME_FORMAT: string = 'shortTime';
 
-  @Input() public statusLabel: { [key: string]: StatusLabelConfig };
+  @Input() public statusLabel: IStatusLabelConfig;
   @Input() public dataSource: CustomDataSource<ICampaignTableData>;
   @Input() public displayedColumns: string[] = ['name', 'status', 'begin', 'end', 'audience', 'engagementType', 'actions'];
   @ViewChild(MatSort, { static: false }) private sort: MatSort;

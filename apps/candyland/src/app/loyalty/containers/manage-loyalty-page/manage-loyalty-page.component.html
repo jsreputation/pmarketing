@@ -7,36 +7,38 @@
   </mat-form-field>
   <!--  buttons-->
   <div class="btn-group">
-    <cl-button classList="tertiary"
+    <cs-button classList="tertiary"
                *ngIf="!isEditPage"
                [disable]="loading"
                (click)="clickCancel()">
       {{'BTN_CANCEL' | translate}}
-    </cl-button>
-    <cl-button classList="tertiary"
+    </cs-button>
+    <cs-button classList="tertiary"
                *ngIf="isEditPage"
                [disable]="loading"
                (click)="clickBack()">
       {{'BTN_BACK' | translate}}
-    </cl-button>
-    <cl-button classList="secondary"
+    </cs-button>
+    <cs-button classList="secondary"
                *ngIf="!isLastStep && showDraftButton"
                [disable]="loading"
                (click)="clickSaveAsDraft()">
       {{'BTN_SAVE_AS_DRAFT' | translate}}
-    </cl-button>
-    <cl-button classList="primary cta cta-next"
+    </cs-button>
+    <cs-button classList="primary cs-btn-mobile"
                *ngIf="!isLastStep"
                [disable]="loading"
                (click)="clickGoNext()">
+      <i class="cs-btn-mobile-icon icon next-icon"></i>
       {{'BTN_NEXT' | translate}}
-    </cl-button>
-    <cl-button *ngIf="isLastStep"
-               classList="primary cta cta-save cta-save-launch"
+    </cs-button>
+    <cs-button *ngIf="isLastStep"
+               classList="primary cs-btn-mobile"
                [disable]="loading"
                (click)="clickLaunch()">
+      <i class="cs-btn-mobile-icon icon save-icon"></i>
       {{'BTN_LAUNCH' | translate}}
-    </cl-button>
+    </cs-button>
   </div>
   <!--/  buttons-->
 </header>

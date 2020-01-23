@@ -7,16 +7,17 @@
       <mat-error *ngIf="name.hasError('maxlength')"><span translate>ERROR_MAX_LENGTH</span> 60</mat-error>
     </mat-form-field>
     <div class="btn-group">
-      <cl-button [classList]="'secondary'" class="stamp-btn-cancel" (click)="comeBack()">
+      <cs-button [classList]="'secondary'" class="stamp-btn-cancel" (click)="comeBack()">
        <span translate>
         BTN_CANCEL
       </span>
-      </cl-button>
-      <cl-button [classList]="'primary cta cta-save'" (click)="save()">
+      </cs-button>
+      <cs-button classList="primary cs-btn-mobile" (click)="save()">
+        <i class="cs-btn-mobile-icon icon save-icon"></i>
         <span translate>
           BTN_SAVE
         </span>
-      </cl-button>
+      </cs-button>
     </div>
   </header>
   <section class="content form-limiter">
@@ -29,20 +30,28 @@
           <div class="stamp-form">
             <div class="control-input">
               <mat-form-field class="messages-input">
-                <input type="text" [placeholder]="'HEADLINE_MESSAGE' | translate" matInput formControlName="headlineMessage">
+                <input type="text" [placeholder]="'HEADLINE_MESSAGE' | translate" matInput
+                       formControlName="headlineMessage">
                 <mat-hint align="end">{{headlineMessage.value?.length || 0}}/60</mat-hint>
-                <mat-error *ngIf="headlineMessage.hasError('required')"><span translate>ERROR_REQUIRED</span></mat-error>
-                <mat-error *ngIf="headlineMessage.hasError('minlength')"><span translate>ERROR_MIN_LENGTH</span> 5</mat-error>
-                <mat-error *ngIf="headlineMessage.hasError('maxlength')"><span translate>ERROR_MAX_LENGTH</span> 60</mat-error>
+                <mat-error *ngIf="headlineMessage.hasError('required')"><span translate>ERROR_REQUIRED</span>
+                </mat-error>
+                <mat-error *ngIf="headlineMessage.hasError('minlength')"><span translate>ERROR_MIN_LENGTH</span> 5
+                </mat-error>
+                <mat-error *ngIf="headlineMessage.hasError('maxlength')"><span translate>ERROR_MAX_LENGTH</span> 60
+                </mat-error>
               </mat-form-field>
             </div>
             <div class="control-input">
               <mat-form-field class="messages-input">
-                <input type="text" matInput [placeholder]="'SUB-HEADLINE_MESSAGE' | translate" formControlName="subHeadlineMessage">
+                <input type="text" matInput [placeholder]="'SUB-HEADLINE_MESSAGE' | translate"
+                       formControlName="subHeadlineMessage">
                 <mat-hint align="end">{{subHeadlineMessage.value?.length || 0}}/60</mat-hint>
-                <mat-error *ngIf="subHeadlineMessage.hasError('required')"><span translate>ERROR_REQUIRED</span></mat-error>
-                <mat-error *ngIf="subHeadlineMessage.hasError('minlength')"><span translate>ERROR_MIN_LENGTH</span> 5</mat-error>
-                <mat-error *ngIf="subHeadlineMessage.hasError('maxlength')"><span translate>ERROR_MAX_LENGTH</span> 60</mat-error>
+                <mat-error *ngIf="subHeadlineMessage.hasError('required')"><span translate>ERROR_REQUIRED</span>
+                </mat-error>
+                <mat-error *ngIf="subHeadlineMessage.hasError('minlength')"><span translate>ERROR_MIN_LENGTH</span> 5
+                </mat-error>
+                <mat-error *ngIf="subHeadlineMessage.hasError('maxlength')"><span translate>ERROR_MAX_LENGTH</span> 60
+                </mat-error>
               </mat-form-field>
             </div>
           </div>
@@ -99,14 +108,14 @@
                 </cl-select-graphic-wrap>
               </div>
             </div>
+            <h3 class="card-fieldset-label" translate>
+              REWARD_PRE-STAMP
+              <cs-info-hint>
+                <span class="info-text" translate>YOU_CAN_SET_THE_REWARDS_WHEN</span>
+                <span class="info-text" translate>YOU_CREATE_A_CAMPAIGN</span>
+              </cs-info-hint>
+            </h3>
             <div class="control-img_asset">
-              <h3 class="card-fieldset-label" translate>
-                REWARD_PRE-STAMP
-                <cl-info-hint>
-                  <span class="info-text" translate>YOU_CAN_SET_THE_REWARDS_WHEN</span>
-                  <span class="info-text" translate >YOU_CREATE_A_CAMPAIGN</span>
-                </cl-info-hint>
-              </h3>
               <div class="game-gift-box_field">
                 <cl-select-graphic-wrap *ngIf="stampData?.rewardPreStamp"
                                         formControlName="rewardPreStamps"
@@ -130,10 +139,10 @@
             <div class="control-img_asset">
               <h3 class="card-fieldset-label" translate>
                 REWARD_POST-STAMP
-                <cl-info-hint>
+                <cs-info-hint>
                   <span class="info-text">You can set the rewards when</span>
                   <span class="info-text">you create a campaign</span>
-                </cl-info-hint>
+                </cs-info-hint>
               </h3>
               <div class="game-gift-box_field">
                 <cl-select-graphic-wrap *ngIf="stampData?.rewardPost"
@@ -190,16 +199,16 @@
 
       <cl-game-mobile-preview-stamp class="tabs-component">
         <cl-simple-mobile-view class="firs-tab"
-                              [background]="getImgLink(background, 'assets/images/background/background1.png')"
-                              [mobileImageClass]="'mobile-non-header'" [headerColor]="tenantSettings?.headerColor"
-                              [logo]="tenantSettings?.logo"
-                              [logoType]="tenantSettings?.logoType"
-                              [fontFamily]="tenantSettings?.font"
-                              clCreateImage
+                               [background]="getImgLink(background, 'assets/images/background/background1.png')"
+                               [mobileImageClass]="'mobile-non-header'" [headerColor]="tenantSettings?.headerColor"
+                               [logo]="tenantSettings?.logo"
+                               [logoType]="tenantSettings?.logoType"
+                               [fontFamily]="tenantSettings?.font"
+                               clCreateImage
         >
           <div class="plugin-block">
             <div class="mobile-preview-card"
-              [ngStyle]="{'background-image': 'url(' + getImgLink(cardBackground, 'assets/images/reward/card-background/card-bg-1.png') + ')'}">
+                 [ngStyle]="{'background-image': 'url(' + getImgLink(cardBackground, 'assets/images/reward/card-background/card-bg-1.png') + ')'}">
               <div class="mobile-preview-header-nested">
                 <p class="mobile-preview-headline">
                   {{headlineMessage.value}}
@@ -210,11 +219,11 @@
               </div>
               <!--use change background image-->
               <perx-core-puzzle-collect-stamps [nbSlots]="stampsNumber.value" [stamps]="stamps"
-                [rewards]="stampsSlotNumberData"
-                [preStampImg]="getImgLink(preStamp, 'assets/images/stamps/pre-stamps/pre-stamp-1.png')"
-                [postStampImg]="getImgLink(preStamp, 'assets/images/stamps/pre-stamps/pre-stamp-1.png')"
-                [rewardPreStamp]="getImgLink(rewardPreStamps, 'assets/images/stamps/reward-pre-stamps/reward-pre-stamp-1.png')"
-                [rewardPostStamp]="getImgLink(rewardPreStamps, 'assets/images/stamps/reward-pre-stamps/reward-pre-stamp-1.png')">
+                                               [rewards]="stampsSlotNumberData"
+                                               [preStampImg]="getImgLink(preStamp, 'assets/images/stamps/pre-stamps/pre-stamp-1.png')"
+                                               [postStampImg]="getImgLink(preStamp, 'assets/images/stamps/pre-stamps/pre-stamp-1.png')"
+                                               [rewardPreStamp]="getImgLink(rewardPreStamps, 'assets/images/stamps/reward-pre-stamps/reward-pre-stamp-1.png')"
+                                               [rewardPostStamp]="getImgLink(rewardPreStamps, 'assets/images/stamps/reward-pre-stamps/reward-pre-stamp-1.png')">
               </perx-core-puzzle-collect-stamps>
             </div>
           </div>
@@ -231,12 +240,13 @@
         </cl-simple-mobile-view>
 
         <cl-simple-mobile-view class="second-tab"
-          [background]="getImgLink(background, 'assets/images/background/background1.png')"
-          [mobileImageClass]="'mobile-non-header'" [headerColor]="tenantSettings?.headerColor"
-          [logo]="tenantSettings?.logo" [logoType]="tenantSettings?.logoType" [fontFamily]="tenantSettings?.font">
+                               [background]="getImgLink(background, 'assets/images/background/background1.png')"
+                               [mobileImageClass]="'mobile-non-header'" [headerColor]="tenantSettings?.headerColor"
+                               [logo]="tenantSettings?.logo" [logoType]="tenantSettings?.logoType"
+                               [fontFamily]="tenantSettings?.font">
           <div class="plugin-block">
             <div class="mobile-preview-card"
-              [ngStyle]="{'background-image': 'url(' + getImgLink(cardBackground, 'assets/images/reward/card-background/card-bg-1.png') + ')'}">
+                 [ngStyle]="{'background-image': 'url(' + getImgLink(cardBackground, 'assets/images/reward/card-background/card-bg-1.png') + ')'}">
               <div class="mobile-preview-header-nested">
                 <p class="mobile-preview-headline">
                   {{headlineMessage.value}}
@@ -246,11 +256,11 @@
                 </p>
               </div>
               <perx-core-puzzle-collect-stamps [nbSlots]="stampsNumber.value" [stamps]="stamps"
-                [rewards]="stampsSlotNumberData"
-                [preStampImg]="getImgLink(preStamp, 'assets/images/stamps/pre-stamps/pre-stamp-1.png')"
-                [postStampImg]="getImgLink(postStamps, 'assets/images/stamps/post-stamps/post-stamp-1.png')"
-                [rewardPreStamp]="getImgLink(rewardPreStamps, 'assets/images/stamps/reward-pre-stamps/reward-pre-stamp-1.png')"
-                [rewardPostStamp]="getImgLink(rewardPostStamps, 'assets/images/stamps/reward-post-stamps/reward-post-stamp-1.png')">
+                                               [rewards]="stampsSlotNumberData"
+                                               [preStampImg]="getImgLink(preStamp, 'assets/images/stamps/pre-stamps/pre-stamp-1.png')"
+                                               [postStampImg]="getImgLink(postStamps, 'assets/images/stamps/post-stamps/post-stamp-1.png')"
+                                               [rewardPreStamp]="getImgLink(rewardPreStamps, 'assets/images/stamps/reward-pre-stamps/reward-pre-stamp-1.png')"
+                                               [rewardPostStamp]="getImgLink(rewardPostStamps, 'assets/images/stamps/reward-post-stamps/reward-post-stamp-1.png')">
               </perx-core-puzzle-collect-stamps>
             </div>
           </div>

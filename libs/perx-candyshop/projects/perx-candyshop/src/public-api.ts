@@ -90,8 +90,8 @@ export { TimePickerComponent } from './lib/time-picker/time-picker.component';
 export { UserModule } from './lib/user/user.module';
 export { UserComponent } from './lib/user/user.component';
 
-export { VouchersProgressBarModule } from './lib/vouchers-progress-bar/vouchers-progress-bar.module';
-export { VouchersProgressBarComponent } from './lib/vouchers-progress-bar/vouchers-progress-bar.component';
+export { StatisticsProgressBarModule } from './lib/statistics-progress-bar/statistics-progress-bar.module';
+export { StatisticsProgressBarComponent } from './lib/statistics-progress-bar/statistics-progress-bar.component';
 
 export { SepareteRangeDatePickerComponent } from './lib/separate-range-date-picker/separate-range-date-picker.component';
 export { SeparateRangeDatePickerModule } from './lib/separate-range-date-picker/separate-range-date-picker.module';
