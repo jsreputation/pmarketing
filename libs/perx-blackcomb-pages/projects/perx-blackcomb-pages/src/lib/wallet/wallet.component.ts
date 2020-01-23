@@ -98,7 +98,7 @@ export class WalletComponent implements OnInit {
         }),
         mergeMap(
           (campaigns: ICampaign[]) => from(campaigns).pipe(
-            mergeMap((campaign: ICampaign) => this.fetchCard(campaign.id)),
+            mergeMap((campaign: ICampaign) => this.stampService.getCurrentCard(campaign.id)),
             toArray(),
             map((stampCards: IStampCard[]) => stampCards.filter(card =>
               card.displayProperties.displayCampaignAs && card.displayProperties.displayCampaignAs === this.stampsType
@@ -115,10 +115,6 @@ export class WalletComponent implements OnInit {
           )
         ),
       );
-  }
-
-  private fetchCard(id: number): Observable<IStampCard> {
-    return this.stampService.getCurrentCard(id);
   }
 
   public puzzleIndex(index: number): string {
