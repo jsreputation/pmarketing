@@ -16,7 +16,7 @@ export class Number2 {
   }
 }
 
-import {Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild, Output, EventEmitter, OnDestroy} from '@angular/core';
+import {Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild, Output, EventEmitter} from '@angular/core';
 import { getImageCors } from '../../utils/getImageCors';
 // https://codepen.io/mexitalian/pen/pNQgae // not very useful, not hammer js
 @Component({
@@ -24,7 +24,7 @@ import { getImageCors } from '../../utils/getImageCors';
   templateUrl: './snake.component.html',
   styleUrls: ['./snake.component.scss']
 })
-export class SnakeGameComponent implements OnChanges, OnDestroy {
+export class SnakeGameComponent implements OnChanges {
   private get canv(): HTMLCanvasElement { return this.canvasEl.nativeElement; }
   // public gameStarted: boolean = false;
 
@@ -36,25 +36,12 @@ export class SnakeGameComponent implements OnChanges, OnDestroy {
     }
     return this.ctx_;
   }
-
-  constructor() {
-    // the bindings are necessary to keep track of correct, common game state
-    this.keyPush = this.keyPush.bind(this);
-    this.game = this.game.bind(this);
-    this.checkCollisionWithWall = this.checkCollisionWithWall.bind(this);
-    this.checkCollisionWithSelf = this.checkCollisionWithSelf.bind(this);
-    this.checkGameOver = this.checkGameOver.bind(this);
-    this.startGameAndRender = this.startGameAndRender.bind(this);
-    document.addEventListener('keydown', this.keyPush);
-  }
   @Input()
-  public target: string;
+  public targetUrl: string;
   @Input()
-  public snake: string;
+  public snakeHeadUrl: string;
   @Input()
-  public colorSnake: string = 'lime';
-  @Input()
-  public gameArea: string;
+  public gameAreaUrl: string;
   @Input()
   public rateOfExpansion: number = 3;
   @Input()
@@ -92,26 +79,36 @@ export class SnakeGameComponent implements OnChanges, OnDestroy {
   private snakeImgLoaded!: HTMLImageElement;
 
   private TOTAL_IMAGES: number = 3;
-  private COUNTER_LOADED: number = 0;
+  private counterLoaded: number = 0;
 
   public allImagesLoaded: boolean = false;
   public score: number = 0;
+
   // https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame
   public request: number;
   // https://stackoverflow.com/questions/19764018/controlling-fps-with-requestanimationframe
-  public fpsInterval: number;
-  public now: number;
-  public then: number;
-  public startTime: number;
-  public elapsed: number;
+  private fpsInterval: number;
+  private now: number;
+  private then: number;
+  private elapsed: number;
 
-  public startedMoving: boolean = false;
-  public gameStop: boolean = false;
+  private startedMoving: boolean = false;
+  private gameStop: boolean = false;
+
+  constructor() {
+    // the bindings are necessary to keep track of correct, common game state
+    this.keyPush = this.keyPush.bind(this);
+    this.game = this.game.bind(this);
+    this.checkCollisionWithWall = this.checkCollisionWithWall.bind(this);
+    this.checkCollisionWithSelf = this.checkCollisionWithSelf.bind(this);
+    this.checkGameOver = this.checkGameOver.bind(this);
+    this.startGameAndRender = this.startGameAndRender.bind(this);
+    document.addEventListener('keydown', this.keyPush);
+  }
 
   public startAnimating(): void {
     this.fpsInterval = 1000 / this.fps;
     this.then = window.performance.now();
-    this.startTime = this.then;
     this.startGameAndRender();
   }
 
@@ -135,9 +132,9 @@ export class SnakeGameComponent implements OnChanges, OnDestroy {
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if ((changes.target && this.target)
-      || (changes.snake && this.snake)
-      || (changes.gameArea && this.gameArea)) {
+    if ((changes.target && this.targetUrl)
+      || (changes.snake && this.snakeHeadUrl)
+      || (changes.gameArea && this.gameAreaUrl)) {
       this.fillStyles();
     }
   }
@@ -202,22 +199,19 @@ export class SnakeGameComponent implements OnChanges, OnDestroy {
   }
 
   private onloadCallBack(): null {
-    this.COUNTER_LOADED++;
-    if (this.COUNTER_LOADED < this.TOTAL_IMAGES) {
+    this.counterLoaded++;
+    if (this.counterLoaded < this.TOTAL_IMAGES) {
       return null;
     }
     // trigger final callback if is the last image
-    return (() => {
-      console.log('ALL LOADED, PROBABLY');
-      this.allImagesLoaded = true;
-      return null;
-    })();
+    this.allImagesLoaded = true;
+    return null;
   }
 
   private fillStyles(): void {
-    this.targetImgLoaded = getImageCors(this.target);
-    this.gameAreaImgLoaded = getImageCors(this.gameArea);
-    this.snakeImgLoaded = getImageCors(this.snake);
+    this.targetImgLoaded = getImageCors(this.targetUrl);
+    this.gameAreaImgLoaded = getImageCors(this.gameAreaUrl);
+    this.snakeImgLoaded = getImageCors(this.snakeHeadUrl);
     this.targetImgLoaded.onload = this.onloadCallBack.bind(this);
     this.gameAreaImgLoaded.onload = this.onloadCallBack.bind(this);
     this.snakeImgLoaded.onload = this.onloadCallBack.bind(this);
@@ -277,9 +271,6 @@ export class SnakeGameComponent implements OnChanges, OnDestroy {
         this.down();
         break;
     }
-  }
-
-  public ngOnDestroy(): void {
   }
 
 }

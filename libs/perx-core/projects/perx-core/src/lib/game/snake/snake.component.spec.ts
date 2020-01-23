@@ -85,8 +85,4 @@ describe('SnakeGameComponent', () => {
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
     expect(spyDown).toHaveBeenCalled();
   }));
-  afterAll(() => {
-    component.ngOnDestroy();
-  });
-
 });

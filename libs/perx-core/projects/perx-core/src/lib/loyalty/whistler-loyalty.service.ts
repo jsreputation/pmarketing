@@ -63,7 +63,7 @@ export class WhistlerLoyaltyService extends LoyaltyService {
     return {
       id: Number.parseInt(loyalty.id, 10),
       name: oc(program).attributes.name(''),
-      pointsBalance: Number.parseFloat(loyalty.attributes.balance.toString()),
+      pointsBalance: Number.parseFloat(loyalty.attributes.balance),
       cardId: Number.parseInt(loyalty.id, 10),
       currency: oc(program).attributes.unit(),
       membershipTierName
