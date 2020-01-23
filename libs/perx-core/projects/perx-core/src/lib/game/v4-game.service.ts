@@ -246,11 +246,11 @@ export class V4GameService implements IGameService {
   public prePlay(engagementId: number, campaignId?: number): Observable<IEngagementTransaction> {
     return this.play(engagementId)
       .pipe(map((outcome: IPlayOutcome) => this.playOutcomeToEngagementTransaction(outcome)),
-        tap((transaction) => this.cacheResponse[transaction.id] = transaction))
+        tap((transaction) => this.cacheResponse[transaction.id] = transaction));
   }
 
   public prePlayConfirm(transactionId: number): Observable<void> {
-    if(this.cacheResponse[transactionId]){
+    if (this.cacheResponse[transactionId]) {
       throw new Error('Not implemented.');
     }
     return of();
@@ -302,13 +302,13 @@ export class V4GameService implements IGameService {
       voucherIds: [] as number[],
       id: outcome.rawPayload.id,
       rewardIds: [] as number[]
-    }
+    };
     outcome.vouchers.forEach((el) => {
       transaction.voucherIds.push(el.id);
       if (el.reward) {
         transaction.rewardIds.push(el.reward.id);
       }
-    })
+    });
     return transaction;
   }
 }

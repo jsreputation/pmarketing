@@ -233,7 +233,7 @@ export class WhistlerGameService implements IGameService {
     if ((informationCollectionSetting === 'pi_required'
       || informationCollectionSetting === 'signup_required')
       && this.checkAnonymous()) {
-      return of()
+      return of();
     }
     return this.http.patch<IJsonApiItemPayload<IWAttbsObjTrans>>(
       `${this.hostName}/game/transactions/${transactionId}`,
