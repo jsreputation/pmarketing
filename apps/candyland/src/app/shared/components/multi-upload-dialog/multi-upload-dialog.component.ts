@@ -26,7 +26,7 @@ export class MultiUploadDialogComponent  { // implements ControlValueAccessor
             ) { } //   private uploadFileService: UploadFileService,
   // private cd: ChangeDetectorRef
 
-  public sanitizeUrl(data): SafeUrl {
+  public sanitizeUrl(data: any): SafeUrl {
     return this.sanitizer.bypassSecurityTrustUrl(data);
   }
 

@@ -8,6 +8,7 @@ import {
   IPinata,
   IScratch,
   ISpin,
+  ISnake,
   defaultScratch,
   defaultPinata,
   IPlayOutcome,
@@ -59,7 +60,7 @@ export class WhistlerGameService implements IGameService {
 
   private static WGameToGame(game: IJsonApiItem<IWGameEngagementAttributes>): IGame {
     let type = TYPE.unknown;
-    let config: ITree | IPinata | IScratch | ISpin | null = null;
+    let config: ITree | IPinata | IScratch | ISpin | ISnake | null = null;
     const { attributes } = game;
     if (attributes.game_type === WGameType.shakeTheTree) {
       type = TYPE.shakeTheTree;
