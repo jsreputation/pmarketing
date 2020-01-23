@@ -161,7 +161,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     const rssFeedsUrl: string = rssFeedsHome.url;
-    this.newsFeedItems = this.feedService.getFromUrl(rssFeedsUrl);
+    this.newsFeedItems = this.feedService.getFromUrl(rssFeedsUrl, true);
   }
 
   constructor(

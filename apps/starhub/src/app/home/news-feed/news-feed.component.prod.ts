@@ -42,7 +42,7 @@ export class NewsFeedComponent implements OnInit {
     }
 
     const rssFeedsUrl: string = rssFeedsHome.url;
-    this.reader.getFromUrl(rssFeedsUrl)
+    this.reader.getFromUrl(rssFeedsUrl, false)
       .subscribe(items => {
         this.items = items;
         this.newsAfterScroll = Array.from(Array(items.length > 0 ? items.length - 1 : 1).keys());
