@@ -112,7 +112,7 @@ export class WhistlerRewardsService implements RewardsService {
         }
       };
       // do the first query
-      this.getRewards(1, undefined, tags, categories).subscribe(process);
+      return this.getRewards(1, undefined, tags, categories).subscribe(process);
     });
   }
 

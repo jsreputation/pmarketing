@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MerchantHttpAdapter } from '@cl-core/http-adapters/merchant-http-adapter';
-import { MerchantHttpService } from '@cl-core/http-services/merchant-http.service';
+import { MerchantHttpService } from '@perx/whistler-services';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { combineLatest, Observable, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
@@ -20,7 +20,7 @@ export class MerchantsService implements ITableService<IMerchantForm> {
 
   constructor(private merchantHttpService: MerchantHttpService) { }
 
-  public getTableData(params: HttpParamsOptions): Observable<ITableData<IMerchantForm>> {
+  public getTableData(params: HttpParamsOptions | any): Observable<ITableData<IMerchantForm>> {
     params.include = 'branches';
     return this.merchantHttpService.getMerchants(params)
       .pipe(map((data) => {

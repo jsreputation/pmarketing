@@ -11,7 +11,10 @@ export {
   isEmptyString,
   isEmptyArray,
 } from './lib/utils/shared/helpers.util';
-export { RedemptionType } from './lib/perx-core.models';
+export {
+  RedemptionType,
+  IMessageResponse,
+} from './lib/perx-core.models';
 
 /**
  * Merchants
@@ -48,7 +51,7 @@ export { BarcodeRedemptionComponent } from './lib/vouchers/barcode-redemption/ba
  * Authentication
  */
 export { AuthenticationModule } from './lib/auth/authentication/authentication.module';
-export { AuthenticationService, RequiresOtpError, IMessageResponse } from './lib/auth/authentication/authentication.service';
+export { AuthenticationService, RequiresOtpError } from './lib/auth/authentication/authentication.service';
 export { TokenStorage } from './lib/utils/storage/token-storage.service';
 export { IChangePasswordData, ISignUpData } from './lib/auth/authentication/models/authentication.model';
 export { IFormsService } from './lib/auth/authentication/iforms.service';
@@ -215,6 +218,8 @@ export { Config } from './lib/config/config';
 export { ConfigService } from './lib/config/config.service';
 export {
   IConfig,
+  IRssFeeds,
+  IRssFeedsData,
   IMicrositeSettings,
   PagesObject,
   AccountPageObject,

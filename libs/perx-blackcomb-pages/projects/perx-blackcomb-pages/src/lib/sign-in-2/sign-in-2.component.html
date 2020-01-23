@@ -1,5 +1,4 @@
-<div class="content-container" *ngIf="theme | async as th"
-  [ngStyle]="{'background-color': th?.properties['--login_background_colour']}">
+<div class="content-container" *ngIf="theme | async as th">
   <div class="login-image">
     <img class="logo" [attr.src]="th?.properties['--logo']" [attr.alt]="th?.properties['--title']" />
   </div>

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of, combineLatest } from 'rxjs';
 import { ClHttpParams } from '@cl-helpers/http-params';
 import { map, switchMap } from 'rxjs/operators';
-import { LoyaltyRulesHttpService } from '@cl-core/http-services/loyalty-rules-http.service';
+import { LoyaltyRulesHttpService } from '@perx/whistler-services';
 import { LoyaltyRuleHttpAdapter } from '@cl-core/http-adapters/loyalty-rule-http-adapter';
 import { JsonApiParser } from '@cl-helpers/json-api-parser';
 import {
