@@ -40,9 +40,9 @@
     <mat-tab label="Communications" class="audience-list-content">
       <div class="audience-list-content">
         <div class="send-message-container">
-          <cl-button [classList]="'primary'" (click)="openSendMessagePopup()">
+          <cs-button [classList]="'primary'" (click)="openSendMessagePopup()">
             <span>{{'AUDIENCE_FEATURE.SEND_MESSAGE' | translate}}</span>
-          </cl-button>
+          </cs-button>
         </div>
         <div class="table-card">
           <!--table-->
@@ -59,7 +59,7 @@
     <mat-tab label="Loyalty" class="audience-list-content">
       <div class="audience-list-content">
         <div class="audience-list-loyalty-panel">
-          <cl-button classList="primary" (click)="openAddLoyaltyPopup()">Add Loyalty</cl-button>
+          <cs-button classList="primary" (click)="openAddLoyaltyPopup()">Add Loyalty</cs-button>
         </div>
         <!--table-->
         <div class="table-card" [ngSwitch]="loyaltyDataSource?.state$ | async">
