@@ -182,7 +182,7 @@ export class SnakeGameComponent implements OnChanges, OnDestroy {
     }
   }
 
-  private render(): void {
+  public render(): void {
     // render board
     this.ctx.drawImage(this.backgroundImgLoaded, 0, 0, this.canv.width, this.canv.height);
     // render snake
