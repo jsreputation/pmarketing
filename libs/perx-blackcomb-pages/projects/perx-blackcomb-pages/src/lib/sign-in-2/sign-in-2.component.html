@@ -4,7 +4,7 @@
   </div>
   <div *ngIf="appConfig.custom" class="login-form">
     <h1 translate>LOGIN</h1>
-    <div class="subtitle">
+    <div class="subtitle" *ngIf="appConfig.showSubtitleLogin">
       Not a member? <a class="link" [routerLink]="'/signup'">Sign up</a>
     </div>
     <div class="error_msg">
