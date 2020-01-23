@@ -3,19 +3,20 @@ import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { IUploadedFile } from '../../models/uploaded-file.interface';
-import { IUploadFileService } from './upload-file-service.interface';
+import { HttpParamsOptions } from '../../models/http-params-options';
+import { UploadFileService } from './upload-file-service.interface';
 
 @Injectable()
-export class UploadFileService implements IUploadFileService {
+export class DefaultUploadFileService implements UploadFileService {
 
   constructor(
     @Inject('uploadFileUrl') public url: string,
     private http: HttpClient
   ) { }
 
-  public uploadFile(file: any): Observable<any> {
+  public uploadFile(file: any, options: HttpParamsOptions): Observable<any> {
     const formData = this.prepareFormData(file);
-    return this.http.post(this.url, formData)
+    return this.http.post(this.url, formData, options)
       .pipe(
         map((res: any) => this.transformToUploadedFile(res.data, this.url))
       );
@@ -39,8 +40,8 @@ export class UploadFileService implements IUploadFileService {
     return formData;
   }
 
-  public uploadMultipleFile(files: any[]): Observable<any> {
-    const arrayRequest: Observable<any>[] = files.map(file => this.uploadFile(file));
+  public uploadMultipleFile(files: any[], options: HttpParamsOptions): Observable<any> {
+    const arrayRequest: Observable<any>[] = files.map(file => this.uploadFile(file, options));
     return combineLatest(...arrayRequest);
   }
 }

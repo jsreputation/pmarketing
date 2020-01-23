@@ -1,10 +1,14 @@
 @import "../../styles/variables";
 
-.upload-file {
+.cs-upload-file {
   font-size: $base-font-size;
+  z-index: 5;
   position: relative;
   width: 100%;
-  padding: 1rem 0;
+  background: $white;
+  //padding: 1rem 0;
+  padding: 0;
+  margin-bottom: -0.7rem;
   box-sizing: border-box;
 
   &-head {
@@ -112,26 +116,67 @@
     }
   }
 
-  &-wrap:hover .upload-file-btn::before,
-  &-wrap:focus .upload-file-btn::before {
+  &-wrap:hover .cs-upload-file-btn::before,
+  &-wrap:focus .cs-upload-file-btn::before {
     opacity: 1;
   }
 
-  &-wrap.invalid .upload-file-btn::before {
-    background-image: linear-gradient(to right, $warning-color 50%, rgba(255, 255, 255, 0) 0%), linear-gradient($warning-color 50%, rgba(255, 255, 255, 0) 0%), linear-gradient(to left, $warning-color 50%, rgba(255, 255, 255, 0) 0%), linear-gradient($warning-color 50%, rgba(255, 255, 255, 0) 0%);
+  &.invalid {
+    .cs-upload-file-btn::before {
+      background-image: linear-gradient(to right, $warning-color 50%, rgba(255, 255, 255, 0) 0%), linear-gradient($warning-color 50%, rgba(255, 255, 255, 0) 0%), linear-gradient(to left, $warning-color 50%, rgba(255, 255, 255, 0) 0%), linear-gradient($warning-color 50%, rgba(255, 255, 255, 0) 0%);
+    }
   }
 
-  &-type {
-    font-size: $base-font-size;
+  &.disabled {
+    pointer-events: none;
+
+    .cs-upload-file-btn {
+      color: $disable-color;
+    }
+
+    .cs-upload-file-btn::before {
+      background-image: linear-gradient(to right, $disable-color 50%, rgba(255, 255, 255, 0) 0%), linear-gradient($disable-color 50%, rgba(255, 255, 255, 0) 0%), linear-gradient(to left, $disable-color 50%, rgba(255, 255, 255, 0) 0%), linear-gradient($disable-color 50%, rgba(255, 255, 255, 0) 0%) !important;
+    }
+
+    .cs-upload-file-file {
+      background: rgba($disable-color, 0.15);
+    }
+
+    .cs-upload-file-file-icon {
+      background-color: $disable-color;
+    }
+
+    .cs-upload-file-delete {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+
+  &-info {
+    @include cs-typo-caption;
+
+    height: 2rem;
+    margin-top: ($vertical-padding * 0.25);
+    //padding: 0.8rem;
+    //color: $warning-color;
+  }
+
+  &-placeholder {
+    @include cs-typo-caption;
+
     color: rgba(51, 51, 51, 0.5);
   }
 
-  &-type-wrap {
-    position: absolute;
-    bottom: -($vertical-padding * 0.75);
-    left: 0;
-    right: -150%;
+  &-error {
+    padding: 0.8rem;
   }
+
+  //&-type-wrap {
+  //  position: absolute;
+  //  bottom: -($vertical-padding * 0.75);
+  //  left: 0;
+  //  right: -150%;
+  //}
 
   &-file {
     position: relative;
@@ -176,14 +221,18 @@
     color: $base-font-color;
   }
 
-  &-error {
-    margin-top: 1rem;
-    padding: 0.8rem;
-  }
-}
-
-.upload-file.invalid {
-  .upload-file-btn {
-    border-color: $warning-color;
+  &-progress-bar {
+    opacity: 0.1;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute !important;
+    height: 100%;
+    width: 100%;
+    border-radius: 0.4rem;
+    display: block;
+    overflow: hidden;
+    transition: opacity 250ms linear;
   }
 }

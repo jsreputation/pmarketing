@@ -7,6 +7,8 @@ export { DatepickerRangeValue } from './models/datepicker-range-value.interface'
 export { IUploadedFile } from './models/uploaded-file.interface';
 export { OptionConfig } from './models/option-config.interface';
 
+export { CsFormFieldControl } from './lib/form-field-control';
+
 export { ButtonComponent } from './lib/button/button.component';
 export { ButtonModule } from './lib/button/button.module';
 
@@ -62,10 +64,9 @@ export { UploadGraphicComponent } from './lib/upload-graphic/upload-graphic.comp
 export { IUploadGraphicConfig } from './lib/upload-graphic/upload-graphic-config.interface';
 export { IUploadImageService } from './lib/upload-graphic/upload-image-service.interface';
 
-export { UploadFileModule } from './lib/upload-file/upload-file.module';
+export { UploadFileModule, UPLOAD_FILE_URL } from './lib/upload-file/upload-file.module';
 export { UploadFileComponent } from './lib/upload-file/upload-file.component';
-export { IUploadFileConfig } from './lib/upload-file/upload-file-config.interface';
-export { IUploadFileService } from './lib/upload-file/upload-file-service.interface';
+export { UploadFileService, FileUploadStatus, IUploadFileResponse } from './lib/upload-file/upload-file-service.interface';
 
 export { SidenavModule } from './lib/sidenav/sidenav.module';
 export { SidenavComponent } from './lib/sidenav/sidenav.component';
