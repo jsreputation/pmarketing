@@ -1,22 +1,2 @@
-<div id="expand-arrow">
-  <svg width="23" height="22" viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="12" cy="11" r="10" transform="rotate(-180 12 11)" fill="white" stroke="#A7A7A7" stroke-width="2"/>
-    <path d="M15.126 6.7925L10.9276 11L15.126 15.2075L13.8335 16.5L8.33348 11L13.8335 5.5L15.126 6.7925Z" fill="#A7A7A7"/>
-  </svg>
+<div class="snake-pic-container" [innerHtml]="formImagePreviewHtml()">
 </div>
-
-<div class="snake-pic-container">
-  <svg id="snake-svg" width="56" height="56" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
-    <path [ngStyle]="{fill: colorOfSnake}"
-          id="snake-shape"
-      xmlns="http://www.w3.org/2000/svg" d="M55.5 28C55.5 43.1878 43.1878 55.5 28 55.5C12.8122 55.5 0.5 43.1878 0.5 28C0.5 12.8122 12.8122 0.5 28 0.5C43.1878 0.5 55.5 12.8122 55.5 28Z" stroke="#E4E4E4" stroke-opacity="0.15"/>
-  </svg>
-  <div id="snake-bg-container">
-    <img id="bg-snake-face" src="https://cdn.uat.whistler.perxtech.io/dev1/global/assets/game/snake/snakey_headhead.png"
-         alt="snakeface">
-  </div>
-</div>
-
-<cl-color-picker
-  [(ngModel)]="colorOfSnake"
-  colorWrap="#EFEFEF"></cl-color-picker>

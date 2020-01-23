@@ -1,7 +1,5 @@
-import {ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {DialogPreviewSelectorComponent} from '@cl-shared/components/dialog-preview-selector/dialog-preview-selector.component';
-import {MatDialog} from '@angular/material';
-import {AbstractControl, FormBuilder} from '@angular/forms';
+import {ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {AbstractControl, ControlValueAccessor, FormBuilder, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Subject} from 'rxjs';
 import {debounceTime, takeUntil} from 'rxjs/operators';
 import {ImageControlValue} from '@cl-helpers/image-control-value';
@@ -9,14 +7,21 @@ import {ImageControlValue} from '@cl-helpers/image-control-value';
 @Component({
   selector: 'cl-select-graphic-wrap-dialog',
   templateUrl: './select-graphic-wrap-dialog.component.html',
-  styleUrls: ['./select-graphic-wrap-dialog.component.scss']
+  styleUrls: ['./select-graphic-wrap-dialog.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => SelectGraphicWrapDialogComponent),
+      multi: true
+    }
+  ]
 })
-export class SelectGraphicWrapDialogComponent implements OnInit, OnDestroy {
-  @Output() private selectColor: EventEmitter<string> = new EventEmitter<string>();
+export class SelectGraphicWrapDialogComponent implements OnInit, ControlValueAccessor, OnDestroy {
   @Output() private selectGraphic: EventEmitter<IGraphic> = new EventEmitter<IGraphic>();
   @Input() public graphicList: IGraphic[];
   @Input() public showUpload: boolean = true;
   @Input() public isRequired: boolean;
+  @Input() public placeHolder: string;
   public selectedGraphic: IGraphic;
   public controlUpload: AbstractControl;
   public controlDefault: AbstractControl;
@@ -37,7 +42,7 @@ export class SelectGraphicWrapDialogComponent implements OnInit, OnDestroy {
     }
   }
 
-  constructor(public matDialog: MatDialog, private fb: FormBuilder,
+  constructor(private fb: FormBuilder,
               private cd: ChangeDetectorRef) { }
 
   public ngOnInit(): void {
@@ -45,19 +50,6 @@ export class SelectGraphicWrapDialogComponent implements OnInit, OnDestroy {
     this.createControl();
     this.subscribeControlDefaultValueChanges();
     this.subscribeControlUploadValueChanges();
-  }
-
-  // Call the dialog
-  public onShowDialog(evt: MouseEvent): void {
-    const target = new ElementRef(evt.currentTarget);
-    const dialogRef = this.matDialog.open(DialogPreviewSelectorComponent, {
-      data: { trigger: target },
-      panelClass: 'custom-dialog-container'
-    });
-    dialogRef.afterClosed().subscribe( res => {
-      console.log(res);
-      this.selectColor.emit('i am a color bro');
-    });
   }
 
   public handlerPatchUploadImage(currentValue: any): void {

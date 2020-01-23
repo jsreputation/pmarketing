@@ -1,4 +1,5 @@
 declare interface IGraphic {
+  body: IGraphic;
   id: number;
   type: string;
   active: boolean;

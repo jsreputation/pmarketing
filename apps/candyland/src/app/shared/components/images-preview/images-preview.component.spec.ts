@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ImagesPreviewComponent } from './images-preview.component';
+import {DialogPreviewSelectorModule} from '@cl-shared/components/dialog-preview-selector/dialog-preview-selector.module';
 
 describe('ImagesPreviewComponent', () => {
   let component: ImagesPreviewComponent;
@@ -8,7 +9,10 @@ describe('ImagesPreviewComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ImagesPreviewComponent ]
+      declarations: [ ImagesPreviewComponent ],
+      imports: [
+        DialogPreviewSelectorModule
+      ]
     })
     .compileComponents();
   }));

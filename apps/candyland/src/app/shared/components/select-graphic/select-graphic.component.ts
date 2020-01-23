@@ -17,6 +17,7 @@ import { ImageControlValue } from '@cl-helpers/image-control-value';
 export class SelectGraphicComponent implements ControlValueAccessor {
   @Input() public selectedGraphic: IGraphic;
   @Input() public graphicList: IGraphic[];
+  @Input() public diagBox: boolean = false;
   @Output() private selectGraphic: EventEmitter<IGraphic> = new EventEmitter<IGraphic>();
 
   public lock: boolean;

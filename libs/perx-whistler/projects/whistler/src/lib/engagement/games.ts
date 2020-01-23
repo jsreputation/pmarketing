@@ -46,7 +46,7 @@ export interface IWSpinDisplayProperties extends IWGameDisplayProperties {
 export interface IWSnakeDisplayProperties extends IWGameDisplayProperties {
   target_icon_img_url: string;
   target_required: number;
-  snake_color: string;
   snake_type_img_url: string;
+  // snake_type_body
   game_area_img_url: string;
 }

@@ -4,26 +4,26 @@
       "id": 1,
       "type": "snake1",
       "title": "icon",
-      "img": "global/assets/game/snake/snake-1.png",
-      "fullImg": "global/assets/game/snake/setup-snake-1.png",
+      "img": "global/assets/game/snake/snake_head1.png",
+      "fullImg": "global/assets/game/snake/snake_head1.png",
       "format": ".png",
-      "active": "false"
+      "active": "false",
+      "body": {
+        "id": 1,
+        "type": "snake1",
+        "title": "icon",
+        "img": "global/assets/game/snake/snake_body1.png",
+        "fullImg": "global/assets/game/snake/snake_body1.png",
+        "format": ".png",
+        "active": "false"
+      }
     },
     {
       "id": 2,
       "type": "snake2",
       "title": "icon",
-      "img": "global/assets/game/snake/snake-2.png",
-      "fullImg": "global/assets/game/snake/setup-snake-2.png",
-      "format": ".png",
-      "active": "false"
-    },
-    {
-      "id": 3,
-      "type": "state3",
-      "title": "icon",
-      "img": "global/assets/game/snake/snake-3.png",
-      "fullImg": "global/assets/game/snake/setup-snake-3.png",
+      "img": "global/assets/game/snake/starsnake_head2.png",
+      "fullImg": "global/assets/game/snake/starsnake_head2.png",
       "format": ".png",
       "active": "false"
     }
@@ -33,8 +33,8 @@
       "id": 1,
       "type": "bg1",
       "title": "icon",
-      "img": "global/assets/background/snake-wrapbg-1.png",
-      "fullImg": "global/assets/background/snake-wrapbg-1.png",
+      "img": "global/assets/background/snake_bg_1.png",
+      "fullImg": "global/assets/background/full_snake_bg_1.png",
       "format": ".png",
       "active": "false"
     },
@@ -42,8 +42,8 @@
       "id": 2,
       "type": "bg2",
       "title": "icon",
-      "img": "global/assets/background/snake-wrapbg-2.png",
-      "fullImg": "global/assets/background/snake-wrapbg-2.png",
+      "img": "global/assets/background/snake_bg_2.png",
+      "fullImg": "global/assets/background/full_snake_bg_2.png",
       "format": ".png",
       "active": "false"
     },
@@ -51,8 +51,8 @@
       "id": 3,
       "type": "bg3",
       "title": "icon",
-      "img": "global/assets/background/snake-wrapbg-3.png",
-      "fullImg": "global/assets/background/snake-wrapbg-3.png",
+      "img": "global/assets/background/snake_bg_3.png",
+      "fullImg": "global/assets/background/full_snake_bg_3.png",
       "format": ".png",
       "active": "false"
     }
@@ -62,8 +62,8 @@
       "id": 1,
       "type": "food1",
       "title": "icon",
-      "img": "global/assets/game/snake/food-1.png",
-      "fullImg": "global/assets/game/snake/setup-food-1.png",
+      "img": "global/assets/game/snake/food_1.png",
+      "fullImg": "global/assets/game/snake/food_1.png",
       "format": ".png",
       "active": "false"
     },
@@ -71,8 +71,8 @@
       "id": 2,
       "type": "food2",
       "title": "icon",
-      "img": "global/assets/game/snake/food-2.png",
-      "fullImg": "global/assets/game/snake/setup-food-2.png",
+      "img": "global/assets/game/snake/food_2.png",
+      "fullImg": "global/assets/game/snake/food_2.png",
       "format": ".png",
       "active": "false"
     },
@@ -80,8 +80,8 @@
       "id": 3,
       "type": "food3",
       "title": "icon",
-      "img": "global/assets/game/snake/food-3.png",
-      "fullImg": "global/assets/game/snake/setup-food-3.png",
+      "img": "global/assets/game/snake/starfood_3.png",
+      "fullImg": "global/assets/game/snake/starfood_3.png",
       "format": ".png",
       "active": "false"
     }
@@ -89,21 +89,55 @@
   "gameArea": [
     {
       "id": 1,
-      "type": "snakebg1",
+      "type": "areabg1",
       "title": "icon",
-      "img": "global/assets/background/snake_bg_1.png",
-      "fullImg": "global/assets/background/snake_bg_1.png",
+      "img": "global/assets/game/snake/game_area_1.png",
+      "fullImg": "global/assets/game/snake/full_game_area_1.png",
       "format": ".png",
       "active": "false"
     },
     {
       "id": 2,
-      "type": "snakebg2",
+      "type": "areabg2",
       "title": "icon",
-      "img": "global/assets/background/snake_bg_2.png",
-      "fullImg": "global/assets/background/snake_bg_2.png",
+      "img": "global/assets/game/snake/game_area_2.png",
+      "fullImg": "global/assets/game/snake/full_game_area_2.png",
       "format": ".png",
       "active": "false"
+    }
+  ],
+  "targetRequired": [
+    {
+      "value": 3,
+      "viewValue": "3"
+    },
+    {
+      "value": 4,
+      "viewValue": "4"
+    },
+    {
+      "value": 5,
+      "viewValue": "5"
+    },
+    {
+      "value": 6,
+      "viewValue": "6"
+    },
+    {
+      "value": 7,
+      "viewValue": "7"
+    },
+    {
+      "value": 8,
+      "viewValue": "8"
+    },
+    {
+      "value": 9,
+      "viewValue": "9"
+    },
+    {
+      "value": 10,
+      "viewValue": "10"
     }
   ]
 }

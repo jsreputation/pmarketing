@@ -55,6 +55,18 @@ export class NewSnakePageComponent implements OnInit, OnDestroy {
     return this.form.get(ControlsName.snakeType);
   }
 
+  public get targetIcon(): AbstractControl {
+    return this.form.get(ControlsName.targetIcon);
+  }
+
+  public get gameArea(): AbstractControl {
+    return this.form.get(ControlsName.gameArea);
+  }
+
+  public get targetRequired(): AbstractControl {
+    return this.form.get(ControlsName.targetRequired);
+  }
+
   constructor(
     private fb: FormBuilder,
     private snakeService: SnakeService,
@@ -125,8 +137,8 @@ export class NewSnakePageComponent implements OnInit, OnDestroy {
   private createSnakeForm(): void {
     this.form = this.fb.group({
       name: ['Hit the Snake Template', [Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(60)]
+        Validators.minLength(1),
+        Validators.maxLength(60)]
       ],
       headlineMessage: ['Play Snake and Win!', [
         Validators.required,
@@ -137,8 +149,11 @@ export class NewSnakePageComponent implements OnInit, OnDestroy {
         Validators.minLength(5),
         Validators.maxLength(60)
       ]],
-      snake: [null, [Validators.required]],
-      background: [null, []],
+      snakeType: [null, [Validators.required]],
+      background: [null, [Validators.required]],
+      targetRequired: [null, [Validators.required]],
+      targetIcon: [null, [Validators.required]],
+      gameArea: [null, [Validators.required]],
       buttonText: ['start playing', [
         Validators.required,
         Validators.minLength(2),
@@ -157,6 +172,7 @@ export class NewSnakePageComponent implements OnInit, OnDestroy {
       [ControlsName.targetIcon]: data.targetIcon[0],
       [ControlsName.background]: data.background[0],
       [ControlsName.gameArea]: data.gameArea[0],
+      [ControlsName.targetRequired]: data.targetRequired[2].value,
       image_url: null
     };
   }

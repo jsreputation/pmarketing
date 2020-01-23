@@ -43,7 +43,7 @@ export class SentryErrorHandler implements ErrorHandler {
 @NgModule({
   declarations: [
     AppComponent,
-    MainContainerComponent,
+    MainContainerComponent
   ],
   imports: [
     BrowserModule,

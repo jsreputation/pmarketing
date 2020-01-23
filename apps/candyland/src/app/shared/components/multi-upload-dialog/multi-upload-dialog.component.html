@@ -1,0 +1,32 @@
+<h1 mat-dialog-title>Add file</h1>
+<input #fileInput type="file"
+       *ngIf="!imgURL"
+       class="upload-input"
+       accept='image/*'
+       (change)="preview(fileInput.files)" />
+<input #fileInput type="file"
+       *ngIf="!imgURL"
+       class="upload-input"
+       accept='image/*'
+       (change)="preview(fileInput.files)" />
+<mat-dialog-content>
+  Content goes here, the two inputs for files, actullay dond newed the object, we pass in thru config
+  keep in a object keys mapping how many controls, which amongst the controls are compulsory
+  switch and then ngFor
+  <div class="upload-wrap-btn" *ngIf="!imgURL">
+    <button class="upload-btn" (click)="multiUploadDialog()" [attr.aria-label]="btnLabel">
+      <ng-content></ng-content>
+<!--      <span>{{btnLabel | translate}}</span>-->
+    </button>
+  </div>
+  <div class="upload-wrap-btn" *ngIf="!imgURL">
+    <button class="upload-btn" (click)="multiUploadDialog()" [attr.aria-label]="btnLabel">
+      <ng-content></ng-content>
+<!--      <span>{{btnLabel | translate}}</span>-->
+    </button>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button>Add</button>
+  <button mat-button>Cancel</button>
+</mat-dialog-actions>

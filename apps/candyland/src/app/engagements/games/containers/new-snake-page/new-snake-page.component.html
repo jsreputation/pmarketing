@@ -55,21 +55,68 @@
 
         <mat-card class="card-fieldset">
           <h2 class="card-fieldset-title sub-title" translate>
+            Game Details
+          </h2>
+          <div>
+            <div class="control-input" *ngIf="snakeData.targetRequired">
+              <mat-form-field class="game-gift-select">
+                <mat-label><span translate>Number of collectibles to reveal reward</span></mat-label>
+                <mat-select formControlName="targetRequired">
+                  <mat-option *ngFor="let target of snakeData.targetRequired" [value]="target.value">
+                    {{target.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <h2 class="card-fieldset-title sub-title" translate>
             GAME_GRAPHIC
           </h2>
           <div class="game-form">
+            <div class="control-img_asset">
+              <h3 class="card-fieldset-label" translate>
+                Snake Type
+              </h3>
+              <div class="game-snake-wrap">
+                <cl-select-graphic-wrap-dialog
+                  *ngIf="snakeData.snakeType"
+                  formControlName="snakeType"
+                  [graphicList]="snakeData.snakeType"
+                  [placeHolder]="'*Recommended size 20px (w) x 20px (h) in .JPG or .PNG format.'"
+                >
+                </cl-select-graphic-wrap-dialog>
+              </div>
+            </div>
 
             <div class="control-img_asset">
               <h3 class="card-fieldset-label" translate>
-                snake
+                Collectible Icon
               </h3>
-              <div class="game-tree-wrap">
-                <cl-select-graphic-wrap-dialog
-                  *ngIf="snakeData.snakeType"
-                  formControlName="snake"
-                  [graphicList]="snakeData.snakeType"
+              <div class="game-gift-box_field">
+                <cl-select-graphic-wrap
+                  *ngIf="snakeData.targetIcon"
+                  formControlName="targetIcon"
+                  [isRequired]="form.get('targetIcon').hasError('required') && form.get('targetIcon').touched"
+                  [graphicList]="snakeData.targetIcon"
+                  [placeHolder]="'*Recommended size 20px (w) x 20px (h) in .JPG or .PNG format.'"
                 >
-                </cl-select-graphic-wrap-dialog>
+                </cl-select-graphic-wrap>
+              </div>
+            </div>
+
+            <div class="control-img_asset">
+              <h3 class="card-fieldset-label" translate>
+                Game Area
+              </h3>
+              <div class="game-gift-box_field">
+                <cl-select-graphic-wrap
+                  *ngIf="snakeData.gameArea"
+                  formControlName="gameArea"
+                  [placeHolder]="'*Recommended size 310px (w) x 390px (h) in .JPG or .PNG format.'"
+                  [isRequired]="form.get('gameArea').hasError('required') && form.get('gameArea').touched"
+                  [graphicList]="snakeData.gameArea"
+                >
+                </cl-select-graphic-wrap>
               </div>
             </div>
 
@@ -81,6 +128,7 @@
                 <cl-select-graphic-wrap
                   *ngIf="snakeData.background"
                   formControlName="background"
+                  [placeHolder]="'*Recommended size 720px (w) x 720px (h) in .JPG or .PNG format.'"
                   [isRequired]="form.get('background').hasError('required') && form.get('background').touched"
                   [graphicList]="snakeData.background"
                 >

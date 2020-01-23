@@ -11,4 +11,5 @@ declare interface IGameDefaultData {
   snakeType?: IGraphic[];
   targetIcon?: IGraphic[];
   gameArea?: IGraphic[];
+  targetRequired?: IGameGifts[];
 }

@@ -34,7 +34,6 @@ export enum ControlsName {
 
   targetRequired = 'targetRequired',
   snakeType = 'snakeType',
-  snakeColor = 'snakeColor',
   targetIcon = 'targetIcon',
   gameArea = 'gameArea'
 }

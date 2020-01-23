@@ -1,17 +1,17 @@
 <div class="graphic-wrap" *ngIf="graphicList"
      [class.field-lock]="lock"
 >
-  <div class="upload graphic-image-preview" *ngIf="showUpload">
-    <cl-upload-graphic
-      [formControl]="controlUpload"
-      [selectGraphic]="selectedGraphic"
-    ></cl-upload-graphic>
-  </div>
+<!--  <div class="upload graphic-image-preview" *ngIf="showUpload">-->
+<!--    <cl-upload-graphic-ext-->
+<!--      [placeholder]="placeHolder"-->
+<!--      [formControl]="controlUpload"-->
+<!--      [selectGraphic]="selectedGraphic">-->
+<!--    </cl-upload-graphic-ext>-->
+<!--  </div>-->
   <cl-select-graphic [formControl]="controlDefault"
-                     (click)="onShowDialog($event)"
                      [graphicList]="graphicList"
                      [selectedGraphic]="selectedGraphic"
+                     [diagBox]="true"
   >
-
   </cl-select-graphic>
 </div>

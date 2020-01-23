@@ -50,7 +50,6 @@ declare interface IEngagementSnakeType extends IEngagementCommon {
   sub_title: string;
   target_icon_img_url: string;
   target_required: number;
-  snake_color: string;
   snake_type_img_url: string;
   background_img_url: string;
   game_area_img_url: string;

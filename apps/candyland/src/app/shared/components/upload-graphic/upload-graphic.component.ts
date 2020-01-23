@@ -21,6 +21,7 @@ export class UploadGraphicComponent implements ControlValueAccessor {
   @Input() public btnLabel: string = 'BTN_ADD_NEW';
   @Input() public classList: string = '';
   @Input() public isRequired: boolean;
+  @Input() public diagBox: boolean = false;
 
   @Input()
   public set selectGraphic(value: any) {

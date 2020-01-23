@@ -230,7 +230,6 @@ export class EngagementHttpAdapter {
       updated_at: data.attributes.updated_at,
       target_icon_img_url: data.attributes.display_properties.target_icon_img_url,
       target_required: data.attributes.display_properties.target_required,
-      snake_color: data.attributes.display_properties.snake_color,
       snake_type_img_url: data.attributes.display_properties.snake_type_img_url,
       game_area_img_url: data.attributes.display_properties.game_area_img_url,
       background_img_url: data.attributes.display_properties.background_img_url
@@ -410,7 +409,6 @@ export class EngagementHttpAdapter {
           sub_title: data.subHeadlineMessage,
           target_icon_img_url: ImageControlValue.getImagePath(data.targetIcon),
           target_required: +data.targetRequired,
-          snake_color: data.snakeColor,
           snake_type_img_url: ImageControlValue.getImagePath(data.snakeType),
           game_area_img_url: ImageControlValue.getImagePath(data.gameArea)
         }
@@ -578,7 +576,6 @@ export class EngagementHttpAdapter {
       buttonText: data.attributes.display_properties.button,
       targetRequired: data.attributes.display_properties.target_required,
       snakeType: data.attributes.display_properties.snake_type_img_url,
-      snakeColor: data.attributes.display_properties.snake_color,
       targetIcon: data.attributes.display_properties.target_icon_img_url,
       gameArea: data.attributes.display_properties.game_area_img_url
     };
