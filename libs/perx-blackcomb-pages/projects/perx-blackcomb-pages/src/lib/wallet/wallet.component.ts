@@ -5,7 +5,7 @@ import {
 import { Router } from '@angular/router';
 
 import {
-  Observable, from
+  Observable, from, forkJoin, of
 } from 'rxjs';
 
 import {
@@ -28,7 +28,7 @@ import { tap, mergeMap, map, toArray } from 'rxjs/operators';
 interface IStampCardConfig {
   stampsType: string;
 }
-
+const REQ_PAGE_SIZE: number = 10;
 @Component({
   selector: 'perx-blackcomb-pages-wallet',
   templateUrl: './wallet.component.html',
@@ -40,6 +40,9 @@ export class WalletComponent implements OnInit {
   public filter: string[];
   public rewardsHeadline: string;
   public expiryLabelFn: ((v: Voucher) => string) | undefined;
+
+  public currentPage: number = 0;
+  public completed: boolean = false;
 
   public stampsType: string;
   public puzzleTextFn: (puzzle: IStampCard) => string;
@@ -58,7 +61,8 @@ export class WalletComponent implements OnInit {
   public ngOnInit(): void {
     this.getCampaign();
     this.translate.get('MY_WALLET').subscribe(text => this.rewardsHeadline = text);
-    this.vouchers$ = this.vouchersService.getAll();
+    this.vouchers$ = of([]);
+    this.onScroll();
     this.filter = [VoucherState.issued, VoucherState.released];
     this.translate.get('VOUCHER_EXPIRY')
       .subscribe((text: string) => {
@@ -122,5 +126,21 @@ export class WalletComponent implements OnInit {
 
   public selected(puzzle: IStampCard): void {
     this.router.navigate([`/stamp/${puzzle.campaignId}`]);
+  }
+
+  public onScroll(): void {
+    this.currentPage = this.currentPage + 1;
+    if (this.completed) {
+      return;
+    }
+    forkJoin(
+      this.vouchers$,
+      this.vouchersService.getFromPage(this.currentPage, { type: 'active' })
+    ).subscribe((val) => {
+      if (!val[1].length && val[1].length < REQ_PAGE_SIZE) {
+        this.completed = true;
+      }
+      this.vouchers$ = of([...val[0], ...val[1]]);
+    });
   }
 }
