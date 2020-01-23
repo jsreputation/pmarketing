@@ -1,5 +1,4 @@
 <article class="snake-wrap" *ngIf="snakeData" [formGroup]="form">
-  <button (click)="revealImgGet()">Reveal Get Img Links</button>
   <header class="page-header full-with">
     <mat-form-field class="pagetitle-input" floatLabel="never">
       <input type="text" matInput formControlName="name" [placeholder]="'ENTER_TITLE_HERE' | translate">
@@ -176,6 +175,7 @@
             </p>
           </div>
           <perx-core-snake-game class="mobile-preview-plugin"
+          [enabled]="false"
           [targetUrl]="getImgLink(targetIcon, '')"
           [snakeHeadUrl]="getImgLink(snakeType, '')"
           [gameAreaUrl]="getImgLink(gameArea, '')">

@@ -8,7 +8,7 @@
       "fullImg": "global/assets/game/snake/snake_head1.png",
       "format": ".png",
       "active": "false",
-      "body": {
+      "imageParts": {
         "id": 1,
         "type": "snake1",
         "title": "icon",

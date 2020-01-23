@@ -1,9 +1,13 @@
 <div class="main-puzzle-container">
+  <div class="game-header">
+    <h1>{{game.texts.title}}</h1>
+    <h3>{{game.texts.subTitle}}</h3>
+  </div>
   <div class="game-wrapper">
     <div class="snake-wrapper">
       <perx-core-snake-game>
         [target]="config.targetImg"
-        [snake]="config.snakeColor"
+        [snake]="config.snakeTarget"
         [background]="config.backgroundColor"
       </perx-core-snake-game>
     </div>

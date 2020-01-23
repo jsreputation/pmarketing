@@ -16,7 +16,7 @@ export class Number2 {
   }
 }
 
-import {Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild, Output, EventEmitter, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild, Output, EventEmitter} from '@angular/core';
 import { getImageCors } from '../../utils/getImageCors';
 // https://codepen.io/mexitalian/pen/pNQgae // not very useful, not hammer js
 @Component({
@@ -24,7 +24,7 @@ import { getImageCors } from '../../utils/getImageCors';
   templateUrl: './snake.component.html',
   styleUrls: ['./snake.component.scss']
 })
-export class SnakeGameComponent implements OnChanges, OnInit {
+export class SnakeGameComponent implements OnChanges {
   private get canv(): HTMLCanvasElement { return this.canvasEl.nativeElement; }
 
   public get ctx(): CanvasRenderingContext2D {
@@ -36,11 +36,17 @@ export class SnakeGameComponent implements OnChanges, OnInit {
     return this.ctx_;
   }
   @Input()
+  private enabled: boolean = true;
+
+  // display related inputs
+  @Input()
   public targetUrl: string;
   @Input()
   public snakeHeadUrl: string;
   @Input()
   public gameAreaUrl: string;
+
+  // gameplay related inputs
   @Input()
   public rateOfExpansion: number = 3;
   @Input()
@@ -69,9 +75,14 @@ export class SnakeGameComponent implements OnChanges, OnInit {
   private velocity: Number2 = new Number2(0, 0);
   // speed
   private speed: number = 1;
-  private trail: Number2[] = [];
+  // just three values, rather than use map operations to create hardcodedly is more performant.
+  private trail: Number2[] = [
+    new Number2(this.snakePos.x - 1, this.snakePos.y),
+    new Number2(this.snakePos.x - 2, this.snakePos.y),
+    new Number2(this.snakePos.x - 3, this.snakePos.y)
+  ];
   // tail length
-  private tail: number = 5;
+  private tail: number = 4;
   private targetImgLoaded!: HTMLImageElement;
   private gameAreaImgLoaded!: HTMLImageElement;
   private snakeImgLoaded!: HTMLImageElement;
@@ -102,18 +113,12 @@ export class SnakeGameComponent implements OnChanges, OnInit {
     document.addEventListener('keydown', this.keyPush);
   }
 
-
   public ngOnChanges(changes: SimpleChanges): void {
     if ((changes.targetUrl && this.targetUrl)
       || (changes.snakeHeadUrl && this.snakeHeadUrl)
       || (changes.gameAreaUrl && this.gameAreaUrl)) {
       this.fillStyles();
-      console.log('i just want to know i am being called');
     }
-  }
-
-  public ngOnInit(): void {
-    console.log(this.targetImgLoaded, this.snakeImgLoaded, this.gameAreaUrl, 'ensure all 3 loaded');
   }
 
   private startAnimating(): void {
@@ -165,7 +170,7 @@ export class SnakeGameComponent implements OnChanges, OnInit {
     }
 
     // remove extra tail pieces, tail is what u have eaten, keep consistent
-    while (this.trail.length > this.tail) {
+    while (this.startedMoving && this.trail.length > this.tail) {
       this.trail.shift();
     }
 
@@ -219,59 +224,62 @@ export class SnakeGameComponent implements OnChanges, OnInit {
     this.snakeImgLoaded.onload = this.onloadCallBack.bind(this);
   }
 
+  // check boolean here necessary for touch controls, keyPush takes care of keyboard controls
   public down(): void {
-    if (this.velocity.y === 0) {
+    if (this.velocity.y === 0 && this.enabled) {
       this.velocity.x = 0;
       this.velocity.y = this.speed;
     }
   }
 
   public up(): void {
-    if (this.velocity.y === 0) {
+    if (this.velocity.y === 0 && this.enabled) {
       this.velocity.x = 0;
       this.velocity.y = -this.speed;
     }
   }
   public left(): void {
-    if (this.velocity.x === 0) {
+    if (this.velocity.x === 0 && this.enabled) {
       this.velocity.x = -this.speed;
       this.velocity.y = 0;
     }
   }
 
   public right(): void {
-    if (this.velocity.x === 0) {
+    if (this.velocity.x === 0 && this.enabled) {
       this.velocity.x = this.speed;
       this.velocity.y = 0;
     }
   }
 
   private keyPush(evt: KeyboardEvent): void {
-    switch (evt.key) {
-      case 'ArrowLeft':
-        if (!this.startedMoving) {
-          this.startedMoving = true;
-        }
-        this.left();
-        break;
-      case 'ArrowUp':
-        if (!this.startedMoving) {
-          this.startedMoving = true;
-        }
-        this.up();
-        break;
-      case 'ArrowRight':
-        if (!this.startedMoving) {
-          this.startedMoving = true;
-        }
-        this.right();
-        break;
-      case 'ArrowDown':
-        if (!this.startedMoving) {
-          this.startedMoving = true;
-        }
-        this.down();
-        break;
+    if (this.enabled) {
+      switch (evt.key) {
+        case 'ArrowLeft':
+          if (!this.startedMoving) {
+            this.startedMoving = true;
+          }
+          this.left();
+          break;
+        case 'ArrowUp':
+          if (!this.startedMoving) {
+            this.startedMoving = true;
+          }
+          this.up();
+          break;
+        case 'ArrowRight':
+          if (!this.startedMoving) {
+            this.startedMoving = true;
+          }
+          this.right();
+          break;
+        case 'ArrowDown':
+          if (!this.startedMoving) {
+            this.startedMoving = true;
+          }
+          this.down();
+          break;
+      }
     }
   }
 
