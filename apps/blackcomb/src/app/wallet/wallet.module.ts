@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { VouchersModule, PuzzlesModule } from '@perx/core';
 import { TranslateModule } from '@ngx-translate/core';
+import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 
 const routes: Routes = [{
   path: '',
@@ -21,6 +22,7 @@ const routes: Routes = [{
     RouterModule.forChild(routes),
     VouchersModule,
     TranslateModule,
+    InfiniteScrollModule,
     PuzzlesModule
   ]
 })
