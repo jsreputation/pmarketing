@@ -60,7 +60,7 @@ export class SnakeGameComponent implements OnChanges, OnDestroy {
   @Input()
   public targetsToWin: number = 5;
   @Input()
-  public fps: number = 40;
+  public fps: number = 10;
 
   @Output() public broken: EventEmitter<void> = new EventEmitter();
 
@@ -105,10 +105,11 @@ export class SnakeGameComponent implements OnChanges, OnDestroy {
   public startTime: number;
   public elapsed: number;
 
+  public startedMoving: boolean = false;
   public gameStop: boolean = false;
 
   public startAnimating(): void {
-    this.fpsInterval = 1000 / 5;
+    this.fpsInterval = 1000 / this.fps;
     this.then = window.performance.now();
     this.startTime = this.then;
     this.startGameAndRender();
@@ -150,17 +151,20 @@ export class SnakeGameComponent implements OnChanges, OnDestroy {
   }
 
   public checkGameOver(): boolean {
-    return this.checkCollisionWithWall() || this.checkCollisionWithWall();
+    return this.checkCollisionWithWall() || this.checkCollisionWithSelf();
   }
 
   private game(): void {
-    if (this.checkGameOver()) {
-      alert('you LOST');
-    }
+
     // update snake
     this.trail.push(new Number2(this.p.x, this.p.y));
-
+    // head is one step ahead, if a  is any part of the trail means it went back
     this.p.add(this.v);
+
+    if (this.checkGameOver() && this.startedMoving) {
+      console.log('LOSER!');
+      // then disable controls
+    }
 
     // remove extra tail pieces, tail is what u have eaten, keep consistent
     while (this.trail.length > this.tail) {
@@ -176,6 +180,7 @@ export class SnakeGameComponent implements OnChanges, OnDestroy {
         // end game
         this.broken.emit();
       }
+      // still this on top of me
       while (this.a.equals(this.p)) {
         this.a.randomize(this.tc);
       }
@@ -186,10 +191,10 @@ export class SnakeGameComponent implements OnChanges, OnDestroy {
     // render board
     this.ctx.drawImage(this.gameAreaImgLoaded, 0, 0, this.canv.width, this.canv.height);
     // render snake
-    this.ctx.fillStyle = this.ctx.createPattern(this.snakeImgLoaded as HTMLImageElement, 'repeat') || 'lime';
+    // maybe draw the head separately???
     // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < this.trail.length; i++) {
-      this.ctx.fillRect(this.trail[i].x * this.gs, this.trail[i].y * this.gs, this.gs - 2 , this.gs - 2);
+      this.ctx.drawImage(this.snakeImgLoaded, this.trail[i].x * this.gs, this.trail[i].y * this.gs, this.gs - 2 , this.gs - 2);
     }
     this.ctx.drawImage(this.targetImgLoaded, this.a.x * this.gs, this.a.y * this.gs, this.gs - 2, this.gs - 2);
 
@@ -247,15 +252,27 @@ export class SnakeGameComponent implements OnChanges, OnDestroy {
   private keyPush(evt: KeyboardEvent): void {
     switch (evt.key) {
       case 'ArrowLeft':
+        if (!this.startedMoving) {
+          this.startedMoving = true;
+        }
         this.left();
         break;
       case 'ArrowUp':
+        if (!this.startedMoving) {
+          this.startedMoving = true;
+        }
         this.up();
         break;
       case 'ArrowRight':
+        if (!this.startedMoving) {
+          this.startedMoving = true;
+        }
         this.right();
         break;
       case 'ArrowDown':
+        if (!this.startedMoving) {
+          this.startedMoving = true;
+        }
         this.down();
         break;
     }
