@@ -103,7 +103,7 @@ export class RewardHttpAdapter {
         termsAndCondition: data.attributes.terms_conditions,
         tags: data.attributes.tags,
         merchantId: data.attributes.organization_id,
-        currency: data.attributes.display_properties.currency,
+        currency: data.attributes.currency,
       },
       vouchers,
       displayProperties: data.attributes.display_properties,
@@ -125,9 +125,9 @@ export class RewardHttpAdapter {
         terms_conditions: data.rewardInfo.termsAndCondition,
         tags: data.rewardInfo.tags || [],
         organization_id: data.rewardInfo.merchantId,
+        currency: data.rewardInfo.currency,
         display_properties: {
           ...(data.displayProperties || {}),
-          currency: data.rewardInfo.currency,
           voucher_properties: {
             ...RewardHttpAdapter.getVoucherProperties(data),
             validity: {
