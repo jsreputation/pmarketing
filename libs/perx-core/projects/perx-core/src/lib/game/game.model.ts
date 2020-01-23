@@ -100,9 +100,11 @@ export interface ISpin {
 }
 
 export interface ISnake {
-  snakeColor: string;
-  targetImg: string;
-  backgroundColor: string;
+  snakeType: string; // snakeWholeImage copy colorCtrls
+  background: string;
+  targetIcon: string;
+  gameArea: string;
+  targetRequired: number;
 }
 
 export interface ITree {
