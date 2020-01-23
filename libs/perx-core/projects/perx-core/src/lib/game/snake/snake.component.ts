@@ -54,7 +54,7 @@ export class SnakeGameComponent implements OnChanges, OnDestroy {
   @Input()
   public colorSnake: string = 'lime';
   @Input()
-  public background: string;
+  public gameArea: string;
   @Input()
   public rateOfExpansion: number = 3;
   @Input()
@@ -88,7 +88,7 @@ export class SnakeGameComponent implements OnChanges, OnDestroy {
   // tail length
   private tail: number = 5;
   private targetImgLoaded!: HTMLImageElement;
-  private backgroundImgLoaded!: HTMLImageElement;
+  private gameAreaImgLoaded!: HTMLImageElement;
   private snakeImgLoaded!: HTMLImageElement;
 
   private TOTAL_IMAGES: number = 3;
@@ -136,7 +136,7 @@ export class SnakeGameComponent implements OnChanges, OnDestroy {
   public ngOnChanges(changes: SimpleChanges): void {
     if ((changes.target && this.target)
       || (changes.snake && this.snake)
-      || (changes.background && this.background)) {
+      || (changes.gameArea && this.gameArea)) {
       this.fillStyles();
     }
   }
@@ -184,7 +184,7 @@ export class SnakeGameComponent implements OnChanges, OnDestroy {
 
   public render(): void {
     // render board
-    this.ctx.drawImage(this.backgroundImgLoaded, 0, 0, this.canv.width, this.canv.height);
+    this.ctx.drawImage(this.gameAreaImgLoaded, 0, 0, this.canv.width, this.canv.height);
     // render snake
     this.ctx.fillStyle = this.ctx.createPattern(this.snakeImgLoaded as HTMLImageElement, 'repeat') || 'lime';
     // tslint:disable-next-line:prefer-for-of
@@ -210,10 +210,10 @@ export class SnakeGameComponent implements OnChanges, OnDestroy {
 
   private fillStyles(): void {
     this.targetImgLoaded = getImageCors(this.target);
-    this.backgroundImgLoaded = getImageCors(this.background);
+    this.gameAreaImgLoaded = getImageCors(this.gameArea);
     this.snakeImgLoaded = getImageCors(this.snake);
     this.targetImgLoaded.onload = this.onloadCallBack.bind(this);
-    this.backgroundImgLoaded.onload = this.onloadCallBack.bind(this);
+    this.gameAreaImgLoaded.onload = this.onloadCallBack.bind(this);
     this.snakeImgLoaded.onload = this.onloadCallBack.bind(this);
   }
 
