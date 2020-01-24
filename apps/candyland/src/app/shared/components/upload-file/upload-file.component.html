@@ -4,8 +4,10 @@
     <div class="upload-file-label">
       {{label}}
     </div>
-    <cl-download-button [file]="downloadFile"><span translate>BTN_DOWNLOAD_A_SAMPLE_FILE</span>
-    </cl-download-button>
+    <cs-download-button
+      [link]="downloadFile">
+      <span translate>BTN_DOWNLOAD_A_SAMPLE_FILE</span>
+    </cs-download-button>
   </div>
 
   <div class="upload-file-wrap"

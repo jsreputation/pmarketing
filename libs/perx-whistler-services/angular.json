@@ -16,15 +16,6 @@
             "project": "projects/perx-whistler-services/ng-package.json"
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/perx-whistler-services/src/test.ts",
-            "tsConfig": "projects/perx-whistler-services/tsconfig.spec.json",
-            "karmaConfig": "projects/perx-whistler-services/karma.conf.js",
-            "codeCoverage": false
-          }
-        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {

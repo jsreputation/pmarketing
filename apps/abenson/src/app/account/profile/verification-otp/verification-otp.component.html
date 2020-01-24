@@ -1,8 +1,8 @@
 <div class="page">
   <div class="body">
     <h1 class="title">Thank you for registering</h1>
-    <div class="mb24">Enter the 6-digit One-Time Password (OTP) sent to your mobile number ({{phoneDisplay}})</div>
-    <perx-core-pin-input [length]="4" (full)="update($event)"></perx-core-pin-input>
+    <div class="mb24">Enter the 5-digit One-Time Password (OTP) sent to your mobile number ({{phoneDisplay}})</div>
+    <perx-core-pin-input [length]="5" (full)="update($event)"></perx-core-pin-input>
     <div class="pslink" (click)="resendOtp()">Resend OTP</div>
     <button mat-flat-button type="submit" color="primary" class="full-width" [disabled]="!data || !data.otp"
       (click)="onSubmit()">Next</button>

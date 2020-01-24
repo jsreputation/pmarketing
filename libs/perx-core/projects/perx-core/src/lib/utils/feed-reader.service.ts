@@ -18,7 +18,7 @@ export interface FeedItem {
 export class FeedReaderService {
   constructor(private http: HttpClient) { }
 
-  public getFromUrl(url: string, useCorsProxy: boolean = false): Observable<FeedItem[]> {
+  public getFromUrl(url: string, useCorsProxy: boolean = true): Observable<FeedItem[]> {
     const querriedUrl = useCorsProxy ? `https://cors-proxy.perxtech.io/?url=${url}` : url;
     return this.http.get(querriedUrl, { responseType: 'text' })
       .pipe(

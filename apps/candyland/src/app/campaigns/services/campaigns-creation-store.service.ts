@@ -36,11 +36,11 @@ export class CampaignCreationStoreService {
       { title: 'CAMPAIGN.CAMPAIGN_LIMIT', value: 'campaign' }
     ],
     goals: [
-      { title: 'CAMPAIGN.BUILD_AWARE', value: 'Build awareness' },
-      { title: 'CAMPAIGN.ACQUIRE_CUST', value: 'Acquire customers' },
-      { title: 'CAMPAIGN.DRIVE_SALES', value: 'Drive sales' },
-      { title: 'CAMPAIGN.REENGAGE_AUD', value: 'Re-engage audience' },
-      { title: 'CAMPAIGN.SURPRISE_DELIGHT', value: 'Surprise & Delight' },
+      { title: 'CAMPAIGN.GOALS.BUILD_AWARE', value: 'Build awareness' },
+      { title: 'CAMPAIGN.GOALS.ACQUIRE_CUST', value: 'Acquire customers' },
+      { title: 'CAMPAIGN.GOALS.DRIVE_SALES', value: 'Drive sales' },
+      { title: 'CAMPAIGN.GOALS.REENGAGE_AUD', value: 'Re-engage audience' },
+      { title: 'CAMPAIGN.GOALS.SURPRISE_DELIGHT', value: 'Surprise & Delight' },
     ],
     days: [
       { title: 'S', value: 'sunday' },

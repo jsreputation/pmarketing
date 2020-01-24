@@ -1,8 +1,11 @@
 <header class="page-header">
   <h1 class="title">{{merchant?.firstName}} {{merchant?.lastName}}</h1>
   <div class="btn-group">
-    <cl-button (click)="close()" class="btn-cancel" classList="secondary">Close</cl-button>
-    <cl-button (click)="edit()" classList="primary cta cta-edit">Edit</cl-button>
+    <cs-button (click)="close()" class="btn-cancel" classList="secondary">Close</cs-button>
+    <cs-button (click)="edit()" classList="primary cs-btn-mobile">
+      <i class="cs-btn-mobile-icon icon edit-icon"></i>
+      Edit
+    </cs-button>
   </div>
 </header>
 <section class="content form-limiter">
