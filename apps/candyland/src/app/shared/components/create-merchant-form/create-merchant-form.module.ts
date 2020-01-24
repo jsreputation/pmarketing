@@ -8,7 +8,7 @@ import {
   MatSelectModule
 } from '@angular/material';
 import { CreateMerchantFormComponent } from './create-merchant-form.component';
-import { ButtonModule } from '../button/button.module';
+import { ButtonModule } from '@perx/candyshop';
 import { UploadGraphicModule } from '@cl-shared/components/upload-graphic/upload-graphic.module';
 import { UtilsModule } from '@perx/core';
 import { MerchantBranchComponent } from './merchant-branch/merchant-branch.component';

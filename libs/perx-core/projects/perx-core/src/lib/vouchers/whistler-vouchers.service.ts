@@ -4,7 +4,7 @@ import { Config } from '../config/config';
 import { IVoucherService } from './ivoucher.service';
 import { Observable, combineLatest, of } from 'rxjs';
 import { IVoucher, IGetVoucherParams, VoucherState } from './models/voucher.model';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, mergeMap, catchError } from 'rxjs/operators';
 import { RewardsService } from '../rewards/rewards.service';
 import { IReward, IRewardParams } from '../rewards/models/reward.model';
 
@@ -96,10 +96,6 @@ export class WhistlerVouchersService implements IVoucherService {
     });
   }
 
-  private getPage(page: number, size: number = 10): Observable<IJsonApiListPayload<IWAssignedAttributes>> {
-    return this.http.get<IJsonApiListPayload<IWAssignedAttributes>>(`${this.vouchersUrl}?page[number]=${page}&page[size]=${size}`);
-  }
-
   /**
    * @package
    */
@@ -145,7 +141,6 @@ export class WhistlerVouchersService implements IVoucherService {
 
   // @ts-ignore
   public issueReward(rewardId: number, sourceType?: string, locale: string = 'en', cardId?: number): Observable<IVoucher> {
-
     return this.http.post<IJsonApiItemPayload<IWPurchaseAttributes>>(`${this.config.apiHost}/voucher-service/purchase_requests`,
       {
         data: {
@@ -162,11 +157,35 @@ export class WhistlerVouchersService implements IVoucherService {
     );
   }
 
+  // @ts-ignore
+  public getFromPage(page: number, voucherParams?: IGetVoucherParams, locale?: string): Observable<IVoucher[]> {
+    const p: { [k: string]: string } = {};
+    if (oc(voucherParams).type() === 'active') {
+      p['filter[status]'] = 'issued';
+    }
+    return this.getPage(page, 10, p)
+      .pipe(
+        mergeMap(
+          (res: IJsonApiListPayload<IWAssignedAttributes>) => combineLatest(
+            ...res.data.map(v => this.getFullVoucher(v).pipe(catchError(() => of(void 0))))
+          )
+        ),
+        map((vs: (IVoucher | undefined)[]) => vs.filter(v => v !== undefined) as IVoucher[])
+      );
+  }
+
   private get vouchersUrl(): string {
     return `${this.config.apiHost}/voucher-service/vouchers`;
   }
-  // @ts-ignore
-  public getFromPage(page: number, voucherParams?: IGetVoucherParams, locale?: string): Observable<IVoucher[]> {
-    throw new Error('Method not implemented.');
+
+  private getPage(
+    page: number,
+    size: number = 10,
+    params: { [k: string]: string } = {}
+  ): Observable<IJsonApiListPayload<IWAssignedAttributes>> {
+    params['page[number]'] = page.toString();
+    params['page[size]'] = size.toString();
+
+    return this.http.get<IJsonApiListPayload<IWAssignedAttributes>>(this.vouchersUrl, { params });
   }
 }

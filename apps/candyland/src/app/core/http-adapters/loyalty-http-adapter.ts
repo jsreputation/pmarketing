@@ -134,7 +134,7 @@ export class LoyaltyHttpAdapter {
     if (data.included && data.included.length) {
       const d: IWRelationshipsDataType | null = relationshipsDataToItem(item.relationships.basic_tier.data);
       for (let i = 0; i <= data.included.length - 1; i++) {
-        if (d && d.id === data.included[i].id && d.type === data.included[i].type) {
+        if (d && 'id' in d && d.id === data.included[i].id && d.type === data.included[i].type) {
           const detailsAndConversionsFormGroup =
             LoyaltyHttpAdapter.getDetailsAndConversionsFormGroup(data.included[i].attributes, item.attributes);
           formLoyalty = {

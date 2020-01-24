@@ -10,10 +10,8 @@ import {
   MatTabsModule
 } from '@angular/material';
 import { ImagesPreviewModule } from '@cl-shared/components/images-preview/images-preview.module';
-import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { SelectGraphicModule } from '@cl-shared/components/select-graphic/select-graphic.module';
 import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wrap/select-graphic-wrap.module';
-import { InfoHintModule } from '@cl-shared/components/info-hint/info-hint.module';
 import { GameMobilePreviewModule } from '@cl-shared/components/game-mobile-preview/game-mobile-preview.module';
 
 import {
@@ -25,6 +23,7 @@ import { ConfirmModalModule } from '@cl-shared';
 import { NewInstantRewardManagePageComponent } from './containers/new-instant-reward-manage-page/new-instant-reward-manage-page.component';
 import { DirectivesModule } from '@cl-shared/directives/directives.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { ButtonModule, InfoHintModule } from '@perx/candyshop';
 
 @NgModule({
   declarations: [

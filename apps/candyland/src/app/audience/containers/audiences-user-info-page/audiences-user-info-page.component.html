@@ -1,8 +1,11 @@
 <section class="page-header">
   <h1 class="title">{{'AUDIENCE_FEATURE.AUDIENCES' | translate}}</h1>
-  <cl-button classList="primary cta cta-edit" (click)="openEditUserDialog()">
+  <cs-button
+    classList="primary cs-btn-mobile"
+    (click)="openEditUserDialog()">
+    <i class="cs-btn-mobile-icon icon edit-icon"></i>
     {{'BTN_EDIT' | translate}}
-  </cl-button>
+  </cs-button>
 </section>
 
 <cl-audiences-user-info [user]="user"></cl-audiences-user-info>
@@ -16,9 +19,9 @@
           <ng-container *clTableFilter="'rewardName'; let filter">
             <cl-search-filter class="search-block" [control]="filter"
                               [placeholder]="'AUDIENCE_FEATURE.SEARCH_VOUCHERS' | translate"></cl-search-filter>
-            <cl-button [classList]="'primary'" (click)="openSelectRewardPopup()">
+            <cs-button classList="primary" (click)="openSelectRewardPopup()">
               <span>{{'AUDIENCE_FEATURE.ISSUE_VOUCHER' | translate}}</span>
-            </cl-button>
+            </cs-button>
           </ng-container>
         </cl-table-filters>
 
@@ -37,9 +40,9 @@
     <mat-tab label="Communications" class="audience-list-content">
       <div class="audience-list-content">
         <div class="send-message-container">
-          <cl-button [classList]="'primary'" (click)="openSendMessagePopup()">
+          <cs-button [classList]="'primary'" (click)="openSendMessagePopup()">
             <span>{{'AUDIENCE_FEATURE.SEND_MESSAGE' | translate}}</span>
-          </cl-button>
+          </cs-button>
         </div>
         <div class="table-card">
           <!--table-->
@@ -56,7 +59,7 @@
     <mat-tab label="Loyalty" class="audience-list-content">
       <div class="audience-list-content">
         <div class="audience-list-loyalty-panel">
-          <cl-button classList="primary" (click)="openAddLoyaltyPopup()">Add Loyalty</cl-button>
+          <cs-button classList="primary" (click)="openAddLoyaltyPopup()">Add Loyalty</cs-button>
         </div>
         <!--table-->
         <div class="table-card" [ngSwitch]="loyaltyDataSource?.state$ | async">
