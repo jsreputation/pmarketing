@@ -20,6 +20,7 @@ import { WalletModule } from '../wallet/wallet.module';
 import { SharedModule } from '../shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatSelectModule, MatCheckboxModule, MatRadioModule } from '@angular/material';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { MatSelectModule, MatCheckboxModule, MatRadioModule } from '@angular/mat
     MatSelectModule,
     MatCheckboxModule,
     MatRadioModule,
-    LocationModule
+    LocationModule,
+    InfiniteScrollModule
   ]
 })
 export class LayoutModule { }
