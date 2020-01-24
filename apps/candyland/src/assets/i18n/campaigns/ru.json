@@ -104,6 +104,6 @@
     "AFTER_CAMPAIGN_STARTS": "после начала кампании",
     "NOT_COMPLETED_CAMPAIGN": "если пользователь не завершил кампанию.",
     "BEFORE_CAMPAIGN_ENDS_MESSAGE": "Сообщение перед окончанием кампании",
-    "": ""
+    "OUTCOMES": "Результаты"
   }
 }

@@ -26,6 +26,7 @@
             matInput
             [class.invalid]="isInvalid"
             [formControl]="limit">
+          <mat-error *ngIf="limit.hasError('min') && limit.touched"><span>{{'ERROR_MIN' | translate}} 1</span></mat-error>
         </mat-form-field>
       </div>
     </div>
@@ -43,6 +44,7 @@
           [class.invalid]="isInvalid"
           [formControl]="overWriteProb || probability">
         <span matSuffix>%</span>
+        <mat-error *ngIf="(overWriteProb || probability).hasError('min') && (overWriteProb || probability).touched"><span>{{'ERROR_MIN' | translate}} 1</span></mat-error>
       </mat-form-field>
     </div>
   </div>

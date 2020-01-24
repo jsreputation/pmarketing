@@ -1,11 +1,11 @@
 <!-- Stamps Rule-->
 <div class="stamps-limits-container" [formGroup]="limitData">
-  <mat-card class="card">
-    <div class="card-header">
+  <mat-expansion-panel class="card" expanded>
+    <mat-expansion-panel-header class="card-header">
       <h2 class="card-title">
         {{'CAMPAIGN.STAMPS_RULE' | translate}}
       </h2>
-    </div>
+    </mat-expansion-panel-header>
     <div class="card-content" formGroupName="stampsRule">
       <div class="card-row">
         <mat-checkbox color="primary" formControlName="sequence">
@@ -37,15 +37,15 @@
         </div>
       </div>
     </div>
-  </mat-card>
+  </mat-expansion-panel>
   <!--/ Stamps Rule-->
   <!--    limits-->
-  <mat-card class="card" formGroupName="limits">
-    <div class="card-header">
+  <mat-expansion-panel class="card" expanded formGroupName="limits">
+    <mat-expansion-panel-header class="card-header">
       <h2 class="card-title">
         {{'CAMPAIGN.LIMITS' | translate}}
       </h2>
-    </div>
+    </mat-expansion-panel-header>
     <div class="card-content">
       <div class="card-section">
         <div class="card-header">
@@ -126,18 +126,20 @@
         </div>
       </div>
     </div>
-  </mat-card>
+  </mat-expansion-panel>
   <!--/    limits-->
   <!--  Stamp Cards Validity-->
-  <mat-card class="card">
-    <div class="card-header">
+  <mat-expansion-panel expanded class="card">
+    <mat-expansion-panel-header class="card-header">
       <div class="row">
         <h3 class="card-title">
           {{'CAMPAIGN.STAMP_CARDS_VALIDITY' | translate}}
         </h3>
-        <mat-slide-toggle color="primary" formControlName="enableStampCardsValidity"></mat-slide-toggle>
+        <div class="toggle-slid">
+          <mat-slide-toggle color="primary" formControlName="enableStampCardsValidity"></mat-slide-toggle>
+        </div>
       </div>
-    </div>
+    </mat-expansion-panel-header>
     <div class="card-content">
       <div class="card-row input-group" formGroupName="stampCardsValidity">
         <span>
@@ -159,6 +161,6 @@
         </span>
       </div>
     </div>
-  </mat-card>
+  </mat-expansion-panel>
   <!--/  Stamp Cards Validity-->
 </div>

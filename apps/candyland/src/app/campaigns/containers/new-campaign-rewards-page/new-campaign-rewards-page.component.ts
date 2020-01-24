@@ -42,7 +42,7 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
     private formService: NewCampaignRewardsStampsFormService,
     private route: ActivatedRoute
   ) {
-    super(1, store, stepConditionService);
+    super(1.1, store, stepConditionService);
     this.initForm();
   }
 
