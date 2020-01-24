@@ -30,12 +30,17 @@ import {
   MatTableModule,
   MatProgressBarModule
 } from '@angular/material';
-import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
 import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter.module';
 import { TabsFilterModule } from '@cl-shared/table/tabs-filter/tabs-filter.module';
 import { RangeDatePickerFilterModule } from '@cl-shared/components/range-date-picker-filter/range-date-picker-filter.module';
-import { ButtonModule } from '@cl-shared/components/button/button.module';
+import {
+  ButtonModule,
+  CopyLinkModule,
+  DownloadLinkModule,
+  ProgressBarModule,
+  StatusLabelModule
+} from '@perx/candyshop';
 import {
   SeparateRangeDatePickerFilterModule
 } from '@cl-shared/table/separate-range-date-picker-filter/separate-range-date-picker-filter.module';
@@ -45,14 +50,11 @@ import { NewCampaignRewardsPageComponent } from './containers/new-campaign-rewar
 import { EngagementItemModule } from '@cl-shared/components/engagement-item/engagement-item.module';
 import { ItemListModule } from '@cl-shared/components/item-list/item-list.module';
 import { RewardItemComponent } from './components/reward-item/reward-item.component';
-import { ProgressBarModule } from '@cl-shared/components/progress-bar/progress-bar.module';
 import { DateTimePickerModule } from '@cl-shared/components/date-time-picker/date-time-picker.module';
 import { TimePickerModule } from '@cl-shared/components/time-picker/time-picker.module';
 import { DatePickerModule } from '@cl-shared/components/date-picker/date-picker.module';
 import { RewardItemPreviewComponent } from './components/reward-item-preview/reward-item-preview.component';
 import { SmsEditorModule } from '@cl-shared/components/sms-editor/sms-editor.module';
-import { CopyLinkModule } from '@cl-shared/components/copy-link/copy-link.module';
-import { DownloadLinkModule } from '@cl-shared/components/download-link/download-link.module';
 import { UploadFileModule } from '@cl-shared/components/upload-file/upload-file.module';
 import {
   NewCampaignSelectEngagementPageComponent

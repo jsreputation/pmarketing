@@ -10,11 +10,11 @@
   <mat-dialog-content>
     <div class="dialog-content add-loyalty-content">
       <div class="input-group add-loyalty-row">
-        <cl-button *ngIf="availableLoyaltyOptions?.length > 0"
+        <cs-button *ngIf="availableLoyaltyOptions?.length > 0"
                    [classList]="'tertiary ph-0'"
                    [matMenuTriggerFor]="addLoyaltyCartMenu">
           + {{'AUDIENCE_FEATURE.ADD_TO_LOYALTY_PROGRAM' | translate}}
-        </cl-button>
+        </cs-button>
       </div>
 
       <ng-container *ngFor="let loyaltyCard of loyaltyCards.controls; let index = index;">
@@ -54,19 +54,19 @@
     </div>
   </mat-dialog-content>
   <footer class="dialog-actions">
-    <cl-button classList="secondary"
+    <cs-button classList="secondary"
                class="actions-close"
                (click)="close()"
                [disableRipple]="true">
       <span>{{'BTN_CANCEL' | translate}}</span>
-    </cl-button>
+    </cs-button>
 
-    <cl-button classList="primary"
+    <cs-button classList="primary"
                (click)="save()"
                [disable]="loyaltyCards?.value?.length === 0"
                [disableRipple]="true">
       <span>{{'AUDIENCE_FEATURE.ADD_LOYALTY' | translate}}</span>
-    </cl-button>
+    </cs-button>
   </footer>
 </aside>
 

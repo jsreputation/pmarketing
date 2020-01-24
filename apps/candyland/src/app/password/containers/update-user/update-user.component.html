@@ -19,8 +19,8 @@
         <input matInput [placeholder]="'Enter password'" [type]="hide ? 'password' : 'text'" #password>
         <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
       </mat-form-field>
-      <cl-button [classList]="'primary btn-block'" class="btn-block" (click)="submit(password.value);">Submit
-      </cl-button>
+      <cs-button [classList]="'primary btn-block'" class="btn-block" (click)="submit(password.value);">Submit
+      </cs-button>
     </div>
     <p class="foot-msg">© 2019 Perx Technologies. All rights reserved.</p>
   </div>

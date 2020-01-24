@@ -1,4 +1,9 @@
-<div class="tab-group__content">
+<div class="tab-group__content"
+  infiniteScroll 
+  [infiniteScrollDistance]="2" 
+  [infiniteScrollThrottle]="500"
+  (scrolled)="onScroll()" 
+  [scrollWindow]="false">
   <perx-core-puzzle-list *ngIf="campaignId" [campaignId]="campaignId" [repeatGhostCount]="1"
     [puzzleTextFn]="puzzleTextFn" [titleFn]="titleFn" (selected)="selected($event)">
   </perx-core-puzzle-list>
