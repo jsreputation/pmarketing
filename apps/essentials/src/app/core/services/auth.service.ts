@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthHttpService } from '@es-core/http-services/auth-http.service';
+import { AuthHttpService } from '@perx/whistler-services';
 import { parseJwt } from '@es-helpers/parse-jwt';
 import { Observable, of } from 'rxjs';
 import { map, tap, switchMap, filter, catchError } from 'rxjs/operators';
@@ -55,7 +55,7 @@ export class AuthService {
   }
 
   public signIn(data: ILogin): Observable<IJsonApiItemPayload<IWIAMUserAttributes>> {
-    const sendData = AuthHttpAdapter.transformFromLogin(data);
+    const sendData: any = AuthHttpAdapter.transformFromLogin(data);
     return this.http.signIn(sendData).pipe(
       tap((res: any) => {
         const tokenString: string | null = res.headers.get('authorization');
@@ -101,8 +101,8 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
-  public resetPassword(username: string): Observable<any> {
-    return this.http.resetPassword(username);
+  public resetPassword(accountId: string, username: string): Observable<any> {
+    return this.http.resetPassword(accountId, username);
   }
 
   public changePassword(password: string, token: string): Observable<any> {
