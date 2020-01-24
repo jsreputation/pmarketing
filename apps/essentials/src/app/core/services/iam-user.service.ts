@@ -7,7 +7,7 @@ import { IAMUser } from '../models/auth/IAMUser.interface';
 import { IamUserHttpAdapter } from '../http-adapters/iam-user-http-adapter';
 import { HttpParamsParser } from '@es-helpers/http-params-parser';
 import { ITableService } from '../models/table-service-interface';
-import { IamUserHttpService } from '../http-services/iam-user-http.service';
+import { IamUserHttpService } from '@perx/whistler-services';
 
 @Injectable({
   providedIn: 'root'

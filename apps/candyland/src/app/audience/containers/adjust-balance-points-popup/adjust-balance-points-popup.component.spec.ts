@@ -4,11 +4,12 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { AdjustBalancePointsPopupComponent } from './adjust-balance-points-popup.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatDialogRef, MatDialogModule, MAT_DIALOG_DATA, MatIconModule, MatDatepickerModule } from '@angular/material';
-import { DatePickerModule, ButtonModule } from '@cl-shared';
+import { DatePickerModule } from '@cl-shared';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
+import { ButtonModule } from '@perx/candyshop';
 
 describe('AdjustBalancePointsPopupComponent', () => {
   let component: AdjustBalancePointsPopupComponent;

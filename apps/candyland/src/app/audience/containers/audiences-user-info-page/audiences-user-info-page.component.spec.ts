@@ -6,7 +6,8 @@ import {
 } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
-import { TableFiltersModule, SearchFilterModule, ButtonModule, PaginationModule, StatusLabelModule, PipesModule } from '@cl-shared';
+import { TableFiltersModule, SearchFilterModule, PaginationModule, PipesModule } from '@cl-shared';
+import { ButtonModule, StatusLabelModule } from '@perx/candyshop';
 import { TabsFilterModule } from '../../../shared/table/tabs-filter/tabs-filter.module';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';

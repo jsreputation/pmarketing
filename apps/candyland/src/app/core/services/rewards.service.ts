@@ -22,11 +22,10 @@ import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.int
   providedIn: 'root'
 })
 export class RewardsService implements ITableService<IRewardEntity> {
-
-  constructor(private rewardHttp: RewardHttpService,
-              private http: HttpClient,
-              ) {
-  }
+  constructor(
+    private rewardHttp: RewardHttpService,
+    private http: HttpClient,
+  ) { }
 
   public getTableData(params: HttpParamsOptions): Observable<ITableData<IRewardEntity>> {
     params.include = 'organization';
@@ -88,9 +87,7 @@ export class RewardsService implements ITableService<IRewardEntity> {
     return this.rewardHttp.getRewardTierList(1, id)
       .pipe(
         map((data: IJsonApiListPayload<IWTierRewardCostsAttributes>) => {
-          const listQuery: Observable<IJsonApiListPayload<IWTierRewardCostsAttributes>>[] = [
-            of(data)
-          ];
+          const listQuery: Observable<IJsonApiListPayload<IWTierRewardCostsAttributes>>[] = [of(data)];
           if (!data.meta || data.meta.page_count <= 1) {
             for (let index = 2; index <= data.meta.page_count; index++) {
               listQuery.push(this.getRewardTierPage(index, id));
@@ -121,14 +118,13 @@ export class RewardsService implements ITableService<IRewardEntity> {
     return this.rewardHttp.createRewardTier(loyaltyCostValue);
   }
 
-  public patchRewardTier(tier: ILoyaltyTiersFormGroup, id: string)
-    : Observable<IJsonApiItem<IWTierRewardCostsAttributes>> {
+  public patchRewardTier(tier: ILoyaltyTiersFormGroup, id: string): Observable<IJsonApiItem<IWTierRewardCostsAttributes>> {
     const loyaltyCostValue = { id, ...RewardHttpAdapter.transformFromLoyaltyForm(tier, id) };
 
     return this.rewardHttp.patchRewardTier(loyaltyCostValue);
   }
 
-  public deleteRewardTier(tier: ILoyaltyTiersFormGroup | IBasicTier): Observable<any> {
+  public deleteRewardTier(tier: ILoyaltyTiersFormGroup | IBasicTier): Observable<void> {
     // const loyaltyCostValue = RewardHttpAdapter.transformFromLoyaltyForm(tier, '0');
     return this.rewardHttp.deleteRewardTier(tier.tierRewardCostsId);
   }
@@ -140,5 +136,4 @@ export class RewardsService implements ITableService<IRewardEntity> {
   private prepareTransformationLoyaltyCost(data: any[]): ITierRewardCost[] {
     return data.map((item) => RewardHttpAdapter.transformToLoyaltyCost(item));
   }
-
 }

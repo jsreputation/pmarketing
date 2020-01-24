@@ -2,7 +2,7 @@
   <header class="dialog-header-wrap">
     <h2 class="dialog-title"
         id="dialogTitle-tierSetup">{{(data?.rule ? 'LOYALTY_FEATURE.EDIT_RULE' : 'LOYALTY_FEATURE.ADD_RULE') | translate}}</h2>
-    <button class="dialog-closed btn-transparent" [mat-dialog-close]="false">
+    <button class="dialog-closed cs-btn-transparent" [mat-dialog-close]="false">
       <mat-icon>close</mat-icon>
     </button>
   </header>
@@ -20,7 +20,7 @@
       <div class="row">
         <!--           *ngIf="!first || conditions.controls.length > 1">-->
         <label class="loyalty-label">{{(!first ? 'LOYALTY_FEATURE.AND' : '') | translate}}</label>
-        <button class="question-remove btn-transparent"
+        <button class="question-remove cs-btn-transparent"
                 *ngIf="conditions.controls.length > 1"
                 (click)="deleteCondition(index)">
           <i class="icon delete"></i>
@@ -52,14 +52,14 @@
 
     <br>
 
-    <cl-button *ngIf="isHideAddCondition"
+    <cs-button *ngIf="isHideAddCondition"
                [classList]="'tertiary'"
                mat-icon-button
                [matMenuTriggerFor]="addConditionMenu">
         <span>
          {{'LOYALTY_FEATURE.ADD_CONDITION' | translate}}
         </span>
-    </cl-button>
+    </cs-button>
 
     <mat-menu #addConditionMenu="matMenu">
       <ng-container *ngFor="let conditionOption of conditionTypes">
@@ -92,7 +92,7 @@
     </ng-container>
   </div>
   <footer class="dialog-actions">
-    <cl-button classList="tertiary"
+    <cs-button classList="tertiary"
                class="actions-close"
                [disable]="loading"
                (click)="close()"
@@ -100,15 +100,15 @@
         <span>
           {{'BTN_CANCEL' | translate}}
         </span>
-    </cl-button>
+    </cs-button>
 
-    <cl-button classList="primary"
+    <cs-button classList="primary"
                [disable]="loading"
                (click)="apply()">
         <span>
           {{(data?.rule ? 'BTN_APPLY' : 'BTN_SAVE') | translate}}
         </span>
-    </cl-button>
+    </cs-button>
   </footer>
 </aside>
 

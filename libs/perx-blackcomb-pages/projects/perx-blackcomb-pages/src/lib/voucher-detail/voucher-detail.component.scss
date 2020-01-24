@@ -10,11 +10,12 @@
     height: 100%;
     flex: 1;
     overflow-y: scroll;
+    background-color: var(--background);
   }
 
   .actions-container {
     padding: 1rem 1.2rem;
-    background-color: white;
+    background-color: var(--surface_colour);
   }
 }
 
