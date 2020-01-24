@@ -8,17 +8,15 @@ import { IProfile } from '../../profile/profile.model';
 import {
   ISignUpData,
   IChangePasswordData,
-  IChangePhoneData
+  IChangePhoneData,
+  IResetPasswordData,
 } from '../authentication/models/authentication.model';
 import { IWAppAccessTokenResponse, IWLoginResponse } from '@perx/whistler';
 import { ProfileService } from '../../profile/profile.service';
 import { Config } from '../../config/config';
 import { IV4ProfileResponse, V4ProfileService } from '../../profile/v4-profile.service';
 import { TokenStorage } from '../../utils/storage/token-storage.service';
-import {
-  IMessageResponse,
-  IResetPasswordData,
-} from '../../perx-core.models';
+import { IMessageResponse } from '../../perx-core.models';
 import { oc } from 'ts-optchain';
 
 interface IV4SignUpData {

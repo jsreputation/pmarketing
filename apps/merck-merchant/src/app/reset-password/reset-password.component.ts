@@ -7,55 +7,52 @@ import {
   FormBuilder,
   FormGroup,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router,
+} from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { mergeMap } from 'rxjs/operators';
-
 import {
-  AuthenticationService,
   NotificationService,
-  ProfileService,
-  IProfile,
   IMerchantAdminService,
+  AuthenticationService,
 } from '@perx/core';
 
-import {
-  PageAppearence,
-  PageProperties,
-  BarSelectedItem,
-} from '../page-properties';
+interface ResetData {
+  resetPasswordToken: string;
+  clientId: string;
+}
 
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.scss']
 })
-export class ResetPasswordComponent implements OnInit, PageAppearence {
+export class ResetPasswordComponent implements OnInit {
 
   public resetPasswordForm: FormGroup;
   public mobileNumber: string = '';
   public otp: string = '';
   public errorMessage: string | null = null;
 
-  constructor(
-    private router: Router,
-    private fb: FormBuilder,
-    private authService: AuthenticationService,
-    private merchantAdminService: IMerchantAdminService,
-    private profileService: ProfileService,
-    private notificationService: NotificationService
-  ) {
-    const currentNavigation = this.router.getCurrentNavigation();
-    if (!currentNavigation) {
-      return;
-    }
+  private resetData: ResetData = {
+    resetPasswordToken: '',
+    clientId: '',
+  };
 
-    // todo: the following block does not seem like it would trigger
-    if (currentNavigation.extras.state) {
-      this.mobileNumber = currentNavigation.extras.state.mobileNo;
-      this.otp = currentNavigation.extras.state.otp;
-    }
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private merchantAdminService: IMerchantAdminService,
+    private notificationService: NotificationService,
+    private activatedRoute: ActivatedRoute,
+    private authService: AuthenticationService,
+  ) {
+    const queryParams = this.activatedRoute.snapshot.queryParams;
+    const { reset_password_token, client_id } = queryParams;
+    this.resetData.resetPasswordToken = reset_password_token || '';
+    this.resetData.clientId = client_id || '';
   }
 
   public ngOnInit(): void {
@@ -63,24 +60,13 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
   }
 
   private initForm(): void {
-
     this.resetPasswordForm = this.fb.group({
       password: ['', Validators.required],
       confirmPassword: ['', Validators.required],
     });
   }
 
-  public getPageProperties(): PageProperties {
-    return {
-      header: true,
-      backButtonEnabled: true,
-      bottomSelectedItem: BarSelectedItem.NONE,
-      pageTitle: ''
-    };
-  }
-
-  public onUpdatePassword(): void {
-
+  public onSubmit(): void {
     const password = this.resetPasswordForm.value.password as string;
     const confirmPassword = this.resetPasswordForm.value.confirmPassword as string;
     if (password !== confirmPassword) {
@@ -88,33 +74,18 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
       return;
     }
 
-    this.profileService.whoAmI().pipe(
-      mergeMap((profile: IProfile) => {
-        this.mobileNumber = profile.phone || '';
-        return this.merchantAdminService.resetPassword({
-          phone: this.mobileNumber,
-          newPassword: password,
-          otp: this.otp,
-          passwordConfirmation: confirmPassword
-        });
-      })
-    ).subscribe(
-      () => {
-        // Send Login Call on successfull password reset
-        this.sendLoginCall(password);
-      },
-      err => {
-        console.error('ResetPassword: ' + err);
-        if (err instanceof HttpErrorResponse) {
-          this.notificationService.addSnack(err.statusText);
-        } else {
-          this.notificationService.addSnack(err.code);
-        }
-      });
+    this.merchantAdminService.resetPassword({
+      clientId: this.resetData.clientId,
+      resetPasswordToken: this.resetData.resetPasswordToken,
+      password,
+    }).subscribe(
+      () => this.sendLoginCall(password),
+      (err: HttpErrorResponse) => this.notificationService.addSnack(err.error.message)
+    );
   }
 
   private sendLoginCall(password: string): void {
-    this.authService.login(this.mobileNumber, password).subscribe(
+    this.authService.login(this.resetData.clientId, password).subscribe(
       () => {
         // set global userID var for GA tracking
         if (!((window as any).primaryIdentifier)) {
@@ -134,5 +105,4 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
       }
     );
   }
-
 }

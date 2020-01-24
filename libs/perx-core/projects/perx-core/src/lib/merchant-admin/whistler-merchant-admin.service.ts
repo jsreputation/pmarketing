@@ -9,14 +9,12 @@ import {
   IMerchantAdminTransaction,
   IMerchantProfile,
   IMerchantTransactionHistory,
+  IResetPasswordData,
 } from './models/merchants-admin.model';
 import { IMerchantAdminService } from './imerchant-admin.service';
 
 import { IVoucher } from '../vouchers/models/voucher.model';
-import {
-  IMessageResponse,
-  IResetPasswordData,
-} from '../perx-core.models';
+import { IMessageResponse } from '../perx-core.models';
 
 @Injectable({
   providedIn: 'root'

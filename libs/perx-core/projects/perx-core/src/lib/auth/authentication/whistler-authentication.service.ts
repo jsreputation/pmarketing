@@ -8,7 +8,8 @@ import { AuthenticationService } from './authentication.service';
 import {
   ISignUpData,
   IChangePasswordData,
-  IChangePhoneData
+  IChangePhoneData,
+  IResetPasswordData,
 } from './models/authentication.model';
 import { Config } from '../../config/config';
 import {
@@ -19,10 +20,7 @@ import {
   IJsonApiItem,
 } from '@perx/whistler';
 import { TokenStorage } from '../../utils/storage/token-storage.service';
-import {
-  IMessageResponse,
-  IResetPasswordData,
-} from '../../perx-core.models';
+import { IMessageResponse } from '../../perx-core.models';
 
 interface IUserJWTRequest {
   identifier: string;

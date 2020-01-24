@@ -17,7 +17,8 @@ import {
   IMerchantCustomProperties,
   MerchantTransactionDetailType,
   IMerchantPurchaseTransactionHistory,
-  IMerchantRewardTransactionHistory
+  IMerchantRewardTransactionHistory,
+  IResetPasswordData
 } from './models/merchants-admin.model';
 
 import { Config } from '../config/config';
@@ -32,7 +33,6 @@ import {
 } from '../vouchers/models/voucher.model';
 import {
   IMessageResponse,
-  IResetPasswordData,
   RedemptionType,
 } from '../perx-core.models';
 
@@ -397,13 +397,12 @@ export class V4MerchantAdminService implements IMerchantAdminService {
   }
 
   public resetPassword(resetPasswordInfo: IResetPasswordData): Observable<IMessageResponse> {
-    return this.http.patch<IMessageResponse>(
-      `${this.merchantEndPoint}/reset_password`,
+    return this.http.post<IMessageResponse>(
+      `${this.apiHost}/v4/merchant_admin/reset_password`,
       {
-        phone: resetPasswordInfo.phone,
-        password: resetPasswordInfo.newPassword,
-        password_confirmation: resetPasswordInfo.passwordConfirmation,
-        confirmation_token: resetPasswordInfo.otp
+        client_id: resetPasswordInfo.clientId,
+        reset_password_token: resetPasswordInfo.resetPasswordToken,
+        password: resetPasswordInfo.password,
       }
     );
   }

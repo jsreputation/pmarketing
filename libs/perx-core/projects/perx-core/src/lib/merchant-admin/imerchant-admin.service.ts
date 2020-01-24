@@ -4,13 +4,11 @@ import {
   IMerchantAdminTransaction,
   IMerchantProfile,
   IMerchantTransactionHistory,
+  IResetPasswordData,
 } from './models/merchants-admin.model';
 
 import { IVoucher } from '../vouchers/models/voucher.model';
-import {
-  IMessageResponse,
-  IResetPasswordData,
-} from '../perx-core.models';
+import { IMessageResponse } from '../perx-core.models';
 
 export abstract class IMerchantAdminService {
   public abstract createTransaction(userId: number, merchantUsername: string, amount: number, currency: string,

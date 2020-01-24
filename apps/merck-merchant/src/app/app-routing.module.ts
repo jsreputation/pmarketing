@@ -31,7 +31,7 @@ const routes: Routes = [
   },
   { path: 'login', component: LoginComponent },
   { path: 'forgot', component: ForgotPasswordComponent },
-  { path: 'reset', component: ResetPasswordComponent },
+  { path: 'merchant_admin/validate_reset_password_token', component: ResetPasswordComponent },
   { path: 'dashboard/merchant_user_account_invitations/accept', component: RegisterComponent }
 ];
 

@@ -14,7 +14,6 @@ export {
 export {
   RedemptionType,
   IMessageResponse,
-  IResetPasswordData,
 } from './lib/perx-core.models';
 
 /**
