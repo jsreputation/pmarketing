@@ -26,7 +26,14 @@ import Utils from '../../utils';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DatePickerComponent extends CsFormFieldControl<any> implements OnInit, OnDestroy, ControlValueAccessor {
-  // @Input()
+  @Input() public minDayPeriod: number = 1;
+  @Input() public set min(value: Date | null) {
+    this.minDate = value ? this.getNextDay(value) : null;
+  }
+  @Input() public set max(value: Date | null) {
+    this.maxDate = value ? this.getPreviousDay(value) : null;
+  }
+  @Input() public clickable: boolean = true;
   public datePickerControl: AbstractControl = new FormControl(null, []);
   public minDate: Date | null = null;
   public maxDate: Date | null = null;
@@ -39,14 +46,6 @@ export class DatePickerComponent extends CsFormFieldControl<any> implements OnIn
   // }
 
   @ViewChild('datePicker', {static: false}) public datePicker: MatDatepicker<Date>;
-  @Input() public minDayPeriod: number = 1;
-  @Input() public set min(value: Date | null) {
-    this.minDate = value ? this.getNextDay(value) : null;
-  }
-  @Input() public set max(value: Date | null) {
-    this.maxDate = value ? this.getPreviousDay(value) : null;
-  }
-  @Input() public clickable: boolean = true;
 
   private onChange: any = noop;
   private onTouched: any = noop;

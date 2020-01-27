@@ -118,8 +118,17 @@
 <!--  </cs-separate-range-date-picker>-->
 
 <!--  <h2>Time Picker</h2>-->
-<!--  <cs-time-picker [disabled]="disabled">-->
-<!--  </cs-time-picker>-->
+<mat-form-field>
+  <cs-time-picker
+    [formControl]="newFromControl"
+    placeholder="input value"
+    [disabled]="disabled">
+  </cs-time-picker>
+  <button mat-icon-button matSuffix>
+    <mat-icon>keyboard_arrow_down</mat-icon>
+  </button>
+</mat-form-field>
+
 
 <!--  <h2>Tag List</h2>-->
 <!--  <cs-tag-list [disabled]="disabled">-->
