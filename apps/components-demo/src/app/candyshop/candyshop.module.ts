@@ -37,7 +37,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { UPLOAD_FILE_URL } from '../../../../../libs/perx-candyshop/projects/perx-candyshop/src/lib/upload-file/upload-file.module';
 import { CandyshopFileUploaderComponent } from './candyshop-file-uploader/candyshop-file-uploader.component';
 import { CandyshopGraphicUploaderComponent } from './candyshop-graphic-uploader/candyshop-graphic-uploader.component';
-import { MatCheckboxModule, MatFormFieldModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatSelectModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
@@ -88,7 +88,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     StatisticsProgressBarModule,
     MatIconModule,
     MatFormFieldModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatDatepickerModule
   ]
 })
 export class CandyshopModule {

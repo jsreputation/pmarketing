@@ -1,4 +1,4 @@
-<mat-checkbox [(ngModel)]="disadled">disadled</mat-checkbox>
+<mat-checkbox [(ngModel)]="disabled">disadled</mat-checkbox>
 
 <!--<h2>Upload File</h2>-->
 
@@ -6,7 +6,7 @@
 <mat-form-field floatLabel="always" appearance="standard">
   <mat-label><span>Label</span></mat-label>
   <cs-upload-file
-    [disabled]="disadled"
+    [disabled]="disabled"
     [formControl]="control1"
     (dropFile)="log($event)"
     (uploadActions)="log($event)"
@@ -25,7 +25,7 @@
 <mat-form-field floatLabel="always" appearance="standard">
   <mat-label>Label</mat-label>
   <cs-upload-file
-    [disabled]="disadled"
+    [disabled]="disabled"
     (dropFile)="log($event)"
     (uploadActions)="log($event)"
     (deleteFile)="log($event)">
@@ -37,7 +37,7 @@
 <h2>control</h2>
 <cs-upload-file
   placeholder="sdfsdfsdgfsfg sdfsd"
-  [disabled]="disadled"
+  [disabled]="disabled"
   [formControl]="control2"
   (dropFile)="log($event)"
   (uploadActions)="log($event)"
@@ -50,7 +50,7 @@
 
 <h2>simple</h2>
 <cs-upload-file
-  [disabled]="disadled"
+  [disabled]="disabled"
   placeholder="placeholder"
   (dropFile)="log($event)"
   (uploadActions)="log($event)"

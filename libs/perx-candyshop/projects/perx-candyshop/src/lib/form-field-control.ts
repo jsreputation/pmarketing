@@ -1,13 +1,8 @@
-import {
-  ElementRef,
-  HostBinding,
-  HostListener,
-  Input,
-  Optional
-} from '@angular/core';
+import { ElementRef, HostBinding, Input, Optional } from '@angular/core';
 import { Subject } from 'rxjs';
 import { FormControl, NgControl } from '@angular/forms';
 import { MatFormFieldControl } from '@angular/material/form-field';
+import Utils from '../utils';
 
 let nextUniqueId = 0;
 
@@ -31,10 +26,8 @@ export class CsFormFieldControl<T> implements MatFormFieldControl<T> {
     this.describedBy = ids.join(' ');
   }
 
-  @HostListener('blur', ['false'])
-  @HostListener('focus', ['true'])
   public focusChanged(isFocused: boolean): void {
-    if (isFocused !== this.focused && !this.protectedReadonly) {
+    if (isFocused !== this.focused && !this.protectedReadonly && !this.disabled) {
       this.focused = isFocused;
       this.stateChanges.next();
     }
@@ -113,11 +106,11 @@ export class CsFormFieldControl<T> implements MatFormFieldControl<T> {
 
   public set value(newValue: T) {
     // tslint:disable-next-line:no-accessor-recursion
-    if (this.value === newValue) {
+    if (Utils.isEqual(this.protectedValue, newValue) || Utils.isEqual(newValue, this.value)) {
       return;
     }
     if (this.control) {
-      this.control.patchValue(newValue);
+      this.control.patchValue(newValue, {emitEvent: false});
     }
     if (this.element) {
       this.element.value = newValue;
@@ -130,20 +123,22 @@ export class CsFormFieldControl<T> implements MatFormFieldControl<T> {
     return !this.value;
   }
 
-  @HostBinding('class.mat-form-field-should-float')
   public get shouldLabelFloat(): boolean {
-    return this.focused || !this.empty || this.placeholder !== undefined;
+    return this.focused || !this.empty;
   }
 
   public get errorState(): boolean {
     if (this.control) {
-      return this.control.hasError && this.control.touched;
+      return this.control.invalid && this.control.touched;
     }
     return this.protectedErrorState;
   }
 
   public set errorState(value: boolean) {
     this.protectedErrorState = !!value;
+  }
+
+  public onContainerClick = (): void => {
   }
 
   public get element(): any {
@@ -163,8 +158,5 @@ export class CsFormFieldControl<T> implements MatFormFieldControl<T> {
     }
     this.protectedUid = `${this.controlType}-${nextUniqueId++}`;
     this.id = this.id;
-  }
-
-  public onContainerClick = (): void => {
   }
 }

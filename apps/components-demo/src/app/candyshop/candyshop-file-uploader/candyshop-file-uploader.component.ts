@@ -9,7 +9,7 @@ import { FormControl, Validators } from '@angular/forms';
 export class CandyshopFileUploaderComponent {
   public control1: FormControl = new FormControl(null, Validators.required);
   public control2: FormControl = new FormControl(null, Validators.required);
-  public disadled: boolean = false;
+  public disabled: boolean = false;
 
   public log(message: any): void {
     alert(message);

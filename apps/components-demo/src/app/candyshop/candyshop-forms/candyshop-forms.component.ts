@@ -1,11 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { DatePickerComponent } from '@perx/candyshop';
 
 @Component({
   selector: 'app-candyshop-forms',
   templateUrl: './candyshop-forms.component.html',
   styleUrls: ['./candyshop-forms.component.scss']
 })
-export class CandyshopFormsComponent {
+export class CandyshopFormsComponent implements OnInit, OnDestroy {
+  @ViewChild('d', {static: false}) public datePicker: DatePickerComponent;
+  public disabled: boolean = false;
+  public appearance: string;
+  public newFromControl: FormControl = new FormControl(null, [Validators.required, Validators.min(3)]);
+  public newFromControl2: FormControl = new FormControl(null, [Validators.required, Validators.min(3)]);
+  public newFromControl3: FormControl = new FormControl(null, [Validators.required, Validators.min(3)]);
+  private destroy$: Subject<void> = new Subject();
+
   public statistics: { type: string, value: number }[] = [
     {type: 'first', value: 200},
     {type: 'second', value: 500},
@@ -22,5 +34,23 @@ export class CandyshopFormsComponent {
 
   public log(message: any): void {
     alert(message);
+  }
+
+  public ngOnInit(): void {
+    this.newFromControl.valueChanges
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe(data =>
+        console.log('wrapper:', data, this.newFromControl));
+  }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  public open(): void {
+    this.datePicker.open();
   }
 }

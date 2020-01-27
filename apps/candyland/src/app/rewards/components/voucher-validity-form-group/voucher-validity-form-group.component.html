@@ -10,21 +10,56 @@
 <!-- Voucher Validity Period-->
 <div class="card-row card-row-date" *ngIf="formGroup.get('period').enabled && formGroup.get('issuanceDate').disabled">
   <div class="input-group">
-    <cl-date-picker [formControl]="formGroup.get('period.startDate')"
-                    [max]="formGroup.get('period.endDate').value"></cl-date-picker>
-    <mat-error *ngIf="formGroup.get('period.startDate').touched && formGroup.get('period.startDate').hasError('required')">required</mat-error>
+    <mat-form-field>
+      <cs-date-picker [formControl]="formGroup.get('period.startDate')"
+                      class="date-picker"
+                      [max]="formGroup.get('period.endDate').value">
+      </cs-date-picker>
+        <button mat-icon-button matSuffix>
+          <i class="icon full-with date-icon"></i>
+        </button>
+      <mat-error
+        *ngIf="formGroup.get('period.startDate').touched && formGroup.get('period.startDate').hasError('required')">
+        required
+      </mat-error>
+    </mat-form-field>
     <cl-time-picker [formControl]="formGroup.get('period.startTime')"></cl-time-picker>
-    <mat-error *ngIf="formGroup.get('period.startTime').touched && formGroup.get('period.startTime').hasError('required')">required</mat-error>
+    <mat-error
+      *ngIf="formGroup.get('period.startTime').touched && formGroup.get('period.startTime').hasError('required')">
+      required
+    </mat-error>
   </div>
   <span translate="">TO</span>
   <div class="input-group">
+    <mat-form-field>
+    <cs-date-picker class="date-picker"
+                    [formControl]="formGroup.get('period.endDate')"
+                    placeholder="Choose date"
+                    [min]="formGroup.get('period.startDate').value">
+    </cs-date-picker>
+      <button matSuffix mat-icon-button>
+        <mat-icon>
+          <i class="icon full-with date-icon"></i>
+        </mat-icon>
+      </button>
+<!--    <button mat-icon-button matSuffix>-->
+<!--      <i class="icon full-with date-icon"></i>-->
+<!--    </button>-->
+    <mat-error
+      *ngIf="formGroup.get('period.endDate').touched && formGroup.get('period.endDate').hasError('required')">
+      required
+    </mat-error>
+    </mat-form-field>
+
     <cl-date-picker [formControl]="formGroup.get('period.endDate')"
-                    [min]="formGroup.get('period.startDate').value"></cl-date-picker>
+                    [min]="formGroup.get('period.startDate').value">
+    </cl-date-picker>
     <mat-error *ngIf="formGroup.get('period.endDate').touched && formGroup.get('period.endDate').hasError('required')">required</mat-error>
     <cl-time-picker [formControl]="formGroup.get('period.endTime')"></cl-time-picker>
     <mat-error *ngIf="formGroup.get('period.endTime').touched && formGroup.get('period.endTime').hasError('required')">required</mat-error>
   </div>
-  <mat-checkbox color="primary" [formControl]="formGroup.get('period.disabledEndDate')"><span translate>DOES_NOT_END</span></mat-checkbox>
+  <mat-checkbox color="primary" [formControl]="formGroup.get('period.disabledEndDate')"><span
+    translate>DOES_NOT_END</span></mat-checkbox>
 </div>
 <!--/ Voucher Validity Period-->
 <!-- Voucher Validity Isuance date-->

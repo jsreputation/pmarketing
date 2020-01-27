@@ -1,24 +1,29 @@
-<mat-form-field class="date-picker" [appearance]="appearance">
+<!--<mat-form-field class="date-picker" [appearance]="appearance">-->
+<!--<div>-->
   <input
-    class="date-picker-toggle"
-    [class.disable]="disabledState"
     matInput
-    [min]="min"
-    [max]="max"
+    [class.date-picker-toggle]="clickable"
+    [class.disable]="disabled"
+    [min]="minDate"
+    [max]="maxDate"
+    (focus)="focusChanged(true)"
+    (blur)="focusChanged(false)"
     [matDatepickerFilter]="minMaxFilter"
     [matDatepicker]="datePicker"
     [placeholder]="placeholder"
-    [formControl]="control"
-    (click)="datePicker.open()"
-    readonly>
-  <mat-datepicker-toggle
-    class="date-picker-toggle"
-    [class.disable]="disabledState"
-    matSuffix
-    [for]="datePicker">
+    [formControl]="datePickerControl"
+    [readonly]="clickable">
+<!--  <mat-datepicker-toggle-->
+<!--    class="date-picker-toggle"-->
+<!--    [class.disable]="disabledState"-->
+<!--    matSuffix-->
+<!--    [for]="datePicker">-->
 <!--    <mat-icon class="date-button" matDatepickerToggleIcon>-->
-<!--&lt;!&ndash;      <i class="icon full-with date-icon"></i>&ndash;&gt;-->
+      <ng-content></ng-content>
+<!--      <i class="icon full-with date-icon"></i>-->
 <!--    </mat-icon>-->
-  </mat-datepicker-toggle>
-  <mat-datepicker #datePicker></mat-datepicker>
-</mat-form-field>
+<!--  </mat-datepicker-toggle>-->
+<!--</div>-->
+  <mat-datepicker #datePicker [disabled]="disabled"></mat-datepicker>
+<!-- -->
+<!--</mat-form-field>-->

@@ -24,5 +24,6 @@ export class VoucherValidityFormGroupComponent implements OnInit {
       }
       this.formGroup.markAsUntouched();
     });
+    this.formGroup.get('period.startDate').valueChanges.subscribe(data => console.log('start date: ', data));
   }
 }

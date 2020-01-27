@@ -1,17 +1,140 @@
+<mat-checkbox [(ngModel)]="disabled">disabled</mat-checkbox>
+<mat-form-field appearance="outline">
+  <mat-select [(ngModel)]="appearance">
+    <mat-option value="standard">standard</mat-option>
+    <mat-option value="outline">outline</mat-option>
+    <mat-option value="legacy">legacy</mat-option>
+    <mat-option value="fill">fill</mat-option>
+  </mat-select>
+</mat-form-field>
+
 <h2>Date Picker</h2>
-<cs-date-picker appearance="outline"></cs-date-picker>
 
-<h2>Range date picker</h2>
-<cs-range-date-picker placeholder="choose date"  appearance="outline"></cs-range-date-picker>
+<mat-form-field [appearance]="appearance">
+  <cs-date-picker [disabled]="disabled"
+                  #d
+                  [clickable]="false"
+                  placeholder="input value"
+                  [formControl]="newFromControl">
+  </cs-date-picker>
+  <button mat-icon-button matSuffix (click)="d?.open()">
+    <mat-icon>keyboard_arrow_down</mat-icon>
+  </button>
+  <mat-hint>hint</mat-hint>
+  <mat-error *ngIf="newFromControl.touched && newFromControl.hasError('required')">
+    Error Required
+  </mat-error>
+  <mat-error *ngIf="newFromControl.touched && newFromControl.hasError('min')">
+    Error min
+  </mat-error>
+</mat-form-field>
 
-<h2>Separate Range Date Picker</h2>
-<cs-separate-range-date-picker></cs-separate-range-date-picker>
+<mat-form-field [appearance]="appearance">
+  <cs-date-picker [disabled]="disabled"
+                  placeholder="input value"
+                  [formControl]="newFromControl2">
+  </cs-date-picker>
+  <button mat-icon-button matSuffix>
+    <mat-icon>keyboard_arrow_down</mat-icon>
+  </button>
+  <mat-hint>hint</mat-hint>
+  <mat-error *ngIf="newFromControl.touched && newFromControl.hasError('required')">Error Required</mat-error>
+</mat-form-field>
 
-<h2>Time Picker</h2>
-<cs-time-picker></cs-time-picker>
+<cs-date-picker [disabled]="disabled"
+                                 placeholder="input value"
+                                 [formControl]="newFromControl3">
+</cs-date-picker>
 
-<h2>Tag List</h2>
-<cs-tag-list></cs-tag-list>
+<cs-date-picker [disabled]="disabled"
+                placeholder="input value">
+</cs-date-picker>
+  <!--    <mat-datepicker-toggle-->
+  <!--      class="date-picker-toggle"-->
+  <!--      matSuffix-->
+  <!--      [for]="d?.datePicker">-->
+  <!--      <mat-icon class="date-button" matDatepickerToggleIcon>-->
+  <!--        calendar-->
+  <!--      </mat-icon>-->
+  <!--    </mat-datepicker-toggle>-->
+  <!--  <mat-icon matPrefix (click)="d.datePicker.open()">visibility</mat-icon>-->
+  <!--  -->
+
+  <!--  <mat-hint>egergegreg</mat-hint>-->
+  <!--  <button mat-icon-button matPrefix>-->
+  <!--  </button>-->
+  <!--  <mat-icon mat-toggle matSuffix class="date-button">-->
+  <!--    close-->
+  <!--  </mat-icon>-->
+  <!--  <mat-error *ngIf="ne  <button mat-icon-button matSuffix (click)="d?.open()">
+    <mat-icon>keyboard_arrow_down</mat-icon>
+
+
+</mat-form-field>
+
+<cs-date-picker [disabled]="disabled"-->
+<!--                placeholder="input Date"-->
+<!--                [formControl]="newFromControl">-->
+<!--</cs-date-picker>-->
+
+<!--      <mat-datepicker-toggle-->
+<!--        class="date-picker-toggle"-->
+<!--        [class.disable]="disabledState"-->
+<!--        matSuffix-->
+<!--        [for]="datePicker">-->
+<!--  </mat-form-field>-->
+
+
+<!--  <h2>Range date picker</h2>-->
+<!--  <cs-range-date-picker placeholder="choose date"-->
+<!--                        [appearance]="appearance">-->
+<!--  </cs-range-date-picker>-->
+
+<!--  <h2>Separate Range Date Picker</h2>-->
+<!--  <cs-separate-range-date-picker [disabled]="disabled">-->
+<!--  </cs-separate-range-date-picker>-->
+
+<!--  <h2>Time Picker</h2>-->
+<!--  <cs-time-picker [disabled]="disabled">-->
+<!--  </cs-time-picker>-->
+
+<!--  <h2>Tag List</h2>-->
+<!--  <cs-tag-list [disabled]="disabled">-->
+
+<!--  </cs-tag-list>-->
 
 <h2>Sms Editor</h2>
-<cs-sms-editor [options]="shortcodes"></cs-sms-editor>
+<cs-sms-editor
+  [options]="shortcodes">
+
+</cs-sms-editor>
+
+
+<!---->
+
+<!--<mat-form-field appearance="outline">-->
+<!--  <mat-form-field [appearance]="appearance">-->
+<!--    <cs-date-picker [disabled]="disabled"-->
+<!--                    #d1-->
+<!--                    placeholder="input value"-->
+<!--                    #d2-->
+<!--                    [formControl]="newFromControl">-->
+<!--    </cs-date-picker>-->
+<!--    <button mat-icon-button matSuffix (click)="d?.open()">-->
+<!--      <mat-icon>keyboard_arrow_down</mat-icon>-->
+<!--    </button>-->
+
+<!--  </mat-form-field>-->
+<!--  <mat-form-field [appearance]="appearance">-->
+<!--    <cs-date-picker [disabled]="disabled"-->
+<!--                    #d2-->
+<!--                    placeholder="input value"-->
+<!--                    [formControl]="newFromControl">-->
+<!--    </cs-date-picker>-->
+<!--    <button mat-icon-button matSuffix (click)="d?.open()">-->
+<!--      <mat-icon>keyboard_arrow_down</mat-icon>-->
+<!--    </button>-->
+
+<!--  </mat-form-field>-->
+<!--  <mat-hint>sdgadsgfaergf</mat-hint>-->
+<!--</mat-form-field>-->
