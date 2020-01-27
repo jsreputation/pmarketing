@@ -6,17 +6,21 @@
     <mat-error *ngIf="name.hasError('maxlength')">{{'ERROR_MAX_LENGTH' | translate}} 60</mat-error>
   </mat-form-field>
   <div class="btn-group">
-    <cl-button classList="secondary" (click)="quit()">{{'BTN_CANCEL' | translate}}</cl-button>
-    <!--    <cl-button classList="secondary" routerLink="..">Save as a draft</cl-button>-->
-    <cl-button *ngIf="!isLastStep"
-      classList="primary cta cta-next"
-      (click)="goNext()">
+    <cs-button classList="secondary" (click)="quit()">{{'BTN_CANCEL' | translate}}</cs-button>
+    <!--    <cs-button classList="secondary" routerLink="..">Save as a draft</cs-button>-->
+    <cs-button *ngIf="!isLastStep"
+               classList="primary cs-btn-mobile"
+               (click)="goNext()">
+      <i class="cs-btn-mobile-icon icon next-icon"></i>
       {{'BTN_NEXT' | translate}}
-    </cl-button>
+    </cs-button>
     <!--    [disable]="getStepCondition(stepper.selectedIndex)"-->
-    <cl-button *ngIf="isLastStep && store.currentCampaign?.status !== 'active'"
-      classList="primary cta cta-save cta-save-launch"
-      (click)="save()">{{'BTN_LAUNCH' | translate}}</cl-button>
+    <cs-button *ngIf="isLastStep && store.currentCampaign?.status !== 'active'"
+               classList="primary cs-btn-mobile"
+               (click)="save()">
+      <i class="cs-btn-mobile-icon icon save-icon"></i>
+      {{'BTN_LAUNCH' | translate}}
+    </cs-button>
   </div>
 </header>
 

@@ -17,7 +17,7 @@
 }
 
 .engagement-selector {
-  @include check-select;
+  @include cs-check-select;
 
   border-radius: $border-radius-lg;
   cursor: pointer;

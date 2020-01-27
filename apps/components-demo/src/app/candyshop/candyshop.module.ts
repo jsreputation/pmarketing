@@ -31,7 +31,7 @@ import {
   TagListModule,
   TimePickerModule,
   UserModule,
-  VouchersProgressBarModule
+  StatisticsProgressBarModule
 } from '@perx/candyshop';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -70,7 +70,7 @@ import { MatIconModule } from '@angular/material/icon';
     TagListModule,
     TimePickerModule,
     UserModule,
-    VouchersProgressBarModule,
+    StatisticsProgressBarModule,
     MatIconModule
   ]
 })

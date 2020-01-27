@@ -19,7 +19,7 @@ const rssFeeds = `{
       "page": "home"
     }
   ]
-}`
+}`;
 
 // `environment.ts` file structure that uses the environment variables
 const envConfigFile = `export const environment = {

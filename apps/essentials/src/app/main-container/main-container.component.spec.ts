@@ -8,8 +8,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthService, LocalStorageService, SessionService } from '@es-core';
+import { TestAuthService } from '@es-shared/test-components/providers/test-auth.service';
 
-describe('LoginPageComponent', () => {
+describe('MainContainerComponent', () => {
   let component: MainContainerComponent;
   let fixture: ComponentFixture<MainContainerComponent>;
 
@@ -22,7 +23,14 @@ describe('LoginPageComponent', () => {
           HttpClientModule,
           TranslateModule.forRoot()
         ],
-        providers: [AuthService, LocalStorageService, SessionService],
+        providers: [
+          LocalStorageService,
+          SessionService,
+          {
+            provide: AuthService,
+            useClass: TestAuthService
+          }
+        ],
         declarations: [MainContainerComponent],
         schemas: [NO_ERRORS_SCHEMA]
       })

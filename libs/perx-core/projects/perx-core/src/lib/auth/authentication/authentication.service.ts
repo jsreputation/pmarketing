@@ -1,20 +1,21 @@
-import { Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+
+import { Observable } from 'rxjs';
+
+import {
+  IWAppAccessTokenResponse
+} from '@perx/whistler';
+import { AuthService } from 'ngx-auth';
+
 import {
   ISignUpData,
   IResetPasswordData,
   IChangePasswordData,
   IChangePhoneData
 } from './models/authentication.model';
-import {
-  IWAppAccessTokenResponse
-} from '@perx/whistler';
-import { IProfile } from '../../profile/profile.model';
-import { AuthService } from 'ngx-auth';
 
-export interface IMessageResponse {
-  message: string;
-}
+import { IProfile } from '../../profile/profile.model';
+import { IMessageResponse } from '../../perx-core.models';
 
 export class RequiresOtpError extends Error {
   constructor() {

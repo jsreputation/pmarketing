@@ -75,6 +75,30 @@
       "WEBLINK": "Веб ссылка",
       "SMS": "CMC"
     },
+    "GameFilters": {
+      "ALL": "Все",
+      "GAME": "Игра",
+      "INSTANT_REWARD": "Мгновенное вознаграждение",
+      "SURVEY": "Опрос",
+      "STAMPS": "Штамп"
+    },
+    "GenderTypes": {
+      "MALE": "Мужчина",
+      "FEMALE": "Женщина",
+      "NOT_SPECIFY": "Не указывать"
+    },
+    "GOALS": {
+      "BUILD_AWARE": "Повышение осведомленности",
+      "ACQUIRE_CUST": "Приобретать клиентов",
+      "DRIVE_SALES": "Управление продажами",
+      "REENGAGE_AUD": "Повторно привлекать аудиторию",
+      "SURPRISE_DELIGHT": "Сюрприз и восторг"
+    },
+    "URL": "URL кампании",
+    "USER_ID": "ID пользователя",
+    "FIRST_NAME": "Имя",
+    "LAST_NAME": "Фамилия",
+    "SALUTATION": "Приветствие",
     "CHANNELS": "Каналы",
     "SMS_NOTIFICATIONS": "CMC Уведомления",
     "MESSAGE_TRIGGERS": "Триггеры сообщений",
@@ -104,6 +128,17 @@
     "AFTER_CAMPAIGN_STARTS": "после начала кампании",
     "NOT_COMPLETED_CAMPAIGN": "если пользователь не завершил кампанию.",
     "BEFORE_CAMPAIGN_ENDS_MESSAGE": "Сообщение перед окончанием кампании",
+    "AUDIENCE_FILTER": "Фильтровать аудиторию",
+    "AGE": "Возраст",
+    "GENDER": "Пол",
+    "ADD_AGE_RANGE": "+ Добавить возрастной диапазон",
+    "DONE": {
+      "DEFAULT_TITLE": "Ура! Вы только что создали кампанию",
+      "DOWNLOAD_SUBTITLE": "Загрузите ваши индивидуальные ссылки",
+      "COPY_SUBTITLE": "Скопируйте ссылку и поделитесь своей кампанией.",
+      "COPY_MESSAGE": "Ссылка скопирована в буфер обмена!",
+      "LINK_WARNING_MESSAGE": "Ваша учетная запись не связана с микросайтом, обратитесь в службу поддержки"
+    },
     "OUTCOMES": "Результаты"
   }
 }

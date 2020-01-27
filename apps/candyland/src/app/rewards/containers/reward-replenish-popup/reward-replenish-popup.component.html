@@ -3,7 +3,7 @@
     <h2 class="dialog-title" id="dialogTitle-replenishVoucherCodes">
       {{'REPLENISH_VOUCHER_CODES' | translate}}
     </h2>
-    <button class="dialog-closed btn-transparent" [mat-dialog-close]="false">
+    <button class="dialog-closed cs-btn-transparent" [mat-dialog-close]="false">
       <mat-icon>close</mat-icon>
     </button>
   </header>
@@ -90,7 +90,7 @@
     </div>
   </mat-dialog-content>
   <footer class="dialog-actions">
-    <cl-button
+    <cs-button
       *ngIf="voucherSettings?.voucherCode?.type !== 'user_uploaded'"
       classList="secondary"
       class="actions-close"
@@ -99,9 +99,9 @@
       <span>
         {{'BTN_CANCEL' | translate}}
       </span>
-    </cl-button>
+    </cs-button>
 
-    <cl-button
+    <cs-button
       *ngIf="voucherSettings?.voucherCode?.type !== 'user_uploaded'"
       classList="primary"
       (click)="replenish()"
@@ -110,9 +110,9 @@
       <span>
         {{'REPLENISH' | translate}}
       </span>
-    </cl-button>
+    </cs-button>
 
-    <cl-button
+    <cs-button
       *ngIf="voucherSettings?.voucherCode?.type === 'user_uploaded'"
       classList="primary"
       (click)="close()"
@@ -120,6 +120,6 @@
       <span>
         {{'BTN_CLOSE' | translate}}
       </span>
-    </cl-button>
+    </cs-button>
   </footer>
 </aside>

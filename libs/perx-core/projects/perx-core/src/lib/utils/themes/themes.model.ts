@@ -15,6 +15,7 @@ interface IThemeProperties {
     '--background': string;
     '--font_color': string;
     '--login_background_colour'?: string;
+    '--surface_colour'?: string;
     'stampCard'?: IStampCardTheme;
 }
 
