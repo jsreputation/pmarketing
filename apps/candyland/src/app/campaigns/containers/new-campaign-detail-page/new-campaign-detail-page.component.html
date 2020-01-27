@@ -101,8 +101,8 @@
                 </mat-select>
               </mat-form-field>
             </div>
-            <cl-button [disable]="filters.get('agesEnabled').value === false"
-                       classList="tertiary ph-0" (click)="addAge()">{{'CAMPAIGN.ADD_AGE_RANGE' | translate}}</cl-button>
+            <cs-button [disable]="filters.get('agesEnabled').value === false"
+                       classList="tertiary ph-0" (click)="addAge()">{{'CAMPAIGN.ADD_AGE_RANGE' | translate}}</cs-button>
           </div>
         </div>
         <div class="card-section">
