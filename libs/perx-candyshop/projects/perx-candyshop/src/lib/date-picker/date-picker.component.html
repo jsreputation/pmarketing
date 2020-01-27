@@ -1,29 +1,17 @@
-<!--<mat-form-field class="date-picker" [appearance]="appearance">-->
-<!--<div>-->
-  <input
-    matInput
-    [class.date-picker-toggle]="clickable"
-    [class.disable]="disabled"
-    [min]="minDate"
-    [max]="maxDate"
-    (focus)="focusChanged(true)"
-    (blur)="focusChanged(false)"
-    [matDatepickerFilter]="minMaxFilter"
-    [matDatepicker]="datePicker"
-    [placeholder]="placeholder"
-    [formControl]="datePickerControl"
-    [readonly]="clickable">
-<!--  <mat-datepicker-toggle-->
-<!--    class="date-picker-toggle"-->
-<!--    [class.disable]="disabledState"-->
-<!--    matSuffix-->
-<!--    [for]="datePicker">-->
-<!--    <mat-icon class="date-button" matDatepickerToggleIcon>-->
-      <ng-content></ng-content>
-<!--      <i class="icon full-with date-icon"></i>-->
-<!--    </mat-icon>-->
-<!--  </mat-datepicker-toggle>-->
-<!--</div>-->
-  <mat-datepicker #datePicker [disabled]="disabled"></mat-datepicker>
-<!-- -->
-<!--</mat-form-field>-->
+<input
+  matInput
+  class="date-picker"
+  [class.date-picker-toggle]="clickable"
+  [class.disable]="disabled"
+  [disabled]="disabled"
+  [min]="minDate"
+  [max]="maxDate"
+  [matDatepickerFilter]="minMaxFilter"
+  [matDatepicker]="datePicker"
+  [placeholder]="placeholder"
+  [formControl]="datePickerControl"
+  [readonly]="clickable"
+  (click)="onClickInnerInput()"
+  (focus)="focusChanged(true)"
+  (blur)="focusChanged(false)">
+<mat-datepicker #datePicker [disabled]="disabled"></mat-datepicker>

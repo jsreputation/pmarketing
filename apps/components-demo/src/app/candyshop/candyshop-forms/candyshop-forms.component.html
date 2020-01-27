@@ -8,66 +8,69 @@
   </mat-select>
 </mat-form-field>
 
-<h2>Date Picker</h2>
+<!--<h2>Date Picker</h2>-->
 
-<mat-form-field [appearance]="appearance">
+<!--<mat-form-field [appearance]="appearance">-->
+<!--  <cs-date-picker [disabled]="disabled"-->
+<!--                  #d-->
+<!--                  [clickable]="false"-->
+<!--                  placeholder="input value"-->
+<!--                  [formControl]="newFromControl">-->
+<!--  </cs-date-picker>-->
+<!--  <button mat-icon-button matSuffix (click)="d?.open()">-->
+<!--    <mat-icon>keyboard_arrow_down</mat-icon>-->
+<!--  </button>-->
+<!--  <mat-hint>hint</mat-hint>-->
+<!--  <mat-error *ngIf="newFromControl.touched && newFromControl.hasError('required')">-->
+<!--    Error Required-->
+<!--  </mat-error>-->
+<!--  <mat-error *ngIf="newFromControl.touched && newFromControl.hasError('min')">-->
+<!--    Error min-->
+<!--  </mat-error>-->
+<!--</mat-form-field>-->
+
+<!--<mat-form-field [appearance]="appearance">-->
+<!--  <cs-date-picker [disabled]="disabled"-->
+<!--                  placeholder="input value"-->
+<!--                  [formControl]="newFromControl2">-->
+<!--  </cs-date-picker>-->
+<!--  <button mat-icon-button matSuffix>-->
+<!--    <mat-icon>keyboard_arrow_down</mat-icon>-->
+<!--  </button>-->
+<!--  <mat-hint>hint</mat-hint>-->
+<!--  <mat-error *ngIf="newFromControl.touched && newFromControl.hasError('required')">Error Required</mat-error>-->
+<!--</mat-form-field>-->
+<mat-form-field>
   <cs-date-picker [disabled]="disabled"
-                  #d
-                  [clickable]="false"
-                  placeholder="input value"
-                  [formControl]="newFromControl">
+                  [clickable]="true"
+                  placeholder="input value">
   </cs-date-picker>
-  <button mat-icon-button matSuffix (click)="d?.open()">
-    <mat-icon>keyboard_arrow_down</mat-icon>
-  </button>
-  <mat-hint>hint</mat-hint>
-  <mat-error *ngIf="newFromControl.touched && newFromControl.hasError('required')">
-    Error Required
-  </mat-error>
-  <mat-error *ngIf="newFromControl.touched && newFromControl.hasError('min')">
-    Error min
-  </mat-error>
 </mat-form-field>
 
-<mat-form-field [appearance]="appearance">
-  <cs-date-picker [disabled]="disabled"
-                  placeholder="input value"
-                  [formControl]="newFromControl2">
-  </cs-date-picker>
-  <button mat-icon-button matSuffix>
-    <mat-icon>keyboard_arrow_down</mat-icon>
-  </button>
-  <mat-hint>hint</mat-hint>
-  <mat-error *ngIf="newFromControl.touched && newFromControl.hasError('required')">Error Required</mat-error>
-</mat-form-field>
+<!--<cs-date-picker [disabled]="disabled"-->
+<!--                placeholder="input value">-->
+<!--</cs-date-picker>-->
 
-<cs-date-picker [disabled]="disabled"
-                                 placeholder="input value"
-                                 [formControl]="newFromControl3">
-</cs-date-picker>
 
-<cs-date-picker [disabled]="disabled"
-                placeholder="input value">
-</cs-date-picker>
-  <!--    <mat-datepicker-toggle-->
-  <!--      class="date-picker-toggle"-->
-  <!--      matSuffix-->
-  <!--      [for]="d?.datePicker">-->
-  <!--      <mat-icon class="date-button" matDatepickerToggleIcon>-->
-  <!--        calendar-->
-  <!--      </mat-icon>-->
-  <!--    </mat-datepicker-toggle>-->
-  <!--  <mat-icon matPrefix (click)="d.datePicker.open()">visibility</mat-icon>-->
-  <!--  -->
+<!--    <mat-datepicker-toggle-->
+<!--      class="date-picker-toggle"-->
+<!--      matSuffix-->
+<!--      [for]="d?.datePicker">-->
+<!--      <mat-icon class="date-button" matDatepickerToggleIcon>-->
+<!--        calendar-->
+<!--      </mat-icon>-->
+<!--    </mat-datepicker-toggle>-->
+<!--  <mat-icon matPrefix (click)="d.datePicker.open()">visibility</mat-icon>-->
+<!--  -->
 
-  <!--  <mat-hint>egergegreg</mat-hint>-->
-  <!--  <button mat-icon-button matPrefix>-->
-  <!--  </button>-->
-  <!--  <mat-icon mat-toggle matSuffix class="date-button">-->
-  <!--    close-->
-  <!--  </mat-icon>-->
-  <!--  <mat-error *ngIf="ne  <button mat-icon-button matSuffix (click)="d?.open()">
-    <mat-icon>keyboard_arrow_down</mat-icon>
+<!--  <mat-hint>egergegreg</mat-hint>-->
+<!--  <button mat-icon-button matPrefix>-->
+<!--  </button>-->
+<!--  <mat-icon mat-toggle matSuffix class="date-button">-->
+<!--    close-->
+<!--  </mat-icon>-->
+<!--  <mat-error *ngIf="ne  <button mat-icon-button matSuffix (click)="d?.open()">
+  <mat-icon>keyboard_arrow_down</mat-icon>
 
 
 </mat-form-field>
@@ -85,10 +88,30 @@
 <!--  </mat-form-field>-->
 
 
-<!--  <h2>Range date picker</h2>-->
-<!--  <cs-range-date-picker placeholder="choose date"-->
-<!--                        [appearance]="appearance">-->
+<h2>Range date picker</h2>
+<!--<mat-form-field>-->
+<!--  <cs-range-date-picker-->
+<!--    [formControl]="newFromControl3"-->
+<!--    placeholder="choose date">-->
 <!--  </cs-range-date-picker>-->
+<!--</mat-form-field>-->
+
+<mat-form-field [appearance]="appearance">
+  <cs-range-date-picker [disabled]="disabled"
+                        placeholder="input value"
+                        [formControl]="newFromControl">
+  </cs-range-date-picker>
+  <button mat-icon-button matSuffix>
+    <mat-icon>keyboard_arrow_down</mat-icon>
+  </button>
+  <mat-hint>hint</mat-hint>
+  <mat-error *ngIf="newFromControl.touched && newFromControl.hasError('required')">
+    Error Required
+  </mat-error>
+  <mat-error *ngIf="newFromControl.touched && newFromControl.hasError('min')">
+    Error min
+  </mat-error>
+</mat-form-field>
 
 <!--  <h2>Separate Range Date Picker</h2>-->
 <!--  <cs-separate-range-date-picker [disabled]="disabled">-->
@@ -103,11 +126,11 @@
 
 <!--  </cs-tag-list>-->
 
-<h2>Sms Editor</h2>
-<cs-sms-editor
-  [options]="shortcodes">
+<!--<h2>Sms Editor</h2>-->
+<!--<cs-sms-editor-->
+<!--  [options]="shortcodes">-->
 
-</cs-sms-editor>
+<!--</cs-sms-editor>-->
 
 
 <!---->

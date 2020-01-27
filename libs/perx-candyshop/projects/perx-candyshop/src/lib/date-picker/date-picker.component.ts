@@ -1,17 +1,16 @@
 import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import {
   ChangeDetectionStrategy, ChangeDetectorRef,
-  Component,
+  Component, Host,
   Input,
-  OnChanges,
   OnDestroy,
   OnInit, Optional, Self,
-  SimpleChanges, ViewChild
+  ViewChild
 } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
 import { noop, Subject } from 'rxjs';
 import { CsFormFieldControl } from '../form-field-control';
-import { MatDatepicker, MatFormFieldControl, DateAdapter } from '@angular/material';
+import { MatDatepicker, MatFormFieldControl, DateAdapter, MatFormField } from '@angular/material';
 import Utils from '../../utils';
 
 @Component({
@@ -22,16 +21,11 @@ import Utils from '../../utils';
     {
       provide: MatFormFieldControl,
       useExisting: DatePickerComponent
-    },
-    // {
-    //   provide: NG_VALUE_ACCESSOR,
-    //   useExisting: forwardRef(() => DatePickerComponent),
-    //   multi: true,
-    // }
+    }
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DatePickerComponent extends CsFormFieldControl<any> implements OnInit, OnChanges, OnDestroy, ControlValueAccessor {
+export class DatePickerComponent extends CsFormFieldControl<any> implements OnInit, OnDestroy, ControlValueAccessor {
   // @Input()
   public datePickerControl: AbstractControl = new FormControl(null, []);
   public minDate: Date | null = null;
@@ -44,7 +38,6 @@ export class DatePickerComponent extends CsFormFieldControl<any> implements OnIn
   //   }
   // }
 
-  // @Input() public placeholder: string = 'choose date';
   @ViewChild('datePicker', {static: false}) public datePicker: MatDatepicker<Date>;
   @Input() public minDayPeriod: number = 1;
   @Input() public set min(value: Date | null) {
@@ -53,7 +46,6 @@ export class DatePickerComponent extends CsFormFieldControl<any> implements OnIn
   @Input() public set max(value: Date | null) {
     this.maxDate = value ? this.getPreviousDay(value) : null;
   }
-  // @Input() public min: Date | null = null;
   @Input() public clickable: boolean = true;
 
   private onChange: any = noop;
@@ -62,6 +54,7 @@ export class DatePickerComponent extends CsFormFieldControl<any> implements OnIn
 
   constructor(
     @Optional() @Self() public ngControl: NgControl,
+    @Optional() @Host() protected formField: MatFormField,
     private cd: ChangeDetectorRef,
     private dateAdapter: DateAdapter<Date>
   ) {
@@ -78,23 +71,10 @@ export class DatePickerComponent extends CsFormFieldControl<any> implements OnIn
         takeUntil(this.destroy$)
       )
       .subscribe((value: Date) => {
-        if (this.control) {
-          console.log('changed: ', value, '/n error state: ', this.errorState, this.protectedErrorState, this.control.invalid, this.control.touched);
-        }
         this.value = value;
         this.onChange(value);
         this.onTouched();
       });
-  }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
-    // if (changes && changes.max && changes.max.currentValue && (changes.max.currentValue !== changes.max.previousValue)) {
-    //   this.max = changes.max.currentValue;
-    // }
-    // if (changes && changes.min && changes.min.currentValue && (changes.min.currentValue !== changes.min.previousValue)) {
-    //   this.min = changes.min.currentValue;
-    // }
   }
 
   public ngOnDestroy(): void {
@@ -138,6 +118,12 @@ export class DatePickerComponent extends CsFormFieldControl<any> implements OnIn
       this.open();
     }
   };
+
+  public onClickInnerInput(): void {
+    if (!this.formField && this.clickable) {
+      this.open();
+    }
+  }
 
   private getNextDay(date: Date): Date {
     return this.dateAdapter.addCalendarDays(new Date(date), this.minDayPeriod);
