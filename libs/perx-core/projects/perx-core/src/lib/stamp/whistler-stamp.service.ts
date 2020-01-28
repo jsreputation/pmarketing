@@ -106,6 +106,8 @@ export class WhistlerStampService implements StampService {
 
           for (let i = 0; i < cards.length; i++) {
             cards[i].campaignId = campaigns[i].id;
+            cards[i].displayProperties.thumbnailImg = cards[i].displayProperties.thumbnailImg ?
+              cards[i].displayProperties.thumbnailImg : cards[i].displayProperties.rewardPostStamp;
           }
           return cards;
         })
