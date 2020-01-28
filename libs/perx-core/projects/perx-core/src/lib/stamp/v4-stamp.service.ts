@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { oc } from 'ts-optchain';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of, throwError, from } from 'rxjs';
 import {
   map,
   flatMap,
   mergeAll,
   scan,
   tap,
-  filter
+  filter,
+  mergeMap,
+  toArray
 } from 'rxjs/operators';
 
 import {
@@ -24,6 +26,8 @@ import { IVoucher } from '../vouchers/models/voucher.model';
 import { IVoucherService } from '../vouchers/ivoucher.service';
 import { StampService } from './stamp.service';
 import { Config } from '../config/config';
+import { ICampaignService } from '../campaign/icampaign.service';
+import { CampaignType, ICampaign } from '../campaign/models/campaign.model';
 
 interface IV4GetStampCardResponse {
   data: IV4StampCard;
@@ -154,7 +158,8 @@ export class V4StampService implements StampService {
   constructor(
     private http: HttpClient,
     config: Config,
-    private vouchersService: IVoucherService
+    private vouchersService: IVoucherService,
+    private campaignService: ICampaignService
   ) {
     this.baseUrl = config.apiHost as string;
   }
@@ -329,7 +334,25 @@ export class V4StampService implements StampService {
     );
   }
 
-  public play(): Observable<boolean> {
-    return of(true);
+  public getActiveCards(stampType?: string): Observable<IStampCard[]> {
+    return this.campaignService.getCampaigns()
+      .pipe(
+        map(campaigns => campaigns.filter(camp => camp.type === CampaignType.stamp)),
+        map(campaigns => {
+          if (stampType === 'puzzle') {
+            return campaigns.filter(camp => camp.type === CampaignType.stamp).slice(0, 1);
+          }
+          return campaigns;
+        }),
+        mergeMap(
+          (campaigns: ICampaign[]) => from(campaigns).pipe(
+            mergeMap((campaign: ICampaign) => this.getCurrentCard(campaign.id)),
+            toArray(),
+            map((stampCards: IStampCard[]) => stampCards.filter(card =>
+              card.displayProperties.displayCampaignAs && card.displayProperties.displayCampaignAs === stampType
+            )),
+          )
+        ),
+      );
   }
 }
