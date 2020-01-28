@@ -79,30 +79,11 @@ export class ResetPasswordComponent implements OnInit {
       resetPasswordToken: this.resetData.resetPasswordToken,
       password,
     }).subscribe(
-      () => this.sendLoginCall(password),
-      (err: HttpErrorResponse) => this.notificationService.addSnack(err.error.message)
-    );
-  }
-
-  private sendLoginCall(password: string): void {
-    this.authService.login(this.resetData.clientId, password).subscribe(
       () => {
-        // set global userID var for GA tracking
-        if (!((window as any).primaryIdentifier)) {
-          (window as any).primaryIdentifier = this.mobileNumber;
-        }
-        this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'account');
+        this.router.navigateByUrl('login');
         this.notificationService.addSnack('Password successfully updated.');
       },
-      (err) => {
-        if (err instanceof HttpErrorResponse) {
-          if (err.status === 0) {
-            this.notificationService.addSnack('We could not reach the server');
-          } else if (err.status === 401) {
-            this.notificationService.addSnack('Invalid credentials');
-          }
-        }
-      }
+      (err: HttpErrorResponse) => this.notificationService.addSnack(err.error.message)
     );
   }
 }
