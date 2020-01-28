@@ -1,23 +1,8 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
-import {
-  Validators,
-  FormBuilder,
-  FormGroup,
-} from '@angular/forms';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
-
-import {
-  NotificationService,
-  IMerchantAdminService,
-  AuthenticationService,
-} from '@perx/core';
+import {Component, OnInit} from '@angular/core';
+import {Validators, FormBuilder, FormGroup} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {HttpErrorResponse} from '@angular/common/http';
+import {NotificationService, IMerchantAdminService} from '@perx/core';
 
 interface ResetData {
   resetPasswordToken: string;
@@ -46,11 +31,10 @@ export class ResetPasswordComponent implements OnInit {
     private router: Router,
     private merchantAdminService: IMerchantAdminService,
     private notificationService: NotificationService,
-    private activatedRoute: ActivatedRoute,
-    private authService: AuthenticationService,
+    private activatedRoute: ActivatedRoute
   ) {
     const queryParams = this.activatedRoute.snapshot.queryParams;
-    const { reset_password_token, client_id } = queryParams;
+    const {reset_password_token, client_id} = queryParams;
     this.resetData.resetPasswordToken = reset_password_token || '';
     this.resetData.clientId = client_id || '';
   }
