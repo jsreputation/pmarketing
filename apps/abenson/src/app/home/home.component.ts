@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IAbensonConfig } from '../model/IAbenson.model';
-import {DatePipe} from '@angular/common';
+import {CurrencyPipe, DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-home',
@@ -33,7 +33,8 @@ export class HomeComponent implements OnInit {
     private vouchersService: IVoucherService,
     private campaignService: ICampaignService,
     private configService: ConfigService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private currencyPipe: CurrencyPipe
   ) { }
 
   public ngOnInit(): void {
@@ -44,7 +45,7 @@ export class HomeComponent implements OnInit {
       .pipe(map((campaign) => campaign.filter(el => el.type === CampaignType.game)));
     this.vouchers$ = this.vouchersService.getAll();
     this.filter = [VoucherState.issued, VoucherState.reserved, VoucherState.released];
-    this.subTitleFn = (loyalty: ILoyalty) => `Equivalent to ${loyalty.currency}${loyalty.currencyBalance} e-Cash`;
+    this.subTitleFn = (loyalty: ILoyalty) => `Equivalent to ${this.currencyPipe.transform(loyalty.currencyBalance, loyalty.currency, 'symbol-narrow', '1.0-0', 'en-PH')} e-Cash`;
     this.summaryExpiringFn = () => `Your total points as of ${this.datePipe.transform(new Date(), 'mediumDate')}`;
 
   }
