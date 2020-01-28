@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RulePointType } from '@cl-core/models/loyalty/rule-point-type.enum';
 import { RuleConditionType } from '@cl-core/models/loyalty/rule-condition-type.enum';
 import { RuleOperatorType } from '@cl-core/models/loyalty/rule-operator-type.enum';
@@ -33,7 +33,7 @@ export class LoyaltyEarnRulesFormsService {
     return new FormGroup({
       name: new FormControl(null,
         [Validators.required, Validators.minLength(1), Validators.maxLength(60)]),
-      conditions: new FormArray([]),
+      conditions: new FormControl([]),
       result: this.createResultFormField(RulePointType.bonus)
     });
   }

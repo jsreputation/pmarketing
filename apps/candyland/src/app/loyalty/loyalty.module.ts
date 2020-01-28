@@ -50,7 +50,6 @@ import { LoyaltyEarnRulesFormsService } from './services/loyalty-earn-rules-form
 import { DateConditionGroupComponent } from './components/date-condition-group/date-condition-group.component';
 import { AmountConditionGroupComponent } from './components/amount-condition-group/amount-condition-group.component';
 import { TransactionConditionGroupComponent } from './components/transaction-condition-group/transaction-condition-group.component';
-import { DynamicFormGroupDirective } from './dynamic-field.directive';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TranslateModule } from '@ngx-translate/core';
 import { LoyaltyRuleCardComponent } from './components/loyalty-rules-card/loyalty-rule-card.component';
@@ -62,6 +61,8 @@ import { BonusResultGroupComponent } from './components/bonus-result-group/bonus
 import { PointsEarnedInfoPipe } from './points-earned-info.pipe';
 import { PointsExpiredInfoPipe } from './points-expired-info.pipe';
 import { StepperModule } from '@perx/candyshop';
+import { DirectivesModule } from '@cl-shared/directives/directives.module';
+import { ManageConditionsComponent } from 'src/app/loyalty/containers/manage-conditions/manage-conditions.component';
 
 @NgModule({
   declarations: [
@@ -93,13 +94,13 @@ import { StepperModule } from '@perx/candyshop';
     AmountConditionGroupComponent,
     TransactionConditionGroupComponent,
     CurrencyConditionGroupComponent,
-    DynamicFormGroupDirective,
     LoyaltyRuleCardComponent,
     ConditionInfoPipe,
     MultiplierResultGroupComponent,
     BonusResultGroupComponent,
     PointsEarnedInfoPipe,
-    PointsExpiredInfoPipe
+    PointsExpiredInfoPipe,
+    ManageConditionsComponent
   ],
   imports: [
     CommonModule,
@@ -132,13 +133,14 @@ import { StepperModule } from '@perx/candyshop';
     TranslateModule,
     DragDropModule,
     MatProgressBarModule,
-    FormsModule
+    FormsModule,
+    DirectivesModule
   ],
   providers: [
     LoyaltyFormsService,
     LoyaltyCustomTierFormsService,
     LoyaltyEarnRulesFormsService,
-    LoyaltyConfigService
+    LoyaltyConfigService,
   ],
   entryComponents: [
     TierSetupPopupComponent,
