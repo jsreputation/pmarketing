@@ -12,7 +12,6 @@ import { IWStampDisplayProperties } from './stamp';
 export enum WEngagementType {
   games = 'game',
   survey = 'survey',
-  stamp = 'stamp',
   instantOutcome = 'instant_outcome',
   loyalty = 'loyalty',
 }

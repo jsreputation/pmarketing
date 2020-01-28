@@ -3,6 +3,7 @@ import {
   OnInit,
 } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormGroup,
   Validators,
@@ -22,6 +23,10 @@ import {
 })
 export class ForgotPinComponent implements OnInit {
   public forgotPinForm: FormGroup;
+
+  public get mobileNumber(): AbstractControl | null {
+    return this.forgotPinForm.get('mobileNumber');
+  }
 
   constructor(
     private fb: FormBuilder,

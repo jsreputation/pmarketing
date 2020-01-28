@@ -14,7 +14,7 @@
     "lint:fix": "ng lint --fix && stylelint \"src/**/*.*css\" --fix && eslint \"./src/*/*.ts\" --fix",
     "styleLint": "stylelint src/**/*.*css",
     "pree2e": "webdriver-manager update",
-    "e2e-pro": "protractor"
+    "e2e-pro-candyland": "protractor"
   },
   "private": true,
   "dependencies": {

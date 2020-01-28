@@ -7,14 +7,14 @@
       <mat-form-field appearance="fill" class="full-width__input">
         <mat-label>Enter Mobile Number</mat-label>
         <input matInput placeholder="Enter Mobile Number" formControlName="mobileNumber">
-        <mat-error *ngIf="loginForm.get('mobileNumber').hasError('required')">
+        <mat-error *ngIf="mobileNumber && mobileNumber.hasError('required')">
           Mobile Number is <strong>required</strong>
         </mat-error>
       </mat-form-field>
       <mat-form-field appearance="fill" class="full-width__input">
         <mat-label>PIN Code</mat-label>
         <input type="password" matInput placeholder="PIN Code" formControlName="pinCode">
-        <mat-error *ngIf="loginForm.get('pinCode').hasError('required')">
+        <mat-error *ngIf="pinCode && pinCode.hasError('required')">
           PIN Code is <strong>required</strong>
         </mat-error>
       </mat-form-field>
