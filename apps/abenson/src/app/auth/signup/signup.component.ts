@@ -44,6 +44,10 @@ export class SignUpComponent implements OnInit {
     return this.signUpForm.get('lastName');
   }
 
+  public get email(): AbstractControl | null {
+    return this.signUpForm.get('email');
+  }
+
   public get phone(): AbstractControl | null {
     return this.signUpForm.get('phone');
   }
@@ -84,6 +88,7 @@ export class SignUpComponent implements OnInit {
     this.signUpForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
+      email: ['', Validators.email],
       phone: ['', Validators.required],
       password: ['', [Validators.required, Validators.maxLength(4), Validators.minLength(4)]],
       acceptTerms: [false, Validators.requiredTrue],
