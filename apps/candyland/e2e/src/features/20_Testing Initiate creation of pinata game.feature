@@ -1,7 +1,7 @@
 Feature:Testing Initiate creation of pinata game.
 
 This will be the test flow for all the features of hit the pinata engagement type.
-@runThis
+
 Scenario: Ensure that hit the pinata engagement type option is present.
   Given 1_I am on engagement page
   And   1_I click on the create new button
