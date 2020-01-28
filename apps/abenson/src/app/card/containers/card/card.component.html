@@ -12,7 +12,7 @@
     (selectedTabChange)="tabChanged($event)"
   >
     <mat-tab label="MyCard">
-      <perx-core-loyalty-summary></perx-core-loyalty-summary>
+      <perx-core-loyalty-summary [subTitleFn]="subTitleFn" [summaryExpiringFn]="summaryExpiringFn"></perx-core-loyalty-summary>
       <div class="bc-block">
         <div class="barcode">
           <ngx-barcode [bc-value]="membershipId" [bc-display-value]="true"></ngx-barcode>
