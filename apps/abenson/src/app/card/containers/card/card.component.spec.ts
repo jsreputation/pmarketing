@@ -5,7 +5,7 @@ import {
 } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { of } from 'rxjs';
+import {Observable, of} from 'rxjs';
 import { NgxBarcodeModule } from 'ngx-barcode';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import {
@@ -13,7 +13,7 @@ import {
   LoyaltyModule,
   LoyaltyService,
   ProfileService,
-  ITransaction,
+  ITransaction, ConfigService, IConfig,
 } from '@perx/core';
 
 import { CardComponent } from './card.component';
@@ -41,6 +41,9 @@ describe('CardComponent', () => {
     getLoyalty: () => of(loyalty),
     getTransactions: () => of([])
   };
+  const configServiceStub: Partial<ConfigService> = {
+    readAppConfig: <T>(): Observable<IConfig<T>> => of()
+  };
   const mockProfile: IProfile = {
     id: 1,
     state: 'active',
@@ -63,6 +66,7 @@ describe('CardComponent', () => {
       ],
       providers: [
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
+        { provide: ConfigService, useValue: configServiceStub },
         { provide: ProfileService, useValue: profileServiceStub }
       ]
     })
@@ -86,11 +90,11 @@ describe('CardComponent', () => {
   });
 
   it('should change tab, trigger onscroll', () => {
-    const spy = spyOn(loyaltyService, 'getTransactions').and.returnValue(of());
+    const loyaltySpy = spyOn(loyaltyService, 'getTransactions').and.returnValue(of());
     component.transactionsEnded = false;
     component.tabChanged({ index: 1 } as MatTabChangeEvent);
     component.onScroll();
-    expect(spy).toHaveBeenCalled();
+    expect(loyaltySpy).toHaveBeenCalled();
   });
 
 });

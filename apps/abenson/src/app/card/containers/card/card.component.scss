@@ -81,3 +81,14 @@ perx-core-loyalty-transactions-list ::ng-deep {
   justify-content: center;
   margin-top: 1.6rem;
 }
+
+.branding-image {
+  display: flex;
+  justify-content: center;
+
+  img {
+    width: 100%;
+    max-width: 60rem;
+    height: auto;
+  }
+}
