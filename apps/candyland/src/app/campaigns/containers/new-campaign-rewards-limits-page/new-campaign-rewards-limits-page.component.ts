@@ -1,7 +1,7 @@
 import {Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, Input, OnDestroy, QueryList, ViewChildren} from '@angular/core';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
 import {AbstractStepWithForm} from '../../step-page-with-form';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {StepConditionService} from '../../services/step-condition.service';
 import {ClValidators} from '@cl-helpers/cl-validators';
 import {merge, Subject} from 'rxjs';
@@ -37,9 +37,9 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
     public stepConditionService: StepConditionService,
     private fb: FormBuilder
   ) {
-    super(1.1, store, stepConditionService);
+    super(2, store, stepConditionService);
     this.limitRewardForm = this.generateBaseLimitForm();
-    this.stepConditionService.registerStepCondition(1.1, this.limitRewardForm);
+    this.stepConditionService.registerStepCondition(2, this.limitRewardForm);
   }
 
   public generateBaseLimitForm(): FormGroup {
@@ -74,7 +74,7 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
       this.probAllGroup.addControl(`totalProbability-${slotIndex}`,
         this.fb.control(null));
       if (this.isSpinEngagement) {
-        this.fillAllGroup.addControl(`notEmpty-${slotIndex}`, this.fb.control(0));
+        this.fillAllGroup.addControl(`notEmpty-${slotIndex}`, this.fb.control(0, [Validators.min(1)]));
       }
     });
     if (this.isSpinEngagement) {
@@ -84,6 +84,7 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
       }
       this.fillAllGroup.setValidators(ClValidators.rewardPatched(this.slots.length)); // slot validator dynamically set
     }
+    this.limitRewardForm.updateValueAndValidity();
     this.updateLimitRewardForm();
   }
 

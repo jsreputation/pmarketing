@@ -3,6 +3,7 @@ import {
   OnInit,
 } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormGroup,
   Validators,
@@ -17,6 +18,10 @@ import { Router } from '@angular/router';
 })
 export class ChangeEmailComponent implements OnInit {
   public emailChangeForm: FormGroup;
+
+  public get email(): AbstractControl | null {
+    return this.emailChangeForm.get('email');
+  }
 
   constructor(
     private fb: FormBuilder,

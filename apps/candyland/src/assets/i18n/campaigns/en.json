@@ -140,6 +140,7 @@
       "COPY_SUBTITLE": "Copy the link and share your campaign.",
       "COPY_MESSAGE": "Link copied to clipboard!",
       "LINK_WARNING_MESSAGE": "Your account does not appear to be linked to a microsite, please contact your Customer Support"
-    }
+    },
+    "OUTCOMES": "Outcomes"
   }
 }

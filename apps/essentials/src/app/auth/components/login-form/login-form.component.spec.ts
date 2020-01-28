@@ -10,6 +10,7 @@ import { SessionService } from '@es-core/services/session.service';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthService } from '@es-core';
+import { TestAuthService } from '@es-shared/test-components/providers/test-auth.service';
 
 describe('LoginFormComponent', () => {
   let component: LoginFormComponent;
@@ -31,7 +32,14 @@ describe('LoginFormComponent', () => {
         HttpClientModule,
         TranslateModule.forRoot()
       ],
-      providers: [ AuthService, LocalStorageService, SessionService ],
+      providers: [
+        LocalStorageService,
+        SessionService,
+        {
+          provide: AuthService,
+          useClass: TestAuthService
+        }
+       ],
       declarations: [ LoginFormComponent ]
     })
     .compileComponents();

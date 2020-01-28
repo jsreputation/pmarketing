@@ -1,9 +1,23 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { AuthenticationService, NotificationService } from '@perx/core';
-import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
 import { HttpErrorResponse } from '@angular/common/http';
+import {
+  Validators,
+  FormBuilder,
+  FormGroup,
+  AbstractControl,
+} from '@angular/forms';
+
+import {
+  AuthenticationService,
+  NotificationService,
+} from '@perx/core';
+
+import {
+  PageAppearence,
+  PageProperties,
+  BarSelectedItem,
+} from '../page-properties';
 
 @Component({
   selector: 'mc-forgot-password',
@@ -14,6 +28,14 @@ export class ForgotPasswordComponent implements PageAppearence {
 
   public selectedCountry: string = '852';
   public resetPasswordForm: FormGroup;
+
+  public get mobileNo(): AbstractControl | null {
+    return this.resetPasswordForm.get('mobileNo');
+  }
+
+  public get countryCode(): AbstractControl | null {
+    return this.resetPasswordForm.get('countryCode');
+  }
 
   constructor(
     private router: Router,

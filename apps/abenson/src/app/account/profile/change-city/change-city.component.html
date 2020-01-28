@@ -16,7 +16,7 @@
         placeholder="Enter new city/municipality"
         formControlName="newCity"
       >
-      <mat-error *ngIf="cityChangeForm.get('newCity').hasError('required')">
+      <mat-error *ngIf="newCity && newCity.hasError('required')">
         New city is <strong>required</strong>
       </mat-error>
     </mat-form-field>
