@@ -7,7 +7,7 @@ import {
   Voucher,
   CampaignType,
   ConfigService,
-  IConfig, ILoyalty, IProfile
+  IConfig, ILoyalty
 } from '@perx/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
