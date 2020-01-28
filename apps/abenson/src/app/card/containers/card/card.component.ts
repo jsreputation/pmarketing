@@ -43,9 +43,6 @@ export class CardComponent implements OnInit {
     this.transactions$ = this.transactions.asObservable().pipe(
       scan((acc, curr) => [...acc, ...curr ? curr : []], [])
     );
-    this.configService.readAppConfig<IAbensonConfig>().subscribe((config: IConfig<IAbensonConfig>) => {
-      this.brandingImg = config.custom && config.custom.cardBrandingImage ? config.custom.cardBrandingImage : '';
-    });
   }
 
   public ngOnInit(): void {
@@ -58,6 +55,10 @@ export class CardComponent implements OnInit {
       }
       this.priceLabelFn = (tr: ITransaction) => `Points ${tr.points < 0 ? 'spent' : 'earned'}`;
       this.getTransactions();
+    });
+
+    this.configService.readAppConfig<IAbensonConfig>().subscribe((config: IConfig<IAbensonConfig>) => {
+      this.brandingImg = config.custom && config.custom.cardBrandingImage ? config.custom.cardBrandingImage : '';
     });
   }
 
