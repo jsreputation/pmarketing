@@ -17,7 +17,7 @@ export function stampServiceFactory(
 ): StampService {
   // Make decision on what to instantiate base on config
   if (config.isWhistler) {
-    return new WhistlerStampService(http, config);
+    return new WhistlerStampService(http, config, campaignService);
   }
   return new V4StampService(http, config, vouchersService, campaignService);
 }

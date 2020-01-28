@@ -60,7 +60,7 @@ export { IFormsService } from './lib/auth/authentication/iforms.service';
  * Campaigns
  */
 export { CampaignModule } from './lib/campaign/campaign.module';
-export { ICampaignService } from './lib/campaign/icampaign.service';
+export { ICampaignService, ICampaignFilterOptions } from './lib/campaign/icampaign.service';
 export {
   CampaignType,
   CampaignState,
@@ -208,7 +208,7 @@ export { LongTextComponent } from './lib/survey/question/long-text/long-text.com
 export { GroupComponent } from './lib/survey/question/group/group.component';
 export { RatingComponent } from './lib/survey/question/rating/rating.component';
 export { DateComponent } from './lib/survey/question/date/date.component';
-export { PasswordComponent} from './lib/survey/question/password/password.component';
+export { PasswordComponent } from './lib/survey/question/password/password.component';
 
 /**
  * Config

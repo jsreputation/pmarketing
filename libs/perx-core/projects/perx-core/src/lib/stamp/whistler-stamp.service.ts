@@ -18,6 +18,8 @@ import {
   IWCampaignAttributes,
 } from '@perx/whistler';
 import { oc } from 'ts-optchain';
+import { ICampaignService } from '../campaign/icampaign.service';
+import { CampaignType } from '../campaign/models/campaign.model';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +30,8 @@ export class WhistlerStampService implements StampService {
 
   constructor(
     private http: HttpClient,
-    config: Config
+    config: Config,
+    private cs: ICampaignService
   ) {
     this.baseUrl = `${config.apiHost}`;
   }
@@ -102,7 +105,8 @@ export class WhistlerStampService implements StampService {
 
   // @ts-ignore
   public getActiveCards(stampType?: string): Observable<IStampCard[]> {
-    return of([]);
+    return this.cs.getCampaigns({ type: CampaignType.stamp })
+      .pipe(map(() => []));
     // return throwError('getActiveCards - Not implemented yet');
   }
 }
