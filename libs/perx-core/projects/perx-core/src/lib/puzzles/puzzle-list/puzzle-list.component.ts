@@ -182,8 +182,8 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private initTotal(cards: IStampCard[]): void {
-    if (this.puzzles !== null && cards.length > 0) {
-      this.total = this.puzzles[0].displayProperties.totalSlots || null;
+    if (cards !== null && cards.length > 0) {
+      this.total = cards[0].displayProperties.totalSlots || null;
     } else {
       this.total = null;
     }
