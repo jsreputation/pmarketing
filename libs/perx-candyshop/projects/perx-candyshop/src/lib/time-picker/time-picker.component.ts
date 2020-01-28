@@ -5,11 +5,10 @@ import {
   Input,
   OnDestroy,
   OnInit, Optional, Self, ViewChild,
-  ViewEncapsulation,
 } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
-import {noop, Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
+import { noop, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { NgxMaterialTimepickerComponent, NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
 import { customTimepickerTheme } from './custom-timepicker-theme';
 import { DatepickerRangeValue } from '../../models/datepicker-range-value.interface';
@@ -26,12 +25,11 @@ import { CsFormFieldControl } from '../form-field-control';
       useExisting: TimePickerComponent
     }
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TimePickerComponent extends CsFormFieldControl<any> implements OnInit, OnDestroy, ControlValueAccessor {
+export class TimePickerComponent extends CsFormFieldControl<string> implements OnInit, OnDestroy, ControlValueAccessor {
   @Input() public clickable: boolean = true;
-  @Input() public format: number = 24;
+  @Input() public format: 12 | 24 = 24;
   public timePickerControl: AbstractControl = new FormControl(null, []);
   public theme: NgxMaterialTimepickerTheme = customTimepickerTheme;
   @ViewChild('timePicker', {static: false}) public timePicker: NgxMaterialTimepickerComponent;
@@ -67,6 +65,7 @@ export class TimePickerComponent extends CsFormFieldControl<any> implements OnIn
     this.stateChanges.complete();
     this.destroy$.next();
     this.destroy$.complete();
+    this.cd.detach();
   }
 
   public registerOnChange(fn: any): void {
@@ -87,7 +86,7 @@ export class TimePickerComponent extends CsFormFieldControl<any> implements OnIn
   }
 
   public open(): void {
-    if (this.timePicker) {
+    if (this.timePicker && !this.timePicker.isOpened) {
       this.timePicker.open();
       this.cd.markForCheck();
     }

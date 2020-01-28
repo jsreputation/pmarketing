@@ -118,16 +118,28 @@
 <!--  </cs-separate-range-date-picker>-->
 
 <!--  <h2>Time Picker</h2>-->
-<mat-form-field>
+<mat-form-field [appearance]="appearance">
   <cs-time-picker
+    #time
+    [clickable]="false"
     [formControl]="newFromControl"
     placeholder="input value"
     [disabled]="disabled">
   </cs-time-picker>
-  <button mat-icon-button matSuffix>
+  <button mat-icon-button matSuffix (click)="time.open($event)">
     <mat-icon>keyboard_arrow_down</mat-icon>
   </button>
 </mat-form-field>
+
+<!--<button mat-icon-button matSuffix (click)="time.open($event)">-->
+<!--  <mat-icon>keyboard_arrow_down</mat-icon>-->
+<!--</button>-->
+
+<cs-time-picker
+  [formControl]="newFromControl3"
+  placeholder="input value"
+  [disabled]="disabled">
+</cs-time-picker>
 
 
 <!--  <h2>Tag List</h2>-->

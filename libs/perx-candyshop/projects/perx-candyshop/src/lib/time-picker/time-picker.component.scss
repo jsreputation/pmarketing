@@ -1,7 +1,7 @@
 .time-picker {
   width: 100%;
-  min-width: 7rem;
-  max-width: 10rem;
+  //min-width: 7rem;
+  //max-width: 10rem;
 
   .ngx-material-timepicker-toggle {
     position: relative;
@@ -13,6 +13,15 @@
   &-toggle {
     outline: none;
     cursor: pointer;
+
+    .disable {
+      pointer-events: none;
+      cursor: default !important;
+
+      .ngx-material-timepicker-toggle {
+        cursor: default !important;
+      }
+    }
   }
 
   .disable {
