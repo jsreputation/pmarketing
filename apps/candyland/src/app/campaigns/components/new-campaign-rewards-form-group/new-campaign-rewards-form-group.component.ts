@@ -95,6 +95,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
           this.cd.detectChanges();
         }
       });
+    this.handlerForToucheFormGroup();
   }
 
   public ngOnDestroy(): void {
@@ -239,5 +240,43 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
       this.outcomes[index].outcome.probability = 0;
     }
     this.updateOutcomesInCampaign();
+  }
+
+  private handlerForToucheFormGroup(): void {
+    this.store.currentCampaign$
+      .asObservable()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        if (this.formParent.get('totalProbAllSlots').touched) {
+          this.viewItemChildren.forEach((component) => {
+            component.group.get('limit').markAsTouched();
+            component.group.get('probability').markAsTouched();
+            component.runChangeDetection();
+          });
+        }
+
+        // it is needed for the set or remove error unpatchedSlot
+        // when we choose spin type of engagement
+        // for the Outcomes step
+        if (this.formParent.get('totalFilledAllSlots').touched
+        &&  this.checkValueSlots((this.formParent.get('totalProbAllSlots') as FormGroup)) && this.isSpinEngagement) {
+          this.formParent.get('totalFilledAllSlots').setErrors({unpatchedSlot: true});
+          this.formParent.updateValueAndValidity();
+          this.cd.markForCheck();
+        }
+        if (!this.isSpinEngagement) {
+          this.formParent.get('totalFilledAllSlots').setErrors(null);
+          this.formParent.updateValueAndValidity();
+        }
+      });
+  }
+
+  private checkValueSlots(group?: FormGroup): boolean {
+    const controls = group.controls;
+    for (const key in controls) {
+      if (controls.hasOwnProperty(key)) {
+        return controls[key].value <= 0;
+      }
+    }
   }
 }

@@ -10,7 +10,6 @@ import { oc } from 'ts-optchain';
 
 interface ISigninConfig {
   redirectAfterLogin: string;
-  showSubtitleLogin: boolean;
 }
 
 @Component({

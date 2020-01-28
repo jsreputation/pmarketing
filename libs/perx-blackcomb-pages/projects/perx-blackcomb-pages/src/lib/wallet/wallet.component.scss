@@ -19,10 +19,9 @@ h1 {
 
 .tab-group__content {
   padding: 0 1.6rem;
-  flex-direction: column;
+  height: 100%;
+  overflow-y: scroll;
   box-sizing: border-box;
-  display: flex;
-  min-height: calc(100vh - 108px);
 
   > h1:first-child {
     padding-top: 2rem;
@@ -79,4 +78,8 @@ h1 {
     margin: 4px 0;
     padding: 0;
   }
+}
+
+:host ::ng-deep .game-container {
+  overflow: hidden;
 }

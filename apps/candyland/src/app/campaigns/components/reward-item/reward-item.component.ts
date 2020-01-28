@@ -1,5 +1,5 @@
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { ICampaignOutcome } from '@cl-core/models/campaign/campaign';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
@@ -22,9 +22,11 @@ export class RewardItemComponent implements OnInit {
   @Output() private updateOutcome: EventEmitter<{ probability: number, limit: number }> =
     new EventEmitter<{ probability: number, limit: number }>();
 
+  constructor(private cd: ChangeDetectorRef) {}
+
   public group: FormGroup = new FormGroup({
-    probability: new FormControl(null),
-    limit: new FormControl(null)
+    probability: new FormControl(null, [Validators.min(1)]),
+    limit: new FormControl(null, [Validators.min(1)])
   }, {updateOn: 'blur'});
   private destroy$: Subject<void> = new Subject();
 
@@ -68,6 +70,10 @@ export class RewardItemComponent implements OnInit {
   }
   public delete(): void {
     this.clickDelete.emit(this.outcomeData);
+  }
+
+  public runChangeDetection(): void {
+    this.cd.detectChanges();
   }
 
 }
