@@ -7,12 +7,13 @@ import {
   Voucher,
   CampaignType,
   ConfigService,
-  IConfig
+  IConfig, ILoyalty, IProfile
 } from '@perx/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IAbensonConfig } from '../model/IAbenson.model';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-home',
@@ -24,11 +25,15 @@ export class HomeComponent implements OnInit {
   public vouchers$: Observable<Voucher[]>;
   public filter: string[];
   public comingSoon: boolean = true;
+  public subTitleFn: (loyalty: ILoyalty) => string;
+  public summaryExpiringFn: (loyalty: ILoyalty) => string;
+
   constructor(
     private router: Router,
     private vouchersService: IVoucherService,
     private campaignService: ICampaignService,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private datePipe: DatePipe
   ) { }
 
   public ngOnInit(): void {
@@ -39,6 +44,9 @@ export class HomeComponent implements OnInit {
       .pipe(map((campaign) => campaign.filter(el => el.type === CampaignType.game)));
     this.vouchers$ = this.vouchersService.getAll();
     this.filter = [VoucherState.issued, VoucherState.reserved, VoucherState.released];
+    this.subTitleFn = (loyalty: ILoyalty) => `Equivalent to ${loyalty.currency}${loyalty.currencyBalance} e-Cash`;
+    this.summaryExpiringFn = () => `Your total points as of ${this.datePipe.transform(new Date(), 'mediumDate')}`;
+
   }
 
   public onCampaignSelect(campaign: ICampaign): void {
