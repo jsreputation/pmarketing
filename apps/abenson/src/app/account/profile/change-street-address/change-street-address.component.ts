@@ -3,6 +3,7 @@ import {
   OnInit,
 } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormGroup,
   Validators,
@@ -22,6 +23,10 @@ import {
 export class ChangeStreetAddressComponent implements OnInit {
   public streetAddressChangeForm: FormGroup;
   private customProperties: ICustomProperties;
+
+  public get newStreetAddress(): AbstractControl | null {
+    return this.streetAddressChangeForm.get('newStreetAddress');
+  }
 
   constructor(
     private fb: FormBuilder,

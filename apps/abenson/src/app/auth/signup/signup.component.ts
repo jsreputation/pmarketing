@@ -6,22 +6,24 @@ import {
   Validators,
   FormBuilder,
   FormGroup,
+  AbstractControl,
 } from '@angular/forms';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 
 import {
   of,
   throwError,
 } from 'rxjs';
-import {mergeMap} from 'rxjs/operators';
+import { mergeMap } from 'rxjs/operators';
 
 import {
   AuthenticationService,
-  ISignUpData, NotificationService,
+  ISignUpData,
+  NotificationService,
   ProfileService,
 } from '@perx/core';
 
-import {SharedDataService} from 'src/app/services/shared-data.service';
+import { SharedDataService } from 'src/app/services/shared-data.service';
 
 @Component({
   selector: 'app-signup',
@@ -33,6 +35,26 @@ export class SignUpComponent implements OnInit {
   public errorMessage?: string;
   public hide: boolean = true;
   public appAccessTokenFetched: boolean;
+
+  public get firstName(): AbstractControl | null {
+    return this.signUpForm.get('firstName');
+  }
+
+  public get lastName(): AbstractControl | null {
+    return this.signUpForm.get('lastName');
+  }
+
+  public get phone(): AbstractControl | null {
+    return this.signUpForm.get('phone');
+  }
+
+  public get password(): AbstractControl | null {
+    return this.signUpForm.get('password');
+  }
+
+  public get acceptTerms(): AbstractControl | null {
+    return this.signUpForm.get('acceptTerms');
+  }
 
   constructor(
     private fb: FormBuilder,
@@ -64,14 +86,14 @@ export class SignUpComponent implements OnInit {
       lastName: ['', Validators.required],
       phone: ['', Validators.required],
       password: ['', [Validators.required, Validators.maxLength(4), Validators.minLength(4)]],
-      accept_terms: [false, Validators.requiredTrue],
+      acceptTerms: [false, Validators.requiredTrue],
       cardNumber: ['', [Validators.minLength(16), Validators.maxLength(16)]]
     });
   }
 
   public onSubmit(): void {
     const password: string = this.signUpForm.value.password;
-    const termsConditions = this.signUpForm.value.accept_terms as boolean;
+    const termsConditions = this.signUpForm.value.acceptTerms as boolean;
     if (!termsConditions) {
       return;
     }
