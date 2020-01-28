@@ -16,7 +16,6 @@ import Utils from '@cl-helpers/utils';
   selector: 'cl-new-campaign-detail-page',
   templateUrl: './new-campaign-detail-page.component.html',
   styleUrls: ['./new-campaign-detail-page.component.scss']
-  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NewCampaignDetailPageComponent extends AbstractStepWithForm implements OnInit, OnDestroy {
   public form: FormGroup;
@@ -63,7 +62,7 @@ export class NewCampaignDetailPageComponent extends AbstractStepWithForm impleme
     private toggleControlService: ToggleControlService,
     private route: ActivatedRoute
   ) {
-    super(2, store, stepConditionService);
+    super(0, store, stepConditionService);
     this.initForm();
   }
 

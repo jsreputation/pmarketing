@@ -27,18 +27,19 @@
 <section class="content form-limiter">
   <mat-horizontal-stepper labelPosition="bottom" [linear]="true" #stepper (selectionChange)="goNext($event)">
     <mat-step [completed]="getStepCondition(0)">
+      <ng-template matStepLabel>{{'CAMPAIGN.CAMPAIGN_DETAILS' | translate}}</ng-template>
+      <cl-new-campaign-detail-page></cl-new-campaign-detail-page>
+    </mat-step>
+    <mat-step [completed]="getStepCondition(1) && getStepCondition(1.1)">
       <ng-template matStepLabel>{{'CAMPAIGN.SELECT_ENGAGEMENT' | translate}}</ng-template>
       <cl-new-campaign-select-engagement-page
         [tenantSettings]="tenantSettings"></cl-new-campaign-select-engagement-page>
     </mat-step>
-    <mat-step [completed]="getStepCondition(1) && getStepCondition(1.1)">
-      <ng-template matStepLabel>{{'CAMPAIGN.REWARDS_LIMITS' | translate}}</ng-template>
+    <mat-step [completed]="getStepCondition(1) && getStepCondition(2)">
+      <ng-template matStepLabel>{{'CAMPAIGN.OUTCOMES' | translate}}</ng-template>
       <cl-new-campaign-rewards-limits-page [tenantSettings]="tenantSettings"></cl-new-campaign-rewards-limits-page>
     </mat-step>
-    <mat-step [completed]="getStepCondition(2)">
-      <ng-template matStepLabel>{{'CAMPAIGN.CAMPAIGN_DETAILS' | translate}}</ng-template>
-      <cl-new-campaign-detail-page></cl-new-campaign-detail-page>
-    </mat-step>
+
     <mat-step>
       <!--[completed]="getStepCondition(2)"-->
       <ng-template matStepLabel>{{'CAMPAIGN.CHANNELS' | translate}}</ng-template>

@@ -7,7 +7,7 @@ import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '
 import { Observable, range, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil, toArray } from 'rxjs/operators';
 import { CampaignCreationStoreService, ICampaignConfig } from '../../services/campaigns-creation-store.service';
-import { AudiencesService, StampsService } from '@cl-core-services';
+import { StampsService } from '@cl-core-services';
 import { ICampaign } from '@cl-core/models/campaign/campaign';
 import { NewCampaignDetailFormService } from '../../services/new-campaign-detail-form.service';
 import { StepConditionService } from '../../services/step-condition.service';
@@ -43,7 +43,6 @@ export class NewCampaignNotificationsComponent implements OnInit, OnChanges, OnD
               public store: CampaignCreationStoreService,
               private cd: ChangeDetectorRef,
               private stampsService: StampsService,
-              private audiencesService: AudiencesService,
               private newCampaignDetailFormService: NewCampaignDetailFormService,
               public stepConditionService: StepConditionService,
               private route: ActivatedRoute,
@@ -58,7 +57,6 @@ export class NewCampaignNotificationsComponent implements OnInit, OnChanges, OnD
     this.getStampData();
     this.subscribeToStore();
 
-    this.initPools();
     this.config = this.store.config;
     this.initData();
   }
@@ -254,13 +252,6 @@ export class NewCampaignNotificationsComponent implements OnInit, OnChanges, OnD
 
   private initForm(): void {
     this.form = this.newCampaignDetailFormService.getForm();
-  }
-
-  private initPools(): any {
-    this.audiencesService.getAudiencesList()
-      .subscribe((data: any) => {
-        this.pools = data;
-      });
   }
 
   public addAge(): void {
