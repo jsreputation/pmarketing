@@ -11,9 +11,10 @@ import {
 } from 'rxjs/operators';
 import {
   LoyaltyService,
-  ITransaction, ConfigService, IConfig,
+  ITransaction, ILoyalty, ConfigService, IConfig,
 } from '@perx/core';
 import {IAbensonConfig} from '../../../model/IAbenson.model';
+import {CurrencyPipe, DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-card',
@@ -35,14 +36,19 @@ export class CardComponent implements OnInit {
     History: 1,
   };
   public brandingImg: string;
+  public subTitleFn: (loyalty: ILoyalty) => string;
+  public summaryExpiringFn: (loyalty: ILoyalty) => string;
 
   constructor(
     private loyaltyService: LoyaltyService,
-    private configService: ConfigService
-  ) {
+    private configService: ConfigService,
+    private datePipe: DatePipe,
+    private currencyPipe: CurrencyPipe) {
     this.transactions$ = this.transactions.asObservable().pipe(
       scan((acc, curr) => [...acc, ...curr ? curr : []], [])
     );
+    this.subTitleFn = (loyalty: ILoyalty) => `Equivalent to ${this.currencyPipe.transform(loyalty.currencyBalance, loyalty.currency, 'symbol-narrow', '1.0-0', 'en-PH')} e-Cash`;
+    this.summaryExpiringFn = () => `Your total points as of ${this.datePipe.transform(new Date(), 'mediumDate')}`;
   }
 
   public ngOnInit(): void {
