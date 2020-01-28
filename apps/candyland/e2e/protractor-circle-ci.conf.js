@@ -8,7 +8,7 @@ config.capabilities = {
 };
 
 config.cucumberOpts = {
-  format: 'json:./apps/candyland/e2e/src/resultsOutput/result.json',
+  format: 'json:e2e/src/resultsOutput/result.json',
   require: [
     './src/steps/**/*.steps.ts',
     './src/features/'

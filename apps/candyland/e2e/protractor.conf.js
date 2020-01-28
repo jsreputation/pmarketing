@@ -56,8 +56,8 @@ exports.config = {
     var reporter = require('cucumber-html-reporter');
     var options = {
       theme: 'bootstrap',
-      jsonFile: './apps/candyland/e2e/src/resultsOutput/result.json',
-      output: './apps/candyland/e2e/src/resultsOutput/cucumber_report.html',
+      jsonFile: require('path').join(__dirname,'./src/resultsOutput/result.json'),
+      output: require('path').join(__dirname,'./src/resultsOutput/cucumber_report.html'),
       reportSuiteAsScenarios: true,
       launchReport: true,
       scenarioTimestamp: true,
