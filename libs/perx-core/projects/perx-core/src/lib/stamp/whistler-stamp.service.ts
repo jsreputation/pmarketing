@@ -15,7 +15,7 @@ import {
   IJsonApiItem,
   IWCampaignDisplayProperties,
   IWAttbsObjStamp,
-  IWAttbsObjEntity,
+  IWCampaignAttributes,
 } from '@perx/whistler';
 import { oc } from 'ts-optchain';
 
@@ -71,7 +71,7 @@ export class WhistlerStampService implements StampService {
     if (this.cache[campaignId]) {
       return of(this.cache[campaignId]);
     }
-    return this.http.get<IJsonApiItemPayload<IWAttbsObjEntity>>(`${this.baseUrl}/campaign/entities/${campaignId}`)
+    return this.http.get<IJsonApiItemPayload<IWCampaignAttributes>>(`${this.baseUrl}/campaign/entities/${campaignId}`)
       .pipe(
         map(res => res.data.attributes),
         switchMap(correctEntityAttribute => {
@@ -100,7 +100,9 @@ export class WhistlerStampService implements StampService {
     throw new Error(`Method not implemented. ${cardId}`);
   }
 
-  public play(): Observable<boolean> {
-    return of(true);
+  // @ts-ignore
+  public getActiveCards(stampType?: string): Observable<IStampCard[]> {
+    return of([]);
+    // return throwError('getActiveCards - Not implemented yet');
   }
 }
