@@ -1,10 +1,8 @@
 import { TestBed, fakeAsync, inject, tick } from '@angular/core/testing';
 
 import { WhistlerCampaignService } from './whistler-campaign.service';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ConfigModule } from '../config/config.module';
 import { ICampaign } from './models/campaign.model';
-import { Type } from '@angular/core';
 
 import {
   IWCampaignAttributes,
@@ -17,8 +15,8 @@ import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 
 describe('WhistlerCampaignService', () => {
-  let httpTestingController: HttpTestingController;
   let service: WhistlerCampaignService;
+  let httpClientSpy: { get: jasmine.Spy };
 
   const environment = {
     apiHost: 'https://blabla',
@@ -98,13 +96,16 @@ describe('WhistlerCampaignService', () => {
   };
 
   beforeEach(() => {
+    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
+
     TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule,
         ConfigModule.forRoot({ ...environment })
       ],
+      providers: [
+        { provide: HttpClient, useValue: httpClientSpy }
+      ]
     });
-    httpTestingController = TestBed.get<HttpTestingController>(HttpTestingController as Type<HttpTestingController>);
     service = TestBed.get(WhistlerCampaignService);
   });
 
@@ -113,35 +114,25 @@ describe('WhistlerCampaignService', () => {
   });
 
   it('should get empty campaigns', (done: DoneFn) => {
-    service.getCampaigns()
-      .subscribe((campaigns: ICampaign[]) => {
-        expect(campaigns.length).toBe(0);
-        done();
-      });
-
-    const req = httpTestingController.expectOne('https://blabla/campaign/entities?page[number]=1');
-    expect(req.request.method).toEqual('GET');
     const res: IJsonApiListPayload<IWCampaignAttributes> = {
       data: [],
       meta: {
         page_count: 1
       }
     };
-    req.flush(res);
+    httpClientSpy.get.and.returnValue(of(res));
 
-    httpTestingController.verify();
-  });
-
-  it('should get campaigns pages', (done: DoneFn) => {
     service.getCampaigns()
       .subscribe((campaigns: ICampaign[]) => {
-        // only one campaign is expected
-        expect(campaigns.length).toBe(1);
+        expect(campaigns.length).toBe(0);
         done();
       });
 
-    const req1 = httpTestingController.expectOne('https://blabla/campaign/entities?page[number]=1');
-    expect(req1.request.method).toEqual('GET');
+    expect(httpClientSpy.get.calls.count()).toBe(1);
+    expect(httpClientSpy.get.calls.argsFor(0)).toEqual(['https://blabla/campaign/entities', { params: { 'page[number]': '1' } }]);
+  });
+
+  it('should get campaigns pages', (done: DoneFn) => {
     const res: IJsonApiListPayload<IWCampaignAttributes> = {
       data: [
         mockCampaign,
@@ -152,12 +143,22 @@ describe('WhistlerCampaignService', () => {
         page_count: 1
       }
     };
-    req1.flush(res);
+    httpClientSpy.get.and.returnValue(of(res));
 
-    httpTestingController.verify();
+    service.getCampaigns()
+      .subscribe((campaigns: ICampaign[]) => {
+        // only one campaign is expected as the 2 other ones are not active yet
+        expect(campaigns.length).toBe(1);
+        done();
+      });
+
+    expect(httpClientSpy.get.calls.count()).toBe(1);
+    expect(httpClientSpy.get.calls.argsFor(0)).toEqual(['https://blabla/campaign/entities', { params: { 'page[number]': '1' } }]);
   });
 
   it('should get one campaign', (done: DoneFn) => {
+    const res: IJsonApiItemPayload<IWCampaignAttributes> = { data: mockCampaign };
+    httpClientSpy.get.and.returnValue(of(res));
     service.getCampaign(42)
       .subscribe((campaign: ICampaign) => {
         expect(`${campaign.id}`).toEqual(mockCampaign.id);
@@ -165,14 +166,8 @@ describe('WhistlerCampaignService', () => {
         done();
       });
 
-    const req1 = httpTestingController.expectOne('https://blabla/campaign/entities/42');
-    expect(req1.request.method).toEqual('GET');
-    const res: IJsonApiItemPayload<IWCampaignAttributes> = {
-      data: mockCampaign
-    };
-    req1.flush(res);
-
-    httpTestingController.verify();
+    expect(httpClientSpy.get.calls.count()).toBe(1);
+    expect(httpClientSpy.get.calls.argsFor(0)).toEqual(['https://blabla/campaign/entities/42']);
   });
 
   it('endDate should be null if end_date_time is null or not defined', () => {
@@ -186,12 +181,12 @@ describe('WhistlerCampaignService', () => {
   });
 
   it('startsAfter handle null values', fakeAsync(inject([WhistlerCampaignService, HttpClient],
-    (campaign: WhistlerCampaignService, http: HttpClient) => {
-      const spy = spyOn(http, 'get').and.returnValue(of(campaingMock));
+    (campaign: WhistlerCampaignService) => {
+      httpClientSpy.get.and.returnValue(of(campaingMock));
       campaign.getCampaigns().subscribe(() => { });
       // second call for write value to cashe
       campaign.getCampaigns().subscribe(() => { });
       tick();
-      expect(spy).toHaveBeenCalled();
+      expect(httpClientSpy.get).toHaveBeenCalled();
     })));
 });
