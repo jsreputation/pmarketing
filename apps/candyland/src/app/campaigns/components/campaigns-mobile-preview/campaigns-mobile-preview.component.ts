@@ -60,7 +60,7 @@ export class CampaignsMobilePreviewComponent implements OnInit, OnDestroy {
   }
 
   private prepareStampsData(): void {
-    if (this.engagement.nb_of_slots) {
+    if (this.engagement && this.engagement.nb_of_slots) {
       for (let i = 0; i <= this.engagement.nb_of_slots; i++) {
         this.stamps.push({
           id: 1,
@@ -77,14 +77,14 @@ export class CampaignsMobilePreviewComponent implements OnInit, OnDestroy {
   }
 
   private setSurveyQuestion(data: any): void {
-    if (data.attributes_type === 'survey') {
+    if (data && data.attributes_type === 'survey') {
       this.questionData$.next({ questions: [data.questions] });
       this.cd.detectChanges();
     }
   }
 
   private setReward(data: any): void {
-    if (data.attributes_type === 'instant_reward') {
+    if (data && data.attributes_type === 'instant_reward') {
       this.reward$.next([{
         id: 1,
         name: 'Reward Name',
