@@ -29,7 +29,10 @@ const appConfigFile = `{
   "baseHref": "${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}",
   "sourceType": "${process.env.SOURCE_TYPE ? process.env.SOURCE_TYPE : ''}",
   "redirectAfterLogin": "${process.env.redirectAfterLogin ? process.env.redirectAfterLogin : '/wallet'}",
-  "custom": {"comingSoon": ${process.env.COMING_SOON ? process.env.COMING_SOON : false}}
+  "custom": {
+    "comingSoon": ${process.env.COMING_SOON ? process.env.COMING_SOON : false},
+    "cardBrandingImage": ${process.env.CARD_BRANDING_IMG ? process.env.CARD_BRANDING_IMG : ''},
+  }
 }
 `;
 
