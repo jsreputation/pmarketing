@@ -8,13 +8,13 @@ import {
   FormGroup,
   AbstractControl,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
 
 import {
   of,
   throwError,
 } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
+import {mergeMap} from 'rxjs/operators';
 
 import {
   AuthenticationService,
@@ -23,7 +23,7 @@ import {
   ProfileService,
 } from '@perx/core';
 
-import { SharedDataService } from 'src/app/services/shared-data.service';
+import {SharedDataService} from 'src/app/services/shared-data.service';
 
 @Component({
   selector: 'app-signup',
@@ -116,13 +116,23 @@ export class SignUpComponent implements OnInit {
       this.router.navigate(['sms-validation'], {
         queryParams: {identifier: profile.phone}
       });
-    }, () => {
-      // card error handling
-      this.notificationService.addPopup({
-        title: 'PROFILE NOT FOUND',
-        text: 'Please check that your PLUS! Card number and last name are correct and try again. If you need help, you may reach us at +63 (02) 8981 0025',
-        buttonTxt: 'OK'
-      });
+    }, (error: any) => {
+      if (error.status === 409) {
+        // http conflict
+        this.notificationService.addPopup({
+          title: 'Account Exists',
+          text: 'This account already exists. Please log in instead.',
+          buttonTxt: 'CLOSE'
+        });
+      } else {
+        // card error handling
+        this.notificationService.addPopup({
+          title: 'PROFILE NOT FOUND',
+          text: 'Please check that your PLUS! Card number and last name are correct and try again. If you need help, you may reach us at +63 (02) 8981 0025',
+          buttonTxt: 'OK'
+        });
+      }
+
     });
   }
 }

@@ -1,8 +1,8 @@
 # Essential reading
 Please read the [Coding Guidelines](coding-guidelines.md) before starting
 
-# Instructions
-Download dependencies
+# Getting Started
+Download/Install dependencies
 ```bash
 yarn
 ```
@@ -13,8 +13,50 @@ yarn build
 ```
 
 Global test
-```
+```bash
 yarn test-ci
+```
+
+# Dev bootstrap
+To start working on a specific app, `cd` into one of the app folders in `/apps`
+```bash
+cd apps/<app> 
+```
+then take a look at the package.json to figure out which yarn script to get start with the chosen backend.
+The default is still 
+```bash 
+yarn start
+```
+### node express proxy
+
+ Create `backend/apputh-server/config.json` with the following format. Ask someone for the secrets
+```json
+{
+  "endpoints": {
+    "microsite.perxtech.org": {
+      "account_id": "2"
+    },
+    "localhost:4200": {
+      "account_id": "3"
+    }
+  },
+  "credentials": {
+    "2": {
+      "target_url": "https://whistler-api-dev.perxtech.org/cognito/users",
+      "perx_access_key_id": "",
+      "perx_secret_access_key": ""
+    },
+    "3": {
+      "target_url": "https://api.perxtech.io",
+      "perx_access_key_id": "",
+      "perx_secret_access_key": ""
+    }
+  }
+}
+```
+Run the node server for login/theming api capability 
+```bash 
+yarn server
 ```
 
 # Philosophy
@@ -62,54 +104,6 @@ imports: [
 })
 
 ```
-# Enabling login functionality
-
- * Create `backend/apputh-server/config.json` with the following format. Ask someone for the secrets
-     ```json
-     {
-      "endpoints": {
-        "microsite.perxtech.org": {
-          "target_url": "https://whistler-api-dev.perxtech.org/cognito/users",
-          "account_id": "2"
-        },
-        "localhost:4200": {
-          "target_url": "https://api.perxtech.io",
-          "account_id": "3"
-        }
-      },
-      "credentials": {
-        "2": {
-          "perx_access_key_id": "",
-          "perx_secret_access_key": ""
-        },
-        "3": {
-          "perx_access_key_id": "",
-          "perx_secret_access_key": ""
-        }
-      }
-    }
-     ```
- * Run the node server for login api capability
- * `apps/{app}/src/environments` should have at minimum
-   ```js
-   export const environment = {
-      apiHost: 'https://api.perxtech.io',
-      production: false,
-      preAuthPath: '/preauth',
-      preAuth: false,
-    };
-   ```
- * In `apps/{app}/src/app/app.module.ts` add these 3 modules
-   ```js
-    @NgModule({
-    imports: [
-        ...
-        AuthenticationModule.forRoot({ env: environment }),
-        ],
-    ...
-    })
-
-   ```
 
 ## Local Deployment
 
