@@ -11,8 +11,9 @@ import {
 } from 'rxjs/operators';
 import {
   LoyaltyService,
-  ITransaction,
+  ITransaction, ConfigService, IConfig,
 } from '@perx/core';
+import {IAbensonConfig} from '../../../model/IAbenson.model';
 
 @Component({
   selector: 'app-card',
@@ -33,11 +34,18 @@ export class CardComponent implements OnInit {
     MyCard: 0,
     History: 1,
   };
+  public brandingImg: string;
 
-  constructor(private loyaltyService: LoyaltyService) {
+  constructor(
+    private loyaltyService: LoyaltyService,
+    private configService: ConfigService
+  ) {
     this.transactions$ = this.transactions.asObservable().pipe(
       scan((acc, curr) => [...acc, ...curr ? curr : []], [])
     );
+    this.configService.readAppConfig<IAbensonConfig>().subscribe((config: IConfig<IAbensonConfig>) => {
+      this.brandingImg = config.custom && config.custom.cardBrandingImage ? config.custom.cardBrandingImage : '';
+    });
   }
 
   public ngOnInit(): void {

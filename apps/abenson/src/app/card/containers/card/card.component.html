@@ -13,6 +13,9 @@
   >
     <mat-tab label="MyCard">
       <perx-core-loyalty-summary></perx-core-loyalty-summary>
+      <div class="branding-image" *ngIf="brandingImg !== ''">
+        <img [src]="brandingImg">
+      </div>
       <div class="bc-block">
         <div class="barcode">
           <ngx-barcode [bc-value]="membershipId" [bc-display-value]="true"></ngx-barcode>
