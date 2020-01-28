@@ -21,7 +21,14 @@ import {
 } from '@perx/core';
 import { TranslateService } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
-import { tap, mergeMap, map, takeUntil, filter, take } from 'rxjs/operators';
+import {
+  tap,
+  mergeMap,
+  map,
+  takeUntil,
+  filter,
+  take
+} from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 
 interface IStampCardConfig {
@@ -48,7 +55,6 @@ export class WalletComponent implements OnInit, OnDestroy {
   // public stampsType: string;
   public puzzleTextFn: (puzzle: IStampCard) => string;
   public titleFn: (index?: number) => string;
-  public campaignId: number | null | undefined;
 
   constructor(
     private router: Router,
@@ -57,7 +63,8 @@ export class WalletComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private configService: ConfigService,
     private stampService: StampService,
-  ) { }
+  ) {
+  }
 
   public ngOnInit(): void {
     this.getStampCard();
@@ -84,7 +91,7 @@ export class WalletComponent implements OnInit, OnDestroy {
   }
 
   private getStampCard(): void {
-    this.configService.readAppConfig<IStampCardConfig>().pipe(
+    this.stampCards$ = this.configService.readAppConfig<IStampCardConfig>().pipe(
       map((config: IConfig<IStampCardConfig>) => oc(config).custom.stampsType('puzzle')),
       tap((stampsType: string) => {
         if (stampsType === 'stamp_card') {
@@ -96,12 +103,10 @@ export class WalletComponent implements OnInit, OnDestroy {
       }),
       mergeMap((stampsType: string) => this.stampService.getActiveCards(stampsType)),
       filter((cards: IStampCard[]) => cards.length > 0),
-      map((cards: IStampCard[]) => cards[0]),
+      map((cards: IStampCard[]) => [cards[0]]),
       take(1),
       takeUntil(this.destroy$)
-    ).subscribe((card: IStampCard) => {
-      this.campaignId = card.campaignId;
-    });
+    );
   }
 
   public puzzleIndex(index: number): string {

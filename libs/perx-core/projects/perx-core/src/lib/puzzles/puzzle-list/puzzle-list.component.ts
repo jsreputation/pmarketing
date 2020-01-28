@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter, Input, OnChanges, SimpleChanges, OnDestroy, OnInit } from '@angular/core';
 import { StampService } from '../../stamp/stamp.service';
 import { IStampCard, StampCardState, StampState } from '../../stamp/models/stamp.model';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -10,8 +10,8 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./puzzle-list.component.scss']
 })
 export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
-
-  public puzzles: IStampCard[] | null;
+  @Input('cards')
+  public puzzles: Observable<IStampCard[]> | null = null;
 
   @Input()
   public repeatGhostCount: number = 10;
@@ -37,15 +37,8 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
 
   @Output()
   public completed: EventEmitter<void> = new EventEmitter<void>();
-  private destroy$: Subject<any> = new Subject();
 
-  private initTotal(): void {
-    if (this.puzzles !== null && this.puzzles.length > 0) {
-      this.total = this.puzzles[0].displayProperties.totalSlots || null;
-    } else {
-      this.total = null;
-    }
-  }
+  private destroy$: Subject<void> = new Subject();
 
   constructor(private stampService: StampService) {
   }
@@ -64,15 +57,15 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
     if (changes.campaignId) {
       this.puzzles = null;
       if (this.campaignId !== null) {
-        this.stampService.getCards(this.campaignId)
+        this.puzzles = this.stampService.getCards(this.campaignId);
+        this.puzzles
           .pipe(takeUntil(this.destroy$))
           .subscribe((res: IStampCard[]) => {
-            this.puzzles = res;
-            this.initTotal();
+            this.initTotal(res);
             // assume all is completed
             let completed = true;
             // loop over all puzzles
-            for (const puzzle of this.puzzles) {
+            for (const puzzle of res) {
               if (puzzle.stamps === undefined || puzzle.stamps.length === 0) {
                 // if there is no stamps objet at all then, it is not completed
                 completed = false;
@@ -186,5 +179,13 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  private initTotal(cards: IStampCard[]): void {
+    if (this.puzzles !== null && cards.length > 0) {
+      this.total = this.puzzles[0].displayProperties.totalSlots || null;
+    } else {
+      this.total = null;
+    }
   }
 }
