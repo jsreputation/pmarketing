@@ -39,7 +39,7 @@ export class StampComponent implements OnInit, OnDestroy {
   }
 
   public downloadReport(): void {
-    this.csvReportService.downloadReport('stamp_campaign_report', { campaign_id: this.id });
+    this.csvReportService.downloadReport('report_stamp_campaigns_summary', { campaign_id: this.id });
   }
 
   public onClose(): void {
