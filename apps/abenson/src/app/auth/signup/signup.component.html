@@ -24,6 +24,13 @@
         </mat-error>
       </mat-form-field>
       <mat-form-field appearance="fill" class="full-width__input">
+        <mat-label>Email (optional)</mat-label>
+        <input matInput placeholder="Email" formControlName="email">
+        <mat-error *ngIf="email && email.hasError('required')">
+          Email is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width__input">
         <mat-label>Mobile Number</mat-label>
         <input matInput placeholder="Mobile Number" formControlName="phone">
         <mat-error *ngIf="phone && phone.hasError('required')">
@@ -41,13 +48,13 @@
           Pin Code should be 4 characters long
         </mat-error>
       </mat-form-field>
-      <mat-form-field appearance="fill" class="full-width__input">
-        <mat-label>16 Digit Plus! Card Number (optional)</mat-label>
-        <input matInput placeholder="16 Digit Plus! Card Number (optional)" formControlName="cardNumber">
-        <mat-error *ngIf="phone && phone.hasError('required')">
-          Mobile Number is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+<!--      <mat-form-field appearance="fill" class="full-width__input">-->
+<!--        <mat-label>16 Digit Plus! Card Number (optional)</mat-label>-->
+<!--        <input matInput placeholder="16 Digit Plus! Card Number (optional)" formControlName="cardNumber">-->
+<!--        <mat-error *ngIf="phone && phone.hasError('required')">-->
+<!--          Mobile Number is <strong>required</strong>-->
+<!--        </mat-error>-->
+<!--      </mat-form-field>-->
       <div class="checkbox-container">
         <div class="checkbox-content">
           <mat-checkbox formControlName="acceptTerms"></mat-checkbox>

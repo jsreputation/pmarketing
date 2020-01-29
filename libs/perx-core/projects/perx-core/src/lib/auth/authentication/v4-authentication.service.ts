@@ -7,9 +7,9 @@ import { AuthenticationService, RequiresOtpError } from './authentication.servic
 import { IProfile } from '../../profile/profile.model';
 import {
   ISignUpData,
-  IResetPasswordData,
   IChangePasswordData,
-  IChangePhoneData
+  IChangePhoneData,
+  IResetPasswordData,
 } from '../authentication/models/authentication.model';
 import { IWAppAccessTokenResponse, IWLoginResponse } from '@perx/whistler';
 import { ProfileService } from '../../profile/profile.service';

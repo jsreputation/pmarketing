@@ -1,19 +1,13 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
-import {
-  Validators,
-  FormBuilder,
-  FormGroup,
-} from '@angular/forms';
-
-import {
-  IMerchantAdminService,
-  IMessageResponse,
-  NotificationService,
-} from '@perx/core';
+import {Component, OnInit} from '@angular/core';
+import {Validators, FormBuilder, FormGroup} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
 import {HttpErrorResponse} from '@angular/common/http';
+import {NotificationService, IMerchantAdminService} from '@perx/core';
+
+interface ResetData {
+  resetPasswordToken: string;
+  clientId: string;
+}
 
 @Component({
   selector: 'app-reset-password',
@@ -22,31 +16,58 @@ import {HttpErrorResponse} from '@angular/common/http';
 })
 export class ResetPasswordComponent implements OnInit {
 
-  public loginForm: FormGroup;
+  public resetPasswordForm: FormGroup;
+  public mobileNumber: string = '';
+  public otp: string = '';
+  public errorMessage: string | null = null;
+
+  private resetData: ResetData = {
+    resetPasswordToken: '',
+    clientId: '',
+  };
 
   constructor(
     private fb: FormBuilder,
-    private notificationService: NotificationService,
+    private router: Router,
     private merchantAdminService: IMerchantAdminService,
+    private notificationService: NotificationService,
+    private activatedRoute: ActivatedRoute
   ) {
-    this.initForm();
+    const queryParams = this.activatedRoute.snapshot.queryParams;
+    const {reset_password_token, client_id} = queryParams;
+    this.resetData.resetPasswordToken = reset_password_token || '';
+    this.resetData.clientId = client_id || '';
   }
 
   public ngOnInit(): void {
+    this.initForm();
   }
 
   private initForm(): void {
-    this.loginForm = this.fb.group({
-      email: ['', Validators.required],
+    this.resetPasswordForm = this.fb.group({
+      password: ['', Validators.required],
+      confirmPassword: ['', Validators.required],
     });
   }
 
   public onSubmit(): void {
-    const email: string = this.loginForm.value.email as string;
-    this.merchantAdminService.forgotPassword(email).subscribe(
-      (res: IMessageResponse) => this.notificationService.addSnack(res.message),
+    const password = this.resetPasswordForm.value.password as string;
+    const confirmPassword = this.resetPasswordForm.value.confirmPassword as string;
+    if (password !== confirmPassword) {
+      this.notificationService.addSnack('Passwords do not match.');
+      return;
+    }
+
+    this.merchantAdminService.resetPassword({
+      clientId: this.resetData.clientId,
+      resetPasswordToken: this.resetData.resetPasswordToken,
+      password,
+    }).subscribe(
+      () => {
+        this.router.navigateByUrl('login');
+        this.notificationService.addSnack('Password successfully updated.');
+      },
       (err: HttpErrorResponse) => this.notificationService.addSnack(err.error.message)
     );
   }
-
 }

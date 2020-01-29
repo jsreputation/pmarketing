@@ -84,3 +84,9 @@ export interface IMerchantTransactionHistory {
     data?: IMerchantPurchaseTransactionHistory | IMerchantRewardTransactionHistory
   };
 }
+
+export interface IResetPasswordData {
+  clientId: string;
+  resetPasswordToken: string;
+  password: string;
+}

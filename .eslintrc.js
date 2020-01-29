@@ -119,7 +119,8 @@ module.exports = {
           "rxjs-tslint-rules",
           "codelyzer",
           "rxjs-tslint",
-          "tslint-consistent-codestyle"
+          "tslint-consistent-codestyle",
+          "tslint-no-focused-test"
         ],
         "rules": {
           "align": [
@@ -166,6 +167,7 @@ module.exports = {
               "format": "PascalCase"
             }
           ],
+          "no-focused-test": true,
           "no-accessor-recursion": true,
           "no-async-without-await": true,
           "no-collapsible-if": true,
