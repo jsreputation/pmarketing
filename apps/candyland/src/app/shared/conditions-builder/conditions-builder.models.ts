@@ -1,4 +1,5 @@
 import { FormGroup } from '@angular/forms';
+import { InjectionToken } from '@angular/core';
 
 export interface IRuleConditionOption {
   value: string;
@@ -22,3 +23,6 @@ export interface IConditionsBuilderGroupMap {
 export interface IConditionsBuilderFormsService {
   groupMap: IConditionsBuilderGroupMap;
 }
+
+export const CONDITION_BUILDER_COMPONENT_MAP = new InjectionToken<IConditionsBuilderComponentMap>('CONDITION_BUILDER_COMPONENT_MAP');
+

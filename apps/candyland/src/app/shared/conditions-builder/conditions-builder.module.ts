@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { InjectionToken, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import {
   MatButtonModule, MatIconModule, MatInputModule, MatMenuModule, MatSelectModule
 } from '@angular/material';
@@ -14,10 +14,8 @@ import { ConditionsBuilderFormsService } from './conditions-builder-forms.servic
 import { ConditionsBuilderComponent } from './conditions-builder.component';
 import { DirectivesModule } from '../directives/directives.module';
 import { DatePickerModule } from '../components/date-picker/date-picker.module';
-import { IConditionsBuilderComponentMap } from '@cl-shared/conditions-builder/conditions-builder.models';
+import { CONDITION_BUILDER_COMPONENT_MAP, IConditionsBuilderComponentMap } from './conditions-builder.models';
 import { RuleConditionType } from '@cl-core/models/loyalty/rule-condition-type.enum';
-
-export const CONDITION_BUILDER_COMPONENT_MAP = new InjectionToken<IConditionsBuilderComponentMap>('CONDITION_BUILDER_COMPONENT_MAP');
 
 const DefaultComponentMap: IConditionsBuilderComponentMap = {
   [RuleConditionType.transaction]: TransactionConditionGroupComponent,

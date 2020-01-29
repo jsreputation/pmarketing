@@ -40,7 +40,7 @@ export class ConditionsBuilderFormsService implements IConditionsBuilderFormsSer
       id: new FormControl(null),
       type: new FormControl(type),
       operator: new FormControl(RuleOperatorType.equal, [Validators.required]),
-      value: new FormControl(null, [Validators.required]),
+      value: new FormControl(0, [Validators.required]),
       valueType: new FormControl('integer'),
     });
   }

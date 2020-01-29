@@ -14,8 +14,13 @@ import Utils from 'src/app/helpers/utils';
 import { ILoyaltyRuleCondition } from 'src/app/core/models/loyalty/loyalty-rules.model';
 import { ConditionsBuilderFormsService } from './conditions-builder-forms.service';
 import { RuleConditionType } from '@cl-core/models/loyalty/rule-condition-type.enum';
-import { IConditionsBuilderComponentMap, IConditionsBuilderConfig, IRuleConditionOption } from './conditions-builder.models';
-import { CONDITION_BUILDER_COMPONENT_MAP } from '@cl-shared/conditions-builder/conditions-builder.module';
+import {
+  CONDITION_BUILDER_COMPONENT_MAP,
+  IConditionsBuilderComponentMap,
+  IConditionsBuilderConfig,
+  IRuleConditionOption
+} from './conditions-builder.models';
+
 
 @Component({
   selector: 'cl-conditions-builder',
