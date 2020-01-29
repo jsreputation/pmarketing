@@ -11,8 +11,9 @@ import {
 } from 'rxjs/operators';
 import {
   LoyaltyService,
-  ITransaction, ILoyalty,
+  ITransaction, ILoyalty, ConfigService, IConfig,
 } from '@perx/core';
+import {IAbensonConfig} from '../../../model/IAbenson.model';
 import {CurrencyPipe, DatePipe} from '@angular/common';
 
 @Component({
@@ -34,12 +35,15 @@ export class CardComponent implements OnInit {
     MyCard: 0,
     History: 1,
   };
+  public brandingImg: string;
   public subTitleFn: (loyalty: ILoyalty) => string;
   public summaryExpiringFn: (loyalty: ILoyalty) => string;
 
-  constructor(private loyaltyService: LoyaltyService,
-              private datePipe: DatePipe,
-              private currencyPipe: CurrencyPipe) {
+  constructor(
+    private loyaltyService: LoyaltyService,
+    private configService: ConfigService,
+    private datePipe: DatePipe,
+    private currencyPipe: CurrencyPipe) {
     this.transactions$ = this.transactions.asObservable().pipe(
       scan((acc, curr) => [...acc, ...curr ? curr : []], [])
     );
@@ -57,6 +61,10 @@ export class CardComponent implements OnInit {
       }
       this.priceLabelFn = (tr: ITransaction) => `Points ${tr.points < 0 ? 'spent' : 'earned'}`;
       this.getTransactions();
+    });
+
+    this.configService.readAppConfig<IAbensonConfig>().subscribe((config: IConfig<IAbensonConfig>) => {
+      this.brandingImg = config.custom && config.custom.cardBrandingImage ? config.custom.cardBrandingImage : '';
     });
   }
 
