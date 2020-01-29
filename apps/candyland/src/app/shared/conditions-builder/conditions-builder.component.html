@@ -1,0 +1,51 @@
+<ng-container *ngFor="let conditionGroup of conditions?.controls; let index = index; let first = first">
+  <div class="row">
+    <!--           *ngIf="!first || conditions.controls.length > 1">-->
+    <label class="loyalty-label">{{(!first ? 'LOYALTY_FEATURE.AND' : '') | translate}}</label>
+    <button class="question-remove cs-btn-transparent"
+            *ngIf="conditions?.controls?.length > 1"
+            (click)="deleteCondition(index)">
+      <i class="icon delete"></i>
+    </button>
+  </div>
+  <div class="card-section card-content">
+    <div class="row">
+      <mat-form-field *ngIf="availableTypeOptionsArray">
+        <mat-select [formControl]="conditionGroup?.get('type')"
+                    (valueChange)="updateCondition(index, $event)">
+          <ng-container *ngFor="let conditionOption of availableTypeOptionsArray[index]">
+            <mat-option [value]="conditionOption?.value">
+              {{conditionOption?.title | translate}}
+            </mat-option>
+          </ng-container>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <ng-container clDynamicFormGroup
+                  [componentMap]="componentMap"
+                  [group]="conditionGroup"
+                  [type]="conditionGroup.get('type')?.value"
+                  [config]="config">
+    </ng-container>
+  </div>
+</ng-container>
+
+<br>
+
+<cs-button *ngIf="availableTypeOptions?.length > 0"
+           [classList]="'tertiary'"
+           mat-icon-button
+           [matMenuTriggerFor]="addConditionMenu">
+        <span>
+         {{'LOYALTY_FEATURE.ADD_CONDITION' | translate}}
+        </span>
+</cs-button>
+
+<mat-menu #addConditionMenu="matMenu">
+  <ng-container *ngFor="let conditionOption of availableTypeOptions">
+    <button mat-menu-item
+            (click)="addCondition(conditionOption?.value)">
+      {{conditionOption?.title | translate}}
+    </button>
+  </ng-container>
+</mat-menu>

@@ -111,3 +111,6 @@ export * from './questions/question-form-field/shared/services/question-form-fie
 export * from './providers/toggle-control.service';
 
 export * from './table';
+
+export * from './conditions-builder/conditions-builder.module';
+export * from './conditions-builder/conditions-builder.component';
