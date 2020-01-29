@@ -4,13 +4,11 @@ import {
   IMerchantAdminTransaction,
   IMerchantProfile,
   IMerchantTransactionHistory,
+  IResetPasswordData,
 } from './models/merchants-admin.model';
 
 import { IVoucher } from '../vouchers/models/voucher.model';
-
-export interface IRes {
-  message: string;
-}
+import { IMessageResponse } from '../perx-core.models';
 
 export abstract class IMerchantAdminService {
   public abstract createTransaction(userId: number, merchantUsername: string, amount: number, currency: string,
@@ -29,5 +27,7 @@ export abstract class IMerchantAdminService {
 
   public abstract getTransactionHistory(page?: number, pageSize?: number, locale?: string): Observable<IMerchantTransactionHistory[]>;
 
-  public abstract forgotPassword(email: string): Observable<IRes>;
+  public abstract forgotPassword(email: string): Observable<IMessageResponse>;
+
+  public abstract resetPassword(resetPasswordInfo: IResetPasswordData): Observable<IMessageResponse>;
 }
