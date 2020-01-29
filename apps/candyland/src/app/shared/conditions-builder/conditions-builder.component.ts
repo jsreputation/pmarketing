@@ -94,8 +94,7 @@ export class ConditionsBuilderComponent implements OnInit, OnDestroy, ControlVal
   }
 
   public createConditionFormField(type: string): FormGroup {
-    const ctrl = this.groupMap[type](type) as FormGroup;
-    return ctrl;
+    return this.groupMap[type](type) as FormGroup;
   }
 
   public registerOnChange(fn: any): void {
