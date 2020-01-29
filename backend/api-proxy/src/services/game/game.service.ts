@@ -28,6 +28,6 @@ export class GameService extends EngagementService<IGame> implements IEngagement
 
     // important so, that parent abstract class get HttpService injected
     constructor(protected http: HttpService) {
-        super(http);
+      super(http);
     }
 }
