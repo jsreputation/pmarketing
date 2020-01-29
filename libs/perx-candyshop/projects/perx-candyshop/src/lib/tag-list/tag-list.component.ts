@@ -10,7 +10,8 @@ import {
 import { MatChipInputEvent } from '@angular/material';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { noop } from 'rxjs';
+import { noop, Subject } from 'rxjs';
+import { CsFormFieldControl } from '../form-field-control';
 
 @Component({
   selector: 'cs-tag-list',
@@ -26,24 +27,24 @@ import { noop } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class TagListComponent implements OnDestroy, ControlValueAccessor {
-  @Input() public visible: boolean = true;
+export class TagListComponent extends CsFormFieldControl<string[]> implements OnDestroy, ControlValueAccessor {
+  // @Input() public visible: boolean = true;
   @Input() public selectable: boolean = true;
   @Input() public removable: boolean = true;
   @Input() public addOnBlur: boolean = true;
-  @Input() public placeholder: string = 'Tags';
+  // @Input() public placeholder: string = 'Tags';
   public readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
-  @Input() set value(setValue: string[]) {
-    this.writeValue(setValue);
-  }
+  // @Input() set value(setValue: string[]) {
+  //   this.writeValue(setValue);
+  // }
+  public control: FormControl = new FormControl();
+  private onChange: any = noop;
+  private onTouched: any = noop;
+  private destroy$: Subject<void> = new Subject();
 
   constructor(public cd: ChangeDetectorRef) { }
   public tags: string[] = [];
-  public control: FormControl = new FormControl();
-  private onChange: any = noop;
-  // @ts-ignore
-  private onTouched: any = noop;
 
   public ngOnDestroy(): void {
   }
