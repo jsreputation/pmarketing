@@ -10,7 +10,7 @@
     "clean": "rm -rf ./dist ./node_modules",
     "test": "ng test",
     "lint": "stylelint src/**/*.*css && eslint \"./src/*/*.ts\"",
-    "lint:fix": "ng lint --fix && stylelint \"src/**/*.*css\" --fix && eslint \"./src/*/*.ts\" --fix",
+    "lint:fix": "stylelint \"src/**/*.*css\" --fix && eslint \"./src/*/*.ts\" --fix",
     "styleLint": "stylelint src/**/*.*css",
     "e2e~": "ng e2e"
   },
