@@ -67,11 +67,11 @@ describe('LoginComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should navigate to reset onForgotPassword click', () => {
+  it('should navigate to forgot onForgotPassword click', () => {
     const routerStub: Router = fixture.debugElement.injector.get(Router);
     spyOn(routerStub, 'navigateByUrl').and.callThrough();
     component.onForgotPassword();
-    expect(routerStub.navigateByUrl).toHaveBeenCalledWith('/reset');
+    expect(routerStub.navigateByUrl).toHaveBeenCalledWith('/forgot');
   });
 
   it('should navigate to home if authenticated', fakeAsync(() => {

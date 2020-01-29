@@ -1,8 +1,14 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent } from './login/login.component';
+import {
+  Routes,
+  RouterModule,
+} from '@angular/router';
+
 import { ProtectedGuard } from 'ngx-auth';
+
+import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { QrscannerComponent } from './qrscanner/qrscanner.component';
 import { OrderComponent } from './order/order.component';
@@ -24,7 +30,8 @@ const routes: Routes = [
     canActivate: [ProtectedGuard]
   },
   { path: 'login', component: LoginComponent },
-  { path: 'reset', component: ResetPasswordComponent },
+  { path: 'forgot', component: ForgotPasswordComponent },
+  { path: 'merchant_admin/validate_reset_password_token', component: ResetPasswordComponent },
   { path: 'dashboard/merchant_user_account_invitations/accept', component: RegisterComponent }
 ];
 
