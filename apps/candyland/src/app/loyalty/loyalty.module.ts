@@ -28,7 +28,7 @@ import { LoyaltyFormStepTiersConversionsComponent } from './components/loyalty-f
 import { PointsInfoComponent } from './components/points-info/points-info.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ProgramMainImageComponent } from './components/program-main-image/program-main-image.component';
-import { DatePickerModule, PipesModule, UploadFileModule, UploadGraphicModule } from '@cl-shared';
+import { ConditionsBuilderModule, DatePickerModule, PipesModule, UploadFileModule, UploadGraphicModule } from '@cl-shared';
 import { UserJoinMethodComponent } from './components/user-joining-method/user-joining-method.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SelectAudienceComponent } from './components/select-audience/select-audience.component';
@@ -47,13 +47,9 @@ import { PointEarnRulesListComponent } from './components/point-earn-rules-list/
 import { RuleSetupPopupComponent } from './containers/rule-setup-popup/rule-setup-popup.component';
 import { LoyaltyCustomTierFormsService } from './services/loyalty-custom-tier-forms.service';
 import { LoyaltyEarnRulesFormsService } from './services/loyalty-earn-rules-forms.service';
-import { DateConditionGroupComponent } from './components/date-condition-group/date-condition-group.component';
-import { AmountConditionGroupComponent } from './components/amount-condition-group/amount-condition-group.component';
-import { TransactionConditionGroupComponent } from './components/transaction-condition-group/transaction-condition-group.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { TranslateModule } from '@ngx-translate/core';
 import { LoyaltyRuleCardComponent } from './components/loyalty-rules-card/loyalty-rule-card.component';
-import { CurrencyConditionGroupComponent } from './components/currency-condition-group/currency-condition-group.component';
 import { ConditionInfoPipe } from './condition-info.pipe';
 import { LoyaltyConfigService } from './services/loyalty-config.service';
 import { MultiplierResultGroupComponent } from './components/multiplier-result-group/multiplier-result-group.component';
@@ -62,7 +58,6 @@ import { PointsEarnedInfoPipe } from './points-earned-info.pipe';
 import { PointsExpiredInfoPipe } from './points-expired-info.pipe';
 import { StepperModule } from '@perx/candyshop';
 import { DirectivesModule } from '@cl-shared/directives/directives.module';
-import { ManageConditionsComponent } from 'src/app/loyalty/containers/manage-conditions/manage-conditions.component';
 
 @NgModule({
   declarations: [
@@ -90,17 +85,12 @@ import { ManageConditionsComponent } from 'src/app/loyalty/containers/manage-con
     LoyaltyFormStepEarnRulesComponent,
     PointEarnRulesListComponent,
     RuleSetupPopupComponent,
-    DateConditionGroupComponent,
-    AmountConditionGroupComponent,
-    TransactionConditionGroupComponent,
-    CurrencyConditionGroupComponent,
     LoyaltyRuleCardComponent,
     ConditionInfoPipe,
     MultiplierResultGroupComponent,
     BonusResultGroupComponent,
     PointsEarnedInfoPipe,
     PointsExpiredInfoPipe,
-    ManageConditionsComponent
   ],
   imports: [
     CommonModule,
@@ -134,7 +124,8 @@ import { ManageConditionsComponent } from 'src/app/loyalty/containers/manage-con
     DragDropModule,
     MatProgressBarModule,
     FormsModule,
-    DirectivesModule
+    DirectivesModule,
+    ConditionsBuilderModule
   ],
   providers: [
     LoyaltyFormsService,
@@ -145,10 +136,6 @@ import { ManageConditionsComponent } from 'src/app/loyalty/containers/manage-con
   entryComponents: [
     TierSetupPopupComponent,
     RuleSetupPopupComponent,
-    DateConditionGroupComponent,
-    AmountConditionGroupComponent,
-    TransactionConditionGroupComponent,
-    CurrencyConditionGroupComponent,
     MultiplierResultGroupComponent,
     BonusResultGroupComponent
   ]
