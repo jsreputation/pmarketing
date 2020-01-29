@@ -23,4 +23,6 @@ config.cucumberOpts = {
   compiler: []
 };
 
+config.specs = ['./src/features/**/*.feature'];
+
 exports.config = config;
