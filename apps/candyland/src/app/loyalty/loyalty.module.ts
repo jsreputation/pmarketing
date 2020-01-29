@@ -131,7 +131,7 @@ import { DirectivesModule } from '@cl-shared/directives/directives.module';
     LoyaltyFormsService,
     LoyaltyCustomTierFormsService,
     LoyaltyEarnRulesFormsService,
-    LoyaltyConfigService
+    LoyaltyConfigService,
   ],
   entryComponents: [
     TierSetupPopupComponent,

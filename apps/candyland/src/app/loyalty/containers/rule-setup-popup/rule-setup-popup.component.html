@@ -32,12 +32,12 @@
             </ng-container>
           </mat-select>
         </mat-form-field>
-          <ng-container clDynamicFormGroup
-                        [componentMap]="resultsComponentsMap"
-                        [group]="result"
-                        [type]="result.get('applierType')?.value"
-                        [config]="data?.config">
-          </ng-container>
+        <ng-container clDynamicFormGroup
+                      [componentMap]="resultsComponentsMap"
+                      [group]="result"
+                      [type]="result.get('applierType')?.value"
+                      [config]="data?.config">
+        </ng-container>
       </div>
     </ng-container>
   </div>

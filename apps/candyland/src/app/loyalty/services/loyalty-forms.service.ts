@@ -53,8 +53,8 @@ export class LoyaltyFormsService {
       status: StatusLabel.DRAFT,
       details: {
         pointsName: 'Point',
-        imageUrl: null,
-        // imageUrl: 'https://material.angular.io/assets/img/homepage/github-circle-white-transparent.svg',
+        // imageUrl: null,
+        imageUrl: 'https://material.angular.io/assets/img/homepage/github-circle-white-transparent.svg',
         joinMethod: {
           inviteOnly: true
         },
