@@ -41,14 +41,6 @@
       </mat-error>
     </mat-card>
     <!--/ Rewards-->
-    <!-- Stamps Rule-->
-    <ng-container [ngSwitch]="campaignEngagementType">
-      <cl-new-campaign-rewards-stamps-page *ngSwitchCase="'stamps'" [tenantSettings]="tenantSettings">
-      </cl-new-campaign-rewards-stamps-page>
-      <cl-new-campaign-rewards-page *ngSwitchDefault [tenantSettings]="tenantSettings" [campaignType]="campaignEngagementType">
-      </cl-new-campaign-rewards-page>
-    </ng-container>
-    <!--/ Stamps Rule-->
   </div>
   <cl-campaigns-mobile-preview [storeTemplate$]="store.template$" [tenantSettings]="tenantSettings">
   </cl-campaigns-mobile-preview>

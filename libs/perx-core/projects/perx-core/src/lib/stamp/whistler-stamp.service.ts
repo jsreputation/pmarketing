@@ -1,10 +1,10 @@
-import { switchMap, map, tap } from 'rxjs/operators';
+import { switchMap, map, tap, mergeMap, distinctUntilChanged } from 'rxjs/operators';
 import {
   IStampCard,
   IStamp,
   StampCardState,
 } from './models/stamp.model';
-import { Observable, of } from 'rxjs';
+import { Observable, of, combineLatest, ReplaySubject, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Config } from '../config/config';
 import { StampService } from './stamp.service';
@@ -13,11 +13,11 @@ import { Injectable } from '@angular/core';
 import {
   IJsonApiItemPayload,
   IJsonApiItem,
-  IWCampaignDisplayProperties,
   IWAttbsObjStamp,
-  IWAttbsObjEntity,
 } from '@perx/whistler';
 import { oc } from 'ts-optchain';
+import { ICampaignService } from '../campaign/icampaign.service';
+import { CampaignType, ICampaign } from '../campaign/models/campaign.model';
 
 @Injectable({
   providedIn: 'root'
@@ -25,10 +25,12 @@ import { oc } from 'ts-optchain';
 export class WhistlerStampService implements StampService {
   public baseUrl: string;
   private cache: { [cid: number]: IStampCard } = {};
+  private engagementCacheQuery: { [cid: number]: Subject<IStampCard> } = {};
 
   constructor(
     private http: HttpClient,
-    config: Config
+    config: Config,
+    private cs: ICampaignService
   ) {
     this.baseUrl = `${config.apiHost}`;
   }
@@ -67,23 +69,14 @@ export class WhistlerStampService implements StampService {
   }
 
   public getCurrentCard(campaignId: number): Observable<IStampCard> {
-    let disProp: IWCampaignDisplayProperties | undefined;
     if (this.cache[campaignId]) {
       return of(this.cache[campaignId]);
     }
-    return this.http.get<IJsonApiItemPayload<IWAttbsObjEntity>>(`${this.baseUrl}/campaign/entities/${campaignId}`)
+
+    return this.cs.getCampaign(campaignId)
       .pipe(
-        map(res => res.data.attributes),
-        switchMap(correctEntityAttribute => {
-          disProp = correctEntityAttribute.display_properties;
-          return this.http.get<IJsonApiItemPayload<IWAttbsObjStamp, void>>(
-            `${this.baseUrl}/loyalty/engagements/${correctEntityAttribute.engagement_id}`
-          );
-        }),
-        map((res: IJsonApiItemPayload<IWAttbsObjStamp, void>) => {
-          const stampData: IStampCard = WhistlerStampService.WStampCardToStampCard(res.data);
-          return { ...stampData, campaignId, displayProperties: { ...stampData.displayProperties, ...disProp } };
-        }),
+        switchMap(campaign => this.getEngagement(campaign.rawPayload.engagement_id)),
+        map((res: IStampCard) => ({ ...res, campaignId })),
         tap(sc => this.cache[campaignId] = sc)
       );
   }
@@ -104,7 +97,37 @@ export class WhistlerStampService implements StampService {
     throw new Error(`Method not implemented. ${cardId}`);
   }
 
-  public play(): Observable<boolean> {
-    return of(true);
+  // @ts-ignore
+  public getActiveCards(stampType?: string): Observable<IStampCard[]> {
+    return this.cs.getCampaigns({ type: CampaignType.stamp })
+      .pipe(
+        mergeMap(
+          (cs: ICampaign[]) => combineLatest([...cs.map(c => of(c)), ...cs.map(c => this.getEngagement(c.rawPayload.engagement_id))])
+        ),
+        map((res: (ICampaign | IStampCard)[]) => {
+          const campaigns: ICampaign[] = res.splice(0, res.length / 2) as ICampaign[];
+          const cards = res as IStampCard[];
+
+          for (let i = 0; i < cards.length; i++) {
+            cards[i].campaignId = campaigns[i].id;
+            cards[i].displayProperties.thumbnailImg = cards[i].displayProperties.thumbnailImg ?
+              cards[i].displayProperties.thumbnailImg : cards[i].displayProperties.rewardPostStamp;
+          }
+          return cards;
+        })
+      );
+  }
+
+  private getEngagement(engagementId: number): Observable<IStampCard> {
+    if (!this.engagementCacheQuery[engagementId]) {
+      this.engagementCacheQuery[engagementId] = new ReplaySubject();
+
+      this.http.get<IJsonApiItemPayload<IWAttbsObjStamp, void>>(`${this.baseUrl}/loyalty/engagements/${engagementId}`)
+        .pipe(
+          map((res: IJsonApiItemPayload<IWAttbsObjStamp, void>) => WhistlerStampService.WStampCardToStampCard(res.data))
+        )
+        .subscribe((sc: IStampCard) => this.engagementCacheQuery[engagementId].next(sc));
+    }
+    return this.engagementCacheQuery[engagementId].pipe(distinctUntilChanged());
   }
 }

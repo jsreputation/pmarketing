@@ -1,11 +1,12 @@
 import {
   Component,
-  OnInit
+  OnInit,
+  OnDestroy
 } from '@angular/core';
 import { Router } from '@angular/router';
 
 import {
-  Observable, from, forkJoin, of
+  Observable, forkJoin, of, Subject
 } from 'rxjs';
 
 import {
@@ -16,14 +17,19 @@ import {
   ConfigService,
   IConfig,
   StampState,
-  ICampaignService,
-  CampaignType,
-  ICampaign,
   StampService
 } from '@perx/core';
 import { TranslateService } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
-import { tap, mergeMap, map, toArray } from 'rxjs/operators';
+import {
+  // tap,
+  mergeMap,
+  map,
+  takeUntil,
+  filter,
+  take
+} from 'rxjs/operators';
+import { oc } from 'ts-optchain';
 
 interface IStampCardConfig {
   stampsType: string;
@@ -34,7 +40,9 @@ const REQ_PAGE_SIZE: number = 10;
   templateUrl: './wallet.component.html',
   styleUrls: ['./wallet.component.scss']
 })
-export class WalletComponent implements OnInit {
+export class WalletComponent implements OnInit, OnDestroy {
+  private destroy$: Subject<void> = new Subject<void>();
+
   public stampCards$: Observable<IStampCard[]>;
   public vouchers$: Observable<Voucher[]>;
   public filter: string[];
@@ -44,22 +52,26 @@ export class WalletComponent implements OnInit {
   public currentPage: number = 0;
   public completed: boolean = false;
 
-  public stampsType: string;
+  // public stampsType: string;
   public puzzleTextFn: (puzzle: IStampCard) => string;
   public titleFn: (index?: number) => string;
-  public campaignId: number | null | undefined;
+
   constructor(
     private router: Router,
     private vouchersService: IVoucherService,
     private datePipe: DatePipe,
     private translate: TranslateService,
     private configService: ConfigService,
-    private campaignService: ICampaignService,
     private stampService: StampService,
-  ) { }
+  ) {
+    this.puzzleTextFn = (puzzle: IStampCard) => !puzzle.stamps ||
+      puzzle.stamps.filter(st => st.state === StampState.issued).length <= 1 ? 'new stamp' : 'new stamps';
+    this.titleFn = (index?: number, totalCount?: number) => index !== undefined ?
+      `Stamp Card ${this.puzzleIndex(index)} out of ${totalCount}` : '';
+  }
 
   public ngOnInit(): void {
-    this.getCampaign();
+    this.getStampCard();
     this.translate.get('MY_WALLET').subscribe(text => this.rewardsHeadline = text);
     this.vouchers$ = of([]);
     this.onScroll();
@@ -73,48 +85,32 @@ export class WalletComponent implements OnInit {
       });
   }
 
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   public voucherSelected(voucher: Voucher): void {
     this.router.navigate([`/voucher-detail/${voucher.id}`]);
   }
 
-  private getCampaign(): void {
-    this.configService.readAppConfig<IStampCardConfig>().pipe(tap((config: IConfig<IStampCardConfig>) => {
-      this.stampsType = config.custom && config.custom.stampsType ? config.custom.stampsType as string : 'puzzle';
-    }), mergeMap(() => this.fetchCampaign())).subscribe((card: IStampCard) => {
-      if (card) {
-        this.campaignId = card.campaignId;
-      }
-    });
-  }
-  private fetchCampaign(): Observable<IStampCard> {
-    return this.campaignService.getCampaigns()
-      .pipe(
-        map(campaigns => campaigns.filter(camp => camp.type === CampaignType.stamp)),
-        map(campaigns => {
-          if (this.stampsType === 'puzzle') {
-            return campaigns.filter(camp => camp.type === CampaignType.stamp).slice(0, 1);
-          }
-          return campaigns;
-        }),
-        mergeMap(
-          (campaigns: ICampaign[]) => from(campaigns).pipe(
-            mergeMap((campaign: ICampaign) => this.stampService.getCurrentCard(campaign.id)),
-            toArray(),
-            map((stampCards: IStampCard[]) => stampCards.filter(card =>
-              card.displayProperties.displayCampaignAs && card.displayProperties.displayCampaignAs === this.stampsType
-            )),
-            tap(() => {
-              if (this.stampsType === 'stamp_card') {
-                this.puzzleTextFn = (puzzle: IStampCard) => !puzzle.stamps ||
-                  puzzle.stamps.filter(st => st.state === StampState.issued).length !== 1 ? 'new stamps' : 'new stamp';
-                this.titleFn = (index?: number, totalCount?: number) => index !== undefined ?
-                  `Stamp Card ${this.puzzleIndex(index)} out of ${totalCount}` : '';
-              }
-            }),
-            map((cards: IStampCard[]) => cards[0])
-          )
-        ),
-      );
+  private getStampCard(): void {
+    this.stampCards$ = this.configService.readAppConfig<IStampCardConfig>().pipe(
+      map((config: IConfig<IStampCardConfig>) => oc(config).custom.stampsType('puzzle')),
+      // tap((stampsType: string) => {
+      //   if (stampsType === 'stamp_card') {
+      //     this.puzzleTextFn = (puzzle: IStampCard) => !puzzle.stamps ||
+      //       puzzle.stamps.filter(st => st.state === StampState.issued).length > 1 ? 'new stamps' : 'new stamp';
+      //     this.titleFn = (index?: number, totalCount?: number) => index !== undefined ?
+      //       `Stamp Card ${this.puzzleIndex(index)} out of ${totalCount}` : '';
+      //   }
+      // }),
+      mergeMap((stampsType: string) => this.stampService.getActiveCards(stampsType)),
+      filter((cards: IStampCard[]) => cards.length > 0),
+      map((cards: IStampCard[]) => cards.slice(0, 1)),
+      take(1),
+      takeUntil(this.destroy$)
+    );
   }
 
   public puzzleIndex(index: number): string {

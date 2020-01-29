@@ -16,6 +16,7 @@ import {
   IJsonApiItem,
   IJsonApiItemPayload,
   WCampaignStatus,
+  WEngagementType,
 } from '@perx/whistler';
 
 import {
@@ -23,30 +24,46 @@ import {
   CampaignType,
   CampaignState,
 } from './models/campaign.model';
-import { ICampaignService } from './icampaign.service';
+import { ICampaignService, ICampaignFilterOptions } from './icampaign.service';
 
 import { Config } from '../config/config';
 import { IVoucher } from '../vouchers/models/voucher.model';
-
-enum WhistlerCampaignType {
-  survey = 'survey',
-  loyalty = 'stamp',
-  instant_outcome = 'give_reward',
-  game = 'game'
-}
 
 @Injectable({
   providedIn: 'root'
 })
 export class WhistlerCampaignService implements ICampaignService {
   private baseUrl: string;
-  private pagesCache: { [p: number]: IJsonApiListPayload<IWCampaignAttributes> } = {};
+  private pagesCache: { [p: string]: IJsonApiListPayload<IWCampaignAttributes> } = {};
   constructor(private http: HttpClient, config: Config) {
     this.baseUrl = config.apiHost as string;
   }
 
-  private static WhistlerTypeToType(ty: string): CampaignType {
-    return WhistlerCampaignType[ty];
+  private static WhistlerTypeToType(ty: WEngagementType): CampaignType {
+    switch (ty) {
+      case WEngagementType.games:
+        return CampaignType.game;
+      case WEngagementType.instantOutcome:
+        return CampaignType.give_reward;
+      case WEngagementType.loyalty:
+        return CampaignType.stamp;
+      case WEngagementType.survey:
+      default:
+        return CampaignType.survey;
+    }
+  }
+
+  private static CampaignType2WhistlerCampaignType(ct: CampaignType): string {
+    switch (ct) {
+      case CampaignType.game:
+        return 'Perx::Game::Engagement';
+      case CampaignType.give_reward:
+        return 'Perx::InstantOutcome::Engagement';
+      case CampaignType.stamp:
+        return 'Perx::Loyalty::Engagement';
+      case CampaignType.survey:
+        return 'Perx::Survey::Engagement';
+    }
   }
 
   private static WCStatus2CampaignState(status?: WCampaignStatus): CampaignState {
@@ -91,7 +108,7 @@ export class WhistlerCampaignService implements ICampaignService {
     return end > ts;
   }
 
-  public getCampaigns(): Observable<ICampaign[]> {
+  public getCampaigns(options?: ICampaignFilterOptions): Observable<ICampaign[]> {
     return new Observable(subject => {
       let current: ICampaign[] = [];
       const now: number = (new Date()).getTime();
@@ -105,19 +122,26 @@ export class WhistlerCampaignService implements ICampaignService {
         if (!cs.meta || !cs.meta.page_count || p >= cs.meta.page_count) {
           subject.complete();
         } else {
-          this.getPage(p + 1).subscribe(res => process(p + 1, res));
+          this.getPage(p + 1, options).subscribe(res => process(p + 1, res));
         }
       };
-      return this.getPage(1).subscribe(cs => process(1, cs));
+      return this.getPage(1, options).subscribe(cs => process(1, cs));
     });
   }
 
-  private getPage(n: number): Observable<IJsonApiListPayload<IWCampaignAttributes>> {
-    if (this.pagesCache[n]) {
-      return of(this.pagesCache[n]);
+  private getPage(n: number, options?: ICampaignFilterOptions): Observable<IJsonApiListPayload<IWCampaignAttributes>> {
+    const params: {} = {
+      'page[number]': `${n}`
+    };
+    if (options !== undefined && options.type !== undefined) {
+      params['filter[engagement_type]'] = WhistlerCampaignService.CampaignType2WhistlerCampaignType(options.type);
     }
-    return this.http.get<IJsonApiListPayload<IWCampaignAttributes>>(`${this.baseUrl}/campaign/entities?page[number]=${n}`)
-      .pipe(tap(page => this.pagesCache[n] = page));
+    const signature = JSON.stringify(params);
+    if (this.pagesCache[signature]) {
+      return of(this.pagesCache[signature]);
+    }
+    return this.http.get<IJsonApiListPayload<IWCampaignAttributes>>(`${this.baseUrl}/campaign/entities`, { params })
+      .pipe(tap(page => this.pagesCache[signature] = page));
   }
 
   public getCampaign(id: number): Observable<ICampaign> {

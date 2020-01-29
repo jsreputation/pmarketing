@@ -7,17 +7,12 @@ import {
   ICampaignService,
   StampService,
   NotificationService,
-  ICampaign,
-  CampaignType,
-  CampaignState,
   IStampCard,
   StampCardState,
   Voucher,
   VoucherState,
   PuzzlesModule,
   ConfigService,
-  // PuzzleListComponent,
-  // RepeatTimesDirective
 } from '@perx/core';
 import { of } from 'rxjs';
 import { MatCardModule, MatRippleModule, MatIconModule } from '@angular/material';
@@ -52,7 +47,8 @@ describe('WalletComponent', () => {
   };
 
   const stampServiceStub: Partial<StampService> = {
-    getCurrentCard: () => of()
+    getCurrentCard: () => of(),
+    getActiveCards: () => of([])
   };
 
   const notificationServiceStub: Partial<NotificationService> = {};
@@ -108,17 +104,7 @@ describe('WalletComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call getCampaignsSpy, stampServiceSpy, voucherServiceSpy onInit', fakeAsync(() => {
-    const campaigns: ICampaign[] = [
-      {
-        id: 1,
-        name: 'Test',
-        description: 'Campaign Test',
-        type: CampaignType.stamp,
-        state: CampaignState.active,
-        endsAt: new Date()
-      }
-    ];
+  it('should call getActiveCardsSpy, stampServiceSpy onInit', fakeAsync(() => {
     const stampCard: IStampCard = {
       id: 1,
       state: StampCardState.active,
@@ -144,20 +130,17 @@ describe('WalletComponent', () => {
       }
     };
 
-    const campaignService: ICampaignService = fixture.debugElement.injector.get<ICampaignService>(
-      ICampaignService as Type<ICampaignService>
-    );
-    const getCampaignsSpy = spyOn(campaignService, 'getCampaigns').and.returnValue(of(campaigns));
-
     const stampService: StampService = fixture.debugElement.injector.get<StampService>(
       StampService as Type<StampService>
     );
-    const stampServiceSpy = spyOn(stampService, 'getCurrentCard').and.returnValue(of(stampCard));
+    const getActiveCardsSpy = spyOn(stampService, 'getActiveCards').and.returnValue(of([stampCard]));
+    // const getCurrentCardSpy = spyOn(stampService, 'getCurrentCard').and.returnValue(of(stampCard));
+
     component.ngOnInit();
     tick();
     fixture.detectChanges();
-    expect(getCampaignsSpy).toHaveBeenCalled();
-    expect(stampServiceSpy).toHaveBeenCalled();
+    expect(getActiveCardsSpy).toHaveBeenCalled();
+    // expect(getCurrentCardSpy).toHaveBeenCalled();
   }));
 
   it('should redirect to voucher detail on voucher selected', () => {
