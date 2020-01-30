@@ -16,7 +16,7 @@
     </mat-form-field>
 
     <label class="loyalty-label">{{'LOYALTY_FEATURE.TITLE_CONDITIONS' | translate}}</label>
-    <cl-conditions-builder
+    <cl-conditions-builder *ngIf="conditions"
       [formControl]="conditions"
       [config]="data?.config">
     </cl-conditions-builder>

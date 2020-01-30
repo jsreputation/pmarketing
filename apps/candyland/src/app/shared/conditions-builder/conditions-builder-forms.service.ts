@@ -2,33 +2,18 @@ import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RuleConditionType } from '@cl-core/models/loyalty/rule-condition-type.enum';
 import { RuleOperatorType } from '@cl-core/models/loyalty/rule-operator-type.enum';
-import { TransactionConditionGroupComponent } from './transaction-condition-group/transaction-condition-group.component';
-import { AmountConditionGroupComponent } from './amount-condition-group/amount-condition-group.component';
-import { CurrencyConditionGroupComponent } from './currency-condition-group/currency-condition-group.component';
-import { DateConditionGroupComponent } from './date-condition-group/date-condition-group.component';
+import { IConditionsBuilderFormsService, IConditionsBuilderGroupMap } from './conditions-builder.models';
 
 @Injectable()
-export class ConditionsBuilderService {
+export class ConditionsBuilderFormsService implements IConditionsBuilderFormsService {
 
-  public componentMap: { [type: string]: any } = {
-    [RuleConditionType.transaction]: TransactionConditionGroupComponent,
-    [RuleConditionType.amount]: AmountConditionGroupComponent,
-    [RuleConditionType.currency]: CurrencyConditionGroupComponent,
-    [RuleConditionType.fromDate]: DateConditionGroupComponent,
-    [RuleConditionType.toDate]: DateConditionGroupComponent,
-  };
-
-  public groupMap: { [key: string]: (type: string) => FormGroup } = {
+  public groupMap: IConditionsBuilderGroupMap = {
     [RuleConditionType.transaction]: (type) => this.transactionGroup(type),
     [RuleConditionType.amount]: (type) => this.amountGroup(type),
     [RuleConditionType.currency]: (type) => this.currencyGroup(type),
     [RuleConditionType.fromDate]: (type) => this.fromDateGroup(type),
     [RuleConditionType.toDate]: (type) => this.toDateGroup(type),
   };
-
-  // public createConditionFormField(type: string): FormGroup {
-  //   return this.groupMap[type](type) as FormGroup;
-  // }
 
   public transactionGroup(type: string): FormGroup {
     return new FormGroup({
