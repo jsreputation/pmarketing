@@ -143,29 +143,29 @@ export class ScratchCardComponent implements AfterViewInit {
     return Math.atan2(point2.x - point1.x, point2.y - point1.y);
   }
 
-  public getFilledInPixels(stride: number): (number | undefined) {
+  public getFilledInPixels(stride: number): number {
     if (!this.canvas) {
       return 0;
     }
-    if (!stride || stride < 1) { stride = 1; }
 
     const canvas2dContext = this.canvas.getContext('2d');
-    if (canvas2dContext) {
-      const pixels = canvas2dContext.getImageData(0, 0, this.canvas.width, this.canvas.height);
-      const pdata = pixels.data;
-      const l = pdata.length;
-      const total = (l / stride);
-      let count = 0;
-
-      // Iterate over all pixels
-      for (let i = 0; i < l; i += stride) {
-        if (pdata[i] === 0) {
-          count++;
-        }
-      }
-      return Math.round((count / total) * 100);
+    if (!canvas2dContext) {
+      return 0;
     }
+    if (!stride || stride < 1) { stride = 1; }
+    const pixels = canvas2dContext.getImageData(0, 0, this.canvas.width, this.canvas.height);
+    const pdata = pixels.data;
+    const l = pdata.length;
+    const total = (l / stride);
+    let count = 0;
 
+    // Iterate over all pixels
+    for (let i = 0; i < l; i += stride) {
+      if (pdata[i] === 0) {
+        count++;
+      }
+    }
+    return Math.round((count / total) * 100);
   }
 
   private getMouse(e: TouchEvent | MouseEvent, canvas: HTMLElement): Coords {
@@ -178,8 +178,10 @@ export class ScratchCardComponent implements AfterViewInit {
       canvas = canvas.offsetParent as HTMLElement;
     }
 
-    const mx = (e.pageX || e.touches[0].clientX) - offsetX;
-    const my = (e.pageY || e.touches[0].clientY) - offsetY;
+    const x = e instanceof MouseEvent ? e.pageX : e.touches[0].clientX;
+    const y = e instanceof MouseEvent ? e.pageY : e.touches[0].clientY;
+    const mx = x - offsetX;
+    const my = y - offsetY;
 
     return { x: mx, y: my };
   }
