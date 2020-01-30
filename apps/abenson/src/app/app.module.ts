@@ -39,6 +39,7 @@ import { environment } from '../environments/environment';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HistoryComponent } from './history/history.component';
 import { PromosComponent } from './promos/promos.component';
+import { PromosComponent as PromosStagingComponent } from './promos/promos.component.staging';
 import { ForgotPinComponent } from './forgot-pin/forgot-pin.component';
 import { SignUpComponent } from './auth/signup/signup.component';
 import { UnauthorizedInterceptor } from './auth/unauthorized.interceptor';
@@ -55,6 +56,7 @@ import { PopupComponent } from './popup/popup.component';
     RedeemComponent,
     HistoryComponent,
     PromosComponent,
+    PromosStagingComponent,
     SignUpComponent,
     ForgotPinComponent,
     SmsValidationComponent,

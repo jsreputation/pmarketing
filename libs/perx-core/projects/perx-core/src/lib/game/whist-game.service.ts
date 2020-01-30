@@ -259,7 +259,7 @@ export class WhistlerGameService implements IGameService {
         subject.complete();
         return;
       }
-      const sub = this.campaignService.getCampaigns()
+      const sub = this.campaignService.getCampaigns({ type: CampaignType.game })
         .pipe(
           map((cs: ICampaign[]) => cs.filter(c => c.type === CampaignType.game)),
           map((cs: ICampaign[]) => cs.filter(c => gameByCid[c.id] === undefined)),

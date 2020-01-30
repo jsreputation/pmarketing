@@ -3,6 +3,7 @@ import {
   OnInit,
 } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormGroup,
   Validators,
@@ -28,6 +29,10 @@ export class ExistingCardComponent implements OnInit {
   public existingCardForm: FormGroup;
 
   private loyaltyId?: number = undefined;
+
+  public get cardNumber(): AbstractControl | null {
+    return this.existingCardForm.get('cardNumber');
+  }
 
   constructor(
     private fb: FormBuilder,

@@ -9,7 +9,7 @@ perx-core-loyalty-summary ::ng-deep {
   .container {
     background-color: #FFFFFF;
     line-height: 1.6rem;
-    height: 12rem;
+    min-height: 12rem;
     box-sizing: border-box;
 
     .welcome-text {
@@ -80,4 +80,15 @@ perx-core-loyalty-transactions-list ::ng-deep {
   display: flex;
   justify-content: center;
   margin-top: 1.6rem;
+}
+
+.branding-image {
+  display: flex;
+  justify-content: center;
+
+  img {
+    width: 100%;
+    max-width: 60rem;
+    height: auto;
+  }
 }

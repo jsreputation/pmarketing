@@ -152,12 +152,12 @@ export class HomeComponent implements OnInit, OnDestroy {
       );
     const rssFeeds: IRssFeeds = await this.configService.readRssFeeds().toPromise();
     if (!(rssFeeds && rssFeeds.data.length > 0)) {
-      return ;
+      return;
     }
 
     const rssFeedsHome: IRssFeedsData | undefined = rssFeeds.data.find(feed => feed.page === 'home');
     if (!rssFeedsHome) {
-      return ;
+      return;
     }
 
     const rssFeedsUrl: string = rssFeedsHome.url;
@@ -273,7 +273,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   private fetchPopupCampaigns(): void {
-    this.campaignService.getCampaigns()
+    this.campaignService.getCampaigns({ type: CampaignType.give_reward })
       .pipe(
         catchError(() => of([]))
       )
