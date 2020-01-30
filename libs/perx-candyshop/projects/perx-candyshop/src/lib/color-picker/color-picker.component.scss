@@ -35,13 +35,23 @@
     pointer-events: none;
   }
 
-  &.hide-icon {
+  &.only-input {
     .cs-color-picker-input {
       padding-left: 0;
     }
 
     .cs-color-picker-icon {
       display: none;
+    }
+  }
+
+  &.only-color {
+    .cs-color-picker-input {
+      opacity: 0;
+    }
+
+    .cs-color-picker-icon {
+      width: 100%;
     }
   }
 }

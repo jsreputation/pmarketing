@@ -30,7 +30,7 @@ export class ColorPickerComponent extends CsFormFieldControl<string> implements 
   @Input() public formatData: string = 'hex';
   @Input() public clickable: boolean = true;
   @Input() public defaultValue: string = '#2883e9';
-  @Input() public hideColorIcon: boolean = false;
+  @Input() public classList: string = '';
   @Input('aria-label') public ariaLabel: string = '';
   @ViewChild('colorPicker', { static: false }) public colorPicker: ColorPickerDirective;
   public toggle: boolean = false;
