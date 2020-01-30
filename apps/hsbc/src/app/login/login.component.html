@@ -11,34 +11,32 @@
 <!--    <div *ngIf="sourceType === 'hsbc-xmas'" class="login-image">-->
 <!--      <img class="logo" src='assets/hsbc-logo-black.svg' />-->
 <!--    </div>-->
-    <div class="form-container">
-      <div [ngClass]="'login-form ' + sourceType">
-        <h1>Log In</h1>
-        <div class="error_msg">
-          <span>{{errorMessage}}</span>
-        </div>
-
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-          <mat-form-field appearance="fill" class="full-width__input">
-            <mat-label>Player Code</mat-label>
-            <input matInput placeholder="Enter your player code" formControlName="playerCode" required>
-            <mat-error *ngIf="loginForm.hasError('playerCode')">
-              Player code is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-          <mat-form-field appearance="fill" class="full-width__input">
-            <mat-label>Card last 4 digits</mat-label>
-            <input matInput placeholder="Enter your HSBC card last 4 digits"
-                   formControlName="hsbcCardLastFourDigits" required perxCoreNumericCharacter minlength="4" maxlength="4">
-            <mat-error *ngIf="loginForm.hasError('hsbcCardLastFourDigits')">
-              HSBC card last 4 digit code is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-          <button mat-flat-button type="submit" color="primary" class="full-width__button">
-            {{sourceType === 'hsbc-xmas' ? 'Log In' : 'Sign In'}}
-          </button>
-        </form>
+    <div [ngClass]="'login-form ' + sourceType">
+      <h1>Log In</h1>
+      <div class="error_msg">
+        <span>{{errorMessage}}</span>
       </div>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill" class="full-width__input">
+          <mat-label>Player Code</mat-label>
+          <input matInput placeholder="Enter your player code" formControlName="playerCode" required>
+          <mat-error *ngIf="loginForm.hasError('playerCode')">
+            Player code is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="full-width__input">
+          <mat-label>Card last 4 digits</mat-label>
+          <input matInput placeholder="Enter your HSBC card last 4 digits"
+                 formControlName="hsbcCardLastFourDigits" required perxCoreNumericCharacter minlength="4" maxlength="4">
+          <mat-error *ngIf="loginForm.hasError('hsbcCardLastFourDigits')">
+            HSBC card last 4 digit code is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <button mat-flat-button type="submit" color="primary" class="full-width__button">
+          {{sourceType === 'hsbc-xmas' ? 'Log In' : 'Sign In'}}
+        </button>
+      </form>
     </div>
   </div>
 </div>
