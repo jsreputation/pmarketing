@@ -87,6 +87,7 @@ describe('SignInComponent', () => {
         TranslateModule.forRoot(),
         RouterTestingModule.withRoutes([
           { path: 'home', redirectTo: '/' },
+          { path: 'wallet', redirectTo: '/' }
         ]),
       ],
       providers: [

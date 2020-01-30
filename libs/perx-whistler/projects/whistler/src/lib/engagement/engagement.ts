@@ -3,7 +3,7 @@ import { IWInstantOutcomeDisplayProperties } from './instant-outcome';
 import {
   IWGameDisplayProperties,
   IWPinataDisplayProperties,
-  IWScratchDisplayProperties, IWSpinDisplayProperties,
+  IWScratchDisplayProperties, IWSnakeDisplayProperties, IWSpinDisplayProperties,
   IWTreeDisplayProperties,
   WGameType
 } from './games';
@@ -12,7 +12,6 @@ import { IWStampDisplayProperties } from './stamp';
 export enum WEngagementType {
   games = 'game',
   survey = 'survey',
-  stamp = 'stamp',
   instantOutcome = 'instant_outcome',
   loyalty = 'loyalty',
 }
@@ -40,7 +39,8 @@ export interface IWEngagementAttributes<T = any> {
 export interface IWGameEngagementAttributes extends IWEngagementAttributes<IWGameDisplayProperties |
   IWTreeDisplayProperties |
   IWPinataDisplayProperties |
-  IWSpinDisplayProperties> {
+  IWSpinDisplayProperties |
+  IWSnakeDisplayProperties> {
   game_type: WGameType;
 }
 
@@ -55,6 +55,10 @@ export interface IWPinataGameEngagementAttributes extends IWEngagementAttributes
 
 export interface IWSpinGameEngagementAttributes extends IWEngagementAttributes<IWSpinDisplayProperties> {
   display_properties: IWSpinDisplayProperties;
+}
+
+export interface IWSnakeGameEngagementAttributes extends IWEngagementAttributes<IWSnakeDisplayProperties> {
+  display_properties: IWSnakeDisplayProperties;
 }
 
 export interface IWScratchGameEngagementAttributes extends IWEngagementAttributes<IWScratchDisplayProperties> {

@@ -1,65 +1,86 @@
 <div class="phonepreview-wrapper">
   <div>
-    <!--  filters-->
-    <div class="template-filters">
-      <cl-table-filters [dataSource]="dataSource">
-        <ng-container *clTableFilter="'title'; value: defaultSearchValue; let filter">
-          <cl-search-filter [control]="filter"
-                            [placeholder]="'CAMPAIGN.SEARCH_FOR_ENGAGEMENTS' | translate">
-          </cl-search-filter>
-        </ng-container>
-        <ng-container *clTableFilter="'attributes_type'; value: defaultTypeValue; let filter">
-          <mat-form-field appearance="outline" class="half-block">
-            <mat-select [formControl]="filter" [placeholder]="'CAMPAIGN.FILTER_BY' | translate">
-              <ng-container *ngFor="let option of typeFilterConfig">
-                <mat-option [value]="option.value">
-                  {{option.title | engagementType | replaceSpaceWithScore | translate}}
-                </mat-option>
+    <mat-expansion-panel class="card" expanded >
+      <mat-expansion-panel-header class="card-header">
+        <h2 class="card-title">
+          {{'CAMPAIGN.SELECT_ENGAGEMENT' | translate}}
+        </h2>
+      </mat-expansion-panel-header>
+      <div class="card-content">
+        <!--  filters-->
+        <div class="template-filters">
+          <cl-table-filters [dataSource]="dataSource">
+            <ng-container *clTableFilter="'title'; value: defaultSearchValue; let filter">
+              <cl-search-filter [control]="filter"
+                                [placeholder]="'CAMPAIGN.SEARCH_FOR_ENGAGEMENTS' | translate">
+              </cl-search-filter>
+            </ng-container>
+            <ng-container *clTableFilter="'attributes_type'; value: defaultTypeValue; let filter">
+              <mat-form-field appearance="outline" class="half-block">
+                <mat-select [formControl]="filter" [placeholder]="'CAMPAIGN.FILTER_BY' | translate">
+                  <ng-container *ngFor="let option of typeFilterConfig">
+                    <mat-option [value]="option.value">
+                      {{option.title | engagementType | replaceSpaceWithScore | translate}}
+                    </mat-option>
+                  </ng-container>
+                </mat-select>
+              </mat-form-field>
+            </ng-container>
+          </cl-table-filters>
+          <cs-button classList="tertiary ph-0" (click)="createNewEngagement()">
+            {{'CAMPAIGN.CREATE_NEW_ENGAGEMENT' | translate}}
+          </cs-button>
+        </div>
+        <ng-container *ngIf="hasData">
+          <!--items-->
+          <mat-error class="error template-error"
+                     *ngIf="form.get('template').getError('required') && form.get('template').touched">
+
+            {{'ERROR_CHOOSE_TEMPLATE' | translate}}
+          </mat-error>
+
+          <mat-radio-group color="primary" class="item-list shadow" [formControl]="form.get('template')">
+            <ng-container *ngIf="(dataSource.connect() | async) as items">
+              <ng-container *ngFor="let item of items">
+                <mat-radio-button [value]="item">
+                  <cl-engagement-item [data]="item"></cl-engagement-item>
+                </mat-radio-button>
               </ng-container>
-            </mat-select>
-          </mat-form-field>
+            </ng-container>
+          </mat-radio-group>
+          <!--/ items-->
+
+          <!--    paginator-->
+          <div class="table-card template-paginator">
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+          </div>
+          <!--/    paginator-->
         </ng-container>
-      </cl-table-filters>
-      <cs-button classList="tertiary ph-0" (click)="createNewEngagement()">
-        {{'CAMPAIGN.CREATE_NEW_ENGAGEMENT' | translate}}
-      </cs-button>
-    </div>
-    <ng-container *ngIf="hasData">
-      <!--items-->
-      <mat-error class="error template-error"
-                 *ngIf="form.get('template').getError('required') && form.get('template').touched">
 
-        {{'ERROR_CHOOSE_TEMPLATE' | translate}}
-      </mat-error>
-
-      <mat-radio-group color="primary" class="item-list shadow" [formControl]="form.get('template')">
-        <ng-container *ngIf="(dataSource.connect() | async) as items">
-          <ng-container *ngFor="let item of items">
-            <mat-radio-button [value]="item">
-              <cl-engagement-item [data]="item"></cl-engagement-item>
-            </mat-radio-button>
-          </ng-container>
-        </ng-container>
-      </mat-radio-group>
-      <!--/ items-->
-
-      <!--    paginator-->
-      <div class="table-card template-paginator">
-        <mat-paginator [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+        <cl-no-data *ngIf="noData">
+          <img class="no-data-img" src="/assets/images/no-data/engagements-empty-illustration.svg" alt="">
+          <h2 class="no-data-title">
+            {{'CAMPAIGN.NO_DATA_TITLE_LIST' | translate}}
+          </h2>
+          <p class="no-data-text">
+            {{'CAMPAIGN.NO_DATA_TEXT_LIST' | translate}}
+          </p>
+        </cl-no-data>
       </div>
-      <!--/    paginator-->
-    </ng-container>
 
-    <cl-no-data *ngIf="noData">
-      <img class="no-data-img" src="/assets/images/no-data/engagements-empty-illustration.svg" alt="">
-      <h2 class="no-data-title">
-        {{'CAMPAIGN.NO_DATA_TITLE_LIST' | translate}}
-      </h2>
-      <p class="no-data-text">
-        {{'CAMPAIGN.NO_DATA_TEXT_LIST' | translate}}
-      </p>
-    </cl-no-data>
+    </mat-expansion-panel>
+
+    <!-- Stamps Rule-->
+    <ng-container [ngSwitch]="campaignEngagementType">
+      <cl-new-campaign-rewards-stamps-page *ngSwitchCase="'stamps'" [tenantSettings]="tenantSettings">
+      </cl-new-campaign-rewards-stamps-page>
+      <cl-new-campaign-rewards-page *ngSwitchDefault [tenantSettings]="tenantSettings" [campaignType]="campaignEngagementType">
+      </cl-new-campaign-rewards-page>
+    </ng-container>
+    <!--/ Stamps Rule-->
+
   </div>
+
   <div>
     <cl-campaigns-mobile-preview *ngIf="hasData"
                                  [storeTemplate$]="store.template$"

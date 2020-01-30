@@ -16,60 +16,10 @@
     </mat-form-field>
 
     <label class="loyalty-label">{{'LOYALTY_FEATURE.TITLE_CONDITIONS' | translate}}</label>
-    <ng-container *ngFor="let conditionGroup of conditions.controls; let index = index; let first = first">
-      <div class="row">
-        <!--           *ngIf="!first || conditions.controls.length > 1">-->
-        <label class="loyalty-label">{{(!first ? 'LOYALTY_FEATURE.AND' : '') | translate}}</label>
-        <button class="question-remove cs-btn-transparent"
-                *ngIf="conditions.controls.length > 1"
-                (click)="deleteCondition(index)">
-          <i class="icon delete"></i>
-        </button>
-      </div>
-      <div class="card-section card-content">
-        <div class="row">
-          <mat-form-field>
-            <mat-select [formControl]="conditionGroup.get('type')"
-                        (valueChange)="updateCondition(index, $event)">
-              <ng-container *ngFor="let conditionOption of conditionTypes">
-                <mat-option [class.disabled-type-option]="conditionOption?.hide"
-                            [value]="conditionOption?.value">
-                  {{conditionOption?.title | translate}}
-                </mat-option>
-              </ng-container>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <ng-container clDynamicFormGroup
-                      [componentMap]="conditionComponentMap"
-                      [group]="conditionGroup"
-                      [type]="conditionGroup.get('type')?.value"
-                      [config]="data?.config"
-        >
-        </ng-container>
-      </div>
-    </ng-container>
-
-    <br>
-
-    <cs-button *ngIf="isHideAddCondition"
-               [classList]="'tertiary'"
-               mat-icon-button
-               [matMenuTriggerFor]="addConditionMenu">
-        <span>
-         {{'LOYALTY_FEATURE.ADD_CONDITION' | translate}}
-        </span>
-    </cs-button>
-
-    <mat-menu #addConditionMenu="matMenu">
-      <ng-container *ngFor="let conditionOption of conditionTypes">
-        <button mat-menu-item
-                [class.disabled-type-option]="conditionOption?.hide"
-                (click)="addCondition(conditionOption?.value)">
-          {{conditionOption?.title | translate}}
-        </button>
-      </ng-container>
-    </mat-menu>
+    <cl-conditions-builder *ngIf="conditions"
+      [formControl]="conditions"
+      [config]="data?.config">
+    </cl-conditions-builder>
 
     <!--results-->
     <label class="loyalty-label">THEN</label>
@@ -82,12 +32,12 @@
             </ng-container>
           </mat-select>
         </mat-form-field>
-          <ng-container clDynamicFormGroup
-                        [componentMap]="resultsComponentsMap"
-                        [group]="result"
-                        [type]="result.get('applierType')?.value"
-                        [config]="data?.config">
-          </ng-container>
+        <ng-container clDynamicFormGroup
+                      [componentMap]="resultsComponentsMap"
+                      [group]="result"
+                      [type]="result.get('applierType')?.value"
+                      [config]="data?.config">
+        </ng-container>
       </div>
     </ng-container>
   </div>

@@ -36,19 +36,27 @@ export class SnakeGameComponent implements OnChanges {
     return this.ctx_;
   }
   @Input()
+  private enabled: boolean = true;
+
+  // display related inputs
+  @Input()
   public targetUrl: string;
   @Input()
   public snakeHeadUrl: string;
   @Input()
+  public snakeBodyUrl: string;
+  @Input()
   public gameAreaUrl: string;
+
+  // gameplay related inputs
   @Input()
   public rateOfExpansion: number = 3;
   @Input()
   public targetsToWin: number = 5;
   @Input()
   public fps: number = 10;
-
-  @Output() public gameFinished: EventEmitter<void> = new EventEmitter();
+  // true for win, false for lose instead of creating another emitter
+  @Output() public completed: EventEmitter<boolean> = new EventEmitter();
 
   @ViewChild('canvasSnake', { static: true })
   public canvasEl: ElementRef<HTMLCanvasElement>;
@@ -68,13 +76,20 @@ export class SnakeGameComponent implements OnChanges {
   // direction
   private velocity: Number2 = new Number2(0, 0);
   // speed
-  private speed: number = 1;
-  private trail: Number2[] = [];
+  private speed: number = 1; // use only whole numbers for position to match exactly in cell
+  // just three values, rather than use map operations to create hardcodedly is more performant.
+  private trail: Number2[] = [
+    new Number2(this.snakePos.x + 1, this.snakePos.y),
+    new Number2(this.snakePos.x + 2, this.snakePos.y),
+    new Number2(this.snakePos.x + 3, this.snakePos.y),
+    new Number2(this.snakePos.x + 4, this.snakePos.y)
+  ];
   // tail length
-  private tail: number = 5;
+  private tail: number = 4;
   private targetImgLoaded!: HTMLImageElement;
   private gameAreaImgLoaded!: HTMLImageElement;
-  private snakeImgLoaded!: HTMLImageElement;
+  private snakeHeadImgLoaded!: HTMLImageElement;
+  private snakeBodyImgLoaded: HTMLImageElement | undefined;
 
   private TOTAL_IMAGES: number = 3;
   private counterLoaded: number = 0;
@@ -88,6 +103,7 @@ export class SnakeGameComponent implements OnChanges {
   private now: number;
   private then: number;
   private elapsed: number;
+  private currentAnimationFrameRequest: number;
 
   private startedMoving: boolean = false;
 
@@ -102,7 +118,22 @@ export class SnakeGameComponent implements OnChanges {
     document.addEventListener('keydown', this.keyPush);
   }
 
-  public startAnimating(): void {
+  public ngOnChanges(changes: SimpleChanges): void {
+    if ((changes.targetUrl && this.targetUrl)
+      || (changes.snakeHeadUrl && this.snakeHeadUrl)
+      || (changes.gameAreaUrl && this.gameAreaUrl)) {
+      this.fillStyles();
+    }
+  }
+
+  private cleanUp(): void {
+    this.completed.complete();
+    // console.log('cleaning up...');
+    window.cancelAnimationFrame(this.currentAnimationFrameRequest);
+    document.removeEventListener('keydown', this.keyPush);
+  }
+
+  private startAnimating(): void {
     this.fpsInterval = 1000 / this.fps;
     this.then = window.performance.now();
     this.startGameAndRender();
@@ -117,21 +148,20 @@ export class SnakeGameComponent implements OnChanges {
     if (this.elapsed > this.fpsInterval) {
       this.then = this.now - (this.elapsed % this.fpsInterval);
       // draw
-      this.game();
+      if (this.startedMoving) {
+        this.game();
+      }
       this.render();
     }
-    return anotherNewTime;
-  }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    if ((changes.targetUrl && this.targetUrl)
-      || (changes.snakeHeadUrl && this.snakeHeadUrl)
-      || (changes.gameAreaUrl && this.gameAreaUrl)) {
-      this.fillStyles();
-    }
+    this.currentAnimationFrameRequest = anotherNewTime;
+    return this.currentAnimationFrameRequest;
   }
 
   private checkCollisionWithWall(): boolean {
+    // console.log('did i collide with wall?, ', ((this.snakePos.x < 0)
+    //   || (this.snakePos.x > this.numberOfCellsInBoard)
+    //   || (this.snakePos.y < 0)
+    //   || (this.snakePos.y > this.numberOfCellsInBoard)) );
     return ((this.snakePos.x < 0)
       || (this.snakePos.x > this.numberOfCellsInBoard)
       || (this.snakePos.y < 0)
@@ -139,7 +169,12 @@ export class SnakeGameComponent implements OnChanges {
   }
 
   private checkCollisionWithSelf(): boolean {
+    // console.log('did i collide with self?, ', this.trail.some(snakePart => snakePart.equals(this.snakePos)));
     return this.trail.some(snakePart => snakePart.equals(this.snakePos));
+  }
+
+  private checkFoodCollisionWithSelf(currentFoodPosition: Number2): boolean {
+    return this.trail.some(snakePart => snakePart.equals(currentFoodPosition));
   }
 
   private checkGameOver(): boolean {
@@ -153,13 +188,13 @@ export class SnakeGameComponent implements OnChanges {
     this.snakePos.add(this.velocity);
 
     if (this.checkGameOver() && this.startedMoving) {
-      console.log('LOSER!');
       // then disable controls
-      document.removeEventListener('keydown', this.keyPush);
+      this.completed.emit(false);
+      this.cleanUp();
     }
 
     // remove extra tail pieces, tail is what u have eaten, keep consistent
-    while (this.trail.length > this.tail) {
+    while (this.startedMoving && this.trail.length > this.tail) {
       this.trail.shift();
     }
 
@@ -168,12 +203,13 @@ export class SnakeGameComponent implements OnChanges {
       this.tail += this.rateOfExpansion;
       this.score += 1;
       if (this.score === this.targetsToWin) {
-        // alert('WIN!');
         // end game
-        this.gameFinished.emit();
+        // console.log('You have won, directing you to your rewards');
+        this.completed.emit(true);
+        this.cleanUp();
       }
-      // still this on top of me
-      while (this.foodPosition.equals(this.snakePos)) {
+      this.foodPosition.randomize(this.numberOfCellsInBoard);
+      while (this.checkFoodCollisionWithSelf(this.foodPosition)) {
         this.foodPosition.randomize(this.numberOfCellsInBoard);
       }
     }
@@ -183,10 +219,9 @@ export class SnakeGameComponent implements OnChanges {
     // render board
     this.ctx.drawImage(this.gameAreaImgLoaded, 0, 0, this.canv.width, this.canv.height);
     // render snake
-    // maybe draw the head separately???
     // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < this.trail.length; i++) {
-      this.ctx.drawImage(this.snakeImgLoaded,
+      this.ctx.drawImage((i === this.trail.length - 1 ? this.snakeHeadImgLoaded : this.snakeBodyImgLoaded || this.snakeHeadImgLoaded),
         this.trail[i].x * this.cellSize, this.trail[i].y * this.cellSize, this.cellSize - 2 , this.cellSize - 2);
     }
     this.ctx.drawImage(this.targetImgLoaded,
@@ -194,79 +229,89 @@ export class SnakeGameComponent implements OnChanges {
 
   }
 
-  private onloadCallBack(): null {
+  private onloadCallBack(): null | undefined {
     this.counterLoaded++;
     if (this.counterLoaded < this.TOTAL_IMAGES) {
       return null;
     }
-    // trigger final callback if is the last image
-    console.log('FULLY LOADED');
-    this.allImagesLoaded = true;
-    return null;
+    // trigger start animation if is the last image
+    this.startAnimating();
   }
 
   private fillStyles(): void {
     this.targetImgLoaded = getImageCors(this.targetUrl);
     this.gameAreaImgLoaded = getImageCors(this.gameAreaUrl);
-    this.snakeImgLoaded = getImageCors(this.snakeHeadUrl);
+    this.snakeHeadImgLoaded = getImageCors(this.snakeHeadUrl);
+    if (this.snakeBodyUrl) {
+      this.TOTAL_IMAGES += 1;
+      this.snakeBodyImgLoaded = getImageCors(this.snakeBodyUrl);
+      this.snakeBodyImgLoaded.onload = this.onloadCallBack.bind(this);
+    }
     this.targetImgLoaded.onload = this.onloadCallBack.bind(this);
     this.gameAreaImgLoaded.onload = this.onloadCallBack.bind(this);
-    this.snakeImgLoaded.onload = this.onloadCallBack.bind(this);
+    this.snakeHeadImgLoaded.onload = this.onloadCallBack.bind(this);
   }
 
+  // check boolean here necessary for touch controls, keyPush takes care of keyboard controls
   public down(): void {
-    if (this.velocity.y === 0) {
+    if (this.velocity.y === 0 && this.enabled) {
       this.velocity.x = 0;
       this.velocity.y = this.speed;
     }
   }
 
   public up(): void {
-    if (this.velocity.y === 0) {
+    if (this.velocity.y === 0 && this.enabled) {
       this.velocity.x = 0;
       this.velocity.y = -this.speed;
     }
   }
   public left(): void {
-    if (this.velocity.x === 0) {
+    if (this.velocity.x === 0 && this.enabled) {
       this.velocity.x = -this.speed;
       this.velocity.y = 0;
     }
   }
 
   public right(): void {
-    if (this.velocity.x === 0) {
+    if (this.velocity.x === 0 && this.enabled) {
       this.velocity.x = this.speed;
       this.velocity.y = 0;
     }
   }
 
   private keyPush(evt: KeyboardEvent): void {
-    switch (evt.key) {
-      case 'ArrowLeft':
-        if (!this.startedMoving) {
-          this.startedMoving = true;
-        }
-        this.left();
-        break;
-      case 'ArrowUp':
-        if (!this.startedMoving) {
-          this.startedMoving = true;
-        }
-        this.up();
-        break;
-      case 'ArrowRight':
-        if (!this.startedMoving) {
-          this.startedMoving = true;
-        }
-        this.right();
-        break;
-      case 'ArrowDown':
-        if (!this.startedMoving) {
-          this.startedMoving = true;
-        }
-        this.down();
-        break;
+    if (this.enabled) {
+      switch (evt.key) {
+        case 'ArrowLeft':
+          if (!this.startedMoving) {
+            this.startedMoving = true;
+            this.trail = []; // so i wont slip over myself
+          }
+          this.left();
+          break;
+        case 'ArrowUp':
+          if (!this.startedMoving) {
+            this.startedMoving = true;
+            this.trail = []; // so i wont slip over myself
+          }
+          this.up();
+          break;
+        case 'ArrowRight':
+          if (!this.startedMoving) {
+            this.startedMoving = true;
+            this.trail = []; // so i wont slip over myself
+          }
+          this.right();
+          break;
+        case 'ArrowDown':
+          if (!this.startedMoving) {
+            this.startedMoving = true;
+            this.trail = []; // so i wont slip over myself
+          }
+          this.down();
+          break;
+      }
     }
   }
 

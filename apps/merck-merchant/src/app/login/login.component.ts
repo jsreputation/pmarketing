@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import {Validators, FormBuilder, FormGroup, AbstractControl} from '@angular/forms';
 import { AuthenticationService, NotificationService, TokenStorage } from '@perx/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
@@ -15,6 +15,19 @@ export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
   public currentSelectedLanguage: string = 'en';
   public appAccessTokenFetched: boolean;
+
+  public get name(): AbstractControl | null {
+    return this.loginForm.get('name');
+  }
+
+  public get email(): AbstractControl | null {
+    return this.loginForm.get('email');
+  }
+
+  public get password(): AbstractControl | null {
+    return this.loginForm.get('password');
+  }
+
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -86,7 +99,7 @@ export class LoginComponent implements OnInit {
   }
 
   public onForgotPassword(): void {
-    this.router.navigateByUrl('/reset');
+    this.router.navigateByUrl('/forgot');
   }
 
   public switchLanguage(): void {

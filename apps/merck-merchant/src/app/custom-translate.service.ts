@@ -3,7 +3,7 @@ import { HttpHeaders, HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { ConfigService, TokenStorage } from '@perx/core';
+import {ConfigService, IConfig, TokenStorage} from '@perx/core';
 
 interface IDictionary {
   [k: string]: string;
@@ -22,7 +22,7 @@ export class PerxTranslateLoader extends TranslateLoader {
     private tokenStorage: TokenStorage
   ) {
     super();
-    this.configService.readAppConfig().subscribe((config) => {
+    this.configService.readAppConfig().subscribe((config: IConfig<void>) => {
       if (config.production) {
         this.hostUrl = `${config.baseHref}`;
       }

@@ -20,6 +20,21 @@ export class ImageControlValue {
     return ImageControlValue.prepareImage(control.value);
   }
 
+  public static getImgLinkLayer(control: AbstractControl, layeredIndex: number, defaultImg?: string): string {
+    if (!(control && control.value)) {
+      return defaultImg; // return compulsory img : repeat the compulsory img | default one (35)
+    }
+    if (control.value.imageParts) {
+      if (control.value.imageParts[layeredIndex] && control.value.imageParts[layeredIndex].fullImg) {
+        return ImageControlValue.prepareImage(control.value.imageParts[layeredIndex].fullImg);
+      }
+      if (control.value.imageParts[layeredIndex] && control.value.imageParts[layeredIndex].img) {
+        return ImageControlValue.prepareImage(control.value.imageParts[layeredIndex].img);
+      }
+    }
+    return ImageControlValue.getImgLink(control, defaultImg);
+  }
+
   public static getImagePath(data: IGraphic | string): string {
     if (typeof data === 'string') {
       return data;

@@ -23,6 +23,11 @@
       [game]="game"
       (broken)=gameCompleted()
     ></perx-blackcomb-pages-spin>
+    <perx-blackcomb-pages-snake
+      *ngSwitchCase="gt.snake"
+      [game]="game"
+      (broken)=gameCompleted($event)>
+    </perx-blackcomb-pages-snake>
   </div>
   <mat-progress-bar *ngIf="progressValue" [value]="progressValue" class="loader"></mat-progress-bar>
 </div>

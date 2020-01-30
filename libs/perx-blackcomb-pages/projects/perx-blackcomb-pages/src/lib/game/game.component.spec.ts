@@ -13,6 +13,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
 import { ConfigToMappedSlotPipe, ConfigToSlicesPipe, SpinComponent } from './spin/spin.component';
 import { WInformationCollectionSettingType } from '@perx/whistler';
+import {SnakeComponent} from './snake/snake.component';
 
 const gamePi: IGame = {
   id: 1,
@@ -94,6 +95,7 @@ describe('GameComponent', () => {
         TapComponent,
         ScratchComponent,
         SpinComponent,
+        SnakeComponent,
         ConfigToSlicesPipe,
         ConfigToMappedSlotPipe
       ],

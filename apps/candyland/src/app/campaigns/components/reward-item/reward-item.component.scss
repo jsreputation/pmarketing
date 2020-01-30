@@ -78,7 +78,7 @@
     margin-left: auto;
     align-items: baseline;
     padding-left: ($horizontal-padding * 0.5);
-    width: 14rem;
+    width: 16rem;
   }
 
   &-probability-label,
@@ -103,7 +103,7 @@
   }
 
   &-limit-input {
-    max-width: 5rem;
+    max-width: 7rem;
   }
 
   &-probability-preview {

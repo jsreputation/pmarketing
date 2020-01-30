@@ -14,7 +14,7 @@ export {
   relationshipsDataToArray,
   relationshipsDataToItem
 } from './lib/jsonapi.payload';
-export { IWRewardDisplayProperties, IWProperties, IWAttbsObjEntity } from './lib/whistler.models';
+export { IWRewardDisplayProperties, IWProperties } from './lib/whistler.models';
 
 export { IWVoucherStatsApi } from './lib/voucher/stats';
 export { IWVouchersApi, WCodeType, WStatus } from './lib/voucher/vouchers-api';
@@ -116,7 +116,8 @@ export {
   IWSurveyEngagementAttributes,
   IWStampEngagementAttributes,
   IWScratchGameEngagementAttributes,
-  IWSpinGameEngagementAttributes
+  IWSpinGameEngagementAttributes,
+  IWSnakeGameEngagementAttributes
 } from './lib/engagement/engagement';
 export {
   WGameType,
@@ -124,7 +125,8 @@ export {
   IWTreeDisplayProperties,
   IWPinataDisplayProperties,
   IWScratchDisplayProperties,
-  IWSpinDisplayProperties
+  IWSpinDisplayProperties,
+  IWSnakeDisplayProperties
 } from './lib/engagement/games';
 export {
   IWInstantOutcomeDisplayProperties

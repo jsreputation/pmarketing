@@ -6,6 +6,7 @@ import {
   Validators,
   FormBuilder,
   FormGroup,
+  AbstractControl,
 } from '@angular/forms';
 import {Router} from '@angular/router';
 
@@ -17,7 +18,8 @@ import {mergeMap} from 'rxjs/operators';
 
 import {
   AuthenticationService,
-  ISignUpData, NotificationService,
+  ISignUpData,
+  NotificationService,
   ProfileService,
 } from '@perx/core';
 
@@ -33,6 +35,30 @@ export class SignUpComponent implements OnInit {
   public errorMessage?: string;
   public hide: boolean = true;
   public appAccessTokenFetched: boolean;
+
+  public get firstName(): AbstractControl | null {
+    return this.signUpForm.get('firstName');
+  }
+
+  public get lastName(): AbstractControl | null {
+    return this.signUpForm.get('lastName');
+  }
+
+  public get email(): AbstractControl | null {
+    return this.signUpForm.get('email');
+  }
+
+  public get phone(): AbstractControl | null {
+    return this.signUpForm.get('phone');
+  }
+
+  public get password(): AbstractControl | null {
+    return this.signUpForm.get('password');
+  }
+
+  public get acceptTerms(): AbstractControl | null {
+    return this.signUpForm.get('acceptTerms');
+  }
 
   constructor(
     private fb: FormBuilder,
@@ -62,16 +88,17 @@ export class SignUpComponent implements OnInit {
     this.signUpForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
+      email: ['', Validators.email],
       phone: ['', Validators.required],
       password: ['', [Validators.required, Validators.maxLength(4), Validators.minLength(4)]],
-      accept_terms: [false, Validators.requiredTrue],
+      acceptTerms: [false, Validators.requiredTrue],
       cardNumber: ['', [Validators.minLength(16), Validators.maxLength(16)]]
     });
   }
 
   public onSubmit(): void {
     const password: string = this.signUpForm.value.password;
-    const termsConditions = this.signUpForm.value.accept_terms as boolean;
+    const termsConditions = this.signUpForm.value.acceptTerms as boolean;
     if (!termsConditions) {
       return;
     }
@@ -94,13 +121,23 @@ export class SignUpComponent implements OnInit {
       this.router.navigate(['sms-validation'], {
         queryParams: {identifier: profile.phone}
       });
-    }, () => {
-      // card error handling
-      this.notificationService.addPopup({
-        title: 'PROFILE NOT FOUND',
-        text: 'Please check that your Plus! Card number and last name are correct and try again. If you need help, you may reach us at +63 (02) 981 0025',
-        buttonTxt: 'OK'
-      });
+    }, (error: any) => {
+      if (error.status === 409) {
+        // http conflict
+        this.notificationService.addPopup({
+          title: 'Account Exists',
+          text: 'This account already exists. Please log in instead.',
+          buttonTxt: 'CLOSE'
+        });
+      } else {
+        // card error handling
+        this.notificationService.addPopup({
+          title: 'PROFILE NOT FOUND',
+          text: 'Please check that your PLUS! Card number and last name are correct and try again. If you need help, you may reach us at +63 (02) 8981 0025',
+          buttonTxt: 'OK'
+        });
+      }
+
     });
   }
 }

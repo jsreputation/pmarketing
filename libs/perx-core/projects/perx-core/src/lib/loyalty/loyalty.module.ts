@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule, DatePipe, CurrencyPipe } from '@angular/common';
 
 import { V4LoyaltyService } from './v4-loyalty.service';
 import { LoyaltyService } from './loyalty.service';
@@ -37,6 +37,7 @@ export function loyaltyServiceFactory(http: HttpClient, config: Config): Loyalty
   providers: [
     DatePipe,
     TransactionPipe,
+    CurrencyPipe,
     {
       provide: LoyaltyService,
       useFactory: loyaltyServiceFactory,
