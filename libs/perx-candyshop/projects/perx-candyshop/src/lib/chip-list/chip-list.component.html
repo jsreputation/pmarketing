@@ -1,8 +1,8 @@
-<!--<mat-form-field class="chip-list">-->
-<mat-chip-list #chipList class="chip-list-row">
-  <mat-chip *ngFor="let tag of tags"
+<mat-chip-list #chipList class="cs-chip-list-row">
+  <mat-chip *ngFor="let tag of value"
             [selectable]="selectable"
             [removable]="removable"
+            [disabled]="disabled"
             (removed)="remove(tag)">
     {{tag}}
     <mat-icon matChipRemove
@@ -11,10 +11,13 @@
     </mat-icon>
   </mat-chip>
   <input [placeholder]="placeholder"
-         [formControl]="control"
+         [formControl]="inputControl"
          [matChipInputFor]="chipList"
          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
          [matChipInputAddOnBlur]="addOnBlur"
+         [disabled]="disabled"
+         [readonly]="readonly"
+         (focus)="focusChanged(true)"
+         (blur)="focusChanged(false)"
          (matChipInputTokenEnd)="add($event)">
 </mat-chip-list>
-<!--</mat-form-field>-->

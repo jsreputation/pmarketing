@@ -28,10 +28,10 @@ import {
   SidenavMenuModule,
   SmsEditorModule,
   StatusLabelModule,
-  TagListModule,
+  ChipListModule,
   TimePickerModule,
   UserModule,
-  StatisticsProgressBarModule
+  StatisticsProgressBarModule, ColorPickerModule
 } from '@perx/candyshop';
 import { MatIconModule } from '@angular/material/icon';
 import { UPLOAD_FILE_URL } from '../../../../../libs/perx-candyshop/projects/perx-candyshop/src/lib/upload-file/upload-file.module';
@@ -82,7 +82,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SidenavMenuModule,
     SmsEditorModule,
     StatusLabelModule,
-    TagListModule,
+    ChipListModule,
     TimePickerModule,
     UserModule,
     StatisticsProgressBarModule,
@@ -91,7 +91,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatCheckboxModule,
     MatSelectModule,
     MatButtonModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    ColorPickerModule
   ]
 })
 export class CandyshopModule {

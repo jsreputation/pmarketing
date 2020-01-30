@@ -66,7 +66,9 @@ export { IUploadImageService } from './lib/upload-graphic/upload-image-service.i
 
 export { UploadFileModule, UPLOAD_FILE_URL } from './lib/upload-file/upload-file.module';
 export { UploadFileComponent } from './lib/upload-file/upload-file.component';
-export { UploadFileService, FileUploadStatus, IUploadFileResponse } from './lib/upload-file/upload-file-service.interface';
+export {
+  UploadFileService, FileUploadStatus, IUploadFileResponse
+}from './lib/upload-file/upload-file-service.interface';
 
 export { SidenavModule } from './lib/sidenav/sidenav.module';
 export { SidenavComponent } from './lib/sidenav/sidenav.component';
@@ -82,8 +84,8 @@ export { StatusLabelConfigItem, IStatusLabelConfig } from './lib/status-label/st
 export { StatusLabelModule } from './lib/status-label/status-label.module';
 export { StatusLabelComponent, DEFAULT_STATUS_LABEL_CONFIG } from './lib/status-label/status-label.component';
 
-export { TagListModule } from './lib/tag-list/tag-list.module';
-export { TagListComponent } from './lib/tag-list/tag-list.component';
+export { ChipListModule } from './lib/chip-list/chip-list.module';
+export { ChipListComponent } from './lib/chip-list/chip-list.component';
 
 export { TimePickerModule } from './lib/time-picker/time-picker.module';
 export { TimePickerComponent } from './lib/time-picker/time-picker.component';
@@ -94,7 +96,9 @@ export { UserComponent } from './lib/user/user.component';
 export { StatisticsProgressBarModule } from './lib/statistics-progress-bar/statistics-progress-bar.module';
 export { StatisticsProgressBarComponent } from './lib/statistics-progress-bar/statistics-progress-bar.component';
 
-export { SepareteRangeDatePickerComponent } from './lib/separate-range-date-picker/separate-range-date-picker.component';
+export {
+  SepareteRangeDatePickerComponent
+}from './lib/separate-range-date-picker/separate-range-date-picker.component';
 export { SeparateRangeDatePickerModule } from './lib/separate-range-date-picker/separate-range-date-picker.module';
 
 export { StepLabelDirective } from './lib/stepper/step-label';
@@ -102,3 +106,6 @@ export { StepperDirective } from './lib/stepper/stepper';
 export { StepperNextDirective, StepperPreviousDirective } from './lib/stepper/stepper-button';
 export { StepperIconDirective } from './lib/stepper/stepper-icon';
 export { StepperModule } from './lib/stepper/stepper-module';
+
+export { ColorPickerComponent } from './lib/color-picker/color-picker.component';
+export { ColorPickerModule } from './lib/color-picker/color-picker.module';

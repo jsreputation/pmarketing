@@ -8,6 +8,18 @@
   </mat-select>
 </mat-form-field>
 
+<mat-form-field appearance="outline">
+  <cs-color-picker [formControl]="newFromControl"
+                   [disabled]="disabled"
+                   aria-label="pick primary color">
+  </cs-color-picker>
+</mat-form-field>
+
+
+<cs-color-picker [formControl]="newFromControl"
+                 aria-label="pick primary color">
+</cs-color-picker>
+
 <!--<h2>Date Picker</h2>-->
 
 <!--<mat-form-field [appearance]="appearance">-->
@@ -142,16 +154,38 @@
 </cs-time-picker>
 
 
-<!--  <h2>Tag List</h2>-->
-<!--  <cs-tag-list [disabled]="disabled">-->
+  <h2>Chip List</h2>
+<mat-form-field [appearance]="appearance"
+                [formControl]="newFromControl">
+  <mat-label>vsdzfgaesrdfa</mat-label>
+  <cs-chip-list [disabled]="disabled">
+  </cs-chip-list>
+  <button mat-icon-button matSuffix>
+    <mat-icon>keyboard_arrow_down</mat-icon>
+  </button>
+  <mat-error *ngIf="newFromControl.hasError('required')">
+    Error Required
+  </mat-error>
+</mat-form-field>
+---
+<mat-form-field [appearance]="appearance">
+  <cs-chip-list [disabled]="disabled">
+  </cs-chip-list>
+</mat-form-field>
+-----
+<cs-chip-list [disabled]="disabled"
+              [formControl]="newFromControl">
+</cs-chip-list>
+----
+<cs-chip-list [disabled]="disabled">
+</cs-chip-list>
 
-<!--  </cs-tag-list>-->
 
-<!--<h2>Sms Editor</h2>-->
-<!--<cs-sms-editor-->
-<!--  [options]="shortcodes">-->
+<h2>Sms Editor</h2>
+<cs-sms-editor
+  [options]="shortcodes">
 
-<!--</cs-sms-editor>-->
+</cs-sms-editor>
 
 
 <!---->
