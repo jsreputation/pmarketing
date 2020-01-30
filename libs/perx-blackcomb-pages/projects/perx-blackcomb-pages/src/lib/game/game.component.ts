@@ -8,7 +8,7 @@ import {
   IEngagementTransaction,
   AuthenticationService,
   NotificationService,
-  IPrePlayStateData
+  IPrePlayStateData, ConfigService, IConfig
 } from '@perx/core';
 import { map, tap, first, filter, switchMap, bufferCount, catchError, takeUntil } from 'rxjs/operators';
 import { Observable, interval, throwError, Subject, combineLatest } from 'rxjs';
@@ -52,6 +52,9 @@ export class GameComponent implements OnInit, OnDestroy {
     imageUrl: '',
   };
 
+  private isWhistler: boolean = true;
+  private gameId: number;
+
   constructor(
     private route: ActivatedRoute,
     private gameService: IGameService,
@@ -59,11 +62,14 @@ export class GameComponent implements OnInit, OnDestroy {
     private notificationService: NotificationService,
     private auth: AuthenticationService,
     private translate: TranslateService,
+    private configService: ConfigService
   ) {
   }
 
   public ngOnInit(): void {
     this.initTranslate();
+    this.configService.readAppConfig<void>().subscribe((config: IConfig<void>) => { this.isWhistler = config.isWhistler as boolean});
+
     this.isAnonymousUser = this.auth.getAnonymous();
     this.gameData$ = this.route.params.pipe(
       filter((params: Params) => params.id),
@@ -84,6 +90,7 @@ export class GameComponent implements OnInit, OnDestroy {
       map((games: IGame[]) => games[0]),
       tap((game: IGame) => {
         if (game) {
+          this.gameId = game.id;
           const { displayProperties } = game;
           if (displayProperties && displayProperties.informationCollectionSetting) {
             this.informationCollectionSetting = displayProperties.informationCollectionSetting;
@@ -145,7 +152,8 @@ export class GameComponent implements OnInit, OnDestroy {
         first()
       );
 
-    const userAction$: Observable<void> = this.gameService.prePlayConfirm(this.transactionId, this.informationCollectionSetting).pipe(
+    const confirmId = this.isWhistler ? this.transactionId : this.gameId;
+    const userAction$: Observable<IEngagementTransaction | void> = this.gameService.prePlayConfirm(confirmId, this.informationCollectionSetting).pipe(
       catchError((err: HttpErrorResponse) => {
         this.popupData = this.noRewardsPopUp;
         throw err;

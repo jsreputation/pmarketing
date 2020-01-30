@@ -16,7 +16,6 @@ import {
 import {
   map,
   switchMap,
-  tap,
 } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 import { Config } from '../config/config';
@@ -129,7 +128,6 @@ interface IV4GameCampaigns {
 })
 export class V4GameService implements IGameService {
   private hostName: string;
-  private cacheResponse: { [gId: number]: IEngagementTransaction } = {};
   constructor(
     private httpClient: HttpClient,
     config: Config,
@@ -244,16 +242,16 @@ export class V4GameService implements IGameService {
 
   // @ts-ignore
   public prePlay(engagementId: number, campaignId?: number): Observable<IEngagementTransaction> {
-    return this.play(engagementId)
-      .pipe(map((outcome: IPlayOutcome) => this.playOutcomeToEngagementTransaction(outcome)),
-        tap((transaction) => this.cacheResponse[transaction.id] = transaction));
+    // do nothing until preplay games are implemented in v4
+    return of();
   }
 
-  public prePlayConfirm(transactionId: number): Observable<void> {
-    if (this.cacheResponse[transactionId]) {
-      throw new Error('Not implemented.');
-    }
-    return of();
+  public prePlayConfirm(transactionId: number, _informationCollectionSetting?: string): Observable<IEngagementTransaction | void> {
+    // todo: transactionId is used as the game/engagementId until preplay games are implemented in v4
+    return this.play(transactionId)
+      .pipe(
+        map((outcome: IPlayOutcome) => this.playOutcomeToEngagementTransaction(outcome)),
+      );
   }
 
   public getActiveGames(): Observable<IGame[]> {
