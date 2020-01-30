@@ -1,11 +1,26 @@
-import { Component, Input, OnDestroy, OnInit, Optional, Self } from '@angular/core';
-import { ControlValueAccessor, FormArray, FormGroup, NgControl } from '@angular/forms';
-import { noop, Subject } from 'rxjs';
-import { distinctUntilChanged, startWith, takeUntil } from 'rxjs/operators';
+import {
+  ChangeDetectorRef,
+  Component, Inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Optional,
+  Self,
+} from '@angular/core';
+import { ControlValueAccessor, FormArray, FormControl, FormGroup, NgControl } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import Utils from 'src/app/helpers/utils';
 import { ILoyaltyRuleCondition } from 'src/app/core/models/loyalty/loyalty-rules.model';
-import { ConditionsBuilderService } from './conditions-builder.service';
+import { ConditionsBuilderFormsService } from './conditions-builder-forms.service';
 import { RuleConditionType } from '@cl-core/models/loyalty/rule-condition-type.enum';
+import {
+  CONDITION_BUILDER_COMPONENT_MAP,
+  IConditionsBuilderComponentMap,
+  IConditionsBuilderConfig,
+  IRuleConditionOption
+} from './conditions-builder.models';
+
 
 @Component({
   selector: 'cl-conditions-builder',
@@ -13,34 +28,38 @@ import { RuleConditionType } from '@cl-core/models/loyalty/rule-condition-type.e
   styleUrls: ['./conditions-builder.component.scss']
 })
 export class ConditionsBuilderComponent implements OnInit, OnDestroy, ControlValueAccessor {
-  @Input() public config: {
-    conditionType: { value: string, title: string, limit?: number }[];
-    [key: string]: any;
-  };
-  public avaibleTypeOptions: { value: string, title: string, limit?: number }[];
-  public avaibleTypeOptionsArray: { value: string, title: string, limit?: number }[][];
+  @Input() public config: IConditionsBuilderConfig;
+  public availableTypeOptions: IRuleConditionOption[];
+  public availableTypeOptionsArray: IRuleConditionOption[][];
   public groupMap: { [key: string]: (type: string) => FormGroup };
-  public componentMap: { [type: string]: any };
   public conditions: FormArray = new FormArray([]);
   public disabledState: boolean = false;
-  private onChange: any = noop;
-  private onTouched: any = noop;
+  public onChange: any = () => {
+  }
+  public onTouched: any = () => {
+  }
   protected destroy$: Subject<void> = new Subject();
 
+  private get control(): FormControl | null {
+    return this.ngControl ? this.ngControl.control as FormControl : null;
+  }
+
   constructor(
-    private conditionsBuilderService: ConditionsBuilderService,
+    @Inject(CONDITION_BUILDER_COMPONENT_MAP) public componentMap: IConditionsBuilderComponentMap,
+    private conditionsBuilderService: ConditionsBuilderFormsService,
+    private cd: ChangeDetectorRef,
     @Optional() @Self() public ngControl: NgControl,
   ) {
-    this.groupMap = this.conditionsBuilderService.groupMap;
-    this.componentMap = this.conditionsBuilderService.componentMap;
     if (this.ngControl) {
       this.ngControl.valueAccessor = this;
     }
+    this.groupMap = this.conditionsBuilderService.groupMap;
   }
 
   public ngOnInit(): void {
-    this.handleConditionTypes();
-
+    this.overrideMarkAsTouchedFunction();
+    this.setAvailableTypeOptions(this.conditions.value || null);
+    this.handleConditionChanges();
   }
 
   public ngOnDestroy(): void {
@@ -64,33 +83,16 @@ export class ConditionsBuilderComponent implements OnInit, OnDestroy, ControlVal
     }
   }
 
-  public handleConditionTypes(): void {
+  public handleConditionChanges(): void {
     this.conditions.valueChanges.pipe(
       distinctUntilChanged(Utils.isEqual),
-      startWith([]),
       takeUntil(this.destroy$)
     ).subscribe(conditions => {
       this.onChange(conditions);
       this.onTouched();
-      this.setAvaibleTypeOptions(conditions);
+      this.setAvailableTypeOptions(conditions);
+      this.setInnerErrorOutside();
     });
-  }
-
-  private setAvaibleTypeOptions(conditions: any[] | null): void {
-    const uniqTypesMap = Utils.uniqValuesMap(conditions, 'type');
-    if (conditions && conditions.length > 1) {
-      this.avaibleTypeOptions = this.config.conditionType.filter(
-        option => !('limit' in option) || !option.limit || !(option.value in uniqTypesMap) || option.limit > uniqTypesMap[option.value]
-      );
-      this.avaibleTypeOptionsArray = conditions.map(
-        condition => this.config.conditionType.filter(
-          option => option.value === condition.type || !('limit' in option) ||
-            !option.limit || !(option.value in uniqTypesMap) || option.limit > uniqTypesMap[option.value]
-        ));
-    } else {
-      this.avaibleTypeOptions = this.config.conditionType;
-      this.avaibleTypeOptionsArray = [this.config.conditionType];
-    }
   }
 
   public createConditionFormField(type: string): FormGroup {
@@ -123,10 +125,49 @@ export class ConditionsBuilderComponent implements OnInit, OnDestroy, ControlVal
 
     if (Utils.isArray(value)) {
       value.forEach((item: any) => this.addCondition(item.type));
-      this.conditions.patchValue(value, {emitEvent: false});
+      this.conditions.patchValue(value);
+      this.conditions.updateValueAndValidity();
+      this.cd.detectChanges();
       return;
     }
 
     console.warn('Error conditions: wrong format of data');
   }
+
+  private setAvailableTypeOptions(conditions: any[] | null): void {
+    const uniqTypesMap = Utils.uniqValuesMap(conditions, 'type');
+    if (conditions && conditions.length > 1) {
+      this.availableTypeOptions = this.config.conditionType.filter(
+        option => !('limit' in option) || !option.limit || !(option.value in uniqTypesMap) || option.limit > uniqTypesMap[option.value]
+      );
+      this.availableTypeOptionsArray = conditions.map(
+        condition => this.config.conditionType.filter(
+          option => option.value === condition.type || !('limit' in option) ||
+            !option.limit || !(option.value in uniqTypesMap) || option.limit > uniqTypesMap[option.value]
+        ));
+    } else {
+      this.availableTypeOptions = this.config.conditionType;
+      this.availableTypeOptionsArray = [this.config.conditionType];
+    }
+  }
+
+  // listening callback markAsTouched from external control
+  private overrideMarkAsTouchedFunction(): void {
+    if (this.control) {
+      this.control.markAsTouched = () => {
+        this.conditions.markAllAsTouched();
+      };
+    }
+  }
+
+  // TODO: this must be changed to custom validator for ConditionsBuilder
+  private setInnerErrorOutside(): void {
+    if (this.control && this.conditions.invalid) {
+      this.control.setErrors({innerError: true});
+    } else {
+      this.control.setErrors({});
+      this.control.updateValueAndValidity();
+    }
+  }
+
 }

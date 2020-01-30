@@ -9,6 +9,8 @@ import {
   IWSurveyEngagementAttributes,
   IWTreeGameEngagementAttributes,
   IWSpinGameEngagementAttributes,
+  IWSnakeGameEngagementAttributes,
+  IWSnakeDisplayProperties,
   WGameType,
   IJsonApiItem,
   IJsonApiPostData
@@ -21,9 +23,10 @@ import {
   IEngagementSurvey,
   IEngagementSpinType,
   IEngagementTapType,
-  IEngagementType
+  IEngagementType, IEngagementSnakeType
 } from '@cl-core/models/engagement/engagement.interface';
 import { IPinataForm } from '@cl-core/models/games/pinata/pinate-form.interface';
+import {ISnakeForm} from '@cl-core/models/games/snake/snake-form';
 
 export class EngagementHttpAdapter {
   // tslint:disable
@@ -178,6 +181,7 @@ export class EngagementHttpAdapter {
     | IEngagementTapType
     | IEngagementScratchType
     | IEngagementSpinType
+    | IEngagementSnakeType
     | undefined {
     switch (data.attributes.game_type) {
       case WGameType.shakeTheTree:
@@ -200,7 +204,38 @@ export class EngagementHttpAdapter {
           data as IJsonApiItem<IWSpinGameEngagementAttributes>,
           engagementType
         );
+      case WGameType.snake:
+        return EngagementHttpAdapter.transformToSnakeType(
+          data as IJsonApiItem<IWSnakeGameEngagementAttributes>,
+          engagementType
+        );
     }
+  }
+
+  public static transformToSnakeType(
+    data: IJsonApiItem<IWSnakeGameEngagementAttributes>,
+    engagementType?: string
+  ) {
+    return {
+      id: data.id,
+      type: data.type,
+      game_type: data.attributes.game_type,
+      title: data.attributes.title,
+      description: data.attributes.description,
+      image_url: data.attributes.image_url,
+      title_display: data.attributes.display_properties.title,
+      button: data.attributes.display_properties.button,
+      sub_title: data.attributes.display_properties.sub_title,
+      attributes_type: engagementType,
+      created_at: data.attributes.created_at,
+      updated_at: data.attributes.updated_at,
+      target_icon_img_url: data.attributes.display_properties.target_icon_img_url,
+      target_required: data.attributes.display_properties.target_required,
+      snake_head_img_url: data.attributes.display_properties.snake_head_img_url,
+      snake_body_img_url: data.attributes.display_properties.snake_body_img_url,
+      game_area_img_url: data.attributes.display_properties.game_area_img_url,
+      background_img_url: data.attributes.display_properties.background_img_url
+    };
   }
 
   public static transformToSpinType(
@@ -359,6 +394,32 @@ export class EngagementHttpAdapter {
     };
   }
 
+  public static transformFromSnakeForm(
+    data: ISnakeForm
+  ): IJsonApiPostData<IWSnakeGameEngagementAttributes> {
+    return {
+      type: "engagements",
+      attributes: {
+        type: "game",
+        title: data.name,
+        description: "Snake Game",
+        game_type: WGameType.snake,
+        image_url: data.image_url,
+        display_properties: {
+          title: data.headlineMessage,
+          button: data.buttonText,
+          sub_title: data.subHeadlineMessage,
+          target_icon_img_url: ImageControlValue.getImagePath(data.targetIcon),
+          target_required: +data.targetRequired,
+          background_img_url: ImageControlValue.getImagePath(data.background),
+          snake_head_img_url: ImageControlValue.getImagePath(data.snakeType),
+          snake_body_img_url: ImageControlValue.getImagePath((data.snakeType as IGraphic).imageParts ? (data.snakeType as IGraphic).imageParts[0] : ''),
+          game_area_img_url: ImageControlValue.getImagePath(data.gameArea)
+        }
+      }
+    };
+  }
+
   public static transformFromShakeTheTreeForm(
     data: IShakeTreeForm
   ): IJsonApiPostData<IWTreeGameEngagementAttributes> {
@@ -504,6 +565,42 @@ export class EngagementHttpAdapter {
       wheelPosition: data.attributes.display_properties.wheel_position,
       pointerImg: data.attributes.display_properties.pointer_img
     };
+  }
+
+  public static transformSnakeForm(
+    data: IJsonApiItem<IWSnakeGameEngagementAttributes>
+  ): ISnakeForm {
+    return {
+      name: data.attributes.title,
+      image_url: data.attributes.image_url,
+      headlineMessage: data.attributes.display_properties.title,
+      subHeadlineMessage: data.attributes.display_properties.sub_title,
+      gameType: data.attributes.game_type,
+      background: data.attributes.display_properties.background_img_url,
+      buttonText: data.attributes.display_properties.button,
+      targetRequired: data.attributes.display_properties.target_required,
+      snakeType: data.attributes.display_properties.snake_body_img_url ?
+        this.combineSnakeHeadAndBody(data.attributes.display_properties as Required<IWSnakeDisplayProperties>) : data.attributes.display_properties.snake_head_img_url,
+      targetIcon: data.attributes.display_properties.target_icon_img_url,
+      gameArea: data.attributes.display_properties.game_area_img_url
+    };
+  }
+  // precondition was head is set, so when confirm body set we enter this function assured body and head exists
+  public static combineSnakeHeadAndBody(IWSnakeDP: Required<IWSnakeDisplayProperties>): IGraphic {
+    // id is 0 to highlight it is an uploaded item different from the configured ones already there
+    return ({
+      id: 0,
+      type: 'snakeHead',
+      active: false,
+      img: IWSnakeDP.snake_head_img_url,
+      imageParts: [
+        { id: 0, // id doesn't matter at this point, look at confirm() of multi-upload-dialog
+          type: 'snakeBody',
+          active: false,
+          img: IWSnakeDP.snake_body_img_url
+        }
+      ]
+    })
   }
 
   public static transformRewardForm(

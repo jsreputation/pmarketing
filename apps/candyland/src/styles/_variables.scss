@@ -180,7 +180,7 @@ $icon-font-size: 1.6rem;
   border: 2px solid transparent;
   border-radius: $border-radius;
   transition: 0.25s cubic-bezier(0.35, 0, 0.25, 1);
-  overflow: hidden;
+  //overflow: hidden;
 
   &::before,
   &::after {

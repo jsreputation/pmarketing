@@ -116,7 +116,8 @@ export {
   IWSurveyEngagementAttributes,
   IWStampEngagementAttributes,
   IWScratchGameEngagementAttributes,
-  IWSpinGameEngagementAttributes
+  IWSpinGameEngagementAttributes,
+  IWSnakeGameEngagementAttributes
 } from './lib/engagement/engagement';
 export {
   WGameType,
@@ -124,7 +125,8 @@ export {
   IWTreeDisplayProperties,
   IWPinataDisplayProperties,
   IWScratchDisplayProperties,
-  IWSpinDisplayProperties
+  IWSpinDisplayProperties,
+  IWSnakeDisplayProperties
 } from './lib/engagement/games';
 export {
   IWInstantOutcomeDisplayProperties
