@@ -246,8 +246,7 @@ export class V4GameService implements IGameService {
     return of();
   }
 
-  // @ts-ignore
-  public prePlayConfirm(transactionId: number, _informationCollectionSetting?: string): Observable<IEngagementTransaction | void> {
+  public prePlayConfirm(transactionId: number): Observable<IEngagementTransaction | void> {
     // todo: transactionId is used as the game/engagementId until preplay games are implemented in v4
     return this.play(transactionId)
       .pipe(
