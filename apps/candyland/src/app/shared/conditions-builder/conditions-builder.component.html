@@ -10,10 +10,10 @@
   </div>
   <div class="card-section card-content">
     <div class="row">
-      <mat-form-field>
+      <mat-form-field *ngIf="availableTypeOptionsArray">
         <mat-select [formControl]="conditionGroup?.get('type')"
                     (valueChange)="updateCondition(index, $event)">
-          <ng-container *ngFor="let conditionOption of avaibleTypeOptionsArray[index] || []">
+          <ng-container *ngFor="let conditionOption of availableTypeOptionsArray[index]">
             <mat-option [value]="conditionOption?.value">
               {{conditionOption?.title | translate}}
             </mat-option>
@@ -32,7 +32,7 @@
 
 <br>
 
-<cs-button *ngIf="avaibleTypeOptions?.length > 0"
+<cs-button *ngIf="availableTypeOptions?.length > 0"
            [classList]="'tertiary'"
            mat-icon-button
            [matMenuTriggerFor]="addConditionMenu">
@@ -42,7 +42,7 @@
 </cs-button>
 
 <mat-menu #addConditionMenu="matMenu">
-  <ng-container *ngFor="let conditionOption of avaibleTypeOptions  || []">
+  <ng-container *ngFor="let conditionOption of availableTypeOptions">
     <button mat-menu-item
             (click)="addCondition(conditionOption?.value)">
       {{conditionOption?.title | translate}}

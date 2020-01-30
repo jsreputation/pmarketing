@@ -10,10 +10,20 @@ import { TransactionConditionGroupComponent } from './transaction-condition-grou
 import { AmountConditionGroupComponent } from './amount-condition-group/amount-condition-group.component';
 import { CurrencyConditionGroupComponent } from './currency-condition-group/currency-condition-group.component';
 import { DateConditionGroupComponent } from './date-condition-group/date-condition-group.component';
-import { ConditionsBuilderService } from './conditions-builder.service';
+import { ConditionsBuilderFormsService } from './conditions-builder-forms.service';
 import { ConditionsBuilderComponent } from './conditions-builder.component';
 import { DirectivesModule } from '../directives/directives.module';
 import { DatePickerModule } from '../components/date-picker/date-picker.module';
+import { CONDITION_BUILDER_COMPONENT_MAP, IConditionsBuilderComponentMap } from './conditions-builder.models';
+import { RuleConditionType } from '@cl-core/models/loyalty/rule-condition-type.enum';
+
+export const DefaultComponentMap: IConditionsBuilderComponentMap = {
+  [RuleConditionType.transaction]: TransactionConditionGroupComponent,
+  [RuleConditionType.amount]: AmountConditionGroupComponent,
+  [RuleConditionType.currency]: CurrencyConditionGroupComponent,
+  [RuleConditionType.fromDate]: DateConditionGroupComponent,
+  [RuleConditionType.toDate]: DateConditionGroupComponent,
+};
 
 @NgModule({
   declarations: [
@@ -39,7 +49,8 @@ import { DatePickerModule } from '../components/date-picker/date-picker.module';
     TranslateModule,
   ],
   providers: [
-    ConditionsBuilderService
+    { provide: CONDITION_BUILDER_COMPONENT_MAP, useValue: DefaultComponentMap },
+    ConditionsBuilderFormsService
   ],
   exports: [
     ConditionsBuilderComponent
