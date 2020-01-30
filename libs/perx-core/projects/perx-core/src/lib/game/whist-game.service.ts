@@ -11,7 +11,7 @@ import {
   defaultScratch,
   defaultPinata,
   IPlayOutcome,
-  IEngagementTransaction, defaultSpin
+  IEngagementTransaction, defaultSpin, IGameOutcome
 } from './game.model';
 import { Observable, combineLatest, of, Subscriber } from 'rxjs';
 import { Injectable, Optional } from '@angular/core';
@@ -295,5 +295,41 @@ export class WhistlerGameService implements IGameService {
       return false;
     }
     return this.auth.getAnonymous();
+  }
+
+  public getSuccessOutcome(game: IGame): Observable<IGameOutcome> {
+    const { displayProperties } = game;
+    if (displayProperties && displayProperties.successPopUp) {
+      return of({
+        title: displayProperties.successPopUp.headLine as string,
+        subTitle: displayProperties.successPopUp.subHeadLine as string,
+        image: displayProperties.successPopUp.imageURL as string,
+        button: displayProperties.successPopUp.buttonTxt as string
+      });
+    }
+
+    return of({
+      title: '',
+      subTitle: '',
+      button: ''
+    });
+  }
+
+  public getNoOutcome(game: IGame): Observable<IGameOutcome>{
+    const { displayProperties } = game;
+    if (displayProperties && displayProperties.noRewardsPopUp) {
+      return of({
+        title: displayProperties.noRewardsPopUp.headLine as string,
+        subTitle: displayProperties.noRewardsPopUp.subHeadLine as string,
+        image: displayProperties.noRewardsPopUp.imageURL as string,
+        button: displayProperties.noRewardsPopUp.buttonTxt as string
+      });
+    }
+
+    return of({
+      title: '',
+      subTitle: '',
+      button: ''
+    });
   }
 }
