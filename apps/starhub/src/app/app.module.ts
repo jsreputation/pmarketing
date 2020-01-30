@@ -30,7 +30,7 @@ import {
   ConfigModule,
   CampaignModule,
   MerchantsModule,
-  RewardPopupComponent,
+  RewardPopupComponent, FeedItemPopupComponent,
 } from '@perx/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -122,7 +122,8 @@ export class SentryErrorHandler implements ErrorHandler {
   entryComponents: [
     CategorySelectComponent,
     CategorySortComponent,
-    RewardPopupComponent
+    RewardPopupComponent,
+    FeedItemPopupComponent
   ],
   providers: [{ provide: ErrorHandler, useClass: SentryErrorHandler }],
   bootstrap: [AppComponent]
