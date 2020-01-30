@@ -19,5 +19,10 @@
   "BACK": "返回",
   "PROCEED": "繼續",
   "CLOSE": "關閉",
-  "TRANSACTION_HISTORY": "交易記錄"
+  "TRANSACTION_HISTORY": "交易記錄",
+  "STATIC_RESET_PASSWORD": "重設你的密碼",
+  "STATIC_PASSWORD": "密碼",
+  "STATIC_NEW_PASSWORD": "新密碼",
+  "STATIC_CONFIRM_PASSWORD": "確認密碼",
+  "SUBMIT_BUTTON": "更新密碼"
 }
