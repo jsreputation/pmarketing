@@ -39,6 +39,7 @@ import { CandyshopFileUploaderComponent } from './candyshop-file-uploader/candys
 import { CandyshopGraphicUploaderComponent } from './candyshop-graphic-uploader/candyshop-graphic-uploader.component';
 import { MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatSelectModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -92,7 +93,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatSelectModule,
     MatButtonModule,
     MatDatepickerModule,
-    ColorPickerModule
+    ColorPickerModule,
+    MatExpansionModule
   ]
 })
 export class CandyshopModule {
