@@ -8,6 +8,7 @@ export { TapComponent } from './lib/game/tap/tap.component';
 export { ShakeComponent } from './lib/game/shake/shake.component';
 export { ScratchComponent } from './lib/game/scratch/scratch.component';
 export { SpinComponent } from './lib/game/spin/spin.component';
+export { SnakeComponent } from './lib/game/snake/snake.component';
 export { ConfigToSlicesPipe } from './lib/game/spin/spin.component';
 export { ConfigToMappedSlotPipe } from './lib/game/spin/spin.component';
 export { HistoryComponent } from './lib/history/history.component';

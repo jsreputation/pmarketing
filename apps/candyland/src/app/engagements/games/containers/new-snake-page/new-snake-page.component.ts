@@ -30,6 +30,11 @@ export class NewSnakePageComponent implements OnInit, OnDestroy {
   public form: FormGroup;
   public snakeData: IGameDefaultData;
   public tenantSettings: ITenantsProperties;
+  // true for required
+  public snakeTypeStruct: {[key: string]: boolean} = {
+    snakeHead: true,
+    snakeBody: false
+  };
 
   public get name(): AbstractControl {
     return this.form.get(ControlsName.name);

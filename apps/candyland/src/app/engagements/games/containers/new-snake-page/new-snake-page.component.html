@@ -7,21 +7,21 @@
       <mat-error *ngIf="name.hasError('maxlength')"><span translate>ERROR_MAX_LENGTH</span> 60</mat-error>
     </mat-form-field>
     <div class="btn-group">
-      <cl-button [classList]="'secondary'"
+      <cs-button [classList]="'secondary'"
                  class="snake-btn-cancel"
                  (click)="comeBack()"
       >
        <span translate>
         BTN_CANCEL
       </span>
-      </cl-button>
-      <cl-button [classList]="'primary cta cta-save'"
+      </cs-button>
+      <cs-button [classList]="'primary cta cta-save'"
                  (click)="save()"
       >
         <span translate>
           BTN_SAVE
         </span>
-      </cl-button>
+      </cs-button>
     </div>
   </header>
   <section class="content form-limiter">
@@ -77,8 +77,9 @@
               <h3 class="card-fieldset-label" translate>
                 Snake Type
               </h3>
-              <div class="game-snake-wrap">
+              <div class="game-gift-box_field">
                 <cl-select-graphic-wrap-dialog
+                  [isMultiObj]="snakeTypeStruct"
                   *ngIf="snakeData.snakeType"
                   formControlName="snakeType"
                   [graphicList]="snakeData.snakeType"
@@ -167,10 +168,10 @@
       >
         <div class="plugin-block">
           <div class="mobile-preview-header">
-            <p class="mobile-preview-headline">
+            <p class="mobile-preview-headline light">
               {{headlineMessage.value}}
             </p>
-            <p class="mobile-preview-sub-headline">
+            <p class="mobile-preview-sub-headline light">
               {{subHeadlineMessage.value}}
             </p>
           </div>

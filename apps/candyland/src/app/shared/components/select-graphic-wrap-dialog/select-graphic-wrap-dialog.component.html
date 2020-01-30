@@ -1,13 +1,33 @@
 <div class="graphic-wrap" *ngIf="graphicList"
      [class.field-lock]="lock"
 >
-<!--  <div class="upload graphic-image-preview" *ngIf="showUpload">-->
-<!--    <cl-upload-graphic-ext-->
-<!--      [placeholder]="placeHolder"-->
-<!--      [formControl]="controlUpload"-->
-<!--      [selectGraphic]="selectedGraphic">-->
-<!--    </cl-upload-graphic-ext>-->
-<!--  </div>-->
+  <div class="upload graphic-image-preview" *ngIf="showUpload">
+    <div *ngIf="isMultiObj">
+      <div class="upload graphic-image-preview" *ngIf="showUpload">
+        <cl-images-preview *ngIf="graphicUploaded"
+                           [img]="graphicUploaded"
+                           [diagBox]="true"
+                           [upload]="true"
+                           (edit)="openMultiUpLoadDialog()"
+                           [selected]="selectedGraphic"
+                           class="graphic-image-preview"
+                           (selectPreview)="setSelectedGraphic($event)"
+        ></cl-images-preview>
+      </div>
+      <div class="upload graphic-image-preview" *ngIf="!graphicUploaded">
+        <div class="upload-wrap-btn">
+          <button class="upload-btn" (click)="openMultiUpLoadDialog()" [attr.aria-label]="'add new'">
+            <span>{{'BTN_ADD_NEW' | translate}}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <cl-upload-graphic *ngIf="!isMultiObj"
+                       [isRequired]="isRequired"
+                       [formControl]="controlUpload"
+                       [selectGraphic]="selectedGraphic"
+                       [placeholder]="placeHolder"></cl-upload-graphic>
+  </div>
   <cl-select-graphic [formControl]="controlDefault"
                      [graphicList]="graphicList"
                      [selectedGraphic]="selectedGraphic"

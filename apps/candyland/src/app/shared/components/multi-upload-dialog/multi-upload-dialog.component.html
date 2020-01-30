@@ -1,32 +1,38 @@
-<h1 mat-dialog-title>Add file</h1>
-<input #fileInput type="file"
-       *ngIf="!imgURL"
-       class="upload-input"
-       accept='image/*'
-       (change)="preview(fileInput.files)" />
-<input #fileInput type="file"
-       *ngIf="!imgURL"
-       class="upload-input"
-       accept='image/*'
-       (change)="preview(fileInput.files)" />
-<mat-dialog-content>
-  Content goes here, the two inputs for files, actullay dond newed the object, we pass in thru config
-  keep in a object keys mapping how many controls, which amongst the controls are compulsory
-  switch and then ngFor
-  <div class="upload-wrap-btn" *ngIf="!imgURL">
-    <button class="upload-btn" (click)="multiUploadDialog()" [attr.aria-label]="btnLabel">
-      <ng-content></ng-content>
-<!--      <span>{{btnLabel | translate}}</span>-->
-    </button>
-  </div>
-  <div class="upload-wrap-btn" *ngIf="!imgURL">
-    <button class="upload-btn" (click)="multiUploadDialog()" [attr.aria-label]="btnLabel">
-      <ng-content></ng-content>
-<!--      <span>{{btnLabel | translate}}</span>-->
-    </button>
-  </div>
-</mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-button>Add</button>
-  <button mat-button>Cancel</button>
-</mat-dialog-actions>
+<aside class="dialog" id="pad-out" role="dialog" aria-labelledby="dialogTitle-multiUpload">
+  <header class="dialog-header-wrap">
+    <h1 class="dialog-title">
+      <span>Upload Asset State Transition</span>
+      <div class="upload-type">
+        {{placeHolder | translate}}
+      </div>
+    </h1>
+  </header>
+
+    <div class="multi-diag">
+      <form [formGroup]="formImgs">
+        <!--[isRequired]="imageSegKVPairs[i][1]"-->
+        <cl-upload-graphic *ngFor="let control of imgArray.controls;index as i"
+                           [formControl]="control"
+                           [placeholder]="''"
+                           [uploadText]="imageSegKVPairs[i]|ctrlKeyVUpload"
+        ></cl-upload-graphic>
+      </form>
+    </div>
+  <mat-dialog-actions class="dialog-actions">
+    <cs-button
+      (click)="close()"
+      [classList]="'secondary'"
+      class="actions-close"
+      [disableRipple]="true"
+    ><span translate>{{'BTN_CANCEL'|translate}}</span>
+    </cs-button>
+    <!--first control by default is compulsory-->
+    <cs-button
+      [disable]="!imgArray.controls[0].value"
+      (click)="confirm()"
+      [classList]="'primary'"
+      [disableRipple]="true"
+    >Confirm</cs-button>
+  </mat-dialog-actions>
+</aside>
+

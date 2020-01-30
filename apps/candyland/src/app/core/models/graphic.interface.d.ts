@@ -7,5 +7,5 @@ declare interface IGraphic {
   format?: string;
   description?: string;
   fullImg?: string;
-  imageParts?: IGraphic;
+  imageParts?: IGraphic[];
 }

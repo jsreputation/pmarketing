@@ -69,6 +69,16 @@ export function defaultScratch(): IScratch {
   };
 }
 
+export function defaultSnake(): ISnake {
+  return {
+    snakeType: '',
+    background: '',
+    targetIcon: '',
+    gameArea: '',
+    targetRequired: 5
+  };
+}
+
 export function defaultSpin(): ISpin {
   return {
     numberOfWedges: 5,

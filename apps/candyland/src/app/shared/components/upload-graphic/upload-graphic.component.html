@@ -24,6 +24,7 @@
       <span>{{btnLabel | translate}}</span>
     </button>
   </div>
+  <p *ngIf="uploadText" class="upload-text">{{uploadText}}</p>
   <div class="upload-error-wrap">
     <p class="upload-error" *ngIf="isRequired">Required field</p>
     <p class="upload-error" *ngIf="message">{{message}}</p>
@@ -34,3 +35,4 @@
     </span>
   </div>
 </div>
+

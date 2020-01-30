@@ -9,10 +9,12 @@ import {DialogPreviewSelectorComponent} from '@cl-shared/components/dialog-previ
   styleUrls: ['./images-preview.component.scss']
 })
 export class ImagesPreviewComponent {
+  @Input() public upload: boolean = false;
   @Input() public img: IGraphic;
   @Input() public selected: any;
   @Input() public diagBox: boolean;
   @Output() public selectPreview: EventEmitter<IGraphic> = new EventEmitter<IGraphic>();
+  @Output() public edit: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public constructor(public matDialog: MatDialog, public cd: ChangeDetectorRef) {
   }
@@ -21,7 +23,12 @@ export class ImagesPreviewComponent {
   public previewOpen: boolean = false;
 
   public handlerClick(): void {
+    console.log(this.img, 'this is my img');
     this.selectPreview.emit(this.img);
+  }
+
+  public handlerClear(): void {
+    this.edit.emit(true);
   }
 
   // Call the dialog
@@ -29,7 +36,7 @@ export class ImagesPreviewComponent {
     this.previewOpen = true;
     const target = new ElementRef(evt.currentTarget);
     const dialogRef = this.matDialog.open(DialogPreviewSelectorComponent, {
-      data: { trigger: target, img: this.img },
+      data: { trigger: target, img: this.img, upload: this.upload },
       panelClass: 'custom-dialog-container'
     });
     dialogRef.afterClosed().subscribe( _ => {

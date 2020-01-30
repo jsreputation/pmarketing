@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {DialogPreviewSelectorComponent} from '@cl-shared/components/dialog-preview-selector/dialog-preview-selector.component';
 import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from '@angular/material';
+import {PipesModule} from '@cl-shared/pipes/pipes.module';
 
 @NgModule({
   providers: [
@@ -12,6 +13,7 @@ import {MAT_DIALOG_DEFAULT_OPTIONS, MatDialogModule} from '@angular/material';
   imports: [
     CommonModule,
     MatDialogModule,
+    PipesModule
   ],
   entryComponents: [
     DialogPreviewSelectorComponent

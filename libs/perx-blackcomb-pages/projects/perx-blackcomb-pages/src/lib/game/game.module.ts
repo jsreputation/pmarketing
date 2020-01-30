@@ -38,6 +38,7 @@ import { SnakeComponent } from './snake/snake.component';
     ShakeComponent,
     ScratchComponent,
     SpinComponent,
+    SnakeComponent,
     ConfigToSlicesPipe,
     ConfigToMappedSlotPipe
   ],

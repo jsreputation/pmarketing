@@ -409,6 +409,7 @@ export class EngagementHttpAdapter {
           sub_title: data.subHeadlineMessage,
           target_icon_img_url: ImageControlValue.getImagePath(data.targetIcon),
           target_required: +data.targetRequired,
+          background_img_url: ImageControlValue.getImagePath(data.background),
           snake_type_img_url: ImageControlValue.getImagePath(data.snakeType),
           game_area_img_url: ImageControlValue.getImagePath(data.gameArea)
         }

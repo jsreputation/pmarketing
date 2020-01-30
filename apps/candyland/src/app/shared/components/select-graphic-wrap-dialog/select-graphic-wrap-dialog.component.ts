@@ -3,6 +3,8 @@ import {AbstractControl, ControlValueAccessor, FormBuilder, NG_VALUE_ACCESSOR} f
 import {Subject} from 'rxjs';
 import {debounceTime, takeUntil} from 'rxjs/operators';
 import {ImageControlValue} from '@cl-helpers/image-control-value';
+import {MultiUploadDialogComponent} from '@cl-shared/components/multi-upload-dialog/multi-upload-dialog.component';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'cl-select-graphic-wrap-dialog',
@@ -22,10 +24,13 @@ export class SelectGraphicWrapDialogComponent implements OnInit, ControlValueAcc
   @Input() public showUpload: boolean = true;
   @Input() public isRequired: boolean;
   @Input() public placeHolder: string;
+  @Input() public isMultiObj: {[key: string]: boolean};
+
   public selectedGraphic: IGraphic;
   public controlUpload: AbstractControl;
   public controlDefault: AbstractControl;
   private destroy$: Subject<void> = new Subject();
+  public graphicUploaded: IGraphic;
   public lock: boolean;
 
   public onChange: any = () => {
@@ -43,7 +48,8 @@ export class SelectGraphicWrapDialogComponent implements OnInit, ControlValueAcc
   }
 
   constructor(private fb: FormBuilder,
-              private cd: ChangeDetectorRef) { }
+              private cd: ChangeDetectorRef,
+              public matDialog: MatDialog) { }
 
   public ngOnInit(): void {
     this.createDefaultControl();
@@ -129,6 +135,25 @@ export class SelectGraphicWrapDialogComponent implements OnInit, ControlValueAcc
       .subscribe((value) => {
         this.setSelectedGraphic(value);
       });
+  }
+
+  public openMultiUpLoadDialog(): void {
+    const dialogRef = this.matDialog.open(MultiUploadDialogComponent, {
+      data: { img: this.graphicUploaded, imgSegments: this.isMultiObj,
+        placeHolder: this.placeHolder }, panelClass: 'multi-upload-dialog'
+    });
+    dialogRef.afterClosed().subscribe( data => {
+      if (!data) {
+        return;
+      }
+      console.log('closed, to log data later on', data);
+      this.graphicUploaded = data;
+      this.cd.detectChanges();
+    });
+  }
+
+  public clear(): void {
+    this.graphicUploaded = undefined;
   }
 
   public ngOnDestroy(): void {

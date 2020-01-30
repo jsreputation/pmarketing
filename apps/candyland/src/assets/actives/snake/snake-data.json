@@ -2,21 +2,23 @@
   "snakeType": [
     {
       "id": 1,
-      "type": "snake1",
+      "type": "snakeHead1",
       "title": "icon",
       "img": "global/assets/game/snake/snake_head1.png",
       "fullImg": "global/assets/game/snake/snake_head1.png",
       "format": ".png",
       "active": "false",
-      "imageParts": {
-        "id": 1,
-        "type": "snake1",
-        "title": "icon",
-        "img": "global/assets/game/snake/snake_body1.png",
-        "fullImg": "global/assets/game/snake/snake_body1.png",
-        "format": ".png",
-        "active": "false"
-      }
+      "imageParts": [
+        {
+          "id": 1,
+          "type": "snakeBody1",
+          "title": "icon",
+          "img": "global/assets/game/snake/snake_body1.png",
+          "fullImg": "global/assets/game/snake/snake_body1.png",
+          "format": ".png",
+          "active": "false"
+        }
+      ]
     },
     {
       "id": 2,
