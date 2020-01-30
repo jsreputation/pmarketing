@@ -1,5 +1,5 @@
 import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
-import { APP_INITIALIZER, NgModule } from '@angular/core'; // , Injectable, ErrorHandler
+import { APP_INITIALIZER, NgModule, Injectable, ErrorHandler } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -24,22 +24,22 @@ import {
   setLanguage,
   translateLoader
 } from '@cl-core/translate-services/multiple-translate-loader-service';
-// import * as Sentry from '@sentry/browser';
+import * as Sentry from '@sentry/browser';
 import { HttpServicesModule } from '@perx/whistler-services';
 
-// Sentry.init({
-//   dsn: 'https://18cd39b4f761401d9a8de7d2cd4398ed@sentry.io/1827238'
-// });
-//
-// @Injectable()
-// export class SentryErrorHandler implements ErrorHandler {
-//   public handleError(error: any): void {
-//     Sentry.captureException(error.originalError || error);
-//     if (!environment.production) {
-//       console.error(error);
-//     }
-//   }
-// }
+Sentry.init({
+  dsn: 'https://18cd39b4f761401d9a8de7d2cd4398ed@sentry.io/1827238'
+});
+
+@Injectable()
+export class SentryErrorHandler implements ErrorHandler {
+  public handleError(error: any): void {
+    Sentry.captureException(error.originalError || error);
+    if (!environment.production) {
+      console.error(error);
+    }
+  }
+}
 
 @NgModule({
   declarations: [
@@ -89,7 +89,8 @@ import { HttpServicesModule } from '@perx/whistler-services';
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     { provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig },
     { provide: APP_INITIALIZER, useFactory: setLanguage, deps: [TranslateService, TranslateDefaultLanguageService], multi: true },
-  ],  // { provide: ErrorHandler, useClass: SentryErrorHandler },
+    { provide: ErrorHandler, useClass: SentryErrorHandler }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

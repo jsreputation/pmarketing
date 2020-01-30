@@ -110,7 +110,8 @@ export class WhistlerGameService implements IGameService {
       const snakedp: IWSnakeDisplayProperties = attributes.display_properties as IWSnakeDisplayProperties;
       config = {
         ...defaultSnake(),
-        snakeType: snakedp.snake_type_img_url,
+        snakeHead: snakedp.snake_head_img_url,
+        snakeBody: snakedp.snake_body_img_url,
         targetIcon: snakedp.target_icon_img_url,
         gameArea: snakedp.game_area_img_url,
         targetRequired: snakedp.target_required

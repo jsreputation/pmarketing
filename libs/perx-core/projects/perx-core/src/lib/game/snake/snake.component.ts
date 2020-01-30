@@ -44,6 +44,8 @@ export class SnakeGameComponent implements OnChanges {
   @Input()
   public snakeHeadUrl: string;
   @Input()
+  public snakeBodyUrl: string;
+  @Input()
   public gameAreaUrl: string;
 
   // gameplay related inputs
@@ -86,7 +88,8 @@ export class SnakeGameComponent implements OnChanges {
   private tail: number = 4;
   private targetImgLoaded!: HTMLImageElement;
   private gameAreaImgLoaded!: HTMLImageElement;
-  private snakeImgLoaded!: HTMLImageElement;
+  private snakeHeadImgLoaded!: HTMLImageElement;
+  private snakeBodyImgLoaded: HTMLImageElement | undefined;
 
   private TOTAL_IMAGES: number = 3;
   private counterLoaded: number = 0;
@@ -166,7 +169,7 @@ export class SnakeGameComponent implements OnChanges {
   }
 
   private checkCollisionWithSelf(): boolean {
-    console.log('did i collide with self?, ', this.trail.some(snakePart => snakePart.equals(this.snakePos)));
+    // console.log('did i collide with self?, ', this.trail.some(snakePart => snakePart.equals(this.snakePos)));
     return this.trail.some(snakePart => snakePart.equals(this.snakePos));
   }
 
@@ -216,11 +219,10 @@ export class SnakeGameComponent implements OnChanges {
     // render board
     this.ctx.drawImage(this.gameAreaImgLoaded, 0, 0, this.canv.width, this.canv.height);
     // render snake
-    // maybe draw the head separately???
     // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < this.trail.length; i++) {
-      this.ctx.drawImage(this.snakeImgLoaded,
-        this.trail[i].x * this.cellSize, this.trail[i].y * this.cellSize, this.cellSize - 2 , this.cellSize - 2);
+      this.ctx.drawImage((i === this.trail.length - 1 ? this.snakeHeadImgLoaded : this.snakeBodyImgLoaded || this.snakeHeadImgLoaded),
+        this.trail[i].x * this.cellSize, this.trail[i].y * this.cellSize, this.cellSize - 2 , this.cellSize - 2);;;
     }
     this.ctx.drawImage(this.targetImgLoaded,
       this.foodPosition.x * this.cellSize, this.foodPosition.y * this.cellSize, this.cellSize - 2, this.cellSize - 2);
@@ -239,10 +241,15 @@ export class SnakeGameComponent implements OnChanges {
   private fillStyles(): void {
     this.targetImgLoaded = getImageCors(this.targetUrl);
     this.gameAreaImgLoaded = getImageCors(this.gameAreaUrl);
-    this.snakeImgLoaded = getImageCors(this.snakeHeadUrl);
+    this.snakeHeadImgLoaded = getImageCors(this.snakeHeadUrl);
+    if (this.snakeBodyUrl) {
+      this.TOTAL_IMAGES += 1;
+      this.snakeBodyImgLoaded = getImageCors(this.snakeBodyUrl);
+      this.snakeBodyImgLoaded.onload = this.onloadCallBack.bind(this);
+    }
     this.targetImgLoaded.onload = this.onloadCallBack.bind(this);
     this.gameAreaImgLoaded.onload = this.onloadCallBack.bind(this);
-    this.snakeImgLoaded.onload = this.onloadCallBack.bind(this);
+    this.snakeHeadImgLoaded.onload = this.onloadCallBack.bind(this);
   }
 
   // check boolean here necessary for touch controls, keyPush takes care of keyboard controls

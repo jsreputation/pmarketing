@@ -139,6 +139,10 @@ export class NewSnakePageComponent implements OnInit, OnDestroy {
     return ImageControlValue.getImgLink(control, defaultImg);
   }
 
+  public getImgLinkLayer(control: FormControl, layeredIndex: number, defaultImg?: string): string {
+    return ImageControlValue.getImgLinkLayer(control, layeredIndex, defaultImg);
+  }
+
   private createSnakeForm(): void {
     this.form = this.fb.group({
       name: ['Hit the Snake Template', [Validators.required,

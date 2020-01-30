@@ -10,6 +10,7 @@ import {
   IWTreeGameEngagementAttributes,
   IWSpinGameEngagementAttributes,
   IWSnakeGameEngagementAttributes,
+  IWSnakeDisplayProperties,
   WGameType,
   IJsonApiItem,
   IJsonApiPostData
@@ -230,7 +231,8 @@ export class EngagementHttpAdapter {
       updated_at: data.attributes.updated_at,
       target_icon_img_url: data.attributes.display_properties.target_icon_img_url,
       target_required: data.attributes.display_properties.target_required,
-      snake_type_img_url: data.attributes.display_properties.snake_type_img_url,
+      snake_head_img_url: data.attributes.display_properties.snake_head_img_url,
+      snake_body_img_url: data.attributes.display_properties.snake_body_img_url,
       game_area_img_url: data.attributes.display_properties.game_area_img_url,
       background_img_url: data.attributes.display_properties.background_img_url
     };
@@ -410,7 +412,8 @@ export class EngagementHttpAdapter {
           target_icon_img_url: ImageControlValue.getImagePath(data.targetIcon),
           target_required: +data.targetRequired,
           background_img_url: ImageControlValue.getImagePath(data.background),
-          snake_type_img_url: ImageControlValue.getImagePath(data.snakeType),
+          snake_head_img_url: ImageControlValue.getImagePath(data.snakeType),
+          snake_body_img_url: ImageControlValue.getImagePath((data.snakeType as IGraphic).imageParts ? (data.snakeType as IGraphic).imageParts[0] : ''),
           game_area_img_url: ImageControlValue.getImagePath(data.gameArea)
         }
       }
@@ -576,10 +579,28 @@ export class EngagementHttpAdapter {
       background: data.attributes.display_properties.background_img_url,
       buttonText: data.attributes.display_properties.button,
       targetRequired: data.attributes.display_properties.target_required,
-      snakeType: data.attributes.display_properties.snake_type_img_url,
+      snakeType: data.attributes.display_properties.snake_body_img_url ?
+        this.combineSnakeHeadAndBody(data.attributes.display_properties as Required<IWSnakeDisplayProperties>) : data.attributes.display_properties.snake_head_img_url,
       targetIcon: data.attributes.display_properties.target_icon_img_url,
       gameArea: data.attributes.display_properties.game_area_img_url
     };
+  }
+  // precondition was head is set, so when confirm body set we enter this function assured body and head exists
+  public static combineSnakeHeadAndBody(IWSnakeDP: Required<IWSnakeDisplayProperties>): IGraphic {
+    // id is 0 to highlight it is an uploaded item different from the configured ones already there
+    return ({
+      id: 0,
+      type: 'snakeHead',
+      active: false,
+      img: IWSnakeDP.snake_head_img_url,
+      imageParts: [
+        { id: 0, // id doesn't matter at this point, look at confirm() of multi-upload-dialog
+          type: 'snakeBody',
+          active: false,
+          img: IWSnakeDP.snake_body_img_url
+        }
+      ]
+    })
   }
 
   public static transformRewardForm(

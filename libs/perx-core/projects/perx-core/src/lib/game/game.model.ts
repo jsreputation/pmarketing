@@ -71,7 +71,8 @@ export function defaultScratch(): IScratch {
 
 export function defaultSnake(): ISnake {
   return {
-    snakeType: '',
+    snakeHead: '',
+    snakeBody: '',
     background: '',
     targetIcon: '',
     gameArea: '',
@@ -110,7 +111,8 @@ export interface ISpin {
 }
 
 export interface ISnake {
-  snakeType: string; // snakeWholeImage copy colorCtrls
+  snakeHead: string; // snakeWholeImage copy colorCtrls
+  snakeBody?: string;
   background: string;
   targetIcon: string;
   gameArea: string;

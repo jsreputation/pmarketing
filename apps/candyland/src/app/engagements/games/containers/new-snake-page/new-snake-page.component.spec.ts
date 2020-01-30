@@ -5,7 +5,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ImagesPreviewModule } from '@cl-shared/components/images-preview/images-preview.module';
-import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { SelectGraphicModule } from '@cl-shared/components/select-graphic/select-graphic.module';
 import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wrap/select-graphic-wrap.module';
 import {
@@ -23,6 +22,8 @@ import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { TenantStoreService } from '@cl-core-services';
 import { TenantMockStore } from '@cl-shared/test-components/tenant-mock-store/tenant-mock-store';
+import {ButtonModule} from '@perx/candyshop';
+import {SelectGraphicWrapDialogModule} from '@cl-shared/components/select-graphic-wrap-dialog/select-graphic-wrap-dialog.module';
 
 describe('NewSnakePageComponent', () => {
   let component: NewSnakePageComponent;
@@ -35,7 +36,6 @@ describe('NewSnakePageComponent', () => {
         BrowserAnimationsModule,
         ReactiveFormsModule,
         ImagesPreviewModule,
-        ButtonModule,
         SelectGraphicModule,
         SelectGraphicWrapModule,
         GameModule,
@@ -48,6 +48,8 @@ describe('NewSnakePageComponent', () => {
         HttpClientTestingModule,
         MatDialogModule,
         ConfirmModalModule,
+        ButtonModule,
+        SelectGraphicWrapDialogModule,
         TranslateModule.forRoot(),
       ],
       declarations: [ NewSnakePageComponent ],

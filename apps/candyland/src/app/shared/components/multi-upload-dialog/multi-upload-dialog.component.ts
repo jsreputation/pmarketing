@@ -18,12 +18,11 @@ export class MultiUploadDialogComponent  {
   // tslint:disable-next-line:variable-name
   private readonly _matDialogRef: MatDialogRef<MultiUploadDialogComponent>;
   // at first not present, if present dont overwrite
-
   public formImgs: FormGroup = new FormGroup({
     imagesFormArray: new FormArray([])
   });
   public imageGraphicWithNestedGraphic: IGraphic | undefined; // to be transformed into this
-  public imageSegments: {[key: string]: boolean}; // more generic, highlight number of upload controls
+  public imageSegments!: {[key: string]: boolean}; // more generic, highlight number of upload controls
   public placeHolder: string;
 
   public get imgArray(): FormArray {
@@ -31,7 +30,9 @@ export class MultiUploadDialogComponent  {
   }
 
   public get imageSegKVPairs(): [string, boolean][] {
-    return Object.entries(this.imageSegments);
+    if (this.imageSegments) {
+      return Object.entries(this.imageSegments);
+    }
   }
   constructor(matDialogRef: MatDialogRef<MultiUploadDialogComponent>,
               @Inject(MAT_DIALOG_DATA) data: { img: IGraphic, imgSegments: {[key: string]: boolean}, placeHolder: string}) {
@@ -45,13 +46,13 @@ export class MultiUploadDialogComponent  {
       if (data.img.imageParts) {
         imageGraphicAsArray = [...imageGraphicAsArray, ...data.img.imageParts.map(image => image.img)];
       }
-      console.log(imageGraphicAsArray, 'what my images graphicas');
     }
     this.placeHolder = data.placeHolder;
-    (this.formImgs.get('imagesFormArray') as FormArray).controls =
-      this.imageSegKVPairs.map((_: [string, boolean], index) => new FormControl(
-        data.img ? imageGraphicAsArray[index] : null)); // default cant access index get undefined, i see it the same as null
-    console.log('what imagenestGraph,', this.imageGraphicWithNestedGraphic);
+    if (this.imageSegKVPairs) {
+      (this.formImgs.get('imagesFormArray') as FormArray).controls =
+        this.imageSegKVPairs.map((_: [string, boolean], index) => new FormControl(
+          data.img ? imageGraphicAsArray[index] : null)); // default cant access index get undefined, i see it the same as null
+    }
   }
 
   public close(imageGraphicWithNestedGraphic?: IGraphic): void {

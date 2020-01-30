@@ -1,2 +1,2 @@
-<div class="snake-pic-container" [innerHtml]="imageGraphic|snakePreview: upload">
+<div class="snake-pic-container" [innerHtml]="imageGraphic? (imageGraphic|snakePreview: upload) : ''">
 </div>

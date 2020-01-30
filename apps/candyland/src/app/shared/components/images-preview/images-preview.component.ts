@@ -23,7 +23,6 @@ export class ImagesPreviewComponent {
   public previewOpen: boolean = false;
 
   public handlerClick(): void {
-    console.log(this.img, 'this is my img');
     this.selectPreview.emit(this.img);
   }
 

@@ -41,7 +41,11 @@ export class SelectGraphicWrapDialogComponent implements OnInit, ControlValueAcc
   public set setGraphic(val: any) {
     if (val !== undefined && this.selectedGraphic !== val) {
       const currentValue = ImageControlValue.getPrepareValue(val, this.graphicList);
-      this.handlerPatchUploadImage(currentValue);
+      if (this.isMultiObj && !this.graphicList.some(graphic => graphic.img === val.img)) {
+        this.graphicUploaded = val;
+      } else {
+        this.handlerPatchUploadImage(currentValue);
+      }
       this.patchDefaultControl(currentValue);
       this.selectedGraphic = currentValue;
     }
@@ -146,8 +150,8 @@ export class SelectGraphicWrapDialogComponent implements OnInit, ControlValueAcc
       if (!data) {
         return;
       }
-      console.log('closed, to log data later on', data);
       this.graphicUploaded = data;
+      this.setSelectedGraphic(this.graphicUploaded);
       this.cd.detectChanges();
     });
   }
