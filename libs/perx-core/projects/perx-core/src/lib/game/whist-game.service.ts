@@ -312,39 +312,39 @@ export class WhistlerGameService implements IGameService {
     return this.auth.getAnonymous();
   }
 
-  public getSuccessOutcome(game: IGame): Observable<IGameOutcome> {
+  public getSuccessOutcome(game: IGame): IGameOutcome {
     const { displayProperties } = game;
     if (displayProperties && displayProperties.successPopUp) {
-      return of({
+      return {
         title: displayProperties.successPopUp.headLine as string,
         subTitle: displayProperties.successPopUp.subHeadLine as string,
         image: displayProperties.successPopUp.imageURL as string,
         button: displayProperties.successPopUp.buttonTxt as string
-      });
+      };
     }
 
-    return of({
+    return {
       title: '',
       subTitle: '',
       button: ''
-    });
+    };
   }
 
-  public getNoOutcome(game: IGame): Observable<IGameOutcome>{
+  public getNoOutcome(game: IGame): IGameOutcome{
     const { displayProperties } = game;
     if (displayProperties && displayProperties.noRewardsPopUp) {
-      return of({
+      return {
         title: displayProperties.noRewardsPopUp.headLine as string,
         subTitle: displayProperties.noRewardsPopUp.subHeadLine as string,
         image: displayProperties.noRewardsPopUp.imageURL as string,
         button: displayProperties.noRewardsPopUp.buttonTxt as string
-      });
+      };
     }
 
-    return of({
+    return {
       title: '',
       subTitle: '',
       button: ''
-    });
+    };
   }
 }

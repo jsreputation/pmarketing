@@ -310,37 +310,37 @@ export class V4GameService implements IGameService {
     return transaction;
   }
 
-  public getSuccessOutcome(game: IGame): Observable<IGameOutcome> {
+  public getSuccessOutcome(game: IGame): IGameOutcome {
 
     if (game.results && game.results.outcome) {
-      return of({
+      return {
         title: game.results.outcome.title,
         subTitle: game.results.outcome.subTitle,
         image: game.results.outcome.image,
         button: game.results.outcome.button
-      });
+      };
     }
-    return of({
+    return {
       title: '',
       subTitle: '',
       button: ''
-    });
+    };
   }
 
-  public getNoOutcome(game: IGame): Observable<IGameOutcome>{
+  public getNoOutcome(game: IGame): IGameOutcome{
 
     if (game.results && game.results.noOutcome) {
-      return of({
+      return {
         title: game.results.noOutcome.title,
         subTitle: game.results.noOutcome.subTitle,
         image: game.results.noOutcome.image,
         button: game.results.noOutcome.button
-      });
+      };
     }
-    return of({
+    return {
       title: '',
       subTitle: '',
       button: ''
-    });
+    };
   }
 }
