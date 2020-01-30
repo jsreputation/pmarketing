@@ -18,6 +18,8 @@ import { Config } from '../config/config';
 import { V4ThemesService } from './themes/v4-themes.service';
 import { NewsfeedComponent } from './newsfeed/newsfeed.component';
 import { StorageModule } from './storage/storage.module';
+import {FeedItemPopupComponent} from './feed-item-popup/feed-item-popup.component';
+import {MatIconModule} from '@angular/material/icon';
 
 export function themesServiceFactory(http: HttpClient, config: Config): ThemesService {
   if (config.isWhistler) {
@@ -35,8 +37,8 @@ const directives = [
 const components = [
   PopupComponent,
   PinInputComponent,
-  NewsfeedComponent
-];
+  NewsfeedComponent,
+  FeedItemPopupComponent];
 
 // make sure we have only one instance of the NotificationService
 export function notificationServiceFactory(): NotificationService {
@@ -64,7 +66,8 @@ export function notificationServiceFactory(): NotificationService {
     MatButtonModule,
     ReactiveFormsModule,
     MatCardModule,
-    StorageModule
+    StorageModule,
+    MatIconModule
   ],
   exports: [
     ...directives,
