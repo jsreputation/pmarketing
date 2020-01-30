@@ -330,7 +330,7 @@ export class WhistlerGameService implements IGameService {
     };
   }
 
-  public getNoOutcome(game: IGame): IGameOutcome{
+  public getNoOutcome(game: IGame): IGameOutcome {
     const { displayProperties } = game;
     if (displayProperties && displayProperties.noRewardsPopUp) {
       return {
