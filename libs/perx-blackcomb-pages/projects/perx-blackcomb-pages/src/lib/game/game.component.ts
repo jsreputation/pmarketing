@@ -96,18 +96,17 @@ export class GameComponent implements OnInit, OnDestroy {
           if (displayProperties && displayProperties.informationCollectionSetting) {
             this.informationCollectionSetting = displayProperties.informationCollectionSetting;
           }
-          if (displayProperties && displayProperties.noRewardsPopUp) {
-            this.noRewardsPopUp.title = displayProperties.noRewardsPopUp.headLine;
-            this.noRewardsPopUp.text = displayProperties.noRewardsPopUp.subHeadLine;
-            this.noRewardsPopUp.imageUrl = displayProperties.noRewardsPopUp.imageURL || this.noRewardsPopUp.imageUrl;
-            this.noRewardsPopUp.buttonTxt = displayProperties.noRewardsPopUp.buttonTxt || this.noRewardsPopUp.buttonTxt;
-          }
-          if (displayProperties && displayProperties.successPopUp) {
-            this.successPopUp.title = displayProperties.successPopUp.headLine;
-            this.successPopUp.text = displayProperties.successPopUp.subHeadLine;
-            this.successPopUp.imageUrl = displayProperties.successPopUp.imageURL || this.successPopUp.imageUrl;
-            this.successPopUp.buttonTxt = displayProperties.successPopUp.buttonTxt || this.successPopUp.buttonTxt;
-          }
+
+          const successOutcome = this.gameService.getSuccessOutcome(game);
+          const noOutcome = this.gameService.getNoOutcome(game);
+          this.noRewardsPopUp.title = noOutcome.title;
+          this.noRewardsPopUp.text = noOutcome.subTitle;
+          this.noRewardsPopUp.imageUrl = noOutcome.image || this.noRewardsPopUp.imageUrl;
+          this.noRewardsPopUp.buttonTxt = noOutcome.button || this.noRewardsPopUp.buttonTxt;
+          this.successPopUp.title = successOutcome.title;
+          this.successPopUp.text = successOutcome.subTitle;
+          this.successPopUp.imageUrl = successOutcome.image || this.successPopUp.imageUrl;
+          this.successPopUp.buttonTxt = successOutcome.button || this.successPopUp.buttonTxt;
         }
       })
     );
