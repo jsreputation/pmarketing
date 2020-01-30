@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material';
 
 import {
   ConfigService,
-  FeedItem,
+  FeedItem, FeedItemPopupComponent,
   FeedReaderService,
   IRssFeeds,
   IRssFeedsData,
@@ -17,7 +17,6 @@ import {
   AnalyticsService,
   PageType,
 } from 'src/app/analytics.service';
-import { PopupComponent } from './popup/popup.component';
 
 @Component({
   selector: 'app-news-feed',
@@ -80,7 +79,7 @@ export class NewsFeedComponent implements OnInit {
       pageType: PageType.overlay,
       pageName: 'The All New Starhub Rewards'
     });
-    this.dialog.open(PopupComponent, {
+    this.dialog.open(FeedItemPopupComponent, {
       panelClass: 'app-full-bleed-dialog',
       data: item,
       height: '85vh',
