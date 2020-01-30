@@ -69,7 +69,10 @@ export class GameComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.initTranslate();
-    this.configService.readAppConfig<void>().subscribe((config: IConfig<void>) => { this.isWhistler = config.isWhistler as boolean});
+    this.configService.readAppConfig<void>().subscribe(
+      (config: IConfig<void>) => {
+        this.isWhistler = config.isWhistler as boolean;
+      });
 
     this.isAnonymousUser = this.auth.getAnonymous();
     this.gameData$ = this.route.params.pipe(
@@ -170,12 +173,14 @@ export class GameComponent implements OnInit, OnDestroy {
       );
 
     const confirmId = this.isWhistler ? this.transactionId : this.gameId;
-    const userAction$: Observable<IEngagementTransaction | void> = this.gameService.prePlayConfirm(confirmId, this.informationCollectionSetting).pipe(
-      catchError((err: HttpErrorResponse) => {
-        this.popupData = this.noRewardsPopUp;
-        throw err;
-      })
-    );
+    const userAction$: Observable<IEngagementTransaction | void> =
+      this.gameService.prePlayConfirm(confirmId, this.informationCollectionSetting)
+        .pipe(
+          catchError((err: HttpErrorResponse) => {
+            this.popupData = this.noRewardsPopUp;
+            throw err;
+          })
+        );
     combineLatest(processBar$, userAction$).subscribe(
       () => this.redirectUrlAndPopUp(),
       () => this.redirectUrlAndPopUp()

@@ -91,7 +91,9 @@ describe('GameComponent', () => {
     getGamesFromCampaign: () => of([gamePi]),
     prePlay: () => of(),
     prePlayConfirm: () => of(),
+    // tslint:disable-next-line:variable-name
     getSuccessOutcome: (_gamePi) => outcome,
+    // tslint:disable-next-line:variable-name
     getNoOutcome: (_gamePi) => outcome
   };
   const routerStub: Partial<Router> = {
