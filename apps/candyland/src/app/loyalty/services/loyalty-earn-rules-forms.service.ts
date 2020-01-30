@@ -25,7 +25,7 @@ export class LoyaltyEarnRulesFormsService {
     return new FormGroup({
       name: new FormControl(null,
         [Validators.required, Validators.minLength(1), Validators.maxLength(60)]),
-      conditions: new FormControl([]),
+      conditions: new FormControl(null),
       result: this.createResultFormField(RulePointType.bonus)
     });
   }

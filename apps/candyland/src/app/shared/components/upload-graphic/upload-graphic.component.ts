@@ -21,6 +21,8 @@ export class UploadGraphicComponent implements ControlValueAccessor {
   @Input() public btnLabel: string = 'BTN_ADD_NEW';
   @Input() public classList: string = '';
   @Input() public isRequired: boolean;
+  @Input() public imgURL: any; // more flexible to be able to pass in too
+  @Input() public uploadText: string;
 
   @Input()
   public set selectGraphic(value: any) {
@@ -33,7 +35,6 @@ export class UploadGraphicComponent implements ControlValueAccessor {
   @Output() private selectUploadGraphic: EventEmitter<IGraphic> = new EventEmitter<IGraphic>();
   public lock: boolean;
   public imagePath: File;
-  public imgURL: any;
   public message: string;
   public loadedImg: boolean = false;
   // tslint:disable

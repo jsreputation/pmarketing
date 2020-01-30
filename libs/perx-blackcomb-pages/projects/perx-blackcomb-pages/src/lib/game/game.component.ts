@@ -30,6 +30,7 @@ export class GameComponent implements OnInit, OnDestroy {
   private popupData: IPopupConfig;
   private isAnonymousUser: boolean;
   private informationCollectionSetting: string;
+  private rewardCount: string;
   public willWin: boolean;
   public successPopUp: IPopupConfig = {
     title: 'GAME_SUCCESS_TITLE',
@@ -120,14 +121,11 @@ export class GameComponent implements OnInit, OnDestroy {
       (gameTransaction: IEngagementTransaction) => {
         this.transactionId = gameTransaction.id;
         if (gameTransaction.voucherIds && gameTransaction.voucherIds.length > 0) {
-          const count = gameTransaction.voucherIds.length.toString();
-          this.willWin = true;
-          this.successPopUp.text =
-            this.successPopUp.text ? this.successPopUp.text.replace('{{rewards}}', count) : `You earned ${count} rewards`;
-          this.popupData = this.successPopUp;
+          // set this as a property
+          this.rewardCount = gameTransaction.voucherIds.length.toString();
+          this.fillSuccess(this.rewardCount);
         } else {
-          this.willWin = false;
-          this.popupData = this.noRewardsPopUp;
+          this.fillFailure();
         }
       },
       () => {
@@ -141,7 +139,27 @@ export class GameComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  public gameCompleted(): void {
+  // mutates willWin property, succespopup text and popup data
+  private fillSuccess(rewardCount: string): void {
+    this.willWin = true;
+    this.successPopUp.text =
+      this.successPopUp.text ? this.successPopUp.text.replace('{{rewards}}', rewardCount) : `You earned ${rewardCount} rewards`;
+    this.popupData = this.successPopUp;
+  }
+
+  private fillFailure(): void {
+    this.willWin = false;
+    this.popupData = this.noRewardsPopUp;
+  }
+
+  // optionally add check if user has won in the game (see snake) other games winning is predetermined
+  public gameCompleted(win?: boolean): void {
+    // win can be undefined also, if not explicitly passed in the willWin prop and popupdata will be what is set on preplay
+    if (win !== undefined && win === false) {
+      this.fillFailure();
+    } else if (win !== undefined && win === true) {
+      this.fillSuccess(this.rewardCount);
+    }
     // display a loader before redirecting to next page
     const delay = 3000;
     const nbSteps = 60;

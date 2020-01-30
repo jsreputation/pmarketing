@@ -45,6 +45,7 @@ import {
     ShakeComponent,
     ScratchComponent,
     SpinComponent,
+    SnakeComponent,
     ConfigToSlicesPipe,
     ConfigToMappedSlotPipe
   ],
