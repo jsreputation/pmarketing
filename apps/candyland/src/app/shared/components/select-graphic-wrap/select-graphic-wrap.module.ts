@@ -18,7 +18,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ImagesPreviewModule,
     UploadGraphicModule,
     SelectGraphicModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ]
 })
 export class SelectGraphicWrapModule { }

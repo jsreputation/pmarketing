@@ -1,5 +1,4 @@
-<button [disabled]="!allImagesLoaded" (click)="startAnimating()">START</button>
-<div #scoreBoard id="score">Score: {{score}}</div>
+<div #scoreBoard id="score">Score: {{score}}/{{targetsToWin}}</div>
 <div class="container"
      (swipeleft)="left()"
      (swiperight)="right()"
