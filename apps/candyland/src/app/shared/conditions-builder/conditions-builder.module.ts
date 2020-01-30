@@ -17,7 +17,7 @@ import { DatePickerModule } from '../components/date-picker/date-picker.module';
 import { CONDITION_BUILDER_COMPONENT_MAP, IConditionsBuilderComponentMap } from './conditions-builder.models';
 import { RuleConditionType } from '@cl-core/models/loyalty/rule-condition-type.enum';
 
-const DefaultComponentMap: IConditionsBuilderComponentMap = {
+export const DefaultComponentMap: IConditionsBuilderComponentMap = {
   [RuleConditionType.transaction]: TransactionConditionGroupComponent,
   [RuleConditionType.amount]: AmountConditionGroupComponent,
   [RuleConditionType.currency]: CurrencyConditionGroupComponent,
