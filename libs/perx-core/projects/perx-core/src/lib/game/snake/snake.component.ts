@@ -222,7 +222,7 @@ export class SnakeGameComponent implements OnChanges {
     // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < this.trail.length; i++) {
       this.ctx.drawImage((i === this.trail.length - 1 ? this.snakeHeadImgLoaded : this.snakeBodyImgLoaded || this.snakeHeadImgLoaded),
-        this.trail[i].x * this.cellSize, this.trail[i].y * this.cellSize, this.cellSize - 2 , this.cellSize - 2);;;
+        this.trail[i].x * this.cellSize, this.trail[i].y * this.cellSize, this.cellSize - 2 , this.cellSize - 2);
     }
     this.ctx.drawImage(this.targetImgLoaded,
       this.foodPosition.x * this.cellSize, this.foodPosition.y * this.cellSize, this.cellSize - 2, this.cellSize - 2);
