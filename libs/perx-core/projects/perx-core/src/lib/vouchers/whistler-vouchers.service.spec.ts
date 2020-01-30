@@ -124,12 +124,12 @@ describe('WhistlerVouchersService', () => {
         done();
       });
 
-    expect(httpClientSpy.get.calls.argsFor(0)).toEqual(
+    expect(getSpy.mock.calls[0]).toEqual(
       ['https://blabla/voucher-service/vouchers', { params: { 'page[number]': '1', 'page[size]': '10' } }]
     );
-    expect(httpClientSpy.get.calls.argsFor(1)).toEqual(
+    expect(getSpy.mock.calls[1]).toEqual(
       ['https://blabla/voucher-service/vouchers', { params: { 'page[number]': '2', 'page[size]': '10' } }]
     );
-    expect(httpClientSpy.get.calls.count()).toBe(2, 'Two pages');
+    expect(getSpy.mock.calls.length).toBe(2/*, 'Two pages'*/);
   });
 });
