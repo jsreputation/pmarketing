@@ -6,6 +6,7 @@ import {
 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { oc } from 'ts-optchain';
 
 import { IMerchantAdminService } from './imerchant-admin.service';
 import {
@@ -16,7 +17,8 @@ import {
   IMerchantCustomProperties,
   MerchantTransactionDetailType,
   IMerchantPurchaseTransactionHistory,
-  IMerchantRewardTransactionHistory
+  IMerchantRewardTransactionHistory,
+  IResetPasswordData
 } from './models/merchants-admin.model';
 
 import { Config } from '../config/config';
@@ -29,8 +31,10 @@ import {
   IVoucher,
   VoucherState,
 } from '../vouchers/models/voucher.model';
-import { RedemptionType } from '../perx-core.models';
-import { oc } from 'ts-optchain';
+import {
+  IMessageResponse,
+  RedemptionType,
+} from '../perx-core.models';
 
 interface IV4MerchantAdminTransaction {
   id: number;
@@ -171,12 +175,18 @@ interface IV4MerchantTransactionHistoryResponse {
 })
 export class V4MerchantAdminService implements IMerchantAdminService {
   public apiHost: string;
+  private merchantEndPoint: string | null = null;
 
   constructor(
     private http: HttpClient,
     private config: Config,
   ) {
     this.apiHost = config.apiHost as string;
+    if (!config.production) {
+      this.merchantEndPoint = `http://localhost:4000/v4/merchant_admin`;
+    } else {
+      this.merchantEndPoint = `${config.baseHref}v4/merchant_admin`;
+    }
   }
 
   public static v4TransactionHistoryToTransactionHistory(transactionHistory: IV4MerchantTransactionHistory): IMerchantTransactionHistory {
@@ -379,6 +389,21 @@ export class V4MerchantAdminService implements IMerchantAdminService {
         (transactionHistory: IV4MerchantTransactionHistory) =>
           V4MerchantAdminService.v4TransactionHistoryToTransactionHistory(transactionHistory)
       ))
+    );
+  }
+
+  public forgotPassword(email: string): Observable<IMessageResponse> {
+    return this.http.post<IMessageResponse>(`${this.merchantEndPoint}/forgot_password`, { email });
+  }
+
+  public resetPassword(resetPasswordInfo: IResetPasswordData): Observable<IMessageResponse> {
+    return this.http.post<IMessageResponse>(
+      `${this.apiHost}/v4/merchant_admin/reset_password`,
+      {
+        client_id: resetPasswordInfo.clientId,
+        reset_password_token: resetPasswordInfo.resetPasswordToken,
+        password: resetPasswordInfo.password,
+      }
     );
   }
 }

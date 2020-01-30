@@ -12,13 +12,15 @@ import {
   MatTableModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ButtonModule } from '@cl-shared/components/button/button.module';
+import { ButtonModule } from '@perx/candyshop';
 import { RewardsListModule } from '@cl-shared/components/rewards-list/rewards-list.module';
 import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter.module';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
 
 import { SelectRewardPopupComponent } from './select-reward-popup.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { RewardsService } from '@cl-core-services';
+import { MockRewardsServices } from '@cl-shared/test-components/providers/mock-rewards.services';
 
 describe('SelectRewardPopupComponent', () => {
   let component: SelectRewardPopupComponent;
@@ -44,6 +46,9 @@ describe('SelectRewardPopupComponent', () => {
       providers: [
         { provide: MatDialogRef, useValue: {} },
         { provide: MAT_DIALOG_DATA, useValue: [] },
+        {
+          provide: RewardsService, useClass: MockRewardsServices
+        }
       ],
       declarations: [ SelectRewardPopupComponent ],
       schemas: [ NO_ERRORS_SCHEMA ]

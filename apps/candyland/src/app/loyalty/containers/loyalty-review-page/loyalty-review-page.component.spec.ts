@@ -10,17 +10,18 @@ import { LoyaltyService } from '@cl-core/services/loyalty.service';
 import { LoyaltyRuleService } from '@cl-core/services/loyalty-rule.service';
 import { of, Subject } from 'rxjs';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
-import { TenantStoreService } from '@cl-core-services';
+import { TenantStoreService, UploadFileService } from '@cl-core-services';
 import { TenantMockStore } from '@cl-shared/test-components/tenant-mock-store/tenant-mock-store';
+import { MockLoyaltyServices } from '@cl-shared/test-components/providers/mock-loyalty.services';
+import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.service';
+import { MockLoyaltyCustomTierService } from '@cl-shared/test-components/providers/mock-loyalty-custom-tier.service';
+import { MockUploadFileService } from '@cl-shared/test-components/providers/mock-upload-file.service';
 
 describe('LoyaltyReviewComponent', () => {
   let component: LoyaltyReviewPageComponent;
   let fixture: ComponentFixture<LoyaltyReviewPageComponent>;
   const loyaltyConfigServiceStub: Partial<LoyaltyConfigService> = {
     getLoyaltyViewConfig: () => of([])
-  };
-  const loyaltyServiceStub: Partial<LoyaltyService> = {
-    getLoyalty: () => of(null),
   };
   const loyaltyRuleServiceStub: Partial<LoyaltyRuleService> = {
     findAndCreateRuleSet: () => of(),
@@ -40,11 +41,13 @@ describe('LoyaltyReviewComponent', () => {
       ],
       providers: [
         { provide: LoyaltyConfigService, useValue: loyaltyConfigServiceStub },
-        { provide: LoyaltyService, useValue: loyaltyServiceStub },
         { provide: LoyaltyRuleService, useValue: loyaltyRuleServiceStub },
         { provide: ActivatedRoute, useValue: activatedRouteStub },
         { provide: Router, useValue: routerStub },
-        { provide: TenantStoreService, useClass: TenantMockStore }
+        { provide: TenantStoreService, useClass: TenantMockStore },
+        { provide: LoyaltyService, useClass: MockLoyaltyServices },
+        { provide: LoyaltyCustomTierService, useClass: MockLoyaltyCustomTierService },
+        { provide: UploadFileService, useClass: MockUploadFileService },
       ],
       declarations: [LoyaltyReviewPageComponent],
       schemas: [NO_ERRORS_SCHEMA]

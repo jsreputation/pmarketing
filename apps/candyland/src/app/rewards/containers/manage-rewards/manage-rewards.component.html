@@ -6,8 +6,11 @@
     <mat-error *ngIf="form.get('name').hasError('maxlength')"><span translate>ERROR_MAX_LENGTH</span> 60</mat-error>
   </mat-form-field>
   <div class="btn-group">
-    <cl-button classList="secondary" (click)="cancel()"><span translate>BTN_CANCEL</span></cl-button>
-    <cl-button classList="primary cta cta-save" (click)="save()"><span translate>BTN_SAVE</span></cl-button>
+    <cs-button classList="secondary" (click)="cancel()"><span translate>BTN_CANCEL</span></cs-button>
+    <cs-button classList="primary cs-btn-mobile" (click)="save()">
+      <i class="cs-btn-mobile-icon icon save-icon"></i>
+      <span translate>BTN_SAVE</span>
+    </cs-button>
   </div>
 </header>
 <section class="content centered">
@@ -22,7 +25,7 @@
       <cl-reward-info-form-group
         [formGroup]="form.get('rewardInfo')"
         [config]="config"
-        [currency]="reward?.currency"
+        [currency$]="currency$"
       >
       </cl-reward-info-form-group>
     </div>

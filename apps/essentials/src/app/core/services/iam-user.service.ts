@@ -3,11 +3,11 @@ import Utils from '@es-helpers/utils';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IWIAMUserAttributes, IJsonApiItemPayload, IJsonApiPatchData, IJsonApiPostData } from '@perx/whistler';
-import { IamUserHttpService } from '../http-adapters/iam-user-http.service';
 import { IAMUser } from '../models/auth/IAMUser.interface';
-import { IamUserHttpAdapter } from '@es-core/http-adapters/iam-user-http-adapter';
+import { IamUserHttpAdapter } from '../http-adapters/iam-user-http-adapter';
 import { HttpParamsParser } from '@es-helpers/http-params-parser';
-import { ITableService } from '@es-core/models/table-service-interface';
+import { ITableService } from '../models/table-service-interface';
+import { IamUserHttpService } from '@perx/whistler-services';
 
 @Injectable({
   providedIn: 'root'

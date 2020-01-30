@@ -11,7 +11,7 @@ import { GamesComponent } from './games/games.component';
 import { GameComponent } from './games/game/game.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { InkModule } from '@cl-shared/components/ink/ink.module';
-import { ButtonModule } from '@cl-shared/components/button/button.module';
+import { ButtonModule } from '@perx/candyshop';
 import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
 import { TranslateModule } from '@ngx-translate/core';
 

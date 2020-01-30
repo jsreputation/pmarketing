@@ -1,10 +1,16 @@
-import { IWRewardEntityAttributes, IWTierRewardCostsAttributes, IJsonApiItem, IJsonApiPostData } from '@perx/whistler';
+import { IWRewardEntityAttributes, IWTierRewardCostsAttributes, IJsonApiItem, IJsonApiPostData, IJsonApiListPayload } from '@perx/whistler';
 import { DateTimeParser } from '@cl-helpers/date-time-parser';
-import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.interface';
+import {
+  IRewardEntityForm,
+  IRewardEntityValidityPeriodForm,
+  IRewardVoucherForm
+} from '@cl-core/models/reward/reward-entity-form.interface';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
+import { oc } from 'ts-optchain';
+import { VouchersHttpAdapter } from './vouchers-http-adapter';
 
 export class RewardHttpAdapter {
-  public static transformToTableData(data: any): ITableData<IRewardEntity> {
+  public static transformToTableData(data: IJsonApiListPayload<IWRewardEntityAttributes>): ITableData<IRewardEntity> {
     const formatData = data.data.map((item) => {
       const formatItem = RewardHttpAdapter.transformToReward(item);
       formatItem.merchantName = RewardHttpAdapter.includeOrganization(item, data);
@@ -25,6 +31,8 @@ export class RewardHttpAdapter {
   }
 
   public static transformToReward(data: IJsonApiItem<IWRewardEntityAttributes>): IRewardEntity {
+    const stats = VouchersHttpAdapter.transformToVoucherStatsObj(data.attributes.stats);
+    const total = Object.values(stats).reduce((acc, curr) => acc + curr, 0);
     return {
       id: data.id,
       image: data.attributes.image_url,
@@ -33,15 +41,15 @@ export class RewardHttpAdapter {
       rewardType: data.attributes.reward_type,
       redemptionType: data.attributes.redemption_type,
       merchantId: data.attributes.organization_id || null,
-      current: data.attributes.cost_of_reward,
-      total: 100,
+      current: stats.available,
+      total,
       category: data.attributes.category,
       tags: data.attributes.tags || []
     };
   }
 
   public static transformToRewardForm(data: IJsonApiItem<IWRewardEntityAttributes>): IRewardEntityForm {
-    let vouchers;
+    let vouchers: IRewardVoucherForm;
     if (data.attributes.display_properties.voucher_properties) {
       const voucher_properties = data.attributes.display_properties.voucher_properties;
       vouchers = {
@@ -62,7 +70,8 @@ export class RewardHttpAdapter {
             startDate: voucher_properties.validity.start_date,
             startTime: DateTimeParser.getTime(voucher_properties.validity.start_date, 'HH:mm'),
             endDate: voucher_properties.validity.end_date,
-            endTime: DateTimeParser.getTime(voucher_properties.validity.end_date, 'HH:mm')
+            endTime: DateTimeParser.getTime(voucher_properties.validity.end_date, 'HH:mm'),
+            disabledEndDate: oc(voucher_properties).validity.disabled_end_date(false)
           },
           issuanceDate: {
             times: voucher_properties.validity.times,
@@ -73,8 +82,10 @@ export class RewardHttpAdapter {
     } else {
       vouchers = {
         voucherValidity: {
-          duration: 'day',
-          times: 30,
+          issuanceDate: {
+            duration: 'day',
+            times: '30',
+          },
           type: 'issuance_date'
         }
       };
@@ -82,7 +93,6 @@ export class RewardHttpAdapter {
     return {
       name: data.attributes.name,
       id: data.id,
-      currency: data.attributes.currency,
       rewardInfo: {
         image: data.attributes.image_url,
         rewardType: data.attributes.reward_type,
@@ -92,7 +102,8 @@ export class RewardHttpAdapter {
         description: data.attributes.description,
         termsAndCondition: data.attributes.terms_conditions,
         tags: data.attributes.tags,
-        merchantId: data.attributes.organization_id
+        merchantId: data.attributes.organization_id,
+        currency: data.attributes.currency,
       },
       vouchers,
       displayProperties: data.attributes.display_properties,
@@ -114,6 +125,7 @@ export class RewardHttpAdapter {
         terms_conditions: data.rewardInfo.termsAndCondition,
         tags: data.rewardInfo.tags || [],
         organization_id: data.rewardInfo.merchantId,
+        currency: data.rewardInfo.currency,
         display_properties: {
           ...(data.displayProperties || {}),
           voucher_properties: {
@@ -147,7 +159,7 @@ export class RewardHttpAdapter {
     return { code_type: data.vouchers.voucherCode.type };
   }
 
-  public static getRewardValidity(data: any): { [key: string]: any } {
+  public static getRewardValidity(data: IRewardEntityForm): { [key: string]: any } {
     switch (data.vouchers.voucherValidity.type) {
       case 'period':
         return {
@@ -163,13 +175,14 @@ export class RewardHttpAdapter {
     }
   }
 
-  public static getRewardDate(period: any): { [key: string]: any } {
-    const res: any = {
+  public static getRewardDate(period: IRewardEntityValidityPeriodForm): { [key: string]: any } {
+    const res: { [key: string]: any } = {
       start_date: DateTimeParser.setTime(period.startDate, period.startTime)
     };
     if (!period.disabledEndDate) {
       res.end_date = DateTimeParser.setTime(period.endDate, period.endTime);
     }
+    res.disabled_end_date = period.disabledEndDate;
     return res;
   }
 

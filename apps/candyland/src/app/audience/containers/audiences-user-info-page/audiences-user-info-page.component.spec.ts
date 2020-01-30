@@ -1,27 +1,30 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AudiencesUserInfoPageComponent } from './audiences-user-info-page.component';
-import { AudiencesUserInfoComponent } from '../../components/audiences-user-info/audiences-user-info.component';
 import {
   MatFormFieldModule, MatInputModule, MatTableModule, MatTabsModule, MatIconModule,
   MatMenuModule, MatDialogRef, MAT_DIALOG_DATA, MatDialogModule, MatSortModule
 } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
-import { AudiencesVouchersListComponent } from '../../components/audiences-vouchers-list/audiences-vouchers-list.component';
-import { TableFiltersModule, SearchFilterModule, ButtonModule, PaginationModule, StatusLabelModule, PipesModule } from '@cl-shared';
+import { TableFiltersModule, SearchFilterModule, PaginationModule, PipesModule } from '@cl-shared';
+import { ButtonModule, StatusLabelModule } from '@perx/candyshop';
 import { TabsFilterModule } from '../../../shared/table/tabs-filter/tabs-filter.module';
-import { AudiencesUsersListComponent } from '../../components/audiences-users-list/audiences-users-list.component';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
-import { AudiencesListComponent } from '../../components/audiences-list/audiences-list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { AudiencesVouchersService, MessageService } from '@cl-core-services';
-import { AudiencesCommunicationsListComponent } from '../../components/audiences-communications-list/audiences-communications-list.component';
-import { AudiencesLoyaltyGridComponent } from '../../components/audiences-loyalty-grid/audiences-loyalty-grid.component';
+import { AudiencesVouchersService, CommsService, MessageService, RewardsService } from '@cl-core-services';
+import { MockRewardsServices } from '@cl-shared/test-components/providers/mock-rewards.services';
+import { MockCommsServices } from '@cl-shared/test-components/providers/mock-comms.services';
 // tslint:disable-next-line
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { MockAudiencesUserService } from '@cl-shared/test-components/providers/mock-audiences-user.service';
+import { LoyaltyService } from '@cl-core/services/loyalty.service';
+import { MockLoyaltyServices } from '@cl-shared/test-components/providers/mock-loyalty.services';
+import { MockLoyaltyCardService } from '@cl-shared/test-components/providers/mock-loyalty-card.service';
+import { LoyaltyCardService } from '@cl-core/services/loyalty-card.service';
+import { MockAudiensesVouchersService } from '@cl-shared/test-components/providers/mock-audienses-vouchers.service';
 
 describe('AudiencesUserInfoPageComponent', () => {
   let component: AudiencesUserInfoPageComponent;
@@ -63,19 +66,18 @@ describe('AudiencesUserInfoPageComponent', () => {
       ],
       providers: [
         { provide: MessageService, useValue: messageServiceStub },
-        AudiencesUserService,
-        AudiencesVouchersService,
         { provide: MatDialogRef, useValue: matDialodRefStub },
-        { provide: MAT_DIALOG_DATA, useValue: matDialogDataStub }
+        { provide: MAT_DIALOG_DATA, useValue: matDialogDataStub },
+        { provide: RewardsService, useClass: MockRewardsServices },
+        { provide: CommsService, useClass: MockCommsServices },
+        { provide: AudiencesUserService, useClass: MockAudiencesUserService },
+        { provide: LoyaltyService, useClass: MockLoyaltyServices },
+        { provide: LoyaltyCardService, useClass: MockLoyaltyCardService },
+        { provide: AudiencesVouchersService, useClass: MockAudiensesVouchersService },
+
       ],
       declarations: [
         AudiencesUserInfoPageComponent,
-        AudiencesUserInfoComponent,
-        AudiencesVouchersListComponent,
-        AudiencesCommunicationsListComponent,
-        AudiencesUsersListComponent,
-        AudiencesListComponent,
-        AudiencesLoyaltyGridComponent
       ],
       schemas: [NO_ERRORS_SCHEMA]
     })

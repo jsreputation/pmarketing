@@ -11,6 +11,16 @@
         </form>
         <!--DummyToRemove Error-->
       </div>
+      <!--      && notAllSlotted-->
+      <cl-new-campaign-rewards-form-group
+        [hidden]="!enableProbability"
+        *ngIf="addNoRewardGroup"
+        [enableProbability]="enableProbability"
+        [formParent]="limitRewardForm"
+        [slotNumber]="-1"
+        >
+      </cl-new-campaign-rewards-form-group>
+
       <ng-container *ngFor="let slot of slots;">
         <cl-new-campaign-rewards-form-group
           [enableProbability]="enableProbability"
@@ -23,19 +33,14 @@
       <mat-error class="error" *ngIf="probAllGroup.hasError('sumMoreThan')">
         {{'CAMPAIGN.THE_TOTAL_PROBABILITY' | translate}}
       </mat-error>
+      <mat-error class="error" *ngIf="isSpinEngagement && enableProbability && probAllGroup.hasError('percentNotMet')">
+        The slots probability should add up to 100
+      </mat-error>
       <mat-error class="error" *ngIf="isSpinEngagement && fillAllGroup.hasError('unpatchedSlot')">
         Please fill in rewards for all slots
       </mat-error>
     </mat-card>
     <!--/ Rewards-->
-    <!-- Stamps Rule-->
-    <ng-container [ngSwitch]="campaignEngagementType">
-      <cl-new-campaign-rewards-stamps-page *ngSwitchCase="'stamps'" [tenantSettings]="tenantSettings">
-      </cl-new-campaign-rewards-stamps-page>
-      <cl-new-campaign-rewards-page *ngSwitchDefault [tenantSettings]="tenantSettings" [campaignType]="campaignEngagementType">
-      </cl-new-campaign-rewards-page>
-    </ng-container>
-    <!--/ Stamps Rule-->
   </div>
   <cl-campaigns-mobile-preview [storeTemplate$]="store.template$" [tenantSettings]="tenantSettings">
   </cl-campaigns-mobile-preview>

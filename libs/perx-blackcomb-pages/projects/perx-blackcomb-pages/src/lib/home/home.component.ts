@@ -20,7 +20,8 @@ import {
   mergeMap,
   takeLast,
   catchError,
-  switchMap
+  filter,
+  take,
 } from 'rxjs/operators';
 
 import {
@@ -40,7 +41,9 @@ import {
   ICampaignService,
   ICampaign,
   CampaignType,
-  RewardPopupComponent
+  RewardPopupComponent,
+  IRssFeeds,
+  IRssFeedsData,
 } from '@perx/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
@@ -140,14 +143,25 @@ export class HomeComponent implements OnInit, OnDestroy {
   public titleFn: (profile: IProfile) => string;
   public showGames: boolean = false;
   private firstComefirstServeCampaign: ICampaign;
-  private initCampaign(): void {
+
+  private async initCampaign(): Promise<void> {
     this.games$ = this.gamesService.getActiveGames()
       .pipe(
         tap((games: IGame[]) => this.showGames = games.length > 0),
         takeLast(1)
       );
+    const rssFeeds: IRssFeeds = await this.configService.readRssFeeds().toPromise();
+    if (!(rssFeeds && rssFeeds.data.length > 0)) {
+      return;
+    }
 
-    this.newsFeedItems = this.feedService.getFromUrl('https://cdn.perxtech.io/content/starhub/rss.xml');
+    const rssFeedsHome: IRssFeedsData | undefined = rssFeeds.data.find(feed => feed.page === 'home');
+    if (!rssFeedsHome) {
+      return;
+    }
+
+    const rssFeedsUrl: string = rssFeedsHome.url;
+    this.newsFeedItems = this.feedService.getFromUrl(rssFeedsUrl);
   }
 
   constructor(
@@ -219,6 +233,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.tabs$.next(this.staticTab);
       });
   }
+
   private getTabs(): Observable<ITabConfigExtended[]> {
     return this.translate.get(stubTabs.map(tab => tab.tabName))
       .pipe(map((translation) => stubTabs.map((tab) => {
@@ -226,6 +241,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         return tab;
       })));
   }
+
   public goToReward(reward: IReward): void {
     this.router.navigate([`/reward-detail/${reward.id}`]);
   }
@@ -257,53 +273,52 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   private fetchPopupCampaigns(): void {
-    this.campaignService.getCampaigns()
+    this.campaignService.getCampaigns({ type: CampaignType.give_reward })
       .pipe(
-        catchError(() => {
-          this.router.navigateByUrl('error');
-          return of([]);
-        })
+        catchError(() => of([]))
       )
       .pipe(
         // for each campaign, get detailed version
-        switchMap((campaigns: ICampaign[]) => combineLatest(...campaigns.map(campaign => this.campaignService.getCampaign(campaign.id)))),
+        mergeMap((campaigns: ICampaign[]) => combineLatest(
+          ...campaigns.map(campaign => this.campaignService.getCampaign(campaign.id).pipe(catchError(() => of(void 0))))
+        )),
+        // just keep campaigns of type give_reward
+        map((campaigns: ICampaign[]) => campaigns.filter(campaign => campaign !== undefined && campaign.type === CampaignType.give_reward)),
+        // don't go further if it is an empty array
+        filter((campaigns: ICampaign[]) => campaigns.length > 0),
+        // get the first element
+        map((campaigns: ICampaign[]) => campaigns[0]),
+        // once we have one, we stop polling
+        take(1),
+        takeUntil(this.destroy$)
       )
       .subscribe(
-        (campaigns: ICampaign[]) => {
-          const firstComeFirstServed: ICampaign[] = campaigns
-            .filter(campaign => campaign.type === CampaignType.give_reward);
+        (firstComeFirstServed: ICampaign) => {
           // if there is a 1st come 1st served campaign, display the popup
-          if (firstComeFirstServed.length > 0) {
-            this.firstComefirstServeCampaign = firstComeFirstServed[0];
-            const data = {
-              text: this.firstComefirstServeCampaign.description,
-              imageUrl: 'assets/bd-campaign.svg',
-              buttonTxt: 'Check it out',
-              afterClosedCallBack: this,
-              // @ts-ignore
-              validTo: new Date(this.firstComefirstServeCampaign.endsAt)
-            };
-            this.dialog.open(RewardPopupComponent, { data });
-            return;
-          }
+          this.firstComefirstServeCampaign = firstComeFirstServed;
+          const data = {
+            text: this.firstComefirstServeCampaign.description,
+            imageUrl: 'assets/bd-campaign.svg',
+            buttonTxt: 'Check it out',
+            afterClosedCallBack: this,
+            // @ts-ignore
+            validTo: new Date(this.firstComefirstServeCampaign.endsAt)
+          };
+          this.dialog.open(RewardPopupComponent, { data });
         },
-        (err) => {
-          console.error(`Something fishy, we should not be here, without any reward or game. ERR print: ${err.error.message}`);
-        }
+        err => console.error('Something fishy, we should not be here, without any reward or game. ERR print', err)
       );
   }
 
   public dialogClosed(): void {
     this.campaignService.issueAll(this.firstComefirstServeCampaign.id).subscribe(
-      () => {
-        this.router.navigate([`/wallet`]);
-      },
+      () => this.router.navigate([`/wallet`]),
       (err) => {
         if (err.error && err.error.code === 4103) {
           // user has already been issued voucher
-          this.router.navigate([`/home/vouchers`]);
+          this.router.navigate([`/wallet`]);
         }
-        console.error(`Something fishy, we should not be here, without any reward or game. ERR print: ${err.error.message}`);
+        console.error('Something fishy, we should not be here, without any reward or game. ERR print', err);
       }
     );
   }

@@ -5,9 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ImagesPreviewModule } from '@cl-shared/components/images-preview/images-preview.module';
-import { ButtonModule } from '@cl-shared/components/button/button.module';
 import { SelectGraphicModule } from '@cl-shared/components/select-graphic/select-graphic.module';
-import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wrap/select-graphic-wrap.module';
 import {
   MatCardModule, MatDialogModule,
   MatFormFieldModule,
@@ -21,8 +19,15 @@ import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view
 import { ConfirmModalModule } from '@cl-shared';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { TranslateModule } from '@ngx-translate/core';
-import { TenantStoreService } from '@cl-core-services';
+import { ButtonModule } from '@perx/candyshop';
+import { PinataService, TenantStoreService, UploadFileService } from '@cl-core-services';
 import { TenantMockStore } from '@cl-shared/test-components/tenant-mock-store/tenant-mock-store';
+import { MockPinataService } from '@cl-shared/test-components/providers/mock-pinata.service';
+// tslint:disable-next-line
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { WINDOW } from '@cl-core/services/window.service';
+import { MockUploadFileService } from '@cl-shared/test-components/providers/mock-upload-file.service';
+import { TestComponentsModule } from '@cl-shared/test-components/test-components.module';
 
 describe('NewPinataPageComponent', () => {
   let component: NewPinataPageComponent;
@@ -37,7 +42,6 @@ describe('NewPinataPageComponent', () => {
         ImagesPreviewModule,
         ButtonModule,
         SelectGraphicModule,
-        SelectGraphicWrapModule,
         GameModule,
         SimpleMobileViewModule,
         MatTabsModule,
@@ -49,12 +53,20 @@ describe('NewPinataPageComponent', () => {
         MatDialogModule,
         ConfirmModalModule,
         TranslateModule.forRoot(),
+        TestComponentsModule
       ],
       declarations: [ NewPinataPageComponent ],
       providers: [
-        {provide: LocalStorageService, useValue: {}},
-        { provide: TenantStoreService, useClass: TenantMockStore }
-      ]
+        { provide: LocalStorageService, useValue: {} },
+        { provide: TenantStoreService, useClass: TenantMockStore },
+        { provide: PinataService, useClass: MockPinataService },
+        { provide: UploadFileService, useClass: MockUploadFileService },
+        { provide: WINDOW, useValue: {
+            scrollTo(a: any, b: any): any { return {a, b}; }
+          }
+        }
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
     })
     .compileComponents();
   }));

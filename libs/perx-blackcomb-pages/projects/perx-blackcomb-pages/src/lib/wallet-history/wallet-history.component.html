@@ -1,12 +1,16 @@
-<div class="page">
-  <mat-tab-group mat-stretch-tabs>
+<div class="page"
+  infiniteScroll 
+  [infiniteScrollDistance]="2" 
+  [infiniteScrollThrottle]="500"
+  (scrolled)="onScroll()" 
+  [scrollWindow]="false">
+  <mat-tab-group mat-stretch-tabs (selectedTabChange)="changedTab($event)">
     <mat-tab label="My Wallet">
       <div class="voucher-list">
         <div class="list-heading">My Rewards</div>
         <perx-core-vouchers (tapped)="voucherSelected($event)"
-                            [data]="vouchers$"
+                            [data]="issuedVoucher$"
                             [mapping]="mapping"
-                            [filter]="walletFilter"
         ></perx-core-vouchers>
       </div>
     </mat-tab>
@@ -14,9 +18,8 @@
       <div class="voucher-list">
         <div class="list-heading">Redeemed</div>
         <perx-core-vouchers (tapped)="voucherSelected($event)"
-                            [data]="vouchers$"
+                            [data]="redeemedVouchers$"
                             [mapping]="mapping"
-                            [filter]="historyFilter"
         ></perx-core-vouchers>
       </div>
     </mat-tab>

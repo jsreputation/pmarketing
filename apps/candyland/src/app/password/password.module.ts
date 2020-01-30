@@ -4,7 +4,7 @@ import { ForgetPasswordComponent } from './containers/forget-password/forget-pas
 import { UpdateUserComponent } from './containers/update-user/update-user.component';
 import { CommonModule } from '@angular/common';
 import { PasswordRoutingModule } from './password-routing.module';
-import { ButtonModule } from '@cl-shared/components/button/button.module';
+import { ButtonModule } from '@perx/candyshop';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({

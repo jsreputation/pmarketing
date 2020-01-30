@@ -29,11 +29,15 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import {
   DatePickerModule,
-  ButtonModule,
   UploadFileModule,
 } from '@cl-shared';
 
+import { ButtonModule } from '@perx/candyshop';
+
 import { UpsertUserPopupComponent } from './upsert-user-popup.component';
+import { AudiencesService, SurveyService } from '@cl-core-services';
+import { MockAudienceService } from '@cl-shared/test-components/providers/mock-audience.service';
+import { MockSurveyService } from '@cl-shared/test-components/providers/mock-survey.service';
 
 describe('UpsertUserPopupComponent', () => {
   let component: UpsertUserPopupComponent;
@@ -67,7 +71,9 @@ describe('UpsertUserPopupComponent', () => {
               }
             }
           },
-          {provide: MAT_DIALOG_DATA, useValue: {}}
+          {provide: MAT_DIALOG_DATA, useValue: {}},
+          { provide: AudiencesService, useClass: MockAudienceService },
+          { provide: SurveyService, useClass: MockSurveyService },
         ],
         declarations: [UpsertUserPopupComponent]
       })

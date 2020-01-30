@@ -9,16 +9,16 @@
     <p *ngIf="!data" class="reward-item-name">{{'CAMPAIGN.NO_REWARD' | translate}}</p>
     <p class="reward-item-type" *ngIf="data?.category">{{data?.category}}</p>
   </div>
-  <!--  <cl-progress-bar class="reward-item-progress"-->
+  <!--  <cs-progress-bar class="reward-item-progress"-->
   <!--                   *ngIf="data?.current && data?.total"-->
   <!--                   [current]="data?.current"-->
   <!--                   [total]="data?.total">-->
 
-  <!--  </cl-progress-bar>-->
+  <!--  </cs-progress-bar>-->
   <div *ngIf="limit">
     <span class="reward-item-probability-label probability-preview">{{'CAMPAIGN.LIMIT' | translate}} {{limit}}</span>
   </div>
-  <div *ngIf="enableProbability && probability">
+  <div *ngIf="probability">
     <span class="reward-item-probability-label probability-preview">{{'CAMPAIGN.PROBABILITY' | translate}}
       {{probability}}%</span>
   </div>

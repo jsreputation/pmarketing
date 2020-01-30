@@ -14,5 +14,4 @@ export class GamesCollectionComponent {
   public games$: Observable<IGame[]>;
   public defaultNbGames: number = 2;
   public showAllGames: boolean = false;
-
 }

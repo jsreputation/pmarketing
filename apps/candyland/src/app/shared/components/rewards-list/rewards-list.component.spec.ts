@@ -6,8 +6,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { ButtonModule } from '@cl-shared/components/button/button.module';
-import { ProgressBarModule } from '@cl-shared/components/progress-bar/progress-bar.module';
+import { ButtonModule, ProgressBarModule } from '@perx/candyshop';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CustomDataSource } from '@cl-shared/table';
 import { of } from 'rxjs';
@@ -44,16 +43,14 @@ describe('RewardsListComponent', () => {
     fixture = TestBed.createComponent(RewardsListComponent);
     component = fixture.componentInstance;
     component.dataSource = new CustomDataSource({
-      getTableData: (params: any) => {
-        return of({
+      getTableData: (params: any) => of({
 
-          data: [(params)],
-          meta: {
-            'page_count': 1,
-            'record_count': 3
-          }
-        });
-      }
+        data: [(params)],
+        meta: {
+          page_count: 1,
+          record_count: 3
+        }
+      })
     });
     fixture.detectChanges();
   });

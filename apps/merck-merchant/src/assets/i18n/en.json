@@ -19,5 +19,10 @@
   "BACK": "Back",
   "PROCEED": "Proceed",
   "CLOSE": "Close",
-  "TRANSACTION_HISTORY": "Transaction History"
+  "TRANSACTION_HISTORY": "Transaction History",
+  "STATIC_RESET_PASSWORD": "Reset your password",
+  "STATIC_PASSWORD": "Password",
+  "STATIC_NEW_PASSWORD": "New password",
+  "STATIC_CONFIRM_PASSWORD": "Confirm password",
+  "SUBMIT_BUTTON": "Update password"
 }

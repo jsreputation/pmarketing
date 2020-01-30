@@ -2,26 +2,25 @@
   <h1 class="title">
     {{'LOYALTY_FEATURE.LOYALTY_PROGRAM' | translate}}
   </h1>
-  <cl-button routerLink="new" classList="primary cta cta-new">
+  <cs-button routerLink="new" classList="primary cs-btn-mobile">
+    <i class="cs-btn-mobile-icon icon new-icon"></i>
     {{'BTN_CREATE_NEW' | translate}}
-  </cl-button>
+  </cs-button>
 </header>
 
 <section class="content">
   <ng-container [ngSwitch]="dataSource.state$ | async">
     <ng-container *ngSwitchCase="dataSourceStates.hasDataApi">
       <cl-loyalty-grid [dataSource]="dataSource"
-                       [statusLabel]="statusLabel"
-                       [menuOptions]="menuOptions"
-                       (menuTapped)="menuOptTapped($event)"
-      >
+        [statusLabel]="statusLabel"
+        [menuOptions]="menuOptions"
+        (menuTapped)="menuOptTapped($event)">
       </cl-loyalty-grid>
       <!--paginator-->
       <div class="table-card">
         <cl-paginator [dataSource]="dataSource"
-                      [pageSize]="5"
-                      [pageSizeOptions]="[5, 10, 20]"
-        ></cl-paginator>
+          [pageSize]="5"
+          [pageSizeOptions]="[5, 10, 20]"></cl-paginator>
       </div>
       <!--/ paginator-->
     </ng-container>
@@ -35,6 +34,15 @@
         {{'LOYALTY_FEATURE.NO_DATA_TEXT' | translate}}
       </p>
     </cl-no-data>
+
+    <div *ngSwitchCase="dataSourceStates.firstLoading">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+
+    <cl-no-data *ngSwitchCase="dataSourceStates.errorApi">
+      <h2 class="no-data-title">
+        <span>Something broke</span> <span style="display: inline-block;">:(</span>
+      </h2>
+    </cl-no-data>
   </ng-container>
 </section>
-

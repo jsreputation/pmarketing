@@ -9,8 +9,10 @@
       "--button_text_color": "#ffffff",
       "--button_background_color": "#C54839",
       "--header_color": "#C54839",
-      "--background": "#ffffff",
+      "--background": "#e8e8e8",
       "--font_color": "#212121",
-      "--login_background_colour": "#000"
+      "--login_background_colour": "#000",
+      "--surface_colour": "#ffffff",
+      "--popup_background_colour": "#ffffff"
     }
 }

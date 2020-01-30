@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthHttpService } from '@es-core/http-services/auth-http.service';
+import { AuthHttpService } from '@perx/whistler-services';
 import { parseJwt } from '@es-helpers/parse-jwt';
 import { Observable, of } from 'rxjs';
 import { map, tap, switchMap, filter, catchError } from 'rxjs/operators';
@@ -55,18 +55,19 @@ export class AuthService {
   }
 
   public signIn(data: ILogin): Observable<IJsonApiItemPayload<IWIAMUserAttributes>> {
-    const sendData = AuthHttpAdapter.transformFromLogin(data);
+    const sendData: any = AuthHttpAdapter.transformFromLogin(data);
     return this.http.signIn(sendData).pipe(
-      tap(res => {
-        if (res.headers.get('authorization')) {
-          const token: string = res.headers.get('authorization');
-          let dat = res.body.data;
-          if (Array.isArray(dat)) {
-            dat = dat[0];
-          }
-          const user: IAMUser = IamUserHttpAdapter.transformToIAMUser(dat);
-          this.login(token, user);
+      tap((res: any) => {
+        const tokenString: string | null = res.headers.get('authorization');
+        if (tokenString === null) {
+          return;
         }
+        let dat = res.body.data;
+        if (Array.isArray(dat)) {
+          dat = dat[0];
+        }
+        const user: IAMUser = IamUserHttpAdapter.transformToIAMUser(dat);
+        this.login(tokenString, user);
       }),
       map(res => res.body)
     );
@@ -100,25 +101,25 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
-  public resetPassword(username: string): Observable<any> {
-    return this.http.resetPassword(username);
+  public resetPassword(accountId: string, username: string): Observable<any> {
+    return this.http.resetPassword(accountId, username);
   }
 
   public changePassword(password: string, token: string): Observable<any> {
     return this.http.changePassword(password, token)
       .pipe(
         switchMap((res: HttpResponse<any>) => {
-            if (res.headers.get('authorization')) {
-              const tokenString: string = res.headers.get('authorization');
-              this.saveToken(tokenString);
-              const tokenObj = parseJwt(tokenString);
-              const userName = tokenObj.sub.split('/').pop();
-              return this.iamUserService.getUsers({'filter[username]': userName}).pipe(
-                map(users => users[0]),
-                tap((user: IAMUser) => this.saveUser(user))
-              );
+            const tokenString: string | null = res.headers.get('authorization');
+            if (tokenString === null) {
+              return of(null);
             }
-            return of(null);
+            this.saveToken(tokenString);
+            const tokenObj = parseJwt(tokenString);
+            const userName = tokenObj.sub.split('/').pop();
+            return this.iamUserService.getUsers({'filter[username]': userName}).pipe(
+              map(users => users[0]),
+              tap((user: IAMUser) => this.saveUser(user))
+            );
           }
         )
       );

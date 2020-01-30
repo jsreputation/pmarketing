@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CampaignsHttpAdapter } from '@cl-core/http-adapters/campaigns-http-adapter';
-import { CampaignsHttpsService } from '@cl-core/http-services/campaigns-https.service';
+import { CampaignsHttpsService } from '@perx/whistler-services';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';

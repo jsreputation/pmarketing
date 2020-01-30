@@ -1,20 +1,21 @@
-import { Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+
+import { Observable } from 'rxjs';
+
+import {
+  IWAppAccessTokenResponse
+} from '@perx/whistler';
+import { AuthService } from 'ngx-auth';
+
 import {
   ISignUpData,
   IResetPasswordData,
   IChangePasswordData,
   IChangePhoneData
 } from './models/authentication.model';
-import {
-  IWAppAccessTokenResponse
-} from '@perx/whistler';
-import { IProfile } from '../../profile/profile.model';
-import { AuthService } from 'ngx-auth';
 
-export interface IMessageResponse {
-  message: string;
-}
+import { IProfile } from '../../profile/profile.model';
+import { IMessageResponse } from '../../perx-core.models';
 
 export class RequiresOtpError extends Error {
   constructor() {
@@ -61,7 +62,7 @@ export abstract class AuthenticationService implements AuthService {
 
   public abstract autoLogin(): Observable<void>;
 
-  public abstract createUserAndAutoLogin(pi: string, userObj?: { [key: string]: any }, anonymous?: boolean): Observable<void>;
+  public abstract createUserAndAutoLogin(pi: string, userObj?: { [key: string]: any }, anonymous?: boolean): Observable<void | null>;
 
   /**
    * This is important, for those public pages, API require app level access token in request header
@@ -85,7 +86,7 @@ export abstract class AuthenticationService implements AuthService {
 
   public abstract resendOTP(phone: string): Observable<IMessageResponse>;
 
-  public abstract signup(profile: ISignUpData): Observable<IProfile>;
+  public abstract signup(profile: ISignUpData): Observable<IProfile | null>;
 
   public abstract verifyOTP(phone: string, otp: string): Observable<IMessageResponse>;
 

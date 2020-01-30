@@ -11,7 +11,10 @@ export {
   isEmptyString,
   isEmptyArray,
 } from './lib/utils/shared/helpers.util';
-export { RedemptionType } from './lib/perx-core.models';
+export {
+  RedemptionType,
+  IMessageResponse,
+} from './lib/perx-core.models';
 
 /**
  * Merchants
@@ -48,7 +51,7 @@ export { BarcodeRedemptionComponent } from './lib/vouchers/barcode-redemption/ba
  * Authentication
  */
 export { AuthenticationModule } from './lib/auth/authentication/authentication.module';
-export { AuthenticationService, RequiresOtpError, IMessageResponse } from './lib/auth/authentication/authentication.service';
+export { AuthenticationService, RequiresOtpError } from './lib/auth/authentication/authentication.service';
 export { TokenStorage } from './lib/utils/storage/token-storage.service';
 export { IChangePasswordData, ISignUpData } from './lib/auth/authentication/models/authentication.model';
 export { IFormsService } from './lib/auth/authentication/iforms.service';
@@ -57,7 +60,7 @@ export { IFormsService } from './lib/auth/authentication/iforms.service';
  * Campaigns
  */
 export { CampaignModule } from './lib/campaign/campaign.module';
-export { ICampaignService } from './lib/campaign/icampaign.service';
+export { ICampaignService, ICampaignFilterOptions } from './lib/campaign/icampaign.service';
 export {
   CampaignType,
   CampaignState,
@@ -205,7 +208,7 @@ export { LongTextComponent } from './lib/survey/question/long-text/long-text.com
 export { GroupComponent } from './lib/survey/question/group/group.component';
 export { RatingComponent } from './lib/survey/question/rating/rating.component';
 export { DateComponent } from './lib/survey/question/date/date.component';
-export { PasswordComponent} from './lib/survey/question/password/password.component';
+export { PasswordComponent } from './lib/survey/question/password/password.component';
 
 /**
  * Config
@@ -215,6 +218,8 @@ export { Config } from './lib/config/config';
 export { ConfigService } from './lib/config/config.service';
 export {
   IConfig,
+  IRssFeeds,
+  IRssFeedsData,
   IMicrositeSettings,
   PagesObject,
   AccountPageObject,

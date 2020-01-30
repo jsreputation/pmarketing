@@ -1,8 +1,20 @@
 import { Injectable } from '@angular/core';
+
+import {
+  Observable,
+  throwError,
+} from 'rxjs';
+
+import {
+  IMerchantAdminTransaction,
+  IMerchantProfile,
+  IMerchantTransactionHistory,
+  IResetPasswordData,
+} from './models/merchants-admin.model';
 import { IMerchantAdminService } from './imerchant-admin.service';
-import { Observable } from 'rxjs';
-import { IMerchantAdminTransaction, IMerchantProfile, IMerchantTransactionHistory } from './models/merchants-admin.model';
+
 import { IVoucher } from '../vouchers/models/voucher.model';
+import { IMessageResponse } from '../perx-core.models';
 
 @Injectable({
   providedIn: 'root'
@@ -56,5 +68,15 @@ export class WhistlerMerchantAdminService implements IMerchantAdminService {
   // @ts-ignore
   public getTransactionHistory(page?: number, pageSize?: number, locale?: string): Observable<IMerchantTransactionHistory[]> {
     throw new Error(`getTransactionHistory Method not implemented.`);
+  }
+
+  // @ts-ignore
+  public forgotPassword(email: string): Observable<IMessageResponse> {
+    return throwError('Not implement yet');
+  }
+
+  // @ts-ignore
+  public resetPassword(resetPasswordInfo: IResetPasswordData): Observable<IMessageResponse> {
+    return throwError('Not implement yet');
   }
 }

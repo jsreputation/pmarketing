@@ -5,16 +5,19 @@ import { V4StampService } from './v4-stamp.service';
 
 import { IVoucherService } from '../vouchers/ivoucher.service';
 import { ConfigModule } from '../config/config.module';
+import { ICampaignService } from '../campaign/icampaign.service';
 
-describe('StampService', () => {
+describe('V4StampService', () => {
   const vouchersServiceStub: Partial<IVoucherService> = {};
+  const campaignServiceStub: Partial<ICampaignService> = {};
   beforeEach(() => TestBed.configureTestingModule({
     imports: [
       HttpClientTestingModule,
       ConfigModule.forRoot({})
     ],
     providers: [
-      { provide: IVoucherService, useValue: vouchersServiceStub }
+      { provide: IVoucherService, useValue: vouchersServiceStub },
+      { provide: ICampaignService, useValue: campaignServiceStub }
     ]
   }));
 

@@ -9,6 +9,6 @@ export class LoyaltyService extends EngagementService<IEngagement> implements IE
 
     // important so, that parent abstract class get HttpService injected
     constructor(protected http: HttpService) {
-        super(http);
+      super(http);
     }
 }

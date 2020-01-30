@@ -7,11 +7,11 @@ import {
 import { CampaignsService, ConfigService, CsvReportService, MessageService } from '@cl-core/services';
 import { Router } from '@angular/router';
 import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign';
-import { StatusLabelConfig } from '@cl-shared';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { CampaignStatus } from '@cl-core/models/campaign/campaign.enum';
-import { EngagementType } from '@cl-core/models/engagement/engagement-type.enum';
+// import { EngagementType } from '@cl-core/models/engagement/engagement-type.enum';
+import { IStatusLabelConfig } from '@perx/candyshop';
 
 @Component({
   selector: 'cl-campaigns-list-page',
@@ -23,7 +23,7 @@ export class CampaignsListPageComponent implements OnInit, OnDestroy {
   public dataSource: CustomDataSource<ICampaignTableData>;
   public dataSourceStates: typeof DataSourceStates = DataSourceStates;
   public displayedColumns: string[] = ['name', 'status', 'begin', 'end', 'audience', 'engagementType', 'actions'];
-  public statusLabel: { [key: string]: StatusLabelConfig };
+  public statusLabel: IStatusLabelConfig;
   private destroy$: Subject<void> = new Subject();
   public cs: typeof CampaignStatus = CampaignStatus;
 
@@ -70,16 +70,16 @@ export class CampaignsListPageComponent implements OnInit, OnDestroy {
   public openReport(url: string): void {
     const segments: string[] = url.split('/');
     // for reports with a dedicated page
-    const hasPage: boolean = [
-      EngagementType.survey,
-      EngagementType.stamp
-    ].some(typ => segments.some(s => s === typ));
-    if (hasPage) {
-      this.router.navigateByUrl(url);
-    } else {
-      const campaignId = segments[segments.length - 1];
-      this.csvReportService.downloadReport('campaign_report', { campaign_id: campaignId });
-    }
+    // const hasPage: boolean = [
+    //   EngagementType.survey,
+    //   EngagementType.stamp
+    // ].some(typ => segments.some(s => s === typ));
+    // if (hasPage) {
+    //   this.router.navigateByUrl(url);
+    // } else {
+    const campaignId = segments[segments.length - 1];
+    this.csvReportService.downloadReport('report_campaigns_summary', { campaign_id: campaignId });
+    // }
   }
 
   public ngOnInit(): void {

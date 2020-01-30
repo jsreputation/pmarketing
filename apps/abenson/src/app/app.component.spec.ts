@@ -13,7 +13,7 @@ import { ChangeCityComponent } from './account/profile/change-city/change-city.c
 import { ChangeStreetAddressComponent } from './account/profile/change-street-address/change-street-address.component';
 import { FaqComponent } from './account/profile-additions/containers/faq/faq.component';
 import { PrivacyPolicyComponent } from './account/profile-additions/containers/privacy-policy/privacy-policy.component';
-import { Location } from '@angular/common';
+import { CurrencyPipe, DatePipe, Location } from '@angular/common';
 import { Type } from '@angular/core';
 import { LoginComponent } from './auth/login/login.component';
 import { SignUpComponent } from './auth/signup/signup.component';
@@ -40,7 +40,10 @@ describe('AppComponent', () => {
   let dialog: MatDialog;
   let snackBar: MatSnackBar;
   let location: Location;
+  let datePipe: DatePipe;
+  let currencyPipe: CurrencyPipe;
   let configService: ConfigService;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -55,7 +58,9 @@ describe('AppComponent', () => {
       ],
       providers: [
         { provide: ConfigService, useValue: configServiceStub },
-        { provide: ThemesService, useValue: { getThemeSetting: () => of({}) } }
+        { provide: ThemesService, useValue: { getThemeSetting: () => of({}) } },
+        DatePipe,
+        CurrencyPipe
       ]
     }).compileComponents();
   }));
@@ -66,6 +71,8 @@ describe('AppComponent', () => {
     dialog = TestBed.get<MatDialog>(MatDialog as Type<MatDialog>);
     snackBar = TestBed.get<MatSnackBar>(MatSnackBar as Type<MatSnackBar>);
     location = TestBed.get<Location>(Location as Type<Location>);
+    datePipe = TestBed.get<DatePipe>(DatePipe as Type<DatePipe>);
+    currencyPipe = TestBed.get<CurrencyPipe>(CurrencyPipe as Type<CurrencyPipe>);
     configService = TestBed.get<ConfigService>(ConfigService as Type<ConfigService>);
     app.ngOnInit();
     tick();
@@ -99,9 +106,9 @@ describe('AppComponent', () => {
     const matDialog = {} as MatDialog;
     app.onActivate(new LoginComponent(router, form, auth, notifi));
     expect(app.showHeader).toBeFalsy();
-    app.onActivate(new SignUpComponent(form, auth, router, shared, profile));
+    app.onActivate(new SignUpComponent(form, auth, router, shared, profile, ntfs));
     expect(app.showHeader).toBeFalsy();
-    app.onActivate(new HomeComponent(router, voucherService, campaingService, configService));
+    app.onActivate(new HomeComponent(router, voucherService, campaingService, configService, datePipe, currencyPipe));
     expect(app.showToolbar).toBeTruthy();
     app.onActivate(new TermsAndConditionComponent());
     expect(app.headerTitle).toBe('Terms & Conditions');

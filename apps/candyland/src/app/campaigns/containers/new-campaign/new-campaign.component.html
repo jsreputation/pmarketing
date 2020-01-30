@@ -6,35 +6,40 @@
     <mat-error *ngIf="name.hasError('maxlength')">{{'ERROR_MAX_LENGTH' | translate}} 60</mat-error>
   </mat-form-field>
   <div class="btn-group">
-    <cl-button classList="secondary" (click)="quit()">{{'BTN_CANCEL' | translate}}</cl-button>
-    <!--    <cl-button classList="secondary" routerLink="..">Save as a draft</cl-button>-->
-    <cl-button *ngIf="!isLastStep"
-      classList="primary cta cta-next"
-      (click)="goNext()">
+    <cs-button classList="secondary" (click)="quit()">{{'BTN_CANCEL' | translate}}</cs-button>
+    <!--    <cs-button classList="secondary" routerLink="..">Save as a draft</cs-button>-->
+    <cs-button *ngIf="!isLastStep"
+               classList="primary cs-btn-mobile"
+               (click)="goNext()">
+      <i class="cs-btn-mobile-icon icon next-icon"></i>
       {{'BTN_NEXT' | translate}}
-    </cl-button>
+    </cs-button>
     <!--    [disable]="getStepCondition(stepper.selectedIndex)"-->
-    <cl-button *ngIf="isLastStep && store.currentCampaign?.status !== 'active'"
-      classList="primary cta cta-save cta-save-launch"
-      (click)="save()">{{'BTN_LAUNCH' | translate}}</cl-button>
+    <cs-button *ngIf="isLastStep && store.currentCampaign?.status !== 'active'"
+               classList="primary cs-btn-mobile"
+               (click)="save()">
+      <i class="cs-btn-mobile-icon icon save-icon"></i>
+      {{'BTN_LAUNCH' | translate}}
+    </cs-button>
   </div>
 </header>
 
 <section class="content form-limiter">
   <mat-horizontal-stepper labelPosition="bottom" [linear]="true" #stepper (selectionChange)="goNext($event)">
     <mat-step [completed]="getStepCondition(0)">
+      <ng-template matStepLabel>{{'CAMPAIGN.CAMPAIGN_DETAILS' | translate}}</ng-template>
+      <cl-new-campaign-detail-page></cl-new-campaign-detail-page>
+    </mat-step>
+    <mat-step [completed]="getStepCondition(1) && getStepCondition(1.1)">
       <ng-template matStepLabel>{{'CAMPAIGN.SELECT_ENGAGEMENT' | translate}}</ng-template>
       <cl-new-campaign-select-engagement-page
         [tenantSettings]="tenantSettings"></cl-new-campaign-select-engagement-page>
     </mat-step>
-    <mat-step [completed]="getStepCondition(1) && getStepCondition(1.1)">
-      <ng-template matStepLabel>{{'CAMPAIGN.REWARDS_LIMITS' | translate}}</ng-template>
+    <mat-step [completed]="getStepCondition(1) && getStepCondition(2)">
+      <ng-template matStepLabel>{{'CAMPAIGN.OUTCOMES' | translate}}</ng-template>
       <cl-new-campaign-rewards-limits-page [tenantSettings]="tenantSettings"></cl-new-campaign-rewards-limits-page>
     </mat-step>
-    <mat-step [completed]="getStepCondition(2)">
-      <ng-template matStepLabel>{{'CAMPAIGN.CAMPAIGN_DETAILS' | translate}}</ng-template>
-      <cl-new-campaign-detail-page></cl-new-campaign-detail-page>
-    </mat-step>
+
     <mat-step>
       <!--[completed]="getStepCondition(2)"-->
       <ng-template matStepLabel>{{'CAMPAIGN.CHANNELS' | translate}}</ng-template>

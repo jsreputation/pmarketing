@@ -3,7 +3,7 @@
     <mat-form-field appearance="fill" class="full-width__input">
       <mat-label>Enter new barangay</mat-label>
       <input matInput placeholder="Enter new barangay" formControlName="newBarangay">
-      <mat-error *ngIf="barangayChangeForm.get('newBarangay').hasError('required')">
+      <mat-error *ngIf="newBarangay && newBarangay.hasError('required')">
         New barangay is <strong>required</strong>
       </mat-error>
     </mat-form-field>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MerchantHttpAdapter } from '@cl-core/http-adapters/merchant-http-adapter';
-import { MerchantHttpService } from '@cl-core/http-services/merchant-http.service';
+import { MerchantHttpService } from '@perx/whistler-services';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { combineLatest, Observable, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
@@ -16,17 +16,17 @@ import { ClHttpParams } from '@cl-helpers/http-params';
 @Injectable({
   providedIn: 'root'
 })
-export class MerchantsService implements ITableService<Partial<IMerchantForm>> {
+export class MerchantsService implements ITableService<IMerchantForm> {
 
-  constructor(private merchantHttpService: MerchantHttpService) {}
+  constructor(private merchantHttpService: MerchantHttpService) { }
 
-  public getTableData(params: HttpParamsOptions): Observable<ITableData<IMerchantForm>> {
+  public getTableData(params: HttpParamsOptions | any): Observable<ITableData<IMerchantForm>> {
     params.include = 'branches';
     return this.merchantHttpService.getMerchants(params)
       .pipe(map((data) => {
         const res = this.getTransformMerchant(data);
         return { data: res, meta: data.meta };
-    }));
+      }));
   }
 
   public getMerchant(id: string): Observable<IMerchantForm | null> {
@@ -89,15 +89,15 @@ export class MerchantsService implements ITableService<Partial<IMerchantForm>> {
   }
 
   private getTransformMerchant(data:
-   IJsonApiItemPayload<IWMerchantAttributes> | IJsonApiListPayload<IWMerchantAttributes>
+    IJsonApiItemPayload<IWMerchantAttributes> | IJsonApiListPayload<IWMerchantAttributes>
   ): IMerchantForm[] {
     return JsonApiParser.parseDataWithIncludes(
       data,
       MerchantHttpAdapter.transformToMerchant, {
-        branches: {
-          fieldName: 'branches',
-          adapterFunction: MerchantHttpAdapter.transformToBranch
-        }
-      });
+      branches: {
+        fieldName: 'branches',
+        adapterFunction: MerchantHttpAdapter.transformToBranch
+      }
+    });
   }
 }

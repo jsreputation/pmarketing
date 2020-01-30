@@ -1,12 +1,34 @@
-import { Component, OnInit, Inject, PLATFORM_ID, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Inject,
+  PLATFORM_ID,
+  ChangeDetectorRef,
+} from '@angular/core';
+import {
+  Validators,
+  FormBuilder,
+  FormGroup,
+  AbstractControl,
+} from '@angular/forms';
 import { Router } from '@angular/router';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { AuthenticationService, NotificationService, ProfileService } from '@perx/core';
-import { HttpErrorResponse } from '@angular/common/http';
-import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
-import { environment } from '../../environments/environment';
 import { isPlatformBrowser } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
+
 import { TranslateService } from '@ngx-translate/core';
+
+import {
+  AuthenticationService,
+  NotificationService,
+  ProfileService,
+} from '@perx/core';
+
+import {
+  PageAppearence,
+  PageProperties,
+  BarSelectedItem,
+} from '../page-properties';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'mc-login',
@@ -24,6 +46,18 @@ export class LoginComponent implements OnInit, PageAppearence {
   public currentSelectedLanguage: string = 'en';
 
   public preAuth: boolean;
+
+  public get mobileNo(): AbstractControl | null {
+    return this.loginForm.get('mobileNo');
+  }
+
+  public get password(): AbstractControl | null {
+    return this.loginForm.get('password');
+  }
+
+  public get countryCode(): AbstractControl | null {
+    return this.loginForm.get('countryCode');
+  }
 
   constructor(
     private router: Router,

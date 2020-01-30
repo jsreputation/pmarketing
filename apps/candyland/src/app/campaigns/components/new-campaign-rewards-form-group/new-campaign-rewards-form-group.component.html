@@ -1,22 +1,29 @@
-<div class="card-header">
+<div  *ngIf="slotNumber !== -1"  class="card-header">
   <h2 class="card-title">
     <span *ngIf="slotNumber > 0">{{title | translate}}</span>
   </h2>
-  <cl-button classList="tertiary ph-0" (click)="openDialogSelectReward()">{{'CAMPAIGN.ADD_REWARDS' | translate}}</cl-button>
+  <cs-button classList="tertiary ph-0" (click)="openDialogSelectReward()">{{'CAMPAIGN.ADD_REWARDS' | translate}}</cs-button>
 </div>
 <div class="card-content" *ngIf="outcomes && outcomes.length > 0">
   <div>
-    <div *ngFor="let outcome of outcomes; let i = index">
+    <div *ngFor="let outcome of outcomes; let i = index; let lastEle = last">
       <cl-reward-item class="item"
         *ngIf="outcome.outcome.slotNumber === slotNumber"
+        [overWriteProb]="slotNumber === -1 ? formParent.get('probNoRewards') : null"
         [outcomeData]="outcome"
         [enableProbability]="enableProbability"
         [isInvalid]="sumMoreThanError"
         (updateOutcome)="updateOutcomeData(i, $event)"
         (clickDelete)="removeOutcome(i)">
       </cl-reward-item>
-  </div>
-    <mat-error class="error" *ngIf="sumMoreThanError && !isSpinEngagement">
+      <mat-error class="error" *ngIf="
+        lastEle &&
+        isSpinEngagement &&
+        minSumError">
+        Please indicate at least one probability value greater than zero for this group
+      </mat-error>
+    </div>
+    <mat-error class="error" *ngIf="sumMoreThanError && (slotNumber !== -1 || !isSpinEngagement)">
       {{'CAMPAIGN.THE_TOTAL_PROBABILITY' | translate}}
     </mat-error>
   </div>
