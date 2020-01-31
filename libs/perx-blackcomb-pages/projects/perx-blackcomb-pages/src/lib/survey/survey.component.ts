@@ -164,9 +164,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
       this.router.navigate(['/signup'], { state });
     } else {
       this.router.navigate(['/wallet']);
-      if (this.popupData && this.isAnonymousUser) {
-        this.notificationService.addPopup(this.popupData);
-      }
+      this.notificationService.addPopup(this.popupData);
     }
   }
 

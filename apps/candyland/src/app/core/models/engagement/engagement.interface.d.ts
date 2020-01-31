@@ -8,6 +8,7 @@ declare type IEngagementType =
   IEngagementSurvey |
   IEngagementScratchType |
   IEngagementSpinType |
+  IEngagementSnakeType |
   IEngagementInstantReward;
 
 declare interface IEngagementCommon {
@@ -34,6 +35,25 @@ declare interface IEngagementSpinType extends IEngagementCommon {
   wheel_img: string;
   wheel_position: string;
   pointer_img: string;
+  attributes_type: string;
+  created_at: string;
+  updated_at: string;
+}
+
+declare interface IEngagementSnakeType extends IEngagementCommon {
+  game_type: string;
+  title: string;
+  description: string;
+  image_url: string;
+  title_display: string;
+  button: string;
+  sub_title: string;
+  target_icon_img_url: string;
+  target_required: number;
+  snake_head_img_url: string;
+  snake_body_img_url?: string;
+  background_img_url: string;
+  game_area_img_url: string;
   attributes_type: string;
   created_at: string;
   updated_at: string;

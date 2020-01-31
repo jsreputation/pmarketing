@@ -207,7 +207,7 @@ export class RewardComponent implements OnInit, OnDestroy {
       this.router.navigate(['/signup'], { state });
     } else {
       this.router.navigate(['/wallet']);
-      if (this.popupData && this.isAnonymousUser) {
+      if (this.popupData) {
         this.notificationService.addPopup(this.popupData);
       }
     }

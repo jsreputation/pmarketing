@@ -16,6 +16,7 @@ interface IThemeProperties {
     '--font_color': string;
     '--login_background_colour'?: string;
     '--surface_colour'?: string;
+    '--popup_background_colour'?: string;
     'stampCard'?: IStampCardTheme;
 }
 
@@ -34,7 +35,9 @@ export const LIGHT: ITheme = {
   name: 'Light',
   properties: {
     '--background': '#fafafa',
-    '--font_color': '#333'
+    '--font_color': '#333',
+    '--surface_colour': '#ffffff',
+    '--popup_background_colour': '#ffffff'
   }
 };
 
@@ -42,6 +45,8 @@ export const DARK: ITheme = {
   name: 'Dark',
   properties: {
     '--background': '#1f2935',
-    '--font_color': '#fff'
+    '--font_color': '#fff',
+    '--surface_colour': '#231F20',
+    '--popup_background_colour': '#333333'
   }
 };

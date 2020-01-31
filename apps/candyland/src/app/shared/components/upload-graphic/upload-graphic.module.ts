@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { UploadGraphicComponent } from './upload-graphic.component';
 import { MatIconModule } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
+import {ImagesPreviewModule} from '@cl-shared/components/images-preview/images-preview.module';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { TranslateModule } from '@ngx-translate/core';
   imports: [
     CommonModule,
     MatIconModule,
-    TranslateModule
+    TranslateModule,
+    ImagesPreviewModule
   ]
 })
 export class UploadGraphicModule { }

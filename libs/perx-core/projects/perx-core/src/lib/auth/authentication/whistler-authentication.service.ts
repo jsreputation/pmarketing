@@ -6,10 +6,10 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { IProfile } from '../../profile/profile.model';
 import { AuthenticationService } from './authentication.service';
 import {
-  IResetPasswordData,
   ISignUpData,
   IChangePasswordData,
-  IChangePhoneData
+  IChangePhoneData,
+  IResetPasswordData,
 } from './models/authentication.model';
 import { Config } from '../../config/config';
 import {

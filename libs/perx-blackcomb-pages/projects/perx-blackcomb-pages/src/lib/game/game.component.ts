@@ -8,10 +8,10 @@ import {
   IEngagementTransaction,
   AuthenticationService,
   NotificationService,
-  IPrePlayStateData
+  IPrePlayStateData, ConfigService, IConfig
 } from '@perx/core';
 import { map, tap, first, filter, switchMap, bufferCount, catchError, takeUntil } from 'rxjs/operators';
-import { Observable, interval, throwError, Subject, of, combineLatest } from 'rxjs';
+import { Observable, interval, throwError, Subject, combineLatest } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -24,12 +24,13 @@ export class GameComponent implements OnInit, OnDestroy {
   public gameData$: Observable<IGame>;
   public gt: typeof GameType = GameType;
   private campaignId: number;
-  private transactionId: number | null = null;
+  private transactionId: number;
   public progressValue: number;
   private destroy$: Subject<any> = new Subject();
   private popupData: IPopupConfig;
   private isAnonymousUser: boolean;
   private informationCollectionSetting: string;
+  private rewardCount: string;
   public willWin: boolean;
   public successPopUp: IPopupConfig = {
     title: 'GAME_SUCCESS_TITLE',
@@ -52,6 +53,9 @@ export class GameComponent implements OnInit, OnDestroy {
     imageUrl: '',
   };
 
+  private isWhistler: boolean = true;
+  private gameId: number;
+
   constructor(
     private route: ActivatedRoute,
     private gameService: IGameService,
@@ -59,11 +63,17 @@ export class GameComponent implements OnInit, OnDestroy {
     private notificationService: NotificationService,
     private auth: AuthenticationService,
     private translate: TranslateService,
+    private configService: ConfigService
   ) {
   }
 
   public ngOnInit(): void {
     this.initTranslate();
+    this.configService.readAppConfig<void>().subscribe(
+      (config: IConfig<void>) => {
+        this.isWhistler = config.isWhistler as boolean;
+      });
+
     this.isAnonymousUser = this.auth.getAnonymous();
     this.gameData$ = this.route.params.pipe(
       filter((params: Params) => params.id),
@@ -84,22 +94,22 @@ export class GameComponent implements OnInit, OnDestroy {
       map((games: IGame[]) => games[0]),
       tap((game: IGame) => {
         if (game) {
+          this.gameId = game.id;
           const { displayProperties } = game;
           if (displayProperties && displayProperties.informationCollectionSetting) {
             this.informationCollectionSetting = displayProperties.informationCollectionSetting;
           }
-          if (displayProperties && displayProperties.noRewardsPopUp) {
-            this.noRewardsPopUp.title = displayProperties.noRewardsPopUp.headLine;
-            this.noRewardsPopUp.text = displayProperties.noRewardsPopUp.subHeadLine;
-            this.noRewardsPopUp.imageUrl = displayProperties.noRewardsPopUp.imageURL || this.noRewardsPopUp.imageUrl;
-            this.noRewardsPopUp.buttonTxt = displayProperties.noRewardsPopUp.buttonTxt || this.noRewardsPopUp.buttonTxt;
-          }
-          if (displayProperties && displayProperties.successPopUp) {
-            this.successPopUp.title = displayProperties.successPopUp.headLine;
-            this.successPopUp.text = displayProperties.successPopUp.subHeadLine;
-            this.successPopUp.imageUrl = displayProperties.successPopUp.imageURL || this.successPopUp.imageUrl;
-            this.successPopUp.buttonTxt = displayProperties.successPopUp.buttonTxt || this.successPopUp.buttonTxt;
-          }
+
+          const successOutcome = this.gameService.getSuccessOutcome(game);
+          const noOutcome = this.gameService.getNoOutcome(game);
+          this.noRewardsPopUp.title = noOutcome.title;
+          this.noRewardsPopUp.text = noOutcome.subTitle;
+          this.noRewardsPopUp.imageUrl = noOutcome.image || this.noRewardsPopUp.imageUrl;
+          this.noRewardsPopUp.buttonTxt = noOutcome.button || this.noRewardsPopUp.buttonTxt;
+          this.successPopUp.title = successOutcome.title;
+          this.successPopUp.text = successOutcome.subTitle;
+          this.successPopUp.imageUrl = successOutcome.image || this.successPopUp.imageUrl;
+          this.successPopUp.buttonTxt = successOutcome.button || this.successPopUp.buttonTxt;
         }
       })
     );
@@ -113,14 +123,11 @@ export class GameComponent implements OnInit, OnDestroy {
       (gameTransaction: IEngagementTransaction) => {
         this.transactionId = gameTransaction.id;
         if (gameTransaction.voucherIds && gameTransaction.voucherIds.length > 0) {
-          const count = gameTransaction.voucherIds.length.toString();
-          this.willWin = true;
-          this.successPopUp.text =
-            this.successPopUp.text ? this.successPopUp.text.replace('{{rewards}}', count) : `You earned ${count} rewards`;
-          this.popupData = this.successPopUp;
+          // set this as a property
+          this.rewardCount = gameTransaction.voucherIds.length.toString();
+          this.fillSuccess(this.rewardCount);
         } else {
-          this.willWin = false;
-          this.popupData = this.noRewardsPopUp;
+          this.fillFailure();
         }
       },
       () => {
@@ -134,7 +141,27 @@ export class GameComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  public gameCompleted(): void {
+  // mutates willWin property, succespopup text and popup data
+  private fillSuccess(rewardCount: string): void {
+    this.willWin = true;
+    this.successPopUp.text =
+      this.successPopUp.text ? this.successPopUp.text.replace('{{rewards}}', rewardCount) : `You earned ${rewardCount} rewards`;
+    this.popupData = this.successPopUp;
+  }
+
+  private fillFailure(): void {
+    this.willWin = false;
+    this.popupData = this.noRewardsPopUp;
+  }
+
+  // optionally add check if user has won in the game (see snake) other games winning is predetermined
+  public gameCompleted(win?: boolean): void {
+    // win can be undefined also, if not explicitly passed in the willWin prop and popupdata will be what is set on preplay
+    if (win !== undefined && win === false) {
+      this.fillFailure();
+    } else if (win !== undefined && win === true) {
+      this.fillSuccess(this.rewardCount);
+    }
     // display a loader before redirecting to next page
     const delay = 3000;
     const nbSteps = 60;
@@ -144,15 +171,16 @@ export class GameComponent implements OnInit, OnDestroy {
         bufferCount(nbSteps),
         first()
       );
-    const isCollectDataRequired = !!(this.informationCollectionSetting === 'pi_required' || this.informationCollectionSetting === 'signup_required');
-    const userAction$: Observable<void> = !this.transactionId || (this.isAnonymousUser && isCollectDataRequired) ?
-      of(void 0) :
-      this.gameService.prePlayConfirm(this.transactionId).pipe(
-        catchError((err: HttpErrorResponse) => {
-          this.popupData = this.noRewardsPopUp;
-          throw err;
-        })
-      );
+
+    const confirmId = this.isWhistler ? this.transactionId : this.gameId;
+    const userAction$: Observable<IEngagementTransaction | void> =
+      this.gameService.prePlayConfirm(confirmId, this.informationCollectionSetting)
+        .pipe(
+          catchError((err: HttpErrorResponse) => {
+            this.popupData = this.noRewardsPopUp;
+            throw err;
+          })
+        );
     combineLatest(processBar$, userAction$).subscribe(
       () => this.redirectUrlAndPopUp(),
       () => this.redirectUrlAndPopUp()
@@ -173,9 +201,7 @@ export class GameComponent implements OnInit, OnDestroy {
       this.router.navigate(['/signup'], { state });
     } else {
       this.router.navigate(['/wallet']);
-      if (this.popupData && this.isAnonymousUser) {
-        this.notificationService.addPopup(this.popupData);
-      }
+      this.notificationService.addPopup(this.popupData);
     }
   }
 

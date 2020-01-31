@@ -13,8 +13,8 @@
     "build:oracle-demo:prod": "PREAUTH=false APIHOST=https://api.perxtech.io IS_WHISTLER=false SHOW_USER_QR=false SHOW_ACCOUNTS_PAGE=false SHOW_HOME_PAGE=true SHOW_HISTORY_PAGE=true SHOW_USERINFO_ACCOUNTS=true SHOW_TRANSANCTION_HISTORY_ACCOUNTS=false SHOW_EXPIRY_REWARD_DETAIL=true SHOW_LOGIN_SUBTITLE=true REDIRECT_AFTER_LOGIN=/home PRODUCTION=true npm run config && ng build --prod",
     "config": "ts-node --project tsconfig.node.json set-env.ts",
     "test": "ng test",
-    "lint": "ng lint && stylelint \"src/**/*.*css\" && eslint \"./src/*/*.ts\"",
-    "lint:fix": "ng lint --fix && stylelint \"src/**/*.*css\" --fix",
+    "lint": "stylelint \"src/**/*.*css\" && eslint \"./src/*/*.ts\"",
+    "lint:fix": "stylelint \"src/**/*.*css\" --fix",
     "e2e": "ng e2e",
     "start:v4": "PREAUTH=false APIHOST=https://api.perxtech.io IS_WHISTLER=false SHOW_USER_QR=true SHOW_ACCOUNTS_PAGE=true SHOW_HOME_PAGE=true SHOW_HISTORY_PAGE=true SHOW_USERINFO_ACCOUNTS=true SHOW_TRANSANCTION_HISTORY_ACCOUNTS=true SHOW_EXPIRY_REWARD_DETAIL=true SHOW_LOGIN_SUBTITLE=true REDIRECT_AFTER_LOGIN=/home npm run config && ng serve --host 0.0.0.0",
     "start:v4:oracle-demo": "PREAUTH=false APIHOST=https://api.perxtech.io IS_WHISTLER=false SHOW_USER_QR=false SHOW_ACCOUNTS_PAGE=false SHOW_HOME_PAGE=true SHOW_HISTORY_PAGE=true SHOW_USERINFO_ACCOUNTS=true SHOW_TRANSANCTION_HISTORY_ACCOUNTS=true SHOW_EXPIRY_REWARD_DETAIL=true SHOW_LOGIN_SUBTITLE=true REDIRECT_AFTER_LOGIN=/home npm run config && ng serve --host 0.0.0.0"

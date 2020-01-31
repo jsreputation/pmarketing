@@ -85,6 +85,10 @@ export class WhistlerStampService implements StampService {
     throw new Error(`Method not implemented. ${campaignId}`);
   }
 
+  public stampsChangedForStampCard(stampCard: IStampCard): Observable<IStampCard> {
+    throw new Error(`Method not implemented. ${stampCard.id}`);
+  }
+
   public putStamp(stampId: number): Observable<IStamp> {
     throw new Error(`Method not implemented. ${stampId}`);
   }

@@ -5,7 +5,8 @@
          *ngIf="engagement?.attributes_type !== 'stamps'
          && engagement?.game_type !== 'spin'
          && engagement?.attributes_type !== 'survey'
-         && engagement?.game_type !== 'scratch'"
+         && engagement?.game_type !== 'scratch'
+         && engagement?.game_type != 'snake'"
     >
       <p class="mobile-preview-headline">
         {{engagement?.title}}
@@ -60,6 +61,11 @@
             <ng-container *ngSwitchCase="'spin'">
               <div class="img-ss">
                 <img alt="spin-pic" [src]="engagement.image_url"/>
+              </div>
+            </ng-container>
+            <ng-container *ngSwitchCase="'snake'">
+              <div class="img-ss">
+                <img alt="snake-pic" [src]="engagement.image_url"/>
               </div>
             </ng-container>
           </ng-container>
