@@ -43,6 +43,7 @@ import { RewardVouchersPreviewComponent } from './components/reward-vouchers-pre
 import { RewardReplenishPopupComponent } from './containers/reward-replenish-popup/reward-replenish-popup.component';
 import {
   CreateMerchantPopupModule,
+  DatePickerModule,
   ItemListModule,
   NoDataModule,
   SearchFilterModule,
@@ -51,13 +52,11 @@ import {
   TimePickerModule,
   UploadFileModule, UploadGraphicModule
 } from '@cl-shared';
-import { DatePickerModule as SharedDatePickerModule} from '@cl-shared';
 import {
   ButtonModule,
   ProgressBarModule,
   StatisticsProgressBarModule,
-  StatusLabelModule,
-  DatePickerModule
+  StatusLabelModule
 } from '@perx/candyshop';
 import { TagListModule } from '@cl-shared/components/tag-list/tag-list.module';
 import { RewardLoyaltyFormGroupComponent } from './components/reward-loyalty-form-group/reward-loyalty-form-group.component';
@@ -122,7 +121,6 @@ import { DownloadButtonModule } from '@perx/candyshop';
     ItemListModule,
     TimePickerModule,
     DatePickerModule,
-    SharedDatePickerModule,
     UploadFileModule,
     UploadGraphicModule,
     DownloadButtonModule,
