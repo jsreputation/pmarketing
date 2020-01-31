@@ -9,7 +9,7 @@ import { catchError } from 'rxjs/operators';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private sessionService: SessionService,
-              private authService: AuthService
+    private authService: AuthService
   ) {
   }
 

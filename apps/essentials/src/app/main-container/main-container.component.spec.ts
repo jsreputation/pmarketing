@@ -16,24 +16,24 @@ describe('MainContainerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        imports: [
-          RouterTestingModule,
-          BrowserAnimationsModule,
-          SidenavMenuModule,
-          HttpClientModule,
-          TranslateModule.forRoot()
-        ],
-        providers: [
-          LocalStorageService,
-          SessionService,
-          {
-            provide: AuthService,
-            useClass: TestAuthService
-          }
-        ],
-        declarations: [MainContainerComponent],
-        schemas: [NO_ERRORS_SCHEMA]
-      })
+      imports: [
+        RouterTestingModule,
+        BrowserAnimationsModule,
+        SidenavMenuModule,
+        HttpClientModule,
+        TranslateModule.forRoot()
+      ],
+      providers: [
+        LocalStorageService,
+        SessionService,
+        {
+          provide: AuthService,
+          useClass: TestAuthService
+        }
+      ],
+      declarations: [MainContainerComponent],
+      schemas: [NO_ERRORS_SCHEMA]
+    })
       .compileComponents();
   }));
 
