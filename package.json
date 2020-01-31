@@ -17,6 +17,7 @@
     "build:essentials:prod": "lerna run build:lib && lerna run build:essentials:prod --",
     "build:digi:prod": "echo 'skipping digi build'",
     "build:feature-demo:prod": "lerna run build:lib && lerna run build:feature-demo:prod --",
+    "build:commbank-demo:prod": "lerna run build:lib && lerna run build:commbank-demo:prod --",
     "build:hsbc:prod": "lerna run build:lib && lerna run build:hsbc:prod --",
     "build:prudential:prod": "echo 'skipping prudential build'",
     "build:starhub:prod": "lerna run build:lib && lerna run build:starhub:prod --",
