@@ -1,8 +1,7 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { DatePickerComponent } from '@perx/candyshop';
 
 @Component({
   selector: 'app-candyshop-forms',
@@ -10,12 +9,13 @@ import { DatePickerComponent } from '@perx/candyshop';
   styleUrls: ['./candyshop-forms.component.scss']
 })
 export class CandyshopFormsComponent implements OnInit, OnDestroy {
-  @ViewChild('d', {static: false}) public datePicker: DatePickerComponent;
   public disabled: boolean = false;
   public appearance: string;
   public newFromControl: FormControl = new FormControl(null, [Validators.required, Validators.min(3)]);
   public newFromControl2: FormControl = new FormControl(null, [Validators.required, Validators.min(3)]);
   public newFromControl3: FormControl = new FormControl(null, [Validators.required, Validators.min(3)]);
+  public rangeStart: FormControl = new FormControl();
+  public rangeEnd: FormControl = new FormControl();
   private destroy$: Subject<void> = new Subject();
 
   public statistics: { type: string, value: number }[] = [
@@ -48,9 +48,5 @@ export class CandyshopFormsComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  public open(): void {
-    this.datePicker.open();
   }
 }

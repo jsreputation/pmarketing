@@ -8,7 +8,6 @@
   top: 0;
   height: auto;
   width: 100%;
-  z-index: 5;
 
   &-icon {
     position: absolute;
@@ -59,14 +58,14 @@
 // Color Picker Pop-up
 .color-picker {
   //@include mat-elevation(3);
-
+  z-index: 100;
   border: 1px solid rgba(0, 0, 0, 0.15) !important;
   border-radius: $border-radius-lg;
   overflow: hidden;
 
   .selected-color-background,
   .selected-color {
-    margin-top: 0.4rem;
+    //margin-top: 0.4rem;
     width: 3rem !important;
     height: 2.3rem !important;
     border-radius: $border-radius !important;
