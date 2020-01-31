@@ -1,8 +1,8 @@
-import {ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, Output, ViewChild} from '@angular/core';
-import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {IUploadedFile} from '../../models/uploaded-file.interface';
-import {UploadFileService} from './upload-file.service';
+import { ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, Output, ViewChild } from '@angular/core';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { IUploadedFile } from '../../models/uploaded-file.interface';
+import { UploadFileService } from './upload-file.service';
 
 @Component({
   selector: 'cs-upload-file',
@@ -18,7 +18,7 @@ import {UploadFileService} from './upload-file.service';
 })
 export class UploadFileComponent implements ControlValueAccessor {
   public MAX_SIZE: number = 1;
-  @ViewChild('fileInput', {static: false}) public fileInput: HTMLInputElement;
+  @ViewChild('fileInput', { static: false }) public fileInput: HTMLInputElement;
   @Input() public downloadFile: string = 'assets/files/Users_template.csv';
   @Input() public isRequired: boolean;
   @Input() public label: string = '';
@@ -41,10 +41,11 @@ export class UploadFileComponent implements ControlValueAccessor {
   public onTouched: any = () => {
   }
 
-  constructor(private sanitizer: DomSanitizer,
-              private uploadFileService: UploadFileService,
-              private cd: ChangeDetectorRef) {
-  }
+  constructor(
+    private sanitizer: DomSanitizer,
+    private uploadFileService: UploadFileService,
+    private cd: ChangeDetectorRef
+  ) { }
 
   public preview(files: FileList): void {
     this.message = null;

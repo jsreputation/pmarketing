@@ -3,12 +3,12 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { IPopupConfig } from '../../utils/popup/popup.component';
 
 export interface IRewardPopupConfig extends IPopupConfig {
-    validTo?: Date;
-    timerCallbacks?: TimerCallBack;
+  validTo?: Date;
+  timerCallbacks?: TimerCallBack;
 }
 export interface TimerCallBack {
-    timerExpired(): void;
-    timerExpiring(): void;
+  timerExpired(): void;
+  timerExpiring(): void;
 }
 
 @Component({

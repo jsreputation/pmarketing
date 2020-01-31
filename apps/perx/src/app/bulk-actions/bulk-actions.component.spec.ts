@@ -10,7 +10,7 @@ describe('BulkActionsComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ BulkActionsComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

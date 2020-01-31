@@ -29,7 +29,7 @@ export class RangeDatePickerComponent implements OnInit, OnDestroy, ControlValue
   @Input() public placeholder: string = 'Choose a date';
   @Input() public appearance: string = '';
 
-  @Input() set value(obj: string) {
+  @Input() public set value(obj: string) {
     if (obj) {
       const newDate = new Date(obj);
       this.writeValue(newDate);
@@ -38,7 +38,7 @@ export class RangeDatePickerComponent implements OnInit, OnDestroy, ControlValue
 
   public disabledState: boolean = false;
 
-  @Input() set disabled(value: boolean) {
+  @Input() public set disabled(value: boolean) {
     this.setDisabledState(value);
   }
 
@@ -47,8 +47,7 @@ export class RangeDatePickerComponent implements OnInit, OnDestroy, ControlValue
   private onTouched: any = noop;
   private destroy$: Subject<void> = new Subject();
 
-  constructor(private cd: ChangeDetectorRef) {
-  }
+  constructor(private cd: ChangeDetectorRef) { }
 
   public ngOnInit(): void {
     this.control.valueChanges

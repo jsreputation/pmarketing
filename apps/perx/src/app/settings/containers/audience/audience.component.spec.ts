@@ -10,7 +10,7 @@ describe('AudienceComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ AudienceComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

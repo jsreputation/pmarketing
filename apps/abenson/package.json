@@ -11,7 +11,7 @@
     "build:abenson:staging": "PRODUCTION=true npm run config && ng build --configuration staging",
     "config": "ts-node --project tsconfig.node.json set-env.ts",
     "test": "ng test",
-    "lint": "stylelint \"src/**/*.*css\" && eslint \"./src/*/*.ts\"",
+    "lint": "stylelint \"src/**/*.*css\" && eslint \"./src/**/*.ts\"",
     "lint:fix": "stylelint \"src/**/*.*css\" --fix",
     "e2e": "ng e2e"
   },

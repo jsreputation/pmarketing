@@ -10,7 +10,8 @@ const routes: Routes = [
       { path: 'edit', loadChildren: () => import('./containers/edit/edit.module').then(m => m.EditModule) },
       { path: 'list', loadChildren: () => import('./containers/list/list.module').then(m => m.ListModule) }
     ]
-  },];
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

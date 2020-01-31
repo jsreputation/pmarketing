@@ -10,7 +10,7 @@ describe('RolesComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ RolesComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

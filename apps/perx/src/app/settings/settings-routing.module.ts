@@ -12,7 +12,10 @@ const routes: Routes = [
       { path: 'audience', loadChildren: () => import('./containers/audience/audience.module').then(m => m.AudienceModule) },
       { path: 'uploads', loadChildren: () => import('./containers/uploads/uploads.module').then(m => m.UploadsModule) },
       { path: 'roles', loadChildren: () => import('./containers/roles/roles.module').then(m => m.RolesModule) },
-      { path: 'rule-building', loadChildren: () => import('./containers/rule-building/rule-building.module').then(m => m.RuleBuildingModule) },
+      {
+        path: 'rule-building',
+        loadChildren: () => import('./containers/rule-building/rule-building.module').then(m => m.RuleBuildingModule)
+      },
       { path: 'branding', loadChildren: () => import('./containers/branding/branding.module').then(m => m.BrandingModule) }
     ]
   }

@@ -70,7 +70,7 @@ export class PinInputComponent implements OnInit, OnDestroy {
     this.update.emit(v);
   }
 
-  get value(): string {
+  public get value(): string {
     return this.controls.reduce((p: string, v: FormControl): string => v.value === null ? p : `${p}${v.value}`, '');
   }
 

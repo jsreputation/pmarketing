@@ -45,9 +45,10 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
     }
   }
 
-  constructor(private fb: FormBuilder,
-              private cd: ChangeDetectorRef) {
-  }
+  constructor(
+    private fb: FormBuilder,
+    private cd: ChangeDetectorRef
+  ) { }
 
   public selectedGraphic: IGraphic;
   public controlUpload: AbstractControl;
@@ -117,7 +118,7 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
 
   private patchDefaultControl(value: any): void {
     this.createDefaultControl();
-    this.controlDefault.patchValue(value, {emitEvent: false});
+    this.controlDefault.patchValue(value, { emitEvent: false });
   }
 
   private subscribeControlDefaultValueChanges(): void {

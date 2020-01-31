@@ -10,7 +10,7 @@ describe('BiComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ BiComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
