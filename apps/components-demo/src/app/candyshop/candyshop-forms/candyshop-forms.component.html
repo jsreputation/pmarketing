@@ -8,223 +8,206 @@
   </mat-select>
 </mat-form-field>
 
-<mat-expansion-panel expanded>
-  <mat-expansion-panel-header>Date Picker</mat-expansion-panel-header>
 
-  <h2>Default</h2>
-  <h2>in mat-form-field with control</h2>
-  <h2>in mat-form-field with control</h2>
-  <mat-form-field [appearance]="appearance">
+<mat-accordion>
+  <!--Date Picker-->
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>Date Picker</mat-expansion-panel-header>
+
+    <h2>standalone</h2>
     <cs-date-picker [disabled]="disabled"
-                    #d
-                    [clickable]="false"
-                    placeholder="input value"
+                    placeholder="input value">
+    </cs-date-picker>
+
+    <h2>in mat-form-field</h2>
+    <mat-form-field [appearance]="appearance">
+      <cs-date-picker [disabled]="disabled"
+                      placeholder="input value"
+                      [formControl]="newFromControl2">
+      </cs-date-picker>
+      <mat-icon matSuffix>calendar_today</mat-icon>
+      <mat-hint>hint</mat-hint>
+      <mat-error *ngIf="newFromControl.touched && newFromControl.hasError('required')">Error Required</mat-error>
+    </mat-form-field>
+
+    <h2>editable input with toggle button</h2>
+    <mat-form-field [appearance]="appearance">
+      <cs-date-picker [disabled]="disabled"
+                      #d
+                      [clickable]="false"
+                      placeholder="input value"
+                      [formControl]="newFromControl">
+      </cs-date-picker>
+      <button mat-icon-button matSuffix (click)="d?.open()">
+        <mat-icon>keyboard_arrow_down</mat-icon>
+      </button>
+      <mat-hint>hint</mat-hint>
+      <mat-error *ngIf="newFromControl.touched && newFromControl.hasError('required')">
+        Error Required
+      </mat-error>
+    </mat-form-field>
+
+  </mat-expansion-panel>
+
+  <!--Range Date Picker-->
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>Range Date Picker</mat-expansion-panel-header>
+
+    <h2>standalone</h2>
+    <cs-range-date-picker [disabled]="disabled"
+                          placeholder="input value">
+    </cs-range-date-picker>
+
+    <h2>in mat-form-field</h2>
+    <mat-form-field [appearance]="appearance">
+      <cs-range-date-picker [disabled]="disabled"
+                            placeholder="input value"
+                            [formControl]="newFromControl2">
+      </cs-range-date-picker>
+      <mat-icon matSuffix>calendar_today</mat-icon>
+      <mat-hint>hint</mat-hint>
+      <mat-error *ngIf="newFromControl.touched && newFromControl.hasError('required')">Error Required</mat-error>
+    </mat-form-field>
+
+    <h2>editable input with toggle button</h2>
+    <mat-form-field [appearance]="appearance">
+      <cs-range-date-picker [disabled]="disabled"
+                            #d
+                            [clickable]="false"
+                            placeholder="input value"
+                            [formControl]="newFromControl">
+      </cs-range-date-picker>
+      <button mat-icon-button matSuffix (click)="d?.open()">
+        <mat-icon>keyboard_arrow_down</mat-icon>
+      </button>
+      <mat-hint>hint</mat-hint>
+      <mat-error *ngIf="newFromControl.touched && newFromControl.hasError('required')">
+        Error Required
+      </mat-error>
+    </mat-form-field>
+
+  </mat-expansion-panel>
+
+  <!--Time Picker-->
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>Time Picker</mat-expansion-panel-header>
+
+    <h2>standalone</h2>
+    <cs-time-picker [disabled]="disabled"
+                    placeholder="input value">
+    </cs-time-picker>
+
+    <h2>in mat-form-field</h2>
+    <mat-form-field [appearance]="appearance">
+      <cs-time-picker [disabled]="disabled"
+                      placeholder="input value"
+                      [formControl]="newFromControl2">
+      </cs-time-picker>
+      <mat-icon matSuffix>access_time</mat-icon>
+      <mat-hint>hint</mat-hint>
+      <mat-error *ngIf="newFromControl.touched && newFromControl.hasError('required')">Error Required</mat-error>
+    </mat-form-field>
+
+    <h2>editable input with toggle button</h2>
+    <mat-form-field [appearance]="appearance">
+      <cs-time-picker [disabled]="disabled"
+                      #d
+                      [clickable]="false"
+                      placeholder="input value"
+                      [formControl]="newFromControl">
+      </cs-time-picker>
+      <button mat-icon-button matSuffix (click)="d?.open()">
+        <mat-icon>
+          access_time
+        </mat-icon>
+      </button>
+      <mat-hint>hint</mat-hint>
+      <mat-error *ngIf="newFromControl.touched && newFromControl.hasError('required')">
+        Error Required
+      </mat-error>
+    </mat-form-field>
+
+  </mat-expansion-panel>
+
+  <!--Color Picker-->
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>Color Picker</mat-expansion-panel-header>
+
+    <h2>standalone</h2>
+    <cs-color-picker [disabled]="disabled"
+                     placeholder="input value">
+    </cs-color-picker>
+
+    <h2>in mat-form-field</h2>
+    <mat-form-field [appearance]="appearance">
+      <cs-color-picker [disabled]="disabled"
+                       placeholder="input value"
+                       [formControl]="newFromControl2">
+      </cs-color-picker>
+      <mat-icon matSuffix>calendar_today</mat-icon>
+      <mat-hint>hint</mat-hint>
+      <mat-error *ngIf="newFromControl.touched && newFromControl.hasError('required')">Error Required</mat-error>
+    </mat-form-field>
+
+    <h2>editable input with toggle button</h2>
+    <mat-form-field [appearance]="appearance">
+      <cs-color-picker [disabled]="disabled"
+                       #d
+                       [clickable]="false"
+                       placeholder="input value"
+                       [formControl]="newFromControl">
+      </cs-color-picker>
+      <button mat-icon-button matSuffix (click)="d?.open()">
+        <mat-icon>keyboard_arrow_down</mat-icon>
+      </button>
+      <mat-hint>hint</mat-hint>
+      <mat-error *ngIf="newFromControl.touched && newFromControl.hasError('required')">
+        Error Required
+      </mat-error>
+    </mat-form-field>
+
+    <h2>show only input</h2>
+    <cs-color-picker [disabled]="disabled"
+                     classList="only-input"
+                     [formControl]="newFromControl">
+    </cs-color-picker>
+
+    <h2>show only color</h2>
+    <cs-color-picker [disabled]="disabled"
+                     classList="only-color"
+                     [formControl]="newFromControl">
+    </cs-color-picker>
+
+  </mat-expansion-panel>
+
+  <!--Chip List-->
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>Chip List</mat-expansion-panel-header>
+
+    <h2>standalone</h2>
+    <cs-chip-list [disabled]="disabled" placeholder="wright some">
+    </cs-chip-list>
+
+    <h2>in mat-form-field</h2>
+    <mat-form-field [appearance]="appearance"
                     [formControl]="newFromControl">
-    </cs-date-picker>
-    <button mat-icon-button matSuffix (click)="d?.open()">
-      <mat-icon>keyboard_arrow_down</mat-icon>
-    </button>
-    <mat-hint>hint</mat-hint>
-    <mat-error *ngIf="newFromControl.touched && newFromControl.hasError('required')">
-      Error Required
-    </mat-error>
-  </mat-form-field>
+      <mat-label>Label</mat-label>
+      <cs-chip-list [disabled]="disabled">
+      </cs-chip-list>
+      <mat-error *ngIf="newFromControl.hasError('required')">
+        Error Required
+      </mat-error>
+    </mat-form-field>
+  </mat-expansion-panel>
 
-  <mat-form-field [appearance]="appearance">
-    <cs-date-picker [disabled]="disabled"
-                    placeholder="input value"
-                    [formControl]="newFromControl2">
-    </cs-date-picker>
-    <button mat-icon-button matSuffix>
-      <mat-icon>keyboard_arrow_down</mat-icon>
-    </button>
-    <mat-hint>hint</mat-hint>
-    <mat-error *ngIf="newFromControl.touched && newFromControl.hasError('required')">Error Required</mat-error>
-  </mat-form-field>
-</mat-expansion-panel>
+  <!--Date Picker-->
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>Sms Editor</mat-expansion-panel-header>
 
-<mat-form-field appearance="outline">
-  <cs-color-picker [formControl]="newFromControl"
-                   [disabled]="disabled"
-                   aria-label="pick primary color">
-  </cs-color-picker>
-</mat-form-field>
+    <h2>standalone</h2>
+    <cs-sms-editor
+      [options]="shortcodes">
+    </cs-sms-editor>
 
-
-<mat-form-field appearance="outline">
-  <cs-color-picker [formControl]="newFromControl"
-                   [disabled]="disabled"
-                   aria-label="pick primary color">
-  </cs-color-picker>
-</mat-form-field>
-
-
-<cs-color-picker [formControl]="newFromControl"
-                 aria-label="pick primary color">
-</cs-color-picker>
-
-<!--<h2>Date Picker</h2>-->
-<mat-form-field>
-  <cs-date-picker [disabled]="disabled"
-                  [clickable]="true"
-                  placeholder="input value">
-  </cs-date-picker>
-</mat-form-field>
-
-<!--<cs-date-picker [disabled]="disabled"-->
-<!--                placeholder="input value">-->
-<!--</cs-date-picker>-->
-
-
-<!--    <mat-datepicker-toggle-->
-<!--      class="date-picker-toggle"-->
-<!--      matSuffix-->
-<!--      [for]="d?.datePicker">-->
-<!--      <mat-icon class="date-button" matDatepickerToggleIcon>-->
-<!--        calendar-->
-<!--      </mat-icon>-->
-<!--    </mat-datepicker-toggle>-->
-<!--  <mat-icon matPrefix (click)="d.datePicker.open()">visibility</mat-icon>-->
-<!--  -->
-
-<!--  <mat-hint>egergegreg</mat-hint>-->
-<!--  <button mat-icon-button matPrefix>-->
-<!--  </button>-->
-<!--  <mat-icon mat-toggle matSuffix class="date-button">-->
-<!--    close-->
-<!--  </mat-icon>-->
-<!--  <mat-error *ngIf="ne  <button mat-icon-button matSuffix (click)="d?.open()">
-  <mat-icon>keyboard_arrow_down</mat-icon>
-
-
-</mat-form-field>
-
-<cs-date-picker [disabled]="disabled"-->
-<!--                placeholder="input Date"-->
-<!--                [formControl]="newFromControl">-->
-<!--</cs-date-picker>-->
-
-<!--      <mat-datepicker-toggle-->
-<!--        class="date-picker-toggle"-->
-<!--        [class.disable]="disabledState"-->
-<!--        matSuffix-->
-<!--        [for]="datePicker">-->
-<!--  </mat-form-field>-->
-
-
-<h2>Range date picker</h2>
-<!--<mat-form-field>-->
-<!--  <cs-range-date-picker-->
-<!--    [formControl]="newFromControl3"-->
-<!--    placeholder="choose date">-->
-<!--  </cs-range-date-picker>-->
-<!--</mat-form-field>-->
-
-<mat-form-field [appearance]="appearance">
-  <cs-range-date-picker [disabled]="disabled"
-                        placeholder="input value"
-                        [formControl]="newFromControl">
-  </cs-range-date-picker>
-  <button mat-icon-button matSuffix>
-    <mat-icon>keyboard_arrow_down</mat-icon>
-  </button>
-  <mat-hint>hint</mat-hint>
-  <mat-error *ngIf="newFromControl.touched && newFromControl.hasError('required')">
-    Error Required
-  </mat-error>
-  <mat-error *ngIf="newFromControl.touched && newFromControl.hasError('min')">
-    Error min
-  </mat-error>
-</mat-form-field>
-
-<!--  <h2>Separate Range Date Picker</h2>-->
-<!--  <cs-separate-range-date-picker [disabled]="disabled">-->
-<!--  </cs-separate-range-date-picker>-->
-
-<!--  <h2>Time Picker</h2>-->
-<mat-form-field [appearance]="appearance">
-  <cs-time-picker
-      #time
-      [clickable]="false"
-      [formControl]="newFromControl"
-      placeholder="input value"
-      [disabled]="disabled">
-  </cs-time-picker>
-  <button mat-icon-button matSuffix (click)="time.open($event)">
-    <mat-icon>keyboard_arrow_down</mat-icon>
-  </button>
-</mat-form-field>
-
-<!--<button mat-icon-button matSuffix (click)="time.open($event)">-->
-<!--  <mat-icon>keyboard_arrow_down</mat-icon>-->
-<!--</button>-->
-
-<cs-time-picker
-  [formControl]="newFromControl3"
-  placeholder="input value"
-  [disabled]="disabled">
-</cs-time-picker>
-
-
-<h2>Chip List</h2>
-<mat-form-field [appearance]="appearance"
-                [formControl]="newFromControl">
-  <mat-label>vsdzfgaesrdfa</mat-label>
-  <cs-chip-list [disabled]="disabled">
-  </cs-chip-list>
-  <button mat-icon-button matSuffix>
-    <mat-icon>keyboard_arrow_down</mat-icon>
-  </button>
-  <mat-error *ngIf="newFromControl.hasError('required')">
-    Error Required
-  </mat-error>
-</mat-form-field>
----
-<mat-form-field [appearance]="appearance">
-  <cs-chip-list [disabled]="disabled">
-  </cs-chip-list>
-</mat-form-field>
------
-<cs-chip-list [disabled]="disabled"
-              [formControl]="newFromControl">
-</cs-chip-list>
-----
-<cs-chip-list [disabled]="disabled">
-</cs-chip-list>
-
-
-<h2>Sms Editor</h2>
-<cs-sms-editor
-  [options]="shortcodes">
-
-</cs-sms-editor>
-
-
-<!---->
-
-<!--<mat-form-field appearance="outline">-->
-<!--  <mat-form-field [appearance]="appearance">-->
-<!--    <cs-date-picker [disabled]="disabled"-->
-<!--                    #d1-->
-<!--                    placeholder="input value"-->
-<!--                    #d2-->
-<!--                    [formControl]="newFromControl">-->
-<!--    </cs-date-picker>-->
-<!--    <button mat-icon-button matSuffix (click)="d?.open()">-->
-<!--      <mat-icon>keyboard_arrow_down</mat-icon>-->
-<!--    </button>-->
-
-<!--  </mat-form-field>-->
-<!--  <mat-form-field [appearance]="appearance">-->
-<!--    <cs-date-picker [disabled]="disabled"-->
-<!--                    #d2-->
-<!--                    placeholder="input value"-->
-<!--                    [formControl]="newFromControl">-->
-<!--    </cs-date-picker>-->
-<!--    <button mat-icon-button matSuffix (click)="d?.open()">-->
-<!--      <mat-icon>keyboard_arrow_down</mat-icon>-->
-<!--    </button>-->
-
-<!--  </mat-form-field>-->
-<!--  <mat-hint>sdgadsgfaergf</mat-hint>-->
-<!--</mat-form-field>-->
+  </mat-expansion-panel>
+</mat-accordion>
