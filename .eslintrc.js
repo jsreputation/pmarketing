@@ -18,21 +18,21 @@ module.exports = {
     "import",
   ],
   "rules": {
-    "indent": ["error", 2, { "SwitchCase": 1 }],
+    // "indent": ["error", 2, { "SwitchCase": 1 }],
     // "import/no-deprecated": "warn",
     "@typescript-eslint/adjacent-overload-signatures": "error",
     "@typescript-eslint/array-type": "error",
     "@typescript-eslint/ban-types": "error",
     "@typescript-eslint/class-name-casing": "error",
-    // "@typescript-eslint/explicit-member-accessibility": [
-    //     "error",
-    //     {
-    //         "overrides": {
-    //             "constructors": "off"
-    //         }
-    //     }
-    // ],
-    // "@typescript-eslint/indent": "error",
+    "@typescript-eslint/explicit-member-accessibility": [
+      "error",
+      {
+        "overrides": {
+          "constructors": "off"
+        }
+      }
+    ],
+    "@typescript-eslint/indent": ["error", 2],
     "@typescript-eslint/interface-name-prefix": "off",
     // "@typescript-eslint/no-angle-bracket-type-assertion": "error",
     "@typescript-eslint/no-empty-interface": "error",

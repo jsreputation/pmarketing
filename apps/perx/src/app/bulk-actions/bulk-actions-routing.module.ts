@@ -4,9 +4,11 @@ import { Routes, RouterModule } from '@angular/router';
 import { BulkActionsComponent } from './bulk-actions.component';
 
 const routes: Routes = [
-  { path: '', component: BulkActionsComponent, children:[
-    {path: '', redirectTo:'list'},
-  { path: 'list', loadChildren: () => import('./containers/list/list.module').then(m => m.ListModule) }]}];
+  {
+    path: '', component: BulkActionsComponent, children: [
+      { path: '', redirectTo: 'list' },
+      { path: 'list', loadChildren: () => import('./containers/list/list.module').then(m => m.ListModule) }]
+  }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
