@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input,  Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {IGame, ISnake} from '@perx/core';
 
 @Component({
@@ -7,10 +7,9 @@ import {IGame, ISnake} from '@perx/core';
   styleUrls: ['./snake.component.scss']
 })
 export class SnakeComponent {
-
   @Input() public game: IGame;
 
-  @Output() public broken: EventEmitter<void> = new EventEmitter();
+  @Output() public broken: EventEmitter<boolean> = new EventEmitter();
 
   public isEnabled: boolean = false;
 
@@ -18,8 +17,8 @@ export class SnakeComponent {
     return this.game.config as ISnake;
   }
 
-  public gameCompleted(): void {
-    this.broken.emit();
+  public gameCompleted(evt: boolean): void {
+    this.broken.emit(evt);
   }
 
 }

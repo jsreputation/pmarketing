@@ -5,7 +5,15 @@ import { of, throwError } from 'rxjs';
 import { ShakeComponent } from './shake/shake.component';
 import { TapComponent } from './tap/tap.component';
 import { ScratchComponent } from './scratch/scratch.component';
-import { GameModule, IGameService, GameType, IGame, AuthenticationService, NotificationService } from '@perx/core';
+import {
+  GameModule,
+  IGameService,
+  GameType,
+  IGame,
+  AuthenticationService,
+  NotificationService,
+  ConfigService, IGameOutcome
+} from '@perx/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Type } from '@angular/core';
@@ -13,6 +21,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
 import { ConfigToMappedSlotPipe, ConfigToSlicesPipe, SpinComponent } from './spin/spin.component';
 import { WInformationCollectionSettingType } from '@perx/whistler';
+import {SnakeComponent} from './snake/snake.component';
 
 const gamePi: IGame = {
   id: 1,
@@ -68,6 +77,12 @@ const gameSignup: IGame = {
   },
 };
 
+const outcome: IGameOutcome = {
+  title: '',
+  subTitle: '',
+  button: ''
+};
+
 describe('GameComponent', () => {
   let component: GameComponent;
   let fixture: ComponentFixture<GameComponent>;
@@ -76,6 +91,10 @@ describe('GameComponent', () => {
     getGamesFromCampaign: () => of([gamePi]),
     prePlay: () => of(),
     prePlayConfirm: () => of(),
+    // tslint:disable-next-line:variable-name
+    getSuccessOutcome: (_gamePi) => outcome,
+    // tslint:disable-next-line:variable-name
+    getNoOutcome: (_gamePi) => outcome
   };
   const routerStub: Partial<Router> = {
     navigate: () => Promise.resolve(true)
@@ -84,7 +103,18 @@ describe('GameComponent', () => {
   const authServiceStub: Partial<AuthenticationService> = {
     getAnonymous: () => true,
   };
-  const notificationServiceStub: Partial<NotificationService> = {};
+  const notificationServiceStub: Partial<NotificationService> = {
+    addPopup: () => void 0
+  };
+  const configServiceStub: Partial<ConfigService> = {
+    readAppConfig: () => of({
+      apiHost: '',
+      production: false,
+      preAuth: false,
+      isWhistler: false,
+      baseHref: '',
+    })
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -94,6 +124,7 @@ describe('GameComponent', () => {
         TapComponent,
         ScratchComponent,
         SpinComponent,
+        SnakeComponent,
         ConfigToSlicesPipe,
         ConfigToMappedSlotPipe
       ],
@@ -108,7 +139,8 @@ describe('GameComponent', () => {
         { provide: ActivatedRoute, useValue: { params: of({ id: 1 }) } },
         { provide: Router, useValue: routerStub },
         { provide: AuthenticationService, useValue: authServiceStub },
-        { provide: NotificationService, useValue: notificationServiceStub }
+        { provide: NotificationService, useValue: notificationServiceStub },
+        { provide: ConfigService, useValue: configServiceStub }
       ]
     })
       // .overrideModule(BrowserDynamicTestingModule, { set: { entryComponents: [PopupComponent] } })

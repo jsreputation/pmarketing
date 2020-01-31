@@ -30,6 +30,10 @@ export enum ControlsName {
   wheelImg = 'wheelImg',
   wheelPosition = 'wheelPosition',
   pointerImg = 'pointerImg',
-  colorCtrls = ' colorCtrls'
+  colorCtrls = 'colorCtrls',
 
+  targetRequired = 'targetRequired',
+  snakeType = 'snakeType',
+  targetIcon = 'targetIcon',
+  gameArea = 'gameArea'
 }

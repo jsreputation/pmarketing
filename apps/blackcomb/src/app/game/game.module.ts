@@ -12,6 +12,7 @@ import {
   TapComponent,
   ScratchComponent,
   SpinComponent,
+  SnakeComponent,
   ConfigToSlicesPipe,
   ConfigToMappedSlotPipe
 } from '@perx/blackcomb-pages';
@@ -25,6 +26,7 @@ import { GameRoutingModule } from './game-routing.module';
     TapComponent,
     ScratchComponent,
     SpinComponent,
+    SnakeComponent,
     ConfigToSlicesPipe,
     ConfigToMappedSlotPipe
   ],

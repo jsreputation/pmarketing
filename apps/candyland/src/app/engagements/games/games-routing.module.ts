@@ -9,6 +9,7 @@ import { NewPinataPageComponent } from './containers/new-pinata-page/new-pinata-
 import { NewScratchPageComponent } from './containers/new-scratch-page/new-scratch-page.component';
 import { GameComponent } from './containers/game/game.component';
 import {NewSpinPageComponent} from './containers/new-spin-page/new-spin-page.component';
+import {NewSnakePageComponent} from './containers/new-snake-page/new-snake-page.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,14 @@ const routes: Routes = [
       {
         path: 'new-pinata/:id',
         component: NewPinataPageComponent
+      },
+      {
+        path: 'new-snake',
+        component: NewSnakePageComponent
+      },
+      {
+        path: 'new-snake/:id',
+        component: NewSnakePageComponent
       },
       {
         path: 'new-scratch',

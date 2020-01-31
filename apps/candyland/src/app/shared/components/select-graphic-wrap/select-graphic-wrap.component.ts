@@ -30,6 +30,7 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
   @Input() public graphicList: IGraphic[];
   @Input() public showUpload: boolean = true;
   @Input() public isRequired: boolean;
+  @Input() public placeHolder: string;
   @Output() private selectGraphic: EventEmitter<IGraphic> = new EventEmitter<IGraphic>();
 
   public set setGraphic(val: any) {

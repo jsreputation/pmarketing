@@ -14,7 +14,7 @@ import { UploadGraphicModule } from '@cl-shared/components/upload-graphic/upload
   imports: [
     CommonModule,
     ImagesPreviewModule,
-    UploadGraphicModule,
+    UploadGraphicModule
   ]
 })
 export class SelectGraphicModule { }

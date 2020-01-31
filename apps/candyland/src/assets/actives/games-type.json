@@ -26,5 +26,12 @@
     "title": "SPIN_THE_WHEEL",
     "img": "assets/images/games/spinTheWheel.png",
     "active": "false"
+  },
+  {
+    "id": 7,
+    "type": "snake",
+    "title": "PLAY_SNAKE",
+    "img": "assets/images/games/snake.png",
+    "active": "false"
   }
 ]

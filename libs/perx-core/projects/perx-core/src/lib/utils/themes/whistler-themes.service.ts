@@ -51,9 +51,14 @@ export class WhistlerThemesService extends ThemesService {
     }
     let backgroundColor = LIGHT.properties['--background'];
     let fontColor = LIGHT.properties['--font_color'];
+    let surfaceColor = LIGHT.properties['--surface_colour'];
+    let popupBackgroundColor = LIGHT.properties['--popup_background_colour'];
+
     if (setting['theme.style'] === DARK.name) {
       backgroundColor = DARK.properties['--background'];
       fontColor = DARK.properties['--font_color'];
+      surfaceColor = DARK.properties['--surface_colour'];
+      popupBackgroundColor = DARK.properties['--popup_background_colour'];
     }
     return {
       name: setting['theme.style'],
@@ -68,7 +73,9 @@ export class WhistlerThemesService extends ThemesService {
         '--header_color': setting['theme.header_color'],
         '--login_background_colour': setting['theme.login_background_colour'],
         '--background': backgroundColor,
-        '--font_color': fontColor
+        '--font_color': fontColor,
+        '--surface_colour': surfaceColor,
+        '--popup_background_colour': popupBackgroundColor
       }
     };
   }

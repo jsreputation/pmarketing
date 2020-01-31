@@ -128,7 +128,6 @@ interface IV4GameCampaigns {
 })
 export class V4GameService implements IGameService {
   private hostName: string;
-
   constructor(
     private httpClient: HttpClient,
     config: Config,
@@ -243,11 +242,16 @@ export class V4GameService implements IGameService {
 
   // @ts-ignore
   public prePlay(engagementId: number, campaignId?: number): Observable<IEngagementTransaction> {
-    throw new Error('Not implemented.');
+    // do nothing until preplay games are implemented in v4
+    return of();
   }
-  // @ts-ignore
-  public prePlayConfirm(transactionId: number): Observable<void> {
-    throw new Error('Not implemented.');
+
+  public prePlayConfirm(transactionId: number): Observable<IEngagementTransaction | void> {
+    // todo: transactionId is used as the game/engagementId until preplay games are implemented in v4
+    return this.play(transactionId)
+      .pipe(
+        map((outcome: IPlayOutcome) => this.playOutcomeToEngagementTransaction(outcome)),
+      );
   }
 
   public getActiveGames(): Observable<IGame[]> {
@@ -289,5 +293,54 @@ export class V4GameService implements IGameService {
           return res;
         })
       );
+  }
+
+  private playOutcomeToEngagementTransaction(outcome: IPlayOutcome): IEngagementTransaction {
+    const transaction = {
+      voucherIds: [] as number[],
+      id: outcome.rawPayload.id,
+      rewardIds: [] as number[]
+    };
+    outcome.vouchers.forEach((el) => {
+      transaction.voucherIds.push(el.id);
+      if (el.reward) {
+        transaction.rewardIds.push(el.reward.id);
+      }
+    });
+    return transaction;
+  }
+
+  public getSuccessOutcome(game: IGame): IGameOutcome {
+
+    if (game.results && game.results.outcome) {
+      return {
+        title: game.results.outcome.title,
+        subTitle: game.results.outcome.subTitle,
+        image: game.results.outcome.image,
+        button: game.results.outcome.button
+      };
+    }
+    return {
+      title: '',
+      subTitle: '',
+      button: ''
+    };
+  }
+
+  public getNoOutcome(game: IGame): IGameOutcome {
+
+    if (game.results && game.results.noOutcome) {
+      return {
+        title: game.results.noOutcome.title,
+        subTitle: game.results.noOutcome.subTitle,
+        image: game.results.noOutcome.image,
+        button: game.results.noOutcome.button
+      };
+    }
+    return {
+      title: '',
+      subTitle: '',
+      button: ''
+    };
   }
 }
