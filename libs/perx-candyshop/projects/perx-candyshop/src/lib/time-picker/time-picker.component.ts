@@ -96,7 +96,7 @@ export class TimePickerComponent extends CsFormFieldControl<string> implements O
     if (this.clickable) {
       this.open();
     }
-  };
+  }
 
   public onClickInnerInput(): void {
     if (!this.formField && this.clickable) {

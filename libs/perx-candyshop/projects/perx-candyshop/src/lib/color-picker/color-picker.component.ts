@@ -36,10 +36,10 @@ export class ColorPickerComponent extends CsFormFieldControl<string> implements 
   public toggle: boolean = false;
 
   public onChange: any = () => {
-  };
+  }
 
   public onTouch: any = () => {
-  };
+  }
 
   constructor(
     @Optional() @Self() public ngControl: NgControl,
@@ -100,7 +100,7 @@ export class ColorPickerComponent extends CsFormFieldControl<string> implements 
     if (this.clickable) {
       this.open();
     }
-  };
+  }
 
   public onClickInnerInput(): void {
     if (!this.formField && this.clickable) {

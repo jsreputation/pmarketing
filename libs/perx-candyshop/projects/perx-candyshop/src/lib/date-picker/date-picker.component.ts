@@ -37,13 +37,6 @@ export class DatePickerComponent extends CsFormFieldControl<any> implements OnIn
   public datePickerControl: AbstractControl = new FormControl(null, []);
   public minDate: Date | null = null;
   public maxDate: Date | null = null;
-  //
-  // @Input() set value(obj: string) {
-  //   if (obj) {
-  //     const newDate = new Date(obj);
-  //     this.writeValue(newDate);
-  //   }
-  // }
 
   @ViewChild('datePicker', {static: false}) public datePicker: MatDatepicker<Date>;
 
@@ -116,7 +109,7 @@ export class DatePickerComponent extends CsFormFieldControl<any> implements OnIn
     if (this.clickable) {
       this.open();
     }
-  };
+  }
 
   public onClickInnerInput(): void {
     if (!this.formField && this.clickable) {
