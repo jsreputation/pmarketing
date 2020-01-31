@@ -109,3 +109,20 @@ export { StepperModule } from './lib/stepper/stepper-module';
 
 export { ColorPickerComponent } from './lib/color-picker/color-picker.component';
 export { ColorPickerModule } from './lib/color-picker/color-picker.module';
+
+export { ApiPaginatorModule } from './lib/api-paginator/api-paginator.module';
+export { ApiPaginatorComponent } from './lib/api-paginator/api-paginator.component';
+
+export { TableFiltersModule } from './lib/table-filters/table-filters.module';
+export { TableFiltersComponent } from './lib/table-filters/table-filters.component';
+export { TableFilterDirective } from './lib/table-filters/table-filter.directive';
+
+export { IApiTableData } from './lib/table-data-source/models/api-table-data.interface';
+export { IApiTableService } from './lib/table-data-source/models/api-table-service.interface';
+export { ApiTableSortModel } from './lib/table-data-source/models/api-table-sort.model';
+export { ITablePagination } from './lib/table-data-source/models/table-pagination.interface';
+export { IFrontTableSort } from './lib/table-data-source/models/front-table-sort.interface';
+export { ApiDataSourceStates } from './lib/table-data-source/models/api-data-source-states.enum';
+export { ApiDataSourceUpdateSchema } from './lib/table-data-source/models/api-data-source-update-schema.enum';
+export { FrontDataSource } from './lib/table-data-source/front-data-source';
+export { ApiDataSource } from './lib/table-data-source/api-data-source';

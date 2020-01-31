@@ -13,7 +13,7 @@ import { takeUntil } from 'rxjs/operators';
 import { MatFormField, MatFormFieldControl } from '@angular/material/form-field';
 import { CsFormFieldControl } from '../form-field-control';
 import { IUploadFileResponse, FileUploadStatus } from './upload-file-service.interface';
-import { HttpParamsOptions } from '../../models/http-params-options';
+import { IHttpParamsOptions } from 'projects/perx-candyshop/src/models/http-params-options.interface';
 import { DefaultUploadFileService } from './default-upload-file.service';
 
 @Component({
@@ -35,7 +35,7 @@ export class UploadFileComponent extends CsFormFieldControl<any>
   public loading: boolean = false;
 
   @ViewChild('fileInput', {static: false}) public fileInput: HTMLInputElement;
-  @Input() public requestOptions: HttpParamsOptions = {};
+  @Input() public requestOptions: IHttpParamsOptions = {};
   @Input() public accept: string = 'text/csv';
   @Input() public showInfo: boolean = true;
   @Output() public dropFile: EventEmitter<File> = new EventEmitter<File>();

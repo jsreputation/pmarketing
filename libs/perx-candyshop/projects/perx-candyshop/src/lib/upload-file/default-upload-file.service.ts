@@ -3,7 +3,7 @@ import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { IUploadedFile } from '../../models/uploaded-file.interface';
-import { HttpParamsOptions } from '../../models/http-params-options';
+import { IHttpParamsOptions } from 'projects/perx-candyshop/src/models/http-params-options.interface';
 import { UploadFileService } from './upload-file-service.interface';
 
 @Injectable()
@@ -14,7 +14,7 @@ export class DefaultUploadFileService implements UploadFileService {
     private http: HttpClient
   ) { }
 
-  public uploadFile(file: any, options: HttpParamsOptions): Observable<any> {
+  public uploadFile(file: any, options: IHttpParamsOptions): Observable<any> {
     const formData = this.prepareFormData(file);
     return this.http.post(this.url, formData, options)
       .pipe(
@@ -40,7 +40,7 @@ export class DefaultUploadFileService implements UploadFileService {
     return formData;
   }
 
-  public uploadMultipleFile(files: any[], options: HttpParamsOptions): Observable<any> {
+  public uploadMultipleFile(files: any[], options: IHttpParamsOptions): Observable<any> {
     const arrayRequest: Observable<any>[] = files.map(file => this.uploadFile(file, options));
     return combineLatest(...arrayRequest);
   }

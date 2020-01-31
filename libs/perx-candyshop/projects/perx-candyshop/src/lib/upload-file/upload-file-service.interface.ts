@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { HttpParamsOptions } from '../../models/http-params-options';
+import { IHttpParamsOptions } from 'projects/perx-candyshop/src/models/http-params-options.interface';
 
 export enum FileUploadStatus {
   pending = 'pending',
@@ -18,5 +18,5 @@ export interface IUploadFileResponse<V = any> {
 }
 
 export abstract class UploadFileService<V = any> {
-  public abstract uploadFile(file: File, options?: HttpParamsOptions): Observable<IUploadFileResponse<V>>;
+  public abstract uploadFile(file: File, options?: IHttpParamsOptions): Observable<IUploadFileResponse<V>>;
 }
