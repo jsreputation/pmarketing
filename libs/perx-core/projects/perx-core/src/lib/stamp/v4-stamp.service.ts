@@ -361,7 +361,7 @@ export class V4StampService implements StampService {
     return this.campaignService.getCampaigns()
       .pipe(
         map(campaigns => campaigns.filter(camp => camp.type === CampaignType.stamp)),
-      map(campaigns => {
+        map(campaigns => {
           if (stampType === 'puzzle') {
             return campaigns.filter(camp => camp.type === CampaignType.stamp).slice(0, 1);
           }
@@ -371,11 +371,9 @@ export class V4StampService implements StampService {
           (campaigns: ICampaign[]) => from(campaigns).pipe(
             mergeMap((campaign: ICampaign) => this.getCurrentCard(campaign.id)),
             toArray(),
-            map((stampCards: IStampCard[]) => {
-              return stampCards.filter(card =>
-                card.displayProperties.displayCampaignAs && card.displayProperties.displayCampaignAs === stampType
-              )
-            }),
+            map((stampCards: IStampCard[]) => stampCards.filter(card =>
+              card.displayProperties.displayCampaignAs && card.displayProperties.displayCampaignAs === stampType
+            )),
           )
         ),
       );
