@@ -74,14 +74,14 @@ const stubTabs: ITabConfigExtended[] = [
     currentPage: 1,
     completePagination: false
   },
-  {
-    filterKey: null,
-    filterValue: null,
-    tabName: 'ELECTRONICS',
-    rewardsType: 'Electronics',
-    currentPage: 1,
-    completePagination: false
-  },
+  // {
+  //   filterKey: null,
+  //   filterValue: null,
+  //   tabName: 'ELECTRONICS',
+  //   rewardsType: 'Electronics',
+  //   currentPage: 1,
+  //   completePagination: false
+  // },
   {
     filterKey: null,
     filterValue: null,
@@ -90,14 +90,14 @@ const stubTabs: ITabConfigExtended[] = [
     currentPage: 1,
     completePagination: false
   },
-  {
-    filterKey: null,
-    filterValue: null,
-    tabName: 'ENTERTAINMENT',
-    rewardsType: 'Entertainment',
-    currentPage: 1,
-    completePagination: false
-  },
+  // {
+  //   filterKey: null,
+  //   filterValue: null,
+  //   tabName: 'ENTERTAINMENT',
+  //   rewardsType: 'Entertainment',
+  //   currentPage: 1,
+  //   completePagination: false
+  // },
   {
     filterKey: null,
     filterValue: null,
@@ -106,22 +106,22 @@ const stubTabs: ITabConfigExtended[] = [
     currentPage: 1,
     completePagination: false
   },
-  {
-    filterKey: null,
-    filterValue: null,
-    tabName: 'MERCHANT_SELF',
-    rewardsType: 'Merchant Self',
-    currentPage: 1,
-    completePagination: false
-  },
-  {
-    filterKey: null,
-    filterValue: null,
-    tabName: 'OTHERS',
-    rewardsType: 'Others',
-    currentPage: 1,
-    completePagination: false
-  },
+  // {
+  //   filterKey: null,
+  //   filterValue: null,
+  //   tabName: 'MERCHANT_SELF',
+  //   rewardsType: 'Merchant Self',
+  //   currentPage: 1,
+  //   completePagination: false
+  // },
+  // {
+  //   filterKey: null,
+  //   filterValue: null,
+  //   tabName: 'OTHERS',
+  //   rewardsType: 'Others',
+  //   currentPage: 1,
+  //   completePagination: false
+  // },
 ];
 
 @Component({
