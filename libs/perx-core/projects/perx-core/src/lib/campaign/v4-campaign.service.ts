@@ -78,7 +78,7 @@ export class V4CampaignService implements ICampaignService {
     };
   }
 
-  public getCampaigns(filterOptions: ICampaignFilterOptions): Observable<ICampaign[]> {
+  public getCampaigns(filterOptions?: ICampaignFilterOptions): Observable<ICampaign[]> {
     let params = new HttpParams();
     if (filterOptions) {
       Object.keys(filterOptions).forEach(key => {
