@@ -89,7 +89,7 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
           // seems that the compiler isn't smart enough to determine the type in this ternary
           this.redemptionType =
             voucher.redemptionType && (voucher.redemptionType !== RedemptionType.txtCode) ? voucher.redemptionType :
-            voucher.code ? (voucher.redemptionType as RedemptionType) : RedemptionType.offline;
+              voucher.code ? (voucher.redemptionType as RedemptionType) : RedemptionType.offline;
 
           if (voucher.reward) {
             if (voucher.reward.displayProperties && voucher.reward.displayProperties.merchantPinText) {
