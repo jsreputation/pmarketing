@@ -30,6 +30,11 @@ const routes: Routes = [
         canActivate: [ProtectedGuard]
       },
       {
+        path: 'stamp/:id',
+        loadChildren: (): any => import('../campaign-stamps/campaign-stamps.module').then((mod: any) => mod.CampaignStampsModule),
+        canActivate: [ProtectedGuard]
+      },
+      {
         path: 'pi', loadChildren: (): any => import('../pi/pi.module').then((mod: any) => mod.PiModule),
         canActivate: [ProtectedGuard]
       },
@@ -47,7 +52,7 @@ const routes: Routes = [
         canActivate: [ProtectedGuard]
       },
       {
-        path: 'stamp/:id',
+        path: 'stamp-card/:id',
         loadChildren: (): any => import('../stamp/stamp.module').then((mod: any) => mod.StampModule),
         canActivate: [ProtectedGuard]
       },
