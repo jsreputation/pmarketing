@@ -23,6 +23,7 @@ import {
   ConfigToSlicesPipe,
   SpinComponent,
 } from './spin/spin.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import {
   imports: [
     CommonModule,
     MatProgressBarModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDialogModule
   ]
 })
 export class GameModule { }
