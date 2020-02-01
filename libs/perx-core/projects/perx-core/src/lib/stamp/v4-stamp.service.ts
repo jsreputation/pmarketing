@@ -373,7 +373,7 @@ export class V4StampService implements StampService {
             toArray(),
             map((stampCards: IStampCard[]) => {
               return stampCards.filter(card =>
-                stampType || card.displayProperties.displayCampaignAs && card.displayProperties.displayCampaignAs === stampType
+                card.displayProperties.displayCampaignAs && card.displayProperties.displayCampaignAs === stampType
               )
             }),
           )
