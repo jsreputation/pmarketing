@@ -229,7 +229,7 @@ export class V4StampService implements StampService {
         preStampImg,
         postStampImg,
         totalSlots: stampCard.display_properties.total_slots,
-        displayCampaignAs: stampCard.display_properties.display_campaign_as,
+        displayCampaignAs: oc(stampCard).display_properties.display_campaign_as('stamp_card'),
         backgroundImg,
         rewardPositions: stampCard.display_properties.reward_positions,
         thumbnailImg: oc(stampCard).display_properties.thumbnail_image.value.image_url()
@@ -250,7 +250,7 @@ export class V4StampService implements StampService {
       map((res: IV4GetStampCardsResponse) => res.data),
       map((stampCards: IV4StampCard[]) => stampCards.map(
         (stampCard: IV4StampCard) => V4StampService.v4StampCardToStampCard(stampCard)
-      )),
+      ))
     );
   }
 

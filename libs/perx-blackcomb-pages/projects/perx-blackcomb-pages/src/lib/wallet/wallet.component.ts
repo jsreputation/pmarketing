@@ -22,12 +22,12 @@ import {
 import { TranslateService } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
 import {
-  // tap,
   mergeMap,
   map,
   takeUntil,
   filter,
-  take
+  take,
+  tap
 } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 
@@ -64,10 +64,6 @@ export class WalletComponent implements OnInit, OnDestroy {
     private configService: ConfigService,
     private stampService: StampService,
   ) {
-    this.puzzleTextFn = (puzzle: IStampCard) => !puzzle.stamps ||
-      puzzle.stamps.filter(st => st.state === StampState.issued).length <= 1 ? 'new stamp' : 'new stamps';
-    this.titleFn = (index?: number, totalCount?: number) => index !== undefined ?
-      `Stamp Card ${this.puzzleIndex(index)} out of ${totalCount}` : '';
   }
 
   public ngOnInit(): void {
@@ -97,14 +93,14 @@ export class WalletComponent implements OnInit, OnDestroy {
   private getStampCard(): void {
     this.stampCards$ = this.configService.readAppConfig<IStampCardConfig>().pipe(
       map((config: IConfig<IStampCardConfig>) => oc(config).custom.stampsType('puzzle')),
-      // tap((stampsType: string) => {
-      //   if (stampsType === 'stamp_card') {
-      //     this.puzzleTextFn = (puzzle: IStampCard) => !puzzle.stamps ||
-      //       puzzle.stamps.filter(st => st.state === StampState.issued).length > 1 ? 'new stamps' : 'new stamp';
-      //     this.titleFn = (index?: number, totalCount?: number) => index !== undefined ?
-      //       `Stamp Card ${this.puzzleIndex(index)} out of ${totalCount}` : '';
-      //   }
-      // }),
+      tap((stampsType: string) => {
+        if (stampsType === 'stamp_card') {
+          this.puzzleTextFn = (puzzle: IStampCard) => !puzzle.stamps ||
+            puzzle.stamps.filter(st => st.state === StampState.issued).length > 1 ? 'new stamps' : 'new stamp';
+          this.titleFn = (index?: number, totalCount?: number) => index !== undefined ?
+            `Stamp Card ${this.puzzleIndex(index)} out of ${totalCount}` : '';
+        }
+      }),
       mergeMap((stampsType: string) => this.stampService.getActiveCards(stampsType)),
       filter((cards: IStampCard[]) => cards.length > 0),
       map((cards: IStampCard[]) => cards.slice(0, 1)),
