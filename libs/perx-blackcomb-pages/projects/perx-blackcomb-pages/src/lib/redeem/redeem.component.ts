@@ -1,17 +1,18 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { Location } from '@angular/common';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
+import {Location} from '@angular/common';
 import {
-  Voucher,
-  IVoucherService,
-  RedemptionType,
   IPopupConfig,
+  IVoucherService,
   NotificationService,
-  PopUpClosedCallBack, VoucherState
+  PopUpClosedCallBack,
+  RedemptionType,
+  Voucher,
+  VoucherState
 } from '@perx/core';
-import { of, Subject, Subscription } from 'rxjs';
-import { filter, switchMap, takeUntil, map, tap } from 'rxjs/operators';
-import { TranslateService } from '@ngx-translate/core';
+import {of, Subject, Subscription} from 'rxjs';
+import {filter, map, switchMap, takeUntil, tap} from 'rxjs/operators';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'perx-blackcomb-redeem',
