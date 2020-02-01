@@ -9,7 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthService, SessionService, LocalStorageService } from '@es-core';
-import { TestAuthService } from '@es-shared/test-components/providers/test-auth.service';
+import { TestAuthService } from '@es-shared';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;

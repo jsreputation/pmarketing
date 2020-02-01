@@ -1,17 +1,18 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { Location } from '@angular/common';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
+import {Location} from '@angular/common';
 import {
-  Voucher,
-  IVoucherService,
-  RedemptionType,
   IPopupConfig,
+  IVoucherService,
   NotificationService,
-  PopUpClosedCallBack, VoucherState
+  PopUpClosedCallBack,
+  RedemptionType,
+  Voucher,
+  VoucherState
 } from '@perx/core';
-import { of, Subject, Subscription } from 'rxjs';
-import { filter, switchMap, takeUntil, map, tap } from 'rxjs/operators';
-import { TranslateService } from '@ngx-translate/core';
+import {of, Subject, Subscription} from 'rxjs';
+import {filter, map, switchMap, takeUntil, tap} from 'rxjs/operators';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'perx-blackcomb-redeem',
@@ -28,7 +29,7 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
   public rt: typeof RedemptionType = RedemptionType;
   public headLine: string;
   public subHeadLine: string;
-  public codeInstructionsText: string = `Please input this code when redeeming your reward at the Merchant`;
+  public codeInstructionsText: string = `This reward will automatically be redeemed for you by the merchant.`;
   public rewardSuccessPopUp: IPopupConfig = {
     title: 'REDEEM_SUCCESSFULLY',
     text: 'REDEEM_SUCCESS_TEXT',
@@ -85,7 +86,11 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
           if (this.rewardSuccessPopUp.text && voucher.reward) {
             this.rewardSuccessPopUp.text = this.rewardSuccessPopUp.text.replace('{{reward}}', voucher.reward.name);
           }
-          this.redemptionType = voucher.redemptionType ? voucher.redemptionType : RedemptionType.none;
+          // seems that the compiler isn't smart enough to determine the type in this ternary
+          this.redemptionType =
+            voucher.redemptionType && (voucher.redemptionType !== RedemptionType.txtCode) ? voucher.redemptionType :
+              voucher.code ? (voucher.redemptionType as RedemptionType) : RedemptionType.offline;
+
           if (voucher.reward) {
             if (voucher.reward.displayProperties && voucher.reward.displayProperties.merchantPinText) {
               this.headLine = voucher.reward.displayProperties.merchantPinText.headLine || this.headLine;
@@ -102,7 +107,8 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
             }
 
             if (voucher.reward.displayProperties && voucher.reward.displayProperties.codeInstructionsText) {
-              this.codeInstructionsText = voucher.reward.displayProperties.codeInstructionsText.headLine || '';
+              this.codeInstructionsText = voucher.reward.displayProperties.codeInstructionsText.headLine ||
+                `Please input this code when redeeming your reward at the Merchant`;
             }
 
             if (voucher.reward.displayProperties && voucher.reward.displayProperties.errorPopUp) {
