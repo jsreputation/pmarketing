@@ -229,7 +229,7 @@ export class V4StampService implements StampService {
         preStampImg,
         postStampImg,
         totalSlots: stampCard.display_properties.total_slots,
-        displayCampaignAs: stampCard.display_properties.display_campaign_as,
+        displayCampaignAs: oc(stampCard).display_properties.display_campaign_as('stamp_card'),
         backgroundImg,
         rewardPositions: stampCard.display_properties.reward_positions,
         thumbnailImg: oc(stampCard).display_properties.thumbnail_image.value.image_url()
@@ -250,7 +250,7 @@ export class V4StampService implements StampService {
       map((res: IV4GetStampCardsResponse) => res.data),
       map((stampCards: IV4StampCard[]) => stampCards.map(
         (stampCard: IV4StampCard) => V4StampService.v4StampCardToStampCard(stampCard)
-      )),
+      ))
     );
   }
 
@@ -361,7 +361,7 @@ export class V4StampService implements StampService {
     return this.campaignService.getCampaigns()
       .pipe(
         map(campaigns => campaigns.filter(camp => camp.type === CampaignType.stamp)),
-        map(campaigns => {
+      map(campaigns => {
           if (stampType === 'puzzle') {
             return campaigns.filter(camp => camp.type === CampaignType.stamp).slice(0, 1);
           }
@@ -371,9 +371,11 @@ export class V4StampService implements StampService {
           (campaigns: ICampaign[]) => from(campaigns).pipe(
             mergeMap((campaign: ICampaign) => this.getCurrentCard(campaign.id)),
             toArray(),
-            map((stampCards: IStampCard[]) => stampCards.filter(card =>
-              card.displayProperties.displayCampaignAs && card.displayProperties.displayCampaignAs === stampType
-            )),
+            map((stampCards: IStampCard[]) => {
+              return stampCards.filter(card =>
+                stampType || card.displayProperties.displayCampaignAs && card.displayProperties.displayCampaignAs === stampType
+              )
+            }),
           )
         ),
       );
