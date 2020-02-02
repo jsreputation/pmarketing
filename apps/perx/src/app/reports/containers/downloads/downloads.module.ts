@@ -3,13 +3,15 @@ import { CommonModule } from '@angular/common';
 
 import { DownloadsRoutingModule } from './downloads-routing.module';
 import { DownloadsComponent } from './downloads.component';
+import { UnderConstructionModule } from '../../../shared/under-construction/under-construction.module';
 
 
 @NgModule({
   declarations: [DownloadsComponent],
   imports: [
     CommonModule,
-    DownloadsRoutingModule
+    DownloadsRoutingModule,
+    UnderConstructionModule
   ]
 })
 export class DownloadsModule { }
