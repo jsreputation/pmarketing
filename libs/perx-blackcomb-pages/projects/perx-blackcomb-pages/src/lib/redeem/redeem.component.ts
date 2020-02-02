@@ -157,17 +157,17 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
     this.destroy$.complete();
   }
 
-  public pinInputSuccess(): void {
-    this.popup(this.rewardSuccessPopUp);
-  }
+  // public pinInputSuccess(): void {
+  //   this.popup(this.rewardSuccessPopUp);
+  // }
 
-  public errorHandler(status: number): void {
-    if (status === 401) {
-      this.needLoginPopup();
-    } else {
-      this.errorPopup();
-    }
-  }
+  // public errorHandler(status: number): void {
+  //   if (status === 401) {
+  //     this.needLoginPopup();
+  //   } else {
+  //     this.errorPopup();
+  //   }
+  // }
 
   public needLoginPopup(): void {
     this.translate.get(['REEDEM_QUEST', 'GO_TO_LOGIN'])
