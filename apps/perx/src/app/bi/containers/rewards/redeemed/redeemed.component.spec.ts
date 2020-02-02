@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RedeemedComponent } from './redeemed.component';
+import { UnderConstructionModule } from '../../../../shared/under-construction/under-construction.module';
 
 describe('RedeemedComponent', () => {
   let component: RedeemedComponent;
@@ -8,9 +9,10 @@ describe('RedeemedComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RedeemedComponent ]
+      declarations: [RedeemedComponent],
+      imports: [UnderConstructionModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ScheduledComponent } from './scheduled.component';
+import { UnderConstructionModule } from '../../../shared/under-construction/under-construction.module';
 
 describe('ScheduledComponent', () => {
   let component: ScheduledComponent;
@@ -8,7 +9,8 @@ describe('ScheduledComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ScheduledComponent ]
+      declarations: [ScheduledComponent],
+      imports: [UnderConstructionModule]
     })
       .compileComponents();
   }));

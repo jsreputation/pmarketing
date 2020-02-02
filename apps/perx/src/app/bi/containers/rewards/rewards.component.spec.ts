@@ -10,7 +10,7 @@ describe('RewardsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RewardsComponent],
-      imports:[RouterTestingModule]
+      imports: [RouterTestingModule]
     })
       .compileComponents();
   }));
