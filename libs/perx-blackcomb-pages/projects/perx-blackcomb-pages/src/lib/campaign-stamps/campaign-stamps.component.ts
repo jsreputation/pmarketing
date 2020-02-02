@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable, Subject} from 'rxjs';
+import {Observable, of, Subject} from 'rxjs';
 import {IStampCard, StampService, StampState, Voucher} from '@perx/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {filter, map, switchMap, takeUntil} from 'rxjs/operators';
@@ -35,7 +35,7 @@ export class CampaignStampsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.stampCards$ = this.activeRoute.paramMap
+    this.activeRoute.paramMap
       .pipe(
         filter((params: ParamMap) => params.has('id')),
         map((params: ParamMap) => params.get('id')),
@@ -44,7 +44,11 @@ export class CampaignStampsComponent implements OnInit {
           return this.stampService.getCards(campaignId);
         }),
         takeUntil(this.destroy$)
-      );
+      ).subscribe(
+      (stampCards: IStampCard[]) => {
+        this.stampCards$ = of(stampCards);
+      }
+    );
   }
 
   public selected(puzzle: IStampCard): void {
