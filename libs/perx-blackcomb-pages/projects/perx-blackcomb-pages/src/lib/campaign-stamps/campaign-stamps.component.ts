@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {Observable, of, Subject} from 'rxjs';
-import {IStampCard, StampService, StampState, Voucher} from '@perx/core';
+import {ConfigService, IConfig, IStampCard, StampService, StampState, Voucher} from '@perx/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
-import {filter, map, switchMap, takeUntil} from 'rxjs/operators';
+import {filter, map, switchMap, take, takeUntil} from 'rxjs/operators';
+import {oc} from 'ts-optchain';
+
+interface IStampCardConfig {
+  stampsType: string;
+}
 
 @Component ({
   selector: 'perx-blackcomb-pages-campaign-stamps',
@@ -27,16 +32,24 @@ export class CampaignStampsComponent implements OnInit {
   constructor(
     private router: Router,
     private activeRoute: ActivatedRoute,
-    private stampService: StampService) {
-    this.puzzleTextFn = (puzzle: IStampCard) => !puzzle.stamps ||
-    puzzle.stamps.filter(st => st.state === StampState.issued).length <= 1 ? 'new stamp' : 'new stamps';
-    this.titleFn = (index?: number, totalCount?: number) => index !== undefined ?
-      `Stamp Card ${this.cardIndex(index)} out of ${totalCount}` : '';
+    private stampService: StampService,
+    private configService: ConfigService) {
   }
 
   ngOnInit(): void {
-    this.activeRoute.paramMap
-      .pipe(
+    this.configService.readAppConfig<IStampCardConfig>().pipe(
+      map((config: IConfig<IStampCardConfig>) => oc(config).custom.stampsType('stamp_card')),
+      take(1)
+    ).subscribe((stampsType: string) => {
+      if (stampsType === 'stamp_card') {
+        this.puzzleTextFn = (puzzle: IStampCard) => !puzzle.stamps ||
+        puzzle.stamps.filter(st => st.state === StampState.issued).length > 1 ? 'new stamps' : 'new stamp';
+        this.titleFn = (index?: number, totalCount?: number) => index !== undefined ?
+          `Stamp Card ${this.cardIndex(index)} out of ${totalCount}` : '';
+      }
+    });
+
+    this.activeRoute.paramMap.pipe(
         filter((params: ParamMap) => params.has('id')),
         map((params: ParamMap) => params.get('id')),
         switchMap((id: string) => {
