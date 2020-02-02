@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Observable, of, Subject} from 'rxjs';
 import {ConfigService, IConfig, IStampCard, StampService, StampState, Voucher} from '@perx/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
@@ -9,7 +9,7 @@ interface IStampCardConfig {
   stampsType: string;
 }
 
-@Component ({
+@Component({
   selector: 'perx-blackcomb-pages-campaign-stamps',
   templateUrl: './campaign-stamps.component.html',
   styleUrls: ['./campaign-stamps.component.scss']
@@ -50,14 +50,14 @@ export class CampaignStampsComponent implements OnInit {
     });
 
     this.activeRoute.paramMap.pipe(
-        filter((params: ParamMap) => params.has('id')),
-        map((params: ParamMap) => params.get('id')),
-        switchMap((id: string) => {
-          const campaignId: number = Number.parseInt(id, 10);
-          return this.stampService.getCards(campaignId);
-        }),
-        takeUntil(this.destroy$)
-      ).subscribe(
+      filter((params: ParamMap) => params.has('id')),
+      map((params: ParamMap) => params.get('id')),
+      switchMap((id: string) => {
+        const campaignId: number = Number.parseInt(id, 10);
+        return this.stampService.getCards(campaignId);
+      }),
+      takeUntil(this.destroy$)
+    ).subscribe(
       (stampCards: IStampCard[]) => {
         this.stampCards$ = of(stampCards);
       }
