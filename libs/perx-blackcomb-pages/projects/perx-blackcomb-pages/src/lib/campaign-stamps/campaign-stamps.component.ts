@@ -31,7 +31,7 @@ export class CampaignStampsComponent implements OnInit {
     this.puzzleTextFn = (puzzle: IStampCard) => !puzzle.stamps ||
     puzzle.stamps.filter(st => st.state === StampState.issued).length <= 1 ? 'new stamp' : 'new stamps';
     this.titleFn = (index?: number, totalCount?: number) => index !== undefined ?
-      `Stamp Card ${this.puzzleIndex(index)} out of ${totalCount}` : '';
+      `Stamp Card ${this.cardIndex(index)} out of ${totalCount}` : '';
   }
 
   ngOnInit(): void {
@@ -40,8 +40,8 @@ export class CampaignStampsComponent implements OnInit {
         filter((params: ParamMap) => params.has('id')),
         map((params: ParamMap) => params.get('id')),
         switchMap((id: string) => {
-          const idN: number = Number.parseInt(id, 10);
-          return this.stampService.getCards(idN);
+          const campaignId: number = Number.parseInt(id, 10);
+          return this.stampService.getCards(campaignId);
         }),
         takeUntil(this.destroy$)
       );
@@ -51,7 +51,7 @@ export class CampaignStampsComponent implements OnInit {
     this.router.navigate([`/stamp-card/${puzzle.campaignId}`]);
   }
 
-  public puzzleIndex(index: number): string {
+  private cardIndex(index: number): string {
     if (index < 0) {
       return '';
     }
