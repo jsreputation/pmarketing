@@ -7,7 +7,7 @@ import {
   InstantOutcomeService,
   IVoucherService,
   NotificationService,
-  RedemptionType,
+  RedemptionType, UtilsModule,
   Voucher,
   VouchersModule,
   VoucherState
@@ -78,6 +78,7 @@ describe('RedeemComponent', () => {
           { path: 'wallet', redirectTo: '/' },
         ]),
         VouchersModule,
+        UtilsModule,
         TranslateModule.forRoot()
       ],
       providers: [
