@@ -10,7 +10,7 @@ describe('RolesComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RolesComponent],
-      imports:[UnderConstructionModule]
+      imports: [UnderConstructionModule]
     })
       .compileComponents();
   }));

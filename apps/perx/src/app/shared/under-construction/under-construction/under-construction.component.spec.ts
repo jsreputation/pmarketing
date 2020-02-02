@@ -10,7 +10,7 @@ describe('UnderConstructionComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ UnderConstructionComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -12,7 +12,7 @@ describe('CategoriesComponent', () => {
       declarations: [CategoriesComponent],
       imports:[UnderConstructionModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

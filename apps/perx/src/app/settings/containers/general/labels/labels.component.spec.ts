@@ -12,7 +12,7 @@ describe('LabelsComponent', () => {
       declarations: [LabelsComponent],
       imports:[UnderConstructionModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

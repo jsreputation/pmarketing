@@ -10,7 +10,7 @@ describe('RuleBuildingComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RuleBuildingComponent],
-      imports:[UnderConstructionModule]
+      imports: [UnderConstructionModule]
     })
       .compileComponents();
   }));

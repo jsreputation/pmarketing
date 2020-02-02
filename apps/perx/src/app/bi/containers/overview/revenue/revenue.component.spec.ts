@@ -12,7 +12,7 @@ describe('RevenueComponent', () => {
       declarations: [RevenueComponent],
       imports:[UnderConstructionModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

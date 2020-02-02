@@ -12,7 +12,7 @@ describe('MediaComponent', () => {
       declarations: [MediaComponent],
       imports:[UnderConstructionModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

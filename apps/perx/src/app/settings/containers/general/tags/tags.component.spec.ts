@@ -10,9 +10,9 @@ describe('TagsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [TagsComponent],
-      imports:[UnderConstructionModule]
+      imports: [UnderConstructionModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

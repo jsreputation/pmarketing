@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { UnderConstructionComponent } from './under-construction/under-construction.component';
 
 
-
 @NgModule({
   declarations: [UnderConstructionComponent],
   imports: [

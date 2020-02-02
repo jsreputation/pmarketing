@@ -12,7 +12,7 @@ describe('UsersComponent', () => {
       declarations: [UsersComponent],
       imports: [UnderConstructionModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

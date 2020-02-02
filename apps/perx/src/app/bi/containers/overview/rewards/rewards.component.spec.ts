@@ -12,7 +12,7 @@ describe('RewardsComponent', () => {
       declarations: [RewardsComponent],
       imports: [UnderConstructionModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

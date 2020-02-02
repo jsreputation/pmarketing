@@ -10,7 +10,7 @@ describe('UsersComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [UsersComponent],
-      imports:[UnderConstructionModule]
+      imports: [UnderConstructionModule]
     })
       .compileComponents();
   }));

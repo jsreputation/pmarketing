@@ -12,7 +12,7 @@ describe('ViewsComponent', () => {
       declarations: [ViewsComponent],
       imports:[UnderConstructionModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

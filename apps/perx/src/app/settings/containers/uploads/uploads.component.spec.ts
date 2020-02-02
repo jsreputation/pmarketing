@@ -10,7 +10,7 @@ describe('UploadsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [UploadsComponent],
-      imports:[UnderConstructionModule]
+      imports: [UnderConstructionModule]
     })
       .compileComponents();
   }));
