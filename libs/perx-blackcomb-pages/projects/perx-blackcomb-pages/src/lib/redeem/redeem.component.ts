@@ -27,7 +27,7 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
   private pinInputComponent: PinInputComponent;
 
   public voucher$: Subscription;
-  public voucherId: number;
+  public voucher: Voucher;
   public redemptionType: RedemptionType;
   private destroy$: Subject<void> = new Subject<void>();
   public rt: typeof RedemptionType = RedemptionType;
@@ -84,9 +84,9 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
         filter((params: ParamMap) => params.has('id')),
         map((params: ParamMap) => params.get('id')),
         map((id: string) => Number.parseInt(id, 10)),
-        tap((id: number) => this.voucherId = id),
         switchMap((id: number) => this.vouchersService.get(id)),
         tap((voucher: Voucher) => {
+          this.voucher = voucher;
           if (this.rewardSuccessPopUp.text && voucher.reward) {
             this.rewardSuccessPopUp.text = this.rewardSuccessPopUp.text.replace('{{reward}}', voucher.reward.name);
           }
@@ -195,10 +195,17 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
   }
 
   public full(pin: string): void {
-    this.vouchersService.redeemVoucher(this.voucherId, {pin})
+    this.vouchersService.redeemVoucher(this.voucher.id, {pin})
       .subscribe(
         () => {
-        }, // watcher will show success.
+          this.notificationService.addPopup({
+            title: 'Successfully Redeemed!',
+            text: `You have redeemed ${this.voucher.reward ? this.voucher.reward.name : ''}.`,
+            buttonTxt: 'Close',
+            imageUrl: 'assets/redeem_success.png',
+          });
+          this.router.navigate(['wallet']);
+        },
         () => {
           this.pinInputError = true;
           this.notificationService.addSnack('Sorry! Voucher redemption failed.');
