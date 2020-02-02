@@ -6,12 +6,13 @@ import { BiComponent } from './bi.component';
 const routes: Routes = [
   {
     path: '', component: BiComponent, children: [
-      { path: '', redirectTo: 'overview' },
       { path: 'overview', loadChildren: () => import('./containers/overview/overview.module').then(m => m.OverviewModule) },
       { path: 'rewards', loadChildren: () => import('./containers/rewards/rewards.module').then(m => m.RewardsModule) },
       { path: 'merchants', loadChildren: () => import('./containers/merchants/merchants.module').then(m => m.MerchantsModule) },
       { path: 'loyalties', loadChildren: () => import('./containers/loyalties/loyalties.module').then(m => m.LoyaltiesModule) },
-      { path: 'campaigns', loadChildren: () => import('./containers/campaigns/campaigns.module').then(m => m.CampaignsModule) }]
+      { path: 'campaigns', loadChildren: () => import('./containers/campaigns/campaigns.module').then(m => m.CampaignsModule) },
+      { path: '', redirectTo: 'overview' },
+    ]
   }];
 
 @NgModule({
