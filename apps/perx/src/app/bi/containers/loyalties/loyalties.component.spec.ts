@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoyaltiesComponent } from './loyalties.component';
+import { UnderConstructionModule } from '../../../shared/under-construction/under-construction.module';
 
 describe('LoyaltiesComponent', () => {
   let component: LoyaltiesComponent;
@@ -8,7 +9,8 @@ describe('LoyaltiesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoyaltiesComponent ]
+      declarations: [LoyaltiesComponent],
+      imports:[UnderConstructionModule]
     })
       .compileComponents();
   }));

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RolesComponent } from './roles.component';
+import { UnderConstructionModule } from '../../../shared/under-construction/under-construction.module';
 
 describe('RolesComponent', () => {
   let component: RolesComponent;
@@ -8,7 +9,8 @@ describe('RolesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RolesComponent ]
+      declarations: [RolesComponent],
+      imports:[UnderConstructionModule]
     })
       .compileComponents();
   }));

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ImpressionsComponent } from './impressions.component';
+import { UnderConstructionModule } from '../../../../shared/under-construction/under-construction.module';
 
 describe('ImpressionsComponent', () => {
   let component: ImpressionsComponent;
@@ -8,9 +9,10 @@ describe('ImpressionsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ImpressionsComponent ]
+      declarations: [ImpressionsComponent],
+      imports: [UnderConstructionModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

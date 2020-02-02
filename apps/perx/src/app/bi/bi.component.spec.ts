@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BiComponent } from './bi.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('BiComponent', () => {
   let component: BiComponent;
@@ -8,7 +9,8 @@ describe('BiComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BiComponent ]
+      declarations: [BiComponent],
+      imports: [RouterTestingModule]
     })
       .compileComponents();
   }));

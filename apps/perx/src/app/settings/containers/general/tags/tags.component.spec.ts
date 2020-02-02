@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TagsComponent } from './tags.component';
+import { UnderConstructionModule } from '../../../../shared/under-construction/under-construction.module';
 
 describe('TagsComponent', () => {
   let component: TagsComponent;
@@ -8,7 +9,8 @@ describe('TagsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TagsComponent ]
+      declarations: [TagsComponent],
+      imports:[UnderConstructionModule]
     })
     .compileComponents();
   }));

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MediaComponent } from './media.component';
+import { UnderConstructionModule } from '../../../../shared/under-construction/under-construction.module';
 
 describe('MediaComponent', () => {
   let component: MediaComponent;
@@ -8,7 +9,8 @@ describe('MediaComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MediaComponent ]
+      declarations: [MediaComponent],
+      imports:[UnderConstructionModule]
     })
     .compileComponents();
   }));
