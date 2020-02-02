@@ -1,0 +1,25 @@
+<div *ngIf="(campaigns$ | async) as campaigns" [@listAnimation]="!showAllCampaigns || campaigns.length">
+  <mat-card
+    *ngFor="let campaign of ((showAllCampaigns || (campaigns.length <= defaultNbCampaigns))
+  ? campaigns : (campaigns | slice:0:defaultNbCampaigns))"
+    matRipple
+    class="campaigns-card"
+    (click)="selectCampaign(campaign)">
+    <div class="img-wrapper">
+      <img class="puzzle-img" src="{{getCampaignImage(campaign)}}" alt="Campaign image">
+    </div>
+    <mat-card-content class="card-content">
+      <p class="main-reward-title">{{campaign.name}}</p>
+      <p class="reward-subtitle">{{campaign.description}}</p>
+    </mat-card-content>
+  </mat-card>
+  <div class="flex-for-button">
+    <button
+      *ngIf="!(campaigns.length <= defaultNbCampaigns)"
+      mat-flat-button
+      class="see-button"
+      (click)="showAllCampaigns = !showAllCampaigns">
+      {{ (showAllCampaigns ? "See Less" : "SEE_MORE" ) | translate}}
+    </button>
+  </div>
+</div>

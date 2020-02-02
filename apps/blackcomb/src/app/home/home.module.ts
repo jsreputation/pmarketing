@@ -11,7 +11,8 @@ import {
 } from '@perx/core';
 import {
   HomeComponent,
-  GamesCollectionComponent
+  GamesCollectionComponent,
+  CampaignsCollectionComponent
 } from '@perx/blackcomb-pages';
 import { TranslateModule } from '@ngx-translate/core';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
@@ -23,7 +24,8 @@ const routes: Routes = [{
 @NgModule({
   declarations: [
     HomeComponent,
-    GamesCollectionComponent
+    GamesCollectionComponent,
+    CampaignsCollectionComponent
   ],
   imports: [
     CommonModule,
@@ -42,7 +44,8 @@ const routes: Routes = [{
   ],
   exports: [
     HomeComponent,
-    GamesCollectionComponent
+    GamesCollectionComponent,
+    CampaignsCollectionComponent
   ],
   entryComponents: [
     RewardPopupComponent

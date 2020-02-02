@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ICampaign, CampaignType, CampaignState } from './models/campaign.model';
-import { ICampaignService } from './icampaign.service';
+import {ICampaignFilterOptions, ICampaignService} from './icampaign.service';
 import { V4RewardsService, IV4Reward } from '../rewards/v4-rewards.service';
 import { Config } from '../config/config';
 import { IV4Voucher, V4VouchersService } from '../vouchers/v4-vouchers.service';
@@ -60,6 +60,8 @@ export class V4CampaignService implements ICampaignService {
   public static v4CampaignToCampaign(campaign: IV4Campaign): ICampaign {
     const thumbnail = campaign.images.find(image => ['catalog_thumbnail', 'campaign_thumbnail'].some(ty => ty === image.type));
     const thumbnailUrl = thumbnail ? thumbnail.url : undefined;
+    const campaignBanner = campaign.images.find(i => i.type === 'campaign_banner');
+    const campaignBannerUrl = campaignBanner ? campaignBanner.url : undefined;
     const rewards = campaign.rewards && campaign.rewards.map((reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward));
 
     return {
@@ -72,11 +74,24 @@ export class V4CampaignService implements ICampaignService {
       beginsAt: campaign.begins_at ? new Date(campaign.begins_at) : null,
       rewards,
       thumbnailUrl,
+      campaignBannerUrl
     };
   }
 
-  public getCampaigns(): Observable<ICampaign[]> {
-    return this.http.get<IV4CampaignsResponse>(`${this.baseUrl}/v4/campaigns`)
+  public getCampaigns(filterOptions?: ICampaignFilterOptions): Observable<ICampaign[]> {
+    let params = new HttpParams();
+    if (filterOptions) {
+      Object.keys(filterOptions).forEach(key => {
+        if (filterOptions.hasOwnProperty(key)) {
+          if ( key === 'type' ) {
+            params = params.set('campaign_type', filterOptions[key] || '');
+          } else {
+            params = params.set(key, filterOptions[key]);
+          }
+        }
+      });
+    }
+    return this.http.get<IV4CampaignsResponse>(`${this.baseUrl}/v4/campaigns`, { params })
       .pipe(
         map(resp => resp.data),
         map((campaigns: IV4Campaign[]) => campaigns.map(campaign => V4CampaignService.v4CampaignToCampaign(campaign)))

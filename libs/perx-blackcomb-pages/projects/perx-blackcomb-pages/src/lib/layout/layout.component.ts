@@ -34,6 +34,7 @@ import { WalletHistoryComponent } from '../wallet-history/wallet-history.compone
 import { ProfileComponent } from '../profile/profile.component';
 import { BACK_ARROW_URLS } from '../perx-blackcomb-pages.constants';
 import {TransactionHistoryComponent} from '../transaction-history/transaction-history.component';
+import {CampaignStampsComponent} from '../campaign-stamps/campaign-stamps.component';
 
 export interface ShowTitleInHeader {
   getTitle(): string;
@@ -111,6 +112,7 @@ export class LayoutComponent implements OnInit {
       ref instanceof WalletComponent ||
       ref instanceof WalletHistoryComponent ||
       ref instanceof ProfileComponent ||
+      ref instanceof CampaignStampsComponent ||
       ref instanceof TransactionHistoryComponent;
 
     this.headerTitle = (ref.getTitle) ? ref.getTitle() : '';
