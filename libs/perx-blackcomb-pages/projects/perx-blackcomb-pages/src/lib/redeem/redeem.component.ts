@@ -1,10 +1,11 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {
   IPopupConfig,
   IVoucherService,
   NotificationService,
+  PinInputComponent,
   PopUpClosedCallBack,
   RedemptionType,
   Voucher,
@@ -21,6 +22,9 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
   public status: VoucherState;
+  public pinInputError: boolean = false;
+  @ViewChild('pinInput', { static: false })
+  private pinInputComponent: PinInputComponent;
 
   public voucher$: Subscription;
   public voucherId: number;
@@ -188,5 +192,21 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
 
   public dialogClosed(): void {
     this.router.navigate(['/login']);
+  }
+
+  public full(pin: string): void {
+    this.vouchersService.redeemVoucher(this.voucherId, {pin})
+      .subscribe(
+        () => {
+        }, // watcher will show success.
+        () => {
+          this.pinInputError = true;
+          this.notificationService.addSnack('Sorry! Voucher redemption failed.');
+        }
+      );
+  }
+
+  public updatePin(): void {
+    this.pinInputComponent.error = false;
   }
 }

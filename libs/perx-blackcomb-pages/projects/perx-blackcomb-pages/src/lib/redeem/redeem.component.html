@@ -7,12 +7,13 @@
       <h1>
         {{headLine}}
       </h1>
-      <perx-core-pin-redemption
-        length="4"
-        [voucherId]="voucherId"
-        (full)="pinInputSuccess()"
-        (hasErrorEmit)="errorHandler($event)">
-      </perx-core-pin-redemption>
+      <perx-core-pin-input #pinInput
+                           [errorMessage]="'Incorrect code'"
+                           [error]="pinInputError"
+                           [length]="4"
+                           (full)="full($event)"
+                           (update)="updatePin()">
+      </perx-core-pin-input>
     </div>
     <div *ngIf="redemptionType === rt.txtCode || redemptionType === rt.offline" class="code-container">
       <perx-core-bcode-redemption
