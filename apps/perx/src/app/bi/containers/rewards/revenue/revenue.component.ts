@@ -5,11 +5,5 @@ import { Component } from '@angular/core';
   templateUrl: './revenue.component.html',
   styleUrls: ['./revenue.component.css']
 })
-export class RevenueComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+export class RevenueComponent {
 }
