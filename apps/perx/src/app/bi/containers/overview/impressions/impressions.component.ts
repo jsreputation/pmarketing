@@ -5,4 +5,4 @@ import { Component } from '@angular/core';
   templateUrl: './impressions.component.html',
   styleUrls: ['./impressions.component.css']
 })
-export class ImpressionsComponent implements OnInit { }
+export class ImpressionsComponent { }
