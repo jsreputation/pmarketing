@@ -30,7 +30,7 @@
   </div>
   <perx-core-newsfeed [items$]="newsFeedItems" *ngIf="appConfig.showNewsfeedOnHomepage"></perx-core-newsfeed>
   <div class="campaigns">
-    <div *ngIf="showCampaigns" class="title" translate>STAMP CAMPAIGNS</div>
+    <div *ngIf="showCampaigns" class="title" translate>STAMP_CAMPAIGNS</div>
     <perx-blackcomb-pages-campaigns-collection [campaigns]="campaigns$" (selected)="goToCampaignPage($event)"></perx-blackcomb-pages-campaigns-collection>
   </div>
   <div class="games">
