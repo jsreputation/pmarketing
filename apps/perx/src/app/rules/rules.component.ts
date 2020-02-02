@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-rules',
+  selector: 'pe-rules',
   templateUrl: './rules.component.html',
   styleUrls: ['./rules.component.css']
 })

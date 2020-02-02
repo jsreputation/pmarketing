@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-campaigns',
+  selector: 'pe-campaigns',
   templateUrl: './campaigns.component.html',
   styleUrls: ['./campaigns.component.css']
 })

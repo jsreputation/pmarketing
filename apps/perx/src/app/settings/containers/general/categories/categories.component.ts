@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-categories',
+  selector: 'pe-categories',
   templateUrl: './categories.component.html',
   styleUrls: ['./categories.component.css']
 })

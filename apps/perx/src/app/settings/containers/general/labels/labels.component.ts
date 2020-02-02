@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-labels',
+  selector: 'pe-labels',
   templateUrl: './labels.component.html',
   styleUrls: ['./labels.component.css']
 })

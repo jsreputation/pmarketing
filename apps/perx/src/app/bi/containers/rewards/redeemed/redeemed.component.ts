@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-redeemed',
+  selector: 'pe-redeemed',
   templateUrl: './redeemed.component.html',
   styleUrls: ['./redeemed.component.css']
 })
