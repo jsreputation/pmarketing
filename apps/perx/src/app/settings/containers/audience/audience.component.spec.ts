@@ -10,7 +10,7 @@ describe('AudienceComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AudienceComponent],
-      imports:[UnderConstructionModule]
+      imports: [UnderConstructionModule]
     })
       .compileComponents();
   }));

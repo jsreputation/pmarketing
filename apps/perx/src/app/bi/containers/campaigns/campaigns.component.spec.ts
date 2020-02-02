@@ -10,7 +10,7 @@ describe('CampaignsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CampaignsComponent],
-      imports:[UnderConstructionModule]
+      imports: [UnderConstructionModule]
     })
       .compileComponents();
   }));

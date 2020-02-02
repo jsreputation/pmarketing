@@ -10,7 +10,7 @@ describe('RevenueComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RevenueComponent],
-      imports:[UnderConstructionModule]
+      imports: [UnderConstructionModule]
     })
       .compileComponents();
   }));

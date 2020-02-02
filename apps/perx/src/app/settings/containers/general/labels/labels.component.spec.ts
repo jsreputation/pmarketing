@@ -10,7 +10,7 @@ describe('LabelsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [LabelsComponent],
-      imports:[UnderConstructionModule]
+      imports: [UnderConstructionModule]
     })
       .compileComponents();
   }));

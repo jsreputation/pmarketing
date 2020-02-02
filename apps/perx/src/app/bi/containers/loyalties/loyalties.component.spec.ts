@@ -10,7 +10,7 @@ describe('LoyaltiesComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [LoyaltiesComponent],
-      imports:[UnderConstructionModule]
+      imports: [UnderConstructionModule]
     })
       .compileComponents();
   }));

@@ -10,7 +10,7 @@ describe('MediaComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [MediaComponent],
-      imports:[UnderConstructionModule]
+      imports: [UnderConstructionModule]
     })
       .compileComponents();
   }));

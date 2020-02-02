@@ -10,7 +10,7 @@ describe('GeneralComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [GeneralComponent],
-      imports:[RouterTestingModule]
+      imports: [RouterTestingModule]
     })
       .compileComponents();
   }));
