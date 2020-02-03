@@ -12,3 +12,4 @@ export { IPLoyalty } from './lib/loyalty/loyalty';
 export { IPRaces } from './lib/race/race';
 export { IPTags } from './lib/tags/tags';
 export { IPTenantConfig } from './lib/tenant/tenant';
+export { IPReportDownload, IPReportDownloadDetails, IPReportDownloads } from './lib/reports/reports';

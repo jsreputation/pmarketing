@@ -1,11 +1,7 @@
-export interface IPReportDownload {
-  report_type: string;
-  report_name: string;
-  report_action: string;
-  report_description: string;
-}
+import { IPReportDownloadDetails } from '../reports/reports';
 
-export interface IPRefactoredReportDownload extends IPReportDownload {
+
+export interface IPRefactoredReportDownload extends IPReportDownloadDetails {
   filters: IPReportFilter[];
   data_sets: IPReportDataSet[];
 }
@@ -35,7 +31,7 @@ export interface IPTenantConfig {
   tenant: { name: string; };
   scheduled_reports: { report_types: any[]; };
   report_downloads: {
-    report_types: IPReportDownload[];
+    report_types: IPReportDownloadDetails[];
   };
   refactored_report_downloads: IPRefactoredReportDownload[];
   bulk_actions: IPBulkAction[];
