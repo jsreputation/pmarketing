@@ -176,6 +176,16 @@ export class GameComponent implements OnInit, OnDestroy {
     const userAction$: Observable<IEngagementTransaction | void> =
       this.gameService.prePlayConfirm(confirmId, this.informationCollectionSetting)
         .pipe(
+          tap((gameTransaction: IEngagementTransaction) => {
+            this.transactionId = gameTransaction.id;
+            if (gameTransaction.voucherIds && gameTransaction.voucherIds.length > 0) {
+              // set this as a property
+              this.rewardCount = gameTransaction.voucherIds.length.toString();
+              this.fillSuccess(this.rewardCount);
+            } else {
+              this.fillFailure();
+            }
+          }),
           catchError((err: HttpErrorResponse) => {
             this.popupData = this.noRewardsPopUp;
             throw err;

@@ -182,7 +182,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
               const data: IRewardPopupConfig = {
                 title: 'Congratulations!',
                 text: 'Here is a reward for you.',
-                imageUrl: 'assets/gift-image.svg',
+                imageUrl: 'assets/prize.png',
                 disableOverlayClose: true,
                 url: `/voucher/${voucherId}`,
                 afterClosedCallBackRedirect: this,

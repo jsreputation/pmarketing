@@ -10,7 +10,8 @@ import {
   ShakeTreeComponent,
   ScratchCardComponent,
   SpinTheWheelComponent,
-  SnakeGameComponent
+  SnakeGameComponent,
+  RewardPopupComponent, ExpireTimerComponent
 } from '@perx/core';
 
 import { TapComponent } from './tap/tap.component';
@@ -23,9 +24,12 @@ import {
   ConfigToSlicesPipe,
   SpinComponent,
 } from './spin/spin.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
+    RewardPopupComponent,
+    ExpireTimerComponent,
     TapComponent,
     ShakeComponent,
     ScratchComponent,
@@ -52,7 +56,8 @@ import {
   imports: [
     CommonModule,
     MatProgressBarModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDialogModule
   ]
 })
 export class GameModule { }

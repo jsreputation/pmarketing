@@ -27,6 +27,7 @@ import { profile } from '../mock/profile.mock';
 import { HttpClientModule } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import {CampaignsCollectionComponent} from './campaigns-collection/campaigns-collection.component';
 
 const rewardsServiceStub: Partial<RewardsService> = {
   getAllRewards: () => of([]),
@@ -81,7 +82,7 @@ describe('HomeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [HomeComponent, GamesCollectionComponent],
+      declarations: [HomeComponent, GamesCollectionComponent, CampaignsCollectionComponent],
       imports: [
         NoopAnimationsModule,
         MatCardModule,
