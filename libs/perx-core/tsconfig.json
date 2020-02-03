@@ -14,14 +14,12 @@
     "importHelpers": true,
     "strictNullChecks": true,
     "target": "es2015",
-    "types": [ "jest" ],
     "plugins": [
       {
         "transform": "ts-optchain/transform"
       }
     ],
     "typeRoots": [
-      "./src/types",
       "node_modules/@types"
     ],
     "lib": [
