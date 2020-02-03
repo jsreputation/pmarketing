@@ -1,7 +1,8 @@
 {
-    "APP": "app",
-    "Games": "GAMES 2",
-    "HELLO": "hi, all ok",
-    "hoo": "client hoo",
-    "MY_QR": "My QR"
+  "STAMP_CAMPAIGNS": "Stamp Card Campaigns",
+  "APP": "app",
+  "Games": "GAMES 2",
+  "HELLO": "hi, all ok",
+  "hoo": "client hoo",
+  "MY_QR": "My QR"
 }

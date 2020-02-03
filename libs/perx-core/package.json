@@ -7,7 +7,7 @@
     "clean": "rm -rf ./dist ./node_modules",
     "test": "jest",
     "lint": "stylelint \"projects/**/*.*css\" && eslint \"projects/**/*.ts\"",
-    "lint:fix": "stylelint \"projects/**/*.*css\" --fix && ng lint --fix && eslint \"projects/**/*.ts\" --fix",
+    "lint:fix": "stylelint \"projects/**/*.*css\" --fix && eslint \"projects/**/*.ts\" --fix",
     "e2e~": "ng e2e",
     "test:watch": "jest --watch"
   },
