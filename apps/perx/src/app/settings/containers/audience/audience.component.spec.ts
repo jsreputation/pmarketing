@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AudienceComponent } from './audience.component';
+import { UnderConstructionModule } from '../../../shared/under-construction/under-construction.module';
 
 describe('AudienceComponent', () => {
   let component: AudienceComponent;
@@ -8,7 +9,8 @@ describe('AudienceComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AudienceComponent ]
+      declarations: [AudienceComponent],
+      imports: [UnderConstructionModule]
     })
       .compileComponents();
   }));

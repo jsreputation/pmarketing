@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RuleBuildingComponent } from './rule-building.component';
+import { UnderConstructionModule } from '../../../shared/under-construction/under-construction.module';
 
 describe('RuleBuildingComponent', () => {
   let component: RuleBuildingComponent;
@@ -8,7 +9,8 @@ describe('RuleBuildingComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RuleBuildingComponent ]
+      declarations: [RuleBuildingComponent],
+      imports: [UnderConstructionModule]
     })
       .compileComponents();
   }));

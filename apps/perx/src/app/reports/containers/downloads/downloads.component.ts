@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-downloads',
+  selector: 'pe-downloads',
   templateUrl: './downloads.component.html',
   styleUrls: ['./downloads.component.css']
 })

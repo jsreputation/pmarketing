@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CampaignsComponent } from './campaigns.component';
+import { UnderConstructionModule } from '../../../shared/under-construction/under-construction.module';
 
 describe('CampaignsComponent', () => {
   let component: CampaignsComponent;
@@ -8,7 +9,8 @@ describe('CampaignsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CampaignsComponent ]
+      declarations: [CampaignsComponent],
+      imports: [UnderConstructionModule]
     })
       .compileComponents();
   }));

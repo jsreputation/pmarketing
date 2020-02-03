@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BulkActionsComponent } from './bulk-actions.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('BulkActionsComponent', () => {
   let component: BulkActionsComponent;
@@ -8,7 +9,8 @@ describe('BulkActionsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BulkActionsComponent ]
+      declarations: [BulkActionsComponent],
+      imports: [RouterTestingModule]
     })
       .compileComponents();
   }));

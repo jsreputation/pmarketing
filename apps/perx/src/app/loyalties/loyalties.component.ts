@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-loyalties',
+  selector: 'pe-loyalties',
   templateUrl: './loyalties.component.html',
   styleUrls: ['./loyalties.component.css']
 })

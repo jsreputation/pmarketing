@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-settings',
+  selector: 'pe-settings',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.css']
 })
