@@ -68,16 +68,16 @@ describe('RewardPopupComponent', () => {
   });
 
   it('should close dialog onClose', () => {
-    const dialogRef = TestBed.get(MatDialogRef);
-    const spy = jest.spyOn(dialogRef, 'close');
+    const dialogRefLocal = TestBed.get(MatDialogRef);
+    const spy = jest.spyOn(dialogRefLocal, 'close');
     component.onClose();
     expect(spy).toBeCalledTimes(1);
   });
 
   describe('buttonPressed', () => {
     it('should close dialog onClose', () => {
-      const dialogRef = TestBed.get(MatDialogRef);
-      const spy = jest.spyOn(dialogRef, 'close');
+      const dialogRefLocal = TestBed.get(MatDialogRef);
+      const spy = jest.spyOn(dialogRefLocal, 'close');
       component.buttonPressed();
       expect(spy).toHaveBeenCalled();
     });

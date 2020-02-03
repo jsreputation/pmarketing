@@ -79,7 +79,8 @@ describe('WhistlerMerchantsService', () => {
 
   it('should getallmerchant', fakeAsync(inject([WhistlerMerchantsService, HttpClient],
     (merchantService: WhistlerMerchantsService, http: HttpClient) => {
-      const spy = jest.spyOn(http, 'get').mockReturnValue(of({ data: [mockMerchant, { ...mockMerchant, id: 5 }], meta: { page_count: 2 } }));
+      const spy = jest.spyOn(http, 'get')
+        .mockReturnValue(of({ data: [mockMerchant, { ...mockMerchant, id: 5 }], meta: { page_count: 2 } }));
       merchantService.getAllMerchants().subscribe(() => { });
       tick();
       expect(spy).toHaveBeenCalled();

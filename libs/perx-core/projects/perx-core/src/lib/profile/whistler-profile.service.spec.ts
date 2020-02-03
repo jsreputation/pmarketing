@@ -29,7 +29,7 @@ describe('WhistlerProfileService', () => {
     expect(service).toBeTruthy();
   });
 
-  fit('should call whoAmI', fakeAsync(inject([WhistlerProfileService, HttpClient, TokenStorage],
+  it('should call whoAmI', fakeAsync(inject([WhistlerProfileService, HttpClient, TokenStorage],
     (profileService: WhistlerProfileService, http: HttpClient, storage: TokenStorage) => {
       const spy = jest.spyOn(http, 'get');
       spy.mockReturnValue(of({

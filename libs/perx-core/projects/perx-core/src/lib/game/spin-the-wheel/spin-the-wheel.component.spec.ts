@@ -1,26 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-// import { SimpleChange, DebugElement } from '@angular/core';	import { DebugElement } from '@angular/core';
-// import { ISlice } from '../game.model';
+import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import { SimpleChange, DebugElement } from '@angular/core';
+import { ISlice } from '../game.model';
 import { SpinTheWheelComponent } from './spin-the-wheel.component';
-import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 describe('SpinTheWheelComponent', () => {
   let component: SpinTheWheelComponent;
   let fixture: ComponentFixture<SpinTheWheelComponent>;
   let debugElement: DebugElement;
-  // let imageOnload: (() => void)[];
-  // beforeAll(() => {
-  //   Object.defineProperty(Image.prototype, 'onload', {
-  //     get(): any {
-  //       return this._onload;
-  //     },
-  //     set(fn: () => any): void {
-  //       imageOnload.push(fn);
-  //       this._onload = fn;
-  //     }
-  //   });
-  // });
+  let imageOnload: (() => void)[];
+  beforeAll(() => {
+    Object.defineProperty(Image.prototype, 'onload', {
+      get(): any {
+        return this._onload;
+      },
+      set(fn: () => any): void {
+        imageOnload.push(fn);
+        this._onload = fn;
+      }
+    });
+  });
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SpinTheWheelComponent]
@@ -39,54 +38,54 @@ describe('SpinTheWheelComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // it('ngOnChanges else', fakeAsync(() => {
-  //   // else flow
-  //   imageOnload = [];
-  //   component.ngOnChanges({
-  //     wheelImg: {} as SimpleChange,
-  //     pointerImg: {} as SimpleChange
-  //   });
-  //   component.slices = [{
-  //     id: '1',
-  //     backgroundImage: 'image.img'
-  //   } as ISlice];
-  //   component.ngOnChanges({
-  //     slices: {} as SimpleChange,
-  //     wheelImg: {} as SimpleChange,
-  //     pointerImg: {} as SimpleChange
-  //   });
-  //   tick();
-  //   imageOnload[0](); // emulate onload
-  //   expect(component.size).toBeTruthy();
-  // }));
-  //
-  // it('ngOnChanges', fakeAsync(() => {
-  //   imageOnload = [];
-  //   spyOn(component.ctx, 'createPattern').and.returnValue({ setTransform(): void { } });
-  //   component.ngOnChanges({
-  //     wheelImg: {} as SimpleChange,
-  //     pointerImg: {} as SimpleChange
-  //   });
-  //   component.slices = [{
-  //     id: '1',
-  //     backgroundImage: 'image.img',
-  //     label: 'test'
-  //   } as ISlice];
-  //   component.ngOnChanges({
-  //     slices: {} as SimpleChange,
-  //     wheelImg: {} as SimpleChange,
-  //     pointerImg: {} as SimpleChange
-  //   });
-  //   tick();
-  //   imageOnload[0]();
-  //   imageOnload[1]();
-  //   expect(component.size).toBeTruthy();
-  // }));
-  //
-  // it('ngAfterViewInit', () => {
-  //   component.ngAfterViewInit();
-  //   expect(component.size).toBeTruthy();
-  // });
+  it('ngOnChanges else', fakeAsync(() => {
+    // else flow
+    imageOnload = [];
+    component.ngOnChanges({
+      wheelImg: {} as SimpleChange,
+      pointerImg: {} as SimpleChange
+    });
+    component.slices = [{
+      id: '1',
+      backgroundImage: 'image.img'
+    } as ISlice];
+    component.ngOnChanges({
+      slices: {} as SimpleChange,
+      wheelImg: {} as SimpleChange,
+      pointerImg: {} as SimpleChange
+    });
+    tick(); // will trigger onload and push the onload function onto the array
+    expect(imageOnload[0]).toBeTruthy(); // emulate onload
+  }));
+
+  it('ngOnChanges', fakeAsync(() => {
+    // we check that our images are actually loaded correctly
+    imageOnload = [];
+    spyOn(component.ctx, 'createPattern').and.returnValue({ setTransform(): void { } });
+    component.ngOnChanges({
+      wheelImg: {} as SimpleChange,
+      pointerImg: {} as SimpleChange
+    });
+    component.slices = [{
+      id: '1',
+      backgroundImage: 'image.img',
+      label: 'test'
+    } as ISlice];
+    component.ngOnChanges({
+      slices: {} as SimpleChange,
+      wheelImg: {} as SimpleChange,
+      pointerImg: {} as SimpleChange
+    });
+    tick();
+    // doesnt make sense to check size since it is set from an actual picture taking the dimensions * 1.2
+    expect(imageOnload[1]).toBeTruthy();
+  }));
+
+  it('ngAfterViewInit', () => {
+    component.ngAfterViewInit();
+    // we onloaded background image and wheelImg
+    expect(imageOnload.length).toBeGreaterThanOrEqual(2);
+  });
 
   it('handle mouse event', () => {
     const eventMouseUp = new MouseEvent('mouseup');

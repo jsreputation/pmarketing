@@ -212,7 +212,7 @@ describe('WhistlerGameService', () => {
 
   it('', fakeAsync(inject([WhistlerGameService, HttpClient],
     (gameService: WhistlerGameService, http: HttpClient) => {
-      const vouchersServiceMock = TestBed.get(IVoucherService);
+      const vouchersServiceMockLocal = TestBed.get(IVoucherService);
       jest.spyOn(http, 'post').mockReturnValue(of({
         data: {
           attributes: {
@@ -224,9 +224,9 @@ describe('WhistlerGameService', () => {
           }
         }
       }));
-      const spy = jest.spyOn(vouchersServiceMock, 'getFullVoucher');
+      const spy = jest.spyOn(vouchersServiceMockLocal, 'getFullVoucher');
       jest.spyOn(gameService, 'play').mockImplementation(() => {
-        vouchersServiceMock.getFullVoucher({attributes: undefined, id: '', type: ''});
+        vouchersServiceMockLocal.getFullVoucher({attributes: undefined, id: '', type: ''});
         return of({
           vouchers: [],
           rawPayload: ''

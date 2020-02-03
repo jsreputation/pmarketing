@@ -15,7 +15,7 @@ import { Directive, Input } from '@angular/core';
 @Directive({
   selector: '[ngxEllipsis]'
 })
-export class LineDirectiveMock {
+export class LineDirectiveMockDirective {
   @Input() lines: number;
 }
 
@@ -100,7 +100,7 @@ describe('RewardsCollectionComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         RewardsCollectionComponent,
-        LineDirectiveMock
+        LineDirectiveMockDirective
       ],
       imports: [
         MaterialModule,
