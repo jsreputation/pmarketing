@@ -119,7 +119,7 @@ describe('V4CampaignService', () => {
   });
 
   it('getCampaign', fakeAsync(inject([V4CampaignService, HttpClient], (campaingService: V4CampaignService, http: HttpClient) => {
-    const spy = spyOn(http, 'get').and.returnValue(of({
+    const spy = jest.spyOn(http, 'get').mockReturnValue(of({
       data: {
         images: [{
           type: 'campaign_thumbnail',

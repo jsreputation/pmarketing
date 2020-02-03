@@ -61,15 +61,15 @@ describe('WhistlerLoyaltyService', () => {
 
   it('call getLoyalties when querrying getLoyalty without argument', fakeAsync(inject([WhistlerLoyaltyService, HttpClient],
     (loyaltyService: WhistlerLoyaltyService) => {
-      spyOn(loyaltyService, 'getLoyalties').and.returnValue(of([{ id: 1 } as ILoyalty]));
+      jest.spyOn(loyaltyService, 'getLoyalties').mockReturnValue(of([{ id: 1 } as ILoyalty]));
       loyaltyService.getLoyalty().subscribe((loyalty) => expect(loyalty.id).toBe(1));
     })));
 
   it('call http when querrying getLoyalty with an argument', fakeAsync(inject([WhistlerLoyaltyService, HttpClient],
     (loyaltyService: WhistlerLoyaltyService, http: HttpClient) => {
-      const spy = spyOn(http, 'get').and.returnValue(of({ data: mockCard }));
+      const spy = jest.spyOn(http, 'get').mockReturnValue(of({ data: mockCard }));
       loyaltyService.getLoyalty(1).subscribe((l: ILoyalty) => { expect(l.id).toBe(1); });
-      expect(spy.calls.count()).toBe(1);
+      expect(spy.mock.calls.length).toBe(1);
       loyaltyService.getLoyalty(1)
         // now that it is in cache, it should tick twice, once with the cache value, once with the http request based value
         .pipe(skip(1))

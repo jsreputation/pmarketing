@@ -246,9 +246,9 @@ describe('V4GameService', () => {
   });
 
   it('handle error', fakeAsync(inject([V4GameService, HttpClient], (gameService: V4GameService, http: HttpClient) => {
-    spyOn(http, 'get').and.returnValue(of({ data: { game_type: '' } }));
+    jest.spyOn(http, 'get').mockReturnValue(of({ data: { game_type: '' } }));
     const handleErr = { err(): void { } };
-    const spy = spyOn(handleErr, 'err');
+    const spy = jest.spyOn(handleErr, 'err');
     gameService.get(1).subscribe(() => { }, handleErr.err);
     tick();
     expect(spy).toHaveBeenCalled();
@@ -299,8 +299,8 @@ describe('V4GameService', () => {
         user_account_id: 1,
       };
       const successHandle = { success(): void { } };
-      spyOn(http, 'get').and.returnValue(of({ data: game }));
-      const spy = spyOn(successHandle, 'success');
+      jest.spyOn(http, 'get').mockReturnValue(of({ data: game }));
+      const spy = jest.spyOn(successHandle, 'success');
       gameService.get(1).subscribe(successHandle.success);
       tick();
       expect(spy).toHaveBeenCalled();
@@ -312,13 +312,13 @@ describe('V4GameService', () => {
 
   it('play should filter voucher ', fakeAsync(inject([V4GameService, HttpClient],
     (gameService: V4GameService, http: HttpClient) => {
-      spyOn(http, 'put').and.returnValue(of({
+      jest.spyOn(http, 'put').mockReturnValue(of({
         data: {
           outcomes: [{ outcome_type: 'reward', redemption_type: RedemptionType.none }]
         }
       }));
       const handle = { success(): void { } };
-      const spy = spyOn(handle, 'success');
+      const spy = jest.spyOn(handle, 'success');
       gameService.play(1).subscribe(handle.success);
       tick();
       expect(spy).toHaveBeenCalled();

@@ -47,7 +47,7 @@ describe('LocationsMapComponent', () => {
   }));
 
   it('updateLocations', fakeAsync(() => {
-    spyOn(geolocation, 'positions').and.returnValue(of(coords));
+    jest.spyOn(geolocation, 'positions').mockReturnValue(of(coords));
     component.userLocation = new Subject();
     component.locations = of([{ name: 'test', latitude: 34, longitude: 31 }]);
     component.userLocation.next(coords);

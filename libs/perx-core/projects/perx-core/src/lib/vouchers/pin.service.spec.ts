@@ -73,7 +73,7 @@ describe('PinService', () => {
       expiry: new Date('2019-04-30T15:59:59.999Z'),
     };
 
-    spyOn(vouchersService, 'get').and.returnValue(of(mockReturn));
+    jest.spyOn(vouchersService, 'get').mockReturnValue(of(mockReturn));
     service.getPin(1)
       .subscribe(pinCode => {
         expect(pinCode).toBe('0052');

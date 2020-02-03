@@ -46,7 +46,7 @@ describe('ScratchCardComponent', () => {
   }));
 
   it('handleMouseMove', () => {
-    const spy = spyOn(component, 'handlePercentage');
+    const spy = jest.spyOn(component, 'handlePercentage');
     component.lastPoint = { x: 1, y: 2 };
     component.canvas.height = 500;
     component.canvas.width = 30;
@@ -64,7 +64,7 @@ describe('ScratchCardComponent', () => {
   });
 
   it('handleMouseMove', () => {
-    const spy = spyOn(component.canvas, 'getContext').and.returnValue(null);
+    const spy = jest.spyOn(component.canvas, 'getContext').mockReturnValue(null);
     component.lastPoint = { x: 1, y: 2 };
     component.canvas.height = 500;
     component.canvas.width = 30;

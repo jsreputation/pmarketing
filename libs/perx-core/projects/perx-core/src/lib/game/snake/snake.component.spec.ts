@@ -26,7 +26,7 @@ describe('SnakeGameComponent', () => {
   });
 
   it('Number2 should randomize', () => {
-    const spy = spyOn(Math, 'floor');
+    const spy = jest.spyOn(Math, 'floor');
     const namber = new Number2(1, 2);
     namber.randomize(3);
     expect(spy).toHaveBeenCalled();
@@ -72,16 +72,16 @@ describe('SnakeGameComponent', () => {
   // }));
 
   it('should handle keyevent', fakeAsync(() => {
-    const spyLeft = spyOn(component, 'left');
+    const spyLeft = jest.spyOn(component, 'left');
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft' }));
     expect(spyLeft).toHaveBeenCalled();
-    const spyUp = spyOn(component, 'up');
+    const spyUp = jest.spyOn(component, 'up');
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp' }));
     expect(spyUp).toHaveBeenCalled();
-    const spyRight = spyOn(component, 'right');
+    const spyRight = jest.spyOn(component, 'right');
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight' }));
     expect(spyRight).toHaveBeenCalled();
-    const spyDown = spyOn(component, 'down');
+    const spyDown = jest.spyOn(component, 'down');
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown' }));
     expect(spyDown).toHaveBeenCalled();
   }));

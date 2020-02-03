@@ -144,8 +144,8 @@ describe('V4AuthenticationService', () => {
   });
 
   it('should login', fakeAsync(inject([V4AuthenticationService], (authService: V4AuthenticationService) => {
-    const spy = spyOn(authService, 'saveUserAccessToken');
-    const spyAuth = spyOn(authService, 'authenticateUser').and.returnValue(of({ bearer_token: 'token' }));
+    const spy = jest.spyOn(authService, 'saveUserAccessToken');
+    const spyAuth = jest.spyOn(authService, 'authenticateUser').mockReturnValue(of({ bearer_token: 'token' }));
     authService.login('user', 'pass').subscribe(() => { });
     tick();
     expect(spyAuth).toHaveBeenCalled();
@@ -154,22 +154,22 @@ describe('V4AuthenticationService', () => {
 
   it('should check authenticateUser', fakeAsync(inject([V4AuthenticationService, HttpClient],
     (authService: V4AuthenticationService, http: HttpClient) => {
-      const spy = spyOn(http, 'post');
+      const spy = jest.spyOn(http, 'post');
       authService.authenticateUser('test', 'test', 'test', 'test', 'test');
       expect(spy).toHaveBeenCalled();
 
     })));
   it('should authenticate user', inject([V4AuthenticationService, HttpClient],
     (authService: V4AuthenticationService, http: HttpClient) => {
-      const spyHttp = spyOn(http, 'post');
+      const spyHttp = jest.spyOn(http, 'post');
       authService.authenticateUser('user', 'password');
       expect(spyHttp).toHaveBeenCalled();
     }));
 
   it('should handle error', fakeAsync(inject([V4AuthenticationService], (authService: V4AuthenticationService) => {
-    const spyAuth = spyOn(authService, 'authenticateUser');
+    const spyAuth = jest.spyOn(authService, 'authenticateUser');
     // api returning something not complete should yield an error
-    spyAuth.and.returnValue(of({}));
+    spyAuth.mockReturnValue(of({}));
     let error: Error | null = null;
     authService.login('user', 'pass').subscribe(
       () => { },
@@ -177,7 +177,7 @@ describe('V4AuthenticationService', () => {
     );
     tick();
     expect(error).toBeTruthy();
-    spyAuth.and.returnValue(throwError(null));
+    spyAuth.mockReturnValue(throwError(null));
     authService.login('user', 'pass').subscribe(() => { }, () => { });
     tick();
     authService.$failedAuth.subscribe((val => expect(val).toBeTruthy()));
@@ -186,10 +186,10 @@ describe('V4AuthenticationService', () => {
   it('should throw err', fakeAsync(inject([V4AuthenticationService, HttpClient],
     (authService: V4AuthenticationService, http: HttpClient) => {
       // api returning something not complete should yield an error
-      spyOn(http, 'post').and.returnValue(of({}));
+      jest.spyOn(http, 'post').mockReturnValue(of({}));
       (window as any).primaryIdentifier = 'user';
       const fun = { err: () => { } };
-      const spy = spyOn(fun, 'err');
+      const spy = jest.spyOn(fun, 'err');
       authService.autoLogin().subscribe(() => { }, fun.err);
       tick();
       expect(spy).toHaveBeenCalled();
@@ -197,9 +197,9 @@ describe('V4AuthenticationService', () => {
 
   it('should autoLogin', fakeAsync(inject([V4AuthenticationService, HttpClient],
     (authService: V4AuthenticationService, http: HttpClient) => {
-      spyOn(http, 'post').and.returnValue(of({ bearer_token: 'token' }));
+      jest.spyOn(http, 'post').mockReturnValue(of({ bearer_token: 'token' }));
       (window as any).primaryIdentifier = 'user';
-      const spy = spyOn(authService, 'saveUserAccessToken');
+      const spy = jest.spyOn(authService, 'saveUserAccessToken');
       authService.autoLogin().subscribe(() => { });
       tick();
       expect(spy).toHaveBeenCalled();
@@ -208,7 +208,7 @@ describe('V4AuthenticationService', () => {
   it('should handle error response', fakeAsync(inject([V4AuthenticationService, HttpClient],
     (authService: V4AuthenticationService, http: HttpClient) => {
       // authService.$failedAuthObservable = null;
-      spyOn(http, 'post').and.returnValue(throwError(null));
+      jest.spyOn(http, 'post').mockReturnValue(throwError(null));
       authService.autoLogin().subscribe(() => { });
       tick();
       authService.$failedAuth.subscribe((val => expect(val).toBeTruthy()));
@@ -222,30 +222,30 @@ describe('V4AuthenticationService', () => {
 
   it('should clear token', inject([V4AuthenticationService, TokenStorage],
     (authService: V4AuthenticationService, tokenSotrage: TokenStorage) => {
-      const spy = spyOn(tokenSotrage, 'clearAppInfoProperty');
+      const spy = jest.spyOn(tokenSotrage, 'clearAppInfoProperty');
       authService.logout();
       expect(spy).toHaveBeenCalled();
     }));
   it('should get token', inject([V4AuthenticationService, TokenStorage],
     (authService: V4AuthenticationService, tokenSotrage: TokenStorage) => {
-      const spy = spyOn(tokenSotrage, 'getAppInfoProperty');
+      const spy = jest.spyOn(tokenSotrage, 'getAppInfoProperty');
       authService.getAppAccessToken();
       expect(spy).toHaveBeenCalled();
     }));
   it('should get AccessToken', inject([V4AuthenticationService],
     (authService: V4AuthenticationService) => {
-      const spyUser = spyOn(authService, 'getUserAccessToken');
-      const spyApp = spyOn(authService, 'getAppAccessToken');
+      const spyUser = jest.spyOn(authService, 'getUserAccessToken');
+      const spyApp = jest.spyOn(authService, 'getAppAccessToken');
       authService.getAccessToken();
       expect(spyUser).toHaveBeenCalled();
-      spyUser.and.returnValue('test');
+      spyUser.mockReturnValue('test');
       authService.getAccessToken();
       expect(spyApp).toHaveBeenCalled();
     }));
   it('should handle error then we call forgotPassword', fakeAsync(inject([V4AuthenticationService, HttpClient],
     (authService: V4AuthenticationService, http: HttpClient) => {
-      const spy = spyOn(console, 'log');
-      spyOn(http, 'get').and.returnValue(throwError('error'));
+      const spy = jest.spyOn(console, 'log');
+      jest.spyOn(http, 'get').mockReturnValue(throwError('error'));
       try {
         authService.forgotPassword('').subscribe(() => { });
         tick();
@@ -255,8 +255,8 @@ describe('V4AuthenticationService', () => {
     })));
   it('should handle error then we call forgotPassword', fakeAsync(inject([V4AuthenticationService, HttpClient],
     (authService: V4AuthenticationService, http: HttpClient) => {
-      const spy = spyOn(console, 'log');
-      spyOn(http, 'patch').and.returnValue(throwError('error'));
+      const spy = jest.spyOn(console, 'log');
+      jest.spyOn(http, 'patch').mockReturnValue(throwError('error'));
       try {
         authService.resetPassword({
           phone: '1',
@@ -272,8 +272,8 @@ describe('V4AuthenticationService', () => {
 
   it('should handle getUserAccessToken', inject([V4AuthenticationService, TokenStorage],
     (authService: V4AuthenticationService, tokenSotrage: TokenStorage) => {
-      const spyGet = spyOn(tokenSotrage, 'getAppInfoProperty');
-      const spySet = spyOn(tokenSotrage, 'setAppInfoProperty');
+      const spyGet = jest.spyOn(tokenSotrage, 'getAppInfoProperty');
+      const spySet = jest.spyOn(tokenSotrage, 'setAppInfoProperty');
       authService.getUserAccessToken();
       authService.saveUserAccessToken('token');
       expect(spyGet).toHaveBeenCalledWith('userAccessToken');
@@ -282,15 +282,15 @@ describe('V4AuthenticationService', () => {
 
   it('should resend otp', fakeAsync(inject([V4AuthenticationService, HttpClient],
     (authService: V4AuthenticationService, http: HttpClient) => {
-      const spy = spyOn(http, 'get').and.returnValue(of({}));
-      const spyLog = spyOn(console, 'log');
-      spy.and.returnValue(of('test'));
+      const spy = jest.spyOn(http, 'get').mockReturnValue(of({}));
+      const spyLog = jest.spyOn(console, 'log');
+      spy.mockReturnValue(of('test'));
       authService.resendOTP('999').subscribe(() => { });
       tick();
       expect(spy).toHaveBeenCalled();
       expect(spyLog).toHaveBeenCalledWith('test');
       tick();
-      spy.and.returnValue(throwError('test'));
+      spy.mockReturnValue(throwError('test'));
       try {
         authService.resendOTP('999').subscribe(() => { });
         tick();
@@ -301,9 +301,9 @@ describe('V4AuthenticationService', () => {
 
   it('should signup', fakeAsync(inject([V4AuthenticationService, HttpClient],
     (authService: V4AuthenticationService, http: HttpClient) => {
-      const spyLog = spyOn(console, 'log');
-      const spy = spyOn(http, 'post');
-      spy.and.returnValue(of({ data: {} }));
+      const spyLog = jest.spyOn(console, 'log');
+      const spy = jest.spyOn(http, 'post');
+      spy.mockReturnValue(of({ data: {} }));
       authService.signup({
         lastName: 'name',
         password: '1234',
@@ -312,7 +312,7 @@ describe('V4AuthenticationService', () => {
       }).subscribe(() => { });
       tick();
       expect(spyLog).toHaveBeenCalled();
-      spy.and.returnValue(throwError('error'));
+      spy.mockReturnValue(throwError('error'));
       try {
         authService.signup({
           lastName: 'name',
@@ -330,9 +330,9 @@ describe('V4AuthenticationService', () => {
     'should create User And Auto Login',
     inject([V4AuthenticationService, HttpClient], (auth: V4AuthenticationService, http: HttpClient) => {
       const obs = { login: () => { } };
-      const spyObs = spyOn(obs, 'login');
-      const spy = spyOn(http, 'post');
-      spy.and.returnValue(of({ data: {} }));
+      const spyObs = jest.spyOn(obs, 'login');
+      const spy = jest.spyOn(http, 'post');
+      spy.mockReturnValue(of({ data: {} }));
       auth.createUserAndAutoLogin('')
         .subscribe(
           obs.login
@@ -344,13 +344,13 @@ describe('V4AuthenticationService', () => {
 
   it('should verify otp', fakeAsync(inject([V4AuthenticationService, HttpClient],
     (auth: V4AuthenticationService, http: HttpClient) => {
-      const spyHttp = spyOn(http, 'patch');
-      const spyLog = spyOn(console, 'log');
-      spyHttp.and.returnValue(of('success'));
+      const spyHttp = jest.spyOn(http, 'patch');
+      const spyLog = jest.spyOn(console, 'log');
+      spyHttp.mockReturnValue(of('success'));
       auth.verifyOTP('', '').subscribe(() => { });
       tick();
       expect(spyLog).toHaveBeenCalledWith('success');
-      spyHttp.and.returnValue(throwError('error'));
+      spyHttp.mockReturnValue(throwError('error'));
       try {
         auth.verifyOTP('', '').subscribe(() => { });
         tick();
@@ -361,8 +361,8 @@ describe('V4AuthenticationService', () => {
 
   it('should change Password', fakeAsync(inject([V4AuthenticationService, HttpClient, ProfileService],
     (auth: V4AuthenticationService, http: HttpClient, profile: ProfileService) => {
-      spyOn(profile, 'whoAmI').and.returnValue(of({ id: 1, firstName: '123', lastName: '123' }));
-      const spy = spyOn(http, 'patch').and.returnValue(of({}));
+      jest.spyOn(profile, 'whoAmI').mockReturnValue(of({ id: 1, firstName: '123', lastName: '123' }));
+      const spy = jest.spyOn(http, 'patch').mockReturnValue(of({}));
       auth.changePassword({ oldPassword: '123', passwordConfirmation: '123', otp: '123', newPassword: '123' }).subscribe(() => { });
       tick();
       tick();
@@ -371,8 +371,8 @@ describe('V4AuthenticationService', () => {
 
   it('requestVerificationToken', fakeAsync(inject([V4AuthenticationService, HttpClient, ProfileService],
     (auth: V4AuthenticationService, http: HttpClient, profile: ProfileService) => {
-      spyOn(profile, 'whoAmI').and.returnValue(of({ id: 1, firstName: '123', lastName: '123' }));
-      const spy = spyOn(http, 'get').and.returnValue(of({}));
+      jest.spyOn(profile, 'whoAmI').mockReturnValue(of({ id: 1, firstName: '123', lastName: '123' }));
+      const spy = jest.spyOn(http, 'get').mockReturnValue(of({}));
       auth.requestVerificationToken().subscribe(() => { });
       tick();
       expect(spy).toHaveBeenCalled();
@@ -383,15 +383,15 @@ describe('V4AuthenticationService', () => {
 
   it('changePhone', fakeAsync(inject([V4AuthenticationService, HttpClient, ProfileService],
     (auth: V4AuthenticationService, http: HttpClient, profile: ProfileService) => {
-      spyOn(profile, 'whoAmI').and.returnValue(of({ id: 1, firstName: '123', lastName: '123' }));
-      const spy = spyOn(http, 'patch').and.returnValue(of({}));
+      jest.spyOn(profile, 'whoAmI').mockReturnValue(of({ id: 1, firstName: '123', lastName: '123' }));
+      const spy = jest.spyOn(http, 'patch').mockReturnValue(of({}));
       auth.changePhone({ otp: '123', phone: '123' }).subscribe(() => { });
       expect(spy).toHaveBeenCalled();
     })));
 
   it('handle pi', inject([V4AuthenticationService, TokenStorage], (auth: V4AuthenticationService, storage: TokenStorage) => {
-    const spyGet = spyOn(storage, 'getAppInfoProperty');
-    const spySet = spyOn(storage, 'setAppInfoProperty');
+    const spyGet = jest.spyOn(storage, 'getAppInfoProperty');
+    const spySet = jest.spyOn(storage, 'setAppInfoProperty');
     auth.getPI();
     expect(spyGet).toHaveBeenCalled();
     auth.savePI('1234');
@@ -400,26 +400,26 @@ describe('V4AuthenticationService', () => {
 
   it('should  get anonymous', fakeAsync(inject([V4AuthenticationService, TokenStorage],
     (auth: V4AuthenticationService, storage: TokenStorage) => {
-      spyOn(storage, 'getAppInfoProperty').and.returnValue('true');
+      jest.spyOn(storage, 'getAppInfoProperty').mockReturnValue('true');
       expect(auth.getAnonymous()).toBeTruthy();
     })));
   it('should  set anonymous', fakeAsync(inject([V4AuthenticationService, TokenStorage],
     (auth: V4AuthenticationService, storage: TokenStorage) => {
-      const spy = spyOn(storage, 'setAppInfoProperty');
+      const spy = jest.spyOn(storage, 'setAppInfoProperty');
       auth.saveAnonymous(true);
       expect(spy).toHaveBeenCalled();
     })));
   it('should  getUserId', fakeAsync(inject([V4AuthenticationService, TokenStorage],
     (auth: V4AuthenticationService, storage: TokenStorage) => {
-      const spy = spyOn(storage, 'getAppInfoProperty');
-      spy.and.returnValue('30');
+      const spy = jest.spyOn(storage, 'getAppInfoProperty');
+      spy.mockReturnValue('30');
       expect(auth.getUserId()).toBe(30);
-      spy.and.returnValue(undefined);
+      spy.mockReturnValue(undefined);
       expect(auth.getUserId()).toBe(null);
     })));
   it('should save userId', inject([V4AuthenticationService, TokenStorage],
     (auth: V4AuthenticationService, storage: TokenStorage) => {
-      const spy = spyOn(storage, 'setAppInfoProperty');
+      const spy = jest.spyOn(storage, 'setAppInfoProperty');
       auth.saveUserId(1);
       expect(spy).toHaveBeenCalledWith(1, 'id');
     }));
@@ -428,7 +428,7 @@ describe('V4AuthenticationService', () => {
       const spyObject = {
         err(): void { }
       };
-      const spy = spyOn(spyObject, 'err');
+      const spy = jest.spyOn(spyObject, 'err');
       auth.mergeUserById([1], 1).subscribe(() => { }, spyObject.err);
       expect(spy).toHaveBeenCalled();
     })));

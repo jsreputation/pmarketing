@@ -24,7 +24,7 @@ describe('ThemesService', () => {
   });
 
   it('should get theme setting', fakeAsync(inject([HttpClient], (http: HttpClient) => {
-    spyOn(http, 'get').and.returnValue(of(DARK));
+    jest.spyOn(http, 'get').mockReturnValue(of(DARK));
     service.getThemeSetting({ sourceType: 'test', baseHref: 'test' } as IConfig<ITheme>)
       .subscribe((val) => expect(val).toEqual(DARK));
     tick();
