@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+// import { SimpleChange, DebugElement } from '@angular/core';	import { DebugElement } from '@angular/core';
+// import { ISlice } from '../game.model';
 import { SpinTheWheelComponent } from './spin-the-wheel.component';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
@@ -8,7 +9,18 @@ describe('SpinTheWheelComponent', () => {
   let component: SpinTheWheelComponent;
   let fixture: ComponentFixture<SpinTheWheelComponent>;
   let debugElement: DebugElement;
-
+  // let imageOnload: (() => void)[];
+  // beforeAll(() => {
+  //   Object.defineProperty(Image.prototype, 'onload', {
+  //     get(): any {
+  //       return this._onload;
+  //     },
+  //     set(fn: () => any): void {
+  //       imageOnload.push(fn);
+  //       this._onload = fn;
+  //     }
+  //   });
+  // });
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SpinTheWheelComponent]
@@ -26,6 +38,55 @@ describe('SpinTheWheelComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // it('ngOnChanges else', fakeAsync(() => {
+  //   // else flow
+  //   imageOnload = [];
+  //   component.ngOnChanges({
+  //     wheelImg: {} as SimpleChange,
+  //     pointerImg: {} as SimpleChange
+  //   });
+  //   component.slices = [{
+  //     id: '1',
+  //     backgroundImage: 'image.img'
+  //   } as ISlice];
+  //   component.ngOnChanges({
+  //     slices: {} as SimpleChange,
+  //     wheelImg: {} as SimpleChange,
+  //     pointerImg: {} as SimpleChange
+  //   });
+  //   tick();
+  //   imageOnload[0](); // emulate onload
+  //   expect(component.size).toBeTruthy();
+  // }));
+  //
+  // it('ngOnChanges', fakeAsync(() => {
+  //   imageOnload = [];
+  //   spyOn(component.ctx, 'createPattern').and.returnValue({ setTransform(): void { } });
+  //   component.ngOnChanges({
+  //     wheelImg: {} as SimpleChange,
+  //     pointerImg: {} as SimpleChange
+  //   });
+  //   component.slices = [{
+  //     id: '1',
+  //     backgroundImage: 'image.img',
+  //     label: 'test'
+  //   } as ISlice];
+  //   component.ngOnChanges({
+  //     slices: {} as SimpleChange,
+  //     wheelImg: {} as SimpleChange,
+  //     pointerImg: {} as SimpleChange
+  //   });
+  //   tick();
+  //   imageOnload[0]();
+  //   imageOnload[1]();
+  //   expect(component.size).toBeTruthy();
+  // }));
+  //
+  // it('ngAfterViewInit', () => {
+  //   component.ngAfterViewInit();
+  //   expect(component.size).toBeTruthy();
+  // });
 
   it('handle mouse event', () => {
     const eventMouseUp = new MouseEvent('mouseup');
