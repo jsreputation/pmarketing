@@ -1,14 +1,11 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { WalletComponent } from './wallet.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {
   IVoucherService,
   VouchersModule,
   ICampaignService,
-  StampService,
   NotificationService,
-  IStampCard,
-  StampCardState,
   Voucher,
   VoucherState,
   PuzzlesModule,
@@ -46,11 +43,6 @@ describe('WalletComponent', () => {
     getCampaigns: () => of()
   };
 
-  const stampServiceStub: Partial<StampService> = {
-    getCurrentCard: () => of(),
-    getActiveCards: () => of([])
-  };
-
   const notificationServiceStub: Partial<NotificationService> = {};
 
   beforeEach(async(() => {
@@ -80,7 +72,6 @@ describe('WalletComponent', () => {
         // { provide: Router, useValue: router },
         { provide: IVoucherService, useValue: vouchersServiceStub },
         { provide: ICampaignService, useValue: campaignServiceStub },
-        { provide: StampService, useValue: stampServiceStub },
         { provide: NotificationService, useValue: notificationServiceStub },
         {
           provide: ConfigService, useValue: {
@@ -103,45 +94,6 @@ describe('WalletComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  it('should call getActiveCardsSpy, stampServiceSpy onInit', fakeAsync(() => {
-    const stampCard: IStampCard = {
-      id: 1,
-      state: StampCardState.active,
-      title: 'Test',
-      campaignConfig: null,
-      displayProperties: {
-        numberOfCols: undefined,
-        numberOfRows: undefined,
-        cardImage: undefined,
-        preStampImg: undefined,
-        postStampImg: undefined,
-        rewardPreStamp: undefined,
-        rewardPostStamp: undefined,
-        bgImage: undefined,
-        cardBgImage: undefined,
-        totalSlots: undefined,
-        displayCampaignAs: '',
-        backgroundImg: undefined,
-        rewardPositions: undefined,
-        thumbnailImg: undefined,
-        noRewardsPopUp: undefined,
-        successPopUp: undefined
-      }
-    };
-
-    const stampService: StampService = fixture.debugElement.injector.get<StampService>(
-      StampService as Type<StampService>
-    );
-    const getActiveCardsSpy = spyOn(stampService, 'getActiveCards').and.returnValue(of([stampCard]));
-    // const getCurrentCardSpy = spyOn(stampService, 'getCurrentCard').and.returnValue(of(stampCard));
-
-    component.ngOnInit();
-    tick();
-    fixture.detectChanges();
-    expect(getActiveCardsSpy).toHaveBeenCalled();
-    // expect(getCurrentCardSpy).toHaveBeenCalled();
-  }));
 
   it('should redirect to voucher detail on voucher selected', () => {
     const router: Router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);

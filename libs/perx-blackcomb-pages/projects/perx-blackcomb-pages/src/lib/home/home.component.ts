@@ -1,53 +1,33 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy
-} from '@angular/core';
-import { Router } from '@angular/router';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+
+import {BehaviorSubject, combineLatest, forkJoin, Observable, of, Subject} from 'rxjs';
+import {catchError, filter, map, mergeMap, take, takeLast, takeUntil, tap} from 'rxjs/operators';
 
 import {
-  Observable,
-  BehaviorSubject,
-  forkJoin,
-  of,
-  Subject,
-  combineLatest,
-} from 'rxjs';
-import {
-  tap,
-  takeUntil,
-  map,
-  mergeMap,
-  takeLast,
-  catchError,
-  filter,
-  take,
-} from 'rxjs/operators';
-
-import {
-  RewardsService,
-  IReward,
-  ITabConfigExtended,
-  IGameService,
-  IGame,
-  IProfile,
-  FeedReaderService,
-  FeedItem,
-  ThemesService,
-  ITheme,
-  IConfig,
-  ConfigService,
   AuthenticationService,
-  ICampaignService,
-  ICampaign,
   CampaignType,
-  RewardPopupComponent,
+  ConfigService,
+  FeedItem,
+  FeedReaderService,
+  ICampaign,
+  ICampaignService,
+  IConfig,
+  IGame,
+  IGameService,
+  IProfile,
+  IReward,
   IRssFeeds,
   IRssFeedsData,
+  ITabConfigExtended,
+  ITheme,
+  RewardPopupComponent,
+  RewardsService,
+  ThemesService,
 } from '@perx/core';
-import { TranslateService } from '@ngx-translate/core';
-import { Title } from '@angular/platform-browser';
-import { MatTabChangeEvent, MatDialog } from '@angular/material';
+import {TranslateService} from '@ngx-translate/core';
+import {Title} from '@angular/platform-browser';
+import {MatDialog, MatTabChangeEvent} from '@angular/material';
 
 const stubTabs: ITabConfigExtended[] = [
   {
@@ -74,14 +54,14 @@ const stubTabs: ITabConfigExtended[] = [
     currentPage: 1,
     completePagination: false
   },
-  {
-    filterKey: null,
-    filterValue: null,
-    tabName: 'ELECTRONICS',
-    rewardsType: 'Electronics',
-    currentPage: 1,
-    completePagination: false
-  },
+  // {
+  //   filterKey: null,
+  //   filterValue: null,
+  //   tabName: 'ELECTRONICS',
+  //   rewardsType: 'Electronics',
+  //   currentPage: 1,
+  //   completePagination: false
+  // },
   {
     filterKey: null,
     filterValue: null,
@@ -90,14 +70,14 @@ const stubTabs: ITabConfigExtended[] = [
     currentPage: 1,
     completePagination: false
   },
-  {
-    filterKey: null,
-    filterValue: null,
-    tabName: 'ENTERTAINMENT',
-    rewardsType: 'Entertainment',
-    currentPage: 1,
-    completePagination: false
-  },
+  // {
+  //   filterKey: null,
+  //   filterValue: null,
+  //   tabName: 'ENTERTAINMENT',
+  //   rewardsType: 'Entertainment',
+  //   currentPage: 1,
+  //   completePagination: false
+  // },
   {
     filterKey: null,
     filterValue: null,
@@ -106,22 +86,22 @@ const stubTabs: ITabConfigExtended[] = [
     currentPage: 1,
     completePagination: false
   },
-  {
-    filterKey: null,
-    filterValue: null,
-    tabName: 'MERCHANT_SELF',
-    rewardsType: 'Merchant Self',
-    currentPage: 1,
-    completePagination: false
-  },
-  {
-    filterKey: null,
-    filterValue: null,
-    tabName: 'OTHERS',
-    rewardsType: 'Others',
-    currentPage: 1,
-    completePagination: false
-  },
+  // {
+  //   filterKey: null,
+  //   filterValue: null,
+  //   tabName: 'MERCHANT_SELF',
+  //   rewardsType: 'Merchant Self',
+  //   currentPage: 1,
+  //   completePagination: false
+  // },
+  // {
+  //   filterKey: null,
+  //   filterValue: null,
+  //   tabName: 'OTHERS',
+  //   rewardsType: 'Others',
+  //   currentPage: 1,
+  //   completePagination: false
+  // },
 ];
 
 @Component({
@@ -138,16 +118,23 @@ export class HomeComponent implements OnInit, OnDestroy {
   public newsFeedItems: Observable<FeedItem[]>;
   public rewards$: Observable<IReward[]>;
   public games$: Observable<IGame[]>;
+  public campaigns$: Observable<ICampaign[]>;
   public tabs$: BehaviorSubject<ITabConfigExtended[]> = new BehaviorSubject<ITabConfigExtended[]>([]);
   public staticTab: ITabConfigExtended[];
   public titleFn: (profile: IProfile) => string;
   public showGames: boolean = false;
+  public showCampaigns: boolean = false;
   private firstComefirstServeCampaign: ICampaign;
 
   private async initCampaign(): Promise<void> {
     this.games$ = this.gamesService.getActiveGames()
       .pipe(
         tap((games: IGame[]) => this.showGames = games.length > 0),
+        takeLast(1)
+      );
+    this.campaigns$ = this.campaignService.getCampaigns({type: CampaignType.stamp})
+      .pipe(
+        tap((campaigns: ICampaign[]) => this.showCampaigns = campaigns.length > 0),
         takeLast(1)
       );
     const rssFeeds: IRssFeeds = await this.configService.readRssFeeds().toPromise();
@@ -240,6 +227,10 @@ export class HomeComponent implements OnInit, OnDestroy {
         tab.tabName = translation[tab.tabName];
         return tab;
       })));
+  }
+
+  public goToCampaignPage(campaign: ICampaign): void {
+    this.router.navigate([`${campaign.type}/${campaign.id}`]);
   }
 
   public goToReward(reward: IReward): void {
