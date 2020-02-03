@@ -10,12 +10,10 @@ export class FrontDataSource<T> extends MatTableDataSource<T> {
   public filtersState$: BehaviorSubject<{ filters: any | null }> = new BehaviorSubject<{ filters: any | null }>({
     filters: null
   });
-  public sortState$: BehaviorSubject<{ sort: IFrontTableSort | null }> = new BehaviorSubject<{ sort: IFrontTableSort | null }>({
-    sort: null
-  });
-  public paginatorState$: BehaviorSubject<{ paginator: ITablePagination | null }> = new BehaviorSubject<{ paginator: ITablePagination | null }>({
-    paginator: null
-  });
+  public sortState$: BehaviorSubject<{ sort: IFrontTableSort | null }> =
+    new BehaviorSubject<{ sort: IFrontTableSort | null }>({ sort: null });
+  public paginatorState$: BehaviorSubject<{ paginator: ITablePagination | null }> =
+    new BehaviorSubject<{ paginator: ITablePagination | null }>({ paginator: null });
   public addDeleteData$: BehaviorSubject<T[]> = new BehaviorSubject<T[]>(
     this.initData
   );
@@ -34,7 +32,9 @@ export class FrontDataSource<T> extends MatTableDataSource<T> {
     ];
 
     combineLatest(...displayDataChanges).subscribe(
-      ([filtersState, sortState, paginatorState]: [{ filters: any | null }, { sort: IFrontTableSort | null }, { paginator: ITablePagination | null }]) => {
+      ([filtersState, sortState, paginatorState]: [
+        { filters: any | null }, { sort: IFrontTableSort | null },
+        { paginator: ITablePagination | null }]) => {
         let data: T[] = this.initData.slice();
         if (filtersState.filters) {
           data = this.dataMultiFilter(data, filtersState.filters);
@@ -76,23 +76,17 @@ export class FrontDataSource<T> extends MatTableDataSource<T> {
   // TODO typings
   private dataMultiFilter(data: T[], filters: any): T[] {
     const filterKeys = Object.keys(filters);
-    return data.filter((item: T) => {
-      return filterKeys.every((key: any) => {
-        return item[key].match(filters[key]);
-      });
-    });
+    return data.filter((item: T) => filterKeys.every((key: any) => item[key].match(filters[key])));
   }
 
   public dataSort(data: T[], sortData: IFrontTableSort): T[] {
     if (!sortData.active || sortData.direction === '') {
       return data;
     }
-    return data.sort((valueA: T, valueB: T) => {
-      return (
-        (valueA[sortData.active] < valueB[sortData.active] ? -1 : 1) *
+    return data.sort((valueA: T, valueB: T) => (
+      (valueA[sortData.active] < valueB[sortData.active] ? -1 : 1) *
         (sortData.direction === 'asc' ? 1 : -1)
-      );
-    });
+    ));
   }
 
   public dataPaginator(data: T[], paginatorData: ITablePagination): T[] {

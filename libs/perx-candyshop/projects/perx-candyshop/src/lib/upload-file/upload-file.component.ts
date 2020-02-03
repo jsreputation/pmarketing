@@ -13,8 +13,9 @@ import { takeUntil } from 'rxjs/operators';
 import { MatFormField, MatFormFieldControl } from '@angular/material/form-field';
 import { CsFormFieldControl } from '../form-field-control';
 import { IUploadFileResponse, FileUploadStatus } from './upload-file-service.interface';
-import { IHttpParamsOptions } from 'projects/perx-candyshop/src/models/http-params-options.interface';
 import { DefaultUploadFileService } from './default-upload-file.service';
+import { IHttpParamsOptions } from '../../models/http-params-options.interface';
+
 
 @Component({
   selector: 'cs-upload-file',

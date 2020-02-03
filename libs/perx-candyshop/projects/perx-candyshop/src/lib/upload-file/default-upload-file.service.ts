@@ -3,8 +3,8 @@ import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { IUploadedFile } from '../../models/uploaded-file.interface';
-import { IHttpParamsOptions } from 'projects/perx-candyshop/src/models/http-params-options.interface';
 import { UploadFileService } from './upload-file-service.interface';
+import { IHttpParamsOptions } from '../../models/http-params-options.interface';
 
 @Injectable()
 export class DefaultUploadFileService implements UploadFileService {

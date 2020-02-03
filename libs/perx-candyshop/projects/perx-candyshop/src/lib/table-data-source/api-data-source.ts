@@ -2,13 +2,13 @@ import { MatSort } from '@angular/material';
 import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
 import { debounceTime, map, takeUntil } from 'rxjs/operators';
 import { DataSource } from '@angular/cdk/collections';
-import { IHttpParamsOptions } from 'projects/perx-candyshop/src/models/http-params-options.interface';
 import { IApiTableData } from './models/api-table-data.interface';
 import { IApiTableService } from './models/api-table-service.interface';
 import { ApiTableSortModel } from './models/api-table-sort.model';
-import { ITablePagination } from 'projects/perx-candyshop/src/lib/table-data-source/models/table-pagination.interface';
 import { ApiDataSourceStates } from './models/api-data-source-states.enum';
-import { ApiDataSourceUpdateSchema } from 'projects/perx-candyshop/src/lib/table-data-source/models/api-data-source-update-schema.enum';
+import { IHttpParamsOptions } from '../../models/http-params-options.interface';
+import { ApiDataSourceUpdateSchema } from './models/api-data-source-update-schema.enum';
+import { ITablePagination } from './models/table-pagination.interface';
 
 export class ApiDataSource<T> extends DataSource<T> {
   private dataSubject: BehaviorSubject<T[]> = new BehaviorSubject<T[]>([]);
@@ -134,10 +134,7 @@ export class ApiDataSource<T> extends DataSource<T> {
       throw new Error('Sort is undefined');
     }
     sort.sortChange
-      .pipe(
-        debounceTime(300),
-        takeUntil(this.destroy$)
-      )
+      .pipe(debounceTime(300), takeUntil(this.destroy$))
       .subscribe(newSort => this.sort = newSort);
   }
 
@@ -161,7 +158,11 @@ export class ApiDataSource<T> extends DataSource<T> {
             this.dataSubject.next(res.data);
             this.lengthData.next(res.meta.record_count || 0);
             this.loadingSubject.next(false);
-            const status = (res.data.length > 0 && 'record_count' in res.meta && res.meta.record_count && res.meta.record_count > 0) ? ApiDataSourceStates.hasDataApi : ApiDataSourceStates.noDataApi;
+            const status = (res.data.length > 0
+              && 'record_count' in res.meta && res.meta.record_count
+              && res.meta.record_count > 0)
+              ? ApiDataSourceStates.hasDataApi
+              : ApiDataSourceStates.noDataApi;
             this.setState(status);
           },
           () => {

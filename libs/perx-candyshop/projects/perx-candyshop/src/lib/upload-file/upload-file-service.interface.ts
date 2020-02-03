@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { IHttpParamsOptions } from 'projects/perx-candyshop/src/models/http-params-options.interface';
+import { IHttpParamsOptions } from '../../models/http-params-options.interface';
 
 export enum FileUploadStatus {
   pending = 'pending',

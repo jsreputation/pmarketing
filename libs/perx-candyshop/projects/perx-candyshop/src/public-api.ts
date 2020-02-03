@@ -126,3 +126,5 @@ export { ApiDataSourceStates } from './lib/table-data-source/models/api-data-sou
 export { ApiDataSourceUpdateSchema } from './lib/table-data-source/models/api-data-source-update-schema.enum';
 export { FrontDataSource } from './lib/table-data-source/front-data-source';
 export { ApiDataSource } from './lib/table-data-source/api-data-source';
+export { IMeta } from './models/meta.interface';
+export { IHttpParamsOptions } from './models/http-params-options.interface';
