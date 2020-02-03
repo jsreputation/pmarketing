@@ -8,7 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthService, LocalStorageService, SessionService } from '@es-core';
-import { TestAuthService } from '@es-shared/test-components/providers/test-auth.service';
+import { TestAuthService } from '@es-shared';
 
 describe('MainContainerComponent', () => {
   let component: MainContainerComponent;

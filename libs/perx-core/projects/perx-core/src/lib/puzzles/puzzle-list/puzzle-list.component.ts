@@ -12,6 +12,7 @@ import { takeUntil } from 'rxjs/operators';
 export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
   @Input('cards')
   public puzzles: Observable<IStampCard[]> | null = null;
+  private cards: IStampCard[] | null = null;
 
   @Input()
   public repeatGhostCount: number = 10;
@@ -51,16 +52,47 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
     if (!this.puzzleTextFn) {
       this.puzzleTextFn = () => 'new pieces';
     }
+
+    if (this.puzzles) {
+      this.puzzles
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((res: IStampCard[]) => {
+          this.initTotal(res);
+          // assume all is completed
+          let completed = true;
+          // loop over all puzzles
+          for (const puzzle of res) {
+            if (puzzle.stamps === undefined || puzzle.stamps.length === 0) {
+              // if there is no stamps objet at all then, it is not completed
+              completed = false;
+            } else if (puzzle.stamps.some(stamp => stamp.state === StampState.issued)) {
+              // if any transction is issued, then it is not all completed
+              completed = false;
+            }
+
+            // if one is not completed, we do not need to loop any further
+            if (!completed) {
+              break;
+            }
+          }
+          // if completed emit an event.
+          if (completed) {
+            this.completed.emit();
+          }
+        });
+    }
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.campaignId) {
       this.puzzles = null;
+      this.cards = null;
       if (this.campaignId !== null) {
         this.puzzles = this.stampService.getCards(this.campaignId);
         this.puzzles
           .pipe(takeUntil(this.destroy$))
           .subscribe((res: IStampCard[]) => {
+            this.cards = res;
             this.initTotal(res);
             // assume all is completed
             let completed = true;
@@ -86,6 +118,9 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
           });
       }
     }
+    if (changes.puzzles && this.puzzles) {
+      this.puzzles.subscribe(res => this.cards = res);
+    }
   }
 
   public puzzleSelected(puzzle: IStampCard): void {
@@ -95,15 +130,12 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
   // in the UX only mark the 1st active puzzle as active
   public isActive(puzzle: IStampCard): boolean {
     // if there is no puzzle in list, it should never happen but return false
-    if (!Array.isArray(this.puzzles)) {
-      return false;
-    }
-    // if we have no information on stamps then it should not be active
-    if (!puzzle.stamps && puzzle.displayProperties.displayCampaignAs === 'puzzle') {
+    if (!Array.isArray(this.cards)) {
       return false;
     }
 
-    if (!puzzle.stamps && puzzle.displayProperties.displayCampaignAs === 'stamp_card') {
+    // if we have no information on stamps then it should not be active
+    if (!puzzle.stamps && ['puzzle', 'stamp_card'].includes(puzzle.displayProperties.displayCampaignAs)) {
       return false;
     }
 
@@ -116,7 +148,7 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
       }
 
       // get list of active puzzles
-      const activePuzzles = this.puzzles.filter(p => p.state === StampCardState.active &&
+      const activePuzzles = this.cards.filter(p => p.state === StampCardState.active &&
         p.stamps &&
         p.stamps.filter(st => st.state === StampState.redeemed).length < totalSlots);
 
@@ -129,15 +161,13 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
       if (puzzle.id === activePuzzles[0].id) {
         return true;
       }
-    }
-
-    if (puzzle.displayProperties.displayCampaignAs === 'stamp_card') {
+    } else if (puzzle.displayProperties.displayCampaignAs === 'stamp_card') {
       if (puzzle.stamps && puzzle.stamps.filter(st => st.state === StampState.redeemed).length >= totalSlots) {
         return false;
       }
 
       // get list of active puzzles
-      const activePuzzles = this.puzzles.filter(p => p.state === StampCardState.active &&
+      const activePuzzles = this.cards.filter(p => p.state === StampCardState.active &&
         p.stamps &&
         p.stamps.filter(st => st.state === StampState.redeemed).length < totalSlots);
 

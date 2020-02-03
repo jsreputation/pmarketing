@@ -142,7 +142,11 @@ commands:
       - run:
           name: Setup REDIRECT_AFTER_LOGIN var
           command: |
-            if [[ $APP == 'petron-demo' || $APP == 'oracle-demo' || $APP == 'feature-demo' || $APP == 'all-it' ]]
+            if [ $APP == 'petron-demo'] || \
+               [ $APP == 'oracle-demo'] || \
+               [ $APP == 'feature-demo'] || \
+               [ $APP == 'all-it' ] || \
+               [ $APP == 'commbank-demo' ]]
             then
               REDIRECT_AFTER_LOGIN="/home"
             elif [ $APP == 'blackcomb' ]
@@ -214,7 +218,7 @@ jobs:
             fi
             echo "after second set APP: ${APP}"
 
-            if [[ $APP == 'petron-demo' || $APP == 'oracle-demo' || $APP == 'feature-demo' ]]
+            if [[ $APP == 'petron-demo' || $APP == 'oracle-demo' || $APP == 'feature-demo' || $APP == 'commbank-demo' ]]
             then
               export APP_BASE="blackcomb"
             else

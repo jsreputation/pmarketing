@@ -10,7 +10,7 @@ import { SessionService } from '@es-core/services/session.service';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthService } from '@es-core';
-import { TestAuthService } from '@es-shared/test-components/providers/test-auth.service';
+import { TestAuthService } from '@es-shared';
 
 describe('LoginFormComponent', () => {
   let component: LoginFormComponent;
@@ -52,6 +52,6 @@ describe('LoginFormComponent', () => {
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+   expect(component).toBeTruthy();
   });
 });

@@ -18,7 +18,7 @@
               {{titleFn(i, (puzzles | async)?.length)}}
             </ng-container>
             <span class="badge-warn">
-              {{nbPlacedStamps(puzzle)}}/{{total}}
+              {{nbPlacedStamps(puzzle)}}/{{puzzle?.displayProperties.totalSlots}}
             </span>
           </h1>
           <p>{{nbAvailableStamps(puzzle)}} {{puzzleTextFn(puzzle)}}</p>
