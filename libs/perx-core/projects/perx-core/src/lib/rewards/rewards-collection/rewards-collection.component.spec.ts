@@ -5,12 +5,19 @@ import {
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
-import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 import { RewardsCollectionComponent } from './rewards-collection.component';
 import { IReward } from '../models/reward.model';
 import { MaterialModule } from '../../shared/material.module';
 import { UtilsModule } from '../../utils/utils.module';
 import { ThemesService } from '../../utils/themes/themes.service';
+import { Directive, Input } from '@angular/core';
+
+@Directive({
+  selector: '[ngxEllipsis]'
+})
+export class LineDirectiveMock {
+  @Input() lines: number;
+}
 
 describe('RewardsCollectionComponent', () => {
   let component: RewardsCollectionComponent;
@@ -91,15 +98,17 @@ describe('RewardsCollectionComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RewardsCollectionComponent],
+      declarations: [
+        RewardsCollectionComponent,
+        LineDirectiveMock
+      ],
       imports: [
         MaterialModule,
         UtilsModule,
-        NgxMultiLineEllipsisModule,
       ],
       providers: [
         { provide: ThemesService, useValue: themesServiceStub }
-      ],
+      ]
     })
       .compileComponents();
   }));
