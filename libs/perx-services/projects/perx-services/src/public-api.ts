@@ -2,4 +2,4 @@
  * Public API Surface of perx-services
  */
 
-export * from './lib/perx-services.module';
+export * from './lib/http-services/http-services.module';

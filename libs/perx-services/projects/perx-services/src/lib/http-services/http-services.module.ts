@@ -2,12 +2,10 @@ import { InjectionToken, ModuleWithProviders, NgModule, Optional, SkipSelf } fro
 import { CommonModule } from '@angular/common';
 
 import { HttpClientModule } from '@angular/common/http';
-import { ApiConfigServices } from '../configs/api-config';
 
 export const BASE_URL_WS = new InjectionToken<string>('BaseUrl');
 
 const providers: any[] = [
-  ApiConfigServices
 ];
 
 @NgModule({
