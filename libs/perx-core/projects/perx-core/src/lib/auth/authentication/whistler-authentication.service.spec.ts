@@ -42,24 +42,24 @@ describe('WhistlerAuthenticationService', () => {
 
   it('check isAuthorized', inject([WhistlerAuthenticationService, TokenStorage],
     (auth: WhistlerAuthenticationService, storage: TokenStorage) => {
-      const spy = spyOn(storage, 'getAppInfoProperty');
+      const spy = jest.spyOn(storage, 'getAppInfoProperty');
       auth.isAuthorized();
       expect(spy).toHaveBeenCalledWith('userAccessToken');
     }));
 
   it('refreshToken', inject([WhistlerAuthenticationService], (auth: WhistlerAuthenticationService) => {
-    const spyLogOut = spyOn(auth, 'logout');
+    const spyLogOut = jest.spyOn(auth, 'logout');
     auth.refreshToken().subscribe(() => { });
     expect(spyLogOut).toHaveBeenCalled();
-    spyOn(auth, 'getPI').and.returnValue('2');
-    const spyLogin = spyOn(auth, 'autoLogin').and.returnValue(of(void 0));
+    jest.spyOn(auth, 'getPI').mockReturnValue('2');
+    const spyLogin = jest.spyOn(auth, 'autoLogin').mockReturnValue(of(void 0));
     auth.refreshToken().subscribe(() => { });
     expect(spyLogin).toHaveBeenCalled();
   }));
 
   it('autoLogin', fakeAsync(inject([WhistlerAuthenticationService, HttpClient],
     (auth: WhistlerAuthenticationService, http: HttpClient) => {
-      const spyHttp = spyOn(http, 'post').and.returnValue(of({ data: [{ attributes: { jwt: 'token' } }] }));
+      const spyHttp = jest.spyOn(http, 'post').mockReturnValue(of({ data: [{ attributes: { jwt: 'token' } }] }));
       auth.autoLogin().subscribe(() => { });
       tick();
       expect(spyHttp).toHaveBeenCalled();
@@ -67,7 +67,7 @@ describe('WhistlerAuthenticationService', () => {
 
   it('autoLogin error handle', fakeAsync(inject([WhistlerAuthenticationService, HttpClient],
     (auth: WhistlerAuthenticationService, http: HttpClient) => {
-      spyOn(http, 'post').and.returnValue(of({ data: [{ attributes: { jwt: null } }] }));
+      jest.spyOn(http, 'post').mockReturnValue(of({ data: [{ attributes: { jwt: null } }] }));
       const errorFunction = () => {
         auth.autoLogin().subscribe(() => { });
         tick();
@@ -77,8 +77,8 @@ describe('WhistlerAuthenticationService', () => {
 
   it('createUserAndAutoLogin', fakeAsync(inject([WhistlerAuthenticationService, HttpClient],
     (auth: WhistlerAuthenticationService, http: HttpClient) => {
-      const spy = spyOn(auth, 'savePI');
-      spyOn(http, 'post').and.returnValue(of({ data: [{ attributes: { jwt: 'token' } }] }));
+      const spy = jest.spyOn(auth, 'savePI');
+      jest.spyOn(http, 'post').mockReturnValue(of({ data: [{ attributes: { jwt: 'token' } }] }));
       auth.createUserAndAutoLogin(
         'test',
         {
@@ -96,7 +96,7 @@ describe('WhistlerAuthenticationService', () => {
 
   it('createUserAndAutoLogin error handle', fakeAsync(inject([WhistlerAuthenticationService, HttpClient],
     (auth: WhistlerAuthenticationService, http: HttpClient) => {
-      spyOn(http, 'post').and.returnValue(of({ data: [{ attributes: { jwt: null } }] }));
+      jest.spyOn(http, 'post').mockReturnValue(of({ data: [{ attributes: { jwt: null } }] }));
       const errorFunction = () => {
         auth.createUserAndAutoLogin('test').subscribe(() => { });
         tick();
@@ -117,15 +117,15 @@ describe('WhistlerAuthenticationService', () => {
 
   it('should login', fakeAsync(inject([WhistlerAuthenticationService, HttpClient],
     (auth: WhistlerAuthenticationService, http: HttpClient) => {
-      const spy = spyOn(http, 'post').and.returnValue(of({ headers: { get: () => 'token' } }));
+      const spy = jest.spyOn(http, 'post').mockReturnValue(of({ headers: { get: () => 'token' } }));
       auth.login('test', 'test').subscribe(() => { });
       tick();
       expect(spy).toHaveBeenCalled();
 
-      spy.and.returnValue(throwError(null));
+      spy.mockReturnValue(throwError(null));
       auth.login('test', 'test').subscribe(() => { });
 
-      spy.and.returnValue(of({ headers: { get: () => null } }));
+      spy.mockReturnValue(of({ headers: { get: () => null } }));
       const errorFunction = () => {
         auth.login('test', 'test').subscribe(() => { });
         tick();
@@ -156,7 +156,7 @@ describe('WhistlerAuthenticationService', () => {
 
   it('logout', inject([WhistlerAuthenticationService, TokenStorage],
     (auth: WhistlerAuthenticationService, tokenStorage: TokenStorage) => {
-      const spy = spyOn(tokenStorage, 'clearAppInfoProperty');
+      const spy = jest.spyOn(tokenStorage, 'clearAppInfoProperty');
       auth.logout();
       expect(spy).toHaveBeenCalled();
     }));
@@ -166,7 +166,7 @@ describe('WhistlerAuthenticationService', () => {
       expect(token).toBe(auth.getUserAccessToken() ? auth.getUserAccessToken() : auth.getUserAccessToken());
     });
     tick();
-    spyOn(auth, 'getUserAccessToken').and.returnValue('token');
+    jest.spyOn(auth, 'getUserAccessToken').mockReturnValue('token');
     auth.getAccessToken().subscribe((token) => {
       expect(token).toBe('token');
     });
@@ -175,7 +175,7 @@ describe('WhistlerAuthenticationService', () => {
 
   it('should call tokenStorage', inject([WhistlerAuthenticationService, TokenStorage],
     (auth: WhistlerAuthenticationService, tokenStorage: TokenStorage) => {
-      const setAppInfoProperty = spyOn(tokenStorage, 'setAppInfoProperty');
+      const setAppInfoProperty = jest.spyOn(tokenStorage, 'setAppInfoProperty');
       auth.saveAppAccessToken('token');
       expect(setAppInfoProperty).toHaveBeenCalledWith('token', 'appAccessToken');
       auth.savePI('pi');
@@ -184,22 +184,22 @@ describe('WhistlerAuthenticationService', () => {
 
   it('should  get anonymous', fakeAsync(inject([WhistlerAuthenticationService, TokenStorage],
     (auth: WhistlerAuthenticationService, storage: TokenStorage) => {
-      spyOn(storage, 'getAppInfoProperty').and.returnValue('true');
+      jest.spyOn(storage, 'getAppInfoProperty').mockReturnValue('true');
       expect(auth.getAnonymous()).toBeTruthy();
     })));
 
   it('should  getUserId', fakeAsync(inject([WhistlerAuthenticationService, TokenStorage],
     (auth: WhistlerAuthenticationService, storage: TokenStorage) => {
-      const spy = spyOn(storage, 'getAppInfoProperty');
-      spy.and.returnValue('30');
+      const spy = jest.spyOn(storage, 'getAppInfoProperty');
+      spy.mockReturnValue('30');
       expect(auth.getUserId()).toBe(30);
-      spy.and.returnValue(undefined);
+      spy.mockReturnValue(undefined);
       expect(auth.getUserId()).toBe(null);
     })));
 
   it('mergeUserById', fakeAsync(inject([WhistlerAuthenticationService, HttpClient],
     (auth: WhistlerAuthenticationService, http: HttpClient) => {
-      const spy = spyOn(http, 'post').and.returnValue(of());
+      const spy = jest.spyOn(http, 'post').mockReturnValue(of());
       auth.mergeUserById([1], 2);
       tick();
       expect(spy).toHaveBeenCalled();

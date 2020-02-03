@@ -2,8 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RewardPopupComponent } from './reward-popup.component';
 import { ExpireTimerComponent } from './expire-timer/expire-timer.component';
-import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Type } from '@angular/core';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+// import { Type } from '@angular/core';
 import { IPopupConfig } from '../../utils/popup/popup.component';
 
 interface IRewardPopupConfig extends IPopupConfig {
@@ -18,7 +18,7 @@ interface TimerCallBack {
 describe('RewardPopupComponent', () => {
   let component: RewardPopupComponent;
   let fixture: ComponentFixture<RewardPopupComponent>;
-  let dialogRef: MatDialogRef<RewardPopupComponent>;
+  const dialogRef: Partial<MatDialogRef<RewardPopupComponent>> = { close: () => { } };
 
   const dataMock: IRewardPopupConfig = {
     timerCallbacks: {
@@ -32,9 +32,8 @@ describe('RewardPopupComponent', () => {
       declarations: [RewardPopupComponent, ExpireTimerComponent],
       imports: [MatDialogModule],
       providers: [
-        { provide: MatDialogRef, useValue: {} },
         { provide: MAT_DIALOG_DATA, useValue: dataMock },
-        { provide: MatDialogRef, useValue: { close: () => { } } }
+        { provide: MatDialogRef, useValue: dialogRef }
       ]
     })
       .compileComponents();
@@ -42,7 +41,6 @@ describe('RewardPopupComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RewardPopupComponent);
-    dialogRef = TestBed.get<MatDialogRef<RewardPopupComponent>>(MatDialogRef as Type<MatDialogRef<RewardPopupComponent>>);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -55,7 +53,7 @@ describe('RewardPopupComponent', () => {
     if (!component.data.timerCallbacks) {
       return;
     }
-    spyOn(component.data.timerCallbacks, 'timerExpired');
+    jest.spyOn(component.data.timerCallbacks, 'timerExpired').mockImplementation(() => {});
     component.onTimerExpired();
     expect(component.data.timerCallbacks.timerExpired).toHaveBeenCalled();
   });
@@ -64,20 +62,22 @@ describe('RewardPopupComponent', () => {
     if (!component.data.timerCallbacks) {
       return;
     }
-    spyOn(component.data.timerCallbacks, 'timerExpiring');
+    jest.spyOn(component.data.timerCallbacks, 'timerExpiring').mockImplementation(() => {});
     component.onExpiring();
     expect(component.data.timerCallbacks.timerExpiring).toHaveBeenCalled();
   });
 
   it('should close dialog onClose', () => {
-    const spy = spyOn(dialogRef, 'close');
+    const dialogRef = TestBed.get(MatDialogRef);
+    const spy = jest.spyOn(dialogRef, 'close');
     component.onClose();
-    expect(spy).toHaveBeenCalled();
+    expect(spy).toBeCalledTimes(1);
   });
 
   describe('buttonPressed', () => {
     it('should close dialog onClose', () => {
-      const spy = spyOn(dialogRef, 'close');
+      const dialogRef = TestBed.get(MatDialogRef);
+      const spy = jest.spyOn(dialogRef, 'close');
       component.buttonPressed();
       expect(spy).toHaveBeenCalled();
     });
@@ -98,7 +98,6 @@ describe('RewardPopupComponent', () => {
       declarations: [RewardPopupComponent, ExpireTimerComponent],
       imports: [MatDialogModule],
       providers: [
-        { provide: MatDialogRef, useValue: {} },
         { provide: MAT_DIALOG_DATA, useValue: dataStub },
         { provide: MatDialogRef, useValue: { close: () => { } } }
       ]

@@ -60,7 +60,7 @@ describe('WhistlerMerchantsService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should get a merchant from its id', (done: DoneFn) => {
+  it('should get a merchant from its id', (done: jest.DoneCallback) => {
     service.getMerchant(42)
       .subscribe((m: IMerchant) => {
         expect(`${m.id}`).toEqual(mockMerchant.id);
@@ -79,7 +79,7 @@ describe('WhistlerMerchantsService', () => {
 
   it('should getallmerchant', fakeAsync(inject([WhistlerMerchantsService, HttpClient],
     (merchantService: WhistlerMerchantsService, http: HttpClient) => {
-      const spy = spyOn(http, 'get').and.returnValue(of({ data: [mockMerchant, { ...mockMerchant, id: 5 }], meta: { page_count: 2 } }));
+      const spy = jest.spyOn(http, 'get').mockReturnValue(of({ data: [mockMerchant, { ...mockMerchant, id: 5 }], meta: { page_count: 2 } }));
       merchantService.getAllMerchants().subscribe(() => { });
       tick();
       expect(spy).toHaveBeenCalled();
@@ -87,11 +87,11 @@ describe('WhistlerMerchantsService', () => {
 
   it('should getMerchants', fakeAsync(inject([WhistlerMerchantsService, HttpClient],
     (merchantService: WhistlerMerchantsService, http: HttpClient) => {
-      const spy = spyOn(http, 'get').and.returnValue(of({ data: [mockMerchant], meta: {} }));
+      const spy = jest.spyOn(http, 'get').mockReturnValue(of({ data: [mockMerchant], meta: {} }));
       merchantService.getMerchants().subscribe(() => { });
       tick();
       expect(spy).toHaveBeenCalled();
-      spy.and.returnValue(of({ data: [mockMerchant] }));
+      spy.mockReturnValue(of({ data: [mockMerchant] }));
       merchantService.getMerchants(1).subscribe(() => { });
       tick();
       expect(spy).toHaveBeenCalled();
@@ -99,7 +99,7 @@ describe('WhistlerMerchantsService', () => {
 
   it('should return mechant from last call', fakeAsync(inject([WhistlerMerchantsService, HttpClient],
     (merchantService: WhistlerMerchantsService, http: HttpClient) => {
-      spyOn(http, 'get').and.returnValue(of({ data: [mockMerchant], meta: { page_count: 3 } }));
+      jest.spyOn(http, 'get').mockReturnValue(of({ data: [mockMerchant], meta: { page_count: 3 } }));
       merchantService.getAllMerchants().subscribe(() => { });
       tick();
       merchantService.getMerchant(42).subscribe(() => { });

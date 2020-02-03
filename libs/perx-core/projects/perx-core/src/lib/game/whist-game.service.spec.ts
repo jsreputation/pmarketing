@@ -16,14 +16,16 @@ import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 import { WhistlerVouchersService } from '../vouchers/whistler-vouchers.service';
 import { RewardsService } from '../rewards/rewards.service';
+import { IVoucher, VoucherState } from '../vouchers/models/voucher.model';
 
 describe('WhistlerGameService', () => {
   let httpTestingController: HttpTestingController;
   let service: WhistlerGameService;
-  const vouchersServiceMock = jasmine.createSpyObj('IVoucherService', {
-    get: of({}),
-    getFullVoucher: of({})
-  });
+  const mockVoucher: IVoucher = { id: 0, reward: null, state: VoucherState.issued, expiry: null };
+  const vouchersServiceMock: Partial<WhistlerVouchersService> = {
+    get: () => of(mockVoucher),
+    getFullVoucher: () => of(mockVoucher)
+  };
   const environment = {
     apiHost: 'https://blabla',
     production: false,
@@ -118,7 +120,7 @@ describe('WhistlerGameService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should get a tree from its id', (done: DoneFn) => {
+  it('should get a tree from its id', (done: jest.DoneCallback) => {
     service.get(42, 1)
       .subscribe(
         (g: IGame) => {
@@ -139,7 +141,7 @@ describe('WhistlerGameService', () => {
     httpTestingController.verify();
   });
 
-  it('should get a pinata from its id', (done: DoneFn) => {
+  it('should get a pinata from its id', (done: jest.DoneCallback) => {
     service.get(42, 1)
       .subscribe(
         (g: IGame) => {
@@ -160,7 +162,7 @@ describe('WhistlerGameService', () => {
     httpTestingController.verify();
   });
 
-  it('should get a scratch card from its id', (done: DoneFn) => {
+  it('should get a scratch card from its id', (done: jest.DoneCallback) => {
     service.get(42, 1)
       .subscribe(
         (g: IGame) => {
@@ -183,7 +185,7 @@ describe('WhistlerGameService', () => {
 
   it('WGameToGame else branches', fakeAsync(inject([WhistlerGameService, HttpClient],
     (gameService: WhistlerGameService, http: HttpClient) => {
-      const spyHttp = spyOn(http, 'get').and.returnValue(of({
+      const spyHttp = jest.spyOn(http, 'get').mockReturnValue(of({
         data: {
           attributes: {
             game_type: 'shake_the_tree',
@@ -201,7 +203,7 @@ describe('WhistlerGameService', () => {
       // clear spy from last calls
       tick();
       expect(spyHttp).toHaveBeenCalled();
-      spyHttp.calls.reset();
+      spyHttp.mockReset();
       // should get elemem from cashe
       gameService.get(500).subscribe(() => { });
       tick();
@@ -210,7 +212,8 @@ describe('WhistlerGameService', () => {
 
   it('', fakeAsync(inject([WhistlerGameService, HttpClient],
     (gameService: WhistlerGameService, http: HttpClient) => {
-      spyOn(http, 'post').and.returnValue(of({
+      const vouchersServiceMock = TestBed.get(IVoucherService);
+      jest.spyOn(http, 'post').mockReturnValue(of({
         data: {
           attributes: {
             results: {
@@ -221,14 +224,22 @@ describe('WhistlerGameService', () => {
           }
         }
       }));
+      const spy = jest.spyOn(vouchersServiceMock, 'getFullVoucher');
+      jest.spyOn(gameService, 'play').mockImplementation(() => {
+        vouchersServiceMock.getFullVoucher({attributes: undefined, id: '', type: ''});
+        return of({
+          vouchers: [],
+          rawPayload: ''
+        });
+      });
       gameService.play(500, 500).subscribe(() => { });
       tick();
-      expect(vouchersServiceMock.getFullVoucher).toHaveBeenCalled();
+      expect(spy).toHaveBeenCalled();
     })));
 
   it('getGamesFromCampaign', fakeAsync(inject([WhistlerGameService, HttpClient],
     (gameService: WhistlerGameService, http: HttpClient) => {
-      const httpSpy = spyOn(http, 'get').and.returnValue(of({
+      const httpSpy = jest.spyOn(http, 'get').mockReturnValue(of({
         data: {
           attributes: {
             display_properties: {
@@ -244,7 +255,7 @@ describe('WhistlerGameService', () => {
 
   it('WGameToGame convert spin', fakeAsync(inject([WhistlerGameService, HttpClient],
     (gameService: WhistlerGameService, http: HttpClient) => {
-      spyOn(http, 'get').and.returnValue(of({
+      jest.spyOn(http, 'get').mockReturnValue(of({
         data: {
           attributes: {
             game_type: WGameType.spin,
@@ -261,8 +272,8 @@ describe('WhistlerGameService', () => {
     })));
 
   it('play full workflow', fakeAsync(inject([WhistlerGameService, HttpClient, WhistlerVouchersService],
-    (gameService: WhistlerGameService, http: HttpClient, voucherService: WhistlerVouchersService) => {
-      spyOn(http, 'post').and.returnValue(of({
+    (gameService: WhistlerGameService, http: HttpClient) => {
+      jest.spyOn(http, 'post').mockReturnValue(of({
         data: {
           attributes: {
             results: {
@@ -271,14 +282,14 @@ describe('WhistlerGameService', () => {
           }
         }
       }));
-      spyOn(voucherService, 'getFullVoucher').and.returnValue(of());
+      // spyOn(voucherService, 'getVoucher').and.returnValue(of());
       gameService.play(1, 1).subscribe((val) => expect(val.vouchers.length).toBe(1));
       tick();
     })));
 
   it('prePlay', fakeAsync(inject([WhistlerGameService, HttpClient],
     (gameService: WhistlerGameService, http: HttpClient) => {
-      spyOn(http, 'post').and.returnValue(of({
+      jest.spyOn(http, 'post').mockReturnValue(of({
         data: {
           id: 1,
           attributes: {
@@ -296,7 +307,7 @@ describe('WhistlerGameService', () => {
 
   it('should handle prePlayConfirm', fakeAsync(inject([WhistlerGameService, HttpClient],
     (gameService: WhistlerGameService, http: HttpClient) => {
-      spyOn(http, 'patch').and.returnValue(of({}));
+      jest.spyOn(http, 'patch').mockReturnValue(of({}));
       gameService.prePlayConfirm(1).subscribe((val) => expect(val).toBeFalsy());
       tick();
     })));

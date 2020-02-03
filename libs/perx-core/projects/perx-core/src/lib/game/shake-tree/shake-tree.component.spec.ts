@@ -24,7 +24,7 @@ describe('ShakeTreeComponent', () => {
   });
 
   it('shoul clear susbcriptions', () => {
-    const spy = spyOn(component.tap, 'complete');
+    const spy = jest.spyOn(component.tap, 'complete');
     component.ngOnDestroy();
     expect(spy).toHaveBeenCalled();
   });

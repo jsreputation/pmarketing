@@ -43,7 +43,7 @@ describe('PuzzleStampComponent', () => {
 
   describe('isStampAvailable', () => {
     it('makes expected calls', () => {
-      spyOn(component, 'getCurrentColumn').and.callThrough();
+      jest.spyOn(component, 'getCurrentColumn');
       component.isStampAvailable(1, 2);
       expect(component.getCurrentColumn).toHaveBeenCalled();
     });
@@ -51,7 +51,7 @@ describe('PuzzleStampComponent', () => {
 
   describe('styleObject', () => {
     it('makes expected calls', () => {
-      spyOn(component, 'isStampAvailable').and.callThrough();
+      jest.spyOn(component, 'isStampAvailable');
       component.styleObject(1, 2);
       expect(component.isStampAvailable).toHaveBeenCalled();
     });
@@ -59,7 +59,7 @@ describe('PuzzleStampComponent', () => {
 
   describe('isStampClicked', () => {
     it('makes expected calls', () => {
-      spyOn(component, 'getCurrentColumn').and.callThrough();
+      jest.spyOn(component, 'getCurrentColumn');
       component.isStampClicked(1, 2);
       expect(component.getCurrentColumn).toHaveBeenCalled();
     });
@@ -67,7 +67,7 @@ describe('PuzzleStampComponent', () => {
 
   describe('cardClick', () => {
     it('makes expected calls', () => {
-      spyOn(component, 'cardClick').and.callThrough();
+      jest.spyOn(component, 'cardClick');
       component.cardClick();
       expect(component.cardClick).toHaveBeenCalled();
     });
@@ -75,7 +75,7 @@ describe('PuzzleStampComponent', () => {
 
   describe('unlockAvailable', () => {
     it('makes expected calls', () => {
-      spyOn(component, 'unlockAvailable').and.callThrough();
+      jest.spyOn(component, 'unlockAvailable');
       component.unlockAvailable();
       expect(component.unlockAvailable).toHaveBeenCalled();
     });
