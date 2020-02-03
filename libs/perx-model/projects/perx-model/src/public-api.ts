@@ -4,3 +4,11 @@
 export { IPLoginRequest, IPLoginResonse } from './lib/auth/login';
 export { IPAuthorizations, IPPermission, PPermissionActions } from './lib/auth/authorizations';
 export { IPAudiences } from './lib/audiences/audiences';
+export { IPCategories } from './lib/categories/categories';
+export { IPLabels } from './lib/labels/labels';
+export { IPCities } from './lib/locations/cities';
+export { IPStates } from './lib/locations/states';
+export { IPLoyalty } from './lib/loyalty/loyalty';
+export { IPRaces } from './lib/race/race';
+export { IPTags } from './lib/tags/tags';
+export { IPTenantConfig } from './lib/tenant/tenant';

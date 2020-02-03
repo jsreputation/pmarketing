@@ -1,4 +1,4 @@
-export interface IPCatgories {
+export interface IPCategories {
   data: any[];
   meta: {
     count: number;
@@ -10,5 +10,5 @@ export interface IPCatgories {
     next_page: null;
     total_pages: number;
     total_count: number;
-  }
+  };
 }

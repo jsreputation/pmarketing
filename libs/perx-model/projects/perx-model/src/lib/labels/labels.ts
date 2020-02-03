@@ -1,5 +1,5 @@
 export interface IPLabels {
-  data: any[],
+  data: any[];
   meta: {
     count: number;
     size: number;
@@ -10,5 +10,5 @@ export interface IPLabels {
     next_page: null,
     total_pages: number;
     total_count: number;
-  }
+  };
 }
