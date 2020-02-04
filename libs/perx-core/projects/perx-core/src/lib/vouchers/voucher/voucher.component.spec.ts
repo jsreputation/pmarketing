@@ -87,7 +87,7 @@ describe('VoucherComponent', () => {
     component.voucherId = 1;
     const voucherService: IVoucherService = fixture.debugElement.injector
       .get<IVoucherService>(IVoucherService as Type<IVoucherService>);
-    const voucherServiceSpy = spyOn(voucherService, 'get').and.returnValue(
+    const voucherServiceSpy = jest.spyOn(voucherService, 'get').mockReturnValue(
       of(mockVoucher)
     );
     component.ngOnChanges({
@@ -98,11 +98,11 @@ describe('VoucherComponent', () => {
     expect(voucherServiceSpy).toHaveBeenCalled();
     expect(mockVoucher.reward).not.toBeNull();
     // @ts-ignore
-    expect(fixture.nativeElement.querySelector('.reward-name').innerText).toEqual(mockVoucher.reward.name);
+    expect(fixture.nativeElement.querySelector('.reward-name').textContent.trim()).toEqual(mockVoucher.reward.name);
     // @ts-ignore
-    expect(fixture.nativeElement.querySelector('.merchant-name').innerText).toEqual(mockVoucher.reward.merchantName);
+    expect(fixture.nativeElement.querySelector('.merchant-name').textContent.trim()).toEqual(mockVoucher.reward.merchantName);
     // @ts-ignore
-    expect(fixture.nativeElement.querySelector('#rewardDescription').innerText).toEqual(mockVoucher.reward.description);
+    expect(fixture.nativeElement.querySelector('#rewardDescription').textContent.trim()).toEqual(mockVoucher.reward.description);
     // @ts-ignore
     expect(fixture.nativeElement.querySelector('.merchant-image').src).toEqual(mockVoucher.reward.merchantImg);
     // @ts-ignore
