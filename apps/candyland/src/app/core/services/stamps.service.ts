@@ -10,10 +10,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class StampsService {
-
-  constructor(private stampHttpService: StampHttpService,
-    private http: HttpClient) {
-  }
+  constructor(private stampHttpService: StampHttpService, private http: HttpClient) { }
 
   public getStampsData(): Observable<IStampsDefaultValue> {
     return this.http.get<IStampsDefaultValue>('assets/actives/stamps/stamps-data.json');

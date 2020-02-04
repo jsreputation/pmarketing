@@ -11,9 +11,11 @@ import { MerchantFormService } from '@cl-shared/components/create-merchant-form/
 })
 export class CreateMerchantComponent implements OnInit {
   public formMerchant: FormGroup;
-  constructor(private router: Router,
+  constructor(
+    private router: Router,
     private routingState: RoutingStateService,
-    private merchantFormService: MerchantFormService) { }
+    private merchantFormService: MerchantFormService
+  ) { }
 
   public ngOnInit(): void {
     this.createFormMerchant();

@@ -4,7 +4,6 @@ import _isEmpty from 'lodash.isempty';
 
 // tslint:disable
 export default class Utils {
-
   public static convertArrToObj(arr: any, propKey: string): { [key: string]: any } {
     return arr.reduce((map, obj) => {
       map[obj[propKey]] = obj;
@@ -87,6 +86,7 @@ export default class Utils {
     return copy;
 
     function walk(target, copy) {
+      /* eslint-disable-next-line guard-for-in */
       for (const key in target) {
         const obj = target[key];
         if (obj instanceof Date) {
@@ -154,11 +154,11 @@ export default class Utils {
     });
   }
 
-  static isEqual(value: any, other: any): boolean {
+  public static isEqual(value: any, other: any): boolean {
     return _isEqual(value, other);
   }
 
-  static getFormData(data): FormData {
+  public static getFormData(data): FormData {
     const formData: FormData = new FormData();
     Object.keys(data).forEach(key => {
       const value = data[key];
@@ -167,7 +167,7 @@ export default class Utils {
     return formData;
   }
 
-  static getFiles<T>(model: T): Partial<T> {
+  public static getFiles<T>(model: T): Partial<T> {
     const partialModel: Partial<T> = {};
     Object.keys(model).forEach((key: string) => {
       if (model[key] && model[key].hasOwnProperty('image')) {
@@ -178,11 +178,11 @@ export default class Utils {
     return partialModel;
   }
 
-  static transformMailTo(email: string): string | null {
+  public static transformMailTo(email: string): string | null {
     return email ? `mailto:${email}` : null;
   }
 
-  static transformTelTo(tel: string): string | null {
+  public static transformTelTo(tel: string): string | null {
     return tel ? `tel:${tel}` : null;
   }
 }
