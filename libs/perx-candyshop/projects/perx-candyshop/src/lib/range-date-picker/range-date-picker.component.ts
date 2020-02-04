@@ -1,15 +1,17 @@
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Component,
-  forwardRef,
+  Component, Host,
   Input,
   OnDestroy,
-  OnInit
+  OnInit, Optional, Self, ViewChild
 } from '@angular/core';
-import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { takeUntil } from 'rxjs/operators';
+import { AbstractControl, ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
+import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { noop, Subject } from 'rxjs';
+import { CsFormFieldControl } from '../form-field-control';
+import { MatDatepicker, MatFormField, MatFormFieldControl } from '@angular/material';
+import Utils from '../../utils';
 
 @Component({
   selector: 'cs-range-date-picker',
@@ -17,49 +19,62 @@ import { noop, Subject } from 'rxjs';
   styleUrls: ['./range-date-picker.component.scss'],
   providers: [
     {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => RangeDatePickerComponent),
-      multi: true
+      provide: MatFormFieldControl,
+      useExisting: RangeDatePickerComponent
     }
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RangeDatePickerComponent implements OnInit, OnDestroy, ControlValueAccessor {
-  @Input() public control: FormControl = new FormControl();
-  @Input() public placeholder: string = 'Choose a date';
-  @Input() public appearance: string = '';
+export class RangeDatePickerComponent extends CsFormFieldControl<any> implements OnInit, OnDestroy, ControlValueAccessor {
+  // @Input() public control: FormControl = new FormControl();
+  public datePickerControl: AbstractControl = new FormControl(null, []);
+  // @Input() public placeholder: string = 'Choose a date';
+  // @Input() public appearance: string = '';
 
-  @Input() public set value(obj: string) {
-    if (obj) {
-      const newDate = new Date(obj);
-      this.writeValue(newDate);
-    }
-  }
+  // @Input() set value(obj: string) {
+  //   if (obj) {
+  //     const newDate = new Date(obj);
+  //     this.writeValue(newDate);
+  //   }
+  // }
 
-  public disabledState: boolean = false;
+  // public disabledState: boolean = false;
 
-  @Input() public set disabled(value: boolean) {
-    this.setDisabledState(value);
-  }
+  // @Input() set disabled(value: boolean) {
+  //   this.setDisabledState(value);
+  // }
+  @ViewChild('datePicker', { static: false }) public datePicker: MatDatepicker<Date>;
+  @Input() public clickable: boolean = true;
+  @Input() public minDayPeriod: number = 1;
 
   private onChange: any = noop;
-  // @ts-ignore
   private onTouched: any = noop;
   private destroy$: Subject<void> = new Subject();
 
-  constructor(private cd: ChangeDetectorRef) { }
+  constructor(@Optional() @Self() public ngControl: NgControl,
+    @Optional() @Host() protected formField: MatFormField,
+    private cd: ChangeDetectorRef) {
+    super('cs-range-date-picker', ngControl);
+    if (this.ngControl) {
+      this.ngControl.valueAccessor = this;
+    }
+  }
 
   public ngOnInit(): void {
-    this.control.valueChanges
+    this.datePickerControl.valueChanges
       .pipe(
+        distinctUntilChanged(Utils.isEqual),
         takeUntil(this.destroy$)
       )
       .subscribe((value: Date) => {
+        this.value = value;
         this.onChange(value);
+        this.onTouched();
       });
   }
 
   public ngOnDestroy(): void {
+    this.stateChanges.complete();
     this.destroy$.next();
     this.destroy$.complete();
     this.cd.detach();
@@ -71,26 +86,42 @@ export class RangeDatePickerComponent implements OnInit, OnDestroy, ControlValue
 
   public registerOnTouched(fn: any): void {
     this.onTouched = fn;
-    this.control.markAsTouched();
+    this.datePickerControl.markAsTouched();
   }
 
-  public setDisabledState(isDisabled: boolean): void {
-    this.disabledState = isDisabled;
-    if (isDisabled) {
-      this.control.disable();
-    } else {
-      this.control.enable();
-    }
-  }
+  // public setDisabledState(isDisabled: boolean): void {
+  //   this.disabledState = isDisabled;
+  //   if (isDisabled) {
+  //     this.control.disable();
+  //   } else {
+  //     this.control.enable();
+  //   }
+  // }
 
   public writeValue(obj: Date | null): void {
     if (obj) {
-      this.control.patchValue(obj);
+      this.datePickerControl.patchValue(obj, { emitEvent: false });
     } else {
-      this.control.reset();
+      this.datePickerControl.reset();
     }
-    this.onChange(obj);
-    this.cd.detectChanges();
   }
 
+  public open(): void {
+    if (this.datePicker) {
+      this.datePicker.open();
+      this.cd.markForCheck();
+    }
+  }
+
+  public onContainerClick = (): void => {
+    if (this.clickable) {
+      this.open();
+    }
+  }
+
+  public onClickInnerInput(): void {
+    if (!this.formField && this.clickable) {
+      this.open();
+    }
+  }
 }

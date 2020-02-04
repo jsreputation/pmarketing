@@ -1,8 +1,21 @@
-import { ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, Output, ViewChild } from '@angular/core';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { IUploadedFile } from '../../models/uploaded-file.interface';
-import { UploadFileService } from './upload-file.service';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Host,
+  Input,
+  OnDestroy, Optional,
+  Output, Self, ViewChild
+} from '@angular/core';
+import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { MatFormField, MatFormFieldControl } from '@angular/material/form-field';
+import { CsFormFieldControl } from '../form-field-control';
+import { IUploadFileResponse, FileUploadStatus } from './upload-file-service.interface';
+import { DefaultUploadFileService } from './default-upload-file.service';
+import { IHttpParamsOptions } from '../../models/http-params-options.interface';
+
 
 @Component({
   selector: 'cs-upload-file',
@@ -10,74 +23,54 @@ import { UploadFileService } from './upload-file.service';
   styleUrls: ['./upload-file.component.scss'],
   providers: [
     {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => UploadFileComponent),
-      multi: true
+      provide: MatFormFieldControl,
+      useExisting: UploadFileComponent
     }
   ]
 })
-export class UploadFileComponent implements ControlValueAccessor {
-  public MAX_SIZE: number = 1;
-  @ViewChild('fileInput', { static: false }) public fileInput: HTMLInputElement;
-  @Input() public downloadFile: string = 'assets/files/Users_template.csv';
-  @Input() public isRequired: boolean;
-  @Input() public label: string = '';
-  @Input() public downloadButtonText: string = 'Download a sample file';
-  @Input() public uploadButtonText: string = 'Upload file a list';
-  @Input() public requiredErrorText: string = 'Required field';
-  @Output() public deleteFile: EventEmitter<any> = new EventEmitter();
-  @Output() public uploadFile: EventEmitter<any> = new EventEmitter();
+export class UploadFileComponent extends CsFormFieldControl<any>
+  implements ControlValueAccessor, OnDestroy {
 
-  public lock: boolean;
-  public fileName: string;
-  public fileURL: string;
-  public file: any;
+  public fileName: string | null;
   public message: string | null;
-  public loadedFile: boolean | null = false;
+  public loading: boolean = false;
+
+  @ViewChild('fileInput', { static: false }) public fileInput: HTMLInputElement;
+  @Input() public requestOptions: IHttpParamsOptions = {};
+  @Input() public accept: string = 'text/csv';
+  @Input() public showInfo: boolean = true;
+  @Output() public dropFile: EventEmitter<File> = new EventEmitter<File>();
+  @Output() public uploadActions: EventEmitter<IUploadFileResponse> = new EventEmitter<IUploadFileResponse>();
+  @Output() public deleteFile: EventEmitter<void> = new EventEmitter<void>();
+  private destroy$: Subject<void> = new Subject();
+
+  constructor(
+    @Optional() @Self() public ngControl: NgControl,
+    @Optional() @Host() protected formField: MatFormField,
+    @Optional() private uploadFileService: DefaultUploadFileService,
+    private cd: ChangeDetectorRef
+  ) {
+    super('cs-upload-file', ngControl);
+    if (this.ngControl) {
+      this.ngControl.valueAccessor = this;
+    }
+    if (formField) {
+      this.showInfo = false;
+    }
+  }
+
+  public ngOnDestroy(): void {
+    this.stateChanges.complete();
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  // ControlValueAccessor
 
   public onChange: any = () => {
   }
 
   public onTouched: any = () => {
-  }
-
-  constructor(
-    private sanitizer: DomSanitizer,
-    private uploadFileService: UploadFileService,
-    private cd: ChangeDetectorRef
-  ) { }
-
-  public preview(files: FileList): void {
-    this.message = null;
-    if (files.length === 0) {
-      this.setError('Empty file.');
-      return;
-    }
-
-    this.fileName = files[0].name;
-    if (!(/\.csv$/i).test(this.fileName)) {
-      this.setError('Only .csv are supported.');
-      return;
-    }
-
-    const fileSize = this.bitsToMBytes(files[0].size);
-    if (fileSize > this.MAX_SIZE) {
-      this.setError(`File\'s size is ${fileSize.toFixed(1)}Mb more than ${this.MAX_SIZE}Mb`);
-      return;
-    }
-
-    this.fetchFile(files[0]);
-  }
-
-  public sanitizeUrl(data: any): SafeUrl {
-    return this.sanitizer.bypassSecurityTrustUrl(data);
-  }
-
-  public clear(): void {
-    this.file = null;
-    this.onChange(this.file);
-    this.loadedFile = false;
-    this.deleteFile.emit(this.file);
   }
 
   public registerOnChange(fn: any): void {
@@ -88,48 +81,102 @@ export class UploadFileComponent implements ControlValueAccessor {
     this.onTouched = fn;
   }
 
-  public setDisabledState(isDisabled: boolean): void {
-    this.lock = isDisabled;
-  }
-
   public writeValue(obj: any): void {
-    this.file = obj;
+    this.value = obj;
   }
 
-  private bitsToMBytes(bit: number): number {
-    return (bit / 1000000);
-  }
-
-  private fetchFile(file: File): void {
-    this.uploadFileService.uploadFile(file)
-      .subscribe((res: IUploadedFile) => {
-        this.file = res;
-        this.fileURL = res.url;
-        this.loadedFile = true;
-        this.setSelectedFile(res.url);
-        this.message = null;
-        this.cd.markForCheck();
-      },
-      (err: Error) => {
-        this.setError('File haven\'t loaded successfully!', err.message);
-        this.cd.markForCheck();
-      });
-  }
-
-  private setError(message: string, serverError?: string): void {
+  // main logic
+  public drop(files: FileList): void {
+    if (files.length === 0) {
+      return;
+    }
+    const file: File = files[0];
+    this.dropFile.emit(file);
+    this.setFileName(file.name);
+    this.clearError();
     this.onTouched();
-    this.loadedFile = null;
-    this.setSelectedFile(null);
-    this.message = message;
-    if (serverError) {
-      console.warn(serverError);
+    if (this.uploadFileService) {
+      this.upload(file);
     }
   }
 
-  private setSelectedFile(file: any): void {
-    this.uploadFile.emit(file);
+  public delete(): void {
+    this.setSelectedFile(null);
+    this.setFileName(null);
+    this.clearError();
+    this.deleteFile.emit();
+    this.cd.markForCheck();
+  }
+
+  private upload(file: File): void {
+    this.uploadFileService.uploadFile(file, this.requestOptions)
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe(
+        (res: IUploadFileResponse) => {
+          this.uploadActions.emit(res);
+          this.uploadFileHandler(res);
+          this.cd.markForCheck();
+        });
+  }
+
+  private uploadFileHandler(res: IUploadFileResponse): void {
+    this.setFileName(res.fileName);
+    this.setSelectedFile(res.value);
+    switch (res.status) {
+      case FileUploadStatus.success:
+      case FileUploadStatus.successWithError:
+        this.onTouched();
+        this.setLoading(false);
+        break;
+      case FileUploadStatus.error:
+        this.onTouched();
+        this.setLoading(false);
+        this.setError(res.errorMsg);
+        break;
+      case FileUploadStatus.processing:
+      case FileUploadStatus.pending:
+        if (this.control) {
+          this.control.markAsUntouched();
+        }
+        this.setLoading(true);
+        break;
+    }
+  }
+
+  private setError(message: string | null = null): void {
+    this.setSelectedFile(null);
+    this.message = message;
+    this.errorState = true;
+    if (this.control) {
+      this.control.setErrors({ serverError: message }, { emitEvent: false });
+    }
+  }
+
+  private clearError(): void {
+    this.message = null;
+    this.errorState = false;
+  }
+
+  private setFileName(fileName: string | null = null): void {
+    if (this.fileName !== fileName) {
+      this.fileName = fileName;
+    }
+  }
+
+  private setLoading(value: boolean): void {
+    if (this.loading !== value) {
+      this.loading = value;
+    }
+  }
+
+  private setSelectedFile(file: string | null = null): void {
+    if (this.value === file) {
+      return;
+    }
+    this.value = file;
     this.onChange(file);
     this.onTouched();
   }
-
 }

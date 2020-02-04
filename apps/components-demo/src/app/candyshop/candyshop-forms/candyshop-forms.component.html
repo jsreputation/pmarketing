@@ -1,63 +1,231 @@
-<h2>Date Picker</h2>
-<cs-date-picker appearance="outline"></cs-date-picker>
+<mat-checkbox [(ngModel)]="disabled">disabled</mat-checkbox>
+<mat-form-field appearance="outline">
+  <mat-select [(ngModel)]="appearance">
+    <mat-option value="standard">standard</mat-option>
+    <mat-option value="outline">outline</mat-option>
+    <mat-option value="legacy">legacy</mat-option>
+    <mat-option value="fill">fill</mat-option>
+  </mat-select>
+</mat-form-field>
 
-<h2>Range date picker</h2>
-<cs-range-date-picker placeholder="choose date"  appearance="outline"></cs-range-date-picker>
 
-<h2>Separate Range Date Picker</h2>
-<cs-separate-range-date-picker></cs-separate-range-date-picker>
+<mat-accordion>
+  <!--Date Picker-->
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>Date Picker</mat-expansion-panel-header>
 
-<h2>Time Picker</h2>
-<cs-time-picker></cs-time-picker>
+    <h2>standalone</h2>
+    <cs-date-picker [disabled]="disabled"
+                    placeholder="input value">
+    </cs-date-picker>
 
-<h2>Tag List</h2>
-<cs-tag-list></cs-tag-list>
+    <h2>in mat-form-field</h2>
+    <mat-form-field [appearance]="appearance">
+      <cs-date-picker [disabled]="disabled"
+                      placeholder="input value"
+                      [formControl]="newFromControl2">
+      </cs-date-picker>
+      <mat-icon matSuffix>calendar_today</mat-icon>
+      <mat-hint>hint</mat-hint>
+      <mat-error *ngIf="newFromControl.touched && newFromControl.hasError('required')">Error Required</mat-error>
+    </mat-form-field>
 
-<h2>Sms Editor</h2>
-<cs-sms-editor [options]="shortcodes"></cs-sms-editor>
+    <h2>editable input with toggle button</h2>
+    <mat-form-field [appearance]="appearance">
+      <cs-date-picker [disabled]="disabled"
+                      #datePicker
+                      [clickable]="false"
+                      placeholder="input value"
+                      [formControl]="newFromControl">
+      </cs-date-picker>
+      <button mat-icon-button matSuffix (click)="datePicker?.open()">
+        <mat-icon>keyboard_arrow_down</mat-icon>
+      </button>
+      <mat-hint>hint</mat-hint>
+      <mat-error *ngIf="newFromControl.touched && newFromControl.hasError('required')">
+        Error Required
+      </mat-error>
+    </mat-form-field>
 
-<h2>Select Graphic Preview</h2>
-<cs-select-graphic [graphicList]="imagesExample"
-                   [selectedGraphic]="imagesExample[0]">
-</cs-select-graphic>
+    <h2>separate date picker</h2>
+    <mat-form-field [appearance]="appearance">
+      <cs-date-picker [disabled]="disabled"
+                      placeholder="start date"
+                      [max]="rangeEnd.value"
+                      [formControl]="rangeStart">
+      </cs-date-picker>
+      <mat-icon matSuffix>calendar_today</mat-icon>
+    </mat-form-field>
+    <span> --- </span>
+    <mat-form-field [appearance]="appearance">
+      <cs-date-picker [disabled]="disabled"
+                      [min]="rangeStart.value"
+                      placeholder="start date"
+                      [formControl]="rangeEnd">
+      </cs-date-picker>
+      <mat-icon matSuffix>calendar_today</mat-icon>
+    </mat-form-field>
 
-<h2>Upload Graphic</h2>
-<cs-upload-graphic
-  placeholder="Recommended size: 250px by 50px"
-  [isRequired]="true">
-</cs-upload-graphic>
-<br>
-<br>
-<br>
-<br>
+  </mat-expansion-panel>
 
-<cs-upload-graphic
-  classList="stretch"
-  placeholder="Recommended size: 250px by 50px"
-  [isRequired]="true">
-</cs-upload-graphic>
-<br>
-<br>
-<br>
+  <!--Range Date Picker-->
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>Range Date Picker</mat-expansion-panel-header>
 
-<h2>Select Graphic Wrap</h2>
-<cs-select-graphic-wrap
-  [isRequired]="true"
-  [graphicList]="imagesExample"
->
-</cs-select-graphic-wrap>
-<br>
-<br>
-<br>
+    <h2>standalone</h2>
+    <cs-range-date-picker [disabled]="disabled"
+                          placeholder="input value">
+    </cs-range-date-picker>
 
-<h2>Upload File</h2>
-<cs-upload-file downloadFile="http://samplecsvs.s3.amazonaws.com/Sacramentorealestatetransactions.csv"
-                label="Some Label"
-                downloadButtonText="Download Button Text"
-                uploadButtonText='Upload Button Text'
-                requiredErrorText='Required Error Text'
-                [isRequired]="true"
-                (deleteFile)="log($event)"
-                (uploadFile)="log($event)"
->
-</cs-upload-file>
+    <h2>in mat-form-field</h2>
+    <mat-form-field [appearance]="appearance">
+      <cs-range-date-picker [disabled]="disabled"
+                            placeholder="input value"
+                            [formControl]="newFromControl2">
+      </cs-range-date-picker>
+      <mat-icon matSuffix>calendar_today</mat-icon>
+      <mat-hint>hint</mat-hint>
+      <mat-error *ngIf="newFromControl.touched && newFromControl.hasError('required')">Error Required</mat-error>
+    </mat-form-field>
+
+    <h2>editable input with toggle button</h2>
+    <mat-form-field [appearance]="appearance">
+      <cs-range-date-picker [disabled]="disabled"
+                            #rang
+                            [clickable]="false"
+                            placeholder="input value"
+                            [formControl]="newFromControl">
+      </cs-range-date-picker>
+      <button mat-icon-button matSuffix (click)="rang.open()">
+        <mat-icon>keyboard_arrow_down</mat-icon>
+      </button>
+      <mat-hint>hint</mat-hint>
+      <mat-error *ngIf="newFromControl.touched && newFromControl.hasError('required')">
+        Error Required
+      </mat-error>
+    </mat-form-field>
+
+  </mat-expansion-panel>
+
+  <!--Time Picker-->
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>Time Picker</mat-expansion-panel-header>
+
+    <h2>standalone</h2>
+    <cs-time-picker [disabled]="disabled"
+                    placeholder="input value">
+    </cs-time-picker>
+
+    <h2>in mat-form-field</h2>
+    <mat-form-field [appearance]="appearance">
+      <cs-time-picker [disabled]="disabled"
+                      placeholder="input value"
+                      [formControl]="newFromControl2">
+      </cs-time-picker>
+      <mat-icon matSuffix>access_time</mat-icon>
+      <mat-hint>hint</mat-hint>
+      <mat-error *ngIf="newFromControl.touched && newFromControl.hasError('required')">Error Required</mat-error>
+    </mat-form-field>
+
+    <h2>editable input with toggle button</h2>
+    <mat-form-field [appearance]="appearance">
+      <cs-time-picker [disabled]="disabled"
+                      #time
+                      [clickable]="false"
+                      placeholder="input value"
+                      [formControl]="newFromControl">
+      </cs-time-picker>
+      <button mat-icon-button matSuffix (click)="time.open()">
+        <mat-icon>
+          access_time
+        </mat-icon>
+      </button>
+      <mat-hint>hint</mat-hint>
+      <mat-error *ngIf="newFromControl.touched && newFromControl.hasError('required')">
+        Error Required
+      </mat-error>
+    </mat-form-field>
+
+  </mat-expansion-panel>
+
+  <!--Color Picker-->
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>Color Picker</mat-expansion-panel-header>
+
+    <h2>standalone</h2>
+    <cs-color-picker [disabled]="disabled"
+                     placeholder="input value">
+    </cs-color-picker>
+
+    <h2>in mat-form-field</h2>
+    <mat-form-field [appearance]="appearance">
+      <cs-color-picker [disabled]="disabled"
+                       placeholder="input value"
+                       [formControl]="newFromControl2">
+      </cs-color-picker>
+      <mat-hint>hint</mat-hint>
+      <mat-error *ngIf="newFromControl.touched && newFromControl.hasError('required')">Error Required</mat-error>
+    </mat-form-field>
+
+    <h2>editable input with toggle button</h2>
+    <mat-form-field [appearance]="appearance">
+      <cs-color-picker [disabled]="disabled"
+                       #colorPicker
+                       [clickable]="false"
+                       placeholder="input value"
+                       [formControl]="newFromControl">
+      </cs-color-picker>
+      <button mat-icon-button matSuffix (click)="colorPicker.open()">
+        <mat-icon>keyboard_arrow_down</mat-icon>
+      </button>
+      <mat-hint>hint</mat-hint>
+      <mat-error *ngIf="newFromControl.touched && newFromControl.hasError('required')">
+        Error Required
+      </mat-error>
+    </mat-form-field>
+
+    <h2>show only input</h2>
+    <cs-color-picker [disabled]="disabled"
+                     classList="only-input"
+                     [formControl]="newFromControl">
+    </cs-color-picker>
+
+    <h2>show only color</h2>
+    <cs-color-picker [disabled]="disabled"
+                     classList="only-color"
+                     [formControl]="newFromControl">
+    </cs-color-picker>
+
+  </mat-expansion-panel>
+
+  <!--Chip List-->
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>Chip List</mat-expansion-panel-header>
+
+    <h2>standalone</h2>
+    <cs-chip-list [disabled]="disabled" placeholder="wright some">
+    </cs-chip-list>
+
+    <h2>in mat-form-field</h2>
+    <mat-form-field [appearance]="appearance"
+                    [formControl]="newFromControl">
+      <mat-label>Label</mat-label>
+      <cs-chip-list [disabled]="disabled">
+      </cs-chip-list>
+      <mat-error *ngIf="newFromControl.hasError('required')">
+        Error Required
+      </mat-error>
+    </mat-form-field>
+  </mat-expansion-panel>
+
+  <!--Date Picker-->
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>Sms Editor</mat-expansion-panel-header>
+
+    <h2>standalone</h2>
+    <cs-sms-editor
+      [options]="shortcodes">
+    </cs-sms-editor>
+
+  </mat-expansion-panel>
+</mat-accordion>

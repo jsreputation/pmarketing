@@ -3,10 +3,12 @@ import { CommonModule } from '@angular/common';
 import { UploadFileComponent } from './upload-file.component';
 import { MatButtonModule, MatIconModule } from '@angular/material';
 import { DownloadButtonModule } from '../download-button/download-button.module';
-import { IUploadFileConfig } from './upload-file-config.interface';
-import { UploadFileService } from './upload-file.service';
+import { UploadFileService } from './upload-file-service.interface';
+import { DefaultUploadFileService } from './default-upload-file.service';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { HttpClientModule } from '@angular/common/http';
 
-const uploadFileUrl = new InjectionToken<string>('uploadFileUrl');
+export const UPLOAD_FILE_URL = new InjectionToken<string>('UPLOAD_FILE_URL');
 
 @NgModule({
   declarations: [
@@ -17,24 +19,28 @@ const uploadFileUrl = new InjectionToken<string>('uploadFileUrl');
   ],
   imports: [
     CommonModule,
+    HttpClientModule,
     MatIconModule,
     MatButtonModule,
+    MatProgressBarModule,
     DownloadButtonModule,
   ]
 })
 
 export class UploadFileModule {
-  public static forRoot(config: IUploadFileConfig = {}): ModuleWithProviders {
+  public static forRoot(url: string | null = null): ModuleWithProviders {
+    console.log('init UploadFileModule');
     return {
       ngModule: UploadFileModule,
       providers: [
         {
-          provide: uploadFileUrl,
-          useValue: config.url || 'https://api-dev1.uat.whistler.perxtech.io/storage/documents'
+          provide: UPLOAD_FILE_URL,
+          useValue: url,
         },
         {
           provide: UploadFileService,
-          useValue: config.service || UploadFileService
+          useClass: DefaultUploadFileService,
+          deps: [UPLOAD_FILE_URL]
         }
       ]
     };

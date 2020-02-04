@@ -404,4 +404,10 @@
   span ~ span {
     display: none;
   }
+
+  .date-picker {
+    width: 100%;
+    min-width: 10rem;
+    max-width: 17rem;
+  }
 }
