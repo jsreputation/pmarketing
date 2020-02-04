@@ -64,7 +64,7 @@ export class UserInfoComponent implements PageAppearence, OnInit {
         this.notificationService.addSnack(this.conditionMessage);
       },
       err => {
-        this.notificationService.addSnack('ProfileService::SetCustomProperties : ' + err);
+        this.notificationService.addSnack(`ProfileService::SetCustomProperties : ${  err}`);
       });
   }
 }

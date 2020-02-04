@@ -84,7 +84,7 @@ describe('ResetPasswordComponent', () => {
       component.resetPasswordForm.controls.password.setValue(1234);
       component.resetPasswordForm.controls.confirmPassword.setValue(123);
       const notificationService: NotificationService = fixture.debugElement.injector.get<NotificationService>
-        (NotificationService as Type<NotificationService>);
+      (NotificationService as Type<NotificationService>);
       const notificationServiceSpy = spyOn(notificationService, 'addSnack');
       component.onSubmit();
       expect(notificationServiceSpy).toHaveBeenCalledWith('Passwords do not match.');

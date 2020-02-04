@@ -37,7 +37,7 @@ describe('HomeComponent', () => {
         { provide: TokenStorage, useValue: tokenStorageStub}
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
