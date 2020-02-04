@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IPRewards } from '@perx/model';
+import { IPRewards, PRewardState } from '@perx/model';
 import { HttpClient } from '@angular/common/http';
 import { ApiConfigService } from '../configs/api-config';
 
 export interface IRewardsListQueryParams {
   search_string?: string;
-  state?: string;
+  state?: PRewardState;
 }
 
 @Injectable({

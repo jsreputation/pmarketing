@@ -1,3 +1,15 @@
+export const enum PRewardState {
+  active = 'active',
+  ended = 'ended',
+  inactive = 'inactive',
+  draft = 'draft',
+  approved = 'approved',
+  private = 'private',
+  system = 'system',
+  sell_fast = 'sell_fast',
+  sold_out = 'sold_out'
+}
+
 export interface IPRewards {
   data: any[];
   meta: {

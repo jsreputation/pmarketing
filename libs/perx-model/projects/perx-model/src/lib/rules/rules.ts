@@ -1,3 +1,10 @@
+export const enum PTransactionRulesState {
+  active = 'active',
+  inactive = 'inactive',
+  approved = 'approved',
+  ended = 'ended'
+}
+
 export interface IPTransactionRules {
   data: any[];
   meta: {

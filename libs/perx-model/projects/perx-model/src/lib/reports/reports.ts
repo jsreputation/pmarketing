@@ -1,3 +1,10 @@
+export const enum PReportType {
+  rewards = 'rewards',
+  vouchers = 'vouchers',
+  vouchersSummary = 'vouchers-summary',
+  rfRewards = 'rf-rewards'
+}
+
 export interface IPReportDownloadDetails {
   report_type: string;
   report_name: string;
@@ -8,11 +15,11 @@ export interface IPReportDownloadDetails {
 export interface IPReportDownload {
   id: number;
   state: string;
-  report_type: string;
+  report_type: PReportType;
   report_details: IPReportDownloadDetails[];
   parameters: {
     end: string;
-    type: string;
+    type: PReportType;
     start: string;
     timezone: string;
     label_ids: any[];

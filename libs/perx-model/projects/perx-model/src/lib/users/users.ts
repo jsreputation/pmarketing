@@ -1,3 +1,9 @@
+export const enum PUserState {
+  active = 'active',
+  inactive = 'inactive',
+  locked = 'locked'
+}
+
 export interface IPUser {
   id: number;
   email: string;
@@ -6,7 +12,7 @@ export interface IPUser {
     id: number;
     name: string
   }[];
-  state: string;
+  state: PUserState;
   is_locked: boolean;
 }
 

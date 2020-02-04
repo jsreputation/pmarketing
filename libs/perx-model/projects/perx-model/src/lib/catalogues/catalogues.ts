@@ -1,3 +1,10 @@
+export const enum PCatalogueState {
+  active = 'active',
+  approved = 'approved',
+  inactive = 'inactive',
+  ended = 'ended'
+}
+
 export interface IPCatalogues {
   data: any[];
   meta: {

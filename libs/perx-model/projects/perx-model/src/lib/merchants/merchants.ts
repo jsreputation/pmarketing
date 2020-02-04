@@ -1,3 +1,8 @@
+export const enum PMerchantState {
+  active = 'active',
+  inactive = 'inactive'
+}
+
 export interface IPMerchants {
   data: any[];
   meta: {

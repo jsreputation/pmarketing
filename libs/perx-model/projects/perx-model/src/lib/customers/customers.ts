@@ -1,7 +1,12 @@
+export const enum PCustomerState {
+  active = 'active',
+  inactive = 'inactive'
+}
+
 export interface IPCustomer {
   id: number;
   customer_id: string;
-  state: string;
+  state: PCustomerState;
   alternate_id: null;
   joined_at: string;
   activatable: boolean;
