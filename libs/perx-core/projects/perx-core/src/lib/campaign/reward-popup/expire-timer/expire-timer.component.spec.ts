@@ -26,7 +26,7 @@ describe('ExpireTimerComponent', () => {
     it('should emit hasExpired with value true', () => {
       const dateNow = new Date();
       component.timerEndDate = dateNow;
-      spyOn(component.hasExpired, 'emit');
+      jest.spyOn(component.hasExpired, 'emit').mockImplementation(() => {});
       component.ngOnInit();
       expect(component.hasExpired.emit).toHaveBeenCalledWith(true);
     });
@@ -34,7 +34,7 @@ describe('ExpireTimerComponent', () => {
     it('should emit isExpiring with value true', fakeAsync(() => {
       const dateNow = new Date();
       component.timerEndDate = new Date(dateNow.setHours(dateNow.getHours() + 26));
-      spyOn(component.isExpiring, 'emit');
+      jest.spyOn(component.isExpiring, 'emit').mockImplementation(() => {});
       component.ngOnInit();
       tick(129600);
       fixture.detectChanges();
@@ -47,8 +47,8 @@ describe('ExpireTimerComponent', () => {
     it('should NOT emit', fakeAsync(() => {
       const dateNow = new Date();
       component.timerEndDate = new Date(dateNow.setHours(dateNow.getHours() + 46));
-      const isExpiringSpy = spyOn(component.isExpiring, 'emit');
-      const hasExpiredSpy = spyOn(component.hasExpired, 'emit');
+      const isExpiringSpy = jest.spyOn(component.isExpiring, 'emit');
+      const hasExpiredSpy = jest.spyOn(component.hasExpired, 'emit');
       component.ngOnInit();
       tick();
       expect(isExpiringSpy).not.toHaveBeenCalled();

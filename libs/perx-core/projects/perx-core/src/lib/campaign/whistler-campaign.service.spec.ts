@@ -16,7 +16,8 @@ import { of } from 'rxjs';
 
 describe('WhistlerCampaignService', () => {
   let service: WhistlerCampaignService;
-  let httpClientSpy: { get: jasmine.Spy };
+  let httpClientSpy: Partial<HttpClient>;
+  let getSpy: jest.Mock;
 
   const environment = {
     apiHost: 'https://blabla',
@@ -96,7 +97,8 @@ describe('WhistlerCampaignService', () => {
   };
 
   beforeEach(() => {
-    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
+    getSpy = jest.fn();
+    httpClientSpy = { get: getSpy };
 
     TestBed.configureTestingModule({
       imports: [
@@ -113,14 +115,14 @@ describe('WhistlerCampaignService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should get empty campaigns', (done: DoneFn) => {
+  it('should get empty campaigns', (done: jest.DoneCallback) => {
     const res: IJsonApiListPayload<IWCampaignAttributes> = {
       data: [],
       meta: {
         page_count: 1
       }
     };
-    httpClientSpy.get.and.returnValue(of(res));
+    getSpy.mockReturnValue(of(res));
 
     service.getCampaigns()
       .subscribe((campaigns: ICampaign[]) => {
@@ -128,11 +130,11 @@ describe('WhistlerCampaignService', () => {
         done();
       });
 
-    expect(httpClientSpy.get.calls.count()).toBe(1);
-    expect(httpClientSpy.get.calls.argsFor(0)).toEqual(['https://blabla/campaign/entities', { params: { 'page[number]': '1' } }]);
+    expect(getSpy.mock.calls.length).toBe(1);
+    expect(getSpy.mock.calls[0]).toEqual(['https://blabla/campaign/entities', { params: { 'page[number]': '1' } }]);
   });
 
-  it('should get campaigns pages', (done: DoneFn) => {
+  it('should get campaigns pages', (done: jest.DoneCallback) => {
     const res: IJsonApiListPayload<IWCampaignAttributes> = {
       data: [
         mockCampaign,
@@ -143,7 +145,7 @@ describe('WhistlerCampaignService', () => {
         page_count: 1
       }
     };
-    httpClientSpy.get.and.returnValue(of(res));
+    getSpy.mockReturnValue(of(res));
 
     service.getCampaigns()
       .subscribe((campaigns: ICampaign[]) => {
@@ -152,13 +154,13 @@ describe('WhistlerCampaignService', () => {
         done();
       });
 
-    expect(httpClientSpy.get.calls.count()).toBe(1);
-    expect(httpClientSpy.get.calls.argsFor(0)).toEqual(['https://blabla/campaign/entities', { params: { 'page[number]': '1' } }]);
+    expect(getSpy.mock.calls.length).toBe(1);
+    expect(getSpy.mock.calls[0]).toEqual(['https://blabla/campaign/entities', { params: { 'page[number]': '1' } }]);
   });
 
-  it('should get one campaign', (done: DoneFn) => {
+  it('should get one campaign', (done: jest.DoneCallback) => {
     const res: IJsonApiItemPayload<IWCampaignAttributes> = { data: mockCampaign };
-    httpClientSpy.get.and.returnValue(of(res));
+    getSpy.mockReturnValue(of(res));
     service.getCampaign(42)
       .subscribe((campaign: ICampaign) => {
         expect(`${campaign.id}`).toEqual(mockCampaign.id);
@@ -166,8 +168,8 @@ describe('WhistlerCampaignService', () => {
         done();
       });
 
-    expect(httpClientSpy.get.calls.count()).toBe(1);
-    expect(httpClientSpy.get.calls.argsFor(0)).toEqual(['https://blabla/campaign/entities/42']);
+    expect(getSpy.mock.calls.length).toBe(1);
+    expect(getSpy.mock.calls[0]).toEqual(['https://blabla/campaign/entities/42']);
   });
 
   it('endDate should be null if end_date_time is null or not defined', () => {
@@ -182,7 +184,7 @@ describe('WhistlerCampaignService', () => {
 
   it('startsAfter handle null values', fakeAsync(inject([WhistlerCampaignService, HttpClient],
     (campaign: WhistlerCampaignService) => {
-      httpClientSpy.get.and.returnValue(of(campaingMock));
+      getSpy.mockReturnValue(of(campaingMock));
       campaign.getCampaigns().subscribe(() => { });
       // second call for write value to cashe
       campaign.getCampaigns().subscribe(() => { });

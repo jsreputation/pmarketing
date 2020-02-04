@@ -46,8 +46,8 @@ describe('PuzzleListComponent', () => {
 
   it('should ngOnChanges', fakeAsync(() => {
     component.campaignId = 1;
-    const spy = spyOn(component.completed, 'emit');
-    spyOn(stampService, 'getCards').and.returnValue(of([{
+    const spy = jest.spyOn(component.completed, 'emit');
+    jest.spyOn(stampService, 'getCards').mockReturnValue(of([{
       displayProperties: {
 
       }, stamps: [{ state: StampState.redeemed, id: 1 }]

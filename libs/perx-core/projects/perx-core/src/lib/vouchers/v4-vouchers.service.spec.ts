@@ -147,7 +147,7 @@ describe('V4VouchersService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should redeem the voucher', (done: DoneFn) => {
+  it('should redeem the voucher', (done: jest.DoneCallback) => {
     service.redeemVoucher(21)
       .subscribe(() => {
         expect(true).toBeTruthy();
@@ -163,7 +163,7 @@ describe('V4VouchersService', () => {
     httpTestingController.verify();
   });
 
-  it('should get the voucher detail by voucher id', (done: DoneFn) => {
+  it('should get the voucher detail by voucher id', (done: jest.DoneCallback) => {
     service.get(21)
       .subscribe((updateVoucher: IVoucher) => {
         expect(updateVoucher.id).toEqual(21);
@@ -182,7 +182,7 @@ describe('V4VouchersService', () => {
     httpTestingController.verify();
   });
 
-  it('should get the voucher detail by voucher id from existing cache', (done: DoneFn) => {
+  it('should get the voucher detail by voucher id from existing cache', (done: jest.DoneCallback) => {
     service.reset(mockIVouchers);
     service.get(21)
       .subscribe(() => {
@@ -195,7 +195,7 @@ describe('V4VouchersService', () => {
     httpTestingController.verify();
   });
 
-  it('should get the all vouchers detail', (done: DoneFn) => {
+  it('should get the all vouchers detail', (done: jest.DoneCallback) => {
     service.getAll()
       .subscribe((vouchers: IVoucher[]) => {
         expect(vouchers.length).toBe(1);
@@ -212,7 +212,7 @@ describe('V4VouchersService', () => {
     httpTestingController.verify();
   });
 
-  // it('should get the all vouchers detail from existing cache', (done: DoneFn) => {
+  // it('should get the all vouchers detail from existing cache', (done: jest.DoneCallback) => {
   //   service.reset(mockIVouchers);
   //   service.getAll()
   //     .subscribe(() => {
@@ -225,7 +225,7 @@ describe('V4VouchersService', () => {
   //   httpTestingController.verify();
   // });
 
-  it('should get the all vouchers detail for page with certain page number', (done: DoneFn) => {
+  it('should get the all vouchers detail for page with certain page number', (done: jest.DoneCallback) => {
     const page = 2;
     service.getAllFromPage(page)
       .subscribe(() => {

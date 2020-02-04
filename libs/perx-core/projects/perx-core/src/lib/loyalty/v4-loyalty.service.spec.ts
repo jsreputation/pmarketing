@@ -199,8 +199,8 @@ describe('LoyaltyService', () => {
 
   it('getLoyalties', fakeAsync(inject([V4LoyaltyService, HttpClient],
     (loyaltyService: V4LoyaltyService, http: HttpClient) => {
-      const spy = spyOn(V4LoyaltyService, 'v4LoyaltyToLoyalty');
-      spyOn(http, 'get').and.returnValue(of({
+      const spy = jest.spyOn(V4LoyaltyService, 'v4LoyaltyToLoyalty');
+      jest.spyOn(http, 'get').mockReturnValue(of({
         data: [{
           id: 1
         }]
@@ -212,8 +212,8 @@ describe('LoyaltyService', () => {
 
   it('getLoyalty', fakeAsync(inject([V4LoyaltyService, HttpClient],
     (loyaltyService: V4LoyaltyService, http: HttpClient) => {
-      const spy = spyOn(V4LoyaltyService, 'v4LoyaltyToLoyalty');
-      spyOn(http, 'get').and.returnValue(of({ data: loyaltyRaw }));
+      const spy = jest.spyOn(V4LoyaltyService, 'v4LoyaltyToLoyalty');
+      jest.spyOn(http, 'get').mockReturnValue(of({ data: loyaltyRaw }));
       loyaltyService.getLoyalty().subscribe(() => { });
       tick();
       expect(spy).toHaveBeenCalled();
@@ -221,19 +221,19 @@ describe('LoyaltyService', () => {
 
   it('should get all transactions', fakeAsync(inject([V4LoyaltyService, HttpClient],
     (loyaltyService: V4LoyaltyService, http: HttpClient) => {
-      const spy = spyOn(http, 'get').and.returnValue(of({ data: loyaltyRaw }));
+      const spy = jest.spyOn(http, 'get').mockReturnValue(of({ data: loyaltyRaw }));
       loyaltyService.getAllTransactions().subscribe(() => { });
       tick();
       loyaltyService.getTransactions(1).subscribe(() => { });
       tick();
-      spy.and.returnValue(of({ data: loyaltyRaw, meta: { historyMeta: 'test', total_pages: 3 } }));
+      spy.mockReturnValue(of({ data: loyaltyRaw, meta: { historyMeta: 'test', total_pages: 3 } }));
       loyaltyService.getAllTransactions().subscribe((val) => expect(val[0].id).toBe(1));
       tick();
     })));
 
   it('should get transaction history', fakeAsync(inject([V4LoyaltyService, HttpClient],
     (loyaltyService: V4LoyaltyService, http: HttpClient) => {
-      spyOn(http, 'get').and.returnValue(of({ data: [transactionRaw] }));
+      jest.spyOn(http, 'get').mockReturnValue(of({ data: [transactionRaw] }));
       loyaltyService.getTransactionHistory().subscribe((val) => expect(val[0].id));
       tick();
     })));

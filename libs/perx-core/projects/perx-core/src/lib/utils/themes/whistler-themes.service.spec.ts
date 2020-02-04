@@ -26,7 +26,7 @@ describe('ThemesService', () => {
 
   it('get Theme Setting', fakeAsync(inject([WhistlerThemesService, HttpClient],
     (service: WhistlerThemesService, http: HttpClient) => {
-      const spy = spyOn(http, 'post').and.returnValue(of({
+      const spy = jest.spyOn(http, 'post').mockReturnValue(of({
         data: [{
           attributes: {
             display_properties: {
@@ -37,8 +37,8 @@ describe('ThemesService', () => {
       }));
       service.getThemeSetting().subscribe((theme) => expect(theme.name).toBe('test'));
       tick();
-      spy.and.returnValue(of({ data: [{ attributes: { display_properties: null } }] }));
-      spy.and.returnValue(of({ data: [{ attributes: { display_properties: { 'theme.style': DARK.properties } } }] }));
+      spy.mockReturnValue(of({ data: [{ attributes: { display_properties: null } }] }));
+      spy.mockReturnValue(of({ data: [{ attributes: { display_properties: { 'theme.style': DARK.properties } } }] }));
       service.getThemeSetting()
         .subscribe((theme) => expect(theme.properties['--backgroundColor']).toEqual(DARK.properties['--backgroundColor']));
       tick();
