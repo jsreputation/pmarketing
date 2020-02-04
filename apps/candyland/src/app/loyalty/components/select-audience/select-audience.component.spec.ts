@@ -12,10 +12,10 @@ describe('SelectAudienceComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        declarations: [SelectAudienceComponent],
-        imports: [TranslateModule.forRoot()],
-        schemas: [NO_ERRORS_SCHEMA]
-      })
+      declarations: [SelectAudienceComponent],
+      imports: [TranslateModule.forRoot()],
+      schemas: [NO_ERRORS_SCHEMA]
+    })
       .compileComponents();
   }));
 

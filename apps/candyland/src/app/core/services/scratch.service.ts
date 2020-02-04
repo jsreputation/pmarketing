@@ -12,7 +12,7 @@ import { HttpClient } from '@angular/common/http';
 export class ScratchService {
 
   constructor(private scratchHttpService: ScratchHttpService,
-              private http: HttpClient) {
+    private http: HttpClient) {
   }
 
   public getScratchData(): Observable<IGameDefaultData> {

@@ -12,7 +12,7 @@ export class ChangeExpiryDatePopupComponent implements OnInit, DoCheck {
   public newDate: FormControl = new FormControl(null);
 
   constructor(public dialogRef: MatDialogRef<ChangeExpiryDatePopupComponent>,
-              private cd: ChangeDetectorRef,
+    private cd: ChangeDetectorRef,
               @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 

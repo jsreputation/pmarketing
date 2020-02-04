@@ -16,7 +16,7 @@ describe('EngagementsComponent', () => {
       ],
       declarations: [ EngagementsComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -21,7 +21,7 @@ export class AdjustBalancePointsPopupComponent implements OnInit, AfterViewInit 
   }
 
   constructor(public dialogRef: MatDialogRef<AdjustBalancePointsPopupComponent>,
-              private cd: ChangeDetectorRef,
+    private cd: ChangeDetectorRef,
               @Inject(MAT_DIALOG_DATA) public data: IAudiencesLoyaltyCard) {
   }
 

@@ -79,23 +79,17 @@ export class TableDataSource<T> extends MatTableDataSource<T> {
   // TODO typings
   private dataMultiFilter(data: T[], filters: any): T[] {
     const filterKeys = Object.keys(filters);
-    return data.filter((item: T) => {
-      return filterKeys.every((key: any) => {
-        return item[key].match(filters[key]);
-      });
-    });
+    return data.filter((item: T) => filterKeys.every((key: any) => item[key].match(filters[key])));
   }
 
   public dataSort(data: T[], sortData: ISort): T[] {
     if (!sortData.active || sortData.direction === '') {
       return data;
     }
-    return data.sort((valueA: T, valueB: T) => {
-      return (
-        (valueA[sortData.active] < valueB[sortData.active] ? -1 : 1) *
+    return data.sort((valueA: T, valueB: T) => (
+      (valueA[sortData.active] < valueB[sortData.active] ? -1 : 1) *
         (sortData.direction === 'asc' ? 1 : -1)
-      );
-    });
+    ));
   }
 
   public dataPaginator(data: T[], paginatorData: IPagination): T[] {

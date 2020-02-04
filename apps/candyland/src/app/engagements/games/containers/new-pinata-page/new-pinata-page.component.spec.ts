@@ -62,13 +62,13 @@ describe('NewPinataPageComponent', () => {
         { provide: PinataService, useClass: MockPinataService },
         { provide: UploadFileService, useClass: MockUploadFileService },
         { provide: WINDOW, useValue: {
-            scrollTo(a: any, b: any): any { return {a, b}; }
-          }
+          scrollTo(a: any, b: any): any { return {a, b}; }
+        }
         }
       ],
       schemas: [NO_ERRORS_SCHEMA],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

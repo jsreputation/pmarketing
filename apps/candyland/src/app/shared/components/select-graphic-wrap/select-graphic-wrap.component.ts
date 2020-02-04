@@ -43,7 +43,7 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
   }
 
   constructor(private fb: FormBuilder,
-              private cd: ChangeDetectorRef) {
+    private cd: ChangeDetectorRef) {
   }
 
   public selectedGraphic: IGraphic;

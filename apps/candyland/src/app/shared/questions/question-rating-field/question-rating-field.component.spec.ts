@@ -24,7 +24,7 @@ describe('QuestionRatingFieldComponent', () => {
       ],
       declarations: [ QuestionRatingFieldComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

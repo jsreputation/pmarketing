@@ -12,7 +12,7 @@ import { HttpClient } from '@angular/common/http';
 export class StampsService {
 
   constructor(private stampHttpService: StampHttpService,
-              private http: HttpClient) {
+    private http: HttpClient) {
   }
 
   public getStampsData(): Observable<IStampsDefaultValue> {

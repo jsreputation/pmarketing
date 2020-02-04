@@ -51,7 +51,7 @@ export class LoyaltyReviewPageComponent implements OnInit, OnDestroy {
   }
 
   public clickEdit(): void {
-    this.router.navigateByUrl('/loyalty/edit/' + this.loyalty.id);
+    this.router.navigateByUrl(`/loyalty/edit/${  this.loyalty.id}`);
   }
 
   private handleRouteParams(): void {
@@ -69,11 +69,11 @@ export class LoyaltyReviewPageComponent implements OnInit, OnDestroy {
       }),
       takeUntil(this.destroy$)
     ).subscribe(() => {
-      },
-      (error: Error) => {
-        console.warn(error.message);
-        // this.router.navigateByUrl('/loyalty');
-      }
+    },
+    (error: Error) => {
+      console.warn(error.message);
+      // this.router.navigateByUrl('/loyalty');
+    }
     );
   }
 
@@ -81,14 +81,14 @@ export class LoyaltyReviewPageComponent implements OnInit, OnDestroy {
     return this.loyaltyService.getLoyalty(id)
       .pipe(
         tap(loyalty => {
-            if (loyalty) {
-              this.loyalty = loyalty;
-              this.cd.detectChanges();
-            } else {
-              console.warn('There is no Loyalty Program with current id');
-              this.router.navigateByUrl('/loyalty');
-            }
-          },
+          if (loyalty) {
+            this.loyalty = loyalty;
+            this.cd.detectChanges();
+          } else {
+            console.warn('There is no Loyalty Program with current id');
+            this.router.navigateByUrl('/loyalty');
+          }
+        },
         ));
   }
 

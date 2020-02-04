@@ -9,9 +9,7 @@ import { TranslateDefaultLanguageService } from '@cl-core/translate-services/tra
 
 export const translateLoader = (
   http: HttpClient,
-  resources: { prefix: string, suffix: string }[]) => {
-  return new MultiTranslateHttpLoader(http, resources);
-};
+  resources: { prefix: string, suffix: string }[]) => new MultiTranslateHttpLoader(http, resources);
 
 @Injectable()
 export class MultiTranslateHttpLoader implements TranslateLoader {
@@ -31,15 +29,9 @@ export class MultiTranslateHttpLoader implements TranslateLoader {
   }
 
   public getTranslation(lang: string): any {
-    const queryList: Observable<any>[] = this.resources.map(config => {
-      return this.http.get(`${config.prefix}${lang}${config.suffix}`, { headers: this.contentHeader });
-    });
+    const queryList: Observable<any>[] = this.resources.map(config => this.http.get(`${config.prefix}${lang}${config.suffix}`, { headers: this.contentHeader }));
     return forkJoin(queryList)
-      .pipe(map(response => {
-        return response.reduce((a, b) => {
-          return Object.assign(a, b);
-        });
-      }));
+      .pipe(map(response => response.reduce((a, b) => Object.assign(a, b))));
   }
 }
 

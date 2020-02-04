@@ -64,9 +64,9 @@ export class NewCampaignStampRuleFormGroupComponent implements AfterViewInit, On
   private destroy$: Subject<void> = new Subject();
 
   constructor(public cd: ChangeDetectorRef,
-              public dialog: MatDialog,
-              private toggleControlService: ToggleControlService,
-              private fb: FormBuilder) {
+    public dialog: MatDialog,
+    private toggleControlService: ToggleControlService,
+    private fb: FormBuilder) {
     this.initGroup();
   }
 

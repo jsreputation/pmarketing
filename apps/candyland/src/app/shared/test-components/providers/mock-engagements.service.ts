@@ -6,10 +6,10 @@ export class MockEngagementsService {
   public getEngagementData(id?: string, type?: string): any {
     return {
       id: id ? id : '1',
-    type: type ? type : 'test',
-    urn: 'test',
-    created_at: 'test',
-    updated_at: 'test',
+      type: type ? type : 'test',
+      urn: 'test',
+      created_at: 'test',
+      updated_at: 'test',
     };
   }
 

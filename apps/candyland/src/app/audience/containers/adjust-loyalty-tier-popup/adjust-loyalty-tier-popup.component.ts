@@ -14,7 +14,7 @@ export class AdjustLoyaltyTierPopupComponent implements OnInit, AfterViewInit {
   public currentTierIndex: number;
 
   constructor(public dialogRef: MatDialogRef<AdjustLoyaltyTierPopupComponent>,
-              private cd: ChangeDetectorRef,
+    private cd: ChangeDetectorRef,
               @Inject(MAT_DIALOG_DATA) public data: { card: IAudiencesLoyaltyCard, tiers: IAudiencesTier[] }) {
   }
 

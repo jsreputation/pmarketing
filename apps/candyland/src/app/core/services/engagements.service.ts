@@ -13,7 +13,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class EngagementsService {
   constructor(private http: EngagementsHttpsService,
-              public httpClient: HttpClient) {
+    public httpClient: HttpClient) {
   }
 
   public getEngagements(): Observable<IEngagementType[]> {

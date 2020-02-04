@@ -24,15 +24,15 @@ export class PointsExpiredInfoPipe implements PipeTransform {
     }
 
     if ('type' in point && point.type) {
-      text += ' ' + this.translate.instant(point.type.toUpperCase()).toLowerCase();
+      text += ` ${  this.translate.instant(point.type.toUpperCase()).toLowerCase()}`;
     }
 
     if ('trigger' in point && point.trigger === LoyaltyPointsExpireTrigger.accrual) {
-      text += ' ' + this.translate.instant('LOYALTY_FEATURE.FROM_ACCRUAL');
+      text += ` ${  this.translate.instant('LOYALTY_FEATURE.FROM_ACCRUAL')}`;
     }
 
     if ('trigger' in point && point.trigger === LoyaltyPointsExpireTrigger.inactivity) {
-      text += ' ' + this.translate.instant('LOYALTY_FEATURE.FROM_USER_INACTIVITY');
+      text += ` ${  this.translate.instant('LOYALTY_FEATURE.FROM_USER_INACTIVITY')}`;
     }
 
     return text;

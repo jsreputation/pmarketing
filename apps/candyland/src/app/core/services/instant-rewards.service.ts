@@ -12,7 +12,7 @@ import { HttpClient } from '@angular/common/http';
 export class InstantRewardsService {
 
   constructor(private instantRewardsHttpService: InstantRewardsHttpService,
-              private http: HttpClient) {
+    private http: HttpClient) {
   }
 
   public getInstantRewardData(): Observable<IRewardDefaultValue> {

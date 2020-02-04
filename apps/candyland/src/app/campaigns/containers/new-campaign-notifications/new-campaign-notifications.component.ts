@@ -40,13 +40,13 @@ export class NewCampaignNotificationsComponent implements OnInit, OnChanges, OnD
   public triggerLabelsChip: boolean;
   public campaignId: string;
   constructor(private campaignChannelsFormService: CampaignChannelsFormService,
-              public store: CampaignCreationStoreService,
-              private cd: ChangeDetectorRef,
-              private stampsService: StampsService,
-              private newCampaignDetailFormService: NewCampaignDetailFormService,
-              public stepConditionService: StepConditionService,
-              private route: ActivatedRoute,
-              private toggleControlService: ToggleControlService) {
+    public store: CampaignCreationStoreService,
+    private cd: ChangeDetectorRef,
+    private stampsService: StampsService,
+    private newCampaignDetailFormService: NewCampaignDetailFormService,
+    public stepConditionService: StepConditionService,
+    private route: ActivatedRoute,
+    private toggleControlService: ToggleControlService) {
     this.initForm();
   }
 
@@ -194,7 +194,7 @@ export class NewCampaignNotificationsComponent implements OnInit, OnChanges, OnD
     const optionControl = this.channelForm.get('webNotification.webLinkOptions');
     check ?
       optionControl
-      .patchValue('not_required')
+        .patchValue('not_required')
       : optionControl.patchValue('');
   }
 
@@ -237,12 +237,10 @@ export class NewCampaignNotificationsComponent implements OnInit, OnChanges, OnD
 
   private getStampNumbers(campaign: ICampaign): void {
     if (this.checkIsStamp(campaign)) {
-      this.stampNumbers = Array.from(Array(10).keys(), (item) => {
-        return {
-          value: item + 1,
-          viewValue: `${item + 1}`
-      };
-      });
+      this.stampNumbers = Array.from(Array(10).keys(), (item) => ({
+        value: item + 1,
+        viewValue: `${item + 1}`
+      }));
     }
   }
 

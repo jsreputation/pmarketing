@@ -7,8 +7,8 @@ export class MockLoyaltyCardService {
   public getMockAudiencesLoyaltyCard(id?: string): IAudiencesLoyaltyCard {
     return {
       id: id ? id : '1',
-    userId: 5,
-    balance: 5,
+      userId: 5,
+      balance: 5,
       loyalty: {
         id: '1',
         name: 'test',

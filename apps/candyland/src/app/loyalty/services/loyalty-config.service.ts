@@ -58,9 +58,9 @@ const rulePointsType: OptionConfig[] = [
 @Injectable()
 export class LoyaltyConfigService {
   constructor(private configService: ConfigService,
-              private tenantService: TenantService,
-              private audiencesService: AudiencesService,
-              private tenantStoreService: TenantStoreService) {
+    private tenantService: TenantService,
+    private audiencesService: AudiencesService,
+    private tenantStoreService: TenantStoreService) {
 
   }
 

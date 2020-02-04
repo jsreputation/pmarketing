@@ -333,12 +333,10 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       );
     return combineLatest(getUsersPis, this.getCognitoUrl())
       .pipe(
-        map(([pis, url]: [string[], string]) => {
-          return pis.reduce(
-            (p: string, v: string) => `${p}${v},${url}?cid=${campaign.id}&pi=${v},\n`,
-            'identifier,urls,\n'
-          );
-        }),
+        map(([pis, url]: [string[], string]) => pis.reduce(
+          (p: string, v: string) => `${p}${v},${url}?cid=${campaign.id}&pi=${v},\n`,
+          'identifier,urls,\n'
+        )),
         takeUntil(this.destroy$)
       );
   }
@@ -392,12 +390,10 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
       ).pipe(
         map(
           ([campaign, outcomes]:
-            [ICampaign | null, IOutcome[] | null]): ICampaign => {
-            return ({
-              ...campaign,
-              outcomes: this.outcomeToRewardCollection(outcomes)
-            });
-          })
+          [ICampaign | null, IOutcome[] | null]): ICampaign => ({
+            ...campaign,
+            outcomes: this.outcomeToRewardCollection(outcomes)
+          }))
       ).subscribe(
         campaign => {
           this.campaign = Object.assign({}, campaign);
@@ -426,7 +422,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   }
 
   private patchNotificationWebLink(data: any): void {
-    const notification = data['notification'];
+    const notification = data.notification;
     if (notification && notification.webNotification && notification.webNotification.webLink) {
       this.channelForm.get('webNotification')
         .patchValue({
@@ -441,7 +437,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
   }
 
   private handlerWebLinkNotification(): void {
-    const notification = this.channelForm.value['webNotification'];
+    const notification = this.channelForm.value.webNotification;
     if (this.campaign) {
       const webLink: ICampaign = {
         campaignInfo: {
@@ -458,7 +454,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
       if (!notification.webLink) {
         delete webLink.notification.webNotification.webLinkOptions;
-        webLink.notification.webNotification['status'] = 'remove';
+        webLink.notification.webNotification.status = 'remove';
       }
       this.store.updateCampaign(webLink);
     }
@@ -495,7 +491,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     return this.createTemplate(data.template)
       .pipe(
         switchMap((res: IJsonApiItemPayload<IWCommTemplateAttributes>) => {
-          data['templateId'] = res.data.id;
+          data.templateId = res.data.id;
           return this.createNotification(data, campaignId);
         }));
   }
@@ -514,7 +510,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
     return this.updateTemplate(data.template)
       .pipe(
         switchMap(res => {
-          data['templateId'] = res.data.id;
+          data.templateId = res.data.id;
           return this.notificationService.updateNotification(data, campaignId);
         })
       );

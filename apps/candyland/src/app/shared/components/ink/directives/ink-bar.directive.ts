@@ -8,9 +8,7 @@ import {ANIMATION_MODULE_TYPE} from '@angular/platform-browser/animations';
  * bar in a set of tabs.
  */
 // tslint:disable-next-line class-name Using leading underscore to denote internal interface.
-export interface _MatInkBarPositioner {
-  (element: HTMLElement): { left: string, width: string };
-}
+export type _MatInkBarPositioner = (element: HTMLElement) => { left: string, width: string };
 
 /** Injection token for the MatInkBar's Positioner. */
 export const _MAT_INK_BAR_POSITIONER =
@@ -25,8 +23,8 @@ export const _MAT_INK_BAR_POSITIONER =
  */
 export function _MAT_INK_BAR_POSITIONER_FACTORY(): _MatInkBarPositioner {
   const method = (element: HTMLElement) => ({
-    left: element ? (element.offsetLeft || 0) + 'px' : '0',
-    width: element ? (element.offsetWidth || 0) + 'px' : '0',
+    left: element ? `${element.offsetLeft || 0  }px` : '0',
+    width: element ? `${element.offsetWidth || 0  }px` : '0',
   });
 
   return method;

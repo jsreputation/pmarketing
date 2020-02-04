@@ -52,8 +52,8 @@ export class SelectGraphicWrapDialogComponent implements OnInit, ControlValueAcc
   }
 
   constructor(private fb: FormBuilder,
-              private cd: ChangeDetectorRef,
-              public matDialog: MatDialog) { }
+    private cd: ChangeDetectorRef,
+    public matDialog: MatDialog) { }
 
   public ngOnInit(): void {
     this.createDefaultControl();

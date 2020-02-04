@@ -13,9 +13,7 @@ export default class Utils {
   }
 
   static convertObjToArr(obj: any): any[] {
-    return Object.keys(obj).map((key) => {
-      return {name: key, ...obj[key]};
-    });
+    return Object.keys(obj).map((key) => ({name: key, ...obj[key]}));
   }
 
   static replaceAt(array: any[], index: number, value: any): any[] {

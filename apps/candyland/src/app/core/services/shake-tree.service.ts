@@ -12,7 +12,7 @@ import { HttpClient } from '@angular/common/http';
 export class ShakeTreeService {
 
   constructor(private shakeHttpService: ShakeHttpService,
-              private http: HttpClient) {
+    private http: HttpClient) {
   }
 
   public getData(): Observable<IGameDefaultData> {

@@ -30,8 +30,8 @@ export class BrandingComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
 
   constructor(private settingsService: SettingsService,
-              private translate: TranslateService,
-              private tenantService: TenantService) { }
+    private translate: TranslateService,
+    private tenantService: TenantService) { }
 
   public get headerNavbarColor(): AbstractControl {
     return this.formBranding.get('headerNavbarColor');

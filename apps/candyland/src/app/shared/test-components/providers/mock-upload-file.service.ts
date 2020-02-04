@@ -6,13 +6,13 @@ export class MockUploadFileService {
   public getMockUploadFile(): IUploadedFile {
     return {
       id: '1;',
-    type: 'string;',
-    url: 'string;',
-    cdn: 'string;',
-    name: 'string;',
-    key: 'string;',
-    createdAt: 'string;',
-    updatedAt: 'string;',
+      type: 'string;',
+      url: 'string;',
+      cdn: 'string;',
+      name: 'string;',
+      key: 'string;',
+      createdAt: 'string;',
+      updatedAt: 'string;',
     };
   }
 

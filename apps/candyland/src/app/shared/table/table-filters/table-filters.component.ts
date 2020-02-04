@@ -54,8 +54,8 @@ export class TableFiltersComponent implements AfterContentInit, OnDestroy {
           Object.keys(values).forEach((key: string) => {
             if (key === 'rangeDate' && DateTimeParser.isDatepickerRangeValue(values[key])) {
               const rangeDate: DatepickerRangeValue<Date> = values[key];
-              res['start_date_time'] = rangeDate.begin ? DateTimeParser.dateToString(rangeDate.begin) : null;
-              res['end_date_time'] = rangeDate.end ? DateTimeParser.dateToString(rangeDate.end) : null;
+              res.start_date_time = rangeDate.begin ? DateTimeParser.dateToString(rangeDate.begin) : null;
+              res.end_date_time = rangeDate.end ? DateTimeParser.dateToString(rangeDate.end) : null;
               return;
             }
             const newKey = key.replace(/-/gi, '.');
@@ -67,8 +67,8 @@ export class TableFiltersComponent implements AfterContentInit, OnDestroy {
         debounceTime(500),
         takeUntil(this.destroy$)
       ).subscribe((value: any) => {
-      this.dataSource.filter = value;
-    });
+        this.dataSource.filter = value;
+      });
   }
 
   private updateFilters(): void {

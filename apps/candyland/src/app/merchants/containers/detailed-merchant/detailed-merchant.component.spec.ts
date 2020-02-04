@@ -14,16 +14,16 @@ describe('DetailedMerchantComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        imports: [
-          RouterTestingModule,
-          BrowserDynamicTestingModule,
-          FormsModule,
-          ReactiveFormsModule,
-          TranslateModule.forRoot()
-        ],
-        declarations: [DetailedMerchantComponent],
-        schemas: [NO_ERRORS_SCHEMA]
-      })
+      imports: [
+        RouterTestingModule,
+        BrowserDynamicTestingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        TranslateModule.forRoot()
+      ],
+      declarations: [DetailedMerchantComponent],
+      schemas: [NO_ERRORS_SCHEMA]
+    })
       .compileComponents();
   }));
 

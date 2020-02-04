@@ -19,7 +19,7 @@ import { noop } from 'rxjs';
 export class TabsFilterComponent implements ControlValueAccessor, DoCheck, AfterViewInit {
   @Input() public tabs: any;
 
-  @Input() set value(setValue: any) {
+  @Input() public set value(setValue: any) {
     this.writeValue(setValue);
   }
 
@@ -27,7 +27,7 @@ export class TabsFilterComponent implements ControlValueAccessor, DoCheck, After
   public onChange: any = noop;
   public onTouched: any = noop();
 
-  @ViewChild('labelContainer', {static: false}) public labelContainer: ElementRef;
+  @ViewChild('labelContainer', { static: false }) public labelContainer: ElementRef;
   public showScrollButtons: any = true;
 
   constructor(private cd: ChangeDetectorRef, private el: ElementRef) {
