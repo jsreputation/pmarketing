@@ -1,5 +1,5 @@
 export interface IPRewards {
-  data: [];
+  data: any[];
   meta: {
     count: number;
     size: number;
