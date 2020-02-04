@@ -13,7 +13,7 @@ config.cucumberOpts = {
     './src/steps/**/*.steps.ts',
     './src/features/'
   ],
-  tags: ['@demo','@runThis','@TestCaseKey'],
+  tags: [],
   ui:       'bdd',
   reporter: 'dot',
   strict: true,
@@ -22,5 +22,7 @@ config.cucumberOpts = {
   dryRun: false,
   compiler: []
 };
+
+config.specs = ['./src/features/**/*.feature'];
 
 exports.config = config;
