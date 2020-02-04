@@ -25,6 +25,7 @@ export interface ICampaign {
   beginsAt?: Date | null;
   rewards?: IReward[];
   thumbnailUrl?: string;
+  campaignBannerUrl?: string;
   engagementId?: number;
   rawPayload?: any;
   displayProperties?: IWCampaignDisplayProperties;

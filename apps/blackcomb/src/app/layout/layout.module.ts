@@ -16,6 +16,7 @@ import { VoucherDetailModule } from '../voucher-detail/voucher-detail.module';
 import { PiModule } from '../pi/pi.module';
 import { RewardsDetailModule } from '../rewards-detail/rewards-detail.module';
 import { ContentModule } from '../content/content.module';
+import { CampaignStampsModule } from '../campaign-stamps/campaign-stamps.module';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { ContentModule } from '../content/content.module';
     PiModule,
     RewardsDetailModule,
     ContentModule,
+    CampaignStampsModule
   ]
 })
 export class LayoutModule { }

@@ -16,6 +16,10 @@
     }
   }
 
+  &.disable {
+    cursor: default;
+  }
+
   &-button {
     height: 2.1rem !important;
     width: 2.1rem !important;

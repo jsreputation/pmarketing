@@ -1,41 +1,22 @@
-import { Component } from '@angular/core';
-import { IGraphic } from '@perx/candyshop';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-candyshop-forms',
   templateUrl: './candyshop-forms.component.html',
   styleUrls: ['./candyshop-forms.component.scss']
 })
-export class CandyshopFormsComponent {
-  public imagesExample: IGraphic[] = [
-    {
-      id: 1,
-      type: 'bg1',
-      title: 'icon',
-      img: 'https://cdn0.iconfinder.com/data/icons/customicondesignoffice5/256/examples.png',
-      fullImg: 'global/assets/background/full_bg_7.jpg',
-      format: '.png',
-      active: false
-    },
-    {
-      id: 2,
-      type: 'bg2',
-      title: 'icon',
-      img: 'https://cdn0.iconfinder.com/data/icons/customicondesignoffice5/256/examples.png',
-      fullImg: 'global/assets/background/full_bg_8.jpg',
-      format: '.png',
-      active: false
-    },
-    {
-      id: 3,
-      type: 'bg3',
-      title: 'icon',
-      img: 'https://cdn0.iconfinder.com/data/icons/customicondesignoffice5/256/examples.png',
-      fullImg: 'global/assets/background/full_bg_9.jpg',
-      format: '.png',
-      active: false
-    }
-  ];
+export class CandyshopFormsComponent implements OnInit, OnDestroy {
+  public disabled: boolean = false;
+  public appearance: string;
+  public newFromControl: FormControl = new FormControl(null, [Validators.required, Validators.min(3)]);
+  public newFromControl2: FormControl = new FormControl(null, [Validators.required, Validators.min(3)]);
+  public newFromControl3: FormControl = new FormControl(null, [Validators.required, Validators.min(3)]);
+  public rangeStart: FormControl = new FormControl();
+  public rangeEnd: FormControl = new FormControl();
+  private destroy$: Subject<void> = new Subject();
 
   public statistics: { type: string, value: number }[] = [
     {type: 'first', value: 200},
@@ -53,5 +34,19 @@ export class CandyshopFormsComponent {
 
   public log(message: any): void {
     alert(message);
+  }
+
+  public ngOnInit(): void {
+    this.newFromControl.valueChanges
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe(data =>
+        console.log('wrapper:', data, this.newFromControl));
+  }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

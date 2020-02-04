@@ -15,9 +15,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: visible;
 
     @include check-select;
   }
+}
+
+#diagClickable {
+  position: absolute;
+  left: 9.4rem;
+  width: 20px;
+  height: 20px;
 }
 
 .image-full {

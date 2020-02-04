@@ -8,4 +8,8 @@ declare interface IGameDefaultData {
   preScratchImage?: IGraphic[];
   postScratchSuccessImage?: IGraphic[];
   postScratchFailImage?: IGraphic[];
+  snakeType?: IGraphic[];
+  targetIcon?: IGraphic[];
+  gameArea?: IGraphic[];
+  targetRequired?: IGameGifts[];
 }

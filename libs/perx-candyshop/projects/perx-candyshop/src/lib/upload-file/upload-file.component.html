@@ -1,40 +1,45 @@
-<div class="upload-file"
-     [class.invalid]="isRequired || message">
-  <div class="upload-file-head">
-    <div class="upload-file-label">
-      {{label}}
-    </div>
-    <cs-download-button [link]="downloadFile">{{downloadButtonText}}</cs-download-button>
-  </div>
+<div class="cs-upload-file"
+     [class.invalid]="errorState"
+     [class.disabled]="disabled">
 
-  <div class="upload-file-wrap"
-       [class.field-lock]="lock">
+  <div class="cs-upload-file-wrap">
 
     <input #fileInput type="file"
-           *ngIf="!file"
-           class="upload-file-input"
-           accept='text/csv'
-           (change)="preview(fileInput.files)"/>
+           *ngIf="!value"
+           class="cs-upload-file-input"
+           [accept]='accept'
+           (change)="drop(fileInput.files)"
+           [disabled]="loading"/>
 
-    <button class="upload-file-btn" *ngIf="!file" (click)="fileInput.click()">{{uploadButtonText}}</button>
+    <button *ngIf="!value"
+            class="cs-upload-file-btn"
+            (click)="fileInput.click()"
+            [disabled]="loading">
+      <ng-content *ngIf="!loading"></ng-content>
+      <span *ngIf="loading">{{value?.name || fileName}}</span>
+    </button>
 
-    <div class="upload-file-file" *ngIf="file">
-      <div class="upload-file-file-icon">
+    <mat-progress-bar *ngIf="loading"
+                      class="cs-upload-file-progress-bar"
+                      mode="indeterminate">
+    </mat-progress-bar>
+
+    <div class="cs-upload-file-file" *ngIf="value">
+      <div class="cs-upload-file-file-icon">
         <i class="icon full-with check-icon"></i>
       </div>
-      <span class="upload-file-file-name">{{file.name}}</span>
-      <button mat-icon-button (click)="clear()">
+      <span class="cs-upload-file-file-name">{{ value?.name || fileName}}</span>
+      <button mat-icon-button class="cs-upload-file-delete" (click)="delete()">
         <i class="icon full-with delete-action"></i>
       </button>
     </div>
   </div>
-
-  <div class="error upload-file-error" *ngIf="isRequired || message">
-    <div>
-      <p *ngIf="isRequired">{{requiredErrorText}}</p>
+  <div class="cs-upload-file-info" *ngIf="showInfo">
+    <span class="cs-upload-file-placeholder" *ngIf="placeholder && !message">
+        {{placeholder}}
+      </span>
+    <div class="error cs-upload-file-error" *ngIf="message">
       <p>{{message}}</p>
     </div>
   </div>
 </div>
-
-

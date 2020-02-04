@@ -1,0 +1,16 @@
+@import 'upload';
+
+.graphic {
+  &-wrap {
+    display: flex;
+  }
+
+  &-image-preview {
+    display: block;
+    margin-right: 1rem;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
