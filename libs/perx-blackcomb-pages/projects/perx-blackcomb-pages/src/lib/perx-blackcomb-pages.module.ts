@@ -74,6 +74,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { LayoutComponent } from './layout/layout.component';
 import { HomeComponent } from './home/home.component';
 import { GamesCollectionComponent } from './home/games-collection/games-collection.component';
+import { CampaignsCollectionComponent } from './home/campaigns-collection/campaigns-collection.component';
 import { WalletHistoryComponent } from './wallet-history/wallet-history.component';
 import { ProfileComponent } from './profile/profile.component';
 import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
@@ -82,6 +83,7 @@ import { EnterPinComponent } from './enter-pin/enter-pin.component';
 import { RewardsBookingComponent } from './rewards-booking/rewards-booking.component';
 import { ProfileBarcodeComponent } from './profile-barcode/profile-barcode.component';
 import { EditProfileFieldComponent } from './edit-profile-field/edit-profile-field.component';
+import { CampaignStampsComponent } from './campaign-stamps/campaign-stamps.component';
 
 const comps: any[] = [
   AccountComponent,
@@ -126,6 +128,7 @@ const comps: any[] = [
   LayoutComponent,
   HomeComponent,
   GamesCollectionComponent,
+  CampaignsCollectionComponent,
   NewsfeedComponent,
   WalletHistoryComponent,
   TransactionHistoryComponent,
@@ -136,7 +139,8 @@ const comps: any[] = [
   RewardsBookingComponent,
   ProfileBarcodeComponent,
   EditProfileFieldComponent,
-  PuzzleListComponent
+  PuzzleListComponent,
+  CampaignStampsComponent
 ];
 
 @NgModule({

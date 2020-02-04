@@ -1,0 +1,201 @@
+<article class="snake-wrap" *ngIf="snakeData" [formGroup]="form">
+  <header class="page-header full-with">
+    <mat-form-field class="pagetitle-input" floatLabel="never">
+      <input type="text" matInput formControlName="name" [placeholder]="'ENTER_TITLE_HERE' | translate">
+      <mat-error *ngIf="name.hasError('required')"><span translate>ERROR_REQUIRED</span></mat-error>
+      <mat-error *ngIf="name.hasError('minlength')"><span translate>ERROR_MIN_LENGTH</span> 1</mat-error>
+      <mat-error *ngIf="name.hasError('maxlength')"><span translate>ERROR_MAX_LENGTH</span> 60</mat-error>
+    </mat-form-field>
+    <div class="btn-group">
+      <cs-button [classList]="'secondary'"
+                 class="snake-btn-cancel"
+                 (click)="comeBack()"
+      >
+       <span translate>
+        BTN_CANCEL
+      </span>
+      </cs-button>
+      <cs-button [classList]="'primary cta cta-save'"
+                 (click)="save()"
+      >
+        <span translate>
+          BTN_SAVE
+        </span>
+      </cs-button>
+    </div>
+  </header>
+  <section class="content form-limiter">
+    <div class="phonepreview-wrapper">
+      <div class="snake-form">
+        <mat-card class="card-fieldset">
+          <h2 class="card-fieldset-title sub-title" translate>
+            MESSAGES
+          </h2>
+          <div class="snake-form">
+            <div class="control-input">
+              <mat-form-field class="messages-input">
+                <input type="text" [placeholder]="'HEADLINE_MESSAGE' | translate" matInput formControlName="headlineMessage">
+                <mat-hint align="end">{{headlineMessage.value?.length || 0}}/60</mat-hint>
+                <mat-error *ngIf="headlineMessage.hasError('required')"><span translate>ERROR_REQUIRED</span></mat-error>
+                <mat-error *ngIf="headlineMessage.hasError('minlength')"><span translate>ERROR_MIN_LENGTH</span> 5</mat-error>
+                <mat-error *ngIf="headlineMessage.hasError('maxlength')"><span translate>ERROR_MAX_LENGTH</span> 60</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="control-input">
+              <mat-form-field class="messages-input">
+                <input type="text" matInput [placeholder]="'SUB-HEADLINE_MESSAGE' | translate" formControlName="subHeadlineMessage">
+                <mat-hint align="end">{{subHeadlineMessage.value?.length || 0}}/{{60}}</mat-hint>
+                <mat-error *ngIf="subHeadlineMessage.hasError('required')"><span translate>ERROR_REQUIRED</span></mat-error>
+                <mat-error *ngIf="subHeadlineMessage.hasError('minlength')"><span translate>ERROR_MIN_LENGTH</span> 5</mat-error>
+                <mat-error *ngIf="subHeadlineMessage.hasError('maxlength')"><span translate>ERROR_MAX_LENGTH</span> 60</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card>
+
+        <mat-card class="card-fieldset">
+          <h2 class="card-fieldset-title sub-title" translate>
+            Game Details
+          </h2>
+          <div>
+            <div class="control-input" *ngIf="snakeData.targetRequired">
+              <mat-form-field class="game-gift-select">
+                <mat-label><span translate>Number of collectibles to reveal reward</span></mat-label>
+                <mat-select formControlName="targetRequired">
+                  <mat-option *ngFor="let target of snakeData.targetRequired" [value]="target.value">
+                    {{target.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <h2 class="card-fieldset-title sub-title" translate>
+            GAME_GRAPHIC
+          </h2>
+          <div class="game-form">
+            <div class="control-img_asset">
+              <h3 class="card-fieldset-label" translate>
+                Snake Type
+              </h3>
+              <div class="game-gift-box_field">
+                <cl-select-graphic-wrap-dialog
+                  [isMultiObj]="snakeTypeStruct"
+                  *ngIf="snakeData.snakeType"
+                  formControlName="snakeType"
+                  [graphicList]="snakeData.snakeType"
+                  [placeHolder]="'*Recommended size 20px (w) x 20px (h) in .JPG or .PNG format.'"
+                >
+                </cl-select-graphic-wrap-dialog>
+              </div>
+            </div>
+
+            <div class="control-img_asset">
+              <h3 class="card-fieldset-label" translate>
+                Collectible Icon
+              </h3>
+              <div class="game-gift-box_field">
+                <cl-select-graphic-wrap
+                  *ngIf="snakeData.targetIcon"
+                  formControlName="targetIcon"
+                  [isRequired]="form.get('targetIcon').hasError('required') && form.get('targetIcon').touched"
+                  [graphicList]="snakeData.targetIcon"
+                  [placeHolder]="'*Recommended size 20px (w) x 20px (h) in .JPG or .PNG format.'"
+                >
+                </cl-select-graphic-wrap>
+              </div>
+            </div>
+
+            <div class="control-img_asset">
+              <h3 class="card-fieldset-label" translate>
+                Game Area
+              </h3>
+              <div class="game-gift-box_field">
+                <cl-select-graphic-wrap
+                  *ngIf="snakeData.gameArea"
+                  formControlName="gameArea"
+                  [placeHolder]="'*Recommended size 310px (w) x 390px (h) in .JPG or .PNG format.'"
+                  [isRequired]="form.get('gameArea').hasError('required') && form.get('gameArea').touched"
+                  [graphicList]="snakeData.gameArea"
+                >
+                </cl-select-graphic-wrap>
+              </div>
+            </div>
+
+            <div class="control-img_asset">
+              <h3 class="card-fieldset-label" translate>
+                BACKGROUND
+              </h3>
+              <div class="game-gift-box_field">
+                <cl-select-graphic-wrap
+                  *ngIf="snakeData.background"
+                  formControlName="background"
+                  [placeHolder]="'*Recommended size 720px (w) x 720px (h) in .JPG or .PNG format.'"
+                  [isRequired]="form.get('background').hasError('required') && form.get('background').touched"
+                  [graphicList]="snakeData.background"
+                >
+                </cl-select-graphic-wrap>
+              </div>
+            </div>
+          </div>
+        </mat-card>
+
+        <mat-card class="card-fieldset">
+          <h2 class="card-fieldset-title sub-title" translate>
+            BUTTON
+          </h2>
+          <div class="messages-form">
+            <div class="control-input">
+              <mat-form-field class="messages-input">
+                <input type="text" [placeholder]="'BUTTON_TEXT' | translate" matInput formControlName="buttonText">
+                <mat-hint align="end">{{buttonText.value?.length || 0}}/20</mat-hint>
+                <mat-error *ngIf="buttonText.hasError('required')"><span translate>ERROR_REQUIRED</span></mat-error>
+                <mat-error *ngIf="buttonText.hasError('minlength')"><span translate>ERROR_MIN_LENGTH</span> 2</mat-error>
+                <mat-error *ngIf="buttonText.hasError('maxlength')"><span translate>ERROR_MAX_LENGTH</span> 20</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+
+      <cl-simple-mobile-view class="second-tab"
+                            [background]="getImgLink(background, 'assets/images/background/background1.png')"
+                            [mobileImageClass]="'mobile-non-header'"
+                            [headerColor]="tenantSettings?.headerColor"
+                            [logo]="tenantSettings?.logo"
+                            [logoType]="tenantSettings?.logoType"
+                            [fontFamily]="tenantSettings?.font"
+                            clCreateImage
+      >
+        <div class="plugin-block">
+          <div class="mobile-preview-header">
+            <p class="mobile-preview-headline light">
+              {{headlineMessage.value}}
+            </p>
+            <p class="mobile-preview-sub-headline light">
+              {{subHeadlineMessage.value}}
+            </p>
+          </div>
+          <perx-core-snake-game class="mobile-preview-plugin"
+          [enabled]="false"
+          [targetUrl]="getImgLink(targetIcon, '')"
+          [snakeHeadUrl]="getImgLink(snakeType, '')"
+          [snakeBodyUrl]="getImgLinkLayer(snakeType, 0, '')"
+          [gameAreaUrl]="getImgLink(gameArea, '')">
+          </perx-core-snake-game>
+        </div>
+        <div class="mobile-preview-btn-wrap mobile-btn-block">
+          <button class="mobile-preview-btn"
+                  [ngStyle]="{
+                    backgroundColor: tenantSettings?.buttonColor,
+                    'color': tenantSettings?.buttonTextColor,
+                    'font-family': tenantSettings?.font
+                  }"
+          >
+            {{buttonText.value}}
+          </button>
+        </div>
+      </cl-simple-mobile-view>
+    </div>
+  </section>
+</article>
+

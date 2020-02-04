@@ -1,18 +1,19 @@
 import {
-  ChangeDetectionStrategy,
+  ChangeDetectionStrategy, ChangeDetectorRef,
   Component,
-  forwardRef,
+  Host,
   Input,
   OnDestroy,
-  OnInit,
-  ViewEncapsulation,
+  OnInit, Optional, Self, ViewChild,
 } from '@angular/core';
-import { AbstractControl, ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
-import {noop, Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
-import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
+import { AbstractControl, ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
+import { noop, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { NgxMaterialTimepickerComponent, NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
 import { customTimepickerTheme } from './custom-timepicker-theme';
 import { DatepickerRangeValue } from '../../models/datepicker-range-value.interface';
+import { MatFormField, MatFormFieldControl } from '@angular/material';
+import { CsFormFieldControl } from '../form-field-control';
 
 @Component({
   selector: 'cs-time-picker',
@@ -20,42 +21,51 @@ import { DatepickerRangeValue } from '../../models/datepicker-range-value.interf
   styleUrls: ['./time-picker.component.scss'],
   providers: [
     {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => TimePickerComponent),
-      multi: true,
+      provide: MatFormFieldControl,
+      useExisting: TimePickerComponent
     }
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TimePickerComponent implements OnInit, OnDestroy, ControlValueAccessor {
-  @Input() public control: AbstractControl = new FormControl(null, []);
-  @Input() public placeholder: string = 'time';
-  @Input() public appearance: string = 'outline';
-  @Input() set disabled(value: boolean) {
-    this.setDisabledState(value);
+export class TimePickerComponent extends CsFormFieldControl<string> implements OnInit, OnDestroy, ControlValueAccessor {
+  @Input() public clickable: boolean = true;
+  @Input() public format: 12 | 24 = 24;
+  public timePickerControl: AbstractControl = new FormControl(null, []);
+  public theme: NgxMaterialTimepickerTheme = customTimepickerTheme;
+  @ViewChild('timePicker', {static: false}) public timePicker: NgxMaterialTimepickerComponent;
+
+  private onChange: any = noop;
+  private onTouched: any = noop;
+  private destroy$: Subject<void> = new Subject();
+
+  constructor(
+    @Optional() @Self() public ngControl: NgControl,
+    @Optional() @Host() protected formField: MatFormField,
+    private cd: ChangeDetectorRef,
+  ) {
+    super('cs-time-picker', ngControl);
+    if (this.ngControl) {
+      this.ngControl.valueAccessor = this;
+    }
   }
 
-  public theme: NgxMaterialTimepickerTheme = customTimepickerTheme;
-  public disabledState: boolean = false;
-  private destroy$: Subject<void> = new Subject();
-  private onChange: any = noop;
-  // @ts-ignore
-  private onTouched: any = noop;
-
   public ngOnInit(): void {
-    this.control.valueChanges
+    this.timePickerControl.valueChanges
       .pipe(
         takeUntil(this.destroy$)
       )
       .subscribe((value: any) => {
+        this.value = value;
         this.onChange(value);
+        this.onTouched();
       });
   }
 
   public ngOnDestroy(): void {
+    this.stateChanges.complete();
     this.destroy$.next();
     this.destroy$.complete();
+    this.cd.detach();
   }
 
   public registerOnChange(fn: any): void {
@@ -64,24 +74,33 @@ export class TimePickerComponent implements OnInit, OnDestroy, ControlValueAcces
 
   public registerOnTouched(fn: any): void {
     this.onTouched = fn;
-    this.control.markAsTouched();
-  }
-
-  public setDisabledState(isDisabled: boolean): void {
-    this.disabledState = isDisabled;
-    if (isDisabled) {
-      this.control.disable();
-    } else {
-      this.control.enable();
-    }
+    this.timePickerControl.markAsTouched();
   }
 
   public writeValue(obj: DatepickerRangeValue<Date> | null): void {
     if (obj) {
-      this.control.patchValue(obj);
+      this.timePickerControl.patchValue(obj, {emitEvent: false});
     } else {
-      this.control.reset();
+      this.timePickerControl.reset();
     }
-    this.onChange(obj);
+  }
+
+  public open(): void {
+    if (this.timePicker && !this.timePicker.isOpened) {
+      this.timePicker.open();
+      this.cd.markForCheck();
+    }
+  }
+
+  public onContainerClick = (): void => {
+    if (this.clickable) {
+      this.open();
+    }
+  }
+
+  public onClickInnerInput(): void {
+    if (!this.formField && this.clickable) {
+      this.open();
+    }
   }
 }

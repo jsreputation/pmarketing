@@ -1,0 +1,203 @@
+@import '~@angular/material/theming';
+@import "variables";
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.upload {
+  &-wrap {
+    position: relative;
+  }
+
+  &-input {
+    opacity: 0;
+    position: absolute;
+    width: 10.8rem;
+    height: 12.7rem;
+    z-index: 55;
+    cursor: pointer;
+  }
+
+  &-btn {
+    @include typo-button;
+
+    width: 11rem;
+    height: 13rem;
+    background: $white;
+    border-radius: $border-radius;
+    transition: 0.5s cubic-bezier(0.35, 0, 0.25, 1);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $primary-color;
+    position: relative;
+    border: none;
+
+    &::after {
+      content: '';
+      opacity: 0;
+      transition: 0.5s cubic-bezier(0.35, 0, 0.25, 1);
+    }
+
+    // Control Dash Visual
+    &::before {
+      content: "";
+      position: absolute;
+      border-radius: $border-radius;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      background-image: linear-gradient(to right, $primary-color 50%, rgba(255, 255, 255, 0) 0%), linear-gradient($primary-color 50%, rgba(255, 255, 255, 0) 0%), linear-gradient(to left, $primary-color 50%, rgba(255, 255, 255, 0) 0%), linear-gradient($primary-color 50%, rgba(255, 255, 255, 0) 0%);
+      background-position: 0% 0%, 100% 0%, 0% 100%, 0% 0%;
+      background-size: ($horizontal-padding * 0.375) 0.15rem, 0.15rem ($horizontal-padding * 0.375), ($horizontal-padding * 0.375) 0.15rem, 0.15rem ($horizontal-padding * 0.375);
+      background-repeat: repeat-x, repeat-y, repeat-x, repeat-y;
+      transition: 0.5s cubic-bezier(0.35, 0, 0.25, 1);
+      opacity: 0.5;
+    }
+  }
+
+  &-wrap:hover .upload-btn::before,
+  &-wrap:focus .upload-btn::before {
+    opacity: 1;
+  }
+
+  &-wrap.invalid .upload-btn::before {
+    background-image: linear-gradient(to right, $warning-color 50%, rgba(255, 255, 255, 0) 0%), linear-gradient($warning-color 50%, rgba(255, 255, 255, 0) 0%), linear-gradient(to left, $warning-color 50%, rgba(255, 255, 255, 0) 0%), linear-gradient($warning-color 50%, rgba(255, 255, 255, 0) 0%);
+  }
+
+  &-error {
+    @include typo-caption;
+
+    color: $warning-color;
+  }
+
+  &-error-wrap {
+    position: absolute;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    margin-top: ($vertical-padding * 0.17);
+    width: max-content;
+  }
+
+  &-type {
+    @include typo-caption;
+
+    color: rgba(51, 51, 51, 0.5);
+  }
+
+  &-type-wrap {
+    position: absolute;
+    bottom: -($vertical-padding * 0.75);
+    left: 0;
+    width: max-content;
+  }
+}
+
+.image {
+  &-clear {
+    opacity: 0;
+    transition: 0.5s cubic-bezier(0.35, 0, 0.25, 1);
+    position: absolute;
+    bottom: 0.4rem;
+    right: 0.4rem;
+    background: $white;
+    border: none;
+    border-radius: 50%;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    @include mat-elevation(1);
+
+    mat-icon {
+      font-size: $icon-font-size;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: $primary-color;
+    }
+  }
+
+  &-wrap {
+    width: 10.8rem;
+    height: 12.7rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: $gray;
+    position: relative;
+    cursor: pointer;
+    box-sizing: border-box;
+
+    @include check-select;
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+  }
+
+  &-wrap:hover {
+    .image-clear {
+      z-index: 10;
+      opacity: 1;
+    }
+  }
+}
+
+.stretch {
+  width: 100%;
+  height: 100%;
+
+  .upload-input, .upload-btn, .image-wrap, .upload-wrap-btn {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.small {
+  .upload-input, .upload-btn, .image-wrap, .upload-wrap-btn {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .image-wrap::after {
+    border-width: 1px;
+  }
+
+  .upload-type-wrap {
+    opacity: 0;
+    transition: 0.5s cubic-bezier(0.35, 0, 0.25, 1);
+  }
+
+  .image-wrap:hover ~ .upload-type-wrap, .upload-input:hover ~ .upload-type-wrap {
+    opacity: 1;
+  }
+}
+
+.upload-full {
+  &-width {
+    .upload {
+      &-btn {
+        height: 4rem;
+        width: 100%;
+        padding: 0 1.6rem;
+      }
+
+      &-input {
+        height: 4rem;
+        width: 100%;
+        padding: 0 1.6rem;
+        box-sizing: border-box;
+      }
+    }
+  }
+}

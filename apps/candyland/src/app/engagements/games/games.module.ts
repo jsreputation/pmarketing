@@ -34,12 +34,15 @@ import { TranslateModule } from '@ngx-translate/core';
 import {ClColorPickerModule} from '@cl-shared/components/cl-color-picker/cl-color-picker.module';
 import { CheckboxGroupModule } from '@cl-shared/components/checkbox-group/checkbox-group.module';
 import {UploadGraphicModule} from '@cl-shared/components/upload-graphic/upload-graphic.module';
+import {NewSnakePageComponent} from './containers/new-snake-page/new-snake-page.component';
+import {SelectGraphicWrapDialogModule} from '@cl-shared/components/select-graphic-wrap-dialog/select-graphic-wrap-dialog.module';
 
 @NgModule({
   declarations: [
     NewShakePageComponent,
     NewPinataPageComponent,
     NewScratchPageComponent,
+    NewSnakePageComponent,
     GameComponent,
     NewSpinPageComponent,
   ],
@@ -52,6 +55,7 @@ import {UploadGraphicModule} from '@cl-shared/components/upload-graphic/upload-g
     ButtonModule,
     SelectGraphicModule,
     SelectGraphicWrapModule,
+    SelectGraphicWrapDialogModule,
     GameModule,
     SimpleMobileViewModule,
     SettingsMobilePreviewModule,

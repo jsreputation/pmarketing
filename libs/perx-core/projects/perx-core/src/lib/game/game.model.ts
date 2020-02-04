@@ -69,6 +69,17 @@ export function defaultScratch(): IScratch {
   };
 }
 
+export function defaultSnake(): ISnake {
+  return {
+    snakeHead: '',
+    snakeBody: '',
+    background: '',
+    targetIcon: '',
+    gameArea: '',
+    targetRequired: 5
+  };
+}
+
 export function defaultSpin(): ISpin {
   return {
     numberOfWedges: 5,
@@ -100,9 +111,12 @@ export interface ISpin {
 }
 
 export interface ISnake {
-  snakeColor: string;
-  targetImg: string;
-  backgroundColor: string;
+  snakeHead: string; // snakeWholeImage copy colorCtrls
+  snakeBody?: string;
+  background: string;
+  targetIcon: string;
+  gameArea: string;
+  targetRequired: number;
 }
 
 export interface ITree {

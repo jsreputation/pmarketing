@@ -1,40 +1,45 @@
-import { HttpClient } from '@angular/common/http';
-import { map, switchMap, mergeMap, tap, retry, takeLast } from 'rxjs/operators';
+import {HttpClient} from '@angular/common/http';
+import {map, mergeMap, retry, switchMap, takeLast, tap} from 'rxjs/operators';
 import {
-  IGame,
-  GameType as TYPE,
-  defaultTree,
-  ITree,
-  IPinata,
-  IScratch,
-  ISpin,
-  defaultScratch,
   defaultPinata,
+  defaultScratch, defaultSnake,
+  defaultSpin,
+  defaultTree,
+  GameType as TYPE,
+  IEngagementTransaction,
+  IGame,
+  IPinata,
   IPlayOutcome,
-  IEngagementTransaction, defaultSpin
+  IScratch,
+  ISnake,
+  ISpin,
+  ITree,
+  IGameOutcome
 } from './game.model';
-import { Observable, combineLatest, of, Subscriber } from 'rxjs';
-import { Injectable, Optional } from '@angular/core';
-import { IGameService } from './igame.service';
-import { Config } from '../config/config';
-import { IVoucherService } from '../vouchers/ivoucher.service';
+import {combineLatest, Observable, of, Subscriber} from 'rxjs';
+import {Injectable, Optional} from '@angular/core';
+import {IGameService} from './igame.service';
+import {Config} from '../config/config';
+import {IVoucherService} from '../vouchers/ivoucher.service';
 import {
-  IWGameEngagementAttributes,
-  IWCampaignAttributes,
-  IWAssignedAttributes,
-  IWTreeDisplayProperties,
-  IWPinataDisplayProperties,
-  WGameType,
-  IJsonApiItemPayload,
   IJsonApiItem,
+  IJsonApiItemPayload,
+  IWAssignedAttributes,
   IWAttbsObjTrans,
-  IWScratchDisplayProperties,
-  IWSpinDisplayProperties,
+  IWCampaignAttributes,
   IWCampaignDisplayProperties,
+  IWGameEngagementAttributes,
+  IWPinataDisplayProperties,
+  IWScratchDisplayProperties,
+  IWSnakeDisplayProperties,
+  IWSpinDisplayProperties,
+  IWTreeDisplayProperties,
+  WGameType,
 } from '@perx/whistler';
 import { WhistlerVouchersService } from '../vouchers/whistler-vouchers.service';
 import { ICampaignService } from '../campaign/icampaign.service';
 import { ICampaign, CampaignType } from '../campaign/models/campaign.model';
+import { AuthenticationService } from '../auth/authentication/authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -45,7 +50,8 @@ export class WhistlerGameService implements IGameService {
     private http: HttpClient,
     config: Config,
     private voucherService: IVoucherService,
-    @Optional() private campaignService?: ICampaignService
+    @Optional() private campaignService?: ICampaignService,
+    @Optional() private auth?: AuthenticationService
   ) {
     this.hostName = config.apiHost as string;
   }
@@ -59,7 +65,7 @@ export class WhistlerGameService implements IGameService {
 
   private static WGameToGame(game: IJsonApiItem<IWGameEngagementAttributes>): IGame {
     let type = TYPE.unknown;
-    let config: ITree | IPinata | IScratch | ISpin | null = null;
+    let config: ITree | IPinata | IScratch | ISpin | ISnake | null = null;
     const { attributes } = game;
     if (attributes.game_type === WGameType.shakeTheTree) {
       type = TYPE.shakeTheTree;
@@ -101,6 +107,17 @@ export class WhistlerGameService implements IGameService {
         wheelImg: spindp.wheel_img,
         wheelPosition: spindp.wheel_position,
         pointerImg: spindp.pointer_img
+      };
+    } else if (attributes.game_type === WGameType.snake) {
+      type = TYPE.snake;
+      const snakedp: IWSnakeDisplayProperties = attributes.display_properties as IWSnakeDisplayProperties;
+      config = {
+        ...defaultSnake(),
+        snakeHead: snakedp.snake_head_img_url,
+        snakeBody: snakedp.snake_body_img_url,
+        targetIcon: snakedp.target_icon_img_url,
+        gameArea: snakedp.game_area_img_url,
+        targetRequired: snakedp.target_required
       };
     }
 
@@ -218,7 +235,7 @@ export class WhistlerGameService implements IGameService {
       }))
     );
   }
-  public prePlayConfirm(transactionId: number): Observable<void> {
+  public prePlayConfirm(transactionId: number, informationCollectionSetting?: string): Observable<void> {
     const body = {
       data: {
         type: 'transactions',
@@ -228,6 +245,11 @@ export class WhistlerGameService implements IGameService {
         }
       }
     };
+    if ((informationCollectionSetting === 'pi_required'
+      || informationCollectionSetting === 'signup_required')
+      && this.checkAnonymous()) {
+      return of();
+    }
     return this.http.patch<IJsonApiItemPayload<IWAttbsObjTrans>>(
       `${this.hostName}/game/transactions/${transactionId}`,
       body,
@@ -280,5 +302,49 @@ export class WhistlerGameService implements IGameService {
         ).subscribe(() => subject.complete());
       return () => sub.unsubscribe();
     }));
+  }
+
+  private checkAnonymous(): boolean {
+    if (!this.auth) {
+      console.log('AuthenticationService is required for check Anonymous');
+      return false;
+    }
+    return this.auth.getAnonymous();
+  }
+
+  public getSuccessOutcome(game: IGame): IGameOutcome {
+    const { displayProperties } = game;
+    if (displayProperties && displayProperties.successPopUp) {
+      return {
+        title: displayProperties.successPopUp.headLine as string,
+        subTitle: displayProperties.successPopUp.subHeadLine as string,
+        image: displayProperties.successPopUp.imageURL as string,
+        button: displayProperties.successPopUp.buttonTxt as string
+      };
+    }
+
+    return {
+      title: '',
+      subTitle: '',
+      button: ''
+    };
+  }
+
+  public getNoOutcome(game: IGame): IGameOutcome {
+    const { displayProperties } = game;
+    if (displayProperties && displayProperties.noRewardsPopUp) {
+      return {
+        title: displayProperties.noRewardsPopUp.headLine as string,
+        subTitle: displayProperties.noRewardsPopUp.subHeadLine as string,
+        image: displayProperties.noRewardsPopUp.imageURL as string,
+        button: displayProperties.noRewardsPopUp.buttonTxt as string
+      };
+    }
+
+    return {
+      title: '',
+      subTitle: '',
+      button: ''
+    };
   }
 }
