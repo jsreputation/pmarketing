@@ -16,9 +16,10 @@ const routes: Routes = [
         path: 'rule-building',
         loadChildren: () => import('./containers/rule-building/rule-building.module').then(m => m.RuleBuildingModule)
       },
-      { path: 'branding', loadChildren: () => import('./containers/branding/branding.module').then(m => m.BrandingModule) }
+      { path: 'branding', loadChildren: () => import('./containers/branding/branding.module').then(m => m.BrandingModule) },
+      { path: 'integrations', loadChildren: () => import('./containers/integrations/integrations.module').then(m => m.IntegrationsModule) }
     ]
-  }
+  },
 ];
 
 @NgModule({
