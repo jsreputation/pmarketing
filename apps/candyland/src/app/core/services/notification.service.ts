@@ -15,7 +15,10 @@ export class NotificationService {
 
   constructor(private notificationHttpService: NotificationHttpService) { }
 
-  public createNotification(data: ICampaignNotificationGroup, campaignId: string): Observable<IJsonApiListPayload<IWNotificationAttributes>> {
+  public createNotification(
+    data: ICampaignNotificationGroup,
+    campaignId: string
+  ): Observable<IJsonApiListPayload<IWNotificationAttributes>> {
     const sendData = NotificationHttpAdapter.transformToNotification(data, campaignId);
     return this.notificationHttpService.createNotification({ data: sendData });
   }
@@ -46,7 +49,10 @@ export class NotificationService {
     return this.notificationHttpService.deleteNotification(id);
   }
 
-  public updateNotification(data: ICampaignNotificationGroup, campaignId: string): Observable<IJsonApiListPayload<IWNotificationAttributes>> {
+  public updateNotification(
+    data: ICampaignNotificationGroup,
+    campaignId: string
+  ): Observable<IJsonApiListPayload<IWNotificationAttributes>> {
     const sendData = NotificationHttpAdapter.transformToNotification(data, campaignId);
     return this.notificationHttpService.updateNotification(sendData.id, { data: sendData });
   }

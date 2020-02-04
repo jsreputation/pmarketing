@@ -19,7 +19,7 @@ describe('TapComponent', () => {
         GameModule
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -19,7 +19,7 @@ export class RewardsComponent implements OnInit, OnDestroy {
   private popupSubscription: SubscriptionLike;
 
   constructor(private dialog: MatDialog,
-              private notificationService: NotificationService) {
+    private notificationService: NotificationService) {
   }
 
   public ngOnInit(): void {

@@ -12,7 +12,7 @@ describe('SpinComponent', () => {
       declarations: [ SpinComponent ],
       imports: [ GameModule ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

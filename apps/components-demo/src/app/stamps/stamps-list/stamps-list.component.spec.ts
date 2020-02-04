@@ -11,7 +11,7 @@ describe('StampsListComponent', () => {
       declarations: [ StampsListComponent ],
       imports: [RewardsModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

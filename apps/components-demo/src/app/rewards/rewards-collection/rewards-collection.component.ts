@@ -33,8 +33,8 @@ export class RewardsCollectionComponent implements OnInit {
   public rewardClickedHandler(reward: IReward): void {
     this.notificationService.addPopup({
       title: 'Clicked!',
-      text: 'ID: ' + reward.id + '\n' +
-        'Reward Name: ' + reward.name,
+      text: `ID: ${  reward.id  }\n` +
+        `Reward Name: ${  reward.name}`,
     });
   }
 }

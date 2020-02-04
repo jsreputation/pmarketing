@@ -13,7 +13,7 @@ describe('LoyaltyComponent', () => {
       declarations: [ LoyaltyComponent ],
       imports: [RouterTestingModule, MatTabsModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -14,7 +14,7 @@ describe('MapComponent', () => {
         PerxChartModule
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

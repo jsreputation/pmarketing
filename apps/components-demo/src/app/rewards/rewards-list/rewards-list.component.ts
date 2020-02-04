@@ -13,7 +13,7 @@ export class RewardsListComponent implements OnInit {
   public rewards: Observable<IReward[]>;
 
   constructor(private rewardsService: RewardsService,
-              private notificationService: NotificationService) {
+    private notificationService: NotificationService) {
   }
 
   public ngOnInit(): void {
@@ -28,8 +28,8 @@ export class RewardsListComponent implements OnInit {
   public rewardClickedHandler(reward: IReward): void {
     this.notificationService.addPopup({
       title: 'Clicked!',
-      text: 'ID: ' + reward.id + '\n' +
-        'Reward Name: ' + reward.name,
+      text: `ID: ${  reward.id  }\n` +
+        `Reward Name: ${  reward.name}`,
     });
   }
 }
