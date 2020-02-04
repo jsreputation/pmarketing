@@ -28,7 +28,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 export class CheckboxGroupComponent implements OnInit, AfterViewInit, OnDestroy, ControlValueAccessor {
   @ContentChildren(MatCheckbox) public checkboxList: QueryList<MatCheckbox>;
 
-  @Input() set value(setValue: string[]) {
+  @Input() public set value(setValue: string[]) {
     this.writeValue(setValue);
   }
   private data: string[] = [];
@@ -38,8 +38,7 @@ export class CheckboxGroupComponent implements OnInit, AfterViewInit, OnDestroy,
   // @ts-ignore
   private onTouched: any = noop;
 
-  constructor(private cd: ChangeDetectorRef) {
-  }
+  constructor(private cd: ChangeDetectorRef) { }
 
   public ngOnInit(): void {
   }

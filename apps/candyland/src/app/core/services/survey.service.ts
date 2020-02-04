@@ -16,10 +16,11 @@ import { GeneralStaticDataService } from '@perx/core';
 })
 export class SurveyService {
 
-  constructor(private surveyHttp: SurveyHttpService,
+  constructor(
+    private surveyHttp: SurveyHttpService,
     private http: HttpClient,
-    private generalStaticDataService: GeneralStaticDataService) {
-  }
+    private generalStaticDataService: GeneralStaticDataService
+  ) { }
 
   public getSurveyQuestionType(): Observable<IEngagementQuestionType[]> {
     return this.http.get('assets/actives/engagement-question/question-type.json')

@@ -11,9 +11,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ScratchService {
 
-  constructor(private scratchHttpService: ScratchHttpService,
-    private http: HttpClient) {
-  }
+  constructor(private scratchHttpService: ScratchHttpService, private http: HttpClient) { }
 
   public getScratchData(): Observable<IGameDefaultData> {
     return this.http.get<IGameDefaultData>('assets/actives/scratch/scratch-data.json');
