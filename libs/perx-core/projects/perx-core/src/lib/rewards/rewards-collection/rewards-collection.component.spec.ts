@@ -16,7 +16,7 @@ import { Directive, Input } from '@angular/core';
   selector: '[ngxEllipsis]'
 })
 export class LineDirectiveMockDirective {
-  @Input() lines: number;
+  @Input() public lines: number;
 }
 
 describe('RewardsCollectionComponent', () => {
