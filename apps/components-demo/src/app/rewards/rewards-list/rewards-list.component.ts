@@ -9,12 +9,9 @@ import { mock } from '../reward-mock';
   styleUrls: ['./rewards-list.component.scss']
 })
 export class RewardsListComponent implements OnInit {
-
   public rewards: Observable<IReward[]>;
 
-  constructor(private rewardsService: RewardsService,
-    private notificationService: NotificationService) {
-  }
+  constructor(private rewardsService: RewardsService, private notificationService: NotificationService) { }
 
   public ngOnInit(): void {
     this.rewardsService
@@ -28,8 +25,8 @@ export class RewardsListComponent implements OnInit {
   public rewardClickedHandler(reward: IReward): void {
     this.notificationService.addPopup({
       title: 'Clicked!',
-      text: `ID: ${  reward.id  }\n` +
-        `Reward Name: ${  reward.name}`,
+      text: `ID: ${reward.id}\n` +
+        `Reward Name: ${reward.name}`,
     });
   }
 }
