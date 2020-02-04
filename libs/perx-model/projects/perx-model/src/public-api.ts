@@ -14,7 +14,7 @@ export { IPTags } from './lib/tags/tags';
 export { IPTenantConfig } from './lib/tenant/tenant';
 export { IPReportDownload, IPReportDownloadDetails, IPReportDownloads } from './lib/reports/reports';
 export { IPRewards, PRewardState, IPPostRewardResponse, IPPostReward, IPReward, IPPutReward } from './lib/rewards/rewards';
-export { PCatalogueState, IPCatalogues } from './lib/catalogues/catalogues';
+export { PCatalogueState, IPCatalogues, IPPostCatalogue, IPPostCatalogueReponse, IPCatalogItem, IPPutCatalog } from './lib/catalogues/catalogues';
 export { IPCustomImageRatio, IPCustomImageRatios, IPCustomImageRatioPutResponse } from './lib/media/media';
 export { IPRoles, IPPostRole, IPPostRoleResponse } from './lib/auth/roles';
 export { IPFtpUploads } from './lib/uploads/ftp';
