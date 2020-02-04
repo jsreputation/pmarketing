@@ -44,7 +44,6 @@
     "lodash.isempty": "^4.4.0",
     "lodash.isequal": "^4.5.0",
     "lodash.transform": "^4.6.0",
-    "mat-color-picker": "^1.4.3",
     "moment": "^2.24.0",
     "ngx-auth": "^5.0.0",
     "ngx-color-picker": "^8.1.0",

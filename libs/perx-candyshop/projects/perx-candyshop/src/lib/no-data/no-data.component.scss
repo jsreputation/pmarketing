@@ -1,0 +1,13 @@
+@import "../../styles/variables";
+
+:host {
+  padding: $vertical-padding;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 10;
+  max-width: 57rem;
+  margin: $vertical-padding auto;
+}
