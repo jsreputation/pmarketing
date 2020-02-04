@@ -20,10 +20,11 @@ export class AdjustBalancePointsPopupComponent implements OnInit, AfterViewInit 
     return this.form ? this.form.get('description') : null;
   }
 
-  constructor(public dialogRef: MatDialogRef<AdjustBalancePointsPopupComponent>,
+  constructor(
+    public dialogRef: MatDialogRef<AdjustBalancePointsPopupComponent>,
     private cd: ChangeDetectorRef,
-              @Inject(MAT_DIALOG_DATA) public data: IAudiencesLoyaltyCard) {
-  }
+    @Inject(MAT_DIALOG_DATA) public data: IAudiencesLoyaltyCard
+  ) { }
 
   public ngOnInit(): void {
     this.form = new FormGroup({
@@ -46,7 +47,7 @@ export class AdjustBalancePointsPopupComponent implements OnInit, AfterViewInit 
       this.form.markAsTouched();
       return;
     }
-    const updatedCard = {id: this.data.id, balance: this.balance.value};
+    const updatedCard = { id: this.data.id, balance: this.balance.value };
     this.dialogRef.close(updatedCard);
   }
 }

@@ -39,14 +39,16 @@ export class NewCampaignNotificationsComponent implements OnInit, OnChanges, OnD
   public isFirstInit: boolean;
   public triggerLabelsChip: boolean;
   public campaignId: string;
-  constructor(private campaignChannelsFormService: CampaignChannelsFormService,
+  constructor(
+    private campaignChannelsFormService: CampaignChannelsFormService,
     public store: CampaignCreationStoreService,
     private cd: ChangeDetectorRef,
     private stampsService: StampsService,
     private newCampaignDetailFormService: NewCampaignDetailFormService,
     public stepConditionService: StepConditionService,
     private route: ActivatedRoute,
-    private toggleControlService: ToggleControlService) {
+    private toggleControlService: ToggleControlService
+  ) {
     this.initForm();
   }
 

@@ -13,10 +13,11 @@ export class AdjustLoyaltyTierPopupComponent implements OnInit, AfterViewInit {
   public tierControl: FormControl;
   public currentTierIndex: number;
 
-  constructor(public dialogRef: MatDialogRef<AdjustLoyaltyTierPopupComponent>,
+  constructor(
+    public dialogRef: MatDialogRef<AdjustLoyaltyTierPopupComponent>,
     private cd: ChangeDetectorRef,
-              @Inject(MAT_DIALOG_DATA) public data: { card: IAudiencesLoyaltyCard, tiers: IAudiencesTier[] }) {
-  }
+    @Inject(MAT_DIALOG_DATA) public data: { card: IAudiencesLoyaltyCard, tiers: IAudiencesTier[] }
+  ) { }
 
   public close(): void {
     this.dialogRef.close(null);
@@ -25,7 +26,7 @@ export class AdjustLoyaltyTierPopupComponent implements OnInit, AfterViewInit {
   public save(): void {
     const selectIndex = this.tierControl.value;
     const selectTier = this.data.tiers[selectIndex];
-    const updatedCard = {id: this.data.card.id, tier: selectTier};
+    const updatedCard = { id: this.data.card.id, tier: selectTier };
     this.dialogRef.close(updatedCard);
   }
 
