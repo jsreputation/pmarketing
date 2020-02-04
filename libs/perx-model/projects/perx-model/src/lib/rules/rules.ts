@@ -19,3 +19,23 @@ export interface IPTransactionRules {
     total_count: number;
   };
 }
+
+export interface IPTriggers {
+  data: {
+    id: number;
+    name: string;
+    uuid: string;
+  }[];
+}
+
+export interface IPPostTrigger {
+  name: string;
+}
+
+export interface IPPostTriggerResponse {
+  id: number;
+  name: string;
+  uuid: string;
+  created_at: string;
+  updated_at: string;
+}

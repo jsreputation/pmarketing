@@ -19,3 +19,4 @@ export { IPCustomImageRatio, IPCustomImageRatios, IPCustomImageRatioPutResponse 
 export { IPRoles, IPPostRole, IPPostRoleResponse } from './lib/auth/roles';
 export { IPFtpUploads } from './lib/uploads/ftp';
 export { IPUsers, IPUser, IPUserItem } from './lib/users/users';
+export { IPTriggers, IPPostTrigger, IPPostTriggerResponse } from './lib/rules/rules';
