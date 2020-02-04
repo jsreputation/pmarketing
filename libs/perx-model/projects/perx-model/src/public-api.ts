@@ -18,3 +18,4 @@ export { PCatalogueState, IPCatalogues } from './lib/catalogues/catalogues';
 export { IPCustomImageRatio, IPCustomImageRatios, IPCustomImageRatioPutResponse } from './lib/media/media';
 export { IPRoles, IPPostRole, IPPostRoleResponse } from './lib/auth/roles';
 export { IPFtpUploads } from './lib/uploads/ftp';
+export { IPUsers, IPUser, IPUserItem } from './lib/users/users';

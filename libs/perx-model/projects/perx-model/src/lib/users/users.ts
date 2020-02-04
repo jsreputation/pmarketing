@@ -4,7 +4,7 @@ export const enum PUserState {
   locked = 'locked'
 }
 
-export interface IPUser {
+export interface IPUserItem {
   id: number;
   email: string;
   name: string;
@@ -16,12 +16,21 @@ export interface IPUser {
   is_locked: boolean;
 }
 
-export interface IPUSers {
-  data: IPUser[];
+export interface IPUsers {
+  data: IPUserItem[];
   meta: {
     count: number;
     size: number;
     total_pages: number;
     page: number;
   };
+}
+
+export interface IPPostUser {
+  email: string;
+  role_ids: number[];
+}
+
+export interface IPUser {
+  data: IPUserItem;
 }
