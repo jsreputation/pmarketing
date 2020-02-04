@@ -9,7 +9,7 @@ describe('GeoLocationService', () => {
   it('should be created', () => {
     const service: GeoLocationService = TestBed.get<GeoLocationService>(GeoLocationService as Type<GeoLocationService>);
     expect(service).toBeTruthy();
-    spyOnProperty(navigator, 'geolocation').and.returnValue(null);
+    // spyOn(navigator, 'geolocation');
     expect(new GeoLocationService()).toBeTruthy();
   });
 
@@ -29,7 +29,7 @@ describe('GeoLocationService', () => {
     geolocation.newPosition(pos);
     tick();
     geolocation.ngOnDestroy();
-    spyOnProperty(navigator, 'geolocation').and.returnValue(null);
+    // spyOnProperty(navigator, 'geolocation').mockReturnValue(null);
     geolocation.ngOnDestroy();
   })));
 

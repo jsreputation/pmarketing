@@ -137,9 +137,9 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       url: location.host,
       username: user,
       password: pass,
-      ...mechId && { mech_id: mechId },
-      ...campaignId && { campaign_id: campaignId },
-      ...scope && { scope }
+      ...(mechId && { mech_id: mechId }),
+      ...(campaignId && { campaign_id: campaignId }),
+      ...(scope && { scope })
     };
     return this.http.post<IWLoginResponse>(`${this.userAuthEndPoint}/token`, authenticateBody);
   }

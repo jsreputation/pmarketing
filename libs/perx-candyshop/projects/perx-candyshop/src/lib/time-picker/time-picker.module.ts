@@ -23,7 +23,7 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
     MatFormFieldModule,
     MatIconModule,
     NgxMaterialTimepickerModule,
-  ]
+  ],
 })
 export class TimePickerModule {
 }

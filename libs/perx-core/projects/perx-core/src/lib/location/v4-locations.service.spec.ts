@@ -36,7 +36,7 @@ describe('V4LocationService', () => {
   it('should get all Locations', fakeAsync(inject([V4LocationsService, IMerchantsService],
     (locationService: V4LocationsService) => {
 
-      const spy = spyOn(locationService, 'getFromMerchant').and.returnValue(of([{
+      const spy = jest.spyOn(locationService, 'getFromMerchant').mockReturnValue(of([{
         id: 1,
         name: 'test',
         latitude: 1,
@@ -56,17 +56,17 @@ describe('V4LocationService', () => {
 
   it('should get locatiion', fakeAsync(inject([V4LocationsService, IMerchantsService],
     (location: V4LocationsService, merchantService: IMerchantsService) => {
-      const spy = spyOn(location, 'getFromMerchant').and.returnValue(of([]));
-      const merchSpy = spyOn(merchantService, 'getMerchants');
-      merchSpy.and.returnValue(of([]));
+      const spy = jest.spyOn(location, 'getFromMerchant').mockReturnValue(of([]));
+      const merchSpy = jest.spyOn(merchantService, 'getMerchants');
+      merchSpy.mockReturnValue(of([]));
       location.getLocations().subscribe(() => { });
       tick();
-      merchSpy.and.returnValue(of([{
+      merchSpy.mockReturnValue(of([{
         tags: [{ id: 1, name: 'test' }]
       } as IMerchant]));
       location.getLocations(1, ['test']).subscribe(() => { });
       tick();
-      merchSpy.and.returnValue(of([{
+      merchSpy.mockReturnValue(of([{
         id: 1
       } as IMerchant]));
       location.getLocations(1, ['test']).subscribe(() => { });
@@ -76,7 +76,7 @@ describe('V4LocationService', () => {
 
   it('getFromMerchant', fakeAsync(inject([V4LocationsService, IMerchantsService],
     (location: V4LocationsService, merchantService: IMerchantsService) => {
-      const spy = spyOn(merchantService, 'getMerchant').and.returnValue(of({
+      const spy = jest.spyOn(merchantService, 'getMerchant').mockReturnValue(of({
         outlets: [{ coordinates: { lat: 1, lng: 2 }, tags: [{ id: 1, name: 'test' }], }]
       } as IMerchant));
       location.getFromMerchant(1).subscribe(() => { });

@@ -3,6 +3,7 @@
   [fontFamily]="tenantSettings?.font">
     <div class="mobile-preview-header"
          *ngIf="engagement?.attributes_type !== 'stamps'
+         && engagement?.attributes_type !== 'instant_reward'
          && engagement?.game_type !== 'spin'
          && engagement?.attributes_type !== 'survey'
          && engagement?.game_type !== 'scratch'

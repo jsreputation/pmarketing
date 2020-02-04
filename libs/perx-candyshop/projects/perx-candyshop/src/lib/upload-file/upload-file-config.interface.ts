@@ -1,6 +1,6 @@
-import { IUploadFileService } from './upload-file-service.interface';
+import { UploadFileService } from './upload-file-service.interface';
 
 export interface IUploadFileConfig {
-  service?: IUploadFileService;
+  service?: UploadFileService;
   url?: string;
 }

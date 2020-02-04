@@ -16,7 +16,7 @@ describe('RewardsListComponent', () => {
   let component: RewardsListComponent;
   let fixture: ComponentFixture<RewardsListComponent>;
 
-  const themesServiceStub = {
+  const themesServiceStub: Partial<ThemesService> = {
     getThemeSetting: () => of()
   };
 
@@ -29,10 +29,7 @@ describe('RewardsListComponent', () => {
         NgxMultiLineEllipsisModule
       ],
       providers: [
-        {
-          provide: ThemesService,
-          useValue: themesServiceStub,
-        },
+        { provide: ThemesService, useValue: themesServiceStub },
       ],
     })
       .compileComponents();

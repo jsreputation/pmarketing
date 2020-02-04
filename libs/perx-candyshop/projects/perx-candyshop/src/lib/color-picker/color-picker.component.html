@@ -1,0 +1,24 @@
+<div class="cs-color-picker"
+     [class.disabled]="disabled"
+     [class.clickable]="clickable"
+     [ngClass]="classList"
+     (click)="onClickInnerInput()">
+  <div [ngStyle]="{'background-color': value}"
+       class="cs-color-picker-icon">
+  </div>
+  <input #colorPicker
+         matInput
+         class="cs-color-picker-input"
+         [readonly]="clickable"
+         [colorPicker]="value"
+         [value]="value"
+         [cpDisabled]="disabled"
+         [cpOutputFormat]="formatData"
+         cpPosition="bottom"
+         (colorPickerChange)="onEventLog($event)"
+         [cpIgnoredElements]="[colorPicker]"
+         [(cpToggle)]="toggle"
+         [attr.aria-label]="ariaLabel"
+         (focus)="focusChanged(true)"
+         (blur)="focusChanged(false)">
+</div>
