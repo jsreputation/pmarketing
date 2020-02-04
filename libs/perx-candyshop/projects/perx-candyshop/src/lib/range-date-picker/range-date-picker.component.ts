@@ -51,9 +51,11 @@ export class RangeDatePickerComponent extends CsFormFieldControl<any> implements
   private onTouched: any = noop;
   private destroy$: Subject<void> = new Subject();
 
-  constructor(@Optional() @Self() public ngControl: NgControl,
+  constructor(
+    @Optional() @Self() public ngControl: NgControl,
     @Optional() @Host() protected formField: MatFormField,
-    private cd: ChangeDetectorRef) {
+    private cd: ChangeDetectorRef
+  ) {
     super('cs-range-date-picker', ngControl);
     if (this.ngControl) {
       this.ngControl.valueAccessor = this;

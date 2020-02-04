@@ -13,23 +13,25 @@ export const translateLoader = (
 
 @Injectable()
 export class MultiTranslateHttpLoader implements TranslateLoader {
-
   public hostUrl: string = `http://localhost:4203`;
   public contentHeader: HttpHeaders = new HttpHeaders({
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
   });
 
-  constructor(private http: HttpClient, public resources: { prefix: string, suffix: string }[] = [{
-    prefix: '/assets/i18n/', suffix: '.json'
-  }]) {
+  constructor(
+    private http: HttpClient,
+    public resources: { prefix: string, suffix: string }[] = [{ prefix: '/assets/i18n/', suffix: '.json' }]
+  ) {
     if (environment.production) {
       this.hostUrl = `${ApiConfig.basePath}`;
     }
   }
 
   public getTranslation(lang: string): any {
-    const queryList: Observable<any>[] = this.resources.map(config => this.http.get(`${config.prefix}${lang}${config.suffix}`, {headers: this.contentHeader}));
+    const queryList: Observable<any>[] = this.resources.map(
+      config => this.http.get(`${config.prefix}${lang}${config.suffix}`, { headers: this.contentHeader })
+    );
     return forkJoin(queryList)
       .pipe(map(response => response.reduce((a, b) => Object.assign(a, b))));
   }

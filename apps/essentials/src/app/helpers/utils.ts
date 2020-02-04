@@ -87,6 +87,7 @@ export default class Utils {
     return copy;
 
     function walk(target, copy) {
+      /* eslint-disable guard-for-in */
       for (const key in target) {
         const obj = target[key];
         if (obj instanceof Date) {
