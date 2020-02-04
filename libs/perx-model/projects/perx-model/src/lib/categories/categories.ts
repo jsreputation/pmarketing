@@ -1,3 +1,10 @@
+export const enum PCategoryUsage {
+  rewards = 'Rewards',
+  merchants = 'Merchants',
+  campaigns = 'Campaigns',
+  catalogs = 'Catalogs'
+}
+
 export interface IPCategories {
   data: any[];
   meta: {
@@ -11,4 +18,11 @@ export interface IPCategories {
     total_pages: number;
     total_count: number;
   };
+}
+
+export interface IPPostCategories {
+  title: string;
+  description: string;
+  parent_id: null;
+  usage: PCategoryUsage[];
 }
