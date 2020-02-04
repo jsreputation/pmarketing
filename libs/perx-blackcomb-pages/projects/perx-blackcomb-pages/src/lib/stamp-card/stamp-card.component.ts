@@ -12,6 +12,7 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import {filter, switchMap, takeUntil, map, distinctUntilChanged} from 'rxjs/operators';
 import {Observable, Subject} from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import {oc} from 'ts-optchain';
 
 export interface IRewardPopupConfig extends IPopupConfig {
   afterClosedCallBackRedirect?: PopUpClosedCallBack;
@@ -31,7 +32,7 @@ export interface PopUpClosedCallBack {
 export class StampCardComponent implements OnInit, OnDestroy {
   public title: string; // = 'Scratch & Win!'
   public subTitle?: string; //  = 'Collect all 10 stickers and win a reward!'
-  public background: string;
+  public background: string | undefined | null;
   public cardBackground: string;
   public isEnabled: boolean = false;
   public stamps: IStamp[] | undefined;
@@ -102,7 +103,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
         this.stamps = stampCard.stamps;
         this.title = stampCard.title || '';
         this.subTitle = stampCard.subTitle;
-        this.background = stampCard.displayProperties.bgImage || '';
+        this.background = oc(stampCard).displayProperties.backgroundImg.value.imageUrl('');
         this.cardBackground = stampCard.displayProperties.cardBgImage || '';
         if (stampCard.displayProperties.noRewardsPopUp) {
           this.errorPopUp.title = stampCard.displayProperties.noRewardsPopUp.headLine;
