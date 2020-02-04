@@ -26,4 +26,8 @@ export class RewardsService {
   public postReward(query: IPPostReward): Observable<IPPostRewardResponse> {
     return this.http.post<IPPostRewardResponse>(`${this.apiConfig.baseApiPath}/v4/dash/rewards`, query);
   }
+
+  public putReward(query: any): Observable<IPPostRewardResponse> {
+    return this.http.put<IPPostRewardResponse>(`${this.apiConfig.baseApiPath}/v4/dash/rewards/${query.id}`, query);
+  }
 }

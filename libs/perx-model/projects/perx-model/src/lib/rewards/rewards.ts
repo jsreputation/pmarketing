@@ -108,7 +108,7 @@ export interface IPPostRewardResponse {
   data: {
     id: 2;
     name: string;
-    subtitle: null;
+    subtitle: null | string;
     description: null;
     meta: {
       translatable_fields: string[]
@@ -120,7 +120,7 @@ export interface IPPostRewardResponse {
     active_at: string;
     active_units: null;
     active_period: null;
-    active_strings: null;
+    active_days: null;
     state: PRewardState;
     images: any[];
     alt_merchant_name: null;
@@ -143,8 +143,8 @@ export interface IPPostRewardResponse {
     account_interval_max_available: null;
     account_interval_units: null;
     account_interval_period: string;
-    display_even_when_sold_out: true;
-    display_even_when_user_limit_reached: true;
+    display_even_when_sold_out: boolean;
+    display_even_when_user_limit_reached: boolean;
     transaction_validity_period_type: string;
     transaction_expires_in_units: null;
     transaction_expires_in_period: string;
@@ -180,7 +180,7 @@ export interface IPPostRewardResponse {
     tags: any[];
     categories: any[];
     labels: any[];
-    is_giftable: true;
+    is_giftable: boolean;
     og_title: null;
     og_description: null;
     og_image: null;
@@ -211,4 +211,67 @@ export interface IPPostRewardResponse {
     brands: any[];
     merchant: null;
   };
+}
+
+export interface IPPutReward {
+  is_draft: boolean;
+  hideDurationEndDate: boolean;
+  hideSellingEndDate: boolean;
+  code_generation_method_: string;
+  user_generated: boolean;
+  origin_begins_at: string;
+  name_en: string;
+  subtitle_en: string;
+  grace_time_in_period: string;
+  transaction_expires_in_period: string;
+  campaign_interval_period: string;
+  account_interval_period: string;
+  isDuplicated: boolean;
+  is_private: boolean;
+  is_system: boolean;
+  state: PRewardState;
+  tags: any[];
+  brands: any[];
+  catalogs: any[];
+  categories: any[];
+  labels: any[];
+  merchant_account_id: null;
+  custom_fields: any[];
+  reward_cost_amount: string;
+  timezone: string;
+  keywords_en: any[];
+  begins_at: string;
+  sneak_peek_loyalty_list: any[];
+  reward_cost_currency: string;
+  id: number;
+  name: string;
+  meta: {
+    translatable_fields: string[]
+  };
+  active_at: string;
+  images: any[];
+  reward_prices: any[];
+  generic_voucher_code: string;
+  display_even_when_sold_out: boolean;
+  display_even_when_user_limit_reached: boolean;
+  transaction_validity_period_type: string;
+  transaction_issues_at: string;
+  redemption_type: string;
+  loyalty: any[];
+  voucher_codes_count: 0;
+  code_generation_method: string;
+  loyalty_list: any[];
+  merchant_membership_levels: any[];
+  reward_price_currency_code: string;
+  voucher_type: string;
+  merchant_location_ids: any[];
+  audience_ids: any[];
+  include_audience_ids: any[];
+  exclude_audience_ids: any[];
+  activatable: boolean;
+  deactivatable: boolean;
+  is_giftable: boolean;
+  reward_publicity_type: string;
+  keywords_th: any[];
+  keywords_zh: any[];
 }
