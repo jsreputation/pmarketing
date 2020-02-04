@@ -1,10 +1,10 @@
-import {ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {AbstractControl, ControlValueAccessor, FormBuilder, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {Subject} from 'rxjs';
-import {debounceTime, takeUntil} from 'rxjs/operators';
-import {ImageControlValue} from '@cl-helpers/image-control-value';
-import {MultiUploadDialogComponent} from '@cl-shared/components/multi-upload-dialog/multi-upload-dialog.component';
-import {MatDialog} from '@angular/material';
+import { ChangeDetectorRef, Component, EventEmitter, forwardRef, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { AbstractControl, ControlValueAccessor, FormBuilder, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { debounceTime, takeUntil } from 'rxjs/operators';
+import { ImageControlValue } from '@cl-helpers/image-control-value';
+import { MultiUploadDialogComponent } from '@cl-shared/components/multi-upload-dialog/multi-upload-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'cl-select-graphic-wrap-dialog',
@@ -24,7 +24,7 @@ export class SelectGraphicWrapDialogComponent implements OnInit, ControlValueAcc
   @Input() public showUpload: boolean = true;
   @Input() public isRequired: boolean;
   @Input() public placeHolder: string;
-  @Input() public isMultiObj: {[key: string]: boolean};
+  @Input() public isMultiObj: { [key: string]: boolean };
 
   public selectedGraphic: IGraphic;
   public controlUpload: AbstractControl;
@@ -51,9 +51,11 @@ export class SelectGraphicWrapDialogComponent implements OnInit, ControlValueAcc
     }
   }
 
-  constructor(private fb: FormBuilder,
+  constructor(
+    private fb: FormBuilder,
     private cd: ChangeDetectorRef,
-    public matDialog: MatDialog) { }
+    public matDialog: MatDialog
+  ) { }
 
   public ngOnInit(): void {
     this.createDefaultControl();
@@ -112,7 +114,7 @@ export class SelectGraphicWrapDialogComponent implements OnInit, ControlValueAcc
 
   private patchDefaultControl(value: any): void {
     this.createDefaultControl();
-    this.controlDefault.patchValue(value, {emitEvent: false});
+    this.controlDefault.patchValue(value, { emitEvent: false });
   }
 
   private subscribeControlDefaultValueChanges(): void {
@@ -143,10 +145,12 @@ export class SelectGraphicWrapDialogComponent implements OnInit, ControlValueAcc
 
   public openMultiUpLoadDialog(): void {
     const dialogRef = this.matDialog.open(MultiUploadDialogComponent, {
-      data: { img: this.graphicUploaded, imgSegments: this.isMultiObj,
-        placeHolder: this.placeHolder }, panelClass: 'multi-upload-dialog'
+      data: {
+        img: this.graphicUploaded, imgSegments: this.isMultiObj,
+        placeHolder: this.placeHolder
+      }, panelClass: 'multi-upload-dialog'
     });
-    dialogRef.afterClosed().subscribe( data => {
+    dialogRef.afterClosed().subscribe(data => {
       if (!data) {
         return;
       }
