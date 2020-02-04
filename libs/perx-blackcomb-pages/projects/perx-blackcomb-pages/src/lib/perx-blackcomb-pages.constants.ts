@@ -11,5 +11,8 @@ export const BACK_ARROW_URLS: string[] = [
   '/change-password',
   '/enter-pin',
   '/booking',
-  '/edit-profile'
+  '/edit-profile',
+  '/game',
+  '/stamp',
+  '/catalog' // WIP page
 ];
