@@ -22,7 +22,7 @@ import {
 import { ConfigModule } from '../config/config.module';
 
 describe('SurveyService', () => {
-  let httpClientSpy: { get: jasmine.Spy, post: jasmine.Spy };
+  let httpClientSpy: Partial<HttpClient>;
   let service: SurveyService;
   const mockCampaign: ICampaign = {
     id: 1,
@@ -33,7 +33,7 @@ describe('SurveyService', () => {
     engagementId: 2,
     endsAt: new Date()
   };
-  const iCampaignServiceStub = {
+  const iCampaignServiceStub: Partial<ICampaignService> = {
     getCampaign: () => of(mockCampaign)
   };
   const noQuestionMockSurvey: IJsonApiItem<IWSurveyEngagementAttributes> = {
@@ -65,9 +65,13 @@ describe('SurveyService', () => {
     preAuth: false,
     baseHref: '/'
   };
+  let postFnMock: jest.Mock;
+  let getFnSpy: jest.Mock;
 
   beforeEach(() => {
-    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get', 'post']);
+    postFnMock = jest.fn();
+    getFnSpy = jest.fn();
+    httpClientSpy = { get: getFnSpy, post: postFnMock };
     TestBed.configureTestingModule({
       imports: [
         ConfigModule.forRoot({ ...environment })
@@ -85,11 +89,11 @@ describe('SurveyService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should get a survey from a campaign id', (done: DoneFn) => {
+  it('should get a survey from a campaign id', (done: jest.DoneCallback) => {
     const res: IJsonApiItemPayload<IWSurveyEngagementAttributes> = {
       data: noQuestionMockSurvey,
     };
-    httpClientSpy.get.and.returnValue(of(res));
+    getFnSpy.mockReturnValue(of(res));
 
     service.getSurveyFromCampaign(42)
       .subscribe(
@@ -100,12 +104,11 @@ describe('SurveyService', () => {
         },
         fail
       );
-    expect(httpClientSpy.get.calls.count()).toBe(1, 'one call');
-    expect(httpClientSpy.get.calls.argsFor(0)).toEqual(['https://blabla/survey/engagements/2?campaign_id=42']);
-
+    expect(getFnSpy.mock.calls.length).toBe(1);
+    expect(getFnSpy.mock.calls[0]).toEqual(['https://blabla/survey/engagements/2?campaign_id=42']);
   });
 
-  it('should post a survey answers', (done: DoneFn) => {
+  it('should post a survey answers', (done: jest.DoneCallback) => {
     const res: IJsonApiItemPayload<IWPostAnswerAttributes> = {
       data: {
         id: '',
@@ -128,8 +131,7 @@ describe('SurveyService', () => {
         }
       },
     };
-
-    httpClientSpy.post.and.returnValue(of(res));
+    postFnMock.mockReturnValue(of(res));
 
     service.postSurveyAnswer([], 3, 1)
       .subscribe(
@@ -139,8 +141,8 @@ describe('SurveyService', () => {
         },
         fail
       );
-    expect(httpClientSpy.post.calls.count()).toBe(1, 'one call');
-    expect(httpClientSpy.post.calls.argsFor(0)).toEqual([
+    expect(postFnMock.mock.calls.length).toBe(1);
+    expect(postFnMock.mock.calls[0]).toEqual([
       'https://blabla/survey/answers',
       { data: { type: 'answers', attributes: { engagement_id: 1, campaign_entity_id: 3, content: [] } } },
       { headers: { 'Content-Type': 'application/vnd.api+json' } }

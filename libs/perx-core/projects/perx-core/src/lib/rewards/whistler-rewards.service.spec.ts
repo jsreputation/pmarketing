@@ -16,7 +16,8 @@ import {
 } from '@perx/whistler';
 
 describe('WhistlerRewardsService', () => {
-  let httpClientSpy: { get: jasmine.Spy };
+  let httpClientSpy: Partial<HttpClient>;
+  let getSpy: jest.Mock;
   let service: WhistlerRewardsService;
 
   const environment = {
@@ -63,7 +64,8 @@ describe('WhistlerRewardsService', () => {
   };
 
   beforeEach(() => {
-    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
+    getSpy = jest.fn();
+    httpClientSpy = { get: getSpy };
 
     TestBed.configureTestingModule({
       imports: [
@@ -80,11 +82,11 @@ describe('WhistlerRewardsService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should get a reward from its id without merchant', (done: DoneFn) => {
+  it('should get a reward from its id without merchant', (done: jest.DoneCallback) => {
     const res: IJsonApiItemPayload<IWRewardEntityAttributes> = {
       data: mockReward
     };
-    httpClientSpy.get.and.returnValue(of(res));
+    getSpy.mockReturnValue(of(res));
 
     service.getReward(42)
       .subscribe((r: IReward) => {
@@ -93,18 +95,18 @@ describe('WhistlerRewardsService', () => {
         done();
       });
 
-    expect(httpClientSpy.get.calls.count()).toBe(1, 'one call');
-    expect(httpClientSpy.get.calls.argsFor(0)).toEqual([
+    expect(getSpy.mock.calls.length).toBe(1);
+    expect(getSpy.mock.calls[0]).toEqual([
       'https://blabla/reward/entities/42',
       { params: { include: 'organization,tier_reward_costs' } }
     ]);
   });
 
-  it('should get a reward from its id with merchant', (done: DoneFn) => {
+  it('should get a reward from its id with merchant', (done: jest.DoneCallback) => {
     const res: IJsonApiItemPayload<IWRewardEntityAttributes> = {
       data: mockRewardWithMerchant
     };
-    httpClientSpy.get.and.returnValue(of(res));
+    getSpy.mockReturnValue(of(res));
 
     service.getReward(42)
       .subscribe((r: IReward) => {
@@ -112,18 +114,18 @@ describe('WhistlerRewardsService', () => {
         done();
       });
 
-    expect(httpClientSpy.get.calls.count()).toBe(1, 'one call');
-    expect(httpClientSpy.get.calls.argsFor(0)).toEqual([
+    expect(getSpy.mock.calls.length).toBe(1);
+    expect(getSpy.mock.calls[0]).toEqual([
       'https://blabla/reward/entities/42',
       { params: { include: 'organization,tier_reward_costs' } }
     ]);
   });
 
-  it('should get a page of rewards', (done: DoneFn) => {
+  it('should get a page of rewards', (done: jest.DoneCallback) => {
     const res: IJsonApiListPayload<IWRewardEntityAttributes> = {
       data: [mockReward, mockRewardWithMerchant]
     };
-    httpClientSpy.get.and.returnValue(of(res));
+    getSpy.mockReturnValue(of(res));
 
     service.getRewards(
       1,
@@ -136,21 +138,21 @@ describe('WhistlerRewardsService', () => {
         done();
       });
 
-    expect(httpClientSpy.get.calls.count()).toBe(1, 'one call');
-    expect(httpClientSpy.get.calls.argsFor(0)).toEqual([
+    expect(getSpy.mock.calls.length).toBe(1);
+    expect(getSpy.mock.calls[0]).toEqual([
       'https://blabla/reward/entities',
       { params: { 'page[number]': '1', 'page[size]': '10', 'filter[tags]': '42tags', 'filter[category]': '42categories', include: 'organization,tier_reward_costs' } }
     ]);
   });
 
-  it('should get all rewards', (done: DoneFn) => {
+  it('should get all rewards', (done: jest.DoneCallback) => {
     const res: IJsonApiListPayload<IWRewardEntityAttributes> = {
       data: [mockReward, mockRewardWithMerchant],
       meta: {
         page_count: 2
       }
     };
-    httpClientSpy.get.and.returnValue(of(res));
+    getSpy.mockReturnValue(of(res));
 
     service.getAllRewards(
       ['42tags'],
@@ -163,8 +165,8 @@ describe('WhistlerRewardsService', () => {
         done();
       });
 
-    expect(httpClientSpy.get.calls.count()).toBe(2, 'two calls');
-    expect(httpClientSpy.get.calls.argsFor(0)).toEqual([
+    expect(getSpy.mock.calls.length).toBe(2);
+    expect(getSpy.mock.calls[0]).toEqual([
       'https://blabla/reward/entities',
       { params: { 'page[number]': '1', 'page[size]': '10', 'filter[tags]': '42tags', 'filter[category]': '42categories', include: 'organization,tier_reward_costs' } }
     ]);

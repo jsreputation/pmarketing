@@ -73,7 +73,7 @@ describe('BcodeRedemptionComponent', () => {
     component.voucherId = 1;
     const voucherService: IVoucherService = fixture.debugElement.injector
       .get<IVoucherService>(IVoucherService as Type<IVoucherService>);
-    const voucherServiceSpy = spyOn(voucherService, 'get').and.returnValue(
+    const voucherServiceSpy = jest.spyOn(voucherService, 'get').mockReturnValue(
       of(mockVoucher)
     );
     component.ngOnChanges({
@@ -84,8 +84,8 @@ describe('BcodeRedemptionComponent', () => {
     expect(voucherServiceSpy).toHaveBeenCalled();
     expect(mockVoucher.reward).not.toBeNull();
     // @ts-ignore
-    expect(fixture.nativeElement.querySelector('h1').innerText).toEqual(mockVoucher.reward.name);
-    expect(fixture.nativeElement.querySelector('.bcode').innerText).toEqual(mockVoucher.code);
+    expect(fixture.nativeElement.querySelector('h1').textContent.trim()).toEqual(mockVoucher.reward.name);
+    expect(fixture.nativeElement.querySelector('.bcode').textContent.trim()).toEqual(mockVoucher.code);
     expect(fixture.nativeElement.querySelector('.reward-image').src).toEqual(oc(mockVoucher).reward.rewardBanner());
 
   }));

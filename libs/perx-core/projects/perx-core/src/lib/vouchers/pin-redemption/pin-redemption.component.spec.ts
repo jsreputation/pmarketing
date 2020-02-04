@@ -58,7 +58,7 @@ describe('PinRedemptionComponent', () => {
     };
     component.voucher = voucher;
     const pinService: PinService = fixture.debugElement.injector.get<PinService>(PinService as Type<PinService>);
-    const spy = spyOn(pinService, 'getPin').and.returnValue( of('1234') );
+    const spy = jest.spyOn(pinService, 'getPin').mockReturnValue(of('1234'));
     component.ngOnChanges({
       voucher: new SimpleChange(null, null, true)
     });
@@ -69,8 +69,8 @@ describe('PinRedemptionComponent', () => {
   describe('redeemVoucher', () => {
     it('should call redeemVoucher and emit full', fakeAsync(() => {
       const voucherService: IVoucherService = fixture.debugElement.injector.get<IVoucherService>(IVoucherService as Type<IVoucherService>);
-      const spy = spyOn(voucherService, 'redeemVoucher').and.returnValue( of('Redeem success') );
-      const fullEmitSpy = spyOn(component.full, 'emit');
+      const spy = jest.spyOn(voucherService, 'redeemVoucher').mockReturnValue(of('Redeem success'));
+      const fullEmitSpy = jest.spyOn(component.full, 'emit');
       component.redeemVoucher();
       tick();
       expect(spy).toHaveBeenCalled();
@@ -79,8 +79,8 @@ describe('PinRedemptionComponent', () => {
 
     it('should throw error', fakeAsync(() => {
       const voucherService: IVoucherService = fixture.debugElement.injector.get<IVoucherService>(IVoucherService as Type<IVoucherService>);
-      const spy = spyOn(voucherService, 'redeemVoucher').and.returnValue(throwError(new HttpErrorResponse({ status: 401 })));
-      const fullEmitSpy = spyOn(component.hasErrorEmit, 'emit');
+      const spy = jest.spyOn(voucherService, 'redeemVoucher').mockReturnValue(throwError(new HttpErrorResponse({ status: 401 })));
+      const fullEmitSpy = jest.spyOn(component.hasErrorEmit, 'emit');
       component.redeemVoucher();
       tick();
       expect(spy).toHaveBeenCalled();
@@ -115,7 +115,7 @@ describe('PinRedemptionComponent', () => {
     const control = new FormControl('');
     fixture.componentInstance.controls[0] = control;
     fixture.detectChanges();
-    const spy = spyOn(component, 'onUpdate');
+    const spy = jest.spyOn(component, 'onUpdate');
     component.ngOnInit();
     const firstInput = fixture.debugElement.query(By.css('input#input_0')).nativeElement;
     expect(firstInput.value).toEqual('');
@@ -146,7 +146,7 @@ describe('PinRedemptionComponent', () => {
 
   it('should get new pin once voucherId from parent changed', () => {
     const pinService: PinService = fixture.debugElement.injector.get<PinService>(PinService as Type<PinService>);
-    const spy = spyOn(pinService, 'getPin').and.returnValue( of('1234') );
+    const spy = jest.spyOn(pinService, 'getPin').mockReturnValue(of('1234'));
     component.ngOnChanges({
       voucherId: new SimpleChange(null, 1, true)
     });
@@ -163,7 +163,7 @@ describe('PinRedemptionComponent', () => {
     });
     tick();
     const keyEvent = new KeyboardEvent('keyUp', { key: 'Backspace' });
-    const spy = spyOn(keyEvent, 'stopPropagation');
+    const spy = jest.spyOn(keyEvent, 'stopPropagation');
     component.onKey(keyEvent);
     fixture.whenStable().then(() => {
       expect(component.value).toBe('');
@@ -181,7 +181,7 @@ describe('PinRedemptionComponent', () => {
     });
     tick();
     const keyEvent = new KeyboardEvent('keyUp', { key: 'Enter' });
-    const spy = spyOn(keyEvent, 'stopPropagation');
+    const spy = jest.spyOn(keyEvent, 'stopPropagation');
     component.onKey(keyEvent);
     fixture.whenStable().then(() => {
       expect(component.value).toBe('2');
@@ -190,13 +190,13 @@ describe('PinRedemptionComponent', () => {
   }));
 
   it('should emit false when inputs onblur', () => {
-    const spy = spyOn(component.pinFocused, 'emit');
+    const spy = jest.spyOn(component.pinFocused, 'emit');
     component.onBlur();
     expect(spy).toHaveBeenCalledWith(false);
   });
 
   it('should emit true when inputs onFocus', () => {
-    const spy = spyOn(component.pinFocused, 'emit');
+    const spy = jest.spyOn(component.pinFocused, 'emit');
     component.onFocus();
     expect(spy).toHaveBeenCalledWith(true);
   });

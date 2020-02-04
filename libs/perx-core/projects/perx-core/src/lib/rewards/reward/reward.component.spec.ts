@@ -27,7 +27,7 @@ describe('RewardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RewardComponent ]
+      declarations: [RewardComponent]
     })
       .compileComponents();
   }));
@@ -42,13 +42,13 @@ describe('RewardComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('reward name should be displayed', fakeAsync( () => {
+  it('reward name should be displayed', fakeAsync(() => {
     component.reward$ = of(mockReward);
     component.ngOnInit();
     fixture.detectChanges();
     tick();
-    expect(fixture.nativeElement.querySelector('.reward-name').innerText).toEqual(mockReward.name);
-    expect(fixture.nativeElement.querySelector('.merchant-name').innerText).toEqual(mockReward.merchantName);
+    expect(fixture.nativeElement.querySelector('.reward-name').textContent.trim()).toEqual(mockReward.name);
+    expect(fixture.nativeElement.querySelector('.merchant-name').textContent.trim()).toEqual(mockReward.merchantName);
     expect(fixture.nativeElement.querySelector('.reward-image').src).toEqual(mockReward.rewardBanner);
     expect(fixture.nativeElement.querySelector('.merchant-image').src).toEqual(mockReward.merchantImg);
   }
