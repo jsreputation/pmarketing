@@ -7,7 +7,7 @@ export interface IPUser {
     name: string
   }[];
   state: string;
-  is_locked: boolean
+  is_locked: boolean;
 }
 
 export interface IPUSers {
@@ -17,5 +17,5 @@ export interface IPUSers {
     size: number;
     total_pages: number;
     page: number;
-  }
+  };
 }
