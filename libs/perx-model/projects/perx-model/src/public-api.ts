@@ -13,6 +13,6 @@ export { IPRaces } from './lib/race/race';
 export { IPTags } from './lib/tags/tags';
 export { IPTenantConfig } from './lib/tenant/tenant';
 export { IPReportDownload, IPReportDownloadDetails, IPReportDownloads } from './lib/reports/reports';
-export { IPRewards, PRewardState } from './lib/rewards/rewards';
+export { IPRewards, PRewardState, IPPostRewardResponse, IPPostReward, IPReward } from './lib/rewards/rewards';
 export { PCatalogueState, IPCatalogues } from './lib/catalogues/catalogues';
 export { IPCustomImageRatio, IPCustomImageRatios, IPCustomImageRatioPutResponse } from './lib/media/media';
