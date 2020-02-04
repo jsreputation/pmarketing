@@ -16,3 +16,4 @@ export { IPReportDownload, IPReportDownloadDetails, IPReportDownloads } from './
 export { IPRewards, PRewardState, IPPostRewardResponse, IPPostReward, IPReward, IPPutReward } from './lib/rewards/rewards';
 export { PCatalogueState, IPCatalogues } from './lib/catalogues/catalogues';
 export { IPCustomImageRatio, IPCustomImageRatios, IPCustomImageRatioPutResponse } from './lib/media/media';
+export { IPRoles, IPPostRole, IPPostRoleResponse } from './lib/auth/roles';
