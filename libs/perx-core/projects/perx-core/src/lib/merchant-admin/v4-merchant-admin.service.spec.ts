@@ -183,28 +183,28 @@ describe('V4MerchantsService', () => {
   });
 
   it('createTransaction', fakeAsync(inject([HttpClient], (http: HttpClient) => {
-    spyOn(http, 'post').and.returnValue(of({ data: adminTransactionRaw }));
+    jest.spyOn(http, 'post').mockReturnValue(of({ data: adminTransactionRaw }));
     service.createTransaction(1, 'test', 2, 'test', 'test', 'test', 'test', 'test')
       .subscribe((val) => expect(val.id).toBe(1));
     tick();
   })));
 
   it('redeemVoucher', fakeAsync(inject([HttpClient], (http: HttpClient) => {
-    const spy = spyOn(V4MerchantAdminService, 'v4VoucherToVoucher');
-    spyOn(http, 'put').and.returnValue(of({ data: merchantAdminVoucherRaw }));
+    const spy = jest.spyOn(V4MerchantAdminService, 'v4VoucherToVoucher');
+    jest.spyOn(http, 'put').mockReturnValue(of({ data: merchantAdminVoucherRaw }));
     service.redeemVoucher(1).subscribe(() => { });
     tick();
     expect(spy).toHaveBeenCalled();
   })));
 
   it('issueVoucher', fakeAsync(inject([HttpClient], (http: HttpClient) => {
-    spyOn(http, 'post').and.returnValue(of({ data: merchantAdminVoucherRaw }));
+    jest.spyOn(http, 'post').mockReturnValue(of({ data: merchantAdminVoucherRaw }));
     service.issueVoucher(1).subscribe((voucher) => expect(voucher.id).toBe(1));
     tick();
   })));
 
   it('validateInvite', fakeAsync(inject([HttpClient], (http: HttpClient) => {
-    spyOn(http, 'get').and.returnValue(of({ data: profileRaw }));
+    jest.spyOn(http, 'get').mockReturnValue(of({ data: profileRaw }));
     service.validateInvite('token', 'test').subscribe((val) =>
       expect(val.locationId).toBe(1)
     );
@@ -212,14 +212,14 @@ describe('V4MerchantsService', () => {
   })));
 
   it('setupNewMerchantsPassword', fakeAsync(inject([HttpClient], (http: HttpClient) => {
-    spyOn(http, 'put').and.returnValue(of({ message: 'ok' }));
+    jest.spyOn(http, 'put').mockReturnValue(of({ message: 'ok' }));
     service.setupNewMerchantsPassword('token', '1', 'test')
       .subscribe((val) => expect(val).toBe('ok'));
     tick();
   })));
 
   it('getMerchantProfile', fakeAsync(inject([HttpClient], (http: HttpClient) => {
-    spyOn(http, 'get').and.returnValue(of({ data: profileRaw }));
+    jest.spyOn(http, 'get').mockReturnValue(of({ data: profileRaw }));
     service.getMerchantProfile().subscribe((val) =>
       expect(val.locationId).toBe(1)
     );

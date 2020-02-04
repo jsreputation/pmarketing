@@ -26,15 +26,15 @@ describe('PinataComponent', () => {
   it('should not shake if not enabled', () => {
     component.tap.subscribe(
       () => {
-        expect(false).toBeTruthy('It should not shake');
+        expect(false).toBeTruthy(/* 'It should not shake' */);
       }
     );
     component.enabled = false;
     component.shake();
-    expect(true).toBeTruthy('just for the sake of having one expectation');
+    expect(true).toBeTruthy(/* 'just for the sake of having one expectation' */);
   });
 
-  it('should shake if enabled', (done: DoneFn) => {
+  it('should shake if enabled', (done: jest.DoneCallback) => {
     component.tap.subscribe(
       (tap: number) => {
         expect(tap).toBe(1);
@@ -45,7 +45,7 @@ describe('PinataComponent', () => {
     component.shake();
   });
 
-  it('should break', (done: DoneFn) => {
+  it('should break', (done: jest.DoneCallback) => {
     const taps = 3;
     component.broken
       .subscribe(

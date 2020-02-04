@@ -1,15 +1,14 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-
-import { SpinTheWheelComponent } from './spin-the-wheel.component';
+import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import { SimpleChange, DebugElement } from '@angular/core';
 import { ISlice } from '../game.model';
+import { SpinTheWheelComponent } from './spin-the-wheel.component';
 import { By } from '@angular/platform-browser';
 
 describe('SpinTheWheelComponent', () => {
   let component: SpinTheWheelComponent;
   let fixture: ComponentFixture<SpinTheWheelComponent>;
-  let imageOnload: (() => void)[];
   let debugElement: DebugElement;
+  let imageOnload: (() => void)[];
   beforeAll(() => {
     Object.defineProperty(Image.prototype, 'onload', {
       get(): any {
@@ -38,6 +37,7 @@ describe('SpinTheWheelComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
   it('ngOnChanges else', fakeAsync(() => {
     // else flow
     imageOnload = [];
@@ -54,12 +54,12 @@ describe('SpinTheWheelComponent', () => {
       wheelImg: {} as SimpleChange,
       pointerImg: {} as SimpleChange
     });
-    tick();
-    imageOnload[0](); // emulate onload
-    expect(component.size).toBeTruthy();
+    tick(); // will trigger onload and push the onload function onto the array
+    expect(imageOnload[0]).toBeTruthy(); // emulate onload
   }));
 
   it('ngOnChanges', fakeAsync(() => {
+    // we check that our images are actually loaded correctly
     imageOnload = [];
     spyOn(component.ctx, 'createPattern').and.returnValue({ setTransform(): void { } });
     component.ngOnChanges({
@@ -77,14 +77,14 @@ describe('SpinTheWheelComponent', () => {
       pointerImg: {} as SimpleChange
     });
     tick();
-    imageOnload[0]();
-    imageOnload[1]();
-    expect(component.size).toBeTruthy();
+    // doesnt make sense to check size since it is set from an actual picture taking the dimensions * 1.2
+    expect(imageOnload[1]).toBeTruthy();
   }));
 
   it('ngAfterViewInit', () => {
     component.ngAfterViewInit();
-    expect(component.size).toBeTruthy();
+    // we onloaded background image and wheelImg
+    expect(imageOnload.length).toBeGreaterThanOrEqual(2);
   });
 
   it('handle mouse event', () => {
