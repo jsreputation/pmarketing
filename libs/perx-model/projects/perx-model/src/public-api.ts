@@ -21,3 +21,4 @@ export { IPFtpUploads } from './lib/uploads/ftp';
 export { IPUsers, IPUser, IPUserItem } from './lib/users/users';
 export { IPTriggers, IPPostTrigger, IPPostTriggerResponse } from './lib/rules/rules';
 export { IPPostMerchant, IPPostMerchantResponse, IPPutMerchant } from './lib/merchants/merchants';
+export { IPCustomers, PCustomerState } from './lib/customers/customers';
