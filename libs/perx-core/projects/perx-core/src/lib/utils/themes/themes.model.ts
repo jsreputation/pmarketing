@@ -3,6 +3,31 @@ export interface ITheme {
   properties: IThemeProperties;
 }
 
+export interface ThemeJsonApiItemPayLoad<T> {
+  data: ThemeJsonApiItem<T>;
+}
+
+export interface ThemeJsonApiItem<T> {
+  id: string,
+  key: string,
+  json_value: T;
+}
+
+export interface IThemeV4ApiProperties {
+  font: string,
+  logo: { file: string, section: string, filename: string },
+  title: string,
+  font_color: string,
+  accent_color: string,
+  app_bg_color: string,
+  header_color: string,
+  rss_feed_url: string,
+  primary_color: string,
+  CTA_button_bg_color: string,
+  login_page_bg_color: string,
+  CTA_button_text_color: string
+}
+
 interface IThemeProperties {
     '--font'?: string;
     '--logo'?: string;
