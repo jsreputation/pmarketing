@@ -250,7 +250,7 @@ jobs:
   deploy:
     executor:
       name: helm-deploy/default
-      docker_tag: "2.15.2"
+      docker_tag: "2.16.1"
     parameters:
       docker_tag:
         type: string
@@ -317,7 +317,7 @@ jobs:
   deploy-whistler:
     executor:
       name: helm-deploy/default
-      docker_tag: "2.15.2"
+      docker_tag: "2.16.1"
     parameters:
       docker_tag:
         type: string
