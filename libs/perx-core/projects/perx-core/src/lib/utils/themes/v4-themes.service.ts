@@ -23,15 +23,16 @@ export class V4ThemesService extends ThemesService {
   private themeSettingEndpoint: string;
   private responseCache: Map<string, ITheme> = new Map();
 
-  constructor(private http: HttpClient,config: Config) {
+  constructor(private http: HttpClient, config: Config) {
     super();
     this.themeSettingEndpoint = `${config.apiHost}/v4/dash/settings/microsite_settings`;
+
   }
 
   public getThemeSetting(config?: IConfig<ITheme>): Observable<ITheme> {
     // it is intended on browser refresh for previous theme to be lost and theme refetched
     // use same throughout to return same and correct theme cached
-    let url: string = this.themeSettingEndpoint;
+    const url: string = this.themeSettingEndpoint;
     // return from cache if it is in cache
     const themeSettingFromCache: ITheme | undefined = this.responseCache.get(url);
     if (themeSettingFromCache) {
@@ -48,9 +49,9 @@ export class V4ThemesService extends ThemesService {
         map((res) => V4ThemesService.VThemeToTheme(res.data)),
         catchError(() => {
           if (responseFallback) {
-            return responseFallback
+            return responseFallback;
           }
-          return of(LIGHT)
+          return of(LIGHT);
         })
       );
     response.subscribe((themeSetting: ITheme) => {
@@ -76,6 +77,6 @@ export class V4ThemesService extends ThemesService {
         '--font_color': setting.json_value.font_color,
         '--login_background_colour': setting.json_value.login_page_bg_color
       }
-    }
+    };
   }
 }
