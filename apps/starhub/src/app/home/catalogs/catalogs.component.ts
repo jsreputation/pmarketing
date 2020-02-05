@@ -27,7 +27,7 @@ export class CatalogsComponent implements OnInit {
   public catalogs$: Observable<ICatalog[]>;
   public catalogsLoaded: boolean = false;
   public catalogsEnded: boolean = false;
-  private catalogsPageId: number = 1;
+  public catalogsPageId: number = 1;
   private catalogs: BehaviorSubject<ICatalog[]> = new BehaviorSubject<ICatalog[]>([]);
 
   @Output()
@@ -56,7 +56,7 @@ export class CatalogsComponent implements OnInit {
     );
   }
 
-  constructor( private rewardsService: RewardsService ) {
+  constructor(private rewardsService: RewardsService) {
     this.initCatalogsScan();
   }
 

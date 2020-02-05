@@ -4,8 +4,8 @@ import { MAT_BOTTOM_SHEET_DATA } from '@angular/material';
 import { SortingMode } from '../category.model';
 
 export interface SortBottomSheetClosedCallBack {
-    sortOrderSelectedCallback(updatedValue: string): void;
-    getCurrentSelectedOrder(): SortingMode;
+  sortOrderSelectedCallback(updatedValue: string): void;
+  getCurrentSelectedOrder(): SortingMode;
 }
 
 @Component({
@@ -21,10 +21,10 @@ export class CategorySortComponent {
     private bottomSheetRef: MatBottomSheetRef<CategorySortComponent>,
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: SortBottomSheetClosedCallBack
   ) {
-      if (this.data.getCurrentSelectedOrder) {
-        this.selectedCriteria = this.data.getCurrentSelectedOrder();
-      }
-   }
+    if (this.data.getCurrentSelectedOrder) {
+      this.selectedCriteria = this.data.getCurrentSelectedOrder();
+    }
+  }
 
   public apply(event: MouseEvent): void {
     if (this.data.sortOrderSelectedCallback) {

@@ -1,5 +1,5 @@
 export interface INavLink {
-    path: string;
-    label: string;
-    icon?: string;
+  path: string;
+  label: string;
+  icon?: string;
 }

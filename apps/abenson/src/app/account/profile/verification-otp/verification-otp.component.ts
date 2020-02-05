@@ -37,13 +37,13 @@ export class VerificationOtpComponent implements OnInit {
   private switchType(type: string): Observable<any> {
     this.type = type;
     switch (this.type) {
-    case 'phone':
-      return this.route.queryParams.pipe(tap((param) => this.userPhone = param.phone));
-    case 'password':
-      return this.profileService.whoAmI().pipe(tap((profile) => this.userPhone = profile.phone),
-        flatMap(() => this.sharedData.data));
-    default:
-      return of(null);
+      case 'phone':
+        return this.route.queryParams.pipe(tap((param) => this.userPhone = param.phone));
+      case 'password':
+        return this.profileService.whoAmI().pipe(tap((profile) => this.userPhone = profile.phone),
+          flatMap(() => this.sharedData.data));
+      default:
+        return of(null);
     }
   }
 
@@ -53,18 +53,18 @@ export class VerificationOtpComponent implements OnInit {
 
   public onSubmit(): void {
     switch (this.type) {
-    case 'phone':
-      this.auth.changePhone(this.data as IChangePhoneData).subscribe(() => {
-        this.ntfcService.addPopup({ title: 'Success', text: 'You phone was update' });
-        this.router.navigate(['account']);
-      });
-      break;
-    case 'password':
-      this.auth.changePassword(this.data as IChangePasswordData).subscribe(() => {
-        this.ntfcService.addPopup({ title: 'Success', text: 'You password was update' });
-        this.router.navigate(['account']);
-      });
-      break;
+      case 'phone':
+        this.auth.changePhone(this.data as IChangePhoneData).subscribe(() => {
+          this.ntfcService.addPopup({ title: 'Success', text: 'You phone was update' });
+          this.router.navigate(['account']);
+        });
+        break;
+      case 'password':
+        this.auth.changePassword(this.data as IChangePasswordData).subscribe(() => {
+          this.ntfcService.addPopup({ title: 'Success', text: 'You password was update' });
+          this.router.navigate(['account']);
+        });
+        break;
     }
   }
 

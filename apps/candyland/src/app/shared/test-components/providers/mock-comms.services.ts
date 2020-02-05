@@ -10,14 +10,14 @@ export class MockCommsServices {
   public getMockData(): ICommMessage {
     return {
       id: '1',
-    from: 'test',
-    to: 'test',
-    providerId: 5,
-    message: 'test',
-    sendDate: null,
-    ownerId: '5',
-    ownerType: 'test',
-    channel: WMessageChannel.sms
+      from: 'test',
+      to: 'test',
+      providerId: 5,
+      message: 'test',
+      sendDate: null,
+      ownerId: '5',
+      ownerType: 'test',
+      channel: WMessageChannel.sms
     };
   }
 

@@ -17,14 +17,14 @@ export class MockPinataService {
         active: false
       }],
       background: [{
-          id: 1,
-          type: 'bg1',
-          title: 'icon',
-          img: 'global/assets/background/stamp-bg-7.png',
-          fullImg: 'global/assets/background/full_bg_7.jpg',
-          format: '.png',
-          active: false
-        }
+        id: 1,
+        type: 'bg1',
+        title: 'icon',
+        img: 'global/assets/background/stamp-bg-7.png',
+        fullImg: 'global/assets/background/full_bg_7.jpg',
+        format: '.png',
+        active: false
+      }
       ]
     });
   }

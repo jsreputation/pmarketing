@@ -15,8 +15,8 @@ export class LoyaltyTransactionsListComponent implements OnInit {
 
   public ngOnInit(): void {
     this.loyaltyService.getAllTransactions(mockLoyalty.id).subscribe(
-        (transactions) => this.transactions = of(transactions),
-        () => this.transactions = of(mockTransactions)
-      );
+      (transactions) => this.transactions = of(transactions),
+      () => this.transactions = of(mockTransactions)
+    );
   }
 }

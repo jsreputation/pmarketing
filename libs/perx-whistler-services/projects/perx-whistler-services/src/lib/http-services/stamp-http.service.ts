@@ -16,7 +16,7 @@ export class StampHttpService {
   }
 
   public updateStamp(id: string, data: IJsonApiPatchItem<IWStampEngagementAttributes>):
-    Observable<IJsonApiItemPayload<IWStampEngagementAttributes>> {
+  Observable<IJsonApiItemPayload<IWStampEngagementAttributes>> {
     return this.http.patch<IJsonApiItemPayload<IWStampEngagementAttributes>>(`${this.apiConfig.engagementsPath}/stamps/${id}`, data);
   }
 

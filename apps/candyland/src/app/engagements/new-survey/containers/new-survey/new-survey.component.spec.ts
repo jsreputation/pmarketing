@@ -63,12 +63,12 @@ describe('NewSurveyPageComponent', () => {
         { provide: SurveyService, useClass: MockSurveyService },
         { provide: UploadFileService, useClass: MockUploadFileService },
         { provide: WINDOW, useValue: {
-            scrollTo(a: any, b: any): any { return {a, b}; }
-          }
+          scrollTo(a: any, b: any): any { return {a, b}; }
+        }
         }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

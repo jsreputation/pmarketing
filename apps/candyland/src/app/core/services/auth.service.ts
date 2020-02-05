@@ -107,19 +107,19 @@ export class AuthService {
   public changePassword(password: string, token: string): Observable<any> {
     return this.http.changePassword(password, token).pipe(
       switchMap((res: HttpResponse<any>) => {
-          if (res.headers.get('authorization')) {
-            const tokenString: string = res.headers.get('authorization');
-            this.saveToken(tokenString);
-            const tokenObj = parseJwt(tokenString);
-            const userName = tokenObj.sub.split('/').pop();
-            return this.iamUserService.getUsers({'filter[username]': userName})
+        if (res.headers.get('authorization')) {
+          const tokenString: string = res.headers.get('authorization');
+          this.saveToken(tokenString);
+          const tokenObj = parseJwt(tokenString);
+          const userName = tokenObj.sub.split('/').pop();
+          return this.iamUserService.getUsers({'filter[username]': userName})
             .pipe(
               map(users => users[0]),
               tap((user: IAMUser) => this.saveUser(user))
             );
-          }
-          return of(null);
         }
+        return of(null);
+      }
       )
     );
   }

@@ -77,7 +77,7 @@ describe('NewCampaignRewardsPageComponent', () => {
   });
 
   it('should create', () => {
-    component.limits.controls['times'].setValue(0);
+    component.limits.controls.times.setValue(0);
     expect(component).toBeTruthy();
   });
 });

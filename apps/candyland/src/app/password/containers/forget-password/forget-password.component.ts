@@ -24,8 +24,8 @@ export class ForgetPasswordComponent implements OnInit {
     private messageService: MessageService
   ) { }
 
-  get accountId(): AbstractControl | null { return this.formForget.get('account_id'); }
-  get username(): AbstractControl | null { return this.formForget.get('username'); }
+  public get accountId(): AbstractControl | null { return this.formForget.get('account_id'); }
+  public get username(): AbstractControl | null { return this.formForget.get('username'); }
 
   private createForm(state: StateObjIntf): void {
     this.formForget = this.fb.group({

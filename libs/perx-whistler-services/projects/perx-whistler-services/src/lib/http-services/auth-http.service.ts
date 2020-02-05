@@ -6,8 +6,10 @@ import { ApiConfigServices } from '../configs/api-config';
 
 @Injectable()
 export class AuthHttpService {
-  constructor(private http: HttpClient,
-              private apiConfig: ApiConfigServices) {}
+  constructor(
+    private http: HttpClient,
+    private apiConfig: ApiConfigServices
+  ) { }
 
   public signIn(data: Partial<IJsonApiPostData<IWProfileAttributes>>): Observable<HttpResponse<IJsonApiItemPayload<IWLoginAttributes>>> {
     return this.http.post<IJsonApiItemPayload<IWLoginAttributes>>(
@@ -40,7 +42,7 @@ export class AuthHttpService {
         }
       }
     };
-    return this.http.put<HttpResponse<IJsonApiItemPayload<void>>>(`${this.apiConfig.IAMUsersPath}/password`, req, { observe: 'response'});
+    return this.http.put<HttpResponse<IJsonApiItemPayload<void>>>(`${this.apiConfig.IAMUsersPath}/password`, req, { observe: 'response' });
   }
 
   public patchUser(user: IWProfileAttributes, id: string): Observable<IJsonApiItemPayload<IWProfileAttributes>> {

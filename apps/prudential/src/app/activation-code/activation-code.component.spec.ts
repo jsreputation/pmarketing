@@ -34,9 +34,7 @@ describe('ActivationCodeComponent', () => {
     whoAmI: () => of()
   };
   const voucherServiceStub = {
-    get: () => {
-      return of('');
-    }
+    get: () => of('')
   };
 
   const rewardsServiceStub = {

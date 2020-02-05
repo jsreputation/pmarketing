@@ -87,7 +87,7 @@ describe('AccountComponent', () => {
 
   it('should redirect to login after logging out', () => {
     const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>
-      (AuthenticationService as Type<AuthenticationService>);
+    (AuthenticationService as Type<AuthenticationService>);
     const router: Router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
     const logoutSpy = spyOn(authenticationService, 'logout');
     const routerSpy = spyOn(router, 'navigate');

@@ -13,7 +13,7 @@ describe('NotificationWrapperService', () => {
     providers: [{
       provide: NotificationService, useValue: notificationServiceStub
     },
-      NotificationWrapperService
+    NotificationWrapperService
     ]
   }));
   beforeEach(() => {

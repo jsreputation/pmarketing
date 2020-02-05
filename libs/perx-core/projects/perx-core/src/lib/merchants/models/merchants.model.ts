@@ -1,33 +1,33 @@
 export interface IMerchant {
-    id: number;
-    name: string;
-    description?: string;
-    website?: string;
-    tags?: ITag[];
-    images?: IImage[];
-    outlets?: IOutlet[] | null;
+  id: number;
+  name: string;
+  description?: string;
+  website?: string;
+  tags?: ITag[];
+  images?: IImage[];
+  outlets?: IOutlet[] | null;
 }
 
 export interface ITag {
-    id: number;
-    name: string;
+  id: number;
+  name: string;
 }
 
 export interface IImage {
-    type: string;
-    url: string;
+  type: string;
+  url: string;
 }
 
 export interface IOutlet {
-    outletId: number;
-    outletName: string;
-    outletAddress1: string;
-    outletAddress2?: string;
-    outletAddress3?: string;
-    postalCode?: string;
-    tel: string;
-    coordinates: { lat: number, lng: number, distance?: number, unitOfMeasure: string };
-    tags?: ITag[];
+  outletId: number;
+  outletName: string;
+  outletAddress1: string;
+  outletAddress2?: string;
+  outletAddress3?: string;
+  postalCode?: string;
+  tel: string;
+  coordinates: { lat: number, lng: number, distance?: number, unitOfMeasure: string };
+  tags?: ITag[];
 }
 
 export interface IMeta {

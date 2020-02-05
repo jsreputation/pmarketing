@@ -20,9 +20,7 @@ describe('RedemptionComponent', () => {
   };
 
   const voucherServiceStub = {
-    get: () => {
-      return of(mockVoucher);
-    }
+    get: () => of(mockVoucher)
   };
   const rewardsServiceStub = {
     getReward: () => of()

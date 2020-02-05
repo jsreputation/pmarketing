@@ -5,7 +5,7 @@ import { Type } from '@angular/core';
 import {
   FormsModule,
   ReactiveFormsModule
-  } from '@angular/forms';
+} from '@angular/forms';
 import { ProfileModule, ProfileService } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
@@ -43,7 +43,7 @@ describe('UserInfoComponent', () => {
         }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

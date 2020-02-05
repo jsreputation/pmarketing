@@ -40,7 +40,7 @@ export class SmsValidationComponent implements OnInit {
       this.authenticationService.getAppToken().subscribe(() => {
         this.appAccessTokenFetched = true;
       }, (err) => {
-        console.error('Error' + err);
+        console.error(`Error${  err}`);
       });
     }
 

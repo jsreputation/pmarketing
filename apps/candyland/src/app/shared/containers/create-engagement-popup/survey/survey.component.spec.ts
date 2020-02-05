@@ -22,7 +22,7 @@ describe('SurveyComponent', () => {
       ],
       declarations: [ SurveyComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

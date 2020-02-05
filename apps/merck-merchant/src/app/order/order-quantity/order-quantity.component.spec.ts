@@ -12,7 +12,7 @@ describe('OrderQuantityComponent', () => {
       declarations: [ OrderQuantityComponent ],
       imports: [ FormsModule ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

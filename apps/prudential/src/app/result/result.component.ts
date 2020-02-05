@@ -14,7 +14,7 @@ export class ResultComponent implements OnInit {
 
   public ngOnInit(): void {
     this.activateRouter.queryParams.subscribe( params => {
-      this.numRewards = params[`numRewards`];
+      this.numRewards = params.numRewards;
     });
   }
 }

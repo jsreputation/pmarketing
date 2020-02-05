@@ -16,7 +16,7 @@ describe('ImagesPreviewComponent', () => {
         MatIconModule
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

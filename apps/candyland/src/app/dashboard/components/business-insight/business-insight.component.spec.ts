@@ -14,7 +14,7 @@ describe('BusinessInsightComponent', () => {
         TranslateModule.forRoot(),
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

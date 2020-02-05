@@ -68,7 +68,7 @@ export class RedemptionBookingComponent implements OnInit, OnDestroy {
     this.route.params.pipe(switchMap((param) => {
       this.rewardId = param.id;
       return forkJoin([this.rewardsService.getReward(this.rewardId),
-      this.rewardsService.getRewardPricesOptions(this.rewardId)]);
+        this.rewardsService.getRewardPricesOptions(this.rewardId)]);
     })).pipe(flatMap((result) => {
       [this.reward, this.prices] = result;
       if (!this.reward.merchantId) {
@@ -142,14 +142,12 @@ export class RedemptionBookingComponent implements OnInit, OnDestroy {
       return;
     }
 
-    forkJoin([...new Array(parseInt(this.bookingForm.value.quantity, 10))].map(() => {
-      return this.vouchersService.reserveReward(this.rewardId,
-        {
-          priceId: this.bookingForm.value.priceId,
-          locationId: this.bookingForm.value.location,
-          sourceType: 'hsbc-rewards'
-        });
-    })).subscribe(() => {
+    forkJoin([...new Array(parseInt(this.bookingForm.value.quantity, 10))].map(() => this.vouchersService.reserveReward(this.rewardId,
+      {
+        priceId: this.bookingForm.value.priceId,
+        locationId: this.bookingForm.value.location,
+        sourceType: 'hsbc-rewards'
+      }))).subscribe(() => {
       this.router.navigate(['detail/success']);
     }, (err) => {
       if (err.code === 40) {
@@ -162,15 +160,17 @@ export class RedemptionBookingComponent implements OnInit, OnDestroy {
   }
 
   private getLoyalty(): void {
-    this.loyaltyService.getLoyalties().pipe(switchMap((loyaltyes) => {
-      return !loyaltyes || !loyaltyes.length ? of(null) : this.loyaltyService.getLoyalty(loyaltyes[0].id);
-    }), map((loyalty) => {
-      if (loyalty) {
-        return loyalty;
-      }
-      throw new Error();
-    })).subscribe((loyalty) => {
-      this.loyalty = loyalty;
-    }, () => console.error('Can\'t find loyalty'));
+    this.loyaltyService.getLoyalties().pipe(
+      switchMap((loyaltyes) => !loyaltyes || !loyaltyes.length ? of(null) : this.loyaltyService.getLoyalty(loyaltyes[0].id)),
+      map((loyalty) => {
+        if (loyalty) {
+          return loyalty;
+        }
+        throw new Error();
+      })
+    ).subscribe(
+      (loyalty) => this.loyalty = loyalty,
+      () => console.error('Can\'t find loyalty')
+    );
   }
 }

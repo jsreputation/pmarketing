@@ -39,7 +39,7 @@ describe('WalletComponent', () => {
         { provide: ICampaignService, useValue: campaignServiceStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

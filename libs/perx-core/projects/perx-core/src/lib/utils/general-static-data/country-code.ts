@@ -1,7 +1,7 @@
 export interface ICountryCode {
-    id: number;
-    name: string;
-    phone: string;
+  id: number;
+  name: string;
+  phone: string;
 }
 
 export const countryCodes: ICountryCode[] = [

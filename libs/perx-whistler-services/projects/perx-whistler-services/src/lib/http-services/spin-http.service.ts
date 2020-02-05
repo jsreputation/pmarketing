@@ -18,7 +18,7 @@ export class SpinHttpService {
   }
 
   public updateSpin(id: string, data: IJsonApiPatchItem<IWSpinGameEngagementAttributes>):
-    Observable<IJsonApiItemPayload<IWSpinGameEngagementAttributes>> {
+  Observable<IJsonApiItemPayload<IWSpinGameEngagementAttributes>> {
     return this.http.patch<IJsonApiItemPayload<IWSpinGameEngagementAttributes>>(`${this.apiConfig.engagementsPath}/game/${id}`, data);
   }
 

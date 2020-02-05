@@ -11,7 +11,7 @@ describe('SweepComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ SweepComponent, MineSweeperComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

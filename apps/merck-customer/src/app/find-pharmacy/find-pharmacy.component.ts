@@ -15,7 +15,7 @@ import {
   share,
   map,
   takeUntil
-  } from 'rxjs/operators';
+} from 'rxjs/operators';
 
 import {
   LocationsService,
@@ -63,8 +63,8 @@ export class FindPharmacyComponent implements OnInit, PageAppearence, OnDestroy 
 
   public ngOnInit(): void {
     this.headerFn = (location: ILocation) => location.merchantName ? of(location.merchantName) :
-                    location.merchantId ? this.merchantService.getMerchant(location.merchantId)
-                    .pipe(map((merchant: IMerchant) => merchant.name)) : of(location.name);
+      location.merchantId ? this.merchantService.getMerchant(location.merchantId)
+        .pipe(map((merchant: IMerchant) => merchant.name)) : of(location.name);
     this.merchants = this.merchantService.getAllMerchants().pipe(
       takeLast(1),
       share()

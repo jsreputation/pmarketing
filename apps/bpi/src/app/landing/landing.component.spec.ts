@@ -16,7 +16,7 @@ describe('LandingComponent', () => {
         { provide: Router, useValue: router }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
