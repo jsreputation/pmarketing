@@ -78,7 +78,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
   public rewardPostStamp: string | undefined;
   public availableStampImg: string | undefined;
   public availableRewardImg: string | undefined;
-  public backgroundImage: string | undefined;
+  public backgroundImage: string | undefined = '';
   public cardBgImage: string | undefined;
 
   public get rewards(): PuzzleCollectReward[] {
