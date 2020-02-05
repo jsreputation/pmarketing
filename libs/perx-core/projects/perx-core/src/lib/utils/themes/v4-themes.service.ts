@@ -62,6 +62,8 @@ export class V4ThemesService extends ThemesService {
   }
 
   private static VThemeToTheme(setting: ThemeJsonApiItem<IThemeV4ApiProperties>): ITheme {
+    // we want to follow material all in all font_color and surface, pop_up color
+    // we hardcore these three values, their values is suppose to come from material theme setting
     return  {
       name: setting.key + setting.id, // more unique than using title from properties
       properties: {
@@ -74,8 +76,10 @@ export class V4ThemesService extends ThemesService {
         '--button_background_color': setting.json_value.CTA_button_bg_color,
         '--header_color': setting.json_value.header_color,
         '--background': setting.json_value.app_bg_color,
-        '--font_color': setting.json_value.font_color,
-        '--login_background_colour': setting.json_value.login_page_bg_color
+        '--login_background_colour': setting.json_value.login_page_bg_color,
+        "--font_color": "#231f20",
+        "--surface_colour": "#ffffff",
+        "--popup_background_colour": "#ffffff"
       }
     };
   }
