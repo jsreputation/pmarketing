@@ -11,10 +11,10 @@ describe('PictureChoiceGraphicComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        declarations: [PictureChoiceGraphicComponent],
-        imports: [TranslateModule.forRoot()],
-        schemas: [NO_ERRORS_SCHEMA]
-      })
+      declarations: [PictureChoiceGraphicComponent],
+      imports: [TranslateModule.forRoot()],
+      schemas: [NO_ERRORS_SCHEMA]
+    })
       .compileComponents();
   }));
 

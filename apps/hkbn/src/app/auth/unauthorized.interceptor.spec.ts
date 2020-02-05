@@ -7,39 +7,39 @@ import { HttpRequest, HttpHandler, HttpErrorResponse, HttpResponse } from '@angu
 import { AppComponent } from '../app.component';
 
 const authenticationServiceStub = {
-    logout: (): void => { }
+  logout: (): void => { }
 };
 
 const mockRequest = new HttpRequest('GET', '');
 
 const mockHandle: HttpHandler = {
-    handle: () => throwError(new HttpResponse<HttpErrorResponse>({ status: 401 }))
+  handle: () => throwError(new HttpResponse<HttpErrorResponse>({ status: 401 }))
 };
 
 describe('UnauthorizedInterceptor', () => {
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [AppComponent],
-            imports: [
-                RouterTestingModule.withRoutes([
-                    { path: 'login', component: AppComponent }
-                ])
-            ],
-            providers: [
-                UnauthorizedInterceptor,
-                { provide: AuthenticationService, useValue: authenticationServiceStub }
-            ]
-        });
-    }));
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [AppComponent],
+      imports: [
+        RouterTestingModule.withRoutes([
+          { path: 'login', component: AppComponent }
+        ])
+      ],
+      providers: [
+        UnauthorizedInterceptor,
+        { provide: AuthenticationService, useValue: authenticationServiceStub }
+      ]
+    });
+  }));
 
-    it('should handle unauthorized call', fakeAsync(inject([UnauthorizedInterceptor, AuthenticationService],
-        (unauthInterceptor: UnauthorizedInterceptor, authenticationService: AuthenticationService) => {
-            const spy = spyOn(authenticationService, 'logout');
-            unauthInterceptor.intercept(mockRequest, mockHandle).toPromise().catch((err) => {
-                expect(err.status).toBe(401);
-            });
-            tick();
-            expect(spy).toHaveBeenCalled();
-        })
-    ));
+  it('should handle unauthorized call', fakeAsync(inject([UnauthorizedInterceptor, AuthenticationService],
+    (unauthInterceptor: UnauthorizedInterceptor, authenticationService: AuthenticationService) => {
+      const spy = spyOn(authenticationService, 'logout');
+      unauthInterceptor.intercept(mockRequest, mockHandle).toPromise().catch((err) => {
+        expect(err.status).toBe(401);
+      });
+      tick();
+      expect(spy).toHaveBeenCalled();
+    })
+  ));
 });

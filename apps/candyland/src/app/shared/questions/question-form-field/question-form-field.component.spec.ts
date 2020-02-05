@@ -62,11 +62,11 @@ describe('QuestionFormFieldComponent', () => {
       ],
       providers: [
         {
-          provide: QuestionFormFieldService, useValue: {getFocusedElem: (a: any) => a + ''}
+          provide: QuestionFormFieldService, useValue: {getFocusedElem: (a: any) => `${a  }`}
         }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

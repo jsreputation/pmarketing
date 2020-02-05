@@ -10,10 +10,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ShakeTreeService {
-
-  constructor(private shakeHttpService: ShakeHttpService,
-              private http: HttpClient) {
-  }
+  constructor(private shakeHttpService: ShakeHttpService, private http: HttpClient) { }
 
   public getData(): Observable<IGameDefaultData> {
     return this.http.get<IGameDefaultData>('assets/actives/shake-tree/data.json');

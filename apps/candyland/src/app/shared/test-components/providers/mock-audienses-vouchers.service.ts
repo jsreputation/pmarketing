@@ -10,13 +10,13 @@ export class MockAudiensesVouchersService {
   public getMockAudienceVoucher(): IAudienceVoucher {
     return {
       id: '1;',
-    batchId: 'string;',
-    endDate: 'string;',
-    rewardId: 'string;',
-    issuedDate: new Date(),
-    expiryDate: new Date(),
-    status: 'string;',
-    reward: null,
+      batchId: 'string;',
+      endDate: 'string;',
+      rewardId: 'string;',
+      issuedDate: new Date(),
+      expiryDate: new Date(),
+      status: 'string;',
+      reward: null,
     };
   }
 

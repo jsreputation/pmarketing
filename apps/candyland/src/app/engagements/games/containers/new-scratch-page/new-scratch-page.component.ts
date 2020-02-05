@@ -177,8 +177,8 @@ export class NewScratchPageComponent implements OnInit, OnDestroy {
   private initScratchForm(): void {
     this.form = this.fb.group({
       name: ['Scratch the Card Template', [Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(60)]
+        Validators.minLength(1),
+        Validators.maxLength(60)]
       ],
       headlineMessage: ['Scratch the Card and Win!', [
         Validators.required,

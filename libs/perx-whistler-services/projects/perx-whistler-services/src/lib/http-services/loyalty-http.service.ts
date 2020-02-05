@@ -67,7 +67,7 @@ export class LoyaltyHttpService {
   }
 
   public updateCustomTier(id: string, data: IJsonApiPatchItem<IWCustomTierAttributes>):
-    Observable<IJsonApiItemPayload<IWCustomTierAttributes>> {
+  Observable<IJsonApiItemPayload<IWCustomTierAttributes>> {
     return this.http.patch<IJsonApiItemPayload<IWCustomTierAttributes>>(`${this.apiConfig.getLoyaltyCustomTierPath}/${id}`, data);
   }
 

@@ -4,6 +4,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({name: 'replaceSpaceWithScore'})
 export class ReplaceSpaceScorePipe implements PipeTransform {
   public transform(value: string): string {
-    return 'CAMPAIGN.GameFilters.' + (value ? value.replace(/ /g, '_') : value).toUpperCase();
+    return `CAMPAIGN.GameFilters.${  (value ? value.replace(/ /g, '_') : value).toUpperCase()}`;
   }
 }

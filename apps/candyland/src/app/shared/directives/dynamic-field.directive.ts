@@ -8,12 +8,10 @@ export class DynamicFormGroupDirective implements OnInit, OnChanges {
   @Input() public group: FormGroup;
   @Input() public type: string;
   @Input() public config: any = null;
-  @Input() public componentMap: {[type: string]: any};
+  @Input() public componentMap: { [type: string]: any };
   public componentRef: ComponentRef<any>;
 
-  constructor(private resolver: ComponentFactoryResolver,
-              private container: ViewContainerRef) {
-  }
+  constructor(private resolver: ComponentFactoryResolver, private container: ViewContainerRef) { }
 
   public ngOnInit(): void {
     this.createComponentFactory();

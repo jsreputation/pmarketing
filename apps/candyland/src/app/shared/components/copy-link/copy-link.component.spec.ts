@@ -26,7 +26,7 @@ describe('DownloadLinkComponent', () => {
       declarations: [ CopyLinkComponent ],
       schemas: [ NO_ERRORS_SCHEMA ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

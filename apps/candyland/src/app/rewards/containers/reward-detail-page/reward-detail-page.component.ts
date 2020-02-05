@@ -70,6 +70,7 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
       .subscribe((stats: { [k: string]: number }) => {
         this.data.vouchersStatistics = [];
         // tslint:disable-next-line: forin
+        /* eslint-disable-next-line guard-for-in */
         for (const k in stats) {
           this.data.vouchersStatistics.push({ type: k, value: stats[k] });
         }
@@ -94,7 +95,7 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
       );
   }
 
-  get availableVouchers(): number {
+  public get availableVouchers(): number {
     if (!this.data.vouchersStatistics) {
       this.data.vouchersStatistics = [];
     }

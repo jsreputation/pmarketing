@@ -8,13 +8,14 @@ import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private sessionService: SessionService,
-              private authService: AuthService
+  constructor(
+    private sessionService: SessionService,
+    private authService: AuthService
   ) {
   }
 
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    let contentType = {'Content-Type': 'application/vnd.api+json'};
+    let contentType = { 'Content-Type': 'application/vnd.api+json' };
     if (req.url.includes(ApiConfig.signIn)) {
       return next.handle(req);
     }

@@ -1,4 +1,4 @@
 export interface ITablePagination {
-    pageIndex: number;
-    pageSize: number;
+  pageIndex: number;
+  pageSize: number;
 }

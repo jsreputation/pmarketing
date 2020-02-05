@@ -27,7 +27,7 @@ export class RegistrationComponent implements OnInit {
       this.auth.getAppToken().subscribe(() => {
         this.appAccessTokenFetched = true;
       }, (err) => {
-        console.error('Error' + err);
+        console.error(`Error${  err}`);
       });
     }
     this.generalStaticDataService.getCountriesList(countries).subscribe((codes) => this.countryCodes = codes);

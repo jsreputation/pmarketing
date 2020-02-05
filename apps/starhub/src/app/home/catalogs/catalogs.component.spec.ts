@@ -78,7 +78,7 @@ describe('CatalogsComponent', () => {
     it('should increment catalogsPageId', () => {
       component.catalogsEnded = false;
       component.onScroll();
-      expect(component['catalogsPageId']).toBe(2);
+      expect(component.catalogsPageId).toBe(2);
     });
   });
 });

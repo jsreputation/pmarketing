@@ -43,13 +43,11 @@ export class AudiencesService implements ITableService<IAudience> {
           const poolsList = res.data;
           return poolsList
             .filter((pool: IJsonApiItem<IWAudiences>) => !pool.attributes.system_generated)
-            .map((pool: IJsonApiItem<IWAudiences>) => {
-              return {
-                name: pool.attributes.name,
-                checked: false,
-                value: { id: pool.id, type: pool.type }
-              };
-            });
+            .map((pool: IJsonApiItem<IWAudiences>) => ({
+              name: pool.attributes.name,
+              checked: false,
+              value: { id: pool.id, type: pool.type }
+            }));
         }));
   }
 

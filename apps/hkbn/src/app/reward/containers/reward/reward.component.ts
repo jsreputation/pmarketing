@@ -83,7 +83,7 @@ export class RewardComponent implements OnInit, OnDestroy {
               afterClosedCallBack: this,
               buttonTxt: close
             })),
-            map(() => { return; })
+            map(() => (void 0))
           )
         )
       );

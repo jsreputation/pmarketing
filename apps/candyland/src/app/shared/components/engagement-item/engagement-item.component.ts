@@ -32,7 +32,7 @@ export class EngagementItemComponent {
     if (this.linkable) {
       const gameType = 'game_type' in this.data ? this.data.game_type : null;
       let path = getEngagementRouterLink(this.data.attributes_type, gameType);
-      path += '/' + this.data.id;
+      path += `/${  this.data.id}`;
       this.router.navigate([path]);
     }
   }

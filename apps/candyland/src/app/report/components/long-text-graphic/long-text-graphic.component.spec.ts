@@ -11,10 +11,10 @@ describe('LongTextGraphicComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        declarations: [LongTextGraphicComponent],
-        imports: [TranslateModule.forRoot()],
-        schemas: [NO_ERRORS_SCHEMA]
-      })
+      declarations: [LongTextGraphicComponent],
+      imports: [TranslateModule.forRoot()],
+      schemas: [NO_ERRORS_SCHEMA]
+    })
       .compileComponents();
   }));
 

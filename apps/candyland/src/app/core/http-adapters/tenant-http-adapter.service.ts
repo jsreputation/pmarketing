@@ -27,7 +27,7 @@ export class TenantHttpAdapterService {
       campaign_base_url: TenantHttpAdapterService.getTenantProperty('campaign_base_url', data)
     };
   }
-/* need add type to data*/
+  /* need add type to data*/
   private static getTenantProperty(property: string, data: IJsonApiItem<IWTenant>): any | null {
     return data && data.attributes.display_properties ? data.attributes.display_properties[property] : null;
   }
@@ -61,7 +61,7 @@ export class TenantHttpAdapterService {
     return {
       timeZone: data.time_zone,
       color: data['theme.color'],
-      currency: data['currency'],
+      currency: data.currency,
       style: data['theme.style'],
       accent: data['theme.accent'],
       buttonColor: data['theme.button_background_color'],

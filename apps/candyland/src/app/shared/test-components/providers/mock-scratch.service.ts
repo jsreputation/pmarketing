@@ -7,16 +7,16 @@ export class MockScratchService {
 
   public getMockData(): IGameDefaultData {
     return {
-     background: [{
-       id: 1,
-       type: 'bg1',
-       title: 'icon',
-       img: 'tenants/666666666/d7r6n7iildb5nv3devvdd2mkzl4p',
-       fullImg: 'tenants/666666666/d7r6n7iildb5nv3devvdd2mkzl4p',
-       format: '.png',
-       active: false
-     }],
-     preScratchImage: [{
+      background: [{
+        id: 1,
+        type: 'bg1',
+        title: 'icon',
+        img: 'tenants/666666666/d7r6n7iildb5nv3devvdd2mkzl4p',
+        fullImg: 'tenants/666666666/d7r6n7iildb5nv3devvdd2mkzl4p',
+        format: '.png',
+        active: false
+      }],
+      preScratchImage: [{
         id: 1,
         type: 'preScratchImage1',
         title: 'icon',
@@ -25,7 +25,7 @@ export class MockScratchService {
         format: '.png',
         active: false
       }],
-     postScratchSuccessImage: [    {
+      postScratchSuccessImage: [    {
         id: 1,
         type: 'postScratchSuccessImage1',
         title: 'icon',
@@ -34,7 +34,7 @@ export class MockScratchService {
         format: '.png',
         active: false
       }],
-     postScratchFailImage: [
+      postScratchFailImage: [
         {
           id: 1,
           type: 'postScratchFailImage1',

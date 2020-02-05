@@ -18,7 +18,7 @@ describe('WalletComponent', () => {
         MatTabsModule
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -10,10 +10,10 @@ describe('LoyaltyFormStepOneComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        declarations: [LoyaltyFormStepDetailsComponent],
-        imports: [TranslateModule.forRoot()],
-        schemas: [NO_ERRORS_SCHEMA]
-      })
+      declarations: [LoyaltyFormStepDetailsComponent],
+      imports: [TranslateModule.forRoot()],
+      schemas: [NO_ERRORS_SCHEMA]
+    })
       .compileComponents();
   }));
 

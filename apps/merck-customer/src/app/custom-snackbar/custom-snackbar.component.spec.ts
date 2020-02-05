@@ -32,7 +32,7 @@ describe('CustomSnackbarComponent', () => {
         }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -10,7 +10,7 @@ export class RepeatTimesDirective {
     private viewContainer: ViewContainerRef) {
   }
 
-  @Input() set perxCoreRepeatTimes(times: number) {
+  @Input() public set perxCoreRepeatTimes(times: number) {
     for (let i = 0; i < times; i++) {
       this.viewContainer.createEmbeddedView(this.templateRef);
     }

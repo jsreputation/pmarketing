@@ -4,26 +4,26 @@ import { TabItemViewComponent } from './tab-item-view.component';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('TabItemViewComponent', () => {
-    let component: TabItemViewComponent;
-    let fixture: ComponentFixture<TabItemViewComponent>;
+  let component: TabItemViewComponent;
+  let fixture: ComponentFixture<TabItemViewComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [TabItemViewComponent],
-          imports: [
-            TranslateModule.forRoot(),
-          ]
-        })
-            .compileComponents();
-    }));
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [TabItemViewComponent],
+      imports: [
+        TranslateModule.forRoot(),
+      ]
+    })
+      .compileComponents();
+  }));
 
-    beforeEach(() => {
-        fixture = TestBed.createComponent(TabItemViewComponent);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
-    });
+  beforeEach(() => {
+    fixture = TestBed.createComponent(TabItemViewComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-    it('should create', () => {
-        expect(component).toBeTruthy();
-    });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

@@ -35,24 +35,24 @@ export class NewCampaignStampRuleFormGroupComponent implements AfterViewInit, On
   // TODO: integrate when global settings are implemented
   public config: any = {
     ruleType: [
-      {title: 'Transaction', value: 'transaction'},
-      {title: 'First login', value: 'First login'},
-      {title: 'Sign up', value: 'Sign up'},
-      {title: 'Purchase', value: 'purchase'},
-      {title: 'Review', value: 'review'},
-      {title: 'Referral', value: 'Referral'},
-      {title: 'Reward redeemed', value: 'Reward redeemed'},
-      {title: 'Bill payment', value: 'Bill payment'}
+      { title: 'Transaction', value: 'transaction' },
+      { title: 'First login', value: 'First login' },
+      { title: 'Sign up', value: 'Sign up' },
+      { title: 'Purchase', value: 'purchase' },
+      { title: 'Review', value: 'review' },
+      { title: 'Referral', value: 'Referral' },
+      { title: 'Reward redeemed', value: 'Reward redeemed' },
+      { title: 'Bill payment', value: 'Bill payment' }
     ],
     rule: [
-      {title: 'is more than', value: 'isMoreThan'},
-      {title: 'is less than', value: 'isLessThan'},
-      {title: 'is equal to', value: 'isEqualTo'}
+      { title: 'is more than', value: 'isMoreThan' },
+      { title: 'is less than', value: 'isLessThan' },
+      { title: 'is equal to', value: 'isEqualTo' }
     ],
     product: [
-      {title: 'Product A', value: 'productA'},
-      {title: 'Product B', value: 'productB'},
-      {title: 'Product C', value: 'productC'}
+      { title: 'Product A', value: 'productA' },
+      { title: 'Product B', value: 'productB' },
+      { title: 'Product C', value: 'productC' }
     ]
   };
   @Input() public currencyID: string = 'SGD';
@@ -63,10 +63,12 @@ export class NewCampaignStampRuleFormGroupComponent implements AfterViewInit, On
 
   private destroy$: Subject<void> = new Subject();
 
-  constructor(public cd: ChangeDetectorRef,
-              public dialog: MatDialog,
-              private toggleControlService: ToggleControlService,
-              private fb: FormBuilder) {
+  constructor(
+    public cd: ChangeDetectorRef,
+    public dialog: MatDialog,
+    private toggleControlService: ToggleControlService,
+    private fb: FormBuilder
+  ) {
     this.initGroup();
   }
 
@@ -91,9 +93,9 @@ export class NewCampaignStampRuleFormGroupComponent implements AfterViewInit, On
 
   public writeValue(data: any): void {
     if (data === null) {
-      this.group.patchValue(this.getDefaultValue(), {emitEvent: false});
+      this.group.patchValue(this.getDefaultValue(), { emitEvent: false });
     } else {
-      this.group.patchValue(data, {emitEvent: false});
+      this.group.patchValue(data, { emitEvent: false });
     }
     this.updateGroup();
   }

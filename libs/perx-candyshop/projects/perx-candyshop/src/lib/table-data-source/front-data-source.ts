@@ -11,9 +11,9 @@ export class FrontDataSource<T> extends MatTableDataSource<T> {
     filters: null
   });
   public sortState$: BehaviorSubject<{ sort: IFrontTableSort | null }> =
-    new BehaviorSubject<{ sort: IFrontTableSort | null }>({ sort: null });
+  new BehaviorSubject<{ sort: IFrontTableSort | null }>({ sort: null });
   public paginatorState$: BehaviorSubject<{ paginator: ITablePagination | null }> =
-    new BehaviorSubject<{ paginator: ITablePagination | null }>({ paginator: null });
+  new BehaviorSubject<{ paginator: ITablePagination | null }>({ paginator: null });
   public addDeleteData$: BehaviorSubject<T[]> = new BehaviorSubject<T[]>(
     this.initData
   );

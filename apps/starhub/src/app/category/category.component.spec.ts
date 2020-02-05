@@ -184,7 +184,7 @@ describe('CategoryComponent', () => {
     it('should increment catalogsPageId', () => {
       component.rewardsEnded = false;
       component.onScroll();
-      expect(component['rewardsPageId']).toBe(2);
+      expect(component.rewardsPageId).toBe(2);
     });
   });
 

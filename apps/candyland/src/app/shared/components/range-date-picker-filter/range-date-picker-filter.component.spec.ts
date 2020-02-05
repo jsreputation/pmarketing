@@ -24,7 +24,7 @@ describe('RangeDatePickerFilterComponent', () => {
       ],
       declarations: [ RangeDatePickerFilterComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

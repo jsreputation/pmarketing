@@ -30,15 +30,15 @@ describe('NewCampaignReviewPageComponent', () => {
       declarations: [ NewCampaignReviewPageComponent ],
       providers: [
         {provide: CampaignCreationStoreService, useValue: {
-            updateCampaign: (data: any) => data,
-            currentCampaign$: new Subject()}},
+          updateCampaign: (data: any) => data,
+          currentCampaign$: new Subject()}},
         {provide: StepConditionService, useValue: {registerStepCondition: () => ({}) }},
         {provide: AudiencesService, useValue: {getAudiencesList: () => new Subject()}},
         {provide: LocalStorageService, useValue: {}}
       ],
       schemas: [ NO_ERRORS_SCHEMA ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

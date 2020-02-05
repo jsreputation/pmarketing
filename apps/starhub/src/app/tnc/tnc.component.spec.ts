@@ -26,7 +26,7 @@ describe('TncComponent', () => {
         { provide: Location, useValue: locationStub },
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -1,4 +1,4 @@
-import { FileUploadStatus } from "@cl-core/services/iadvanced-upload-file.service";
+import { FileUploadStatus } from '@cl-core/services/iadvanced-upload-file.service';
 
 export interface IUploadedFile {
   id: string;
