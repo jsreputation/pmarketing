@@ -111,7 +111,7 @@ export class CampaignsHttpAdapter {
     const campaignData = data.attributes;
     return {
       audience: {
-        select: '' + data.attributes.pool_id,
+        select: `${  data.attributes.pool_id}`,
         filters: CampaignsHttpAdapter.transformAudienceFilterFromAPI(data.attributes.audience_segment || {})
       },
       id: data.id,
@@ -145,9 +145,9 @@ export class CampaignsHttpAdapter {
     const startTime = data.campaignInfo.startTime ? data.campaignInfo.startTime : moment().format('LT');
     const endTime = data.campaignInfo.endTime ? data.campaignInfo.endTime : moment().format('LT');
     const startDate = data.campaignInfo.startDate
-      ? moment(moment(data.campaignInfo.startDate).format('l') + ' ' + startTime).format()
+      ? moment(`${moment(data.campaignInfo.startDate).format('l')  } ${  startTime}`).format()
       : null;
-    const endDate = data.campaignInfo.endDate ? moment(moment(data.campaignInfo.endDate).format('l') + ' ' + endTime).format() : null;
+    const endDate = data.campaignInfo.endDate ? moment(`${moment(data.campaignInfo.endDate).format('l')  } ${  endTime}`).format() : null;
     // When user not select weblink, default the information collection setting back to not required. Double confirm with Nocolas
     const informationCollectionSetting = data.notification.webNotification.webLink
       ? data.notification.webNotification.webLinkOptions

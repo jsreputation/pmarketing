@@ -60,9 +60,7 @@ export class TenantService {
     const sendData = TenantHttpAdapterService.transformToTenantAPI(data);
     return this.tenantHttpService.patchTenant({ data: sendData }, data.id)
       .pipe(
-        map((tenant) => {
-          return TenantHttpAdapterService.transformToTenant((tenant.data));
-        }),
+        map((tenant) => TenantHttpAdapterService.transformToTenant((tenant.data))),
         tap(tenant => {
           this.tenantStoreService.tenant = TenantHttpAdapterService.getTenantsSettings(tenant);
           this.tenant = tenant;

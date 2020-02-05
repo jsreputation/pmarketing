@@ -19,10 +19,10 @@ export class AppComponent implements OnInit {
     private notificationService: NotificationService,
     private dialog: MatDialog,
     private configService: ConfigService,
-    @Inject(PLATFORM_ID) private platformId: object) {}
+    @Inject(PLATFORM_ID) private platformId: object
+  ) { }
 
   public ngOnInit(): void {
-
     this.configService.readAppConfig().subscribe(
       (config: IConfig<void>) => {
         this.preAuth = config.preAuth as boolean;
@@ -47,7 +47,7 @@ export class AppComponent implements OnInit {
     );
   }
 
-  get loggedIn(): boolean {
+  public get loggedIn(): boolean {
     // todo
     return false;
   }

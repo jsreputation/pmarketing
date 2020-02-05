@@ -33,7 +33,7 @@ describe('QuestionTypeComponent', () => {
       providers: [{ provide: UploadFileService, useClass: MockUploadFileService }],
       declarations: [ QuestionTypeComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -109,18 +109,18 @@ export class AuthService {
     return this.http.changePassword(password, token)
       .pipe(
         switchMap((res: HttpResponse<any>) => {
-            const tokenString: string | null = res.headers.get('authorization');
-            if (tokenString === null) {
-              return of(null);
-            }
-            this.saveToken(tokenString);
-            const tokenObj = parseJwt(tokenString);
-            const userName = tokenObj.sub.split('/').pop();
-            return this.iamUserService.getUsers({'filter[username]': userName}).pipe(
-              map(users => users[0]),
-              tap((user: IAMUser) => this.saveUser(user))
-            );
+          const tokenString: string | null = res.headers.get('authorization');
+          if (tokenString === null) {
+            return of(null);
           }
+          this.saveToken(tokenString);
+          const tokenObj = parseJwt(tokenString);
+          const userName = tokenObj.sub.split('/').pop();
+          return this.iamUserService.getUsers({'filter[username]': userName}).pipe(
+            map(users => users[0]),
+            tap((user: IAMUser) => this.saveUser(user))
+          );
+        }
         )
       );
   }

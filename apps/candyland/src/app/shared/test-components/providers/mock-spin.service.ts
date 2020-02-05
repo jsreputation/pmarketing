@@ -100,7 +100,7 @@ export class MockSpinService {
         id: 1, type: 'wheelPositionImage1', title: 'icon', img: 'global/assets/preview/positionup.png',
         fullImg: 'global/assets/preview/positionupfull.png', format: '.png', active: false
       },
-        {
+      {
         id: 2, type: 'wheelPositionImage2', title: 'icon', img: 'global/assets/preview/positiondown.png',
         fullImg: 'global/assets/preview/positiondown.png', format: '.png', active: false
       }], wheelImg: [{
@@ -115,20 +115,20 @@ export class MockSpinService {
       }],
       background: [
         {
-        id: 1,
+          id: 1,
           type: 'bg1',
           title: 'icon',
           img: 'global/assets/background/stamp-bg-10.png',
-         fullImg: 'global/assets/background/full_bg_10.jpg',
+          fullImg: 'global/assets/background/full_bg_10.jpg',
           format: '.png',
           active: false
-      }, {
-        id: 2, type: 'bg2', title: 'icon', img: 'global/assets/background/stamp-bg-11.png',
-        fullImg: 'global/assets/background/full_bg_11.png', format: '.png', active: false
-      }, {
-        id: 3, type: 'bg3', title: 'icon', img: 'global/assets/background/stamp-bg-12.png',
-        fullImg: 'global/assets/background/full_bg_12.png', format: '.png', active: false
-      }],
+        }, {
+          id: 2, type: 'bg2', title: 'icon', img: 'global/assets/background/stamp-bg-11.png',
+          fullImg: 'global/assets/background/full_bg_11.png', format: '.png', active: false
+        }, {
+          id: 3, type: 'bg3', title: 'icon', img: 'global/assets/background/stamp-bg-12.png',
+          fullImg: 'global/assets/background/full_bg_12.png', format: '.png', active: false
+        }],
       rewardIcon: [{
         id: 1, type: 'post-stamp-2', title: 'icon', img: 'global/assets/stamps/post-stamp-2.png',
         fullImg: 'global/assets/stamps/post-stamp-2.png', format: '.png', active: false

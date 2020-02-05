@@ -16,31 +16,31 @@ describe('ChangeExpiryDatePopupComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        imports: [
-          HttpClientTestingModule,
-          MatDialogModule,
-          DatePickerModule,
-          ButtonModule,
-          MatIconModule,
-          BrowserDynamicTestingModule,
-          MatDatepickerModule,
-          FormsModule,
-          ReactiveFormsModule,
-          BrowserAnimationsModule,
-          NoopAnimationsModule,
-          TranslateModule.forRoot(),
-        ],
-        providers: [
-          {
-            provide: MatDialogRef, useValue: {
-              close: () => {
-              }
+      imports: [
+        HttpClientTestingModule,
+        MatDialogModule,
+        DatePickerModule,
+        ButtonModule,
+        MatIconModule,
+        BrowserDynamicTestingModule,
+        MatDatepickerModule,
+        FormsModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule,
+        NoopAnimationsModule,
+        TranslateModule.forRoot(),
+      ],
+      providers: [
+        {
+          provide: MatDialogRef, useValue: {
+            close: () => {
             }
-          },
-          {provide: MAT_DIALOG_DATA, useValue: {}}
-        ],
-        declarations: [ChangeExpiryDatePopupComponent]
-      })
+          }
+        },
+        {provide: MAT_DIALOG_DATA, useValue: {}}
+      ],
+      declarations: [ChangeExpiryDatePopupComponent]
+    })
       .compileComponents();
   }));
 

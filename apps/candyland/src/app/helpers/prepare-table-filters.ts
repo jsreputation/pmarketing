@@ -6,14 +6,14 @@ export class PrepareTableFilters {
 
     if (data) {
       config.push({
-        title: 'All (' + data.length + ')',
+        title: `All (${  data.length  })`,
         value: null
       });
     }
 
     Object.keys(counterObject).forEach((key) => {
       config.push({
-        title: key + ' (' + counterObject[key] + ')',
+        title: `${key  } (${  counterObject[key]  })`,
         value: key
       });
     });

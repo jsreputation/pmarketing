@@ -23,11 +23,11 @@ export class NotificationService {
     this.$snackSubject.next(msg);
   }
 
-  get $popup(): Observable<IPopupConfig> {
+  public get $popup(): Observable<IPopupConfig> {
     return this.$popupSubject;
   }
 
-  get $snack(): Observable<string> {
+  public get $snack(): Observable<string> {
     return this.$snackSubject;
   }
 }

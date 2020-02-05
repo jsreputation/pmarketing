@@ -61,7 +61,7 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
   public rewards$: Observable<IReward[]>;
   public rewardsLoaded: boolean = false;
   public rewardsEnded: boolean = false;
-  private rewardsPageId: number = 1;
+  public rewardsPageId: number = 1;
   private rewards: BehaviorSubject<IReward[]> = new BehaviorSubject<IReward[]>([]);
 
   public selectedCategory: string;

@@ -18,7 +18,7 @@ export class InstantRewardsHttpService {
   }
 
   public updateInstantReward(id: string, data: IJsonApiPatchItem<IWInstantOutcomeEngagementAttributes>):
-    Observable<IJsonApiItemPayload<IWInstantOutcomeEngagementAttributes>> {
+  Observable<IJsonApiItemPayload<IWInstantOutcomeEngagementAttributes>> {
     return this.http.patch<IJsonApiItemPayload<IWInstantOutcomeEngagementAttributes>>(
       `${this.apiConfig.engagementsPath}/instant_reward/${id}`,
       data

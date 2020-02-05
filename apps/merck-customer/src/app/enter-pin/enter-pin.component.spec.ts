@@ -49,7 +49,7 @@ describe('EnterPinComponent', () => {
         }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -76,7 +76,7 @@ describe('EnterPinComponent', () => {
 
   it('should resend otp resendOtp', fakeAsync(() => {
     const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>
-      (AuthenticationService as Type<AuthenticationService>);
+    (AuthenticationService as Type<AuthenticationService>);
     const authSpy = spyOn(authenticationService, 'forgotPassword').and.returnValue(
       of({
         message: 'success'

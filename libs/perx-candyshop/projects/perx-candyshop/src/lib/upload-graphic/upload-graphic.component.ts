@@ -63,8 +63,8 @@ export class UploadGraphicComponent implements ControlValueAccessor {
   }
 
   constructor(private sanitizer: DomSanitizer,
-              private cd: ChangeDetectorRef,
-              private uploadFileService: UploadImageService) {
+    private cd: ChangeDetectorRef,
+    private uploadFileService: UploadImageService) {
   }
 
   public preview(files): void {

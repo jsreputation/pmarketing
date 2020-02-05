@@ -8,9 +8,10 @@ import { IUploadedFile } from '../../models/uploaded-file.interface';
 @Injectable()
 export class UploadImageService implements IUploadImageService {
 
-  constructor(@Inject('uploadImageUrl') public url: string,
-              private http: HttpClient) {
-  }
+  constructor(
+    @Inject('uploadImageUrl') public url: string,
+    private http: HttpClient
+  ) { }
 
   public uploadImage(file: File): Observable<any> {
     const formData = this.prepareFormData(file);

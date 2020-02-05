@@ -20,7 +20,7 @@ export class RewardItemComponent implements OnInit {
 
   @Output() private clickDelete: EventEmitter<any> = new EventEmitter<any>();
   @Output() private updateOutcome: EventEmitter<{ probability: number, limit: number }> =
-    new EventEmitter<{ probability: number, limit: number }>();
+  new EventEmitter<{ probability: number, limit: number }>();
 
   constructor(private cd: ChangeDetectorRef) {}
 

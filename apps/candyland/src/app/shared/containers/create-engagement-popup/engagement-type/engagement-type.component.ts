@@ -15,8 +15,8 @@ export class EngagementTypeComponent implements IInkBarHost {
   @ViewChildren(InkListenerDirective) public inkListener: QueryList<InkListenerDirective>;
 
   public setTypeEngagement(type: IGraphic): void {
-     this.selectedType = type;
-     this.selectType.emit(type);
+    this.selectedType = type;
+    this.selectType.emit(type);
   }
 
   public getInkListeners(): any {

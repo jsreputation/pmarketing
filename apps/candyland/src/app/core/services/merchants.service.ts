@@ -89,15 +89,15 @@ export class MerchantsService implements ITableService<IMerchantForm> {
   }
 
   private getTransformMerchant(data:
-    IJsonApiItemPayload<IWMerchantAttributes> | IJsonApiListPayload<IWMerchantAttributes>
+  IJsonApiItemPayload<IWMerchantAttributes> | IJsonApiListPayload<IWMerchantAttributes>
   ): IMerchantForm[] {
     return JsonApiParser.parseDataWithIncludes(
       data,
       MerchantHttpAdapter.transformToMerchant, {
-      branches: {
-        fieldName: 'branches',
-        adapterFunction: MerchantHttpAdapter.transformToBranch
-      }
-    });
+        branches: {
+          fieldName: 'branches',
+          adapterFunction: MerchantHttpAdapter.transformToBranch
+        }
+      });
   }
 }

@@ -16,7 +16,7 @@ describe('SelectGraphicComponent', () => {
       ],
       declarations: [ SelectGraphicComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

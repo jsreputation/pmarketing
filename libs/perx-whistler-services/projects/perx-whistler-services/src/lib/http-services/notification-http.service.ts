@@ -7,8 +7,10 @@ import { ApiConfigServices } from '../configs/api-config';
 @Injectable()
 export class NotificationHttpService {
 
-  constructor(private http: HttpClient,
-              private apiConfig: ApiConfigServices) { }
+  constructor(
+    private http: HttpClient,
+    private apiConfig: ApiConfigServices
+  ) { }
 
   public createNotification(data: any): Observable<IJsonApiListPayload<IWNotificationAttributes>> {
     return this.http.post<IJsonApiListPayload<IWNotificationAttributes>>(`${this.apiConfig.campaignsNotificationPath}`, data);

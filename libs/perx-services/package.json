@@ -1,0 +1,76 @@
+{
+  "name": "@perx/services",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build:lib": "ng build",
+    "test": "jest",
+    "lint": "eslint \"./projects/**/*.ts\"",
+    "lint:fix": "eslint \"./projects/**/*.ts\" --fix",
+    "test:watch": "jest --watch"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/common": "~8.0.0",
+    "@angular/compiler": "~8.0.0",
+    "@angular/core": "~8.0.0",
+    "@angular/platform-browser": "~8.0.0",
+    "@angular/platform-browser-dynamic": "~8.0.0",
+    "@angular/router": "~8.0.0",
+    "@perx/model": "^0.0.0",
+    "rxjs": "~6.4.0",
+    "tslib": "^1.10.0",
+    "zone.js": "~0.9.1"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "~0.800.0",
+    "@angular-devkit/build-ng-packagr": "~0.800.0",
+    "@angular/cli": "~8.0.0",
+    "@angular/compiler-cli": "~8.0.0",
+    "@angular/language-service": "~8.0.0",
+    "@types/jest": "25.1.1",
+    "@types/node": "~8.9.4",
+    "codelyzer": "^5.0.0",
+    "jest": "25.1.0",
+    "jest-preset-angular": "8.0.0",
+    "ng-packagr": "^5.4.0",
+    "protractor": "~5.4.0",
+    "ts-node": "~7.0.0",
+    "tsickle": "^0.37.0",
+    "tslint": "~5.15.0",
+    "typescript": "~3.5.3"
+  },
+  "main": "./dist/perx-services/bundles/perx-services.umd.js",
+  "module": "./dist/perx-services/fesm5/perx-services.js",
+  "es2015": "./dist/perx-services/fesm2015/perx-services.js",
+  "esm5": "./dist/perx-services/esm5/perx-services.js",
+  "esm2015": "./dist/perx-services/esm2015/perx-services.js",
+  "fesm5": "./dist/perx-services/fesm5/perx-services.js",
+  "fesm2015": "./dist/perx-services/fesm2015/perx-services.js",
+  "typings": "./dist/perx-services/perx-services.d.ts",
+  "metadata": "./dist/perx-services/perx-services.metadata.json",
+  "jest": {
+    "preset": "jest-preset-angular",
+    "roots": [
+      "projects"
+    ],
+    "transform": {
+      "^.+\\.(ts|js|html)$": "ts-jest"
+    },
+    "setupFilesAfterEnv": [
+      "<rootDir>/projects/setup-jest.ts"
+    ],
+    "moduleNameMapper": {},
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "<rootDir>/projects/perx-services/tsconfig.spec.json",
+        "stringifyContentPathRegex": "\\.html$",
+        "astTransformers": [
+          "jest-preset-angular/build/InlineFilesTransformer",
+          "jest-preset-angular/build/StripStylesTransformer"
+        ]
+      }
+    }
+  }
+}

@@ -40,7 +40,7 @@ describe('SideNavComponent', () => {
       ],
       declarations: [ SideNavComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

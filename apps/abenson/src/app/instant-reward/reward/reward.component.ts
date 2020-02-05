@@ -31,8 +31,8 @@ export class RewardComponent implements OnInit {
   public rewardClickedHandler(reward: IReward): void {
     const data = {
       title: 'Clicked!',
-      text: 'ID: ' + reward.id + '\n' +
-        'Reward Name: ' + reward.name,
+      text: `ID: ${  reward.id  }\n` +
+        `Reward Name: ${  reward.name}`,
     };
     this.dialog.open(PopupComponent, { data });
   }

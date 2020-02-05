@@ -14,7 +14,7 @@ describe('VerticalGraphicElementComponent', () => {
       schemas: [NO_ERRORS_SCHEMA],
       imports: [TranslateModule.forRoot()]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

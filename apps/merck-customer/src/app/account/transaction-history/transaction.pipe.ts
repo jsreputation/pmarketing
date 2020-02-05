@@ -10,10 +10,8 @@ export class TransactionPipe implements PipeTransform {
 
   public transform(allTransanctions: Observable<ITransaction[]>, isPurchase?: boolean): Observable<ITransaction[]> {
 
-      return allTransanctions.pipe(
-          map((transactions) => transactions.filter((transaction) => {
-            return isPurchase ? (transaction.points < 0) : (transaction.points > 0);
-          }))
-      );
+    return allTransanctions.pipe(
+      map((transactions) => transactions.filter((transaction) => isPurchase ? (transaction.points < 0) : (transaction.points > 0)))
+    );
   }
 }

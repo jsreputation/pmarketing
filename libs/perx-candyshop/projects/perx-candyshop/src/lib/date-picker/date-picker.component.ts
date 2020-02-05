@@ -38,7 +38,7 @@ export class DatePickerComponent extends CsFormFieldControl<any> implements OnIn
   public minDate: Date | null = null;
   public maxDate: Date | null = null;
 
-  @ViewChild('datePicker', {static: false}) public datePicker: MatDatepicker<Date>;
+  @ViewChild('datePicker', { static: false }) public datePicker: MatDatepicker<Date>;
 
   private onChange: any = noop;
   private onTouched: any = noop;
@@ -92,7 +92,7 @@ export class DatePickerComponent extends CsFormFieldControl<any> implements OnIn
 
   public writeValue(obj: Date | null): void {
     if (obj) {
-      this.datePickerControl.patchValue(obj, {emitEvent: false});
+      this.datePickerControl.patchValue(obj, { emitEvent: false });
     } else {
       this.datePickerControl.reset();
     }

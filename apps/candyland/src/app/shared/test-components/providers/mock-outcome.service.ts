@@ -8,11 +8,11 @@ export class MockOutcomeService {
   public getMockOutcome(): IOutcome {
     return {
       id: '1',
-    resultId: 1,
-    resultType: 'test',
-    probability: 2,
-    slotNumber: 2,
-    limit: 2,
+      resultId: 1,
+      resultType: 'test',
+      probability: 2,
+      slotNumber: 2,
+      limit: 2,
     };
   }
 

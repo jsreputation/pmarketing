@@ -21,27 +21,27 @@ describe('ManageListPopupComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        imports: [
-          MatTableModule,
-          MatIconModule,
-          MatDialogModule,
-          ButtonModule,
-          MatCheckboxModule,
-          HttpClientTestingModule,
-          TranslateModule.forRoot(),
-        ],
-        providers: [
-          {
-            provide: MatDialogRef, useValue: {
-              close: () => {
-              }
+      imports: [
+        MatTableModule,
+        MatIconModule,
+        MatDialogModule,
+        ButtonModule,
+        MatCheckboxModule,
+        HttpClientTestingModule,
+        TranslateModule.forRoot(),
+      ],
+      providers: [
+        {
+          provide: MatDialogRef, useValue: {
+            close: () => {
             }
-          },
-          {provide: MAT_DIALOG_DATA, useValue: {}},
-          {provide: AudiencesService, useClass: MockAudienceService }
-        ],
-        declarations: [ManageListPopupComponent]
-      })
+          }
+        },
+        {provide: MAT_DIALOG_DATA, useValue: {}},
+        {provide: AudiencesService, useClass: MockAudienceService }
+      ],
+      declarations: [ManageListPopupComponent]
+    })
       .compileComponents();
   }));
 

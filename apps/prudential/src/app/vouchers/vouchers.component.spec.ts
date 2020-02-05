@@ -19,12 +19,8 @@ describe('VouchersComponent', () => {
   const matDialogStub = new MatDialogStub();
   const spy = routerSpy.navigate as jasmine.Spy;
   const voucherServiceStub = {
-    get: () => {
-      return of('');
-    },
-    getAll: () => {
-      return of ('');
-    }
+    get: () => of(''),
+    getAll: () => of ('')
   };
 
   const rewardsServiceStub = {

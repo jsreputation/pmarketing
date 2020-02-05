@@ -98,7 +98,7 @@ describe('FindPharmacyComponent', () => {
   describe('OnInit', () => {
     it('should get all locations', fakeAsync(() => {
       const locationsService: LocationsService = fixture.debugElement.injector.get<LocationsService>
-        (LocationsService as Type<LocationsService>);
+      (LocationsService as Type<LocationsService>);
       const locationsServiceSpy = spyOn(locationsService, 'getAllLocations').and.returnValue(of(locationsStub));
       component.ngOnInit();
       tick();
@@ -111,7 +111,7 @@ describe('FindPharmacyComponent', () => {
 
     it('should get all tags', fakeAsync(() => {
       const locationsTags: LocationsService = fixture.debugElement.injector.get<LocationsService>
-        (LocationsService as Type<LocationsService>);
+      (LocationsService as Type<LocationsService>);
       const locationsTagsSpy = spyOn(locationsTags, 'getTags').and.returnValue(of(tagsStub));
       component.ngOnInit();
       tick();

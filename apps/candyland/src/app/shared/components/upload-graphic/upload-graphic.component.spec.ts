@@ -21,7 +21,7 @@ describe('DownloadButtonComponent', () => {
       declarations: [ UploadGraphicComponent ],
       providers: [{ provide: UploadFileService, useClass: MockUploadFileService }]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

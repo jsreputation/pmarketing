@@ -32,7 +32,7 @@ export class ChipListComponent implements OnDestroy, ControlValueAccessor {
   @Input() public addOnBlur: boolean = true;
   public readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
-  @Input() set value(setValue: string[]) {
+  @Input() public set value(setValue: string[]) {
     this.writeValue(setValue);
   }
 

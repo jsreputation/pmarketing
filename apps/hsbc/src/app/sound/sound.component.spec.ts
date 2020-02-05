@@ -21,7 +21,7 @@ describe('SoundComponent', () => {
         { provide: MAT_DIALOG_DATA, useValue: [] }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -21,7 +21,7 @@ describe('QuestionLongTextFieldComponent', () => {
       ],
       declarations: [ QuestionLongTextFieldComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

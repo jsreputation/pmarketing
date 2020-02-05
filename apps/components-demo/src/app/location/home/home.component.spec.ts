@@ -16,7 +16,7 @@ describe('HomeComponent', () => {
         MatTabsModule
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
