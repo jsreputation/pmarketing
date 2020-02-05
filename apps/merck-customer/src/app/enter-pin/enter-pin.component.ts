@@ -102,7 +102,7 @@ export class EnterPinComponent implements OnInit, PageAppearence {
           this.notificationService.addSnack('Resend Otp request sent');
         },
         err => {
-          console.error('ResendOTP: ' + err);
+          console.error(`ResendOTP: ${  err}`);
           this.notificationService.addSnack(err.error.message);
         });
     }

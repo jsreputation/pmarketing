@@ -164,7 +164,7 @@ export class V4VouchersService implements IVoucherService {
       );
   }
 
-  get vouchersUrl(): string {
+  private get vouchersUrl(): string {
     return `${this.config.apiHost}/v4/vouchers?redeemed_within=-1&expired_within=-1`;
   }
 

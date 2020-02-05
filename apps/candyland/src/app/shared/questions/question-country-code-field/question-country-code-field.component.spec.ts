@@ -27,7 +27,7 @@ describe('QuestionCountryCodeFieldComponent', () => {
         }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

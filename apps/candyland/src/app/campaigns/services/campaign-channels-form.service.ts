@@ -252,7 +252,7 @@ export class CampaignChannelsFormService {
           formGroup.patchValue(item);
           (form.get(key) as FormArray).push(formGroup);
         });
-          } else {
+      } else {
         form.patchValue({[key]: value[key]}, {onlySelf: false, emitEvent: false});
       }
     });

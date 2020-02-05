@@ -32,22 +32,22 @@ export class MockRewardsServices {
 
   public getreward(): Observable<OptionConfig[]> {
     return of(
-    [{ title: 'REWARD_TYPE_OPTIONS.FREE',
-      value: 'Free'
-    }]
+      [{ title: 'REWARD_TYPE_OPTIONS.FREE',
+        value: 'Free'
+      }]
     );
   }
 
   public getReward(id: string): Observable<IRewardEntity> {
     return of({
       id,
-    image: 'string;',
-    name: 'string;',
-    type: 'string;',
-    rewardType: 'string;',
-    current: 1,
-    total: 2,
-    category: 'string;',
+      image: 'string;',
+      name: 'string;',
+      type: 'string;',
+      rewardType: 'string;',
+      current: 1,
+      total: 2,
+      category: 'string;',
       tags: []
     });
   }
@@ -55,17 +55,17 @@ export class MockRewardsServices {
   public getRewardToForm(id: string): Observable<IRewardEntityForm> {
     return of({
       id,
-    name: 'string',
-    rewardInfo: {
-      image: 'string',
-      rewardType: 'string',
-      category: 'string',
-      redemptionType: WRedemptionType.barCode,
-      cost: 3,
-      description: 'string',
-      termsAndCondition: 'string',
-      merchantId: '2'
-    }});
+      name: 'string',
+      rewardInfo: {
+        image: 'string',
+        rewardType: 'string',
+        category: 'string',
+        redemptionType: WRedemptionType.barCode,
+        cost: 3,
+        description: 'string',
+        termsAndCondition: 'string',
+        merchantId: '2'
+      }});
   }
 
   public createReward(data: IRewardEntityForm, loyalties?: ILoyaltyFormGroup[]): Observable<IJsonApiItemPayload<IWRewardEntityAttributes>> {
@@ -78,7 +78,7 @@ export class MockRewardsServices {
     return of(null);
   }
   public updateReward(id: string, data: IRewardEntityForm, loyalties?: ILoyaltyFormGroup[]):
-    Observable<IJsonApiItemPayload<IWRewardEntityAttributes>> {
+  Observable<IJsonApiItemPayload<IWRewardEntityAttributes>> {
     console.log('data', data, id, loyalties);
     return of(null);
   }
@@ -93,15 +93,13 @@ export class MockRewardsServices {
     return of(null);
   }
 
-  public createRewardTier(tier: ILoyaltyTiersFormGroup | IBasicTier, id: string)
-    : Observable<IJsonApiItem<IWTierRewardCostsAttributes>> {
+  public createRewardTier(tier: ILoyaltyTiersFormGroup | IBasicTier, id: string): Observable<IJsonApiItem<IWTierRewardCostsAttributes>> {
     console.log('data', tier, id);
     return of(null);
   }
 
-  public patchRewardTier(tier: ILoyaltyTiersFormGroup, id: string)
-    : Observable<IJsonApiItem<IWTierRewardCostsAttributes>> {
-       console.log('data', tier, id);
+  public patchRewardTier(tier: ILoyaltyTiersFormGroup, id: string): Observable<IJsonApiItem<IWTierRewardCostsAttributes>> {
+    console.log('data', tier, id);
     return of(null);
   }
 

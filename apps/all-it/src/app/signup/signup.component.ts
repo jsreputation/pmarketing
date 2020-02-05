@@ -32,7 +32,7 @@ export class SignupComponent {
       this.authService.getAppToken().subscribe(() => {
         this.appAccessTokenFetched = true;
       }, (err) => {
-        console.error('Error' + err);
+        console.error(`Error${  err}`);
       });
     }
   }
@@ -90,17 +90,17 @@ export class SignupComponent {
     };
 
     this.authService.signup(signUpData)
-    .subscribe(
-      (data: IProfile | null) => {
-        if (!data) {
-          return;
-        }
+      .subscribe(
+        (data: IProfile | null) => {
+          if (!data) {
+            return;
+          }
 
-        this.router.navigateByUrl('enter-pin/register', { state: { mobileNo: codeAndMobile } });
-      },
-      err => {
-        this.notificationService.addSnack(err.error.message);
-      });
+          this.router.navigateByUrl('enter-pin/register', { state: { mobileNo: codeAndMobile } });
+        },
+        err => {
+          this.notificationService.addSnack(err.error.message);
+        });
   }
 
   public goToLogin(): void {

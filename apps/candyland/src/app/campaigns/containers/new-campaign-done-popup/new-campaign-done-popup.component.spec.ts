@@ -14,18 +14,18 @@ describe('NewCampaignDonePopupComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        imports: [
-          MatDialogModule,
-          TranslateModule.forRoot()
-        ],
-        providers: [
-          {provide: MessageService, useValue: messageServiceStub},
-          {provide: MatDialogRef, useValue: {}},
-          {provide: MAT_DIALOG_DATA, useValue: []}
-        ],
-        declarations: [NewCampaignDonePopupComponent],
-        schemas: [NO_ERRORS_SCHEMA]
-      })
+      imports: [
+        MatDialogModule,
+        TranslateModule.forRoot()
+      ],
+      providers: [
+        {provide: MessageService, useValue: messageServiceStub},
+        {provide: MatDialogRef, useValue: {}},
+        {provide: MAT_DIALOG_DATA, useValue: []}
+      ],
+      declarations: [NewCampaignDonePopupComponent],
+      schemas: [NO_ERRORS_SCHEMA]
+    })
       .compileComponents();
   }));
 

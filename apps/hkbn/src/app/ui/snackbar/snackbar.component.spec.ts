@@ -26,11 +26,11 @@ describe('SnackbarComponent', () => {
           }
         }
       },
-        {
-          provide: MAT_SNACK_BAR_DATA, useValue: {
-            message: 'test'
-          }
-        }],
+      {
+        provide: MAT_SNACK_BAR_DATA, useValue: {
+          message: 'test'
+        }
+      }],
       declarations: [SnackbarComponent]
     })
       .compileComponents();

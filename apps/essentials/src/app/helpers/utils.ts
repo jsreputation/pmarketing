@@ -5,41 +5,39 @@ import _isEmpty from 'lodash.isempty';
 // tslint:disable
 export default class Utils {
 
-  static convertArrToObj(arr: any, propKey: string): { [key: string]: any } {
+  public static convertArrToObj(arr: any, propKey: string): { [key: string]: any } {
     return arr.reduce((map, obj) => {
       map[obj[propKey]] = obj;
       return map;
     }, {});
   }
 
-  static convertObjToArr(obj: any): any[] {
-    return Object.keys(obj).map((key) => {
-      return {name: key, ...obj[key]};
-    });
+  public static convertObjToArr(obj: any): any[] {
+    return Object.keys(obj).map((key) => ({ name: key, ...obj[key] }));
   }
 
-  static replaceAt(array: any[], index: number, value: any): any[] {
+  public static replaceAt(array: any[], index: number, value: any): any[] {
     const ret = array.slice(0);
     ret[index] = value;
     return ret;
   }
 
-  static updateAtArray<T = any>(array: T[], current: T, updated: T): T[] {
+  public static updateAtArray<T = any>(array: T[], current: T, updated: T): T[] {
     const index = array.findIndex(item => Utils.isEqual(item, current));
     return Utils.replaceAt(array, index, updated);
   }
 
-  static filterUniq(arr: any[]): any[] {
+  public static filterUniq(arr: any[]): any[] {
     return arr.filter((item, pos, array) => array.indexOf(item) === pos);
   }
 
-  static filterObj(obj: object, predicate): object {
+  public static filterObj(obj: object, predicate): object {
     return Object.keys(obj)
       .filter(key => predicate(obj[key]))
       .reduce((res, key) => (res[key] = obj[key], res), {});
   }
 
-  static uniqValuesMap(arr: any[], field: string | null = null): { [value: string]: number } {
+  public static uniqValuesMap(arr: any[], field: string | null = null): { [value: string]: number } {
     return arr.reduce((acc, item) => {
       const value = field ? item[field] : item;
       acc[value] = acc[value] === undefined ? 1 : acc[value] += 1;
@@ -47,7 +45,7 @@ export default class Utils {
     }, {});
   }
 
-  static nestedObjectAssign(target, ...sources) {
+  public static nestedObjectAssign(target, ...sources) {
     if (!sources.length) {
       return target;
     }
@@ -57,18 +55,18 @@ export default class Utils {
       for (const key in source) {
         if (this.isObject(source[key])) {
           if (!target[key]) {
-            Object.assign(target, {[key]: {}});
+            Object.assign(target, { [key]: {} });
           }
 
           this.nestedObjectAssign(target[key], source[key]);
         } else if (this.isArray(source[key])) {
           if (!target[key]) {
-            Object.assign(target, {[key]: []});
+            Object.assign(target, { [key]: [] });
           }
 
           target[key] = target[key].concat(source[key]);
         } else {
-          Object.assign(target, {[key]: source[key]});
+          Object.assign(target, { [key]: source[key] });
         }
       }
     }
@@ -76,7 +74,7 @@ export default class Utils {
     return this.nestedObjectAssign(target, ...sources);
   }
 
-  static dcopy(target) {
+  public static dcopy(target) {
     if (/number|string|boolean/.test(typeof target)) {
       return target;
     }
@@ -89,6 +87,7 @@ export default class Utils {
     return copy;
 
     function walk(target, copy) {
+      /* eslint-disable guard-for-in */
       for (const key in target) {
         const obj = target[key];
         if (obj instanceof Date) {
@@ -113,7 +112,7 @@ export default class Utils {
     }
   }
 
-  static add(copy, key, value) {
+  public static add(copy, key, value) {
     if (copy instanceof Array) {
       copy.push(value);
       return copy[copy.length - 1];
@@ -123,23 +122,23 @@ export default class Utils {
     }
   }
 
-  static isObject(item): boolean {
+  public static isObject(item): boolean {
     return item && typeof item === 'object' && !Array.isArray(item);
   }
 
-  static isArray(item): boolean {
+  public static isArray(item): boolean {
     return item && Array.isArray(item);
   }
 
-  static isFunction(fun): boolean {
+  public static isFunction(fun): boolean {
     return fun && {}.toString.call(fun) === '[object Function]';
   }
 
-  static isEmptyObject(object): boolean {
+  public static isEmptyObject(object): boolean {
     return this.isObject(object) && _isEmpty(object);
   }
 
-  static createMapIncludes(arr: any, propKey: string, fieldType: string): { [key: string]: any } {
+  public static createMapIncludes(arr: any, propKey: string, fieldType: string): { [key: string]: any } {
     return arr.reduce((map, obj) => {
       if (obj.type === fieldType) {
         map[obj[propKey]] = obj;
@@ -148,7 +147,7 @@ export default class Utils {
     }, {});
   }
 
-  static getChanges(changedObject, base) {
+  public static getChanges(changedObject, base) {
     return _transform(changedObject, (result, value, key) => {
       if (!_isEqual(value, base[key])) {
         result[key] = value;
@@ -156,11 +155,11 @@ export default class Utils {
     });
   }
 
-  static isEqual(value: any, other: any): boolean {
+  public static isEqual(value: any, other: any): boolean {
     return _isEqual(value, other);
   }
 
-  static getFormData(data): FormData {
+  public static getFormData(data): FormData {
     const formData: FormData = new FormData();
     Object.keys(data).forEach(key => {
       const value = data[key];
@@ -169,7 +168,7 @@ export default class Utils {
     return formData;
   }
 
-  static getFiles<T>(model: T): Partial<T> {
+  public static getFiles<T>(model: T): Partial<T> {
     const partialModel: Partial<T> = {};
     Object.keys(model).forEach((key: string) => {
       if (model[key] && model[key].hasOwnProperty('image')) {
@@ -180,11 +179,11 @@ export default class Utils {
     return partialModel;
   }
 
-  static transformMailTo(email: string): string | null {
+  public static transformMailTo(email: string): string | null {
     return email ? `mailto:${email}` : null;
   }
 
-  static transformTelTo(tel: string): string | null {
+  public static transformTelTo(tel: string): string | null {
     return tel ? `tel:${tel}` : null;
   }
 }

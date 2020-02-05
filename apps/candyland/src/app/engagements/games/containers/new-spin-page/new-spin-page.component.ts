@@ -133,8 +133,8 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
   private createSpinForm(): void {
     this.formSpin = this.fb.group({
       name: ['Spin Wheel Template', [Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(60)]
+        Validators.minLength(1),
+        Validators.maxLength(60)]
       ],
       headlineMessage: ['Spin the Wheel', [
         Validators.required,
@@ -178,7 +178,7 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
       const blue = sin_to_hex(i, Math.PI * 2 / 3); // 120 deg
       const green = sin_to_hex(i, 2 * Math.PI * 2 / 3); // 240 deg
 
-      rainbow[i] = '#' + red + green + blue;
+      rainbow[i] = `#${  red  }${green  }${blue}`;
     }
 
     function sin_to_hex(i: number, phase: number): string {
@@ -186,7 +186,7 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
       const int = Math.floor(sin * 127) + 128;
       const hex = int.toString(16);
 
-      return hex.length === 1 ? '0' + hex : hex;
+      return hex.length === 1 ? `0${  hex}` : hex;
     }
     return rainbow;
   }
@@ -245,31 +245,31 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
   private subscribeSpinSlotChanges(): void {
     combineLatest(
       [this.formSpin.get(ControlsName.rewardSlots).valueChanges, this.formSpin.get(ControlsName.rewardIcon).valueChanges]).pipe(
-        takeUntil(this.destroy$)
-      ).subscribe(([slots, _]) => {
-        if (!slots) {
-          return;
-        }
-        this.rewardSlotNumberData = slots.map(
-          (item: number) => ({ rewardPosition: item })
-        );
-        const tempISlices = [];
+      takeUntil(this.destroy$)
+    ).subscribe(([slots, _]) => {
+      if (!slots) {
+        return;
+      }
+      this.rewardSlotNumberData = slots.map(
+        (item: number) => ({ rewardPosition: item })
+      );
+      const tempISlices = [];
 
-        if (this.iSlices.length) {
-          for (let i = 1; i <= this.numberOfWedges.value; i++) {
-            const probRewardProp = this.rewardSlotNumberData.map(slotData => slotData.rewardPosition)
-              .includes(i) ?
-              {backgroundImage: ImageControlValue.getImgLink(this.rewardIcon)} : {};
-            tempISlices.push({
-              ...probRewardProp,
-              id: `${i}`,
-              backgroundColor: this.colorCtrls.get(`${i}`).value
-              // label: `${i}win`, // hard code for testing
-            });
-          }
+      if (this.iSlices.length) {
+        for (let i = 1; i <= this.numberOfWedges.value; i++) {
+          const probRewardProp = this.rewardSlotNumberData.map(slotData => slotData.rewardPosition)
+            .includes(i) ?
+            {backgroundImage: ImageControlValue.getImgLink(this.rewardIcon)} : {};
+          tempISlices.push({
+            ...probRewardProp,
+            id: `${i}`,
+            backgroundColor: this.colorCtrls.get(`${i}`).value
+            // label: `${i}win`, // hard code for testing
+          });
         }
-        this.iSlices = tempISlices;
-      });
+      }
+      this.iSlices = tempISlices;
+    });
   }
 
   /*** END subscription to form value Changes ***/

@@ -37,7 +37,7 @@ describe('MultiUploadDialogComponent', () => {
         }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

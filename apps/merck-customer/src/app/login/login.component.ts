@@ -90,7 +90,7 @@ export class LoginComponent implements OnInit, PageAppearence {
       this.authService.getAppToken().subscribe(() => {
         this.appAccessTokenFetched = true;
       }, (err) => {
-        console.error('Error' + err);
+        console.error(`Error${  err}`);
       });
     }
 

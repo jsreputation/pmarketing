@@ -56,7 +56,7 @@ describe('VouchersComponent', () => {
 
   it('should on ngOnInit', fakeAsync(() => {
     const voucherService: IVoucherService = fixture.debugElement.injector.get<IVoucherService>
-      (IVoucherService as Type<IVoucherService>);
+    (IVoucherService as Type<IVoucherService>);
 
     const voucherServiceSpy = spyOn(voucherService, 'getFromPage').and.returnValue(of(vouchers));
     component.ngOnInit();

@@ -13,7 +13,7 @@ describe('NoStampsToNextRewardFormGroupComponent', () => {
       declarations: [ NoStampsToNextRewardFormGroupComponent ],
       schemas: [NO_ERRORS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

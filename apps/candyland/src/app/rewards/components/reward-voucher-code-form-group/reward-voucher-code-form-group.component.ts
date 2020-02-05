@@ -23,7 +23,7 @@ export class RewardVoucherCodeFormGroupComponent {
 
   public get codePlaceholder(): string {
     const type = this.formGroup.get('uniqueGeneratedCode.codeFormat').value || 'alphanumeric';
-    return 'Prefix (eg.' + this.codeFormatConfig[type].eg + ')';
+    return `Prefix (eg.${  this.codeFormatConfig[type].eg  })`;
   }
 
   public get redemptionType(): WRedemptionType | null {

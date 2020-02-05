@@ -41,7 +41,7 @@ export class TestAuthService {
           time_zone: '5555555',
           username: 'admin'
         }
-    }});
+      }});
   }
 
   public logout(): void {}

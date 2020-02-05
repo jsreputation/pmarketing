@@ -55,7 +55,7 @@ describe('ForgotPasswordComponent', () => {
         }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -31,7 +31,7 @@ export class MockInstantRewardsService {
 
   public getInstantReward(id: string): Observable<IRewardForm> {
     return of({
-      name: 'data.attributes.title' + id,
+      name: `data.attributes.title${  id}`,
       headlineMessage: 'data.attributes.display_properties.title',
       subHeadlineMessage: 'data.attributes.display_properties.sub_title',
       banner: 'data.attributes.display_properties.banner',

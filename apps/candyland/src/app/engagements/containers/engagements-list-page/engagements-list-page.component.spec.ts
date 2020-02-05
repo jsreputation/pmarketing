@@ -17,25 +17,25 @@ describe('EngagementsListPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        imports: [
-          TableFiltersModule,
-          HttpClientTestingModule,
-          RouterTestingModule,
-          MatDialogModule,
-          TranslateModule.forRoot()
-        ],
-        providers: [
-          {
-            provide: MatDialogRef, useValue: {
-              close: () => {
-              }
+      imports: [
+        TableFiltersModule,
+        HttpClientTestingModule,
+        RouterTestingModule,
+        MatDialogModule,
+        TranslateModule.forRoot()
+      ],
+      providers: [
+        {
+          provide: MatDialogRef, useValue: {
+            close: () => {
             }
-          },
-          { provide: EngagementsService, useClass: MockEngagementsService }
-        ],
-        declarations: [EngagementsListPageComponent],
-        schemas: [NO_ERRORS_SCHEMA]
-      })
+          }
+        },
+        { provide: EngagementsService, useClass: MockEngagementsService }
+      ],
+      declarations: [EngagementsListPageComponent],
+      schemas: [NO_ERRORS_SCHEMA]
+    })
       .compileComponents();
   }));
 

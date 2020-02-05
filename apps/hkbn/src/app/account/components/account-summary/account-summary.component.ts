@@ -45,8 +45,8 @@ export class AccountSummaryComponent implements OnChanges, OnInit {
   public agreement(event: MatSlideToggleChange): void {
     this.profileService.setCustomProperties({ subscribe_notification: event.checked }).subscribe(() => {
     },
-      (err) => {
-        this.ntfs.addSnack(err);
-      });
+    (err) => {
+      this.ntfs.addSnack(err);
+    });
   }
 }

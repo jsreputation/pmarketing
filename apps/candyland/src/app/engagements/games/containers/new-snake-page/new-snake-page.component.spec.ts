@@ -58,7 +58,7 @@ describe('NewSnakePageComponent', () => {
         { provide: TenantStoreService, useClass: TenantMockStore }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

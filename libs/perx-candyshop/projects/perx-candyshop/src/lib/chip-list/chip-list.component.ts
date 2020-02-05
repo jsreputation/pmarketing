@@ -40,8 +40,10 @@ export class ChipListComponent extends CsFormFieldControl<string[]> implements O
     return !this.value || (this.value as []).length === 0;
   }
 
-  constructor(@Optional() @Self() public ngControl: NgControl,
-              private cd: ChangeDetectorRef) {
+  constructor(
+    @Optional() @Self() public ngControl: NgControl,
+    private cd: ChangeDetectorRef
+  ) {
     super('cs-chip-list', ngControl);
     if (this.ngControl) {
       this.ngControl.valueAccessor = this;

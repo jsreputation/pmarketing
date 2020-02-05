@@ -82,7 +82,7 @@ export class OrderComponent implements OnInit {
     // 0 padded date
     const date = new Date();
     // @ts-ignore
-    const dateStamp = ('0' + date.getDate()).slice(-2) + ('0' + (date.getMonth() + 1)).slice(-2) + date.getFullYear().toString();
+    const dateStamp = (`0${  date.getDate()}`).slice(-2) + (`0${  date.getMonth() + 1}`).slice(-2) + date.getFullYear().toString();
 
     this.merchantAdminService.getMerchantProfile()
       .pipe(
@@ -98,7 +98,7 @@ export class OrderComponent implements OnInit {
                 for (let i = 0; i < product.quantity; i++) {
                   partDataRequests.push(this.merchantAdminService.createTransaction(
                     this.payload.id, merchantUsername, product.price, product.currency,
-                    'purchase', dateStamp + '-' + this.payload.id, merchantName, product.name));
+                    'purchase', `${dateStamp  }-${  this.payload.id}`, merchantName, product.name));
                 }
               }
               return forkJoin(partDataRequests);

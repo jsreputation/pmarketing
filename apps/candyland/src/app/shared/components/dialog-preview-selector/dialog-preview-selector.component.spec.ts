@@ -23,7 +23,7 @@ describe('DialogPreviewSelectorComponent', () => {
         }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

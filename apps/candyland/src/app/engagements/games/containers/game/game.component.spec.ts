@@ -16,7 +16,7 @@ describe('GameComponent', () => {
       ],
       declarations: [ GameComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

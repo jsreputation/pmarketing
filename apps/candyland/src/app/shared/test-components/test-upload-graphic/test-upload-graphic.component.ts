@@ -32,7 +32,7 @@ export class TestUploadGraphicComponent implements OnInit {
   };
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
   public registerOnChange(fn: any): void {
     this.onChange = fn;

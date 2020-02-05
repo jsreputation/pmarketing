@@ -10,7 +10,7 @@ export class RangeDatePickerFilterComponent {
   @Input() public control: FormControl = new FormControl();
   public disabledState: boolean = false;
 
-  @Input() set disabled(value: boolean) {
+  @Input() public set disabled(value: boolean) {
     this.setDisabledState(value);
   }
 

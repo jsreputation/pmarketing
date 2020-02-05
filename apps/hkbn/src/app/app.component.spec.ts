@@ -14,11 +14,11 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Type } from '@angular/core';
 
 class MockNotificationService {
-  get $popup(): Observable<any> {
+  public get $popup(): Observable<any> {
     return of(true);
   }
 
-  get $snack(): Observable<any> {
+  public get $snack(): Observable<any> {
     return of(true);
   }
 }

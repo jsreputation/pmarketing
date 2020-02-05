@@ -20,7 +20,7 @@ describe('HeaderComponent', () => {
         { provide: Location, useValue: locationStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

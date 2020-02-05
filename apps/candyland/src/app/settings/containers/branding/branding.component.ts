@@ -29,9 +29,11 @@ export class BrandingComponent implements OnInit, OnDestroy {
   public tabsLabels: string[];
   private destroy$: Subject<void> = new Subject<void>();
 
-  constructor(private settingsService: SettingsService,
-              private translate: TranslateService,
-              private tenantService: TenantService) { }
+  constructor(
+    private settingsService: SettingsService,
+    private translate: TranslateService,
+    private tenantService: TenantService
+  ) { }
 
   public get headerNavbarColor(): AbstractControl {
     return this.formBranding.get('headerNavbarColor');
@@ -138,7 +140,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
         })),
         takeUntil(this.destroy$),
       )
-      .subscribe(() => {});
+      .subscribe(() => { });
   }
 
   private updateTenant(): Observable<ITenant> {

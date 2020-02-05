@@ -20,7 +20,7 @@ describe('GameMobilePreviewComponent', () => {
       declarations: [ SettingsMobilePreviewComponent ],
       providers: [{ provide: UploadFileService, useClass: MockUploadFileService }]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

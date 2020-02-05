@@ -46,7 +46,7 @@ describe('CongratsComponent', () => {
         { provide: Router, useValue: routerStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

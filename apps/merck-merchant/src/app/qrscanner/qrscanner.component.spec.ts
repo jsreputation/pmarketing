@@ -28,7 +28,7 @@ describe('QrscannerComponent', () => {
 
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

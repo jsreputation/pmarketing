@@ -60,9 +60,9 @@ export class HomeComponent implements OnInit, PageAppearence {
       (msg) => this.titleFn = (profile) => {
         let returnString = msg;
         if (profile && profile.firstName && profile.firstName !== '') {
-          returnString =  returnString + ', ' + profile.firstName;
+          returnString =  `${returnString  }, ${  profile.firstName}`;
         } else if (profile && profile.lastName && profile.lastName !== '') {
-          returnString =  returnString + ', ' + profile.lastName;
+          returnString =  `${returnString  }, ${  profile.lastName}`;
         }
         return returnString;
       }
@@ -77,10 +77,8 @@ export class HomeComponent implements OnInit, PageAppearence {
   private getRewards(): void {
     this.getTags().pipe(flatMap((tags: ITabConfigExtended[]) => {
       this.tabs.next(tags);
-      return forkJoin(tags.map((tab) => {
-        return this.rewardsService.getAllRewards(undefined, [tab.tabName])
-          .pipe(map((result: IReward[]) => ({ key: tab.tabName, value: result })));
-      }));
+      return forkJoin(tags.map((tab) => this.rewardsService.getAllRewards(undefined, [tab.tabName])
+        .pipe(map((result: IReward[]) => ({ key: tab.tabName, value: result })))));
     })).subscribe((result) => {
       result.forEach((rewards) => {
         const reward = this.staticTab.find((elem) => rewards.key === elem.tabName);
