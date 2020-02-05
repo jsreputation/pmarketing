@@ -318,7 +318,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   private filterRewardTierList(rewardTierList: ITierRewardCost[]): { [key: string]: ITierRewardCost } {
     const result: { [key: string]: ITierRewardCost } = {};
     rewardTierList.forEach((rewardTier) => {
-      if (`${  this.id}` === `${  rewardTier.rewardId}`) {
+      if (`${this.id}` === `${rewardTier.rewardId}`) {
         const prefix = rewardTier.tierType === this.newRewardFormService.tierTypes.basicType ? 'basic' : 'custom';
         result[prefix + rewardTier.tierId] = rewardTier;
       }
@@ -331,13 +331,13 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     loyalties.data.forEach((loyalty: ILoyaltyForm) => {
       const loyaltyFormGroup = this.newRewardFormService.getLoyaltyFormGroup();
       let programStatus;
-      const basicTier = rewardTierMap[`basic${  loyalty.basicTierId}`];
+      const basicTier = rewardTierMap[`basic${loyalty.basicTierId}`];
       // handler of custom tears
       this.setCustomTiers(loyalty, loyaltyFormGroup);
 
       if (basicTier && basicTier.tierType === this.newRewardFormService.tierTypes.basicType) {
         programStatus = true;
-        basicTier.statusTiers = true;
+        basicTier['statusTiers'] = true;
         this.newRewardFormService.setDefaultRewardTiers(basicTier);
       }
       loyaltyFormGroup.patchValue({
@@ -365,11 +365,11 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
       if (rewardTierMap) {
         let hasSelectedCustomTier = false;
         (loyaltyGroup.get('tiers') as FormArray).controls.forEach((tier) => {
-          const rewardTier = rewardTierMap[`custom${  tier.value.tierId}`];
+          const rewardTier = rewardTierMap[`custom${tier.value.tierId}`];
           if (rewardTier && rewardTier.tierType === this.newRewardFormService.tierTypes.customType) {
             // add to object for know what to do next remove or update
             hasSelectedCustomTier = true;
-            rewardTier.statusTiers = true;
+            rewardTier['statusTiers'] = true;
             this.newRewardFormService.setDefaultRewardTiers(rewardTier);
             tier.patchValue({ ...rewardTier });
           }

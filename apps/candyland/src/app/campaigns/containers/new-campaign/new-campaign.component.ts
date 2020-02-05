@@ -389,11 +389,9 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
         this.outcomesService.getOutcomes(paramsPO).pipe(catchError(() => of(null)))
       ).pipe(
         map(
-          ([campaign, outcomes]:
-          [ICampaign | null, IOutcome[] | null]): ICampaign => ({
-            ...campaign,
-            outcomes: this.outcomeToRewardCollection(outcomes)
-          }))
+          ([campaign, outcomes]: [ICampaign | null, IOutcome[] | null]): ICampaign =>
+            ({ ...campaign, outcomes: this.outcomeToRewardCollection(outcomes) })
+        )
       ).subscribe(
         campaign => {
           this.campaign = Object.assign({}, campaign);
@@ -454,7 +452,7 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
       if (!notification.webLink) {
         delete webLink.notification.webNotification.webLinkOptions;
-        webLink.notification.webNotification.status = 'remove';
+        webLink.notification.webNotification['status'] = 'remove';
       }
       this.store.updateCampaign(webLink);
     }
