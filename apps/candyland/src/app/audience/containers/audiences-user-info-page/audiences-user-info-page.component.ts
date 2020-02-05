@@ -125,9 +125,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
     dialogRef.afterClosed().pipe(takeUntil(this.destroy$))
       .pipe(
         filter(Boolean),
-        switchMap((entity: string) => {
-          return this.vouchersService.updateVoucherExpiry(item.id, entity);
-        })
+        switchMap((entity: string) => this.vouchersService.updateVoucherExpiry(item.id, entity))
       )
       .subscribe(
         () => {
@@ -245,9 +243,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
     dialogRef.afterClosed()
       .pipe(
         filter(Boolean),
-        switchMap((updatedCard: IAudiencesLoyaltyCard) => {
-          return this.loyaltyCardService.updateLoyaltyCard(updatedCard.id, updatedCard);
-        }),
+        switchMap((updatedCard: IAudiencesLoyaltyCard) => this.loyaltyCardService.updateLoyaltyCard(updatedCard.id, updatedCard)),
         takeUntil(this.destroy$)
       )
       .subscribe(
@@ -268,9 +264,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
     dialogRef.afterClosed()
       .pipe(
         filter(Boolean),
-        switchMap((updatedCard: IAudiencesLoyaltyCard) => {
-          return this.loyaltyCardService.updateLoyaltyCard(updatedCard.id, updatedCard);
-        }),
+        switchMap((updatedCard: IAudiencesLoyaltyCard) => this.loyaltyCardService.updateLoyaltyCard(updatedCard.id, updatedCard)),
         takeUntil(this.destroy$)
       )
       .subscribe(

@@ -35,7 +35,7 @@ export class UploadFileComponent extends CsFormFieldControl<any>
   public message: string | null;
   public loading: boolean = false;
 
-  @ViewChild('fileInput', {static: false}) public fileInput: HTMLInputElement;
+  @ViewChild('fileInput', { static: false }) public fileInput: HTMLInputElement;
   @Input() public requestOptions: IHttpParamsOptions = {};
   @Input() public accept: string = 'text/csv';
   @Input() public showInfo: boolean = true;

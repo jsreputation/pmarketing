@@ -16,7 +16,7 @@ describe('CategoriesComponent', () => {
         MatCardModule
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

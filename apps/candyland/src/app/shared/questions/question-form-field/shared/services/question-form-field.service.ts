@@ -134,7 +134,7 @@ export class QuestionFormFieldService {
       payload: this.fb.group({
         type: [type, [Validators.required]],
         // tslint:disable
-        'default_country_code': [null, [Validators.minLength(2), Validators.maxLength(4)]]
+        default_country_code: [null, [Validators.minLength(2), Validators.maxLength(4)]]
       })
     });
   }
@@ -180,8 +180,8 @@ export class QuestionFormFieldService {
       id: [this.idCounter],
       selectedType: [type, [Validators.required]],
       question: ['', [Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(128)]],
+        Validators.minLength(1),
+        Validators.maxLength(128)]],
       required: [true, []],
       description: [{ value: '', disabled: true }, [Validators.maxLength(this.descriptionFieldMaxLength)]],
       payload: this.fb.group({

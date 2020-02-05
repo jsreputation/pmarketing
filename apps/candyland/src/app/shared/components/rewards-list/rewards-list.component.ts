@@ -24,7 +24,7 @@ export class RewardsListComponent implements AfterViewInit {
   @Input() public selectable: boolean = false;
   @ViewChild(MatSort, { static: false }) private sort: MatSort;
   @Output() public itemAction: EventEmitter<{ action: RewardsTableMenuActions, data: IRewardEntity }>
-    = new EventEmitter<{ action: RewardsTableMenuActions, data: IRewardEntity }>();
+  = new EventEmitter<{ action: RewardsTableMenuActions, data: IRewardEntity }>();
   @Output() public selectReward: EventEmitter<IRewardEntity> = new EventEmitter<IRewardEntity>();
   @Output() public clickDetailReward: EventEmitter<IRewardEntity> = new EventEmitter<IRewardEntity>();
   public selected: IRewardEntity;

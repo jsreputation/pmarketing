@@ -65,7 +65,7 @@ describe('NewCampaignNotificationsComponent', () => {
         { provide: LoyaltyCustomTierService, useClass: MockLoyaltyCustomTierService },
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

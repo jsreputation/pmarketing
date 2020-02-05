@@ -39,10 +39,10 @@ describe('LoginFormComponent', () => {
           provide: AuthService,
           useClass: TestAuthService
         }
-       ],
+      ],
       declarations: [ LoginFormComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -52,6 +52,6 @@ describe('LoginFormComponent', () => {
   });
 
   it('should create', () => {
-   expect(component).toBeTruthy();
+    expect(component).toBeTruthy();
   });
 });

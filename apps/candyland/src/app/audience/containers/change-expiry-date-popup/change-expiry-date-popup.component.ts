@@ -11,10 +11,11 @@ import { FormControl } from '@angular/forms';
 export class ChangeExpiryDatePopupComponent implements OnInit, DoCheck {
   public newDate: FormControl = new FormControl(null);
 
-  constructor(public dialogRef: MatDialogRef<ChangeExpiryDatePopupComponent>,
-              private cd: ChangeDetectorRef,
-              @Inject(MAT_DIALOG_DATA) public data: any) {
-  }
+  constructor(
+    public dialogRef: MatDialogRef<ChangeExpiryDatePopupComponent>,
+    private cd: ChangeDetectorRef,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) { }
 
   public close(): void {
     this.dialogRef.close(null);

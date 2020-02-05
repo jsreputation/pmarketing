@@ -13,13 +13,13 @@ export class MockCampaignService {
   public getMockData(): ICampaignTableData {
     return {
       id: 'test',
-    name: 'test',
-    status: 'test',
-    begin: new Date(),
-    end: new Date(),
-    audience: 'test',
-    goal: 'test',
-    engagementType: 'test',
+      name: 'test',
+      status: 'test',
+      begin: new Date(),
+      end: new Date(),
+      audience: 'test',
+      goal: 'test',
+      engagementType: 'test',
     };
   }
 

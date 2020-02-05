@@ -148,12 +148,12 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
   private initShakeTreeForm(): void {
     this.form = this.fb.group({
       name: ['Shake the Tree Template', [Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(60)]
+        Validators.minLength(1),
+        Validators.maxLength(60)]
       ],
       headlineMessage: ['Tap the Tree and Win!', [Validators.required,
-      Validators.minLength(5),
-      Validators.maxLength(60)]
+        Validators.minLength(5),
+        Validators.maxLength(60)]
       ],
       subHeadlineMessage: ['Tap the tree until you get a reward!', [
         Validators.minLength(5),

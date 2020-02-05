@@ -17,7 +17,7 @@ describe('PagesComponent', () => {
         MatDialogModule
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -32,7 +32,7 @@ export class TimePickerComponent extends CsFormFieldControl<string> implements O
   @Input() public format: 12 | 24 = 24;
   public timePickerControl: AbstractControl = new FormControl(null, []);
   public theme: NgxMaterialTimepickerTheme = customTimepickerTheme;
-  @ViewChild('timePicker', {static: false}) public timePicker: NgxMaterialTimepickerComponent;
+  @ViewChild('timePicker', { static: false }) public timePicker: NgxMaterialTimepickerComponent;
 
   private onChange: any = noop;
   private onTouched: any = noop;
@@ -79,7 +79,7 @@ export class TimePickerComponent extends CsFormFieldControl<string> implements O
 
   public writeValue(obj: DatepickerRangeValue<Date> | null): void {
     if (obj) {
-      this.timePickerControl.patchValue(obj, {emitEvent: false});
+      this.timePickerControl.patchValue(obj, { emitEvent: false });
     } else {
       this.timePickerControl.reset();
     }

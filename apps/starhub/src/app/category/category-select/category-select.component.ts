@@ -5,8 +5,8 @@ import { categories } from '../../category.mock';
 import { MAT_BOTTOM_SHEET_DATA } from '@angular/material';
 
 export interface CategoryBottomSheetClosedCallBack {
-    categorySelectedCallback(updatedValue: string): void;
-    getCurrentSelectedCategory(): string;
+  categorySelectedCallback(updatedValue: string): void;
+  getCurrentSelectedCategory(): string;
 }
 
 @Component({

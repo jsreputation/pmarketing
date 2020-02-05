@@ -78,18 +78,18 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
         });
       })
     ).subscribe(
-        () => {
-          // Send Login Call on successfull password reset
-          this.sendLoginCall(password);
-        },
-        err => {
-          console.error('ResetPassword: ' + err);
-          if (err instanceof HttpErrorResponse) {
-            this.notificationService.addSnack(err.statusText);
-          } else {
-            this.notificationService.addSnack(err.code);
-          }
-        });
+      () => {
+        // Send Login Call on successfull password reset
+        this.sendLoginCall(password);
+      },
+      err => {
+        console.error(`ResetPassword: ${  err}`);
+        if (err instanceof HttpErrorResponse) {
+          this.notificationService.addSnack(err.statusText);
+        } else {
+          this.notificationService.addSnack(err.code);
+        }
+      });
   }
 
   private sendLoginCall(password: string): void {

@@ -24,7 +24,7 @@ export class AudiencesHttpAdapter {
     const mainUserApiObject = {
       type: 'users',
       attributes: {
-        title: data.firstName + ' ' + data.lastName,
+        title: `${data.firstName  } ${  data.lastName}`,
         first_name: data.firstName,
         last_name: data.lastName,
         phone_number: data.phone,

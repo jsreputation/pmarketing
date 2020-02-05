@@ -12,11 +12,11 @@ describe('GlobalEarnRuleGroupComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        declarations: [GlobalEarnRuleGroupComponent],
-        providers: [{ provide: UploadFileService, useClass: MockUploadFileService }],
-        imports: [TranslateModule.forRoot()],
-        schemas: [NO_ERRORS_SCHEMA]
-      })
+      declarations: [GlobalEarnRuleGroupComponent],
+      providers: [{ provide: UploadFileService, useClass: MockUploadFileService }],
+      imports: [TranslateModule.forRoot()],
+      schemas: [NO_ERRORS_SCHEMA]
+    })
       .compileComponents();
   }));
 

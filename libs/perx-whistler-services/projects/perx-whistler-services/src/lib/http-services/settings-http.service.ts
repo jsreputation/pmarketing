@@ -51,12 +51,12 @@ export class SettingsHttpService {
   }
 
   public createCognitoEndpoint(data: IJsonApiPostItem<IWCognitoEndpointAttributes>):
-    Observable<IJsonApiItemPayload<IWCognitoEndpointAttributes>> {
+  Observable<IJsonApiItemPayload<IWCognitoEndpointAttributes>> {
     return this.http.post<IJsonApiItemPayload<IWCognitoEndpointAttributes>>(`${this.apiConfig.cognitoEndpoints}/`, data);
   }
 
   public updateCognitoEndpoint(id: string, data: IJsonApiPatchItem<IWCognitoEndpointAttributes>):
-    Observable<IJsonApiItemPayload<IWCognitoEndpointAttributes>> {
+  Observable<IJsonApiItemPayload<IWCognitoEndpointAttributes>> {
     return this.http.patch<IJsonApiItemPayload<IWCognitoEndpointAttributes>>(`${this.apiConfig.cognitoEndpoints}/${id}`, data);
   }
 

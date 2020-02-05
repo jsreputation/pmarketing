@@ -1,3 +1,3 @@
 export class EnvConfig {
-    public tokenBasePath?: string;
+  public tokenBasePath?: string;
 }

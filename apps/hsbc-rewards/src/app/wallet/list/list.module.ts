@@ -12,7 +12,7 @@ import { environment } from '../../../environments/environment';
 
 export class VoucherStubService {
   public getAll(): Observable<Voucher[]> {
-      return of(voucher);
+    return of(voucher);
   }
 }
 

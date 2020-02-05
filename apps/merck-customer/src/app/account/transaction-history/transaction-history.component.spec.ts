@@ -43,7 +43,7 @@ describe('TransactionHistoryComponent', () => {
         }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

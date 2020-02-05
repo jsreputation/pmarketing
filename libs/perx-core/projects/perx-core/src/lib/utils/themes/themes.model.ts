@@ -29,20 +29,20 @@ export interface IThemeV4ApiProperties {
 }
 /*eslint-enable camelcase */
 interface IThemeProperties {
-    '--font'?: string;
-    '--logo'?: string;
-    '--title'?: string;
-    '--accent'?: string;
-    '--primary'?: string;
-    '--button_text_color'?: string;
-    '--button_background_color'?: string;
-    '--header_color'?: string;
-    '--background': string;
-    '--font_color': string;
-    '--login_background_colour'?: string;
-    '--surface_colour'?: string;
-    '--popup_background_colour'?: string;
-    'stampCard'?: IStampCardTheme;
+  '--font'?: string;
+  '--logo'?: string;
+  '--title'?: string;
+  '--accent'?: string;
+  '--primary'?: string;
+  '--button_text_color'?: string;
+  '--button_background_color'?: string;
+  '--header_color'?: string;
+  '--background': string;
+  '--font_color': string;
+  '--login_background_colour'?: string;
+  '--surface_colour'?: string;
+  '--popup_background_colour'?: string;
+  'stampCard'?: IStampCardTheme;
 }
 
 interface IStampCardTheme {

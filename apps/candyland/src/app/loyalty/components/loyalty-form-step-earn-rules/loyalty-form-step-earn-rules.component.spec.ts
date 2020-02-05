@@ -15,23 +15,21 @@ describe('LoyaltyFormStepEarnRulesComponent', () => {
       declarations: [ LoyaltyFormStepEarnRulesComponent ],
       schemas: [ NO_ERRORS_SCHEMA ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LoyaltyFormStepEarnRulesComponent);
     component = fixture.componentInstance;
     component.customTierDataSource = new CustomDataSource({
-      getTableData: (params: any) => {
-        return of({
+      getTableData: (params: any) => of({
 
-          data: [(params)],
-          meta: {
-            page_count: 1,
-            record_count: 3
-          }
-        });
-      }
+        data: [(params)],
+        meta: {
+          page_count: 1,
+          record_count: 3
+        }
+      })
     });
     fixture.detectChanges();
   });

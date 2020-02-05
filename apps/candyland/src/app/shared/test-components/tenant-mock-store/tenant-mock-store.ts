@@ -1,7 +1,7 @@
 import { of } from 'rxjs';
 
 export class TenantMockStore {
-  get tenant(): any {
+  public get tenant(): any {
     return of({});
   }
   public get tenant$(): any {

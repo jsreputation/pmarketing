@@ -22,7 +22,7 @@ describe('PrivacyPolicyComponent', () => {
         { provide: Location, useValue: locationStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

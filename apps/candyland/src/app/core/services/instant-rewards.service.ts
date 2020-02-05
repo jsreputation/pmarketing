@@ -10,10 +10,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class InstantRewardsService {
-
-  constructor(private instantRewardsHttpService: InstantRewardsHttpService,
-              private http: HttpClient) {
-  }
+  constructor(private instantRewardsHttpService: InstantRewardsHttpService, private http: HttpClient) { }
 
   public getInstantRewardData(): Observable<IRewardDefaultValue> {
     return this.http.get<IRewardDefaultValue>('assets/actives/reward/reward-data.json');

@@ -59,7 +59,7 @@ describe('QuestionGroupFieldComponent', () => {
         }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

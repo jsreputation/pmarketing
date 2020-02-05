@@ -30,7 +30,7 @@ import Utils from '@cl-helpers/utils';
 export class DatePickerComponent implements OnInit, OnChanges, OnDestroy, ControlValueAccessor {
   @Input() public control: AbstractControl = new FormControl(null, []);
 
-  @Input() set value(obj: string) {
+  @Input() public set value(obj: string) {
     if (obj) {
       const newDate = new Date(obj);
       this.writeValue(newDate);
@@ -42,7 +42,7 @@ export class DatePickerComponent implements OnInit, OnChanges, OnDestroy, Contro
   @Input() public min: Date | null = null;
   public disabledState: boolean = false;
 
-  @Input() set disabled(value: boolean) {
+  @Input() public set disabled(value: boolean) {
     this.setDisabledState(value);
   }
 

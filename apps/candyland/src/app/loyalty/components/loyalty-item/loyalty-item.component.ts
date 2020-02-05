@@ -34,7 +34,7 @@ export class LoyaltyItemComponent {
 
   public navigateToReview(): void {
     if (this.linkable) {
-      this.router.navigate(['loyalty/review/' + this.data.id]);
+      this.router.navigate([`loyalty/review/${  this.data.id}`]);
     }
   }
 }

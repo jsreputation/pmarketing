@@ -10,7 +10,7 @@ describe('TestSelectGraphicWrapComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ TestSelectGraphicWrapComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

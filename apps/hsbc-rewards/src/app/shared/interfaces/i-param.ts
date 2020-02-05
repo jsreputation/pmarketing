@@ -1,3 +1,3 @@
 export interface IParam {
-    id: string;
+  id: string;
 }

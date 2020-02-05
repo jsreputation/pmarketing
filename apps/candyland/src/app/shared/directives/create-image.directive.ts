@@ -12,24 +12,23 @@ import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interfa
 })
 export class CreateImageDirective {
 
-  constructor(private element: ElementRef,
-              private uploadFileService: UploadFileService,
-              @Inject(WINDOW) private window: Window) {
-  }
+  constructor(
+    private element: ElementRef,
+    private uploadFileService: UploadFileService,
+    @Inject(WINDOW) private window: Window
+  ) { }
 
   public getPreviewUrl(): Observable<IUploadedFile> {
     this.setPosition();
     return this.downloadImage()
       .pipe(
-        switchMap((data: any) => {
-          return this.uploadFileService.uploadImage(data)
-            .pipe(
-              tap(() => {
-                this.hideShowScroll(false);
-                this.switchBodyClass(false);
-              })
-            );
-        }),
+        switchMap((data: any) => this.uploadFileService.uploadImage(data)
+          .pipe(
+            tap(() => {
+              this.hideShowScroll(false);
+              this.switchBodyClass(false);
+            })
+          )),
         catchError((error => {
           this.hideShowScroll(false);
           this.switchBodyClass(false);
@@ -47,7 +46,7 @@ export class CreateImageDirective {
   }
 
   public downloadImage(): Observable<Blob> {
-    const option: Partial<Options> = { useCORS: true, logging: true, allowTaint: true, removeContainer: false};
+    const option: Partial<Options> = { useCORS: true, logging: true, allowTaint: true, removeContainer: false };
     const element: HTMLElement = (this.element.nativeElement as HTMLElement);
     this.patchImages(element);
     const htmlCanvas: any = html2canvas;
@@ -58,7 +57,7 @@ export class CreateImageDirective {
   }
 
   private patchImages(el: ChildNode): void {
-    if (el instanceof  HTMLImageElement) {
+    if (el instanceof HTMLImageElement) {
       el.crossOrigin = 'Anonymous';
       el.src = el.src ? `${el.src}?v=${new Date().getTime()}` : '';
     }

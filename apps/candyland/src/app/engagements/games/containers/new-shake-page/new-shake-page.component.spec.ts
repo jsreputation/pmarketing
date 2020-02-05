@@ -96,15 +96,15 @@ describe('NewShakePageComponent', () => {
         },
         {provide: LocalStorageService, useValue: {}},
         { provide: WINDOW, useValue: {
-            scrollTo(a: any, b: any): any { return {a, b}; }
-          }
+          scrollTo(a: any, b: any): any { return {a, b}; }
+        }
         },
         { provide: TenantStoreService, useClass: TenantMockStore },
         { provide: UploadFileService, useClass: MockUploadFileService },
       ],
       schemas: [ NO_ERRORS_SCHEMA ],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -18,7 +18,7 @@ export class RedemptionComponent implements OnInit {
 
   public ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.voucher$ = this.vouchersService.get(params[`id`]);
+      this.voucher$ = this.vouchersService.get(params.id);
     });
   }
 

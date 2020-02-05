@@ -79,9 +79,9 @@ export class LoginComponent implements OnInit {
       this.appAccessTokenFetched = true;
     } else {
       this.authService.getAppToken().subscribe(() => {
-         this.appAccessTokenFetched = true;
+        this.appAccessTokenFetched = true;
       }, (err) => {
-        console.error('Error' + err);
+        console.error(`Error${err}`);
       });
     }
     this.configService.readAppConfig<IHsbcConfig>().pipe(

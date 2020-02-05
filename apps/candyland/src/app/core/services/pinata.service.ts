@@ -11,10 +11,7 @@ import { IPinataForm } from '@cl-core/models/games/pinata/pinate-form.interface'
   providedIn: 'root'
 })
 export class PinataService {
-
-  constructor(private pinataHttpService: PinataHttpService,
-              private http: HttpClient) {
-  }
+  constructor(private pinataHttpService: PinataHttpService, private http: HttpClient) { }
 
   public getPinataData(): Observable<IGameDefaultData> {
     return this.http.get<{

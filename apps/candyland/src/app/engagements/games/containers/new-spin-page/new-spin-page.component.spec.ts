@@ -62,8 +62,8 @@ describe('NewSpinPageComponent', () => {
         { provide: SpinService, useClass: MockSpinService },
         { provide: UploadFileService, useClass: MockUploadFileService },
         { provide: WINDOW, useValue: {
-            scrollTo(a: any, b: any): any { return {a, b}; }
-          }
+          scrollTo(a: any, b: any): any { return {a, b}; }
+        }
         }
       ],
       schemas: [ NO_ERRORS_SCHEMA ],
