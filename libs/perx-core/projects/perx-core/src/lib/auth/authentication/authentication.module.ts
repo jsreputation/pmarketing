@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {NgModule, Optional, SkipSelf} from '@angular/core';
 import {
   AuthModule,
   PROTECTED_FALLBACK_PAGE_URI,
@@ -62,4 +62,10 @@ export function FormsServiceFactory(config: Config, http: HttpClient): IFormsSer
   ]
 })
 export class AuthenticationModule {
+  constructor (@Optional() @SkipSelf() parentModule: AuthenticationModule) {
+    if (parentModule) {
+      throw new Error(
+        'AuthenticationModule is already loaded. Import it in the AppModule only');
+    }
+  }
 }
