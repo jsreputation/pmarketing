@@ -27,7 +27,7 @@ import {
   ITheme,
   ThemesService,
   LoyaltyService,
-  ILoyalty,
+  ILoyalty, SettingsService,
 } from '@perx/core';
 
 @Component({
@@ -51,14 +51,15 @@ export class AccountComponent implements OnInit {
     private translate: TranslateService,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private themesService: ThemesService
+    private themesService: ThemesService,
+    private settingsService: SettingsService,
   ) {
     this.preAuth = config.preAuth || false;
   }
 
   public ngOnInit(): void {
     this.theme = this.themesService.getThemeSetting();
-    this.configService.getAccountSettings()
+    this.settingsService.getAccountSettings()
       .pipe(
         map((settings: PagesObject) => settings.pages),
         tap((pages: AccountPageObject[]) => this.pages = pages),
