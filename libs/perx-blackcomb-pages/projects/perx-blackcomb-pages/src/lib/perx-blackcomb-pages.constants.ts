@@ -14,5 +14,5 @@ export const BACK_ARROW_URLS: string[] = [
   '/edit-profile',
   '/game',
   '/stamp',
-  '/catalog' // WIP page
+  '/catalog'
 ];
