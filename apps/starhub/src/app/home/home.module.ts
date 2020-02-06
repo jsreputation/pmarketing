@@ -19,6 +19,7 @@ import {
   LoyaltyModule,
   ConfigModule,
   CampaignModule,
+  OutcomeModule,
   PopupComponent,
 } from '@perx/core';
 
@@ -62,7 +63,8 @@ import { NoRenewaleInNamePipe } from './no-renewale-in-name.pipe';
     ScrollingModule,
     LoyaltyModule,
     InfiniteScrollModule,
-    CampaignModule
+    CampaignModule,
+    OutcomeModule
   ],
   bootstrap: [
   ],

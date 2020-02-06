@@ -45,10 +45,6 @@ interface IV4CampaignsResponse {
   };
 }
 
-interface IV4IssueCampaignResponse {
-  data: IV4Voucher[];
-}
-
 @Injectable({ providedIn: 'root' })
 export class V4CampaignService implements ICampaignService {
   public baseUrl: string;
@@ -103,14 +99,6 @@ export class V4CampaignService implements ICampaignService {
       .pipe(
         map(resp => resp.data),
         map((campaign: IV4Campaign) => V4CampaignService.v4CampaignToCampaign(campaign))
-      );
-  }
-
-  public issueAll(id: number): Observable<IVoucher[]> {
-    return this.http.post<IV4IssueCampaignResponse>(`${this.baseUrl}/v4/campaigns/${id}/issue_all`, null)
-      .pipe(
-        map(resp => resp.data),
-        map((vouchers: IV4Voucher[]) => vouchers.map(voucher => V4VouchersService.v4VoucherToVoucher(voucher)))
       );
   }
 }

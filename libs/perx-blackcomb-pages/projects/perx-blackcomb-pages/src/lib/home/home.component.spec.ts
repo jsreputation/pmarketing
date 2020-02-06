@@ -6,6 +6,7 @@ import { HomeComponent } from './home.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {
   ICampaignService,
+  InstantOutcomeService,
   LoyaltyModule,
   RewardsModule,
   UtilsModule,
@@ -80,6 +81,10 @@ describe('HomeComponent', () => {
     getCampaigns: () => of([])
   };
 
+  const instantOutcomeServiceStub: Partial<InstantOutcomeService> = {
+    claim: () => of([])
+  }
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [HomeComponent, GamesCollectionComponent, CampaignsCollectionComponent],
@@ -98,6 +103,7 @@ describe('HomeComponent', () => {
       providers: [
         Title,
         { provide: ICampaignService, useValue: campaignServiceStub },
+        { provide: InstantOutcomeService, useValue: instantOutcomeServiceStub },
         { provide: RewardsService, useValue: rewardsServiceStub },
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
         { provide: ProfileService, useValue: profileService },

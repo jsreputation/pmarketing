@@ -5,8 +5,6 @@ import { map, switchMap, mergeMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Config } from '../config/config';
-import { IReward } from '../rewards/models/reward.model';
-import { RewardsService } from '../rewards/rewards.service';
 import {
   IWInstantOutcomeDisplayProperties,
   IWInstantOutcomeTransactionAttributes,
@@ -22,6 +20,9 @@ import {
   IWAssignedAttributes
 } from '@perx/whistler';
 import { IEngagementTransaction } from '../game/game.model';
+import { IVoucher } from '../vouchers/models/voucher.model';
+import { IVoucherService } from '../vouchers/ivoucher.service';
+import { WhistlerVouchersService } from '../vouchers/whistler-vouchers.service';
 
 @Injectable({
   providedIn: 'root'
@@ -32,11 +33,15 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
   constructor(
     private http: HttpClient,
     private config: Config,
-    private rewardsService: RewardsService
+    private voucherService: IVoucherService
   ) {
     this.baseUrl = `${config.apiHost}/instant-outcome/transactions/`;
   }
 
+  private get whistlerVoucherService(): WhistlerVouchersService {
+    return this.voucherService as WhistlerVouchersService;
+  }
+  
   private getEngagementId(
     campaignId: number
   ): Observable<IWCampaignProperties | never> {
@@ -83,7 +88,7 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
     );
   }
 
-  public claim(campaignId: number): Observable<IReward[]> {
+  public claim(campaignId: number): Observable<IVoucher[]> {
     const buildBody: Observable<IJsonApiPostItem<IWInstantOutcomeTxnReq>> =
     this.getEngagementId(campaignId)
       .pipe(
@@ -99,7 +104,7 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
         }))
       );
 
-    const getRewardIds: Observable<number[]> = buildBody.pipe(
+    return buildBody.pipe(
       switchMap(
         (body: IJsonApiPostItem<IWInstantOutcomeTxnReq>): Observable<IJsonApiItemPayload<IWInstantOutcomeTransactionAttributes>> =>
           this.http.post<IJsonApiItemPayload<IWInstantOutcomeTransactionAttributes>>(
@@ -111,13 +116,9 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
       map((res: IJsonApiItemPayload<IWInstantOutcomeTransactionAttributes>) => res.data),
       map((data: IJsonApiItem<IWInstantOutcomeTransactionAttributes>) => data.attributes.results),
       switchMap(results => results !== undefined ? of(results) : throwError('Empty results object')),
-      map(results => results.attributes.results),
-      map((results): number[] => results.map(result => result.attributes.source_id))
-    );
-
-    return getRewardIds.pipe(
-      map((ids: number[]): Observable<IReward>[] => ids.map(id => this.rewardsService.getReward(id))),
-      mergeMap((queries: Observable<IReward>[]): Observable<IReward[]> => combineLatest(...queries))
+      combineLatest(...res.data.attributes.results.attributes.results.map(
+        (result: IJsonApiItem<IWAssignedAttributes>) => this.whistlerVoucherService.getFullVoucher(result)
+      ))
     );
   }
 

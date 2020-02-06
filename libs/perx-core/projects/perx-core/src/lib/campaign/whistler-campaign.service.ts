@@ -151,9 +151,4 @@ export class WhistlerCampaignService implements ICampaignService {
         map((campaign: IJsonApiItem<IWCampaignAttributes>) => WhistlerCampaignService.WhistlerCampaignToCampaign(campaign)),
       );
   }
-
-  // @ts-ignore
-  public issueAll(campaignId: number): Observable<IVoucher[]> {
-    throw new Error('Method not implemented');
-  }
 }
