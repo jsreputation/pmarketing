@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 
 import {
   Observable,
-  of,
 } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -15,9 +14,6 @@ import {
 
 import {
   IConfig,
-  IMicrositeSettings,
-  IRssFeeds,
-  PagesObject,
 } from './models/config.model';
 import { ConfigService } from './config.service';
 import { Config } from './config';
@@ -26,7 +22,6 @@ import { Config } from './config';
   providedIn: 'root'
 })
 export class WhistlerConfigService extends ConfigService {
-  private settings: any;
   private endpoint: string;
 
   constructor(private http: HttpClient, private config: Config) {
@@ -69,27 +64,5 @@ export class WhistlerConfigService extends ConfigService {
         map(res => res.data && res.data[0].attributes.display_properties),
         map((setting) => WhistlerConfigService.WTenantToConfig(setting, this.config)),
       );
-  }
-
-  public readRssFeeds(): Observable<IRssFeeds> {
-    return this.http.get<IRssFeeds>('assets/config/RSS_FEEDS.json');
-  }
-
-  public getTenantAppSettings(): Observable<IMicrositeSettings> {
-    return of();
-  }
-
-  public getAccountSettings(): Observable<PagesObject> {
-    if (this.settings) {
-      return of(this.settings);
-    }
-    const accountSettingRequest: { url: string } = {
-      url: location.host
-    };
-    return this.http.post<IJsonApiListPayload<IWTenant>>(this.endpoint, accountSettingRequest).pipe(
-      map(res => res.data && res.data[0].attributes.display_properties),
-      map((displayProps) => displayProps.account || { pages: [] }),
-      map((account) => this.settings = account)
-    );
   }
 }
