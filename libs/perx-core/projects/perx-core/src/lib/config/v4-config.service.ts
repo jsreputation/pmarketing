@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 
 import {
   of,
@@ -13,7 +13,7 @@ import {
 import {
   IConfig,
 } from './models/config.model';
-import { ConfigService } from './config.service';
+import {ConfigService} from './config.service';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +33,7 @@ export class V4ConfigService extends ConfigService {
     if (this.appConfig) {
       return of(this.appConfig);
     }
-    if (!this.appConfig$){
+    if (!this.appConfig$) {
       this.appConfig$ = this.http.get<IConfig<T>>('assets/config/app-config.json').pipe(
         tap((appConfig: IConfig<T>) => this.appConfig = appConfig),
         share()
