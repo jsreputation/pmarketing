@@ -12,10 +12,20 @@ import { HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { ProfileService } from '../../profile/profile.service';
 import { TokenStorage } from '../../utils/storage/token-storage.service';
 import { LocalTokenStorage } from '../../utils/storage/local-token-storage.service';
+import {ConfigService} from '../../config/config.service';
 
 function fakeFactory(): TokenStorage {
   return new LocalTokenStorage({});
 }
+
+const configServiceStub = {
+  readAppConfig: () => of({
+    production: true,
+    baseHref: '/',
+    preAuth: false,
+    apiHost: 'https://api.perxtech.io'
+  })
+};
 
 describe('V4AuthenticationService', () => {
   const environment = {
@@ -27,7 +37,7 @@ describe('V4AuthenticationService', () => {
   };
 
   const baseUrl = 'https://api.perxtech.io/';
-  const baseUrlForAppAccessToken = 'http://localhost:4000/';
+  // const baseUrlForAppAccessToken = 'http://localhost:4000/';
   let httpTestingController: HttpTestingController;
   let service: V4AuthenticationService;
 
@@ -39,7 +49,8 @@ describe('V4AuthenticationService', () => {
         ConfigModule.forRoot({ ...environment })
       ],
       providers: [
-        { provide: TokenStorage, useFactory: fakeFactory }
+        { provide: TokenStorage, useFactory: fakeFactory },
+        { provide: ConfigService, useValue: configServiceStub }
       ]
     });
     httpTestingController = TestBed.get<HttpTestingController>(HttpTestingController as Type<HttpTestingController>);
@@ -57,7 +68,7 @@ describe('V4AuthenticationService', () => {
         done();
       });
     const url = location.host;
-    const req = httpTestingController.expectOne(`${baseUrlForAppAccessToken}v2/oauth/token`);
+    const req = httpTestingController.expectOne(`/v2/oauth/token`);
     expect(req.request.body).toEqual({ url });
     expect(req.request.method).toEqual('POST');
 
@@ -110,7 +121,7 @@ describe('V4AuthenticationService', () => {
 
   it('should create service with config production', () => {
     // @ts-ignore
-    const serviceWithConfig = new V4AuthenticationService({ baseHref: 'test', production: true }, null, null, null);
+    const serviceWithConfig = new V4AuthenticationService( configServiceStub, null, null, null);
     expect(serviceWithConfig).toBeTruthy();
   });
 
