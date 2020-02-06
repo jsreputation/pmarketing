@@ -99,6 +99,11 @@ const routes: Routes = [
         path: 'edit-profile/:type',
         loadChildren: (): any => import('../edit-profile-field/edit-profile-field.module')
           .then((mod: any) => mod.EditProfileFieldModule)
+      },
+      {
+        path: 'category',
+        loadChildren: (): any => import('../category/category.module')
+          .then((mod: any) => mod.CategoryModule)
       }
     ]
   }

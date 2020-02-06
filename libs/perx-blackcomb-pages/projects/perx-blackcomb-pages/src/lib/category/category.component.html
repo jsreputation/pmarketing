@@ -1,0 +1,31 @@
+<div
+  *ngIf="(rewards$ | async) as rewards"
+  class="content"
+  #contentScroll
+  infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="500"
+  (scrolled)="onScroll()"
+  [scrollWindow]="false"
+>
+  <h1 class="catergory-title">{{selectedCategory}}</h1>
+  <div
+    *ngIf="rewards.length > 0"
+    class="scroll-content">
+    <mat-card *ngFor="let reward of rewards" (click)="goToReward(reward)" matRipple>
+      <div class="featured-image">
+        <img mat-card-image [src]="reward.rewardBanner">
+        <div *ngIf="reward.merchantImg" class="badge">
+          <img [src]="reward.merchantImg">
+        </div>
+      </div>
+      <mat-card-content>
+        <div class="details">
+          <h1>{{reward.name}}</h1>
+          <h2>{{reward.merchantName}}</h2>
+        </div>
+      </mat-card-content>
+      <mat-card-footer></mat-card-footer>
+    </mat-card>
+  </div>
+</div>

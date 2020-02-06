@@ -84,6 +84,8 @@ import { RewardsBookingComponent } from './rewards-booking/rewards-booking.compo
 import { ProfileBarcodeComponent } from './profile-barcode/profile-barcode.component';
 import { EditProfileFieldComponent } from './edit-profile-field/edit-profile-field.component';
 import { CampaignStampsComponent } from './campaign-stamps/campaign-stamps.component';
+import { CatalogsComponent } from './catalogs/catalogs.component';
+import { CategoryComponent } from './category/category.component';
 
 const comps: any[] = [
   AccountComponent,
@@ -140,7 +142,9 @@ const comps: any[] = [
   ProfileBarcodeComponent,
   EditProfileFieldComponent,
   PuzzleListComponent,
-  CampaignStampsComponent
+  CampaignStampsComponent,
+  CategoryComponent,
+  CatalogsComponent,
 ];
 
 @NgModule({

@@ -11,7 +11,7 @@ import {
   FeedItem,
   FeedReaderService,
   ICampaign,
-  ICampaignService,
+  ICampaignService, ICatalog,
   IConfig,
   IGame,
   IGameService,
@@ -235,6 +235,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   public goToReward(reward: IReward): void {
     this.router.navigate([`/reward-detail/${reward.id}`]);
+  }
+
+  public catalogSelected(catalog: ICatalog): void {
+    console.log('this catalog is selected in home component.', catalog);
+    this.router.navigate(['/category'], { queryParams: { catalog: catalog.id } });
   }
 
   public onScroll(): void {
