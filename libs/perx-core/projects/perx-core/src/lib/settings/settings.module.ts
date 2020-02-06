@@ -15,7 +15,7 @@ export function settingsServiceFactory(
   if (config.isWhistler) {
     return new WhistlerSettingsService(http, configService);
   }
-  return new V4SettingsService(http, authService);
+  return new V4SettingsService(http, configService, authService);
 }
 
 @NgModule({
@@ -25,7 +25,7 @@ export function settingsServiceFactory(
     {
       provide: SettingsService,
       useFactory: settingsServiceFactory,
-      deps: [HttpClient, ConfigService, AuthenticationService]
+      deps: [HttpClient, Config, ConfigService, AuthenticationService]
     }
   ]
 })

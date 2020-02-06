@@ -20,6 +20,7 @@ import { AuthenticationService } from '../auth/authentication/authentication.ser
 import { ICustomProperties } from '../profile/profile.model';
 import { SettingsService } from './settings.service';
 import {IMicrositeSettings, IRssFeeds, PagesObject} from './models/settings.model';
+import {ConfigService} from '../config/config.service';
 
 interface IV4MicrositeSettingsResponse {
   data: IV4MicrositeSettings;
@@ -36,11 +37,11 @@ interface IV4MicrositeSettings {
   providedIn: 'root'
 })
 export class V4SettingsService extends SettingsService {
-  private appConfig: IConfig<any>;
   private settings: any;
 
   constructor(
     private http: HttpClient,
+    private configService: ConfigService,
     private authenticationService: AuthenticationService
   ) {
     super();
@@ -67,7 +68,8 @@ export class V4SettingsService extends SettingsService {
 
     return this.authenticationService.getAppToken().pipe(
       // todo: remove this.appConfig usage and use readAppConfig directly
-      switchMap(() => this.http.get(`${this.appConfig.apiHost}/v4/settings/${key}`)),
+      switchMap(() => this.configService.readAppConfig()),
+      switchMap((config: IConfig<void>) => this.http.get(`${config.apiHost}/v4/settings/${key}`)),
       map((res: IV4MicrositeSettingsResponse) => res.data),
       map((data: IV4MicrositeSettings) => V4SettingsService.v4MicrositeSettingsToMicrositeSettings(data))
     );
