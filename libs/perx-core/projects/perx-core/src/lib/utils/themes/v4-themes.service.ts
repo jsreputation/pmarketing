@@ -77,9 +77,9 @@ export class V4ThemesService extends ThemesService {
         '--header_color': setting.json_value.header_color,
         '--background': setting.json_value.app_bg_color,
         '--login_background_colour': setting.json_value.login_page_bg_color,
-        "--font_color": "#231f20",
-        "--surface_colour": "#ffffff",
-        "--popup_background_colour": "#ffffff"
+        '--font_color': '#231f20',
+        '--surface_colour': '#ffffff',
+        '--popup_background_colour': '#ffffff'
       }
     };
   }
