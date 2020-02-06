@@ -11,9 +11,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class SpinService {
 
-  constructor(private http: HttpClient,
-              private spinHttpService: SpinHttpService) {
-  }
+  constructor(private http: HttpClient, private spinHttpService: SpinHttpService) { }
 
   public getSpinData(): Observable<ISpinDefaultValue> {
     return this.http.get<ISpinDefaultValue>('assets/actives/spin/spin-data.json');

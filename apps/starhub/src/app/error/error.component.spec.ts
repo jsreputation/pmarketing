@@ -10,7 +10,7 @@ describe('ErrorComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ErrorComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

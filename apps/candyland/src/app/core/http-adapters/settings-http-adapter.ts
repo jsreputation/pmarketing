@@ -50,10 +50,10 @@ export class SettingsHttpAdapter {
   public static transformToGroup(data: any): IAMGroup {
     return {
       id: data.id,
-    type: data.type,
-    name: data.attributes.name,
-    createdAt: data.attributes.careatd_at,
-    updatedAt: data.attributes.updated_at
+      type: data.type,
+      name: data.attributes.name,
+      createdAt: data.attributes.careatd_at,
+      updatedAt: data.attributes.updated_at
     };
   }
 }

@@ -60,7 +60,7 @@ describe('ProfileComponent', () => {
         { provide: LoyaltyService, useValue: loyaltyServiceStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

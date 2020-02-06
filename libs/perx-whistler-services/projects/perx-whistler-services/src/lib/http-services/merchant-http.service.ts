@@ -47,7 +47,7 @@ export class MerchantHttpService {
   }
 
   public updateMerchantBranch(id: string, data: IJsonApiPatchItem<IWMerchantBranchAttributes>):
-    Observable<IJsonApiItemPayload<IWMerchantBranchAttributes>> {
+  Observable<IJsonApiItemPayload<IWMerchantBranchAttributes>> {
     return this.http.patch<IJsonApiItemPayload<IWMerchantBranchAttributes>>(`${this.apiConfig.merchantsPath}/branches/${id}`, data);
   }
 

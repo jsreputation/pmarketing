@@ -11,11 +11,13 @@ export class MockNotificationService {
         webLink: true,
         webLinkOptions: InformationCollectionSettingType.notRequired,
         id: '1'
-  }
+      }
     };
   }
-  public createNotification(data: ICampaignNotificationGroup, campaignId: string)
-    : Observable<IJsonApiListPayload<IWNotificationAttributes>> {
+  public createNotification(
+    data: ICampaignNotificationGroup,
+    campaignId: string
+  ): Observable<IJsonApiListPayload<IWNotificationAttributes>> {
     console.log(campaignId, data);
     return of(null);
   }
@@ -29,8 +31,10 @@ export class MockNotificationService {
     console.log(id);
     return of(null);
   }
-  public updateNotification(data: ICampaignNotificationGroup, campaignId: string)
-    : Observable<IJsonApiListPayload<IWNotificationAttributes>> {
+  public updateNotification(
+    data: ICampaignNotificationGroup,
+    campaignId: string
+  ): Observable<IJsonApiListPayload<IWNotificationAttributes>> {
     console.log(data, campaignId);
     return of(null);
   }

@@ -226,7 +226,7 @@ export class RewardHttpAdapter {
       type: 'tier_reward_costs',
       attributes: {
         apply_tier_discount: tier.statusDiscount ? tier.statusDiscount : false,
-        tier_value: tier.tierValue ? '' + tier.tierValue : '0',
+        tier_value: tier.tierValue ? `${  tier.tierValue}` : '0',
         tier_id: +tier.tierId,
         entity_id: +rewardId,
         tier_type: tier.tierType
@@ -238,7 +238,7 @@ export class RewardHttpAdapter {
     return {
       tierRewardCostsId: +data.id,
       statusDiscount: data.attributes.apply_tier_discount,
-      tierId: '' + data.attributes.tier_id,
+      tierId: `${  data.attributes.tier_id}`,
       rewardId: data.attributes.entity_id,
       tierValue: Number.parseInt(data.attributes.tier_value, 10),
       tierType: data.attributes.tier_type

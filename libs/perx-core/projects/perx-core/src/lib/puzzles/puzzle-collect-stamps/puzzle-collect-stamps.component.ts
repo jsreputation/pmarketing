@@ -25,8 +25,6 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
   @Input()
   public defaultCardBgImage: string = '';
   @Input()
-  public defaultbackgroundImage: string = '';
-  @Input()
   public defaultstampCardImage: string = '';
 
   @Input()
@@ -52,9 +50,6 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
 
   @Input()
   private rewardPostStamp: string | null = null;
-
-  @Input()
-  public backgroundImage: string | null = null;
 
   @Input()
   public cardBgImage: string | null = null;

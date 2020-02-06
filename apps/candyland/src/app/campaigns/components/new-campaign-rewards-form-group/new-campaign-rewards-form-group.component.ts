@@ -218,7 +218,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
     }, 0);
     if (slotProbControl) {
       if (this.slotNumber !== -1) {
-        slotProbControl.setValidators(Validators.min(1));
+        slotProbControl.setValidators(Validators.min(0));
       }
       slotProbControl.patchValue(totalNum);
       this.minSumError = totalNum <= 0;

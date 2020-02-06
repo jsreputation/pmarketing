@@ -39,7 +39,7 @@ export class CampaignsListPageComponent implements OnInit, OnDestroy {
   }
 
   public editCampaign(campaign: ICampaignTableData): void {
-    this.router.navigateByUrl('/campaigns/edit/' + campaign.id);
+    this.router.navigateByUrl(`/campaigns/edit/${  campaign.id}`);
   }
 
   public duplicateCampaign(campaign: ICampaignTableData): void {

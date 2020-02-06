@@ -66,9 +66,7 @@ export class CampaignsMobilePreviewComponent implements OnInit, OnDestroy {
           id: 1,
           state: PuzzleCollectStampState.redeemed
         });
-        this.stampsSlotNumberData = this.engagement.slots.map((item: number) => {
-          return { rewardPosition: item - 1 };
-        });
+        this.stampsSlotNumberData = this.engagement.slots.map((item: number) => ({ rewardPosition: item - 1 }));
       }
     } else {
       this.stamps = [];

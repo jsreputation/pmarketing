@@ -12,7 +12,7 @@ describe('SubMenuItemComponent', () => {
       declarations: [ SubMenuItemComponent ],
       schemas: [NO_ERRORS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

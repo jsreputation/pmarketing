@@ -6,12 +6,12 @@ import { ApiConfigServices } from '../configs/api-config';
 
 @Injectable()
 export class LimitsHttpsService {
-  constructor(private http: HttpClient,
-              private apiConfig: ApiConfigServices) { }
+  constructor(
+    private http: HttpClient,
+    private apiConfig: ApiConfigServices
+  ) { }
 
-  public getLimits(params: HttpParams, eType: string):
-    Observable<IJsonApiListPayload<IWLimitAttributes>> {
-
+  public getLimits(params: HttpParams, eType: string): Observable<IJsonApiListPayload<IWLimitAttributes>> {
     return this.http.get<IJsonApiListPayload<IWLimitAttributes>>(`${this.apiConfig.baseAPIPath}/${eType}/limits`, { params });
   }
 
@@ -35,7 +35,7 @@ export class LimitsHttpsService {
     );
   }
 
-  public deleteLimit( limitId: number | string, eType: string): Observable<void> {
+  public deleteLimit(limitId: number | string, eType: string): Observable<void> {
     return this.http.delete<void>(`${this.apiConfig.baseAPIPath}/${eType}/limits/${limitId}`);
   }
 }

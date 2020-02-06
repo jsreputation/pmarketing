@@ -22,7 +22,7 @@ describe('TypeItemComponent', () => {
       ],
       declarations: [ TypeItemComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

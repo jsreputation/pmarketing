@@ -46,14 +46,14 @@ describe('ListMerchantViewComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ListMerchantViewComponent);
     component = fixture.componentInstance;
-    component.dataSource = new CustomDataSource({getTableData: (params: any) => {return of({
+    component.dataSource = new CustomDataSource({getTableData: (params: any) => of({
 
-        data: [(params)],
-        meta: {
-        'page_count': 1,
-        'record_count': 3
+      data: [(params)],
+      meta: {
+        page_count: 1,
+        record_count: 3
       }
-      })}});
+    })});
     fixture.detectChanges();
   });
 

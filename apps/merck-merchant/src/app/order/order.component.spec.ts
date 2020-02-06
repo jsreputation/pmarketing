@@ -221,7 +221,7 @@ describe('OrderComponent', () => {
         of(transaction)
       );
     const notificationService: NotificationService = fixture.debugElement.injector.get
-      < NotificationService > (NotificationService as Type<NotificationService>);
+    < NotificationService > (NotificationService as Type<NotificationService>);
     const notificationSpy = spyOn(notificationService, 'addSnack');
 
     const router: Router = fixture.debugElement.injector.get(Router);

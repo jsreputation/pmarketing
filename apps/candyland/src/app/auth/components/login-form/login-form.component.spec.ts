@@ -36,10 +36,10 @@ describe('LoginFormComponent', () => {
           provide: AuthService,
           useClass: TestAuthServisec
         }
-        ],
+      ],
       declarations: [ LoginFormComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

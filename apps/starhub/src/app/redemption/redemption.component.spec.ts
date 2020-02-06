@@ -133,7 +133,7 @@ describe('RedemptionComponent', () => {
     const voucherServiceSpy = spyOn(voucherService, 'redeemVoucher')
       .and.returnValue(throwError({}));
     const notificationService: NotificationService = fixture.debugElement.injector.get<NotificationService>
-      (NotificationService as Type<NotificationService>);
+    (NotificationService as Type<NotificationService>);
     const notificationSpy = spyOn(notificationService, 'addSnack').and.callThrough();
     component.voucher = voucherCustom;
     component.full('2222');

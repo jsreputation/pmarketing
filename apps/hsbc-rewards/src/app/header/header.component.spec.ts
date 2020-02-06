@@ -16,7 +16,7 @@ describe('HeaderComponent', () => {
         NavigateToolbarModule
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

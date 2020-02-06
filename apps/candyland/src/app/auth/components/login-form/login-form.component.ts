@@ -37,9 +37,9 @@ export class LoginFormComponent implements OnInit {
     this.router.navigate(['/password/forget'], { state: { id: data.account_id, user: data.username } });
   }
 
-  get username(): AbstractControl | null { return this.formLogin.get('username'); }
-  get password(): AbstractControl | null { return this.formLogin.get('password'); }
-  get accountId(): AbstractControl | null { return this.formLogin.get('account_id'); }
+  public get username(): AbstractControl | null { return this.formLogin.get('username'); }
+  public get password(): AbstractControl | null { return this.formLogin.get('password'); }
+  public get accountId(): AbstractControl | null { return this.formLogin.get('account_id'); }
 
   // ideally should be 9 digits or alpha numeric char
   private createForm(): void {

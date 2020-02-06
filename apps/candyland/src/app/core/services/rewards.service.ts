@@ -72,7 +72,7 @@ export class RewardsService implements ITableService<IRewardEntity> {
   }
 
   public updateReward(id: string, data: IRewardEntityForm, loyalties?: ILoyaltyFormGroup[]):
-    Observable<IJsonApiItemPayload<IWRewardEntityAttributes>> {
+  Observable<IJsonApiItemPayload<IWRewardEntityAttributes>> {
     const sendData: IJsonApiPatchData<IWRewardEntityAttributes> = {
       ...RewardHttpAdapter.transformFromRewardForm(data, loyalties),
       id
@@ -111,8 +111,7 @@ export class RewardsService implements ITableService<IRewardEntity> {
     return this.rewardHttp.getRewardTier(id);
   }
 
-  public createRewardTier(tier: ILoyaltyTiersFormGroup | IBasicTier, id: string)
-    : Observable<IJsonApiItem<IWTierRewardCostsAttributes>> {
+  public createRewardTier(tier: ILoyaltyTiersFormGroup | IBasicTier, id: string): Observable<IJsonApiItem<IWTierRewardCostsAttributes>> {
     const loyaltyCostValue = RewardHttpAdapter.transformFromLoyaltyForm(tier, id);
 
     return this.rewardHttp.createRewardTier(loyaltyCostValue);

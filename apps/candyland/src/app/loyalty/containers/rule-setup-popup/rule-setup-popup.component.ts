@@ -151,7 +151,7 @@ export class RuleSetupPopupComponent implements OnInit, OnDestroy {
   }
 
   private getAllUpdateRequests(currentRule: ILoyaltyRule, updatedRule: ILoyaltyRule):
-    Observable<ILoyaltyRule | ILoyaltyRuleCondition | ILoyaltyRulePoint>[] {
+  Observable<ILoyaltyRule | ILoyaltyRuleCondition | ILoyaltyRulePoint>[] {
     const ruleId = currentRule.id;
     const requestArray: Observable<ILoyaltyRule | ILoyaltyRuleCondition | ILoyaltyRulePoint>[] =
       this.getConditionsRequests(ruleId, currentRule.conditions, updatedRule.conditions);

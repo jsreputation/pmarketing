@@ -31,7 +31,7 @@ describe('EngagementTypeComponent', () => {
         TypeItemComponent
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

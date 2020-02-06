@@ -12,7 +12,7 @@ describe('SalesContactComponent', () => {
       imports: [ TranslateModule.forRoot() ],
       declarations: [ SalesContactComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

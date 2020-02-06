@@ -16,7 +16,7 @@ export class QrscannerComponent implements OnInit {
 
   public ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.path = params[`path`];
+      this.path = params.path;
     });
   }
 

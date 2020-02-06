@@ -106,16 +106,16 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
     this.stepProgress$.pipe(
       takeUntil(this.destroy$)
     ).subscribe(stepProgress => {
-        switch (stepProgress) {
-          case 1:
-            this.initCustomTiersDataSource();
-            break;
-          case 2:
-            this.initAllRuleSet();
-            break;
-        }
-        this.stepProgress = stepProgress;
+      switch (stepProgress) {
+        case 1:
+          this.initCustomTiersDataSource();
+          break;
+        case 2:
+          this.initAllRuleSet();
+          break;
       }
+      this.stepProgress = stepProgress;
+    }
     );
 
     this.loading$.pipe(
@@ -533,7 +533,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
 
   // rules
   private getRefDialogSetupRule(data: { ruleSet: ILoyaltyRuleSet, rule?: ILoyaltyRule | null } = null):
-    Observable<MatDialogRef<RuleSetupPopupComponent>> {
+  Observable<MatDialogRef<RuleSetupPopupComponent>> {
     const dialogRef: MatDialogRef<RuleSetupPopupComponent> = this.dialog.open(RuleSetupPopupComponent, {
       panelClass: 'tier-setup-dialog',
       data: {

@@ -41,7 +41,7 @@ describe('LoginComponent', () => {
         LoginFormComponent
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -16,7 +16,7 @@ describe('GameMobilePreviewStampComponent', () => {
       ],
       declarations: [ GameMobilePreviewStampComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

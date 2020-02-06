@@ -14,7 +14,7 @@ describe('TermsAndConditionsComponent', () => {
         RouterTestingModule
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

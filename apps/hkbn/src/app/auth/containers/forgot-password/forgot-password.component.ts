@@ -84,14 +84,12 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     const value = this.newPasswordForm.value;
     this.authenticationService.resetPassword({ phone: this.identifier, otp: this.otp, ...value }).pipe(
       mergeMap(
-        () => {
-          return this.authenticationService.login(this.identifier, value.newPassword);
-        }
+        () => this.authenticationService.login(this.identifier, value.newPassword)
       )).subscribe(
-        () => {
-          this.router.navigate(['/']);
-        }
-      );
+      () => {
+        this.router.navigate(['/']);
+      }
+    );
   }
 
 }

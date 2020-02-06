@@ -16,7 +16,7 @@ describe('ListComponent', () => {
         MatSlideToggleModule
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

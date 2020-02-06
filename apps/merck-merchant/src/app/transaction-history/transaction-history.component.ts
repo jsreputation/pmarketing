@@ -31,7 +31,7 @@ export class TransactionHistoryComponent implements OnInit {
 
   public ngOnInit(): void {
     this.purchasesTitleFn = (tr: IMerchantTransactionHistory) =>
-    `${tr.transactionDetails && (tr.transactionDetails.data as IMerchantPurchaseTransactionHistory).pharmacyName}`;
+      `${tr.transactionDetails && (tr.transactionDetails.data as IMerchantPurchaseTransactionHistory).pharmacyName}`;
 
     this.redemptionsTitleFn = (tr: IMerchantTransactionHistory) =>
       `${tr.transactionDetails && (tr.transactionDetails.data as IMerchantRewardTransactionHistory).rewardName}`;

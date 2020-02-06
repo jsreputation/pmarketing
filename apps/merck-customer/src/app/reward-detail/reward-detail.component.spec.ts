@@ -33,7 +33,7 @@ describe('RewardDetailComponent', () => {
         { provide: Router, useValue: routerStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
