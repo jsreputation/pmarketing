@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import {
   Observable,
 } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {map, share} from 'rxjs/operators';
 
 import {
   IJsonApiListPayload,
@@ -23,6 +23,7 @@ import { Config } from './config';
 })
 export class WhistlerConfigService extends ConfigService {
   private endpoint: string;
+  private appConfig$: Observable<IConfig<any>>;
 
   constructor(private http: HttpClient, private config: Config) {
     super();
@@ -58,11 +59,14 @@ export class WhistlerConfigService extends ConfigService {
     const themesRequest: { url: string } = {
       url: location.host
     };
-
-    return this.http.post<IJsonApiListPayload<IWTenant>>(this.endpoint, themesRequest)
-      .pipe(
-        map(res => res.data && res.data[0].attributes.display_properties),
-        map((setting) => WhistlerConfigService.WTenantToConfig(setting, this.config)),
-      );
+    if (!this.appConfig$) {
+      this.appConfig$ = this.http.post<IJsonApiListPayload<IWTenant>>(this.endpoint, themesRequest)
+        .pipe(
+          map(res => res.data && res.data[0].attributes.display_properties),
+          map((setting) => WhistlerConfigService.WTenantToConfig(setting, this.config)),
+          share()
+        );
+    }
+    return this.appConfig$;
   }
 }

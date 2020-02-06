@@ -6,6 +6,7 @@ import {
   Observable,
 } from 'rxjs';
 import {
+  share,
   tap,
 } from 'rxjs/operators';
 
@@ -20,6 +21,8 @@ import { ConfigService } from './config.service';
 export class V4ConfigService extends ConfigService {
   private appConfig: IConfig<any>;
 
+  private appConfig$: Observable<IConfig<any>>;
+
   constructor(
     private http: HttpClient
   ) {
@@ -30,9 +33,12 @@ export class V4ConfigService extends ConfigService {
     if (this.appConfig) {
       return of(this.appConfig);
     }
-    return this.http.get<IConfig<T>>('assets/config/app-config.json').pipe(
-      tap((appConfig: IConfig<T>) => this.appConfig = appConfig)
-    );
+    if (!this.appConfig$){
+      this.appConfig$ = this.http.get<IConfig<T>>('assets/config/app-config.json').pipe(
+        tap((appConfig: IConfig<T>) => this.appConfig = appConfig),
+        share()
+      );
+    }
+    return this.appConfig$;
   }
-
 }
