@@ -116,9 +116,13 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
       map((res: IJsonApiItemPayload<IWInstantOutcomeTransactionAttributes>) => res.data),
       map((data: IJsonApiItem<IWInstantOutcomeTransactionAttributes>) => data.attributes.results),
       switchMap(results => results !== undefined ? of(results) : throwError('Empty results object')),
-      combineLatest(...res.data.attributes.results.attributes.results.map(
-        (result: IJsonApiItem<IWAssignedAttributes>) => this.whistlerVoucherService.getFullVoucher(result)
-      ))
+      mergeMap(
+        res => (
+          combineLatest(...res.attributes.results.map(
+            (result: IJsonApiItem<IWAssignedAttributes>) => this.whistlerVoucherService.getFullVoucher(result)
+          ))
+        )
+      )
     );
   }
 

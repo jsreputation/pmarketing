@@ -5,6 +5,10 @@ import { InstantOutcomeService } from './instant-outcome.service';
 import { IVoucher } from '../vouchers/models/voucher.model';
 import { map } from 'rxjs/operators';
 import { IV4Voucher, V4VouchersService } from '../vouchers/v4-vouchers.service';
+import { Observable } from 'rxjs';
+
+import { IOutcome } from './models/outcome.model';
+import { IEngagementTransaction } from '../game/game.model';
 
 interface IV4IssueCampaignResponse {
   data: IV4Voucher[];

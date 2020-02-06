@@ -6,8 +6,6 @@ import { ICampaign, CampaignType, CampaignState } from './models/campaign.model'
 import {ICampaignFilterOptions, ICampaignService} from './icampaign.service';
 import { V4RewardsService, IV4Reward } from '../rewards/v4-rewards.service';
 import { Config } from '../config/config';
-import { IV4Voucher, V4VouchersService } from '../vouchers/v4-vouchers.service';
-import { IVoucher } from '../vouchers/models/voucher.model';
 
 interface IV4Image {
   type: string;

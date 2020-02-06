@@ -27,7 +27,6 @@ import {
 import { ICampaignService, ICampaignFilterOptions } from './icampaign.service';
 
 import { Config } from '../config/config';
-import { IVoucher } from '../vouchers/models/voucher.model';
 
 @Injectable({
   providedIn: 'root'
