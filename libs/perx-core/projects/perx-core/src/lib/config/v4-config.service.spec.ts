@@ -1,13 +1,9 @@
-import { TestBed, fakeAsync, inject, tick } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { V4ConfigService } from './v4-config.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { AuthenticationService } from '../auth/authentication/authentication.service';
 import { Type } from '@angular/core';
 import { of } from 'rxjs';
-import { IWAppAccessTokenResponse } from '@perx/whistler';
-import { HttpClient } from '@angular/common/http';
-import {IConfig} from './models/config.model';
-import { ITheme } from '../utils/themes/themes.model';
 
 const authenticationServiceStub = {
   getAppToken: () => of()
@@ -59,51 +55,4 @@ describe('V4ConfigService', () => {
 
     httpTestingController.verify();
   });
-
-  it('v4MicrositeSettingsToMicrositeSettings', () => {
-    const convertObject = {
-      id: 1,
-      key: 'key',
-      string_value: 'key',
-      json_value: {}
-    };
-    const val = V4ConfigService.v4MicrositeSettingsToMicrositeSettings(convertObject);
-    expect(val.id).toBe(convertObject.id);
-  });
-
-  it('getTenantAppSettings', fakeAsync(inject([V4ConfigService, AuthenticationService, HttpClient],
-    (config: V4ConfigService, auth: AuthenticationService, http: HttpClient) => {
-      const spyHttpGet = jest.spyOn(http, 'get');
-      spyHttpGet.mockReturnValue(of({ apiHost: '11' } as IConfig<ITheme>));
-      config.readAppConfig().subscribe(() => { });
-      tick();
-      const spy = jest.spyOn(V4ConfigService, 'v4MicrositeSettingsToMicrositeSettings');
-      jest.spyOn(auth, 'getAppToken').mockReturnValue(of({} as IWAppAccessTokenResponse));
-      spyHttpGet.mockReturnValue(of({}));
-      jest.spyOn(config, 'getTenantAppSettings').mockImplementation(() => {
-        const convertObject = {
-          id: 1,
-          key: 'key',
-          string_value: 'key',
-          json_value: {}
-        };
-        const val = V4ConfigService.v4MicrositeSettingsToMicrositeSettings(convertObject);
-        return of(val);
-      });
-      config.getTenantAppSettings('key').subscribe(() => { });
-      tick();
-      expect(spy).toHaveBeenCalled();
-    })));
-
-  it('getAccountSettings', fakeAsync(inject([V4ConfigService, HttpClient],
-    (config: V4ConfigService, http: HttpClient) => {
-      const spy = jest.spyOn(http, 'get').mockReturnValue(of({
-        displayProperties: {
-          account: null
-        }
-      }));
-      config.getAccountSettings().subscribe(() => { });
-      tick();
-      expect(spy).toHaveBeenCalled();
-    })));
 });
