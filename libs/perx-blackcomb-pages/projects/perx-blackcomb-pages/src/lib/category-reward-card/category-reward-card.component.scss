@@ -1,0 +1,86 @@
+.ribbon {
+  position: absolute;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: normal;
+  width: 5.7rem;
+  bottom: 1.2rem;
+  right: 1.6rem;
+  text-align: center;
+  line-height: 1.6rem;
+  letter-spacing: 0.02rem;
+
+  &.coming-soon,
+  &.redeemed {
+    background: #bbe5b3;
+    color: #173630;
+  }
+
+  &.running-out,
+  &.expiring,
+  &.expired {
+    background: #919eab;
+    color: #212121;
+  }
+
+  &.released {
+    background: #fead9a;
+    color: #330101;
+  }
+}
+
+.mat-card {
+  margin: 0 auto;
+  margin-bottom: 3rem;
+
+  mat-card-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1.4rem 0 1.9rem 0;
+
+    .details {
+      flex: 1;
+
+      h1 {
+        font-size: 1.6rem;
+        color: #666666;
+        font-weight: bold;
+        margin: 0;
+      }
+
+      h2 {
+        font-size: 1.2rem;
+        font-weight: normal;
+        margin: 0.2rem 0 0 0;
+        color: #666666;
+      }
+    }
+  }
+}
+
+.featured-image {
+  position: relative;
+
+  img {
+    margin-bottom: 0;
+  }
+
+  .badge {
+    max-width: 8rem;
+    height: 4.8rem;
+    background-color: #ffffff;
+    border-radius: 0.5rem 0.5rem 0 0;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+
+    img {
+      max-width: 4rem;
+      position: relative;
+    }
+  }
+}

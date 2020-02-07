@@ -12,28 +12,7 @@
   <div
     *ngIf="rewards.length > 0"
     class="scroll-content">
-    <mat-card *ngFor="let reward of rewards" (click)="goToReward(reward)" matRipple>
-      <div class="featured-image">
-        <img mat-card-image [src]="reward.rewardBanner">
-        <div *ngIf="reward.merchantImg" class="badge">
-          <img [src]="reward.merchantImg">
-        </div>
-      </div>
-      <mat-card-content>
-        <div class="details">
-          <h1>{{reward.name}}</h1>
-          <h2>{{reward.merchantName}}</h2>
-          <h2 *ngIf="reward.validTo">
-            Expires on {{reward.validTo | date:'shortDate'}}
-          </h2>
-          <ng-container *ngIf=" getRewardState(reward) as state">
-            <div [ngClass]="'ribbon ' + state.class">
-              {{state.label}}
-            </div>
-          </ng-container>
-        </div>
-      </mat-card-content>
-      <mat-card-footer></mat-card-footer>
-    </mat-card>
+    <perx-blackcomb-pages-category-reward-card *ngFor="let reward of rewards" (click)="goToReward(reward)">
+    </perx-blackcomb-pages-category-reward-card>
   </div>
 </div>

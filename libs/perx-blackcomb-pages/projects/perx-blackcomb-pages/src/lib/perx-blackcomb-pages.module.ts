@@ -86,6 +86,7 @@ import { EditProfileFieldComponent } from './edit-profile-field/edit-profile-fie
 import { CampaignStampsComponent } from './campaign-stamps/campaign-stamps.component';
 import { CatalogsComponent } from './catalogs/catalogs.component';
 import { CategoryComponent } from './category/category.component';
+import { CategoryRewardCardComponent } from './category-reward-card/category-reward-card.component';
 
 const comps: any[] = [
   AccountComponent,
@@ -145,6 +146,7 @@ const comps: any[] = [
   CampaignStampsComponent,
   CategoryComponent,
   CatalogsComponent,
+  CategoryRewardCardComponent
 ];
 
 @NgModule({

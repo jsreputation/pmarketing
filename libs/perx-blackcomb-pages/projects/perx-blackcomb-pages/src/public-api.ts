@@ -38,3 +38,5 @@ export { EditProfileFieldComponent } from './lib/edit-profile-field/edit-profile
 export { CampaignStampsComponent } from './lib/campaign-stamps/campaign-stamps.component';
 export { CatalogsComponent } from './lib/catalogs/catalogs.component';
 export { CategoryComponent } from './lib/category/category.component';
+export { CategoryRewardCardComponent } from './lib/category-reward-card/category-reward-card.component';
+

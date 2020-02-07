@@ -23,6 +23,9 @@ import {
   ICategoryTags,
 } from './models/reward.model';
 import { Config } from '../config/config';
+
+import {RewardStateHelper} from './reward-state-helper';
+
 export interface IV4Tag {
   id: number;
   name: string;
@@ -133,6 +136,7 @@ export class V4RewardsService extends RewardsService {
     this.apiHost = config.apiHost as string;
   }
 
+
   public static v4RewardToReward(reward: IV4Reward): IReward {
     const images = reward.images || [];
     let thumbnail = images.find((image: IV4Image) => image.type === 'reward_thumbnail');
@@ -165,6 +169,7 @@ export class V4RewardsService extends RewardsService {
         identifier: price.identifier
       })) : undefined,
       rewardThumbnail: thumbnailImg,
+      rewardState: RewardStateHelper.getRewardState(reward as unknown as IReward),
       rewardBanner,
       validFrom: new Date(reward.valid_from),
       validTo: new Date(reward.valid_to),

@@ -140,7 +140,6 @@ export { LoyaltyTransactionsListComponent } from './lib/loyalty/loyalty-transact
  */
 export { RewardsModule } from './lib/rewards/rewards.module';
 export { RewardsService } from './lib/rewards/rewards.service';
-export { RewardStateService } from './lib/rewards/reward-state.service';
 export {
   IReward,
   ICatalog,

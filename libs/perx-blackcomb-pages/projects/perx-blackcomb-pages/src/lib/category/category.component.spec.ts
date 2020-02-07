@@ -6,6 +6,7 @@ import {MatCardModule} from '@angular/material';
 import {ActivatedRoute, Router} from '@angular/router';
 import {RewardsService} from '../../../../../../perx-core/dist/perx-core';
 import {of} from 'rxjs';
+import {CategoryRewardCardComponent} from '../category-reward-card/category-reward-card.component';
 
 describe('CategoryComponent', () => {
   let component: CategoryComponent;
@@ -27,7 +28,7 @@ describe('CategoryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CategoryComponent ],
+      declarations: [ CategoryComponent, CategoryRewardCardComponent ],
       providers: [
         { provide: Router, useValue: routerStub },
         { provide: RewardsService, useValue: rewardsServiceStub },

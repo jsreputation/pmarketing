@@ -1,13 +1,9 @@
-import { Injectable } from '@angular/core';
 import {IReward, IRewardState} from './models/reward.model';
 import {ICampaign} from '../campaign/models/campaign.model';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class RewardStateService {
+export class RewardStateHelper {
 
-  public getRewardState(reward: IReward): IRewardState | null {
+  public static getRewardState(reward: IReward): IRewardState | null {
     const sellingFrom = reward.sellingFrom;
     const validToDate = reward.validTo;
 
@@ -77,7 +73,7 @@ export class RewardStateService {
     return null;
   }
 
-  public getCampaignRewardState(campaign: ICampaign): IRewardState | null {
+  public static getCampaignRewardState(campaign: ICampaign): IRewardState | null {
     const currentDate = new Date();
     const isComingSoon = campaign.beginsAt && campaign.beginsAt.getTime() > currentDate.getTime();
     if (isComingSoon) {

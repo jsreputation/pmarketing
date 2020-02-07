@@ -12,6 +12,7 @@ export interface IReward {
   rewardBanner: string;
   merchantImg?: string;
   rewardPrice?: IPrice[];
+  rewardState?: IRewardState | null;
   merchantId?: number;
   merchantName?: string;
   merchantWebsite?: string;
