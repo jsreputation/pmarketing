@@ -25,7 +25,7 @@ import {
   PagesObject,
   NotificationService,
   IConfig,
-  ThemesService
+  ThemesService, SettingsService
 } from '@perx/core';
 
 import { AccountComponent } from './account.component';
@@ -53,8 +53,10 @@ describe('AccountComponent', () => {
     whoAmI: (): Observable<IProfile> => of(profile)
   };
   const configServiceStub: Partial<ConfigService> = {
-    getAccountSettings: (): Observable<PagesObject> => of(pagesObject),
     readAppConfig: <T>(): Observable<IConfig<T>> => of()
+  };
+  const settingsServiceStub: Partial<SettingsService> = {
+    getAccountSettings: (): Observable<PagesObject> => of(pagesObject),
   };
   const authenticationServiceStub: Partial<AuthenticationService> = {
     logout: () => { }
@@ -88,7 +90,8 @@ describe('AccountComponent', () => {
         { provide: ConfigService, useValue: configServiceStub },
         { provide: NotificationService, useValue: notificationServiceStub },
         { provide: LoyaltyService, useValue: loyalityServiceStub },
-        { provide: ThemesService, useValue: themeServiceStub }
+        { provide: ThemesService, useValue: themeServiceStub },
+        { provide: SettingsService, useValue: settingsServiceStub }
       ]
     })
       .compileComponents();

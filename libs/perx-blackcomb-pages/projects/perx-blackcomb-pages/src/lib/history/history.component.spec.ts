@@ -5,12 +5,14 @@ import { VouchersModule, IVoucherService } from '@perx/core';
 import { of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
+import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 
 describe('HistoryComponent', () => {
   let component: HistoryComponent;
   let fixture: ComponentFixture<HistoryComponent>;
 
   const vouchersServiceStub: Partial<IVoucherService> = {
+    getFromPage: () => of([]),
     getAll: () => of([])
   };
 
@@ -19,6 +21,7 @@ describe('HistoryComponent', () => {
       declarations: [HistoryComponent],
       imports: [
         VouchersModule,
+        InfiniteScrollModule,
         TranslateModule.forRoot()
       ],
       providers: [

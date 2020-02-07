@@ -13,11 +13,12 @@ import {
 } from '../authentication/models/authentication.model';
 import { IWAppAccessTokenResponse, IWLoginResponse } from '@perx/whistler';
 import { ProfileService } from '../../profile/profile.service';
-import { Config } from '../../config/config';
 import { IV4ProfileResponse, V4ProfileService } from '../../profile/v4-profile.service';
 import { TokenStorage } from '../../utils/storage/token-storage.service';
 import { IMessageResponse } from '../../perx-core.models';
 import { oc } from 'ts-optchain';
+import {ConfigService} from '../../config/config.service';
+import {IConfig} from '../../config/models/config.model';
 
 interface IV4SignUpData {
   first_name?: string;
@@ -59,24 +60,28 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   private maxRetries: number = 2;
   public isSignUpEnded: boolean = true;
   public preauth: boolean = false;
+
   constructor(
-    config: Config,
+    private configService: ConfigService,
     private http: HttpClient,
     private tokenStorage: TokenStorage,
     private profileService: ProfileService
   ) {
     super();
-    if (!config.production) {
-      this.appAuthEndPoint = 'http://localhost:4000/v2/oauth';
-      this.userAuthEndPoint = 'http://localhost:4000/v4/oauth';
-    } else {
-      this.appAuthEndPoint = `${config.baseHref}v2/oauth`;
-      this.userAuthEndPoint = `${config.baseHref}v4/oauth`;
-    }
-    if (config.preAuth) {
-      this.preauth = config.preAuth;
-    }
-    this.customersEndPoint = `${config.apiHost}/v4/customers`;
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig<void>) => {
+        if (!config.production) {
+          this.appAuthEndPoint = 'http://localhost:4000/v2/oauth';
+          this.userAuthEndPoint = 'http://localhost:4000/v4/oauth';
+        } else {
+          this.appAuthEndPoint = `${config.baseHref}v2/oauth`;
+          this.userAuthEndPoint = `${config.baseHref}v4/oauth`;
+        }
+        if (config.preAuth) {
+          this.preauth = config.preAuth;
+        }
+        this.customersEndPoint = `${config.apiHost}/v4/customers`;
+      });
     this.$failedAuthObservableSubject = new Subject();
   }
 

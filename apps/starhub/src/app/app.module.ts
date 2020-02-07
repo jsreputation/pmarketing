@@ -30,7 +30,7 @@ import {
   ConfigModule,
   CampaignModule,
   MerchantsModule,
-  RewardPopupComponent, FeedItemPopupComponent,
+  RewardPopupComponent, FeedItemPopupComponent, SettingsModule,
 } from '@perx/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -90,6 +90,7 @@ export class SentryErrorHandler implements ErrorHandler {
   ],
   imports: [
     ConfigModule.forRoot({...environment}),
+    SettingsModule.forRoot({...environment}),
     BrowserModule,
     CampaignModule,
     AppRoutingModule,

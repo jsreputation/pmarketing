@@ -4,13 +4,12 @@ import {ConfigService} from './config.service';
 import { V4ConfigService } from './v4-config.service';
 import { WhistlerConfigService } from './whistler-config.service';
 import { HttpClient } from '@angular/common/http';
-import { AuthenticationService } from '../auth/authentication/authentication.service';
 
-export function configServiceFactory(http: HttpClient, config: Config, authenticationService: AuthenticationService): ConfigService {
+export function configServiceFactory(http: HttpClient, config: Config): ConfigService {
   if (config.isWhistler) {
     return new WhistlerConfigService( http, config );
   }
-  return new V4ConfigService(http, authenticationService);
+  return new V4ConfigService(http);
 }
 
 @NgModule({
@@ -20,7 +19,7 @@ export function configServiceFactory(http: HttpClient, config: Config, authentic
     {
       provide: ConfigService,
       useFactory: configServiceFactory,
-      deps: [HttpClient, Config, AuthenticationService]
+      deps: [HttpClient, Config]
     }
   ]
 })
