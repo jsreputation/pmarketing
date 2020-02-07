@@ -69,13 +69,13 @@ describe('V4SettingsService', () => {
     })));
 
   it('getAccountSettings', fakeAsync(inject([V4SettingsService, HttpClient],
-    (config: V4SettingsService, http: HttpClient) => {
+    (settings: V4SettingsService, http: HttpClient) => {
       const spy = jest.spyOn(http, 'get').mockReturnValue(of({
         displayProperties: {
           account: null
         }
       }));
-      config.getAccountSettings().subscribe(() => { });
+      settings.getAccountSettings().subscribe(() => { });
       tick();
       expect(spy).toHaveBeenCalled();
     })));
