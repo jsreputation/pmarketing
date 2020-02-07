@@ -238,7 +238,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   public catalogSelected(catalog: ICatalog): void {
-    console.log('this catalog is selected in home component.', catalog);
     this.router.navigate(['/category'], { queryParams: { catalog: catalog.id } });
   }
 

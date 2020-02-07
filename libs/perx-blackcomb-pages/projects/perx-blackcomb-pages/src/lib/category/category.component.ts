@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {ICatalog, IReward, RewardsService} from '@perx/core';
+import {ICatalog, IReward, RewardsService, RewardStateService, IRewardState} from '@perx/core';
 import {map, scan} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
 // import {SortingMode} from '';
@@ -24,6 +24,10 @@ export class CategoryComponent implements OnInit {
   public selectedCategory: string;
   public selectedSortingCriteria: string = 'Ending Soon';
   public showToolbarTitle: boolean = false;
+
+  public getRewardState(reward: IReward): IRewardState | null {
+    return this.rewardStateService.getRewardState(reward);
+  }
 
   private fetchRewards(): void {
     this.rewardsLoaded = false;
@@ -51,6 +55,7 @@ export class CategoryComponent implements OnInit {
   constructor(
     private router: Router,
     private rewardsService: RewardsService,
+    private rewardStateService: RewardStateService,
     private activeRoute: ActivatedRoute,
   ) {
     this.initRewardsScan();
@@ -91,12 +96,4 @@ export class CategoryComponent implements OnInit {
     this.fetchRewards();
   }
 
-  // WIP
-  // public selectCategory(): void {
-  //   this.bottomSheet.open(CategorySelectComponent, { data: this });
-  // }
-  //
-  // public selectSort(): void {
-  //   this.bottomSheet.open(CategorySortComponent, { data: this });
-  // }
 }

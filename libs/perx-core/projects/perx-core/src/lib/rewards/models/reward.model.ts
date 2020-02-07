@@ -24,6 +24,13 @@ export interface IReward {
   displayProperties?: IWRewardDisplayProperties;
 }
 
+export interface IRewardState {
+  label: string;
+  class: string;
+  rewardBalance?: number;
+  isButtonEnabled: boolean;
+}
+
 export interface ICatalog {
   id: number;
   name: string;

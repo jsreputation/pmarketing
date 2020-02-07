@@ -55,7 +55,6 @@ export class CatalogsComponent implements OnInit {
   }
 
   public selected(catalog: ICatalog): void {
-    console.log(catalog, 'emit me');
     this.tapped.emit(catalog);
   }
 

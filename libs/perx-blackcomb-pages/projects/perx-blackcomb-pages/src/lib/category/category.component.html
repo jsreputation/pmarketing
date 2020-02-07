@@ -23,6 +23,14 @@
         <div class="details">
           <h1>{{reward.name}}</h1>
           <h2>{{reward.merchantName}}</h2>
+          <h2 *ngIf="reward.validTo">
+            Expires on {{reward.validTo | date:'shortDate'}}
+          </h2>
+          <ng-container *ngIf=" getRewardState(reward) as state">
+            <div [ngClass]="'ribbon ' + state.class">
+              {{state.label}}
+            </div>
+          </ng-container>
         </div>
       </mat-card-content>
       <mat-card-footer></mat-card-footer>

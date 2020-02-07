@@ -14,6 +14,7 @@ import { HttpClient } from '@angular/common/http';
 import { Config } from '../config/config';
 import { WhistlerRewardsService } from './whistler-rewards.service';
 import { StampsCardsListComponent } from '../stamp/stamps-cards-list/stamps-cards-list.component';
+import { RewardStateService } from './reward-state.service';
 
 const components = [
   RewardsCollectionComponent,
@@ -50,7 +51,8 @@ export function rewardsServiceFactory(http: HttpClient, config: Config): Rewards
       provide: RewardsService,
       useFactory: rewardsServiceFactory,
       deps: [HttpClient, Config]
-    }
+    },
+    RewardStateService
   ]
 })
 export class RewardsModule {
