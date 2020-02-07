@@ -67,7 +67,6 @@ export class V4SettingsService extends SettingsService {
     }
 
     return this.authenticationService.getAppToken().pipe(
-      // todo: remove this.appConfig usage and use readAppConfig directly
       switchMap(() => this.configService.readAppConfig()),
       switchMap((config: IConfig<void>) => this.http.get(`${config.apiHost}/v4/settings/${key}`)),
       map((res: IV4MicrositeSettingsResponse) => res.data),
