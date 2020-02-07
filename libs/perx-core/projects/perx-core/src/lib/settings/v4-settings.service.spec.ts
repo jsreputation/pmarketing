@@ -7,9 +7,17 @@ import { IWAppAccessTokenResponse } from '@perx/whistler';
 import { HttpClient } from '@angular/common/http';
 import {IConfig} from '../config/models/config.model';
 import { ITheme } from '../utils/themes/themes.model';
+import {ConfigService} from '../config/config.service';
 
 const authenticationServiceStub = {
   getAppToken: () => of()
+};
+
+const configServiceStub = {
+  readAppConfig: () => of({
+    production: true,
+    baseHref: '/'
+  })
 };
 
 describe('V4SettingsService', () => {
@@ -19,10 +27,16 @@ describe('V4SettingsService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [{
-        provide: AuthenticationService,
-        useValue: authenticationServiceStub
-      }]
+      providers: [
+        {
+          provide: AuthenticationService,
+          useValue: authenticationServiceStub
+        },
+        {
+          provide: ConfigService,
+          useValue: configServiceStub
+        }
+      ]
     });
     // httpClient = TestBed.get(HttpClient);
     // httpTestingController = TestBed.get<HttpTestingController>(HttpTestingController as Type<HttpTestingController>);
