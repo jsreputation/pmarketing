@@ -4,6 +4,7 @@ import { HistoryComponent } from '@perx/blackcomb-pages';
 import { RouterModule, Routes } from '@angular/router';
 import { VouchersModule } from '@perx/core';
 import { TranslateModule } from '@ngx-translate/core';
+import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 
 const routes: Routes = [{
   path: '',
@@ -18,6 +19,7 @@ const routes: Routes = [{
     CommonModule,
     RouterModule.forChild(routes),
     VouchersModule,
+    InfiniteScrollModule,
     TranslateModule
   ]
 })

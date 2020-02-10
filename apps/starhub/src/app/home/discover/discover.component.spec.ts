@@ -25,7 +25,7 @@ import {
   FeedReaderService,
   IGameService,
   IReward,
-  ConfigService,
+  ConfigService, SettingsService
 } from '@perx/core';
 
 import { rewards } from 'src/app/rewards.mock';
@@ -45,6 +45,9 @@ describe('DiscoverComponent', () => {
   const rewardsServiceStub: Partial<RewardsService> = {
     getAllRewards: () => of(rewards),
     getCatalogs: () => of(catalogs),
+  };
+  const settingsServiceStub: Partial<SettingsService> = {
+    readRssFeeds: () => of()
   };
   const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of({
@@ -98,6 +101,7 @@ describe('DiscoverComponent', () => {
         { provide: Router, useValue: routerStub },
         { provide: IGameService, useValue: gameServiceStub },
         { provide: ConfigService, useValue: configServiceStub},
+        { provide: SettingsService, useValue: settingsServiceStub},
       ]
     })
       .compileComponents();

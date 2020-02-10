@@ -217,13 +217,21 @@ export { ConfigModule } from './lib/config/config.module';
 export { Config } from './lib/config/config';
 export { ConfigService } from './lib/config/config.service';
 export {
-  IConfig,
+  IConfig
+} from './lib/config/models/config.model';
+
+/**
+ * Settings
+ */
+export { SettingsModule } from './lib/settings/settings.module';
+export { SettingsService } from './lib/settings/settings.service';
+export {
   IRssFeeds,
   IRssFeedsData,
   IMicrositeSettings,
   PagesObject,
   AccountPageObject,
-} from './lib/config/models/config.model';
+} from './lib/settings/models/settings.model';
 
 /**
  * PrePlay

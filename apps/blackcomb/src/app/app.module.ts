@@ -58,6 +58,7 @@ import {
   TokenStorage,
   ConfigService,
   LocaleIdFactory,
+  SettingsModule,
 } from '@perx/core';
 
 import * as Hammer from 'hammerjs';
@@ -114,6 +115,7 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
+    SettingsModule.forRoot({ ...environment }),
     BrowserModule,
     AppRoutingModule,
     PerxCoreModule,
