@@ -21,7 +21,7 @@ export class AuthInterceptor implements HttpInterceptor {
     }
     const authReq = req.clone({
       setHeaders: {
-         ...contentType,
+        ...contentType,
         'Access-Control-Allow-Origin': '*',
         Authorization: this.sessionService.token || ''
       }

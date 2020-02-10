@@ -7,8 +7,8 @@ export class MockLoyaltyServices {
 
   public getMockLoyaltyForm(): ILoyaltyForm {
     return {
-        id: '1', name: 'test'
-      };
+      id: '1', name: 'test'
+    };
   }
 
   public getAudiencesLoyaltyOption(params: HttpParamsOptions = {}): Observable<IAudiencesLoyalty[]> {

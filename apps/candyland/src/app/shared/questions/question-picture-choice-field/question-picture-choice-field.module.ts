@@ -12,10 +12,10 @@ import { TranslateModule } from '@ngx-translate/core';
     QuestionPictureChoiceFieldComponent,
     UploadImageComponent
   ],
-    exports: [
-        QuestionPictureChoiceFieldComponent,
-        UploadImageComponent
-    ],
+  exports: [
+    QuestionPictureChoiceFieldComponent,
+    UploadImageComponent
+  ],
   entryComponents: [
     QuestionPictureChoiceFieldComponent
   ],

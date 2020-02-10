@@ -6,7 +6,7 @@ import {
 import { MatDialog } from '@angular/material';
 
 import {
-  ConfigService,
+  SettingsService,
   FeedItem, FeedItemPopupComponent,
   FeedReaderService,
   IRssFeeds,
@@ -30,7 +30,7 @@ export class NewsFeedComponent implements OnInit {
   public newsAfterScroll: number[];
 
   private async initNewsFeedItems(): Promise<void> {
-    const rssFeeds: IRssFeeds = await this.configService.readRssFeeds().toPromise();
+    const rssFeeds: IRssFeeds = await this.settingsService.readRssFeeds().toPromise();
     if (!(rssFeeds && rssFeeds.data.length > 0)) {
       return ;
     }
@@ -52,7 +52,7 @@ export class NewsFeedComponent implements OnInit {
     private reader: FeedReaderService,
     private dialog: MatDialog,
     private analytics: AnalyticsService,
-    private configService: ConfigService,
+    private settingsService: SettingsService,
   ) { }
 
   public ngOnInit(): void {

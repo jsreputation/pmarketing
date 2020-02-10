@@ -12,12 +12,12 @@ export class ShakeHttpService {
   ) { }
 
   public createShakeTree(data: IJsonApiPostItem<IWTreeGameEngagementAttributes>):
-    Observable<IJsonApiItemPayload<IWTreeGameEngagementAttributes>> {
+  Observable<IJsonApiItemPayload<IWTreeGameEngagementAttributes>> {
     return this.http.post<IJsonApiItemPayload<IWTreeGameEngagementAttributes>>(`${this.apiConfig.engagementsPath}/`, data);
   }
 
   public updateShakeTree(id: string, data: IJsonApiPatchItem<IWTreeGameEngagementAttributes>):
-    Observable<IJsonApiItemPayload<IWTreeGameEngagementAttributes>> {
+  Observable<IJsonApiItemPayload<IWTreeGameEngagementAttributes>> {
     return this.http.patch<IJsonApiItemPayload<IWTreeGameEngagementAttributes>>(`${this.apiConfig.engagementsPath}/game/${id}`, data);
   }
 

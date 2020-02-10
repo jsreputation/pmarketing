@@ -43,7 +43,7 @@ export class RedeemComponent implements OnInit {
   public pinInputSuccess(): void {
     this.popup({
       title: 'Redeem Successfully',
-      text: 'ID: ' + this.voucherId
+      text: `ID: ${  this.voucherId}`
     });
   }
 

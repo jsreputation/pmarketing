@@ -23,14 +23,15 @@ export class ErrorHandlerDirective implements AfterViewInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
 
   @Input()
-  set hkbnErrorHandler(errorName: string | string[]) {
+  public set hkbnErrorHandler(errorName: string | string[]) {
     this.errorName = errorName;
   }
 
-  constructor(private templateRef: TemplateRef<any>,
-              private viewContainer: ViewContainerRef,
-              private formField: MatFormField) {
-  }
+  constructor(
+    private templateRef: TemplateRef<any>,
+    private viewContainer: ViewContainerRef,
+    private formField: MatFormField
+  ) { }
 
   public ngAfterViewInit(): void {
     this.control = this.formField._control.ngControl;

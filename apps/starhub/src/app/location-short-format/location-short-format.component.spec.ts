@@ -39,7 +39,7 @@ describe('LocationShortFormatComponent', () => {
         { provide: GeoLocationService, useValue: geoLocationServiceStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -71,7 +71,7 @@ describe('LocationShortFormatComponent', () => {
     ];
 
     const locationsService: LocationsService = fixture.debugElement.injector.get<LocationsService>
-      (LocationsService as Type<LocationsService>);
+    (LocationsService as Type<LocationsService>);
     const locationsServiceSpy = spyOn(locationsService, 'getFromMerchant').and.returnValue(of(
       location
     ));

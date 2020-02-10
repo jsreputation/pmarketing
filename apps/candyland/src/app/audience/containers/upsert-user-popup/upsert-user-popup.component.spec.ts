@@ -45,38 +45,38 @@ describe('UpsertUserPopupComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        imports: [
-          HttpClientTestingModule,
-          MatIconModule,
-          BrowserDynamicTestingModule,
-          FormsModule,
-          ReactiveFormsModule,
-          MatOptionModule,
-          MatSelectModule,
-          MatInputModule,
-          MatFormFieldModule,
-          MatDialogModule,
-          DatePickerModule,
-          MatTabsModule,
-          ButtonModule,
-          UploadFileModule,
-          BrowserAnimationsModule,
-          NoopAnimationsModule,
-          TranslateModule.forRoot(),
-        ],
-        providers: [
-          {
-            provide: MatDialogRef, useValue: {
-              close: () => {
-              }
+      imports: [
+        HttpClientTestingModule,
+        MatIconModule,
+        BrowserDynamicTestingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatOptionModule,
+        MatSelectModule,
+        MatInputModule,
+        MatFormFieldModule,
+        MatDialogModule,
+        DatePickerModule,
+        MatTabsModule,
+        ButtonModule,
+        UploadFileModule,
+        BrowserAnimationsModule,
+        NoopAnimationsModule,
+        TranslateModule.forRoot(),
+      ],
+      providers: [
+        {
+          provide: MatDialogRef, useValue: {
+            close: () => {
             }
-          },
-          {provide: MAT_DIALOG_DATA, useValue: {}},
-          { provide: AudiencesService, useClass: MockAudienceService },
-          { provide: SurveyService, useClass: MockSurveyService },
-        ],
-        declarations: [UpsertUserPopupComponent]
-      })
+          }
+        },
+        {provide: MAT_DIALOG_DATA, useValue: {}},
+        { provide: AudiencesService, useClass: MockAudienceService },
+        { provide: SurveyService, useClass: MockSurveyService },
+      ],
+      declarations: [UpsertUserPopupComponent]
+    })
       .compileComponents();
   }));
 

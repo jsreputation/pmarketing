@@ -12,9 +12,7 @@ describe('CategorySelectComponent', () => {
 
   const dataStub = {
     categorySelectedCallback: () => {},
-    getCurrentSelectedCategory: () => {
-      return '';
-    }
+    getCurrentSelectedCategory: () => ''
   };
 
   beforeEach(async(() => {

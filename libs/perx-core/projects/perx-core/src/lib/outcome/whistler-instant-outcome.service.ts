@@ -47,8 +47,8 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
   ): Observable<IWCampaignProperties | never> {
     return this.http
       .get<IJsonApiItemPayload<IWCampaignAttributes>>(
-        `${this.config.apiHost}/campaign/entities/${campaignId}`
-      )
+      `${this.config.apiHost}/campaign/entities/${campaignId}`
+    )
       .pipe(
         switchMap(res =>
           !(res.data && res.data.attributes)
@@ -68,7 +68,7 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
       switchMap((campaign: IWCampaignProperties) => {
         displayProps = campaign.display_properties || {};
         return this.http.get<
-          IJsonApiItemPayload<IWInstantOutcomeEngagementAttributes>
+        IJsonApiItemPayload<IWInstantOutcomeEngagementAttributes>
         >(
           `${this.config.apiHost}/instant-outcome/engagements/${
             campaign.engagementId
@@ -173,10 +173,10 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
     };
     return this.http
       .patch<IJsonApiItemPayload<IWInstantOutcomeTransactionAttributes>>(
-        `${this.config.apiHost}/instant-outcome/transactions/${transactionId}`,
-        body,
-        { headers: { 'Content-Type': 'application/vnd.api+json' } }
-      )
+      `${this.config.apiHost}/instant-outcome/transactions/${transactionId}`,
+      body,
+      { headers: { 'Content-Type': 'application/vnd.api+json' } }
+    )
       .pipe(map(() => void 0));
   }
 }

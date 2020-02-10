@@ -19,28 +19,28 @@ describe('ListMerchantComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        imports: [
-          RouterTestingModule,
-          BrowserDynamicTestingModule,
-          FormsModule,
-          ReactiveFormsModule,
-          TableFiltersModule,
-          HttpClientTestingModule,
-          MatDialogModule,
-          TranslateModule.forRoot()
-        ],
-        providers: [
-          {
-            provide: MatDialogRef, useValue: {
-              close: () => {
-              }
+      imports: [
+        RouterTestingModule,
+        BrowserDynamicTestingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        TableFiltersModule,
+        HttpClientTestingModule,
+        MatDialogModule,
+        TranslateModule.forRoot()
+      ],
+      providers: [
+        {
+          provide: MatDialogRef, useValue: {
+            close: () => {
             }
-          },
-          { provide: MerchantsService, useClass: MockMerchantsService }
-        ],
-        declarations: [ListMerchantComponent],
-        schemas: [NO_ERRORS_SCHEMA]
-      })
+          }
+        },
+        { provide: MerchantsService, useClass: MockMerchantsService }
+      ],
+      declarations: [ListMerchantComponent],
+      schemas: [NO_ERRORS_SCHEMA]
+    })
       .compileComponents();
   }));
 

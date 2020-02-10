@@ -7,24 +7,25 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   templateUrl: './upload-image.component.html',
   styleUrls: ['./upload-image.component.scss'],
   providers: [
-    {       provide: NG_VALUE_ACCESSOR,
+    {
+      provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => UploadImageComponent),
       multi: true
     }
   ]
 })
-export class UploadImageComponent implements OnInit, ControlValueAccessor  {
+export class UploadImageComponent implements OnInit, ControlValueAccessor {
 
   @Output() private selectUploadGraphic: EventEmitter<IGraphic> = new EventEmitter<IGraphic>();
-  @ViewChild('fileInput', {static: true}) public htmlInput: HTMLInputElement;
+  @ViewChild('fileInput', { static: true }) public htmlInput: HTMLInputElement;
   public lock: boolean;
   public imagePath: FileList;
   public imgURL: any;
   public message: string;
   public loadedImg: boolean = false;
 
-  public onChange: any = () => {};
-  public onTouch: any = () => {};
+  public onChange: any = () => { };
+  public onTouch: any = () => { };
 
   public set setGraphic(val: any) {
     if (val !== undefined) {
@@ -34,8 +35,7 @@ export class UploadImageComponent implements OnInit, ControlValueAccessor  {
     }
   }
 
-  constructor(private sanitizer: DomSanitizer,
-              private cd: ChangeDetectorRef) {}
+  constructor(private sanitizer: DomSanitizer, private cd: ChangeDetectorRef) { }
 
   public preview(input: HTMLInputElement): void {
     const files = input.files;

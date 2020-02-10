@@ -70,9 +70,9 @@ export class GameComponent implements OnInit {
       }
       this.loading = false;
     },
-      () => {
-        this.router.navigate(['/vouchers']);
-      }
+    () => {
+      this.router.navigate(['/vouchers']);
+    }
     );
   }
 

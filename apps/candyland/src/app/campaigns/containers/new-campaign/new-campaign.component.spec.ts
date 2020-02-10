@@ -71,10 +71,10 @@ describe('NewCampaignComponent', () => {
         },
         { provide: LocalStorageService, useValue: {} },
         { provide: CampaignChannelsFormService, useValue: {
-            getForm () {
-              return new FormGroup({});
-            }
-          } },
+          getForm() {
+            return new FormGroup({});
+          }
+        } },
         { provide: TenantStoreService, useClass: TenantMockStore },
         { provide: CampaignsService, useClass: MockCampaignService },
         { provide: SettingsService, useClass: MockSettingsService },

@@ -24,6 +24,7 @@ import {
   ITheme,
   RewardPopupComponent,
   RewardsService,
+  SettingsService,
   ThemesService,
 } from '@perx/core';
 import {TranslateService} from '@ngx-translate/core';
@@ -138,7 +139,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         tap((campaigns: ICampaign[]) => this.showCampaigns = campaigns.length > 0),
         takeLast(1)
       );
-    const rssFeeds: IRssFeeds = await this.configService.readRssFeeds().toPromise();
+    const rssFeeds: IRssFeeds = await this.settingsService.readRssFeeds().toPromise();
     if (!(rssFeeds && rssFeeds.data.length > 0)) {
       return;
     }
@@ -164,7 +165,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     private authService: AuthenticationService,
     private campaignService: ICampaignService,
     private instantOutcomeService: InstantOutcomeService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private settingsService: SettingsService,
+
   ) {
   }
 

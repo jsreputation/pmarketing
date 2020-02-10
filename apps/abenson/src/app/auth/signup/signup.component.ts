@@ -79,7 +79,7 @@ export class SignUpComponent implements OnInit {
       this.authService.getAppToken().subscribe(() => {
         this.appAccessTokenFetched = true;
       }, (err) => {
-        console.error('Error' + err);
+        console.error(`Error${  err}`);
       });
     }
   }
@@ -111,33 +111,33 @@ export class SignUpComponent implements OnInit {
     (profile as ISignUpData).passwordConfirmation = password;
     (cardNumber && cardNumber.length ? this.profileService.verifyCardNumber(cardNumber, profile.lastName, '1') : of(true))
       .pipe(mergeMap((success) => success ? this.authService.signup(profile) : throwError(('err-or')))).subscribe(() => {
-      if (this.signUpForm.value.cardNumber) {
-        this.sharedDataService.addData({
-          phone: profile.phone,
-          password: profile.password,
-          cardNumber
+        if (this.signUpForm.value.cardNumber) {
+          this.sharedDataService.addData({
+            phone: profile.phone,
+            password: profile.password,
+            cardNumber
+          });
+        }
+        this.router.navigate(['sms-validation'], {
+          queryParams: {identifier: profile.phone}
         });
-      }
-      this.router.navigate(['sms-validation'], {
-        queryParams: {identifier: profile.phone}
-      });
-    }, (error: any) => {
-      if (error.status === 409) {
+      }, (error: any) => {
+        if (error.status === 409) {
         // http conflict
-        this.notificationService.addPopup({
-          title: 'Account Exists',
-          text: 'This account already exists. Please log in instead.',
-          buttonTxt: 'CLOSE'
-        });
-      } else {
+          this.notificationService.addPopup({
+            title: 'Account Exists',
+            text: 'This account already exists. Please log in instead.',
+            buttonTxt: 'CLOSE'
+          });
+        } else {
         // card error handling
-        this.notificationService.addPopup({
-          title: 'PROFILE NOT FOUND',
-          text: 'Please check that your PLUS! Card number and last name are correct and try again. If you need help, you may reach us at +63 (02) 8981 0025',
-          buttonTxt: 'OK'
-        });
-      }
+          this.notificationService.addPopup({
+            title: 'PROFILE NOT FOUND',
+            text: 'Please check that your PLUS! Card number and last name are correct and try again. If you need help, you may reach us at +63 (02) 8981 0025',
+            buttonTxt: 'OK'
+          });
+        }
 
-    });
+      });
   }
 }

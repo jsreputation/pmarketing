@@ -48,7 +48,7 @@ describe('V4LocationService', () => {
       // with tags
       tick();
       locationService.getAllLocations(of([{ id: 1, tags: [{ name: 'tag', id: 1 }] } as IMerchant,
-      { id: 2 } as IMerchant]), ['tag'])
+        { id: 2 } as IMerchant]), ['tag'])
         .subscribe(() => { });
       tick();
       expect(spy).toHaveBeenCalled();

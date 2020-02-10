@@ -10,10 +10,10 @@ describe('ReportLinearGraphicComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        declarations: [ReportLinearGraphicComponent],
-        schemas: [NO_ERRORS_SCHEMA],
-        imports: [TranslateModule.forRoot()]
-      })
+      declarations: [ReportLinearGraphicComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+      imports: [TranslateModule.forRoot()]
+    })
       .compileComponents();
   }));
 

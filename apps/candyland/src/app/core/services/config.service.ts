@@ -10,8 +10,7 @@ import { IStatusLabelConfig } from '@perx/candyshop';
 })
 export class ConfigService {
 
-  constructor(private configHttp: ConfigHttpService,
-              private translate: TranslateService) {}
+  constructor(private configHttp: ConfigHttpService, private translate: TranslateService) { }
 
   public prepareStatusesLabel(): Observable<IStatusLabelConfig> {
     return combineLatest([this.getTranslationStatuses(), this.getStatusLabel()])

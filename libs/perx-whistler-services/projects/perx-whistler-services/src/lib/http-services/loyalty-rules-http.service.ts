@@ -32,7 +32,7 @@ export class LoyaltyRulesHttpService {
   }
 
   public updateRuleSet(id: string, data: IJsonApiItemPayload<IWLoyaltyRuleSetAttributes>):
-    Observable<IJsonApiItemPayload<IWLoyaltyRuleSetAttributes>> {
+  Observable<IJsonApiItemPayload<IWLoyaltyRuleSetAttributes>> {
     return this.http.patch<IJsonApiItemPayload<IWLoyaltyRuleSetAttributes>>(`${this.apiConfig.getLoyaltyRuleSetPath}/${id}`, data);
   }
 
@@ -54,7 +54,7 @@ export class LoyaltyRulesHttpService {
   }
 
   public updateRule(id: string, data: IJsonApiItemPayload<IWLoyaltyRuleAttributes>):
-    Observable<IJsonApiItemPayload<IWLoyaltyRuleAttributes>> {
+  Observable<IJsonApiItemPayload<IWLoyaltyRuleAttributes>> {
     return this.http.patch<IJsonApiItemPayload<IWLoyaltyRuleAttributes>>(`${this.apiConfig.getLoyaltyRulePath}/${id}`, data);
   }
 
@@ -71,12 +71,12 @@ export class LoyaltyRulesHttpService {
   }
 
   public createRuleCondition(data: IJsonApiItemPayload<IWLoyaltyRuleConditionAttributes>):
-    Observable<IJsonApiItemPayload<IWLoyaltyRuleConditionAttributes>> {
+  Observable<IJsonApiItemPayload<IWLoyaltyRuleConditionAttributes>> {
     return this.http.post<IJsonApiItemPayload<IWLoyaltyRuleConditionAttributes>>(`${this.apiConfig.getLoyaltyRuleConditionPath}/`, data);
   }
 
   public updateRuleCondition(id: string, data: IJsonApiItemPayload<IWLoyaltyRuleConditionAttributes>):
-    Observable<IJsonApiItemPayload<IWLoyaltyRuleConditionAttributes>> {
+  Observable<IJsonApiItemPayload<IWLoyaltyRuleConditionAttributes>> {
     return this.http.patch<IJsonApiItemPayload<IWLoyaltyRuleConditionAttributes>>(
       `${this.apiConfig.getLoyaltyRuleConditionPath}/${id}`,
       data
@@ -96,12 +96,12 @@ export class LoyaltyRulesHttpService {
   }
 
   public createRulePoint(data: IJsonApiItemPayload<IWLoyaltyRulePointAttributes>):
-    Observable<IJsonApiItemPayload<IWLoyaltyRulePointAttributes>> {
+  Observable<IJsonApiItemPayload<IWLoyaltyRulePointAttributes>> {
     return this.http.post<IJsonApiItemPayload<IWLoyaltyRulePointAttributes>>(`${this.apiConfig.getLoyaltyRulePointsCalculator}/`, data);
   }
 
   public updateRulePoint(id: string, data: IJsonApiItemPayload<IWLoyaltyRulePointAttributes>):
-    Observable<IJsonApiItemPayload<IWLoyaltyRulePointAttributes>> {
+  Observable<IJsonApiItemPayload<IWLoyaltyRulePointAttributes>> {
     return this.http.patch<IJsonApiItemPayload<IWLoyaltyRulePointAttributes>>(
       `${this.apiConfig.getLoyaltyRulePointsCalculator}/${id}`,
       data

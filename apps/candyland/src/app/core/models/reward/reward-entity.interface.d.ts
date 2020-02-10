@@ -1,4 +1,4 @@
-import { WRedemptionType } from "@perx/whistler";
+import { WRedemptionType } from '@perx/whistler';
 
 export interface IRewardEntity {
   id: string;

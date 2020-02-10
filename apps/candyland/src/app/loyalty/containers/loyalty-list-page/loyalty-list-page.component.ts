@@ -75,7 +75,7 @@ export class LoyaltyListPageComponent implements OnInit, OnDestroy {
 
   private navigateToEdit(id: string): void {
     if (id) {
-      this.router.navigate(['loyalty/edit/' + id]);
+      this.router.navigate([`loyalty/edit/${  id}`]);
     }
   }
 

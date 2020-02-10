@@ -17,16 +17,16 @@ export class SnakeHttpService {
   }
 
   public createSnake(data: IJsonApiPostItem<IWSnakeGameEngagementAttributes>):
-    Observable<IJsonApiItemPayload<IWSnakeGameEngagementAttributes>> {
-    return this.http.post<IJsonApiItemPayload<IWSnakeGameEngagementAttributes>>(ApiConfig.engagementsPath + '/', data);
+  Observable<IJsonApiItemPayload<IWSnakeGameEngagementAttributes>> {
+    return this.http.post<IJsonApiItemPayload<IWSnakeGameEngagementAttributes>>(`${ApiConfig.engagementsPath  }/`, data);
   }
 
   public updateSnake(id: string, data: IJsonApiPatchItem<IWSnakeGameEngagementAttributes>):
-    Observable<IJsonApiItemPayload<IWSnakeGameEngagementAttributes>> {
-    return this.http.patch<IJsonApiItemPayload<IWSnakeGameEngagementAttributes>>(ApiConfig.engagementsPath + '/game/' + id, data);
+  Observable<IJsonApiItemPayload<IWSnakeGameEngagementAttributes>> {
+    return this.http.patch<IJsonApiItemPayload<IWSnakeGameEngagementAttributes>>(`${ApiConfig.engagementsPath  }/game/${  id}`, data);
   }
 
   public getSnake(id: string): Observable<IJsonApiItemPayload<IWSnakeGameEngagementAttributes>> {
-    return this.http.get<IJsonApiItemPayload<IWSnakeGameEngagementAttributes>>(ApiConfig.engagementsPath + '/game/' + id);
+    return this.http.get<IJsonApiItemPayload<IWSnakeGameEngagementAttributes>>(`${ApiConfig.engagementsPath  }/game/${  id}`);
   }
 }

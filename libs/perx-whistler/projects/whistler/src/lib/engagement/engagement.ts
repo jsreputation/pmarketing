@@ -37,10 +37,10 @@ export interface IWEngagementAttributes<T = any> {
 }
 
 export interface IWGameEngagementAttributes extends IWEngagementAttributes<IWGameDisplayProperties |
-  IWTreeDisplayProperties |
-  IWPinataDisplayProperties |
-  IWSpinDisplayProperties |
-  IWSnakeDisplayProperties> {
+IWTreeDisplayProperties |
+IWPinataDisplayProperties |
+IWSpinDisplayProperties |
+IWSnakeDisplayProperties> {
   game_type: WGameType;
 }
 

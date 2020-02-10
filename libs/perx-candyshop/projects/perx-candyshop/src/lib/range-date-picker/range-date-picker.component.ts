@@ -43,7 +43,7 @@ export class RangeDatePickerComponent extends CsFormFieldControl<any> implements
   // @Input() set disabled(value: boolean) {
   //   this.setDisabledState(value);
   // }
-  @ViewChild('datePicker', {static: false}) public datePicker: MatDatepicker<Date>;
+  @ViewChild('datePicker', { static: false }) public datePicker: MatDatepicker<Date>;
   @Input() public clickable: boolean = true;
   @Input() public minDayPeriod: number = 1;
 
@@ -51,9 +51,11 @@ export class RangeDatePickerComponent extends CsFormFieldControl<any> implements
   private onTouched: any = noop;
   private destroy$: Subject<void> = new Subject();
 
-  constructor(@Optional() @Self() public ngControl: NgControl,
-              @Optional() @Host() protected formField: MatFormField,
-              private cd: ChangeDetectorRef) {
+  constructor(
+    @Optional() @Self() public ngControl: NgControl,
+    @Optional() @Host() protected formField: MatFormField,
+    private cd: ChangeDetectorRef
+  ) {
     super('cs-range-date-picker', ngControl);
     if (this.ngControl) {
       this.ngControl.valueAccessor = this;
@@ -100,7 +102,7 @@ export class RangeDatePickerComponent extends CsFormFieldControl<any> implements
 
   public writeValue(obj: Date | null): void {
     if (obj) {
-      this.datePickerControl.patchValue(obj, {emitEvent: false});
+      this.datePickerControl.patchValue(obj, { emitEvent: false });
     } else {
       this.datePickerControl.reset();
     }

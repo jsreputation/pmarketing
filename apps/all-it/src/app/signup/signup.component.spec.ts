@@ -50,7 +50,7 @@ describe('SignupComponent', () => {
         { provide: NotificationService, useValue: notificationServiceStub}
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

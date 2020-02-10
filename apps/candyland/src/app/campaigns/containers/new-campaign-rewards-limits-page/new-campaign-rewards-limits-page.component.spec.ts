@@ -24,30 +24,30 @@ describe('NewCampaignRewardsLimitsPageComponent', () => {
       getToggleConfig: () => ([])
     };
     TestBed.configureTestingModule({
-        imports: [
-          BrowserDynamicTestingModule,
-          MatCheckboxModule,
-          ButtonModule,
-          FormsModule,
-          ReactiveFormsModule,
-          TranslateModule.forRoot(),
-        ],
-        providers: [
-          {
-            provide: CampaignCreationStoreService, useValue: {
-              updateCampaign: () => {
-              },
-              resetCampaign: () => {
-              },
-              currentCampaign$: new BehaviorSubject({})
-            }
-          },
-          {provide: StepConditionService, useValue: {registerStepCondition: () => ({})}},
-          {provide: NewCampaignRewardsStampsFormService, useValue: NewCampaignRewardsStampsFormServiceStub}
-        ],
-        declarations: [NewCampaignRewardsLimitsPageComponent],
-        schemas: [NO_ERRORS_SCHEMA]
-      })
+      imports: [
+        BrowserDynamicTestingModule,
+        MatCheckboxModule,
+        ButtonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        TranslateModule.forRoot(),
+      ],
+      providers: [
+        {
+          provide: CampaignCreationStoreService, useValue: {
+            updateCampaign: () => {
+            },
+            resetCampaign: () => {
+            },
+            currentCampaign$: new BehaviorSubject({})
+          }
+        },
+        {provide: StepConditionService, useValue: {registerStepCondition: () => ({})}},
+        {provide: NewCampaignRewardsStampsFormService, useValue: NewCampaignRewardsStampsFormServiceStub}
+      ],
+      declarations: [NewCampaignRewardsLimitsPageComponent],
+      schemas: [NO_ERRORS_SCHEMA]
+    })
       .compileComponents();
   }));
 

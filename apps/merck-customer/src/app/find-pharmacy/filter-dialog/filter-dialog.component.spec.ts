@@ -23,7 +23,7 @@ describe('FilterDialogComponent', () => {
         {provide: MatDialogRef, useValue: FilterDialogComponent}
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

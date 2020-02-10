@@ -25,7 +25,7 @@ export class NotificationHttpAdapter {
     if (type === NotificationHttpAdapter.launchType.launchDate
       && data.time && data.type) {
       res.attributes.payload['send_at'] = data.time;
-      res.attributes['notification_type'] = type;
+      res.attributes.notification_type = type;
       res.attributes.payload['new_status'] = 'ended';
       res.attributes.payload['send_on'] = {
         period: data.numberPeriod,
@@ -37,7 +37,7 @@ export class NotificationHttpAdapter {
     if (type === NotificationHttpAdapter.launchType.launchDate
       && !data.numberPeriod && !data.type) {
       res.attributes.payload['send_at'] = data.launchDateTime;
-      res.attributes['notification_type'] = type;
+      res.attributes.notification_type = type;
       res.attributes.payload['new_status'] = 'active';
     }
 
@@ -46,8 +46,8 @@ export class NotificationHttpAdapter {
       && data.birthdayTime
       && !data.monthDay
     ) {
-      res.attributes['notification_type'] = NotificationHttpAdapter.launchType.users_date_birth;
-      res.attributes['segment'] = 'this_day';
+      res.attributes.notification_type = NotificationHttpAdapter.launchType.users_date_birth;
+      res.attributes.segment = 'this_day';
       res.attributes.payload['send_at'] = data.birthdayTime;
     }
 
@@ -57,14 +57,14 @@ export class NotificationHttpAdapter {
       && data.birthdayTime
       && data.monthDay
     ) {
-      res.attributes['notification_type'] = NotificationHttpAdapter.launchType.users_month_birth;
-      res.attributes['segment'] = 'this_month';
+      res.attributes.notification_type = NotificationHttpAdapter.launchType.users_month_birth;
+      res.attributes.segment = 'this_month';
       res.attributes.payload['send_at'] = data.birthdayTime;
       res.attributes.payload['on_day'] = data.monthDay;
     }
 
     if (type === NotificationHttpAdapter.launchType.campaignNotCompleted) {
-      res.attributes['notification_type'] = data.sentType;
+      res.attributes.notification_type = data.sentType;
       res.attributes.payload['send_at'] = data.time;
       res.attributes.payload['send_on'] = {
         period: data.numberPeriod,
@@ -140,18 +140,18 @@ export class NotificationHttpAdapter {
       monthDay: null,
     };
     if (notification.attributes.notification_type === NotificationHttpAdapter.launchType.launchDate) {
-      result['launchDateTime'] = notification.attributes.payload.send_at;
+      result.launchDateTime = notification.attributes.payload.send_at;
     }
 
     if (notification.attributes.notification_type === NotificationHttpAdapter.launchType.users_date_birth) {
       if (notification.attributes.segment === 'this_day') {
-        result['sentType'] = NotificationHttpAdapter.launchType.usersDateBirth;
-        result['birthdayTime'] = notification.attributes.payload.send_at;
+        result.sentType = NotificationHttpAdapter.launchType.usersDateBirth;
+        result.birthdayTime = notification.attributes.payload.send_at;
       }
       if (notification.attributes.segment === 'this_month') {
-        result['sentType'] = NotificationHttpAdapter.launchType.usersMonthBirth;
-        result['birthdayTime'] = notification.attributes.payload.send_at;
-        result['monthDay'] = notification.attributes.payload.on_day;
+        result.sentType = NotificationHttpAdapter.launchType.usersMonthBirth;
+        result.birthdayTime = notification.attributes.payload.send_at;
+        result.monthDay = notification.attributes.payload.on_day;
       }
     }
     return result;

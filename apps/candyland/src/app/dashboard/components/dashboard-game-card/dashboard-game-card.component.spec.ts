@@ -26,7 +26,7 @@ describe('DashboardGameCardComponent', () => {
       ],
       declarations: [ DashboardGameCardComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

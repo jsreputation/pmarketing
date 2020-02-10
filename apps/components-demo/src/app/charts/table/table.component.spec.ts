@@ -12,7 +12,7 @@ describe('TableComponent', () => {
       declarations: [ TableComponent ],
       imports: [ PerxChartModule ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

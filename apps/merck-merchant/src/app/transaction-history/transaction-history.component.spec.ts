@@ -40,7 +40,7 @@ describe('TransactionHistoryComponent', () => {
         { provide: IMerchantAdminService, useValue: merchantAdminServiceStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

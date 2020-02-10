@@ -1,5 +1,5 @@
-import { ConfigService } from '@perx/core';
-import { of, BehaviorSubject } from 'rxjs';
+import { PagesObject, SettingsService} from '@perx/core';
+import {of, BehaviorSubject, Observable} from 'rxjs';
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { ContentComponent } from './content.component';
 import { ActivatedRoute } from '@angular/router';
@@ -8,12 +8,13 @@ import { Type } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 
+const settingsServiceStub: Partial<SettingsService> = {
+  getAccountSettings: (): Observable<PagesObject> => of(),
+};
+
 describe('ContentComponent', () => {
   let component: ContentComponent;
   let fixture: ComponentFixture<ContentComponent>;
-  const configSvcStub: Partial<ConfigService> = {
-    getAccountSettings: () => of()
-  };
 
   const params = new BehaviorSubject({});
 
@@ -25,7 +26,7 @@ describe('ContentComponent', () => {
         TranslateModule.forRoot()
       ],
       providers: [
-        { provide: ConfigService, useValue: configSvcStub },
+        { provide: SettingsService, useValue: settingsServiceStub },
         {
           provide: ActivatedRoute,
           useValue: {
@@ -54,8 +55,8 @@ describe('ContentComponent', () => {
     });
 
     it('should display the error message, If key is valid but the content cannot be downloaded', fakeAsync(() => {
-      const themesService: ConfigService = fixture.debugElement.injector.get<ConfigService>(
-        ConfigService as Type<ConfigService>);
+      const themesService: SettingsService = fixture.debugElement.injector.get<SettingsService>(
+        SettingsService as Type<SettingsService>);
 
       const themesServiceSpy = spyOn(themesService, 'getAccountSettings').and.returnValue(of(
         {
@@ -80,8 +81,8 @@ describe('ContentComponent', () => {
     }));
 
     it('If the key is valid and the content can be fetched, it should render the fetched content.', fakeAsync(() => {
-      const themesService: ConfigService = fixture.debugElement.injector.get<ConfigService>(
-        ConfigService as Type<ConfigService>);
+      const themesService: SettingsService = fixture.debugElement.injector.get<SettingsService>(
+        SettingsService as Type<SettingsService>);
 
       const themesServiceSpy = spyOn(themesService, 'getAccountSettings').and.returnValue(of(
         {
@@ -106,8 +107,8 @@ describe('ContentComponent', () => {
     }));
 
     it('should display a spinner', fakeAsync(() => {
-      const themesService: ConfigService = fixture.debugElement.injector.get<ConfigService>(
-        ConfigService as Type<ConfigService>);
+      const themesService: SettingsService = fixture.debugElement.injector.get<SettingsService>(
+        SettingsService as Type<SettingsService>);
 
       const themesServiceSpy = spyOn(themesService, 'getAccountSettings').and.returnValue(of(
         {
@@ -135,8 +136,8 @@ describe('ContentComponent', () => {
     }));
 
     it('If the key does not have any matching page, it should display the error message.', fakeAsync(() => {
-      const themesService: ConfigService = fixture.debugElement.injector.get<ConfigService>(
-        ConfigService as Type<ConfigService>);
+      const themesService: SettingsService = fixture.debugElement.injector.get<SettingsService>(
+        SettingsService as Type<SettingsService>);
 
       const themesServiceSpy = spyOn(themesService, 'getAccountSettings').and.returnValue(of());
       component.ngOnInit();
@@ -161,8 +162,8 @@ describe('ContentComponent', () => {
     });
 
     it('If there is no routeParam key, it should display the error message.', fakeAsync(() => {
-      const themesService: ConfigService = fixture.debugElement.injector.get<ConfigService>(
-        ConfigService as Type<ConfigService>);
+      const themesService: SettingsService = fixture.debugElement.injector.get<SettingsService>(
+        SettingsService as Type<SettingsService>);
 
       const themesServiceSpy = spyOn(themesService, 'getAccountSettings').and.returnValue(of());
       component.ngOnInit();

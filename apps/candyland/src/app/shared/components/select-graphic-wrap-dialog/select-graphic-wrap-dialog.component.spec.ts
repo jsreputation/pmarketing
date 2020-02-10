@@ -26,7 +26,7 @@ describe('SelectGraphicWrapDialogComponent', () => {
         MatIconModule
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
