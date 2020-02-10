@@ -8,11 +8,11 @@ import {ActivatedRoute, Router} from '@angular/router';
 const REQ_PAGE_SIZE: number = 10;
 
 @Component({
-  selector: 'perx-blackcomb-pages-category',
-  templateUrl: './category.component.html',
-  styleUrls: ['./category.component.scss']
+  selector: 'perx-blackcomb-pages-catalog',
+  templateUrl: './catalog.component.html',
+  styleUrls: ['./catalog.component.scss']
 })
-export class CategoryComponent implements OnInit {
+export class CatalogComponent implements OnInit {
   @ViewChild('contentScroll', { static: false })
   public contentScroll: ElementRef;
   public rewards$: Observable<IReward[]>;
@@ -57,7 +57,7 @@ export class CategoryComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    const categoryName = this.activeRoute.snapshot.queryParamMap.get('category');
+    const categoryName = this.activeRoute.snapshot.queryParamMap.get('catalogs');
     if (categoryName) {
       this.selectedCategory = categoryName;
       this.fetchRewards();

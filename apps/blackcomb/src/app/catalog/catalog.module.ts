@@ -12,17 +12,17 @@ import {RewardsModule, UtilsModule} from '@perx/core';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 
-import { CategoryComponent, CategoryRewardCardComponent } from '@perx/blackcomb-pages';
+import { CatalogComponent, CatalogRewardCardComponent } from '@perx/blackcomb-pages';
 
 const routes: Routes = [{
   path: '',
-  component: CategoryComponent
+  component: CatalogComponent
 }];
 
 @NgModule({
   declarations: [
-    CategoryComponent,
-    CategoryRewardCardComponent
+    CatalogComponent,
+    CatalogRewardCardComponent
   ],
   imports: [
     CommonModule,
@@ -34,4 +34,4 @@ const routes: Routes = [{
     RouterModule.forChild(routes)
   ]
 })
-export class CategoryModule { }
+export class CatalogModule { }

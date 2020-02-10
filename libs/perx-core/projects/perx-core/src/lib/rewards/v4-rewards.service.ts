@@ -144,7 +144,7 @@ export class V4RewardsService extends RewardsService {
       thumbnail = images.find((image: IV4Image) => image.type === 'reward_logo');
     }
     const thumbnailImg = thumbnail && thumbnail.url;
-    const banner = images.find((image: IV4Image) => image.type === 'reward_banner');
+    const banner = images.find((image: IV4Image) => image['image_section'] === 'reward_banner');
     const rewardBanner: string = oc(banner).url('');
     const merchantImg = oc(reward).merchant_logo_url();
     const sellingFrom = reward.selling_from ? new Date(reward.selling_from) : undefined;

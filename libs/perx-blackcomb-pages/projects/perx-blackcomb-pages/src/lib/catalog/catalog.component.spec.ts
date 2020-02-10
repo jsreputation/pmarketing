@@ -1,16 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CategoryComponent } from './category.component';
 import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {MatCardModule} from '@angular/material';
 import {ActivatedRoute, Router} from '@angular/router';
-import {RewardsService} from '../../../../../../perx-core/dist/perx-core';
+import {RewardsService} from '@perx/core';
 import {of} from 'rxjs';
-import {CategoryRewardCardComponent} from '../category-reward-card/category-reward-card.component';
+import {CatalogComponent} from './catalog.component';
+import {CatalogRewardCardComponent} from '../catalog-reward-card/catalog-reward-card.component';
 
-describe('CategoryComponent', () => {
-  let component: CategoryComponent;
-  let fixture: ComponentFixture<CategoryComponent>;
+describe('CatalogComponent', () => {
+  let component: CatalogComponent;
+  let fixture: ComponentFixture<CatalogComponent>;
   const routerStub = { navigateByUrl: () => ({}) };
   const rewardsServiceStub = {
     getRewards: () => of()
@@ -28,7 +28,7 @@ describe('CategoryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CategoryComponent, CategoryRewardCardComponent ],
+      declarations: [ CatalogComponent, CatalogRewardCardComponent ],
       providers: [
         { provide: Router, useValue: routerStub },
         { provide: RewardsService, useValue: rewardsServiceStub },
@@ -43,7 +43,7 @@ describe('CategoryComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CategoryComponent);
+    fixture = TestBed.createComponent(CatalogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

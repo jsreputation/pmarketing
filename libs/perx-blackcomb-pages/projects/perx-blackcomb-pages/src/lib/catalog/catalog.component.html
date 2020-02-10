@@ -12,7 +12,9 @@
   <div
     *ngIf="rewards.length > 0"
     class="scroll-content">
-    <perx-blackcomb-pages-category-reward-card *ngFor="let reward of rewards" (click)="goToReward(reward)">
-    </perx-blackcomb-pages-category-reward-card>
+    <ng-container *ngFor="let reward of rewards">
+      <perx-blackcomb-pages-catalog-reward-card [reward]="reward" (click)="goToReward(reward)">
+      </perx-blackcomb-pages-catalog-reward-card>
+    </ng-container>
   </div>
 </div>

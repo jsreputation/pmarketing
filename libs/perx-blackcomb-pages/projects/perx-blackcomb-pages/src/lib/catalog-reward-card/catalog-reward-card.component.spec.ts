@@ -1,22 +1,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CategoryRewardCardComponent } from './category-reward-card.component';
+import { CatalogRewardCardComponent } from './catalog-reward-card.component';
 import {MatCardModule} from '@angular/material';
 
 describe('CategoryRewardCardComponent', () => {
-  let component: CategoryRewardCardComponent;
-  let fixture: ComponentFixture<CategoryRewardCardComponent>;
+  let component: CatalogRewardCardComponent;
+  let fixture: ComponentFixture<CatalogRewardCardComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CategoryRewardCardComponent ],
+      declarations: [ CatalogRewardCardComponent ],
       imports: [ MatCardModule ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CategoryRewardCardComponent);
+    fixture = TestBed.createComponent(CatalogRewardCardComponent);
     component = fixture.componentInstance;
     component.reward =  {
       id: 1,

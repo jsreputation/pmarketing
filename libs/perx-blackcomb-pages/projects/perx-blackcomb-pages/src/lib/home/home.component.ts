@@ -238,7 +238,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   public catalogSelected(catalog: ICatalog): void {
-    this.router.navigate(['/category'], { queryParams: { catalog: catalog.id } });
+    this.router.navigate(['/catalogs'], { queryParams: { catalog: catalog.id } });
   }
 
   public onScroll(): void {

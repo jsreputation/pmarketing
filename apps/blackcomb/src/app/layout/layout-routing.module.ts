@@ -101,9 +101,9 @@ const routes: Routes = [
           .then((mod: any) => mod.EditProfileFieldModule)
       },
       {
-        path: 'category',
-        loadChildren: (): any => import('../category/category.module')
-          .then((mod: any) => mod.CategoryModule)
+        path: 'catalogs',
+        loadChildren: (): any => import('../catalog/catalog.module')
+          .then((mod: any) => mod.CatalogModule)
       }
     ]
   }

@@ -37,6 +37,6 @@ export { ProfileBarcodeComponent } from './lib/profile-barcode/profile-barcode.c
 export { EditProfileFieldComponent } from './lib/edit-profile-field/edit-profile-field.component';
 export { CampaignStampsComponent } from './lib/campaign-stamps/campaign-stamps.component';
 export { CatalogsComponent } from './lib/catalogs/catalogs.component';
-export { CategoryComponent } from './lib/category/category.component';
-export { CategoryRewardCardComponent } from './lib/category-reward-card/category-reward-card.component';
+export { CatalogComponent } from './lib/catalog/catalog.component';
+export { CatalogRewardCardComponent } from './lib/catalog-reward-card/catalog-reward-card.component';
 
