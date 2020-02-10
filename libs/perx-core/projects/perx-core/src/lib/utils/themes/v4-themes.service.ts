@@ -25,7 +25,7 @@ export class V4ThemesService extends ThemesService {
 
   constructor(private http: HttpClient, config: Config) {
     super();
-    this.themeSettingEndpoint = `${config.apiHost}/v4/dash/settings/microsite_settings`;
+    this.themeSettingEndpoint = `${config.apiHost}/v4/settings/microsite_settings`;
 
   }
 
