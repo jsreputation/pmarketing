@@ -17,7 +17,7 @@ import {
   ConfigService,
   IReward,
   AuthenticationService,
-  TokenStorage
+  TokenStorage, SettingsService
 } from '@perx/core';
 import { of } from 'rxjs';
 import { MatCardModule, MatDialogModule } from '@angular/material';
@@ -57,7 +57,10 @@ const gameSvcStub: Partial<IGameService> = {
 const themesServiceStub = { getThemeSetting: () => of({}) };
 
 const configServiceStub = {
-  readAppConfig: () => of(),
+  readAppConfig: () => of()
+};
+
+const settingsServiceStub = {
   readRssFeeds: () => of()
 };
 
@@ -105,6 +108,7 @@ describe('HomeComponent', () => {
         { provide: IGameService, useValue: gameSvcStub },
         { provide: ThemesService, useValue: themesServiceStub },
         { provide: ConfigService, useValue: configServiceStub },
+        { provide: SettingsService, useValue: settingsServiceStub },
         {
           provide: AuthenticationService,
           useValue: authServiceStub

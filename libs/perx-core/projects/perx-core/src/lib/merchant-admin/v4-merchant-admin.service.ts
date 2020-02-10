@@ -21,7 +21,6 @@ import {
   IResetPasswordData
 } from './models/merchants-admin.model';
 
-import { Config } from '../config/config';
 import {
   IV4Reward,
   V4RewardsService,
@@ -35,6 +34,8 @@ import {
   IMessageResponse,
   RedemptionType,
 } from '../perx-core.models';
+import {ConfigService} from '../config/config.service';
+import {IConfig} from '../config/models/config.model';
 
 interface IV4MerchantAdminTransaction {
   id: number;
@@ -179,14 +180,18 @@ export class V4MerchantAdminService implements IMerchantAdminService {
 
   constructor(
     private http: HttpClient,
-    private config: Config,
+    private configService: ConfigService,
   ) {
-    this.apiHost = config.apiHost as string;
-    if (!config.production) {
-      this.merchantEndPoint = `http://localhost:4000/v4/merchant_admin`;
-    } else {
-      this.merchantEndPoint = `${config.baseHref}v4/merchant_admin`;
-    }
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig<void>) => {
+        this.apiHost = config.apiHost as string;
+        if (!config.production) {
+          this.merchantEndPoint = `http://localhost:4000/v4/merchant_admin`;
+        } else {
+          this.merchantEndPoint = `${config.baseHref}v4/merchant_admin`;
+        }
+      }
+    );
   }
 
   public static v4TransactionHistoryToTransactionHistory(transactionHistory: IV4MerchantTransactionHistory): IMerchantTransactionHistory {
@@ -295,7 +300,7 @@ export class V4MerchantAdminService implements IMerchantAdminService {
     pharmacy: string,
     productName: string
   ): Observable<IMerchantAdminTransaction> {
-    const url = `${this.config.apiHost}/v4/merchant_admin/transactions`;
+    const url = `${this.apiHost}/v4/merchant_admin/transactions`;
     const body = {
       user_account_id: userId,
       transaction_data: {
@@ -318,7 +323,7 @@ export class V4MerchantAdminService implements IMerchantAdminService {
   }
 
   public redeemVoucher(id: number): Observable<IVoucher> {
-    const url = `${this.config.apiHost}/v4/merchant_admin/vouchers/${id}/redeem`;
+    const url = `${this.apiHost}/v4/merchant_admin/vouchers/${id}/redeem`;
 
     return this.http.put<IV4RedeemVoucherResponse>(url, null).pipe(
       map((res) => V4MerchantAdminService.v4VoucherToVoucher(res.data))
@@ -328,7 +333,7 @@ export class V4MerchantAdminService implements IMerchantAdminService {
   public issueVoucher(id: number, userId: string = ''): Observable<IVoucher> {
     const headers = new HttpHeaders().set('user-id', userId);
 
-    const url = `${this.config.apiHost}/v4/merchant_admin/rewards/${id}/issue`;
+    const url = `${this.apiHost}/v4/merchant_admin/rewards/${id}/issue`;
 
     return this.http.post<IV4RedeemVoucherResponse>(url, null, { headers }).pipe(
       map((res) => V4MerchantAdminService.v4VoucherToVoucher(res.data))
@@ -340,7 +345,7 @@ export class V4MerchantAdminService implements IMerchantAdminService {
       .set('invitation_token', token)
       .set('client_id', clientId);
 
-    const url = `${this.config.apiHost}/v4/merchant_user_account_invitations/accept`;
+    const url = `${this.apiHost}/v4/merchant_user_account_invitations/accept`;
 
     return this.http.get<IV4MerchantUserInvitationResponse>(url, { params }).pipe(
       map((res) => V4MerchantAdminService.v4MerchantProfileToMerchantProfile(res.data))
@@ -356,7 +361,7 @@ export class V4MerchantAdminService implements IMerchantAdminService {
       password_confirmation: password,
     };
 
-    const url = `${this.config.apiHost}/v4/merchant_user_account_invitations`;
+    const url = `${this.apiHost}/v4/merchant_user_account_invitations`;
 
     return this.http.put(url, body).pipe(
       // response is always HTTP 200 in this format regardless if it is a error or success and backend should resolve this
@@ -366,7 +371,7 @@ export class V4MerchantAdminService implements IMerchantAdminService {
   }
 
   public getMerchantProfile(): Observable<IMerchantProfile> {
-    const url = `${this.config.apiHost}/v4/merchant_admin/me`;
+    const url = `${this.apiHost}/v4/merchant_admin/me`;
     return this.http.get<IV4MerchantUserInvitationResponse>(url).pipe(
       map((res) => V4MerchantAdminService.v4MerchantProfileToMerchantProfile(res.data)
       ));

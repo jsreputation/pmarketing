@@ -21,7 +21,7 @@ import {
   UtilsModule,
   ConfigModule,
   RewardsModule,
-  RewardPopupComponent,
+  RewardPopupComponent, SettingsModule,
 
   // ICampaignService,
   // ConfigService
@@ -121,6 +121,7 @@ import { UnauthorizedInterceptor } from './login/unauthorized.interceptor';
   ],
   imports: [
     ConfigModule.forRoot({...environment}),
+    SettingsModule.forRoot({...environment}),
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

@@ -9,10 +9,9 @@ h1 {
 
 .tab-group__content {
   padding: 0 1.6rem;
-  flex-direction: column;
+  height: 100%;
+  overflow-y: scroll;
   box-sizing: border-box;
-  display: flex;
-  min-height: calc(100vh - 13rem);
 
   > h1:first-child {
     padding-top: 2rem;
