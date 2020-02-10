@@ -3,7 +3,6 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {ICatalog, IReward, RewardsService} from '@perx/core';
 import {map, scan} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
-// import {SortingMode} from '';
 
 const REQ_PAGE_SIZE: number = 10;
 
