@@ -1,15 +1,22 @@
 import { TestBed } from '@angular/core/testing';
 
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ConfigModule } from '../../public-api';
+import { ConfigModule, IVoucherService } from '../../public-api';
 import { WhistlerInstantOutcomeService } from './whistler-instant-outcome.service';
+import { of } from 'rxjs';
 
 describe('WhistlerInstantOutcomeService', () => {
+  const vouchersServiceStub: Partial<IVoucherService> = {
+    getAll: () => of()
+  };
 
   beforeEach(() => TestBed.configureTestingModule({
     imports: [
       HttpClientTestingModule,
       ConfigModule.forRoot({})
+    ],
+    providers: [
+      { provide: IVoucherService, useValue: vouchersServiceStub }
     ]
   }));
 
