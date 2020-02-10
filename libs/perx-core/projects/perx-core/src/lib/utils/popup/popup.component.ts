@@ -8,6 +8,7 @@ export interface IPopupConfig {
   buttonTxt?: string | null;
   afterClosedCallBack?: PopUpClosedCallBack;
   disableOverlayClose?: boolean;
+  hideButton?: boolean;
   buttonTxt2?: string | null;
   panelClass?: string[] | string;
 }
@@ -30,6 +31,7 @@ export class PopupComponent {
   public imageUrl: string | null = null;
   public buttonTxt: string | null = 'close';
   public buttonTxt2: string | null = null;
+  public showButton: boolean = true;
 
   constructor(
     public dialogRef: MatDialogRef<PopupComponent>,
@@ -52,6 +54,9 @@ export class PopupComponent {
     }
     if (data.buttonTxt2) {
       this.buttonTxt2 = data.buttonTxt2;
+    }
+    if (data.hideButton) {
+      this.showButton = !data.hideButton;
     }
   }
 

@@ -3,7 +3,7 @@
 	<img [src]="imageUrl"/>
 </div>
 <mat-dialog-content *ngIf="text">{{text}}</mat-dialog-content>
-<div class="button-group">
+<div class="button-group" *ngIf="showButton">
 	<button *ngIf="buttonTxt2" mat-stroked-button class="button-secondary" mat-dialog-close tabindex="-1">{{buttonTxt2}}</button>
 	<button mat-flat-button color="primary" mat-dialog-close (click)="buttonPressed()" tabindex="-1">{{buttonTxt}}</button>
 </div>
