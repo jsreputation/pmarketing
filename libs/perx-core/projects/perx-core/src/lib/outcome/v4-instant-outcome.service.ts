@@ -26,12 +26,12 @@ export class V4InstantOutcomeService implements InstantOutcomeService {
   }
 
   // @ts-ignore
-  public getFromCampaign(campaignId: number): Observable<IOutcome>{
+  public getFromCampaign(campaignId: number): Observable<IOutcome> {
     throw new Error('Method not implemented');
   }
 
   // @ts-ignore
-  public claim(campaignId: number): Observable<IVoucher[]>{
+  public claim(campaignId: number): Observable<IVoucher[]> {
     return this.http.post<IV4IssueCampaignResponse>(`${this.config.apiHost}/v4/campaigns/${campaignId}/issue_all`, null)
       .pipe(
         map(resp => resp.data),
@@ -40,12 +40,12 @@ export class V4InstantOutcomeService implements InstantOutcomeService {
   }
 
   // @ts-ignore
-  public prePlay(campaignId: number): Observable<IEngagementTransaction>{
+  public prePlay(campaignId: number): Observable<IEngagementTransaction> {
     throw new Error('Method not implemented');
   }
 
   // @ts-ignore
-  public prePlayConfirm(transactionId: number): Observable<void>{
+  public prePlayConfirm(transactionId: number): Observable<void> {
     throw new Error('Method not implemented');
   }
 }
