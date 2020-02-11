@@ -8,8 +8,8 @@ export interface IPopupConfig {
   buttonTxt?: string | null;
   afterClosedCallBack?: PopUpClosedCallBack;
   disableOverlayClose?: boolean;
-  hideButton?: boolean;
   buttonTxt2?: string | null;
+  hideButton?: boolean;
   panelClass?: string[] | string;
 }
 
@@ -29,9 +29,9 @@ export class PopupComponent {
   public title: string | null = null;
   public text: string | null = null;
   public imageUrl: string | null = null;
+  public showButton: boolean = true;
   public buttonTxt: string | null = 'close';
   public buttonTxt2: string | null = null;
-  public showButton: boolean = true;
 
   constructor(
     public dialogRef: MatDialogRef<PopupComponent>,
@@ -55,8 +55,10 @@ export class PopupComponent {
     if (data.buttonTxt2) {
       this.buttonTxt2 = data.buttonTxt2;
     }
+
+    // can only be true if explicitly passed then we change the default showButton which is true
     if (data.hideButton) {
-      this.showButton = !data.hideButton;
+      this.showButton = false;
     }
   }
 
