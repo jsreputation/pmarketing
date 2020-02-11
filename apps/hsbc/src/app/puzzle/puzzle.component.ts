@@ -238,7 +238,10 @@ export class PuzzleComponent implements OnInit, OnDestroy {
         if (!this.campaignId) {
           throw new Error(`campaignId is required`);
         }
-
+        card.displayProperties.rewardPostStamp = 'assets/post-reward.png';
+        card.displayProperties.rewardPreStamp = '/assets/pre-reward.png';
+        card.displayProperties.preStampImg = '/assets/hsbc-prestamp.png';
+        card.displayProperties.postStampImg = '/assets/hsbc-stamped.png';
         this.card = card;
         this.cardId = card.id;
         this.fetchStampTransactionCount(this.campaignId);
