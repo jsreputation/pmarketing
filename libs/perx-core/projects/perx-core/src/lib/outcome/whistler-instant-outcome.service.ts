@@ -41,7 +41,7 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
   private get whistlerVoucherService(): WhistlerVouchersService {
     return this.voucherService as WhistlerVouchersService;
   }
-  
+
   private getEngagementId(
     campaignId: number
   ): Observable<IWCampaignProperties | never> {
