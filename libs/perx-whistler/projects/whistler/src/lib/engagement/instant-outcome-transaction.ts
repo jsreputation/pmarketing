@@ -17,7 +17,7 @@ export interface IWInstantOutcomeTransactionAttributes {
     created_at: string;
     updated_at: string;
     results: IJsonApiItem<IWAssignedAttributes>[];
-  }>
+  }>;
 }
 
 export interface IWInstantOutcomeTxnReq {
