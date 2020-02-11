@@ -10,7 +10,7 @@ export interface FeedItem {
   image?: string | null;
   guid: string | null;
   pubDate: Date | null;
-  hideButton?: boolean
+  hideButton?: boolean;
 }
 
 @Injectable({
