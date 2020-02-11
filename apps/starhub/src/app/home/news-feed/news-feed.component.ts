@@ -28,6 +28,7 @@ export class NewsFeedComponent implements OnInit {
   public itemSize: number;
   public newsBeforeScroll: number[];
   public newsAfterScroll: number[];
+  public showButton: boolean = true;
 
   private async initNewsFeedItems(): Promise<void> {
     const rssFeeds: IRssFeeds = await this.settingsService.readRssFeeds().toPromise();
@@ -81,7 +82,7 @@ export class NewsFeedComponent implements OnInit {
     });
     this.dialog.open(FeedItemPopupComponent, {
       panelClass: 'app-full-bleed-dialog',
-      data: item,
+      data: {...item, ...(this.showButton ? {} : {hideButton: true})},
       height: '85vh',
       minWidth: '35.5rem',
       maxWidth: '94vw'
