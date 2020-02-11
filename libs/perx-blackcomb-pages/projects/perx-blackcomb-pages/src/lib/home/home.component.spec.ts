@@ -86,7 +86,7 @@ describe('HomeComponent', () => {
 
   const instantOutcomeServiceStub: Partial<InstantOutcomeService> = {
     claim: () => of([])
-  }
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
