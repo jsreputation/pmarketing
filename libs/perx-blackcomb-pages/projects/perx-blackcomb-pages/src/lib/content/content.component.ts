@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { map, switchMap, filter, catchError, takeUntil } from 'rxjs/operators';
+import { map, switchMap, filter, catchError, takeUntil, tap } from 'rxjs/operators';
 import { from, of, combineLatest, Observable, throwError, Subject } from 'rxjs';
 import { ActivatedRoute, Params } from '@angular/router';
-import { SettingsService } from '@perx/core';
+import { SettingsService, PagesObject, AccountPageObject } from '@perx/core';
+import { oc } from 'ts-optchain';
 
 @Component({
   selector: 'perx-blackcomb-pages-content',
@@ -10,34 +11,30 @@ import { SettingsService } from '@perx/core';
   styleUrls: ['./content.component.scss']
 })
 export class ContentComponent implements OnInit, OnDestroy {
-  public content$: Observable<any>;
-  public isLoading: boolean = true;
-  public errorFlag: boolean = false;
+  public content$: Observable<string>;
+  public error$: Subject<boolean> = new Subject<boolean>();
   private destroy$: Subject<any> = new Subject();
   constructor(private settingsService: SettingsService, private route: ActivatedRoute) { }
 
   public ngOnInit(): void {
-    this.content$ = this.route.params
+    let key = null;
+    const obs: Observable<string> = this.route.params
       .pipe(
         filter((params: Params) => params.key),
         map((params: Params) => params.key),
-        switchMap(key => combineLatest(of(key), this.settingsService.getAccountSettings())),
-        map(([key, settings]: [string, any]) => settings.pages.find(s => s.key === key)),
-        map((page: any) => page.content_url),
-        catchError(err => throwError(err)),
+        tap(k => key = k),
+        switchMap(k => combineLatest(of(k), this.settingsService.getAccountSettings())),
+        map(([k, settings]: [string, PagesObject]) => settings.pages.find(s => s.key === k)),
+        map((page: AccountPageObject) => page.content_url),
         switchMap(url => fetch(url)),
-        map(stuff => from(stuff.text())),
-        switchMap(content => content),
-        takeUntil(this.destroy$)
+        switchMap(stuff => from(stuff.text())),
+        catchError((err) => {
+          this.error$.next(true);
+          return throwError(new Error(`${oc(err).message('Could not find/fetch content')} ${key}`));
+        })
       );
-
-    this.content$.subscribe(
-      () => this.isLoading = false,
-      () => {
-        this.errorFlag = true;
-        this.isLoading = false;
-      }
-    );
+    //NL done in 2 steps to avoid having the compiler on our back
+    this.content$ = obs.pipe(takeUntil(this.destroy$));
   }
 
   public ngOnDestroy(): void {
