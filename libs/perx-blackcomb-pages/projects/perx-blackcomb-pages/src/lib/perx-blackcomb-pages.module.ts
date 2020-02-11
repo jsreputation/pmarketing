@@ -26,6 +26,7 @@ import { GameModule } from './game/game.module';
 import { HistoryComponent } from './history/history.component';
 import {
   RepeatTimesDirective,
+  SortRewardsPipe,
   RewardsCollectionComponent,
   VouchersComponent,
   PinRedemptionComponent,
@@ -146,7 +147,8 @@ const comps: any[] = [
   CampaignStampsComponent,
   CatalogComponent,
   CatalogsComponent,
-  CatalogRewardCardComponent
+  CatalogRewardCardComponent,
+  SortRewardsPipe
 ];
 
 @NgModule({

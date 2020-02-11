@@ -3,6 +3,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 import {ICatalog, IReward, RewardsService} from '@perx/core';
 import {map, scan} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
+import {MatDialog} from '@angular/material';
 
 const REQ_PAGE_SIZE: number = 10;
 
@@ -51,6 +52,7 @@ export class CatalogComponent implements OnInit {
     private router: Router,
     private rewardsService: RewardsService,
     private activeRoute: ActivatedRoute,
+    private matDialog: MatDialog
   ) {
     this.initRewardsScan();
   }
@@ -74,8 +76,15 @@ export class CatalogComponent implements OnInit {
     }
   }
 
-  public selectSort(): void {
-    console.log('fuck');
+  public selectSort(evt: MouseEvent): void {
+    const target = new ElementRef(evt.currentTarget);
+    // const dialogRef = this.matDialog.open( P, {
+    //   data: {
+    //     trigger: target,
+    //     ...this
+    //   }
+    // })
+    console.log('fuck', target);
   }
 
   public goToReward(reward: IReward): void {

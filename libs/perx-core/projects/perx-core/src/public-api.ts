@@ -3,7 +3,6 @@
  * Public API Surface of perx-core
  */
 export { PerxCoreModule } from './lib/perx-core.module';
-
 /**
  * Shared
  */
@@ -161,6 +160,7 @@ export {
   IPopupConfig,
   PopUpClosedCallBack
 } from './lib/utils/popup/popup.component';
+export { SortRewardsPipe, SortingMode } from './lib/utils/directives/sort-rewards-pipe';
 export { NotificationService } from './lib/utils/notification/notification.service';
 export { PinInputComponent } from './lib/utils/pin-input/pin-input.component';
 export { FeedReaderService, FeedItem } from './lib/utils/feed-reader.service';

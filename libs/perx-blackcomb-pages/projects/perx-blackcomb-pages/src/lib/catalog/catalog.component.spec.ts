@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import {InfiniteScrollModule} from 'ngx-infinite-scroll';
-import {MatCardModule, MatIconModule} from '@angular/material';
+import {MatCardModule, MatDialogModule, MatIconModule} from '@angular/material';
 import {ActivatedRoute, Router} from '@angular/router';
 import {RewardsService} from '@perx/core';
 import {of} from 'rxjs';
@@ -36,6 +36,7 @@ describe('CatalogComponent', () => {
       ],
       imports: [
         InfiniteScrollModule,
+        MatDialogModule,
         MatIconModule,
         MatCardModule
       ]
