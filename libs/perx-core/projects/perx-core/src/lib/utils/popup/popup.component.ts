@@ -55,6 +55,7 @@ export class PopupComponent {
     if (data.buttonTxt2) {
       this.buttonTxt2 = data.buttonTxt2;
     }
+
     // can only be true if explicitly passed then we change the default showButton which is true
     if (data.hideButton) {
       this.showButton = false;
