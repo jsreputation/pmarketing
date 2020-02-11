@@ -201,10 +201,10 @@ export class V4StampService implements StampService {
     //  todo: temporarily map this until v4 dashboard fixes naming
     const cardBackgroundImageUrl = oc(stampCard).display_properties.card_background_img.value.image_url();
     const cardBackgroundImage = cardBackgroundImageUrl ? { value: { imageUrl: cardBackgroundImageUrl } } : undefined;
-    // const rewardPreStamp = oc(stampCard).display_properties.gift_inactive_img.value.image_url(undefined);
-    // const rewardPostStamp = oc(stampCard).display_properties.gift_active_img.value.image_url(undefined);
-    // const preStampImg = oc(stampCard).display_properties.stamp_inactive_img.value.image_url(undefined);
-    // const postStampImg = oc(stampCard).display_properties.stamp_active_img.value.image_url(undefined);
+    const rewardPreStamp = oc(stampCard).display_properties.gift_inactive_img.value.image_url(undefined);
+    const rewardPostStamp = oc(stampCard).display_properties.gift_active_img.value.image_url(undefined);
+    const preStampImg = oc(stampCard).display_properties.stamp_inactive_img.value.image_url(undefined);
+    const postStampImg = oc(stampCard).display_properties.stamp_active_img.value.image_url(undefined);
     const backgroundImgUrl = oc(stampCard).display_properties.background_img.value.image_url();
     const backgroundImg = backgroundImgUrl ? { value: { imageUrl: backgroundImgUrl } } : undefined;
     return {
@@ -224,10 +224,10 @@ export class V4StampService implements StampService {
         cardImage,
         // todo: temporarily map this until v4 dashboard fixes naming
         cardBackgroundImage,
-        // rewardPreStamp,
-        // rewardPostStamp,
-        // preStampImg,
-        // postStampImg,
+        rewardPreStamp,
+        rewardPostStamp,
+        preStampImg,
+        postStampImg,
         totalSlots: stampCard.display_properties.total_slots,
         displayCampaignAs: oc(stampCard).display_properties.display_campaign_as('stamp_card'),
         backgroundImg,
