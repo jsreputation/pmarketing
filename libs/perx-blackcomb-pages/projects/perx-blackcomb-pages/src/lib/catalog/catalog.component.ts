@@ -74,6 +74,10 @@ export class CatalogComponent implements OnInit {
     }
   }
 
+  public selectSort(): void {
+    console.log('fuck');
+  }
+
   public goToReward(reward: IReward): void {
     this.router.navigate([`/reward-detail/${reward.id}`]);
   }

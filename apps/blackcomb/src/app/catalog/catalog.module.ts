@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-  MatCardModule,
+  MatCardModule, MatIconModule,
   MatListModule,
 } from '@angular/material';
 import {
@@ -30,6 +30,7 @@ const routes: Routes = [{
     RewardsModule,
     MatCardModule,
     MatListModule,
+    MatIconModule,
     InfiniteScrollModule,
     RouterModule.forChild(routes)
   ]

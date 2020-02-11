@@ -1,3 +1,7 @@
+:root {
+  --text-color: #666666;
+}
+
 mat-card {
   max-width: 28rem;
 
@@ -24,6 +28,10 @@ mat-card {
   //}
 }
 
+h1, h2, h3 {
+  color: var(--text-color);
+}
+
 mat-card-content {
   display: flex;
   flex-direction: row;
@@ -35,14 +43,12 @@ mat-card-content {
   div {
     h1 {
       font-size: 1.6rem;
-      color: #666666;
       margin: 0;
     }
 
     h2 {
       font-size: 1.6rem;
       text-overflow: ellipsis;
-      color: #666666;
       font-weight: normal;
       margin: 0.2rem 0 0 0;
     }
@@ -50,7 +56,6 @@ mat-card-content {
     h3 {
       margin-top: 0;
       font-weight: normal;
-      color: #666666;
       font-size: 1.2rem;
       margin-bottom: 0;
     }
@@ -62,7 +67,6 @@ mat-card-content {
 
   h1 {
     font-size: 2.5rem;
-    color: #666666;
     margin: 1rem;
   }
 
