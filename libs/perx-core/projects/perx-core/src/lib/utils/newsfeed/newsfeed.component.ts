@@ -8,7 +8,8 @@ import { Observable } from 'rxjs';
   styleUrls: ['./newsfeed.component.scss']
 })
 export class NewsfeedComponent {
-
+  // will be passed down to the dialog from readMoreClicked
+  public showButton: boolean = true;
   @Input()
   public items$: Observable<FeedItem[]>;
 
