@@ -218,7 +218,11 @@ jobs:
             fi
             echo "after second set APP: ${APP}"
 
-            if [[ $APP == 'petron-demo' || $APP == 'oracle-demo' || $APP == 'feature-demo' || $APP == 'commbank-demo' ]]
+            if [ $APP == 'petron-demo'] || \
+            [ $APP == 'oracle-demo'] || \
+            [ $APP == 'feature-demo'] || \
+            [ $APP == 'commbank-demo' ]] || \
+            [ $APP == 'perx-demo' ]]
             then
               export APP_BASE="blackcomb"
             else
