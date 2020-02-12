@@ -31,7 +31,7 @@ export class CatalogComponent implements OnInit {
   ];
 
   public selectedCategory: string;
-  public selectedSortingCriteria: SortingMode = SortingMode.ending_soon;
+  public selectedSortingCriteria: SortingMode = SortingMode.endingSoon;
   public showToolbarTitle: boolean = false;
 
   private rewards: BehaviorSubject<IReward[]> = new BehaviorSubject<IReward[]>([]);
