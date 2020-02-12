@@ -9,13 +9,17 @@ import { HttpClient } from '@angular/common/http';
 import { Config } from '../config/config';
 import { WhistlerProfileService } from './whistler-profile.service';
 import { TokenStorage } from '../utils/storage/token-storage.service';
+import { ConfigService } from '../config/config.service';
 
-export function profileServiceFactory(http: HttpClient, config: Config, tokenStorage: TokenStorage): ProfileService {
+export function profileServiceFactory(http: HttpClient,
+                                      config: Config,
+                                      configService: ConfigService,
+                                      tokenStorage: TokenStorage): ProfileService {
   // Make decision on what to instantiate base on config
   if (config.isWhistler) {
     return new WhistlerProfileService(http, config, tokenStorage);
   }
-  return new V4ProfileService(http, config);
+  return new V4ProfileService(http, configService);
 }
 
 @NgModule({
@@ -27,7 +31,7 @@ export function profileServiceFactory(http: HttpClient, config: Config, tokenSto
     {
       provide: ProfileService,
       useFactory: profileServiceFactory,
-      deps: [HttpClient, Config, TokenStorage]
+      deps: [HttpClient, Config, ConfigService, TokenStorage]
     }
   ],
   declarations: [UserProfileComponent, MicroProfileComponent],
