@@ -89,7 +89,8 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
           banner: outcomeData.banner,
           backgroundImgUrl: outcomeData.background_img_url,
           cardBackgroundImgUrl: outcomeData.card_background_img_url,
-          results
+          results,
+          displayProperties: { ...outcomeData.displayProperties, ...displayProps }
         };
       })
     );

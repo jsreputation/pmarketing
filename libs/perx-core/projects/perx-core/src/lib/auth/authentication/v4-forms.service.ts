@@ -10,6 +10,7 @@ export class V4FormsService implements IFormsService {
   public getSignupForm(): Observable<ISurvey | undefined> {
     return of({
       title: '',
+      results: {},
       questions: [
         {
           id: 'sign-up',

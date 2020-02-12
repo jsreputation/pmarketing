@@ -1,3 +1,5 @@
+import { IWCampaignDisplayProperties } from '@perx/whistler';
+
 export interface IOutcome {
   title: string;
   button: string;
@@ -8,6 +10,7 @@ export interface IOutcome {
   results: {
     noOutcome?: IOutcomeMsg;
   };
+  displayProperties?: IWCampaignDisplayProperties;
 }
 
 export interface IOutcomeMsg {
