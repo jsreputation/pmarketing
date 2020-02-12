@@ -1,3 +1,22 @@
+alias:
+  helm_executor: &helm_executor
+    name: helm-deploy/default
+    docker_tag: '2.16.1'
+  kubeconfig_parameters: &kubeconfig_parameters
+    kube_host:
+      type: env_var_name
+      description: host for kubeconfig
+    kube_bearer_token:
+      type: env_var_name
+      description: breaker token for kubeconfig
+    kube_cluster_ca_cert_data:
+      type: env_var_name
+      description: certificate data for kubeconfig
+  docker_tag_parameter: &docker_tag_parameter
+    docker_tag:
+      type: string
+      description: The docker tag to deploy
+      default: "${CIRCLE_SHA1:0:7}"
 version: 2.1
 orbs:
   helm-deploy: perxtech/helm-deploy@0.0.5
@@ -142,11 +161,12 @@ commands:
       - run:
           name: Setup REDIRECT_AFTER_LOGIN var
           command: |
-            if [ $APP == 'petron-demo'] || \
-               [ $APP == 'oracle-demo'] || \
-               [ $APP == 'feature-demo'] || \
+            if [ $APP == 'petron-demo' ] || \
+               [ $APP == 'oracle-demo' ] || \
+               [ $APP == 'feature-demo' ] || \
                [ $APP == 'all-it' ] || \
-               [ $APP == 'commbank-demo' ]]
+               [ $APP == 'commbank-demo' ] || \
+               [ $APP == 'perx-demo' ]
             then
               REDIRECT_AFTER_LOGIN="/home"
             elif [ $APP == 'blackcomb' ]
@@ -168,7 +188,6 @@ commands:
       - run:
           name: Login to dockerhub
           command: echo ${DOCKERHUB_PASSWORD} | docker login -u ${DOCKERHUB_USER} --password-stdin
-
 jobs:
   build_proxy_docker_image:
     working_directory: ~/project
@@ -218,11 +237,11 @@ jobs:
             fi
             echo "after second set APP: ${APP}"
 
-            if [ $APP == 'petron-demo'] || \
-            [ $APP == 'oracle-demo'] || \
-            [ $APP == 'feature-demo'] || \
-            [ $APP == 'commbank-demo' ]] || \
-            [ $APP == 'perx-demo' ]]
+            if [ $APP == 'petron-demo' ] || \
+            [ $APP == 'oracle-demo' ] || \
+            [ $APP == 'feature-demo' ] || \
+            [ $APP == 'commbank-demo' ] || \
+            [ $APP == 'perx-demo' ]
             then
               export APP_BASE="blackcomb"
             else
@@ -252,23 +271,10 @@ jobs:
           command: |
             docker push ${DOCKER_REPO}:${CIRCLE_TAG}
   deploy:
-    executor:
-      name: helm-deploy/default
-      docker_tag: "2.16.1"
+    executor: *helm_executor
     parameters:
-      docker_tag:
-        type: string
-        description: The docker tag to deploy
-        default: "${CIRCLE_SHA1:0:7}"
-      kube_host:
-        type: env_var_name
-        description: host for kubeconfig
-      kube_bearer_token:
-        type: env_var_name
-        description: breaker token for kubeconfig
-      kube_cluster_ca_cert_data:
-        type: env_var_name
-        description: certificate data for kubeconfig
+      <<: *docker_tag_parameter
+      <<: *kubeconfig_parameters
     steps:
       - get_app_name
       - run:
@@ -318,24 +324,44 @@ jobs:
           helm_chart: perx/perx-general-app
           helm_values: image.tag="${DOCKER_TAG}"
           helm_extra_args: --reuse-values --timeout 600
-  deploy-whistler:
-    executor:
-      name: helm-deploy/default
-      docker_tag: "2.16.1"
+  deploy-to-aws:
+    executor: *helm_executor
     parameters:
-      docker_tag:
+      <<: *docker_tag_parameter
+      <<: *kubeconfig_parameters
+      domain:
         type: string
-        description: The docker tag to deploy
-        default: "${CIRCLE_SHA1:0:7}"
-      kube_host:
-        type: env_var_name
-        description: host for kubeconfig
-      kube_bearer_token:
-        type: env_var_name
-        description: breaker token for kubeconfig
-      kube_cluster_ca_cert_data:
-        type: env_var_name
-        description: certificate data for kubeconfig
+        description: App domain name. Should be perxtech.net for production or perxtech.io for staging
+    steps:
+      - checkout
+      - get_app_name
+      - run:
+          name: Set environments
+          command: |
+            echo "export DOCKER_TAG=<< parameters.docker_tag >>" >> $BASH_ENV
+            echo "export HELM_REPO_URL=https://chartmuseum.perxtech.io" >> $BASH_ENV
+            echo "export SKAFFOLD_DEFAULT_REPO=perxtech" >> $BASH_ENV
+            echo "export DOMAIN=<< parameters.domain >>" >> $BASH_ENV
+      - helm-deploy/add-helm-repo:
+          helm_repo_name: perx
+      - helm-deploy/configure-kubectl:
+          kube_host: "<< parameters.kube_host >>"
+          kube_bearer_token: "<< parameters.kube_bearer_token >>"
+          kube_cluster_ca_cert_data: "<< parameters.kube_cluster_ca_cert_data >>"
+      - run:
+          name: Install skaffold
+          command: |
+            curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
+            chmod +x skaffold
+      - run:
+          name: Deploy microsite app
+          command: |
+            ./skaffold deploy -f .circleci/skaffold/knative-microsite-app.yaml
+  deploy-whistler:
+    executor: *helm_executor
+    parameters:
+      <<: *docker_tag_parameter
+      <<: *kubeconfig_parameters
     steps:
       - checkout
       - get_app_name
@@ -479,6 +505,34 @@ workflows:
             tags:
               # semver v2
               only: /(candyland|blackcomb)-production-\d+\.\d+\.\d+.*/
+      - deploy-to-aws:
+          name: deploy_to_aws_production
+          docker_tag: "${CIRCLE_TAG}"
+          kube_host: AWS_PRODUCTION_KUBE_HOST
+          kube_bearer_token: AWS_PRODUCTION_KUBE_BEARER_TOKEN
+          kube_cluster_ca_cert_data: AWS_PRODUCTION_KUBE_CLUSTER_CA_CERT_DATA
+          domain: perxtech.net
+          requires:
+            - build_docker_image
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^(perx-demo|commbank-demo)-production-\d+\.\d+\.\d+.*/
+      - deploy-to-aws:
+          name: deploy_to_aws_staging
+          docker_tag: "${CIRCLE_TAG}"
+          kube_host: AWS_STAGING_KUBE_HOST
+          kube_bearer_token: AWS_STAGING_KUBE_BEARER_TOKEN
+          kube_cluster_ca_cert_data: AWS_STAGING_KUBE_CLUSTER_CA_CERT_DATA
+          domain: perxtech.io
+          requires:
+            - build_docker_image
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^(perx-demo|commbank-demo)-staging-\d+\.\d+\.\d+.*/
       - deploy:
           name: deploy_to_staging
           docker_tag: "${CIRCLE_TAG}"
@@ -491,7 +545,7 @@ workflows:
             branches:
               ignore: /.*/
             tags:
-              only: /^(?!blackcomb|candyland|oracle-demo)(\w+-)+staging-\d+\.\d+\.\d+.*/
+              only: /^(?!blackcomb|candyland|oracle-demo|perx-demo|commbank-demo)(\w+-)+staging-\d+\.\d+\.\d+.*/
       - deploy:
           name: deploy_to_production
           docker_tag: "${CIRCLE_TAG}"
@@ -507,7 +561,7 @@ workflows:
               ignore: /.*/
             tags:
               # semver v2
-              only: /^(?!blackcomb|candyland|oracle-demo)(\w+-)+production-\d+\.\d+\.\d+.*/
+              only: /^(?!blackcomb|candyland|oracle-demo|perx-demo|commbank-demo)(\w+-)+production-\d+\.\d+\.\d+.*/
       - build_proxy_docker_image:
           filters:
             # need to sepcify this otherwise the job will run even if there's no tag

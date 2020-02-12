@@ -1,0 +1,28 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+metadata:
+  name: microsite-app
+deploy:
+  helm:
+    flags:
+      install: ['--atomic']
+      upgrade: ['--atomic']
+    releases:
+    - name: "{{.APP}}"
+      namespace: microsite
+      chartPath: perx/microsite-app
+      remote: true
+      wait: true
+      setValueTemplates:
+        image.tag: "{{.DOCKER_TAG}}"
+        image.repository: "{{.SKAFFOLD_DEFAULT_REPO}}/microsite-apps-ng"
+        nameOverride: "{{.APP}}"
+        ksvc.secretMounts[0].secretName: "{{.APP}}-api-config"
+        ksvc.secretMounts[0].mountPath: /secrets/api-config
+        route.host: "{{.APP}}.{{.DOMAIN}}"
+      overrides:
+        imagePullSecrets:
+        - name: dockerhub-perxtech
+        ksvc:
+          env:
+            API_CONFIG_PATH: "/secrets/api-config/config.json"
