@@ -4,7 +4,7 @@ import { HomeComponent } from './home.component';
 import { MatToolbarModule, MatTabsModule, MatDialogModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoRenewaleInNamePipe } from '../no-renewale-in-name.pipe';
-import { LoyaltyService, IProfile, ProfileService, FeedReaderService, AuthenticationService, ICampaignService, TokenStorage } from '@perx/core';
+import { LoyaltyService, IProfile, ProfileService, FeedReaderService, AuthenticationService, InstantOutcomeService, ICampaignService, TokenStorage } from '@perx/core';
 import { of, throwError } from 'rxjs';
 import { loyalty } from 'src/app/loyalty.mock';
 import { Type } from '@angular/core';
@@ -24,8 +24,11 @@ const tokenStorageStub: Partial<TokenStorage> = {
 const campaignServiceStub: Partial<ICampaignService> = {
   getCampaigns: () => of(campaigns),
   getCampaign: () => of(campaigns[0]),
-  issueAll: () => of()
 };
+
+const instantOutcomeServiceStub: Partial<InstantOutcomeService> = {
+  claim: () => of([])
+}
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -64,6 +67,7 @@ describe('HomeComponent', () => {
         { provide: ProfileService, useValue: profileServiceStub },
         { provide: FeedReaderService, useValue: newsFeedServiceStub },
         { provide: ICampaignService, useValue: campaignServiceStub },
+        { provide: InstantOutcomeService, useValue: instantOutcomeServiceStub },
         { provide: AuthenticationService, useValue: authServiceStub },
         { provide: TokenStorage, useValue: tokenStorageStub }
       ]

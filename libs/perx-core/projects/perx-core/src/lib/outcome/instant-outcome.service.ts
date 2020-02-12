@@ -1,4 +1,4 @@
-import { IReward } from './../rewards/models/reward.model';
+import { IVoucher } from '../vouchers/models/voucher.model';
 import { Observable } from 'rxjs';
 
 import { IOutcome } from './models/outcome.model';
@@ -9,7 +9,7 @@ export abstract class InstantOutcomeService {
   public abstract getFromCampaign(campaignId: number): Observable<IOutcome>;
 
   // @ts-ignore
-  public abstract claim(campaignId: number): Observable<IReward[]>;
+  public abstract claim(campaignId: number): Observable<IVoucher[]>;
   public abstract prePlay(campaignId: number): Observable<IEngagementTransaction>;
   public abstract prePlayConfirm(transactionId: number): Observable<void>;
 }

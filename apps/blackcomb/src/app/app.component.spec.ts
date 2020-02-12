@@ -10,7 +10,6 @@ const authServiceStub = {};
 const campaignServiceStub: Partial<ICampaignService> = {
   getCampaigns: () => of(),
   getCampaign: () => of(),
-  issueAll: () => of()
 };
 const tokenStorageStub: Partial<TokenStorage> = {
   getAppInfoProperty: () => undefined,

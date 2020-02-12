@@ -7,7 +7,8 @@ import {
   RewardsModule,
   UtilsModule,
   RewardPopupComponent,
-  CampaignModule
+  CampaignModule,
+  OutcomeModule
 } from '@perx/core';
 import {
   HomeComponent,
@@ -40,7 +41,8 @@ const routes: Routes = [{
     RouterModule.forChild(routes),
     InfiniteScrollModule,
     MatDialogModule,
-    CampaignModule
+    CampaignModule,
+    OutcomeModule
   ],
   exports: [
     HomeComponent,
