@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import {IGame, IPlayOutcome, IEngagementTransaction, IGameOutcome} from './game.model';
+import { IGame, IPlayOutcome, IEngagementTransaction } from './game.model';
 
 export abstract class IGameService {
   public abstract play(engagementId: number, campaignId?: number): Observable<IPlayOutcome>;

@@ -1,5 +1,3 @@
-import { IWCampaignDisplayProperties } from '@perx/whistler';
-
 export interface IOutcome {
   title: string;
   button: string;
@@ -10,10 +8,9 @@ export interface IOutcome {
   results: {
     noOutcome?: IOutcomeMsg;
   };
-  displayProperties?: IWCampaignDisplayProperties;
 }
 
-interface IOutcomeMsg {
+export interface IOutcomeMsg {
   title: string;
   subTitle: string;
   image?: string;

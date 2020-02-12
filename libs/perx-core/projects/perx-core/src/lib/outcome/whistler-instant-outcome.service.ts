@@ -1,5 +1,5 @@
 import { InstantOutcomeService } from './instant-outcome.service';
-import { IOutcome } from './models/outcome.model';
+import { IOutcome, IOutcomeMsg } from './models/outcome.model';
 import { Observable, combineLatest, throwError, of } from 'rxjs';
 import { map, switchMap, mergeMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
@@ -17,7 +17,8 @@ import {
   IWCampaignDisplayProperties,
   IJsonApiPostItem,
   WInstantOutcomeStatus,
-  IWAssignedAttributes
+  IWAssignedAttributes,
+  IWProperties
 } from '@perx/whistler';
 import { IEngagementTransaction } from '../game/game.model';
 import { IVoucher } from '../vouchers/models/voucher.model';
@@ -76,16 +77,32 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
         );
       }),
       map(res => res.data.attributes.display_properties),
-      map((outcomeData: IWInstantOutcomeDisplayProperties) => ({
+      map((outcomeData: IWInstantOutcomeDisplayProperties) => {
+        const results: { [key: string]: IOutcomeMsg } = {};
+          if (displayProps && displayProps.noRewardsPopUp) {
+            results.noOutcome = WhistlerInstantOutcomeService.outcomeToOutcome(displayProps.noRewardsPopUp);
+          }
+        return {
         title: outcomeData.title,
         subTitle: outcomeData.sub_title,
         button: outcomeData.button,
         banner: outcomeData.banner,
         backgroundImgUrl: outcomeData.background_img_url,
         cardBackgroundImgUrl: outcomeData.card_background_img_url,
-        displayProperties: { ...outcomeData.displayProperties, ...displayProps }
-      }))
+        results
+      };})
     );
+  }
+
+  private static outcomeToOutcome(outcome: IWProperties): IOutcomeMsg {
+    const res: IOutcomeMsg = {
+      title: outcome.headLine ? outcome.headLine : '',
+      subTitle: outcome.subHeadLine ? outcome.subHeadLine : '',
+      button: outcome.buttonTxt ? outcome.buttonTxt : '',
+      image: outcome.imageURL
+    };
+
+    return res;
   }
 
   public claim(campaignId: number): Observable<IVoucher[]> {

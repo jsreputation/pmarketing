@@ -210,13 +210,11 @@ export class WhistlerGameService implements IGameService {
         switchMap((correctId: number) => this.get(correctId, campaignId)),
         map((game: IGame) => {
           const results: { [key: string]: IGameOutcome } = {};
-          if(disProp) {
-            if (disProp.successPopUp) {
-              results.outcome = WhistlerGameService.outcomeToGameOutcome(disProp.successPopUp);
-            }
-            if (disProp.noRewardsPopUp) {
-              results.noOutcome = WhistlerGameService.outcomeToGameOutcome(disProp.noRewardsPopUp);
-            }
+          if (disProp && disProp.successPopUp) {
+            results.outcome = WhistlerGameService.outcomeToGameOutcome(disProp.successPopUp);
+          }
+          if (disProp && disProp.noRewardsPopUp) {
+            results.noOutcome = WhistlerGameService.outcomeToGameOutcome(disProp.noRewardsPopUp);
           }
           return [{
             ...game,
