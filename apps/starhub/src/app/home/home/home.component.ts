@@ -7,6 +7,7 @@ import {
   AuthenticationService,
   ICampaignService,
   ICampaign,
+  InstantOutcomeService,
   CampaignType,
   IGame,
   RewardPopupComponent
@@ -44,6 +45,7 @@ export class HomeComponent implements OnInit {
     private profileService: ProfileService,
     private authenticationService: AuthenticationService,
     private campaignService: ICampaignService,
+    private instantOutcomeService: InstantOutcomeService,
     private router: Router,
     private dialog: MatDialog,
   ) { }
@@ -151,7 +153,7 @@ export class HomeComponent implements OnInit {
     if (this.game) {
       this.router.navigate([`/game`], { queryParams: { id: this.game.id } });
     } else {
-      this.campaignService.issueAll(this.firstComefirstServeCampaign.id).subscribe(
+      this.instantOutcomeService.claim(this.firstComefirstServeCampaign.id).subscribe(
         () => {
           this.router.navigate([`/home/vouchers`]);
         },

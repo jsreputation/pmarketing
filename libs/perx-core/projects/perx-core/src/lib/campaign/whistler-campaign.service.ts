@@ -27,7 +27,6 @@ import {
 import { ICampaignService, ICampaignFilterOptions } from './icampaign.service';
 
 import { Config } from '../config/config';
-import { IVoucher } from '../vouchers/models/voucher.model';
 
 @Injectable({
   providedIn: 'root'
@@ -150,10 +149,5 @@ export class WhistlerCampaignService implements ICampaignService {
         map((campaigns: IJsonApiItemPayload<IWCampaignAttributes>) => campaigns.data),
         map((campaign: IJsonApiItem<IWCampaignAttributes>) => WhistlerCampaignService.WhistlerCampaignToCampaign(campaign)),
       );
-  }
-
-  // @ts-ignore
-  public issueAll(campaignId: number): Observable<IVoucher[]> {
-    throw new Error('Method not implemented');
   }
 }
