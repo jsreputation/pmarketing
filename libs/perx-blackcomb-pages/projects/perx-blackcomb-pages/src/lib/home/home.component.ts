@@ -11,7 +11,9 @@ import {
   FeedItem,
   FeedReaderService,
   ICampaign,
-  ICampaignService, ICatalog,
+  ICatalog,
+  ICampaignService,
+  InstantOutcomeService,
   IConfig,
   IGame,
   IGameService,
@@ -163,6 +165,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private configService: ConfigService,
     private authService: AuthenticationService,
     private campaignService: ICampaignService,
+    private instantOutcomeService: InstantOutcomeService,
     private dialog: MatDialog,
     private settingsService: SettingsService,
 
@@ -309,7 +312,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   public dialogClosed(): void {
-    this.campaignService.issueAll(this.firstComefirstServeCampaign.id).subscribe(
+    this.instantOutcomeService.claim(this.firstComefirstServeCampaign.id).subscribe(
       () => this.router.navigate([`/wallet`]),
       (err) => {
         if (err.error && err.error.code === 4103) {

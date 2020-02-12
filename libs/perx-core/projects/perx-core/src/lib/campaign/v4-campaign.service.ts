@@ -6,8 +6,6 @@ import { ICampaign, CampaignType, CampaignState } from './models/campaign.model'
 import {ICampaignFilterOptions, ICampaignService} from './icampaign.service';
 import { V4RewardsService, IV4Reward } from '../rewards/v4-rewards.service';
 import { Config } from '../config/config';
-import { IV4Voucher, V4VouchersService } from '../vouchers/v4-vouchers.service';
-import { IVoucher } from '../vouchers/models/voucher.model';
 
 interface IV4Image {
   type: string;
@@ -43,10 +41,6 @@ interface IV4CampaignsResponse {
   meta: {
     count: number;
   };
-}
-
-interface IV4IssueCampaignResponse {
-  data: IV4Voucher[];
 }
 
 @Injectable({ providedIn: 'root' })
@@ -103,14 +97,6 @@ export class V4CampaignService implements ICampaignService {
       .pipe(
         map(resp => resp.data),
         map((campaign: IV4Campaign) => V4CampaignService.v4CampaignToCampaign(campaign))
-      );
-  }
-
-  public issueAll(id: number): Observable<IVoucher[]> {
-    return this.http.post<IV4IssueCampaignResponse>(`${this.baseUrl}/v4/campaigns/${id}/issue_all`, null)
-      .pipe(
-        map(resp => resp.data),
-        map((vouchers: IV4Voucher[]) => vouchers.map(voucher => V4VouchersService.v4VoucherToVoucher(voucher)))
       );
   }
 }
