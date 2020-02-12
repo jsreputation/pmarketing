@@ -217,8 +217,6 @@ export class WhistlerGameService implements IGameService {
             if (disProp.noRewardsPopUp) {
               results.noOutcome = WhistlerGameService.outcomeToGameOutcome(disProp.noRewardsPopUp);
             }
-            delete disProp.noRewardsPopUp;
-            delete disProp.successPopUp;
           }
           return [{
             ...game,
