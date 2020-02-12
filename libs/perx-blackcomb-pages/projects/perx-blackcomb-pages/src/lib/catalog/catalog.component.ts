@@ -1,10 +1,13 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {ICatalog, IReward, RewardsService} from '@perx/core';
+import {ICatalog, IReward, RewardsService, SortingMode} from '@perx/core';
 import {map, scan} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
-import {MatDialog} from '@angular/material';
 
+interface ISortMenuOption {
+  action: 'Latest' | 'Ending' | 'AZ' | 'ZA';
+  label: 'Most Recent' | 'Ending Soon' | 'Alphabet A - Z' | 'Alphabet Z - A'; // map to SortingMode enum
+}
 const REQ_PAGE_SIZE: number = 10;
 
 @Component({
@@ -19,11 +22,19 @@ export class CatalogComponent implements OnInit {
   public rewardsLoaded: boolean = false;
   public rewardsEnded: boolean = false;
   public rewardsPageId: number = 1;
-  private rewards: BehaviorSubject<IReward[]> = new BehaviorSubject<IReward[]>([]);
+
+  public sortOptions: ISortMenuOption[] = [
+    {action: 'Latest', label: 'Most Recent' },
+    {action: 'Ending', label: 'Ending Soon' },
+    {action: 'AZ', label: 'Alphabet A - Z' },
+    {action: 'ZA', label: 'Alphabet Z - A' }
+  ];
 
   public selectedCategory: string;
-  public selectedSortingCriteria: string = 'Ending Soon';
+  public selectedSortingCriteria: SortingMode = SortingMode.ending_soon;
   public showToolbarTitle: boolean = false;
+
+  private rewards: BehaviorSubject<IReward[]> = new BehaviorSubject<IReward[]>([]);
 
   private fetchRewards(): void {
     this.rewardsLoaded = false;
@@ -52,7 +63,6 @@ export class CatalogComponent implements OnInit {
     private router: Router,
     private rewardsService: RewardsService,
     private activeRoute: ActivatedRoute,
-    private matDialog: MatDialog
   ) {
     this.initRewardsScan();
   }
@@ -76,17 +86,6 @@ export class CatalogComponent implements OnInit {
     }
   }
 
-  public selectSort(evt: MouseEvent): void {
-    const target = new ElementRef(evt.currentTarget);
-    // const dialogRef = this.matDialog.open( P, {
-    //   data: {
-    //     trigger: target,
-    //     ...this
-    //   }
-    // })
-    console.log('fuck', target);
-  }
-
   public goToReward(reward: IReward): void {
     this.router.navigate([`/reward-detail/${reward.id}`]);
   }
@@ -101,6 +100,10 @@ export class CatalogComponent implements OnInit {
     }
     this.rewardsPageId++;
     this.fetchRewards();
+  }
+
+  public sortChoice({action}: ISortMenuOption): void {
+    this.selectedSortingCriteria = action as SortingMode;
   }
 
 }

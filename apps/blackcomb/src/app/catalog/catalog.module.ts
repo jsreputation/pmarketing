@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   MatCardModule, MatIconModule,
-  MatListModule,
+  MatListModule, MatMenuModule,
 } from '@angular/material';
 import {
   RouterModule,
@@ -31,6 +31,7 @@ const routes: Routes = [{
     MatCardModule,
     MatListModule,
     MatIconModule,
+    MatMenuModule,
     InfiniteScrollModule,
     RouterModule.forChild(routes)
   ]

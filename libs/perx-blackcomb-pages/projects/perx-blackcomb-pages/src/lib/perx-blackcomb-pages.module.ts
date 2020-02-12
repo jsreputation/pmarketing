@@ -20,7 +20,7 @@ import {
   MatDatepickerModule,
   MatToolbarModule,
   MatListModule,
-  MatDialogModule
+  MatDialogModule, MatMenuModule
 } from '@angular/material';
 import { GameModule } from './game/game.module';
 import { HistoryComponent } from './history/history.component';
@@ -160,6 +160,7 @@ const comps: any[] = [
     MatIconModule,
     MatCardModule,
     MatButtonModule,
+    MatMenuModule,
     MatRippleModule,
     MatGridListModule,
     MatTabsModule,

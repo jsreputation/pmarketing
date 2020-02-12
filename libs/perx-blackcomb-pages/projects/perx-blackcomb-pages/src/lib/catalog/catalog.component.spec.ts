@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import {InfiniteScrollModule} from 'ngx-infinite-scroll';
-import {MatCardModule, MatDialogModule, MatIconModule} from '@angular/material';
+import {MatCardModule, MatIconModule, MatMenuModule} from '@angular/material';
 import {ActivatedRoute, Router} from '@angular/router';
-import {RewardsService} from '@perx/core';
+import {RewardsService, SortRewardsPipe} from '@perx/core';
 import {of} from 'rxjs';
 import {CatalogComponent} from './catalog.component';
 import {CatalogRewardCardComponent} from '../catalog-reward-card/catalog-reward-card.component';
@@ -28,7 +28,11 @@ describe('CatalogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CatalogComponent, CatalogRewardCardComponent ],
+      declarations: [
+        CatalogComponent,
+        CatalogRewardCardComponent,
+        SortRewardsPipe
+      ],
       providers: [
         { provide: Router, useValue: routerStub },
         { provide: RewardsService, useValue: rewardsServiceStub },
@@ -36,8 +40,8 @@ describe('CatalogComponent', () => {
       ],
       imports: [
         InfiniteScrollModule,
-        MatDialogModule,
         MatIconModule,
+        MatMenuModule,
         MatCardModule
       ]
     })
