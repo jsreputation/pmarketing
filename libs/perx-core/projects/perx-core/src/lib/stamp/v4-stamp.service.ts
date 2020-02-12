@@ -131,7 +131,7 @@ interface IV4StampCard {
     };
     total_slots?: number;
     display_campaign_as: string;
-    background_img?: {
+    background_image?: {
       value?: {
         image_url?: string;
       }
@@ -205,7 +205,7 @@ export class V4StampService implements StampService {
     const rewardPostStamp = oc(stampCard).display_properties.gift_active_image.value.image_url(undefined);
     const preStampImg = oc(stampCard).display_properties.stamp_inactive_image.value.image_url(undefined);
     const postStampImg = oc(stampCard).display_properties.stamp_active_image.value.image_url(undefined);
-    const backgroundImgUrl = oc(stampCard).display_properties.background_img.value.image_url();
+    const backgroundImgUrl = oc(stampCard).display_properties.background_image.value.image_url();
     const backgroundImg = backgroundImgUrl ? { value: { imageUrl: backgroundImgUrl } } : undefined;
     return {
       id: stampCard.id,

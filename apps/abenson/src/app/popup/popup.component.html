@@ -9,7 +9,7 @@
         {{item.description}}
     </p>
     <div class="spacer"></div>
-    <div mat-dialog-actions>
+    <div mat-dialog-actions *ngIf="!item.hideButton">
         <a mat-flat-button color="primary" [href]="item.link">{{item.title}}</a>
     </div>
 </div>
