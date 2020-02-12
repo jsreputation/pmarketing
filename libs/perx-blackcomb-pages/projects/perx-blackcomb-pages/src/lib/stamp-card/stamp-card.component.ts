@@ -8,11 +8,11 @@ import {
   IStamp,
   StampState
 } from '@perx/core';
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import {filter, switchMap, takeUntil, map, distinctUntilChanged} from 'rxjs/operators';
-import {Observable, Subject} from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { filter, switchMap, takeUntil, map, distinctUntilChanged } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import {oc} from 'ts-optchain';
+import { oc } from 'ts-optchain';
 
 export interface IRewardPopupConfig extends IPopupConfig {
   afterClosedCallBackRedirect?: PopUpClosedCallBack;
@@ -99,24 +99,27 @@ export class StampCardComponent implements OnInit, OnDestroy {
           this.notificationService.addSnack('You got a new stamp!');
         }
         // The initialization still needs to be here since the state references need to be updated after subscribed stampcard changes
-        this.stampCard = stampCard;
-        this.stamps = stampCard.stamps;
-        this.title = stampCard.title || '';
-        this.subTitle = stampCard.subTitle;
-        this.background = oc(stampCard).displayProperties.backgroundImg.value.imageUrl('');
-        this.cardBackground = stampCard.displayProperties.cardBgImage || '';
-        if (stampCard.displayProperties.noRewardsPopUp) {
-          this.errorPopUp.title = stampCard.displayProperties.noRewardsPopUp.headLine;
-          this.errorPopUp.text = stampCard.displayProperties.noRewardsPopUp.subHeadLine;
-          this.errorPopUp.buttonTxt = stampCard.displayProperties.noRewardsPopUp.buttonTxt || this.errorPopUp.buttonTxt;
-          this.errorPopUp.imageUrl = stampCard.displayProperties.noRewardsPopUp.imageURL || this.errorPopUp.imageUrl;
-        }
-
-        if (stampCard.displayProperties.successPopUp) {
-          this.rewardSuccessPopUp.title = stampCard.displayProperties.successPopUp.headLine;
-          this.rewardSuccessPopUp.text = stampCard.displayProperties.successPopUp.subHeadLine;
-          this.rewardSuccessPopUp.buttonTxt = stampCard.displayProperties.successPopUp.buttonTxt || this.rewardSuccessPopUp.buttonTxt;
-          this.rewardSuccessPopUp.imageUrl = stampCard.displayProperties.successPopUp.imageURL || this.rewardSuccessPopUp.imageUrl;
+        if (stampCard) {
+          this.stampCard = stampCard;
+          this.stamps = stampCard.stamps;
+          this.title = stampCard.title || '';
+          this.subTitle = stampCard.subTitle;
+          this.background = oc(stampCard).displayProperties.backgroundImg.value.imageUrl('');
+          this.cardBackground = stampCard.displayProperties.cardBgImage || '';
+          const successOutcome = stampCard.results.outcome;
+          const noOutcome = stampCard.results.noOutcome;
+          if (noOutcome) {
+            this.errorPopUp.title = noOutcome.title;
+            this.errorPopUp.text = noOutcome.subTitle;
+            this.errorPopUp.imageUrl = noOutcome.image || this.errorPopUp.imageUrl;
+            this.errorPopUp.buttonTxt = noOutcome.button || this.errorPopUp.buttonTxt;
+          }
+          if (successOutcome) {
+            this.rewardSuccessPopUp.title = successOutcome.title;
+            this.rewardSuccessPopUp.text = successOutcome.subTitle;
+            this.rewardSuccessPopUp.imageUrl = successOutcome.image || this.rewardSuccessPopUp.imageUrl;
+            this.rewardSuccessPopUp.buttonTxt = successOutcome.button || this.rewardSuccessPopUp.buttonTxt;
+          }
         }
       },
       () => {
