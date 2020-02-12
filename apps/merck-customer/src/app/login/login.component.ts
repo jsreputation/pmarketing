@@ -41,8 +41,6 @@ export class LoginComponent implements OnInit, PageAppearence {
 
   public loginForm: FormGroup;
 
-  private appAccessTokenFetched: boolean = false;
-
   public currentSelectedLanguage: string = 'en';
 
   public preAuth: boolean;
@@ -153,16 +151,10 @@ export class LoginComponent implements OnInit, PageAppearence {
   }
 
   public goToSignup(): void {
-    if (!this.appAccessTokenFetched) {
-      return;
-    }
     this.router.navigateByUrl('/signup');
   }
 
   public goToForgotPassword(): void {
-    if (!this.appAccessTokenFetched) {
-      return;
-    }
     const mobileNumber = (this.loginForm.value.mobileNo as string);
     this.router.navigate(['forgot-password'], { state: { country: this.selectedCountry, mobileNo: mobileNumber } });
   }
