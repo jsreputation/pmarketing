@@ -221,20 +221,18 @@ export class WhistlerGameService implements IGameService {
             campaignId,
             results,
             displayProperties: { ...game.displayProperties, ...disProp }
-          }]
+          }];
         })
       );
   }
 
   private static outcomeToGameOutcome(outcome: IWProperties): IGameOutcome {
-    const res: IGameOutcome = {
+    return  {
       title: outcome.headLine ? outcome.headLine : '',
       subTitle: outcome.subHeadLine ? outcome.subHeadLine : '',
       button: outcome.buttonTxt ? outcome.buttonTxt : '',
       image: outcome.imageURL
     };
-
-    return res;
   }
 
   public prePlay(engagementId: number, campaignId?: number): Observable<IEngagementTransaction> {

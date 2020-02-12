@@ -89,14 +89,12 @@ export class SurveyService {
   }
 
   private static outcomeToGameOutcome(outcome: IWProperties): ISurveyOutcome {
-    const res: ISurveyOutcome = {
+    return {
       title: outcome.headLine ? outcome.headLine : '',
       subTitle: outcome.subHeadLine ? outcome.subHeadLine : '',
       button: outcome.buttonTxt ? outcome.buttonTxt : '',
       image: outcome.imageURL
     };
-
-    return res;
   }
 
   public postSurveyAnswer(answers: IAnswer[], campaignId: number, surveyId: number): Observable<{ hasOutcomes: boolean }> {

@@ -50,7 +50,7 @@ export interface ISurvey {
   results: {
     outcome?: ISurveyOutcome;
     noOutcome?: ISurveyOutcome;
-  },
+  };
   displayProperties?: IWCampaignDisplayProperties;
 }
 

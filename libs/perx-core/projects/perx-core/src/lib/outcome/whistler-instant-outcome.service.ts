@@ -83,26 +83,25 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
             results.noOutcome = WhistlerInstantOutcomeService.outcomeToOutcome(displayProps.noRewardsPopUp);
           }
         return {
-        title: outcomeData.title,
-        subTitle: outcomeData.sub_title,
-        button: outcomeData.button,
-        banner: outcomeData.banner,
-        backgroundImgUrl: outcomeData.background_img_url,
-        cardBackgroundImgUrl: outcomeData.card_background_img_url,
-        results
-      };})
+          title: outcomeData.title,
+          subTitle: outcomeData.sub_title,
+          button: outcomeData.button,
+          banner: outcomeData.banner,
+          backgroundImgUrl: outcomeData.background_img_url,
+          cardBackgroundImgUrl: outcomeData.card_background_img_url,
+          results
+        };
+      })
     );
   }
 
   private static outcomeToOutcome(outcome: IWProperties): IOutcomeMsg {
-    const res: IOutcomeMsg = {
+    return  {
       title: outcome.headLine ? outcome.headLine : '',
       subTitle: outcome.subHeadLine ? outcome.subHeadLine : '',
       button: outcome.buttonTxt ? outcome.buttonTxt : '',
       image: outcome.imageURL
     };
-
-    return res;
   }
 
   public claim(campaignId: number): Observable<IVoucher[]> {
