@@ -29,6 +29,7 @@
     "build:merck-merchant:prod": "lerna run build:lib && lerna run build:merck-merchant:prod --",
     "build:petron-demo:prod": "lerna run build:lib && lerna run build:petron-demo:prod --",
     "build:oracle-demo:prod": "lerna run build:lib && lerna run build:oracle-demo:prod --",
+    "build:perx-demo:prod": "lerna run build:lib && lerna run build:perx-demo:prod --",
     "build:oracle-pay:prod": "echo 'skipping oracle-pay build'",
     "build:perx:prod": "lerna run build:lib && lerna run build:perx:prod --",
     "build:backend": "lerna run build:backend",
