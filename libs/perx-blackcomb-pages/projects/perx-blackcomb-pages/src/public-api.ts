@@ -36,3 +36,7 @@ export { RewardsBookingComponent } from './lib/rewards-booking/rewards-booking.c
 export { ProfileBarcodeComponent } from './lib/profile-barcode/profile-barcode.component';
 export { EditProfileFieldComponent } from './lib/edit-profile-field/edit-profile-field.component';
 export { CampaignStampsComponent } from './lib/campaign-stamps/campaign-stamps.component';
+export { CatalogsComponent } from './lib/catalogs/catalogs.component';
+export { CatalogComponent } from './lib/catalog/catalog.component';
+export { CatalogRewardCardComponent } from './lib/catalog-reward-card/catalog-reward-card.component';
+

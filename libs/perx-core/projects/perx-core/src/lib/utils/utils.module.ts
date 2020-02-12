@@ -20,6 +20,7 @@ import { NewsfeedComponent } from './newsfeed/newsfeed.component';
 import { StorageModule } from './storage/storage.module';
 import {FeedItemPopupComponent} from './feed-item-popup/feed-item-popup.component';
 import {MatIconModule} from '@angular/material/icon';
+import {SortRewardsPipe} from './directives/sort-rewards-pipe';
 
 export function themesServiceFactory(http: HttpClient, config: Config): ThemesService {
   // if (config.isWhistler) {
@@ -55,7 +56,8 @@ export function notificationServiceFactory(): NotificationService {
   declarations: [
     ...directives,
     ...components,
-    DistancePipe
+    DistancePipe,
+    SortRewardsPipe
   ],
   entryComponents: [
     ...components,
@@ -72,7 +74,8 @@ export function notificationServiceFactory(): NotificationService {
   exports: [
     ...directives,
     ...components,
-    DistancePipe
+    DistancePipe,
+    SortRewardsPipe
   ],
   providers: [
     { provide: NotificationService, useFactory: notificationServiceFactory },
