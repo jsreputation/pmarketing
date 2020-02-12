@@ -66,21 +66,24 @@ import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common
 import { PerxTranslateLoader } from './custom-translate.service';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
-export const setLanguage = (translateService: TranslateService, configService: ConfigService, authService: AuthenticationService) => () => new Promise((resolve) => {
-  translateService.setDefaultLang(environment.defaultLang);
-  configService.readAppConfig().subscribe(
-    () => {
-      const token = authService.getAppAccessToken();
-      if (!token) {
-        authService.getAppToken().subscribe(() => {
-        }, (err) => {
-          console.error(`Error${  err}`);
-        });
-      }
-    }
-  );
-  resolve();
-});
+export const setLanguage =
+  (translateService: TranslateService, configService: ConfigService, authService: AuthenticationService) =>
+    () => new Promise((resolve) => {
+      translateService.setDefaultLang(environment.defaultLang);
+      configService.readAppConfig().subscribe(
+        () => {
+          const token = authService.getAppAccessToken();
+          if (!token) {
+            authService.getAppToken().subscribe(() => {
+            }, (err) => {
+              console.error(`Error${err}`);
+            });
+          }
+        }
+      );
+      resolve();
+    });
+
 @NgModule({
   declarations: [
     AppComponent,

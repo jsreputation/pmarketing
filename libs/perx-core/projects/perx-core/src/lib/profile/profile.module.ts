@@ -11,10 +11,11 @@ import { WhistlerProfileService } from './whistler-profile.service';
 import { TokenStorage } from '../utils/storage/token-storage.service';
 import { ConfigService } from '../config/config.service';
 
-export function profileServiceFactory(http: HttpClient,
-                                      config: Config,
-                                      configService: ConfigService,
-                                      tokenStorage: TokenStorage): ProfileService {
+export function profileServiceFactory(
+  http: HttpClient,
+  config: Config,
+  configService: ConfigService,
+  tokenStorage: TokenStorage): ProfileService {
   // Make decision on what to instantiate base on config
   if (config.isWhistler) {
     return new WhistlerProfileService(http, config, tokenStorage);
