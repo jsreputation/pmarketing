@@ -77,9 +77,9 @@ interface TreeDisplayProperties extends GameProperties {
 }
 
 interface ScratchDisplayProperties extends GameProperties {
-  prescratch_image: string;
-  post_success_image: string;
-  post_fail_image: string;
+  prescratch_image: Asset;
+  post_success_image: Asset;
+  post_fail_image: Asset;
 }
 
 interface PinataDisplayProperties extends GameProperties {
@@ -176,9 +176,9 @@ export class V4GameService implements IGameService {
       const dpps: ScratchDisplayProperties = game.display_properties as ScratchDisplayProperties;
       config = {
         ...defaultScratch(),
-        coverImg: dpps.prescratch_image,
-        underlyingSuccessImg: dpps.post_success_image,
-        underlyingFailImg: dpps.post_fail_image
+        coverImg: dpps.prescratch_image.value.image_url,
+        underlyingSuccessImg: dpps.post_success_image.value.image_url,
+        underlyingFailImg: dpps.post_fail_image.value.image_url
       };
     } else {
       throw new Error(`${game.game_type} is not mapped yet`);

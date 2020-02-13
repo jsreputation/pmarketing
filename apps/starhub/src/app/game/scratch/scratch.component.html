@@ -1,0 +1,13 @@
+<div class="main-puzzle-container">
+  <div class="game-wrapper">
+    <div class="scratch-wrapper">
+      <perx-core-scratch-card
+        [enabled]="enabled"
+        [coverImg]="config.coverImg"
+        [underlyingImg]="willWin ? config.underlyingSuccessImg : config.underlyingFailImg"
+        [uncoverPortionToTrigger]="config.uncoverPortionToTrigger"
+        (completed)="gameCompleted()">
+      </perx-core-scratch-card>
+    </div>
+  </div>
+</div>
