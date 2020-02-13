@@ -33,6 +33,7 @@ describe('SurveyComponent', () => {
     id: '1',
     title: 'Survey Test',
     subTitle: 'Test',
+    results: {},
     questions: [
       {
         id: '1',
@@ -162,6 +163,7 @@ describe('SurveyComponent', () => {
         id: '1',
         title: 'Survey Test',
         subTitle: 'Test',
+        results: {},
         questions: [
           {
             id: '1',

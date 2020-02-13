@@ -30,6 +30,7 @@ const mockOutcome: IOutcome = {
   banner: 'banner',
   backgroundImgUrl: '',
   cardBackgroundImgUrl: '',
+  results: {},
   displayProperties: {
     informationCollectionSetting: WInformationCollectionSettingType.not_required,
     noRewardsPopUp: {
