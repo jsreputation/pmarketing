@@ -26,7 +26,7 @@ import { IV4Voucher, V4VouchersService } from '../vouchers/v4-vouchers.service';
 const enum GameType {
   shakeTheTree = 'shake_the_tree',
   pinata = 'hit_the_pinata',
-  scratch = "scratch_card"
+  scratch = 'scratch_card'
 }
 
 interface Asset {
@@ -180,8 +180,7 @@ export class V4GameService implements IGameService {
         underlyingSuccessImg: dpps.post_success_image,
         underlyingFailImg: dpps.post_fail_image
       };
-    }
-    else {
+    } else {
       throw new Error(`${game.game_type} is not mapped yet`);
     }
     const texts: { [key: string]: string } = {};
@@ -260,7 +259,7 @@ export class V4GameService implements IGameService {
   }
 
   // @ts-ignore
-  public prePlay(gameId): Observable<IEngagementTransaction> {
+  public prePlay(gameId: number): Observable<IEngagementTransaction> {
     return this.httpClient
       .put<IV4PlayResponse>(`${this.hostName}/v4/games/${gameId}/reserve`, null)
       .pipe(
@@ -271,10 +270,9 @@ export class V4GameService implements IGameService {
           ),
           rewardIds: res.data.outcomes.reduce((accRewardIds, currVouch) => {
             if (currVouch.reward) {
-              return accRewardIds.concat(currVouch.reward.id)
-            } else {
-              return accRewardIds;
+              return accRewardIds.concat(currVouch.reward.id);
             }
+            return accRewardIds;
           }, [] as number[])
         }))
       );

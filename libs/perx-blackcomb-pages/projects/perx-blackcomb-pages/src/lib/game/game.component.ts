@@ -125,6 +125,7 @@ export class GameComponent implements OnInit, OnDestroy {
       },
       () => {
         this.popupData = this.noRewardsPopUp;
+        this.redirectUrlAndPopUp(); // wont call preplayConfirm direct away if preplay fail
       }
     );
   }
@@ -171,7 +172,6 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   public preplayGameCompleted(): void {
-    // is the game id
     const userAction$: Observable<IEngagementTransaction | void> =
       this.gameService.prePlayConfirm(this.transactionId, this.informationCollectionSetting)
         .pipe(
