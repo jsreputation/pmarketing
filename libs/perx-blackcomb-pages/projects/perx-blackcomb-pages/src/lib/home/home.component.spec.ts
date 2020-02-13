@@ -29,6 +29,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import {CampaignsCollectionComponent} from './campaigns-collection/campaigns-collection.component';
+import {CatalogsComponent} from '../catalogs/catalogs.component';
 
 const rewardsServiceStub: Partial<RewardsService> = {
   getAllRewards: () => of([]),
@@ -90,7 +91,7 @@ describe('HomeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [HomeComponent, GamesCollectionComponent, CampaignsCollectionComponent],
+      declarations: [HomeComponent, GamesCollectionComponent, CampaignsCollectionComponent, CatalogsComponent],
       imports: [
         NoopAnimationsModule,
         MatCardModule,

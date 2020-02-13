@@ -37,7 +37,8 @@ import {
   ConfigModule,
   TokenStorage,
   ConfigService,
-  LanguageInterceptor
+  LanguageInterceptor,
+  AuthenticationService
 } from '@perx/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -65,10 +66,24 @@ import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common
 import { PerxTranslateLoader } from './custom-translate.service';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
-export const setLanguage = (translateService: TranslateService) => () => new Promise((resolve) => {
-  translateService.setDefaultLang(environment.defaultLang);
-  resolve();
-});
+export const setLanguage =
+  (translateService: TranslateService, configService: ConfigService, authService: AuthenticationService) =>
+    () => new Promise((resolve) => {
+      translateService.setDefaultLang(environment.defaultLang);
+      configService.readAppConfig().subscribe(
+        () => {
+          const token = authService.getAppAccessToken();
+          if (!token) {
+            authService.getAppToken().subscribe(() => {
+            }, (err) => {
+              console.error(`Error${err}`);
+            });
+          }
+        }
+      );
+      resolve();
+    });
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -139,7 +154,7 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
   providers: [
     // { provide: LOCALE_ID, useValue: 'zh' },
     { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true},
-    { provide: APP_INITIALIZER, useFactory: setLanguage, deps: [TranslateService], multi: true }
+    { provide: APP_INITIALIZER, useFactory: setLanguage, deps: [TranslateService, ConfigService, AuthenticationService], multi: true }
   ],
   bootstrap: [AppComponent],
   entryComponents: [CustomSnackbarComponent, FilterDialogComponent]

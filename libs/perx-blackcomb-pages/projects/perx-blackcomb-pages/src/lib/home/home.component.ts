@@ -11,6 +11,7 @@ import {
   FeedItem,
   FeedReaderService,
   ICampaign,
+  ICatalog,
   ICampaignService,
   InstantOutcomeService,
   IConfig,
@@ -240,6 +241,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   public goToReward(reward: IReward): void {
     this.router.navigate([`/reward-detail/${reward.id}`]);
+  }
+
+  public catalogSelected(catalog: ICatalog): void {
+    this.router.navigate(['/catalogs'], { queryParams: { catalog: catalog.id } });
   }
 
   public onScroll(): void {
