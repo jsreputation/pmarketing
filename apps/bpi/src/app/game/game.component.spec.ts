@@ -148,6 +148,7 @@ describe('GameComponent', () => {
             totalSlots: 5,
             rewards: [],
           },
+          results: {},
           displayProperties: {
             numberOfCols: 1,
             numberOfRows: 5,
@@ -292,6 +293,7 @@ describe('GameComponent', () => {
           totalSlots: 5,
           rewards: [],
         },
+        results: {},
         displayProperties: {
           numberOfCols: 1,
           numberOfRows: 5,
@@ -339,6 +341,7 @@ describe('GameComponent', () => {
           stampCardId: 1,
           createdAt: '',
           updatedAt: '',
+          results: {}
         }]
       ));
 
@@ -358,6 +361,7 @@ describe('GameComponent', () => {
           totalSlots: 5,
           rewards: [],
         },
+        results: {},
         displayProperties: {
           numberOfCols: 1,
           numberOfRows: 5,
@@ -436,6 +440,7 @@ describe('GameComponent', () => {
             stampCardId: 1,
             createdAt: '',
             updatedAt: '',
+            results: {}
           },
           {
             id: 1609,
@@ -446,6 +451,7 @@ describe('GameComponent', () => {
             stampCardId: 1,
             createdAt: '',
             updatedAt: '',
+            results: {}
           },
           {
             id: 1610,
@@ -456,6 +462,7 @@ describe('GameComponent', () => {
             stampCardId: 1,
             createdAt: '',
             updatedAt: '',
+            results: {}
           },
           {
             id: 1611,
@@ -466,6 +473,7 @@ describe('GameComponent', () => {
             stampCardId: 1,
             createdAt: '',
             updatedAt: '',
+            results: {}
           }
         ]
       ));
@@ -486,6 +494,7 @@ describe('GameComponent', () => {
           totalSlots: 5,
           rewards: [],
         },
+        results: {},
         displayProperties: {
           numberOfCols: 1,
           numberOfRows: 5,
@@ -547,6 +556,7 @@ describe('GameComponent', () => {
             stampCardId: 1,
             createdAt: '',
             updatedAt: '',
+            results: {}
           },
         ],
       };
@@ -574,6 +584,7 @@ describe('GameComponent', () => {
             stampCardId: 1,
             createdAt: '',
             updatedAt: '',
+            results: {}
           },
           {
             id: 1609,
@@ -584,6 +595,7 @@ describe('GameComponent', () => {
             stampCardId: 1,
             createdAt: '',
             updatedAt: '',
+            results: {}
           },
           {
             id: 1610,
@@ -594,6 +606,7 @@ describe('GameComponent', () => {
             stampCardId: 1,
             createdAt: '',
             updatedAt: '',
+            results: {}
           },
           {
             id: 1611,
@@ -604,6 +617,7 @@ describe('GameComponent', () => {
             stampCardId: 1,
             createdAt: '',
             updatedAt: '',
+            results: {}
           },
           {
             id: 1612,
@@ -614,6 +628,7 @@ describe('GameComponent', () => {
             stampCardId: 1,
             createdAt: '',
             updatedAt: '',
+            results: {}
           }
         ]
       ));
@@ -635,6 +650,7 @@ describe('GameComponent', () => {
           totalSlots: 5,
           rewards: [],
         },
+        results: {},
         displayProperties: {
           numberOfCols: 1,
           numberOfRows: 5,
@@ -713,6 +729,7 @@ describe('GameComponent', () => {
             stampCardId: 1,
             createdAt: '',
             updatedAt: '',
+            results: {}
           },
           {
             id: 1609,
@@ -723,6 +740,7 @@ describe('GameComponent', () => {
             stampCardId: 1,
             createdAt: '',
             updatedAt: '',
+            results: {}
           },
           {
             id: 1610,
@@ -733,6 +751,7 @@ describe('GameComponent', () => {
             stampCardId: 1,
             createdAt: '',
             updatedAt: '',
+            results: {}
           },
           {
             id: 1611,
@@ -743,6 +762,7 @@ describe('GameComponent', () => {
             stampCardId: 1,
             createdAt: '',
             updatedAt: '',
+            results: {}
           },
         ]
       ));
@@ -763,6 +783,7 @@ describe('GameComponent', () => {
           totalSlots: 5,
           rewards: [],
         },
+        results: {},
         displayProperties: {
           numberOfCols: 1,
           numberOfRows: 5,
@@ -841,6 +862,7 @@ describe('GameComponent', () => {
             stampCardId: 1,
             createdAt: '',
             updatedAt: '',
+            results: {}
           },
           {
             id: 1609,
@@ -851,6 +873,7 @@ describe('GameComponent', () => {
             stampCardId: 1,
             createdAt: '',
             updatedAt: '',
+            results: {}
           },
           {
             id: 1610,
@@ -861,6 +884,7 @@ describe('GameComponent', () => {
             stampCardId: 1,
             createdAt: '',
             updatedAt: '',
+            results: {}
           },
           {
             id: 1611,
@@ -871,6 +895,7 @@ describe('GameComponent', () => {
             stampCardId: 1,
             createdAt: '',
             updatedAt: '',
+            results: {}
           },
         ]
       ));

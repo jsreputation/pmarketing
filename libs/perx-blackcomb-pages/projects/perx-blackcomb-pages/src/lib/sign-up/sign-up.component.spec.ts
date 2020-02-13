@@ -87,6 +87,7 @@ describe('SignUpComponent', () => {
   const formSvcStub: Partial<IFormsService> = {
     getSignupForm: () => of({
       title: '',
+      results: {},
       questions: []
     })
   };

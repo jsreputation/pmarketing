@@ -79,9 +79,9 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
       map(res => res.data.attributes.display_properties),
       map((outcomeData: IWInstantOutcomeDisplayProperties) => {
         const results: { [key: string]: IOutcomeMsg } = {};
-          if (displayProps && displayProps.noRewardsPopUp) {
-            results.noOutcome = WhistlerInstantOutcomeService.outcomeToOutcome(displayProps.noRewardsPopUp);
-          }
+        if (displayProps && displayProps.noRewardsPopUp) {
+          results.noOutcome = WhistlerInstantOutcomeService.outcomeToOutcome(displayProps.noRewardsPopUp);
+        }
         return {
           title: outcomeData.title,
           subTitle: outcomeData.sub_title,

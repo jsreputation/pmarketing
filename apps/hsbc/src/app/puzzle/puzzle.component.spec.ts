@@ -38,6 +38,7 @@ describe('PuzzleComponent', () => {
       totalSlots: 1,
       rewards: []
     },
+    results: {},
     displayProperties: {
       numberOfCols: 1,
       numberOfRows: 1,
