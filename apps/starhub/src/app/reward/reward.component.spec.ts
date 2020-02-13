@@ -33,13 +33,13 @@ const rewardStub = {
   }
 };
 
-const macaronFalseStub: IMacaron = {
+const macaronFalseStub: Partial<IMacaron> = {
   label: '',
   class: '',
   isButtonEnabled: false
 };
 
-const macaronTrueStub: IMacaron = {
+const macaronTrueStub: Partial<IMacaron> = {
   label: '',
   class: '',
   isButtonEnabled: true

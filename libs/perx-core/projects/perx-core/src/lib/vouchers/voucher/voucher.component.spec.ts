@@ -44,15 +44,15 @@ describe('VoucherComponent', () => {
     expiry: null,
   };
 
-  const voucherServiceStub = {
+  const voucherServiceStub: Partial<IVoucherService> = {
     get: () => of(mockVoucher),
     getAll: () => of([])
   };
-  const rewardsServiceStub = {
+  const rewardsServiceStub: Partial<RewardsService> = {
     getReward: () => of()
   };
 
-  const merchantsServiceStub = {
+  const merchantsServiceStub: Partial<IMerchantsService> = {
     getMerchant: () => of()
   };
 

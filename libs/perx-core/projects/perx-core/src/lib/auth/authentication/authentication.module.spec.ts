@@ -14,14 +14,15 @@ import { UtilsModule } from '../../utils/utils.module';
 import { LocalTokenStorage } from '../../utils/storage/local-token-storage.service';
 import { TokenType } from '../../utils/storage/models/token-storage.model';
 import { TokenStorageServiceFactory } from '../../utils/storage/storage.module';
-import {of} from 'rxjs';
-import {ConfigService} from '../../config/config.service';
+import { of } from 'rxjs';
+import { ConfigService } from '../../config/config.service';
+import { IConfig } from '../../config/models/config.model';
 
-const configServiceStub = {
+const configServiceStub: Partial<ConfigService> = {
   readAppConfig: () => of({
     production: true,
     baseHref: '/'
-  })
+  } as IConfig<any>)
 };
 
 describe('AuthenticationModule', () => {

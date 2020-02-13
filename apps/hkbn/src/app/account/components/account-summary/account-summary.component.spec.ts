@@ -19,7 +19,7 @@ import { IProfile, AuthenticationService, ProfileService, NotificationService } 
 import { of, throwError } from 'rxjs';
 import { Type } from '@angular/core';
 
-const accountDataStub: IProfile = {
+const accountDataStub: Partial<IProfile> = {
   id: 0,
   firstName: 'Temp',
   state: 'issued',

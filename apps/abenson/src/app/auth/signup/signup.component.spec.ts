@@ -8,13 +8,17 @@ import { AuthenticationService, ProfileService } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
+import { IWAppAccessTokenResponse } from '@perx/whistler';
 
 describe('SignupComponent', () => {
   let component: SignUpComponent;
   let fixture: ComponentFixture<SignUpComponent>;
   let auth: AuthenticationService;
-  const authenticationServiceStub = { getAppToken: () => of({}), getAppAccessToken: () => 'token' };
-  const profileServiceStub = { verifyCardNumber: () => of(true) };
+  const authenticationServiceStub: Partial<AuthenticationService> = {
+    getAppToken: () => of({} as IWAppAccessTokenResponse),
+    getAppAccessToken: () => 'token'
+  };
+  const profileServiceStub: Partial<ProfileService> = { verifyCardNumber: () => of(true) };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SignUpComponent],

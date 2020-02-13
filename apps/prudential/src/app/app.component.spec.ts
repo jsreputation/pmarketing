@@ -15,7 +15,7 @@ describe('AppComponent', () => {
   let debugElement: DebugElement;
   let router: Router;
 
-  const authServiceStub = {
+  const authServiceStub: Partial<AuthenticationService> = {
     $failedAuth: of(true)
   };
   const locationStub = {

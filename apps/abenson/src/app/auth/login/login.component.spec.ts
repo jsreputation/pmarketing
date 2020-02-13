@@ -8,16 +8,17 @@ import { AuthenticationService, NotificationService } from '@perx/core';
 import { Type } from '@angular/core';
 import { of, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { IWAppAccessTokenResponse } from '@perx/whistler';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let auth: AuthenticationService;
-  let notificationService: NotificationService;
-  const authenticationServiceStub = {
-    login: () => of(null),
+  let notificationService: Partial<NotificationService>;
+  const authenticationServiceStub: Partial<AuthenticationService> = {
+    login: () => of(void 0),
     getAppAccessToken: () => 'token',
-    getAppToken: () => of({})
+    getAppToken: () => of({} as IWAppAccessTokenResponse)
   };
 
   beforeEach(async(() => {

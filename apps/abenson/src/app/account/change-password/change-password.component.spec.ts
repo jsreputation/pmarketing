@@ -11,8 +11,8 @@ import { Type } from '@angular/core';
 import { SharedDataService } from 'src/app/services/shared-data.service';
 import { Router } from '@angular/router';
 
-const authenticationServiceStub = {
-  requestVerificationToken: () => of(null)
+const authenticationServiceStub: Partial<AuthenticationService> = {
+  requestVerificationToken: () => of()
 };
 
 describe('ChangePasswordComponent', () => {

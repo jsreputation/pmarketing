@@ -10,14 +10,14 @@ import { of } from 'rxjs';
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
-  let notificationService: NotificationService;
+  let notificationService: Partial<NotificationService>;
 
   beforeEach(async(() => {
-    const notificationServiceStub = { $popup: { subscribe: () => ({}) } };
+    const notificationServiceStub: Partial<NotificationService> = { $popup: of() };
     const matDialogStub = { open: () => ({}) };
-    const authenticationServiceStub = { $failedAuth: of(true) };
-    const routerStub = { navigateByUrl: () => ({}) };
-    const configServiceStub = {
+    const authenticationServiceStub: Partial<AuthenticationService> = { $failedAuth: of(true) };
+    const routerStub: Partial<Router> = { navigateByUrl: () => new Promise((resolve) => resolve(true)) };
+    const configServiceStub: Partial<ConfigService> = {
       readAppConfig: () => of()
     };
 
@@ -68,7 +68,7 @@ describe('AppComponent', () => {
 
   describe('ngOnInit', () => {
     it('should pass auth login', () => {
-      const routerStub: Router = fixture.debugElement.injector.get(Router);
+      const routerStub: Partial<Router> = fixture.debugElement.injector.get(Router);
       spyOn(routerStub, 'navigateByUrl').and.callThrough();
       component.ngOnInit();
       expect(routerStub.navigateByUrl).toHaveBeenCalledWith('login');

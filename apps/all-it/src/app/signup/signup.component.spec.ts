@@ -20,11 +20,11 @@ describe('SignupComponent', () => {
   let component: SignupComponent;
   let fixture: ComponentFixture<SignupComponent>;
 
-  const authServiceStub = {
-    getAppAccessToken: () => of()
+  const authServiceStub: Partial<AuthenticationService> = {
+    getAppAccessToken: () => 'of'
   };
 
-  const notificationServiceStub = {
+  const notificationServiceStub: Partial<NotificationService> = {
     addSnack: () => {}
   };
 

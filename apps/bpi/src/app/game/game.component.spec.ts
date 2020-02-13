@@ -6,6 +6,7 @@ import { GameComponent } from './game.component';
 import { HeaderComponent } from '../header/header.component';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
+import {IStamp} from '../../../../../libs/perx-core/projects/perx-core/src/lib/stamp/models/stamp.model';
 
 describe('GameComponent', () => {
   let component: GameComponent;
@@ -15,15 +16,50 @@ describe('GameComponent', () => {
     const router = {
       navigate: jasmine.createSpy('navigate')
     };
-    const stampServiceStub = {
-      getCards: () => ({ pipe: () => ({ subscribe: () => ({}) }) }),
-      stampAll: () => ({ subscribe: () => ({}) })
+    const stampServiceStub: Partial<StampService> = {
+      getCards: () => (of([
+        {
+          id: 1,
+          state: StampCardState.active,
+          title: 'Test',
+          campaignConfig: null,
+          displayProperties: {
+            numberOfCols: undefined,
+            numberOfRows: undefined,
+            cardImage: undefined,
+            preStampImg: undefined,
+            postStampImg: undefined,
+            rewardPreStamp: undefined,
+            rewardPostStamp: undefined,
+            bgImage: undefined,
+            cardBgImage: undefined,
+            totalSlots: undefined,
+            displayCampaignAs: '',
+            backgroundImg: undefined,
+            rewardPositions: undefined,
+            thumbnailImg: undefined,
+            noRewardsPopUp: {
+              headLine: 'Headline',
+              subHeadLine: 'Sub headline',
+              imageURL: 'url',
+              buttonTxt: 'button'
+            },
+            successPopUp: {
+              headLine: 'Headline',
+              subHeadLine: 'Sub headline',
+              imageURL: 'url',
+              buttonTxt: 'button'
+            }
+          }
+        }
+      ])),
+      stampAll: () => of([{ state: StampState.issued } as IStamp])
     };
-    const campaignServiceStub = {
-      getCampaigns: () => ({ pipe: () => ({ subscribe: () => ({}) }) })
+    const campaignServiceStub: Partial<ICampaignService> = {
+      getCampaigns: () => of()
     };
 
-    const notificationServiceStub = { addPopup: () => ({}) };
+    const notificationServiceStub: Partial<NotificationService> = { addPopup: () => ({}) };
     TestBed.configureTestingModule({
       declarations: [GameComponent, HeaderComponent],
       imports: [PerxCoreModule],

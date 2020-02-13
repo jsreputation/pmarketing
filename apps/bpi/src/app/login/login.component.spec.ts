@@ -10,12 +10,12 @@ describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
 
-  const authServiceStub = {
+  const authServiceStub: Partial<AuthenticationService> = {
     autoLogin: () => of(),
-    getAppToken: () => of({}),
+    getAppToken: () => of(),
     getAppAccessToken: () => 'token'
   };
-  const configServiceStub = {
+  const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of()
   };
 
