@@ -280,10 +280,10 @@ export class V4GameService implements IGameService {
       );
   }
 
-  public prePlayConfirm(transactionId: number): Observable<IEngagementTransaction | void> {
+  public prePlayConfirm(gameId: number): Observable<IEngagementTransaction | void> {
     // todo: transactionId is used as the game/engagementId until preplay games are implemented in v4
     return this.httpClient
-      .put<IV4PlayResponse>(`${this.hostName}/v4/game_transactions/${transactionId}/confirm`, null)
+      .put<IV4PlayResponse>(`${this.hostName}/v4/game_transactions/${gameId}/confirm`, null)
       .pipe(
         map(() => void 0)
       );
