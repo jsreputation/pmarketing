@@ -233,6 +233,7 @@ describe('GameComponent', () => {
           stampCardId: 1,
           createdAt: '',
           updatedAt: '',
+          results: {}
         },
         {
           id: 1609,
@@ -243,6 +244,7 @@ describe('GameComponent', () => {
           stampCardId: 1,
           createdAt: '',
           updatedAt: '',
+          results: {}
         },
         {
           id: 1610,
@@ -253,6 +255,7 @@ describe('GameComponent', () => {
           stampCardId: 1,
           createdAt: '',
           updatedAt: '',
+          results: {}
         },
         {
           id: 1611,
@@ -263,6 +266,7 @@ describe('GameComponent', () => {
           stampCardId: 1,
           createdAt: '',
           updatedAt: '',
+          results: {}
         },
         {
           id: 1612,
@@ -273,6 +277,7 @@ describe('GameComponent', () => {
           stampCardId: 1,
           createdAt: '',
           updatedAt: '',
+          results: {}
         }]
       ));
 
