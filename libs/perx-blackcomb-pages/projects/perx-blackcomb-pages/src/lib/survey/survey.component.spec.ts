@@ -220,7 +220,7 @@ describe('SurveyComponent', () => {
         const routerSpy = spyOn(routerStub, 'navigate').and.callThrough();
 
         const state = {
-          popupData: { title: '', text: '', imageUrl: 'assets/congrats_image.png', buttonTxt: 'VIEW_REWARD' },
+          popupData: { title: 'SURVEY_SUCCESS_TITLE', text: 'SURVEY_SUCCESS_TEXT', imageUrl: 'assets/congrats_image.png', buttonTxt: 'VIEW_REWARD' },
           engagementType: 'survey',
           surveyId: 1,
           collectInfo: true,
