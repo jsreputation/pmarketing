@@ -222,6 +222,7 @@ export class GameComponent implements OnInit {
       text: this.game.results.noOutcome && this.game.results.noOutcome.subTitle,
       buttonTxt: this.game.results.noOutcome && this.game.results.noOutcome.button,
       afterClosedCallBack: this,
+      disableOverlayClose: true,
       panelClass: 'custom-class'
     });
   }
