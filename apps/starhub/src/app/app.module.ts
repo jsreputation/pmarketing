@@ -53,6 +53,7 @@ import { ErrorComponent } from './error/error.component';
 
 import { environment } from '../environments/environment';
 import * as Sentry from '@sentry/browser';
+import {ScratchComponent} from './game/scratch/scratch.component';
 
 Sentry.init({
   dsn: 'https://b7939e78d33d483685b1c82e9c076384@sentry.io/1873560'
@@ -87,6 +88,7 @@ export class SentryErrorHandler implements ErrorHandler {
     CongratsComponent,
     ExpireTimerComponent,
     ErrorComponent,
+    ScratchComponent
   ],
   imports: [
     ConfigModule.forRoot({...environment}),
