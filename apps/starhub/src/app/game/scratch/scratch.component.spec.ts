@@ -76,14 +76,14 @@ describe('ScratchComponent', () => {
   });
 
   it('By default game should be disabled', () => {
-    expect(component.isEnabled).toBe(false);
+    expect(component.enabled).toBe(false);
   });
 
   it('game should be enabled when button is pressed', () => {
     const gameButton = fixture.debugElement.query(By.css('button')).nativeElement;
     gameButton.click();
     fixture.detectChanges();
-    expect(component.isEnabled).toBe(true);
+    expect(component.enabled).toBe(true);
   });
 
   it('emits broken event when game is completed', () => {

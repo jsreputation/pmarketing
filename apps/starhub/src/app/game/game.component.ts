@@ -102,13 +102,14 @@ export class GameComponent implements OnInit {
               siteSectionLevel2: 'rewards:game',
               siteSectionLevel3: 'rewards:game'
             });
-          },
-          (err: any) => {
-            console.log(err);
-            this.isEnabled = false;
-            this.showErrorPopup();
           }
-        )
+        ),
+        catchError((err: HttpErrorResponse) => {
+          console.log('error should beb caught here');
+          this.showErrorPopup();
+          throw err;
+        }),
+        takeUntil(this.destroy$)
       );
   }
 
@@ -170,10 +171,13 @@ export class GameComponent implements OnInit {
             });
           }
         }),
+        take(1),
         catchError((err: HttpErrorResponse) => {
+          console.log('error should beb caught here');
           this.showErrorPopup();
           throw err;
-        })
+        }),
+        takeUntil(this.destroy$)
       ).subscribe();
   }
 
