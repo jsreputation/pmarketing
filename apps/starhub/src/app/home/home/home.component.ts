@@ -10,7 +10,7 @@ import {
   InstantOutcomeService,
   CampaignType,
   IGame,
-  RewardPopupComponent
+  RewardPopupComponent, ConfigService
 } from '@perx/core';
 import { NoRenewaleInNamePipe } from '../no-renewale-in-name.pipe';
 import { MatToolbar, MatDialog } from '@angular/material';
@@ -46,14 +46,19 @@ export class HomeComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private campaignService: ICampaignService,
     private instantOutcomeService: InstantOutcomeService,
+    private configService: ConfigService,
     private router: Router,
     private dialog: MatDialog,
   ) { }
 
   public ngOnInit(): void {
-    this.loyaltyService.getLoyalty().subscribe((loyalty: ILoyalty) => this.loyalty = loyalty);
-    this.profileService.whoAmI().subscribe((p: IProfile) => this.profile = p);
-    this.getAccessToken();
+    this.configService.readAppConfig().subscribe(
+      () => {
+        this.loyaltyService.getLoyalty().subscribe((loyalty: ILoyalty) => this.loyalty = loyalty);
+        this.profileService.whoAmI().subscribe((p: IProfile) => this.profile = p);
+        this.getAccessToken();
+      }
+    );
   }
 
   private getAccessToken(): void {
