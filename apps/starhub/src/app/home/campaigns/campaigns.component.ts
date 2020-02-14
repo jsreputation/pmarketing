@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
-import { ICampaign, CampaignType, ICampaignService, IGameService, IGame } from '@perx/core';
-import { map, switchMap, tap } from 'rxjs/operators';
-import { combineLatest } from 'rxjs';
+import {ICampaign, CampaignType, ICampaignService, IGameService, IGame} from '@perx/core';
+import {map, scan, switchMap, tap} from 'rxjs/operators';
+import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
 import { IMacaron, MacaronService } from '../../services/macaron.service';
 
 interface ICampaignWithMacaron extends ICampaign {
@@ -14,8 +14,11 @@ interface ICampaignWithMacaron extends ICampaign {
 })
 
 export class CampaignsComponent implements OnInit {
-  public campaigns: ICampaignWithMacaron[];
+  public campaigns$: Observable<ICampaignWithMacaron[]>;
+  public campaignsSubj: BehaviorSubject<ICampaignWithMacaron[]> = new BehaviorSubject<ICampaignWithMacaron[]>([]);
   public games: IGame[];
+  public campaignsPageId: number = 1;
+  public campaignsEnded: boolean = false;
 
   @Output()
   public tapped: EventEmitter<number> = new EventEmitter();
@@ -24,21 +27,30 @@ export class CampaignsComponent implements OnInit {
     private campaignService: ICampaignService,
     private gameService: IGameService,
     private macaronService: MacaronService,
-  ) { }
+  ) {
+    this.initCampaignsScan();
+  }
 
   public ngOnInit(): void {
+    this.loadCampaigns();
+  }
 
-    this.campaignService.getCampaigns().pipe(
-      map((campaigns: ICampaign[]) => campaigns.filter((campaign) => campaign.type === CampaignType.game)),
-      tap((campaigns: ICampaign[]) => this.campaigns = campaigns),
-      switchMap(
-        (campaigns: ICampaign[]) => combineLatest(...campaigns.map(campaign => this.gameService.getGamesFromCampaign(campaign.id)))
-      ),
-      map((games: IGame[][]) => [].concat(...games as []) as IGame[])
-    )
+  public loadCampaigns(): void {
+    let tempCampaigns;
+    this.campaignService.getCampaigns({ page: this.campaignsPageId })
+      .pipe(
+        map((campaigns: ICampaign[]) => campaigns.filter((campaign) => campaign.type === CampaignType.game)),
+        tap((campaigns: ICampaign[]) => {
+          tempCampaigns = campaigns;
+        }),
+        switchMap(
+          (campaigns: ICampaign[]) => combineLatest(...campaigns.map(campaign => this.gameService.getGamesFromCampaign(campaign.id)))
+        ),
+        map((games: IGame[][]) => [].concat(...games as []) as IGame[])
+      )
       .subscribe((games: IGame[]) => {
         this.games = games;
-        this.campaigns = this.campaigns.filter(
+        const filteredAndMacoronedCampaigns = tempCampaigns.filter(
           (campaign) => {
             const currentDate = new Date();
             const isComingSoon = campaign.beginsAt && campaign.beginsAt.getTime() > currentDate.getTime();
@@ -48,7 +60,21 @@ export class CampaignsComponent implements OnInit {
           campaign.macaron = this.getCampaignMacaron(campaign);
           return campaign;
         });
+        this.campaignsSubj.next(filteredAndMacoronedCampaigns);
+        if (filteredAndMacoronedCampaigns.length === 0) {
+          this.campaignsEnded = true;
+        }
       });
+  }
+
+  private initCampaignsScan(): void {
+    this.campaigns$ = this.campaignsSubj.asObservable().pipe(
+      scan((acc, curr) => [...acc, ...curr ? curr : []], [])
+    );
+  }
+
+  public getCampaignMacaron(campaign: ICampaign): IMacaron | null {
+    return this.macaronService.getCampaignMacaron(campaign);
   }
 
   public selected(campaign: ICampaignWithMacaron): void {
@@ -62,8 +88,12 @@ export class CampaignsComponent implements OnInit {
     }
   }
 
-  public getCampaignMacaron(campaign: ICampaign): IMacaron | null {
-    return this.macaronService.getCampaignMacaron(campaign);
+  public onScroll(): void {
+    if (this.campaignsEnded) {
+      return;
+    }
+    this.campaignsPageId++;
+    this.loadCampaigns();
   }
 
 }

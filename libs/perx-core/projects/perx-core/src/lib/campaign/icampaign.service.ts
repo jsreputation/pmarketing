@@ -3,6 +3,7 @@ import { ICampaign, CampaignType } from './models/campaign.model';
 
 export interface ICampaignFilterOptions {
   type?: CampaignType;
+  page?: number;
 }
 
 export abstract class ICampaignService {
