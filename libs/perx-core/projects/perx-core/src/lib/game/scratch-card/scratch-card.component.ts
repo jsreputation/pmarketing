@@ -188,11 +188,9 @@ export class ScratchCardComponent implements AfterViewInit {
 
   public handlePercentage(filledInPixels: number): void {
     const cont = document.getElementById('js_container');
-
     filledInPixels = filledInPixels || 0;
     // console.log(filledInPixels + '%');
     if (filledInPixels > this.uncoverPortionToTrigger && (cont as HTMLElement).children.length > 1 && this.canvas) {
-      (this.canvas.parentNode as Node).removeChild(this.canvas);
       this.completed.emit();
     }
   }

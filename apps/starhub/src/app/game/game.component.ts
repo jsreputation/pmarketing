@@ -42,7 +42,11 @@ export class GameComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.gameData$ = this.activeRoute.queryParams
+    this.gameData$ = this.loadGame();
+  }
+
+  public loadGame(): Observable<IGame> {
+    return this.activeRoute.queryParams
       .pipe(
         switchMap((params: Params) => {
           if (params.id) {
@@ -134,7 +138,6 @@ export class GameComponent implements OnInit {
         if (gameTransaction.voucherIds && gameTransaction.voucherIds.length > 0) {
           // set this as a property
           if (this.game.results && this.game.results.outcome) {
-            console.log(this.game.results, 'what results');
             this.gameOutcomeService.setOutcome(this.game.results.outcome);
             this.willWin = true;
             this.isButtonDisabled = false;
@@ -158,27 +161,21 @@ export class GameComponent implements OnInit {
   public preplayGameCompleted(): void {
     this.gameService.prePlayConfirm(this.gameTransaction.id)
       .pipe(
-        tap(() => {
-          if (this.gameTransaction.voucherIds && this.gameTransaction.voucherIds.length > 0) {
-            this.router.navigate(['/congrats']);
+        map((game: IPlayOutcome) => game.vouchers),
+      ).subscribe(
+        (vouchs: Voucher[]) => {
+          if (vouchs.length === 0) {
+            this.showNoRewardsPopUp();
           } else {
-            this.notificationService.addPopup({
-              title: this.game.results.noOutcome && this.game.results.noOutcome.title,
-              text: this.game.results.noOutcome && this.game.results.noOutcome.subTitle,
-              buttonTxt: this.game.results.noOutcome && this.game.results.noOutcome.button,
-              afterClosedCallBack: this,
-              panelClass: 'custom-class'
-            });
+            this.gameOutcomeService.setVouchersList(vouchs);
+            if (this.game.results && this.game.results.outcome) {
+              this.gameOutcomeService.setOutcome(this.game.results.outcome);
+            }
+            this.router.navigate(['/congrats']);
           }
-        }),
-        take(1),
-        catchError((err: HttpErrorResponse) => {
-          console.log('error should beb caught here');
-          this.showErrorPopup();
-          throw err;
-        }),
-        takeUntil(this.destroy$)
-      ).subscribe();
+        },
+        () => this.showNoRewardsPopUp()
+      );
   }
 
   public goBack(): void {
