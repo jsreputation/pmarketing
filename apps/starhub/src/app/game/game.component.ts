@@ -88,17 +88,16 @@ export class GameComponent implements OnInit {
               this.backgroundImage = game.backgroundImg || '';
             }
 
-            // if (game.remainingNumberOfTries <= 0) {
-            //   this.isButtonDisabled = true; // important
-            //   console.log('i amd eifneintl getitn called');
-            //   this.notificationService.addPopup({
-            //     title: game.results.noOutcome && game.results.noOutcome.title,
-            //     text: game.results.noOutcome && game.results.noOutcome.subTitle,
-            //     buttonTxt: game.results.noOutcome && game.results.noOutcome.button,
-            //     afterClosedCallBack: this,
-            //     panelClass: 'custom-class'
-            //   });
-            // }
+            if (game.remainingNumberOfTries !== null && game.remainingNumberOfTries <= 0) {
+              this.isButtonDisabled = true; // important
+              this.notificationService.addPopup({
+                title: game.results.noOutcome && game.results.noOutcome.title,
+                text: game.results.noOutcome && game.results.noOutcome.subTitle,
+                buttonTxt: game.results.noOutcome && game.results.noOutcome.button,
+                afterClosedCallBack: this,
+                panelClass: 'custom-class'
+              });
+            }
 
             this.analytics.addEvent({
               pageName: `rewards:game:${this.title}`,
@@ -109,7 +108,6 @@ export class GameComponent implements OnInit {
           }
         ),
         catchError((err: HttpErrorResponse) => {
-          console.log('error should beb caught here');
           this.showErrorPopup();
           throw err;
         }),
