@@ -40,7 +40,7 @@ export class PhoneComponent implements OnChanges, OnInit {
       'Malaysia',
       'Philippines',
       'Vietnam'
-  ]);
+    ]);
     this.subject.pipe(
       debounceTime(500)
     ).subscribe(inputValue => {
