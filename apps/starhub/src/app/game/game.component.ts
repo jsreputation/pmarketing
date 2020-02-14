@@ -141,13 +141,8 @@ export class GameComponent implements OnInit {
             this.isButtonDisabled = false;
           }
         } else {
-          this.notificationService.addPopup({
-            title: this.game.results.noOutcome && this.game.results.noOutcome.title,
-            text: this.game.results.noOutcome && this.game.results.noOutcome.subTitle,
-            buttonTxt: this.game.results.noOutcome && this.game.results.noOutcome.button,
-            afterClosedCallBack: this,
-            panelClass: 'custom-class'
-          });
+          this.willWin = false;
+          this.isButtonDisabled = false;
         }
       },
       () => {
