@@ -1,0 +1,16 @@
+.main-puzzle-container {
+  box-sizing: border-box;
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
+.scratch-wrapper {
+  width: 30rem;
+  height: 30rem;
+  margin: 0 auto;
+}

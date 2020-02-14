@@ -14,7 +14,6 @@ export class LoginComponent implements OnInit {
 
   public loginForm: FormGroup;
   public currentSelectedLanguage: string = 'en';
-  public appAccessTokenFetched: boolean;
 
   public get name(): AbstractControl | null {
     return this.loginForm.get('name');
@@ -50,16 +49,6 @@ export class LoginComponent implements OnInit {
 
   public ngOnInit(): void {
     this.currentSelectedLanguage = this.translateService.currentLang || this.translateService.defaultLang;
-    const token = this.authService.getAppAccessToken();
-    if (token) {
-      this.appAccessTokenFetched = true;
-    } else {
-      this.authService.getAppToken().subscribe(() => {
-        this.appAccessTokenFetched = true;
-      }, (err) => {
-        console.error(`Error${  err}`);
-      });
-    }
   }
 
   public onSubmit(): void {

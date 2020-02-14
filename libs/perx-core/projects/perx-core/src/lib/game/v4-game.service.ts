@@ -8,10 +8,12 @@ import {
   defaultTree,
   ITree,
   IPinata,
+  IScratch,
   defaultPinata,
   IGameOutcome,
   IPlayOutcome,
-  IEngagementTransaction
+  IEngagementTransaction,
+  defaultScratch
 } from './game.model';
 import {
   map,
@@ -23,7 +25,8 @@ import { IV4Voucher, V4VouchersService } from '../vouchers/v4-vouchers.service';
 
 const enum GameType {
   shakeTheTree = 'shake_the_tree',
-  pinata = 'hit_the_pinata'
+  pinata = 'hit_the_pinata',
+  scratch = 'scratch_card'
 }
 
 interface Asset {
@@ -73,6 +76,12 @@ interface TreeDisplayProperties extends GameProperties {
   number_of_taps: number;
 }
 
+interface ScratchDisplayProperties extends GameProperties {
+  prescratch_image: Asset;
+  post_success_image: Asset;
+  post_fail_image: Asset;
+}
+
 interface PinataDisplayProperties extends GameProperties {
   still_image: Asset;
   cracking_image?: Asset;
@@ -82,7 +91,7 @@ interface PinataDisplayProperties extends GameProperties {
 
 interface Game {
   campaign_id?: number;
-  display_properties: TreeDisplayProperties | PinataDisplayProperties;
+  display_properties: TreeDisplayProperties | PinataDisplayProperties | ScratchDisplayProperties;
   game_type: GameType;
   id: number;
   number_of_tries: number;
@@ -104,7 +113,7 @@ interface IV4PlayResponse {
     game_id: number;
     id: number;
     outcomes: IV4Voucher[];
-    state: string;
+    state: 'reserved' | 'issued';
     use_account_id: number;
   };
 }
@@ -137,7 +146,7 @@ export class V4GameService implements IGameService {
 
   private static v4GameToGame(game: Game): IGame {
     let type = TYPE.unknown;
-    let config: ITree | IPinata;
+    let config: ITree | IPinata | IScratch;
     if (game.game_type === GameType.shakeTheTree) {
       type = TYPE.shakeTheTree;
       const dpts: TreeDisplayProperties = game.display_properties as TreeDisplayProperties;
@@ -161,6 +170,15 @@ export class V4GameService implements IGameService {
         brokenImg: dpps.opened_image.value.image_url || dpps.opened_image.value.file,
         breakingImg: oc(dpps).cracking_image.value.image_url() || oc(dpps).cracking_image.value.file(),
         nbTaps: dpps.number_of_taps || 5
+      };
+    } else if (game.game_type === GameType.scratch) {
+      type = TYPE.scratch;
+      const dpps: ScratchDisplayProperties = game.display_properties as ScratchDisplayProperties;
+      config = {
+        ...defaultScratch(),
+        coverImg: dpps.prescratch_image.value.image_url,
+        underlyingSuccessImg: dpps.post_success_image.value.image_url,
+        underlyingFailImg: dpps.post_fail_image.value.image_url
       };
     } else {
       throw new Error(`${game.game_type} is not mapped yet`);
@@ -241,16 +259,38 @@ export class V4GameService implements IGameService {
   }
 
   // @ts-ignore
-  public prePlay(engagementId: number, campaignId?: number): Observable<IEngagementTransaction> {
-    // do nothing until preplay games are implemented in v4
-    return of();
+  public prePlay(gameId: number): Observable<IEngagementTransaction> {
+    return this.httpClient
+      .put<IV4PlayResponse>(`${this.hostName}/v4/games/${gameId}/reserve`, null)
+      .pipe(
+        map(res => ({
+          id: res.data.id,
+          voucherIds: res.data.outcomes.map(
+            outcome => outcome.id
+          ),
+          rewardIds: res.data.outcomes.reduce((accRewardIds, currVouch) => {
+            if (currVouch.reward) {
+              return accRewardIds.concat(currVouch.reward.id);
+            }
+            return accRewardIds;
+          }, [] as number[])
+        }))
+      );
   }
 
-  public prePlayConfirm(transactionId: number): Observable<IEngagementTransaction | void> {
+  public prePlayConfirm(gameId: number): Observable<IPlayOutcome | void> {
     // todo: transactionId is used as the game/engagementId until preplay games are implemented in v4
-    return this.play(transactionId)
+    return this.httpClient
+      .put<IV4PlayResponse>(`${this.hostName}/v4/game_transactions/${gameId}/confirm`, null)
       .pipe(
-        map((outcome: IPlayOutcome) => this.playOutcomeToEngagementTransaction(outcome)),
+        map((res: IV4PlayResponse) => {
+          // @ts-ignore
+          const vs: IV4Voucher[] = res.data.outcomes.filter((out) => out.outcome_type === 'reward');
+          return {
+            vouchers: vs.map(v => V4VouchersService.v4VoucherToVoucher(v)),
+            rawPayload: res
+          };
+        })
       );
   }
 
@@ -293,21 +333,6 @@ export class V4GameService implements IGameService {
           return res;
         })
       );
-  }
-
-  private playOutcomeToEngagementTransaction(outcome: IPlayOutcome): IEngagementTransaction {
-    const transaction = {
-      voucherIds: [] as number[],
-      id: outcome.rawPayload.id,
-      rewardIds: [] as number[]
-    };
-    outcome.vouchers.forEach((el) => {
-      transaction.voucherIds.push(el.id);
-      if (el.reward) {
-        transaction.rewardIds.push(el.reward.id);
-      }
-    });
-    return transaction;
   }
 
   public getSuccessOutcome(game: IGame): IGameOutcome {
