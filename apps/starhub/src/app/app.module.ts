@@ -1,7 +1,7 @@
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
-import { ScrollingModule } from '@angular/cdk/scrolling';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {BrowserModule} from '@angular/platform-browser';
+import {HttpClientModule} from '@angular/common/http';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 import {APP_INITIALIZER, ErrorHandler, Injectable, NgModule} from '@angular/core';
 import {
   MatDialogModule,
@@ -15,9 +15,9 @@ import {
   MatSnackBarModule
 } from '@angular/material';
 
-import { QRCodeModule } from 'angularx-qrcode';
-import { NgxBarcodeModule } from 'ngx-barcode';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import {QRCodeModule} from 'angularx-qrcode';
+import {NgxBarcodeModule} from 'ngx-barcode';
+import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 
 import {
   AuthenticationModule,
@@ -33,25 +33,25 @@ import {
   RewardPopupComponent, FeedItemPopupComponent, SettingsModule, ConfigService, AuthenticationService,
 } from '@perx/core';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { CategoryComponent } from './category/category.component';
-import { RewardComponent } from './reward/reward.component';
-import { LocationsComponent } from './locations/locations.component';
-import { TncComponent } from './tnc/tnc.component';
-import { VoucherComponent } from './voucher/voucher.component';
-import { RedemptionComponent } from './redemption/redemption.component';
-import { CategorySelectComponent } from './category/category-select/category-select.component';
-import { CategorySortComponent } from './category/category-sort/category-sort.component';
-import { RewardsSortPipe } from './category/rewards-sort.pipe';
-import { LocationShortFormatComponent } from './location-short-format/location-short-format.component';
-import { RewardDetailComponent } from './reward/reward-detail/reward-detail.component';
-import { GameComponent } from './game/game.component';
-import { CongratsComponent } from './congrats/congrats.component';
-import { ExpireTimerComponent } from './reward/expire-timer/expire-timer.component';
-import { ErrorComponent } from './error/error.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {CategoryComponent} from './category/category.component';
+import {RewardComponent} from './reward/reward.component';
+import {LocationsComponent} from './locations/locations.component';
+import {TncComponent} from './tnc/tnc.component';
+import {VoucherComponent} from './voucher/voucher.component';
+import {RedemptionComponent} from './redemption/redemption.component';
+import {CategorySelectComponent} from './category/category-select/category-select.component';
+import {CategorySortComponent} from './category/category-sort/category-sort.component';
+import {RewardsSortPipe} from './category/rewards-sort.pipe';
+import {LocationShortFormatComponent} from './location-short-format/location-short-format.component';
+import {RewardDetailComponent} from './reward/reward-detail/reward-detail.component';
+import {GameComponent} from './game/game.component';
+import {CongratsComponent} from './congrats/congrats.component';
+import {ExpireTimerComponent} from './reward/expire-timer/expire-timer.component';
+import {ErrorComponent} from './error/error.component';
 
-import { environment } from '../environments/environment';
+import {environment} from '../environments/environment';
 import * as Sentry from '@sentry/browser';
 import {ScratchComponent} from './game/scratch/scratch.component';
 
@@ -95,7 +95,6 @@ export const appInit =
               console.error(`Error${err}`);
             });
           }
-
         }
       );
       resolve();
@@ -161,9 +160,10 @@ export const appInit =
     FeedItemPopupComponent
   ],
   providers: [
-    { provide: ErrorHandler, useClass: SentryErrorHandler },
-    { provide: APP_INITIALIZER, useFactory: appInit, deps: [ConfigService, AuthenticationService], multi: true }
+    {provide: ErrorHandler, useClass: SentryErrorHandler},
+    {provide: APP_INITIALIZER, useFactory: appInit, deps: [ConfigService, AuthenticationService], multi: true}
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
