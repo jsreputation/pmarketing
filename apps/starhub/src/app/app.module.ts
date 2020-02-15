@@ -75,15 +75,12 @@ export class SentryErrorHandler implements ErrorHandler {
 export const appInit =
   (configService: ConfigService, authService: AuthenticationService) =>
     () => new Promise((resolve) => {
-      const userToken = authService.getUserAccessToken();
-      if (!userToken) {
-        const urlParams = new URLSearchParams(window.location.search);
-        const token = urlParams.get('token');
-        if (token) {
-          authService.saveUserAccessToken(token);
-        } else {
-          console.error('Could not retrieve user token');
-        }
+      const urlParams = new URLSearchParams(window.location.search);
+      const token = urlParams.get('token');
+      if (token) {
+        authService.saveUserAccessToken(token);
+      } else {
+        console.error('Could not retrieve user token');
       }
 
       configService.readAppConfig().subscribe(
