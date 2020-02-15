@@ -1,6 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {GameType, IEngagementTransaction, IGame, IGameService, IPlayOutcome, NotificationService, Voucher} from '@perx/core';
+import {
+  GameType,
+  IEngagementTransaction,
+  IGame,
+  IGameService,
+  IPlayOutcome,
+  NotificationService,
+  Voucher
+} from '@perx/core';
 import {Location} from '@angular/common';
 import {catchError, map, switchMap, take, takeUntil, tap} from 'rxjs/operators';
 import {AnalyticsService, PageType} from '../analytics.service';
@@ -39,7 +47,8 @@ export class GameComponent implements OnInit {
     private router: Router,
     private analytics: AnalyticsService,
     private gameOutcomeService: GameOutcomeService
-  ) { }
+  ) {
+  }
 
   public ngOnInit(): void {
     this.gameData$ = this.loadGame();
@@ -116,7 +125,6 @@ export class GameComponent implements OnInit {
   }
 
   private showErrorPopup(): void {
-
     this.notificationService.addPopup({
       title: 'Oooops!',
       text: 'Something is wrong, game cannot be played at the moment!',
@@ -159,19 +167,19 @@ export class GameComponent implements OnInit {
       .pipe(
         map((game: IPlayOutcome) => game.vouchers),
       ).subscribe(
-        (vouchs: Voucher[]) => {
-          if (vouchs.length === 0) {
-            this.showNoRewardsPopUp();
-          } else {
-            this.gameOutcomeService.setVouchersList(vouchs);
-            if (this.game.results && this.game.results.outcome) {
-              this.gameOutcomeService.setOutcome(this.game.results.outcome);
-            }
-            this.router.navigate(['/congrats']);
+      (vouchs: Voucher[]) => {
+        if (vouchs.length === 0) {
+          this.showNoRewardsPopUp();
+        } else {
+          this.gameOutcomeService.setVouchersList(vouchs);
+          if (this.game.results && this.game.results.outcome) {
+            this.gameOutcomeService.setOutcome(this.game.results.outcome);
           }
-        },
-        () => this.showNoRewardsPopUp()
-      );
+          this.router.navigate(['/congrats']);
+        }
+      },
+      () => this.showNoRewardsPopUp()
+    );
   }
 
   public goBack(): void {
