@@ -2,7 +2,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { ErrorHandler, Injectable, NgModule } from '@angular/core';
+import {APP_INITIALIZER, ErrorHandler, Injectable, NgModule} from '@angular/core';
 import {
   MatDialogModule,
   MatIconModule,
@@ -30,7 +30,7 @@ import {
   ConfigModule,
   CampaignModule,
   MerchantsModule,
-  RewardPopupComponent, FeedItemPopupComponent, SettingsModule,
+  RewardPopupComponent, FeedItemPopupComponent, SettingsModule, ConfigService, AuthenticationService,
 } from '@perx/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -70,6 +70,26 @@ export class SentryErrorHandler implements ErrorHandler {
     // Sentry.showReportDialog({ eventId });
   }
 }
+
+// app token only needed for the settings APIs
+export const appInit =
+  (configService: ConfigService, authService: AuthenticationService) =>
+    () => new Promise((resolve) => {
+      configService.readAppConfig().subscribe(
+        () => {
+          const token = authService.getAppAccessToken();
+          if (!token) {
+            authService.getAppToken().subscribe(() => {
+            }, (err) => {
+              console.error(`Error${err}`);
+            });
+          }
+        }
+      );
+      resolve();
+    });
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -128,7 +148,10 @@ export class SentryErrorHandler implements ErrorHandler {
     RewardPopupComponent,
     FeedItemPopupComponent
   ],
-  providers: [{ provide: ErrorHandler, useClass: SentryErrorHandler }],
+  providers: [
+    { provide: ErrorHandler, useClass: SentryErrorHandler },
+    { provide: APP_INITIALIZER, useFactory: appInit, deps: [ConfigService, AuthenticationService], multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
