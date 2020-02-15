@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  AuthenticationService,
   NotificationService,
   PopupComponent,
   IPopupConfig,
@@ -13,7 +12,6 @@ import {
   RewardPopupComponent
 } from '@perx/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
-import { ActivatedRoute, Params } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 import { AnalyticsService, IEvent, PageType } from './analytics.service';
 
@@ -47,9 +45,9 @@ export class AppComponent implements OnInit {
   public theme: ITheme;
 
   constructor(
-    private authenticationService: AuthenticationService,
+    // private authenticationService: AuthenticationService,
     private notificationService: NotificationService,
-    private activeRoute: ActivatedRoute,
+    // private activeRoute: ActivatedRoute,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private gameService: IGameService,
@@ -84,15 +82,6 @@ export class AppComponent implements OnInit {
         }));
 
     this.notificationService.$snack.subscribe((msg: string) => this.snackBar.open(msg, 'x', { duration: 2000 }));
-
-    this.activeRoute.queryParams
-      .pipe(
-        filter((params: Params) => params.token),
-        map((params: Params) => params.token)
-      )
-      .subscribe((token: string) => {
-        this.authenticationService.saveUserAccessToken(token);
-      });
 
     this.analytics.events$.subscribe(
       (event: IEvent) => {

@@ -1,8 +1,8 @@
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
-import { ScrollingModule } from '@angular/cdk/scrolling';
-import { ErrorHandler, Injectable, NgModule } from '@angular/core';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {BrowserModule} from '@angular/platform-browser';
+import {HttpClientModule} from '@angular/common/http';
+import {ScrollingModule} from '@angular/cdk/scrolling';
+import {APP_INITIALIZER, ErrorHandler, Injectable, NgModule} from '@angular/core';
 import {
   MatDialogModule,
   MatIconModule,
@@ -15,9 +15,9 @@ import {
   MatSnackBarModule
 } from '@angular/material';
 
-import { QRCodeModule } from 'angularx-qrcode';
-import { NgxBarcodeModule } from 'ngx-barcode';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import {QRCodeModule} from 'angularx-qrcode';
+import {NgxBarcodeModule} from 'ngx-barcode';
+import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 
 import {
   AuthenticationModule,
@@ -30,28 +30,28 @@ import {
   ConfigModule,
   CampaignModule,
   MerchantsModule,
-  RewardPopupComponent, FeedItemPopupComponent, SettingsModule,
+  RewardPopupComponent, FeedItemPopupComponent, SettingsModule, ConfigService, AuthenticationService,
 } from '@perx/core';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { CategoryComponent } from './category/category.component';
-import { RewardComponent } from './reward/reward.component';
-import { LocationsComponent } from './locations/locations.component';
-import { TncComponent } from './tnc/tnc.component';
-import { VoucherComponent } from './voucher/voucher.component';
-import { RedemptionComponent } from './redemption/redemption.component';
-import { CategorySelectComponent } from './category/category-select/category-select.component';
-import { CategorySortComponent } from './category/category-sort/category-sort.component';
-import { RewardsSortPipe } from './category/rewards-sort.pipe';
-import { LocationShortFormatComponent } from './location-short-format/location-short-format.component';
-import { RewardDetailComponent } from './reward/reward-detail/reward-detail.component';
-import { GameComponent } from './game/game.component';
-import { CongratsComponent } from './congrats/congrats.component';
-import { ExpireTimerComponent } from './reward/expire-timer/expire-timer.component';
-import { ErrorComponent } from './error/error.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {CategoryComponent} from './category/category.component';
+import {RewardComponent} from './reward/reward.component';
+import {LocationsComponent} from './locations/locations.component';
+import {TncComponent} from './tnc/tnc.component';
+import {VoucherComponent} from './voucher/voucher.component';
+import {RedemptionComponent} from './redemption/redemption.component';
+import {CategorySelectComponent} from './category/category-select/category-select.component';
+import {CategorySortComponent} from './category/category-sort/category-sort.component';
+import {RewardsSortPipe} from './category/rewards-sort.pipe';
+import {LocationShortFormatComponent} from './location-short-format/location-short-format.component';
+import {RewardDetailComponent} from './reward/reward-detail/reward-detail.component';
+import {GameComponent} from './game/game.component';
+import {CongratsComponent} from './congrats/congrats.component';
+import {ExpireTimerComponent} from './reward/expire-timer/expire-timer.component';
+import {ErrorComponent} from './error/error.component';
 
-import { environment } from '../environments/environment';
+import {environment} from '../environments/environment';
 import * as Sentry from '@sentry/browser';
 import {ScratchComponent} from './game/scratch/scratch.component';
 
@@ -70,6 +70,37 @@ export class SentryErrorHandler implements ErrorHandler {
     // Sentry.showReportDialog({ eventId });
   }
 }
+
+// app token only needed for the settings APIs
+export const appInit =
+  (configService: ConfigService, authService: AuthenticationService) =>
+    () => new Promise((resolve) => {
+      const userToken = authService.getUserAccessToken();
+      if (!userToken) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+        if (token) {
+          authService.saveUserAccessToken(token);
+        } else {
+          console.error('Could not retrieve user token');
+        }
+      }
+
+      configService.readAppConfig().subscribe(
+        () => {
+          const appToken = authService.getAppAccessToken();
+          if (!appToken) {
+            authService.getAppToken().subscribe(() => {
+            }, (err) => {
+              console.error(`Error${err}`);
+            });
+          }
+        }
+      );
+      resolve();
+    });
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -128,7 +159,11 @@ export class SentryErrorHandler implements ErrorHandler {
     RewardPopupComponent,
     FeedItemPopupComponent
   ],
-  providers: [{ provide: ErrorHandler, useClass: SentryErrorHandler }],
+  providers: [
+    {provide: ErrorHandler, useClass: SentryErrorHandler},
+    {provide: APP_INITIALIZER, useFactory: appInit, deps: [ConfigService, AuthenticationService], multi: true}
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
