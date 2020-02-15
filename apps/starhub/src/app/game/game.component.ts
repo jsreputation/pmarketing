@@ -116,6 +116,7 @@ export class GameComponent implements OnInit {
   }
 
   private showErrorPopup(): void {
+
     this.notificationService.addPopup({
       title: 'Oooops!',
       text: 'Something is wrong, game cannot be played at the moment!',
@@ -124,31 +125,33 @@ export class GameComponent implements OnInit {
   }
 
   public loadPreplay(): void {
-    this.gameData$.pipe(
-      switchMap(
-        (game) => this.gameService.prePlay(game.id)
-      ),
-      catchError(err => throwError(err)),
-      takeUntil(this.destroy$)
-    ).subscribe(
-      (gameTransaction: IEngagementTransaction) => {
-        this.gameTransaction = gameTransaction;
-        if (gameTransaction.voucherIds && gameTransaction.voucherIds.length > 0) {
-          // set this as a property
-          if (this.game.results && this.game.results.outcome) {
-            this.gameOutcomeService.setOutcome(this.game.results.outcome);
-            this.willWin = true;
+    if (this.game && this.game.remainingNumberOfTries > 0) {
+      this.gameData$.pipe(
+        switchMap(
+          (game) => this.gameService.prePlay(game.id)
+        ),
+        catchError(err => throwError(err)),
+        takeUntil(this.destroy$)
+      ).subscribe(
+        (gameTransaction: IEngagementTransaction) => {
+          this.gameTransaction = gameTransaction;
+          if (gameTransaction.voucherIds && gameTransaction.voucherIds.length > 0) {
+            // set this as a property
+            if (this.game.results && this.game.results.outcome) {
+              this.gameOutcomeService.setOutcome(this.game.results.outcome);
+              this.willWin = true;
+              this.isButtonDisabled = false;
+            }
+          } else {
+            this.willWin = false;
             this.isButtonDisabled = false;
           }
-        } else {
-          this.willWin = false;
-          this.isButtonDisabled = false;
+        },
+        () => {
+          this.showErrorPopup();
         }
-      },
-      () => {
-        this.showErrorPopup();
-      }
-    );
+      );
+    }
   }
 
   public preplayGameCompleted(): void {
