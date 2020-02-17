@@ -66,8 +66,16 @@ jobs:
         env:
           SOPS_VERSION: 3.5.0
         run: |
-          curl -sSL  https://github.com/mozilla/sops/releases/download/v${SOPS_VERSION}/sops_${SOPS_VERSION}_amd64.deb -o sops.deb && \
+          curl -LsS  https://github.com/mozilla/sops/releases/download/v${SOPS_VERSION}/sops_${SOPS_VERSION}_amd64.deb -o sops.deb && \
           sudo dpkg -i sops.deb
+
+      - name: Install skaffold
+        env:
+          SKAFFOLD_VERSION: latest
+        run: |
+          curl -LsSo skaffold https://storage.googleapis.com/skaffold/releases/${SKAFFOLD_VERSION}/skaffold-linux-amd64
+          chmod +x skaffold
+          sudo mv skaffold /usr/local/bin
 
       - name: Deploy
         env:
