@@ -47,7 +47,8 @@ jobs:
         uses: azure/k8s-set-context@v1
         with:
           method: kubeconfig
-          kubeconfig: ${{ secrets.AWS_KUBE_CONFIG_${TARGET_ENV} }}
+          kubeconfig: ${{ secrets.AWS_KUBE_CONFIG }}
+          context: ${TARGET_ENV}
 
       - name: Deploy
         run: |
