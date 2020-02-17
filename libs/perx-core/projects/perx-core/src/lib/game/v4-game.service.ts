@@ -77,9 +77,9 @@ interface TreeDisplayProperties extends GameProperties {
 }
 
 interface ScratchDisplayProperties extends GameProperties {
-  prescratch_image: string;
-  post_success_image: string;
-  post_fail_image: string;
+  prescratch_image: Asset;
+  post_success_image: Asset;
+  post_fail_image: Asset;
 }
 
 interface PinataDisplayProperties extends GameProperties {
@@ -176,9 +176,9 @@ export class V4GameService implements IGameService {
       const dpps: ScratchDisplayProperties = game.display_properties as ScratchDisplayProperties;
       config = {
         ...defaultScratch(),
-        coverImg: dpps.prescratch_image,
-        underlyingSuccessImg: dpps.post_success_image,
-        underlyingFailImg: dpps.post_fail_image
+        coverImg: dpps.prescratch_image.value.image_url,
+        underlyingSuccessImg: dpps.post_success_image.value.image_url,
+        underlyingFailImg: dpps.post_fail_image.value.image_url
       };
     } else {
       throw new Error(`${game.game_type} is not mapped yet`);
@@ -267,7 +267,7 @@ export class V4GameService implements IGameService {
           id: res.data.id,
           voucherIds: res.data.outcomes.map(
             outcome => outcome.id
-          ),
+          ).filter(id => id),
           rewardIds: res.data.outcomes.reduce((accRewardIds, currVouch) => {
             if (currVouch.reward) {
               return accRewardIds.concat(currVouch.reward.id);
@@ -278,12 +278,19 @@ export class V4GameService implements IGameService {
       );
   }
 
-  public prePlayConfirm(gameId: number): Observable<IEngagementTransaction | void> {
+  public prePlayConfirm(gameId: number): Observable<IPlayOutcome | void> {
     // todo: transactionId is used as the game/engagementId until preplay games are implemented in v4
     return this.httpClient
       .put<IV4PlayResponse>(`${this.hostName}/v4/game_transactions/${gameId}/confirm`, null)
       .pipe(
-        map(() => void 0)
+        map((res: IV4PlayResponse) => {
+          // @ts-ignore
+          const vs: IV4Voucher[] = res.data.outcomes.filter((out) => out.outcome_type === 'reward');
+          return {
+            vouchers: vs.map(v => V4VouchersService.v4VoucherToVoucher(v)),
+            rawPayload: res
+          };
+        })
       );
   }
 

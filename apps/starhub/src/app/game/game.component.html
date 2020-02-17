@@ -4,8 +4,7 @@
       <h1 class="title">{{title}}</h1>
       <span class="sub-title">{{subTitle}}</span>
     </div>
-    <div *ngIf="isGameAvailable" class="pinata-wrapper">
-
+    <div *ngIf="gameData$ | async as game">
       <perx-core-pinata
         *ngIf="game && game.type === pinata"
         [stillImg]="game.config.stillImg"
@@ -28,14 +27,20 @@
         [nbShakes]="numberOfTaps"
       >
       </perx-core-shake-tree>
-
+      <page-scratch
+        *ngIf="game && game.type === scratch"
+        [willWin]="willWin"
+        [game]="game"
+        [enabled]="isEnabled"
+        (loaded)="loadPreplay()"
+        (broken)=preplayGameCompleted()>>
+      </page-scratch>
     </div>
-  </div>
-
-  <div class="button-area">
-    <button mat-flat-button color="primary" [disabled]="isButtonDisabled" (click)="isEnabled = true"
-      [ngStyle]="{ 'visibility': isEnabled ? 'hidden': 'visible'}">
-      {{buttonText}}
-    </button>
+    <div class="button-area">
+      <button mat-flat-button color="primary" [disabled]="isButtonDisabled" (click)="isEnabled = true"
+              [ngStyle]="{ 'visibility': isEnabled ? 'hidden': 'visible'}">
+        {{buttonText}}
+      </button>
+    </div>
   </div>
 </div>
