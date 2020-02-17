@@ -267,7 +267,7 @@ export class V4GameService implements IGameService {
           id: res.data.id,
           voucherIds: res.data.outcomes.map(
             outcome => outcome.id
-          ),
+          ).filter(id => id),
           rewardIds: res.data.outcomes.reduce((accRewardIds, currVouch) => {
             if (currVouch.reward) {
               return accRewardIds.concat(currVouch.reward.id);
