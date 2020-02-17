@@ -26,11 +26,14 @@ jobs:
             echo ::set-env name=APP::${BASH_REMATCH[1]}
             echo ::set-env name=TARGET_ENV::${BASH_REMATCH[2]}
             echo ::set-env name=SEM_VER::${BASH_REMATCH[4]}
-            echo ::set-env name=DOCKER_TAG::${GITHUB_REF}
+            echo ::set-env name=DOCKER_TAG::${GITHUB_REF##*/}
           else
             echo "Error! Unrecognized tag"
             exit 1
           fi
+
+      - name: Check env variables
+        run: |
           echo "APP: $APP"
           echo "TARGET_ENV: $TARGET_ENV"
           echo "SEM_VER: $SEM_VER"
@@ -44,7 +47,7 @@ jobs:
         run: |
           echo "Wait for docker image: $DOCKER_TAG"
             WAIT_TIME=0
-            until docker run --rm -v ~/.docker:/root/.docker gcr.io/go-containerregistry/crane digest perxtech/$DOCKER_TAG || [ $WAIT_TIME -gt 900 ]; do
+            until docker run --rm -v ~/.docker:/root/.docker gcr.io/go-containerregistry/crane digest perxtech/microsite-apps-ng:$DOCKER_TAG || [ $WAIT_TIME -gt 900 ]; do
               (( WAIT_TIME+=5 ))
               sleep 5
             done
@@ -54,9 +57,11 @@ jobs:
         with:
           method: kubeconfig
           kubeconfig: ${{ secrets.AWS_KUBE_CONFIG }}
-          context: ${TARGET_ENV}
+
+      - name: Set kube context
+        run: |
+          kubectl config use-context ${TARGET_ENV}
 
       - name: Deploy
         run: |
-          make deploy
-
+          make decrypt-secret && make deploy
