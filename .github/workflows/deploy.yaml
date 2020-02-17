@@ -44,7 +44,7 @@ jobs:
         run: |
           echo "Wait for docker image: $DOCKER_TAG"
             WAIT_TIME=0
-            until docker run --rm -v ~/.docker:/root/.docker gcr.io/go-containerregistry/crane digest $DOCKER_TAG || [ $WAIT_TIME -gt 600 ]; do
+            until docker run --rm gcr.io/go-containerregistry/crane digest perxtech/$DOCKER_TAG || [ $WAIT_TIME -gt 600 ]; do
               (( WAIT_TIME+=5 ))
               sleep 5
             done
