@@ -73,9 +73,9 @@ jobs:
         env:
           HELM_VERSION: 2.16.1
         run: |
-          curl -LsS https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz
+          curl -LsSO https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz
           tar -zxvf helm-v${HELM_VERSION}-linux-amd64.tar.gz
-          mv linux-amd64/helm /usr/local/bin/helm
+          sudo mv linux-amd64/helm /usr/local/bin/helm
           helm init --client-only
           helm repo add perx https://chartmuseum.perxtech.io --username ${{ secrets.HELM_USER }} --password ${{ secrets.HELM_PASSWORD }}
           helm repo update
