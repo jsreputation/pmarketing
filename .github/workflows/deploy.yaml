@@ -16,7 +16,7 @@ jobs:
         with:
           repository: PerxTech/microsite-deploy
           ref: master
-          token: ${{ .secrets.MICROSITE_DEPLOY_TOKEN }}
+          token: ${{ secrets.MICROSITE_DEPLOY_TOKEN }}
 
       - name: Set environment variables
         run: |
