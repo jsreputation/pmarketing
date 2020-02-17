@@ -456,13 +456,13 @@ workflows:
       #       tags:
       #         # this enables circleci to trigger on tags
       #         only: /.*/
-      # - build_docker_image:
-      #     filters:
-      #       tags:
-      #         # this enables circleci to trigger on tags
-      #         only: /^[\w-]+-(production|staging|uat)-(\w+-)?\d+\.\d+\.\d+.*/
-      #       branches:
-      #         ignore: /.*/
+      - build_docker_image:
+          filters:
+            tags:
+              # this enables circleci to trigger on tags
+              only: /^[\w-]+-(production|staging|uat)-(\w+-)?\d+\.\d+\.\d+.*/
+            branches:
+              ignore: /.*/
       # - deploy-whistler:
       #     name: deploy_to_whistler_uat
       #     docker_tag: "${CIRCLE_TAG}"
