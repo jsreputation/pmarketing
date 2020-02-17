@@ -75,7 +75,7 @@ commands:
               fi
             else
               if [ ${TARGET_ENV} == 'staging' ]; then
-                APIHOST="https://api.getperx.io"
+                APIHOST="https://api.perxtech.io"
               elif [ ${TARGET_ENV} == 'production' ]; then
                 if [ $APP == 'hsbc' ] || [ $APP == 'hsbc-rewards' ] || [ $APP == 'hsbc-xmas' ]
                 then

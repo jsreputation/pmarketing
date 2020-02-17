@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed, fakeAsync, tick, discardPeriodicTasks} from '@angular/core/testing';
 
 import { GameComponent } from './game.component';
 import { of, throwError } from 'rxjs';
@@ -167,29 +167,32 @@ describe('GameComponent', () => {
     }));
   });
 
-  it('should call redirectUrlAndPopup', () => {
+  it('should call redirectUrlAndPopup', fakeAsync( () => {
     const authService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
       AuthenticationService as Type<AuthenticationService>);
     const gameService: IGameService = fixture.debugElement.injector.get<IGameService>(IGameService as Type<IGameService>);
     const router: Router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
-
     spyOn(authService, 'getAnonymous').and.returnValue(false);
     spyOn(gameService, 'getGamesFromCampaign').and.returnValue(of([gameSignup]));
-    spyOn(gameService, 'prePlay').and.returnValue(of({ id: 3, voucherIds: [1, 2, 3] }));
-
     const error = 'error';
-    const spy = spyOn(gameService, 'prePlayConfirm').and.returnValue(throwError(error));
+    const spy = spyOn(gameService, 'prePlay').and.returnValue(throwError(error));
     const routerSpy = spyOn(router, 'navigate');
     component.ngOnInit();
-    component.gameCompleted();
+    component.loadPreplay();
+    component.preplayGameCompleted();
+    tick(1000);
+    fixture.detectChanges();
+    tick();
+    discardPeriodicTasks();
     expect(spy).toHaveBeenCalled();
     expect(routerSpy).toHaveBeenCalledWith(['/wallet']);
-  });
+  }));
 
   it('should set willWin true value', () => {
     const gameService: IGameService = fixture.debugElement.injector.get<IGameService>(IGameService as Type<IGameService>);
     const spy = spyOn(gameService, 'prePlay').and.returnValue(of({ id: 3, voucherIds: [1, 2, 3] }));
     component.ngOnInit();
+    component.loadPreplay();
     expect(spy).toHaveBeenCalled();
     expect(component.willWin).toBe(true);
   });
@@ -198,6 +201,7 @@ describe('GameComponent', () => {
     const gameService: IGameService = fixture.debugElement.injector.get<IGameService>(IGameService as Type<IGameService>);
     const spy = spyOn(gameService, 'prePlay').and.returnValue(of({ id: 3, voucherIds: [] }));
     component.ngOnInit();
+    component.loadPreplay();
     expect(spy).toHaveBeenCalled();
     expect(component.willWin).toBe(false);
   });

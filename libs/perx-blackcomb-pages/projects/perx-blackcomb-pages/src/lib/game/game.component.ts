@@ -8,7 +8,7 @@ import {
   IEngagementTransaction,
   AuthenticationService,
   NotificationService,
-  IPrePlayStateData, ConfigService, IConfig
+  IPrePlayStateData,
 } from '@perx/core';
 import { map, tap, first, filter, switchMap, bufferCount, catchError, takeUntil } from 'rxjs/operators';
 import { Observable, interval, throwError, Subject, combineLatest } from 'rxjs';
@@ -53,9 +53,6 @@ export class GameComponent implements OnInit, OnDestroy {
     imageUrl: '',
   };
 
-  private isWhistler: boolean = true;
-  private gameId: number;
-
   constructor(
     private route: ActivatedRoute,
     private gameService: IGameService,
@@ -63,16 +60,11 @@ export class GameComponent implements OnInit, OnDestroy {
     private notificationService: NotificationService,
     private auth: AuthenticationService,
     private translate: TranslateService,
-    private configService: ConfigService
   ) {
   }
 
   public ngOnInit(): void {
     this.initTranslate();
-    this.configService.readAppConfig<void>().subscribe(
-      (config: IConfig<void>) => {
-        this.isWhistler = config.isWhistler as boolean;
-      });
 
     this.isAnonymousUser = this.auth.getAnonymous();
     this.gameData$ = this.route.params.pipe(
@@ -94,7 +86,6 @@ export class GameComponent implements OnInit, OnDestroy {
       map((games: IGame[]) => games[0]),
       tap((game: IGame) => {
         if (game) {
-          this.gameId = game.id;
           const { displayProperties } = game;
           if (displayProperties && displayProperties.informationCollectionSetting) {
             this.informationCollectionSetting = displayProperties.informationCollectionSetting;
@@ -117,6 +108,9 @@ export class GameComponent implements OnInit, OnDestroy {
         }
       })
     );
+  }
+
+  public loadPreplay(): void {
     this.gameData$.pipe(
       switchMap(
         (game: IGame) => this.gameService.prePlay(game.id, this.campaignId)
@@ -136,6 +130,7 @@ export class GameComponent implements OnInit, OnDestroy {
       },
       () => {
         this.popupData = this.noRewardsPopUp;
+        this.redirectUrlAndPopUp(); // wont call preplayConfirm direct away if preplay fail
       }
     );
   }
@@ -175,13 +170,17 @@ export class GameComponent implements OnInit, OnDestroy {
         bufferCount(nbSteps),
         first()
       );
+    combineLatest(processBar$).subscribe(
+      () => this.redirectUrlAndPopUp(),
+      () => this.redirectUrlAndPopUp()
+    );
+  }
 
-    const confirmId = this.isWhistler ? this.transactionId : this.gameId;
+  public preplayGameCompleted(): void {
     const userAction$: Observable<IEngagementTransaction | void> =
-      this.gameService.prePlayConfirm(confirmId, this.informationCollectionSetting)
+      this.gameService.prePlayConfirm(this.transactionId, this.informationCollectionSetting)
         .pipe(
           tap((gameTransaction: IEngagementTransaction) => {
-            this.transactionId = gameTransaction.id;
             if (gameTransaction.voucherIds && gameTransaction.voucherIds.length > 0) {
               // set this as a property
               this.rewardCount = gameTransaction.voucherIds.length.toString();
@@ -195,6 +194,15 @@ export class GameComponent implements OnInit, OnDestroy {
             throw err;
           })
         );
+    // display a loader before redirecting to next page
+    const delay = 3000;
+    const nbSteps = 60;
+    const processBar$ = interval(delay / nbSteps)
+      .pipe(
+        tap(v => this.progressValue = v * 100 / nbSteps),
+        bufferCount(nbSteps),
+        first()
+      );
     combineLatest(processBar$, userAction$).subscribe(
       () => this.redirectUrlAndPopUp(),
       () => this.redirectUrlAndPopUp()
