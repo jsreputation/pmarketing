@@ -8,7 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatRippleModule } from '@angular/material/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthenticationService, IMerchantAdminService } from '@perx/core';
+import { AuthenticationService, IMerchantAdminService, ConfigService } from '@perx/core';
 import { Router } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { of } from 'rxjs';
@@ -21,6 +21,9 @@ describe('RegisterComponent', () => {
   };
   beforeEach(async(() => {
     const routerStub = { navigateByUrl: () => ({}) };
+    const configServiceStub = {
+      readAppConfig: () => of()
+    };
 
     TestBed.configureTestingModule({
       declarations: [RegisterComponent],
@@ -37,6 +40,7 @@ describe('RegisterComponent', () => {
       ],
       providers: [
         { provide: Router, useValue: routerStub },
+        { provide: ConfigService, useValue: configServiceStub },
         {
           provide: AuthenticationService,
           useValue: {

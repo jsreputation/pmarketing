@@ -33,6 +33,10 @@
     <div *ngIf="showCampaigns" class="title" translate>STAMP_CAMPAIGNS</div>
     <perx-blackcomb-pages-campaigns-collection [campaigns]="campaigns$" (selected)="goToCampaignPage($event)"></perx-blackcomb-pages-campaigns-collection>
   </div>
+  <div class="catalogs">
+    <div class="title">Catalog</div>
+    <perx-blackcomb-pages-catalogs (tapped)="catalogSelected($event)"></perx-blackcomb-pages-catalogs>
+  </div>
   <div class="games">
     <div *ngIf="showGames" class="title" translate>GAMES</div>
     <perx-blackcomb-games-collection [games]="games$"></perx-blackcomb-games-collection>

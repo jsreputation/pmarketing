@@ -6,6 +6,7 @@ import { HomeComponent } from './home.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {
   ICampaignService,
+  InstantOutcomeService,
   LoyaltyModule,
   RewardsModule,
   UtilsModule,
@@ -28,6 +29,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import {CampaignsCollectionComponent} from './campaigns-collection/campaigns-collection.component';
+import {CatalogsComponent} from '../catalogs/catalogs.component';
 
 const rewardsServiceStub: Partial<RewardsService> = {
   getAllRewards: () => of([]),
@@ -83,9 +85,13 @@ describe('HomeComponent', () => {
     getCampaigns: () => of([])
   };
 
+  const instantOutcomeServiceStub: Partial<InstantOutcomeService> = {
+    claim: () => of([])
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [HomeComponent, GamesCollectionComponent, CampaignsCollectionComponent],
+      declarations: [HomeComponent, GamesCollectionComponent, CampaignsCollectionComponent, CatalogsComponent],
       imports: [
         NoopAnimationsModule,
         MatCardModule,
@@ -101,6 +107,7 @@ describe('HomeComponent', () => {
       providers: [
         Title,
         { provide: ICampaignService, useValue: campaignServiceStub },
+        { provide: InstantOutcomeService, useValue: instantOutcomeServiceStub },
         { provide: RewardsService, useValue: rewardsServiceStub },
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
         { provide: ProfileService, useValue: profileService },

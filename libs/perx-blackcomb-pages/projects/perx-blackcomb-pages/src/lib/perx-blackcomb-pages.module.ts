@@ -20,12 +20,13 @@ import {
   MatDatepickerModule,
   MatToolbarModule,
   MatListModule,
-  MatDialogModule
+  MatDialogModule, MatMenuModule
 } from '@angular/material';
 import { GameModule } from './game/game.module';
 import { HistoryComponent } from './history/history.component';
 import {
   RepeatTimesDirective,
+  SortRewardsPipe,
   RewardsCollectionComponent,
   VouchersComponent,
   PinRedemptionComponent,
@@ -84,6 +85,9 @@ import { RewardsBookingComponent } from './rewards-booking/rewards-booking.compo
 import { ProfileBarcodeComponent } from './profile-barcode/profile-barcode.component';
 import { EditProfileFieldComponent } from './edit-profile-field/edit-profile-field.component';
 import { CampaignStampsComponent } from './campaign-stamps/campaign-stamps.component';
+import { CatalogsComponent } from './catalogs/catalogs.component';
+import { CatalogRewardCardComponent } from './catalog-reward-card/catalog-reward-card.component';
+import {CatalogComponent} from './catalog/catalog.component';
 
 const comps: any[] = [
   AccountComponent,
@@ -140,7 +144,11 @@ const comps: any[] = [
   ProfileBarcodeComponent,
   EditProfileFieldComponent,
   PuzzleListComponent,
-  CampaignStampsComponent
+  CampaignStampsComponent,
+  CatalogComponent,
+  CatalogsComponent,
+  CatalogRewardCardComponent,
+  SortRewardsPipe
 ];
 
 @NgModule({
@@ -152,6 +160,7 @@ const comps: any[] = [
     MatIconModule,
     MatCardModule,
     MatButtonModule,
+    MatMenuModule,
     MatRippleModule,
     MatGridListModule,
     MatTabsModule,

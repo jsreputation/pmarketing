@@ -11,7 +11,9 @@ import {
   FeedItem,
   FeedReaderService,
   ICampaign,
+  ICatalog,
   ICampaignService,
+  InstantOutcomeService,
   IConfig,
   IGame,
   IGameService,
@@ -163,6 +165,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private configService: ConfigService,
     private authService: AuthenticationService,
     private campaignService: ICampaignService,
+    private instantOutcomeService: InstantOutcomeService,
     private dialog: MatDialog,
     private settingsService: SettingsService,
 
@@ -240,6 +243,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.router.navigate([`/reward-detail/${reward.id}`]);
   }
 
+  public catalogSelected(catalog: ICatalog): void {
+    this.router.navigate(['/catalogs'], { queryParams: { catalog: catalog.id } });
+  }
+
   public onScroll(): void {
     const stTab = this.staticTab[this.currentTabIndex];
     if (!stTab || !stTab.rewardsList || stTab.completePagination) {
@@ -305,7 +312,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   public dialogClosed(): void {
-    this.campaignService.issueAll(this.firstComefirstServeCampaign.id).subscribe(
+    this.instantOutcomeService.claim(this.firstComefirstServeCampaign.id).subscribe(
       () => this.router.navigate([`/wallet`]),
       (err) => {
         if (err.error && err.error.code === 4103) {

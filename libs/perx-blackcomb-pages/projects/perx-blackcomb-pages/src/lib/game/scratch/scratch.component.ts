@@ -3,6 +3,7 @@ import {
   Input,
   Output,
   EventEmitter,
+  OnInit,
 } from '@angular/core';
 
 import {
@@ -15,12 +16,17 @@ import {
   templateUrl: './scratch.component.html',
   styleUrls: ['./scratch.component.scss']
 })
-export class ScratchComponent {
+export class ScratchComponent implements OnInit {
   @Input() public willWin: boolean = false;
 
   @Input() public game: IGame;
 
   @Output() public broken: EventEmitter<void> = new EventEmitter();
+  @Output() public loaded: EventEmitter<boolean> = new EventEmitter();
+
+  public ngOnInit(): void {
+    this.loaded.emit();
+  }
 
   public isEnabled: boolean = false;
 
@@ -31,4 +37,5 @@ export class ScratchComponent {
   public gameCompleted(): void {
     this.broken.emit();
   }
+
 }

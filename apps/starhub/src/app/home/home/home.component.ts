@@ -7,9 +7,10 @@ import {
   AuthenticationService,
   ICampaignService,
   ICampaign,
+  InstantOutcomeService,
   CampaignType,
   IGame,
-  RewardPopupComponent
+  RewardPopupComponent, ConfigService
 } from '@perx/core';
 import { NoRenewaleInNamePipe } from '../no-renewale-in-name.pipe';
 import { MatToolbar, MatDialog } from '@angular/material';
@@ -44,14 +45,20 @@ export class HomeComponent implements OnInit {
     private profileService: ProfileService,
     private authenticationService: AuthenticationService,
     private campaignService: ICampaignService,
+    private instantOutcomeService: InstantOutcomeService,
+    private configService: ConfigService,
     private router: Router,
     private dialog: MatDialog,
   ) { }
 
   public ngOnInit(): void {
-    this.loyaltyService.getLoyalty().subscribe((loyalty: ILoyalty) => this.loyalty = loyalty);
-    this.profileService.whoAmI().subscribe((p: IProfile) => this.profile = p);
-    this.getAccessToken();
+    this.configService.readAppConfig().subscribe(
+      () => {
+        this.loyaltyService.getLoyalty().subscribe((loyalty: ILoyalty) => this.loyalty = loyalty);
+        this.profileService.whoAmI().subscribe((p: IProfile) => this.profile = p);
+        this.getAccessToken();
+      }
+    );
   }
 
   private getAccessToken(): void {
@@ -151,7 +158,7 @@ export class HomeComponent implements OnInit {
     if (this.game) {
       this.router.navigate([`/game`], { queryParams: { id: this.game.id } });
     } else {
-      this.campaignService.issueAll(this.firstComefirstServeCampaign.id).subscribe(
+      this.instantOutcomeService.claim(this.firstComefirstServeCampaign.id).subscribe(
         () => {
           this.router.navigate([`/home/vouchers`]);
         },

@@ -41,8 +41,6 @@ export class LoginComponent implements OnInit, PageAppearence {
 
   public loginForm: FormGroup;
 
-  private appAccessTokenFetched: boolean = false;
-
   public currentSelectedLanguage: string = 'en';
 
   public preAuth: boolean;
@@ -83,16 +81,7 @@ export class LoginComponent implements OnInit, PageAppearence {
 
   public ngOnInit(): void {
     this.currentSelectedLanguage = this.translateService.currentLang || this.translateService.defaultLang;
-    const token = this.authService.getAppAccessToken();
-    if (token) {
-      this.appAccessTokenFetched = true;
-    } else {
-      this.authService.getAppToken().subscribe(() => {
-        this.appAccessTokenFetched = true;
-      }, (err) => {
-        console.error(`Error${  err}`);
-      });
-    }
+
 
     if (this.preAuth && isPlatformBrowser(this.platformId) && !this.authService.getUserAccessToken()) {
       this.authService.autoLogin().subscribe(
@@ -162,16 +151,10 @@ export class LoginComponent implements OnInit, PageAppearence {
   }
 
   public goToSignup(): void {
-    if (!this.appAccessTokenFetched) {
-      return;
-    }
     this.router.navigateByUrl('/signup');
   }
 
   public goToForgotPassword(): void {
-    if (!this.appAccessTokenFetched) {
-      return;
-    }
     const mobileNumber = (this.loginForm.value.mobileNo as string);
     this.router.navigate(['forgot-password'], { state: { country: this.selectedCountry, mobileNo: mobileNumber } });
   }
