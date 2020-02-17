@@ -4,6 +4,8 @@ import {map, scan, switchMap, tap} from 'rxjs/operators';
 import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
 import { IMacaron, MacaronService } from '../../services/macaron.service';
 
+const REQ_PAGE_SIZE: number = 10;
+
 interface ICampaignWithMacaron extends ICampaign {
   macaron?: IMacaron | null;
 }
@@ -39,6 +41,11 @@ export class CampaignsComponent implements OnInit {
     let tempCampaigns;
     this.campaignService.getCampaigns({ page: this.campaignsPageId })
       .pipe(
+        tap((campaigns) => {
+          if (campaigns.length === 0) { // actual check here if no more campaigns then end -> ensure all pages combed
+            this.campaignsEnded = true;
+          }
+        }),
         map((campaigns: ICampaign[]) => campaigns.filter((campaign) => campaign.type === CampaignType.game)),
         tap((campaigns: ICampaign[]) => {
           tempCampaigns = campaigns;
@@ -61,9 +68,6 @@ export class CampaignsComponent implements OnInit {
           return campaign;
         });
         this.campaignsSubj.next(filteredAndMacoronedCampaigns);
-        if (filteredAndMacoronedCampaigns.length === 0) {
-          this.campaignsEnded = true;
-        }
       });
   }
 
