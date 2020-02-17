@@ -62,6 +62,13 @@ jobs:
         run: |
           kubectl config use-context ${TARGET_ENV}
 
+      - name: Install sops
+        env:
+          SOPS_VERSION: 3.5.0
+        run: |
+          curl -sSL  https://github.com/mozilla/sops/releases/download/v${SOPS_VERSION}/sops_${SOPS_VERSION}_amd64.deb -o sops.deb && \
+          sudo dpkg -i sops.deb
+
       - name: Deploy
         run: |
           make decrypt-secret && make deploy
