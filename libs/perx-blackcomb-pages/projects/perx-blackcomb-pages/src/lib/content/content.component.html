@@ -2,8 +2,8 @@
 </div>
 <ng-template #loadingOrError>
     <div class="loading">
-        <div *ngIf="error$ | async; else loading" translate>CONTENT_PAGE</div>
-        <ng-template #loading>
+        <div class="error" *ngIf="error$ | async; else loading" translate>CONTENT_PAGE</div>
+        <ng-template #loading class="spinner">
             <mat-spinner></mat-spinner>
         </ng-template>
     </div>

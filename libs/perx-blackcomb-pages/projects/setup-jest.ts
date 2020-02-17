@@ -26,7 +26,5 @@ Object.defineProperty(document.body.style, 'transform', {
   },
 });
 
-Object.defineProperty(window, 'fetch', { value: require('jest-fetch-mock') });
-
 /* output shorter and more meaningful Zone error stack traces */
-// Error.stackTraceLimit = 2;
+Error.stackTraceLimit = 2;

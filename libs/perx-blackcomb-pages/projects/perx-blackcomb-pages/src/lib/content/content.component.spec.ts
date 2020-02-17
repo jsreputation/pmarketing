@@ -1,24 +1,36 @@
-import { PagesObject, SettingsService} from '@perx/core';
-import {of, BehaviorSubject, Observable} from 'rxjs';
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { PagesObject, SettingsService } from '@perx/core';
+import { of, ReplaySubject, throwError, Observable, } from 'rxjs';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  flushMicrotasks,
+} from '@angular/core/testing';
 import { ContentComponent } from './content.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material';
-import { Type } from '@angular/core';
-import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
-
-const settingsServiceStub: Partial<SettingsService> = {
-  getAccountSettings: (): Observable<PagesObject> => of(),
-};
+import { HttpClient } from '@angular/common/http';
 
 describe('ContentComponent', () => {
   let component: ContentComponent;
   let fixture: ComponentFixture<ContentComponent>;
 
-  const params = new BehaviorSubject({});
+  let params: ReplaySubject<Params>
+  const getAccountSettingsSpy: jest.Mock = jest.fn();
+  const settingsServiceStub: Partial<SettingsService> = {
+    getAccountSettings: getAccountSettingsSpy,
+  };
+  const getSpy: jest.Mock = jest.fn();
+  const httpClientStub: Partial<HttpClient> = { get: getSpy }
 
   beforeEach(async(() => {
+    params = new ReplaySubject<Params>();
+    const activatedRouteStub: Partial<ActivatedRoute> = {
+      params,
+      queryParams: of({})
+    };
     TestBed.configureTestingModule({
       declarations: [ContentComponent],
       imports: [
@@ -27,13 +39,8 @@ describe('ContentComponent', () => {
       ],
       providers: [
         { provide: SettingsService, useValue: settingsServiceStub },
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            params,
-            queryParams: of({})
-          }
-        },
+        { provide: ActivatedRoute, useValue: activatedRouteStub },
+        { provide: HttpClient, useValue: httpClientStub }
       ]
     })
       .compileComponents();
@@ -42,7 +49,10 @@ describe('ContentComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ContentComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    jest.resetAllMocks();
   });
 
   it('should create', () => {
@@ -55,129 +65,112 @@ describe('ContentComponent', () => {
     });
 
     it('should display the error message, If key is valid but the content cannot be downloaded', fakeAsync(() => {
-      const themesService: SettingsService = fixture.debugElement.injector.get<SettingsService>(
-        SettingsService as Type<SettingsService>);
+      const pages: PagesObject = {
+        pages: [{
+          title: '',
+          content_url: 'http://failingStuff',
+          key: 'test',
+        }]
+      };
+      getAccountSettingsSpy.mockReturnValue(of(pages));
+      getSpy.mockReturnValue(throwError('failed'));
 
-      const themesServiceSpy = spyOn(themesService, 'getAccountSettings').and.returnValue(of(
-        {
-          pages: [{
-            title: '',
-            content_url: 'http://localhost:4200',
-            key: 'test',
-          }]
-        }
-      ));
       component.ngOnInit();
-      tick();
-      expect(themesServiceSpy).toHaveBeenCalled();
-      component.content$.subscribe(
-        () => { },
-        () => {
-          fixture.detectChanges();
-          expect(component.errorFlag).toBe(true);
-          expect(fixture.nativeElement.querySelector('.loading').innerText).toBe('CONTENT_PAGE');
-        }
-      );
+      fixture.detectChanges();
+
+      flushMicrotasks();
+      expect(getAccountSettingsSpy).toHaveBeenCalledTimes(1);
+      expect(getSpy).toHaveBeenCalledTimes(1);
+      expect(getSpy).toHaveBeenCalledWith('https://cors-proxy.perxtech.io/?url=http://failingStuff', { "responseType": "text" });
+      const compiled = fixture.debugElement.nativeElement;
+      expect(compiled.querySelector('.content')).toBeNull();
+      expect(compiled.querySelector('.error')).toBeDefined();
+      expect(compiled.querySelector('.spinner')).toBeNull();
     }));
 
-    it('If the key is valid and the content can be fetched, it should render the fetched content.', fakeAsync(() => {
-      const themesService: SettingsService = fixture.debugElement.injector.get<SettingsService>(
-        SettingsService as Type<SettingsService>);
+    it('it should render the fetched content, if the key is valid and the content can be fetched.', fakeAsync(() => {
+      const pages: PagesObject = {
+        pages: [{
+          title: '',
+          content_url: 'http://goodStuff',
+          key: 'test',
+        }]
+      };
+      getAccountSettingsSpy.mockReturnValue(of(pages));
+      getSpy.mockReturnValue('blabla');
 
-      const themesServiceSpy = spyOn(themesService, 'getAccountSettings').and.returnValue(of(
-        {
-          pages: [{
-            title: '',
-            content_url: '',
-            key: 'test',
-          }]
-        }
-      ));
       component.ngOnInit();
-      tick();
-      expect(themesServiceSpy).toHaveBeenCalled();
-      component.content$.subscribe(
-        (res) => {
-          fixture.detectChanges();
-          expect(component.isLoading).toBe(false);
-          expect(res).toContain('<html>');
-        },
-        () => { }
-      );
+      fixture.detectChanges();
+
+      flushMicrotasks();
+      expect(getAccountSettingsSpy).toHaveBeenCalledTimes(1);
+      expect(getSpy).toHaveBeenCalledTimes(1);
+      expect(getSpy).toHaveBeenCalledWith('https://cors-proxy.perxtech.io/?url=http://goodStuff', { "responseType": "text" });
+      const compiled = fixture.debugElement.nativeElement;
+      expect(compiled.querySelector('.content')).toBeDefined();
+      expect(compiled.querySelector('.error')).toBeNull();
+      expect(compiled.querySelector('.spinner')).toBeNull();
     }));
 
-    it('should display a spinner', fakeAsync(() => {
-      const themesService: SettingsService = fixture.debugElement.injector.get<SettingsService>(
-        SettingsService as Type<SettingsService>);
+    it('should display a spinner while content is being fetched.', fakeAsync(() => {
+      const pages: PagesObject = {
+        pages: [{
+          title: '',
+          content_url: 'http://goodStuff',
+          key: 'test',
+        }]
+      };
+      getAccountSettingsSpy.mockReturnValue(of(pages));
+      getSpy.mockReturnValue(new Observable());
 
-      const themesServiceSpy = spyOn(themesService, 'getAccountSettings').and.returnValue(of(
-        {
-          pages: [{
-            title: '',
-            content_url: '', // will get the browser test
-            key: 'test',
-          }]
-        }
-      ));
       component.ngOnInit();
-      tick();
-      expect(themesServiceSpy).toHaveBeenCalled();
-      let spinner = fixture.debugElement.queryAll(By.css('.loading .mat-spinner'));
-      expect(spinner.length).toBe(1);
-      component.content$.subscribe(
-        () => {
-          fixture.detectChanges();
-          spinner = fixture.debugElement.queryAll(By.css('.loading .mat-spinner'));
-          expect(component.isLoading).toBe(false);
-          expect(spinner.length).toBe(0);
-        },
-        () => { }
-      );
+      fixture.detectChanges();
+
+      flushMicrotasks();
+      expect(getAccountSettingsSpy).toHaveBeenCalledTimes(1);
+      expect(getSpy).toHaveBeenCalledTimes(1);
+      expect(getSpy).toHaveBeenCalledWith('https://cors-proxy.perxtech.io/?url=http://goodStuff', { "responseType": "text" });
+      const compiled = fixture.debugElement.nativeElement;
+      expect(compiled.querySelector('.content')).toBeNull();
+      expect(compiled.querySelector('.error')).toBeNull();
+      expect(compiled.querySelector('.spinner')).toBeDefined();
     }));
 
-    it('If the key does not have any matching page, it should display the error message.', fakeAsync(() => {
-      const themesService: SettingsService = fixture.debugElement.injector.get<SettingsService>(
-        SettingsService as Type<SettingsService>);
+    it('should display the error message, if the key does not have any matching page.', fakeAsync(() => {
+      const pages: PagesObject = {
+        pages: []
+      };
+      getAccountSettingsSpy.mockReturnValue(of(pages));
+      // @ts-ignore
+      getSpy.mockReturnValue('blabla');
 
-      const themesServiceSpy = spyOn(themesService, 'getAccountSettings').and.returnValue(of());
       component.ngOnInit();
-      tick();
-      expect(themesServiceSpy).toHaveBeenCalled();
-      component.content$.subscribe(
-        () => {
-        },
-        () => {
-          fixture.detectChanges();
-          expect(component.errorFlag).toBe(true);
-          expect(fixture.nativeElement.querySelector('.loading').innerText).toBe('Content Page Not Found');
-        }
-      );
+      fixture.detectChanges();
+
+      flushMicrotasks();
+      expect(getAccountSettingsSpy).toHaveBeenCalledTimes(1);
+      expect(getSpy).not.toHaveBeenCalled();
+      const compiled = fixture.debugElement.nativeElement;
+      expect(compiled.querySelector('.content')).toBeNull();
+      expect(compiled.querySelector('.error')).toBeDefined();
+      expect(compiled.querySelector('.spinner')).toBeNull();
     }));
 
   });
 
-  describe('ngOnInit', () => {
+  describe('ngOnInit with no key', () => {
     beforeEach(() => {
       params.next({});
     });
 
-    it('If there is no routeParam key, it should display the error message.', fakeAsync(() => {
-      const themesService: SettingsService = fixture.debugElement.injector.get<SettingsService>(
-        SettingsService as Type<SettingsService>);
-
-      const themesServiceSpy = spyOn(themesService, 'getAccountSettings').and.returnValue(of());
+    it('it should display the error message, if there is no routeParam key, ', fakeAsync(() => {
       component.ngOnInit();
-      tick();
-      expect(themesServiceSpy).not.toHaveBeenCalled();
-      component.content$.subscribe(
-        () => {
-        },
-        () => {
-          fixture.detectChanges();
-          expect(component.errorFlag).toBe(true);
-          expect(fixture.nativeElement.querySelector('.loading').innerText).toBe('CONTENT_PAGE');
-        }
-      );
+      fixture.detectChanges();
+
+      flushMicrotasks();
+      expect(getAccountSettingsSpy).not.toHaveBeenCalled();
+      expect(getSpy).not.toHaveBeenCalled();
+      //TODO test html
     }));
 
   });
