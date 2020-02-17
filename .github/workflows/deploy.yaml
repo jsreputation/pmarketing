@@ -14,8 +14,9 @@ jobs:
       - name: Checkout microsite-deploy
         uses: actions/checkout@v2
         with:
-          repository: perxtech/microsite-deploy
+          repository: PerxTech/microsite-deploy
           ref: master
+          token: ${{ .secrets.MICROSITE_DEPLOY_TOKEN }}
 
       - name: Set environment variables
         run: |
