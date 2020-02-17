@@ -1,9 +1,9 @@
 name: deploy
 on:
   push:
-    branches:
-      #- master
-      - DO-378/deploy-microsites-by-github-actions
+    # branches:
+    #   - master
+    #   - DO-378/deploy-microsites-by-github-actions
     tags:
       - '*[0-9]+.[0-9]+.[0-9]+'
 jobs:
@@ -29,11 +29,16 @@ jobs:
             echo ::set-env name=DOCKER_TAG::${GITHUB_REF}
           else
             echo "Error! Unrecognized tag"
+            exit 1
           fi
           echo "APP: $APP"
           echo "TARGET_ENV: $TARGET_ENV"
           echo "SEM_VER: $SEM_VER"
           echo "DOCKER_TAG: $DOCKER_TAG"
+
+      - name: Login to Dockerhub
+        run: |
+          echo ${DOCKERHUB_PASSWORD} | docker login -u ${DOCKERHUB_USER} --password-stdin
 
       - name: Wait for docker image tag to be present
         run: |
