@@ -20,7 +20,7 @@ describe('ProfileBarcodeComponent', () => {
 
   const profileServiceStub: Partial<ProfileService> = { whoAmI: () => of({ id: 2, firstName: '', lastName: '' }) };
 
-  const configServiceStub = { readAppConfig: () => of() };
+  const configServiceStub: Partial<ConfigService> = { readAppConfig: () => of() };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

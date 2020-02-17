@@ -9,7 +9,8 @@ import {
   IGameService,
   Config,
   NotificationService,
-  ConfigService
+  ConfigService,
+  IConfig
 } from '@perx/core';
 import { of } from 'rxjs';
 import { Router, ActivatedRoute, convertToParamMap } from '@angular/router';
@@ -38,10 +39,10 @@ describe('LoadingComponent', () => {
     addPopup: () => { }
   };
 
-  const configServiceStub = {
+  const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of({
       redirectAfterLogin: '/home'
-    })
+    } as IConfig<any>)
   };
 
   beforeEach(async(() => {

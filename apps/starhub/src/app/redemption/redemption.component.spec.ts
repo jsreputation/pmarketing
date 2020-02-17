@@ -16,7 +16,7 @@ import { AnalyticsService } from '../analytics.service';
 import { NgxBarcodeModule } from 'ngx-barcode';
 import { QRCodeModule } from 'angularx-qrcode';
 
-const rewardsServiceStub = {
+const rewardsServiceStub: Partial<RewardsService> = {
   getReward: () => of(rewards[0])
 };
 
@@ -55,22 +55,22 @@ describe('RedemptionComponent', () => {
     expiry: null,
   };
 
-  const vouchersServiceStub = {
-    redeemVoucher: () => { },
+  const vouchersServiceStub: Partial<IVoucherService> = {
+    redeemVoucher: () => of(),
     get: () => of(voucher)
   };
 
-  const locationStub = {
+  const locationStub: Partial<Location> = {
     back: () => { }
   };
 
-  const notificationServiceStub = {
+  const notificationServiceStub: Partial<NotificationService> = {
     addSnack: () => {}
   };
 
   let params: Subject<Params>;
 
-  const routerStub = { navigateByUrl: () => ({}) };
+  const routerStub: Partial<Router> = { navigateByUrl: () => new Promise<boolean>(resolve => resolve(true)) };
 
   beforeEach(async(() => {
     params = new Subject<Params>();

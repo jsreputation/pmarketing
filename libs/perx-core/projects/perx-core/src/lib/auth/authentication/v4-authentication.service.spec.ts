@@ -13,18 +13,19 @@ import { ProfileService } from '../../profile/profile.service';
 import { TokenStorage } from '../../utils/storage/token-storage.service';
 import { LocalTokenStorage } from '../../utils/storage/local-token-storage.service';
 import {ConfigService} from '../../config/config.service';
+import {IConfig} from '../../config/models/config.model';
 
 function fakeFactory(): TokenStorage {
   return new LocalTokenStorage({});
 }
 
-const configServiceStub = {
+const configServiceStub: Partial<ConfigService> = {
   readAppConfig: () => of({
     production: true,
     baseHref: '/',
     preAuth: false,
     apiHost: 'https://api.perxtech.io'
-  })
+  } as IConfig<any>)
 };
 
 describe('V4AuthenticationService', () => {

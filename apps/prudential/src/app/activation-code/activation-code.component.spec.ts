@@ -29,19 +29,19 @@ describe('ActivationCodeComponent', () => {
   let router: Router;
   // let dialog: MatDialog;
   let overlayContainerElement: HTMLElement;
-  const authenticationServiceStub = {};
-  const profileServiceStub = {
+  const authenticationServiceStub: Partial<AuthenticationService> = {};
+  const profileServiceStub: Partial<ProfileService> = {
     whoAmI: () => of()
   };
-  const voucherServiceStub = {
-    get: () => of('')
+  const voucherServiceStub: Partial<IVoucherService> = {
+    get: () => of()
   };
 
-  const rewardsServiceStub = {
+  const rewardsServiceStub: Partial<RewardsService> = {
     getReward: () => of()
   };
 
-  const merchantsServiceStub = {
+  const merchantsServiceStub: Partial<IMerchantsService> = {
     getMerchant: () => of()
   };
 

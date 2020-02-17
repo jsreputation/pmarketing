@@ -40,7 +40,7 @@ describe('QrcodeRedemptionComponent', () => {
     expiry: new Date('2019-09-05T03:24:00'),
   };
 
-  const voucherServiceStub = {
+  const voucherServiceStub: Partial<IVoucherService> = {
     get: () => of(mockVoucher)
   };
 

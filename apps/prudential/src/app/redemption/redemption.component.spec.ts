@@ -9,6 +9,7 @@ import {
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
+import {MerchantService} from '@perx/hsbc-rewards/src/app/shared/service/merchant.service';
 
 describe('RedemptionComponent', () => {
   let component: RedemptionComponent;
@@ -19,15 +20,15 @@ describe('RedemptionComponent', () => {
     expiry: null,
   };
 
-  const voucherServiceStub = {
-    get: () => of(mockVoucher)
+  const voucherServiceStub: Partial<IVoucherService> = {
+    get: () => of(mockVoucher as Voucher)
   };
-  const rewardsServiceStub = {
+  const rewardsServiceStub: Partial<RewardsService> = {
     getReward: () => of()
   };
 
-  const merchantsServiceStub = {
-    getMerchant: () => of()
+  const merchantsServiceStub: Partial<MerchantService> = {
+    getMerchants: () => of()
   };
 
   beforeEach(async(() => {

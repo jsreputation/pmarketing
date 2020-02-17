@@ -11,8 +11,8 @@ import {CatalogRewardCardComponent} from '../catalog-reward-card/catalog-reward-
 describe('CatalogComponent', () => {
   let component: CatalogComponent;
   let fixture: ComponentFixture<CatalogComponent>;
-  const routerStub = { navigateByUrl: () => ({}) };
-  const rewardsServiceStub = {
+  const routerStub: Partial<Router> = { navigateByUrl: () => new Promise<boolean>(resolve => resolve(true)) };
+  const rewardsServiceStub: Partial<RewardsService> = {
     getRewards: () => of()
   };
   const activatedRouteStub = {

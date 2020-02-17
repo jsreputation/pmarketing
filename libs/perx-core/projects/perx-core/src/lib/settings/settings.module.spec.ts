@@ -8,12 +8,13 @@ import {V4SettingsService} from './v4-settings.service';
 import {settingsServiceFactory} from './settings.module';
 import {ConfigService} from '../config/config.service';
 import {of} from 'rxjs';
+import {IConfig} from '../config/models/config.model';
 
-const configServiceStub = {
+const configServiceStub: Partial<ConfigService> = {
   readAppConfig: () => of({
     production: true,
     baseHref: '/'
-  })
+  } as IConfig<any>)
 };
 
 describe('SettingsModule', () => {

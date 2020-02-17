@@ -4,7 +4,7 @@ import { AppComponent } from './app.component';
 import { VouchersModule, IVoucherService } from '@perx/core';
 import { of } from 'rxjs';
 
-const vouchersServiceStub = {
+const vouchersServiceStub: Partial<IVoucherService> = {
   getAll: () => of([])
 };
 

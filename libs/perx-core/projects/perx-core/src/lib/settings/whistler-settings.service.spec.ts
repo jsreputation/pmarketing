@@ -4,12 +4,13 @@ import { WhistlerSettingsService } from './whistler-settings.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 import {ConfigService} from '../config/config.service';
+import {IConfig} from '../config/models/config.model';
 
-const configServiceStub = {
+const configServiceStub: Partial<ConfigService> = {
   readAppConfig: () => of({
     production: true,
     baseHref: '/'
-  })
+  } as IConfig<any>)
 };
 
 describe('WhistlerSettingsService', () => {

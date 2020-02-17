@@ -31,19 +31,19 @@ describe('AccountComponent', () => {
     }
   };
 
-  const profileServiceStub = {
+  const profileServiceStub: Partial<ProfileService> = {
     whoAmI: () => of(userInfo)
   };
 
-  const authenticationServiceStub = {
+  const authenticationServiceStub: Partial<AuthenticationService> = {
     logout: () => { }
   };
 
-  const routerStub = {
-    navigate: () => { }
+  const routerStub: Partial<Router> = {
+    navigate: () => new Promise<boolean>((resolve) => resolve(true))
   };
 
-  const loyaltyServiceStub = {
+  const loyaltyServiceStub: Partial<LoyaltyService> = {
     getLoyalty: () => of()
   };
 

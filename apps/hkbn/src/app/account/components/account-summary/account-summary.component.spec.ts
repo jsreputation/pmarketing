@@ -27,14 +27,14 @@ const accountDataStub: Partial<IProfile> = {
   phone: '999888199'
 };
 
-const authenticationServiceStub = {
+const authenticationServiceStub: Partial<AuthenticationService> = {
   requestVerificationToken: () => of(null)
 };
-const notificationServiceStub = {
+const notificationServiceStub: Partial<NotificationService> = {
   addPopup: () => ({}), addSnack: () => { }
 };
 
-const profileServiceStub = {
+const profileServiceStub: Partial<ProfileService> = {
   setCustomProperties: () => of(null)
 };
 

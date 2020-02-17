@@ -13,9 +13,9 @@ import { of } from 'rxjs';
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-  const authServiceStub = {
-    getUserAccessToken: () => of(),
-    getAppToken: () => of({}),
+  const authServiceStub: Partial<AuthenticationService> = {
+    getUserAccessToken: () => '',
+    getAppToken: () => of(),
     getAppAccessToken: () => 'token'
   };
   beforeEach(async(() => {

@@ -14,7 +14,9 @@ describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let auth: AuthenticationService;
-  let notificationService: Partial<NotificationService>;
+  const notificationServiceStub: Partial<NotificationService> = {
+    addPopup: () => void 0
+  };
   const authenticationServiceStub: Partial<AuthenticationService> = {
     login: () => of(void 0),
     getAppAccessToken: () => 'token',
@@ -36,7 +38,8 @@ describe('LoginComponent', () => {
         NoopAnimationsModule
       ],
       providers: [
-        { provide: AuthenticationService, useValue: authenticationServiceStub }
+        { provide: AuthenticationService, useValue: authenticationServiceStub },
+        { provide: NotificationService, useValue: notificationServiceStub }
       ]
     })
       .compileComponents();
@@ -46,7 +49,6 @@ describe('LoginComponent', () => {
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     auth = TestBed.get<AuthenticationService>(AuthenticationService as Type<AuthenticationService>);
-    notificationService = TestBed.get<NotificationService>(NotificationService as Type<NotificationService>);
     fixture.detectChanges();
   });
 
@@ -100,7 +102,8 @@ describe('LoginComponent', () => {
 
   it('should handle error with status 0', fakeAsync(() => {
     spyOn(auth, 'login').and.returnValue(throwError(new HttpErrorResponse({ status: 0 })));
-    const spy = spyOn(notificationService, 'addPopup');
+    const notificationSvc = TestBed.get(NotificationService);
+    const spy = spyOn(notificationSvc, 'addPopup');
     component.onSubmit();
     tick();
     expect(spy).toHaveBeenCalled();

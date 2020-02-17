@@ -15,7 +15,7 @@ describe('VouchersComponent', () => {
   let component: VouchersComponent;
   let fixture: ComponentFixture<VouchersComponent>;
   let router: Router;
-  const vouchersServiceStub = {
+  const vouchersServiceStub: Partial<IVoucherService> = {
     getAll: () => of(vouchers),
     getFromPage: () => of(vouchers)
   };

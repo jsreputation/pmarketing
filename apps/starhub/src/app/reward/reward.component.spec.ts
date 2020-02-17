@@ -48,19 +48,19 @@ const macaronTrueStub: Partial<IMacaron> = {
 describe('RewardComponent', () => {
   let component: RewardComponent;
   let fixture: ComponentFixture<RewardComponent>;
-  const rewardsServiceStub = {
+  const rewardsServiceStub: Partial<RewardsService> = {
     getReward: () => of()
   };
 
-  const vouchersServiceStub = {
+  const vouchersServiceStub: Partial<IVoucherService> = {
     issueReward: () => of()
   };
-  const locationStub = {
+  const locationStub: Partial<Location> = {
     back: () => { }
   };
-  const routerStub = { navigate: () => ({}) };
-  const notificationServiceStub = { addSnack: () => ({}) };
-  const macaronServiceStub = { getMacaron: () => ({}) };
+  const routerStub: Partial<Router> = { navigate: () =>new Promise<boolean>((resolve => resolve(true))) };
+  const notificationServiceStub: Partial<NotificationService> = { addSnack: () => ({}) };
+  const macaronServiceStub: Partial<MacaronService> = { getMacaron: () => null };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

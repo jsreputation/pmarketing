@@ -6,7 +6,7 @@ import { throwError } from 'rxjs';
 import { HttpRequest, HttpHandler, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { AppComponent } from '../app.component';
 
-const authenticationServiceStub = {
+const authenticationServiceStub: Partial<AuthenticationService> = {
   logout: (): void => { }
 };
 

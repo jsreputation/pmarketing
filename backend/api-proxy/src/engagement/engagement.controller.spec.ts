@@ -7,10 +7,10 @@ import { InstantOutcomeService } from '../services/instant-outcome/instant-outco
 
 describe('Engagement Controller', () => {
   let controller: EngagementController;
-  const gameServiceStub = {};
-  const loyaltyServiceStub = {};
-  const irServiceStub = {};
-  const surveyServiceStub = {};
+  const gameServiceStub: Partial<GameService> = {};
+  const loyaltyServiceStub: Partial<LoyaltyService> = {};
+  const irServiceStub: Partial<InstantOutcomeService> = {};
+  const surveyServiceStub: Partial<SurveyService> = {};
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({

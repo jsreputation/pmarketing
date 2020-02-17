@@ -18,16 +18,16 @@ describe('VouchersComponent', () => {
   const activatedRouteStub = new ActivatedRouteStub();
   const matDialogStub = new MatDialogStub();
   const spy = routerSpy.navigate as jasmine.Spy;
-  const voucherServiceStub = {
-    get: () => of(''),
-    getAll: () => of ('')
+  const voucherServiceStub: Partial<IVoucherService> = {
+    get: () => of(),
+    getAll: () => of ()
   };
 
-  const rewardsServiceStub = {
+  const rewardsServiceStub: Partial<RewardsService> = {
     getReward: () => of()
   };
 
-  const merchantsServiceStub = {
+  const merchantsServiceStub: Partial<IMerchantsService> = {
     getMerchant: () => of()
   };
 

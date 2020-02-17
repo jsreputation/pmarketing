@@ -18,10 +18,10 @@ describe('AppComponent', () => {
   const authServiceStub: Partial<AuthenticationService> = {
     $failedAuth: of(true)
   };
-  const locationStub = {
+  const locationStub: Partial<Location> = {
     back: () => { }
   };
-  const configServiceStub = {
+  const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of()
   };
 

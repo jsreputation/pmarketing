@@ -44,14 +44,14 @@ describe('GameComponent', () => {
   const routerStub = { navigate: () => ({}) };
   let gameService: IGameService;
   let notificationService: NotificationService;
-  const gameServiceStub = {
+  const gameServiceStub: Partial<IGameService> = {
     get: () => of(),
-    play: () => { }
+    play: () => of()
   };
-  const locationStub = {
+  const locationStub: Partial<Location> = {
     back: () => { }
   };
-  const notificationServiceStub = { addPopup: () => ({}) };
+  const notificationServiceStub: Partial<NotificationService> = { addPopup: () => ({}) };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

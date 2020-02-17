@@ -20,12 +20,12 @@ describe('LoginComponent', () => {
   let fixture: ComponentFixture<LoginComponent>;
 
   beforeEach(async(() => {
-    const routerStub = {
-      navigateByUrl: () => ({}),
-      navigate: () => ({})
+    const routerStub: Partial<Router> = {
+      navigateByUrl: () => new Promise<boolean>((resolve => resolve(true))),
+      navigate: () => new Promise<boolean>((resolve => resolve(true)))
     };
 
-    const profileStub = {
+    const profileStub: Partial<ProfileService> = {
       getCustomProperties: () => of({
         questionaire_answered: false
       })

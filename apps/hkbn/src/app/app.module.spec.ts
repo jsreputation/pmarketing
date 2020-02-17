@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { setLanguage } from './app.module';
 import { environment } from 'src/environments/environment';
 
-const translateServiceStub = {
+const translateServiceStub: Partial<TranslateService> = {
   defaultLang: null,
   setDefaultLang(leng: string): void { this.defaultLang = leng; }
 };

@@ -14,16 +14,16 @@ import { Router } from '@angular/router';
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-  const notificationServiceStub = { $popup: { subscribe: () => ({}) } };
-  const routerSub = { navigateByUrl: () => { } };
-  const authenticationServiceStub = {
+  const notificationServiceStub: Partial<NotificationService> = { $popup: of({}) };
+  const routerSub: Partial<Router> = { navigateByUrl: () => new Promise<boolean>(resolve => resolve(true)) };
+  const authenticationServiceStub: Partial<AuthenticationService> = {
     $failedAuth: of(true),
-    getInterruptedUrl: () => null,
-    login: of({ bearer_token: 'SWWERW' }),
-    getAppToken: () => of({}),
+    getInterruptedUrl: () => 'url',
+    login: () => of(),
+    getAppToken: () => of(),
     getAppAccessToken: () => 'token'
   };
-  const configServiceStub = {
+  const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of()
   };
   let debugElement: DebugElement;

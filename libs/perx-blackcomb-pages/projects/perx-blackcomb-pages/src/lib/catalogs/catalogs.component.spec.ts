@@ -23,7 +23,7 @@ describe('CatalogsComponent', () => {
     howToRedeem: '',
   };
 
-  const rewardsServiceStub = {
+  const rewardsServiceStub: Partial<RewardsService> = {
     getReward: () => of(mockReward),
     getCatalogs: () => of()
   };

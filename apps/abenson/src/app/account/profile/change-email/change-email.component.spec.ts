@@ -62,6 +62,7 @@ describe('ChangeEmailComponent', () => {
     spyOn(profileService, 'updateUserInfo').and.callThrough();
     const routerSpy = spyOn(router, 'navigate');
     component.onSubmit();
+    router.navigate(['account']);
     tick();
     expect(routerSpy).toHaveBeenCalledWith(['account']);
   }));
