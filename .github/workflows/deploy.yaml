@@ -107,3 +107,17 @@ jobs:
         run: |
           echo "Deploying ${APP}"
           make decrypt-secret && make deploy
+
+      - name: Invalidate Cloudfront distribution
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        if: contains( ${APP}, hsbc-collect2 ) || contains( ${APP}, hsbc-xmas ) || contains( ${APP}, hsbc-rewards )
+        run: |
+          sudo apt-get update && sudo apt-get install awscli
+          case $TARGET_ENV in
+            production ) DISTRIBUTION_ID=E3NTONYLQET6VX;;
+            staging    ) DISTRIBUTION_ID=ENIVGKPKYFPZI;;
+            *          ) echo "Environment not supported"; exit 1;;
+          esac
+          aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID
