@@ -81,15 +81,15 @@ describe('ResetPasswordComponent', () => {
       component.resetPasswordForm.controls.password.setValue(1234);
       component.resetPasswordForm.controls.confirmPassword.setValue(123);
       const notificationService: NotificationService = fixture.debugElement.injector.get<NotificationService>
-      (NotificationService as Type<NotificationService>);
+        (NotificationService as Type<NotificationService>);
       const notificationServiceSpy = spyOn(notificationService, 'addSnack');
       component.onUpdatePassword();
       expect(notificationServiceSpy).toHaveBeenCalledWith('Passwords do not match.');
     });
 
-    it('should reset password and call login', (done: DoneFn) => {
+    it('should reset password and call login', (done: jest.DoneCallback) => {
       const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>
-      (AuthenticationService as Type<AuthenticationService>);
+        (AuthenticationService as Type<AuthenticationService>);
       const authenticationServiceSpy = spyOn(authenticationService, 'resetPassword').and.returnValue(
         of({
           message: 'test',
