@@ -8,7 +8,10 @@
     ],
     "module": "commonjs",
     "emitDecoratorMetadata": true,
-    "allowJs": true
+    "allowJs": true,
+    "typeRoots": [
+      "../../../../node_modules/@types"
+    ]
   },
   "files": [],
   "include": [
