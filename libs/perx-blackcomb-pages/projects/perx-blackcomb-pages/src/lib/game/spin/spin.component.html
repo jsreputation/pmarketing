@@ -16,13 +16,18 @@
         </perx-core-spin-the-wheel>
 
         <div class="game-footer">
-          <button class="js-play"
-                  [hidden]="isEnabled"
-                  mat-flat-button
-                  color="primary"
-                  (click)="isEnabled = true">
-            {{ game.texts.button }}
-          </button>
+          <ng-container *ngIf="!isEnabled">
+            <button class="js-play"
+                [hidden]="isEnabled"
+                mat-flat-button
+                color="primary"
+                (click)="isEnabled = true">
+              {{ game.texts.button }}
+            </button>
+          </ng-container>
+          <ng-container *ngIf="isEnabled">
+            <div class="nullBlock"></div>
+          </ng-container>
         </div>
       </div>
     </div>

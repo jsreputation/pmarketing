@@ -13,12 +13,17 @@
       </perx-core-scratch-card>
   </div>
   <div class="game-footer">
-    <button class="js-play"
-      mat-flat-button
-      color="primary"
-      [hidden]="isEnabled"
-      (click)="isEnabled = true">
-      {{ game.texts.button }}
-    </button>
+    <ng-container *ngIf="!isEnabled">
+      <button class="js-play"
+        mat-flat-button
+        color="primary"
+        [hidden]="isEnabled"
+        (click)="isEnabled = true">
+        {{ game.texts.button }}
+      </button>
+    </ng-container>
+    <ng-container *ngIf="isEnabled">
+      <div class="nullBlock"></div>
+    </ng-container>
   </div>
 </div>
