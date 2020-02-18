@@ -17,13 +17,13 @@ describe('ContentComponent', () => {
   let component: ContentComponent;
   let fixture: ComponentFixture<ContentComponent>;
 
-  let params: ReplaySubject<Params>
+  let params: ReplaySubject<Params>;
   const getAccountSettingsSpy: jest.Mock = jest.fn();
   const settingsServiceStub: Partial<SettingsService> = {
     getAccountSettings: getAccountSettingsSpy,
   };
   const getSpy: jest.Mock = jest.fn();
-  const httpClientStub: Partial<HttpClient> = { get: getSpy }
+  const httpClientStub: Partial<HttpClient> = { get: getSpy };
 
   beforeEach(async(() => {
     params = new ReplaySubject<Params>();
@@ -81,7 +81,7 @@ describe('ContentComponent', () => {
       flushMicrotasks();
       expect(getAccountSettingsSpy).toHaveBeenCalledTimes(1);
       expect(getSpy).toHaveBeenCalledTimes(1);
-      expect(getSpy).toHaveBeenCalledWith('https://cors-proxy.perxtech.io/?url=http://failingStuff', { "responseType": "text" });
+      expect(getSpy).toHaveBeenCalledWith('https://cors-proxy.perxtech.io/?url=http://failingStuff', { responseType: 'text' });
       const compiled = fixture.debugElement.nativeElement;
       expect(compiled.querySelector('.content')).toBeNull();
       expect(compiled.querySelector('.error')).toBeDefined();
@@ -105,9 +105,9 @@ describe('ContentComponent', () => {
       flushMicrotasks();
       expect(getAccountSettingsSpy).toHaveBeenCalledTimes(1);
       expect(getSpy).toHaveBeenCalledTimes(1);
-      expect(getSpy).toHaveBeenCalledWith('https://cors-proxy.perxtech.io/?url=http://goodStuff', { "responseType": "text" });
+      expect(getSpy).toHaveBeenCalledWith('https://cors-proxy.perxtech.io/?url=http://goodStuff', { responseType: 'text' });
       const compiled = fixture.debugElement.nativeElement;
-      expect(compiled.querySelector('.content')).toBeDefined();
+      expect(compiled.querySelector('.content')).not.toBeNull();
       expect(compiled.querySelector('.error')).toBeNull();
       expect(compiled.querySelector('.spinner')).toBeNull();
     }));
@@ -129,7 +129,7 @@ describe('ContentComponent', () => {
       flushMicrotasks();
       expect(getAccountSettingsSpy).toHaveBeenCalledTimes(1);
       expect(getSpy).toHaveBeenCalledTimes(1);
-      expect(getSpy).toHaveBeenCalledWith('https://cors-proxy.perxtech.io/?url=http://goodStuff', { "responseType": "text" });
+      expect(getSpy).toHaveBeenCalledWith('https://cors-proxy.perxtech.io/?url=http://goodStuff', { responseType: 'text' });
       const compiled = fixture.debugElement.nativeElement;
       expect(compiled.querySelector('.content')).toBeNull();
       expect(compiled.querySelector('.error')).toBeNull();
@@ -170,7 +170,7 @@ describe('ContentComponent', () => {
       flushMicrotasks();
       expect(getAccountSettingsSpy).not.toHaveBeenCalled();
       expect(getSpy).not.toHaveBeenCalled();
-      //TODO test html
+      // TODO test html
     }));
 
   });
