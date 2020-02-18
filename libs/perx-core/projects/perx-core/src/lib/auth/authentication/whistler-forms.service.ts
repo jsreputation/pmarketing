@@ -1,43 +1,77 @@
-import { ISurvey } from './../../survey/models/survey.model';
-import { HttpClient } from '@angular/common/http';
-import { Config } from '../../config/config';
-import { Observable } from 'rxjs';
+import { ISurvey, SurveyQuestionType } from '../../survey/models/survey.model';
+import { Observable, of } from 'rxjs';
 import { IFormsService } from './iforms.service';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
-import { SurveyService } from '../../survey/survey.service';
-
-import {
-  IWCognitoTenantAttributes,
-  IJsonApiListPayload,
-} from '@perx/whistler';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WhistlerFormsService implements IFormsService {
-  private baseUrl: string;
-  // @ts-ignore
-  constructor(private config: Config, private http: HttpClient) {
-    this.baseUrl = config.apiHost as string;
-  }
-
   public getSignupForm(): Observable<ISurvey | undefined> {
-    return this.http.get<IJsonApiListPayload<IWCognitoTenantAttributes>>(`${this.baseUrl}/cognito/tenants/`)
-      .pipe(
-        map(res => res.data),
-        map(res => res[0]),
-        map(res => res.attributes.properties.signup),
-        map(form => form ? SurveyService.WSurveyToSurvey({
-          data: {
-            id: '',
-            type: '',
-            links: { self: '' },
-            attributes: {
-              display_properties: form
-            }
+    return of({
+      title: '',
+      questions: [
+        {
+          id: 'sign-up',
+          question: '',
+          required: false,
+          payload: {
+            type: SurveyQuestionType.questionGroup,
+            questions: [
+              {
+                id: 'firstName',
+                question: 'First Name',
+                required: true,
+                payload: {
+                  type: SurveyQuestionType.longText
+                }
+              },
+              {
+                id: 'lastName',
+                question: 'Last Name',
+                required: true,
+                payload: {
+                  type: SurveyQuestionType.longText
+                }
+              },
+              {
+                id: 'primary_identifier',
+                question: 'Phone Number',
+                required: true,
+                payload: {
+                  type: SurveyQuestionType.phone,
+                  default_country_code: '+65'
+                }
+              },
+              {
+                id: 'password',
+                question: 'Create your Password',
+                required: true,
+                payload: {
+                  type: SurveyQuestionType.password
+                }
+              },
+            ]
           }
-        }) : undefined)
-      );
+        }
+      ]
+    });
+    return of();
+    // return this.http.get<IJsonApiListPayload<IWCognitoTenantAttributes>>(`${this.baseUrl}/cognito/tenants/3`)
+    //   .pipe(
+    //     map(res => res.data),
+    //     map(res => res[0]),
+    //     map(res => res.attributes.properties.signup),
+    //     map(form => form ? SurveyService.WSurveyToSurvey({
+    //       data: {
+    //         id: '',
+    //         type: '',
+    //         links: { self: '' },
+    //         attributes: {
+    //           display_properties: form
+    //         }
+    //       }
+    //     }) : undefined)
+    //   );
   }
 }
