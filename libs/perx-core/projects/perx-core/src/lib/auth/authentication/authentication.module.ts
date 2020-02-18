@@ -34,9 +34,9 @@ export function AuthServiceFactory(
   return new V4AuthenticationService(configService, http, tokenStorage, profileService);
 }
 
-export function FormsServiceFactory(config: Config): IFormsService {
+export function FormsServiceFactory(config: Config, http: HttpClient): IFormsService {
   if (config.isWhistler) {
-    return new WhistlerFormsService();
+    return new WhistlerFormsService(config, http);
   }
   return new V4FormsService();
 }
@@ -58,7 +58,7 @@ export function FormsServiceFactory(config: Config): IFormsService {
       useFactory: AuthServiceFactory,
       deps: [HttpClient, Config, TokenStorage, ProfileService, ConfigService]
     },
-    { provide: IFormsService, useFactory: FormsServiceFactory, deps: [Config] }
+    { provide: IFormsService, useFactory: FormsServiceFactory, deps: [Config, HttpClient] }
   ]
 })
 export class AuthenticationModule { }
