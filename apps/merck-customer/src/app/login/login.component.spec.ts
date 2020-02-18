@@ -21,8 +21,8 @@ describe('LoginComponent', () => {
 
   beforeEach(async(() => {
     const routerStub: Partial<Router> = {
-      navigateByUrl: () => new Promise<boolean>((resolve => resolve(true))),
-      navigate: () => new Promise<boolean>((resolve => resolve(true)))
+      navigateByUrl: () => Promise.resolve(true),
+      navigate: () => Promise.resolve(true)
     };
 
     const profileStub: Partial<ProfileService> = {

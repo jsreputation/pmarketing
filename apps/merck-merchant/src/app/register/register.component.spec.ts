@@ -20,7 +20,7 @@ describe('RegisterComponent', () => {
     validateInvite: () => of()
   };
   beforeEach(async(() => {
-    const routerStub: Partial<Router> = { navigateByUrl: () => new Promise<boolean>(resolve => resolve(true))};
+    const routerStub: Partial<Router> = { navigateByUrl: () => Promise.resolve(true)};
     const configServiceStub: Partial<ConfigService> = {
       readAppConfig: () => of()
     };

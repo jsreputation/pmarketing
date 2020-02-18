@@ -34,7 +34,7 @@ describe('CategoryComponent', () => {
     }
   };
   const routerStub: Partial<Router> = {
-    navigate: () => new Promise<boolean>(resolve => resolve(true))
+    navigate: () => Promise.resolve(true)
   };
   const matBottomSheetStub = {
     open: () => {}

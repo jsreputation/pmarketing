@@ -21,11 +21,13 @@ function fakeFactory(): TokenStorage {
 
 const configServiceStub: Partial<ConfigService> = {
   readAppConfig: () => of({
+    redirectAfterLogin: '/home',
+    apiHost: 'string',
     production: true,
     baseHref: '/',
+    isWhistler: true,
     preAuth: false,
-    apiHost: 'https://api.perxtech.io'
-  } as IConfig<any>)
+  })
 };
 
 describe('V4AuthenticationService', () => {

@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RedemptionComponent } from './redemption.component';
 import { MatCardModule } from '@angular/material';
 import {
-  Voucher, VoucherState, VouchersModule, IVoucherService, RewardsService, IMerchantsService
+  Voucher, VoucherState, VouchersModule, IVoucherService, RewardsService, IMerchantsService, IReward
 } from '@perx/core';
 
 import { RouterTestingModule } from '@angular/router/testing';
@@ -14,14 +14,15 @@ import {MerchantService} from '@perx/hsbc-rewards/src/app/shared/service/merchan
 describe('RedemptionComponent', () => {
   let component: RedemptionComponent;
   let fixture: ComponentFixture<RedemptionComponent>;
-  const mockVoucher: Partial<Voucher> = {
+  const mockVoucher: Voucher = {
     id: 2,
+    reward: null,
     state: VoucherState.issued,
     expiry: null,
   };
 
   const voucherServiceStub: Partial<IVoucherService> = {
-    get: () => of(mockVoucher as Voucher)
+    get: () => of(mockVoucher)
   };
   const rewardsServiceStub: Partial<RewardsService> = {
     getReward: () => of()

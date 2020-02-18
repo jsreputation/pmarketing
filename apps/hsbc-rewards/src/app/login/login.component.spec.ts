@@ -15,7 +15,7 @@ describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   const notificationServiceStub: Partial<NotificationService> = { $popup: of({}) };
-  const routerSub: Partial<Router> = { navigateByUrl: () => new Promise<boolean>(resolve => resolve(true)) };
+  const routerSub: Partial<Router> = { navigateByUrl: () => Promise.resolve(true) };
   const authenticationServiceStub: Partial<AuthenticationService> = {
     $failedAuth: of(true),
     getInterruptedUrl: () => 'url',

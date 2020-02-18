@@ -15,9 +15,13 @@ const authenticationServiceStub: Partial<AuthenticationService> = {
 
 const configServiceStub: Partial<ConfigService> = {
   readAppConfig: () => of({
+    redirectAfterLogin: '/home',
+    apiHost: 'string',
     production: true,
-    baseHref: '/'
-  } as IConfig<any>)
+    baseHref: '/',
+    isWhistler: true,
+    preAuth: false,
+  })
 };
 
 describe('V4SettingsService', () => {

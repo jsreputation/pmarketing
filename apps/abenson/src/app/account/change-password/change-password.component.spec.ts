@@ -6,13 +6,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthenticationService } from '@perx/core';
-import {of, Subject} from 'rxjs';
+import {of} from 'rxjs';
 import { Type } from '@angular/core';
 import { SharedDataService } from 'src/app/services/shared-data.service';
 import { Router } from '@angular/router';
 
 const authenticationServiceStub: Partial<AuthenticationService> = {
-  requestVerificationToken: () => of(new Subject().asObservable() as unknown as void)
+  requestVerificationToken: () => of(void 0)
 };
 
 describe('ChangePasswordComponent', () => {

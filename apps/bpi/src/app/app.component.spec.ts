@@ -16,7 +16,7 @@ describe('AppComponent', () => {
     const notificationServiceStub: Partial<NotificationService> = { $popup: of() };
     const matDialogStub = { open: () => ({}) };
     const authenticationServiceStub: Partial<AuthenticationService> = { $failedAuth: of(true) };
-    const routerStub: Partial<Router> = { navigateByUrl: () => new Promise((resolve) => resolve(true)) };
+    const routerStub: Partial<Router> = { navigateByUrl: () => Promise.resolve(true) };
     const configServiceStub: Partial<ConfigService> = {
       readAppConfig: () => of()
     };
@@ -68,7 +68,7 @@ describe('AppComponent', () => {
 
   describe('ngOnInit', () => {
     it('should pass auth login', () => {
-      const routerStub: Partial<Router> = fixture.debugElement.injector.get(Router);
+      const routerStub: Router = fixture.debugElement.injector.get(Router);
       spyOn(routerStub, 'navigateByUrl').and.callThrough();
       component.ngOnInit();
       expect(routerStub.navigateByUrl).toHaveBeenCalledWith('login');

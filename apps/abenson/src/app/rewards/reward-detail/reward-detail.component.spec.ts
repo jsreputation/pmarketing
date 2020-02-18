@@ -7,8 +7,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { rewards } from 'src/app/mock/rewards.mock';
 import { loyalty } from 'src/app/mock/loyalty.mock';
-import {VoucherState} from '../../../../../../libs/perx-core/projects/perx-core/src/lib/vouchers/models/voucher.model';
-import {RedemptionType} from '../../../../../../libs/perx-core/projects/perx-core/src/lib/perx-core.models';
+import {VoucherState} from '@perx/core';
+import {RedemptionType} from '@perx/core';
 
 const rewardsServiceStub: Partial<RewardsService> = {
   getReward: () => of(rewards[0])

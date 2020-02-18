@@ -41,8 +41,13 @@ describe('LoadingComponent', () => {
 
   const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of({
-      redirectAfterLogin: '/home'
-    } as IConfig<any>)
+      redirectAfterLogin: '/home',
+      apiHost: 'string',
+      production: true,
+      preAuth: true,
+      isWhistler: true,
+      baseHref: ''
+    })
   };
 
   beforeEach(async(() => {

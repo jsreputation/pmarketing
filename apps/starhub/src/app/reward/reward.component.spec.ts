@@ -58,7 +58,7 @@ describe('RewardComponent', () => {
   const locationStub: Partial<Location> = {
     back: () => { }
   };
-  const routerStub: Partial<Router> = { navigate: () =>new Promise<boolean>((resolve => resolve(true))) };
+  const routerStub: Partial<Router> = { navigate: () => Promise.resolve(true) };
   const notificationServiceStub: Partial<NotificationService> = { addSnack: () => ({}) };
   const macaronServiceStub: Partial<MacaronService> = { getMacaron: () => null };
 

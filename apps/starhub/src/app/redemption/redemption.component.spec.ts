@@ -70,7 +70,7 @@ describe('RedemptionComponent', () => {
 
   let params: Subject<Params>;
 
-  const routerStub: Partial<Router> = { navigateByUrl: () => new Promise<boolean>(resolve => resolve(true)) };
+  const routerStub: Partial<Router> = { navigateByUrl: () => Promise.resolve(true) };
 
   beforeEach(async(() => {
     params = new Subject<Params>();

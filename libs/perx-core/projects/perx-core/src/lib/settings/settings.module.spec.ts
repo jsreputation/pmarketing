@@ -12,9 +12,13 @@ import {IConfig} from '../config/models/config.model';
 
 const configServiceStub: Partial<ConfigService> = {
   readAppConfig: () => of({
+    redirectAfterLogin: '/home',
+    apiHost: 'string',
     production: true,
-    baseHref: '/'
-  } as IConfig<any>)
+    baseHref: '/',
+    isWhistler: true,
+    preAuth: false,
+  })
 };
 
 describe('SettingsModule', () => {

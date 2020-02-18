@@ -8,14 +8,17 @@ import { AuthenticationService, ProfileService } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
-import { IWAppAccessTokenResponse } from '@perx/whistler';
 
 describe('SignupComponent', () => {
   let component: SignUpComponent;
   let fixture: ComponentFixture<SignUpComponent>;
   let auth: AuthenticationService;
   const authenticationServiceStub: Partial<AuthenticationService> = {
-    getAppToken: () => of({} as IWAppAccessTokenResponse),
+    getAppToken: () => of({
+      access_token: 'string',
+      token_type: 'string',
+      expires_in: 666,
+      created_at: 666}),
     getAppAccessToken: () => 'token'
   };
   const profileServiceStub: Partial<ProfileService> = { verifyCardNumber: () => of(true) };

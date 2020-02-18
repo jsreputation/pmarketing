@@ -34,12 +34,17 @@ describe('SignIn2Component', () => {
 
   const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of({
-      redirectAfterLogin: '/home'
-    } as IConfig<any>)
+      redirectAfterLogin: '/home',
+      apiHost: 'string',
+      production: true,
+      preAuth: true,
+      isWhistler: true,
+      baseHref: ''
+    })
   };
 
   const routerStub: Partial<Router> = {
-    navigateByUrl: () => new Promise<boolean>(resolve => resolve(true)),
+    navigateByUrl: () => Promise.resolve(true),
     getCurrentNavigation: () => null
   };
 

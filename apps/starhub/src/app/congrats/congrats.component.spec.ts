@@ -31,7 +31,7 @@ describe('CongratsComponent', () => {
     addEvent: () => {}
   };
 
-  const routerStub: Partial<Router> = { navigateByUrl: () => new Promise<boolean>(resolve => resolve(true)) };
+  const routerStub: Partial<Router> = { navigateByUrl: () => Promise.resolve(true) };
 
   beforeEach(async(() => {
 

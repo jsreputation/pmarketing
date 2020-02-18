@@ -8,7 +8,6 @@ import { AuthenticationService, NotificationService } from '@perx/core';
 import { Type } from '@angular/core';
 import { of, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
-import { IWAppAccessTokenResponse } from '@perx/whistler';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -20,7 +19,11 @@ describe('LoginComponent', () => {
   const authenticationServiceStub: Partial<AuthenticationService> = {
     login: () => of(void 0),
     getAppAccessToken: () => 'token',
-    getAppToken: () => of({} as IWAppAccessTokenResponse)
+    getAppToken: () => of({
+      access_token: 'string',
+      token_type: 'string',
+      expires_in: 666,
+      created_at: 666})
   };
 
   beforeEach(async(() => {

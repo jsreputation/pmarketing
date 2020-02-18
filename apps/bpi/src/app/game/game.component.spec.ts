@@ -6,7 +6,7 @@ import { GameComponent } from './game.component';
 import { HeaderComponent } from '../header/header.component';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
-import {IStamp} from '../../../../../libs/perx-core/projects/perx-core/src/lib/stamp/models/stamp.model';
+import {IStamp} from '@perx/core';
 
 describe('GameComponent', () => {
   let component: GameComponent;
