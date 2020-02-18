@@ -5,7 +5,7 @@ import {
   ViewChild,
   AfterViewInit,
   Output,
-  EventEmitter
+  EventEmitter, OnInit
 } from '@angular/core';
 
 interface Coords {
@@ -20,7 +20,7 @@ const RADIUS: number = 10;
   templateUrl: './scratch-card.component.html',
   styleUrls: ['./scratch-card.component.scss']
 })
-export class ScratchCardComponent implements AfterViewInit {
+export class ScratchCardComponent implements AfterViewInit, OnInit {
   @Input()
   public coverImg: string;
 
@@ -35,6 +35,10 @@ export class ScratchCardComponent implements AfterViewInit {
 
   @Output()
   public completed: EventEmitter<void> = new EventEmitter<void>();
+
+  @Output()
+  public loaded: EventEmitter<boolean> = new EventEmitter();
+
 
   @ViewChild('js_container', { static: false }) public scContainer: ElementRef;
   @ViewChild('under_img', { static: false }) public underImg: ElementRef;
@@ -91,6 +95,10 @@ export class ScratchCardComponent implements AfterViewInit {
     if (constFilledInPixels) {
       this.handlePercentage(constFilledInPixels);
     }
+  }
+
+  public ngOnInit(): void {
+    this.loaded.emit();
   }
 
   public ngAfterViewInit(): void {

@@ -9,7 +9,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { Location } from '@angular/common';
 import { Type } from '@angular/core';
-import {ScratchComponent} from './scratch/scratch.component';
 // import 'jasmine'
 const mockGame: IGame = {
   id: 1,
@@ -55,7 +54,7 @@ describe('GameComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [GameComponent, ScratchComponent],
+      declarations: [GameComponent],
       imports: [MatIconModule, MatToolbarModule, GameModule],
       providers: [
         { provide: Router, useValue: routerStub },

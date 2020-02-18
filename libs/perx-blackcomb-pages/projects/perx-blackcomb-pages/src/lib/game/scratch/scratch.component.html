@@ -4,7 +4,6 @@
     <h3>{{game.texts.subTitle}}</h3>
   </div>
   <div class="game-wrapper">
-    <div class="scratch-wrapper">
       <perx-core-scratch-card
         [coverImg]="config.coverImg"
         [underlyingImg]="willWin ? config.underlyingSuccessImg : config.underlyingFailImg"
@@ -12,7 +11,6 @@
         [enabled]="isEnabled"
         (completed)="gameCompleted()">
       </perx-core-scratch-card>
-    </div>
   </div>
   <div class="game-footer">
     <button class="js-play"
