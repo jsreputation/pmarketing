@@ -19,7 +19,7 @@ import {
   MatSnackBarModule,
 } from '@angular/material';
 import { MatButtonModule } from '@angular/material/button';
-import { ServiceWorkerModule } from '@angular/service-worker';
+// import { ServiceWorkerModule } from '@angular/service-worker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
 
@@ -152,7 +152,7 @@ export const setLanguage = (
         useClass: LanguageService
       }
     }),
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   bootstrap: [AppComponent],
   providers: [
