@@ -69,7 +69,7 @@ import { AppComponent } from './app.component';
 import { SignUpModule } from './sign-up/sign-up.module';
 
 import { environment } from '../environments/environment';
-import {switchMap} from "rxjs/operators";
+import {switchMap} from 'rxjs/operators';
 
 // https://medium.com/angular-in-depth/gestures-in-an-angular-application-dde71804c0d0
 // to override default settings
@@ -106,18 +106,18 @@ registerLocaleData(vi, 'vi', localesViExtra);
 registerLocaleData(ko, 'ko', localesKoExtra);
 registerLocaleData(fr, 'fr', localesFrExtra);
 
-export const setLanguage =
-  (translateService: TranslateService,
-   configService: ConfigService,
-   authService: AuthenticationService,
-   themesService: ThemesService) =>
-    () => new Promise((resolve) => {
-      translateService.setDefaultLang(environment.defaultLang);
-      configService.readAppConfig().pipe(
-        switchMap(() => authService.getAppToken()),
-        switchMap(() => themesService.getThemeSetting())
-      ).toPromise().then(() => resolve())
-    });
+export const setLanguage = (
+  translateService: TranslateService,
+  configService: ConfigService,
+  authService: AuthenticationService,
+  themesService: ThemesService ) =>
+  () => new Promise((resolve) => {
+    translateService.setDefaultLang(environment.defaultLang);
+    configService.readAppConfig().pipe(
+      switchMap(() => authService.getAppToken()),
+      switchMap(() => themesService.getThemeSetting())
+    ).toPromise().then(() => resolve());
+  });
 
 @NgModule({
   declarations: [
