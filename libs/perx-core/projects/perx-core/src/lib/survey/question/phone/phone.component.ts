@@ -33,7 +33,14 @@ export class PhoneComponent implements OnChanges, OnInit {
   constructor(private generalStaticDataService: GeneralStaticDataService) { }
 
   public ngOnInit(): void {
-    this.countriesList$ = this.generalStaticDataService.getCountriesList();
+    this.countriesList$ = this.generalStaticDataService.getCountriesList([
+      'Hong Kong',
+      'Indonesia',
+      'Singapore',
+      'Malaysia',
+      'Philippines',
+      'Vietnam'
+    ]);
     this.subject.pipe(
       debounceTime(500)
     ).subscribe(inputValue => {
