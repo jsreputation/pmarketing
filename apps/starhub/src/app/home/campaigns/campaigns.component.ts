@@ -42,7 +42,7 @@ export class CampaignsComponent implements OnInit {
     this.campaignService.getCampaigns({ page: this.campaignsPageId })
       .pipe(
         tap((campaigns) => {
-          if (campaigns.length === 0) { // actual check here if no more campaigns then end -> ensure all pages combed
+          if (campaigns.length < REQ_PAGE_SIZE) { // actual check here if no more campaigns then end -> ensure all pages combed
             this.campaignsEnded = true;
           }
         }),
