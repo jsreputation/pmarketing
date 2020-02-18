@@ -237,6 +237,11 @@ jobs:
             elif [ $APP == 'hsbc-xmas' ]
             then
               export APP="hsbc"
+            elif [ $APP == 'perx-demo2' ] || \
+            [ $APP == 'perx-demo3' ] || \
+            [ $APP == 'perx-demo4' ]
+            then
+              export APP="perx-demo"
             fi
             echo "after second set APP: ${APP}"
 
@@ -244,10 +249,7 @@ jobs:
             [ $APP == 'oracle-demo' ] || \
             [ $APP == 'feature-demo' ] || \
             [ $APP == 'commbank-demo' ] || \
-            [ $APP == 'perx-demo' ] || \
-            [ $APP == 'perx-demo2' ] || \
-            [ $APP == 'perx-demo3' ] || \
-            [ $APP == 'perx-demo4' ]
+            [ $APP == 'perx-demo' ]
             then
               export APP_BASE="blackcomb"
             else
