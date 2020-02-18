@@ -534,35 +534,35 @@ workflows:
       #       tags:
       #         only: /^(perx-demo|commbank-demo)-staging-\d+\.\d+\.\d+.*/
 
-      # - deploy:
-      #     name: deploy_to_staging
-      #     docker_tag: "${CIRCLE_TAG}"
-      #     kube_host: STAGING_KUBE_HOST
-      #     kube_cluster_ca_cert_data: STAGING_KUBE_CLUSTER_CA_CERT_DATA
-      #     kube_bearer_token: STAGING_KUBE_BEARER_TOKEN
-      #     requires:
-      #       - build_docker_image
-      #     filters:
-      #       branches:
-      #         ignore: /.*/
-      #       tags:
-      #         only: /^(?!blackcomb|candyland|oracle-demo|perx-demo|commbank-demo)(\w+-)+staging-\d+\.\d+\.\d+.*/
-      # - deploy:
-      #     name: deploy_to_production
-      #     docker_tag: "${CIRCLE_TAG}"
-      #     kube_host: PRODUCTION_KUBE_HOST
-      #     kube_bearer_token: PRODUCTION_KUBE_BEARER_TOKEN
-      #     kube_cluster_ca_cert_data: PRODUCTION_KUBE_CLUSTER_CA_CERT_DATA
-      #     requires:
-      #       - build_docker_image
-      #       # - build
-      #     filters:
-      #       # need to sepcify this otherwise the job will run even if there's no tag
-      #       branches:
-      #         ignore: /.*/
-      #       tags:
-      #         # semver v2
-      #         only: /^(?!blackcomb|candyland|oracle-demo|perx-demo|commbank-demo)(\w+-)+production-\d+\.\d+\.\d+.*/
+      - deploy:
+          name: deploy_to_staging
+          docker_tag: "${CIRCLE_TAG}"
+          kube_host: STAGING_KUBE_HOST
+          kube_cluster_ca_cert_data: STAGING_KUBE_CLUSTER_CA_CERT_DATA
+          kube_bearer_token: STAGING_KUBE_BEARER_TOKEN
+          requires:
+            - build_docker_image
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^(?!blackcomb|candyland|oracle-demo|perx-demo|commbank-demo)(\w+-)+staging-\d+\.\d+\.\d+.*/
+      - deploy:
+          name: deploy_to_production
+          docker_tag: "${CIRCLE_TAG}"
+          kube_host: PRODUCTION_KUBE_HOST
+          kube_bearer_token: PRODUCTION_KUBE_BEARER_TOKEN
+          kube_cluster_ca_cert_data: PRODUCTION_KUBE_CLUSTER_CA_CERT_DATA
+          requires:
+            - build_docker_image
+            # - build
+          filters:
+            # need to sepcify this otherwise the job will run even if there's no tag
+            branches:
+              ignore: /.*/
+            tags:
+              # semver v2
+              only: /^(?!blackcomb|candyland|oracle-demo|perx-demo|commbank-demo)(\w+-)+production-\d+\.\d+\.\d+.*/
       - build_proxy_docker_image:
           filters:
             # need to sepcify this otherwise the job will run even if there's no tag
