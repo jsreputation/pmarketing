@@ -15,28 +15,9 @@
             "tsConfig": "projects/perx-services/tsconfig.lib.json",
             "project": "projects/perx-services/ng-package.json"
           }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/perx-services/src/test.ts",
-            "tsConfig": "projects/perx-services/tsconfig.spec.json",
-            "karmaConfig": "projects/perx-services/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/perx-services/tsconfig.lib.json",
-              "projects/perx-services/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "perx-services"
 }
