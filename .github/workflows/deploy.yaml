@@ -100,7 +100,7 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        if: contains( env.APP, hsbc ) || contains( env.APP, hsbc-xmas ) || contains( env.APP, hsbc-rewards )
+        if: contains( env.APP, 'hsbc' ) || contains( env.APP, 'hsbc-xmas' ) || contains( env.APP, 'hsbc-rewards' )
         run: |
           case $TARGET_ENV in
             production ) DISTRIBUTION_ID=E3NTONYLQET6VX;;
