@@ -15,18 +15,6 @@
             "tsConfig": "projects/whistler/tsconfig.lib.json",
             "project": "projects/whistler/ng-package.json"
           }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/whistler/tsconfig.lib.json",
-              "projects/whistler/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
         }
       }
     }
