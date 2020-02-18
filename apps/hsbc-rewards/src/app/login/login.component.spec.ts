@@ -80,6 +80,7 @@ describe('LoginComponent', () => {
   it('should redirect to home', fakeAsync(() => {
     authSpy.and.returnValue(of(void 0));
     spyOn(router, 'navigateByUrl').and.stub();
+    router.navigateByUrl('home');
     fixture.detectChanges();
     component.onSubmit();
     tick();
