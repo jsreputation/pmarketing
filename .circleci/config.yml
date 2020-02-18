@@ -166,7 +166,10 @@ commands:
                [ $APP == 'feature-demo' ] || \
                [ $APP == 'all-it' ] || \
                [ $APP == 'commbank-demo' ] || \
-               [ $APP == 'perx-demo' ]
+               [ $APP == 'perx-demo' ] || \
+               [ $APP == 'perx-demo2' ] || \
+               [ $APP == 'perx-demo3' ] || \
+               [ $APP == 'perx-demo4' ]
             then
               REDIRECT_AFTER_LOGIN="/home"
             elif [ $APP == 'blackcomb' ]
@@ -241,7 +244,10 @@ jobs:
             [ $APP == 'oracle-demo' ] || \
             [ $APP == 'feature-demo' ] || \
             [ $APP == 'commbank-demo' ] || \
-            [ $APP == 'perx-demo' ]
+            [ $APP == 'perx-demo' ] || \
+            [ $APP == 'perx-demo2' ] || \
+            [ $APP == 'perx-demo3' ] || \
+            [ $APP == 'perx-demo4' ]
             then
               export APP_BASE="blackcomb"
             else
