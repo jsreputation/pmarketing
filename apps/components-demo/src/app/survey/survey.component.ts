@@ -14,7 +14,7 @@ export class SurveyComponent implements OnInit {
   public data: Observable<ISurvey>;
 
   public ngOnInit(): void {
-    console.log(mock);
+    // console.log(mock);
     this.data = of(mock);
   }
 }
