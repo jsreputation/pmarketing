@@ -14,7 +14,8 @@ import {
   StampService,
   StampState,
   ThemesService,
-  VouchersModule
+  VouchersModule,
+  StampCardState
 } from '@perx/core';
 import {RouterTestingModule} from '@angular/router/testing';
 import {MatCardModule, MatIconModule, MatRippleModule, MatTabsModule} from '@angular/material';
@@ -49,10 +50,10 @@ describe('HomeComponent', () => {
     getCurrentCard: () => of({
       id: 4768,
       userAccountId: 59431,
-      state: 'active',
+      state: StampCardState.active,
       campaignId: 100,
       cardNumber: 161,
-      campaignConfig: {},
+      campaignConfig: null,
       displayProperties: {
         numberOfCols: 3,
         numberOfRows: 2,
@@ -74,6 +75,9 @@ describe('HomeComponent', () => {
           id: 28369,
           userAccountId: 59431,
           state: StampState.redeemed,
+          stampCardId: 1,
+          createdAt: 'string',
+          updatedAt: 'string',
           campaignId: 100,
           vouchers: []
         },
@@ -81,6 +85,9 @@ describe('HomeComponent', () => {
           id: 28370,
           userAccountId: 59431,
           state: StampState.redeemed,
+          stampCardId: 1,
+          createdAt: 'string',
+          updatedAt: 'string',
           campaignId: 100,
           vouchers: []
         },
@@ -88,6 +95,9 @@ describe('HomeComponent', () => {
           id: 28372,
           userAccountId: 59431,
           state: StampState.issued,
+          stampCardId: 1,
+          createdAt: 'string',
+          updatedAt: 'string',
           campaignId: 100,
           vouchers: []
         },
@@ -95,6 +105,9 @@ describe('HomeComponent', () => {
           id: 28373,
           userAccountId: 59431,
           state: StampState.issued,
+          stampCardId: 1,
+          createdAt: 'string',
+          updatedAt: 'string',
           campaignId: 100,
           vouchers: []
         },
@@ -102,6 +115,9 @@ describe('HomeComponent', () => {
           id: 28374,
           userAccountId: 59431,
           state: StampState.issued,
+          stampCardId: 1,
+          createdAt: 'string',
+          updatedAt: 'string',
           campaignId: 100,
           vouchers: []
         },
@@ -109,6 +125,9 @@ describe('HomeComponent', () => {
           id: 28375,
           userAccountId: 59431,
           state: StampState.issued,
+          stampCardId: 1,
+          createdAt: 'string',
+          updatedAt: 'string',
           campaignId: 100,
           vouchers: []
         }
