@@ -88,9 +88,22 @@ jobs:
           chmod +x skaffold
           sudo mv skaffold /usr/local/bin
 
+      - name: Adjust microsite app name
+        run: |
+          shopt -s extglob
+          case $APP in
+            prudential                ) echo ::set-env name=APP::${APP}-birthday;;
+            hsbc                      ) echo ::set-env name=APP::${APP}-collect2;;
+            digi                      ) echo ::set-env name=APP::${APP}-minigames;;
+            @(bpi|merck-customer|hkbn)) echo ::set-env name=APP::${APP}-rewards;;
+            merck-merchant            ) echo ::set-env name=APP::${APP}-scanner;;
+            *                         ) echo ::set-env name=APP::${APP};;
+          esac
+
       - name: Deploy
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
+          echo "Deploying ${APP}"
           make decrypt-secret && make deploy

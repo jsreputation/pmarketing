@@ -324,99 +324,99 @@ jobs:
           helm_chart: perx/perx-general-app
           helm_values: image.tag="${DOCKER_TAG}"
           helm_extra_args: --reuse-values --timeout 600
-  deploy-to-aws:
-    executor: *helm_executor
-    parameters:
-      <<: *docker_tag_parameter
-      <<: *kubeconfig_parameters
-      domain:
-        type: string
-        description: App domain name. Should be perxtech.net for production or perxtech.io for staging
-    steps:
-      - checkout
-      - get_app_name
-      - run:
-          name: Set environments
-          command: |
-            echo "export DOCKER_TAG=<< parameters.docker_tag >>" >> $BASH_ENV
-            echo "export HELM_REPO_URL=https://chartmuseum.perxtech.io" >> $BASH_ENV
-            echo "export SKAFFOLD_DEFAULT_REPO=perxtech" >> $BASH_ENV
-            echo "export DOMAIN=<< parameters.domain >>" >> $BASH_ENV
-      - helm-deploy/add-helm-repo:
-          helm_repo_name: perx
-      - helm-deploy/configure-kubectl:
-          kube_host: "<< parameters.kube_host >>"
-          kube_bearer_token: "<< parameters.kube_bearer_token >>"
-          kube_cluster_ca_cert_data: "<< parameters.kube_cluster_ca_cert_data >>"
-      - run:
-          name: Install skaffold
-          command: |
-            curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
-            chmod +x skaffold
-      - run:
-          name: Deploy microsite app
-          command: |
-            ./skaffold deploy -f .circleci/skaffold/knative-microsite-app.yaml
-  deploy-whistler:
-    executor: *helm_executor
-    parameters:
-      <<: *docker_tag_parameter
-      <<: *kubeconfig_parameters
-    steps:
-      - checkout
-      - get_app_name
-      - run:
-          name: Set environments
-          command: |
-            echo 'export DOCKER_TAG="<< parameters.docker_tag >>"' >> $BASH_ENV
-            echo 'export TILLER_NAMESPACE="${TARGET_NAMESPACE}"-whistler' >> $BASH_ENV
-            echo 'export SKAFFOLD_NAMESPACE="${TARGET_NAMESPACE}"-whistler' >> $BASH_ENV
-            echo 'export SKAFFOLD_DEFAULT_REPO=perxtech' >> $BASH_ENV
-            echo 'export HELM_REPO_URL=https://rails-on-services.github.io/helm-charts' >> $BASH_ENV
-            echo 'export HELM_APP="$APP"' >> $BASH_ENV
-            if [ $APP == 'candyland' ]; then
-              if [ $TARGET_ENV == 'production' ]; then
-                INGRESS_HOST="candyland.whistler.perxtech.io"
-              elif [ $TARGET_ENV == 'staging' ]; then
-                INGRESS_HOST="candyland.staging.whistler.perxtech.io"
-              else
-                if [ $TARGET_NAMESPACE == 'master' ]; then
-                  INGRESS_HOST="candyland.${TARGET_ENV}.whistler.perxtech.io"
-                else
-                  INGRESS_HOST="candyland-${TARGET_NAMESPACE}.${TARGET_ENV}.whistler.perxtech.io"
-                fi
-              fi
-            elif [ $APP == 'blackcomb' ]; then
-              if [ $TARGET_ENV == 'production' ]; then
-                INGRESS_HOST="*-blackcomb.whistler.perxtech.io"
-              elif [ $TARGET_ENV == 'staging' ]; then
-                INGRESS_HOST="*-blackcomb.staging.whistler.perxtech.io"
-              else
-                if [ $TARGET_NAMESPACE == 'master' ]; then
-                  INGRESS_HOST="*-blackcomb.${TARGET_ENV}.whistler.perxtech.io"
-                else
-                  INGRESS_HOST="*-blackcomb-${TARGET_NAMESPACE}.${TARGET_ENV}.whistler.perxtech.io"
-                fi
-              fi
-            fi
-            echo "export APIHOST=$APIHOST" >> $BASH_ENV
-            echo "export INGRESS_HOST=$INGRESS_HOST" >> $BASH_ENV
-            echo $APIHOST
-            echo $INGRESS_HOST
-      - helm-deploy/add-helm-repo:
-          helm_repo_name: ros
-      - helm-deploy/configure-kubectl:
-          kube_host: "<< parameters.kube_host >>"
-          kube_bearer_token: "<< parameters.kube_bearer_token >>"
-          kube_cluster_ca_cert_data: "<< parameters.kube_cluster_ca_cert_data >>"
-      - run:
-          name: Install skaffold
-          command: |
-            curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
-            chmod +x skaffold
-      - run:
-          name: Deploy microsite app and ingress
-          command: ./skaffold deploy -f .circleci/skaffold/microsites-app-ng-${APP}.yaml --images perxtech/microsite-apps-ng
+  # deploy-to-aws:
+  #   executor: *helm_executor
+  #   parameters:
+  #     <<: *docker_tag_parameter
+  #     <<: *kubeconfig_parameters
+  #     domain:
+  #       type: string
+  #       description: App domain name. Should be perxtech.net for production or perxtech.io for staging
+  #   steps:
+  #     - checkout
+  #     - get_app_name
+  #     - run:
+  #         name: Set environments
+  #         command: |
+  #           echo "export DOCKER_TAG=<< parameters.docker_tag >>" >> $BASH_ENV
+  #           echo "export HELM_REPO_URL=https://chartmuseum.perxtech.io" >> $BASH_ENV
+  #           echo "export SKAFFOLD_DEFAULT_REPO=perxtech" >> $BASH_ENV
+  #           echo "export DOMAIN=<< parameters.domain >>" >> $BASH_ENV
+  #     - helm-deploy/add-helm-repo:
+  #         helm_repo_name: perx
+  #     - helm-deploy/configure-kubectl:
+  #         kube_host: "<< parameters.kube_host >>"
+  #         kube_bearer_token: "<< parameters.kube_bearer_token >>"
+  #         kube_cluster_ca_cert_data: "<< parameters.kube_cluster_ca_cert_data >>"
+  #     - run:
+  #         name: Install skaffold
+  #         command: |
+  #           curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
+  #           chmod +x skaffold
+  #     - run:
+  #         name: Deploy microsite app
+  #         command: |
+  #           ./skaffold deploy -f .circleci/skaffold/knative-microsite-app.yaml
+  # deploy-whistler:
+  #   executor: *helm_executor
+  #   parameters:
+  #     <<: *docker_tag_parameter
+  #     <<: *kubeconfig_parameters
+  #   steps:
+  #     - checkout
+  #     - get_app_name
+  #     - run:
+  #         name: Set environments
+  #         command: |
+  #           echo 'export DOCKER_TAG="<< parameters.docker_tag >>"' >> $BASH_ENV
+  #           echo 'export TILLER_NAMESPACE="${TARGET_NAMESPACE}"-whistler' >> $BASH_ENV
+  #           echo 'export SKAFFOLD_NAMESPACE="${TARGET_NAMESPACE}"-whistler' >> $BASH_ENV
+  #           echo 'export SKAFFOLD_DEFAULT_REPO=perxtech' >> $BASH_ENV
+  #           echo 'export HELM_REPO_URL=https://rails-on-services.github.io/helm-charts' >> $BASH_ENV
+  #           echo 'export HELM_APP="$APP"' >> $BASH_ENV
+  #           if [ $APP == 'candyland' ]; then
+  #             if [ $TARGET_ENV == 'production' ]; then
+  #               INGRESS_HOST="candyland.whistler.perxtech.io"
+  #             elif [ $TARGET_ENV == 'staging' ]; then
+  #               INGRESS_HOST="candyland.staging.whistler.perxtech.io"
+  #             else
+  #               if [ $TARGET_NAMESPACE == 'master' ]; then
+  #                 INGRESS_HOST="candyland.${TARGET_ENV}.whistler.perxtech.io"
+  #               else
+  #                 INGRESS_HOST="candyland-${TARGET_NAMESPACE}.${TARGET_ENV}.whistler.perxtech.io"
+  #               fi
+  #             fi
+  #           elif [ $APP == 'blackcomb' ]; then
+  #             if [ $TARGET_ENV == 'production' ]; then
+  #               INGRESS_HOST="*-blackcomb.whistler.perxtech.io"
+  #             elif [ $TARGET_ENV == 'staging' ]; then
+  #               INGRESS_HOST="*-blackcomb.staging.whistler.perxtech.io"
+  #             else
+  #               if [ $TARGET_NAMESPACE == 'master' ]; then
+  #                 INGRESS_HOST="*-blackcomb.${TARGET_ENV}.whistler.perxtech.io"
+  #               else
+  #                 INGRESS_HOST="*-blackcomb-${TARGET_NAMESPACE}.${TARGET_ENV}.whistler.perxtech.io"
+  #               fi
+  #             fi
+  #           fi
+  #           echo "export APIHOST=$APIHOST" >> $BASH_ENV
+  #           echo "export INGRESS_HOST=$INGRESS_HOST" >> $BASH_ENV
+  #           echo $APIHOST
+  #           echo $INGRESS_HOST
+  #     - helm-deploy/add-helm-repo:
+  #         helm_repo_name: ros
+  #     - helm-deploy/configure-kubectl:
+  #         kube_host: "<< parameters.kube_host >>"
+  #         kube_bearer_token: "<< parameters.kube_bearer_token >>"
+  #         kube_cluster_ca_cert_data: "<< parameters.kube_cluster_ca_cert_data >>"
+  #     - run:
+  #         name: Install skaffold
+  #         command: |
+  #           curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
+  #           chmod +x skaffold
+  #     - run:
+  #         name: Deploy microsite app and ingress
+  #         command: ./skaffold deploy -f .circleci/skaffold/microsites-app-ng-${APP}.yaml --images perxtech/microsite-apps-ng
   test-e2e-protractor:
     docker:
       - image: circleci/node:10-browsers
@@ -533,6 +533,7 @@ workflows:
       #         ignore: /.*/
       #       tags:
       #         only: /^(perx-demo|commbank-demo)-staging-\d+\.\d+\.\d+.*/
+
       # - deploy:
       #     name: deploy_to_staging
       #     docker_tag: "${CIRCLE_TAG}"
