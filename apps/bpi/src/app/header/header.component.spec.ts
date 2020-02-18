@@ -18,23 +18,26 @@ describe('HeaderComponent', () => {
     fixture.detectChanges();
   });
 
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
   it('should show test title', () => {
     component.title = 'test title';
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('p.title').innerText).toEqual(
-      'test title'
-    );
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('p.title').textContent)
+      .toContain('test title');
   });
 
   it('should show sub title', () => {
     component.subTitles = ['sub title'];
     fixture.detectChanges();
-    expect(
-      fixture.nativeElement.querySelector('p.sub-title').innerText
-    ).toEqual('sub title\n');
+    const compiled = fixture.debugElement.nativeElement;
+    console.log(compiled.querySelector('p.sub-title').textContent);
+    expect(compiled.querySelector('p.sub-title').textContent)
+      .toContain('sub title');
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+
 });
