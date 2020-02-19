@@ -59,11 +59,11 @@ describe('VouchersComponent', () => {
     fixture = TestBed.createComponent(VouchersComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    navigateSpy.call.reset();
+    // navigateSpy.call.reset();
   });
 
   afterEach(() => {
-    navigateSpy.calls.reset();
+    // navigateSpy.calls.reset();
     activatedRouteStub.setParamMap({});
   });
 
