@@ -13,19 +13,19 @@ import { FeedReaderService } from './feed-reader.service';
 import { DistancePipe } from './directives/distance-pipe';
 import { GeneralStaticDataService } from './general-static-data/general-static-data.service';
 import { ThemesService } from './themes/themes.service';
-// import { WhistlerThemesService } from './themes/whistler-themes.service';
+import { WhistlerThemesService } from './themes/whistler-themes.service';
 import { Config } from '../config/config';
 import { V4ThemesService } from './themes/v4-themes.service';
 import { NewsfeedComponent } from './newsfeed/newsfeed.component';
 import { StorageModule } from './storage/storage.module';
-import {FeedItemPopupComponent} from './feed-item-popup/feed-item-popup.component';
-import {MatIconModule} from '@angular/material/icon';
-import {SortRewardsPipe} from './directives/sort-rewards-pipe';
+import { FeedItemPopupComponent } from './feed-item-popup/feed-item-popup.component';
+import { MatIconModule } from '@angular/material/icon';
+import { SortRewardsPipe } from './directives/sort-rewards-pipe';
 
 export function themesServiceFactory(http: HttpClient, config: Config): ThemesService {
-  // if (config.isWhistler) {
-  //   return new WhistlerThemesService(http, config);
-  // }
+  if (config.isWhistler) {
+    return new WhistlerThemesService(http, config);
+  }
   return new V4ThemesService(http, config);
 }
 

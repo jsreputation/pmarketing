@@ -22,7 +22,7 @@ const rssFeeds = `{
   ]
 }`;
 
-const displayProperties = `"display_properties": {
+const displayProperties = `"displayProperties": {
   "account": {
       "pages": [
           {

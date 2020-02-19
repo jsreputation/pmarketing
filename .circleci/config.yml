@@ -166,7 +166,10 @@ commands:
                [ $APP == 'feature-demo' ] || \
                [ $APP == 'all-it' ] || \
                [ $APP == 'commbank-demo' ] || \
-               [ $APP == 'perx-demo' ]
+               [ $APP == 'perx-demo' ] || \
+               [ $APP == 'perx-demo2' ] || \
+               [ $APP == 'perx-demo3' ] || \
+               [ $APP == 'perx-demo4' ]
             then
               REDIRECT_AFTER_LOGIN="/home"
             elif [ $APP == 'blackcomb' ]
@@ -234,6 +237,11 @@ jobs:
             elif [ $APP == 'hsbc-xmas' ]
             then
               export APP="hsbc"
+            elif [ $APP == 'perx-demo2' ] || \
+            [ $APP == 'perx-demo3' ] || \
+            [ $APP == 'perx-demo4' ]
+            then
+              export APP="perx-demo"
             fi
             echo "after second set APP: ${APP}"
 
@@ -324,39 +332,39 @@ jobs:
           helm_chart: perx/perx-general-app
           helm_values: image.tag="${DOCKER_TAG}"
           helm_extra_args: --reuse-values --timeout 600
-  deploy-to-aws:
-    executor: *helm_executor
-    parameters:
-      <<: *docker_tag_parameter
-      <<: *kubeconfig_parameters
-      domain:
-        type: string
-        description: App domain name. Should be perxtech.net for production or perxtech.io for staging
-    steps:
-      - checkout
-      - get_app_name
-      - run:
-          name: Set environments
-          command: |
-            echo "export DOCKER_TAG=<< parameters.docker_tag >>" >> $BASH_ENV
-            echo "export HELM_REPO_URL=https://chartmuseum.perxtech.io" >> $BASH_ENV
-            echo "export SKAFFOLD_DEFAULT_REPO=perxtech" >> $BASH_ENV
-            echo "export DOMAIN=<< parameters.domain >>" >> $BASH_ENV
-      - helm-deploy/add-helm-repo:
-          helm_repo_name: perx
-      - helm-deploy/configure-kubectl:
-          kube_host: "<< parameters.kube_host >>"
-          kube_bearer_token: "<< parameters.kube_bearer_token >>"
-          kube_cluster_ca_cert_data: "<< parameters.kube_cluster_ca_cert_data >>"
-      - run:
-          name: Install skaffold
-          command: |
-            curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
-            chmod +x skaffold
-      - run:
-          name: Deploy microsite app
-          command: |
-            ./skaffold deploy -f .circleci/skaffold/knative-microsite-app.yaml
+  # deploy-to-aws:
+  #   executor: *helm_executor
+  #   parameters:
+  #     <<: *docker_tag_parameter
+  #     <<: *kubeconfig_parameters
+  #     domain:
+  #       type: string
+  #       description: App domain name. Should be perxtech.net for production or perxtech.io for staging
+  #   steps:
+  #     - checkout
+  #     - get_app_name
+  #     - run:
+  #         name: Set environments
+  #         command: |
+  #           echo "export DOCKER_TAG=<< parameters.docker_tag >>" >> $BASH_ENV
+  #           echo "export HELM_REPO_URL=https://chartmuseum.perxtech.io" >> $BASH_ENV
+  #           echo "export SKAFFOLD_DEFAULT_REPO=perxtech" >> $BASH_ENV
+  #           echo "export DOMAIN=<< parameters.domain >>" >> $BASH_ENV
+  #     - helm-deploy/add-helm-repo:
+  #         helm_repo_name: perx
+  #     - helm-deploy/configure-kubectl:
+  #         kube_host: "<< parameters.kube_host >>"
+  #         kube_bearer_token: "<< parameters.kube_bearer_token >>"
+  #         kube_cluster_ca_cert_data: "<< parameters.kube_cluster_ca_cert_data >>"
+  #     - run:
+  #         name: Install skaffold
+  #         command: |
+  #           curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
+  #           chmod +x skaffold
+  #     - run:
+  #         name: Deploy microsite app
+  #         command: |
+  #           ./skaffold deploy -f .circleci/skaffold/knative-microsite-app.yaml
   deploy-whistler:
     executor: *helm_executor
     parameters:
@@ -505,47 +513,48 @@ workflows:
             tags:
               # semver v2
               only: /(candyland|blackcomb)-production-\d+\.\d+\.\d+.*/
-      - deploy-to-aws:
-          name: deploy_to_aws_production
-          docker_tag: "${CIRCLE_TAG}"
-          kube_host: AWS_PRODUCTION_KUBE_HOST
-          kube_bearer_token: AWS_PRODUCTION_KUBE_BEARER_TOKEN
-          kube_cluster_ca_cert_data: AWS_PRODUCTION_KUBE_CLUSTER_CA_CERT_DATA
-          domain: perxtech.net
-          requires:
-            - build_docker_image
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^(perx-demo|commbank-demo)-production-\d+\.\d+\.\d+.*/
-      - deploy-to-aws:
-          name: deploy_to_aws_staging
-          docker_tag: "${CIRCLE_TAG}"
-          kube_host: AWS_STAGING_KUBE_HOST
-          kube_bearer_token: AWS_STAGING_KUBE_BEARER_TOKEN
-          kube_cluster_ca_cert_data: AWS_STAGING_KUBE_CLUSTER_CA_CERT_DATA
-          domain: perxtech.io
-          requires:
-            - build_docker_image
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^(perx-demo|commbank-demo)-staging-\d+\.\d+\.\d+.*/
-      - deploy:
-          name: deploy_to_staging
-          docker_tag: "${CIRCLE_TAG}"
-          kube_host: STAGING_KUBE_HOST
-          kube_cluster_ca_cert_data: STAGING_KUBE_CLUSTER_CA_CERT_DATA
-          kube_bearer_token: STAGING_KUBE_BEARER_TOKEN
-          requires:
-            - build_docker_image
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^(?!blackcomb|candyland|oracle-demo|perx-demo|commbank-demo)(\w+-)+staging-\d+\.\d+\.\d+.*/
+      # - deploy-to-aws:
+      #     name: deploy_to_aws_production
+      #     docker_tag: "${CIRCLE_TAG}"
+      #     kube_host: AWS_PRODUCTION_KUBE_HOST
+      #     kube_bearer_token: AWS_PRODUCTION_KUBE_BEARER_TOKEN
+      #     kube_cluster_ca_cert_data: AWS_PRODUCTION_KUBE_CLUSTER_CA_CERT_DATA
+      #     domain: perxtech.net
+      #     requires:
+      #       - build_docker_image
+      #     filters:
+      #       branches:
+      #         ignore: /.*/
+      #       tags:
+      #         only: /^(perx-demo|commbank-demo)-production-\d+\.\d+\.\d+.*/
+      # - deploy-to-aws:
+      #     name: deploy_to_aws_staging
+      #     docker_tag: "${CIRCLE_TAG}"
+      #     kube_host: AWS_STAGING_KUBE_HOST
+      #     kube_bearer_token: AWS_STAGING_KUBE_BEARER_TOKEN
+      #     kube_cluster_ca_cert_data: AWS_STAGING_KUBE_CLUSTER_CA_CERT_DATA
+      #     domain: perxtech.io
+      #     requires:
+      #       - build_docker_image
+      #     filters:
+      #       branches:
+      #         ignore: /.*/
+      #       tags:
+      #         only: /^(perx-demo|commbank-demo)-staging-\d+\.\d+\.\d+.*/
+
+      # - deploy:
+      #     name: deploy_to_staging
+      #     docker_tag: "${CIRCLE_TAG}"
+      #     kube_host: STAGING_KUBE_HOST
+      #     kube_cluster_ca_cert_data: STAGING_KUBE_CLUSTER_CA_CERT_DATA
+      #     kube_bearer_token: STAGING_KUBE_BEARER_TOKEN
+      #     requires:
+      #       - build_docker_image
+      #     filters:
+      #       branches:
+      #         ignore: /.*/
+      #       tags:
+      #         only: /^(?!blackcomb|candyland|oracle-demo|perx-demo|commbank-demo)(\w+-)+staging-\d+\.\d+\.\d+.*/
       - deploy:
           name: deploy_to_production
           docker_tag: "${CIRCLE_TAG}"
@@ -561,7 +570,7 @@ workflows:
               ignore: /.*/
             tags:
               # semver v2
-              only: /^(?!blackcomb|candyland|oracle-demo|perx-demo|commbank-demo)(\w+-)+production-\d+\.\d+\.\d+.*/
+              only: /^(bpi|prudential)-production-\d+\.\d+\.\d+.*/
       - build_proxy_docker_image:
           filters:
             # need to sepcify this otherwise the job will run even if there's no tag

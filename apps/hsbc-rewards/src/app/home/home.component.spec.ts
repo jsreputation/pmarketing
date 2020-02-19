@@ -47,7 +47,7 @@ export class RewardsListTabbedMockComponent {
 
 @Component({
   selector: 'mock-host-component',
-  template: `<div class="reward-body" infiniteScroll [infiniteScrollContainer]></div>`
+  template: '<div class="reward-body" infiniteScroll [infiniteScrollContainer]></div>'
 })
 class MockHostComponent {
   @ViewChild(HomeComponent, { read: undefined, static: true })

@@ -33,7 +33,7 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
   public rt: typeof RedemptionType = RedemptionType;
   public headLine: string;
   public subHeadLine: string;
-  public codeInstructionsText: string = `This reward will automatically be redeemed for you by the merchant.`;
+  public codeInstructionsText: string = 'This reward will automatically be redeemed for you by the merchant.';
   public rewardSuccessPopUp: IPopupConfig = {
     title: 'REDEEM_SUCCESSFULLY',
     text: 'REDEEM_SUCCESS_TEXT',
@@ -112,7 +112,7 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
 
             if (voucher.reward.displayProperties && voucher.reward.displayProperties.codeInstructionsText) {
               this.codeInstructionsText = voucher.reward.displayProperties.codeInstructionsText.headLine ||
-                `Please input this code when redeeming your reward at the Merchant`;
+                'Please input this code when redeeming your reward at the Merchant';
             }
 
             if (voucher.reward.displayProperties && voucher.reward.displayProperties.errorPopUp) {
