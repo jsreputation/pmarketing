@@ -83,7 +83,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
 
   public get rewards(): PuzzleCollectReward[] {
     if (!this.card || !this.card.displayProperties.rewardPositions) {
-      throw new Error(`card or rewardPositions is required`);
+      throw new Error('card or rewardPositions is required');
     }
     return this.card.displayProperties.rewardPositions.map((el: number) => ({ rewardPosition: --el }));
   }
@@ -196,7 +196,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
       )
       .subscribe((card: IStampCard) => {
         if (!card || !card.campaignId) {
-          throw new Error(`card or campaignId is required`);
+          throw new Error('card or campaignId is required');
         }
 
         this.fetchStampTransactionCount(card.campaignId);
@@ -205,14 +205,14 @@ export class PuzzleComponent implements OnInit, OnDestroy {
         this.cols = card.displayProperties.numberOfCols;
         this.rows = card.displayProperties.numberOfRows;
         if (!this.cols || !this.rows) {
-          throw new Error(`cols or rows is required`);
+          throw new Error('cols or rows is required');
         }
 
         this.playedPieces = card.stamps ? card.stamps.filter(stamp => stamp.state === StampState.redeemed).length : 0;
         const availablePieces = card.stamps ? card.stamps.filter(stamp => stamp.state === StampState.issued).length : 0;
         this.availablePieces = Math.min(this.rows * this.cols - this.playedPieces, availablePieces);
         if (!card.displayProperties.cardImage) {
-          throw new Error(`cardImage is required`);
+          throw new Error('cardImage is required');
         }
 
         this.image = card.displayProperties.cardImage.value.imageUrl;
@@ -230,13 +230,13 @@ export class PuzzleComponent implements OnInit, OnDestroy {
 
   private fetchCard(): void {
     if (!this.campaignId) {
-      throw new Error(`campaignId is required`);
+      throw new Error('campaignId is required');
     }
 
     this.currentCard(this.campaignId).subscribe(
       (card: IStampCard) => {
         if (!this.campaignId) {
-          throw new Error(`campaignId is required`);
+          throw new Error('campaignId is required');
         }
         card.displayProperties.rewardPostStamp = 'assets/post-reward.png';
         card.displayProperties.rewardPreStamp = '/assets/pre-reward.png';
@@ -270,7 +270,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
 
   public onMoved(): void {
     if (!this.card || !this.card.stamps) {
-      throw new Error(`card or stamps is required`);
+      throw new Error('card or stamps is required');
     }
 
     const stamps = this.card.stamps.filter(s => s.state === StampState.issued);
@@ -284,7 +284,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
 
   public async stampClicked(stamp: IStamp): Promise<void> {
     if (!this.card || !this.card.stamps) {
-      throw new Error(`card or stamps is required`);
+      throw new Error('card or stamps is required');
     }
 
     // build ordered list of stamps to be stamped
@@ -312,11 +312,11 @@ export class PuzzleComponent implements OnInit, OnDestroy {
         (stamp: IStamp) => {
           if (stamp.state === StampState.redeemed) {
             if (!this.card || !this.card.stamps) {
-              throw new Error(`card or stamps is required`);
+              throw new Error('card or stamps is required');
             }
 
             if (!this.cols || !this.rows) {
-              throw new Error(`cols or rows is required`);
+              throw new Error('cols or rows is required');
             }
 
             const redeemedCard = this.card.stamps.map((cardStamp: IStamp) => {
@@ -329,12 +329,12 @@ export class PuzzleComponent implements OnInit, OnDestroy {
 
             if (this.card.cardNumber === this.cardsCount) { // we are on the last card
               if (!this.card || !this.card.stamps) {
-                throw new Error(`card or stamps is required`);
+                throw new Error('card or stamps is required');
               }
 
               const redeemedTransactionsCount = this.card.stamps.filter(s => s.state === StampState.redeemed).length;
               if (!this.card || !this.card.campaignConfig) {
-                throw new Error(`card or campaignConfig is required`);
+                throw new Error('card or campaignConfig is required');
               }
 
               if (this.card.displayProperties.displayCampaignAs === 'stamp_card'
@@ -368,7 +368,7 @@ export class PuzzleComponent implements OnInit, OnDestroy {
             }
           } else {
             if (!this.card || !this.card.stamps) {
-              throw new Error(`card or stamps is required`);
+              throw new Error('card or stamps is required');
             }
 
             const issuedLeft = this.card.stamps.filter(s => s.state === StampState.issued);
