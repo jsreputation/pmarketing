@@ -38,7 +38,9 @@ import {
   TokenStorage,
   ConfigService,
   LanguageInterceptor,
-  AuthenticationService
+  AuthenticationService,
+  ThemesService,
+  IConfig
 } from '@perx/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -65,24 +67,20 @@ import { TransactionHistoryPipe } from './account/transaction-history/transactio
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { PerxTranslateLoader } from './custom-translate.service';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { tap, switchMap } from 'rxjs/operators';
 
-export const setLanguage =
-  (translateService: TranslateService, configService: ConfigService, authService: AuthenticationService) =>
-    () => new Promise((resolve) => {
-      translateService.setDefaultLang(environment.defaultLang);
-      configService.readAppConfig().subscribe(
-        () => {
-          const token = authService.getAppAccessToken();
-          if (!token) {
-            authService.getAppToken().subscribe(() => {
-            }, (err) => {
-              console.error(`Error${err}`);
-            });
-          }
-        }
-      );
-      resolve();
-    });
+export const setLanguage = (
+  translateService: TranslateService,
+  configService: ConfigService,
+  authService: AuthenticationService,
+  themesService: ThemesService ) =>
+  () => new Promise((resolve) => {
+    configService.readAppConfig().pipe(
+      tap((config: IConfig<void>) => translateService.setDefaultLang(config.defaultLang || 'en')),
+      switchMap(() => authService.getAppToken()),
+      switchMap(() => themesService.getThemeSetting())
+    ).toPromise().then(() => resolve());
+  });
 
 @NgModule({
   declarations: [
@@ -154,7 +152,7 @@ export const setLanguage =
   providers: [
     // { provide: LOCALE_ID, useValue: 'zh' },
     { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true},
-    { provide: APP_INITIALIZER, useFactory: setLanguage, deps: [TranslateService, ConfigService, AuthenticationService], multi: true }
+    { provide: APP_INITIALIZER, useFactory: setLanguage, deps: [TranslateService, ConfigService, AuthenticationService, ThemesService], multi: true }
   ],
   bootstrap: [AppComponent],
   entryComponents: [CustomSnackbarComponent, FilterDialogComponent]
