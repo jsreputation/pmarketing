@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VouchersComponent, PopupType } from './vouchers.component';
-import { VouchersModule,  IVoucherService, RewardsService, IMerchantsService } from '@perx/core';
+import { VouchersModule, IVoucherService, RewardsService, IMerchantsService } from '@perx/core';
 import { MatDialog } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -13,7 +13,6 @@ import { of } from 'rxjs';
 describe('VouchersComponent', () => {
   let component: VouchersComponent;
   let fixture: ComponentFixture<VouchersComponent>;
-  const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 
   const activatedRouteStub = new ActivatedRouteStub();
   const matDialogStub = new MatDialogStub();
@@ -31,6 +30,11 @@ describe('VouchersComponent', () => {
     getMerchant: () => of()
   };
 
+  const navigateSpy: jest.Mock = jest.fn();
+  const routerStub: Partial<Router> = {
+    navigate: navigateSpy
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [VouchersComponent],
@@ -40,7 +44,7 @@ describe('VouchersComponent', () => {
       ],
       providers: [
         DatePipe,
-        { provide: Router, useValue: routerSpy },
+        { provide: Router, useValue: routerStub },
         { provide: ActivatedRoute, useValue: activatedRouteStub },
         { provide: MatDialog, useValue: matDialogStub },
         {
@@ -56,11 +60,11 @@ describe('VouchersComponent', () => {
     fixture = TestBed.createComponent(VouchersComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    spy.calls.reset();
+    // navigateSpy.call.reset();
   });
 
   afterEach(() => {
-    spy.calls.reset();
+    // navigateSpy.calls.reset();
     activatedRouteStub.setParamMap({});
   });
 
@@ -70,8 +74,8 @@ describe('VouchersComponent', () => {
 
   it('should redirect to voucher page', () => {
     component.onRoute('234');
-    expect(spy.calls.count()).toBe(1);
-    expect(spy.calls.first().args[0]).toEqual(['/vouchers/234']);
+    expect(navigateSpy).toHaveBeenCalledTimes(1);
+    expect(navigateSpy).toHaveBeenCalledWith(['/vouchers/234']);
   });
 
   it('should open completed dialog', () => {
