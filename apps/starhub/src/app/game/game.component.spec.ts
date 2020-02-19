@@ -8,8 +8,8 @@ import { GameComponent } from './game.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { Location } from '@angular/common';
+import { ScratchComponent, ShakeComponent, TapComponent } from '@perx/blackcomb-pages';
 import { Type } from '@angular/core';
-import { ScratchComponent } from './scratch/scratch.component';
 
 const mockGame: IGame = {
   id: 1,
@@ -55,7 +55,7 @@ describe('GameComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [GameComponent],
+      declarations: [GameComponent, ScratchComponent, ShakeComponent, TapComponent],
       imports: [MatIconModule, MatToolbarModule, GameModule],
       providers: [
         { provide: Router, useValue: routerStub },
@@ -90,24 +90,6 @@ describe('GameComponent', () => {
     tick();
     expect(gameServiceSpy).toHaveBeenCalled();
   }));
-
-  describe('goBack', () => {
-    it('should call notificationService addPopup if isEnabled is true', () => {
-      component.isEnabled = true;
-      // const notificationService = TestBed.get<NotificationService>(NotificationService as Type<NotificationService>);
-      const notificationServiceSpy = spyOn(notificationService, 'addPopup');
-      component.goBack();
-      expect(notificationServiceSpy).toHaveBeenCalled();
-    });
-
-    it('should go back if isEnabled is false', () => {
-      component.isEnabled = false;
-      const location = TestBed.get<Location>(Location as Type<Location>);
-      const locationSpy = spyOn(location, 'back');
-      component.goBack();
-      expect(locationSpy).toHaveBeenCalled();
-    });
-  });
 
   it('should go back on dialogClosed', () => {
     const location = TestBed.get<Location>(Location as Type<Location>);
