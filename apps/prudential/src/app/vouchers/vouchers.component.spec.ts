@@ -16,7 +16,6 @@ describe('VouchersComponent', () => {
 
   const activatedRouteStub = new ActivatedRouteStub();
   const matDialogStub = new MatDialogStub();
-  const spy = routerSpy.navigate as jasmine.Spy;
   const voucherServiceStub: Partial<IVoucherService> = {
     get: () => of(),
     getAll: () => of ()
