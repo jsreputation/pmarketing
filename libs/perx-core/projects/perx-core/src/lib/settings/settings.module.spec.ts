@@ -8,7 +8,6 @@ import {V4SettingsService} from './v4-settings.service';
 import {settingsServiceFactory} from './settings.module';
 import {ConfigService} from '../config/config.service';
 import {of} from 'rxjs';
-import {IConfig} from '../config/models/config.model';
 
 const configServiceStub: Partial<ConfigService> = {
   readAppConfig: () => of({
