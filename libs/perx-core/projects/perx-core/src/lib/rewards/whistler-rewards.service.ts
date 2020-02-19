@@ -234,7 +234,7 @@ export class WhistlerRewardsService implements RewardsService {
   }
 
   public getCategories(): Observable<ITabConfigExtended[]> {
-    return this.http.get<ITabConfigExtended[]>(`${this.config.baseHref}assets/categories-tabs.json`)
+    return this.http.get<ITabConfigExtended[]>(`${this.config.baseHref}assets/categories-tabs.json`);
   }
 
   // @ts-ignore

@@ -337,7 +337,7 @@ export class V4RewardsService extends RewardsService {
   }
 
   public getCategories(): Observable<ITabConfigExtended[]> {
-    return this.http.get<ITabConfigExtended[]>(`${this.config.baseHref}assets/categories-tabs.json`)
+    return this.http.get<ITabConfigExtended[]>(`${this.config.baseHref}assets/categories-tabs.json`);
   }
 
   public getRewardPricesOptions(id: number, locale: string = 'en'): Observable<IPrice[]> {
