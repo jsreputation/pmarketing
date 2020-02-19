@@ -313,11 +313,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   public dialogClosed(): void {
     this.instantOutcomeService.claim(this.firstComefirstServeCampaign.id).subscribe(
-      () => this.router.navigate([`/wallet`]),
+      () => this.router.navigate(['/wallet']),
       (err) => {
         if (err.error && err.error.code === 4103) {
           // user has already been issued voucher
-          this.router.navigate([`/wallet`]);
+          this.router.navigate(['/wallet']);
         }
         console.error('Something fishy, we should not be here, without any reward or game. ERR print', err);
       }

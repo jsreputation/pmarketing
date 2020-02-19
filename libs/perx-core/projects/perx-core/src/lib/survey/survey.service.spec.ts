@@ -49,7 +49,7 @@ describe('SurveyService', () => {
       image_url: '',
       properties: {},
       display_properties: {
-        title: '',
+        title: 'yoyo',
         sub_title: '',
         background_img_url: '',
         progress_bar_color: '',
@@ -99,7 +99,7 @@ describe('SurveyService', () => {
       .subscribe(
         (s: ISurvey) => {
           expect(s.questions.length).toBe(0);
-          expect(s.title).toBe(noQuestionMockSurvey.attributes.title);
+          expect(s.title).toBe(noQuestionMockSurvey.attributes.display_properties.title);
           done();
         },
         fail

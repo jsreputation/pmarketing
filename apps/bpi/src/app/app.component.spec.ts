@@ -60,7 +60,7 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'bpi'`, () => {
+  it('should have as title \'bpi\'', () => {
     fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app.title).toEqual('bpi');

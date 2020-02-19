@@ -76,7 +76,7 @@ export class LoginComponent implements OnInit {
         if (!((window as any).primaryIdentifier)) {
           (window as any).primaryIdentifier = username;
         }
-        this.router.navigate([`home`]);
+        this.router.navigate(['home']);
       },
       (err) => {
         if (err instanceof HttpErrorResponse) {
