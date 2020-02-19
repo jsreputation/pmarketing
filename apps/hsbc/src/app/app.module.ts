@@ -1,5 +1,5 @@
 import {BrowserModule, Title} from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,7 +21,7 @@ import {
   UtilsModule,
   ConfigModule,
   RewardsModule,
-  RewardPopupComponent, SettingsModule,
+  RewardPopupComponent, SettingsModule, ConfigService, AuthenticationService, ThemesService, IConfig, TokenStorage, LanguageService,
 
   // ICampaignService,
   // ConfigService
@@ -48,61 +48,27 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { APP_BASE_HREF, DatePipe } from '@angular/common';
 import { SoundModule } from './sound/sound.module';
 import { ProfileComponent } from './profile/profile.component';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule, HttpClient } from '@angular/common/http';
 import { NavigateToolbarComponent } from './navigate-toolbar/navigate-toolbar.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { AccountComponent } from './account/account.component';
 import { ContentModule } from './content/content.module';
 import { UnauthorizedInterceptor } from './login/unauthorized.interceptor';
+import { TranslateService, TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { tap, switchMap } from 'rxjs/operators';
 
-// import { PuzzleListComponent } from './mock/service/puzzle-list/puzzle-list.component';
-// import { of } from 'rxjs';
-// import { stampCard } from './mock/stamp.mock';
-// import { puzzle } from './mock/puzzle.mock';
-// import { campaigns } from './mock/campaigns.mock';
-
-// const stampServiceStub = {
-//   getCurrentCard: (id: number) => {
-//     if (id === 100) {
-//       return of(puzzle[0]);
-//     }
-//
-//     if (id === 265) {
-//       return of(stampCard[0]);
-//     }
-//   },
-//   getStamps: () => of(),
-//   getCards: (id: number) => {
-//     if (id === 100) {
-//       return of(puzzle);
-//     }
-//
-//     if (id === 265) {
-//       return of(stampCard);
-//     }
-//   },
-//   putStamp: () => of(stampCard)
-// };
-//
-// const campaignServiceStub = {
-//   getCampaigns: () => of(campaigns)
-// };
-
-// const configServiceStub = {
-//   getTenantAppSettings: () => of({
-//     id: 1,
-//     key: 'hsbc-xmas',
-//     stringValue: '',
-//     jsonValue: {
-//       background: 'assets/xmas_background.jpg',
-//       source_type: 'hsbc-xmas',
-//     },
-//   }),
-//   readAppConfig: () => of({
-//     preAuth: false,
-//     sourceType: 'hsbc-xmas'
-//   })
-// };
+export const setLanguage = (
+  translateService: TranslateService,
+  configService: ConfigService,
+  authService: AuthenticationService,
+  themesService: ThemesService ) =>
+  () => new Promise((resolve) => {
+    configService.readAppConfig().pipe(
+      tap((config: IConfig<void>) => translateService.setDefaultLang(config.defaultLang || 'en')),
+      switchMap(() => authService.getAppToken()),
+      switchMap(() => themesService.getThemeSetting())
+    ).toPromise().then(() => resolve());
+  });
 
 @NgModule({
   declarations: [
@@ -152,11 +118,23 @@ import { UnauthorizedInterceptor } from './login/unauthorized.interceptor';
     RewardsModule,
     HttpClientModule,
     MatDialogModule,
-    ContentModule
+    ContentModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        deps: [HttpClient, ConfigService, TokenStorage],
+        useClass: LanguageService
+      }
+    }),
   ],
   providers: [
     Title,
     DatePipe,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: setLanguage,
+      deps: [TranslateService, ConfigService, AuthenticationService, ThemesService], multi: true 
+    },
     {provide: APP_BASE_HREF, useValue: environment.baseHref },
     {provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true},
     // { provide: ConfigService, useValue: configServiceStub },
