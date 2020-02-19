@@ -45,14 +45,15 @@ export class SignIn2Component implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.initForm();
-    this.theme = this.themesService.getThemeSetting();
     this.configService.readAppConfig<ISigninConfig>().subscribe((conf) => this.appConfig = conf);
     const token = this.authService.getAppAccessToken();
     if (token) {
       this.appAccessTokenFetched = true;
+      this.theme = this.themesService.getThemeSetting();
     } else {
       this.authService.getAppToken().subscribe(() => {
         this.appAccessTokenFetched = true;
+        this.theme = this.themesService.getThemeSetting();
       }, (err) => {
         console.error(`Error${err}`);
       });
