@@ -37,7 +37,7 @@ describe('AppComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it(`should have as title 'oracle-pay'`, () => {
+  it('should have as title \'oracle-pay\'', () => {
     expect(component.title).toEqual('oracle-pay');
   });
 

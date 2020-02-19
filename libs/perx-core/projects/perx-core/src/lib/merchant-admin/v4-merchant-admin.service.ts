@@ -186,7 +186,7 @@ export class V4MerchantAdminService implements IMerchantAdminService {
       (config: IConfig<void>) => {
         this.apiHost = config.apiHost as string;
         if (!config.production) {
-          this.merchantEndPoint = `http://localhost:4000/v4/merchant_admin`;
+          this.merchantEndPoint = 'http://localhost:4000/v4/merchant_admin';
         } else {
           this.merchantEndPoint = `${config.baseHref}v4/merchant_admin`;
         }

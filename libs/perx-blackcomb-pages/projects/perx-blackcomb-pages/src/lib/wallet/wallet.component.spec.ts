@@ -99,7 +99,7 @@ describe('WalletComponent', () => {
     const router: Router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
     const routerSpy = spyOn(router, 'navigate');
     component.voucherSelected(voucher[0]);
-    expect(routerSpy).toHaveBeenCalledWith([`/voucher-detail/1`]);
+    expect(routerSpy).toHaveBeenCalledWith(['/voucher-detail/1']);
   });
 
   it('should call voucher serivce after scroll', fakeAsync(() => {

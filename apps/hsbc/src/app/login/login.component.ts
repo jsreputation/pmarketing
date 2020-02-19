@@ -112,7 +112,7 @@ export class LoginComponent implements OnInit {
     const password: string | null = this.hsbcCardLastFourDigits ? (this.hsbcCardLastFourDigits.value as string).toUpperCase() : null;
     this.errorMessage = null;
     if (isEmptyString(username) || isEmptyString(password)) {
-      throw new Error(`username or password is required`);
+      throw new Error('username or password is required');
     }
 
     this.authService.login(username as string, password as string).subscribe(

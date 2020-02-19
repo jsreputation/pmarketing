@@ -112,6 +112,7 @@ module.exports = {
     ],
     "use-isnan": "error",
     "valid-typeof": "off",
+    "quotes": ["error", "single"],
     "@typescript-eslint/tslint/config": [
       "error",
       {
@@ -203,10 +204,6 @@ module.exports = {
             "allow-named-functions"
           ],
           "prefer-const-enum": true,
-          "quotemark": [
-            true,
-            "single"
-          ],
           "rxjs-collapse-imports": true,
           // "rxjs-no-create": true,
           // "rxjs-no-ignored-subscribe": true,
