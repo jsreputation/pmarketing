@@ -95,7 +95,7 @@ export class HomeComponent implements OnInit {
       if (profile && profile.lastName) {
         return `Welcome ${profile.lastName},`;
       }
-      return `Welcome`;
+      return 'Welcome';
     };
     this.subTitleFn = () => `Your total points as of ${this.datePipe.transform(new Date(), 'ddMMMyy')}`;
     this.summaryExpiringFn = (): string => '';

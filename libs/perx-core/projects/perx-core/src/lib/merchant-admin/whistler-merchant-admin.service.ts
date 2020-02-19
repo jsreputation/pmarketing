@@ -38,36 +38,36 @@ export class WhistlerMerchantAdminService implements IMerchantAdminService {
     // @ts-ignore
     productName: string
   ): Observable<IMerchantAdminTransaction> {
-    throw new Error(`createTransaction Method not implemented.`);
+    throw new Error('createTransaction Method not implemented.');
   }
 
   // @ts-ignore
   public redeemVoucher(id: number): Observable<IVoucher> {
-    throw new Error(`redeemVoucher Method not implemented.`);
+    throw new Error('redeemVoucher Method not implemented.');
   }
 
   // @ts-ignore
   public issueVoucher(id: number, userId: string): Observable<IVoucher> {
-    throw new Error(`issueVoucher Method not implemented.`);
+    throw new Error('issueVoucher Method not implemented.');
   }
 
   // @ts-ignore
   public validateInvite(token: string, clientId: string): Observable<IMerchantProfile> {
-    throw new Error(`validateInvite Method not implemented.`);
+    throw new Error('validateInvite Method not implemented.');
   }
 
   // @ts-ignore
   public setupNewMerchantsPassword(token: string, clientId: string, password: string): Observable<string> {
-    throw new Error(`setupNewMerchantsPassword Method not implemented.`);
+    throw new Error('setupNewMerchantsPassword Method not implemented.');
   }
 
   public getMerchantProfile(): Observable<IMerchantProfile> {
-    throw new Error(`getMerchantProfile Method not implemented.`);
+    throw new Error('getMerchantProfile Method not implemented.');
   }
 
   // @ts-ignore
   public getTransactionHistory(page?: number, pageSize?: number, locale?: string): Observable<IMerchantTransactionHistory[]> {
-    throw new Error(`getTransactionHistory Method not implemented.`);
+    throw new Error('getTransactionHistory Method not implemented.');
   }
 
   // @ts-ignore

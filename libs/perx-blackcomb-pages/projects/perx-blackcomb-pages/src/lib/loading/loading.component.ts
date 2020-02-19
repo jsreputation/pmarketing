@@ -149,9 +149,9 @@ export class LoadingComponent implements OnInit, OnDestroy {
 
   private initCampaignEndedPopup(): void {
     this.notificationService.addPopup({
-      title: `Oops, the Campaign has ended`,
-      text: `We'll be in touch soon.`,
-      imageUrl: `assets/beer_and_tea.png`,
+      title: 'Oops, the Campaign has ended',
+      text: 'We\'ll be in touch soon.',
+      imageUrl: 'assets/beer_and_tea.png',
       buttonTxt: 'Back To Wallet',
     });
   }

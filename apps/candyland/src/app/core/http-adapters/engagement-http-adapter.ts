@@ -73,16 +73,16 @@ export class EngagementHttpAdapter {
     const engagementType = type ? type : data.attributes.type;
 
     switch (engagementType) {
-      case "game":
+      case 'game':
         return EngagementHttpAdapter.transformGameHandler(data, engagementType);
-      case "survey":
+      case 'survey':
         return EngagementHttpAdapter.transformToSurveyType(
           data,
           engagementType
         );
-      case "stamps":
+      case 'stamps':
         return EngagementHttpAdapter.transformToStampType(data, engagementType);
-      case "instant_reward":
+      case 'instant_reward':
         return EngagementHttpAdapter.transformToInstantReward(
           data,
           engagementType
@@ -347,9 +347,9 @@ export class EngagementHttpAdapter {
     data: IRewardForm
   ): IJsonApiPostData<IWInstantOutcomeEngagementAttributes> {
     return {
-      type: "engagements",
+      type: 'engagements',
       attributes: {
-        type: "instant_reward",
+        type: 'instant_reward',
         title: data.name,
         image_url: data.image_url,
         display_properties: {
@@ -370,11 +370,11 @@ export class EngagementHttpAdapter {
     data: ISpinEntityForm
   ): IJsonApiPostData<IWSpinGameEngagementAttributes> {
     return {
-      type: "engagements",
+      type: 'engagements',
       attributes: {
-        type: "game",
+        type: 'game',
         title: data.name,
-        description: "Spin and win",
+        description: 'Spin and win',
         game_type: WGameType.spin,
         image_url: data.image_url,
         display_properties: {
@@ -398,11 +398,11 @@ export class EngagementHttpAdapter {
     data: ISnakeForm
   ): IJsonApiPostData<IWSnakeGameEngagementAttributes> {
     return {
-      type: "engagements",
+      type: 'engagements',
       attributes: {
-        type: "game",
+        type: 'game',
         title: data.name,
-        description: "Snake Game",
+        description: 'Snake Game',
         game_type: WGameType.snake,
         image_url: data.image_url,
         display_properties: {
@@ -424,11 +424,11 @@ export class EngagementHttpAdapter {
     data: IShakeTreeForm
   ): IJsonApiPostData<IWTreeGameEngagementAttributes> {
     return {
-      type: "engagements",
+      type: 'engagements',
       attributes: {
-        type: "game",
+        type: 'game',
         title: data.name,
-        description: "Spin and win",
+        description: 'Spin and win',
         game_type: WGameType.shakeTheTree,
         image_url: data.image_url,
         display_properties: {
@@ -448,9 +448,9 @@ export class EngagementHttpAdapter {
     data: IPinataForm
   ): IJsonApiPostData<IWPinataGameEngagementAttributes> {
     return {
-      type: "engagements",
+      type: 'engagements',
       attributes: {
-        type: "game",
+        type: 'game',
         title: data.name,
         game_type: WGameType.pinata,
         image_url: data.image_url,
@@ -471,9 +471,9 @@ export class EngagementHttpAdapter {
     data: IScratchForm
   ): IJsonApiPostData<IWScratchGameEngagementAttributes> {
     return {
-      type: "engagements",
+      type: 'engagements',
       attributes: {
-        type: "game",
+        type: 'game',
         title: data.name,
         game_type: WGameType.scratch,
         image_url: data.image_url,
@@ -500,9 +500,9 @@ export class EngagementHttpAdapter {
     data: IStampsEntityForm
   ): IJsonApiPostData<IWStampEngagementAttributes> {
     return {
-      type: "engagements",
+      type: 'engagements',
       attributes: {
-        type: "stamps",
+        type: 'stamps',
         title: data.name,
         image_url: data.image_url,
         display_properties: {
