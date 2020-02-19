@@ -99,8 +99,8 @@ describe('HomeComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         HomeComponent,
-        PerxCoreRewardsCollectionMock,
-        PerxCoreRewardsListTabbedMock
+        PerxCoreRewardsCollectionMockComponent,
+        PerxCoreRewardsListTabbedMockComponent
       ],
       imports: [
         RouterTestingModule,
@@ -157,7 +157,7 @@ describe('HomeComponent', () => {
 
   it('should get all rewards on onInit', fakeAsync(() => {
     const rewardsService: RewardsService = fixture.debugElement.injector.get<
-    RewardsService
+      RewardsService
     >(RewardsService as Type<RewardsService>);
 
     const rewardSpy = spyOn(rewardsService, 'getAllRewards').and.returnValue(
