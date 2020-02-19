@@ -6,7 +6,7 @@ import {
   MatProgressSpinnerModule
 } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { ProfileModule, AuthenticationService } from '@perx/core';
+import { ProfileModule, AuthenticationService, ConfigService } from '@perx/core';
 import { FormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 
@@ -18,6 +18,11 @@ describe('LoginComponent', () => {
     getAppToken: () => of({}),
     getAppAccessToken: () => 'token'
   };
+
+  const configServiceStub = {
+    readAppConfig: () => of()
+  };
+  
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -30,6 +35,7 @@ describe('LoginComponent', () => {
       ],
       declarations: [LoginComponent],
       providers: [
+        { provide: ConfigService, useValue: configServiceStub },
         { provide: AuthenticationService, useValue: authServiceStub }
       ]
     })

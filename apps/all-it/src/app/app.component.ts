@@ -28,6 +28,7 @@ import {
   ITheme,
   AuthenticationService,
   ConfigService,
+  IConfig,
 } from '@perx/core';
 import {
   HomeComponent,
@@ -68,14 +69,14 @@ export class AppComponent implements OnInit {
     private translate: TranslateService,
     private config: ConfigService
   ) {
-    this.preAuth = environment.preAuth;
   }
 
   public ngOnInit(): void {
     this.config.readAppConfig()
       .pipe(switchMap((conf) => this.translate.getTranslation(conf.defaultLang as string)))
-      .subscribe(() => {
+      .subscribe((config: IConfig<void>) => {
         this.translationLoaded = true;
+        this.preAuth = config.preAuth as boolean;
       });
     this.authService.$failedAuth.subscribe(
       res => {

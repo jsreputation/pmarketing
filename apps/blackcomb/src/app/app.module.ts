@@ -59,6 +59,8 @@ import {
   ConfigService,
   LocaleIdFactory,
   SettingsModule,
+  AuthenticationService,
+  ThemesService
 } from '@perx/core';
 
 import * as Hammer from 'hammerjs';
