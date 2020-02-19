@@ -162,7 +162,8 @@ export const setLanguage = (
     {
       provide: APP_INITIALIZER,
       useFactory: setLanguage,
-      deps: [TranslateService, ConfigService, AuthenticationService, ThemesService], multi: true },
+      deps: [TranslateService, ConfigService, AuthenticationService, ThemesService], multi: true 
+    },
     // Locale Id factory ensures the Locale Id matches whatever translation is available in the backend.
     {
       provide: LOCALE_ID,
