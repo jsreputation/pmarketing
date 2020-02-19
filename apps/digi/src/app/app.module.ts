@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -12,7 +12,13 @@ import {
   MerchantsModule,
   UtilsModule,
   ConfigModule,
-  ProfileModule
+  ProfileModule,
+  ConfigService,
+  AuthenticationService,
+  IConfig,
+  TokenStorage,
+  LanguageService,
+  ThemesService
 } from '@perx/core';
 import { GameComponent } from './game/game.component';
 
@@ -23,7 +29,22 @@ import { environment } from '../environments/environment';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { httpInterceptorProviders } from './UserIdInterceptor';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { TranslateService, TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { tap, switchMap } from 'rxjs/operators';
+
+export const setLanguage = (
+  translateService: TranslateService,
+  configService: ConfigService,
+  authService: AuthenticationService,
+  themesService: ThemesService) =>
+  () => new Promise((resolve) => {
+    configService.readAppConfig().pipe(
+      tap((config: IConfig<void>) => translateService.setDefaultLang(config.defaultLang || 'en')),
+      switchMap(() => authService.getAppToken()),
+      switchMap(() => themesService.getThemeSetting())
+    ).toPromise().then(() => resolve());
+  });
 
 @NgModule({
   declarations: [
@@ -49,9 +70,21 @@ import { HttpClientModule } from '@angular/common/http';
     AuthenticationModule,
     CampaignModule,
     GameModule,
-    HttpClientModule
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        deps: [HttpClient, ConfigService, TokenStorage],
+        useClass: LanguageService
+      }
+    }),
   ],
   providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: setLanguage,
+      deps: [TranslateService, ConfigService, AuthenticationService, ThemesService], multi: true
+    },
     httpInterceptorProviders
   ],
   bootstrap: [AppComponent]
