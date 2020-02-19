@@ -7,6 +7,7 @@ import { ICampaignService, CampaignType, CampaignState, IGameService, ICampaign,
 import { Type } from '@angular/core';
 import { game } from '../../game.mock';
 import { IMacaron, MacaronService } from 'src/app/services/macaron.service';
+import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 
 describe('CampaignsComponent', () => {
   let component: CampaignsComponent;
@@ -28,7 +29,8 @@ describe('CampaignsComponent', () => {
       imports: [
         MatCardModule,
         MatIconModule,
-        MatRippleModule
+        MatRippleModule,
+        InfiniteScrollModule
       ],
       providers: [
         { provide: ICampaignService, useValue: campaignServiceStub },
@@ -101,7 +103,6 @@ describe('CampaignsComponent', () => {
       tick();
       expect(campaignsServiceSpy).toHaveBeenCalled();
       expect(component.games).toEqual(game);
-      expect(component.campaigns).toEqual([campaigns[0]]);
     }));
   });
   it('should handle ngOnInit with games', fakeAsync(() => {

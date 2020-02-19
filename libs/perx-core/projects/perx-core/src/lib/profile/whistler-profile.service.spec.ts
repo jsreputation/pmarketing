@@ -42,7 +42,7 @@ describe('WhistlerProfileService', () => {
       tick();
       spy.mockReturnValue(of({ data: [] }));
       jest.spyOn(storage, 'getAppInfoProperty').mockReturnValue('');
-      profileService.whoAmI().subscribe(() => { }, (er) => expect(er.message).toEqual(`There is no user with pi ''`));
+      profileService.whoAmI().subscribe(() => { }, (er) => expect(er.message).toEqual('There is no user with pi \'\''));
       tick();
     })));
 });

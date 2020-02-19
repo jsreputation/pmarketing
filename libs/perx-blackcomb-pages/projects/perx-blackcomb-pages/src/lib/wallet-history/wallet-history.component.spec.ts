@@ -61,6 +61,6 @@ describe('WalletHistoryComponent', () => {
     const routerService: Router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
     const routerSpy = spyOn(routerService, 'navigate');
     component.voucherSelected(voucher[0]);
-    expect(routerSpy).toHaveBeenCalledWith([`/voucher-detail/1`]);
+    expect(routerSpy).toHaveBeenCalledWith(['/voucher-detail/1']);
   });
 });

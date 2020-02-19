@@ -70,7 +70,7 @@ describe('V4AuthenticationService', () => {
         done();
       });
     const url = location.host;
-    const req = httpTestingController.expectOne(`/v2/oauth/token`);
+    const req = httpTestingController.expectOne('/v2/oauth/token');
     expect(req.request.body).toEqual({ url });
     expect(req.request.method).toEqual('POST');
 

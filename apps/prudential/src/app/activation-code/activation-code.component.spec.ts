@@ -99,7 +99,7 @@ describe('ActivationCodeComponent', () => {
     spyOn(router, 'navigate').and.stub();
     component.voucherId = 1;
     component.pinInputSuccess();
-    expect(router.navigate).toHaveBeenCalledWith([`/redemption/1`]);
+    expect(router.navigate).toHaveBeenCalledWith(['/redemption/1']);
   });
 
   it('show goBack to previous page once cancelled', () => {

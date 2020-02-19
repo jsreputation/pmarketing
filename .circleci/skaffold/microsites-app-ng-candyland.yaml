@@ -1,0 +1,36 @@
+apiVersion: skaffold/v1beta15
+kind: Config
+metadata:
+  name: microsite-apps-ng
+deploy:
+  helm:
+    releases:
+    - name: "microsite-apps-candyland"
+      chartPath: ros/basic
+      remote: true
+      wait: false
+      recreatePods: true
+      setValueTemplates:
+        image.tag: "{{.DOCKER_TAG}}"
+        image.repository: "{{.SKAFFOLD_DEFAULT_REPO}}/microsite-apps-ng"
+        nameOverride: microsite-apps-candyland
+      overrides:
+        image:
+          pullPolicy: Always
+        env:
+          API_CONFIG_PATH: /service/express/package.json
+        imagePullSecrets:
+        - name: registry-perxtech
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+    - name: microsite-apps-candyland-ingress
+      chartPath: ros/ingress
+      remote: true
+      setValueTemplates:
+        hosts[0]: "{{.INGRESS_HOST}}"
+        services[0].name: "microsite-apps-candyland"
+      overrides:
+        services:
+          - port: 80

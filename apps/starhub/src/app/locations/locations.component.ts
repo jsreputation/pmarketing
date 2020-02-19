@@ -49,7 +49,7 @@ export class LocationsComponent implements OnInit {
             pageName: `rewards:discover:locations:${category}:${reward.name}`,
             pageType: PageType.detailPage,
             siteSectionLevel2: 'rewards:discover',
-            siteSectionLevel3: `rewards:discover:locations`
+            siteSectionLevel3: 'rewards:discover:locations'
           });
         }
       );

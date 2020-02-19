@@ -1,0 +1,40 @@
+apiVersion: skaffold/v1beta15
+kind: Config
+metadata:
+  name: microsite-apps-ng
+deploy:
+  helm:
+    releases:
+    - name: "microsite-apps-blackcomb"
+      chartPath: ros/basic
+      remote: true
+      wait: false
+      recreatePods: true
+      setValueTemplates:
+        image.tag: "{{.DOCKER_TAG}}"
+        image.repository: "{{.SKAFFOLD_DEFAULT_REPO}}/microsite-apps-ng"
+        nameOverride: microsite-apps-blackcomb
+        secretMounts[0].secretName: microsite-apps-blackcomb-api-config
+      overrides:
+        env:
+          API_CONFIG_PATH: /secrets/api-config/config.json
+        image:
+          pullPolicy: Always
+        imagePullSecrets:
+        - name: registry-perxtech
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        secretMounts:
+        - mountPath: /secrets/api-config
+          optional: true
+    - name: microsite-apps-blackcomb-ingress
+      chartPath: ros/ingress
+      remote: true
+      setValueTemplates:
+        hosts[0]: "{{.INGRESS_HOST}}"
+        services[0].name: "microsite-apps-blackcomb"
+      overrides:
+        services:
+          - port: 80

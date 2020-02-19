@@ -156,16 +156,16 @@ export class HomeComponent implements OnInit {
 
   public dialogClosed(): void {
     if (this.game) {
-      this.router.navigate([`/game`], { queryParams: { id: this.game.id } });
+      this.router.navigate(['/game'], { queryParams: { id: this.game.id } });
     } else {
       this.instantOutcomeService.claim(this.firstComefirstServeCampaign.id).subscribe(
         () => {
-          this.router.navigate([`/home/vouchers`]);
+          this.router.navigate(['/home/vouchers']);
         },
         (err) => {
           if (err.error && err.error.code === 4103) {
             // user has already been issued voucher
-            this.router.navigate([`/home/vouchers`]);
+            this.router.navigate(['/home/vouchers']);
           }
           console.error(`Something fishy, we should not be here, without any reward or game. ERR print: ${err.error.message}`);
         }

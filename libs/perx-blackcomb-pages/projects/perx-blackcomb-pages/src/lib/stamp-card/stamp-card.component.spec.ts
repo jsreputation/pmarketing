@@ -152,13 +152,13 @@ describe('StampCardComponent', () => {
   describe('handleStamp', () => {
     it('should throw error if card is empty ', async () => {
       component.stampCard = null;
-      let errorMessage = `No error thrown`;
+      let errorMessage = 'No error thrown';
       try {
         await component.handleStamp(stamps[0]);
       } catch (error) {
         errorMessage = error.message;
       }
-      expect(errorMessage).toBe(`card or stamps is required`);
+      expect(errorMessage).toBe('card or stamps is required');
     });
   });
 });
