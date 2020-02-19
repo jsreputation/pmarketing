@@ -9,8 +9,7 @@ import {
   IGameService,
   Config,
   NotificationService,
-  ConfigService,
-  IConfig
+  ConfigService
 } from '@perx/core';
 import { of } from 'rxjs';
 import { Router, ActivatedRoute, convertToParamMap } from '@angular/router';
