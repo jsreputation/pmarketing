@@ -44,7 +44,7 @@ export class SurveyService {
       });
       return {
         id: survey.data.id,
-        title: survey.data.attributes.title || '',
+        title: dp.title || '',
         subTitle: dp.sub_title,
         progressBarColor: MaterialColor[dp.progress_bar_color],
         cardBackgroundImgUrl: dp.card_background_img_url,
