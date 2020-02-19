@@ -19,7 +19,7 @@ import {
   MatSnackBarModule,
 } from '@angular/material';
 import { MatButtonModule } from '@angular/material/button';
-import { ServiceWorkerModule } from '@angular/service-worker';
+// import { ServiceWorkerModule } from '@angular/service-worker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
 
@@ -71,6 +71,7 @@ import { AppComponent } from './app.component';
 import { SignUpModule } from './sign-up/sign-up.module';
 
 import { environment } from '../environments/environment';
+import {switchMap} from 'rxjs/operators';
 
 // https://medium.com/angular-in-depth/gestures-in-an-angular-application-dde71804c0d0
 // to override default settings
@@ -107,10 +108,19 @@ registerLocaleData(vi, 'vi', localesViExtra);
 registerLocaleData(ko, 'ko', localesKoExtra);
 registerLocaleData(fr, 'fr', localesFrExtra);
 
-export const setLanguage = (translateService: TranslateService) => () => new Promise((resolve) => {
-  translateService.setDefaultLang(environment.defaultLang);
-  resolve();
-});
+export const setLanguage = (
+  translateService: TranslateService,
+  configService: ConfigService,
+  authService: AuthenticationService,
+  themesService: ThemesService ) =>
+  () => new Promise((resolve) => {
+    translateService.setDefaultLang(environment.defaultLang);
+    configService.readAppConfig().pipe(
+      switchMap(() => authService.getAppToken()),
+      switchMap(() => themesService.getThemeSetting())
+    ).toPromise().then(() => resolve());
+  });
+
 @NgModule({
   declarations: [
     AppComponent
@@ -144,11 +154,14 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
         useClass: LanguageService
       }
     }),
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   bootstrap: [AppComponent],
   providers: [
-    { provide: APP_INITIALIZER, useFactory: setLanguage, deps: [TranslateService], multi: true },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: setLanguage,
+      deps: [TranslateService, ConfigService, AuthenticationService, ThemesService], multi: true },
     // Locale Id factory ensures the Locale Id matches whatever translation is available in the backend.
     {
       provide: LOCALE_ID,
