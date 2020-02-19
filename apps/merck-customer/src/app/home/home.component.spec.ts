@@ -3,28 +3,50 @@ import {
   ComponentFixture,
   TestBed,
   fakeAsync,
-  tick,
-} from '@angular/core/testing';
-import { Type } from '@angular/core';
-import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { of } from 'rxjs';
-import { TranslateModule } from '@ngx-translate/core';
+  tick
+} from "@angular/core/testing";
+import { Type, Input, Component, Output, EventEmitter } from "@angular/core";
+import { Router } from "@angular/router";
+import { RouterTestingModule } from "@angular/router/testing";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { InfiniteScrollModule } from "ngx-infinite-scroll";
+import { of, Observable } from "rxjs";
+import { TranslateModule } from "@ngx-translate/core";
 
 import {
   RewardsService,
   LoyaltyModule,
-  RewardsModule,
   ProfileService,
   LoyaltyService,
-  IReward, ThemesService, ILoyalty
-} from '@perx/core';
+  IReward,
+  ThemesService,
+  ILoyalty
+} from "@perx/core";
 
-import { HomeComponent } from './home.component';
+import { HomeComponent } from "./home.component";
 
-describe('HomeComponent', () => {
+// mock the components from perx-core entirely because their dependency on the ellipsis
+// module makes it hard to test
+@Component({
+  selector: "perx-core-rewards-collection",
+  template: ""
+})
+export class PerxCoreRewardsCollectionMock {
+  @Input() public rewardsList: Observable<IReward>;
+  @Output() public tapped: EventEmitter<IReward> = new EventEmitter();
+}
+
+@Component({
+  selector: "perx-core-rewards-list-tabbed",
+  template: ""
+})
+export class PerxCoreRewardsListTabbedMock {
+  @Input() public tabs$: Observable<any>;
+  @Output() public tapped: EventEmitter<IReward> = new EventEmitter();
+  @Output() public tabChanged: EventEmitter<any> = new EventEmitter();
+}
+
+describe("HomeComponent", () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
 
@@ -34,38 +56,38 @@ describe('HomeComponent', () => {
 
   const reward: IReward = {
     id: 149,
-    name: '100 HSBC Bonus Points',
-    description: '',
-    subtitle: '',
-    validFrom: new Date('2019-07-04T09:58:07.000Z'),
-    validTo: new Date('2020-07-19T16:00:00Z'),
-    rewardThumbnail: '',
-    rewardBanner: '',
+    name: "100 HSBC Bonus Points",
+    description: "",
+    subtitle: "",
+    validFrom: new Date("2019-07-04T09:58:07.000Z"),
+    validTo: new Date("2020-07-19T16:00:00Z"),
+    rewardThumbnail: "",
+    rewardBanner: "",
     merchantImg: undefined,
     rewardPrice: [
       {
         id: 23,
-        currencyCode: 'MYR',
+        currencyCode: "MYR",
         price: 0
       }
     ],
     merchantId: undefined,
     merchantName: undefined,
     merchantWebsite: undefined,
-    termsAndConditions: '',
-    howToRedeem: '',
+    termsAndConditions: "",
+    howToRedeem: ""
   };
 
   const mockLoyalty: ILoyalty = {
     id: 1,
-    name: 'test',
-    description: 'test',
-    beginDate: '',
-    membershipTierName: '',
-    membershipIdentifier: '1',
+    name: "test",
+    description: "test",
+    beginDate: "",
+    membershipTierName: "",
+    membershipIdentifier: "1",
     pointsBalance: 1,
     currencyBalance: 1,
-    currency: 'SGD',
+    currency: "SGD"
   };
 
   const loyaltyServiceStub: Partial<LoyaltyService> = {
@@ -75,11 +97,15 @@ describe('HomeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [HomeComponent],
+      declarations: [
+        HomeComponent,
+        PerxCoreRewardsCollectionMock,
+        PerxCoreRewardsListTabbedMock
+      ],
       imports: [
         RouterTestingModule,
         LoyaltyModule,
-        RewardsModule,
+        // RewardsModule,
         BrowserAnimationsModule,
         TranslateModule.forRoot(),
         InfiniteScrollModule
@@ -98,25 +124,25 @@ describe('HomeComponent', () => {
         {
           provide: ProfileService,
           useValue: {
-            whoAmI: () => of({
-              id: 1,
-              state: 'active',
-              firstName: 'Jane',
-              lastName: 'Doe',
-            })
+            whoAmI: () =>
+              of({
+                id: 1,
+                state: "active",
+                firstName: "Jane",
+                lastName: "Doe"
+              })
           }
         },
         {
           provide: Router,
-          useValue: { navigateByUrl: () => { } }
+          useValue: { navigateByUrl: () => {} }
         },
         {
           provide: ThemesService,
-          useValue: themesServiceStub,
-        },
+          useValue: themesServiceStub
+        }
       ]
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -125,24 +151,27 @@ describe('HomeComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 
-  it('should get all rewards on onInit', fakeAsync(() => {
-    const rewardsService: RewardsService = fixture.debugElement.injector.get<RewardsService>
-    (RewardsService as Type<RewardsService>);
+  it("should get all rewards on onInit", fakeAsync(() => {
+    const rewardsService: RewardsService = fixture.debugElement.injector.get<
+      RewardsService
+    >(RewardsService as Type<RewardsService>);
 
-    const rewardSpy = spyOn(rewardsService, 'getAllRewards').and.returnValue(of([reward]));
+    const rewardSpy = spyOn(rewardsService, "getAllRewards").and.returnValue(
+      of([reward])
+    );
     component.ngOnInit();
     tick();
     expect(rewardSpy).toHaveBeenCalled();
   }));
 
-  it('should navigate to reward detail based on the passed reward', () => {
+  it("should navigate to reward detail based on the passed reward", () => {
     const router: Router = fixture.debugElement.injector.get(Router);
-    const routerSpy = spyOn(router, 'navigateByUrl');
+    const routerSpy = spyOn(router, "navigateByUrl");
     component.rewardClicked(reward);
-    expect(routerSpy).toHaveBeenCalledWith('reward-detail/149');
+    expect(routerSpy).toHaveBeenCalledWith("reward-detail/149");
   });
 });
