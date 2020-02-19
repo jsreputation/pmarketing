@@ -21,7 +21,7 @@ function fakeFactory(): TokenStorage {
 const configServiceStub: Partial<ConfigService> = {
   readAppConfig: () => of({
     redirectAfterLogin: '/home',
-    apiHost: 'string',
+    apiHost: 'https://api.perxtech.io',
     production: true,
     baseHref: '/',
     isWhistler: true,
