@@ -38,7 +38,6 @@ import {
   WalletComponent,
 } from '@perx/blackcomb-pages';
 
-import { environment } from 'src/environments/environment';
 import { BACK_ARROW_URLS } from './app.constants';
 
 @Component({
