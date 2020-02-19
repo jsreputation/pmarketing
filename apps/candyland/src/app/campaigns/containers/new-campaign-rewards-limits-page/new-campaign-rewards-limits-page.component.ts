@@ -146,8 +146,8 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
       map( (sumProb: number) => 100 - sumProb < 0 ? null : 100 - sumProb),
       takeUntil(this.destroy$)
     ).subscribe(value => {
-      if (value && this.limitRewardForm.get(`probNoRewards`)) {
-        this.limitRewardForm.get(`probNoRewards`).patchValue(value);
+      if (value && this.limitRewardForm.get('probNoRewards')) {
+        this.limitRewardForm.get('probNoRewards').patchValue(value);
         this.updateLimitRewardForm();
       }
     });

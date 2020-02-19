@@ -11,6 +11,6 @@ export class ConfigHttpService {
   constructor(private http: HttpClient) { }
 
   public getStatusLabel(): Observable<IStatusLabelConfig> {
-    return this.http.get<IStatusLabelConfig>(`/assets/actives/statuses-type/statuses-type.json`);
+    return this.http.get<IStatusLabelConfig>('/assets/actives/statuses-type/statuses-type.json');
   }
 }

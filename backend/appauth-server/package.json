@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "server": "ts-node-dev server.ts",
+    "server": "ts-node server.ts",
     "build:backend": "webpack --config webpack.config.js",
     "watch": "webpack --config webpack.config.js --watch",
     "lint": "eslint \"./**/*.ts\"",

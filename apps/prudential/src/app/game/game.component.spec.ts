@@ -45,7 +45,7 @@ describe('GameComponent', () => {
     config: { ...defaultTree(), treeImg: '', giftImg: '' },
   };
 
-  const vouchersServiceMock = jasmine.createSpyObj('IVoucherService', ['']);
+  const vouchersServiceStub: Partial<IVoucherService> = {};
 
   beforeEach(async(() => {
     const routerStub = { navigate: () => ({}) };
@@ -63,7 +63,7 @@ describe('GameComponent', () => {
       ],
       providers: [
         { provide: APP_BASE_HREF, useValue: '/' },
-        { provide: IVoucherService, useValue: vouchersServiceMock },
+        { provide: IVoucherService, useValue: vouchersServiceStub },
         { provide: IGameService, useValue: gameServiceStub },
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: Router, useValue: routerStub },
