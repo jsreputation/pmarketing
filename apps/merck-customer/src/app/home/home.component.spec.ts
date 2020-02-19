@@ -156,9 +156,7 @@ describe('HomeComponent', () => {
   });
 
   it('should get all rewards on onInit', fakeAsync(() => {
-    const rewardsService: RewardsService = fixture.debugElement.injector.get<
-      RewardsService
-    >(RewardsService as Type<RewardsService>);
+    const rewardsService: RewardsService = fixture.debugElement.injector.get<RewardsService>(RewardsService as Type<RewardsService>);
 
     const rewardSpy = spyOn(rewardsService, 'getAllRewards').and.returnValue(
       of([reward])
