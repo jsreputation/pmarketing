@@ -137,19 +137,19 @@ export class GameComponent implements OnInit {
       .pipe(
         map((game: IPlayOutcome) => game.vouchers),
       ).subscribe(
-      (vouchs: Voucher[]) => {
-        if (vouchs.length === 0) {
-          this.showNoRewardsPopUp();
-        } else {
-          this.gameOutcomeService.setVouchersList(vouchs);
-          if (this.game.results && this.game.results.outcome) {
-            this.gameOutcomeService.setOutcome(this.game.results.outcome);
+        (vouchs: Voucher[]) => {
+          if (vouchs.length === 0) {
+            this.showNoRewardsPopUp();
+          } else {
+            this.gameOutcomeService.setVouchersList(vouchs);
+            if (this.game.results && this.game.results.outcome) {
+              this.gameOutcomeService.setOutcome(this.game.results.outcome);
+            }
+            this.router.navigate(['/congrats']);
           }
-          this.router.navigate(['/congrats']);
-        }
-      },
-      () => this.showNoRewardsPopUp()
-    );
+        },
+        () => this.showNoRewardsPopUp()
+      );
   }
 
   // public goBack(): void {

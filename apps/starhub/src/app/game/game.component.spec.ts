@@ -9,7 +9,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { Location } from '@angular/common';
 import { Type } from '@angular/core';
-// import 'jasmine'
+import { ScratchComponent } from './scratch/scratch.component';
+
 const mockGame: IGame = {
   id: 1,
   campaignId: 1,
@@ -128,7 +129,7 @@ describe('GameComponent', () => {
 
   it('should handle gameComplited', fakeAsync(() => {
     component.game = mockGame;
-    spyOn(gameService, 'play').and.returnValue(of({vouchers: [], rawPayload: {}} as IPlayOutcome));
+    spyOn(gameService, 'play').and.returnValue(of({ vouchers: [], rawPayload: {} } as IPlayOutcome));
     const spyComponent = spyOn(notificationService, 'addPopup');
     component.gameCompleted();
     tick();
