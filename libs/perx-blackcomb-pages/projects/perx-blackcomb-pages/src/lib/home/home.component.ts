@@ -1,8 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-
 import {BehaviorSubject, combineLatest, forkJoin, Observable, of, Subject} from 'rxjs';
-import {catchError, filter, map, mergeMap, take, takeLast, takeUntil, tap} from 'rxjs/operators';
+import {catchError, filter, map, mergeMap, switchMap, take, takeLast, takeUntil, tap} from 'rxjs/operators';
 
 import {
   AuthenticationService,
@@ -31,81 +30,6 @@ import {
 import {TranslateService} from '@ngx-translate/core';
 import {Title} from '@angular/platform-browser';
 import {MatDialog, MatTabChangeEvent} from '@angular/material';
-
-const stubTabs: ITabConfigExtended[] = [
-  {
-    filterKey: null,
-    filterValue: null,
-    tabName: 'ALL',
-    rewardsType: null,
-    currentPage: 1,
-    completePagination: false
-  },
-  {
-    filterKey: null,
-    filterValue: null,
-    tabName: 'FOOD_BEVERAGE',
-    rewardsType: 'Food & Beverage',
-    currentPage: 1,
-    completePagination: false
-  },
-  {
-    filterKey: null,
-    filterValue: null,
-    tabName: 'TRAVEL',
-    rewardsType: 'Travel',
-    currentPage: 1,
-    completePagination: false
-  },
-  // {
-  //   filterKey: null,
-  //   filterValue: null,
-  //   tabName: 'ELECTRONICS',
-  //   rewardsType: 'Electronics',
-  //   currentPage: 1,
-  //   completePagination: false
-  // },
-  {
-    filterKey: null,
-    filterValue: null,
-    tabName: 'WELLNESS',
-    rewardsType: 'Wellness',
-    currentPage: 1,
-    completePagination: false
-  },
-  // {
-  //   filterKey: null,
-  //   filterValue: null,
-  //   tabName: 'ENTERTAINMENT',
-  //   rewardsType: 'Entertainment',
-  //   currentPage: 1,
-  //   completePagination: false
-  // },
-  {
-    filterKey: null,
-    filterValue: null,
-    tabName: 'SHOPPING',
-    rewardsType: 'Shopping',
-    currentPage: 1,
-    completePagination: false
-  },
-  // {
-  //   filterKey: null,
-  //   filterValue: null,
-  //   tabName: 'MERCHANT_SELF',
-  //   rewardsType: 'Merchant Self',
-  //   currentPage: 1,
-  //   completePagination: false
-  // },
-  // {
-  //   filterKey: null,
-  //   filterValue: null,
-  //   tabName: 'OTHERS',
-  //   rewardsType: 'Others',
-  //   currentPage: 1,
-  //   completePagination: false
-  // },
-];
 
 @Component({
   selector: 'perx-blackcomb-home',
@@ -228,11 +152,16 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   private getTabs(): Observable<ITabConfigExtended[]> {
-    return this.translate.get(stubTabs.map(tab => tab.tabName))
-      .pipe(map((translation) => stubTabs.map((tab) => {
-        tab.tabName = translation[tab.tabName];
-        return tab;
-      })));
+    return this.rewardsService.getCategories()
+      .pipe(
+        switchMap((stubTabs: ITabConfigExtended[]) => {
+          return this.translate.get(stubTabs.map(tab => tab.tabName))
+            .pipe(map((translation) => stubTabs.map((tab) => {
+              tab.tabName = translation[tab.tabName];
+              return tab;
+            })));
+        })
+      )
   }
 
   public goToCampaignPage(campaign: ICampaign): void {

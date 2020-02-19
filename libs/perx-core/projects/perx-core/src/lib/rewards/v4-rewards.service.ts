@@ -25,6 +25,7 @@ import {
 import { Config } from '../config/config';
 
 import {RewardStateHelper} from './reward-state-helper';
+import {ITabConfigExtended} from './rewards-list-tabbed/rewards-list-tabbed.component';
 
 export interface IV4Tag {
   id: number;
@@ -130,10 +131,10 @@ export class V4RewardsService extends RewardsService {
 
   constructor(
     private http: HttpClient,
-    config: Config
+    private config: Config
   ) {
     super();
-    this.apiHost = config.apiHost as string;
+    this.apiHost = this.config.apiHost as string;
   }
 
 
@@ -333,6 +334,10 @@ export class V4RewardsService extends RewardsService {
       map(res => res.data),
       map((catalog: IV4Catalog) => V4RewardsService.v4CatalogToCatalog(catalog))
     );
+  }
+
+  public getCategories(): Observable<ITabConfigExtended[]> {
+    return this.http.get<ITabConfigExtended[]>(`${this.config.baseHref}assets/categories-tabs.json`)
   }
 
   public getRewardPricesOptions(id: number, locale: string = 'en'): Observable<IPrice[]> {
