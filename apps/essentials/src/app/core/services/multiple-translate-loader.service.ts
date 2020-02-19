@@ -13,7 +13,7 @@ export const translateLoader = (
 
 @Injectable()
 export class MultiTranslateHttpLoader implements TranslateLoader {
-  public hostUrl: string = `http://localhost:4203`;
+  public hostUrl: string = 'http://localhost:4203';
   public contentHeader: HttpHeaders = new HttpHeaders({
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',

@@ -50,7 +50,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
 
   public v4Rewards(card: IStampCard): PuzzleCollectReward[] {
     if (!card || !card.displayProperties.rewardPositions) {
-      throw new Error(`card or rewardPositions is required`);
+      throw new Error('card or rewardPositions is required');
     }
     return card.displayProperties.rewardPositions.map((el: number) => ({ rewardPosition: --el }));
   }
@@ -132,7 +132,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
 
   public async handleStamp(stamp: IStamp): Promise<void> {
     if (!this.stampCard || !this.stampCard.stamps) {
-      throw new Error(`card or stamps is required`);
+      throw new Error('card or stamps is required');
     }
 
     // build ordered list of stamps to be stamped
@@ -152,7 +152,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
         (stamp: IStamp) => {
           if (stamp.state === StampState.redeemed) {
             if (!this.stampCard || !this.stampCard.stamps) {
-              throw new Error(`card or stamps is required`);
+              throw new Error('card or stamps is required');
             }
 
             // if (!this.cols || !this.rows) {
@@ -194,7 +194,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
 
           } else {
             if (!this.stampCard || !this.stampCard.stamps) {
-              throw new Error(`card or stamps is required`);
+              throw new Error('card or stamps is required');
             }
 
             const issuedLeft = this.stampCard.stamps.filter(s => s.state === StampState.issued);
