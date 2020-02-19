@@ -170,9 +170,9 @@ export class ScratchCardComponent implements AfterViewInit {
     const pixels = canvas2dContext.getImageData(0, 0, this.canvas.width, this.canvas.height);
     const pdata = pixels.data;
     const l = pdata.length / 4;
-    // when painting the brush on top of the existing data, iOS does not necessarily sets all pixels to 0 (unlike chrome), 
+    // when painting the brush on top of the existing data, iOS does not necessarily sets all pixels to 0 (unlike chrome),
     // but it only sets the transparency to 1 or 0. So we only count the pixels for which transparency is lower or equal to 1.
-    let count = pdata.reduce((previous, accum, index) => previous += (index % 4 === 3 && accum <= 1 ? 1 : 0), 0);
+    const count = pdata.reduce((previous, accum, index) => previous += (index % 4 === 3 && accum <= 1 ? 1 : 0), 0);
     return Math.round((count / l) * 100);
   }
 
