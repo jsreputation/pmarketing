@@ -5,7 +5,8 @@ import {
   ViewChild,
   AfterViewInit,
   Output,
-  EventEmitter, OnInit
+  EventEmitter,
+  OnInit
 } from '@angular/core';
 
 interface Coords {
