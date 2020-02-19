@@ -69,7 +69,7 @@ export class PuzzleListComponent implements OnChanges, OnDestroy {
   // in the UX only mark the 1st active puzzle as active
   public isActive(puzzle: IStampCard): boolean | undefined {
     if (!puzzle.stamps) {
-      throw new Error(`stamps is required`);
+      throw new Error('stamps is required');
     }
 
     // if there is no puzzle in list, it should never happen but return false
@@ -90,7 +90,7 @@ export class PuzzleListComponent implements OnChanges, OnDestroy {
 
     const totalSlots = puzzle.displayProperties.totalSlots;
     if (!totalSlots) {
-      throw new Error(`totalSlots is required`);
+      throw new Error('totalSlots is required');
     }
 
     // if there is no more available stamp return false

@@ -53,7 +53,7 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
       .pipe(
         switchMap(res =>
           !(res.data && res.data.attributes)
-            ? throwError(`Unable to find Response`)
+            ? throwError('Unable to find Response')
             : of({
               engagementId: res.data.attributes.engagement_id,
               display_properties: res.data.attributes.display_properties || {}

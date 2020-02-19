@@ -87,7 +87,7 @@ describe('ResetPasswordComponent', () => {
       expect(notificationServiceSpy).toHaveBeenCalledWith('Passwords do not match.');
     });
 
-    it('should reset password and call login', (done: DoneFn) => {
+    it('should reset password and call login', (done: jest.DoneCallback) => {
       const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>
       (AuthenticationService as Type<AuthenticationService>);
       const authenticationServiceSpy = spyOn(authenticationService, 'resetPassword').and.returnValue(

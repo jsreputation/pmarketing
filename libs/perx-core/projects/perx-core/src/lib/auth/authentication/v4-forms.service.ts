@@ -41,7 +41,7 @@ export class V4FormsService implements IFormsService {
                 required: true,
                 payload: {
                   type: SurveyQuestionType.phone,
-                  default_country_code: '+63'
+                  default_country_code: '+65'
                 }
               },
               {

@@ -52,7 +52,7 @@ export class RewardDetailComponent implements OnInit {
       .subscribe(() => {
         this.ntfcService.addPopup({
           title: `Successfully purchased ${this.rewardData.name}.`,
-          buttonTxt: `Got it`
+          buttonTxt: 'Got it'
         });
       });
   }
