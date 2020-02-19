@@ -30,7 +30,15 @@ import {
   ConfigModule,
   CampaignModule,
   MerchantsModule,
-  RewardPopupComponent, FeedItemPopupComponent, SettingsModule, ConfigService, AuthenticationService, IConfig, ThemesService, TokenStorage, LanguageService,
+  RewardPopupComponent,
+  FeedItemPopupComponent,
+  SettingsModule,
+  ConfigService,
+  AuthenticationService,
+  IConfig,
+  ThemesService,
+  TokenStorage,
+  LanguageService,
 } from '@perx/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -165,7 +173,10 @@ export const appInit =
   ],
   providers: [
     { provide: ErrorHandler, useClass: SentryErrorHandler },
-    { provide: APP_INITIALIZER, useFactory: appInit, deps: [TranslateService, ConfigService, AuthenticationService, ThemesService], multi: true }
+    {
+      provide: APP_INITIALIZER, useFactory: appInit,
+      deps: [TranslateService, ConfigService, AuthenticationService, ThemesService], multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
