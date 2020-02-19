@@ -7,7 +7,7 @@ export function getRootCredentials(): Promise<ICredentials> {
 
   const rootEndpoint = apiConfig.root;
   if (rootEndpoint === undefined) {
-    throw new Error(`No root endpoints found`);
+    throw new Error('No root endpoints found');
   }
   return Promise.resolve(rootEndpoint);
 }

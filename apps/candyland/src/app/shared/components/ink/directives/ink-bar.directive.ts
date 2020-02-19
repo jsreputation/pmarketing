@@ -37,9 +37,9 @@ export function _MAT_INK_BAR_POSITIONER_FACTORY(): _MatInkBarPositioner {
 @Directive({
   selector: 'cl-ink-bar',
   host: {
-    '[class.cl-ink-bar]': `!triangle`,
-    '[class.cl-triangle-bar]': `triangle`,
-    '[class._mat-animation-noopable]': `_animationMode === 'NoopAnimations'`,
+    '[class.cl-ink-bar]': '!triangle',
+    '[class.cl-triangle-bar]': 'triangle',
+    '[class._mat-animation-noopable]': '_animationMode === \'NoopAnimations\'',
   },
 })
 

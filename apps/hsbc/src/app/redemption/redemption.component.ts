@@ -22,7 +22,7 @@ export class RedemptionComponent implements OnInit {
 
   public ngOnInit(): void {
     if (isEmptyString(this.route.snapshot.paramMap.get('id'))) {
-      throw new Error(`id is required`);
+      throw new Error('id is required');
     }
 
     this.voucherId = parseInt(this.route.snapshot.paramMap.get('id') as string, 10);
