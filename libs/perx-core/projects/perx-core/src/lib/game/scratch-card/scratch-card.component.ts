@@ -89,7 +89,7 @@ export class ScratchCardComponent implements AfterViewInit {
     if (this.lastPoint === lastPoint) {
       this.lastPoint = currentPoint;
     }
-    const constFilledInPixels = this.getFilledInPixels(32);
+    const constFilledInPixels = this.getFilledInPixels();
     if (constFilledInPixels) {
       this.handlePercentage(constFilledInPixels);
     }
@@ -104,7 +104,9 @@ export class ScratchCardComponent implements AfterViewInit {
 
     // the crossOrigin flag needs to be setup before src otherwise it is too late
     image.crossOrigin = 'Anonymous';
-    image.src = this.patchUrl(this.coverImg);
+    if (this.coverImg) {
+      image.src = this.patchUrl(this.coverImg);
+    }
     const canvas2dContext = this.canvas.getContext('2d');
     image.onload = () => {
       if (this.canvas && canvas2dContext) {
@@ -156,7 +158,7 @@ export class ScratchCardComponent implements AfterViewInit {
     return Math.atan2(point2.x - point1.x, point2.y - point1.y);
   }
 
-  public getFilledInPixels(stride: number): number {
+  public getFilledInPixels(): number {
     if (!this.canvas) {
       return 0;
     }
@@ -165,20 +167,13 @@ export class ScratchCardComponent implements AfterViewInit {
     if (!canvas2dContext) {
       return 0;
     }
-    if (!stride || stride < 1) { stride = 1; }
     const pixels = canvas2dContext.getImageData(0, 0, this.canvas.width, this.canvas.height);
     const pdata = pixels.data;
-    const l = pdata.length;
-    const total = (l / stride);
-    let count = 0;
-
-    // Iterate over all pixels
-    for (let i = 0; i < l; i += stride) {
-      if (pdata[i] === 0) {
-        count++;
-      }
-    }
-    return Math.round((count / total) * 100);
+    const l = pdata.length / 4;
+    // when painting the brush on top of the existing data, iOS does not necessarily sets all pixels to 0 (unlike chrome), 
+    // but it only sets the transparency to 1 or 0. So we only count the pixels for which transparency is lower or equal to 1.
+    let count = pdata.reduce((previous, accum, index) => previous += (index % 4 === 3 && accum <= 1 ? 1 : 0), 0);
+    return Math.round((count / l) * 100);
   }
 
   private getMouse(e: TouchEvent | MouseEvent, canvas: HTMLElement): Coords {
@@ -200,10 +195,9 @@ export class ScratchCardComponent implements AfterViewInit {
   }
 
   public handlePercentage(filledInPixels: number): void {
-    const cont = document.getElementById('js_container');
-    filledInPixels = filledInPixels || 0;
-    // console.log(filledInPixels + '%');
-    if (this.isDrawing && filledInPixels > this.uncoverPortionToTrigger && (cont as HTMLElement).children.length > 1 && this.canvas) {
+    const cont = document.getElementById('js_container') as HTMLElement;
+
+    if (this.isDrawing && filledInPixels > this.uncoverPortionToTrigger && cont.children.length > 1 && this.canvas) {
       this.isDrawing = false;
       this.completed.emit();
     }
