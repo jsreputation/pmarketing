@@ -60,7 +60,8 @@ import {
   LocaleIdFactory,
   SettingsModule,
   AuthenticationService,
-  ThemesService
+  ThemesService,
+  IConfig
 } from '@perx/core';
 
 import * as Hammer from 'hammerjs';
@@ -71,7 +72,7 @@ import { AppComponent } from './app.component';
 import { SignUpModule } from './sign-up/sign-up.module';
 
 import { environment } from '../environments/environment';
-import {switchMap} from 'rxjs/operators';
+import {switchMap, tap} from 'rxjs/operators';
 
 // https://medium.com/angular-in-depth/gestures-in-an-angular-application-dde71804c0d0
 // to override default settings
@@ -114,8 +115,8 @@ export const setLanguage = (
   authService: AuthenticationService,
   themesService: ThemesService ) =>
   () => new Promise((resolve) => {
-    translateService.setDefaultLang(environment.defaultLang);
     configService.readAppConfig().pipe(
+      tap((config: IConfig<void>) => translateService.setDefaultLang(config.defaultLang || 'en')),
       switchMap(() => authService.getAppToken()),
       switchMap(() => themesService.getThemeSetting())
     ).toPromise().then(() => resolve());
