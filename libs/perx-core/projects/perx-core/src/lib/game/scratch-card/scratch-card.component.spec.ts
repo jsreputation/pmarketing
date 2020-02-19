@@ -34,10 +34,10 @@ describe('ScratchCardComponent', () => {
   it('getFilledInPixels', () => {
     component.canvas.width = 50;
     component.canvas.height = 130;
-    expect(component.getFilledInPixels(5)).toBeTruthy();
+    expect(component.getFilledInPixels()).toBeTruthy();
     // @ts-ignore
     component.canvas = null;
-    expect(component.getFilledInPixels(5)).toBe(0);
+    expect(component.getFilledInPixels()).toBe(0);
   });
 
   it('lastPointOffset', fakeAsync(() => {
@@ -68,7 +68,7 @@ describe('ScratchCardComponent', () => {
     component.lastPoint = { x: 1, y: 2 };
     component.canvas.height = 500;
     component.canvas.width = 30;
-    component.getFilledInPixels(-32);
+    component.getFilledInPixels();
     component.handleMouseDown(new TouchEvent('touch', {
       touches: [
         new Touch({
