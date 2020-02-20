@@ -137,7 +137,8 @@ describe('WhistlerAuthenticationService', () => {
     const checkError = (err) => expect(err).toContain('Not implement yet');
     // whService.getAppToken().subscribe(() => { }, checkError);
     whService.forgotPassword('').subscribe(() => { }, checkError);
-    whService.resetPassword({ phone: 'string', newPassword: 'string', otp: 'string', passwordConfirmation: 'string' }).subscribe(() => { }, checkError);
+    whService.resetPassword({ phone: 'string', newPassword: 'string', otp: 'string', passwordConfirmation: 'string' })
+      .subscribe(() => { }, checkError);
     whService.resendOTP('99').subscribe(() => { }, checkError);
     whService.signup({ phone: 'string;', password: 'string;', passwordConfirmation: 'string;' }).subscribe(() => { }, checkError);
     whService.requestVerificationToken('').subscribe(() => { }, checkError);
