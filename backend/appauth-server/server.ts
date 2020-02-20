@@ -58,8 +58,6 @@ app.get(`${BASE_HREF}manifest.webmanifest`, manifest(getTokens, appPath));
 
 app.get(`${BASE_HREF}lang`, language());
 
-app.all(`*`, (_, res) => res.status(500).end());
-
 if (process.env.PRODUCTION) {
   console.log('production mode ON', appPath);
   app.set('view engine', 'html');
