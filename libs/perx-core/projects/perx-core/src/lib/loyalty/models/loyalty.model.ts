@@ -21,6 +21,9 @@ export interface ILoyalty {
   pointsBalance: number;
   currencyBalance?: number;
   currency?: string;
+  nextTierPoints?: number;
+  nextTierName?: string;
+  highestTier?: string;
   expiringPoints?: IExpiringPoints[];
   cardId?: number;
 }
