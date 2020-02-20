@@ -172,7 +172,7 @@ export class V4LoyaltyService extends LoyaltyService {
       currencyBalance: loyalty.points_balance_converted_to_currency,
       currency: loyalty.points_currency,
       nextTierPoints: nextTier ? nextTier.points_difference : 0,
-      nextTierName: nextTier? nextTier.name : '',
+      nextTierName: nextTier ? nextTier.name : '',
       highestTier,
       expiringPoints: loyalty.aging_points && loyalty.aging_points.map(aging => ({
         expireDate: aging.expiring_on_date,
