@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {
-  GameType,
   IEngagementTransaction,
   IGame,
   IGameService,
@@ -22,22 +21,13 @@ import {HttpErrorResponse} from '@angular/common/http';
   styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit {
-  public isEnabled: boolean = false;
-  public buttonText: string;
-  public title: string;
-  public subTitle: string;
   public numberOfTaps: number | null;
-  public isGameAvailable: boolean = false;
-  public isButtonDisabled: boolean = true;
+  public title: string;
   public gameData$: Observable<IGame>;
   public game: IGame;
   public gameTransaction: IEngagementTransaction;
   private destroy$: Subject<any> = new Subject();
-  public backgroundImage: string = '';
   public willWin: boolean = false;
-  public pinata: GameType = GameType.pinata;
-  public shakeTheTree: GameType = GameType.shakeTheTree;
-  public scratch: GameType = GameType.scratch;
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -76,29 +66,11 @@ export class GameComponent implements OnInit {
               return;
             }
             this.game = game;
-            this.buttonText = game.texts.button || 'Start playing';
             this.title = game.texts.title || 'Shake the Pinata';
-            this.subTitle = game.texts.subTitle || 'Shake the Pinata and Win!';
-            this.isGameAvailable = true;
-            this.isButtonDisabled = false;
             if (game.config && ('nbTaps' in game.config)) {
               this.numberOfTaps = game.config && game.config.nbTaps;
             }
-
-            if (game.type === GameType.shakeTheTree) {
-              this.backgroundImage = game.backgroundImg || 'assets/tree/background.jpg';
-            }
-
-            if (game.type === GameType.pinata) {
-              this.backgroundImage = game.backgroundImg || '';
-            }
-
-            if (game.type === GameType.scratch) {
-              this.backgroundImage = game.backgroundImg || '';
-            }
-
             if (game.remainingNumberOfTries !== null && game.remainingNumberOfTries <= 0) {
-              this.isButtonDisabled = true; // important
               this.notificationService.addPopup({
                 title: game.results.noOutcome && game.results.noOutcome.title,
                 text: game.results.noOutcome && game.results.noOutcome.subTitle,
@@ -148,11 +120,9 @@ export class GameComponent implements OnInit {
             if (this.game.results && this.game.results.outcome) {
               this.gameOutcomeService.setOutcome(this.game.results.outcome);
               this.willWin = true;
-              this.isButtonDisabled = false;
             }
           } else {
             this.willWin = false;
-            this.isButtonDisabled = false;
           }
         },
         () => {
@@ -182,20 +152,20 @@ export class GameComponent implements OnInit {
       );
   }
 
-  public goBack(): void {
-    if (this.isEnabled) {
-      this.notificationService.addPopup({
-        title: 'Do you want to quit now?',
-        text: 'By leaving, your progress will not be saved.', // You’ve got a “Shake the Tree” reward!
-        buttonTxt2: 'Keep playing',
-        buttonTxt: 'Quit game',
-        afterClosedCallBack: this,
-        panelClass: 'custom-class'
-      });
-    } else {
-      this.location.back();
-    }
-  }
+  // public goBack(): void {
+  //   if (this.isEnabled) {
+  //     this.notificationService.addPopup({
+  //       title: 'Do you want to quit now?',
+  //       text: 'By leaving, your progress will not be saved.', // You’ve got a “Shake the Tree” reward!
+  //       buttonTxt2: 'Keep playing',
+  //       buttonTxt: 'Quit game',
+  //       afterClosedCallBack: this,
+  //       panelClass: 'custom-class'
+  //     });
+  //   } else {
+  //     this.location.back();
+  //   }
+  // }
 
   public dialogClosed(): void {
     this.location.back();
