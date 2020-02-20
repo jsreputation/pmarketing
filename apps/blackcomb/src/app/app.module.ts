@@ -72,12 +72,12 @@ import { AppComponent } from './app.component';
 import { SignUpModule } from './sign-up/sign-up.module';
 
 import { environment } from '../environments/environment';
-import {switchMap, tap} from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 
 // https://medium.com/angular-in-depth/gestures-in-an-angular-application-dde71804c0d0
 // to override default settings
 export class MyHammerConfig extends HammerGestureConfig {
-  public overrides: any =  {
+  public overrides: any = {
     swipe: { direction: Hammer.DIRECTION_ALL }, // in order to swipe up and down
     pinch: { enable: false },
     rotate: { enable: false }
@@ -113,7 +113,7 @@ export const setLanguage = (
   translateService: TranslateService,
   configService: ConfigService,
   authService: AuthenticationService,
-  themesService: ThemesService ) =>
+  themesService: ThemesService) =>
   () => new Promise((resolve) => {
     configService.readAppConfig().pipe(
       tap((config: IConfig<void>) => translateService.setDefaultLang(config.defaultLang || 'en')),
@@ -162,7 +162,7 @@ export const setLanguage = (
     {
       provide: APP_INITIALIZER,
       useFactory: setLanguage,
-      deps: [TranslateService, ConfigService, AuthenticationService, ThemesService], multi: true 
+      deps: [TranslateService, ConfigService, AuthenticationService, ThemesService], multi: true
     },
     // Locale Id factory ensures the Locale Id matches whatever translation is available in the backend.
     {
