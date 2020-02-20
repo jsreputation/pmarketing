@@ -1,5 +1,7 @@
 <div class="main-container">
-  <img src="assets/logo.png">
+  <a routerLink="/">
+    <img src="assets/logo.png">
+  </a>
   <div class="translate-switch">
     <mat-form-field>
       <mat-select [(value)]="currentSelectedLanguage" (selectionChange)="switchLanguage()">
