@@ -22,7 +22,7 @@ describe('LoginComponent', () => {
   const configServiceStub = {
     readAppConfig: () => of()
   };
-  
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
