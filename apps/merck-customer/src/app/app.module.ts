@@ -152,7 +152,10 @@ export const setLanguage = (
   providers: [
     // { provide: LOCALE_ID, useValue: 'zh' },
     { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true },
-    { provide: APP_INITIALIZER, useFactory: setLanguage, deps: [TranslateService, ConfigService, AuthenticationService, ThemesService], multi: true }
+    {
+      provide: APP_INITIALIZER, useFactory: setLanguage,
+      deps: [TranslateService, ConfigService, AuthenticationService, ThemesService], multi: true
+    }
   ],
   bootstrap: [AppComponent],
   entryComponents: [CustomSnackbarComponent, FilterDialogComponent]
