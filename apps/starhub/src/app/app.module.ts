@@ -63,7 +63,7 @@ import { environment } from '../environments/environment';
 import * as Sentry from '@sentry/browser';
 import { tap, switchMap } from 'rxjs/operators';
 import { TranslateService, TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import {ScratchComponent, ShakeComponent, TapComponent} from '@perx/blackcomb-pages';
+import { ScratchComponent, ShakeComponent, TapComponent } from '@perx/blackcomb-pages';
 
 Sentry.init({
   dsn: 'https://b7939e78d33d483685b1c82e9c076384@sentry.io/1873560'

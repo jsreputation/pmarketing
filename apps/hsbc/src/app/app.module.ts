@@ -1,4 +1,4 @@
-import {BrowserModule, Title} from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -61,7 +61,7 @@ export const setLanguage = (
   translateService: TranslateService,
   configService: ConfigService,
   authService: AuthenticationService,
-  themesService: ThemesService ) =>
+  themesService: ThemesService) =>
   () => new Promise((resolve) => {
     configService.readAppConfig().pipe(
       tap((config: IConfig<void>) => translateService.setDefaultLang(config.defaultLang || 'en')),
@@ -86,8 +86,8 @@ export const setLanguage = (
     // PuzzleListComponent, // mock service/component
   ],
   imports: [
-    ConfigModule.forRoot({...environment}),
-    SettingsModule.forRoot({...environment}),
+    ConfigModule.forRoot({ ...environment }),
+    SettingsModule.forRoot({ ...environment }),
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -133,10 +133,10 @@ export const setLanguage = (
     {
       provide: APP_INITIALIZER,
       useFactory: setLanguage,
-      deps: [TranslateService, ConfigService, AuthenticationService, ThemesService], multi: true 
+      deps: [TranslateService, ConfigService, AuthenticationService, ThemesService], multi: true
     },
-    {provide: APP_BASE_HREF, useValue: environment.baseHref },
-    {provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true},
+    { provide: APP_BASE_HREF, useValue: environment.baseHref },
+    { provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true },
     // { provide: ConfigService, useValue: configServiceStub },
     // { provide: StampService, useValue: stampServiceStub },
     // { provide: ICampaignService, useValue: campaignServiceStub },

@@ -83,7 +83,7 @@ export const setLanguage = (
   translateService: TranslateService,
   configService: ConfigService,
   authService: AuthenticationService,
-  themesService: ThemesService ) =>
+  themesService: ThemesService) =>
   () => new Promise((resolve) => {
     configService.readAppConfig().pipe(
       tap((config: IConfig<void>) => translateService.setDefaultLang(config.defaultLang || 'en')),
@@ -92,7 +92,7 @@ export const setLanguage = (
     ).toPromise().then(() => resolve());
   });
 
-  
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -151,7 +151,8 @@ export const setLanguage = (
     {
       provide: APP_INITIALIZER,
       useFactory: setLanguage,
-      deps: [TranslateService, ConfigService, AuthenticationService, ThemesService], multi: true },
+      deps: [TranslateService, ConfigService, AuthenticationService, ThemesService], multi: true
+    },
     { provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true }
   ],
   entryComponents: [PopupComponent],

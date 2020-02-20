@@ -73,7 +73,7 @@ export const setLanguage = (
   translateService: TranslateService,
   configService: ConfigService,
   authService: AuthenticationService,
-  themesService: ThemesService ) =>
+  themesService: ThemesService) =>
   () => new Promise((resolve) => {
     configService.readAppConfig().pipe(
       tap((config: IConfig<void>) => translateService.setDefaultLang(config.defaultLang || 'en')),
@@ -151,7 +151,7 @@ export const setLanguage = (
   ],
   providers: [
     // { provide: LOCALE_ID, useValue: 'zh' },
-    { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true },
     { provide: APP_INITIALIZER, useFactory: setLanguage, deps: [TranslateService, ConfigService, AuthenticationService, ThemesService], multi: true }
   ],
   bootstrap: [AppComponent],
