@@ -61,7 +61,7 @@ export const setLanguage = (
   themesService: ThemesService) =>
   () => new Promise((resolve) => {
     configService.readAppConfig().pipe(
-      tap((config: IConfig<void>) => translateService.setDefaultLang(config.defaultLang || 'en')),
+      tap((config: IConfig<void>) => translateService.setDefaultLang(config.defaultLang || 'zh')),
       switchMap(() => authService.getAppToken()),
       switchMap(() => themesService.getThemeSetting())
     ).toPromise().then(() => resolve());
