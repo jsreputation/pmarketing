@@ -6,7 +6,9 @@
     >
       {{backArrowIcon}}
     </mat-icon>
-    <img *ngIf="!headerTitle" class="logo" [attr.src]="theme.properties['--logo']" [attr.alt]="theme.properties['--title']" />
+    <a [routerLink]="[ '/home' ]">
+      <img *ngIf="!headerTitle" class="logo" [attr.src]="theme.properties['--logo']" [attr.alt]="theme.properties['--title']" />
+    </a>
     <span *ngIf="headerTitle" class="header-title">{{headerTitle}}</span>
     <!-- ghost stuff-->
     <span></span>
