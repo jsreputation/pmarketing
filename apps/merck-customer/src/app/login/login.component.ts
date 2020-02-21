@@ -21,6 +21,8 @@ import {
   AuthenticationService,
   NotificationService,
   ProfileService,
+  ConfigService,
+  IConfig,
 } from '@perx/core';
 
 import {
@@ -28,7 +30,6 @@ import {
   PageProperties,
   BarSelectedItem,
 } from '../page-properties';
-import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'mc-login',
@@ -64,11 +65,11 @@ export class LoginComponent implements OnInit, PageAppearence {
     private authService: AuthenticationService,
     private notificationService: NotificationService,
     private profileService: ProfileService,
+    private configService: ConfigService,
     private translateService: TranslateService,
     private cd: ChangeDetectorRef
   ) {
     this.initForm();
-    this.preAuth = environment.preAuth;
   }
 
   private initForm(): void {
@@ -81,7 +82,11 @@ export class LoginComponent implements OnInit, PageAppearence {
 
   public ngOnInit(): void {
     this.currentSelectedLanguage = this.translateService.currentLang || this.translateService.defaultLang;
-
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig<void>) => {
+        this.preAuth = config.preAuth as boolean;
+      }
+    );
 
     if (this.preAuth && isPlatformBrowser(this.platformId) && !this.authService.getUserAccessToken()) {
       this.authService.autoLogin().subscribe(

@@ -3,7 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { LoginComponent } from './login.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthenticationService, ProfileService } from '@perx/core';
+import { AuthenticationService, ProfileService, ConfigService } from '@perx/core';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import {
@@ -30,6 +30,9 @@ describe('LoginComponent', () => {
         questionaire_answered: false
       })
     };
+    const configServiceStub = {
+      readAppConfig: () => of()
+    };
 
     TestBed.configureTestingModule({
       declarations: [LoginComponent],
@@ -55,6 +58,7 @@ describe('LoginComponent', () => {
             getAppAccessToken: () => 'token'
           }
         },
+        { provide: ConfigService, useValue: configServiceStub },
         { provide: ProfileService, useValue: profileStub }
       ]
     })

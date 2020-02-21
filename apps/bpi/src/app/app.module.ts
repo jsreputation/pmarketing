@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,7 +13,12 @@ import {
   StampModule,
   UtilsModule,
   ConfigModule,
-  ProfileModule
+  ProfileModule,
+  ConfigService,
+  AuthenticationService,
+  IConfig,
+  TokenStorage,
+  LanguageService
 } from '@perx/core';
 import { HeaderComponent } from './header/header.component';
 import { GameComponent } from './game/game.component';
@@ -26,7 +31,21 @@ import {
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LandingComponent } from './landing/landing.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { TranslateService, TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { tap, switchMap } from 'rxjs/operators';
+
+export const setLanguage = (
+  translateService: TranslateService,
+  configService: ConfigService,
+  authService: AuthenticationService
+) =>
+  () => new Promise((resolve) => {
+    configService.readAppConfig().pipe(
+      tap((config: IConfig<void>) => translateService.setDefaultLang(config.defaultLang || 'en')),
+      switchMap(() => authService.getAppToken()),
+    ).toPromise().then(() => resolve());
+  });
 
 @NgModule({
   declarations: [
@@ -57,9 +76,22 @@ import { HttpClientModule } from '@angular/common/http';
     CampaignModule,
     StampModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        deps: [HttpClient, ConfigService, TokenStorage],
+        useClass: LanguageService
+      }
+    })
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: setLanguage,
+      deps: [TranslateService, ConfigService, AuthenticationService], multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,7 +13,13 @@ import {
   GameModule,
   UtilsModule,
   ConfigModule,
-  ProfileModule
+  ProfileModule,
+  ConfigService,
+  AuthenticationService,
+  ThemesService,
+  IConfig,
+  TokenStorage,
+  LanguageService
 } from '@perx/core';
 import { GameComponent } from './game/game.component';
 import { ActivationCodeComponent } from './activation-code/activation-code.component';
@@ -39,7 +45,22 @@ import { LoginComponent } from './login/login.component';
 import { environment } from '../environments/environment';
 import { FormsModule } from '@angular/forms';
 import { ResultComponent } from './result/result.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { TranslateService, TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { tap, switchMap } from 'rxjs/operators';
+
+export const setLanguage = (
+  translateService: TranslateService,
+  configService: ConfigService,
+  authService: AuthenticationService,
+  themesService: ThemesService) =>
+  () => new Promise((resolve) => {
+    configService.readAppConfig().pipe(
+      tap((config: IConfig<void>) => translateService.setDefaultLang(config.defaultLang || 'en')),
+      switchMap(() => authService.getAppToken()),
+      switchMap(() => themesService.getThemeSetting())
+    ).toPromise().then(() => resolve());
+  });
 
 @NgModule({
   declarations: [
@@ -78,10 +99,22 @@ import { HttpClientModule } from '@angular/common/http';
     AuthenticationModule,
     FormsModule,
     UtilsModule,
-    HttpClientModule
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        deps: [HttpClient, ConfigService, TokenStorage],
+        useClass: LanguageService
+      }
+    }),
   ],
   providers: [
-    DatePipe
+    DatePipe,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: setLanguage,
+      deps: [TranslateService, ConfigService, AuthenticationService, ThemesService], multi: true
+    },
   ],
   bootstrap: [AppComponent]
 })
