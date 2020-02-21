@@ -20,7 +20,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 describe('CategoryComponent', () => {
   let component: CategoryComponent;
   let fixture: ComponentFixture<CategoryComponent>;
-  const rewardsServiceStub = {
+  const rewardsServiceStub: Partial<RewardsService> = {
     getRewards: () => of(rewards),
     getCatalog: () => of(catalogs[0])
   };
@@ -33,8 +33,8 @@ describe('CategoryComponent', () => {
       }
     }
   };
-  const routerStub = {
-    navigate: () => {}
+  const routerStub: Partial<Router> = {
+    navigate: () => Promise.resolve(true)
   };
   const matBottomSheetStub = {
     open: () => {}

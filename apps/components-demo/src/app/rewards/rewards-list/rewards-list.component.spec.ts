@@ -18,13 +18,13 @@ describe('RewardsListComponent', () => {
   let component: RewardsListComponent;
   let fixture: ComponentFixture<RewardsListComponent>;
 
-  const themesServiceStub = {
+  const themesServiceStub: Partial<ThemesService> = {
     getThemeSetting: () => of()
   };
 
   beforeEach(async(() => {
-    const rewardsServiceStub = {
-      getAllRewards: () => ({ subscribe: () => ({}) })
+    const rewardsServiceStub: Partial<RewardsService> = {
+      getAllRewards: () => (of([]))
     };
     TestBed.configureTestingModule({
       imports: [RewardsModule],

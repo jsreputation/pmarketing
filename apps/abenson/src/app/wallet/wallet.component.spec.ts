@@ -10,7 +10,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 describe('WalletComponent', () => {
   let component: WalletComponent;
   let fixture: ComponentFixture<WalletComponent>;
-  const vouchersServiceStub = {
+  const vouchersServiceStub: Partial<IVoucherService> = {
     getAll: (): Observable<Voucher[]> => of([])
   };
   const configServiceStub: Partial<ConfigService> = {

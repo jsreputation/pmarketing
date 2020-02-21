@@ -15,11 +15,11 @@ describe('CampaignsComponent', () => {
   let campaigndService: ICampaignService;
   let gameService: IGameService;
   let macaronService: MacaronService;
-  const campaignServiceStub = {
+  const campaignServiceStub: Partial<ICampaignService>  = {
     getCampaigns: () => of([])
   };
 
-  const gameServiceStub = {
+  const gameServiceStub: Partial<IGameService> = {
     getGamesFromCampaign: () => of(game)
   };
 

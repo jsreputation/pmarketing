@@ -50,11 +50,11 @@ describe('RewardsCardsComponent', () => {
       }
     }
   ];
-  const rewardsServiceStub = {
+  const rewardsServiceStub: Partial<RewardsService> = {
     getAllRewards: () => of()
   };
-  const macaronServiceStub = {
-    getMacaron: () => {}
+  const macaronServiceStub: Partial<MacaronService> = {
+    getMacaron: () => null
   };
 
   beforeEach(async(() => {

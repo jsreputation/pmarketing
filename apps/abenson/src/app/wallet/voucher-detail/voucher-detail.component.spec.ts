@@ -6,8 +6,7 @@ import { IVoucherService, VouchersModule } from '@perx/core';
 describe('VoucherDetailComponent', () => {
   let component: VoucherDetailComponent;
   let fixture: ComponentFixture<VoucherDetailComponent>;
-  const vouchersServiceStub = {
-
+  const vouchersServiceStub: Partial<IVoucherService> = {
   };
 
   beforeEach(async(() => {

@@ -10,7 +10,7 @@ import { NgxBarcodeModule } from 'ngx-barcode';
 describe('RedeemComponent', () => {
   let component: RedeemComponent;
   let fixture: ComponentFixture<RedeemComponent>;
-  const vouchersServiceStub = {
+  const vouchersServiceStub: Partial<IVoucherService> = {
     // getAll: () => of([])
   };
 

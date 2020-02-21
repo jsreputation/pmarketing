@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 describe('ChangePasswordComponent', () => {
   let component: ChangePasswordComponent;
   let fixture: ComponentFixture<ChangePasswordComponent>;
-  const notificationServiceStub = { addSnack: () => {} };
+  const notificationServiceStub: Partial<NotificationService> = { addSnack: () => {} };
 
   const authenticationServiceStub: Partial<AuthenticationService> = {
     requestVerificationToken: () => of()

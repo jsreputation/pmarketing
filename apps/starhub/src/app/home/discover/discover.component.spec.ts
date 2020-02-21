@@ -63,13 +63,13 @@ describe('DiscoverComponent', () => {
   const campaignServiceStub: Partial<ICampaignService> = {
     getCampaigns: () => of([])
   };
-  const feedReaderServiceStub = {
+  const feedReaderServiceStub: Partial<FeedReaderService> = {
     getFromUrl: () => of([])
   };
-  const routerStub = {
-    navigate: () => { }
+  const routerStub: Partial<Router> = {
+    navigate: () => Promise.resolve(true)
   };
-  const gameServiceStub = {
+  const gameServiceStub: Partial<IGameService> = {
     getGamesFromCampaign: () => of()
   };
 

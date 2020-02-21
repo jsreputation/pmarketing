@@ -58,10 +58,10 @@ describe('HomeComponent', () => {
   let mockHostFixture: ComponentFixture<MockHostComponent>;
   let mockHostComponent: MockHostComponent;
 
-  const rewardsServiceStub = {
+  const rewardsServiceStub: Partial<RewardsService> = {
     getAllRewards: () => of([])
   };
-  const loyaltyServiceStub = {
+  const loyaltyServiceStub: Partial<LoyaltyService> = {
     getLoyalties: () => of([])
   };
 

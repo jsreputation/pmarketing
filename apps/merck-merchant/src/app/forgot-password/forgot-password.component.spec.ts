@@ -30,7 +30,7 @@ describe('ForgotPasswordComponent', () => {
   let component: ForgotPasswordComponent;
   let fixture: ComponentFixture<ForgotPasswordComponent>;
 
-  const merchantAdminServiceStub = {
+  const merchantAdminServiceStub: Partial<IMerchantAdminService> = {
     forgotPassword: () => of(),
   };
 

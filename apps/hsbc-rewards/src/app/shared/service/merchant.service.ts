@@ -2,6 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+interface IMerchant {
+  id: string;
+  logo: string;
+  phone?: string;
+  firstName: string;
+  lastName: string;
+  branches: any;
+  dateCreated?: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })

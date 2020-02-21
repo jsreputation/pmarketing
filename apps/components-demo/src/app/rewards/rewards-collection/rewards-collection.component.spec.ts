@@ -18,10 +18,10 @@ describe('RewardsCollectionComponent', () => {
   let component: RewardsCollectionComponent;
   let fixture: ComponentFixture<RewardsCollectionComponent>;
 
-  const rewardsServiceStub = {
+  const rewardsServiceStub: Partial<RewardsService> = {
     getAllRewards: () => of([])
   };
-  const themesServiceStub = {
+  const themesServiceStub: Partial<ThemesService> = {
     getThemeSetting: () => of()
   };
 

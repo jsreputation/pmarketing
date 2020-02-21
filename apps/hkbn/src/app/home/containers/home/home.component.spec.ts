@@ -49,14 +49,14 @@ describe('HomeComponent', () => {
   let rewardsService: RewardsService;
   let translateService: TranslateService;
 
-  const themesServiceStub = {
+  const themesServiceStub: Partial<ThemesService> = {
     getThemeSetting: () => of()
   };
-  const loyaltyServiceStub = {
+  const loyaltyServiceStub: Partial<LoyaltyService> = {
     getLoyalty: (): Observable<ILoyalty> => of(mockLoyalty),
     getLoyalties: (): Observable<ILoyalty[]> => of([mockLoyalty])
   };
-  const rewardServiceStub = {
+  const rewardServiceStub: Partial<RewardsService> = {
     getAllRewards: (): Observable<IReward[]> => of([])
   };
   beforeEach(async(() => {

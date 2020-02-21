@@ -15,7 +15,7 @@ import { of } from 'rxjs';
 describe('SummaryComponent', () => {
   let component: LoyaltySummaryComponent;
   let fixture: ComponentFixture<LoyaltySummaryComponent>;
-  const loyaltyServiceStub = {
+  const loyaltyServiceStub: Partial<LoyaltyService> = {
     getLoyalties: () => of([])
   };
   const mockProfile: IProfile = {
@@ -24,7 +24,7 @@ describe('SummaryComponent', () => {
     firstName: '',
     lastName: ''
   };
-  const profileServiceStub = {
+  const profileServiceStub: Partial<ProfileService> = {
     whoAmI: () => of(mockProfile)
   };
 

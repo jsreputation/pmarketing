@@ -44,7 +44,7 @@ describe('WhistlerVouchersService', () => {
     howToRedeem: 'string;',
   };
 
-  const rewardsServiceStub = {
+  const rewardsServiceStub: Partial<RewardsService> = {
     getReward: () => of(mockReward)
   };
 

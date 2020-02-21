@@ -18,20 +18,20 @@ describe('CongratsComponent', () => {
   let component: CongratsComponent;
   let fixture: ComponentFixture<CongratsComponent>;
 
-  const gameServiceStub = {
+  const gameServiceStub: Partial<IGameService> = {
     play: () => of()
   };
 
-  const gameOutcomeServiceStub = {
-    getVouchersRewarded: () => {},
+  const gameOutcomeServiceStub: Partial<GameOutcomeService> = {
+    getVouchersRewarded: () => [],
     clearVoucherList: () => {}
   };
 
-  const analyticsServiceStub = {
+  const analyticsServiceStub: Partial<AnalyticsService> = {
     addEvent: () => {}
   };
 
-  const routerStub = { navigateByUrl: () => ({}) };
+  const routerStub: Partial<Router> = { navigateByUrl: () => Promise.resolve(true) };
 
   beforeEach(async(() => {
 

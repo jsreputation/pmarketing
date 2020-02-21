@@ -21,8 +21,9 @@ import { TranslateModule } from '@ngx-translate/core';
 describe('RedeemComponent', () => {
   let component: RedeemComponent;
   let fixture: ComponentFixture<RedeemComponent>;
-  history.pushState({ data: '{"id": 1234, "name": "John", "rewardId": 149}' }, '', '');
-  const locationStub = {
+
+  history.pushState({data: '{"id": 1234, "name": "John", "rewardId": 149}'}, '', '');
+  const locationStub: Partial<Location> = {
     back: () => {
     }
   };
@@ -65,12 +66,12 @@ describe('RedeemComponent', () => {
     howToRedeem: 'test',
   };
 
-  const rewardsServiceStub = {
+  const rewardsServiceStub: Partial<RewardsService> = {
     getReward: () => of(reward),
     // getRewardPricesOptions: () => of()
   };
 
-  const merchantAdminServiceStub = {
+  const merchantAdminServiceStub: Partial<IMerchantAdminService> = {
     issueVoucher: () => of(),
     redeemVoucher: () => of()
   };
