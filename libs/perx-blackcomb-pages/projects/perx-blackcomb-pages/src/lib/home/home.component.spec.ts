@@ -23,7 +23,7 @@ import {
 import { of } from 'rxjs';
 import { MatCardModule, MatDialogModule } from '@angular/material';
 import { GamesCollectionComponent } from './games-collection/games-collection.component';
-import { TranslateModule } from '@ngx-translate/core';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import { profile } from '../mock/profile.mock';
 import { HttpClientModule } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
@@ -33,7 +33,8 @@ import {CatalogsComponent} from '../catalogs/catalogs.component';
 
 const rewardsServiceStub: Partial<RewardsService> = {
   getAllRewards: () => of([]),
-  getRewards: () => of([])
+  getRewards: () => of([]),
+  getCategories: () => of([])
 };
 
 const tokenStorageStub: Partial<TokenStorage> = {
@@ -76,6 +77,10 @@ const reward: IReward = {
   termsAndConditions: '',
 };
 
+const translateServiceStub: Partial<TranslateService> = {
+  get: () => of()
+};
+
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
@@ -111,6 +116,7 @@ describe('HomeComponent', () => {
         { provide: RewardsService, useValue: rewardsServiceStub },
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
         { provide: ProfileService, useValue: profileService },
+        { provide: TranslateService, useValue: translateServiceStub },
         { provide: IGameService, useValue: gameSvcStub },
         { provide: ThemesService, useValue: themesServiceStub },
         { provide: ConfigService, useValue: configServiceStub },
