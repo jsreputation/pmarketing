@@ -23,7 +23,7 @@ describe('HeaderComponent', () => {
   it('should show test title', () => {
     component.title = 'test title';
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('strong').innerText).toEqual(
+    expect(fixture.nativeElement.querySelector('strong').textContent).toContain(
       'test title'
     );
   });

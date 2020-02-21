@@ -7,13 +7,10 @@
     @include game-headline;
 
     margin-top: $app-margin;
-    color: white;
   }
 
   h3 {
     @include game-subheadline;
-
-    color: white;
   }
 }
 
@@ -23,4 +20,8 @@
 
 .game-footer {
   @include game-cta;
+}
+
+.nullBlock {
+  height: 4.8rem;
 }

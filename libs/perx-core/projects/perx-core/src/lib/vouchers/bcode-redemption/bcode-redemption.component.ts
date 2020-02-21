@@ -24,7 +24,7 @@ export class BcodeRedemptionComponent implements OnChanges {
   @Input()
   public useMinimalStyle: boolean = false;
 
-  public bCode: string = ``;
+  public bCode: string = '';
 
   @Input('voucher')
   public voucher$: Observable<IVoucher>;
