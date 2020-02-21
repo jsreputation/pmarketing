@@ -14,7 +14,7 @@ describe('CongratsComponent', () => {
     navigate: jasmine.createSpy('navigate')
   };
 
-  const stampServiceStub = {
+  const stampServiceStub: Partial<StampService> = {
     // @ts-ignore
     getCards: (id: number) => (of([]))
   };

@@ -31,7 +31,7 @@ describe('LayoutComponent', () => {
     $failedAuth: of(true)
   };
 
-  const configServiceStub = {
+  const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of()
   };
 

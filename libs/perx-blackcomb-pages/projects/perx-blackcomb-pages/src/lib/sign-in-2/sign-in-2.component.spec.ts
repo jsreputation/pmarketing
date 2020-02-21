@@ -4,7 +4,7 @@ import { SignIn2Component } from './sign-in-2.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthenticationService, Config, ConfigService, ThemesService } from '@perx/core';
+import {AuthenticationService, Config, ConfigService, ThemesService} from '@perx/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { IWAppAccessTokenResponse } from '@perx/whistler';
@@ -32,15 +32,20 @@ describe('SignIn2Component', () => {
     getThemeSetting: () => of()
   };
 
-  const configServiceStub = {
+  const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of({
-      redirectAfterLogin: '/home'
+      redirectAfterLogin: '/home',
+      apiHost: 'string',
+      production: true,
+      preAuth: true,
+      isWhistler: true,
+      baseHref: ''
     })
   };
 
-  const routerStub = {
-    navigateByUrl: () => {},
-    getCurrentNavigation: () => {}
+  const routerStub: Partial<Router> = {
+    navigateByUrl: () => Promise.resolve(true),
+    getCurrentNavigation: () => null
   };
 
   beforeEach(async(() => {

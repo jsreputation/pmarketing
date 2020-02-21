@@ -15,7 +15,7 @@ describe('BarcodeRedemptionComponent', () => {
   let component: BarcodeRedemptionComponent;
   let fixture: ComponentFixture<BarcodeRedemptionComponent>;
 
-  const voucherServiceStub = {
+  const voucherServiceStub: Partial<IVoucherService> = {
     get: () => of()
   };
 

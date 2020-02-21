@@ -17,7 +17,7 @@ describe('OrderComponent', () => {
   let component: OrderComponent;
   let fixture: ComponentFixture<OrderComponent>;
   history.pushState({data: '{"id": 1234, "name": "John", "rewardId": 149}'}, '', '');
-  const locationStub = {
+  const locationStub: Partial<Location> = {
     back: () => {
     }
   };
@@ -50,7 +50,7 @@ describe('OrderComponent', () => {
     workflowId: null,
   };
 
-  const merchantAdminServiceStub = {
+  const merchantAdminServiceStub: Partial<IMerchantAdminService> = {
     createTransaction: () => of(transaction),
     getMerchantProfile: () => of()
   };
@@ -113,7 +113,7 @@ describe('OrderComponent', () => {
       currency: 'HKD'
     }
   ];
-  const productServiceStub = {
+  const productServiceStub: Partial<ProductService> = {
     getProducts: () => of(products)
   };
 

@@ -11,16 +11,16 @@ const mockProfile = {
   phone: '999'
 };
 
-const profileServiceStub = {
+const profileServiceStub: Partial<ProfileService> = {
   whoAmI: () => of(mockProfile)
 };
 
-const notificationWrapperServiceStub = {
+const notificationWrapperServiceStub: Partial<NotificationWrapperService> = {
   addPopup: () => { },
   addSnack: () => { }
 };
 
-const authenticationServiceStub = {
+const authenticationServiceStub: Partial<AuthenticationService> = {
   verifyOTP: () => of(null),
   requestVerificationToken: () => of(null),
   resendOTP: () => of(null),

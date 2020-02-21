@@ -21,10 +21,10 @@ describe('LocationShortFormatComponent', () => {
     timestamp: Date.now()
   };
 
-  const locationServiceStub = {
+  const locationServiceStub: Partial<LocationsService> = {
     getFromMerchant: () => of()
   };
-  const geoLocationServiceStub = {
+  const geoLocationServiceStub: Partial<GeoLocationService> = {
     positions: () => of(position)
   };
 

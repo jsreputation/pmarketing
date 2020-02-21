@@ -7,9 +7,9 @@ import { RewardsModule, LoyaltyService } from '@perx/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 
-const loyaltyServiceStub = {
+const loyaltyServiceStub: Partial<LoyaltyService> = {
   getLoyalties: () => of([]),
-  getLoyalty: () => of({})
+  getLoyalty: () => of()
 };
 
 describe('RewardConfirmComponent', () => {

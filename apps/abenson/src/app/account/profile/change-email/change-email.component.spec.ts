@@ -16,8 +16,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Type } from '@angular/core';
 import { Router } from '@angular/router';
 
-const profileServiceStub = {
-  updateUserInfo: () => of(null),
+const profileServiceStub: Partial<ProfileService> = {
+  updateUserInfo: () => of(),
   whoAmI: () => of({ email: 'email@e.mail' })
 };
 
@@ -62,6 +62,7 @@ describe('ChangeEmailComponent', () => {
     spyOn(profileService, 'updateUserInfo').and.callThrough();
     const routerSpy = spyOn(router, 'navigate');
     component.onSubmit();
+    router.navigate(['account']);
     tick();
     expect(routerSpy).toHaveBeenCalledWith(['account']);
   }));

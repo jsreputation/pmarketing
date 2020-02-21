@@ -32,14 +32,14 @@ describe('FindPharmacyComponent', () => {
   let component: FindPharmacyComponent;
   let fixture: ComponentFixture<FindPharmacyComponent>;
 
-  const locationServiceStub = {
+  const locationServiceStub: Partial<LocationsService> = {
     getAllLocations: () => of(),
     getTags: () => of()
   };
 
-  const merchantsServiceStub = {
+  const merchantsServiceStub: Partial<IMerchantsService> = {
     getAllMerchants: () => of(),
-    getMerchant: () => of({name: 'merchant-name'})
+    getMerchant: () => of({name: 'merchant-name', id: 1})
   };
 
   const locationsStub = [

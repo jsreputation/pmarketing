@@ -1,4 +1,3 @@
-// import 'jasmine';
 import { async, TestBed, inject } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { MatDialogModule, MatSnackBarModule } from '@angular/material';
@@ -7,7 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { setLanguage } from './app.module';
 import { environment } from 'src/environments/environment';
 
-const translateServiceStub = {
+const translateServiceStub: Partial<TranslateService> = {
   defaultLang: null,
   setDefaultLang(leng: string): void { this.defaultLang = leng; }
 };

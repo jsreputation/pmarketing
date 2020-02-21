@@ -15,8 +15,8 @@ describe('ChangeBarangayComponent', () => {
   let fixture: ComponentFixture<ChangeBarangayComponent>;
   let location: Location;
   let profileService: ProfileService;
-  const profileServiceStub = {
-    setCustomProperties: () => of(null)
+  const profileServiceStub: Partial<ProfileService> = {
+    setCustomProperties: () => of(void 0)
   };
 
   beforeEach(async(() => {

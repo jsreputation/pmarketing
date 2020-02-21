@@ -1,8 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChipListComponent } from './chip-list.component';
-// tslint:disable
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -16,7 +14,6 @@ describe('TagListComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ChipListComponent],
-      schemas: [NO_ERRORS_SCHEMA],
       imports: [
         MatChipsModule,
         MatIconModule,

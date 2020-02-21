@@ -7,8 +7,17 @@
     </div>
   </ng-container>
   <ng-container *ngIf="loyalty$ | async as loyalty; else elseBlockLoyalty">
+    <p class="tier-description">{{loyalty.membershipTierName}} member {{loyalty.membershipTierName === loyalty.highestTier ? ', this is the highest tier' : ''}}</p>
+
     <div class="points" *ngIf="loyalty">
       {{loyalty.pointsBalance | number}}
+    </div>
+
+    <div *ngIf="loyalty.membershipTierName !== loyalty.highestTier" class="progress-bar">
+      <mat-progress-bar mode="determinate" [value]="(loyalty.pointsBalance / loyalty.nextTierPoints) * 100 | number"></mat-progress-bar>
+      <div class="points-to">
+        Points to {{loyalty.nextTierName}}: {{loyalty.nextTierPoints}}
+      </div>
     </div>
     <div>
       {{subTitleFn(loyalty)}}

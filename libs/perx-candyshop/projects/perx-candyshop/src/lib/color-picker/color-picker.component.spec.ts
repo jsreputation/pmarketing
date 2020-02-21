@@ -1,8 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { ColorPickerComponent } from 'projects/perx-candyshop/src/lib/color-picker/color-picker.component';
-// tslint:disable
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ColorPickerComponent } from './color-picker.component';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material';
+import { ColorPickerModule as NgxColorPickerModule } from 'ngx-color-picker';
 
 describe('ClColorPickerComponent', () => {
   let component: ColorPickerComponent;
@@ -11,7 +12,12 @@ describe('ClColorPickerComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ColorPickerComponent],
-      schemas: [NO_ERRORS_SCHEMA],
+      imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        NgxColorPickerModule,
+        MatInputModule
+      ]
     })
       .compileComponents();
   }));

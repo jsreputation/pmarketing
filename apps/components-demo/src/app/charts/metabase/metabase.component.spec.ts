@@ -15,7 +15,7 @@ describe('MetabaseComponent', () => {
     rows: [],
     insights: null
   };
-  const dataServiceStub = {
+  const dataServiceStub: Partial<DataService> = {
     getData: () => of(mockData)
   };
 

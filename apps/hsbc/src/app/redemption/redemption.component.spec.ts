@@ -49,14 +49,14 @@ describe('RedemptionComponent', () => {
     code: 'string;',
     expiry: null,
   };
-  const vouchersServiceStub = {
+  const vouchersServiceStub: Partial<IVoucherService> = {
     get: () => of(mockVoucher)
   };
-  const themesServiceStub = {};
-  const feedReaderServiceStub = {};
-  const authenticationServiceStub = {};
-  const profileServiceStub = {};
-  const configServiceStub = {
+  const themesServiceStub: Partial<ThemesService> = {};
+  const feedReaderServiceStub: Partial<FeedReaderService> = {};
+  const authenticationServiceStub: Partial<AuthenticationService> = {};
+  const profileServiceStub: Partial<ProfileService> = {};
+  const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of()
   };
   const activatedRouteStub = {

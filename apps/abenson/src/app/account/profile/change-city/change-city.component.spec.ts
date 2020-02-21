@@ -15,8 +15,8 @@ import { of, throwError } from 'rxjs';
 import { Location } from '@angular/common';
 import { Type } from '@angular/core';
 
-const profileServiceStub = {
-  setCustomProperties: () => of(null)
+const profileServiceStub: Partial<ProfileService> = {
+  setCustomProperties: () => of()
 };
 describe('ChangeCityComponent', () => {
   let component: ChangeCityComponent;

@@ -5,7 +5,7 @@ import { AuthenticationService } from '../auth/authentication/authentication.ser
 import { Type } from '@angular/core';
 import { of } from 'rxjs';
 
-const authenticationServiceStub = {
+const authenticationServiceStub: Partial<AuthenticationService> = {
   getAppToken: () => of()
 };
 

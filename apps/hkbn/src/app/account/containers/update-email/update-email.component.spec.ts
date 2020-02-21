@@ -11,7 +11,7 @@ import { of, throwError } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Type } from '@angular/core';
 
-const profileServiceStub = {
+const profileServiceStub: Partial<ProfileService> = {
   whoAmI: () => of({ email: 'test@gmail.com' }),
   updateUserInfo: () => of(null)
 };

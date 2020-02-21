@@ -19,11 +19,11 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import { of } from 'rxjs';
 
 describe('AppComponent', () => {
-  const authenticationServiceStub = {};
-  const themesServiceStub = {
-    getThemeSetting: () => {}
+  const authenticationServiceStub: Partial<AuthenticationService> = {};
+  const themesServiceStub: Partial<ThemesService> = {
+    getThemeSetting: () => of()
   };
-  const configServiceStub = {
+  const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of()
   };
 

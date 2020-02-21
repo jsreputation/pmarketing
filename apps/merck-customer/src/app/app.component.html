@@ -4,7 +4,9 @@
 			{{leftIconToShow}}
 		</mat-icon>
 	</button>
-	<img *ngIf="pageProperties.pageTitle === ''" src="assets/header_logo.png">
+  <a routerLink="/">
+    <img *ngIf="pageProperties.pageTitle === ''" src="assets/header_logo.png">
+  </a>
 	<ng-container *ngIf="pageProperties.pageTitle !== ''" translate>{{pageProperties.pageTitle | translate}}</ng-container>
 	<button [disabled]="rightIconToShow === ''" mat-icon-button>
 		<mat-icon *ngIf="rightIconToShow !== ''">

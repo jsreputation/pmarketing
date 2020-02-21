@@ -8,7 +8,7 @@ import { DetailHeaderModule } from 'src/app/details/detail-header/detail-header.
 describe('VoucherDetailComponent', () => {
   let component: VoucherDetailComponent;
   let fixture: ComponentFixture<VoucherDetailComponent>;
-  const voucherServiceStub = {};
+  const voucherServiceStub: Partial<IVoucherService> = {};
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [VoucherDetailComponent],

@@ -20,12 +20,12 @@ import {ActivatedRoute} from '@angular/router';
 describe('PuzzlesComponent', () => {
   let component: PuzzlesComponent;
   let fixture: ComponentFixture<PuzzlesComponent>;
-  const stampsServiceStub = {
+  const stampsServiceStub: Partial<StampService> = {
     getCards: () => of([])
   };
-  const authenticationServiceStub = {$failedAuth: of(true)};
+  const authenticationServiceStub: Partial<AuthenticationService> = {$failedAuth: of(true)};
 
-  const configServiceStub = {
+  const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of()
   };
 

@@ -13,8 +13,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 describe('TransactionHistoryComponent', () => {
   let component: TransactionHistoryComponent;
   let fixture: ComponentFixture<TransactionHistoryComponent>;
-  const locationStub = {
-    goBack: () => {}
+  const locationStub: Partial<Location> = {
+    back: () => {}
   };
 
   beforeEach(async(() => {

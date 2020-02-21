@@ -10,7 +10,7 @@ describe('PromosComponent', () => {
   let component: PromosComponent;
   let fixture: ComponentFixture<PromosComponent>;
 
-  const feedReaderServiceStub = {
+  const feedReaderServiceStub: Partial<FeedReaderService> = {
     getFromUrl: () => of([])
   };
 
