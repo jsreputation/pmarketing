@@ -17,11 +17,11 @@ import { RedemptionType } from '../../perx-core.models';
 describe('VouchersComponent', () => {
   let component: VouchersComponent;
   let fixture: ComponentFixture<VouchersComponent>;
-  const rewardsServiceStub = {
+  const rewardsServiceStub: Partial<RewardsService> = {
     getReward: () => of()
   };
 
-  const merchantsServiceStub = {
+  const merchantsServiceStub: Partial<IMerchantsService> = {
     getMerchant: () => of()
   };
 
@@ -77,8 +77,8 @@ describe('VouchersComponent', () => {
     },
   };
 
-  const voucherServiceStub = {
-    get: () => of(''),
+  const voucherServiceStub: Partial<IVoucherService> = {
+    get: () => of(mockIssuedVoucherDetail),
     getAll: () => of([])
   };
 

@@ -19,7 +19,7 @@ describe('RewardsListTabbedComponent', () => {
   let component: RewardsListTabbedComponent;
   let fixture: ComponentFixture<RewardsListTabbedComponent>;
 
-  const themesServiceStub = {
+  const themesServiceStub: Partial<ThemesService> = {
     getThemeSetting: () => of()
   };
 

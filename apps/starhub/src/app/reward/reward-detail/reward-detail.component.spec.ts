@@ -12,7 +12,7 @@ import { Location } from '@angular/common';
 import { Type } from '@angular/core';
 import { IMacaron } from 'src/app/services/macaron.service';
 
-const locationsServiceStub = {
+const locationsServiceStub: Partial<LocationsService> = {
   getFromMerchant: () => of()
 };
 
@@ -20,11 +20,11 @@ describe('RewardDetailComponent', () => {
   let component: RewardDetailComponent;
   let fixture: ComponentFixture<RewardDetailComponent>;
   let location: Location;
-  const rewardsServiceStub = {
+  const rewardsServiceStub: Partial<RewardsService> = {
     getReward: () => of()
   };
 
-  const locationStub = {
+  const locationStub: Partial<Location> = {
     back: () => { }
   };
 

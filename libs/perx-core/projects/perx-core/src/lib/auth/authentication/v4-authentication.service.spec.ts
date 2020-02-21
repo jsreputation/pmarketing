@@ -18,12 +18,14 @@ function fakeFactory(): TokenStorage {
   return new LocalTokenStorage({});
 }
 
-const configServiceStub = {
+const configServiceStub: Partial<ConfigService> = {
   readAppConfig: () => of({
+    redirectAfterLogin: '/home',
+    apiHost: 'https://api.perxtech.io',
     production: true,
     baseHref: '/',
+    isWhistler: true,
     preAuth: false,
-    apiHost: 'https://api.perxtech.io'
   })
 };
 

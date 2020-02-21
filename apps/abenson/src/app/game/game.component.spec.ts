@@ -10,7 +10,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 describe('GameComponent', () => {
   let component: GameComponent;
   let fixture: ComponentFixture<GameComponent>;
-  const gameServiceStub = {
+  const gameServiceStub: Partial<IGameService> = {
     getGamesFromCampaign: () => of([])
   };
 

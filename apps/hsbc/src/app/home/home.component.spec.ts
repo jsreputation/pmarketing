@@ -1,54 +1,59 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { HomeComponent } from './home.component';
+import {HomeComponent} from './home.component';
 import {
-  VouchersModule,
+  AuthenticationService,
+  CampaignState,
+  CampaignType,
+  ConfigService,
+  FeedReaderService,
   ICampaignService,
   IVoucherService,
+  ProfileService,
   PuzzlesModule,
   StampService,
+  StampState,
   ThemesService,
-  FeedReaderService,
-  AuthenticationService,
-  ProfileService,
-  ConfigService
+  VouchersModule,
+  StampCardState
 } from '@perx/core';
-import { RouterTestingModule } from '@angular/router/testing';
-import { MatTabsModule, MatCardModule, MatIconModule, MatRippleModule } from '@angular/material';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { of } from 'rxjs';
-import { NavigateToolbarComponent } from '../navigate-toolbar/navigate-toolbar.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import {RouterTestingModule} from '@angular/router/testing';
+import {MatCardModule, MatIconModule, MatRippleModule, MatTabsModule} from '@angular/material';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {of} from 'rxjs';
+import {NavigateToolbarComponent} from '../navigate-toolbar/navigate-toolbar.component';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
-import { PuzzleListComponent } from '../mock/service/puzzle-list/puzzle-list.component';
+import {PuzzleListComponent} from '../mock/service/puzzle-list/puzzle-list.component';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
-  const campaignServiceStub = {
+  const campaignServiceStub: Partial<ICampaignService> = {
     getCampaigns: () => of([
       {
         id: 100,
         name: 'Puzzle Game',
         description: 'jahdjkashdjsahdkajhda',
-        type: 'stamp',
-        endsAt: '1970-01-01T00:00:00.000Z'
+        type: CampaignType.stamp,
+        endsAt: new Date(),
+        state: CampaignState.active
       }
     ])
   };
-  const vouchersServiceStub = {
+  const vouchersServiceStub: Partial<IVoucherService> = {
     getAll: () => of([])
   };
 
-  const stampSeviceStub = {
+  const stampSeviceStub: Partial<StampService> = {
     getCards: () => of(),
     getCurrentCard: () => of({
       id: 4768,
       userAccountId: 59431,
-      state: 'active',
+      state: StampCardState.active,
       campaignId: 100,
       cardNumber: 161,
-      campaignConfig: {},
+      campaignConfig: null,
       displayProperties: {
         numberOfCols: 3,
         numberOfRows: 2,
@@ -69,42 +74,60 @@ describe('HomeComponent', () => {
         {
           id: 28369,
           userAccountId: 59431,
-          state: 'redeemed',
+          state: StampState.redeemed,
+          stampCardId: 1,
+          createdAt: 'string',
+          updatedAt: 'string',
           campaignId: 100,
           vouchers: []
         },
         {
           id: 28370,
           userAccountId: 59431,
-          state: 'issued',
+          state: StampState.redeemed,
+          stampCardId: 1,
+          createdAt: 'string',
+          updatedAt: 'string',
           campaignId: 100,
           vouchers: []
         },
         {
           id: 28372,
           userAccountId: 59431,
-          state: 'issued',
+          state: StampState.issued,
+          stampCardId: 1,
+          createdAt: 'string',
+          updatedAt: 'string',
           campaignId: 100,
           vouchers: []
         },
         {
           id: 28373,
           userAccountId: 59431,
-          state: 'issued',
+          state: StampState.issued,
+          stampCardId: 1,
+          createdAt: 'string',
+          updatedAt: 'string',
           campaignId: 100,
           vouchers: []
         },
         {
           id: 28374,
           userAccountId: 59431,
-          state: 'issued',
+          state: StampState.issued,
+          stampCardId: 1,
+          createdAt: 'string',
+          updatedAt: 'string',
           campaignId: 100,
           vouchers: []
         },
         {
           id: 28375,
           userAccountId: 59431,
-          state: 'issued',
+          state: StampState.issued,
+          stampCardId: 1,
+          createdAt: 'string',
+          updatedAt: 'string',
           campaignId: 100,
           vouchers: []
         }
@@ -112,15 +135,15 @@ describe('HomeComponent', () => {
     })
   };
 
-  const themesServiceStub = {};
+  const themesServiceStub: Partial<ThemesService> = {};
 
-  const feedReaderServiceStub = {};
+  const feedReaderServiceStub: Partial<FeedReaderService> = {};
 
-  const authenticationServiceStub = {};
+  const authenticationServiceStub: Partial<AuthenticationService> = {};
 
-  const profileServiceStub = {};
+  const profileServiceStub: Partial<ProfileService> = {};
 
-  const configServiceStub = {
+  const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of()
   };
 

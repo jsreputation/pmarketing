@@ -13,10 +13,10 @@ import { rewards } from '../rewards.mock';
 import { AnalyticsService } from '../analytics.service';
 import { Type } from '@angular/core';
 
-const rewardsServiceStub = {
+const rewardsServiceStub: Partial<RewardsService> = {
   getReward: () => of(rewards[0])
 };
-const analyticsServiceStub = {
+const analyticsServiceStub: Partial<AnalyticsService> = {
   addEvent: () => { }
 };
 describe('VoucherComponent', () => {
@@ -54,7 +54,7 @@ describe('VoucherComponent', () => {
     expiry: null,
     redemptionDate: null,
   };
-  const vouchersServiceStub = {
+  const vouchersServiceStub: Partial<IVoucherService> = {
     get: () => of(voucher)
   };
   let params: Subject<Params>;

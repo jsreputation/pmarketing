@@ -9,10 +9,14 @@ import {settingsServiceFactory} from './settings.module';
 import {ConfigService} from '../config/config.service';
 import {of} from 'rxjs';
 
-const configServiceStub = {
+const configServiceStub: Partial<ConfigService> = {
   readAppConfig: () => of({
+    redirectAfterLogin: '/home',
+    apiHost: 'string',
     production: true,
-    baseHref: '/'
+    baseHref: '/',
+    isWhistler: true,
+    preAuth: false,
   })
 };
 

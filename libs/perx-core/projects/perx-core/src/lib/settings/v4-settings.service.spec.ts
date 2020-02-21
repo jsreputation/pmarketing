@@ -9,14 +9,18 @@ import {IConfig} from '../config/models/config.model';
 import { ITheme } from '../utils/themes/themes.model';
 import {ConfigService} from '../config/config.service';
 
-const authenticationServiceStub = {
+const authenticationServiceStub: Partial<AuthenticationService> = {
   getAppToken: () => of()
 };
 
-const configServiceStub = {
+const configServiceStub: Partial<ConfigService> = {
   readAppConfig: () => of({
+    redirectAfterLogin: '/home',
+    apiHost: 'string',
     production: true,
-    baseHref: '/'
+    baseHref: '/',
+    isWhistler: true,
+    preAuth: false,
   })
 };
 

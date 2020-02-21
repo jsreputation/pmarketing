@@ -25,7 +25,7 @@ import { ActivatedRoute, convertToParamMap } from '@angular/router';
 describe('PuzzleComponent', () => {
   let component: PuzzleComponent;
   let fixture: ComponentFixture<PuzzleComponent>;
-  const campaignServiceStub = {
+  const campaignServiceStub: Partial<ICampaignService> = {
     getCampaigns: () => of([])
   };
   const mockCard: IStampCard = {
@@ -50,17 +50,17 @@ describe('PuzzleComponent', () => {
       displayCampaignAs: 'puzzle',
     },
   };
-  const stampServiceStub = {
+  const stampServiceStub: Partial<StampService> = {
     getStamps: () => of([]),
     getCurrentCard: () => of(mockCard),
     getCards: () => of([mockCard])
   };
 
-  const configServiceStub = {
+  const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of()
   };
 
-  const authenticationServiceStub = {};
+  const authenticationServiceStub: Partial<AuthenticationService> = {};
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [PuzzleComponent],

@@ -12,10 +12,10 @@ import { of } from 'rxjs';
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-  const authenticationServiceStub = { getAppToken: () => of({}), getAppAccessToken: () => 'token' };
+  const authenticationServiceStub: Partial<AuthenticationService> = { getAppToken: () => of(), getAppAccessToken: () => 'token' };
   const tokenStorageStub = {};
-  const settingsServiceStub = {};
-  const configServiceStub = {
+  const settingsServiceStub: Partial<SettingsService> = {};
+  const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of()
   };
 

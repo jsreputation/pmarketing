@@ -10,14 +10,15 @@ import { NotificationWrapperService } from 'src/app/services/notification-wrappe
 import { VoucherState } from '@perx/core';
 import { Location } from '@angular/common';
 
-const NotificationWrapperServiceStub = {
+const NotificationWrapperServiceStub: Partial<NotificationWrapperService> = {
   addPopup: () => { }
 };
 
-const vouchersServiceStub = {
-  state: new BehaviorSubject(mockVoucher),
+const stateSubj = new BehaviorSubject(mockVoucher);
+
+const vouchersServiceStub: Partial<IVoucherService> = {
   get: (): Observable<Voucher> => of(mockVoucher),
-  stateChangedForVoucher: (): Observable<Voucher> => vouchersServiceStub.state,
+  stateChangedForVoucher: (): Observable<Voucher> => stateSubj,
   redeemVoucher: (): Observable<any> => of({})
 };
 
@@ -58,13 +59,13 @@ describe('CodeRedemptionComponent', () => {
   });
 
   it('expect change status', fakeAsync(() => {
-    vouchersServiceStub.state.next({ ...mockVoucher, state: VoucherState.issued });
+    stateSubj.next({ ...mockVoucher, state: VoucherState.issued });
     tick();
     expect(component.previousStatus).toBe(VoucherState.issued);
   }));
 
   it('should navigate to wallet', fakeAsync(() => {
-    vouchersServiceStub.state.next({ ...mockVoucher, state: VoucherState.redeemed });
+    stateSubj.next({ ...mockVoucher, state: VoucherState.redeemed });
     tick();
     expect(location.path(false)).toBe('/wallet');
   }));

@@ -10,7 +10,7 @@ describe('TncComponent', () => {
   let component: TncComponent;
   let fixture: ComponentFixture<TncComponent>;
 
-  const locationStub = {
+  const locationStub: Partial<Location> = {
     back: () => {}
   };
 

@@ -15,8 +15,8 @@ describe('GameComponent', () => {
   let component: GameComponent;
   let fixture: ComponentFixture<GameComponent>;
   let spy: any;
-  const gameServiceStub = {};
-  const campaignServiceStub = {
+  const gameServiceStub: Partial<IGameService> = {};
+  const campaignServiceStub: Partial<ICampaignService> = {
     getCampaigns: () => of([])
   };
 

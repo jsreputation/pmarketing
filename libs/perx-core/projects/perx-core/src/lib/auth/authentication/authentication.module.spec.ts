@@ -14,13 +14,17 @@ import { UtilsModule } from '../../utils/utils.module';
 import { LocalTokenStorage } from '../../utils/storage/local-token-storage.service';
 import { TokenType } from '../../utils/storage/models/token-storage.model';
 import { TokenStorageServiceFactory } from '../../utils/storage/storage.module';
-import {of} from 'rxjs';
-import {ConfigService} from '../../config/config.service';
+import { of } from 'rxjs';
+import { ConfigService } from '../../config/config.service';
 
-const configServiceStub = {
+const configServiceStub: Partial<ConfigService> = {
   readAppConfig: () => of({
+    redirectAfterLogin: '/home',
+    apiHost: 'string',
     production: true,
-    baseHref: '/'
+    preAuth: true,
+    isWhistler: true,
+    baseHref: ''
   })
 };
 

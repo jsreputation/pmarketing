@@ -5,10 +5,14 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 import {ConfigService} from '../config/config.service';
 
-const configServiceStub = {
+const configServiceStub: Partial<ConfigService> = {
   readAppConfig: () => of({
+    redirectAfterLogin: '/home',
+    apiHost: 'string',
     production: true,
-    baseHref: '/'
+    baseHref: '/',
+    isWhistler: true,
+    preAuth: false,
   })
 };
 

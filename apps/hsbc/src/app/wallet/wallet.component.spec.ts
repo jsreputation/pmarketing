@@ -11,15 +11,15 @@ describe('WalletComponent', () => {
   let component: WalletComponent;
   let fixture: ComponentFixture<WalletComponent>;
 
-  const vouchersServiceStub = {
+  const vouchersServiceStub: Partial<IVoucherService> = {
     getAll: () => of([])
   };
 
-  const configServiceStub = {
+  const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of()
   };
 
-  const campaignServiceStub = {
+  const campaignServiceStub: Partial<ICampaignService> = {
     getCampaigns: () => of()
   };
 

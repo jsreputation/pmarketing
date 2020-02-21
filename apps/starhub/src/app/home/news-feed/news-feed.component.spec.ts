@@ -11,7 +11,7 @@ describe('NewsFeedComponent', () => {
   let component: NewsFeedComponent;
   let fixture: ComponentFixture<NewsFeedComponent>;
 
-  const feedReaderServiceStub = {
+  const feedReaderServiceStub: Partial<FeedReaderService> = {
     getFromUrl: () => of([])
   };
 

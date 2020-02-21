@@ -15,7 +15,7 @@ describe('RewardComponent', () => {
     description: '', subtitle: '', validFrom: null,
     validTo: null, rewardThumbnail: '', rewardBanner: '', merchantImg: '', termsAndConditions: '', howToRedeem: ''
   };
-  const rewardsServiceStub = {
+  const rewardsServiceStub: Partial<RewardsService> = {
     getReward: () => of(mockReward)
   };
 

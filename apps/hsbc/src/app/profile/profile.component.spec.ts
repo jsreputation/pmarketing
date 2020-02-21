@@ -27,11 +27,11 @@ describe('ProfileComponent', () => {
       code: ''
     }
   };
-  const profileServiceStub = {
+  const profileServiceStub: Partial<ProfileService> = {
     whoAmI: () => of(mockProfile)
   };
-  const authenticationServiceStub = {};
-  const vouchersServiceStub = {};
+  const authenticationServiceStub: Partial<AuthenticationService> = {};
+  const vouchersServiceStub: Partial<IVoucherService> = {};
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
