@@ -10,14 +10,14 @@ import { of } from 'rxjs';
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
-  let notificationService: NotificationService;
+  let notificationService: Partial<NotificationService>;
 
   beforeEach(async(() => {
-    const notificationServiceStub = { $popup: { subscribe: () => ({}) } };
+    const notificationServiceStub: Partial<NotificationService> = { $popup: of() };
     const matDialogStub = { open: () => ({}) };
-    const authenticationServiceStub = { $failedAuth: of(true) };
-    const routerStub = { navigateByUrl: () => ({}) };
-    const configServiceStub = {
+    const authenticationServiceStub: Partial<AuthenticationService> = { $failedAuth: of(true) };
+    const routerStub: Partial<Router> = { navigateByUrl: () => Promise.resolve(true) };
+    const configServiceStub: Partial<ConfigService> = {
       readAppConfig: () => of()
     };
 

@@ -6,8 +6,8 @@ import { AuthenticationService, ConfigService } from '@perx/core';
 import { of } from 'rxjs';
 
 describe('AppComponent', () => {
-  const authenticationServiceStub = {};
-  const configServiceStub = {
+  const authenticationServiceStub: Partial<AuthenticationService> = {};
+  const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of()
   };
 

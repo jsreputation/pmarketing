@@ -25,11 +25,11 @@ describe('ResetPasswordComponent', () => {
     phone: '6512345678',
   };
 
-  const profileServiceStub = {
+  const profileServiceStub: Partial<ProfileService> = {
     whoAmI: () => of(mockProfile)
   };
 
-  const merchantAdminServiceStub = {
+  const merchantAdminServiceStub: Partial<IMerchantAdminService> = {
     resetPassword: () => of()
   };
 

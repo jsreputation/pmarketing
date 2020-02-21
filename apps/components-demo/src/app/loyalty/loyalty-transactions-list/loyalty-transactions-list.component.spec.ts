@@ -8,7 +8,7 @@ import { of } from 'rxjs';
 describe('TransactionsListComponent', () => {
   let component: LoyaltyTransactionsListComponent;
   let fixture: ComponentFixture<LoyaltyTransactionsListComponent>;
-  const loyaltyServiceStub = {
+  const loyaltyServiceStub: Partial<LoyaltyService> = {
     getAllTransactions: () => of([])
   };
 

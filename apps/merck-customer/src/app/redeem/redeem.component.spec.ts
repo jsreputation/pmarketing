@@ -12,7 +12,7 @@ import { TranslateModule } from '@ngx-translate/core';
 describe('RedeemComponent', () => {
   let component: RedeemComponent;
   let fixture: ComponentFixture<RedeemComponent>;
-  const locationStub = {
+  const locationStub: Partial<Location> = {
     back: () => { }
   };
 

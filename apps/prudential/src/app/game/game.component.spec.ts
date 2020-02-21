@@ -26,11 +26,11 @@ import { environment } from 'src/environments/environment';
 describe('GameComponent', () => {
   let component: GameComponent;
   let fixture: ComponentFixture<GameComponent>;
-  const gameServiceStub = {};
-  const campaignServiceStub = {
+  const gameServiceStub: Partial<IGameService> = {};
+  const campaignServiceStub: Partial<ICampaignService> = {
     getCampaigns: () => of([])
   };
-  const configServiceStub = {
+  const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of()
   };
 

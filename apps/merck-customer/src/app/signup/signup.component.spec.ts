@@ -23,7 +23,7 @@ describe('SignupComponent', () => {
     navigateByUrl: () => ({}),
     navigate: () => { }
   };
-  const notificationServiceStub = { addSnack: () => { } };
+  const notificationServiceStub: Partial<NotificationService> = { addSnack: () => { } };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

@@ -14,17 +14,16 @@ import {
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthenticationService, NotificationService } from '@perx/core';
-import { of } from 'rxjs';
 
 describe('SignupComponent', () => {
   let component: SignupComponent;
   let fixture: ComponentFixture<SignupComponent>;
 
-  const authServiceStub = {
-    getAppAccessToken: () => of()
+  const authServiceStub: Partial<AuthenticationService> = {
+    getAppAccessToken: () => 'of'
   };
 
-  const notificationServiceStub = {
+  const notificationServiceStub: Partial<NotificationService> = {
     addSnack: () => {}
   };
 

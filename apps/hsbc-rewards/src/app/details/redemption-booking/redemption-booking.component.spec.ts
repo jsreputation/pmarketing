@@ -29,7 +29,7 @@ describe('RedemptionBookingComponent', () => {
   let component: RedemptionBookingComponent;
   let fixture: ComponentFixture<RedemptionBookingComponent>;
 
-  const locationsServiceStub = {};
+  const locationsServiceStub: Partial<LocationsService> = {};
 
   const loyaltyServiceStub: Partial<LoyaltyService> = {
     getLoyalty: (): Observable<ILoyalty> => of(),
@@ -47,11 +47,11 @@ describe('RedemptionBookingComponent', () => {
     termsAndConditions: '',
     howToRedeem: '',
   };
-  const rewardsServiceStub = {
+  const rewardsServiceStub: Partial<RewardsService> = {
     getReward: () => of(mockReward)
   };
 
-  const vouchersServiceStub = {
+  const vouchersServiceStub: Partial<IVoucherService> = {
     reserveReward: () => of()
   };
 

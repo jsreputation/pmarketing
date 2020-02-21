@@ -8,8 +8,8 @@ import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { vouchers } from '../mock/vouchers.mock';
 
-const ivoucherServiceStub = {
-  get: () => of({})
+const ivoucherServiceStub: Partial<IVoucherService> = {
+  get: () => of()
 };
 
 describe('QrCodeComponent', () => {

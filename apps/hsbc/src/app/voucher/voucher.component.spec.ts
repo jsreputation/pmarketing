@@ -38,11 +38,11 @@ describe('VoucherComponent', () => {
     expiry: null,
     redemptionDate: null,
   };
-  const vouchersServiceStub = {
+  const vouchersServiceStub: Partial<IVoucherService> = {
     get: () => of(mockVoucher)
   };
 
-  const configServiceStub = {
+  const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of()
   };
 

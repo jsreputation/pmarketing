@@ -13,11 +13,11 @@ describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
 
-  const locationStub = {
+  const locationStub: Partial<Location> = {
     back: () => {}
   };
 
-  const tokenStorageStub = {
+  const tokenStorageStub: Partial<TokenStorage> = {
     clearAppInfoProperty: () => {}
   };
 

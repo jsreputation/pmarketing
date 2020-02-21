@@ -153,8 +153,10 @@ export class V4LoyaltyService extends LoyaltyService {
     let highestTier;
     let highestPoints;
     // they are in order, find the first one points_rqmt
-    if (copiedLoyalty.tiers) {
-      nextTier = copiedLoyalty.tiers.find(tier => tier.points_difference > 0);
+    if (copiedLoyalty.tiers) { // sort for extra assurance
+      nextTier = copiedLoyalty.tiers
+        .sort((tier1, tier2) => tier1.points_difference - tier2.points_difference)
+        .find(tier => tier.points_difference > 0);
       // will improve > later on , name diff var to avoid linting shadowed var
       highestPoints = Math.max(...copiedLoyalty.tiers.map(tier2 => tier2.points_requirement));
       highestTier = copiedLoyalty.tiers.find(tier3 => tier3.points_requirement === highestPoints)
@@ -171,7 +173,8 @@ export class V4LoyaltyService extends LoyaltyService {
       pointsBalance: loyalty.points_balance,
       currencyBalance: loyalty.points_balance_converted_to_currency,
       currency: loyalty.points_currency,
-      nextTierPoints: nextTier ? nextTier.points_difference : 0,
+      nextTierPoints: nextTier ? nextTier.points_requirement : 0,
+      nextTierPointsDiff: nextTier ? nextTier.points_difference : 0,
       nextTierName: nextTier ? nextTier.name : '',
       highestTier,
       expiringPoints: loyalty.aging_points && loyalty.aging_points.map(aging => ({

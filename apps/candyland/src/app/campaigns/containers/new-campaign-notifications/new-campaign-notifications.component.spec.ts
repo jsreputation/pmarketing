@@ -36,6 +36,7 @@ describe('NewCampaignNotificationsComponent', () => {
   const activatedRouteStub = {
     snapshot: {
       params: {
+        url: '1',
         id: 42
       }
     }

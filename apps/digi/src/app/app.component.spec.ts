@@ -7,8 +7,8 @@ import { MatDialogModule } from '@angular/material';
 import { of } from 'rxjs';
 
 describe('AppComponent', () => {
-  const authServiceStub = {};
-  const configServiceStub = {
+  const authServiceStub: Partial<AuthenticationService> = {};
+  const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of()
   };
 

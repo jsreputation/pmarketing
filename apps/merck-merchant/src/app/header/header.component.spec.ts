@@ -8,7 +8,7 @@ describe('HeaderComponent', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
 
-  const locationStub = {
+  const locationStub: Partial<Location> = {
     back: () => {}
   };
 

@@ -38,9 +38,14 @@ describe('LoadingComponent', () => {
     addPopup: () => { }
   };
 
-  const configServiceStub = {
+  const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of({
-      redirectAfterLogin: '/home'
+      redirectAfterLogin: '/home',
+      apiHost: 'string',
+      production: true,
+      preAuth: true,
+      isWhistler: true,
+      baseHref: ''
     })
   };
 

@@ -23,7 +23,7 @@ import {
 import { of } from 'rxjs';
 import { MatCardModule, MatDialogModule } from '@angular/material';
 import { GamesCollectionComponent } from './games-collection/games-collection.component';
-import { TranslateModule } from '@ngx-translate/core';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import { profile } from '../mock/profile.mock';
 import { HttpClientModule } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
@@ -33,7 +33,8 @@ import {CatalogsComponent} from '../catalogs/catalogs.component';
 
 const rewardsServiceStub: Partial<RewardsService> = {
   getAllRewards: () => of([]),
-  getRewards: () => of([])
+  getRewards: () => of([]),
+  getCategories: () => of([])
 };
 
 const tokenStorageStub: Partial<TokenStorage> = {
@@ -44,7 +45,7 @@ const tokenStorageStub: Partial<TokenStorage> = {
 const profileService: Partial<ProfileService> = {
   whoAmI: () => of(profile)
 };
-const authServiceStub = {
+const authServiceStub: Partial<AuthenticationService> = {
   isAuthorized: () => of(true)
 };
 const loyaltyServiceStub: Partial<LoyaltyService> = {
@@ -55,13 +56,13 @@ const gameSvcStub: Partial<IGameService> = {
   getActiveGames: () => of([])
 };
 
-const themesServiceStub = { getThemeSetting: () => of({}) };
+const themesServiceStub: Partial<ThemesService> = { getThemeSetting: () => of() };
 
-const configServiceStub = {
+const configServiceStub: Partial<ConfigService> = {
   readAppConfig: () => of()
 };
 
-const settingsServiceStub = {
+const settingsServiceStub: Partial<SettingsService> = {
   readRssFeeds: () => of()
 };
 
@@ -74,6 +75,10 @@ const reward: IReward = {
   validTo: new Date('2019-11-17T03:24:00'),
   rewardBanner: '',
   termsAndConditions: '',
+};
+
+const translateServiceStub: Partial<TranslateService> = {
+  get: () => of()
 };
 
 describe('HomeComponent', () => {
@@ -111,6 +116,7 @@ describe('HomeComponent', () => {
         { provide: RewardsService, useValue: rewardsServiceStub },
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
         { provide: ProfileService, useValue: profileService },
+        { provide: TranslateService, useValue: translateServiceStub },
         { provide: IGameService, useValue: gameSvcStub },
         { provide: ThemesService, useValue: themesServiceStub },
         { provide: ConfigService, useValue: configServiceStub },

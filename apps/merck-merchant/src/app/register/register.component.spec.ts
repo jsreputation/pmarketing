@@ -16,12 +16,12 @@ import { of } from 'rxjs';
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
   let fixture: ComponentFixture<RegisterComponent>;
-  const merchantAdminServiceStub = {
-    validateInvite: () => ({ subscribe: () => ({ add: () => ({}) }) })
+  const merchantAdminServiceStub: Partial<IMerchantAdminService> = {
+    validateInvite: () => of()
   };
   beforeEach(async(() => {
-    const routerStub = { navigateByUrl: () => ({}) };
-    const configServiceStub = {
+    const routerStub: Partial<Router> = { navigateByUrl: () => Promise.resolve(true)};
+    const configServiceStub: Partial<ConfigService> = {
       readAppConfig: () => of()
     };
 

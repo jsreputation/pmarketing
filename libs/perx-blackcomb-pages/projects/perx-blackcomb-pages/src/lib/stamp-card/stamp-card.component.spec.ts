@@ -36,7 +36,7 @@ describe('StampCardComponent', () => {
     putStamp: () => of(stampCard.stamps[0])
   };
 
-  const notificationStub = {
+  const notificationStub: Partial<NotificationService> = {
     addPopup: () => {}
   };
 

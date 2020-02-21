@@ -13,10 +13,10 @@ import { IMerchantAdminService } from '@perx/core';
 describe('TransactionHistoryComponent', () => {
   let component: TransactionHistoryComponent;
   let fixture: ComponentFixture<TransactionHistoryComponent>;
-  const locationStub = {
-    goBack: () => {}
+  const locationStub: Partial<Location> = {
+    back: () => {}
   };
-  const merchantAdminServiceStub = {
+  const merchantAdminServiceStub: Partial<IMerchantAdminService> = {
     getTransactionHistory: () => of()
   };
 

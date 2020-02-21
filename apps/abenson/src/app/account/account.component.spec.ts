@@ -13,11 +13,11 @@ describe('AccountComponent', () => {
   let fixture: ComponentFixture<AccountComponent>;
   let auth: AuthenticationService;
   let router: Router;
-  const authenticationServiceStub = {
+  const authenticationServiceStub: Partial<AuthenticationService> = {
     logout: () => { }
   };
 
-  const profileServiceStub = {
+  const profileServiceStub: Partial<ProfileService> = {
     whoAmI: (): Observable<IProfile> => of(profile)
   };
 
