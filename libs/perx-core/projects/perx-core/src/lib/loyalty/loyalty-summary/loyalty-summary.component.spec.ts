@@ -8,7 +8,7 @@ import { LoyaltyModule } from '../loyalty.module';
 import { LoyaltyService } from '../loyalty.service';
 import { of } from 'rxjs';
 import { ProfileService } from '../../profile/profile.service';
-import { MatProgressSpinnerModule } from '@angular/material';
+import {MatProgressBarModule, MatProgressSpinnerModule} from '@angular/material';
 import { ILoyalty } from '../models/loyalty.model';
 
 describe('LoyaltySummaryComponent', () => {
@@ -36,7 +36,8 @@ describe('LoyaltySummaryComponent', () => {
       imports: [
         ProfileModule,
         LoyaltyModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatProgressBarModule
       ],
       providers: [
         { provide: LoyaltyService, useValue: loyaltyServiceStub },

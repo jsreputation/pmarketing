@@ -10,7 +10,7 @@ import { Config } from '../config/config';
 import { HttpClient } from '@angular/common/http';
 import { WhistlerLoyaltyService } from './whistler-loyalty.service';
 import { AuthenticationService } from '../auth/authentication/authentication.service';
-import { MatProgressSpinnerModule } from '@angular/material';
+import {MatProgressBarModule, MatProgressSpinnerModule} from '@angular/material';
 
 export function loyaltyServiceFactory(http: HttpClient, config: Config): LoyaltyService {
   // Make decision on what to instantiate base on config
@@ -28,7 +28,8 @@ export function loyaltyServiceFactory(http: HttpClient, config: Config): Loyalty
   ],
   imports: [
     CommonModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatProgressBarModule
   ],
   exports: [
     LoyaltySummaryComponent,
