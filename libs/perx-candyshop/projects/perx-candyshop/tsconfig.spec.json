@@ -6,7 +6,8 @@
       "jest",
       "node"
     ],
-    "module": "commonjs",
+    "module": "esnext",
+    "esModuleInterop": true,
     "emitDecoratorMetadata": true,
     "allowJs": true,
     "typeRoots": [
