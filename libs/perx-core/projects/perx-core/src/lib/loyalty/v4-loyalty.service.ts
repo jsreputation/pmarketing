@@ -60,7 +60,7 @@ interface IV4Loyalty {
   points_currency: string;
   points_to_currency_rate: number;
   aging_points?: IV4AgingPoints[];
-
+  tiers: any[]; // will do proper mapping later on
   points_history?: IV4PointHistory[];
 }
 
@@ -148,6 +148,18 @@ export class V4LoyaltyService extends LoyaltyService {
   }
 
   public static v4LoyaltyToLoyalty(loyalty: IV4Loyalty): ILoyalty {
+    const copiedLoyalty: IV4Loyalty = {...loyalty};
+    let nextTier;
+    let highestTier;
+    let highestPoints;
+    // they are in order, find the first one points_rqmt
+    if (copiedLoyalty.tiers) {
+      nextTier = copiedLoyalty.tiers.find(tier => tier.points_difference > 0);
+      // will improve > later on , name diff var to avoid linting shadowed var
+      highestPoints = Math.max(...copiedLoyalty.tiers.map(tier2 => tier2.points_requirement));
+      highestTier = copiedLoyalty.tiers.find(tier3 => tier3.points_requirement === highestPoints)
+        .name;
+    }
     return {
       id: loyalty.id,
       name: loyalty.name,
@@ -159,6 +171,9 @@ export class V4LoyaltyService extends LoyaltyService {
       pointsBalance: loyalty.points_balance,
       currencyBalance: loyalty.points_balance_converted_to_currency,
       currency: loyalty.points_currency,
+      nextTierPoints: nextTier ? nextTier.points_difference : 0,
+      nextTierName: nextTier ? nextTier.name : '',
+      highestTier,
       expiringPoints: loyalty.aging_points && loyalty.aging_points.map(aging => ({
         expireDate: aging.expiring_on_date,
         points: aging.points_expiring
