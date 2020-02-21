@@ -7,7 +7,7 @@ export function getCredentials(url: string): Promise<ICredentials> {
 
   const endpoint = apiConfig.endpoints[url];
   if (endpoint === undefined) {
-    throw new Error(`No endpoints found for ${url}`);
+    throw new Error('tenant credentials not found');
   }
   return Promise.resolve(apiConfig.credentials[endpoint.account_id]);
 }

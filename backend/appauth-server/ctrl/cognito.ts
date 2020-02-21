@@ -109,7 +109,7 @@ export const users = (getCredentials: ((url: string) => Promise<ICredentials>)) 
 
   } catch (e) {
     if (e.response && e.response.data && e.response.status) {
-      res.status(e.response.status).json(e.response.data);
+      res.status(400).json(e.response.data);
     } else {
       next(e);
     }
