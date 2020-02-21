@@ -10,7 +10,7 @@ import {
 import { AbstractControl, ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
 import { noop, Subject } from 'rxjs';
 import { CsFormFieldControl } from '../form-field-control';
-import { MatDatepicker, MatFormFieldControl, DateAdapter, MatFormField } from '@angular/material';
+import { MatDatepicker, MatFormFieldControl, MatFormField } from '@angular/material';
 import Utils from '../../utils';
 
 @Component({
@@ -47,8 +47,7 @@ export class DatePickerComponent extends CsFormFieldControl<any> implements OnIn
   constructor(
     @Optional() @Self() public ngControl: NgControl,
     @Optional() @Host() protected formField: MatFormField,
-    private cd: ChangeDetectorRef,
-    private dateAdapter: DateAdapter<Date>
+    private cd: ChangeDetectorRef
   ) {
     super('cs-date-picker', ngControl);
     if (this.ngControl) {
@@ -118,10 +117,25 @@ export class DatePickerComponent extends CsFormFieldControl<any> implements OnIn
   }
 
   private getNextDay(date: Date): Date {
-    return this.dateAdapter.addCalendarDays(new Date(date), this.minDayPeriod);
+    return this.addCalendarDays(date, this.minDayPeriod);
+
   }
 
   private getPreviousDay(date: Date): Date {
-    return this.dateAdapter.addCalendarDays(new Date(date), -this.minDayPeriod);
+    return this.addCalendarDays(date, -this.minDayPeriod);
+  }
+
+  private addCalendarDays(date: Date, days: number): Date {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const day = date.getDate() + days;
+    const result = new Date(year, month, day);
+
+    // We need to correct for the fact that JS native Date treats years in range [0, 99] as
+    // abbreviations for 19xx.
+    if (year >= 0 && year < 100) {
+      result.setFullYear(result.getFullYear() - 1900);
+    }
+    return result;
   }
 }
