@@ -127,9 +127,11 @@ describe('RedeemComponent', () => {
   it('should onProceed', () => {
     // const rewardsService: RewardsService = fixture.debugElement.injector.get<RewardsService>(RewardsService as Type<RewardsService>);
     const merchantAdminService: IMerchantAdminService = fixture.debugElement.injector.get<IMerchantAdminService>(
-      IMerchantAdminService as Type<IMerchantAdminService>);
-    const notificationService: NotificationService = fixture.debugElement.injector.get<NotificationService>
-      (NotificationService as Type<NotificationService>);
+      IMerchantAdminService as Type<IMerchantAdminService>
+    );
+    const notificationService: NotificationService = fixture.debugElement.injector.get<NotificationService>(
+      NotificationService as Type<NotificationService>
+    );
 
     // const price = {
     //   id: 1,
