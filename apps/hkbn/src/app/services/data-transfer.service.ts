@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { IChangePasswordData } from '@perx/core';
 import { IChangePhoneData, ISignUpData } from '@perx/core/dist/perx-core/lib/auth/authentication/models/authentication.model';
 
@@ -7,9 +7,9 @@ import { IChangePhoneData, ISignUpData } from '@perx/core/dist/perx-core/lib/aut
   providedIn: 'root'
 })
 export class DataTransferService {
-  private data$: BehaviorSubject<IChangePasswordData | IChangePhoneData| ISignUpData | null> = new BehaviorSubject(null);
+  private data$: BehaviorSubject<IChangePasswordData | IChangePhoneData | ISignUpData | null> = new BehaviorSubject(null);
 
-  public get updateData$(): BehaviorSubject<IChangePasswordData | IChangePhoneData| ISignUpData | null> {
+  public get updateData$(): Observable<IChangePasswordData | IChangePhoneData | ISignUpData | null> {
     return this.data$;
   }
   public newxUpdateData(object: IChangePasswordData | IChangePhoneData | ISignUpData | null): void {
