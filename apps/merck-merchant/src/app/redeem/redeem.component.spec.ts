@@ -1,9 +1,9 @@
-import {async, ComponentFixture, TestBed, fakeAsync, tick} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
-import {RedeemComponent} from './redeem.component';
-import {HeaderComponent} from '../header/header.component';
-import {MatToolbarModule, MatIconModule} from '@angular/material';
-import {Router} from '@angular/router';
+import { RedeemComponent } from './redeem.component';
+import { HeaderComponent } from '../header/header.component';
+import { MatToolbarModule, MatIconModule } from '@angular/material';
+import { Router } from '@angular/router';
 import {
   RewardsService,
   NotificationService,
@@ -13,15 +13,15 @@ import {
   IReward,
   Voucher
 } from '@perx/core';
-import {of} from 'rxjs';
-import {Type} from '@angular/core';
-import {Location} from '@angular/common';
+import { of } from 'rxjs';
+import { Type } from '@angular/core';
+import { Location } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('RedeemComponent', () => {
   let component: RedeemComponent;
   let fixture: ComponentFixture<RedeemComponent>;
-  history.pushState({data: '{"id": 1234, "name": "John", "rewardId": 149}'}, '', '');
+  history.pushState({ data: '{"id": 1234, "name": "John", "rewardId": 149}' }, '', '');
   const locationStub = {
     back: () => {
     }
@@ -80,16 +80,16 @@ describe('RedeemComponent', () => {
       declarations: [RedeemComponent, HeaderComponent],
       imports: [MatToolbarModule, MatIconModule, TranslateModule.forRoot()],
       providers: [
-        {provide: Router, useValue: routerStub},
-        {provide: RewardsService, useValue: rewardsServiceStub},
-        {provide: IMerchantAdminService, useValue: merchantAdminServiceStub},
-        {provide: Location, useValue: locationStub},
+        { provide: Router, useValue: routerStub },
+        { provide: RewardsService, useValue: rewardsServiceStub },
+        { provide: IMerchantAdminService, useValue: merchantAdminServiceStub },
+        { provide: Location, useValue: locationStub },
         {
           provide: NotificationService, useValue:
-            {
-              addSnack: () => {
-              }
+          {
+            addSnack: () => {
             }
+          }
         }
       ]
     })
@@ -127,9 +127,11 @@ describe('RedeemComponent', () => {
   it('should onProceed', () => {
     // const rewardsService: RewardsService = fixture.debugElement.injector.get<RewardsService>(RewardsService as Type<RewardsService>);
     const merchantAdminService: IMerchantAdminService = fixture.debugElement.injector.get<IMerchantAdminService>(
-      IMerchantAdminService as Type<IMerchantAdminService>);
-    const notificationService: NotificationService = fixture.debugElement.injector.get<NotificationService>
-    (NotificationService as Type<NotificationService>);
+      IMerchantAdminService as Type<IMerchantAdminService>
+    );
+    const notificationService: NotificationService = fixture.debugElement.injector.get<NotificationService>(
+      NotificationService as Type<NotificationService>
+    );
 
     // const price = {
     //   id: 1,
@@ -216,9 +218,8 @@ describe('RedeemComponent', () => {
 
   it('should get reward price', () => {
     component.reward = reward;
-    const price = component.getPrice();
+    // const price = component.getPrice();
     expect(component.reward).toBe(reward);
-    console.log('price', price);
     // expect(price).toBe(0);
   });
 

@@ -34,7 +34,6 @@ describe('HeaderComponent', () => {
     component.subTitles = ['sub title'];
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    console.log(compiled.querySelector('p.sub-title').textContent);
     expect(compiled.querySelector('p.sub-title').textContent)
       .toContain('sub title');
   });
