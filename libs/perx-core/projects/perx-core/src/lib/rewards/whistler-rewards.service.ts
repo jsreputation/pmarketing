@@ -19,6 +19,7 @@ import {
 } from '@perx/whistler';
 import { oc } from 'ts-optchain';
 import { RedemptionType } from '../perx-core.models';
+import {ITabConfigExtended} from './rewards-list-tabbed/rewards-list-tabbed.component';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,7 @@ export class WhistlerRewardsService implements RewardsService {
   // basic local cache
   private rewards: { [k: number]: Subject<IReward> } = {};
 
-  constructor(private http: HttpClient, config: Config) {
+  constructor(private http: HttpClient, private config: Config) {
     this.baseUrl = `${config.apiHost}/reward/entities`;
   }
 
@@ -230,6 +231,10 @@ export class WhistlerRewardsService implements RewardsService {
 
   public getAllCatalogs(): Observable<ICatalog[]> {
     throw new Error('Method not implemented.');
+  }
+
+  public getCategories(): Observable<ITabConfigExtended[]> {
+    return this.http.get<ITabConfigExtended[]>(`${this.config.baseHref}assets/categories-tabs.json`);
   }
 
   // @ts-ignore
