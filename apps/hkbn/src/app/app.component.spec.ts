@@ -58,8 +58,7 @@ describe('AppComponent', () => {
     const notificationService = TestBed.get<NotificationService>(NotificationService as Type<NotificationService>);
     const dialog = TestBed.get<MatDialog>(MatDialog as Type<MatDialog>);
 
-    spyOnProperty(notificationService, '$popup', 'get')
-      .and.returnValue(of({ title: 'Test' }));
+    jest.spyOn(notificationService, '$popup', 'get').mockReturnValue(of({ title: 'Test' }));
     const openSpy = spyOn(dialog, 'open');
 
     fixture.detectChanges();

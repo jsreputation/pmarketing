@@ -6,7 +6,7 @@ import { ProfileService } from '../../profile/profile.service';
 import { IProfile } from '../../profile/profile.model';
 import { ILoyalty } from '../models/loyalty.model';
 import { DatePipe } from '@angular/common';
-import {tap} from 'rxjs/operators';
+// import {tap} from 'rxjs/operators';
 
 @Component({
   selector: 'perx-core-loyalty-summary',
@@ -67,18 +67,18 @@ export class LoyaltySummaryComponent implements OnInit {
 
     if (!this.loyalty$) {
       this.loyalty$ = this.loyaltyService.getLoyalty(this.loyaltyId).pipe(
-        tap((res) => console.log(res, 'see the response f1 the loaylty'))
+        // tap((res) => console.log(res, 'see the response f1 the loaylty'))
       );
     }
 
     if (this.loyalty$) {
       this.loyalty$.pipe(
-        tap((res) => console.log(res, 'see the response f2 the loaylty'))
+        // tap((res) => console.log(res, 'see the response f2 the loaylty'))
       );
     }
   }
 
   public getPercentageToNext(currentPoints: number, nextPoints: number): number {
-    return Math.round( (currentPoints / nextPoints) * 100);
+    return Math.round((currentPoints / nextPoints) * 100);
   }
 }

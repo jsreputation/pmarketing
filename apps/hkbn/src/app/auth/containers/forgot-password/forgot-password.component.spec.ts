@@ -69,7 +69,7 @@ describe('ForgotPasswordComponent', () => {
 
   it('should init identifier from queryParams, if it exist', () => {
     const activatedRoute = TestBed.get(ActivatedRoute);
-    spyOnProperty(activatedRoute, 'queryParams', 'get').and.returnValue(of({ identifier: '63987654' }));
+    jest.spyOn(activatedRoute, 'queryParams', 'get').mockReturnValue(of({ identifier: '63987654' }));
     fixture.detectChanges();
     expect(component.phoneStepForm.value).toEqual({ phone: '63987654' });
   });
@@ -78,8 +78,6 @@ describe('ForgotPasswordComponent', () => {
     fixture.detectChanges();
     component.phoneStepForm.setValue({ phone: '63987654' });
     component.phoneHandler();
-    console.log(component.phoneStepForm.value);
-    console.log(component.phoneStepForm.valid);
     fixture.detectChanges();
     expect(component.currentStep).toEqual(2);
   });
