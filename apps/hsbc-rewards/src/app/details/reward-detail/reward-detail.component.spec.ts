@@ -27,7 +27,7 @@ describe('RewardDetailComponent', () => {
     termsAndConditions: '',
     howToRedeem: '',
   };
-  const rewardsServiceStub = {
+  const rewardsServiceStub: Partial<RewardsService> = {
     getReward: () => of(mockReward)
   };
 

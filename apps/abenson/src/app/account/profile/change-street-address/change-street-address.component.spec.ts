@@ -29,7 +29,7 @@ describe('ChangeStreetAddressComponent', () => {
   let fixture: ComponentFixture<ChangeStreetAddressComponent>;
   let profileSpy: jasmine.Spy;
   let location: Location;
-  const profileServiceStub = {
+  const profileServiceStub: Partial<ProfileService> = {
     setCustomProperties: () => of()
   };
 

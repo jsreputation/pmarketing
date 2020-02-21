@@ -8,7 +8,7 @@ import { PuzzlesModule, IVoucherService } from '@perx/core';
 import { VouchersModule as PerxVouchersModule } from '@perx/core';
 import { HttpClientModule } from '@angular/common/http';
 
-const vouchersServiceStub = {};
+const vouchersServiceStub: Partial<IVoucherService> = {};
 
 @NgModule({
   declarations: [

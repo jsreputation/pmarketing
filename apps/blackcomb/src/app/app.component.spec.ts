@@ -6,7 +6,7 @@ import { MatDialogModule, MatToolbarModule, MatIconModule, MatSnackBarModule } f
 import { TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
 
-const authServiceStub = {};
+const authServiceStub: Partial<AuthenticationService> = {};
 const campaignServiceStub: Partial<ICampaignService> = {
   getCampaigns: () => of(),
   getCampaign: () => of(),

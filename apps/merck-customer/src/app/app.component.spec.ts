@@ -22,7 +22,7 @@ describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
 
-  const authenticationStub = {
+  const authenticationStub: Partial<AuthenticationService> = {
     autoLogin: () => of(),
     isAuthorized: () => of()
   };
@@ -32,11 +32,11 @@ describe('AppComponent', () => {
     navigate: () => {},
   };
 
-  const locationStub = {
+  const locationStub: Partial<Location> = {
     back: () => {}
   };
 
-  const configServiceStub = {
+  const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of()
   };
 

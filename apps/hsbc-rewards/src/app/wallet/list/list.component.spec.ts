@@ -9,7 +9,7 @@ import { IReward } from '@perx/core';
 describe('ListComponent', () => {
   let component: ListComponent;
   let fixture: ComponentFixture<ListComponent>;
-  const voucherServiceStub = {
+  const voucherServiceStub: Partial<IVoucherService> = {
     getAll: () => of([])
   };
   const mockReward: IReward = {
@@ -24,7 +24,7 @@ describe('ListComponent', () => {
     termsAndConditions: '',
     howToRedeem: '',
   };
-  const rewardServiceStub = {
+  const rewardServiceStub: Partial<RewardsService> = {
     getReward: () => of(mockReward)
   };
 

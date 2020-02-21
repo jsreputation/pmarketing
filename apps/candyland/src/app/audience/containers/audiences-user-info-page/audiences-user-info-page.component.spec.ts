@@ -32,7 +32,7 @@ describe('AudiencesUserInfoPageComponent', () => {
   const messageServiceStub: Partial<MessageService> = {
     show: () => ({})
   };
-  const matDialodRefStub = {
+  const matDialogRefStub: Partial<MatDialogRef<any>> = {
     close: () => { }
   };
   const matDialogDataStub = {};
@@ -66,7 +66,7 @@ describe('AudiencesUserInfoPageComponent', () => {
       ],
       providers: [
         { provide: MessageService, useValue: messageServiceStub },
-        { provide: MatDialogRef, useValue: matDialodRefStub },
+        { provide: MatDialogRef, useValue: matDialogRefStub },
         { provide: MAT_DIALOG_DATA, useValue: matDialogDataStub },
         { provide: RewardsService, useClass: MockRewardsServices },
         { provide: CommsService, useClass: MockCommsServices },

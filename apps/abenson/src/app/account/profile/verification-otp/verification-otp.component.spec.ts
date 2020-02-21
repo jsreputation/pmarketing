@@ -33,7 +33,7 @@ describe('VerificationOtpComponent', () => {
     addPopup: () => { }
   };
 
-  const activatedRouteStub = {
+  const activatedRouteStub: Partial<ActivatedRoute> = {
     params,
     queryParams: of({ phone: testphone })
   };

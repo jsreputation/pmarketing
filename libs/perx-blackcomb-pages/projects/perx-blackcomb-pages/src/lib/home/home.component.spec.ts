@@ -45,7 +45,7 @@ const tokenStorageStub: Partial<TokenStorage> = {
 const profileService: Partial<ProfileService> = {
   whoAmI: () => of(profile)
 };
-const authServiceStub = {
+const authServiceStub: Partial<AuthenticationService> = {
   isAuthorized: () => of(true)
 };
 const loyaltyServiceStub: Partial<LoyaltyService> = {
@@ -56,13 +56,13 @@ const gameSvcStub: Partial<IGameService> = {
   getActiveGames: () => of([])
 };
 
-const themesServiceStub = { getThemeSetting: () => of({}) };
+const themesServiceStub: Partial<ThemesService> = { getThemeSetting: () => of() };
 
-const configServiceStub = {
+const configServiceStub: Partial<ConfigService> = {
   readAppConfig: () => of()
 };
 
-const settingsServiceStub = {
+const settingsServiceStub: Partial<SettingsService> = {
   readRssFeeds: () => of()
 };
 

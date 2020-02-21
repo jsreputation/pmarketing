@@ -13,7 +13,7 @@ import { mockLoyalty } from '../loyalty.mock';
 describe('EnlargedQrComponent', () => {
   let component: EnlargedQrComponent;
   let fixture: ComponentFixture<EnlargedQrComponent>;
-  const loyaltyServiceStub = {
+  const loyaltyServiceStub: Partial<LoyaltyService> = {
     getLoyalty: (): Observable<ILoyalty> => of(mockLoyalty)
   };
 

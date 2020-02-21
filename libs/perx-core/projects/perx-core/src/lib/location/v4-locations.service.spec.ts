@@ -11,7 +11,7 @@ import { IMerchant } from '../merchants/models/merchants.model';
 import { ILocation } from './ilocation';
 
 describe('V4LocationService', () => {
-  const merchantsServiceStub = {
+  const merchantsServiceStub: Partial<IMerchantsService> = {
     getMerchant: () => of(),
     getMerchants: () => of([])
   };

@@ -5,8 +5,7 @@ import { NotificationService } from '@perx/core';
 describe('NotificationWrapperService', () => {
   let service: NotificationWrapperService;
   let notification: NotificationService;
-  const notificationServiceStub = {
-    $popup: { subscribe: () => ({}) },
+  const notificationServiceStub: Partial<NotificationService> = {
     addPopup: (val) => val
   };
   beforeEach(() => TestBed.configureTestingModule({

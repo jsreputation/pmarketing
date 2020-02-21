@@ -48,7 +48,7 @@ describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
   let router: Router;
-  const loyaltyServiceStub = {
+  const loyaltyServiceStub: Partial<LoyaltyService> = {
     getLoyalty: () => of()
   };
   const mockProfile: IProfile = {
@@ -58,11 +58,11 @@ describe('HomeComponent', () => {
     lastName: ''
   };
 
-  const profileServiceStub = {
+  const profileServiceStub: Partial<ProfileService> = {
     whoAmI: () => of()
   };
 
-  const newsFeedServiceStub = {};
+  const newsFeedServiceStub: Partial<FeedReaderService> = {};
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

@@ -22,11 +22,11 @@ import { ConfigModule } from '../config/config.module';
 describe('PinService', () => {
   let service: PinService;
   let vouchersService: IVoucherService;
-  const rewardsServiceStub = {
+  const rewardsServiceStub: Partial<RewardsService> = {
     getReward: () => of()
   };
 
-  const merchantsServiceStub = {
+  const merchantsServiceStub: Partial<IMerchantsService> = {
     getMerchant: () => of()
   };
 

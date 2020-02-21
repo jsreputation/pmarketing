@@ -9,16 +9,16 @@ describe('CardComponent', () => {
   let component: CardComponent;
   let fixture: ComponentFixture<CardComponent>;
 
-  const configServiceStub = {
+  const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of()
   };
-  const themesServiceStub = {
+  const themesServiceStub: Partial<ThemesService> = {
     getThemeSetting: () => of()
   };
-  const campaignServiceStub = {
+  const campaignServiceStub: Partial<ICampaignService> = {
     getCampaigns: () => of()
   };
-  const stampServiceStub = {
+  const stampServiceStub: Partial<StampService> = {
     getStamps: () => of()
   };
 

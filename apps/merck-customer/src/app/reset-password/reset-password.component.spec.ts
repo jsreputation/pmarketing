@@ -27,7 +27,7 @@ describe('ResetPasswordComponent', () => {
     phone: '6512345678',
   };
 
-  const profileServiceStub = {
+  const profileServiceStub: Partial<ProfileService> = {
     whoAmI: () => of(mockProfile)
   };
   beforeEach(async(() => {

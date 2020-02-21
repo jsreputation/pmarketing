@@ -13,8 +13,15 @@ describe('SignupComponent', () => {
   let component: SignUpComponent;
   let fixture: ComponentFixture<SignUpComponent>;
   let auth: AuthenticationService;
-  const authenticationServiceStub = { getAppToken: () => of({}), getAppAccessToken: () => 'token' };
-  const profileServiceStub = { verifyCardNumber: () => of(true) };
+  const authenticationServiceStub: Partial<AuthenticationService> = {
+    getAppToken: () => of({
+      access_token: 'string',
+      token_type: 'string',
+      expires_in: 666,
+      created_at: 666}),
+    getAppAccessToken: () => 'token'
+  };
+  const profileServiceStub: Partial<ProfileService> = { verifyCardNumber: () => of(true) };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SignUpComponent],
