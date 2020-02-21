@@ -216,7 +216,7 @@ describe('RedeemComponent', () => {
 
   it('should get reward price', () => {
     component.reward = reward;
-    const price = component.getPrice();
+    // const price = component.getPrice();
     expect(component.reward).toBe(reward);
     // expect(price).toBe(0);
   });
