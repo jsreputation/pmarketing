@@ -16,27 +16,6 @@
             "project": "projects/perx-candyshop/ng-package.json"
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/perx-candyshop/src/test.ts",
-            "tsConfig": "projects/perx-candyshop/tsconfig.spec.json",
-            "karmaConfig": "projects/perx-candyshop/karma.conf.js",
-            "codeCoverage": false
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/perx-candyshop/tsconfig.lib.json",
-              "projects/perx-candyshop/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
-          }
-        }
       }
     }
   },

@@ -3,13 +3,18 @@
   "compilerOptions": {
     "outDir": "../../out-tsc/spec",
     "types": [
-      "jasmine",
+      "jest",
       "node"
+    ],
+    "module": "commonjs",
+    "emitDecoratorMetadata": true,
+    "allowJs": true,
+    "typeRoots": [
+      "../../../../node_modules/@types",
+      "../../node_modules/@types",
     ]
   },
-  "files": [
-    "src/test.ts"
-  ],
+  "files": [],
   "include": [
     "**/*.spec.ts",
     "**/*.d.ts"
