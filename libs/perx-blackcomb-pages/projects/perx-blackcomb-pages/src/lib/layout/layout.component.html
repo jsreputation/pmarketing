@@ -6,7 +6,7 @@
     >
       {{backArrowIcon}}
     </mat-icon>
-    <a [routerLink]="[ '/home' ]">
+    <a class="logoWrapper" [routerLink]="[ '/home' ]">
       <img *ngIf="!headerTitle" class="logo" [attr.src]="theme.properties['--logo']" [attr.alt]="theme.properties['--title']" />
     </a>
     <span *ngIf="headerTitle" class="header-title">{{headerTitle}}</span>
