@@ -5,6 +5,8 @@ import { ShakeHttpService } from '@perx/whistler-services';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 import { IWTreeGameEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
 import { HttpClient } from '@angular/common/http';
+import { IGameDefaultData } from '@cl-core/models/games/game-default-data.interface';
+import { IShakeTree } from '@cl-core/models/games/shake-tree/shakeTree.interface';
 
 @Injectable({
   providedIn: 'root'

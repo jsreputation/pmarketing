@@ -3,11 +3,12 @@ import {
   IJsonApiItemPayload, IWPinataGameEngagementAttributes
 } from '@perx/whistler';
 import { IPinataForm } from '@cl-core/models/games/pinata/pinate-form.interface';
+import { IGameDefaultData } from '@cl-core/models/games/game-default-data.interface';
 
 export class MockPinataService {
   public getPinataData(): Observable<IGameDefaultData> {
     return of({
-      pinata: [    {
+      pinata: [{
         id: 1,
         type: 'state1',
         title: 'icon',

@@ -13,6 +13,11 @@ import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-v
 import { IWSpinGameEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
 import { SpinService } from '@cl-core/services/spin.service';
 import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
+import { CommonSelect } from '@cl-core/models/common-select.interface';
+import { ISpinDefaultValue } from '@cl-core/models/games/spin/spin-default-value.interface';
+import { ITenantsProperties } from '@cl-core/models/settings/tenants.properties.interface';
+import { ISpinEntityForm } from '@cl-core/models/games/spin/spin-form.interface';
+import { IStampsEntityForm } from '@cl-core/models/games/stamps/stamps-entity-form.interface';
 
 @Component({
   selector: 'cl-new-spin-page',
@@ -178,7 +183,7 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
       const blue = sin_to_hex(i, Math.PI * 2 / 3); // 120 deg
       const green = sin_to_hex(i, 2 * Math.PI * 2 / 3); // 240 deg
 
-      rainbow[i] = `#${  red  }${green  }${blue}`;
+      rainbow[i] = `#${red}${green}${blue}`;
     }
 
     function sin_to_hex(i: number, phase: number): string {
@@ -186,7 +191,7 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
       const int = Math.floor(sin * 127) + 128;
       const hex = int.toString(16);
 
-      return hex.length === 1 ? `0${  hex}` : hex;
+      return hex.length === 1 ? `0${hex}` : hex;
     }
     return rainbow;
   }
@@ -259,7 +264,7 @@ export class NewSpinPageComponent implements OnInit, OnDestroy {
         for (let i = 1; i <= this.numberOfWedges.value; i++) {
           const probRewardProp = this.rewardSlotNumberData.map(slotData => slotData.rewardPosition)
             .includes(i) ?
-            {backgroundImage: ImageControlValue.getImgLink(this.rewardIcon)} : {};
+            { backgroundImage: ImageControlValue.getImgLink(this.rewardIcon) } : {};
           tempISlices.push({
             ...probRewardProp,
             id: `${i}`,

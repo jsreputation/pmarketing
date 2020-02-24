@@ -5,6 +5,7 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { MultiUploadDialogComponent } from '@cl-shared/components/multi-upload-dialog/multi-upload-dialog.component';
 import { MatDialog } from '@angular/material';
+import { IGraphic } from '@cl-core/models/graphic.interface';
 
 @Component({
   selector: 'cl-select-graphic-wrap-dialog',

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
+import { OptionConfig } from '@perx/candyshop';
 
 @Component({
   selector: 'cl-question-rating-field',

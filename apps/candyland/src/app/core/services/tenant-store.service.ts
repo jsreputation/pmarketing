@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ITenantsProperties } from '@cl-core/models/settings/tenants.properties.interface';
 
 @Injectable({
   providedIn: 'root'
