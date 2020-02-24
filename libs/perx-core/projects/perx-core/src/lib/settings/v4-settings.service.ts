@@ -7,6 +7,7 @@ import {
 } from 'rxjs';
 import {
   map,
+  share,
   switchMap,
 } from 'rxjs/operators';
 
@@ -70,7 +71,8 @@ export class V4SettingsService extends SettingsService {
       switchMap(() => this.configService.readAppConfig()),
       switchMap((config: IConfig<void>) => this.http.get(`${config.apiHost}/v4/settings/${key}`)),
       map((res: IV4MicrositeSettingsResponse) => res.data),
-      map((data: IV4MicrositeSettings) => V4SettingsService.v4MicrositeSettingsToMicrositeSettings(data))
+      map((data: IV4MicrositeSettings) => V4SettingsService.v4MicrositeSettingsToMicrositeSettings(data)),
+      share()
     );
   }
 
