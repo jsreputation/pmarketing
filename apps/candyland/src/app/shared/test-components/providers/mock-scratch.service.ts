@@ -4,10 +4,11 @@ import {
 } from '@perx/whistler';
 import { IGameDefaultData } from '@cl-core/models/games/game-default-data.interface';
 import { IScratchForm } from '@cl-core/models/games/scratch/scratch-form.interface';
+import { ScratchService } from '@cl-core-services';
 
-export class MockScratchService {
+export class MockScratchService implements Partial<ScratchService> {
 
-  public getMockData(): IGameDefaultData {
+  private getMockData(): IGameDefaultData {
     return {
       background: [{
         id: 1,
@@ -71,13 +72,11 @@ export class MockScratchService {
     });
   }
 
-  public createScratch(data: IScratchForm): Observable<IJsonApiItemPayload<IWScratchGameEngagementAttributes>> {
-    console.log(data);
+  public createScratch(): Observable<IJsonApiItemPayload<IWScratchGameEngagementAttributes>> {
     return of(null);
   }
 
-  public updateScratch(id: string, data: IScratchForm): Observable<IJsonApiItemPayload<IWScratchGameEngagementAttributes>> {
-    console.log(id, data);
+  public updateScratch(): Observable<IJsonApiItemPayload<IWScratchGameEngagementAttributes>> {
     return of(null);
   }
 }

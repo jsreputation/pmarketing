@@ -17,7 +17,7 @@ import { ILimit } from '@cl-core/models/limit/limit.interface';
 import { IEngagementType } from '@cl-core/models/engagement/engagement.interface';
 import { ITenantsProperties } from '@cl-core/models/settings/tenants.properties.interface';
 import { HttpParamsOptions } from '@cl-core/models/params-map';
-import { OptionConfig } from '@cl-core/models/option-config.types';
+import { OptionConfig } from '@perx/candyshop';
 
 @Component({
   selector: 'cl-new-campaign-select-engagement-page',

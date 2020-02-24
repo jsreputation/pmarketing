@@ -1,12 +1,10 @@
 import { Observable, of } from 'rxjs';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
-import { ICampaignOutcome } from '@cl-core/models/campaign/campaign';
 import { IJsonApiItemPayload, IWOutcomeAttributes } from '@perx/whistler';
-import { HttpParamsOptions } from '@cl-core/models/params-map';
+import { OutcomesService } from '@cl-core-services';
 
-export class MockOutcomeService {
-
-  public getMockOutcome(): IOutcome {
+export class MockOutcomeService implements Partial<OutcomesService> {
+  private getMockOutcome(): IOutcome {
     return {
       id: '1',
       resultId: 1,
@@ -17,29 +15,19 @@ export class MockOutcomeService {
     };
   }
 
-  public getOutcomes(params: HttpParamsOptions): Observable<IOutcome[]> {
-    console.log(params);
+  public getOutcomes(): Observable<IOutcome[]> {
     return of([this.getMockOutcome()]);
   }
 
-  public updateOutcome(
-    data: ICampaignOutcome,
-    campaignId: string,
-  ): Observable<IJsonApiItemPayload<IWOutcomeAttributes>> {
-    console.log(data, campaignId);
+  public updateOutcome(): Observable<IJsonApiItemPayload<IWOutcomeAttributes>> {
     return of(null);
   }
 
-  public createOutcome(
-    data: ICampaignOutcome,
-    campaignId: string,
-  ): Observable<IJsonApiItemPayload<IWOutcomeAttributes>> {
-    console.log(data, campaignId);
+  public createOutcome(): Observable<IJsonApiItemPayload<IWOutcomeAttributes>> {
     return of(null);
   }
 
-  public deleteOutcome(id: string): Observable<any> {
-    console.log(id);
+  public deleteOutcome(): Observable<any> {
     return of(null);
   }
 }

@@ -15,8 +15,10 @@ export class DialogPreviewSelectorComponent implements OnInit {
   public imageGraphic: IGraphic;
   public upload: boolean;
 
-  constructor(matDialogRef: MatDialogRef<DialogPreviewSelectorComponent>,
-    @Inject(MAT_DIALOG_DATA) data: { trigger: ElementRef, img: IGraphic, upload: boolean }) {
+  constructor(
+    matDialogRef: MatDialogRef<DialogPreviewSelectorComponent>,
+    @Inject(MAT_DIALOG_DATA) data: { trigger: ElementRef, img: IGraphic, upload: boolean }
+  ) {
     this._matDialogRef = matDialogRef;
     this.triggerElementRef = data.trigger;
     // if have head. HEAD should be compulsory instead

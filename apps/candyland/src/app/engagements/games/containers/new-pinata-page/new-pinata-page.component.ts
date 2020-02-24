@@ -127,8 +127,8 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
   private createPinataForm(): void {
     this.form = this.fb.group({
       name: ['Hit the Pinata Template', [Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(60)]
+        Validators.minLength(1),
+        Validators.maxLength(60)]
       ],
       headlineMessage: ['Tap the Piñata and Win!', [
         Validators.required,

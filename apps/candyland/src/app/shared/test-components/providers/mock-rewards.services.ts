@@ -8,28 +8,21 @@ import {
   WRedemptionType
 } from '@perx/whistler';
 import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.interface';
-import { HttpParamsOptions } from '@cl-core/models/params-map';
 import { ITableData } from '@cl-core/models/data-list.interface';
 import { OptionConfig } from '@perx/candyshop';
-import { ILoyaltyFormGroup, ILoyaltyTiersFormGroup, IBasicTier } from '@cl-core/models/reward/reward-loyalty-form-interface';
 import { ITierRewardCost } from '@cl-core/models/reward/tier-reward-cost-intrface';
-export class MockRewardsServices {
-  public getTableData(params: HttpParamsOptions): Observable<ITableData<IRewardEntity>> {
-    // tslint:disable
-    const data: any = params;
-    console.log('data', data);
+import { RewardsService } from '@cl-core-services';
+
+export class MockRewardsServices implements Partial<RewardsService> {
+  public getTableData(): Observable<ITableData<IRewardEntity>> {
     return of({
       data: [],
       meta: {
-
       }
     });
   }
 
-  public getRewards(params: HttpParamsOptions): Observable<IJsonApiListPayload<IWRewardEntityAttributes>> {
-    // tslint:disable-next-line
-    const data: any = params;
-    console.log('data', data);
+  public getRewards(): Observable<IJsonApiListPayload<IWRewardEntityAttributes>> {
     return of({
       data: []
     });
@@ -75,43 +68,35 @@ export class MockRewardsServices {
     });
   }
 
-  public createReward(data: IRewardEntityForm, loyalties?: ILoyaltyFormGroup[]): Observable<IJsonApiItemPayload<IWRewardEntityAttributes>> {
-    console.log('data', data, loyalties);
+  public createReward(): Observable<IJsonApiItemPayload<IWRewardEntityAttributes>> {
     return of(null);
   }
 
-  public duplicateReward(data: IRewardEntity): Observable<IJsonApiItemPayload<IWRewardEntityAttributes>> {
-    console.log('data', data);
+  public duplicateReward(): Observable<IJsonApiItemPayload<IWRewardEntityAttributes>> {
     return of(null);
   }
-  public updateReward(id: string, data: IRewardEntityForm, loyalties?: ILoyaltyFormGroup[]):
-    Observable<IJsonApiItemPayload<IWRewardEntityAttributes>> {
-    console.log('data', data, id, loyalties);
-    return of(null);
-  }
-
-  public getRewardTierList(id: string): Observable<ITierRewardCost[]> {
-    console.log('data', id);
+  public updateReward():
+  Observable<IJsonApiItemPayload<IWRewardEntityAttributes>> {
     return of(null);
   }
 
-  public getRewardTier(id: string): Observable<any> {
-    console.log('data', id);
+  public getRewardTierList(): Observable<ITierRewardCost[]> {
     return of(null);
   }
 
-  public createRewardTier(tier: ILoyaltyTiersFormGroup | IBasicTier, id: string): Observable<IJsonApiItem<IWTierRewardCostsAttributes>> {
-    console.log('data', tier, id);
+  public getRewardTier(): Observable<any> {
     return of(null);
   }
 
-  public patchRewardTier(tier: ILoyaltyTiersFormGroup, id: string): Observable<IJsonApiItem<IWTierRewardCostsAttributes>> {
-    console.log('data', tier, id);
+  public createRewardTier(): Observable<IJsonApiItem<IWTierRewardCostsAttributes>> {
     return of(null);
   }
 
-  public deleteRewardTier(tier: ILoyaltyTiersFormGroup | IBasicTier): Observable<any> {
-    console.log('data', tier);
+  public patchRewardTier(): Observable<IJsonApiItem<IWTierRewardCostsAttributes>> {
+    return of(null);
+  }
+
+  public deleteRewardTier(): Observable<any> {
     return of(null);
   }
 }

@@ -1,11 +1,11 @@
 import { Observable, of } from 'rxjs';
 import { ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
-import { HttpParamsOptions } from '@cl-core/models/params-map';
 import { ITableData } from '@cl-core/models/data-list.interface';
+import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.service';
 
-export class MockLoyaltyCustomTierService {
+export class MockLoyaltyCustomTierService implements Partial<LoyaltyCustomTierService> {
 
-  public getMockData(): ICustomTireForm {
+  private getMockData(): ICustomTireForm {
     return {
       id: '1',
       type: 'type',
@@ -29,31 +29,26 @@ export class MockLoyaltyCustomTierService {
     };
   }
 
-  public getTableData(params: HttpParamsOptions): Observable<ITableData<ICustomTireForm>> {
-    console.log(params);
+  public getTableData(): Observable<ITableData<ICustomTireForm>> {
     return of({
       data: [this.getMockData()],
       meta: {}
     });
   }
 
-  public getCustomTier(id: string, params: HttpParamsOptions): Observable<ICustomTireForm> {
-    console.log(id, params);
+  public getCustomTier(): Observable<ICustomTireForm> {
     return of(this.getMockData());
   }
 
-  public createCustomTier(data: any, basicTierId: string): Observable<ICustomTireForm> {
-    console.log(data, basicTierId);
+  public createCustomTier(): Observable<ICustomTireForm> {
     return of(this.getMockData());
   }
 
-  public updateCustomTier(customTierId: string, data: any, basicTierId: string): Observable<ICustomTireForm> {
-    console.log(data, basicTierId, customTierId);
+  public updateCustomTier(): Observable<ICustomTireForm> {
     return of(this.getMockData());
   }
 
-  public deleteCustomTier(id: string): Observable<void> {
-    console.log(id);
+  public deleteCustomTier(): Observable<void> {
     return of(null);
   }
 }

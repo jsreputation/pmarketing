@@ -1,8 +1,8 @@
 import { Observable, of } from 'rxjs';
 import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
+import { UploadFileService } from '@cl-core-services';
 
-export class MockUploadFileService {
-
+export class MockUploadFileService implements Partial<UploadFileService> {
   public getMockUploadFile(): IUploadedFile {
     return {
       id: '1;',
@@ -16,23 +16,19 @@ export class MockUploadFileService {
     };
   }
 
-  public uploadImage(file: File): Observable<IUploadedFile> {
-    console.log(file);
+  public uploadImage(): Observable<IUploadedFile> {
     return of(null);
   }
 
-  public uploadFile(file: File): Observable<IUploadedFile> {
-    console.log(file);
+  public uploadFile(): Observable<IUploadedFile> {
     return of(null);
   }
 
-  public getFile(id: string): Observable<IUploadedFile> {
-    console.log(id);
+  public getFile(): Observable<IUploadedFile> {
     return of(null);
   }
 
-  public uploadMultipleFile(files: File[]): Observable<IUploadedFile[]> {
-    console.log(files);
+  public uploadMultipleFile(): Observable<IUploadedFile[]> {
     return of([this.getMockUploadFile()]);
   }
 }

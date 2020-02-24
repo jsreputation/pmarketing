@@ -20,7 +20,7 @@ import { ILoyaltyFormGroup, ILoyaltyTiersFormGroup, IBasicTier } from '@cl-core/
 import { Currency } from '@cl-core/models/merchant/currency';
 import { IMerchant } from '@cl-core/models/merchant/merchant-simple-interface';
 import { ITierRewardCost } from '@cl-core/models/reward/tier-reward-cost-intrface';
-import { OptionConfig } from '@cl-core/models/option-config.types';
+import { OptionConfig } from '@perx/candyshop';
 
 @Component({
   selector: 'cl-manage-rewards',
@@ -343,7 +343,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
 
       if (basicTier && basicTier.tierType === this.newRewardFormService.tierTypes.basicType) {
         programStatus = true;
-        basicTier['statusTiers'] = true;
+        basicTier.statusTiers = true;
         this.newRewardFormService.setDefaultRewardTiers(basicTier);
       }
       loyaltyFormGroup.patchValue({
@@ -375,7 +375,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
           if (rewardTier && rewardTier.tierType === this.newRewardFormService.tierTypes.customType) {
             // add to object for know what to do next remove or update
             hasSelectedCustomTier = true;
-            rewardTier['statusTiers'] = true;
+            rewardTier.statusTiers = true;
             this.newRewardFormService.setDefaultRewardTiers(rewardTier);
             tier.patchValue({ ...rewardTier });
           }

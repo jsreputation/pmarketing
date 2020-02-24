@@ -3,11 +3,10 @@ import {
   IJsonApiItemPayload, IWMerchantAttributes, IWMerchantBranchAttributes
 } from '@perx/whistler';
 import { IMerchantForm } from '@cl-core/models/merchant/merchant-form-interface';
-import { HttpParamsOptions } from '@cl-core/models/params-map';
 import { ITableData } from '@cl-core/models/data-list.interface';
-import { IBranch } from '@cl-core/models/merchant/branch-interface';
+import { MerchantsService } from '@cl-core-services';
 
-export class MockMerchantsService {
+export class MockMerchantsService implements Partial<MerchantsService> {
 
   public getMockMerchantForm(id?: string): IMerchantForm {
     return {
@@ -28,8 +27,8 @@ export class MockMerchantsService {
       createdAt: 'string;',
     };
   }
-  public getTableData(params: HttpParamsOptions | any): Observable<ITableData<IMerchantForm>> {
-    console.log(params);
+  public getTableData(): Observable<ITableData<IMerchantForm>> {
+
     return of({
       data: [this.getMockMerchantForm()],
       meta: {}
@@ -44,26 +43,19 @@ export class MockMerchantsService {
     return of((data.id as any));
   }
 
-  public createMerchantBranch(merchantId: string, data: IBranch): Observable<IJsonApiItemPayload<IWMerchantBranchAttributes>> {
-    console.log(merchantId, data);
+  public createMerchantBranch(): Observable<IJsonApiItemPayload<IWMerchantBranchAttributes>> {
     return of(null);
   }
 
-  public updateMerchantBranch(merchantId: string, data: IBranch): Observable<IJsonApiItemPayload<IWMerchantBranchAttributes>> {
-    console.log(merchantId, data);
+  public updateMerchantBranch(): Observable<IJsonApiItemPayload<IWMerchantBranchAttributes>> {
     return of(null);
   }
 
-  public deleteMerchantBranch(id: string): Observable<void> {
-    console.log(id);
+  public deleteMerchantBranch(): Observable<void> {
     return of(null);
   }
 
-  public updateMerchant(
-    id: string,
-    data: IMerchantForm
-  ): Observable<IJsonApiItemPayload<IWMerchantAttributes>> {
-    console.log(id, data);
+  public updateMerchant(): Observable<IJsonApiItemPayload<IWMerchantAttributes>> {
     return of(null);
   }
 
@@ -72,7 +64,6 @@ export class MockMerchantsService {
   }
 
   public duplicateMerchant(merchant: IMerchantForm): Observable<number> {
-    console.log(merchant);
     return of(merchant.id as any);
   }
 

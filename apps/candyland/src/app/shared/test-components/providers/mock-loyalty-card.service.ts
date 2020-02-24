@@ -3,8 +3,9 @@ import { IAudiencesLoyaltyCard } from '@cl-core/models/audiences/audiences-loyal
 import { IJsonApiItemPayload, IWLoyaltyCard } from '@perx/whistler';
 import { HttpParamsOptions } from '@cl-core/models/params-map';
 import { ITableData } from '@cl-core/models/data-list.interface';
+import { LoyaltyCardService } from '@cl-core/services/loyalty-card.service';
 
-export class MockLoyaltyCardService {
+export class MockLoyaltyCardService implements Partial<LoyaltyCardService> {
 
   public getMockAudiencesLoyaltyCard(id?: string): IAudiencesLoyaltyCard {
     return {
@@ -21,12 +22,10 @@ export class MockLoyaltyCardService {
   }
 
   public getLoyaltyCards(params: HttpParamsOptions): Observable<IAudiencesLoyaltyCard[]> {
-    console.log(params);
     return of([this.getMockAudiencesLoyaltyCard()]);
   }
 
   public getTableData(params: HttpParamsOptions): Observable<ITableData<IAudiencesLoyaltyCard>> {
-    console.log(params);
     return of({
       data: [this.getMockAudiencesLoyaltyCard()],
       meta: {}
@@ -34,22 +33,18 @@ export class MockLoyaltyCardService {
   }
 
   public getLoyaltyCard(id: string, params: HttpParamsOptions = {}): Observable<IAudiencesLoyaltyCard> {
-    console.log(id, params);
     return of(this.getMockAudiencesLoyaltyCard());
   }
 
   public createLoyaltyCard(data: IAudiencesLoyaltyCard): Observable<IJsonApiItemPayload<IWLoyaltyCard>> {
-    console.log(data);
     return of(null);
   }
 
-  public updateLoyaltyCard(id: string, data: any): Observable<IJsonApiItemPayload<IWLoyaltyCard>> {
-    console.log(id, data);
+  public updateLoyaltyCard(): Observable<IJsonApiItemPayload<IWLoyaltyCard>> {
     return of(null);
   }
 
-  public deleteLoyalty(id: string): Observable<void> {
-    console.log(id);
+  public deleteLoyalty(): Observable<void> {
     return of(null);
   }
 }

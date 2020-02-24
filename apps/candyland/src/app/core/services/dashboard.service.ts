@@ -15,17 +15,10 @@ export class DashboardService {
 
   public getDashboardGameCard(): Observable<DashboardGameCard[]> {
     return this.dashboardHttpService.getDashboardGameCard();
-    // .pipe(
-    //   map((res: DashboardGameCard[]) => res)
-    // );
   }
 
   public getTotalActive(): Observable<ITotal[]> {
-    return this.dashboardHttpService.getDashboardDataTotal()
-      // .pipe(
-      //   // map((res: ITotal[]) => res)
-      // )
-      ;
+    return this.dashboardHttpService.getDashboardDataTotal();
   }
 
   public getDashboardCampaignsTabs(): Observable<ITotal[]> {

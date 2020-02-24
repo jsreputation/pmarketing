@@ -24,7 +24,7 @@ export class MockAudiensesVouchersService {
   }
 
   public getTableData(params: HttpParamsOptions): Observable<ITableData<IAudienceVoucher>> {
-    console.log(params);
+
     return of({
       data: [this.getMockAudienceVoucher()],
       meta: {}
@@ -32,12 +32,10 @@ export class MockAudiensesVouchersService {
   }
 
   public voucherAssigned(source: string, assigned: string): Observable<IJsonApiListPayload<IWAssignedAttributes>> {
-    console.log(source, assigned);
     return of(null);
   }
 
   public updateVoucherExpiry(id: string, endData: string): Observable<IJsonApiItem<IWAssignedAttributes>> {
-    console.log(id, endData);
     return of(null);
   }
 }

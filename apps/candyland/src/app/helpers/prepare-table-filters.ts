@@ -1,4 +1,4 @@
-import { OptionConfig } from '@cl-core/models/option-config.types';
+import { OptionConfig } from '@perx/candyshop';
 
 export class PrepareTableFilters {
 

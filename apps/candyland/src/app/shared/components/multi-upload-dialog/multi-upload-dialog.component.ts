@@ -35,8 +35,10 @@ export class MultiUploadDialogComponent {
       return Object.entries(this.imageSegments);
     }
   }
-  constructor(matDialogRef: MatDialogRef<MultiUploadDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) data: { img: IGraphic, imgSegments: { [key: string]: boolean }, placeHolder: string }) {
+  constructor(
+    matDialogRef: MatDialogRef<MultiUploadDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) data: { img: IGraphic, imgSegments: { [key: string]: boolean }, placeHolder: string }
+  ) {
     this._matDialogRef = matDialogRef;
     this.imageSegments = data.imgSegments;
     let imageGraphicAsArray;

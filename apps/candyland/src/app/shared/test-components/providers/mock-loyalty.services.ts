@@ -2,10 +2,9 @@ import { Observable, of } from 'rxjs';
 import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
 import { IJsonApiItemPayload, IWBasicTierAttributes } from '@perx/whistler';
 import { IAudiencesLoyalty } from '@cl-core/models/audiences/audiences-loyalty.model';
-import { HttpParamsOptions } from '@cl-core/models/params-map';
 import { ITableData } from '@cl-core/models/data-list.interface';
-
-export class MockLoyaltyServices {
+import { LoyaltyService } from '@cl-core/services/loyalty.service';
+export class MockLoyaltyServices implements Partial<LoyaltyService> {
 
   public getMockLoyaltyForm(): ILoyaltyForm {
     return {
@@ -13,20 +12,17 @@ export class MockLoyaltyServices {
     };
   }
 
-  public getAudiencesLoyaltyOption(params: HttpParamsOptions = {}): Observable<IAudiencesLoyalty[]> {
-    console.log(params);
+  public getAudiencesLoyaltyOption(): Observable<IAudiencesLoyalty[]> {
     return of([(this.getMockLoyaltyForm() as any)]);
   }
 
-  public getLoyalties(params: HttpParamsOptions): Observable<{ data: ILoyaltyForm[] }> {
-    console.log(params);
+  public getLoyalties(): Observable<{ data: ILoyaltyForm[] }> {
     return of({
       data: [this.getMockLoyaltyForm()]
     });
   }
 
-  public getTableData(params: HttpParamsOptions): Observable<ITableData<ILoyaltyForm>> {
-    console.log(params);
+  public getTableData(): Observable<ITableData<ILoyaltyForm>> {
     return of({
       data: [
         this.getMockLoyaltyForm()
@@ -34,61 +30,43 @@ export class MockLoyaltyServices {
       meta: {}
     });
   }
-  public getLoyalty(id: string, params: HttpParamsOptions = {}): Observable<ILoyaltyForm> {
-    console.log(id, params);
+  public getLoyalty(): Observable<ILoyaltyForm> {
     return of(this.getMockLoyaltyForm());
   }
 
-  public createLoyalty(data: ILoyaltyForm): Observable<ILoyaltyForm> {
-    console.log(data);
+  public createLoyalty(): Observable<ILoyaltyForm> {
     return of(this.getMockLoyaltyForm());
   }
-  public updateLoyalty(id: string, data: ILoyaltyForm): Observable<ILoyaltyForm> {
-    console.log(id, data);
+  public updateLoyalty(): Observable<ILoyaltyForm> {
     return of(this.getMockLoyaltyForm());
   }
-  public updateLoyaltyStatus(id: string, status: string): Observable<ILoyaltyForm> {
-    console.log(id, status);
+  public updateLoyaltyStatus(): Observable<ILoyaltyForm> {
     return of(this.getMockLoyaltyForm());
   }
   public deleteLoyalty(id: string): Observable<any> {
     return of(id);
   }
-  public createBasicTier(data: ILoyaltyForm, loyaltyId: string): Observable<IJsonApiItemPayload<IWBasicTierAttributes>> {
-    console.log(data, loyaltyId);
+  public createBasicTier(): Observable<IJsonApiItemPayload<IWBasicTierAttributes>> {
     return of(null);
   }
 
-  public updateBasicTier(
-    basicTierId: string,
-    data: ILoyaltyForm,
-    loyaltyId: string
-  ): Observable<IJsonApiItemPayload<IWBasicTierAttributes>> {
-    console.log(data, loyaltyId, basicTierId);
+  public updateBasicTier(): Observable<IJsonApiItemPayload<IWBasicTierAttributes>> {
     return of(null);
   }
 
-  public deleteBasicTier(id: string): Observable<void> {
-    console.log(id);
+  public deleteBasicTier(): Observable<void> {
     return of(null);
   }
 
-  public duplicateLoyalty(loyalty: ILoyaltyForm): Observable<IJsonApiItemPayload<IWBasicTierAttributes>> {
-    console.log(loyalty);
+  public duplicateLoyalty(): Observable<IJsonApiItemPayload<IWBasicTierAttributes>> {
     return of(null);
   }
 
-  public getLoyaltyRequest(loyalty: ILoyaltyForm, loyaltyId: string = null): Observable<ILoyaltyForm> {
-    console.log(loyalty, loyaltyId);
+  public getLoyaltyRequest(): Observable<ILoyaltyForm> {
     return of(null);
   }
 
-  public getBasicTierRequest(
-    loyalty: ILoyaltyForm,
-    loyaltyId: string,
-    basicTierId: string = null
-  ): Observable<IJsonApiItemPayload<IWBasicTierAttributes>> {
-    console.log(loyalty, loyaltyId, basicTierId);
+  public getBasicTierRequest(): Observable<IJsonApiItemPayload<IWBasicTierAttributes>> {
     return of(null);
   }
 }

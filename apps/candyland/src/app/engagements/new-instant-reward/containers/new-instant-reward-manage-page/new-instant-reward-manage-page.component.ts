@@ -141,8 +141,8 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy, A
   private initRewardForm(): void {
     this.form = this.fb.group({
       name: [null, [Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(60)]
+        Validators.minLength(1),
+        Validators.maxLength(60)]
       ],
       headlineMessage: [null, [
         Validators.required,

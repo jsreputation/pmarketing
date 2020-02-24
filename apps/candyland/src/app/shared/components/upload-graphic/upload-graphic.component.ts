@@ -54,9 +54,11 @@ export class UploadGraphicComponent implements ControlValueAccessor {
     }
   }
 
-  constructor(private sanitizer: DomSanitizer,
+  constructor(
+    private sanitizer: DomSanitizer,
     private cd: ChangeDetectorRef,
-    private uploadFileService: UploadFileService) {
+    private uploadFileService: UploadFileService
+  ) {
   }
 
   public preview(files): void {
@@ -122,10 +124,10 @@ export class UploadGraphicComponent implements ControlValueAccessor {
         this.message = null;
         this.cd.markForCheck();
       },
-        (err: Error) => {
-          this.setError('Image haven\'t loaded successfully!', err.message);
-          this.cd.markForCheck();
-        });
+      (err: Error) => {
+        this.setError('Image haven\'t loaded successfully!', err.message);
+        this.cd.markForCheck();
+      });
   }
 
   private setError(message: string, serverError?: string) {

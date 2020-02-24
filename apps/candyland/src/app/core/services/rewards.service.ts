@@ -77,7 +77,7 @@ export class RewardsService implements ITableService<IRewardEntity> {
   }
 
   public updateReward(id: string, data: IRewardEntityForm, loyalties?: ILoyaltyFormGroup[]):
-    Observable<IJsonApiItemPayload<IWRewardEntityAttributes>> {
+  Observable<IJsonApiItemPayload<IWRewardEntityAttributes>> {
     const sendData: IJsonApiPatchData<IWRewardEntityAttributes> = {
       ...RewardHttpAdapter.transformFromRewardForm(data, loyalties),
       id

@@ -1,12 +1,11 @@
 import { Observable, of } from 'rxjs';
 import { IReward } from '@perx/core';
 import { RoleLabelConfig } from '@cl-shared';
-import { HttpParams } from '@angular/common/http';
 import { ICognitoEndpoint } from '@cl-core/models/settings/cognito-endpoint.interface';
 import { IAMGroup } from '@cl-core/models/settings/group.interface';
-import { HttpParamsOptions } from '@cl-core/models/params-map';
+import { SettingsService } from '@cl-core-services';
 
-export class MockSettingsService {
+export class MockSettingsService implements Partial<SettingsService> {
   public getRoles(): Observable<any[]> {
     return of([{
       id: 0,
@@ -84,18 +83,17 @@ export class MockSettingsService {
     });
   }
 
-  public getCognitoEndpoint(id: string, params: HttpParams): Observable<ICognitoEndpoint> {
-    console.log(id, params);
+  public getCognitoEndpoint(): Observable<ICognitoEndpoint> {
+
     return of(this.getMockCognitoEndpoint());
   }
 
-  public getCognitoEndpoints(params: HttpParamsOptions): Observable<ICognitoEndpoint[]> {
-    console.log(params);
+  public getCognitoEndpoints(): Observable<ICognitoEndpoint[]> {
     return of([this.getMockCognitoEndpoint()]);
   }
 
-  public createCognitoEndpoint(data: ICognitoEndpoint = null): Observable<ICognitoEndpoint> {
-    console.log(data);
+  public createCognitoEndpoint(): Observable<ICognitoEndpoint> {
+
     return of(this.getMockCognitoEndpoint());
   }
   public findAndCreateCognitoEndpoint(): Observable<ICognitoEndpoint> {

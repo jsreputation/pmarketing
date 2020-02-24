@@ -148,8 +148,8 @@ export class NewSnakePageComponent implements OnInit, OnDestroy {
   private createSnakeForm(): void {
     this.form = this.fb.group({
       name: ['Hit the Snake Template', [Validators.required,
-      Validators.minLength(1),
-      Validators.maxLength(60)]
+        Validators.minLength(1),
+        Validators.maxLength(60)]
       ],
       headlineMessage: ['Play Snake and Win!', [
         Validators.required,

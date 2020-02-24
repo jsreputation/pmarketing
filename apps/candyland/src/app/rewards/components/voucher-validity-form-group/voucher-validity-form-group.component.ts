@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { OptionConfig } from '@cl-core/models/option-config.types';
+import { OptionConfig } from '@perx/candyshop';
 
 @Component({
   selector: 'cl-voucher-validity-form-group',

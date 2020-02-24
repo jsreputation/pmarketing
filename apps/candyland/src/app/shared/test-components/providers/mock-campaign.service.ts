@@ -5,14 +5,12 @@ import {
   IJsonApiListPayload,
   IWCampaignAttributes
 } from '@perx/whistler';
-import { CampaignStatus } from '@cl-core/models/campaign/campaign.enum';
 import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
-import { HttpParamsOptions } from '@cl-core/models/params-map';
 import { ITableData } from '@cl-core/models/data-list.interface';
+import { CampaignsService } from '@cl-core-services';
 
-export class MockCampaignService {
-
-  public getMockData(): ICampaignTableData {
+export class MockCampaignService implements Partial<CampaignsService> {
+  private getMockData(): ICampaignTableData {
     return {
       id: 'test',
       name: 'test',
@@ -31,45 +29,37 @@ export class MockCampaignService {
     };
   }
 
-  public getTableData(params: HttpParamsOptions): Observable<ITableData<ICampaignTableData>> {
-    console.log(params);
+  public getTableData(): Observable<ITableData<ICampaignTableData>> {
     return of({
       data: [this.getMockData()],
       meta: {}
     });
   }
 
-  public getCampaigns(params: HttpParamsOptions): Observable<IJsonApiListPayload<IWCampaignAttributes>> {
-    console.log(params);
+  public getCampaigns(): Observable<IJsonApiListPayload<IWCampaignAttributes>> {
     return of(null);
   }
 
-  public getCampaign(id: string): Observable<ICampaign> {
-    console.log(id);
+  public getCampaign(): Observable<ICampaign> {
     return of(null);
   }
-  public updateCampaign(data: ICampaign): Observable<IJsonApiItemPayload<IWCampaignAttributes>> {
-    console.log(data);
-    return of(null);
-  }
-
-  public createCampaign(data: ICampaign): Observable<IJsonApiItemPayload<IWCampaignAttributes>> {
-    console.log(data);
+  public updateCampaign(): Observable<IJsonApiItemPayload<IWCampaignAttributes>> {
     return of(null);
   }
 
-  public duplicateCampaign(id: string): Observable<IJsonApiItemPayload<IWCampaignAttributes>> {
-    console.log(id);
+  public createCampaign(): Observable<IJsonApiItemPayload<IWCampaignAttributes>> {
     return of(null);
   }
 
-  public deleteCampaign(id: string): Observable<void> {
-    console.log(id);
+  public duplicateCampaign(): Observable<IJsonApiItemPayload<IWCampaignAttributes>> {
     return of(null);
   }
 
-  public updateCampaignStatus(id: string, status: CampaignStatus): Observable<ILoyaltyForm> {
-    console.log(id, status);
+  public deleteCampaign(): Observable<void> {
+    return of(null);
+  }
+
+  public updateCampaignStatus(): Observable<ILoyaltyForm> {
     return of(this.getMockLoyaltyForm());
   }
 }

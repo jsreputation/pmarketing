@@ -2,13 +2,12 @@ import { Observable, of } from 'rxjs';
 import {
   IJsonApiItem, IJsonApiItemPayload, IJsonApiListPayload, IWAudiences, IWProfileAttributes
 } from '@perx/whistler';
-import { ManageListPopupComponentOutput } from '../../../audience/containers/manage-list-popup/manage-list-popup.component';
 import { IAudiencesUserForm } from '@cl-core/models/audiences/user.interface';
-import { HttpParamsOptions } from '@cl-core/models/params-map';
 import { ITableData } from '@cl-core/models/data-list.interface';
+import { AudiencesUserService } from '@cl-core-services';
 
-export class MockAudiencesUserService {
-  public getMockData(id?: string): IAudiencesUserForm {
+export class MockAudiencesUserService implements Partial<AudiencesUserService> {
+  private getMockData(id?: string): IAudiencesUserForm {
     return {
       id: id ? id : 'string;',
       pi: ' string;',
@@ -32,18 +31,15 @@ export class MockAudiencesUserService {
     return of(this.getMockData(id));
   }
 
-  public getAllUsers(params: HttpParamsOptions): Observable<IJsonApiListPayload<IWProfileAttributes>> {
-    console.log(params);
+  public getAllUsers(): Observable<IJsonApiListPayload<IWProfileAttributes>> {
     return of(null);
   }
 
-  public getAllPoolUser(poolId: string): Observable<IJsonApiItem<IWProfileAttributes>[]> {
-    console.log(poolId);
+  public getAllPoolUser(): Observable<IJsonApiItem<IWProfileAttributes>[]> {
     return of(null);
   }
 
-  public getTableData(params: HttpParamsOptions): Observable<ITableData<IAudiencesUserForm>> {
-    console.log(params);
+  public getTableData(): Observable<ITableData<IAudiencesUserForm>> {
     return of({
       data: [this.getMockData()],
       meta: {
@@ -53,18 +49,15 @@ export class MockAudiencesUserService {
     });
   }
 
-  public createUser(user: IAudiencesUserForm): Observable<IJsonApiItemPayload<IWProfileAttributes>> {
-    console.log(user);
+  public createUser(): Observable<IJsonApiItemPayload<IWProfileAttributes>> {
     return of(null);
   }
 
-  public updateUser(id: string, user: IAudiencesUserForm): Observable<IJsonApiItemPayload<IWProfileAttributes>> {
-    console.log(user, id);
+  public updateUser(): Observable<IJsonApiItemPayload<IWProfileAttributes>> {
     return of(null);
   }
 
-  public updateUserPools(user: ManageListPopupComponentOutput): Observable<IJsonApiListPayload<IWProfileAttributes, IWAudiences>> {
-    console.log(user);
+  public updateUserPools(): Observable<IJsonApiListPayload<IWProfileAttributes, IWAudiences>> {
     return of(null);
   }
 }

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { OptionConfig } from '@cl-core/models/option-config.types';
+import { OptionConfig } from '@perx/candyshop';
 
 @Component({
   selector: 'cl-sms-editor',

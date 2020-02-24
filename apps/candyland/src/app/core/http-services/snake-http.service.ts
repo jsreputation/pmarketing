@@ -18,12 +18,12 @@ export class SnakeHttpService {
   }
 
   public createSnake(data: IJsonApiPostItem<IWSnakeGameEngagementAttributes>):
-    Observable<IJsonApiItemPayload<IWSnakeGameEngagementAttributes>> {
+  Observable<IJsonApiItemPayload<IWSnakeGameEngagementAttributes>> {
     return this.http.post<IJsonApiItemPayload<IWSnakeGameEngagementAttributes>>(`${ApiConfig.engagementsPath}/`, data);
   }
 
   public updateSnake(id: string, data: IJsonApiPatchItem<IWSnakeGameEngagementAttributes>):
-    Observable<IJsonApiItemPayload<IWSnakeGameEngagementAttributes>> {
+  Observable<IJsonApiItemPayload<IWSnakeGameEngagementAttributes>> {
     return this.http.patch<IJsonApiItemPayload<IWSnakeGameEngagementAttributes>>(`${ApiConfig.engagementsPath}/game/${id}`, data);
   }
 
