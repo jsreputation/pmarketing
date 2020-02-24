@@ -17,6 +17,8 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { IWEngagementAttributes, IWQuestion, WSurveyQuestionType, IJsonApiItemPayload } from '@perx/whistler';
 import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
+import { IEngagementQuestionType } from '@cl-core/models/engagement-question/engagement-question-type.interface';
+import { ITenantsProperties } from '@cl-core/models/settings/tenants.properties.interface';
 
 @Component({
   selector: 'cl-new-survey',

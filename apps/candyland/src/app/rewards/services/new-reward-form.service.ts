@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToggleControlConfig } from 'src/app/core/models/toggle-control-config.interface';
 import { RewardTierTypes } from '../models/reward-tier-types.enum';
+import { ILoyaltyTiersFormGroup, IBasicTier } from '@cl-core/models/reward/reward-loyalty-form-interface';
 
 @Injectable()
 export class NewRewardFormService {

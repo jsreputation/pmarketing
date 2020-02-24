@@ -1,6 +1,8 @@
 import { Observable, of } from 'rxjs';
 import { IAMUserMock } from '@cl-shared/test-components/mock-data/iam-user-mock';
 import { IJsonApiItemPayload, IWLoginAttributes } from '@perx/whistler';
+import { IAMUser } from '@cl-core/models/settings/IAMUser.interface';
+import { ILogin } from '@cl-core/models/auth/login.interface';
 
 export class TestAuthServisec {
 
@@ -8,7 +10,7 @@ export class TestAuthServisec {
     return '1';
   }
 
-  public initAuth(): void {}
+  public initAuth(): void { }
 
   public updateUser(): Observable<IAMUser> {
     return of(IAMUserMock);
@@ -24,10 +26,11 @@ export class TestAuthServisec {
           time_zone: '5555555',
           username: 'admin'
         }
-      }});
+      }
+    });
   }
 
-  public logout(): void {}
+  public logout(): void { }
 
   public resetPassword(accountId: string, username: string): Observable<any> {
     return of({

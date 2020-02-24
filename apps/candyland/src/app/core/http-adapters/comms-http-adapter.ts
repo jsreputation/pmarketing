@@ -9,6 +9,7 @@ import {
 } from '@perx/whistler';
 import { IComm, ICommMessage } from '@cl-core/models/comm/schedule';
 import { ICampaign } from '@cl-core/models/campaign/campaign';
+import { ITableData } from '@cl-core/models/data-list.interface';
 
 export class CommsHttpAdapter {
   public static transformTemplateAPIResponseToComm(data: IJsonApiItem<IWCommTemplateAttributes>): IComm {

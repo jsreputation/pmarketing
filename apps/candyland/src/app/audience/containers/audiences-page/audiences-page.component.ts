@@ -38,6 +38,8 @@ import {
   Type,
 } from '../../audience.model';
 import { IAudience } from '@cl-core/models/audiences/audiences';
+import { IAudiencesUserForm } from '@cl-core/models/audiences/user.interface';
+import { OptionConfig } from '@perx/candyshop';
 
 @Component({
   selector: 'cl-audiences-page',

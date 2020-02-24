@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { EngagementsService } from '@cl-core/services';
 import { getEngagementRouterLink } from '@cl-helpers/get-engagement-router-link';
+import { IGraphic } from '@cl-core/models/graphic.interface';
 
 @Component({
   selector: 'cl-create-engagement-popup',
