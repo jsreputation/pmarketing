@@ -6,7 +6,7 @@ import { GameComponent } from './game.component';
 import { HeaderComponent } from '../header/header.component';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
-import {IStamp} from '@perx/core';
+import { IStamp } from '@perx/core';
 
 describe('GameComponent', () => {
   let component: GameComponent;
@@ -23,6 +23,7 @@ describe('GameComponent', () => {
           state: StampCardState.active,
           title: 'Test',
           campaignConfig: null,
+          results: {},
           displayProperties: {
             numberOfCols: undefined,
             numberOfRows: undefined,
