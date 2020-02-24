@@ -28,6 +28,7 @@ export const stampCard: IStampCard = {
       { rewardPosition: 2 }
     ]
   },
+  results: {},
   displayProperties: {
     numberOfCols: 1,
     numberOfRows: 1,

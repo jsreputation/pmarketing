@@ -42,12 +42,6 @@ export class RewardComponent implements OnInit, OnDestroy {
     buttonTxt: 'BACK_TO_WALLET',
     imageUrl: '',
   };
-  public successPopUp: IPopupConfig = {
-    title: 'REDEEM_SUCCESSFULLY',
-    text: '',
-    buttonTxt: 'VIEW_REWARD',
-    imageUrl: '',
-  };
 
   public instantOutcomeNotAvailablePopUp: IPopupConfig = {
     title: 'INSTANT_OUTCOME_NOT_VALID',
@@ -71,12 +65,6 @@ export class RewardComponent implements OnInit, OnDestroy {
   }
 
   private initTranslate(): void {
-    if (this.successPopUp.title) {
-      this.translate.get(this.successPopUp.title).subscribe((text: string) => this.successPopUp.title = text);
-    }
-    if (this.successPopUp.buttonTxt) {
-      this.translate.get(this.successPopUp.buttonTxt).subscribe((text: string) => this.successPopUp.buttonTxt = text);
-    }
     if (this.noRewardsPopUp.title) {
       this.translate.get(this.noRewardsPopUp.title).subscribe((text: string) => this.noRewardsPopUp.title = text);
     }
@@ -123,11 +111,12 @@ export class RewardComponent implements OnInit, OnDestroy {
         if (displayProperties && displayProperties.informationCollectionSetting) {
           this.informationCollectionSetting = displayProperties.informationCollectionSetting;
         }
-        if (displayProperties && displayProperties.noRewardsPopUp) {
-          this.noRewardsPopUp.title = displayProperties.noRewardsPopUp.headLine;
-          this.noRewardsPopUp.text = displayProperties.noRewardsPopUp.subHeadLine;
-          this.noRewardsPopUp.imageUrl = displayProperties.noRewardsPopUp.imageURL || this.noRewardsPopUp.imageUrl;
-          this.noRewardsPopUp.buttonTxt = displayProperties.noRewardsPopUp.buttonTxt || this.noRewardsPopUp.buttonTxt;
+        const noOutcome = eng.results.noOutcome;
+        if (noOutcome) {
+          this.noRewardsPopUp.title = noOutcome.title;
+          this.noRewardsPopUp.text = noOutcome.subTitle;
+          this.noRewardsPopUp.imageUrl = noOutcome.image || this.noRewardsPopUp.imageUrl;
+          this.noRewardsPopUp.buttonTxt = noOutcome.button || this.noRewardsPopUp.buttonTxt;
         }
       })
     );

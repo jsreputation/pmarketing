@@ -91,16 +91,21 @@ export class GameComponent implements OnInit, OnDestroy {
           if (displayProperties && displayProperties.informationCollectionSetting) {
             this.informationCollectionSetting = displayProperties.informationCollectionSetting;
           }
-          const successOutcome = this.gameService.getSuccessOutcome(game);
-          const noOutcome = this.gameService.getNoOutcome(game);
-          this.noRewardsPopUp.title = noOutcome.title;
-          this.noRewardsPopUp.text = noOutcome.subTitle;
-          this.noRewardsPopUp.imageUrl = noOutcome.image || this.noRewardsPopUp.imageUrl;
-          this.noRewardsPopUp.buttonTxt = noOutcome.button || this.noRewardsPopUp.buttonTxt;
-          this.successPopUp.title = successOutcome.title;
-          this.successPopUp.text = successOutcome.subTitle;
-          this.successPopUp.imageUrl = successOutcome.image || this.successPopUp.imageUrl;
-          this.successPopUp.buttonTxt = successOutcome.button || this.successPopUp.buttonTxt;
+
+          const successOutcome = game.results.outcome;
+          const noOutcome = game.results.noOutcome;
+          if (noOutcome) {
+            this.noRewardsPopUp.title = noOutcome.title;
+            this.noRewardsPopUp.text = noOutcome.subTitle;
+            this.noRewardsPopUp.imageUrl = noOutcome.image || this.noRewardsPopUp.imageUrl;
+            this.noRewardsPopUp.buttonTxt = noOutcome.button || this.noRewardsPopUp.buttonTxt;
+          }
+          if (successOutcome) {
+            this.successPopUp.title = successOutcome.title;
+            this.successPopUp.text = successOutcome.subTitle;
+            this.successPopUp.imageUrl = successOutcome.image || this.successPopUp.imageUrl;
+            this.successPopUp.buttonTxt = successOutcome.button || this.successPopUp.buttonTxt;
+          }
         }
       })
     );
