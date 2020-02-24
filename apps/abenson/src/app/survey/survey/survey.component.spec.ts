@@ -22,7 +22,7 @@ describe('SurveyComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SurveyComponent ],
+      declarations: [SurveyComponent],
       imports: [
         MatCardModule,
         MatButtonModule,
@@ -40,7 +40,7 @@ describe('SurveyComponent', () => {
           provide: SurveyService, useValue: surveyServiceStub
         }
       ],
-      schemas: [ ]
+      schemas: []
     })
       .compileComponents();
   }));

@@ -22,7 +22,7 @@ describe('ChangeCityComponent', () => {
   let component: ChangeCityComponent;
   let fixture: ComponentFixture<ChangeCityComponent>;
   let profileService: ProfileService;
-  let spyOnProfile: jasmine.Spy;
+  let spyOnProfile;
   let location: Location;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -46,7 +46,7 @@ describe('ChangeCityComponent', () => {
     component = fixture.componentInstance;
     profileService = TestBed.get<ProfileService>(ProfileService as Type<ProfileService>);
     location = TestBed.get<Location>(Location as Type<Location>);
-    spyOnProfile = spyOn(profileService, 'setCustomProperties');
+    spyOnProfile = jest.spyOn(profileService, 'setCustomProperties');
     component.ngOnInit();
     fixture.detectChanges();
   });
@@ -57,9 +57,9 @@ describe('ChangeCityComponent', () => {
 
   it('should submit data', fakeAsync(() => {
     const newCity = 'Paris';
-    const spyLocation = spyOn(location, 'back');
+    const spyLocation = jest.spyOn(location, 'back');
     component.cityChangeForm.setValue({ newCity });
-    spyOnProfile.and.returnValue(of(null));
+    spyOnProfile.mockReturnValue(of(null));
     component.onSubmit();
     tick();
     fixture.detectChanges();
@@ -70,8 +70,8 @@ describe('ChangeCityComponent', () => {
   it('should handle error data', fakeAsync(() => {
     const newCity = 'Paris';
     component.cityChangeForm.setValue({ newCity });
-    const spyLog = spyOn(console, 'log');
-    spyOnProfile.and.returnValue(throwError('message'));
+    const spyLog = jest.spyOn(console, 'log');
+    spyOnProfile.mockReturnValue(throwError('message'));
     component.onSubmit();
     tick();
     fixture.detectChanges();

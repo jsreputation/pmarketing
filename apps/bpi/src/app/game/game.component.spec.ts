@@ -14,7 +14,7 @@ describe('GameComponent', () => {
 
   beforeEach(() => {
     const router = {
-      navigate: jasmine.createSpy('navigate')
+      navigate: jest.fn()
     };
     const stampServiceStub: Partial<StampService> = {
       getCards: () => (of([
