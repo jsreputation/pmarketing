@@ -93,9 +93,11 @@ button.mat-stroked-button {
 }
 
 .backArrow {
-  position: absolute;
-  left: 1.2rem;
   color: var(--accent);
+}
+
+.toolbar {
+  padding: 1.6rem 1.2rem 1.6rem !important;
 }
 
 .logoWrapper {
