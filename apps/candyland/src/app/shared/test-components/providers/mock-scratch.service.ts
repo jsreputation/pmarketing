@@ -2,6 +2,8 @@ import { Observable, of } from 'rxjs';
 import {
   IJsonApiItemPayload, IWScratchGameEngagementAttributes
 } from '@perx/whistler';
+import { IGameDefaultData } from '@cl-core/models/games/game-default-data.interface';
+import { IScratchForm } from '@cl-core/models/games/scratch/scratch-form.interface';
 
 export class MockScratchService {
 
@@ -25,7 +27,7 @@ export class MockScratchService {
         format: '.png',
         active: false
       }],
-      postScratchSuccessImage: [    {
+      postScratchSuccessImage: [{
         id: 1,
         type: 'postScratchSuccessImage1',
         title: 'icon',

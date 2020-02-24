@@ -14,6 +14,8 @@ import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-v
 import { IWEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
 import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
 import { ISnakeForm } from '@cl-core/models/games/snake/snake-form';
+import { IGameDefaultData } from '@cl-core/models/games/game-default-data.interface';
+import { ITenantsProperties } from '@cl-core/models/settings/tenants.properties.interface';
 
 @Component({
   selector: 'cl-new-snake-page',
@@ -31,7 +33,7 @@ export class NewSnakePageComponent implements OnInit, OnDestroy {
   public snakeData: IGameDefaultData;
   public tenantSettings: ITenantsProperties;
   // true for required
-  public snakeTypeStruct: {[key: string]: boolean} = {
+  public snakeTypeStruct: { [key: string]: boolean } = {
     snakeHead: true,
     snakeBody: false
   };
@@ -146,8 +148,8 @@ export class NewSnakePageComponent implements OnInit, OnDestroy {
   private createSnakeForm(): void {
     this.form = this.fb.group({
       name: ['Hit the Snake Template', [Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(60)]
+      Validators.minLength(1),
+      Validators.maxLength(60)]
       ],
       headlineMessage: ['Play Snake and Win!', [
         Validators.required,

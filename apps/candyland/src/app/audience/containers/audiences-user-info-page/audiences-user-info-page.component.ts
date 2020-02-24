@@ -56,6 +56,8 @@ import { AdjustLoyaltyTierPopupComponent } from '../adjust-loyalty-tier-popup/ad
 import { AdjustBalancePointsPopupComponent } from '../adjust-balance-points-popup/adjust-balance-points-popup.component';
 import { LoyaltyService } from '@cl-core/services/loyalty.service';
 import { IAudiencesLoyalty, IAudiencesLoyaltyCard, IAudiencesTier } from '@cl-core/models/audiences/audiences-loyalty.model';
+import { IAudiencesUserForm } from '@cl-core/models/audiences/user.interface';
+import { IAudienceVoucher } from '@cl-core/models/vouchers/audience-voucher.interface';
 
 @Component({
   selector: 'cl-audiences-user-info-page',

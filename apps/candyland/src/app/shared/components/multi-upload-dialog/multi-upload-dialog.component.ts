@@ -1,6 +1,7 @@
-import {Component, forwardRef, Inject} from '@angular/core';
-import {FormArray, FormControl, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import { Component, forwardRef, Inject } from '@angular/core';
+import { FormArray, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { IGraphic } from '@cl-core/models/graphic.interface';
 
 @Component({
   selector: 'cl-multi-upload-dialog',
@@ -9,12 +10,12 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => MultiUploadDialogComponent ),
+      useExisting: forwardRef(() => MultiUploadDialogComponent),
       multi: true
     }
   ]
 })
-export class MultiUploadDialogComponent  {
+export class MultiUploadDialogComponent {
   // tslint:disable-next-line:variable-name
   private readonly _matDialogRef: MatDialogRef<MultiUploadDialogComponent>;
   // at first not present, if present dont overwrite
@@ -22,7 +23,7 @@ export class MultiUploadDialogComponent  {
     imagesFormArray: new FormArray([])
   });
   public imageGraphicWithNestedGraphic: IGraphic | undefined; // to be transformed into this
-  public imageSegments!: {[key: string]: boolean}; // more generic, highlight number of upload controls
+  public imageSegments!: { [key: string]: boolean }; // more generic, highlight number of upload controls
   public placeHolder: string;
 
   public get imgArray(): FormArray {
@@ -35,7 +36,7 @@ export class MultiUploadDialogComponent  {
     }
   }
   constructor(matDialogRef: MatDialogRef<MultiUploadDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) data: { img: IGraphic, imgSegments: {[key: string]: boolean}, placeHolder: string}) {
+    @Inject(MAT_DIALOG_DATA) data: { img: IGraphic, imgSegments: { [key: string]: boolean }, placeHolder: string }) {
     this._matDialogRef = matDialogRef;
     this.imageSegments = data.imgSegments;
     let imageGraphicAsArray;
@@ -68,14 +69,15 @@ export class MultiUploadDialogComponent  {
           id: index,
           type: key,
           active: false,
-          img: this.imgArray.controls[index].value};
+          img: this.imgArray.controls[index].value
+        };
       }
     }
     ).filter(graphObj => graphObj);
     if (IGraphicArray.length >= 2) {
-      this.imageGraphicWithNestedGraphic = {...IGraphicArray[0], imageParts: IGraphicArray.slice(1)};
+      this.imageGraphicWithNestedGraphic = { ...IGraphicArray[0], imageParts: IGraphicArray.slice(1) };
     } else {
-      this.imageGraphicWithNestedGraphic = {...IGraphicArray[0]};
+      this.imageGraphicWithNestedGraphic = { ...IGraphicArray[0] };
     }
     this.close(this.imageGraphicWithNestedGraphic);
   }

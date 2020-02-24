@@ -4,6 +4,9 @@ import {
   IJsonApiListPayload,
   IWAssignedAttributes
 } from '@perx/whistler';
+import { ITableData } from '@cl-core/models/data-list.interface';
+import { IAudienceVoucher } from '@cl-core/models/vouchers/audience-voucher.interface';
+import { HttpParamsOptions } from '@cl-core/models/params-map';
 
 export class MockAudiensesVouchersService {
 

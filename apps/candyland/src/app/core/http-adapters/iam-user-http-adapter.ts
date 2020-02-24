@@ -4,6 +4,7 @@ import {
   IJsonApiPostData
 } from '@perx/whistler';
 import { IAMUser } from '@cl-core/models/settings/IAMUser.interface';
+import { ITableData } from '@cl-core/models/data-list.interface';
 
 export class IamUserHttpAdapter {
   public static transformInviteUser(data: IAMUser): IJsonApiPostData<IWIAMUserAttributes> {
@@ -17,7 +18,7 @@ export class IamUserHttpAdapter {
       },
       relationships: {
         groups: {
-          data: [{id: data.roleId, type: 'groups'}]
+          data: [{ id: data.roleId, type: 'groups' }]
         }
       }
     };
@@ -63,7 +64,7 @@ export class IamUserHttpAdapter {
 
   public static transformToTableData(data: any): ITableData<IAMUser> {
     const formatData = IamUserHttpAdapter.transformToUsers(data);
-    return {data: formatData, meta: data.meta};
+    return { data: formatData, meta: data.meta };
   }
 
   private static setGroupId(data: any): number | null {

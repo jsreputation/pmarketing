@@ -16,6 +16,7 @@ import {
   IJsonApiItem
 } from '@perx/whistler';
 import { ILoyaltyRule, ILoyaltyRuleCondition, ILoyaltyRulePoint, ILoyaltyRuleSet } from '@cl-core/models/loyalty/loyalty-rules.model';
+import { HttpParamsOptions } from '@cl-core/models/params-map';
 
 @Injectable({
   providedIn: 'root'
@@ -179,7 +180,7 @@ export class LoyaltyRuleService {
   }
 
   public createRulePoint(data: ILoyaltyRulePoint):
-  Observable<ILoyaltyRulePoint> {
+    Observable<ILoyaltyRulePoint> {
     const sendData: any = LoyaltyRuleHttpAdapter.transformFromPointForm(data);
     return this.rulesHttpService.createRulePoint({ data: sendData })
       .pipe(
@@ -189,7 +190,7 @@ export class LoyaltyRuleService {
   }
 
   public updateRulePoint(id: string, data: ILoyaltyRulePoint):
-  Observable<ILoyaltyRulePoint> {
+    Observable<ILoyaltyRulePoint> {
     const sendData: any = LoyaltyRuleHttpAdapter.transformFromPointForm(data);
     sendData.id = id;
     return this.rulesHttpService.updateRulePoint(id, { data: sendData })

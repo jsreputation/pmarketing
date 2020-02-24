@@ -13,6 +13,11 @@ import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.component';
 import { IWEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
 import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
+import { IGameDefaultData } from '@cl-core/models/games/game-default-data.interface';
+import { ITenantsProperties } from '@cl-core/models/settings/tenants.properties.interface';
+import { IShakeTreeForm } from '@cl-core/models/games/shake-tree/shake-tree-form.interface';
+import { IShakeTree } from '@cl-core/models/games/shake-tree/shakeTree.interface';
+import { IGraphic } from '@cl-core/models/graphic.interface';
 
 @Component({
   selector: 'cl-new-shake-page',
@@ -148,12 +153,12 @@ export class NewShakePageComponent implements OnInit, OnDestroy {
   private initShakeTreeForm(): void {
     this.form = this.fb.group({
       name: ['Shake the Tree Template', [Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(60)]
+      Validators.minLength(1),
+      Validators.maxLength(60)]
       ],
       headlineMessage: ['Tap the Tree and Win!', [Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(60)]
+      Validators.minLength(5),
+      Validators.maxLength(60)]
       ],
       subHeadlineMessage: ['Tap the tree until you get a reward!', [
         Validators.minLength(5),

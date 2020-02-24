@@ -8,6 +8,11 @@ import {
   WRedemptionType
 } from '@perx/whistler';
 import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.interface';
+import { HttpParamsOptions } from '@cl-core/models/params-map';
+import { ITableData } from '@cl-core/models/data-list.interface';
+import { OptionConfig } from '@perx/candyshop';
+import { ILoyaltyFormGroup, ILoyaltyTiersFormGroup, IBasicTier } from '@cl-core/models/reward/reward-loyalty-form-interface';
+import { ITierRewardCost } from '@cl-core/models/reward/tier-reward-cost-intrface';
 export class MockRewardsServices {
   public getTableData(params: HttpParamsOptions): Observable<ITableData<IRewardEntity>> {
     // tslint:disable
@@ -32,7 +37,8 @@ export class MockRewardsServices {
 
   public getreward(): Observable<OptionConfig[]> {
     return of(
-      [{ title: 'REWARD_TYPE_OPTIONS.FREE',
+      [{
+        title: 'REWARD_TYPE_OPTIONS.FREE',
         value: 'Free'
       }]
     );
@@ -65,7 +71,8 @@ export class MockRewardsServices {
         description: 'string',
         termsAndCondition: 'string',
         merchantId: '2'
-      }});
+      }
+    });
   }
 
   public createReward(data: IRewardEntityForm, loyalties?: ILoyaltyFormGroup[]): Observable<IJsonApiItemPayload<IWRewardEntityAttributes>> {
@@ -78,7 +85,7 @@ export class MockRewardsServices {
     return of(null);
   }
   public updateReward(id: string, data: IRewardEntityForm, loyalties?: ILoyaltyFormGroup[]):
-  Observable<IJsonApiItemPayload<IWRewardEntityAttributes>> {
+    Observable<IJsonApiItemPayload<IWRewardEntityAttributes>> {
     console.log('data', data, id, loyalties);
     return of(null);
   }

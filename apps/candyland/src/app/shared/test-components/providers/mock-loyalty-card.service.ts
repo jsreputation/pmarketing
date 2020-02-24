@@ -1,6 +1,8 @@
 import { Observable, of } from 'rxjs';
 import { IAudiencesLoyaltyCard } from '@cl-core/models/audiences/audiences-loyalty.model';
 import { IJsonApiItemPayload, IWLoyaltyCard } from '@perx/whistler';
+import { HttpParamsOptions } from '@cl-core/models/params-map';
+import { ITableData } from '@cl-core/models/data-list.interface';
 
 export class MockLoyaltyCardService {
 
@@ -12,9 +14,9 @@ export class MockLoyaltyCardService {
       loyalty: {
         id: '1',
         name: 'test',
-        tiers: [{id: 1, type: 'test', name: 'test'}]
+        tiers: [{ id: 1, type: 'test', name: 'test' }]
       },
-      tier: {id: 1, type: 'test', name: 'test'}
+      tier: { id: 1, type: 'test', name: 'test' }
     };
   }
 

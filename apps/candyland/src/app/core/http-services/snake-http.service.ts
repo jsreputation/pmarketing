@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ApiConfig } from '@cl-core/api-config';
 import { Observable } from 'rxjs';
 import { IWSnakeGameEngagementAttributes, IJsonApiItemPayload, IJsonApiPatchItem, IJsonApiPostItem } from '@perx/whistler';
+import { IGameDefaultData } from '@cl-core/models/games/game-default-data.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -17,16 +18,16 @@ export class SnakeHttpService {
   }
 
   public createSnake(data: IJsonApiPostItem<IWSnakeGameEngagementAttributes>):
-  Observable<IJsonApiItemPayload<IWSnakeGameEngagementAttributes>> {
-    return this.http.post<IJsonApiItemPayload<IWSnakeGameEngagementAttributes>>(`${ApiConfig.engagementsPath  }/`, data);
+    Observable<IJsonApiItemPayload<IWSnakeGameEngagementAttributes>> {
+    return this.http.post<IJsonApiItemPayload<IWSnakeGameEngagementAttributes>>(`${ApiConfig.engagementsPath}/`, data);
   }
 
   public updateSnake(id: string, data: IJsonApiPatchItem<IWSnakeGameEngagementAttributes>):
-  Observable<IJsonApiItemPayload<IWSnakeGameEngagementAttributes>> {
-    return this.http.patch<IJsonApiItemPayload<IWSnakeGameEngagementAttributes>>(`${ApiConfig.engagementsPath  }/game/${  id}`, data);
+    Observable<IJsonApiItemPayload<IWSnakeGameEngagementAttributes>> {
+    return this.http.patch<IJsonApiItemPayload<IWSnakeGameEngagementAttributes>>(`${ApiConfig.engagementsPath}/game/${id}`, data);
   }
 
   public getSnake(id: string): Observable<IJsonApiItemPayload<IWSnakeGameEngagementAttributes>> {
-    return this.http.get<IJsonApiItemPayload<IWSnakeGameEngagementAttributes>>(`${ApiConfig.engagementsPath  }/game/${  id}`);
+    return this.http.get<IJsonApiItemPayload<IWSnakeGameEngagementAttributes>>(`${ApiConfig.engagementsPath}/game/${id}`);
   }
 }

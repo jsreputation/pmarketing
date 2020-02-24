@@ -14,6 +14,8 @@ import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-v
 import { IWEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
 import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
 import { IPinataForm } from '@cl-core/models/games/pinata/pinate-form.interface';
+import { IGameDefaultData } from '@cl-core/models/games/game-default-data.interface';
+import { ITenantsProperties } from '@cl-core/models/settings/tenants.properties.interface';
 
 @Component({
   selector: 'cl-new-pinata-page',
@@ -125,8 +127,8 @@ export class NewPinataPageComponent implements OnInit, OnDestroy {
   private createPinataForm(): void {
     this.form = this.fb.group({
       name: ['Hit the Pinata Template', [Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(60)]
+      Validators.minLength(1),
+      Validators.maxLength(60)]
       ],
       headlineMessage: ['Tap the Piñata and Win!', [
         Validators.required,

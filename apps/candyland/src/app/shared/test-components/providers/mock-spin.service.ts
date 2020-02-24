@@ -2,6 +2,8 @@ import { Observable, of } from 'rxjs';
 import {
   IJsonApiItemPayload, IWSpinGameEngagementAttributes
 } from '@perx/whistler';
+import { ISpinEntityForm } from '@cl-core/models/games/spin/spin-form.interface';
+import { ISpinDefaultValue } from '@cl-core/models/games/spin/spin-default-value.interface';
 
 export class MockSpinService {
 
@@ -145,7 +147,7 @@ export class MockSpinService {
       image_url: 'test',
       numberOfWedges: 3,
       rewardSlots: [4],
-      colorCtrls: {1: 'test'},
+      colorCtrls: { 1: 'test' },
       rewardIcon: 'test',
       background: 'test',
       pointerImg: 'test',

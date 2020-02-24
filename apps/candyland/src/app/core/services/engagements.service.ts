@@ -7,6 +7,7 @@ import { EngagementTypeAPIMapping } from '@cl-core/models/engagement/engagement-
 import { IWEngagementAttributes, IJsonApiItemPayload, IJsonApiListPayload } from '@perx/whistler';
 import { IEngagementType } from '@cl-core/models/engagement/engagement.interface';
 import { HttpClient } from '@angular/common/http';
+import { IGraphic } from '@cl-core/models/graphic.interface';
 
 @Injectable({
   providedIn: 'root'

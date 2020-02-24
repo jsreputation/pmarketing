@@ -4,6 +4,8 @@ import {
   IJsonApiItemPayload, IWCommEventAttributes, IWCommMessageAttributes, IWCommTemplateAttributes, WMessageChannel
 } from '@perx/whistler';
 import { ICampaign } from '@cl-core/models/campaign/campaign';
+import { HttpParamsOptions } from '@cl-core/models/params-map';
+import { ITableData } from '@cl-core/models/data-list.interface';
 
 export class MockCommsServices {
 

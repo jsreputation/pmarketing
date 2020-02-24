@@ -17,6 +17,10 @@ import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.component';
 import { IWEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
 import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
+import { CommonSelect } from '@cl-core/models/common-select.interface';
+import { IStampsDefaultValue } from '@cl-core/models/games/stamps/stamps-default-value.interface';
+import { ITenantsProperties } from '@cl-core/models/settings/tenants.properties.interface';
+import { IStampsEntityForm } from '@cl-core/models/games/stamps/stamps-entity-form.interface';
 
 @Component({
   selector: 'cl-new-stamp',
@@ -155,8 +159,8 @@ export class NewStampComponent implements OnInit, OnDestroy {
   private createStampForm(): void {
     this.formStamp = this.fb.group({
       name: ['Stamp Card Template', [Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(60)]
+      Validators.minLength(1),
+      Validators.maxLength(60)]
       ],
       headlineMessage: ['Collect stamps', [
         Validators.required,

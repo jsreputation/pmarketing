@@ -1,6 +1,8 @@
-import {Component, Input, ViewEncapsulation} from '@angular/core';
-import {AbstractControl} from '@angular/forms';
+import { Component, Input, ViewEncapsulation } from '@angular/core';
+import { AbstractControl } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { OptionConfig } from '@cl-core/models/option-config.types';
+import { Currency } from '@cl-core/models/merchant/currency';
 
 @Component({
   selector: 'cl-reward-info-form-group',

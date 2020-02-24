@@ -7,6 +7,8 @@ import {
 } from '@perx/whistler';
 import { CampaignStatus } from '@cl-core/models/campaign/campaign.enum';
 import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
+import { HttpParamsOptions } from '@cl-core/models/params-map';
+import { ITableData } from '@cl-core/models/data-list.interface';
 
 export class MockCampaignService {
 

@@ -17,6 +17,11 @@ import {
 } from '@perx/whistler';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.interface';
+import { HttpParamsOptions } from '@cl-core/models/params-map';
+import { ITableData } from '@cl-core/models/data-list.interface';
+import { OptionConfig } from '@perx/candyshop';
+import { ILoyaltyFormGroup, ILoyaltyTiersFormGroup, IBasicTier } from '@cl-core/models/reward/reward-loyalty-form-interface';
+import { ITierRewardCost } from '@cl-core/models/reward/tier-reward-cost-intrface';
 
 @Injectable({
   providedIn: 'root'
@@ -72,7 +77,7 @@ export class RewardsService implements ITableService<IRewardEntity> {
   }
 
   public updateReward(id: string, data: IRewardEntityForm, loyalties?: ILoyaltyFormGroup[]):
-  Observable<IJsonApiItemPayload<IWRewardEntityAttributes>> {
+    Observable<IJsonApiItemPayload<IWRewardEntityAttributes>> {
     const sendData: IJsonApiPatchData<IWRewardEntityAttributes> = {
       ...RewardHttpAdapter.transformFromRewardForm(data, loyalties),
       id

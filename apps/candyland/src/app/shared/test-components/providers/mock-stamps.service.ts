@@ -2,6 +2,9 @@ import { Observable, of } from 'rxjs';
 import {
   IJsonApiItemPayload, IWStampEngagementAttributes
 } from '@perx/whistler';
+import { IStampsDefaultValue } from '@cl-core/models/games/stamps/stamps-default-value.interface';
+import { IStampsEntityForm } from '@cl-core/models/games/stamps/stamps-entity-form.interface';
+import { StampsGraphicData } from '@cl-core/models/reports/stamps-report/stamps-report.interface';
 
 export class MockStampsService {
 
@@ -24,7 +27,7 @@ export class MockStampsService {
         format: '.png',
         active: false
       }],
-      rewardPost: [ {
+      rewardPost: [{
         id: 1,
         type: 'reward-post-stamp-1',
         title: 'icon',
@@ -93,7 +96,7 @@ export class MockStampsService {
         format: '.png',
         active: false
       }],
-      rewardPost: [ {
+      rewardPost: [{
         id: 1,
         type: 'reward-post-stamp-1',
         title: 'icon',

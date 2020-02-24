@@ -13,6 +13,8 @@ import { VouchersService } from '@cl-core/services/vouchers.service';
 import { IWVouchersApi } from '@perx/whistler';
 import { oc } from 'ts-optchain';
 import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.interface';
+import { IMerchantForm } from '@cl-core/models/merchant/merchant-form-interface';
+import { OptionConfig } from '@perx/candyshop';
 
 interface IRewardDetailData {
   name?: string;

@@ -23,6 +23,9 @@ import {
 import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.component';
 import { IWEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
 import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
+import { IRewardDefaultValue } from '@cl-core/models/games/reward/reward-default-value.interface';
+import { ITenantsProperties } from '@cl-core/models/settings/tenants.properties.interface';
+import { IRewardForm } from '@cl-core/models/games/reward/reward-form-interface';
 
 @Component({
   selector: 'cl-new-instant-reward-manage-page',
@@ -138,8 +141,8 @@ export class NewInstantRewardManagePageComponent implements OnInit, OnDestroy, A
   private initRewardForm(): void {
     this.form = this.fb.group({
       name: [null, [Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(60)]
+      Validators.minLength(1),
+      Validators.maxLength(60)]
       ],
       headlineMessage: [null, [
         Validators.required,

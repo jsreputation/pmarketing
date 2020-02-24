@@ -2,6 +2,10 @@ import { Observable, of } from 'rxjs';
 import {
   IJsonApiItemPayload, IWMerchantAttributes, IWMerchantBranchAttributes
 } from '@perx/whistler';
+import { IMerchantForm } from '@cl-core/models/merchant/merchant-form-interface';
+import { HttpParamsOptions } from '@cl-core/models/params-map';
+import { ITableData } from '@cl-core/models/data-list.interface';
+import { IBranch } from '@cl-core/models/merchant/branch-interface';
 
 export class MockMerchantsService {
 

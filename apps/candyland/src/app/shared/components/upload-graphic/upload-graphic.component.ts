@@ -3,6 +3,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { UploadFileService } from '@cl-core-services';
 import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
+import { IGraphic } from '@cl-core/models/graphic.interface';
 
 @Component({
   selector: 'cl-upload-graphic',
@@ -121,10 +122,10 @@ export class UploadGraphicComponent implements ControlValueAccessor {
         this.message = null;
         this.cd.markForCheck();
       },
-      (err: Error) => {
-        this.setError('Image haven\'t loaded successfully!', err.message);
-        this.cd.markForCheck();
-      });
+        (err: Error) => {
+          this.setError('Image haven\'t loaded successfully!', err.message);
+          this.cd.markForCheck();
+        });
   }
 
   private setError(message: string, serverError?: string) {

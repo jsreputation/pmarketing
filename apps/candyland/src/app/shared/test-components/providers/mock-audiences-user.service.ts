@@ -3,6 +3,9 @@ import {
   IJsonApiItem, IJsonApiItemPayload, IJsonApiListPayload, IWAudiences, IWProfileAttributes
 } from '@perx/whistler';
 import { ManageListPopupComponentOutput } from '../../../audience/containers/manage-list-popup/manage-list-popup.component';
+import { IAudiencesUserForm } from '@cl-core/models/audiences/user.interface';
+import { HttpParamsOptions } from '@cl-core/models/params-map';
+import { ITableData } from '@cl-core/models/data-list.interface';
 
 export class MockAudiencesUserService {
   public getMockData(id?: string): IAudiencesUserForm {

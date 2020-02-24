@@ -4,7 +4,8 @@ import { combineLatest, Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { DataService, IData } from '@perx/chart';
 import { ITotal } from '@cl-core/models/dashboard/total-active-interface';
-import { DashboardGameCard } from '@cl-shared/models/dashboard/dashboard-game-car.interface';
+import { DashboardGameCard } from '@cl-shared/models/dashboard/dashboard-game-card.interface';
+import { HttpParamsOptions } from '@cl-core/models/params-map';
 
 @Injectable({
   providedIn: 'root'
@@ -21,10 +22,10 @@ export class DashboardService {
 
   public getTotalActive(): Observable<ITotal[]> {
     return this.dashboardHttpService.getDashboardDataTotal()
-    // .pipe(
-    //   // map((res: ITotal[]) => res)
-    // )
-    ;
+      // .pipe(
+      //   // map((res: ITotal[]) => res)
+      // )
+      ;
   }
 
   public getDashboardCampaignsTabs(): Observable<ITotal[]> {

@@ -5,6 +5,8 @@ import {
   IJsonApiPostData,
 } from '@perx/whistler';
 import { IAMUser } from '@cl-core/models/settings/IAMUser.interface';
+import { ICognitoEndpoint } from '@cl-core/models/settings/cognito-endpoint.interface';
+import { IAMGroup } from '@cl-core/models/settings/group.interface';
 
 export interface IColor {
   labelView: string;

@@ -41,6 +41,8 @@ import { NotificationService } from '@cl-core/services/notification.service';
 import { IChannel, ICampaignNotificationGroup } from '@cl-core/models/campaign/channel-interface';
 import { Location } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
+import { ITenantsProperties } from '@cl-core/models/settings/tenants.properties.interface';
+import { HttpParamsOptions } from '@cl-core/models/params-map';
 
 @Component({
   selector: 'cl-new-campaign',

@@ -1,13 +1,14 @@
-import {Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, Input, OnDestroy, QueryList, ViewChildren} from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy, Input, OnDestroy, QueryList, ViewChildren } from '@angular/core';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
-import {AbstractStepWithForm} from '../../step-page-with-form';
+import { AbstractStepWithForm } from '../../step-page-with-form';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {StepConditionService} from '../../services/step-condition.service';
-import {ClValidators} from '@cl-helpers/cl-validators';
-import {merge, Subject} from 'rxjs';
-import {ICampaign} from '@cl-core/models/campaign/campaign';
-import {filter, map, takeUntil, tap} from 'rxjs/operators';
-import {NewCampaignRewardsFormGroupComponent} from '../../components/new-campaign-rewards-form-group/new-campaign-rewards-form-group.component';
+import { StepConditionService } from '../../services/step-condition.service';
+import { ClValidators } from '@cl-helpers/cl-validators';
+import { merge, Subject } from 'rxjs';
+import { ICampaign } from '@cl-core/models/campaign/campaign';
+import { filter, map, takeUntil, tap } from 'rxjs/operators';
+import { NewCampaignRewardsFormGroupComponent } from '../../components/new-campaign-rewards-form-group/new-campaign-rewards-form-group.component';
+import { ITenantsProperties } from '@cl-core/models/settings/tenants.properties.interface';
 
 @Component({
   selector: 'cl-new-campaign-rewards-limits-page',
@@ -45,8 +46,8 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
   public generateBaseLimitForm(): FormGroup {
     return this.fb.group({
       enableProbability: [false],
-      probNoRewards: this.fb.control({value: null, disabled: true}),
-      totalProbAllSlots: this.fb.group( {}), // no show up, main for validation
+      probNoRewards: this.fb.control({ value: null, disabled: true }),
+      totalProbAllSlots: this.fb.group({}), // no show up, main for validation
       totalFilledAllSlots: this.fb.group({}) // doesn't show up in the template
     });
   }
@@ -143,7 +144,7 @@ export class NewCampaignRewardsLimitsPageComponent extends AbstractStepWithForm 
         }
         return 0;
       }),
-      map( (sumProb: number) => 100 - sumProb < 0 ? null : 100 - sumProb),
+      map((sumProb: number) => 100 - sumProb < 0 ? null : 100 - sumProb),
       takeUntil(this.destroy$)
     ).subscribe(value => {
       if (value && this.limitRewardForm.get('probNoRewards')) {

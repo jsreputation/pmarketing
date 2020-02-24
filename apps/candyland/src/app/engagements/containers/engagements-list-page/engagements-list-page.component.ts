@@ -18,6 +18,7 @@ import { AvailableNewEngagementService, EngagementsService } from '@cl-core/serv
 import { CreateEngagementPopupComponent } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.component';
 import { IEngagementItemMenuOption } from '@cl-shared/components/engagement-item/engagement-item.component';
 import { IEngagementType } from '@cl-core/models/engagement/engagement.interface';
+import { OptionConfig } from '@cl-core/models/option-config.types';
 
 @Component({
   selector: 'cl-engagements-list-page',

@@ -2,6 +2,8 @@ import { Observable, of } from 'rxjs';
 import { IJsonApiListPayload, IWAudiences } from '@perx/whistler';
 import { IPoolUserLink } from '@cl-core-services';
 import { IAudience } from '@cl-core/models/audiences/audiences';
+import { HttpParamsOptions } from '@cl-core/models/params-map';
+import { ITableData } from '@cl-core/models/data-list.interface';
 
 export class MockAudienceService {
   public getAudiences(params: HttpParamsOptions): Observable<IJsonApiListPayload<IWAudiences>> {

@@ -1,5 +1,6 @@
 import { AbstractControl } from '@angular/forms';
 import { ApiConfig } from '@cl-core/api-config';
+import { IGraphic } from '@cl-core/models/graphic.interface';
 
 export class ImageControlValue {
 
@@ -47,7 +48,7 @@ export class ImageControlValue {
   public static getPrepareValue(val: any, graphicList: IGraphic[]): IGraphic | any {
     if (graphicList) {
       for (const item of graphicList) {
-        if ( ImageControlValue.prepareImage(item.fullImg).includes(val)  || ImageControlValue.prepareImage(item.img).includes(val)) {
+        if (ImageControlValue.prepareImage(item.fullImg).includes(val) || ImageControlValue.prepareImage(item.img).includes(val)) {
           return item;
         }
       }

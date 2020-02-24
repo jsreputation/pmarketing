@@ -1,8 +1,8 @@
 import { Observable, of } from 'rxjs';
 import { IEngagementType } from '@cl-core/models/engagement/engagement.interface';
+import { IGraphic } from '@cl-core/models/graphic.interface';
 
 export class MockEngagementsService {
-
   public getEngagementData(id?: string, type?: string): any {
     return {
       id: id ? id : '1',
@@ -22,7 +22,7 @@ export class MockEngagementsService {
   }
 
   public getEngagementType(): Observable<IGraphic[]> {
-    return of([ {
+    return of([{
       id: 1,
       type: 'survey',
       title: 'SURVEY',
@@ -32,7 +32,7 @@ export class MockEngagementsService {
   }
 
   public getGamesType(): Observable<IGraphic[]> {
-    return of([  {
+    return of([{
       id: 2,
       type: 'shake',
       title: 'SHAKE_THE_TREE',

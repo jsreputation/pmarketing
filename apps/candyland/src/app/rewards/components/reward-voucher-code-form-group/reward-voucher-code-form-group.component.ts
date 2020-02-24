@@ -1,6 +1,7 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { WRedemptionType } from '@perx/whistler';
+import { OptionConfig } from '@cl-core/models/option-config.types';
 
 @Component({
   selector: 'cl-reward-voucher-code-form-group',
@@ -23,7 +24,7 @@ export class RewardVoucherCodeFormGroupComponent {
 
   public get codePlaceholder(): string {
     const type = this.formGroup.get('uniqueGeneratedCode.codeFormat').value || 'alphanumeric';
-    return `Prefix (eg.${  this.codeFormatConfig[type].eg  })`;
+    return `Prefix (eg.${this.codeFormatConfig[type].eg})`;
   }
 
   public get redemptionType(): WRedemptionType | null {

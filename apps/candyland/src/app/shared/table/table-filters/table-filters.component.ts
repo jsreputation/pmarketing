@@ -18,6 +18,7 @@ import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith, takeUntil } from 'rxjs/operators';
 import { MatTableDataSource } from '@angular/material';
 import { DateTimeParser } from '@cl-helpers/date-time-parser';
+import { DatepickerRangeValue } from '@cl-core/models/sat-datepicker-range-value.interface';
 
 @Component({
   selector: 'cl-table-filters',

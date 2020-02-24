@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
+import { OptionConfig } from '@cl-core/models/option-config.types';
 
 @Component({
   selector: 'cl-question-rating-field',

@@ -2,6 +2,7 @@ import { Observable, of } from 'rxjs';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
 import { ICampaignOutcome } from '@cl-core/models/campaign/campaign';
 import { IJsonApiItemPayload, IWOutcomeAttributes } from '@perx/whistler';
+import { HttpParamsOptions } from '@cl-core/models/params-map';
 
 export class MockOutcomeService {
 

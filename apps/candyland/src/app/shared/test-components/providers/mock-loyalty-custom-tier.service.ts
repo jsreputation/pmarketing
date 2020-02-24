@@ -1,5 +1,7 @@
 import { Observable, of } from 'rxjs';
 import { ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
+import { HttpParamsOptions } from '@cl-core/models/params-map';
+import { ITableData } from '@cl-core/models/data-list.interface';
 
 export class MockLoyaltyCustomTierService {
 
@@ -26,6 +28,7 @@ export class MockLoyaltyCustomTierService {
       }
     };
   }
+
   public getTableData(params: HttpParamsOptions): Observable<ITableData<ICustomTireForm>> {
     console.log(params);
     return of({

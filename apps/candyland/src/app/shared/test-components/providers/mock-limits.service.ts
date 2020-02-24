@@ -1,6 +1,7 @@
 import { Observable, of } from 'rxjs';
 import { ILimit } from '@cl-core/models/limit/limit.interface';
 import { IJsonApiItemPayload, IWLimitAttributes } from '@perx/whistler';
+import { HttpParamsOptions } from '@cl-core/models/params-map';
 
 export class MockLimitsService {
 
@@ -34,7 +35,7 @@ export class MockLimitsService {
     campaignId: number,
     engagementId: number
   ): Observable<IJsonApiItemPayload<IWLimitAttributes> | void> {
-    console.log( data, type, campaignId, engagementId);
+    console.log(data, type, campaignId, engagementId);
     return of(null);
   }
 

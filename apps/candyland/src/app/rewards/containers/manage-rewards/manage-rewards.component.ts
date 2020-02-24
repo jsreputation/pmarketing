@@ -15,6 +15,12 @@ import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.int
 import { IWTierRewardCostsAttributes, IJsonApiItem } from '@perx/whistler';
 import { oc } from 'ts-optchain';
 import { TenantService } from '@cl-core/services/tenant.service';
+import { IMerchantForm } from '@cl-core/models/merchant/merchant-form-interface';
+import { ILoyaltyFormGroup, ILoyaltyTiersFormGroup, IBasicTier } from '@cl-core/models/reward/reward-loyalty-form-interface';
+import { Currency } from '@cl-core/models/merchant/currency';
+import { IMerchant } from '@cl-core/models/merchant/merchant-simple-interface';
+import { ITierRewardCost } from '@cl-core/models/reward/tier-reward-cost-intrface';
+import { OptionConfig } from '@cl-core/models/option-config.types';
 
 @Component({
   selector: 'cl-manage-rewards',
