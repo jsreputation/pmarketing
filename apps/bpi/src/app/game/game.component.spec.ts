@@ -14,7 +14,7 @@ describe('GameComponent', () => {
 
   beforeEach(() => {
     const router = {
-      navigate: jasmine.createSpy('navigate')
+      navigate: jest.fn()
     };
     const stampServiceStub: Partial<StampService> = {
       getCards: () => (of([
@@ -186,7 +186,7 @@ describe('GameComponent', () => {
             totalSlots: 5,
             rewards: [],
           },
-          results: {},
+          // results: {},
           displayProperties: {
             numberOfCols: 1,
             numberOfRows: 5,

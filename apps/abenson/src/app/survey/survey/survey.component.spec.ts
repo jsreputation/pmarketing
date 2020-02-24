@@ -10,7 +10,7 @@ describe('SurveyComponent', () => {
   let component: SurveyComponent;
   let fixture: ComponentFixture<SurveyComponent>;
   const mockSurvey: ISurvey = {
-    results: {},
+    // results: {},
     title: '',
     questions: []
   };
@@ -22,7 +22,7 @@ describe('SurveyComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SurveyComponent ],
+      declarations: [SurveyComponent],
       imports: [
         MatCardModule,
         MatButtonModule,
@@ -40,7 +40,7 @@ describe('SurveyComponent', () => {
           provide: SurveyService, useValue: surveyServiceStub
         }
       ],
-      schemas: [ ]
+      schemas: []
     })
       .compileComponents();
   }));
