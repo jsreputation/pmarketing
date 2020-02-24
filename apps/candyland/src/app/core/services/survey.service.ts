@@ -10,6 +10,10 @@ import {
 import { IWSurveyEngagementAttributes, IJsonApiItemPayload, WSurveyQuestionType } from '@perx/whistler';
 import { HttpClient } from '@angular/common/http';
 import { GeneralStaticDataService } from '@perx/core';
+import { IEngagementQuestionType } from '@cl-core/models/engagement-question/engagement-question-type.interface';
+import { IApacCountries } from '@cl-core/models/apac-countries.interface';
+import { IGraphic } from '@cl-core/models/graphic.interface';
+import { IBaseQuestionReport } from '@cl-core/models/reports/survey-report/survey-report.interface';
 
 @Injectable({
   providedIn: 'root'

@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material';
 import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
+import { IMerchantForm } from '@cl-core/models/merchant/merchant-form-interface';
 
 @Component({
   selector: 'cl-list-merchant-view',

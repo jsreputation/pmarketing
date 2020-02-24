@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { CreateEngagementPopupComponent } from '@cl-shared';
-import { DashboardGameCard } from '@cl-shared/models/dashboard/dashboard-game-car.interface';
+import { DashboardGameCard } from '@cl-shared/models/dashboard/dashboard-game-card.interface';
 export enum DashboardGameCardName {
   ENGAGEMENT = 'engagement',
   CAMPAIGN = 'campaign',

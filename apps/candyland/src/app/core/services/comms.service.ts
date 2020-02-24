@@ -17,6 +17,8 @@ import { IComm, ICommMessage } from '@cl-core/models/comm/schedule';
 import { ICampaign } from '@cl-core/models/campaign/campaign';
 import { IWCommMessageAttributes } from '@perx/whistler/dist/whistler/lib/comm/comm';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
+import { HttpParamsOptions } from '@cl-core/models/params-map';
+import { ITableData } from '@cl-core/models/data-list.interface';
 
 @Injectable({
   providedIn: 'root'

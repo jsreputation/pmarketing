@@ -1,9 +1,9 @@
-declare interface ISubMenu {
+export interface ISubMenu {
   titleGroup: string;
   groupMenu: ISubMenuItem[];
 }
 
-declare interface ISubMenuItem {
+export interface ISubMenuItem {
   name: string;
   count: number;
   active: boolean;

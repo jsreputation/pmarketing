@@ -16,6 +16,7 @@ import {
   IJsonApiItem
 } from '@perx/whistler';
 import { ILoyaltyRule, ILoyaltyRuleCondition, ILoyaltyRulePoint, ILoyaltyRuleSet } from '@cl-core/models/loyalty/loyalty-rules.model';
+import { HttpParamsOptions } from '@cl-core/models/params-map';
 
 @Injectable({
   providedIn: 'root'

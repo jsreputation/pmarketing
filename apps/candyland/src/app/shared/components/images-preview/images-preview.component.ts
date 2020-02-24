@@ -1,7 +1,8 @@
-import {ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output} from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
 import { ApiConfig } from '@cl-core/api-config';
-import {MatDialog} from '@angular/material';
-import {DialogPreviewSelectorComponent} from '@cl-shared/components/dialog-preview-selector/dialog-preview-selector.component';
+import { MatDialog } from '@angular/material';
+import { DialogPreviewSelectorComponent } from '@cl-shared/components/dialog-preview-selector/dialog-preview-selector.component';
+import { IGraphic } from '@cl-core/models/graphic.interface';
 
 @Component({
   selector: 'cl-images-preview',
@@ -38,7 +39,7 @@ export class ImagesPreviewComponent {
       data: { trigger: target, img: this.img, upload: this.upload },
       panelClass: 'custom-dialog-container'
     });
-    dialogRef.afterClosed().subscribe( _ => {
+    dialogRef.afterClosed().subscribe(_ => {
       this.previewOpen = false;
       this.cd.detectChanges();
     });

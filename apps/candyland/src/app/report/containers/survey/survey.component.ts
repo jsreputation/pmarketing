@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { RoutingStateService, SurveyService, CsvReportService } from '@cl-core-services';
+import { IBaseQuestionReport } from '@cl-core/models/reports/survey-report/survey-report.interface';
 
 @Component({
   selector: 'cl-survey',

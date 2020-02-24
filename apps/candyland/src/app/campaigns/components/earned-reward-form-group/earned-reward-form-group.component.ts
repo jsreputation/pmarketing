@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { CommonSelect } from '@cl-core/models/common-select.interface';
 
 @Component({
   selector: 'cl-earned-reward-form-group',
