@@ -6,9 +6,9 @@ import {
 } from '@perx/whistler';
 import { ITableData } from '@cl-core/models/data-list.interface';
 import { IAudienceVoucher } from '@cl-core/models/vouchers/audience-voucher.interface';
-import { HttpParamsOptions } from '@cl-core/models/params-map';
+import { AudiencesVouchersService } from '@cl-core-services';
 
-export class MockAudiensesVouchersService {
+export class MockAudiensesVouchersService implements Partial<AudiencesVouchersService> {
 
   public getMockAudienceVoucher(): IAudienceVoucher {
     return {
@@ -23,19 +23,18 @@ export class MockAudiensesVouchersService {
     };
   }
 
-  public getTableData(params: HttpParamsOptions): Observable<ITableData<IAudienceVoucher>> {
-
+  public getTableData(): Observable<ITableData<IAudienceVoucher>> {
     return of({
       data: [this.getMockAudienceVoucher()],
       meta: {}
     });
   }
 
-  public voucherAssigned(source: string, assigned: string): Observable<IJsonApiListPayload<IWAssignedAttributes>> {
+  public voucherAssigned(): Observable<IJsonApiListPayload<IWAssignedAttributes>> {
     return of(null);
   }
 
-  public updateVoucherExpiry(id: string, endData: string): Observable<IJsonApiItem<IWAssignedAttributes>> {
+  public updateVoucherExpiry(): Observable<IJsonApiItem<IWAssignedAttributes>> {
     return of(null);
   }
 }

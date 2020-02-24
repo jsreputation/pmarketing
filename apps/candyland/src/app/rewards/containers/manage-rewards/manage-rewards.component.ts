@@ -343,7 +343,8 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
 
       if (basicTier && basicTier.tierType === this.newRewardFormService.tierTypes.basicType) {
         programStatus = true;
-        basicTier.statusTiers = true;
+        // eslint-disable-next-line
+        basicTier['statusTiers'] = true;
         this.newRewardFormService.setDefaultRewardTiers(basicTier);
       }
       loyaltyFormGroup.patchValue({
@@ -375,7 +376,8 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
           if (rewardTier && rewardTier.tierType === this.newRewardFormService.tierTypes.customType) {
             // add to object for know what to do next remove or update
             hasSelectedCustomTier = true;
-            rewardTier.statusTiers = true;
+            // eslint-disable-next-line
+            rewardTier['statusTiers'] = true;
             this.newRewardFormService.setDefaultRewardTiers(rewardTier);
             tier.patchValue({ ...rewardTier });
           }

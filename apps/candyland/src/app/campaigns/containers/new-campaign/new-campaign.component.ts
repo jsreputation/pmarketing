@@ -454,7 +454,8 @@ export class NewCampaignComponent implements OnInit, OnDestroy {
 
       if (!notification.webLink) {
         delete webLink.notification.webNotification.webLinkOptions;
-        webLink.notification.webNotification.status = 'remove';
+        // eslint-disable-next-line
+        webLink.notification.webNotification['status'] = 'remove';
       }
       this.store.updateCampaign(webLink);
     }

@@ -4,8 +4,9 @@ import {
 } from '@perx/whistler';
 import { IRewardDefaultValue } from '@cl-core/models/games/reward/reward-default-value.interface';
 import { IRewardForm } from '@cl-core/models/games/reward/reward-form-interface';
+import { InstantRewardsService } from '@cl-core-services';
 
-export class MockInstantRewardsService {
+export class MockInstantRewardsService implements Partial<InstantRewardsService> {
   public getInstantRewardData(): Observable<IRewardDefaultValue> {
     return of({
       background: [{
