@@ -186,7 +186,7 @@ describe('GameComponent', () => {
             totalSlots: 5,
             rewards: [],
           },
-          // results: {},
+          results: {},
           displayProperties: {
             numberOfCols: 1,
             numberOfRows: 5,
