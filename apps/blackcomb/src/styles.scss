@@ -97,7 +97,7 @@ button.mat-stroked-button {
 }
 
 .toolbar {
-  padding: 1.6rem 1.2rem 1.6rem !important;
+  padding: 1.6rem calc(1.3rem + 24px) 1.6rem 1.3rem !important;
 }
 
 .logoWrapper {
