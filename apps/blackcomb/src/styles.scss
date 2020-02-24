@@ -96,6 +96,10 @@ button.mat-stroked-button {
   color: var(--accent);
 }
 
+.toolbar {
+  padding: 1.6rem calc(1.3rem + 24px) 1.6rem 1.3rem !important;
+}
+
 .logoWrapper {
   height: 100%;
 
