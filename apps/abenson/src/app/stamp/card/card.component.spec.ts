@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CardComponent } from './card.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import {PuzzlesModule, StampCardState, StampService} from '@perx/core';
-import {of} from 'rxjs';
+import { PuzzlesModule, StampCardState, StampService } from '@perx/core';
+import { of } from 'rxjs';
 
 describe('CardComponent', () => {
   let component: CardComponent;
@@ -15,6 +15,7 @@ describe('CardComponent', () => {
         state: StampCardState.active,
         title: 'Test',
         campaignConfig: null,
+        results: {},
         displayProperties: {
           numberOfCols: undefined,
           numberOfRows: undefined,
