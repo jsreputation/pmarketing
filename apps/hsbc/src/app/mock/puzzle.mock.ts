@@ -8,6 +8,7 @@ export const puzzle: IStampCard[] = [
     campaignId: 100,
     cardNumber: 161,
     campaignConfig: null,
+    results: {},
     displayProperties: {
       numberOfCols: 3,
       numberOfRows: 2,
