@@ -15,6 +15,7 @@ import {
 } from '@perx/whistler';
 import { relationshipsDataToItem } from '@perx/whistler';
 import { IAudiencesLoyalty, IAudiencesTier } from '@cl-core/models/audiences/audiences-loyalty.model';
+import { ITableData } from '@cl-core/models/data-list.interface';
 
 export class LoyaltyHttpAdapter {
   public static transformToLoyalties(data: IJsonApiListPayload<IWLoyaltyAttributes>): { data: ILoyaltyForm[] } {

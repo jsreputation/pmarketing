@@ -7,6 +7,8 @@ import { ITableService } from '@cl-shared/table/data-source/table-service-interf
 import { ClHttpParams } from '@cl-helpers/http-params';
 import { IWAudiences, IJsonApiItem, IJsonApiListPayload } from '@perx/whistler';
 import { IAudience } from '@cl-core/models/audiences/audiences';
+import { HttpParamsOptions } from '@cl-core/models/params-map';
+import { ITableData } from '@cl-core/models/data-list.interface';
 
 export interface IPoolUserLink {
   name: string;

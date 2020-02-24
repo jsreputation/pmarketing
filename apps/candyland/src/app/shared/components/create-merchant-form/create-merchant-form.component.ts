@@ -3,6 +3,7 @@ import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 import { SurveyService } from '@cl-core/services';
 import { Observable } from 'rxjs';
 import { MerchantFormService } from '@cl-shared/components/create-merchant-form/shared/merchant-form.service';
+import { IMerchantFormConfig } from '@cl-core/models/merchant/merchant-form-config-interface';
 
 @Component({
   selector: 'cl-create-merchant-form',

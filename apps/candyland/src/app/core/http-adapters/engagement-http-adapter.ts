@@ -26,7 +26,15 @@ import {
   IEngagementType, IEngagementSnakeType
 } from '@cl-core/models/engagement/engagement.interface';
 import { IPinataForm } from '@cl-core/models/games/pinata/pinate-form.interface';
-import {ISnakeForm} from '@cl-core/models/games/snake/snake-form';
+import { ISnakeForm } from '@cl-core/models/games/snake/snake-form';
+import { IEngagementForm } from '@cl-core/models/engagement/engagement-form.interface';
+import { IRewardForm } from '@cl-core/models/games/reward/reward-form-interface';
+import { ISpinEntityForm } from '@cl-core/models/games/spin/spin-form.interface';
+import { IShakeTreeForm } from '@cl-core/models/games/shake-tree/shake-tree-form.interface';
+import { IScratchForm } from '@cl-core/models/games/scratch/scratch-form.interface';
+import { IStampsEntityForm } from '@cl-core/models/games/stamps/stamps-entity-form.interface';
+import { IShakeTree } from '@cl-core/models/games/shake-tree/shakeTree.interface';
+import { IGraphic } from '@cl-core/models/graphic.interface';
 
 export class EngagementHttpAdapter {
   // tslint:disable
@@ -594,7 +602,8 @@ export class EngagementHttpAdapter {
       active: false,
       img: IWSnakeDP.snake_head_img_url,
       imageParts: [
-        { id: 0, // id doesn't matter at this point, look at confirm() of multi-upload-dialog
+        {
+          id: 0, // id doesn't matter at this point, look at confirm() of multi-upload-dialog
           type: 'snakeBody',
           active: false,
           img: IWSnakeDP.snake_body_img_url

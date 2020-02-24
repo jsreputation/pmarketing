@@ -13,6 +13,7 @@ import { AbstractControl, ControlValueAccessor, FormBuilder, NG_VALUE_ACCESSOR }
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
+import { IGraphic } from '@cl-core/models/graphic.interface';
 
 @Component({
   selector: 'cl-select-graphic-wrap',

@@ -12,6 +12,7 @@ import { noop, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { customTimepickerTheme } from '@cl-shared/components/time-picker/custom-timepicker-theme';
 import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
+import { DatepickerRangeValue } from '@cl-core/models/sat-datepicker-range-value.interface';
 
 @Component({
   selector: 'cl-time-picker',
