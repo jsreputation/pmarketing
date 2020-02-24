@@ -25,9 +25,9 @@ import {
   PopupComponent,
   NotificationService,
   IPopupConfig,
-  ITheme,
   AuthenticationService,
   ConfigService,
+  IConfig,
 } from '@perx/core';
 import {
   HomeComponent,
@@ -37,7 +37,6 @@ import {
   WalletComponent
 } from '@perx/blackcomb-pages';
 
-import { environment } from 'src/environments/environment';
 import { BACK_ARROW_URLS } from './app.constants';
 
 @Component({
@@ -50,7 +49,6 @@ export class AppComponent implements OnInit {
   public showToolbar: boolean;
   public backArrowIcon: string = '';
   public preAuth: boolean;
-  public theme: ITheme;
   public translationLoaded: boolean = false;
 
   private initBackArrow(url: string): void {
@@ -68,14 +66,14 @@ export class AppComponent implements OnInit {
     private config: ConfigService,
     private translate: TranslateService
   ) {
-    this.preAuth = environment.preAuth;
   }
 
   public ngOnInit(): void {
     this.config.readAppConfig()
       .pipe(switchMap((conf) => this.translate.getTranslation(conf.defaultLang as string)))
-      .subscribe(() => {
+      .subscribe((config: IConfig<void>) => {
         this.translationLoaded = true;
+        this.preAuth = config.preAuth as boolean;
       });
     this.authService.$failedAuth.subscribe(
       res => {

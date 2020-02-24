@@ -165,7 +165,7 @@ commands:
                [ $APP == 'oracle-demo' ] || \
                [ $APP == 'feature-demo' ] || \
                [ $APP == 'all-it' ] || \
-               [ $APP == 'commbank-demo' ] || \
+               [ $APP == 'partners-demo' ] || \
                [ $APP == 'perx-demo' ] || \
                [ $APP == 'perx-demo2' ] || \
                [ $APP == 'perx-demo3' ] || \
@@ -248,7 +248,7 @@ jobs:
             if [ $APP == 'petron-demo' ] || \
             [ $APP == 'oracle-demo' ] || \
             [ $APP == 'feature-demo' ] || \
-            [ $APP == 'commbank-demo' ] || \
+            [ $APP == 'partners-demo' ] || \
             [ $APP == 'perx-demo' ]
             then
               export APP_BASE="blackcomb"
@@ -526,7 +526,7 @@ workflows:
       #       branches:
       #         ignore: /.*/
       #       tags:
-      #         only: /^(perx-demo|commbank-demo)-production-\d+\.\d+\.\d+.*/
+      #         only: /^(perx-demo|partners-demo)-production-\d+\.\d+\.\d+.*/
       # - deploy-to-aws:
       #     name: deploy_to_aws_staging
       #     docker_tag: "${CIRCLE_TAG}"
@@ -540,7 +540,7 @@ workflows:
       #       branches:
       #         ignore: /.*/
       #       tags:
-      #         only: /^(perx-demo|commbank-demo)-staging-\d+\.\d+\.\d+.*/
+      #         only: /^(perx-demo|partners-demo)-staging-\d+\.\d+\.\d+.*/
 
       # - deploy:
       #     name: deploy_to_staging
@@ -554,7 +554,7 @@ workflows:
       #       branches:
       #         ignore: /.*/
       #       tags:
-      #         only: /^(?!blackcomb|candyland|oracle-demo|perx-demo|commbank-demo)(\w+-)+staging-\d+\.\d+\.\d+.*/
+      #         only: /^(?!blackcomb|candyland|oracle-demo|perx-demo|partners-demo)(\w+-)+staging-\d+\.\d+\.\d+.*/
       - deploy:
           name: deploy_to_production
           docker_tag: "${CIRCLE_TAG}"

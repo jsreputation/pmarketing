@@ -14,6 +14,7 @@ import { map, tap, first, filter, switchMap, bufferCount, catchError, takeUntil 
 import { Observable, interval, throwError, Subject, combineLatest } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import {IPlayOutcome} from '@perx/core';
 
 @Component({
   selector: 'perx-blackcomb-pages-game',
@@ -156,6 +157,23 @@ export class GameComponent implements OnInit, OnDestroy {
     } else if (win !== undefined && win === true) {
       this.fillSuccess(this.rewardCount);
     }
+    const gameOutcome$ = this.gameService.play(
+      this.transactionId
+    ).pipe(
+      tap((gameOutcome: IPlayOutcome) => {
+        if (gameOutcome.vouchers.length > 0) {
+          // set this as a property
+          this.rewardCount = gameOutcome.vouchers.length.toString();
+          this.fillSuccess(this.rewardCount);
+        } else {
+          this.fillFailure();
+        }
+      }),
+      catchError((err: HttpErrorResponse) => {
+        this.popupData = this.noRewardsPopUp;
+        throw err;
+      })
+    );
     // display a loader before redirecting to next page
     const delay = 3000;
     const nbSteps = 60;
@@ -165,7 +183,7 @@ export class GameComponent implements OnInit, OnDestroy {
         bufferCount(nbSteps),
         first()
       );
-    combineLatest(processBar$).subscribe(
+    combineLatest(processBar$, gameOutcome$).subscribe(
       () => this.redirectUrlAndPopUp(),
       () => this.redirectUrlAndPopUp()
     );

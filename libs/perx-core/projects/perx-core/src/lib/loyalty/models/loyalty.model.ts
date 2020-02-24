@@ -22,6 +22,7 @@ export interface ILoyalty {
   currencyBalance?: number;
   currency?: string;
   nextTierPoints?: number;
+  nextTierPointsDiff?: number;
   nextTierName?: string;
   highestTier?: string;
   expiringPoints?: IExpiringPoints[];
