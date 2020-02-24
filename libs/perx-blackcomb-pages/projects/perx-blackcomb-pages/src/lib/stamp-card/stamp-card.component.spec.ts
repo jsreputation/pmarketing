@@ -76,6 +76,7 @@ describe('StampCardComponent', () => {
         state: StampCardState.active,
         title: 'Test',
         campaignConfig: null,
+        results: {},
         displayProperties: {
           numberOfCols: undefined,
           numberOfRows: undefined,
@@ -120,6 +121,7 @@ describe('StampCardComponent', () => {
         state: StampCardState.active,
         title: 'Test',
         campaignConfig: null,
+        results: {},
         displayProperties: {
           numberOfCols: undefined,
           numberOfRows: undefined,

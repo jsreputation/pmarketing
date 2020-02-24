@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular
 import { PuzzleCollectStamp, PuzzleCollectStampState, IReward } from '@perx/core';
 import { BehaviorSubject, Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { ITenantsProperties } from '@cl-core/models/settings/tenants.properties.interface';
 
 @Component({
   selector: 'cl-campaigns-mobile-preview',

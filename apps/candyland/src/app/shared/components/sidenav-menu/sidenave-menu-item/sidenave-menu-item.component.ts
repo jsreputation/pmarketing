@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { IMenu } from '@cl-core/models/menu/menu.interface';
 
 @Component({
   selector: 'cl-sidenave-menu-item',

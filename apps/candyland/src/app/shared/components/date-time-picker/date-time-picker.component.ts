@@ -4,6 +4,7 @@ import { DateAdapter } from 'saturn-datepicker';
 import { noop, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
+import { DatepickerRangeValue } from '@cl-core/models/sat-datepicker-range-value.interface';
 
 @Component({
   selector: 'cl-date-time-picker',

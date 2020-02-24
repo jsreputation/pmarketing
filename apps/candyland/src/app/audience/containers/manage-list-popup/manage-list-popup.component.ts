@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy, Inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { AudiencesService, IPoolUserLink } from '@cl-core-services';
+import { IAudiencesUserForm } from '@cl-core/models/audiences/user.interface';
 
 export interface ManageListPopupComponentOutput {
   id: string;

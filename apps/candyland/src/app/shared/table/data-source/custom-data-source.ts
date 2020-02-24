@@ -5,6 +5,8 @@ import { SortModel } from '@cl-shared/table/data-source/sort.model';
 import { debounceTime, map, takeUntil } from 'rxjs/operators';
 import { IPagination } from './ipagination';
 import { DataSource } from '@angular/cdk/collections';
+import { ITableData } from '@cl-core/models/data-list.interface';
+import { HttpParamsOptions } from '@cl-core/models/params-map';
 
 // enum of states for manage view in pages where used data source
 export enum DataSourceStates {

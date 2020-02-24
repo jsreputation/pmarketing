@@ -1,11 +1,11 @@
-import { ICampaignNotificationGroup, IChannel } from '@cl-core/models/campaign/channel-interface';
+import { IChannel } from '@cl-core/models/campaign/channel-interface';
 import { Observable, of } from 'rxjs';
 import { IJsonApiListPayload, IWNotificationAttributes } from '@perx/whistler';
 import { InformationCollectionSettingType } from '@cl-core/models/campaign/campaign.enum';
+import { NotificationService } from '@cl-core/services/notification.service';
 
-export class MockNotificationService {
-
-  public getMockIChanal(): Partial<IChannel> {
+export class MockNotificationService implements Partial<NotificationService> {
+  private getMockIChanal(): Partial<IChannel> {
     return {
       webNotification: {
         webLink: true,
@@ -14,28 +14,18 @@ export class MockNotificationService {
       }
     };
   }
-  public createNotification(
-    data: ICampaignNotificationGroup,
-    campaignId: string
-  ): Observable<IJsonApiListPayload<IWNotificationAttributes>> {
-    console.log(campaignId, data);
+  public createNotification(): Observable<IJsonApiListPayload<IWNotificationAttributes>> {
     return of(null);
   }
 
-  public getNotifications(campaignId: string): Observable<Partial<IChannel>> {
-    console.log(campaignId);
+  public getNotifications(): Observable<Partial<IChannel>> {
     return of(this.getMockIChanal());
   }
 
-  public deleteNotification(id: string): Observable<IJsonApiListPayload<IWNotificationAttributes>> {
-    console.log(id);
+  public deleteNotification(): Observable<IJsonApiListPayload<IWNotificationAttributes>> {
     return of(null);
   }
-  public updateNotification(
-    data: ICampaignNotificationGroup,
-    campaignId: string
-  ): Observable<IJsonApiListPayload<IWNotificationAttributes>> {
-    console.log(data, campaignId);
+  public updateNotification(): Observable<IJsonApiListPayload<IWNotificationAttributes>> {
     return of(null);
   }
 }

@@ -85,22 +85,26 @@ export class SurveyComponent implements OnInit, OnDestroy {
       );
     this.data$.subscribe(
       (survey: ISurvey) => {
-        this.survey = survey;
-        const { displayProperties } = this.survey;
-        if (displayProperties && displayProperties.informationCollectionSetting) {
-          this.informationCollectionSetting = displayProperties.informationCollectionSetting;
-        }
-        if (displayProperties && displayProperties.successPopUp) {
-          this.successPopUp.title = displayProperties.successPopUp.headLine;
-          this.successPopUp.text = displayProperties.successPopUp.subHeadLine;
-          this.successPopUp.imageUrl = displayProperties.successPopUp.imageURL || this.successPopUp.imageUrl;
-          this.successPopUp.buttonTxt = displayProperties.successPopUp.buttonTxt || this.successPopUp.buttonTxt;
-        }
-        if (displayProperties && displayProperties.noRewardsPopUp) {
-          this.noRewardsPopUp.title = displayProperties.noRewardsPopUp.headLine;
-          this.noRewardsPopUp.text = displayProperties.noRewardsPopUp.subHeadLine;
-          this.noRewardsPopUp.imageUrl = displayProperties.noRewardsPopUp.imageURL || this.noRewardsPopUp.imageUrl;
-          this.noRewardsPopUp.buttonTxt = displayProperties.noRewardsPopUp.buttonTxt || this.noRewardsPopUp.buttonTxt;
+        if (survey) {
+          this.survey = survey;
+          const { displayProperties } = this.survey;
+          if (displayProperties && displayProperties.informationCollectionSetting) {
+            this.informationCollectionSetting = displayProperties.informationCollectionSetting;
+          }
+          const successOutcome = survey.results.outcome;
+          const noOutcome = survey.results.noOutcome;
+          if (noOutcome) {
+            this.noRewardsPopUp.title = noOutcome.title;
+            this.noRewardsPopUp.text = noOutcome.subTitle;
+            this.noRewardsPopUp.imageUrl = noOutcome.image || this.noRewardsPopUp.imageUrl;
+            this.noRewardsPopUp.buttonTxt = noOutcome.button || this.noRewardsPopUp.buttonTxt;
+          }
+          if (successOutcome) {
+            this.successPopUp.title = successOutcome.title;
+            this.successPopUp.text = successOutcome.subTitle;
+            this.successPopUp.imageUrl = successOutcome.image || this.successPopUp.imageUrl;
+            this.successPopUp.buttonTxt = successOutcome.button || this.successPopUp.buttonTxt;
+          }
         }
       },
       () => {

@@ -2,6 +2,7 @@ import { ISurvey, SurveyQuestionType } from '@perx/core';
 
 export const survey: ISurvey = {
   title: 'Please help us knowing you better',
+  results: {},
   questions: [
     {
       question: 'Which color you like?',

@@ -1,6 +1,6 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {HomeComponent} from './home.component';
+import { HomeComponent } from './home.component';
 import {
   AuthenticationService,
   CampaignState,
@@ -17,14 +17,14 @@ import {
   VouchersModule,
   StampCardState
 } from '@perx/core';
-import {RouterTestingModule} from '@angular/router/testing';
-import {MatCardModule, MatIconModule, MatRippleModule, MatTabsModule} from '@angular/material';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {of} from 'rxjs';
-import {NavigateToolbarComponent} from '../navigate-toolbar/navigate-toolbar.component';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { MatCardModule, MatIconModule, MatRippleModule, MatTabsModule } from '@angular/material';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { of } from 'rxjs';
+import { NavigateToolbarComponent } from '../navigate-toolbar/navigate-toolbar.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-import {PuzzleListComponent} from '../mock/service/puzzle-list/puzzle-list.component';
+import { PuzzleListComponent } from '../mock/service/puzzle-list/puzzle-list.component';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -54,6 +54,7 @@ describe('HomeComponent', () => {
       campaignId: 100,
       cardNumber: 161,
       campaignConfig: null,
+      results: {},
       displayProperties: {
         numberOfCols: 3,
         numberOfRows: 2,

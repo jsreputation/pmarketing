@@ -218,6 +218,7 @@ export class V4StampService implements StampService {
         rewards: oc(stampCard).campaign_config.rewards([])
           .map((rewards: IV4Outcome) => V4StampService.v4OutcomeToOutcome(rewards)),
       },
+      results: {},
       displayProperties: {
         numberOfCols: stampCard.display_properties.number_of_cols,
         numberOfRows: stampCard.display_properties.number_of_rows,

@@ -6,6 +6,7 @@ import {
 import { AuthService } from '@cl-core-services';
 import { UserService } from '@cl-core/services/user.service';
 import { Observable } from 'rxjs';
+import { IAMUser } from '@cl-core/models/auth/IAMUser.interface';
 
 export function fnTransition(stateChangeExpr: string, time: string): any {
   return transition(stateChangeExpr, [

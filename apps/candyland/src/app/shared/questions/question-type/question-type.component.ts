@@ -6,6 +6,7 @@ import { SurveyService } from '@cl-core-services';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { WSurveyQuestionType } from '@perx/whistler';
+import { IEngagementQuestionType } from '@cl-core/models/engagement-question/engagement-question-type.interface';
 // tslint:disable
 export const EPANDED_TEXTAREA_VALUE_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,

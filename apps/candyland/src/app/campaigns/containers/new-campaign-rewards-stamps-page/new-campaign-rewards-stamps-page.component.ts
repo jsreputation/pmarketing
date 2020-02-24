@@ -7,6 +7,7 @@ import { StepConditionService } from 'src/app/campaigns/services/step-condition.
 import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
 import { oc } from 'ts-optchain';
+import { ITenantsProperties } from '@cl-core/models/settings/tenants.properties.interface';
 
 @Component({
   selector: 'cl-new-campaign-rewards-stamps-page',
