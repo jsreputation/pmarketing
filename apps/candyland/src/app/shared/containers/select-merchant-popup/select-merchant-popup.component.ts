@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
 import { MerchantsService } from '@cl-core-services';
+import { IMerchant } from '@cl-core/models/merchant/merchant-simple-interface';
+import { IMerchantForm } from '@cl-core/models/merchant/merchant-form-interface';
 
 @Component({
   selector: 'cl-select-merchant-popup',

@@ -5,6 +5,7 @@ import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-ad
 import { map } from 'rxjs/operators';
 import { IWSnakeGameEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
 import { ISnakeForm } from '@cl-core/models/games/snake/snake-form';
+import { IGameDefaultData } from '@cl-core/models/games/game-default-data.interface';
 
 @Injectable({
   providedIn: 'root'

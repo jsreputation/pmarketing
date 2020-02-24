@@ -8,6 +8,10 @@ import { Role } from '@cl-helpers/role.enum';
 import { IReward } from '@perx/core';
 import { RoleLabelConfig } from '@cl-shared';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { ISimpleValue } from '@cl-core/models/simpl-value.interface';
+import { HttpParamsOptions } from '@cl-core/models/params-map';
+import { IAMGroup } from '@cl-core/models/settings/group.interface';
+import { ICognitoEndpoint } from '@cl-core/models/settings/cognito-endpoint.interface';
 
 export enum DefaultSetting {
   style = 'Light',

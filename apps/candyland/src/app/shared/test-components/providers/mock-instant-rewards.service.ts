@@ -2,8 +2,11 @@ import { Observable, of } from 'rxjs';
 import {
   IJsonApiItemPayload, IWInstantOutcomeEngagementAttributes
 } from '@perx/whistler';
+import { IRewardDefaultValue } from '@cl-core/models/games/reward/reward-default-value.interface';
+import { IRewardForm } from '@cl-core/models/games/reward/reward-form-interface';
+import { InstantRewardsService } from '@cl-core-services';
 
-export class MockInstantRewardsService {
+export class MockInstantRewardsService implements Partial<InstantRewardsService> {
   public getInstantRewardData(): Observable<IRewardDefaultValue> {
     return of({
       background: [{
@@ -31,15 +34,15 @@ export class MockInstantRewardsService {
 
   public getInstantReward(id: string): Observable<IRewardForm> {
     return of({
-      name: `data.attributes.title${  id}`,
+      name: `data.attributes.title${id}`,
       headlineMessage: 'data.attributes.display_properties.title',
       subHeadlineMessage: 'data.attributes.display_properties.sub_title',
       banner: 'data.attributes.display_properties.banner',
       buttonText: 'data.attributes.display_properties.button',
       background:
-      'data.attributes.display_properties.background_img_url',
+        'data.attributes.display_properties.background_img_url',
       cardBackground:
-      'data.attributes.display_properties.card_background_img_url',
+        'data.attributes.display_properties.card_background_img_url',
       image_url: 'data.attributes.image_url'
     });
   }
@@ -49,6 +52,6 @@ export class MockInstantRewardsService {
   }
 
   public updateInstantReward(id: string, data: IRewardForm): Observable<IJsonApiItemPayload<IWInstantOutcomeEngagementAttributes>> {
-    return of(({id, data} as any));
+    return of(({ id, data } as any));
   }
 }

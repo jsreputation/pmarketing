@@ -5,6 +5,9 @@ import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-ad
 import { map } from 'rxjs/operators';
 import { IWStampEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
 import { HttpClient } from '@angular/common/http';
+import { IStampsDefaultValue } from '@cl-core/models/games/stamps/stamps-default-value.interface';
+import { IStampsEntityForm } from '@cl-core/models/games/stamps/stamps-entity-form.interface';
+import { StampsGraphicData } from '@cl-core/models/reports/stamps-report/stamps-report.interface';
 
 @Injectable({
   providedIn: 'root'
