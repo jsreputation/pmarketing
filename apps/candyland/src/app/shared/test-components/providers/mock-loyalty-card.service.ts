@@ -1,8 +1,10 @@
 import { Observable, of } from 'rxjs';
 import { IAudiencesLoyaltyCard } from '@cl-core/models/audiences/audiences-loyalty.model';
 import { IJsonApiItemPayload, IWLoyaltyCard } from '@perx/whistler';
+import { ITableData } from '@cl-core/models/data-list.interface';
+import { LoyaltyCardService } from '@cl-core/services/loyalty-card.service';
 
-export class MockLoyaltyCardService {
+export class MockLoyaltyCardService implements Partial<LoyaltyCardService> {
 
   public getMockAudiencesLoyaltyCard(id?: string): IAudiencesLoyaltyCard {
     return {
@@ -12,42 +14,36 @@ export class MockLoyaltyCardService {
       loyalty: {
         id: '1',
         name: 'test',
-        tiers: [{id: 1, type: 'test', name: 'test'}]
+        tiers: [{ id: 1, type: 'test', name: 'test' }]
       },
-      tier: {id: 1, type: 'test', name: 'test'}
+      tier: { id: 1, type: 'test', name: 'test' }
     };
   }
 
-  public getLoyaltyCards(params: HttpParamsOptions): Observable<IAudiencesLoyaltyCard[]> {
-    console.log(params);
+  public getLoyaltyCards(): Observable<IAudiencesLoyaltyCard[]> {
     return of([this.getMockAudiencesLoyaltyCard()]);
   }
 
-  public getTableData(params: HttpParamsOptions): Observable<ITableData<IAudiencesLoyaltyCard>> {
-    console.log(params);
+  public getTableData(): Observable<ITableData<IAudiencesLoyaltyCard>> {
     return of({
       data: [this.getMockAudiencesLoyaltyCard()],
       meta: {}
     });
   }
 
-  public getLoyaltyCard(id: string, params: HttpParamsOptions = {}): Observable<IAudiencesLoyaltyCard> {
-    console.log(id, params);
+  public getLoyaltyCard(): Observable<IAudiencesLoyaltyCard> {
     return of(this.getMockAudiencesLoyaltyCard());
   }
 
-  public createLoyaltyCard(data: IAudiencesLoyaltyCard): Observable<IJsonApiItemPayload<IWLoyaltyCard>> {
-    console.log(data);
+  public createLoyaltyCard(): Observable<IJsonApiItemPayload<IWLoyaltyCard>> {
     return of(null);
   }
 
-  public updateLoyaltyCard(id: string, data: any): Observable<IJsonApiItemPayload<IWLoyaltyCard>> {
-    console.log(id, data);
+  public updateLoyaltyCard(): Observable<IJsonApiItemPayload<IWLoyaltyCard>> {
     return of(null);
   }
 
-  public deleteLoyalty(id: string): Observable<void> {
-    console.log(id);
+  public deleteLoyalty(): Observable<void> {
     return of(null);
   }
 }

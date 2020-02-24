@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { ApiConfig } from '@cl-core/api-config';
+import { StampsGraphicData } from '@cl-core/models/reports/stamps-report/stamps-report.interface';
 
 @Component({
   selector: 'cl-report-linear-graphic',

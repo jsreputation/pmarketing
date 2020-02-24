@@ -31,6 +31,14 @@ export enum MaterialColor {
   accent = 'accent',
   warn = 'warn'
 }
+
+export interface ISurveyOutcome {
+  title: string;
+  subTitle: string;
+  image?: string;
+  button: string;
+}
+
 export interface ISurvey {
   id?: string;
   title: string;
@@ -39,6 +47,10 @@ export interface ISurvey {
   cardBackgroundImgUrl?: string;
   backgroundImgUrl?: string;
   questions: IQuestion[];
+  results: {
+    outcome?: ISurveyOutcome;
+    noOutcome?: ISurveyOutcome;
+  };
   displayProperties?: IWCampaignDisplayProperties;
 }
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ITotal } from '@cl-core/models/dashboard/total-active-interface';
-import { DashboardGameCard } from '@cl-shared/models/dashboard/dashboard-game-car.interface';
+import { DashboardGameCard } from '@cl-shared/models/dashboard/dashboard-game-card.interface';
 
 @Injectable({
   providedIn: 'root'

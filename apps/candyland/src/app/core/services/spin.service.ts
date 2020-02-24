@@ -5,6 +5,8 @@ import { map } from 'rxjs/operators';
 import { SpinHttpService } from '@perx/whistler-services';
 import { IWSpinGameEngagementAttributes, IJsonApiItemPayload, IJsonApiPatchData } from '@perx/whistler';
 import { HttpClient } from '@angular/common/http';
+import { ISpinDefaultValue } from '@cl-core/models/games/spin/spin-default-value.interface';
+import { ISpinEntityForm } from '@cl-core/models/games/spin/spin-form.interface';
 
 @Injectable({
   providedIn: 'root'

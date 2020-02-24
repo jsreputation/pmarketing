@@ -15,6 +15,12 @@ import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.int
 import { IWTierRewardCostsAttributes, IJsonApiItem } from '@perx/whistler';
 import { oc } from 'ts-optchain';
 import { TenantService } from '@cl-core/services/tenant.service';
+import { IMerchantForm } from '@cl-core/models/merchant/merchant-form-interface';
+import { ILoyaltyFormGroup, ILoyaltyTiersFormGroup, IBasicTier } from '@cl-core/models/reward/reward-loyalty-form-interface';
+import { Currency } from '@cl-core/models/merchant/currency';
+import { IMerchant } from '@cl-core/models/merchant/merchant-simple-interface';
+import { ITierRewardCost } from '@cl-core/models/reward/tier-reward-cost-intrface';
+import { OptionConfig } from '@perx/candyshop';
 
 @Component({
   selector: 'cl-manage-rewards',
@@ -337,6 +343,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
 
       if (basicTier && basicTier.tierType === this.newRewardFormService.tierTypes.basicType) {
         programStatus = true;
+        // eslint-disable-next-line
         basicTier['statusTiers'] = true;
         this.newRewardFormService.setDefaultRewardTiers(basicTier);
       }
@@ -369,6 +376,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
           if (rewardTier && rewardTier.tierType === this.newRewardFormService.tierTypes.customType) {
             // add to object for know what to do next remove or update
             hasSelectedCustomTier = true;
+            // eslint-disable-next-line
             rewardTier['statusTiers'] = true;
             this.newRewardFormService.setDefaultRewardTiers(rewardTier);
             tier.patchValue({ ...rewardTier });

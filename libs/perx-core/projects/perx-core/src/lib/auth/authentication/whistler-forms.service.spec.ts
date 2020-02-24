@@ -24,7 +24,7 @@ describe('WhistlerFormsService', () => {
   it('should create form ', fakeAsync(inject([HttpClient, WhistlerFormsService],
     (http: HttpClient, formService: WhistlerFormsService) => {
       const spy = jest.spyOn(http, 'get').mockReturnValue(of({ data: [{ attributes: { properties: { signup: {} } } }] }));
-      jest.spyOn(SurveyService, 'WSurveyToSurvey').mockReturnValue({ title: '', questions: [] });
+      jest.spyOn(SurveyService, 'WSurveyToSurvey').mockReturnValue({ title: '', results: {}, questions: [] });
       formService.getSignupForm().subscribe(() => { });
       tick();
       expect(spy).toHaveBeenCalled();

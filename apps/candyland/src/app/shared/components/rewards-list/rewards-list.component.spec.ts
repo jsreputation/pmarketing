@@ -52,7 +52,7 @@ describe('RewardsListComponent', () => {
         }
       })
     });
-    fixture.detectChanges();
+    // fixture.detectChanges();
   });
 
   it('should create', () => {
