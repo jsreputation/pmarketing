@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { IColor } from '@cl-core/http-adapters/settings-http-adapter';
 import { IJsonApiItem, IWSetting, IWTenant } from '@perx/whistler';
+import { ITenant } from '@cl-core/models/settings/tenant.interface';
+import { ITenantsProperties } from '@cl-core/models/settings/tenants.properties.interface';
+import { IBrandingForm } from '@cl-core/models/settings/branding-form.interface';
 
 @Injectable({
   providedIn: 'root'

@@ -51,6 +51,7 @@ export class WhistlerStampService implements StampService {
           )
           )
       },
+      results: {},
       displayProperties: {
         preStampImg: attributesObj.display_properties.pre_stamp_img_url,
         postStampImg: attributesObj.display_properties.post_stamp_img_url,

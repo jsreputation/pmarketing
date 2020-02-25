@@ -1,5 +1,6 @@
 import { IWQuestion } from './survey-question';
 import { WInformationCollectionSettingType } from '../campaign/campaign';
+import { IWProperties } from '../../public-api';
 
 export interface IWSurveyDisplayProperties {
   title: string;
@@ -10,18 +11,8 @@ export interface IWSurveyDisplayProperties {
   questions: IWQuestion[];
   button?: string;
   informationCollectionSetting?: WInformationCollectionSettingType;
-  noRewardsPopUp?: {
-    headLine?: string;
-    subHeadLine?: string;
-    imageURL?: string;
-    buttonTxt?: string;
-  };
-  successPopUp?: {
-    headLine?: string;
-    subHeadLine?: string;
-    imageURL?: string;
-    buttonTxt?: string;
-  };
+  noRewardsPopUp?: IWProperties;
+  successPopUp?: IWProperties;
 }
 
 export interface IWPostAnswerAttributes {

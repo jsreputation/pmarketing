@@ -5,6 +5,8 @@ import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-ad
 import { ScratchHttpService } from '@perx/whistler-services';
 import { IWScratchGameEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
 import { HttpClient } from '@angular/common/http';
+import { IGameDefaultData } from '@cl-core/models/games/game-default-data.interface';
+import { IScratchForm } from '@cl-core/models/games/scratch/scratch-form.interface';
 
 @Injectable({
   providedIn: 'root'

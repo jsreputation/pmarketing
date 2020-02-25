@@ -14,6 +14,7 @@ import { StepConditionService } from '../../services/step-condition.service';
 import Utils from '@cl-helpers/utils';
 import { ActivatedRoute } from '@angular/router';
 import { ToggleControlService } from '@cl-shared';
+import { CommonSelect } from '@cl-core/models/common-select.interface';
 
 @Component({
   selector: 'cl-new-campaign-notifications',

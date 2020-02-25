@@ -5,6 +5,8 @@ import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-ad
 import { map } from 'rxjs/operators';
 import { IWInstantOutcomeEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
 import { HttpClient } from '@angular/common/http';
+import { IRewardDefaultValue } from '@cl-core/models/games/reward/reward-default-value.interface';
+import { IRewardForm } from '@cl-core/models/games/reward/reward-form-interface';
 
 @Injectable({
   providedIn: 'root'

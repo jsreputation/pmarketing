@@ -1,3 +1,5 @@
+import { IAMUser } from '@cl-core/models/auth/IAMUser.interface';
+
 export const IAMUserMock: IAMUser = {
   id: '1',
   type: 'users',

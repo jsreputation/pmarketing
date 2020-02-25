@@ -1,11 +1,13 @@
 import { Observable, of } from 'rxjs';
 import { IReward } from '@perx/core';
 import { RoleLabelConfig } from '@cl-shared';
-import { HttpParams } from '@angular/common/http';
+import { ICognitoEndpoint } from '@cl-core/models/settings/cognito-endpoint.interface';
+import { IAMGroup } from '@cl-core/models/settings/group.interface';
+import { SettingsService } from '@cl-core-services';
 
-export class MockSettingsService {
+export class MockSettingsService implements Partial<SettingsService> {
   public getRoles(): Observable<any[]> {
-    return of([  {
+    return of([{
       id: 0,
       avatar: null,
       firstName: 'Beck',
@@ -77,21 +79,21 @@ export class MockSettingsService {
 
   public getRoleLabel(): Observable<{ [key: string]: RoleLabelConfig }> {
     return of({
-      1 : {abbr: 'ADMIN_ABBR', title: 'ADMIN_TITLE', class: 'admin'}});
+      1: { abbr: 'ADMIN_ABBR', title: 'ADMIN_TITLE', class: 'admin' }
+    });
   }
 
-  public getCognitoEndpoint(id: string, params: HttpParams): Observable<ICognitoEndpoint> {
-    console.log(id, params);
+  public getCognitoEndpoint(): Observable<ICognitoEndpoint> {
+
     return of(this.getMockCognitoEndpoint());
   }
 
-  public getCognitoEndpoints(params: HttpParamsOptions): Observable<ICognitoEndpoint[]> {
-    console.log( params);
+  public getCognitoEndpoints(): Observable<ICognitoEndpoint[]> {
     return of([this.getMockCognitoEndpoint()]);
   }
 
-  public createCognitoEndpoint(data: ICognitoEndpoint = null): Observable<ICognitoEndpoint> {
-    console.log(data);
+  public createCognitoEndpoint(): Observable<ICognitoEndpoint> {
+
     return of(this.getMockCognitoEndpoint());
   }
   public findAndCreateCognitoEndpoint(): Observable<ICognitoEndpoint> {

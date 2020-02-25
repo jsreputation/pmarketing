@@ -19,6 +19,7 @@ export class StampsListComponent implements OnInit {
       campaignConfig: {
         totalSlots: 5,
       },
+      results: {},
       displayProperties: {
         cardBgImage: 'https://robohash.org/preStampImg.png',
         displayCampaignAs: 'stamp_card',
@@ -29,6 +30,7 @@ export class StampsListComponent implements OnInit {
       title: 'Loyalty Card 1',
       subTitle: 'description text',
       state: StampCardState.active,
+      results: {},
       displayProperties: {
         cardBgImage: 'https://robohash.org/loyalty-card-1.png',
         displayCampaignAs: 'stamp_card',

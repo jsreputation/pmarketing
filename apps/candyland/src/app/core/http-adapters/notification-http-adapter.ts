@@ -24,9 +24,12 @@ export class NotificationHttpAdapter {
 
     if (type === NotificationHttpAdapter.launchType.launchDate
       && data.time && data.type) {
+      // eslint-disable-next-line
       res.attributes.payload['send_at'] = data.time;
       res.attributes.notification_type = type;
+      // eslint-disable-next-line
       res.attributes.payload['new_status'] = 'ended';
+      // eslint-disable-next-line
       res.attributes.payload['send_on'] = {
         period: data.numberPeriod,
         units: data.type
@@ -36,8 +39,10 @@ export class NotificationHttpAdapter {
     // type campaign_launch_date
     if (type === NotificationHttpAdapter.launchType.launchDate
       && !data.numberPeriod && !data.type) {
+      // eslint-disable-next-line
       res.attributes.payload['send_at'] = data.launchDateTime;
       res.attributes.notification_type = type;
+      // eslint-disable-next-line
       res.attributes.payload['new_status'] = 'active';
     }
 
@@ -48,6 +53,7 @@ export class NotificationHttpAdapter {
     ) {
       res.attributes.notification_type = NotificationHttpAdapter.launchType.users_date_birth;
       res.attributes.segment = 'this_day';
+      // eslint-disable-next-line
       res.attributes.payload['send_at'] = data.birthdayTime;
     }
 
@@ -59,13 +65,17 @@ export class NotificationHttpAdapter {
     ) {
       res.attributes.notification_type = NotificationHttpAdapter.launchType.users_month_birth;
       res.attributes.segment = 'this_month';
+      // eslint-disable-next-line
       res.attributes.payload['send_at'] = data.birthdayTime;
+      // eslint-disable-next-line
       res.attributes.payload['on_day'] = data.monthDay;
     }
 
     if (type === NotificationHttpAdapter.launchType.campaignNotCompleted) {
       res.attributes.notification_type = data.sentType;
+      // eslint-disable-next-line
       res.attributes.payload['send_at'] = data.time;
+      // eslint-disable-next-line
       res.attributes.payload['send_on'] = {
         period: data.numberPeriod,
         units: data.type
@@ -73,6 +83,7 @@ export class NotificationHttpAdapter {
     }
 
     if (data.id) {
+      // eslint-disable-next-line
       res['id'] = data.id;
     }
 
@@ -171,6 +182,7 @@ export class NotificationHttpAdapter {
       [NotificationHttpAdapter.notificationsFormGroups.beforeCampaignEnds]: []
     };
     data.forEach((item) => {
+      // eslint-disable-next-line
       channelForm['sms'] = true;
       const type = item.sentType;
       if (type === NotificationHttpAdapter.launchType.launchDate

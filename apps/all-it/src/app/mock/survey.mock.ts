@@ -5,6 +5,7 @@ export const survey: ISurvey = {
   title: 'What all women should know about cancers',
   backgroundImgUrl: 'https://cdn.perxtech.io/content/prudential/BreastCancer_Banner.jpg',
   subTitle: 'A private event hosted by Prudential & Parkway Cancer Centre in conjunction with Breast Cancer month. Join us at our event to hear from Medical Oncologist sharing with you important insight to the condition.',
+  results: {},
   questions: [
     {
       question: 'Details',
