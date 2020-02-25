@@ -82,7 +82,7 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
             passwordConfirmation: confirmPassword
           });
         })
-      )
+      );
     } else if (this.otp && this.mobileNumber && appToken) {
       resetPaswordCall = this.authService.resetPassword({
         phone: this.mobileNumber,
