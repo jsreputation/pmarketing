@@ -154,14 +154,7 @@ export class GameComponent implements OnInit, OnDestroy {
     this.popupData = this.noRewardsPopUp;
   }
 
-  // optionally add check if user has won in the game (see snake) other games winning is predetermined
-  public gameCompleted(win?: boolean): void {
-    // win can be undefined also, if not explicitly passed in the willWin prop and popupdata will be what is set on preplay
-    if (win !== undefined && win === false) {
-      this.fillFailure();
-    } else if (win !== undefined && win === true) {
-      this.fillSuccess(this.rewardCount);
-    }
+  public gameCompleted(): void {
     const gameOutcome$ = this.gameService.play(
       this.transactionId
     ).pipe(
