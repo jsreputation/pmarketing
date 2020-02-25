@@ -45,6 +45,11 @@
   a {
     text-decoration: none;
     color: #666666;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    height: 100%;
+    align-items: center;
 
     &.active {
       color: var(--accent);
