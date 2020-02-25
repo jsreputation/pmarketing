@@ -7,6 +7,7 @@ import { OutcomesHttpAdapter } from '@cl-core/http-adapters/outcomes-http-adapte
 import { IWOutcomeAttributes, IJsonApiItem, IJsonApiListPayload, IJsonApiItemPayload } from '@perx/whistler';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
 import { ICampaignOutcome } from '@cl-core/models/campaign/campaign';
+import { HttpParamsOptions } from '@cl-core/models/params-map';
 
 @Injectable({
   providedIn: 'root'

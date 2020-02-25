@@ -11,6 +11,8 @@ import { TranslateDefaultLanguageService } from '@cl-core/translate-services/tra
 import { TranslateService } from '@ngx-translate/core';
 import { CRUDParser, RequestType } from '@cl-helpers/crud-parser';
 import { IJsonApiItemPayload, IWMerchantBranchAttributes } from '@perx/whistler';
+import { IMerchantForm } from '@cl-core/models/merchant/merchant-form-interface';
+import { IBranch } from '@cl-core/models/merchant/branch-interface';
 
 @Component({
   selector: 'cl-list-merchant',

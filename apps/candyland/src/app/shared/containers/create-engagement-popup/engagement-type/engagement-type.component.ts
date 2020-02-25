@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output, QueryList, ViewChildren } from '@angular/core';
 import { InkListenerDirective } from '../../../components/ink/directives/ink-listener.directive';
 import { IInkBarHost } from '../../../components/ink/models/ink-bar-host';
+import { IGraphic } from '@cl-core/models/graphic.interface';
 
 @Component({
   selector: 'cl-engagement-type',

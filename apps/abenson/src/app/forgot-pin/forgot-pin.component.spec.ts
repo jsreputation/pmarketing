@@ -26,7 +26,7 @@ describe('ForgotPinComponent', () => {
   let authenticationService: AuthenticationService;
   let fixture: ComponentFixture<ForgotPinComponent>;
   const router = {
-    navigate: jasmine.createSpy('navigate')
+    navigate: jest.fn()
   };
   const authenticationServiceStub: Partial<AuthenticationService> = {
     forgotPassword: () => of(),
@@ -35,7 +35,7 @@ describe('ForgotPinComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        ForgotPinComponent ,
+        ForgotPinComponent,
       ],
       imports: [
         FormsModule,

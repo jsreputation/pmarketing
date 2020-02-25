@@ -12,7 +12,7 @@ import {
   IGame,
   AuthenticationService,
   NotificationService,
-  ConfigService, IGameOutcome
+  ConfigService
 } from '@perx/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -77,12 +77,6 @@ const gameSignup: IGame = {
   },
 };
 
-const outcome: IGameOutcome = {
-  title: '',
-  subTitle: '',
-  button: ''
-};
-
 describe('GameComponent', () => {
   let component: GameComponent;
   let fixture: ComponentFixture<GameComponent>;
@@ -91,10 +85,6 @@ describe('GameComponent', () => {
     getGamesFromCampaign: () => of([gamePi]),
     prePlay: () => of(),
     prePlayConfirm: () => of(),
-    // tslint:disable-next-line:variable-name
-    getSuccessOutcome: (_gamePi) => outcome,
-    // tslint:disable-next-line:variable-name
-    getNoOutcome: (_gamePi) => outcome
   };
   const routerStub: Partial<Router> = {
     navigate: () => Promise.resolve(true)

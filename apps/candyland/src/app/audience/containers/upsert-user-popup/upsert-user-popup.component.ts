@@ -26,6 +26,8 @@ import {
 } from '@cl-core-services';
 
 import { Type } from '../../audience.model';
+import { OptionConfig } from '@perx/candyshop';
+import { IAudiencesUserForm } from '@cl-core/models/audiences/user.interface';
 
 @Component({
   selector: 'cl-upsert-user-popup',

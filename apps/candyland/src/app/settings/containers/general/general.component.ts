@@ -6,6 +6,8 @@ import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TenantService } from '@cl-core/services/tenant.service';
 import { ITimeZone } from '@cl-core/models/settings/time-zone';
+import { Currency } from '@cl-core/models/merchant/currency';
+import { ITenant } from '@cl-core/models/settings/tenant.interface';
 
 @Component({
   selector: 'cl-general',

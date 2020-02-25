@@ -2,8 +2,12 @@ import { Observable, of } from 'rxjs';
 import {
   IJsonApiItemPayload, IWStampEngagementAttributes
 } from '@perx/whistler';
+import { IStampsDefaultValue } from '@cl-core/models/games/stamps/stamps-default-value.interface';
+import { IStampsEntityForm } from '@cl-core/models/games/stamps/stamps-entity-form.interface';
+import { StampsGraphicData } from '@cl-core/models/reports/stamps-report/stamps-report.interface';
+import { StampsService } from '@cl-core-services';
 
-export class MockStampsService {
+export class MockStampsService implements Partial<StampsService> {
 
   public getStampData(id?: string): any {
     return {
@@ -24,7 +28,7 @@ export class MockStampsService {
         format: '.png',
         active: false
       }],
-      rewardPost: [ {
+      rewardPost: [{
         id: 1,
         type: 'reward-post-stamp-1',
         title: 'icon',
@@ -93,7 +97,7 @@ export class MockStampsService {
         format: '.png',
         active: false
       }],
-      rewardPost: [ {
+      rewardPost: [{
         id: 1,
         type: 'reward-post-stamp-1',
         title: 'icon',
@@ -147,13 +151,11 @@ export class MockStampsService {
     return of(this.getStampData(id));
   }
 
-  public createStamp(data: IStampsEntityForm): Observable<IJsonApiItemPayload<IWStampEngagementAttributes>> {
-    console.log('data', data);
+  public createStamp(): Observable<IJsonApiItemPayload<IWStampEngagementAttributes>> {
     return of(null);
   }
 
-  public updateStamp(id: string, data: IStampsEntityForm): Observable<IJsonApiItemPayload<IWStampEngagementAttributes>> {
-    console.log('data', id, data);
+  public updateStamp(): Observable<IJsonApiItemPayload<IWStampEngagementAttributes>> {
     return of(null);
   }
 

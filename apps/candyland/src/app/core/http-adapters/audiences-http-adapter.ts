@@ -16,6 +16,9 @@ import { SOURCE_TYPE } from '../../app.constants';
 import { IAudience, IPools } from '@cl-core/models/audiences/audiences';
 import { oc } from 'ts-optchain';
 import { ManageListPopupComponentOutput } from 'src/app/audience/containers/manage-list-popup/manage-list-popup.component';
+import { IAudiencesUserForm } from '@cl-core/models/audiences/user.interface';
+import { ITableData } from '@cl-core/models/data-list.interface';
+import { IAudienceVoucher } from '@cl-core/models/vouchers/audience-voucher.interface';
 
 export class AudiencesHttpAdapter {
 
@@ -24,7 +27,7 @@ export class AudiencesHttpAdapter {
     const mainUserApiObject = {
       type: 'users',
       attributes: {
-        title: `${data.firstName  } ${  data.lastName}`,
+        title: `${data.firstName} ${data.lastName}`,
         first_name: data.firstName,
         last_name: data.lastName,
         phone_number: data.phone,
