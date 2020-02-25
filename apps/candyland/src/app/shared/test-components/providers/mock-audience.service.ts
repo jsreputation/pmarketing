@@ -1,11 +1,11 @@
 import { Observable, of } from 'rxjs';
 import { IJsonApiListPayload, IWAudiences } from '@perx/whistler';
-import { IPoolUserLink } from '@cl-core-services';
+import { IPoolUserLink, AudiencesService } from '@cl-core-services';
 import { IAudience } from '@cl-core/models/audiences/audiences';
+import { ITableData } from '@cl-core/models/data-list.interface';
 
-export class MockAudienceService {
-  public getAudiences(params: HttpParamsOptions): Observable<IJsonApiListPayload<IWAudiences>> {
-    console.log(params);
+export class MockAudienceService implements Partial<AudiencesService> {
+  public getAudiences(): Observable<IJsonApiListPayload<IWAudiences>> {
     return of({
       data: [{
         id: '1',
@@ -21,10 +21,7 @@ export class MockAudienceService {
     });
   }
 
-  public getAudiencesList(
-    params: HttpParamsOptions = {}
-  ): Observable<IPoolUserLink[]> {
-    console.log(params);
+  public getAudiencesList(): Observable<IPoolUserLink[]> {
     return of([{
       name: 'test',
       checked: false,
@@ -32,8 +29,7 @@ export class MockAudienceService {
     }]);
   }
 
-  public getTableData(params: HttpParamsOptions): Observable<ITableData<IAudience>> {
-    console.log(params);
+  public getTableData(): Observable<ITableData<IAudience>> {
     return of({
       data: [{
         id: 5, updated_at: '5555', name: 'test', users_count: 5,

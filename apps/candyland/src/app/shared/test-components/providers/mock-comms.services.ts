@@ -3,11 +3,11 @@ import { IComm, ICommMessage } from '@cl-core/models/comm/schedule';
 import {
   IJsonApiItemPayload, IWCommEventAttributes, IWCommMessageAttributes, IWCommTemplateAttributes, WMessageChannel
 } from '@perx/whistler';
-import { ICampaign } from '@cl-core/models/campaign/campaign';
+import { ITableData } from '@cl-core/models/data-list.interface';
+import { CommsService } from '@cl-core-services';
 
-export class MockCommsServices {
-
-  public getMockData(): ICommMessage {
+export class MockCommsServices implements Partial<CommsService> {
+  private getMockData(): ICommMessage {
     return {
       id: '1',
       from: 'test',
@@ -21,8 +21,7 @@ export class MockCommsServices {
     };
   }
 
-  public getTableData(params: HttpParamsOptions): Observable<ITableData<ICommMessage>> {
-    console.log(params);
+  public getTableData(): Observable<ITableData<ICommMessage>> {
     return of(
       {
         data: [this.getMockData()],
@@ -31,65 +30,53 @@ export class MockCommsServices {
     );
   }
 
-  public getCommsTemplate(params: HttpParamsOptions): Observable<IComm[]> {
-    console.log(params);
+  public getCommsTemplate(): Observable<IComm[]> {
     return of(
       [this.getMockData()]
     );
   }
 
-  public getCommsEvents(params: HttpParamsOptions): Observable<IComm[]> {
-    console.log(params);
+  public getCommsEvents(): Observable<IComm[]> {
     return of(
       [this.getMockData()]
     );
   }
 
-  public getCommsEvent(params: HttpParamsOptions): Observable<IComm> {
-    console.log(params);
+  public getCommsEvent(): Observable<IComm> {
     return of(
       this.getMockData()
     );
   }
 
-  public createCommsEvent(data: ICampaign, templateId: string, campaignId: string): Observable<IJsonApiItemPayload<IWCommEventAttributes>> {
-    console.log(data, templateId, campaignId);
+  public createCommsEvent(): Observable<IJsonApiItemPayload<IWCommEventAttributes>> {
     return of(null);
   }
 
-  public deleteCommsEvent(id: string): Observable<any> {
-    console.log(id);
+  public deleteCommsEvent(): Observable<any> {
     return of(null);
   }
 
-  public updateCommsTemplate(data: IComm): Observable<IJsonApiItemPayload<IWCommTemplateAttributes>> {
-    console.log(data);
+  public updateCommsTemplate(): Observable<IJsonApiItemPayload<IWCommTemplateAttributes>> {
     return of(null);
   }
 
-  public createCommsTemplate(data: IComm): Observable<IJsonApiItemPayload<IWCommTemplateAttributes>> {
-    console.log(data);
+  public createCommsTemplate(): Observable<IJsonApiItemPayload<IWCommTemplateAttributes>> {
     return of(null);
   }
 
-  public deleteCommsTemplate(id: string): Observable<void> {
-    console.log(id);
+  public deleteCommsTemplate(): Observable<void> {
     return of(null);
   }
 
-  public createMessage(data: ICommMessage): Observable<IJsonApiItemPayload<IWCommMessageAttributes>> {
-    console.log(data);
+  public createMessage(): Observable<IJsonApiItemPayload<IWCommMessageAttributes>> {
     return of(null);
   }
 
-  public getMessages(params: HttpParamsOptions): Observable<ICommMessage[]> {
-    console.log(params);
+  public getMessages(): Observable<ICommMessage[]> {
     return of([this.getMockData()]);
   }
 
-  public getMessage(id: string): Observable<ICommMessage> {
-    console.log(id);
+  public getMessage(): Observable<ICommMessage> {
     return of(this.getMockData());
   }
-
 }

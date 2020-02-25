@@ -14,6 +14,8 @@ import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-v
 import { IWEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
 import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
 import { IPinataForm } from '@cl-core/models/games/pinata/pinate-form.interface';
+import { IGameDefaultData } from '@cl-core/models/games/game-default-data.interface';
+import { ITenantsProperties } from '@cl-core/models/settings/tenants.properties.interface';
 
 @Component({
   selector: 'cl-new-pinata-page',

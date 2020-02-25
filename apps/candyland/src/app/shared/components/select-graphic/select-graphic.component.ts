@@ -1,6 +1,7 @@
-import {Component, EventEmitter, forwardRef, Input, Output} from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
+import { IGraphic } from '@cl-core/models/graphic.interface';
 
 @Component({
   selector: 'cl-select-graphic',

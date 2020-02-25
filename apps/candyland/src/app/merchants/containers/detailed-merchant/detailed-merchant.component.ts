@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { IMerchantFull } from '@cl-core/models/merchant/merchant-interface';
 
 @Component({
   selector: 'cl-detailed-merchant',

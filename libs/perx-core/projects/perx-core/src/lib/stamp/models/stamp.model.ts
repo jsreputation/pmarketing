@@ -49,6 +49,13 @@ export interface ICampaignConfig {
   collectionRewards?: PuzzleCollectReward[];
 }
 
+export interface IStampCardOutcome {
+  title: string;
+  subTitle: string;
+  image?: string;
+  button: string;
+}
+
 export interface IStampCard {
   title?: string; // added
   subTitle?: string; // added
@@ -59,6 +66,10 @@ export interface IStampCard {
   campaignId?: number; // made optional
   cardNumber?: number; // made optional
   campaignConfig: ICampaignConfig | null | undefined;
+  results: {
+    outcome?: IStampCardOutcome;
+    noOutcome?: IStampCardOutcome;
+  };
   displayProperties: {
     numberOfCols?: number; // made optional
     numberOfRows?: number; // made optional

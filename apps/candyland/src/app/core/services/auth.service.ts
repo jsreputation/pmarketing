@@ -12,6 +12,8 @@ import { HttpResponse } from '@angular/common/http';
 import { IamUserService } from './iam-user.service';
 import { IamUserHttpAdapter } from '@cl-core/http-adapters/iam-user-http-adapter';
 import { AuthHttpService } from '@perx/whistler-services';
+import { IAMUser } from '@cl-core/models/settings/IAMUser.interface';
+import { ILogin } from '@cl-core/models/auth/login.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -112,7 +114,7 @@ export class AuthService {
           this.saveToken(tokenString);
           const tokenObj = parseJwt(tokenString);
           const userName = tokenObj.sub.split('/').pop();
-          return this.iamUserService.getUsers({'filter[username]': userName})
+          return this.iamUserService.getUsers({ 'filter[username]': userName })
             .pipe(
               map(users => users[0]),
               tap((user: IAMUser) => this.saveUser(user))

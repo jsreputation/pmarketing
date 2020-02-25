@@ -5,6 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { RoutingStateService, StampsService, CsvReportService } from '@cl-core-services';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { StampsGraphicData } from '@cl-core/models/reports/stamps-report/stamps-report.interface';
 
 @Component({
   selector: 'cl-stamp',

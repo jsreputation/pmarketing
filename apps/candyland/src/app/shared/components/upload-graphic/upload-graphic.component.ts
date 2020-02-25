@@ -3,6 +3,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { UploadFileService } from '@cl-core-services';
 import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
+import { IGraphic } from '@cl-core/models/graphic.interface';
 
 @Component({
   selector: 'cl-upload-graphic',
@@ -53,9 +54,11 @@ export class UploadGraphicComponent implements ControlValueAccessor {
     }
   }
 
-  constructor(private sanitizer: DomSanitizer,
+  constructor(
+    private sanitizer: DomSanitizer,
     private cd: ChangeDetectorRef,
-    private uploadFileService: UploadFileService) {
+    private uploadFileService: UploadFileService
+  ) {
   }
 
   public preview(files): void {

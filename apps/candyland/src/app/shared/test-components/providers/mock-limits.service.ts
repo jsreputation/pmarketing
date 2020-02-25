@@ -1,8 +1,9 @@
 import { Observable, of } from 'rxjs';
 import { ILimit } from '@cl-core/models/limit/limit.interface';
 import { IJsonApiItemPayload, IWLimitAttributes } from '@perx/whistler';
+import { LimitsService } from '@cl-core-services';
 
-export class MockLimitsService {
+export class MockLimitsService implements Partial<LimitsService> {
 
   public getMockLimit(): ILimit {
     return {
@@ -12,34 +13,19 @@ export class MockLimitsService {
     };
   }
 
-  public getLimits(params: HttpParamsOptions, engagementType: string): Observable<ILimit[]> {
-    console.log(params, engagementType);
+  public getLimits(): Observable<ILimit[]> {
     return of([this.getMockLimit()]);
   }
 
-  public updateLimit(
-    id: string,
-    data: { times?: number, duration: string },
-    type: string,
-    campaignId: number,
-    engagementId: number
-  ): Observable<IJsonApiItemPayload<IWLimitAttributes> | void> {
-    console.log(id, data, type, campaignId, engagementId);
+  public updateLimit(): Observable<IJsonApiItemPayload<IWLimitAttributes> | void> {
     return of(null);
   }
 
-  public createLimit(
-    data: { times?: number, duration: string },
-    type: string,
-    campaignId: number,
-    engagementId: number
-  ): Observable<IJsonApiItemPayload<IWLimitAttributes> | void> {
-    console.log( data, type, campaignId, engagementId);
+  public createLimit(): Observable<IJsonApiItemPayload<IWLimitAttributes> | void> {
     return of(null);
   }
 
-  public deleteLimit(type: string, limitId: number): Observable<void> {
-    console.log(type, limitId);
+  public deleteLimit(): Observable<void> {
     return of(null);
   }
 }

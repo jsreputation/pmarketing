@@ -3,6 +3,9 @@ import { ICountries, ISurveyForm } from '@cl-core/models/survey/survey-common.in
 import {
   IJsonApiItemPayload, IWSurveyEngagementAttributes, WSurveyQuestionType
 } from '@perx/whistler';
+import { IEngagementQuestionType } from '@cl-core/models/engagement-question/engagement-question-type.interface';
+import { IGraphic } from '@cl-core/models/graphic.interface';
+import { IBaseQuestionReport } from '@cl-core/models/reports/survey-report/survey-report.interface';
 
 export class MockSurveyService {
 
@@ -35,7 +38,7 @@ export class MockSurveyService {
   }
 
   public getCountriesList(): Observable<any> {
-    return of([  {
+    return of([{
       id: 36,
       name: 'Singapore',
       phone: '+65'
@@ -43,7 +46,7 @@ export class MockSurveyService {
   }
 
   public getDefaultCountryCode(): Observable<ICountries[]> {
-    return of(  [{
+    return of([{
       name: 'Singapore',
       code: 'SG'
     }]);

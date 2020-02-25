@@ -1,5 +1,5 @@
-import {HttpClient} from '@angular/common/http';
-import {map, mergeMap, retry, switchMap, takeLast, tap} from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { map, mergeMap, retry, switchMap, takeLast, tap } from 'rxjs/operators';
 import {
   defaultPinata,
   defaultScratch, defaultSnake,
@@ -16,11 +16,11 @@ import {
   ITree,
   IGameOutcome
 } from './game.model';
-import {combineLatest, Observable, of, Subscriber} from 'rxjs';
-import {Injectable, Optional} from '@angular/core';
-import {IGameService} from './igame.service';
-import {Config} from '../config/config';
-import {IVoucherService} from '../vouchers/ivoucher.service';
+import { combineLatest, Observable, of, Subscriber } from 'rxjs';
+import { Injectable, Optional } from '@angular/core';
+import { IGameService } from './igame.service';
+import { Config } from '../config/config';
+import { IVoucherService } from '../vouchers/ivoucher.service';
 import {
   IJsonApiItem,
   IJsonApiItemPayload,
@@ -35,6 +35,7 @@ import {
   IWSpinDisplayProperties,
   IWTreeDisplayProperties,
   WGameType,
+  IWProperties,
 } from '@perx/whistler';
 import { WhistlerVouchersService } from '../vouchers/whistler-vouchers.service';
 import { ICampaignService } from '../campaign/icampaign.service';
@@ -207,8 +208,31 @@ export class WhistlerGameService implements IGameService {
           return entity.engagement_id;
         }),
         switchMap((correctId: number) => this.get(correctId, campaignId)),
-        map((game: IGame) => ([{ ...game, campaignId, displayProperties: { ...game.displayProperties, ...disProp } }]))
+        map((game: IGame) => {
+          const results: { [key: string]: IGameOutcome } = {};
+          if (disProp && disProp.successPopUp) {
+            results.outcome = WhistlerGameService.outcomeToGameOutcome(disProp.successPopUp);
+          }
+          if (disProp && disProp.noRewardsPopUp) {
+            results.noOutcome = WhistlerGameService.outcomeToGameOutcome(disProp.noRewardsPopUp);
+          }
+          return [{
+            ...game,
+            campaignId,
+            results,
+            displayProperties: { ...game.displayProperties, ...disProp }
+          }];
+        })
       );
+  }
+
+  private static outcomeToGameOutcome(outcome: IWProperties): IGameOutcome {
+    return  {
+      title: outcome.headLine ? outcome.headLine : '',
+      subTitle: outcome.subHeadLine ? outcome.subHeadLine : '',
+      button: outcome.buttonTxt ? outcome.buttonTxt : '',
+      image: outcome.imageURL
+    };
   }
 
   public prePlay(engagementId: number, campaignId?: number): Observable<IEngagementTransaction> {
@@ -310,41 +334,5 @@ export class WhistlerGameService implements IGameService {
       return false;
     }
     return this.auth.getAnonymous();
-  }
-
-  public getSuccessOutcome(game: IGame): IGameOutcome {
-    const { displayProperties } = game;
-    if (displayProperties && displayProperties.successPopUp) {
-      return {
-        title: displayProperties.successPopUp.headLine as string,
-        subTitle: displayProperties.successPopUp.subHeadLine as string,
-        image: displayProperties.successPopUp.imageURL as string,
-        button: displayProperties.successPopUp.buttonTxt as string
-      };
-    }
-
-    return {
-      title: '',
-      subTitle: '',
-      button: ''
-    };
-  }
-
-  public getNoOutcome(game: IGame): IGameOutcome {
-    const { displayProperties } = game;
-    if (displayProperties && displayProperties.noRewardsPopUp) {
-      return {
-        title: displayProperties.noRewardsPopUp.headLine as string,
-        subTitle: displayProperties.noRewardsPopUp.subHeadLine as string,
-        image: displayProperties.noRewardsPopUp.imageURL as string,
-        button: displayProperties.noRewardsPopUp.buttonTxt as string
-      };
-    }
-
-    return {
-      title: '',
-      subTitle: '',
-      button: ''
-    };
   }
 }

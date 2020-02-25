@@ -9,6 +9,9 @@ import Utils from '@cl-helpers/utils';
 import { IWAssignedAttributes, IJsonApiItem, IJsonApiListPayload } from '@perx/whistler';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 import { RewardsService } from './rewards.service';
+import { IAudienceVoucher } from '@cl-core/models/vouchers/audience-voucher.interface';
+import { HttpParamsOptions } from '@cl-core/models/params-map';
+import { ITableData } from '@cl-core/models/data-list.interface';
 
 @Injectable({
   providedIn: 'root'

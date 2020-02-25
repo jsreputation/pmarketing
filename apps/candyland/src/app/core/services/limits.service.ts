@@ -7,6 +7,7 @@ import { LimitsHttpAdapter } from '@cl-core/http-adapters/limits-http-adapter';
 import { IWLimitAttributes, IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload } from '@perx/whistler';
 import { ILimit } from '@cl-core/models/limit/limit.interface';
 import { EngagementTypeAPIMapping } from '@cl-core/models/engagement/engagement-type.enum';
+import { HttpParamsOptions } from '@cl-core/models/params-map';
 
 @Injectable({
   providedIn: 'root'
