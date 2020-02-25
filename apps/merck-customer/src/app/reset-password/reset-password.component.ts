@@ -5,6 +5,7 @@ import { AuthenticationService, NotificationService, ProfileService, IProfile } 
 import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
 import { HttpErrorResponse } from '@angular/common/http';
 import { mergeMap } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'mc-reset-password',
@@ -66,14 +67,10 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
       this.notificationService.addSnack('Passwords do not match.');
       return;
     }
-    let resetPaswordCall = this.authService.resetPassword({
-      phone: this.mobileNumber,
-      newPassword: password,
-      otp: this.otp,
-      passwordConfirmation: confirmPassword
-    });
+    let resetPaswordCall;
 
     const userToken = this.authService.getUserAccessToken();
+    const appToken = this.authService.getAppAccessToken();
     if (!this.otp && !this.mobileNumber && userToken) {
       resetPaswordCall = this.profileService.whoAmI().pipe(
         mergeMap((profile: IProfile) => {
@@ -86,6 +83,15 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
           });
         })
       )
+    } else if (this.otp && this.mobileNumber && appToken) {
+      resetPaswordCall = this.authService.resetPassword({
+        phone: this.mobileNumber,
+        newPassword: password,
+        otp: this.otp,
+        passwordConfirmation: confirmPassword
+      });
+    } else {
+      resetPaswordCall = throwError('Unknown error occurred, please try again!');
     }
 
     resetPaswordCall.subscribe(
