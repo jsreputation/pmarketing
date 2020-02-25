@@ -21,19 +21,22 @@ export class LocationsListComponent implements OnInit {
     if (!this.headerFn) {
       this.headerFn = (location) => of(location.merchantName ? location.merchantName : location.name);
     }
-    this.locations.pipe(
-      map((locations: ILocation[]) => locations.sort((locationA, locationB) => {
-        if (locationA.merchantName && locationB.merchantName) {
-          if (locationA.merchantName < locationB.merchantName) {
-            return -1
-          }
-          if (locationA.merchantName > locationB.merchantName) {
-            return 1;
-          }
-          return 0;
-        }
-        return 0;
-        })
-    )).subscribe();
+    if (this.locations) {
+      this.locations.pipe(
+        map((locations: ILocation[]) => locations.sort((locationA, locationB) => {
+            if (locationA.merchantName && locationB.merchantName) {
+              if (locationA.merchantName < locationB.merchantName) {
+                return -1
+              }
+              if (locationA.merchantName > locationB.merchantName) {
+                return 1;
+              }
+              return 0;
+            }
+            return 0;
+          })
+        )).subscribe();
+    }
+
   }
 }
