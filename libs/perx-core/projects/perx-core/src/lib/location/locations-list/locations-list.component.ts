@@ -26,13 +26,7 @@ export class LocationsListComponent implements OnInit {
         map((locations: ILocation[]) => locations
           .sort((locationA, locationB) => {
             if (locationA.merchantName && locationB.merchantName) {
-              if (locationA.merchantName < locationB.merchantName) {
-                return -1;
-              }
-              if (locationA.merchantName > locationB.merchantName) {
-                return 1;
-              }
-              return 0;
+              return locationA.merchantName < locationB.merchantName ? -1 : 1;
             }
             return 0;
           })
