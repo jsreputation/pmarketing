@@ -4,7 +4,6 @@ import {
   HomeComponent,
   WalletHistoryComponent,
   HistoryComponent,
-  RedeemComponent,
   VoucherDetailComponent,
   ContentComponent,
   RewardDetailsComponent,
