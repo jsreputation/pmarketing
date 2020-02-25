@@ -23,9 +23,11 @@ const routes: Routes = [
       { path: 'home', component: HomeComponent },
       { path: 'wallet', component: WalletHistoryComponent, canActivate: [ WalletGuard ] },
       { path: 'history', component: HistoryComponent },
-      { path: 'redeem/:id', component: RedeemComponent },
       { path: 'voucher-detail/:id', component: VoucherDetailComponent },
       { path: 'pi', component: SignInComponent },
+      {
+        path: 'redeem/:id', loadChildren: (): any => import('../redeem/redeem.module').then((mod: any) => mod.RedeemModule),
+      },
       {
         path: 'qr', loadChildren: (): any => import('../qr/qr.module').then((mod: any) => mod.QRModule)
 
