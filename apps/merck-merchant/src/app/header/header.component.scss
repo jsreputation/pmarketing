@@ -4,8 +4,13 @@
   z-index: 1;
   color: white;
 
-  img {
-    display: block;
+  a {
     margin: 2rem auto 1.5rem auto;
+    display: flex;
+    justify-content: center;
+
+    ~ img {
+      display: block;
+    }
   }
 }
