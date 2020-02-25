@@ -21,7 +21,7 @@ describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
   const router = {
-    navigate: jasmine.createSpy('navigate')
+    navigate: jest.fn()
   };
   const configServiceStub: Partial<ConfigService> = {
     readAppConfig: <T>(): Observable<IConfig<T>> => of()
