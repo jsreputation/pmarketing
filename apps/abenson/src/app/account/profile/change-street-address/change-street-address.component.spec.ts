@@ -27,7 +27,7 @@ import { Location } from '@angular/common';
 describe('ChangeStreetAddressComponent', () => {
   let component: ChangeStreetAddressComponent;
   let fixture: ComponentFixture<ChangeStreetAddressComponent>;
-  let profileSpy: jasmine.Spy;
+  let profileSpy;
   let location: Location;
   const profileServiceStub: Partial<ProfileService> = {
     setCustomProperties: () => of()
@@ -59,7 +59,7 @@ describe('ChangeStreetAddressComponent', () => {
     component = fixture.componentInstance;
     const profileService: ProfileService = TestBed.get<ProfileService>(ProfileService as Type<ProfileService>);
     location = TestBed.get<Location>(Location as Type<Location>);
-    profileSpy = spyOn(profileService, 'setCustomProperties');
+    profileSpy = jest.spyOn(profileService, 'setCustomProperties');
     fixture.detectChanges();
   });
 
@@ -68,9 +68,9 @@ describe('ChangeStreetAddressComponent', () => {
   });
 
   it('should call all submit flow', fakeAsync(() => {
-    const locationSpy = spyOn(location, 'back');
+    const locationSpy = jest.spyOn(location, 'back');
     component.streetAddressChangeForm.setValue({ newStreetAddress: 'street' });
-    profileSpy.and.returnValue(of(null));
+    profileSpy.mockReturnValue(of(null));
     component.onSubmit();
     tick();
     expect(locationSpy).toHaveBeenCalled();
@@ -84,9 +84,9 @@ describe('ChangeStreetAddressComponent', () => {
   }));
 
   it('should handle error', fakeAsync(() => {
-    const spyLog = spyOn(console, 'log');
+    const spyLog = jest.spyOn(console, 'log');
     component.streetAddressChangeForm.setValue({ newStreetAddress: 'street' });
-    profileSpy.and.returnValue(throwError('error'));
+    profileSpy.mockReturnValue(throwError('error'));
     component.onSubmit();
     tick();
     expect(spyLog).toHaveBeenCalled();

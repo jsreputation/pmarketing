@@ -90,7 +90,8 @@ export class V4ProfileService extends ProfileService {
             personal_properties: {
               ...profile.customProperties,
               ...data
-            }
+            },
+            email: null,
           })
       )
     );
