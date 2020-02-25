@@ -1,5 +1,5 @@
 <mat-toolbar class="header mat-elevation-z4">
-  <button *ngIf="showBackButton" mat-icon-button (click)="onLeftActionClick()">
+  <button [ngStyle]="{ 'visibility': showBackButton ? 'hidden': 'visible'}" mat-icon-button (click)="onLeftActionClick()">
         <mat-icon>arrow_back_ios</mat-icon>
   </button>
   <a routerLink="/home">
