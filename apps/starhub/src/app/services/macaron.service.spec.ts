@@ -12,9 +12,9 @@ describe('GameOutcomeService', () => {
   });
 
   it('should return running out macaron', inject([MacaronService], (macaronService: MacaronService) => {
-     let endDate = new Date();
-      endDate.setDate(endDate.getDate() + 1);
-      const reward: IReward = {
+    let endDate = new Date();
+    endDate.setDate(endDate.getDate() + 1);
+    const reward: IReward = {
       id: 1,
       name: 'Reward Test',
       description: 'Reward Description',
