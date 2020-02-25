@@ -23,10 +23,11 @@ export class LocationsListComponent implements OnInit {
     }
     if (this.locations) {
       this.locations.pipe(
-        map((locations: ILocation[]) => locations.sort((locationA, locationB) => {
+        map((locations: ILocation[]) => locations
+          .sort((locationA, locationB) => {
             if (locationA.merchantName && locationB.merchantName) {
               if (locationA.merchantName < locationB.merchantName) {
-                return -1
+                return -1;
               }
               if (locationA.merchantName > locationB.merchantName) {
                 return 1;
