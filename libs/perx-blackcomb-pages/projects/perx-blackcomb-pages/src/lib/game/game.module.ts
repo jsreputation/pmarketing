@@ -6,12 +6,8 @@ import {
 } from '@angular/material';
 
 import {
-  PinataComponent,
-  ShakeTreeComponent,
-  ScratchCardComponent,
-  SpinTheWheelComponent,
-  SnakeGameComponent,
-  RewardPopupComponent, ExpireTimerComponent
+  GameModule as PerxGameModule,
+  CampaignModule
 } from '@perx/core';
 
 import { TapComponent } from './tap/tap.component';
@@ -28,16 +24,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
-    RewardPopupComponent,
-    ExpireTimerComponent,
     TapComponent,
     ShakeComponent,
     ScratchComponent,
-    PinataComponent,
-    ShakeTreeComponent,
-    ScratchCardComponent,
-    SpinTheWheelComponent,
-    SnakeGameComponent,
     GameComponent,
     SpinComponent,
     ConfigToSlicesPipe,
@@ -54,6 +43,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     ConfigToMappedSlotPipe
   ],
   imports: [
+    PerxGameModule,
+    CampaignModule,
     CommonModule,
     MatProgressBarModule,
     MatButtonModule,
