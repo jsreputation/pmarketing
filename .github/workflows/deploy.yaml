@@ -94,7 +94,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: |
           echo "Deploying ${APP}"
-          make decrypt-secret && make deploy
+          make deploy
 
       - name: Invalidate Cloudfront distribution
         env:

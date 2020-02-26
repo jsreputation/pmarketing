@@ -26,6 +26,10 @@ jobs:
           echo ::set-env name=APP_FOLDERS::${APP_FOLDERS[@]}
           echo ::set-env name=LIBS_FOLDERS::${LIBS_FOLDERS[@]}
           echo ::set-env name=BACKEND_FOLDERS::${BACKEND_FOLDERS[@]}
+
+          # Set tekton label
+          LABEL=${GITHUB_REF//[^0-9a-zA-Z-_\.]/-} | cut -c-60
+          echo ::set-env name=TEKTON_LABEL::${LABEL}
       - name: Download tekton cli and install parallel
         run: |
           curl -L https://github.com/tektoncd/cli/releases/download/v0.6.0/tkn_0.6.0_Linux_x86_64.tar.gz \
@@ -34,7 +38,7 @@ jobs:
           sudo apt-get install -y parallel
       - name: Remove existing tasks
         run: |
-          EXISTING_TASKS=$(kubectl -n build get taskrun -l github.ref=${GITHUB_REF//[^0-9a-zA-Z-_\.]/-},tekton.dev/task=microsite-apps-ng-test -o=name)
+          EXISTING_TASKS=$(kubectl -n build get taskrun -l github.ref=${TEKTON_LABEL},tekton.dev/task=microsite-apps-ng-test -o=name)
           if [ ${#EXISTING_TASKS[@]} -ne 0 ]; then
             parallel kubectl -n build delete {} ::: ${EXISTING_TASKS[@]}
           else
@@ -51,7 +55,8 @@ jobs:
           metadata:
             generateName: microsite-apps-ng-test-${f//[^0-9a-zA-Z-]/-}-
             labels:
-              github.ref: ${GITHUB_REF//[^0-9a-zA-Z-_\.]/-}
+              github.ref: ${TEKTON_LABEL}
+              task: test
           spec:
             serviceAccountName: tekton
             taskRef:
@@ -136,5 +141,7 @@ jobs:
         if: always()
         run: |
           for TASKRUN_NAME in ${TEKTON_TASKS[@]}; do
-            tkn -n build taskrun delete ${TASKRUN_NAME}
+            if [ "$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')" == "Succeeded" ]; then
+              tkn -n build taskrun delete ${TASKRUN_NAME}
+            fi
           done
