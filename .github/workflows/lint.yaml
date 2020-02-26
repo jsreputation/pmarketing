@@ -24,9 +24,13 @@ jobs:
           | sudo tar xzv -C /usr/local/bin tkn
           # sudo apt-get --allow-releaseinfo-change update &&
           sudo apt-get install -y parallel
+
+          # Set tekton label
+          LABEL=${GITHUB_REF//[^0-9a-zA-Z-_\.]/-} | cut -c-60
+          echo ::set-env name=TEKTON_LABEL::${LABEL}
       - name: Remove existing tasks
         run: |
-          EXISTING_TASKS=$(kubectl -n build get taskrun -l github.ref=${GITHUB_REF//[^0-9a-zA-Z-_\.]/-},tekton.dev/task=microsite-apps-ng-lint -o=name)
+          EXISTING_TASKS=$(kubectl -n build get taskrun -l github.ref=${TEKTON_LABEL},tekton.dev/task=microsite-apps-ng-lint -o=name)
           if [ ${#EXISTING_TASKS[@]} -ne 0 ]; then
             parallel kubectl -n build delete {} ::: ${EXISTING_TASKS[@]}
           else
@@ -40,7 +44,8 @@ jobs:
           metadata:
             generateName: microsite-apps-ng-lint-
             labels:
-              github.ref: ${GITHUB_REF//[^0-9a-zA-Z-_\.]/-}
+              github.ref: ${TEKTON_LABEL}
+              task: lint
           spec:
             serviceAccountName: tekton
             taskRef:
@@ -110,4 +115,6 @@ jobs:
       - name: Taskruns cleanup
         if: always()
         run: |
-          tkn -n build taskrun delete ${TASKRUN_NAME}
+          if [ "$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')" == "Succeeded" ]; then
+              tkn -n build taskrun delete ${TASKRUN_NAME}
+          fi
