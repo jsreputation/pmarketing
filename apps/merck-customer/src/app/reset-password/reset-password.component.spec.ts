@@ -49,6 +49,8 @@ describe('ResetPasswordComponent', () => {
             login: () => {
             },
             resetPassword: () => of(),
+            getUserAccessToken: () => '',
+            getAppAccessToken: () => '',
             getInterruptedUrl: () => ''
           }
         },
@@ -96,6 +98,8 @@ describe('ResetPasswordComponent', () => {
           code: 1234,
         })
       );
+      const authenticationUserTokenSpy = spyOn(authenticationService, 'getUserAccessToken').and.returnValue('mock User Token');
+
       const profileService: ProfileService = fixture.debugElement.injector.get<ProfileService>(ProfileService as Type<ProfileService>);
       const profileServiceSpy = spyOn(profileService, 'whoAmI').and.returnValue(
         of(mockProfile)
@@ -103,6 +107,7 @@ describe('ResetPasswordComponent', () => {
       const loginSpy = spyOn(authenticationService, 'login').and.returnValue(of(void 0));
       spyOn(router, 'navigateByUrl').and.stub();
       component.onUpdatePassword();
+      expect(authenticationUserTokenSpy).toHaveBeenCalled();
       expect(profileServiceSpy).toHaveBeenCalled();
 
       profileService.whoAmI().subscribe(() => {
