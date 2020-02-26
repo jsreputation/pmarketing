@@ -17,8 +17,8 @@ import { IV4ProfileResponse, V4ProfileService } from '../../profile/v4-profile.s
 import { TokenStorage } from '../../utils/storage/token-storage.service';
 import { IMessageResponse } from '../../perx-core.models';
 import { oc } from 'ts-optchain';
-import {ConfigService} from '../../config/config.service';
-import {IConfig} from '../../config/models/config.model';
+import { ConfigService } from '../../config/config.service';
+import { IConfig } from '../../config/models/config.model';
 
 interface IV4SignUpData {
   first_name?: string;
@@ -247,13 +247,20 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       last_name: data.lastName || '',
       first_name: data.firstName,
       middle_name: data.middleName,
-      email: data.email,
-      gender: data.gender,
-      birthday: data.birthDay,
       password: data.password,
       password_confirmation: data.passwordConfirmation,
       phone: data.phone,
     };
+
+    if (data.email) {
+      result.email = data.email;
+    }
+    if (data.birthDay) {
+      result.birthday = data.birthDay;
+    }
+    if (data.gender) {
+      result.gender = data.gender;
+    }
 
     if (data.title || data.postcode || data.anonymous) {
       result.personal_properties = {};
