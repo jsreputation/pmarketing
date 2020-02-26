@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { LayoutRoutingModule } from './layout-routing.module';
 import {
   HistoryComponent,
-  RedeemComponent,
   VoucherDetailComponent,
   RewardDetailsComponent,
   ContentComponent,
@@ -26,7 +25,6 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
   declarations: [
     LayoutComponent,
     HistoryComponent,
-    RedeemComponent,
     VoucherDetailComponent,
     RewardDetailsComponent,
     ContentComponent,
