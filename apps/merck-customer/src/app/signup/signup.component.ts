@@ -134,9 +134,6 @@ export class SignupComponent implements PageAppearence {
         lastName: name,
         middleName: '',
         phone: cleanedMobileNo,
-        email: '',
-        birthDay: '',
-        gender: '',
         password: passwordString,
         passwordConfirmation: confirmPassword
       };
