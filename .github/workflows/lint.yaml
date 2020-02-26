@@ -94,27 +94,38 @@ jobs:
             (( WAIT_TIME+=5 ))
             sleep 5
           done
-      - name: Stream task log
-        run: |
-          echo "Tekton taskrun name: ${TASKRUN_NAME}"
-          tkn -n build taskrun logs -f ${TASKRUN_NAME}
+      # - name: Stream task log
+      #   run: |
+      #     echo "Tekton taskrun name: ${TASKRUN_NAME}"
+      #     tkn -n build taskrun logs -f ${TASKRUN_NAME}
       - name: Check task result
         run: |
           # wait 10s for task to transit from running
           WAIT_TIME=0
-          until [ "$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')" != "Running" ] || [ $WAIT_TIME -gt 30 ]; do
-            (( WAIT_TIME+=1 ))
-            echo "Task ${TASKRUN_NAME} is still running, wait for 1 second"
-            sleep 1
+          TASKRUN_STATUS=$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')
+          echo "Taskrun ${TASKRUN_NAME} status is ${TASKRUN_STATUS}"
+          until [ "${TASKRUN_STATUS}" != "Running" ] || [ $WAIT_TIME -gt 900 ]; do
+            (( WAIT_TIME+=10 ))
+            echo "Task ${TASKRUN_NAME} is still running, wait for 10 second"
+            sleep 10
+            TASKRUN_STATUS=$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')
+            echo "Taskrun ${TASKRUN_NAME} status is ${TASKRUN_STATUS}"
           done
-          REASON=$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath={.status.conditions[0].reason})
-          if [ "$REASON" != "Succeeded" ] ; then
-            echo "Taskrun ${TASKRUN_NAME} status is ${REASON}, fail the job"
+          if [ "${TASKRUN_STATUS}" != "Succeeded" ]; then
+            echo "Taskrun ${TASKRUN_NAME} status is ${TASKRUN_STATUS}, fail the job"
             exit 1
           fi
-      - name: Taskruns cleanup
-        if: always()
+      - name: Display dashboard link
+        if: failure()
         run: |
-          if [ "$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')" == "Succeeded" ]; then
-              tkn -n build taskrun delete ${TASKRUN_NAME}
+          TASKRUN_STATUS=$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')
+          if [ "${TASKRUN_STATUS}" != "Succeeded" ]; then
+            echo ">>>> Taskrun ${TASKRUN_NAME} status is ${TASKRUN_STATUS} <<<<"
+            echo "Follow dashboard link to get the details: http://TO_BE_UPDATED"
           fi
+      # - name: Taskruns cleanup
+      #   if: always()
+      #   run: |
+      #     if [ "$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')" == "Succeeded" ]; then
+      #         tkn -n build taskrun delete ${TASKRUN_NAME}
+      #     fi
