@@ -5,8 +5,6 @@ jobs:
     name: lint
     runs-on: ubuntu-latest
     steps:
-      # checkout is not needed since it's performed inside tekton taskrun
-      # - uses: actions/checkout@master
       - uses: azure/k8s-set-context@v1
         with:
           method: kubeconfig
@@ -26,7 +24,7 @@ jobs:
           sudo apt-get install -y parallel
 
           # Set tekton label
-          LABEL=${GITHUB_REF//[^0-9a-zA-Z-_\.]/-} | cut -c-60
+          LABEL=$(echo ${GITHUB_REF//[^0-9a-zA-Z-_\.]/-} | cut -c-60)
           echo ::set-env name=TEKTON_LABEL::${LABEL}
       - name: Remove existing tasks
         run: |
@@ -94,10 +92,6 @@ jobs:
             (( WAIT_TIME+=5 ))
             sleep 5
           done
-      # - name: Stream task log
-      #   run: |
-      #     echo "Tekton taskrun name: ${TASKRUN_NAME}"
-      #     tkn -n build taskrun logs -f ${TASKRUN_NAME}
       - name: Check task result
         run: |
           # wait 10s for task to transit from running
@@ -121,11 +115,11 @@ jobs:
           TASKRUN_STATUS=$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')
           if [ "${TASKRUN_STATUS}" != "Succeeded" ]; then
             echo ">>>> Taskrun ${TASKRUN_NAME} status is ${TASKRUN_STATUS} <<<<"
-            echo "Follow dashboard link to get the details: http://TO_BE_UPDATED"
+            echo "Follow dashboard link to get the details: http://tekton-dashboard.perxtech.io/#/namespaces/build/taskruns/${TASKRUN_NAME}"
           fi
-      # - name: Taskruns cleanup
-      #   if: always()
-      #   run: |
-      #     if [ "$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')" == "Succeeded" ]; then
-      #         tkn -n build taskrun delete ${TASKRUN_NAME}
-      #     fi
+      - name: Taskruns cleanup
+        if: always()
+        run: |
+          if [ "$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')" == "Succeeded" ]; then
+              tkn -n build taskrun delete ${TASKRUN_NAME}
+          fi
