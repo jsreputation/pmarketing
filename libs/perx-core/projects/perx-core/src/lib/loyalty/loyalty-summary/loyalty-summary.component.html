@@ -7,7 +7,7 @@
     </div>
   </ng-container>
   <ng-container *ngIf="loyalty$ | async as loyalty; else elseBlockLoyalty">
-    <p class="tier-description">{{loyalty.membershipTierName}} member}}</p>
+    <p class="tier-description">{{loyalty.membershipTierName}} member</p>
 
     <div class="points" *ngIf="loyalty">
       {{loyalty.pointsBalance | number}}
