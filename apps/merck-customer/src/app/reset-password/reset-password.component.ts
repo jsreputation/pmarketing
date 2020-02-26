@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {Validators, FormBuilder, FormGroup} from '@angular/forms';
-import {AuthenticationService, NotificationService, ProfileService, IProfile} from '@perx/core';
-import {PageAppearence, PageProperties, BarSelectedItem} from '../page-properties';
-import {HttpErrorResponse} from '@angular/common/http';
-import {mergeMap} from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { AuthenticationService, NotificationService, ProfileService, IProfile } from '@perx/core';
+import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
+import { HttpErrorResponse } from '@angular/common/http';
+import { mergeMap } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'mc-reset-password',
@@ -66,24 +67,40 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
       this.notificationService.addSnack('Passwords do not match.');
       return;
     }
+    let resetPaswordCall;
 
-    this.profileService.whoAmI().pipe(
-      mergeMap((profile: IProfile) => {
-        this.mobileNumber = profile.phone || '';
-        return this.authService.resetPassword({
-          phone: this.mobileNumber,
-          newPassword: password,
-          otp: this.otp,
-          passwordConfirmation: confirmPassword
-        });
-      })
-    ).subscribe(
+    const userToken = this.authService.getUserAccessToken();
+    const appToken = this.authService.getAppAccessToken();
+    if (!this.otp && !this.mobileNumber && userToken) {
+      resetPaswordCall = this.profileService.whoAmI().pipe(
+        mergeMap((profile: IProfile) => {
+          this.mobileNumber = profile.phone || '';
+          return this.authService.resetPassword({
+            phone: this.mobileNumber,
+            newPassword: password,
+            otp: this.otp,
+            passwordConfirmation: confirmPassword
+          });
+        })
+      );
+    } else if (this.otp && this.mobileNumber && appToken) {
+      resetPaswordCall = this.authService.resetPassword({
+        phone: this.mobileNumber,
+        newPassword: password,
+        otp: this.otp,
+        passwordConfirmation: confirmPassword
+      });
+    } else {
+      resetPaswordCall = throwError('Unknown error occurred, please try again!');
+    }
+
+    resetPaswordCall.subscribe(
       () => {
         // Send Login Call on successfull password reset
         this.sendLoginCall(password);
       },
       err => {
-        console.error(`ResetPassword: ${  err}`);
+        console.error(`ResetPassword: ${err}`);
         if (err instanceof HttpErrorResponse) {
           this.notificationService.addSnack(err.statusText);
         } else {
