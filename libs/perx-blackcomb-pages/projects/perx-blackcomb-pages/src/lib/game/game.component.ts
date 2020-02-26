@@ -25,7 +25,7 @@ export class GameComponent implements OnInit, OnDestroy {
   public gameData$: Observable<IGame>;
   public gt: typeof GameType = GameType;
   private campaignId: number;
-  private gameId: string;
+  private gameId: number;
   private transactionId: number;
   public progressValue: number;
   private destroy$: Subject<any> = new Subject();
