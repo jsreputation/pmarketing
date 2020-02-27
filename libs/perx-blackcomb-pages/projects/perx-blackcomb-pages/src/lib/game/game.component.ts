@@ -25,6 +25,7 @@ export class GameComponent implements OnInit, OnDestroy {
   public gameData$: Observable<IGame>;
   public gt: typeof GameType = GameType;
   private campaignId: number;
+  private gameId: number;
   private transactionId: number;
   public progressValue: number;
   private destroy$: Subject<any> = new Subject();
@@ -88,6 +89,7 @@ export class GameComponent implements OnInit, OnDestroy {
       tap((game: IGame) => {
         if (game) {
           const { displayProperties } = game;
+          this.gameId = game.id;
           if (displayProperties && displayProperties.informationCollectionSetting) {
             this.informationCollectionSetting = displayProperties.informationCollectionSetting;
           }
@@ -156,7 +158,7 @@ export class GameComponent implements OnInit, OnDestroy {
 
   public gameCompleted(): void {
     const gameOutcome$ = this.gameService.play(
-      this.transactionId
+      this.gameId
     ).pipe(
       tap((gameOutcome: IPlayOutcome) => {
         if (gameOutcome.vouchers.length > 0) {
