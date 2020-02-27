@@ -72,41 +72,39 @@ jobs:
           )
           echo "Task: ${TEKTON_TASK}"
           echo ::set-env name=TASKRUN_NAME::${TEKTON_TASK}
-      - name: Wait for tekton task running
-        run: |
-          echo "Wait for tekton task: ${TASKRUN_NAME}"
-          WAIT_TIME=0
-          until [ "$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')" = "Running" ] || [ $WAIT_TIME -gt 600 ]; do
-            echo "Waiting ${WAIT_TIME} seconds for tekton task: ${TASKRUN_NAME}"
-            echo "Current task state: $(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')"
-            (( WAIT_TIME+=5 ))
-            sleep 5
-          done
       - name: Check task result
         run: |
-          # wait 10s for task to transit from running
-          WAIT_TIME=0
-          TASKRUN_STATUS=$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')
-          echo "Taskrun ${TASKRUN_NAME} status is ${TASKRUN_STATUS}"
-          until [ "${TASKRUN_STATUS}" != "Running" ] || [ $WAIT_TIME -gt 900 ]; do
-            (( WAIT_TIME+=10 ))
-            echo "Task ${TASKRUN_NAME} is still running, wait for 10 second"
-            sleep 10
-            TASKRUN_STATUS=$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')
-            echo "Taskrun ${TASKRUN_NAME} status is ${TASKRUN_STATUS}"
+          start=$SECONDS
+          until [[ $(( SECONDS - start )) -gt 1200 ]]; do
+            REASON=$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')
+            STATUS=$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].status}')
+            if [[ "${REASON}" = "Succeeded" ]] && [[ "${STATUS}" = "True" ]]; then
+              exit 0
+            fi
+            if [[ "${REASON}" = "Failed" ]] && [[ "${STATUS}" = "False" ]]; then
+              echo "Taskrun ${TASKRUN_NAME} is failed, fail the job"
+              exit 1
+            fi
+            echo "Taskrun ${TASKRUN_NAME} reason is ${REASON}, status is ${STATUS}"
+            sleep 20
+            echo "Running for $(( SECONDS - start )) seconds"
           done
-          if [ "${TASKRUN_STATUS}" != "Succeeded" ]; then
-            echo "Taskrun ${TASKRUN_NAME} status is ${TASKRUN_STATUS}, fail the job"
-            exit 1
-          fi
       - name: Display dashboard link
-        if: failure()
+        if: always()
         run: |
+          touch lint_error.log
           TASKRUN_STATUS=$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')
-          if [ "${TASKRUN_STATUS}" != "Succeeded" ]; then
+          if [ "${TASKRUN_STATUS}" = "Failed" ]; then
             echo ">>>> Taskrun ${TASKRUN_NAME} status is ${TASKRUN_STATUS} <<<<"
-            echo "Follow dashboard link to get the details: https://tekton-dashboard.perxtech.io/#/namespaces/build/taskruns/${TASKRUN_NAME}"
+            echo "Follow dashboard link to get the details: http://tekton-dashboard.perxtech.io/#/namespaces/build/taskruns/${TASKRUN_NAME}"
+            tkn -n build taskrun logs ${TASKRUN_NAME} >> lint_error.log
           fi
+      - name: Upload lint log
+        if: always()
+        uses: actions/upload-artifact@v1
+        with:
+          name: Lint logs
+          path: lint_error.log
       - name: Taskruns cleanup
         if: always()
         run: |
