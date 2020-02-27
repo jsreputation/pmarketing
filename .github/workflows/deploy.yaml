@@ -77,7 +77,7 @@ jobs:
           tar -zxvf helm-v${HELM_VERSION}-linux-amd64.tar.gz
           sudo mv linux-amd64/helm /usr/local/bin/helm
           helm init --client-only
-          helm repo add perx https://chartmuseum.perxtech.io --username ${{ secrets.HELM_USER }} --password ${{ secrets.HELM_PASSWORD }}
+          helm repo add perx https://chartmuseum.perxtech.io --username perx --password ${{ secrets.HELM_PASSWORD }}
           helm repo update
 
       - name: Install skaffold
