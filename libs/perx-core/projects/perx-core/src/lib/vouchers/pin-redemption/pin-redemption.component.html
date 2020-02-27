@@ -1,10 +1,10 @@
-<div [ngClass]="'activation-code ' + hasError">
-  <div class="activation-code__inputs">
-    <div *ngFor="let ctrl of controls; let i = index">
-      <input [ngClass]="hasError === '' ? 'correct': 'wrong'" type="tel" maxlength="1" [formControl]="ctrl" id="{{'input_'+i}}" (keyup)="onKey($event)"
-             (blur)="onBlur()" (focus)="onFocus()"
-             [attr.autofocus]="i === 0" autocomplete="off">
-    </div>
-  </div>
-  <div class="error-label">Incorrect Code</div>
+<div class="pin-input-container">
+  <perx-core-pin-input #pinInput
+  [errorMessage]="errorMessage"
+  [error]="error"
+  [length]="length"
+  (full)="redeemVoucher($event)"
+  (update)="updatePin()"
+  (pinFocused)="isPinFocused()">
+  </perx-core-pin-input>
 </div>
