@@ -10,7 +10,9 @@ import {
   tap,
   filter,
   mergeMap,
-  toArray
+  toArray,
+  switchMap,
+  skip
 } from 'rxjs/operators';
 
 import {
@@ -284,27 +286,11 @@ export class V4StampService implements StampService {
     );
   }
 
-  public stampsChangedForStampCard(campaignId: number, intervalPeriod: number = 2000): Observable<IStampCard> {
-    let current: number = 0;
-    let previousNumberOfStamps = 0;
+  // pipe pairwise inside the component,bcz get Proxy for some reason, unable to get access to the value cached in svc
+  public stampsChangedForStampCard(campaignId: number, intervalPeriod: number = 1500): Observable<IStampCard> {
     return interval(intervalPeriod).pipe(
-      map(val => {
-        current = val;
-        return this.getCurrentCard(campaignId || 0);
-      }),
-      mergeAll(1),
-      filter((card: IStampCard) => {
-        if (current === 0) {
-          previousNumberOfStamps = oc(card).stamps.length || 0;
-          return true;
-        }
-
-        if (card.stamps && previousNumberOfStamps < card.stamps.length) {
-          previousNumberOfStamps = card.stamps.length;
-          return true;
-        }
-        return false;
-      })
+      switchMap((_) => this.getCurrentCard(campaignId)),
+      skip(1)
     );
   }
 
