@@ -114,7 +114,7 @@ jobs:
             if [ "${TASKRUN_STATUS}" = "Failed" ]; then
               echo ">>>> Taskrun ${TASKRUN_NAME} status is ${TASKRUN_STATUS} <<<<"
               echo "Follow dashboard link to get the details: http://tekton-dashboard.perxtech.io/#/namespaces/build/taskruns/${TASKRUN_NAME}"
-              tkn -n build taskrun logs ${TASKRUN_NAME} >> build_error.log
+              tkn -n build taskrun logs ${TASKRUN_NAME} -f >> build_error.log
             fi
           done
       - name: Upload build log
