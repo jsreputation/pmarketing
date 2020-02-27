@@ -90,7 +90,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
           const idN = Number.parseInt(id, 10);
           return this.stampService.getCurrentCard(idN);
         }),
-        switchMap((stampCard: IStampCard) => this.stampService.stampsChangedForStampCard(stampCard)),
+        switchMap((stampCard: IStampCard) => this.stampService.stampsChangedForStampCard(stampCard.campaignId)),
         takeUntil(this.destroy$)
       );
     this.stampCard$.pipe(distinctUntilChanged()).subscribe(

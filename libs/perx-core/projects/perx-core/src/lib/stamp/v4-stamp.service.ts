@@ -284,22 +284,23 @@ export class V4StampService implements StampService {
     );
   }
 
-  public stampsChangedForStampCard(stampCard: IStampCard, intervalPeriod: number = 2000): Observable<IStampCard> {
-    let pass: number;
-    let numberOfStamps = stampCard.stamps ? stampCard.stamps.length : 0;
+  public stampsChangedForStampCard(campaignId: number, intervalPeriod: number = 2000): Observable<IStampCard> {
+    let current: number = 0;
+    let previousNumberOfStamps = 0;
     return interval(intervalPeriod).pipe(
       map(val => {
-        pass = val;
-        return this.getCurrentCard(stampCard.campaignId || 0);
+        current = val;
+        return this.getCurrentCard(campaignId || 0);
       }),
       mergeAll(1),
       filter((card: IStampCard) => {
-        if (pass === 0) {
+        if (current === 0) {
+          previousNumberOfStamps = oc(card).stamps.length || 0;
           return true;
         }
 
-        if (card.stamps && numberOfStamps < card.stamps.length) {
-          numberOfStamps = card.stamps.length;
+        if (card.stamps && previousNumberOfStamps < card.stamps.length) {
+          previousNumberOfStamps = card.stamps.length;
           return true;
         }
         return false;
