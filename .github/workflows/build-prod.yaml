@@ -78,16 +78,6 @@ jobs:
                 - key: "dedicated"
                   value: "build"
                   effect: "NoSchedule"
-              affinity:
-                nodeAffinity:
-                  preferredDuringSchedulingIgnoredDuringExecution:
-                    - weight: 1
-                      preference:
-                        matchExpressions:
-                        - key: machine-type
-                          operator: In
-                          values:
-                          - highcpu
           EOT
           )
           TEKTON_TASKS+=(${TEKTON_TASK})
@@ -130,7 +120,7 @@ jobs:
             TASKRUN_STATUS=$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')
             if [ "${TASKRUN_STATUS}" != "Succeeded" ]; then
               echo ">>>> Taskrun ${TASKRUN_NAME} status is ${TASKRUN_STATUS} <<<<"
-              echo "Follow dashboard link to get the details: http://tekton-dashboard.perxtech.io/#/namespaces/build/taskruns/${TASKRUN_NAME}"
+              echo "Follow dashboard link to get the details: https://tekton-dashboard.perxtech.io/#/namespaces/build/taskruns/${TASKRUN_NAME}"
             fi
           done
       - name: Taskruns cleanup
