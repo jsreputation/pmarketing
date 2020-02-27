@@ -4,6 +4,6 @@
 	<div *ngIf="imageUrl" class="img-wrapper">
 		<img [src]="imageUrl" />
 	</div>
-	<mat-dialog-content *ngIf="text">{{text}}</mat-dialog-content>
+	<mat-dialog-content *ngIf="text"> <div class="description" [innerHtml]="text"></div></mat-dialog-content>
 	<button mat-flat-button color="primary" mat-dialog-close (click)="buttonPressed()">{{buttonTxt}}</button>
 </div>
