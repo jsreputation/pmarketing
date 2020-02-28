@@ -2,10 +2,15 @@
   <img src="assets/signup-top-image.svg" class="top-image">
   <div class="login-form">
     <h1>Log In</h1>
-    <p *ngIf="useSignUpButton">
+    <p>
+      <span *ngIf="useSignUpButton else signUpMsg"></span>
+      <ng-template #signUpMsg>
+        Not registered to DigitalPLUS! Card? <a routerLink="/signup" class="link">Sign up</a>
+      </ng-template>
     </p>
+
     <p *ngIf="!useSignUpButton">
-      Not registered to DigitalPLUS! Card? <a routerLink="/signup" class="link">Sign up</a>
+
     </p>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="fill" class="full-width__input">
