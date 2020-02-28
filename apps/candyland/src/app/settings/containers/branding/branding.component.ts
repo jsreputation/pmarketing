@@ -8,6 +8,9 @@ import { settingsFonts, SettingsService, settingsStyles } from '@cl-core/service
 import { IReward } from '@perx/core';
 import { TranslateService } from '@ngx-translate/core';
 import { TenantService } from '@cl-core/services/tenant.service';
+import { ISimpleValue } from '@cl-core/models/simpl-value.interface';
+import { ITenant } from '@cl-core/models/settings/tenant.interface';
+import { IBrandingForm } from '@cl-core/models/settings/branding-form.interface';
 
 @Component({
   selector: 'cl-branding',

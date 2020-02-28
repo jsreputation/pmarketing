@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { ApiConfig } from '@cl-core/api-config';
+import { IGraphic } from '@cl-core/models/graphic.interface';
 
 @Pipe({ name: 'snakePreview' })
 export class SnakePreviewPipe implements PipeTransform {

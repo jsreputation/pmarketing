@@ -3,6 +3,7 @@ import { AbstractControl, ControlValueAccessor, FormControl, FormGroup, NG_VALUE
 import { DateAdapter } from 'saturn-datepicker';
 import { noop, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { DatepickerRangeValue } from '@cl-core/models/sat-datepicker-range-value.interface';
 
 @Component({
   selector: 'cl-separate-range-date-picker-filter',

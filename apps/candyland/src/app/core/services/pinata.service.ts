@@ -6,6 +6,8 @@ import { map } from 'rxjs/operators';
 import { IWPinataGameEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
 import { HttpClient } from '@angular/common/http';
 import { IPinataForm } from '@cl-core/models/games/pinata/pinate-form.interface';
+import { IGameDefaultData } from '@cl-core/models/games/game-default-data.interface';
+import { IGraphic } from '@cl-core/models/graphic.interface';
 
 @Injectable({
   providedIn: 'root'

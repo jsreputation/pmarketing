@@ -9,6 +9,8 @@ import { IWCampaignAttributes, IJsonApiListPayload, IJsonApiItemPayload, IJsonAp
 import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
 import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign';
 import { CampaignStatus } from '@cl-core/models/campaign/campaign.enum';
+import { HttpParamsOptions } from '@cl-core/models/params-map';
+import { ITableData } from '@cl-core/models/data-list.interface';
 
 @Injectable({
   providedIn: 'root'

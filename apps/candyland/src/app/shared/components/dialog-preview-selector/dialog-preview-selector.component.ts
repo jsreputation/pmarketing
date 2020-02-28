@@ -1,6 +1,7 @@
 /* eslint-disable prefer-template */
-import {Component, ElementRef, Inject, OnInit} from '@angular/core';
+import { Component, ElementRef, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogConfig, MatDialogRef } from '@angular/material';
+import { IGraphic } from '@cl-core/models/graphic.interface';
 
 @Component({
   selector: 'cl-dialog-preview-selector',
@@ -14,8 +15,10 @@ export class DialogPreviewSelectorComponent implements OnInit {
   public imageGraphic: IGraphic;
   public upload: boolean;
 
-  constructor(matDialogRef: MatDialogRef<DialogPreviewSelectorComponent>,
-              @Inject(MAT_DIALOG_DATA) data: { trigger: ElementRef, img: IGraphic, upload: boolean }) {
+  constructor(
+    matDialogRef: MatDialogRef<DialogPreviewSelectorComponent>,
+    @Inject(MAT_DIALOG_DATA) data: { trigger: ElementRef, img: IGraphic, upload: boolean }
+  ) {
     this._matDialogRef = matDialogRef;
     this.triggerElementRef = data.trigger;
     // if have head. HEAD should be compulsory instead

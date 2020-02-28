@@ -11,7 +11,7 @@ describe('CongratsComponent', () => {
   let component: CongratsComponent;
   let fixture: ComponentFixture<CongratsComponent>;
   const router = {
-    navigate: jasmine.createSpy('navigate')
+    navigate: jest.fn()
   };
 
   const stampServiceStub: Partial<StampService> = {

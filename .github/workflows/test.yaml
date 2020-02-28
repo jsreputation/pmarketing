@@ -26,6 +26,10 @@ jobs:
           echo ::set-env name=APP_FOLDERS::${APP_FOLDERS[@]}
           echo ::set-env name=LIBS_FOLDERS::${LIBS_FOLDERS[@]}
           echo ::set-env name=BACKEND_FOLDERS::${BACKEND_FOLDERS[@]}
+
+          # Set tekton label
+          LABEL=$(echo ${GITHUB_REF//[^0-9a-zA-Z-_\.]/-} | cut -c-60)
+          echo ::set-env name=TEKTON_LABEL::${LABEL}
       - name: Download tekton cli and install parallel
         run: |
           curl -L https://github.com/tektoncd/cli/releases/download/v0.6.0/tkn_0.6.0_Linux_x86_64.tar.gz \
@@ -34,7 +38,7 @@ jobs:
           sudo apt-get install -y parallel
       - name: Remove existing tasks
         run: |
-          EXISTING_TASKS=$(kubectl -n build get taskrun -l github.ref=${GITHUB_REF//[^0-9a-zA-Z-_\.]/-},tekton.dev/task=microsite-apps-ng-test -o=name)
+          EXISTING_TASKS=$(kubectl -n build get taskrun -l github.ref=${TEKTON_LABEL},tekton.dev/task=microsite-apps-ng-test -o=name)
           if [ ${#EXISTING_TASKS[@]} -ne 0 ]; then
             parallel kubectl -n build delete {} ::: ${EXISTING_TASKS[@]}
           else
@@ -51,7 +55,8 @@ jobs:
           metadata:
             generateName: microsite-apps-ng-test-${f//[^0-9a-zA-Z-]/-}-
             labels:
-              github.ref: ${GITHUB_REF//[^0-9a-zA-Z-_\.]/-}
+              github.ref: ${TEKTON_LABEL}
+              task: test
           spec:
             serviceAccountName: tekton
             taskRef:
@@ -79,62 +84,56 @@ jobs:
                 - key: "dedicated"
                   value: "build"
                   effect: "NoSchedule"
-              affinity:
-                nodeAffinity:
-                  preferredDuringSchedulingIgnoredDuringExecution:
-                    - weight: 1
-                      preference:
-                        matchExpressions:
-                        - key: machine-type
-                          operator: In
-                          values:
-                          - standard
           EOT
           )
           TEKTON_TASKS+=(${TEKTON_TASK})
           done
           echo "Tasks: ${TEKTON_TASKS[@]}"
           echo ::set-env name=TEKTON_TASKS::${TEKTON_TASKS[@]}
-      - name: Wait for tekton task running
-        run: |
-          WAIT_TIME=0
-          for TASKRUN_NAME in ${TEKTON_TASKS[@]}; do
-            until [ "$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')" = "Running" ] || [ $WAIT_TIME -gt 600 ]; do
-              echo "Waiting ${WAIT_TIME} seconds for tekton task: ${TASKRUN_NAME}"
-              echo "Current task state: $(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')"
-              (( WAIT_TIME+=3 ))
-              sleep 3
-            done
-          done
-      - name: Stream tekton logs
-        run: |
-          parallel tkn -n build taskrun logs -f {} ::: ${TEKTON_TASKS[@]}
       - name: Check task result
         run: |
-          WAIT_TIME=0
-          for TASKRUN_NAME in ${TEKTON_TASKS[@]}; do
-            until [ "$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')" != "Running" ] || [ $WAIT_TIME -gt 180 ]; do
-              (( WAIT_TIME+=1 ))
-              echo "Task ${TASKRUN_NAME} is still running, wait for 1 second"
-              sleep 1
+          start=$SECONDS
+          RUNNING_TASKS=(${TEKTON_TASKS[@]})
+          until [[ -z "${RUNNING_TASKS// }" ]] || [[ $(( SECONDS - start )) -gt 1200 ]]; do
+            echo "Tasks: \"${RUNNING_TASKS// }\""
+            for TASKRUN_NAME in ${RUNNING_TASKS[@]}; do
+              REASON=$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')
+              STATUS=$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].status}')
+              if [[ "${REASON}" = "Succeeded" ]] && [[ "${STATUS}" = "True" ]]; then
+                RUNNING_TASKS=("${RUNNING_TASKS[@]/$TASKRUN_NAME}")
+              fi
+              if [[ "${REASON}" = "Failed" ]] && [[ "${STATUS}" = "False" ]]; then
+                echo "Taskrun ${TASKRUN_NAME} is failed, fail sthe job"
+                exit 1
+              fi
+              echo "Taskrun ${TASKRUN_NAME} reason is ${REASON}, status is ${STATUS}"
             done
-            REASON=$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath={.status.conditions[0].reason})
-            if [ "$REASON" != "Succeeded" ]; then
-              echo "Taskrun ${TASKRUN_NAME} status is ${REASON}, fail the job"
-              exit 1
-            fi
+            sleep 20
+            echo "Running for $(( SECONDS - start )) seconds"
           done
-      - name: Output Errors
-        if: failure()
+      - name: Display dashboard link ang generate error logs
+        if: always()
         run: |
+          touch test_error.log
           for TASKRUN_NAME in ${TEKTON_TASKS[@]}; do
-            if [ "$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')" != "Succeeded" ]; then
-              tkn -n build taskrun logs ${TASKRUN_NAME} -f
+            TASKRUN_STATUS=$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')
+            if [ "${TASKRUN_STATUS}" = "Failed" ]; then
+              echo ">>>> Taskrun ${TASKRUN_NAME} status is ${TASKRUN_STATUS} <<<<"
+              echo "Follow dashboard link to get the details: http://tekton-dashboard.perxtech.io/#/namespaces/build/taskruns/${TASKRUN_NAME}"
+              tkn -n build taskrun logs ${TASKRUN_NAME} -f >> test_error.log
             fi
           done
+      - name: Upload tests log
+        if: always()
+        uses: actions/upload-artifact@v1
+        with:
+          name: Test logs
+          path: test_error.log
       - name: Taskruns cleanup
         if: always()
         run: |
           for TASKRUN_NAME in ${TEKTON_TASKS[@]}; do
-            tkn -n build taskrun delete ${TASKRUN_NAME}
+            if [ "$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')" == "Succeeded" ]; then
+              tkn -n build taskrun delete ${TASKRUN_NAME}
+            fi
           done

@@ -13,6 +13,7 @@ import { getEngagementRouterLink } from '@cl-helpers/get-engagement-router-link'
 import { Router } from '@angular/router';
 import { CampaignChannelsLaunchType } from '../../models/campaign-channels-launch-type.enum';
 import { AudiencesService, IPoolUserLink } from '@cl-core-services';
+import { ITenantsProperties } from '@cl-core/models/settings/tenants.properties.interface';
 // import { Subject } from 'rxjs';
 
 @Component({
