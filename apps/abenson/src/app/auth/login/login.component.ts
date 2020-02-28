@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
   public errorMessage?: string;
   public preAuth: boolean;
   public appAccessTokenFetched: boolean;
+  public useSignUpButton: boolean = true;
 
   public get mobileNumber(): AbstractControl | null {
     return this.loginForm.get('mobileNumber');
