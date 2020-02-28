@@ -90,45 +90,45 @@ jobs:
           done
           echo "Tasks: ${TEKTON_TASKS[@]}"
           echo ::set-env name=TEKTON_TASKS::${TEKTON_TASKS[@]}
-      - name: Wait for tekton task running
-        run: |
-          WAIT_TIME=0
-          for TASKRUN_NAME in ${TEKTON_TASKS[@]}; do
-            until [ "$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')" = "Running" ] || [ $WAIT_TIME -gt 600 ]; do
-              echo "Waiting ${WAIT_TIME} seconds for tekton task: ${TASKRUN_NAME}"
-              echo "Current task state: $(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')"
-              (( WAIT_TIME+=3 ))
-              sleep 3
-            done
-          done
       - name: Check task result
         run: |
-          WAIT_TIME=0
-          for TASKRUN_NAME in ${TEKTON_TASKS[@]}; do
-            TASKRUN_STATUS=$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')
-            echo "Taskrun ${TASKRUN_NAME} status is ${TASKRUN_STATUS}"
-            until [ "${TASKRUN_STATUS}" != "Running" ] || [ $WAIT_TIME -gt 900 ]; do
-              (( WAIT_TIME+=10 ))
-              echo "Task ${TASKRUN_NAME} is still running, wait for 10 second"
-              sleep 10
-              TASKRUN_STATUS=$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')
-              echo "Taskrun ${TASKRUN_NAME} status is ${TASKRUN_STATUS}"
+          start=$SECONDS
+          RUNNING_TASKS=(${TEKTON_TASKS[@]})
+          until [[ -z "${RUNNING_TASKS// }" ]] || [[ $(( SECONDS - start )) -gt 1200 ]]; do
+            echo "Tasks: \"${RUNNING_TASKS// }\""
+            for TASKRUN_NAME in ${RUNNING_TASKS[@]}; do
+              REASON=$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')
+              STATUS=$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].status}')
+              if [[ "${REASON}" = "Succeeded" ]] && [[ "${STATUS}" = "True" ]]; then
+                RUNNING_TASKS=("${RUNNING_TASKS[@]/$TASKRUN_NAME}")
+              fi
+              if [[ "${REASON}" = "Failed" ]] && [[ "${STATUS}" = "False" ]]; then
+                echo "Taskrun ${TASKRUN_NAME} is failed, fail sthe job"
+                exit 1
+              fi
+              echo "Taskrun ${TASKRUN_NAME} reason is ${REASON}, status is ${STATUS}"
             done
-            if [ "${TASKRUN_STATUS}" != "Succeeded" ]; then
-              echo "Taskrun ${TASKRUN_NAME} status is ${TASKRUN_STATUS}, fail the job"
-              exit 1
-            fi
+            sleep 20
+            echo "Running for $(( SECONDS - start )) seconds"
           done
-      - name: Display dashboard link
-        if: failure()
+      - name: Display dashboard link ang generate error logs
+        if: always()
         run: |
+          touch test_error.log
           for TASKRUN_NAME in ${TEKTON_TASKS[@]}; do
             TASKRUN_STATUS=$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')
-            if [ "${TASKRUN_STATUS}" != "Succeeded" ]; then
+            if [ "${TASKRUN_STATUS}" = "Failed" ]; then
               echo ">>>> Taskrun ${TASKRUN_NAME} status is ${TASKRUN_STATUS} <<<<"
-              echo "Follow dashboard link to get the details: https://tekton-dashboard.perxtech.io/#/namespaces/build/taskruns/${TASKRUN_NAME}"
+              echo "Follow dashboard link to get the details: http://tekton-dashboard.perxtech.io/#/namespaces/build/taskruns/${TASKRUN_NAME}"
+              tkn -n build taskrun logs ${TASKRUN_NAME} -f >> test_error.log
             fi
           done
+      - name: Upload tests log
+        if: always()
+        uses: actions/upload-artifact@v1
+        with:
+          name: Test logs
+          path: test_error.log
       - name: Taskruns cleanup
         if: always()
         run: |

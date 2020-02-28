@@ -92,6 +92,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
           // set global userID var for GA tracking
           if (!((window as any).primaryIdentifier)) {
             (window as any).primaryIdentifier = username;
+            this.authService.saveAnonymous(false);
           }
           this.redirectAfterLogin();
         },

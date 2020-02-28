@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { oc } from 'ts-optchain';
-import {interval, Observable, of, throwError, from } from 'rxjs';
+import { Observable, of, throwError, from, timer } from 'rxjs';
 import {
   map,
   flatMap,
@@ -285,7 +285,7 @@ export class V4StampService implements StampService {
       map((stamps: IStamp[]) => stamps.sort((v1, v2) => v1.id - v2.id))
     );
   }
-
+  
   // pipe pairwise inside the component,bcz get Proxy for some reason, unable to get access to the value cached in svc
   public stampsChangedForStampCard(campaignId: number, intervalPeriod: number = 1500): Observable<IStampCard> {
     return interval(intervalPeriod).pipe(
