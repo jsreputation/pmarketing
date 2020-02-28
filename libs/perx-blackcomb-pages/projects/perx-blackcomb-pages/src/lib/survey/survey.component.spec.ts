@@ -220,7 +220,12 @@ describe('SurveyComponent', () => {
         const routerSpy = spyOn(routerStub, 'navigate').and.callThrough();
 
         const state = {
-          popupData: { title: 'SURVEY_SUCCESS_TITLE', text: 'SURVEY_SUCCESS_TEXT', imageUrl: 'assets/congrats_image.png', buttonTxt: 'VIEW_REWARD' },
+          popupData: {
+            title: 'SURVEY_SUCCESS_TITLE',
+            text: 'SURVEY_SUCCESS_TEXT',
+            imageUrl: 'assets/congrats_image.png',
+            buttonTxt: 'CLOSE'
+          },
           engagementType: 'survey',
           surveyId: 1,
           collectInfo: true,
@@ -256,7 +261,12 @@ describe('SurveyComponent', () => {
         const routerSpy = spyOn(routerStub, 'navigate').and.callThrough();
 
         const state = {
-          popupData: { title: 'SURVEY_SUCCESS_TITLE', text: 'SURVEY_SUCCESS_TEXT', imageUrl: 'assets/congrats_image.png', buttonTxt: 'CLOSE' },
+          popupData: {
+            title: 'SURVEY_SUCCESS_TITLE',
+            text: 'SURVEY_SUCCESS_TEXT',
+            imageUrl: 'assets/congrats_image.png',
+            buttonTxt: 'CLOSE'
+          },
           engagementType: 'survey',
           surveyId: 1,
           collectInfo: true,
