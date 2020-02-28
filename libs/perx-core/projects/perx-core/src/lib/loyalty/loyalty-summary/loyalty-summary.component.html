@@ -33,7 +33,7 @@
 
   <ng-template #elseBlockLoyalty>
     <div class="points ghost">
-      <mat-spinner diameter="50" color="primary"></mat-spinner>
+      <mat-spinner *ngIf="!noLoyaltyProgram"  diameter="50" color="primary"></mat-spinner>
     </div>
     <div class="expiring-points ghost"></div>
   </ng-template>

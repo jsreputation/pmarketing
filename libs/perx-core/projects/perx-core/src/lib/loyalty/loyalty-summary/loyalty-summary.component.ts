@@ -1,11 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Observable } from 'rxjs';
+import {Observable, of} from 'rxjs';
 
 import { LoyaltyService } from '../loyalty.service';
 import { ProfileService } from '../../profile/profile.service';
 import { IProfile } from '../../profile/profile.model';
 import { ILoyalty } from '../models/loyalty.model';
 import { DatePipe } from '@angular/common';
+import {catchError} from 'rxjs/operators';
 // import {tap} from 'rxjs/operators';
 
 @Component({
@@ -21,7 +22,7 @@ export class LoyaltySummaryComponent implements OnInit {
   public profile$: Observable<IProfile> | undefined;
 
   @Input('loyalty')
-  public loyalty$: Observable<ILoyalty> | undefined;
+  public loyalty$: Observable<ILoyalty | undefined> | undefined;
 
   @Input()
   public subTitleFn: (loyalty: ILoyalty) => string;
@@ -31,6 +32,8 @@ export class LoyaltySummaryComponent implements OnInit {
 
   @Input()
   public summaryExpiringFn: (loyalty: ILoyalty) => string;
+
+  public noLoyaltyProgram = false;
   constructor(
     private profileService: ProfileService,
     private loyaltyService: LoyaltyService,
@@ -67,13 +70,12 @@ export class LoyaltySummaryComponent implements OnInit {
 
     if (!this.loyalty$) {
       this.loyalty$ = this.loyaltyService.getLoyalty(this.loyaltyId).pipe(
-        // tap((res) => console.log(res, 'see the response f1 the loaylty'))
-      );
-    }
-
-    if (this.loyalty$) {
-      this.loyalty$.pipe(
-        // tap((res) => console.log(res, 'see the response f2 the loaylty'))
+        catchError(val => {
+          if (val.status === 401) {
+            this.noLoyaltyProgram = true;
+          }
+          return of(undefined)
+        })
       );
     }
   }
