@@ -8,10 +8,6 @@
         Not registered to DigitalPLUS! Card? <a routerLink="/signup" class="link">Sign up</a>
       </ng-template>
     </p>
-
-    <p *ngIf="!useSignUpButton">
-
-    </p>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="fill" class="full-width__input">
         <mat-label>Enter Mobile Number</mat-label>
