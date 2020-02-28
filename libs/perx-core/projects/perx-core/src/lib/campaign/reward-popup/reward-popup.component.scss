@@ -42,6 +42,12 @@ mat-dialog-content {
   text-align: center;
   font-size: 1.6rem;
   line-height: 1.8rem;
+
+  .description,
+  .address,
+  .terms-conditions {
+    white-space: pre-line;
+  }
 }
 
 app-expire-timer {
