@@ -2,7 +2,12 @@
   <img src="assets/signup-top-image.svg" class="top-image">
   <div class="login-form">
     <h1>Log In</h1>
-    <p>Not registered to DigitalPLUS! Card? <a routerLink="/signup" class="link">Sign up</a></p>
+    <p>
+      <span *ngIf="useSignUpButton else signUpMsg"></span>
+      <ng-template #signUpMsg>
+        Not registered to DigitalPLUS! Card? <a routerLink="/signup" class="link">Sign up</a>
+      </ng-template>
+    </p>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="fill" class="full-width__input">
         <mat-label>Enter Mobile Number</mat-label>
@@ -20,6 +25,10 @@
       </mat-form-field>
       <a [routerLink]="[ '/forgot-pin' ]" class="link forgot-pin">Forgot Pin Code?</a>
       <button mat-flat-button type="submit" color="primary" class="full-width__button">Log In</button>
+      <div *ngIf="useSignUpButton" class="sign-up-block-container">
+        <p class="sign-up-block-msg">No account?</p>
+        <button routerLink="/signup" mat-stroked-button class="full-width_sign_button" color="primary">Sign Up</button>
+      </div>
     </form>
   </div>
   <img src="assets/signup-bottom-image.svg" class="bottom-image">
