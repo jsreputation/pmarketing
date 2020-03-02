@@ -44,8 +44,7 @@ export interface IMerchantProfile {
 }
 
 export const enum MerchantTransactionDetailType {
-  'transaction' = 'Transaction',
-  'reward' = 'Reward::Transaction'
+  'purchase' = 'purchase',
 }
 
 export interface IMerchantPurchaseTransactionHistory {
@@ -57,6 +56,7 @@ export interface IMerchantPurchaseTransactionHistory {
   transactionRef?: string;
   price?: number;
   currency?: string;
+  pointsIssued: number;
 }
 
 export interface IMerchantRewardTransactionHistory {
