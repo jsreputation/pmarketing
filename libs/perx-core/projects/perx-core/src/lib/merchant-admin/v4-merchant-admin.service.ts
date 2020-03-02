@@ -198,29 +198,6 @@ export class V4MerchantAdminService implements IMerchantAdminService {
   public static v4PurchaseTransactionHistoryToPurchaseTransactionHistory(
     transactionHistory: IV4MerchantPurchaseTransactionHistory): IMerchantPurchaseTransactionHistory {
 
-    // const transactionDetails = oc(transactionHistory).transaction_details.data();
-    // let data: IMerchantPurchaseTransactionHistory | IMerchantRewardTransactionHistory | undefined;
-    //
-    // if (transactionDetails) {
-    //   if (transactionHistory.transaction_type === MerchantTransactionDetailType.purchase) {
-    //     const pthDetails = transactionDetails as IV4MerchantPurchaseTransactionHistory;
-    //     const pthProps = oc(pthDetails).properties() as {
-    //       merchant_username: string;
-    //       pharmacy: string;
-    //       product: string;
-    //     };
-    //     data = {
-    //       id: transactionDetails.id,
-    //       productName: oc(pthProps).product(),
-    //       pharmacyName: oc(pthProps).pharmacy(),
-    //       issuerName: oc(pthProps).merchant_username(),
-    //       transactionDate: pthDetails.transaction_date,
-    //       transactionRef: pthDetails.transaction_reference,
-    //       price: pthDetails.amount,
-    //       currency: pthDetails.currency,
-    //     };
-    //   }
-    // }
     const purchaseProperties = oc(transactionHistory).properties() as {
       merchant_username: string;
       pharmacy: string;
