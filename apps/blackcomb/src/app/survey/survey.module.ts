@@ -15,6 +15,7 @@ import {
   MatProgressBarModule,
   MatDatepickerModule,
   MatRadioModule,
+  MatToolbarModule,
   MatCheckboxModule
 } from '@angular/material';
 import { environment } from 'src/environments/environment';
@@ -34,6 +35,7 @@ import { SurveyComponent } from '@perx/blackcomb-pages';
     MatCardModule,
     MatButtonModule,
     MatProgressBarModule,
+    MatToolbarModule,
     MatDatepickerModule,
     MatRadioModule,
     MatCheckboxModule,

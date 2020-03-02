@@ -11,7 +11,7 @@ import {
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { SurveyComponent } from './survey.component';
-import { MatCardModule, MatButtonModule, MatProgressBarModule } from '@angular/material';
+import { MatCardModule, MatButtonModule, MatProgressBarModule, MatToolbarModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
@@ -81,6 +81,7 @@ describe('SurveyComponent', () => {
           { path: 'wallet', redirectTo: '/' }
         ]),
         MatProgressBarModule,
+        MatToolbarModule,
         PerxSurveyModule,
         TranslateModule.forRoot(),
         BrowserAnimationsModule

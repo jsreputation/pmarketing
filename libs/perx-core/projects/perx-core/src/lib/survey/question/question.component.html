@@ -81,12 +81,4 @@
             </div>
         </div>
     </div>
-    <div class="question-action-container" *ngIf="!isSubQuestion">
-            <button *ngIf="id !== 0" mat-raised-button (click)="back()">
-                Back
-            </button>
-            <button *ngIf="id !== totalQuestions -1" mat-raised-button color="primary" (click)="next()">
-                Next
-            </button>
-        </div>
 </div>

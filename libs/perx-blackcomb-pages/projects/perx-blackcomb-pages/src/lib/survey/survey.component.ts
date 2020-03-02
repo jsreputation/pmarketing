@@ -22,6 +22,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
   public answers: IAnswer[];
   public totalLength: number;
   public currentPointer: number;
+  public questionPointer: number = 0;
   private isAnonymousUser: boolean;
   private informationCollectionSetting: string;
   private destroy$: Subject<any> = new Subject();
@@ -182,5 +183,14 @@ export class SurveyComponent implements OnInit, OnDestroy {
 
   public updateSurveyStatus(answers: IAnswer[]): void {
     this.answers = answers;
+  }
+
+
+  public updateQuestionPointer(action: string): void {
+    if (action === 'next') {
+      this.questionPointer++;
+    } else {
+      this.questionPointer--;
+    }
   }
 }

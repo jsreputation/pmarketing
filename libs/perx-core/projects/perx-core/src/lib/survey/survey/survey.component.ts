@@ -15,6 +15,9 @@ export class SurveyComponent implements OnInit, OnDestroy {
   @Input()
   public hideIndex: boolean = false;
 
+  @Input()
+  public questionPointer: number = 0;
+
   @Output()
   public totalLength: EventEmitter<number> = new EventEmitter();
 
@@ -29,8 +32,6 @@ export class SurveyComponent implements OnInit, OnDestroy {
   public pointsTracker: ITracker = {};
 
   public data: ISurvey;
-
-  public questionPointer: number = 0;
 
   private destroy$: Subject<any> = new Subject();
 
@@ -74,14 +75,6 @@ export class SurveyComponent implements OnInit, OnDestroy {
         content: answer.content
       }));
       this.surveyDone.emit(answers);
-    }
-  }
-
-  public updateQuestionPointer(action: string): void {
-    if (action === 'next') {
-      this.questionPointer++;
-    } else {
-      this.questionPointer--;
     }
   }
 
