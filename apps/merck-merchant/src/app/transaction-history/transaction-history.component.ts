@@ -15,12 +15,12 @@ import {
   styleUrls: ['./transaction-history.component.scss']
 })
 export class TransactionHistoryComponent implements OnInit {
-  public transactions: Observable<IMerchantTransactionHistory[]>;
-  public purchasesTitleFn: (tr: IMerchantTransactionHistory) => string;
+  public purchaseTransactions: Observable<IMerchantPurchaseTransactionHistory[]>;
+  public salesTitleFn: (tr: IMerchantPurchaseTransactionHistory) => string;
+  public salesDescFn: (tr: IMerchantTransactionHistory) => string;
+  public salesSubTitleFn: (tr: IMerchantTransactionHistory) => string;
+  public salespriceLabelFn: (tr: IMerchantTransactionHistory) => string;
   public redemptionsTitleFn: (tr: IMerchantTransactionHistory) => string;
-  public descFn: (tr: IMerchantTransactionHistory) => string;
-  public subTitleFn: (tr: IMerchantTransactionHistory) => string;
-  public priceLabelFn: (tr: IMerchantTransactionHistory) => string;
 
   constructor(
     private location: Location,
@@ -30,20 +30,23 @@ export class TransactionHistoryComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.purchasesTitleFn = (tr: IMerchantTransactionHistory) =>
-      `${tr.transactionDetails && (tr.transactionDetails.data as IMerchantPurchaseTransactionHistory).pharmacyName}`;
+    this.salesTitleFn = (tr: IMerchantPurchaseTransactionHistory) =>
+      `${tr.pharmacyName}`;
 
     this.redemptionsTitleFn = (tr: IMerchantTransactionHistory) =>
       `${tr.transactionDetails && (tr.transactionDetails.data as IMerchantRewardTransactionHistory).rewardName}`;
 
-    this.descFn = (tr: IMerchantTransactionHistory) =>
-      `${tr.transactionDetails && (tr.transactionDetails.data as IMerchantPurchaseTransactionHistory).productName}`;
+    this.salesDescFn = (tr: IMerchantPurchaseTransactionHistory) =>
+      `${tr.productName}`;
 
-    this.subTitleFn = (tr: IMerchantTransactionHistory) => `${this.datePipe.transform(tr.transactedAt, 'dd/MM/yyyy')}`;
-    this.priceLabelFn = (tr: IMerchantTransactionHistory) => `${this.transactionPipe.transform(tr.pointsAmount || 0)}`;
+    this.salesSubTitleFn = (tr: IMerchantPurchaseTransactionHistory) =>
+      `${this.datePipe.transform(tr.transactionDate, 'dd/MM/yyyy')}`;
+
+    this.salespriceLabelFn = (tr: IMerchantPurchaseTransactionHistory) =>
+      `${this.transactionPipe.transform(tr.pointsIssued || 0)}`;
 
     this.merchantAdminService.getTransactionHistory().subscribe(
-      (transactions: IMerchantTransactionHistory[]) => this.transactions = of(transactions),
+      (transactions: IMerchantPurchaseTransactionHistory[]) => this.purchaseTransactions = of(transactions),
       (err) => console.log(err)
     );
   }
