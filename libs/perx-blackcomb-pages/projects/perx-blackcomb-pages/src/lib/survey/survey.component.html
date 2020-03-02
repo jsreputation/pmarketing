@@ -1,6 +1,8 @@
-<div class="survey-main-container">
-  <div class="survey-page" *ngIf="survey">
-    <img [src]="survey.backgroundImgUrl" *ngIf="survey.backgroundImgUrl" class="background_img_url">
+<!--<img [src]="survey.backgroundImgUrl" alt="survey-bg" *ngIf="survey.backgroundImgUrl" class="background_img_url">-->
+<div *ngIf="survey" class="survey-main-container"
+     [ngStyle]="{'background': survey.backgroundImgUrl ? 'url(' + survey.backgroundImgUrl +
+       ')' : ''}">
+  <div class="survey-page">
     <div class="progress-text">
       <p>Question <strong>{{questionPointer + 1}}</strong> out of {{totalLength}}</p>
     </div>
@@ -12,7 +14,6 @@
     </div>
     <mat-card class="survey-card mat-elevation-z2">
       <h1>{{survey.title}}</h1>
-      {{progressBarValue}}
       <h2 *ngIf="survey.subTitle">{{survey.subTitle}}</h2>
       <perx-core-survey
         [data]="data$"

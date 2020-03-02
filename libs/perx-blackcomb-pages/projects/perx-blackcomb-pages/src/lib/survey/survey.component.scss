@@ -12,16 +12,13 @@
   flex: 1 1 70%;
   flex-direction: column;
   align-items: center;
-  padding: 1rem;
+  padding: 1rem 1rem 3rem;
   box-sizing: border-box;
-
-  .background_img_url {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    //offset the padding
-    transform: translateY(-1rem);
-  }
+  //.background_img_url {
+  //  position: absolute;
+  //  width: 100%;
+  //  height: 100%;
+  //}
 
   .progress-text {
     z-index: 1;
@@ -40,7 +37,7 @@
       width: 100%;
       font-size: 1.2rem;
       line-height: 1.6rem;
-      color: red;
+      color: #fff;
       letter-spacing: 0.4px;
       text-align: left;
     }
@@ -49,10 +46,11 @@
   .survey-card {
     display: flex;
     flex-direction: column;
-    //overflow-y: scroll;
+    overflow-y: scroll;
     align-items: center;
     //-webkit-overflow-scrolling: touch;
-    height: 100%;
+    max-height: 45rem;
+    height: 36rem;
     width: 90%;
     margin-top: 2rem;
     z-index: 1;
@@ -85,8 +83,7 @@
 .navbar {
   display: flex;
   justify-content: space-around;
-  height: 7rem;
-  z-index: 800;
+  flex: 0 0 7rem;
   background: var(--surface_colour) !important;
   font-size: 1rem;
   line-height: 1.6rem;
@@ -97,7 +94,7 @@
     flex: 0 0 13rem;
     text-align: center;
     justify-content: center;
-    height: 4.4rem;
+    height: 4rem;
     align-items: center;
   }
 }
