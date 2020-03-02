@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { LayoutRoutingModule } from './layout-routing.module';
-import { LayoutComponent, PerxBlackcombPagesModule } from '@perx/blackcomb-pages';
+import { PerxBlackcombPagesModule } from '@perx/blackcomb-pages';
 import { HomeModule } from '../home/home.module';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { InstantRewardRoutingModule } from './instant-reward-routing.module';
 import { RewardsModule, OutcomeModule } from '@perx/core';
 import { MatButtonModule } from '@angular/material';
-import { RewardComponent, PerxBlackcombPagesModule } from '@perx/blackcomb-pages';
+import { PerxBlackcombPagesModule } from '@perx/blackcomb-pages';
 
 @NgModule({
   imports: [
