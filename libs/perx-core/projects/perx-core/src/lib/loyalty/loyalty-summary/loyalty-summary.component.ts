@@ -33,7 +33,7 @@ export class LoyaltySummaryComponent implements OnInit {
   @Input()
   public summaryExpiringFn: (loyalty: ILoyalty) => string;
 
-  public noLoyaltyProgram = false;
+  public loyaltyProgramExists: boolean = true;
   constructor(
     private profileService: ProfileService,
     private loyaltyService: LoyaltyService,
@@ -72,9 +72,9 @@ export class LoyaltySummaryComponent implements OnInit {
       this.loyalty$ = this.loyaltyService.getLoyalty(this.loyaltyId).pipe(
         catchError(val => {
           if (val.status === 401) {
-            this.noLoyaltyProgram = true;
+            this.loyaltyProgramExists = true;
           }
-          return of(undefined)
+          return of(undefined);
         })
       );
     }
