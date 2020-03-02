@@ -16,8 +16,9 @@ import { TransactionPipe } from './transaction.pipe';
   styleUrls: ['./loyalty-transactions-list.component.scss']
 })
 export class LoyaltyTransactionsListComponent implements OnInit {
-  @Input('transactions')
+  @Input('transactions') // needs flexibility to be of type Observable<ITransaction[]> | Observable<IMerchantAdminTransaction[]>
   public transactions$: Observable<ITransaction[]>;
+  public transactions: ITransaction[];
 
   @Output()
   public tapped: EventEmitter<ITransaction> = new EventEmitter<ITransaction>();
@@ -48,6 +49,13 @@ export class LoyaltyTransactionsListComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.transactions$.subscribe(
+      (transactions: ITransaction[]) => {
+        this.transactions = transactions;
+      },
+      () => console.error('No transactions loaded to loyalty transactions list')
+    );
+
     if (!this.titleFn) {
       this.titleFn = (tr: ITransaction) => `${tr.name}`;
     }
