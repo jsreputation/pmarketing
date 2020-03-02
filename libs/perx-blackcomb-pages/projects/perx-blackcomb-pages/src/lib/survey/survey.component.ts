@@ -30,7 +30,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
     title: 'SURVEY_SUCCESS_TITLE',
     text: 'SURVEY_SUCCESS_TEXT',
     imageUrl: 'assets/congrats_image.png',
-    buttonTxt: 'VIEW_REWARD',
+    buttonTxt: 'CLOSE',
   };
 
   public noRewardsPopUp: IPopupConfig = {
