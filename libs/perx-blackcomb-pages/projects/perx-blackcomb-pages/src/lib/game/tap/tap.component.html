@@ -16,14 +16,13 @@
     </div>
   </div>
   <div class="game-footer">
-    <ng-container *ngIf="!isEnabled">
-      <button class="js-play" mat-flat-button (click)="isEnabled = true"
-              [hidden]="isEnabled" color="primary">
+      <button 
+        class="js-play" 
+        mat-flat-button 
+        (click)="isEnabled = true"
+        [ngStyle]="{ 'visibility': isEnabled ? 'hidden': 'visible'}"
+        color="primary">
         {{ game.texts.button }}
       </button>
-    </ng-container>
-    <ng-container *ngIf="isEnabled">
-      <div class="nullBlock"></div>
-    </ng-container>
   </div>
 </div>
