@@ -13,7 +13,7 @@ import { PinInputComponent } from '../../utils/pin-input/pin-input.component';
 })
 export class PinRedemptionComponent implements OnInit {
   @Input()
-  public length: number = 4;;
+  public length: number = 4;
 
   @Input()
   public errorMessage: string = 'Incorrect code';
