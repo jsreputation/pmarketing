@@ -14,7 +14,7 @@ const routes: Routes = [{
   imports: [
     CommonModule,
     SharedModule,
-    ChangePasswordComponent,
+    PerxBlackcombPagesModule,
     TranslateModule.forChild(),
     RouterModule.forChild(routes)
   ]
