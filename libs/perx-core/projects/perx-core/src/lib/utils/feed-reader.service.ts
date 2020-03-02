@@ -40,15 +40,14 @@ export class FeedReaderService {
     }
 
     // try to extract the channel image used as a default image
-    const mediaImg = channel.getElementsByTagName('media:thumbnail')[0];
     const channelImg = channel.querySelector('image > url');
-    const channelImgUrl = mediaImg ? mediaImg.getAttribute('url') : channelImg && channelImg.textContent || null;
-
+    const channelImgUrl = channelImg ? channelImg.textContent : null;
     const items = Array.from(channel.querySelectorAll('item'));
     return items.map((item: Element) => {
       const dateStr = item.getElementsByTagName('pubDate')[0].textContent;
       const imageTag = item.getElementsByTagName('image')[0];
-      const image: string | null = imageTag ? imageTag.textContent : channelImgUrl;
+      const mediaImg = item.getElementsByTagName('media:thumbnail')[0];
+      const image: string | null = mediaImg ? mediaImg.getAttribute('url') : imageTag ? imageTag.textContent : channelImgUrl;
       const it: FeedItem = {
         title: item.getElementsByTagName('title')[0].textContent,
         description: item.getElementsByTagName('description')[0].textContent,
