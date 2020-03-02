@@ -6,33 +6,15 @@ import {
   GameModule as PerxGameModule,
   AuthenticationModule,
 } from '@perx/core';
-import {
-  GameComponent,
-  ShakeComponent,
-  TapComponent,
-  ScratchComponent,
-  SpinComponent,
-  SnakeComponent,
-  ConfigToSlicesPipe,
-  ConfigToMappedSlotPipe
-} from '@perx/blackcomb-pages';
+import { GameModule as BCGameModule } from '@perx/blackcomb-pages';
 
 import { GameRoutingModule } from './game-routing.module';
 
 @NgModule({
-  declarations: [
-    GameComponent,
-    ShakeComponent,
-    TapComponent,
-    ScratchComponent,
-    SpinComponent,
-    SnakeComponent,
-    ConfigToSlicesPipe,
-    ConfigToMappedSlotPipe
-  ],
   imports: [
     CommonModule,
     GameRoutingModule,
+    BCGameModule,
     PerxGameModule,
     AuthenticationModule,
     MatProgressBarModule

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { LayoutRoutingModule } from './layout-routing.module';
-import { LayoutComponent } from '@perx/blackcomb-pages';
+import { LayoutComponent, PerxBlackcombPagesModule } from '@perx/blackcomb-pages';
 import { HomeModule } from '../home/home.module';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -19,9 +19,6 @@ import { ContentModule } from '../content/content.module';
 import { CampaignStampsModule } from '../campaign-stamps/campaign-stamps.module';
 
 @NgModule({
-  declarations: [
-    LayoutComponent
-  ],
   imports: [
     // LayoutRoutingModule must be listed first to use its '' routing paths
     LayoutRoutingModule,
@@ -41,7 +38,8 @@ import { CampaignStampsModule } from '../campaign-stamps/campaign-stamps.module'
     PiModule,
     RewardsDetailModule,
     ContentModule,
-    CampaignStampsModule
+    CampaignStampsModule,
+    PerxBlackcombPagesModule
   ]
 })
 export class LayoutModule { }

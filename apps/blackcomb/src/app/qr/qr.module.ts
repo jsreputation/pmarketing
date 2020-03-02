@@ -9,7 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { QRCodeModule} from 'angularx-qrcode';
 
-import { QRComponent } from '@perx/blackcomb-pages';
+import { QRComponent, PerxBlackcombPagesModule } from '@perx/blackcomb-pages';
 import { TranslateModule } from '@ngx-translate/core';
 
 const routes: Routes = [{
@@ -18,12 +18,12 @@ const routes: Routes = [{
 }];
 
 @NgModule({
-  declarations: [QRComponent],
   imports: [
     CommonModule,
     UtilsModule,
     QRCodeModule,
     MatButtonModule,
+    PerxBlackcombPagesModule,
     RouterModule.forChild(routes),
     TranslateModule
   ]
