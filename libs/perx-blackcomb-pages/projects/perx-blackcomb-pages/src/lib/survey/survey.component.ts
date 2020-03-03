@@ -150,7 +150,8 @@ export class SurveyComponent implements OnInit, OnDestroy {
   }
 
   public get progressBarValue(): number {
-    return Math.round(this.answers.filter((answer) => answer.content).length / this.totalLength * 100) || 0;
+    // maybe pipe it instead
+    return Math.round(this.answers.filter((answer) => !!answer.content).length / this.totalLength * 100) || 0;
     this.cd.detectChanges(); // idk why this needs to be here
   }
 
@@ -250,11 +251,9 @@ export class SurveyComponent implements OnInit, OnDestroy {
       console.log(this.answers, ' what my current answer');
       // means completed before, allow to freely click next
       // change logic to if answers are present arldy, allow next
-      if (this.answers[this.questionPointer] && this.answers[this.questionPointer].content) { // this.progressBarValue >= 100 <- no longer valid, progress bar is in line with current questions
+      if (this.answers[this.questionPointer] && !!this.answers[this.questionPointer].content) { // this.progressBarValue >= 100 <- no longer valid, progress bar is in line with current questions
         // can go next if currentpage points < progressBarvalue, else only when asnwer last qn then trigger functionality (DEFUNCT)
         // able to go next if answer has been answered, i.e. content is present, would an empty string be considered answered?
-        this.questionPointer++;
-      } else if (this.currentPointer === this.questionPointer + 1) {
         this.questionPointer++;
       }
       console.log(this.currentPointer, 'what is my current pointer now?');
