@@ -9,7 +9,7 @@
 .survey-page {
   width: 100%;
   display: flex;
-  flex: 1 1 70%;
+  flex: 1 1 36rem;
   flex-direction: column;
   align-items: center;
   padding: 1rem 1rem 3rem;
@@ -25,7 +25,6 @@
     width: 100%;
     font-size: 1.2rem;
     line-height: 1.6rem;
-    color: #fff;
     letter-spacing: 0.4px;
     text-align: left;
   }
@@ -37,7 +36,6 @@
       width: 100%;
       font-size: 1.2rem;
       line-height: 1.6rem;
-      color: #fff;
       letter-spacing: 0.4px;
       text-align: left;
     }
@@ -48,7 +46,7 @@
     flex-direction: column;
     overflow-y: scroll;
     align-items: center;
-    //-webkit-overflow-scrolling: touch;
+    -webkit-overflow-scrolling: touch;
     max-height: 45rem;
     height: 36rem;
     width: 90%;
@@ -80,7 +78,7 @@
   }
 }
 
-.navbar {
+.bottom-nav-container {
   display: flex;
   justify-content: space-around;
   flex: 0 0 7rem;
@@ -90,11 +88,8 @@
 
   button {
     text-decoration: none;
-    display: flex;
-    flex: 0 0 13rem;
     text-align: center;
-    justify-content: center;
     height: 4rem;
-    align-items: center;
+    width: 13rem;
   }
 }

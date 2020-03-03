@@ -188,9 +188,22 @@ export class SurveyComponent implements OnInit, OnDestroy {
 
   public updateQuestionPointer(action: string): void {
     if (action === 'next') {
-      this.questionPointer++;
+      console.log(this.currentPointer, 'current pointer');
+      console.log(this.progressBarValue, 'prog value');
+      // means completed before, allow to freely click next
+      if (this.progressBarValue >= 100) {
+        console.log('i am back from the dead');
+        this.questionPointer++;
+        return;
+      } else if (this.currentPointer === this.questionPointer + 1) {
+        this.questionPointer++;
+        return;
+      }
+      console.log(this.questionPointer);
     } else {
       this.questionPointer--;
+      console.log(this.questionPointer, 'minusing what am i');
+      console.log(this.totalLength, 'total length');
     }
   }
 }
