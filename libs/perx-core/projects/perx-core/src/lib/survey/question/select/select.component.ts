@@ -39,7 +39,7 @@ export class SelectComponent implements OnChanges {
     if (this.payload.multiple && this.selectedChoices) {
       console.log('i am here, multiple');
       result = Object.entries(this.selectedChoices)
-        .filter(([key, value]) => key !== undefined && value !== undefined || false)
+        .filter(([key, value]) => key !== undefined && value !== undefined && value !== false)
         .map(data => data[0]);
     } else {
       result[0] = this.selectedChoice.toString();
