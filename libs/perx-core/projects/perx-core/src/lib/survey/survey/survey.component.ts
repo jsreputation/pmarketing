@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import {Component, Input, Output, EventEmitter, OnInit, OnDestroy, OnChanges, SimpleChanges} from '@angular/core';
 import { IAnswer, ISurvey, ITracker, IPoints } from '../models/survey.model';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -8,7 +8,7 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './survey.component.html',
   styleUrls: ['./survey.component.scss']
 })
-export class SurveyComponent implements OnInit, OnDestroy {
+export class SurveyComponent implements OnInit, OnChanges, OnDestroy {
   @Input('data')
   public data$: Observable<ISurvey>;
 
@@ -22,7 +22,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
   public totalLength: EventEmitter<number> = new EventEmitter();
 
   @Output()
-  public currentPointer: EventEmitter<number> = new EventEmitter();
+  public currentPointer: EventEmitter<number> = new EventEmitter(false);
 
   @Output()
   public surveyDone: EventEmitter<IAnswer[]> = new EventEmitter();
@@ -34,6 +34,16 @@ export class SurveyComponent implements OnInit, OnDestroy {
   public data: ISurvey;
 
   private destroy$: Subject<any> = new Subject();
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    const questionPointerChange = changes.questionPointer;
+    console.log(questionPointerChange, 'what arte chagnes, cal update parent or emit the curreentPoitnt');
+    console.log(this.questionPointer, 'current point called from perx-core');
+    if (questionPointerChange.currentValue) {
+      // emitting helps to update calling setCurrentPointer on parentElement but degisters that currentPointer has been called with answer alrdy
+      this.currentPointer.emit(questionPointerChange.currentValue);
+    }
+  }
 
   public ngOnInit(): void {
     if (this.data$) {
@@ -52,6 +62,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
   public updateAnswers(answer: IAnswer): void {
     if (answer.questionId) {
       this.answersTracker[answer.questionId] = answer;
+      console.log('HEY ANSWERS ARE UPDATING!!!, think wont work when hit previous');
     }
   }
 
@@ -69,13 +80,14 @@ export class SurveyComponent implements OnInit, OnDestroy {
       this.totalLength.emit(totalQuestion);
       this.currentPointer.emit(currentPoint);
     }
-    if (currentPoint >= totalQuestion) {
-      const answers: IAnswer[] = Object.entries(this.answersTracker).map(([id, answer]) => ({
-        questionId: id,
-        content: answer.content
-      }));
-      this.surveyDone.emit(answers);
-    }
+    // to keep track of questions answered state, update after each question answered / updated
+    // if (currentPoint >= totalQuestion) {
+    const answers: IAnswer[] = Object.entries(this.answersTracker).map(([id, answer]) => ({
+      questionId: id,
+      content: answer.content
+    }));
+    this.surveyDone.emit(answers);
+    // }
   }
 
   public calculatePoints(): number {

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {Component, OnInit, OnDestroy, ViewChild, ElementRef, NgZone, ChangeDetectorRef} from '@angular/core';
 import { NotificationService, ISurvey, SurveyService, IPopupConfig, IPrePlayStateData, AuthenticationService } from '@perx/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable, Subject, of } from 'rxjs';
@@ -17,7 +17,10 @@ interface IAnswer {
   styleUrls: ['./survey.component.scss']
 })
 export class SurveyComponent implements OnInit, OnDestroy {
+  @ViewChild('overflowContainer', { static: false }) overflowContainer: ElementRef;
+  @ViewChild('overFarrow', { static: false }) overFarrow: ElementRef;
   public data$: Observable<ISurvey>;
+  public intervalId: number;
   public survey: ISurvey;
   public answers: IAnswer[];
   public totalLength: number;
@@ -68,7 +71,9 @@ export class SurveyComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private surveyService: SurveyService,
     private translate: TranslateService,
-    private auth: AuthenticationService
+    private auth: AuthenticationService,
+    private cd: ChangeDetectorRef,
+    private ngZone: NgZone,
   ) { }
 
   public ngOnInit(): void {
@@ -112,19 +117,45 @@ export class SurveyComponent implements OnInit, OnDestroy {
         this.router.navigate(['/wallet']);
       }
     );
+    this.ngZone.runOutsideAngular(() => {
+      // https://medium.com/@krzysztof.grzybek89/how-runoutsideangular-might-reduce-change-detection-calls-in-your-app-6b4dab6e374d
+      // Zone.js is an execution context for tracking and intercepting async operations like: DOM events, XMLHttpRequests
+      // https://stackoverflow.com/questions/51455545/when-to-use-ngzone-run
+
+      this.intervalId = window.setInterval(() => {
+        // handle scroll event on angular https://stackoverflow.com/questions/44516017/how-to-handle-window-scroll-event-in-angular-4/44516191
+        // click doesnt handle scroll
+        this.overflowContainer.nativeElement.addEventListener('scroll', () => {
+          // if the visibility of overflow is there, change it to hidden on scroll
+          console.log('first check that this is working');
+          this.overFarrow.nativeElement.classList.add('hidden');
+          console.log(this.overFarrow.nativeElement, 'arrows classlist');
+        }, { once: true }); // once: true so i dont need to remove the event listener, only needs to be ran once
+        // remember to removeEventListener after
+        this.overflowContainer.nativeElement.addEventListener('click', () => {
+          this.overFarrow.nativeElement.classList.add('hidden');
+          console.log('when click on this box want to disbale tha arrow');
+        }, { once: true });
+      }, 500);
+      // setinterval allows me delay so that i access the nativeElement is not undefined ala afterviewChecked
+    });
   }
 
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
 
   public get progressBarValue(): number {
     return Math.round(this.currentPointer / this.totalLength * 100) || 0;
+    this.cd.detectChanges(); // idk why this needs to be here
   }
 
   public get surveyComplete(): boolean {
-    return this.currentPointer === this.totalLength;
+    return this.questionPointer === this.totalLength - 1 && this.answers[this.questionPointer] && this.answers[this.questionPointer].content;
   }
 
   public onSubmit(): void {
@@ -178,28 +209,58 @@ export class SurveyComponent implements OnInit, OnDestroy {
   }
 
   public setCurrentPointer(currentPointer: number): void {
+    console.log('set current pointer function is being called');
     this.currentPointer = currentPointer;
+    this.ngZone.run(
+      () => {
+        // two cd refs have to be here to work
+        this.cd.detectChanges();
+        console.log('useless stufgf HELLOP');
+        this.checkShowOverArrow();
+        this.cd.detectChanges();
+      }
+    );
   }
 
   public updateSurveyStatus(answers: IAnswer[]): void {
     this.answers = answers;
   }
 
+  public checkShowOverArrow() {
+    const card = this.overflowContainer.nativeElement;
+    const arrow = this.overFarrow.nativeElement;
+    const isOverflowing = card.clientHeight < card.scrollHeight;
+    console.log(card.clientHeight, card.scrollHeight, 'card client height and scroll height');
+    if (isOverflowing) {
+      console.log('it is overlfowing');
+      arrow.classList.remove('hidden');
+    } else {
+      console.log('it is not overflowing');
+      arrow.classList.add('hidden');
+    }
+  }
 
   public updateQuestionPointer(action: string): void {
+    // updateQuestion will be called again because questionPointer cause child to emit currentPointer
+    // produce change and rerender, so get new dimensions
+    console.log(this.progressBarValue, 'prog value first');
     if (action === 'next') {
       console.log(this.currentPointer, 'current pointer');
-      console.log(this.progressBarValue, 'prog value');
+      console.log(this.progressBarValue, 'prog value second');
+      console.log(this.answers, ' what my current answer');
       // means completed before, allow to freely click next
-      if (this.progressBarValue >= 100) {
-        console.log('i am back from the dead');
+      // change logic to if answers are present arldy, allow next
+      if (this.answers[this.questionPointer] && this.answers[this.questionPointer].content) { // this.progressBarValue >= 100 <- no longer valid, progress bar is in line with current questions
+        // can go next if currentpage points < progressBarvalue, else only when asnwer last qn then trigger functionality (DEFUNCT)
+        // able to go next if answer has been answered, i.e. content is present, would an empty string be considered answered?
         this.questionPointer++;
-        return;
       } else if (this.currentPointer === this.questionPointer + 1) {
         this.questionPointer++;
-        return;
       }
-      console.log(this.questionPointer);
+      console.log(this.currentPointer, 'what is my current pointer now?');
+      // to acknowledge change page and call checkArrow
+      // this.setCurrentPointer(this.currentPointer + 1);
+      // console.log(this.questionPointer);
     } else {
       this.questionPointer--;
       console.log(this.questionPointer, 'minusing what am i');

@@ -41,17 +41,20 @@
     }
   }
 
-  .survey-card {
-    display: flex;
-    flex-direction: column;
+  .survey-card-wrap {
     overflow-y: scroll;
-    align-items: center;
     -webkit-overflow-scrolling: touch;
     max-height: 45rem;
-    height: 36rem;
     width: 90%;
     margin-top: 2rem;
     z-index: 1;
+  }
+
+  .survey-card {
+    display: flex;
+    flex-direction: column;
+    min-height: 34rem;
+    align-items: center;
 
     h1 {
       font-style: normal;
@@ -91,5 +94,45 @@
     text-align: center;
     height: 4rem;
     width: 13rem;
+  }
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.arrow {
+  position: absolute;
+  top: 32.8rem;
+  animation: anim 3s infinite;
+}
+
+@keyframes anim {
+  0% {
+    transform: translateY(0);
+  }
+
+  20% {
+    transform: translateY(0);
+  }
+
+  40% {
+    transform: translateY(-30px);
+  }
+
+  50% {
+    transform: translateY(0);
+  }
+
+  60% {
+    transform: translateY(-15px);
+  }
+
+  80% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(0);
   }
 }
