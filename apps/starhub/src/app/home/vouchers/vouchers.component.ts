@@ -42,7 +42,7 @@ export class VouchersComponent implements OnInit {
   }
 
   public voucherSelected(voucher: Voucher): void {
-    this.router.navigate(['/voucher'], { queryParams: { id: voucher.id } });
+    this.router.navigate(['/redemption'], { queryParams: { id: voucher.id } });
   }
 
   public seeMoreClicked(): void {
