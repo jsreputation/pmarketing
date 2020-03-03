@@ -8,6 +8,7 @@ import { AuthenticationService, NotificationService } from '@perx/core';
 import { Type } from '@angular/core';
 import { of, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { CardComponentMock } from '../../card/containers/card/card.component.mock';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -28,11 +29,17 @@ describe('LoginComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [LoginComponent],
+      declarations: [
+        LoginComponent
+      ],
       imports: [
         RouterTestingModule.withRoutes([{
           path: 'home',
           component: LoginComponent
+        },
+        {
+          path: 'card',
+          component: CardComponentMock
         }]),
         FormsModule,
         MatFormFieldModule,
