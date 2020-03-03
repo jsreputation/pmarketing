@@ -22,7 +22,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
   public data$: Observable<ISurvey>;
   public intervalId: number;
   public survey: ISurvey;
-  public answers: IAnswer[];
+  public answers: IAnswer[] = [];
   public totalLength: number;
   public currentPointer: number;
   public questionPointer: number = 0;
@@ -150,7 +150,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
   }
 
   public get progressBarValue(): number {
-    return Math.round(this.currentPointer / this.totalLength * 100) || 0;
+    return Math.round(this.answers.filter((answer) => answer.content).length / this.totalLength * 100) || 0;
     this.cd.detectChanges(); // idk why this needs to be here
   }
 
