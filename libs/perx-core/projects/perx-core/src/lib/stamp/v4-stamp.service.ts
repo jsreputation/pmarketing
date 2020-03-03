@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { oc } from 'ts-optchain';
-import { Observable, of, throwError, from, timer } from 'rxjs';
+import {Observable, of, throwError, from, timer} from 'rxjs';
 import {
   map,
   flatMap,
@@ -10,7 +10,9 @@ import {
   tap,
   filter,
   mergeMap,
-  toArray
+  toArray,
+  switchMap,
+  skip
 } from 'rxjs/operators';
 
 import {
@@ -284,26 +286,11 @@ export class V4StampService implements StampService {
     );
   }
 
-  public stampsChangedForStampCard(stampCard: IStampCard, intervalPeriod: number = 2000): Observable<IStampCard> {
-    let pass: number;
-    let numberOfStamps = stampCard.stamps ? stampCard.stamps.length : 0;
+  // pipe pairwise inside the component,bcz get Proxy for some reason, unable to get access to the value cached in svc
+  public stampsChangedForStampCard(campaignId: number, intervalPeriod: number = 1500): Observable<IStampCard> {
     return timer(0, intervalPeriod).pipe(
-      map(val => {
-        pass = val;
-        return this.getCurrentCard(stampCard.campaignId || 0);
-      }),
-      mergeAll(1),
-      filter((card: IStampCard) => {
-        if (pass === 0) {
-          return true;
-        }
-
-        if (card.stamps && numberOfStamps < card.stamps.length) {
-          numberOfStamps = card.stamps.length;
-          return true;
-        }
-        return false;
-      })
+      switchMap((_) => this.getCurrentCard(campaignId)),
+      skip(1)
     );
   }
 
