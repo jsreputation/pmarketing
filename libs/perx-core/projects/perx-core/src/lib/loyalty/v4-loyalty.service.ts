@@ -153,7 +153,7 @@ export class V4LoyaltyService extends LoyaltyService {
   }
 
   public static v4LoyaltyToLoyalty(loyalty: IV4Loyalty): ILoyalty {
-    const copiedLoyalty: IV4Loyalty = {...loyalty};
+    const copiedLoyalty: IV4Loyalty = { ...loyalty };
     let nextTier;
     let highestTier;
     let highestPoints;
@@ -193,10 +193,10 @@ export class V4LoyaltyService extends LoyaltyService {
     const properties = pointHistory.properties;
     return {
       id: pointHistory.id,
-      name: pointHistory.name || properties['descr'],
-      sku: properties['sku'],
-      quantity: properties['qty'],
-      purchaseAmount: properties['untprc'],
+      name: pointHistory.name || properties.descr,
+      sku: properties.sku,
+      quantity: properties.qty,
+      purchaseAmount: properties.untprc,
       points: pointHistory.points,
       pointsBalance: pointHistory.points_balance,
       currencyBalance: pointHistory.points_balance_converted_to_currency,
