@@ -71,7 +71,7 @@ export class LoyaltySummaryComponent implements OnInit {
       this.profile$ = this.profileService.whoAmI();
     }
 
-    if (!this.loyalty$ && this.enableLoyalty) {
+    if (!this.loyalty$) {
       this.loyalty$ = this.loyaltyService.getLoyalty(this.loyaltyId).pipe(
         catchError(val => {
           if (val.status === 401) {
