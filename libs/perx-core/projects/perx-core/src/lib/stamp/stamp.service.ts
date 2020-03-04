@@ -7,7 +7,7 @@ export abstract class StampService {
 
   public abstract getCurrentCard(campaignId: number): Observable<IStampCard>;
 
-  public abstract stampsChangedForStampCard(stampCard: IStampCard): Observable<IStampCard>;
+  public abstract stampsChangedForStampCard(campaignId: number): Observable<IStampCard | undefined>;
 
   public abstract getStamps(campaignId: number): Observable<IStamp[]>;
 
