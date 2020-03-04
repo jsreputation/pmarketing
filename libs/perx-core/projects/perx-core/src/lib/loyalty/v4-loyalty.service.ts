@@ -85,7 +85,7 @@ interface IV4PointHistory {
   properties: {
     descr?: string;
     sku?: string;
-    qty?: number;
+    qty?: string;
     untprc?: string;
   };
 }
@@ -196,7 +196,7 @@ export class V4LoyaltyService extends LoyaltyService {
       name: pointHistory.name || properties['descr'],
       sku: properties['sku'],
       quantity: properties['qty'],
-      purchaseAmount: properties['‘untprc’'],
+      purchaseAmount: properties['untprc'],
       points: pointHistory.points,
       pointsBalance: pointHistory.points_balance,
       currencyBalance: pointHistory.points_balance_converted_to_currency,

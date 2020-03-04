@@ -33,7 +33,7 @@ export interface ITransaction {
   id: number;
   name?: string;
   sku?: string;
-  quantity?: number;
+  quantity?: string;
   purchaseAmount?: string;
   points: number;
   pointsBalance: number;

@@ -5,7 +5,7 @@ cdk-virtual-scroll-viewport {
 .transaction {
   display: flex;
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-  height: 10rem;
+  min-height: 10rem;
   flex-direction: row;
   align-items: stretch;
   box-sizing: border-box;
@@ -26,12 +26,12 @@ cdk-virtual-scroll-viewport {
     font-weight: 900;
     font-family: Lato, sans-serif;
     color: #1B1B25;
-    
+
     span {
-      color: #7D7D89;
+      color: #bfbfc3;
       font-size: 1rem;
       line-height: 1.2rem;
-      margin-left: 1rem;
+      margin-left: 0.5rem;
       letter-spacing: 0.2px;
     }
   }
@@ -41,7 +41,8 @@ cdk-virtual-scroll-viewport {
     line-height: 2.1rem;
   }
 
-  &-point, &-sku-details {
+  &-point,
+  &-sku-details {
     font-style: normal;
     font-weight: normal;
     font-size: 1.2rem;
