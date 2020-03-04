@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./rewards-cards.component.scss']
 })
 export class RewardsCardsComponent implements OnInit {
-  public rewards: Observable<IReward[]>;
+  public rewards$: Observable<IReward[]>;
 
   @Output()
   public tapped: EventEmitter<IReward> = new EventEmitter<IReward>();
@@ -22,7 +22,7 @@ export class RewardsCardsComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.rewards = this.rewardsService.getAllRewards(['featured'])
+    this.rewards$ = this.rewardsService.getAllRewards(['featured'])
       .pipe(
         map((rewards: IReward[]) => rewards.sort((a: IReward, b: IReward) => {
           if (!a.sellingFrom) { return 1; }
