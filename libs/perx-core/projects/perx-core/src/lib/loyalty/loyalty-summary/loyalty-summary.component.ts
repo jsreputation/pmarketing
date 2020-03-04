@@ -33,6 +33,9 @@ export class LoyaltySummaryComponent implements OnInit {
   @Input()
   public summaryExpiringFn: (loyalty: ILoyalty) => string;
 
+  @Input()
+  public enableLoyalty: boolean = true;
+
   public loyaltyProgramExists: boolean = true;
   constructor(
     private profileService: ProfileService,
@@ -68,7 +71,7 @@ export class LoyaltySummaryComponent implements OnInit {
       this.profile$ = this.profileService.whoAmI();
     }
 
-    if (!this.loyalty$) {
+    if (!this.loyalty$ && this.enableLoyalty) {
       this.loyalty$ = this.loyaltyService.getLoyalty(this.loyaltyId).pipe(
         catchError(val => {
           if (val.status === 401) {
