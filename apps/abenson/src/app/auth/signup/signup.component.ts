@@ -8,7 +8,7 @@ import {
   FormGroup,
   AbstractControl,
 } from '@angular/forms';
-// import {Router} from '@angular/router';
+import {Router} from '@angular/router';
 //
 // import {
 //   of,
@@ -18,6 +18,7 @@ import {
 
 import {
   AuthenticationService,
+  NotificationService,
   ISignUpData,
 } from '@perx/core';
 
@@ -61,10 +62,10 @@ export class SignUpComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthenticationService,
-    // private router: Router,
+    private router: Router,
+    private notificationService: NotificationService
     // private sharedDataService: SharedDataService,
     // private profileService: ProfileService,
-    // private notificationService: NotificationService,
   ) {
   }
 
@@ -105,6 +106,29 @@ export class SignUpComponent implements OnInit {
     const profile = {...this.signUpForm.value};
     delete profile.accept_terms;
     (profile as ISignUpData).passwordConfirmation = password;
+    this.authService.signup(profile).subscribe(
+      () => {
+        this.router.navigate(['sms-validation'], {
+          queryParams: {identifier: profile.phone}
+        });
+      }, (error: any) => {
+        if (error.status === 409) {
+          // http conflict
+          this.notificationService.addPopup({
+            title: 'Account Exists',
+            text: 'This account already exists. Please log in instead.',
+            buttonTxt: 'CLOSE'
+          });
+        } else {
+          // card error handling
+          this.notificationService.addPopup({
+            title: 'PROFILE NOT FOUND',
+            text: 'Please check that your PLUS! Card number and last name are correct and try again. If you need help, you may reach us at +63 (02) 8981 0025',
+            buttonTxt: 'OK'
+          });
+        }
+      }
+    );
     /*  tslint:disable max-line-length
     delete profile.cardNumber;
     const cardNumber: string = this.signUpForm.value.cardNumber;
