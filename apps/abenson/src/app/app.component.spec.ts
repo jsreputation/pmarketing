@@ -106,7 +106,8 @@ describe('AppComponent', () => {
     const matDialog = {} as MatDialog;
     app.onActivate(new LoginComponent(router, form, auth, notifi));
     expect(app.showHeader).toBeFalsy();
-    app.onActivate(new SignUpComponent(form, auth, router, shared, profile, ntfs));
+    // , profile, ntfs //for below signupcomponent but remove temp on disable card section
+    app.onActivate(new SignUpComponent(form, auth, router, shared));
     expect(app.showHeader).toBeFalsy();
     app.onActivate(new HomeComponent(router, voucherService, campaingService, configService, datePipe, currencyPipe));
     expect(app.showToolbar).toBeTruthy();
