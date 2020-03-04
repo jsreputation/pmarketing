@@ -231,7 +231,7 @@ describe('SurveyComponent', () => {
           surveyId: 1,
           collectInfo: true,
           campaignId: 1,
-          answers: undefined
+          answers: []
         };
 
         component.ngOnInit();
@@ -272,7 +272,7 @@ describe('SurveyComponent', () => {
           surveyId: 1,
           collectInfo: true,
           campaignId: 1,
-          answers: undefined
+          answers: []
         };
 
         component.ngOnInit();

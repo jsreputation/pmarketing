@@ -117,8 +117,10 @@ export class SurveyComponent implements OnInit, OnDestroy {
             // setTimeout allows me delay so that i am confirmed access the nativeElement
             window.setTimeout(() => {
               // handle scroll event on angular,
-              this.overflowContainer.nativeElement.addEventListener('scroll', this.hideArrow, { passive: true });
-              this.overflowContainer.nativeElement.addEventListener('click', this.hideArrow);
+              if (this.overflowContainer) {
+                this.overflowContainer.nativeElement.addEventListener('scroll', this.hideArrow, { passive: true });
+                this.overflowContainer.nativeElement.addEventListener('click', this.hideArrow);
+              }
             }, 0);
           });
         }
@@ -214,13 +216,17 @@ export class SurveyComponent implements OnInit, OnDestroy {
   }
 
   public checkShowOverArrow(): void {
-    const card = this.overflowContainer.nativeElement;
-    const arrow = this.overFarrow.nativeElement;
-    const isOverflowing = card.clientHeight < card.scrollHeight;
-    if (isOverflowing) {
-      arrow.classList.remove('hidden');
-    } else {
-      arrow.classList.add('hidden');
+    let card: HTMLElement;
+    let arrow: HTMLElement;
+    if (this.overflowContainer && this.overflowContainer.nativeElement) {
+      card = this.overflowContainer.nativeElement;
+      arrow = this.overFarrow.nativeElement;
+      const isOverflowing = card.clientHeight < card.scrollHeight;
+      if (isOverflowing) {
+        arrow.classList.remove('hidden');
+      } else {
+        arrow.classList.add('hidden');
+      }
     }
   }
 
