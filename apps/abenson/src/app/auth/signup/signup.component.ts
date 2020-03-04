@@ -8,22 +8,20 @@ import {
   FormGroup,
   AbstractControl,
 } from '@angular/forms';
-import {Router} from '@angular/router';
-
-import {
-  of,
-  throwError,
-} from 'rxjs';
-import {mergeMap} from 'rxjs/operators';
+// import {Router} from '@angular/router';
+//
+// import {
+//   of,
+//   throwError,
+// } from 'rxjs';
+// import {mergeMap} from 'rxjs/operators';
 
 import {
   AuthenticationService,
   ISignUpData,
-  NotificationService,
-  ProfileService,
 } from '@perx/core';
 
-import {SharedDataService} from 'src/app/services/shared-data.service';
+// import {SharedDataService} from 'src/app/services/shared-data.service';
 
 @Component({
   selector: 'app-signup',
@@ -63,10 +61,10 @@ export class SignUpComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthenticationService,
-    private router: Router,
-    private sharedDataService: SharedDataService,
-    private profileService: ProfileService,
-    private notificationService: NotificationService,
+    // private router: Router,
+    // private sharedDataService: SharedDataService,
+    // private profileService: ProfileService,
+    // private notificationService: NotificationService,
   ) {
   }
 
@@ -91,8 +89,8 @@ export class SignUpComponent implements OnInit {
       email: ['', Validators.email],
       phone: ['', Validators.required],
       password: ['', [Validators.required, Validators.maxLength(4), Validators.minLength(4)]],
-      acceptTerms: [false, Validators.requiredTrue],
-      cardNumber: ['', [Validators.minLength(16), Validators.maxLength(16)]]
+      acceptTerms: [false, Validators.requiredTrue]
+      // cardNumber: ['', [Validators.minLength(16), Validators.maxLength(16)]]
     });
   }
 
@@ -106,9 +104,10 @@ export class SignUpComponent implements OnInit {
     this.errorMessage = undefined;
     const profile = {...this.signUpForm.value};
     delete profile.accept_terms;
+    (profile as ISignUpData).passwordConfirmation = password;
+    /*  tslint:disable max-line-length
     delete profile.cardNumber;
     const cardNumber: string = this.signUpForm.value.cardNumber;
-    (profile as ISignUpData).passwordConfirmation = password;
     (cardNumber && cardNumber.length ? this.profileService.verifyCardNumber(cardNumber, profile.lastName, '1') : of(true))
       .pipe(mergeMap((success) => success ? this.authService.signup(profile) : throwError(('err-or')))).subscribe(() => {
         if (this.signUpForm.value.cardNumber) {
@@ -137,7 +136,7 @@ export class SignUpComponent implements OnInit {
             buttonTxt: 'OK'
           });
         }
-
       });
+    */
   }
 }
