@@ -35,16 +35,13 @@ export class SelectComponent implements OnChanges {
 
   public emitValue(): void {
     let result: string[] = [];
-    console.log(this.selectedChoices);
     if (this.payload.multiple && this.selectedChoices) {
-      console.log('i am here, multiple');
       result = Object.entries(this.selectedChoices)
         .filter(([key, value]) => key !== undefined && value !== undefined && value !== false)
         .map(data => data[0]);
     } else {
       result[0] = this.selectedChoice.toString();
     }
-    console.log(result, 'what is the result?');
     this.updateAnswers.emit({ content: result });
   }
 

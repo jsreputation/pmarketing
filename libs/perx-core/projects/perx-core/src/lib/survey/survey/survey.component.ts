@@ -37,8 +37,6 @@ export class SurveyComponent implements OnInit, OnChanges, OnDestroy {
 
   public ngOnChanges(changes: SimpleChanges): void {
     const questionPointerChange = changes.questionPointer;
-    console.log(questionPointerChange, 'what arte chagnes, cal update parent or emit the curreentPoitnt');
-    console.log(this.questionPointer, 'current point called from perx-core');
     if (questionPointerChange.currentValue) {
       // emitting helps to update calling setCurrentPointer on parentElement but degisters that currentPointer has been called with answer alrdy
       this.currentPointer.emit(questionPointerChange.currentValue);
@@ -62,7 +60,6 @@ export class SurveyComponent implements OnInit, OnChanges, OnDestroy {
   public updateAnswers(answer: IAnswer): void {
     if (answer.questionId) {
       this.answersTracker[answer.questionId] = answer;
-      console.log('HEY ANSWERS ARE UPDATING!!!, think wont work when hit previous');
     }
   }
 
