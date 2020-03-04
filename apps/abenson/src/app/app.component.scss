@@ -17,6 +17,7 @@
   font-size: 2rem;
   line-height: 1.9rem;
   position: relative;
+  padding: 0.5rem 0;
 
   .mat-icon {
     position: absolute;
@@ -28,6 +29,15 @@
     font-weight: 500;
     line-height: 2.4rem;
     letter-spacing: 0.75px;
+  }
+
+  .logo-wrapper {
+    height: 100%;
+    width: auto;
+
+    .logo {
+      height: 100%;
+    }
   }
 }
 
