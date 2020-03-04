@@ -206,29 +206,30 @@ export class V4StampService implements StampService {
   }
 
   private static v4StampCardToStampCard(stampCard: IV4StampCard): IStampCard {
-    const cardImageUrl = oc(stampCard).display_properties.card_image.value.image_url(
-      oc(stampCard).display_properties.card_image.value.image_url(undefined) as unknown as string
+    const stampCardDP = oc(stampCard).display_properties;
+    const cardImageUrl = stampCardDP.card_image.value.image_url(
+      stampCardDP.card_image.value.file(undefined) as unknown as string
     );
     const cardImage = cardImageUrl ? { value: { imageUrl: cardImageUrl } } : undefined;
     //  todo: temporarily map this until v4 dashboard fixes naming
-    const cardBackgroundImageUrl = oc(stampCard).display_properties.card_background_image.value.image_url(
-      oc(stampCard).display_properties.card_background_image.value.file(undefined) as unknown as string
+    const cardBackgroundImageUrl = stampCardDP.card_background_image.value.image_url(
+      stampCardDP.card_background_image.value.file(undefined) as unknown as string
     );
     const cardBackgroundImage = cardBackgroundImageUrl ? { value: { imageUrl: cardBackgroundImageUrl } } : undefined;
-    const rewardPreStamp = oc(stampCard).display_properties.gift_inactive_image.value.image_url(
-      oc(stampCard).display_properties.gift_inactive_image.value.file(undefined) as unknown as string
+    const rewardPreStamp = stampCardDP.gift_inactive_image.value.image_url(
+      stampCardDP.gift_inactive_image.value.file(undefined) as unknown as string
     );
-    const rewardPostStamp = oc(stampCard).display_properties.gift_active_image.value.image_url(
-      oc(stampCard).display_properties.gift_active_image.value.file(undefined) as unknown as string
+    const rewardPostStamp = stampCardDP.gift_active_image.value.image_url(
+      stampCardDP.gift_active_image.value.file(undefined) as unknown as string
     );
-    const preStampImg = oc(stampCard).display_properties.stamp_inactive_image.value.image_url(
-      oc(stampCard).display_properties.stamp_inactive_image.value.file(undefined) as unknown as string
+    const preStampImg = stampCardDP.stamp_inactive_image.value.image_url(
+      stampCardDP.stamp_inactive_image.value.file(undefined) as unknown as string
     );
-    const postStampImg = oc(stampCard).display_properties.stamp_active_image.value.image_url(
-      oc(stampCard).display_properties.stamp_active_image.value.file(undefined) as unknown as string
+    const postStampImg = stampCardDP.stamp_active_image.value.image_url(
+      stampCardDP.stamp_active_image.value.file(undefined) as unknown as string
     );
-    const backgroundImgUrl = oc(stampCard).display_properties.background_image.value.image_url(
-      oc(stampCard).display_properties.background_image.value.file(undefined) as unknown as string
+    const backgroundImgUrl = stampCardDP.background_image.value.image_url(
+      stampCardDP.background_image.value.file(undefined) as unknown as string
     );
     const backgroundImg = backgroundImgUrl ? { value: { imageUrl: backgroundImgUrl } } : undefined;
     return {
