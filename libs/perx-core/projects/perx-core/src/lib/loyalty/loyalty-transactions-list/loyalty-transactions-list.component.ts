@@ -26,6 +26,13 @@ export class LoyaltyTransactionsListComponent implements OnInit {
   public titleFn: (tr: ITransaction) => string;
 
   @Input()
+  public skuFn: (tr: ITransaction) => ({
+    sku: string | undefined;
+    qty: string | undefined,
+    untprc: string | undefined;
+  });
+
+  @Input()
   public descFn: (tr: ITransaction) => string;
 
   @Input()
@@ -43,6 +50,13 @@ export class LoyaltyTransactionsListComponent implements OnInit {
   public ngOnInit(): void {
     if (!this.titleFn) {
       this.titleFn = (tr: ITransaction) => `${tr.name}`;
+    }
+    if (!this.skuFn) {
+      this.skuFn = (tr: ITransaction) => ({
+        sku: tr.sku,
+        qty: tr.quantity ? tr.quantity > 0 ? `${tr.quantity} items` : '0 item' : undefined,
+        untprc: tr.purchaseAmount
+      });
     }
     if (!this.descFn) {
       this.descFn = () => '';

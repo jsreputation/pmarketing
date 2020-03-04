@@ -32,6 +32,9 @@ export interface ILoyalty {
 export interface ITransaction {
   id: number;
   name?: string;
+  sku?: string;
+  quantity?: number;
+  purchaseAmount?: string;
   points: number;
   pointsBalance: number;
   currencyBalance: number;
