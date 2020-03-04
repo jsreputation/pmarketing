@@ -8,13 +8,13 @@ import {
   FormGroup,
   AbstractControl,
 } from '@angular/forms';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 
 import {
   of,
   throwError,
 } from 'rxjs';
-import {mergeMap} from 'rxjs/operators';
+import { mergeMap } from 'rxjs/operators';
 
 import {
   AuthenticationService,
@@ -23,7 +23,7 @@ import {
   ProfileService,
 } from '@perx/core';
 
-import {SharedDataService} from 'src/app/services/shared-data.service';
+import { SharedDataService } from 'src/app/services/shared-data.service';
 
 @Component({
   selector: 'app-signup',
@@ -79,7 +79,7 @@ export class SignUpComponent implements OnInit {
       this.authService.getAppToken().subscribe(() => {
         this.appAccessTokenFetched = true;
       }, (err) => {
-        console.error(`Error${  err}`);
+        console.error(`Error${err}`);
       });
     }
   }
@@ -104,7 +104,7 @@ export class SignUpComponent implements OnInit {
     }
 
     this.errorMessage = undefined;
-    const profile = {...this.signUpForm.value};
+    const profile = { ...this.signUpForm.value, phone: `63${this.signUpForm.value.phone}` };
     delete profile.accept_terms;
     delete profile.cardNumber;
     const cardNumber: string = this.signUpForm.value.cardNumber;
@@ -119,18 +119,18 @@ export class SignUpComponent implements OnInit {
           });
         }
         this.router.navigate(['sms-validation'], {
-          queryParams: {identifier: profile.phone}
+          queryParams: { identifier: profile.phone }
         });
       }, (error: any) => {
         if (error.status === 409) {
-        // http conflict
+          // http conflict
           this.notificationService.addPopup({
             title: 'Account Exists',
             text: 'This account already exists. Please log in instead.',
             buttonTxt: 'CLOSE'
           });
         } else {
-        // card error handling
+          // card error handling
           this.notificationService.addPopup({
             title: 'PROFILE NOT FOUND',
             text: 'Please check that your PLUS! Card number and last name are correct and try again. If you need help, you may reach us at +63 (02) 8981 0025',
