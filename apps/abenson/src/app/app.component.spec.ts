@@ -98,6 +98,7 @@ describe('AppComponent', () => {
     const router = {} as Router;
     const form = {} as FormBuilder;
     const notifi = {} as NotificationService;
+    const config = {} as ConfigService;
     const voucherService = {} as IVoucherService;
     const campaingService = {} as ICampaignService;
     const profile = {} as ProfileService;
@@ -107,7 +108,7 @@ describe('AppComponent', () => {
     app.onActivate(new LoginComponent(router, form, auth, notifi));
     expect(app.showHeader).toBeFalsy();
     // , profile, ntfs //for below signupcomponent but remove temp on disable card section
-    app.onActivate(new SignUpComponent(form, auth, router, notifi));
+    app.onActivate(new SignUpComponent(form, auth, router, notifi, config));
     expect(app.showHeader).toBeFalsy();
     app.onActivate(new HomeComponent(router, voucherService, campaingService, configService, datePipe, currencyPipe));
     expect(app.showToolbar).toBeTruthy();
