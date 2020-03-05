@@ -52,7 +52,8 @@ export class FeedReaderService {
       const it: FeedItem = {
         title: item.getElementsByTagName('title')[0].textContent,
         description: item.getElementsByTagName('description')[0].textContent,
-        descriptionWithURL: item.getElementsByTagName('content:encoded')[0] ? item.getElementsByTagName('content:encoded')[0].textContent : item.getElementsByTagName('description')[0].textContent,
+        descriptionWithURL: item.getElementsByTagName('content:encoded')[0] ?
+          item.getElementsByTagName('content:encoded')[0].textContent : item.getElementsByTagName('description')[0].textContent,
         link: item.getElementsByTagName('link')[0].textContent,
         image,
         guid: item.getElementsByTagName('guid')[0].textContent,
