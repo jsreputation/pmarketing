@@ -20,11 +20,11 @@
     </mat-tab>
     <mat-tab label="Redemption">
       <perx-core-loyalty-transactions-list
-        *ngIf="transactions"
-        [transactions]="transactions | transactionHistory: false"
+        *ngIf="rewardTransactions"
+        [transactions]="rewardTransactions"
         [titleFn]="redemptionsTitleFn"
-        [subTitleFn]="subTitleFn"
-        [priceLabelFn]="priceLabelFn"
+        [subTitleFn]="redemptionsSubTitleFn"
+        [priceLabelFn]="redemptionsPriceLabelFn"
       >
       </perx-core-loyalty-transactions-list>
     </mat-tab>
