@@ -107,7 +107,7 @@ describe('AppComponent', () => {
     app.onActivate(new LoginComponent(router, form, auth, notifi));
     expect(app.showHeader).toBeFalsy();
     // , profile, ntfs //for below signupcomponent but remove temp on disable card section
-    app.onActivate(new SignUpComponent(form, auth, router, shared));
+    app.onActivate(new SignUpComponent(form, auth, router, notifi));
     expect(app.showHeader).toBeFalsy();
     app.onActivate(new HomeComponent(router, voucherService, campaingService, configService, datePipe, currencyPipe));
     expect(app.showToolbar).toBeTruthy();
