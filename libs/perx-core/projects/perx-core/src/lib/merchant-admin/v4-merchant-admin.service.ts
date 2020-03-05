@@ -17,7 +17,7 @@ import {
   IMerchantCustomProperties,
   // MerchantTransactionDetailType,
   IMerchantPurchaseTransactionHistory,
-  // IMerchantRewardTransactionHistory,
+  IMerchantRewardTransactionHistory,
   IResetPasswordData
 } from './models/merchants-admin.model';
 
@@ -138,21 +138,18 @@ interface IV4MerchantPurchaseTransactionHistory {
   transaction_reference: string;
   points_earned: number;
 }
-//
-// interface IV4MerchantRewardTransactionHistory {
-//   id: number;
-//   state: string;
-//   voucher_code?: string;
-//   reserved_expires_at?: Date;
-//   voucher_key?: string;
-//   voucher_expires_at: Date;
-//   user_account: {
-//     identifier: string;
-//   };
-//   reward: IV4Reward;
-//   redemption_location?: string;
-//   tags?: IV4Tag[];
-// }
+
+interface IV4MerchantRewardTransactionHistory {
+  id: number;
+  created_at: Date;
+  issued_date: Date;
+  redemption_date: Date;
+  updated_at: Date;
+  customer_name: string;
+  merchant_name: string;
+  reward_name: string;
+  voucher_code: string;
+}
 
 // interface IV4MerchantTransactionHistory {
 //   id: number;
@@ -170,6 +167,10 @@ interface IV4MerchantPurchaseTransactionHistory {
 
 interface IV4MerchantTransactionHistoryResponse {
   data: IV4MerchantPurchaseTransactionHistory[];
+}
+
+interface IV4MerchantRewardHistoryResponse {
+  data: IV4MerchantRewardTransactionHistory[];
 }
 
 @Injectable({
@@ -213,6 +214,16 @@ export class V4MerchantAdminService implements IMerchantAdminService {
       price: transactionHistory.amount,
       currency: transactionHistory.currency,
       pointsIssued: transactionHistory.points_earned
+    };
+  }
+
+  public static v4RewardTransactionHistoryToRewardTransactionHistory(transaction: IV4MerchantRewardTransactionHistory): IMerchantRewardTransactionHistory {
+    return {
+      id: transaction.id,
+      issuedDate: transaction.issued_date,
+      userAccount: transaction.merchant_name,
+      customerName: transaction.customer_name,
+      rewardName: transaction.reward_name
     };
   }
 
@@ -363,6 +374,17 @@ export class V4MerchantAdminService implements IMerchantAdminService {
       map((transactionHistories: IV4MerchantPurchaseTransactionHistory[]) => transactionHistories.map(
         (transactionHistory: IV4MerchantPurchaseTransactionHistory) =>
           V4MerchantAdminService.v4PurchaseTransactionHistoryToPurchaseTransactionHistory(transactionHistory)
+      ))
+    );
+  }
+
+  public getRewardTransactionHistory(): Observable<IMerchantRewardTransactionHistory[]> {
+    const url = `${this.apiHost}/v4/merchant_admin/reward_transactions?state=redeemed`;
+    return this.http.get<IV4MerchantRewardHistoryResponse>(url).pipe(
+      map((res: IV4MerchantRewardHistoryResponse) => res.data),
+      map((transactionHistories: IV4MerchantRewardTransactionHistory[]) => transactionHistories.map(
+        (transactionHistory: IV4MerchantRewardTransactionHistory) =>
+          V4MerchantAdminService.v4RewardTransactionHistoryToRewardTransactionHistory(transactionHistory)
       ))
     );
   }

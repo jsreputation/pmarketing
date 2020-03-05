@@ -61,11 +61,10 @@ export interface IMerchantPurchaseTransactionHistory {
 
 export interface IMerchantRewardTransactionHistory {
   id: number;
-  state: string;
-  voucherExpiry: Date;
+  issuedDate: Date;
   userAccount: string;
+  customerName: string;
   rewardName: string;
-  redemptionLocation?: string;
 }
 
 export interface IMerchantCustomProperties {
