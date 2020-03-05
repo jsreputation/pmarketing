@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FeedItem, FeedReaderService } from '@perx/core';
 import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
-import {PopupComponent} from '../popup/popup.component';
+import { PopupComponent } from '../popup/popup.component';
 
 interface FeedItemGroup {
   label: string;
@@ -14,7 +14,6 @@ interface FeedItemGroup {
   styleUrls: ['./promos.component.scss']
 })
 export class PromosComponent implements OnInit {
-  public showButton: boolean = false;
   public itemsGroup$: FeedItemGroup[];
   constructor(
     private reader: FeedReaderService,
@@ -37,7 +36,7 @@ export class PromosComponent implements OnInit {
   public readMore(item: FeedItem): void {
     this.dialog.open(PopupComponent, {
       panelClass: 'app-full-bleed-dialog',
-      data: {...item, ...(this.showButton ? {} : {hideButton: true})},
+      data: { ...item, description: item.descriptionWithURL, hideButton: true },
       height: '85vh',
       minWidth: '35.5rem',
       maxWidth: '94vw'
