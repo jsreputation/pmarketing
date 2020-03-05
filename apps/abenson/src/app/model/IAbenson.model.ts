@@ -1,5 +1,5 @@
 export interface IAbensonConfig {
   comingSoon: boolean;
-  phoneNoPrefix: string;
+  phonePrefix: string;
   cardBrandingImage: string;
 }

@@ -37,7 +37,7 @@ export class SignUpComponent implements OnInit {
   public errorMessage?: string;
   public hide: boolean = true;
   public appAccessTokenFetched: boolean;
-  public phoenNoPrefix: string;
+  public phonePrefix: string;
 
   public get firstName(): AbstractControl | null {
     return this.signUpForm.get('firstName');
@@ -78,7 +78,7 @@ export class SignUpComponent implements OnInit {
     this.initForm();
     const token = this.authService.getAppAccessToken();
     this.configService.readAppConfig<IAbensonConfig>().subscribe(
-      (config: IConfig<IAbensonConfig>) => this.phoenNoPrefix = config && config.custom && config.custom.phoneNoPrefix || ''
+      (config: IConfig<IAbensonConfig>) => this.phonePrefix = config && config.custom && config.custom.phonePrefix || ''
     );
     if (token) {
       this.appAccessTokenFetched = true;
@@ -111,7 +111,7 @@ export class SignUpComponent implements OnInit {
     }
 
     this.errorMessage = undefined;
-    const profile = { ...this.signUpForm.value, phone: `${this.phoenNoPrefix}${this.signUpForm.value.phone}` };
+    const profile = { ...this.signUpForm.value, phone: `${this.phonePrefix}${this.signUpForm.value.phone}` };
     delete profile.accept_terms;
     (profile as ISignUpData).passwordConfirmation = password;
     this.authService.signup(profile).subscribe(
