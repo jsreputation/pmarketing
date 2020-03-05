@@ -158,7 +158,7 @@ export class V4LoyaltyService extends LoyaltyService {
     let highestTier;
     let highestPoints;
     // they are in order, find the first one points_rqmt
-    if (copiedLoyalty && copiedLoyalty.tiers.length > 0) { // sort for extra assurance
+    if (copiedLoyalty.tiers && copiedLoyalty.tiers.length > 0) { // sort for extra assurance
       nextTier = copiedLoyalty.tiers
         .sort((tier1, tier2) => tier1.points_difference - tier2.points_difference)
         .find(tier => tier.points_difference > 0);
