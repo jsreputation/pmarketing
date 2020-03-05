@@ -177,8 +177,8 @@ export class V4GameService implements IGameService {
       config = {
         ...defaultScratch(),
         coverImg: dpps.prescratch_image.value.image_url,
-        underlyingSuccessImg: dpps.post_success_image.value.image_url,
-        underlyingFailImg: dpps.post_fail_image.value.image_url
+        underlyingSuccessImg: oc(dpps).post_success_image.value.image_url(''),
+        underlyingFailImg: oc(dpps).post_fail_image.value.image_url('')
       };
     } else {
       throw new Error(`${game.game_type} is not mapped yet`);
