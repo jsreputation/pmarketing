@@ -82,7 +82,12 @@ interface IV4PointHistory {
   points_balance: number;
   points_balance_converted_to_currency: number;
   points_date: string;
-  properties: {};
+  properties: {
+    descr?: string;
+    sku?: string;
+    qty?: string;
+    untprc?: string;
+  };
 }
 
 interface IV4RewardTransactionHistory {
@@ -148,7 +153,7 @@ export class V4LoyaltyService extends LoyaltyService {
   }
 
   public static v4LoyaltyToLoyalty(loyalty: IV4Loyalty): ILoyalty {
-    const copiedLoyalty: IV4Loyalty = {...loyalty};
+    const copiedLoyalty: IV4Loyalty = { ...loyalty };
     let nextTier;
     let highestTier;
     let highestPoints;
@@ -185,9 +190,13 @@ export class V4LoyaltyService extends LoyaltyService {
   }
 
   public static v4PointHistoryToPointHistory(pointHistory: IV4PointHistory): ITransaction {
+    const properties = pointHistory.properties;
     return {
       id: pointHistory.id,
-      name: pointHistory.name,
+      name: pointHistory.name || properties.descr,
+      sku: properties.sku,
+      quantity: properties.qty,
+      purchaseAmount: properties.untprc,
       points: pointHistory.points,
       pointsBalance: pointHistory.points_balance,
       currencyBalance: pointHistory.points_balance_converted_to_currency,
