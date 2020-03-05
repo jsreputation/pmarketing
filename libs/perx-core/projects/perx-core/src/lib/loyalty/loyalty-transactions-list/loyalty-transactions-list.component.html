@@ -3,6 +3,13 @@
     <div class="transaction-info">
       <div class="transaction-name">
         {{titleFn(transaction)}}
+        <span>
+          {{skuFn(transaction).sku}}
+        </span>
+      </div>
+      <div class="transaction-sku-details">
+        {{skuFn(transaction).qty}} <br />
+        {{skuFn(transaction).untprc}}
       </div>
       <div class="transaction-description">
         {{descFn(transaction)}}
