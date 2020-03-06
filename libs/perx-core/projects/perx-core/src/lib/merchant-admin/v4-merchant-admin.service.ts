@@ -217,7 +217,9 @@ export class V4MerchantAdminService implements IMerchantAdminService {
     };
   }
 
-  public static v4RewardTransactionHistoryToRewardTransactionHistory(transaction: IV4MerchantRewardTransactionHistory): IMerchantRewardTransactionHistory {
+  public static v4RewardTransactionHistoryToRewardTransactionHistory(
+    transaction: IV4MerchantRewardTransactionHistory
+  ): IMerchantRewardTransactionHistory {
     return {
       id: transaction.id,
       issuedDate: transaction.issued_date,
@@ -358,7 +360,11 @@ export class V4MerchantAdminService implements IMerchantAdminService {
       ));
   }
 
-  public getTransactionHistory(page: number = 1, pageSize: number = 10, locale: string = 'en'): Observable<IMerchantPurchaseTransactionHistory[]> {
+  public getTransactionHistory(
+    page: number = 1,
+    pageSize: number = 10,
+    locale: string = 'en'
+  ): Observable<IMerchantPurchaseTransactionHistory[]> {
     const headers = new HttpHeaders().set('Accept-Language', locale);
     return this.http.get<IV4MerchantTransactionHistoryResponse>(
       `${this.apiHost}/v4/merchant_admin/transactions_history`,
