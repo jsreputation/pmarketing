@@ -56,7 +56,7 @@ export class TransactionHistoryComponent implements OnInit {
     this.merchantAdminService.getRewardTransactionHistory().subscribe(
       (transactions: IMerchantRewardTransactionHistory[]) => this.rewardTransactions = of(transactions),
       (err) => console.log(err)
-    )
+    );
   }
 
   public onLeftActionClick(): void {
