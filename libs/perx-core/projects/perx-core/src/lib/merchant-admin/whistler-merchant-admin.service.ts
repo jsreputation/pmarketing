@@ -7,7 +7,7 @@ import {
 
 import {
   IMerchantAdminTransaction,
-  IMerchantProfile,
+  IMerchantProfile, IMerchantRewardTransactionHistory,
   IMerchantTransactionHistory,
   IResetPasswordData,
 } from './models/merchants-admin.model';
@@ -68,6 +68,11 @@ export class WhistlerMerchantAdminService implements IMerchantAdminService {
   // @ts-ignore
   public getTransactionHistory(page?: number, pageSize?: number, locale?: string): Observable<IMerchantTransactionHistory[]> {
     throw new Error('getTransactionHistory Method not implemented.');
+  }
+
+  // @ts-ignore
+  public getRewardTransactionHistory(): Observable<IMerchantRewardTransactionHistory[]> {
+    throw new Error('getRewardTransactionHistory Method not implemented.');
   }
 
   // @ts-ignore

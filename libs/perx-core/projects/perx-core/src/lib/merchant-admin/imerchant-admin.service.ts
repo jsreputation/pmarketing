@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import {
   IMerchantAdminTransaction,
   IMerchantProfile,
+  IMerchantRewardTransactionHistory,
   IMerchantTransactionHistory,
   IResetPasswordData,
 } from './models/merchants-admin.model';
@@ -33,6 +34,8 @@ export abstract class IMerchantAdminService {
   public abstract getMerchantProfile(): Observable<IMerchantProfile>;
 
   public abstract getTransactionHistory(page?: number, pageSize?: number, locale?: string): Observable<IMerchantTransactionHistory[]>;
+
+  public abstract getRewardTransactionHistory(): Observable<IMerchantRewardTransactionHistory[]>;
 
   public abstract forgotPassword(email: string): Observable<IMessageResponse>;
 
