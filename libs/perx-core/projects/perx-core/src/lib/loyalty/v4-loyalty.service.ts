@@ -148,8 +148,9 @@ export class V4LoyaltyService extends LoyaltyService {
   }
 
   public static v4LoyaltyToLoyalty(loyalty: IV4Loyalty): ILoyalty {
-    const copiedLoyalty: IV4Loyalty = {...loyalty};
+    const copiedLoyalty: IV4Loyalty = { ...loyalty };
     let nextTier;
+    let highestTierData;
     let highestTier;
     let highestPoints;
     // they are in order, find the first one points_rqmt
@@ -159,8 +160,8 @@ export class V4LoyaltyService extends LoyaltyService {
         .find(tier => tier.points_difference > 0);
       // will improve > later on , name diff var to avoid linting shadowed var
       highestPoints = Math.max(...copiedLoyalty.tiers.map(tier2 => tier2.points_requirement));
-      highestTier = copiedLoyalty.tiers.find(tier3 => tier3.points_requirement === highestPoints)
-        .name;
+      highestTierData = copiedLoyalty.tiers.find(tier3 => tier3.points_requirement === highestPoints);
+      highestTier = highestTierData ? highestTierData.name : undefined;
     }
     return {
       id: loyalty.id,
