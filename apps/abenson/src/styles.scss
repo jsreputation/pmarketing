@@ -61,6 +61,11 @@ html, body {
     .mat-form-field-flex > div {
       padding-bottom: 0.75em;
       top: -0.5em;
+
+      span.prefix-spacer {
+        width: 0.3em;
+        display: inline-block;
+      }
     }
   }
 }

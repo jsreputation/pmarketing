@@ -32,7 +32,7 @@
       </mat-form-field>
       <mat-form-field appearance="standard" class="full-width__input">
         <mat-label>Mobile Number</mat-label>
-        <span matPrefix>+63</span>
+        <span matPrefix>+63<span class="prefix-spacer"></span></span>
         <input matInput placeholder="Mobile Number" formControlName="phone">
         <mat-error *ngIf="phone && phone.hasError('required')">
           Mobile Number is <strong>required</strong>
