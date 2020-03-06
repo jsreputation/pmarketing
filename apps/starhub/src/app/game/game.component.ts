@@ -105,7 +105,7 @@ export class GameComponent implements OnInit {
   }
 
   public loadPreplay(): void {
-    if (this.game && this.game.remainingNumberOfTries > 0) {
+    if (this.game && (this.game.remainingNumberOfTries > 0 || this.game.remainingNumberOfTries === null)) {
       this.gameData$.pipe(
         switchMap(
           (game) => this.gameService.prePlay(game.id)
