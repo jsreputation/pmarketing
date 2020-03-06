@@ -18,6 +18,7 @@ describe('FeedItemPopupComponent', () => {
   const dataMock: FeedItem = {
     title: '',
     description: '',
+    descriptionWithURL: '',
     link: '',
     guid: '',
     pubDate: new Date()

@@ -82,7 +82,12 @@ interface IV4PointHistory {
   points_balance: number;
   points_balance_converted_to_currency: number;
   points_date: string;
-  properties: {};
+  properties: {
+    descr?: string;
+    sku?: string;
+    qty?: string;
+    untprc?: string;
+  };
 }
 
 interface IV4RewardTransactionHistory {
@@ -154,7 +159,7 @@ export class V4LoyaltyService extends LoyaltyService {
     let highestTier;
     let highestPoints;
     // they are in order, find the first one points_rqmt
-    if (copiedLoyalty.tiers) { // sort for extra assurance
+    if (copiedLoyalty.tiers && copiedLoyalty.tiers.length > 0) { // sort for extra assurance
       nextTier = copiedLoyalty.tiers
         .sort((tier1, tier2) => tier1.points_difference - tier2.points_difference)
         .find(tier => tier.points_difference > 0);
@@ -186,9 +191,13 @@ export class V4LoyaltyService extends LoyaltyService {
   }
 
   public static v4PointHistoryToPointHistory(pointHistory: IV4PointHistory): ITransaction {
+    const properties = pointHistory.properties;
     return {
       id: pointHistory.id,
-      name: pointHistory.name,
+      name: pointHistory.name || properties.descr,
+      sku: properties.sku,
+      quantity: properties.qty,
+      purchaseAmount: properties.untprc,
       points: pointHistory.points,
       pointsBalance: pointHistory.points_balance,
       currencyBalance: pointHistory.points_balance_converted_to_currency,

@@ -4,7 +4,7 @@ import { SignUpComponent } from './signup.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatIconModule, MatCheckboxModule, MatInputModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthenticationService, ProfileService } from '@perx/core';
+import { AuthenticationService, ProfileService, ConfigService } from '@perx/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
@@ -22,6 +22,7 @@ describe('SignupComponent', () => {
     getAppAccessToken: () => 'token'
   };
   const profileServiceStub: Partial<ProfileService> = { verifyCardNumber: () => of(true) };
+  const configServiceStub: ConfigService = { readAppConfig: () => of() };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SignUpComponent],
@@ -37,7 +38,8 @@ describe('SignupComponent', () => {
       ],
       providers: [
         { provide: AuthenticationService, useValue: authenticationServiceStub },
-        { provide: ProfileService, useValue: profileServiceStub }
+        { provide: ProfileService, useValue: profileServiceStub },
+        { provide: ConfigService, useValue: configServiceStub }
       ]
     })
       .compileComponents();
