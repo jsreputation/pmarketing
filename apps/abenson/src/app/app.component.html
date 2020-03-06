@@ -1,7 +1,7 @@
 <div class="main-app-container">
   <mat-toolbar class="toolbar mat-elevation-z2" *ngIf="showHeader" color="primary">
     <mat-icon *ngIf="showBackArrow" (click)="goBack()">arrow_back</mat-icon>
-    <a [routerLink]="[ '/home' ]">
+    <a class="logo-wrapper" [routerLink]="[ '/home' ]">
       <img *ngIf="showLogo" class="logo" src="assets/logo.png" />
     </a>
     <span *ngIf="showPageTitle" class="title">{{headerTitle}}</span>
