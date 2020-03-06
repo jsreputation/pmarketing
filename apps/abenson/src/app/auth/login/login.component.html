@@ -9,15 +9,14 @@
       </ng-template>
     </p>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <mat-form-field appearance="fill" class="full-width__input">
-        <mat-label>Enter Mobile Number</mat-label>
-        <input matInput placeholder="Enter Mobile Number" formControlName="mobileNumber">
+      <mat-form-field appearance="standard" class="full-width__input">
+        <span matPrefix>+63<span class="prefix-spacer"></span></span>
+        <input type="tel" autocomplete="tel-national" matInput placeholder="Enter Mobile Number" formControlName="mobileNumber">
         <mat-error *ngIf="mobileNumber && mobileNumber.hasError('required')">
           Mobile Number is <strong>required</strong>
         </mat-error>
       </mat-form-field>
-      <mat-form-field appearance="fill" class="full-width__input">
-        <mat-label>PIN Code</mat-label>
+      <mat-form-field appearance="standard" class="full-width__input">
         <input type="password" matInput placeholder="PIN Code" formControlName="pinCode">
         <mat-error *ngIf="pinCode && pinCode.hasError('required')">
           PIN Code is <strong>required</strong>

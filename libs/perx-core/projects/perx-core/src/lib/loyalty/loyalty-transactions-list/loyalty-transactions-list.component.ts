@@ -49,13 +49,14 @@ export class LoyaltyTransactionsListComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.transactions$.subscribe(
-      (transactions: ITransaction[]) => {
-        this.transactions = transactions;
-      },
-      () => console.error('No transactions loaded to loyalty transactions list')
-    );
-
+    if (this.transactions$) {
+      this.transactions$.subscribe(
+        (transactions: ITransaction[]) => {
+          this.transactions = transactions;
+        },
+        () => console.error('No transactions loaded to loyalty transactions list')
+      );
+    }
     if (!this.titleFn) {
       this.titleFn = (tr: ITransaction) => `${tr.name}`;
     }
