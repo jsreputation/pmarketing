@@ -10,28 +10,24 @@
         (ngSubmit)="onSubmit()"
     >
       <mat-form-field appearance="standard" class="full-width__input">
-        <mat-label>First Name</mat-label>
         <input matInput placeholder="First Name" formControlName="firstName">
         <mat-error *ngIf="firstName && firstName.hasError('required')">
           First Name is <strong>required</strong>
         </mat-error>
       </mat-form-field>
       <mat-form-field appearance="standard" class="full-width__input">
-        <mat-label>Last Name</mat-label>
         <input matInput placeholder="Last Name" formControlName="lastName">
         <mat-error *ngIf="lastName && lastName.hasError('required')">
           Last Name is <strong>required</strong>
         </mat-error>
       </mat-form-field>
       <mat-form-field appearance="standard" class="full-width__input">
-        <mat-label>Email (optional)</mat-label>
-        <input matInput placeholder="Email" formControlName="email">
+        <input matInput placeholder="Email (optional)" formControlName="email">
         <mat-error *ngIf="email && email.hasError('required')">
           Email is <strong>required</strong>
         </mat-error>
       </mat-form-field>
       <mat-form-field appearance="standard" class="full-width__input">
-        <mat-label>Mobile Number</mat-label>
         <span matPrefix>+63<span class="prefix-spacer"></span></span>
         <input matInput placeholder="Mobile Number" formControlName="phone">
         <mat-error *ngIf="phone && phone.hasError('required')">
@@ -39,7 +35,6 @@
         </mat-error>
       </mat-form-field>
       <mat-form-field appearance="standard" class="full-width__input">
-        <mat-label>Create your 4-Digit Pin Code</mat-label>
         <input [type]="hide ? 'password' : 'text'" matInput placeholder="Create your 4-Digit Pin Code" formControlName="password">
         <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         <mat-error *ngIf="password && password.hasError('required')">
