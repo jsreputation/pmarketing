@@ -4,7 +4,7 @@ import { LoginComponent } from './login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthenticationService, NotificationService } from '@perx/core';
+import {AuthenticationService, ConfigService, NotificationService} from '@perx/core';
 import { Type } from '@angular/core';
 import { of, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -26,6 +26,7 @@ describe('LoginComponent', () => {
       expires_in: 666,
       created_at: 666})
   };
+  const configServiceStub: ConfigService = { readAppConfig: () => of() };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -49,7 +50,8 @@ describe('LoginComponent', () => {
       ],
       providers: [
         { provide: AuthenticationService, useValue: authenticationServiceStub },
-        { provide: NotificationService, useValue: notificationServiceStub }
+        { provide: NotificationService, useValue: notificationServiceStub },
+        { provide: ConfigService, useValue: configServiceStub }
       ]
     })
       .compileComponents();
