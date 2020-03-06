@@ -15,7 +15,7 @@ import {
   AuthenticationService, ConfigService, IConfig,
   NotificationService,
 } from '@perx/core';
-import {IAbensonConfig} from "../../model/IAbenson.model";
+import {IAbensonConfig} from '../../model/IAbenson.model';
 
 @Component({
   selector: 'app-login',
@@ -72,7 +72,7 @@ export class LoginComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    const username = `${this.phonePrefix}` + this.loginForm.value.mobileNumber as string;
+    const username = `${this.phonePrefix}${this.loginForm.value.mobileNumber}` as string;
     const password: string = this.loginForm.value.pinCode;
     this.errorMessage = undefined;
 
