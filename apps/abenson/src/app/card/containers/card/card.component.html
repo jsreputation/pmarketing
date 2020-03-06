@@ -34,6 +34,7 @@
       <perx-core-loyalty-transactions-list
         [transactions]="transactions$"
         [priceLabelFn]="priceLabelFn"
+        [skuFn]="skuFn"
       >
       </perx-core-loyalty-transactions-list>
       <div *ngIf="!transactionsLoaded" class="spinner-wrapper">

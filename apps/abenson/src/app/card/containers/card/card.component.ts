@@ -38,6 +38,11 @@ export class CardComponent implements OnInit {
   public brandingImg: string;
   public subTitleFn: (loyalty: ILoyalty) => string;
   public summaryExpiringFn: (loyalty: ILoyalty) => string;
+  public skuFn: (tr: ITransaction) => ({
+    sku: string | undefined;
+    qty: string | undefined,
+    untprc: string | undefined;
+  });
 
   constructor(
     private loyaltyService: LoyaltyService,
@@ -61,6 +66,12 @@ export class CardComponent implements OnInit {
       }
       this.priceLabelFn = (tr: ITransaction) => `Points ${tr.points < 0 ? 'spent' : 'earned'}`;
       this.getTransactions();
+
+      this.skuFn = (tr: ITransaction) => ({
+        sku: tr.sku ? `sku${tr.sku}` : '',
+        qty: tr.quantity ? (parseInt(tr.quantity, 10) > 1 ? `${tr.quantity} items` : `${tr.quantity} item`) : undefined,
+        untprc: `${this.currencyPipe.transform(tr.purchaseAmount, 'PHP', 'symbol-narrow', '1.0-0', 'en-PH')}`
+      });
     });
 
     this.configService.readAppConfig<IAbensonConfig>().subscribe((config: IConfig<IAbensonConfig>) => {
