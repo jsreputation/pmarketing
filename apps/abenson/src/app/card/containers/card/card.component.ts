@@ -13,8 +13,8 @@ import {
   LoyaltyService,
   ITransaction, ILoyalty, ConfigService, IConfig,
 } from '@perx/core';
-import {IAbensonConfig} from '../../../model/IAbenson.model';
-import {CurrencyPipe, DatePipe} from '@angular/common';
+import { IAbensonConfig } from '../../../model/IAbenson.model';
+import { CurrencyPipe, DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-card',
@@ -68,9 +68,10 @@ export class CardComponent implements OnInit {
       this.getTransactions();
 
       this.skuFn = (tr: ITransaction) => ({
-        sku: tr.sku ? `sku${tr.sku}` : '',
+        sku: tr.sku ? `sku${tr.sku}` : undefined,
         qty: tr.quantity ? (parseInt(tr.quantity, 10) > 1 ? `${tr.quantity} items` : `${tr.quantity} item`) : undefined,
-        untprc: `${this.currencyPipe.transform(tr.purchaseAmount, 'PHP', 'symbol-narrow', '1.0-0', 'en-PH')}`
+        untprc: tr.purchaseAmount ?
+          `${this.currencyPipe.transform(tr.purchaseAmount, 'PHP', 'symbol-narrow', '1.0-0', 'en-PH')}` : undefined
       });
     });
 

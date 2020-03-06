@@ -53,9 +53,9 @@ export class LoyaltyTransactionsListComponent implements OnInit {
     }
     if (!this.skuFn) {
       this.skuFn = (tr: ITransaction) => ({
-        sku: tr.sku ? `sku${tr.sku}` : '',
+        sku: tr.sku ? `sku${tr.sku}` : undefined,
         qty: tr.quantity ? (parseInt(tr.quantity, 10) > 1 ? `${tr.quantity} items` : `${tr.quantity} item`) : undefined,
-        untprc: tr.purchaseAmount
+        untprc: tr.purchaseAmount || undefined
       });
     }
     if (!this.descFn) {
