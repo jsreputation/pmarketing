@@ -8,7 +8,7 @@
         </span>
       </div>
       <div class="transaction-sku-details"
-        *ngIf="skuFn(transaction) && skuFn(transaction).sku && skuFn(transaction).qty && skuFn(transaction).untprc">
+        *ngIf="skuFn(transaction)?.sku && skuFn(transaction)?.qty && skuFn(transaction)?.untprc">
         {{skuFn(transaction).qty}} <br />
         {{skuFn(transaction).untprc}}
       </div>
