@@ -8,7 +8,7 @@ import {
   FormGroup,
   AbstractControl,
 } from '@angular/forms';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 //
 // import {
 //   of,
@@ -20,7 +20,10 @@ import {
   AuthenticationService,
   NotificationService,
   ISignUpData,
+  ConfigService,
+  IConfig,
 } from '@perx/core';
+import { IAbensonConfig } from 'src/app/model/IAbenson.model';
 
 // import {SharedDataService} from 'src/app/services/shared-data.service';
 
@@ -34,6 +37,7 @@ export class SignUpComponent implements OnInit {
   public errorMessage?: string;
   public hide: boolean = true;
   public appAccessTokenFetched: boolean;
+  public phonePrefix: string;
 
   public get firstName(): AbstractControl | null {
     return this.signUpForm.get('firstName');
@@ -63,7 +67,8 @@ export class SignUpComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthenticationService,
     private router: Router,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private configService: ConfigService
     // private sharedDataService: SharedDataService,
     // private profileService: ProfileService,
   ) {
@@ -72,13 +77,16 @@ export class SignUpComponent implements OnInit {
   public ngOnInit(): void {
     this.initForm();
     const token = this.authService.getAppAccessToken();
+    this.configService.readAppConfig<IAbensonConfig>().subscribe(
+      (config: IConfig<IAbensonConfig>) => this.phonePrefix = config && config.custom && config.custom.phonePrefix || ''
+    );
     if (token) {
       this.appAccessTokenFetched = true;
     } else {
       this.authService.getAppToken().subscribe(() => {
         this.appAccessTokenFetched = true;
       }, (err) => {
-        console.error(`Error${  err}`);
+        console.error(`Error${err}`);
       });
     }
   }
@@ -103,13 +111,13 @@ export class SignUpComponent implements OnInit {
     }
 
     this.errorMessage = undefined;
-    const profile = {...this.signUpForm.value};
+    const profile = { ...this.signUpForm.value, phone: `${this.phonePrefix}${this.signUpForm.value.phone}` };
     delete profile.accept_terms;
     (profile as ISignUpData).passwordConfirmation = password;
     this.authService.signup(profile).subscribe(
       () => {
         this.router.navigate(['sms-validation'], {
-          queryParams: {identifier: profile.phone}
+          queryParams: { identifier: profile.phone }
         });
       }, (error: any) => {
         if (error.status === 409) {
@@ -142,18 +150,18 @@ export class SignUpComponent implements OnInit {
           });
         }
         this.router.navigate(['sms-validation'], {
-          queryParams: {identifier: profile.phone}
+          queryParams: { identifier: profile.phone }
         });
       }, (error: any) => {
         if (error.status === 409) {
-        // http conflict
+          // http conflict
           this.notificationService.addPopup({
             title: 'Account Exists',
             text: 'This account already exists. Please log in instead.',
             buttonTxt: 'CLOSE'
           });
         } else {
-        // card error handling
+          // card error handling
           this.notificationService.addPopup({
             title: 'PROFILE NOT FOUND',
             text: 'Please check that your PLUS! Card number and last name are correct and try again. If you need help, you may reach us at +63 (02) 8981 0025',
