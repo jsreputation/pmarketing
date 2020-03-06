@@ -164,6 +164,7 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
   public categorySelectedCallback(updatedValue: string): void {
     this.selectedCategory = updatedValue;
     this.fetchRewards();
+    this.rewards.subscribe(() => this.initRewardsScan());
   }
 
   public getCurrentSelectedCategory(): string {
@@ -194,8 +195,10 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
   }
 
   public ngAfterViewInit(): void {
-    this.renderer.listen(this.contentScroll.nativeElement, 'scroll', () => {
-      this.checkScrolledPosition(this.contentScroll.nativeElement.scrollTop);
-    });
+    if (this.contentScroll && this.contentScroll.nativeElement) {
+      this.renderer.listen(this.contentScroll.nativeElement, 'scroll', () => {
+        this.checkScrolledPosition(this.contentScroll.nativeElement.scrollTop);
+      });
+    }
   }
 }
