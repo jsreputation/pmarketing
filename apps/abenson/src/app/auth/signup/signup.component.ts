@@ -20,10 +20,7 @@ import {
   AuthenticationService,
   NotificationService,
   ISignUpData,
-  ConfigService,
-  IConfig,
 } from '@perx/core';
-import { IAbensonConfig } from 'src/app/model/IAbenson.model';
 
 // import {SharedDataService} from 'src/app/services/shared-data.service';
 
@@ -37,7 +34,6 @@ export class SignUpComponent implements OnInit {
   public errorMessage?: string;
   public hide: boolean = true;
   public appAccessTokenFetched: boolean;
-  public phonePrefix: string;
 
   public get firstName(): AbstractControl | null {
     return this.signUpForm.get('firstName');
@@ -68,7 +64,6 @@ export class SignUpComponent implements OnInit {
     private authService: AuthenticationService,
     private router: Router,
     private notificationService: NotificationService,
-    private configService: ConfigService
     // private sharedDataService: SharedDataService,
     // private profileService: ProfileService,
   ) {
@@ -77,9 +72,7 @@ export class SignUpComponent implements OnInit {
   public ngOnInit(): void {
     this.initForm();
     const token = this.authService.getAppAccessToken();
-    this.configService.readAppConfig<IAbensonConfig>().subscribe(
-      (config: IConfig<IAbensonConfig>) => this.phonePrefix = config && config.custom && config.custom.phonePrefix || ''
-    );
+
     if (token) {
       this.appAccessTokenFetched = true;
     } else {
@@ -111,7 +104,7 @@ export class SignUpComponent implements OnInit {
     }
 
     this.errorMessage = undefined;
-    const profile = { ...this.signUpForm.value, phone: `${this.phonePrefix}${this.signUpForm.value.phone}` };
+    const profile = { ...this.signUpForm.value, phone: this.signUpForm.value.phone };
     delete profile.accept_terms;
     (profile as ISignUpData).passwordConfirmation = password;
     this.authService.signup(profile).subscribe(
