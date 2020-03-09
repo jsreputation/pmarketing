@@ -14,7 +14,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import {
   AuthenticationService,
   NotificationService,
+  ConfigService,
+  IConfig,
 } from '@perx/core';
+import { IAbensonConfig } from '../model/IAbenson.model';
 
 @Component({
   selector: 'app-forgot-pin',
@@ -23,6 +26,7 @@ import {
 })
 export class ForgotPinComponent implements OnInit {
   public forgotPinForm: FormGroup;
+  public phonePrefix: string;
 
   public get mobileNumber(): AbstractControl | null {
     return this.forgotPinForm.get('mobileNumber');
@@ -33,10 +37,14 @@ export class ForgotPinComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private notificationService: NotificationService,
+    private configService: ConfigService
   ) { }
 
   public ngOnInit(): void {
     this.initForm();
+    this.configService.readAppConfig<IAbensonConfig>().subscribe(
+      (config: IConfig<IAbensonConfig>) => this.phonePrefix = config && config.custom && config.custom.phonePrefix || ''
+    );
   }
 
   private initForm(): void {
@@ -46,7 +54,7 @@ export class ForgotPinComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    const mobileNumber = (this.forgotPinForm.value.mobileNumber as string);
+    const mobileNumber = `${this.phonePrefix}${this.forgotPinForm.value.mobileNumber}` as string;
 
     try {
       this.authenticationService.forgotPassword(mobileNumber).subscribe(
