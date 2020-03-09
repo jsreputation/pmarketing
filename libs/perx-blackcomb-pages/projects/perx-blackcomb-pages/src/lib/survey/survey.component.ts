@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
 interface IAnswer {
-  question_id: string;
+  questionId: string;
   content: any;
 }
 
@@ -139,12 +139,14 @@ export class SurveyComponent implements OnInit, OnDestroy {
   }
 
   public get progressBarValue(): number {
-    // maybe pipe it instead
-    return Math.round(this.answers.filter((answer) => !!answer.content).length / this.totalLength * 100) || 0;
-    this.cd.detectChanges(); // idk why this needs to be here
+    return (this.questionPointer + 1) / this.totalLength * 100 || 0;
   }
 
   public get surveyComplete(): boolean {
+    const {questions} = this.survey; // to find if the question is required or not
+    if (this.questionPointer === this.totalLength - 1 && !questions[this.questionPointer].required) {
+      return true;
+    }
     return this.questionPointer === this.totalLength - 1 && this.answers[this.questionPointer]
       && this.answers[this.questionPointer].content;
   }
@@ -200,19 +202,18 @@ export class SurveyComponent implements OnInit, OnDestroy {
   }
 
   public setCurrentPointer(currentPointer: number): void {
+    // has to have two detectChanges here
     this.currentPointer = currentPointer;
-    this.ngZone.run(
-      () => {
-        // two cd refs have to be here to work
-        this.cd.detectChanges();
-        this.checkShowOverArrow();
-        this.cd.detectChanges();
-      }
-    );
+    this.cd.detectChanges();
+
+    this.checkShowOverArrow();
+    this.cd.detectChanges();
   }
 
   public updateSurveyStatus(answers: IAnswer[]): void {
-    this.answers = answers;
+    if (this.answers) {
+      this.answers = answers;
+    }
   }
 
   public checkShowOverArrow(): void {
@@ -231,9 +232,15 @@ export class SurveyComponent implements OnInit, OnDestroy {
   }
 
   public updateQuestionPointer(action: string): void {
+    const {questions} = this.survey; // to find if the question is required or not
     // updateQuestion will be called when questionPointer cause child to emit currentPointer
     if (action === 'next') {
-      if (this.answers[this.questionPointer] && !!this.answers[this.questionPointer].content) {
+      if (!questions[this.questionPointer].required) {
+        // able to go next if not required
+        this.questionPointer++;
+      }
+      const answerToCurrentQuestion = this.answers.find(answer => parseInt(answer.questionId, 10) === this.questionPointer);
+      if (answerToCurrentQuestion && answerToCurrentQuestion.content) {
         // able to go next if answer has been answered
         this.questionPointer++;
       }

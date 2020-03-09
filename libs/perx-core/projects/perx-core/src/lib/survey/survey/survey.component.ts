@@ -38,7 +38,8 @@ export class SurveyComponent implements OnInit, OnChanges, OnDestroy {
   public ngOnChanges(changes: SimpleChanges): void {
     const questionPointerChange = changes.questionPointer;
     if (questionPointerChange) {
-      // 1emitting helps to update calling setCurrentPointer on parentElement but degisters that currentPointer has been called with answer alrdy
+      // emitting helps to update calling setCurrentPointer on parentElement
+      // signal has been called with answer alrdy
       this.currentPointer.emit(questionPointerChange.currentValue);
     }
   }

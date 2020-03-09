@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, Optional } from '@angular/core';
+import {Component, Input, Output, EventEmitter, Optional} from '@angular/core';
 import { IQuestion, SurveyQuestionType, IAnswer, IPoints, IErrors } from '../models/survey.model';
 
 @Component({
@@ -6,7 +6,7 @@ import { IQuestion, SurveyQuestionType, IAnswer, IPoints, IErrors } from '../mod
   templateUrl: './question.component.html',
   styleUrls: ['./question.component.scss']
 })
-export class QuestionComponent implements OnChanges {
+export class QuestionComponent {
 
   @Input()
   public id: number;
@@ -29,9 +29,9 @@ export class QuestionComponent implements OnChanges {
   @Input()
   public isSubQuestion: boolean;
 
-  // Used to flush group tree
-  @Input()
-  public flush: boolean;
+  // Used to flush group tree is passed into each question component if used
+  // @Input()
+  // public flush: boolean;
 
   @Output()
   public updateAnswers: EventEmitter<IAnswer> = new EventEmitter<IAnswer>();
@@ -44,16 +44,16 @@ export class QuestionComponent implements OnChanges {
 
   public errorState: IErrors = {};
 
-  public point: number;
+  public point: number = 1;
 
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.flush) {
-      this.flush = changes.flush.currentValue;
-      if (this.flush) {
-        this.questionValidation();
-      }
-    }
-  }
+  // public ngOnChanges(changes: SimpleChanges): void {
+  //   if (changes.flush) {
+  //     this.flush = changes.flush.currentValue;
+  //     if (this.flush) {
+  //       this.questionValidation();
+  //     }
+  //   }
+  // }
 
   public get surveyQuestionType(): typeof SurveyQuestionType { return SurveyQuestionType; }
 
@@ -69,36 +69,40 @@ export class QuestionComponent implements OnChanges {
     this.questionValidation();
   }
 
-  public updateGroupPoint(point: number): void {
-    this.point = point;
-    this.updatePoints.emit({ questionId: this.question.id, point });
-  }
+  // public updateGroupPoint(point: number): void {
+  //   this.point = point;
+  //   this.updatePoints.emit({ questionId: this.question.id, point });
+  // }
 
   public updateNonGroupPoint(): void {
-    if (this.question.payload.type !== SurveyQuestionType.questionGroup) {
-      this.point = this.question && this.question.required ?
-        (this.question.answer === 0 || (this.question.answer && this.question.answer.length > 0) ? 1 : 0) : 1;
-      this.updatePoints.emit({ questionId: this.question.id, point: this.point });
-    }
+    // if (this.question.payload.type !== SurveyQuestionType.questionGroup) {
+    //   this.point = this.question && this.question.required ?
+    //     (this.question.answer === 0 || (this.question.answer && this.question.answer.length > 0) ? 1 : 0) : 1;
+    //   console.log('check out the updatepoints i am emitting', { questionId: this.question.id, point: this.point } );
+    //   this.updatePoints.emit({ questionId: this.question.id, point: this.point });
+    // }
+    this.updatePoints.emit({ questionId: this.question.id, point: 1 });
   }
 
-  public next(): void {
-    this.questionValidation();
-    if (!this.errorState.hasError) {
-      this.moveToNextQuestion();
-    } else if (this.question.payload.type === SurveyQuestionType.questionGroup) {
-      this.flush = !this.flush;
-    }
-  }
+  // note: because next is handled now by parent it needs to be bought up
 
-  public moveToNextQuestion(): void {
-    this.updateNonGroupPoint();
-    this.updateQuestionPointer.emit('next');
-  }
+  // public next(): void {
+  //   this.questionValidation();
+  //   if (!this.errorState.hasError) {
+  //     this.moveToNextQuestion();
+  //   } else if (this.question.payload.type === SurveyQuestionType.questionGroup) {
+  //     this.flush = !this.flush;
+  //   }
+  // }
 
-  public back(): void {
-    this.updateQuestionPointer.emit('back');
-  }
+  // public moveToNextQuestion(): void {
+  //   this.updateNonGroupPoint();
+  //   this.updateQuestionPointer.emit('next');
+  // }
+  //
+  // public back(): void {
+  //   this.updateQuestionPointer.emit('back');
+  // }
 
   public validateEmail(email: string): boolean {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
