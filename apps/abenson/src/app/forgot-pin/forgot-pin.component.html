@@ -5,11 +5,9 @@
     [formGroup]="forgotPinForm"
     (ngSubmit)="onSubmit()"
   >
-    <mat-form-field
-      appearance="fill"
-      class="full-width"
-    >
+  <mat-form-field appearance="standard" class="full-width__input">
       <mat-label>Enter Mobile Number</mat-label>
+      <span matPrefix>+63<span class="prefix-spacer"></span></span>
       <input
         matInput
         placeholder="Enter Mobile Number"
