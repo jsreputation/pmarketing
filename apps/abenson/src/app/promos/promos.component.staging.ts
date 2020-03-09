@@ -36,7 +36,7 @@ export class PromosComponent implements OnInit {
   public readMore(item: FeedItem): void {
     this.dialog.open(PopupComponent, {
       panelClass: 'app-full-bleed-dialog',
-      data: item,
+      data: { ...item, description: item.descriptionWithURL, hideButton: true },
       height: '85vh',
       minWidth: '35.5rem',
       maxWidth: '94vw'
