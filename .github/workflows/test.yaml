@@ -29,6 +29,8 @@ jobs:
 
           # Set tekton label
           LABEL=$(echo ${GITHUB_REF//[^0-9a-zA-Z-_\.]/-} | cut -c-60)
+          # Workaround to ensure label name ended with alphanumeric char
+          LABEL+=0
           echo ::set-env name=TEKTON_LABEL::${LABEL}
       - name: Download tekton cli and install parallel
         run: |

@@ -55,6 +55,19 @@ html, body {
   .mat-form-field-underline::before {
     display: none !important;
   }
+
+  &[appearance=standard],
+  &[appearance=legacy] {
+    .mat-form-field-flex > div {
+      padding-bottom: 0.75em;
+      top: -0.5em;
+
+      span.prefix-spacer {
+        width: 0.3em;
+        display: inline-block;
+      }
+    }
+  }
 }
 
 .mat-form-field-invalid {

@@ -39,6 +39,7 @@ import {
   ThemesService,
   TokenStorage,
   LanguageService,
+  LoyaltyModule,
 } from '@perx/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -159,6 +160,7 @@ export const appInit =
     QRCodeModule,
     NgxBarcodeModule,
     InfiniteScrollModule,
+    LoyaltyModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

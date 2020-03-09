@@ -1,20 +1,50 @@
-<mat-card
-	*ngFor="let reward of rewards | async"
-	matRipple (click)="selected(reward)">
-	<div class="featured-image">
-		<img mat-card-image [src]="reward.rewardBanner">
-		<div *ngIf="getMacaron(reward) as macaron" class="macaron-container">
-			<span [ngClass]="macaron.class">{{macaron.label}}</span>
-		</div>
-	</div>
-	<mat-card-content>
-		<div class="card-description">
-			<h1>{{reward.name}}</h1>
-			<h2>{{reward.merchantName}}</h2>
-		</div>
-		<div class="icon">
-			<img src="assets/forward-arrow.svg" alt="">
-		</div>
-	</mat-card-content>
-	<mat-card-footer></mat-card-footer>
-</mat-card>
+<div *ngIf="(rewardsSnapping$ | async) as rewardsSnapping" class="main-container">
+  <h1 *ngIf="rewardsSnapping.length > 0">Snapping Saturday</h1>
+  <div *ngIf="rewardsSnapping.length > 0" class="cards">
+    <mat-card
+      *ngFor="let rewardSnapping of rewardsSnapping"
+      matRipple (click)="selected(rewardSnapping)">
+      <div class="featured-image">
+        <img mat-card-image [src]="rewardSnapping.rewardBanner">
+        <div *ngIf="getMacaron(rewardSnapping) as macaron" class="macaron-container">
+          <span [ngClass]="macaron.class">{{macaron.label}}</span>
+        </div>
+      </div>
+      <mat-card-content>
+        <div class="card-description">
+          <h1>{{rewardSnapping.name}}</h1>
+          <h2>{{rewardSnapping.merchantName}}</h2>
+        </div>
+        <div class="icon">
+          <img src="assets/forward-arrow.svg" alt="">
+        </div>
+      </mat-card-content>
+      <mat-card-footer></mat-card-footer>
+    </mat-card>
+  </div>
+</div>
+<div *ngIf="(rewardsFeatured$ | async) as rewardsFeatured" class="main-container">
+  <h1 *ngIf="rewardsFeatured.length > 0">More to enjoy</h1>
+  <div *ngIf="rewardsFeatured.length > 0" class="cards">
+    <mat-card
+      *ngFor="let rewardFeatured of rewardsFeatured"
+      matRipple (click)="selected(rewardFeatured)">
+      <div class="featured-image">
+        <img mat-card-image [src]="rewardFeatured.rewardBanner">
+        <div *ngIf="getMacaron(rewardFeatured) as macaron" class="macaron-container">
+          <span [ngClass]="macaron.class">{{macaron.label}}</span>
+        </div>
+      </div>
+      <mat-card-content>
+        <div class="card-description">
+          <h1>{{rewardFeatured.name}}</h1>
+          <h2>{{rewardFeatured.merchantName}}</h2>
+        </div>
+        <div class="icon">
+          <img src="assets/forward-arrow.svg" alt="">
+        </div>
+      </mat-card-content>
+      <mat-card-footer></mat-card-footer>
+    </mat-card>
+  </div>
+</div>

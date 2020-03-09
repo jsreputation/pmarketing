@@ -98,15 +98,17 @@ describe('AppComponent', () => {
     const router = {} as Router;
     const form = {} as FormBuilder;
     const notifi = {} as NotificationService;
+    const config = {} as ConfigService;
     const voucherService = {} as IVoucherService;
     const campaingService = {} as ICampaignService;
     const profile = {} as ProfileService;
     const locationTest = {} as Location;
     const shared = {} as SharedDataService;
     const matDialog = {} as MatDialog;
-    app.onActivate(new LoginComponent(router, form, auth, notifi));
+    app.onActivate(new LoginComponent(router, form, auth, notifi, configService));
     expect(app.showHeader).toBeFalsy();
-    app.onActivate(new SignUpComponent(form, auth, router, shared, profile, ntfs));
+    // , profile, ntfs //for below signupcomponent but remove temp on disable card section
+    app.onActivate(new SignUpComponent(form, auth, router, notifi, config));
     expect(app.showHeader).toBeFalsy();
     app.onActivate(new HomeComponent(router, voucherService, campaingService, configService, datePipe, currencyPipe));
     expect(app.showToolbar).toBeTruthy();
