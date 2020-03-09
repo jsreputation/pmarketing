@@ -105,7 +105,7 @@ describe('AppComponent', () => {
     const locationTest = {} as Location;
     const shared = {} as SharedDataService;
     const matDialog = {} as MatDialog;
-    app.onActivate(new LoginComponent(router, form, auth, notifi, configService));
+    app.onActivate(new LoginComponent(router, form, auth, notifi));
     expect(app.showHeader).toBeFalsy();
     // , profile, ntfs //for below signupcomponent but remove temp on disable card section
     app.onActivate(new SignUpComponent(form, auth, router, notifi, config));
