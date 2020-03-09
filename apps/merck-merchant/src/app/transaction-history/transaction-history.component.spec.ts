@@ -17,7 +17,8 @@ describe('TransactionHistoryComponent', () => {
     back: () => {}
   };
   const merchantAdminServiceStub: Partial<IMerchantAdminService> = {
-    getTransactionHistory: () => of()
+    getTransactionHistory: () => of(),
+    getRewardTransactionHistory: () => of()
   };
 
   beforeEach(async(() => {
