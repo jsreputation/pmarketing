@@ -17,7 +17,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { of } from 'rxjs';
 
-import { AuthenticationService } from '@perx/core';
+import { AuthenticationService, ConfigService } from '@perx/core';
 
 import { ForgotPinComponent } from './forgot-pin.component';
 
@@ -31,6 +31,8 @@ describe('ForgotPinComponent', () => {
   const authenticationServiceStub: Partial<AuthenticationService> = {
     forgotPassword: () => of(),
   };
+
+  const configServiceStub: ConfigService = { readAppConfig: () => of() };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -47,6 +49,7 @@ describe('ForgotPinComponent', () => {
       providers: [
         { provide: Router, useValue: router },
         { provide: AuthenticationService, useValue: authenticationServiceStub },
+        { provide: ConfigService, useValue: configServiceStub }
       ],
     })
       .compileComponents();
