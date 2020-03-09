@@ -31,7 +31,6 @@ const appConfigFile = `{
   "redirectAfterLogin": "${process.env.redirectAfterLogin ? process.env.redirectAfterLogin : '/wallet'}",
   "custom": {
     "comingSoon": ${process.env.COMING_SOON ? process.env.COMING_SOON : false},
-    "phonePrefix": "${process.env.PHONE_PREFIX ? process.env.PHONE_PREFIX : ''}",
     "cardBrandingImage": "${process.env.CARD_BRANDING_IMG ? process.env.CARD_BRANDING_IMG : 'assets/abenson_plus_banner.png'}"
   }
 }
