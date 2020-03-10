@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SignInComponent } from '@perx/blackcomb-pages';
+import { SignInComponent, PerxBlackcombPagesModule } from '@perx/blackcomb-pages';
 import { RouterModule, Routes } from '@angular/router';
 import {
   MatFormFieldModule,
@@ -16,12 +16,10 @@ const routes: Routes = [{
 }];
 
 @NgModule({
-  declarations: [
-    SignInComponent,
-  ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
+    PerxBlackcombPagesModule,
     TranslateModule,
     MatFormFieldModule,
     MatInputModule,
