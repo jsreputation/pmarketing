@@ -9,8 +9,8 @@ import {
   StampState
 } from '@perx/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { filter, switchMap, takeUntil, map, distinctUntilChanged } from 'rxjs/operators';
-import { Observable, Subject } from 'rxjs';
+import {filter, switchMap, takeUntil, map, tap, pairwise} from 'rxjs/operators';
+import {Subject} from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { oc } from 'ts-optchain';
 
@@ -36,8 +36,8 @@ export class StampCardComponent implements OnInit, OnDestroy {
   public cardBackground: string;
   public isEnabled: boolean = false;
   public stamps: IStamp[] | undefined;
-  public stampCard$: Observable<IStampCard>;
   public stampCard: IStampCard | null;
+  private idN: number;
   private destroy$: Subject<any> = new Subject();
   private rewardSuccessPopUp: IPopupConfig = {
     title: 'STAMP_SUCCESS_TITLE',
@@ -81,51 +81,52 @@ export class StampCardComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.initTranslate();
-
-    this.stampCard$ = this.route.paramMap
+    this.route.paramMap
       .pipe(
         filter((params: ParamMap) => params.has('id')),
         map((params: ParamMap) => params.get('id')),
         switchMap((id: string) => {
-          const idN = Number.parseInt(id, 10);
-          return this.stampService.getCurrentCard(idN);
+          this.idN = Number.parseInt(id, 10);
+          return this.stampService.getCurrentCard(this.idN);
         }),
-        switchMap((stampCard: IStampCard) => this.stampService.stampsChangedForStampCard(stampCard)),
+        tap((stampCard: IStampCard) => {
+          if (stampCard) {
+            this.stampCard = stampCard;
+            this.stamps = stampCard.stamps;
+            this.title = stampCard.title || '';
+            this.subTitle = stampCard.subTitle;
+            this.background = oc(stampCard).displayProperties.backgroundImg.value.imageUrl('');
+            this.cardBackground = stampCard.displayProperties.cardBgImage || '';
+            const successOutcome = stampCard.results.outcome;
+            const noOutcome = stampCard.results.noOutcome;
+            if (noOutcome) {
+              this.errorPopUp.title = noOutcome.title;
+              this.errorPopUp.text = noOutcome.subTitle;
+              this.errorPopUp.imageUrl = noOutcome.image || this.errorPopUp.imageUrl;
+              this.errorPopUp.buttonTxt = noOutcome.button || this.errorPopUp.buttonTxt;
+            }
+            if (successOutcome) {
+              this.rewardSuccessPopUp.title = successOutcome.title;
+              this.rewardSuccessPopUp.text = successOutcome.subTitle;
+              this.rewardSuccessPopUp.imageUrl = successOutcome.image || this.rewardSuccessPopUp.imageUrl;
+              this.rewardSuccessPopUp.buttonTxt = successOutcome.button || this.rewardSuccessPopUp.buttonTxt;
+            }
+          }
+        }),
+        switchMap(() => this.stampService.stampsChangedForStampCard(this.idN)
+          .pipe(
+            pairwise()
+          )),
         takeUntil(this.destroy$)
-      );
-    this.stampCard$.pipe(distinctUntilChanged()).subscribe(
-      (stampCard: IStampCard) => {
-        if (this.stamps && stampCard.stamps && this.stamps.length < stampCard.stamps.length) {
+      ).subscribe(([prevStamps, currStamps]) => {
+        // after skip once we get definitely prev and current
+        if ((currStamps && currStamps.stamps) &&
+        (prevStamps && prevStamps.stamps) &&
+        prevStamps.stamps.length < currStamps.stamps.length) {
+          this.stampCard = currStamps;
           this.notificationService.addSnack('You got a new stamp!');
         }
-        // The initialization still needs to be here since the state references need to be updated after subscribed stampcard changes
-        if (stampCard) {
-          this.stampCard = stampCard;
-          this.stamps = stampCard.stamps;
-          this.title = stampCard.title || '';
-          this.subTitle = stampCard.subTitle;
-          this.background = oc(stampCard).displayProperties.backgroundImg.value.imageUrl('');
-          this.cardBackground = stampCard.displayProperties.cardBgImage || '';
-          const successOutcome = stampCard.results.outcome;
-          const noOutcome = stampCard.results.noOutcome;
-          if (noOutcome) {
-            this.errorPopUp.title = noOutcome.title;
-            this.errorPopUp.text = noOutcome.subTitle;
-            this.errorPopUp.imageUrl = noOutcome.image || this.errorPopUp.imageUrl;
-            this.errorPopUp.buttonTxt = noOutcome.button || this.errorPopUp.buttonTxt;
-          }
-          if (successOutcome) {
-            this.rewardSuccessPopUp.title = successOutcome.title;
-            this.rewardSuccessPopUp.text = successOutcome.subTitle;
-            this.rewardSuccessPopUp.imageUrl = successOutcome.image || this.rewardSuccessPopUp.imageUrl;
-            this.rewardSuccessPopUp.buttonTxt = successOutcome.button || this.rewardSuccessPopUp.buttonTxt;
-          }
-        }
-      },
-      () => {
-        this.router.navigate(['/wallet']);
-      }
-    );
+      }, () => this.router.navigate(['/wallet']));
   }
 
   public ngOnDestroy(): void {

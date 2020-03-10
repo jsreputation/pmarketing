@@ -16,14 +16,22 @@ import { TransactionPipe } from './transaction.pipe';
   styleUrls: ['./loyalty-transactions-list.component.scss']
 })
 export class LoyaltyTransactionsListComponent implements OnInit {
-  @Input('transactions')
+  @Input('transactions') // needs flexibility to be of type Observable<ITransaction[]> | Observable<IMerchantAdminTransaction[]>
   public transactions$: Observable<ITransaction[]>;
+  public transactions: ITransaction[];
 
   @Output()
   public tapped: EventEmitter<ITransaction> = new EventEmitter<ITransaction>();
 
   @Input()
   public titleFn: (tr: ITransaction) => string;
+
+  @Input()
+  public skuFn: (tr: ITransaction) => ({
+    sku: string | undefined;
+    qty: string | undefined,
+    untprc: string | undefined;
+  });
 
   @Input()
   public descFn: (tr: ITransaction) => string;
@@ -41,8 +49,23 @@ export class LoyaltyTransactionsListComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    if (this.transactions$) {
+      this.transactions$.subscribe(
+        (transactions: ITransaction[]) => {
+          this.transactions = transactions;
+        },
+        () => console.error('No transactions loaded to loyalty transactions list')
+      );
+    }
     if (!this.titleFn) {
       this.titleFn = (tr: ITransaction) => `${tr.name}`;
+    }
+    if (!this.skuFn) {
+      this.skuFn = (tr: ITransaction) => ({
+        sku: tr.sku ? `sku${tr.sku}` : undefined,
+        qty: tr.quantity ? (parseInt(tr.quantity, 10) > 1 ? `${tr.quantity} items` : `${tr.quantity} item`) : undefined,
+        untprc: tr.purchaseAmount || undefined
+      });
     }
     if (!this.descFn) {
       this.descFn = () => '';

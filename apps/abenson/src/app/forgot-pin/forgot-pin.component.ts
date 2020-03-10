@@ -46,7 +46,7 @@ export class ForgotPinComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    const mobileNumber = (this.forgotPinForm.value.mobileNumber as string);
+    const mobileNumber = this.forgotPinForm.value.mobileNumber as string;
 
     try {
       this.authenticationService.forgotPassword(mobileNumber).subscribe(

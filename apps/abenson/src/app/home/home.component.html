@@ -1,21 +1,30 @@
 <div class="container">
   <div class="loyalty-block">
-    <perx-core-loyalty-summary [subTitleFn]="subTitleFn" [summaryExpiringFn]="summaryExpiringFn"></perx-core-loyalty-summary>
+    <perx-core-loyalty-summary
+      [subTitleFn]="subTitleFn"
+      [summaryExpiringFn]="summaryExpiringFn"
+    ></perx-core-loyalty-summary>
   </div>
-  <h1>Games</h1>
-  <div class="games">
-    <mat-card *ngFor="let campaign of campaigns$ | async as campaigns" routerLink="" matRipple
-      (click)="onCampaignSelect(campaign)">
-      <img class="puzzle-img" [src]="campaign.thumbnailUrl">
-      <mat-card-content>
-        <p class='main-reward-title'>{{campaign.name}}</p>
-        <p class="reward-subtitle">{{campaign.description}}</p>
-      </mat-card-content>
-    </mat-card>
+  <div *ngIf="!comingSoon">
+    <h1>Games</h1>
+    <div class="games">
+      <mat-card
+        *ngFor="let campaign of campaigns$ | async as campaigns"
+        routerLink=""
+        matRipple
+        (click)="onCampaignSelect(campaign)"
+      >
+        <img class="puzzle-img" [src]="campaign.thumbnailUrl" />
+        <mat-card-content>
+          <p class="main-reward-title">{{ campaign.name }}</p>
+          <p class="reward-subtitle">{{ campaign.description }}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
   </div>
   <div class="rewards" *ngIf="comingSoon">
     <h1>Rewards</h1>
-    <img class="coming-soon-img" src="assets/img/coming_soon.png">
+    <img class="coming-soon-img" src="assets/img/coming_soon.png" />
     <p>Coming soon</p>
   </div>
 </div>

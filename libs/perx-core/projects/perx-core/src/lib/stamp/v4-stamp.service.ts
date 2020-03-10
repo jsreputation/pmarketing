@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { oc } from 'ts-optchain';
-import { Observable, of, throwError, from, timer } from 'rxjs';
+import {Observable, of, throwError, from, timer} from 'rxjs';
 import {
   map,
   flatMap,
@@ -10,7 +10,9 @@ import {
   tap,
   filter,
   mergeMap,
-  toArray
+  toArray,
+  switchMap,
+  skip
 } from 'rxjs/operators';
 
 import {
@@ -101,32 +103,38 @@ interface IV4StampCard {
     card_image?: {
       value?: {
         image_url?: string;
+        file?: string; // default if image_url is not present
       }
     };
     //  todo: temporarily map this until v4 dashboard fixes naming
     card_background_image?: {
       value?: {
         image_url?: string;
+        file?: string;
       }
     };
     gift_active_image?: {
       value?: {
         image_url?: string;
+        file?: string;
       }
     };
     stamp_active_image?: {
       value?: {
         image_url?: string;
+        file?: string;
       }
     };
     gift_inactive_image?: {
       value?: {
         image_url?: string;
+        file?: string;
       }
     };
     stamp_inactive_image?: {
       value?: {
         image_url?: string;
+        file?: string;
       }
     };
     total_slots?: number;
@@ -134,11 +142,13 @@ interface IV4StampCard {
     background_image?: {
       value?: {
         image_url?: string;
+        file?: string;
       }
     };
     thumbnail_image?: {
       value?: {
         image_url?: string;
+        file?: string;
       }
     };
     reward_positions?: number[];
@@ -196,16 +206,31 @@ export class V4StampService implements StampService {
   }
 
   private static v4StampCardToStampCard(stampCard: IV4StampCard): IStampCard {
-    const cardImageUrl = oc(stampCard).display_properties.card_image.value.image_url();
+    const stampCardDP = oc(stampCard).display_properties;
+    const cardImageUrl = stampCardDP.card_image.value.image_url(
+      stampCardDP.card_image.value.file(undefined) as unknown as string
+    );
     const cardImage = cardImageUrl ? { value: { imageUrl: cardImageUrl } } : undefined;
     //  todo: temporarily map this until v4 dashboard fixes naming
-    const cardBackgroundImageUrl = oc(stampCard).display_properties.card_background_image.value.image_url();
+    const cardBackgroundImageUrl = stampCardDP.card_background_image.value.image_url(
+      stampCardDP.card_background_image.value.file(undefined) as unknown as string
+    );
     const cardBackgroundImage = cardBackgroundImageUrl ? { value: { imageUrl: cardBackgroundImageUrl } } : undefined;
-    const rewardPreStamp = oc(stampCard).display_properties.gift_inactive_image.value.image_url(undefined);
-    const rewardPostStamp = oc(stampCard).display_properties.gift_active_image.value.image_url(undefined);
-    const preStampImg = oc(stampCard).display_properties.stamp_inactive_image.value.image_url(undefined);
-    const postStampImg = oc(stampCard).display_properties.stamp_active_image.value.image_url(undefined);
-    const backgroundImgUrl = oc(stampCard).display_properties.background_image.value.image_url();
+    const rewardPreStamp = stampCardDP.gift_inactive_image.value.image_url(
+      stampCardDP.gift_inactive_image.value.file(undefined) as unknown as string
+    );
+    const rewardPostStamp = stampCardDP.gift_active_image.value.image_url(
+      stampCardDP.gift_active_image.value.file(undefined) as unknown as string
+    );
+    const preStampImg = stampCardDP.stamp_inactive_image.value.image_url(
+      stampCardDP.stamp_inactive_image.value.file(undefined) as unknown as string
+    );
+    const postStampImg = stampCardDP.stamp_active_image.value.image_url(
+      stampCardDP.stamp_active_image.value.file(undefined) as unknown as string
+    );
+    const backgroundImgUrl = stampCardDP.background_image.value.image_url(
+      stampCardDP.background_image.value.file(undefined) as unknown as string
+    );
     const backgroundImg = backgroundImgUrl ? { value: { imageUrl: backgroundImgUrl } } : undefined;
     return {
       id: stampCard.id,
@@ -284,26 +309,11 @@ export class V4StampService implements StampService {
     );
   }
 
-  public stampsChangedForStampCard(stampCard: IStampCard, intervalPeriod: number = 2000): Observable<IStampCard> {
-    let pass: number;
-    let numberOfStamps = stampCard.stamps ? stampCard.stamps.length : 0;
+  // pipe pairwise inside the component,bcz get Proxy for some reason, unable to get access to the value cached in svc
+  public stampsChangedForStampCard(campaignId: number, intervalPeriod: number = 1500): Observable<IStampCard> {
     return timer(0, intervalPeriod).pipe(
-      map(val => {
-        pass = val;
-        return this.getCurrentCard(stampCard.campaignId || 0);
-      }),
-      mergeAll(1),
-      filter((card: IStampCard) => {
-        if (pass === 0) {
-          return true;
-        }
-
-        if (card.stamps && numberOfStamps < card.stamps.length) {
-          numberOfStamps = card.stamps.length;
-          return true;
-        }
-        return false;
-      })
+      switchMap((_) => this.getCurrentCard(campaignId)),
+      skip(1)
     );
   }
 

@@ -49,6 +49,7 @@ perx-core-loyalty-transactions-list ::ng-deep {
   display: flex;
   align-items: center;
   flex-direction: column;
+  padding-bottom: 3rem;
 
   .barcode {
     width: 26rem;
@@ -83,8 +84,7 @@ perx-core-loyalty-transactions-list ::ng-deep {
 }
 
 .branding-image {
-  display: flex;
-  justify-content: center;
+  text-align: center;
 
   img {
     width: 100%;

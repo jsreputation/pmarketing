@@ -46,7 +46,7 @@ describe('ForgotPinComponent', () => {
       ],
       providers: [
         { provide: Router, useValue: router },
-        { provide: AuthenticationService, useValue: authenticationServiceStub },
+        { provide: AuthenticationService, useValue: authenticationServiceStub }
       ],
     })
       .compileComponents();

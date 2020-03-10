@@ -9,10 +9,10 @@ import {
   TokenStorage,
   ThemesService,
   ITheme,
-  RewardPopupComponent
+  RewardPopupComponent, IProfile, LoyaltyService, ProfileService, ConfigService
 } from '@perx/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
-import { filter, map } from 'rxjs/operators';
+import {filter, map, switchMap} from 'rxjs/operators';
 import { AnalyticsService, IEvent, PageType } from './analytics.service';
 
 export interface IdataLayerSH {
@@ -53,7 +53,10 @@ export class AppComponent implements OnInit {
     private gameService: IGameService,
     private tokenStorage: TokenStorage,
     private analytics: AnalyticsService,
-    private themeService: ThemesService
+    private themeService: ThemesService,
+    private loyaltyService: LoyaltyService,
+    private profileService: ProfileService,
+    private configService: ConfigService
   ) {
     this.data.pageName = '';
     this.data.channel = 'msa';
@@ -107,6 +110,13 @@ export class AppComponent implements OnInit {
         _satellite.track('msa-rewards-virtual-page');
       }
     );
+
+    this.configService.readAppConfig().pipe(
+      switchMap(() => this.loyaltyService.getLoyalty()),
+      switchMap(() => this.profileService.whoAmI())
+    ).subscribe((profile: IProfile) => {
+      (window as any).dataLayer.push({user_properties: {identifier: profile.identifier}});
+    });
   }
 
   protected checkGame(campaign: ICampaign): void {

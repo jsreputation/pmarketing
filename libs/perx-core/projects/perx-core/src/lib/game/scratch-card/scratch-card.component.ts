@@ -29,7 +29,7 @@ export class ScratchCardComponent implements AfterViewInit, OnInit {
   public underlyingImg: string;
 
   @Input()
-  public uncoverPortionToTrigger: number = 90;
+  public uncoverPortionToTrigger: number = 60;
 
   @Input()
   public enabled: boolean = true;
