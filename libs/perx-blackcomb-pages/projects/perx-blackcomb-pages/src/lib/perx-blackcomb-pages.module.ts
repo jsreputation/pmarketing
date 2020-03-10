@@ -67,6 +67,7 @@ import { CampaignStampsComponent } from './campaign-stamps/campaign-stamps.compo
 import { CatalogsComponent } from './catalogs/catalogs.component';
 import { CatalogRewardCardComponent } from './catalog-reward-card/catalog-reward-card.component';
 import { CatalogComponent } from './catalog/catalog.component';
+import {MatInputModule} from "@angular/material/input";
 
 const comps: any[] = [
   AccountComponent,
@@ -118,6 +119,7 @@ const comps: any[] = [
     MatCardModule,
     MatButtonModule,
     MatMenuModule,
+    MatInputModule,
     MatRippleModule,
     MatGridListModule,
     MatTabsModule,
