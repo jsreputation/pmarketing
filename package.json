@@ -15,6 +15,8 @@
     "build:bpi:prod": "echo 'skipping bpi build'",
     "build:candyland:prod": "lerna run build:lib && lerna run build:candyland:prod --",
     "build:essentials:prod": "lerna run build:lib && lerna run build:essentials:prod --",
+    "build:daiichi:staging": "lerna run build:lib && lerna run build:daiichi:staging --",
+    "build:daiichi:prod": "lerna run build:lib && lerna run build:daiichi:prod --",
     "build:digi:prod": "echo 'skipping digi build'",
     "build:feature-demo:prod": "lerna run build:lib && lerna run build:feature-demo:prod --",
     "build:partners-demo:prod": "lerna run build:lib && lerna run build:partners-demo:prod --",
