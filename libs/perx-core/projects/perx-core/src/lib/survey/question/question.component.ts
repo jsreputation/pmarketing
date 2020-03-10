@@ -44,16 +44,7 @@ export class QuestionComponent {
 
   public errorState: IErrors = {};
 
-  public point: number = 1;
-
-  // public ngOnChanges(changes: SimpleChanges): void {
-  //   if (changes.flush) {
-  //     this.flush = changes.flush.currentValue;
-  //     if (this.flush) {
-  //       this.questionValidation();
-  //     }
-  //   }
-  // }
+  public point: number;
 
   public get surveyQuestionType(): typeof SurveyQuestionType { return SurveyQuestionType; }
 
@@ -69,40 +60,13 @@ export class QuestionComponent {
     this.questionValidation();
   }
 
-  // public updateGroupPoint(point: number): void {
-  //   this.point = point;
-  //   this.updatePoints.emit({ questionId: this.question.id, point });
-  // }
-
   public updateNonGroupPoint(): void {
     // if (this.question.payload.type !== SurveyQuestionType.questionGroup) {
-    //   this.point = this.question && this.question.required ?
-    //     (this.question.answer === 0 || (this.question.answer && this.question.answer.length > 0) ? 1 : 0) : 1;
-    //   console.log('check out the updatepoints i am emitting', { questionId: this.question.id, point: this.point } );
-    //   this.updatePoints.emit({ questionId: this.question.id, point: this.point });
+    this.point = this.question && this.question.required ?
+      (this.question.answer === 0 || (this.question.answer && this.question.answer.length > 0) ? 1 : 0) : 1;
     // }
-    this.updatePoints.emit({ questionId: this.question.id, point: 1 });
+    this.updatePoints.emit({ questionId: this.question.id, point: this.point });
   }
-
-  // note: because next is handled now by parent it needs to be bought up
-
-  // public next(): void {
-  //   this.questionValidation();
-  //   if (!this.errorState.hasError) {
-  //     this.moveToNextQuestion();
-  //   } else if (this.question.payload.type === SurveyQuestionType.questionGroup) {
-  //     this.flush = !this.flush;
-  //   }
-  // }
-
-  // public moveToNextQuestion(): void {
-  //   this.updateNonGroupPoint();
-  //   this.updateQuestionPointer.emit('next');
-  // }
-  //
-  // public back(): void {
-  //   this.updateQuestionPointer.emit('back');
-  // }
 
   public validateEmail(email: string): boolean {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -126,3 +90,38 @@ export class QuestionComponent {
     }
   }
 }
+
+
+// note: because next is handled now by parent it needs to be bought up
+
+// public next(): void {
+//   this.questionValidation();
+//   if (!this.errorState.hasError) {
+//     this.moveToNextQuestion();
+//   } else if (this.question.payload.type === SurveyQuestionType.questionGroup) {
+//     this.flush = !this.flush;
+//   }
+// }
+
+// public moveToNextQuestion(): void {
+//   this.updateNonGroupPoint();
+//   this.updateQuestionPointer.emit('next');
+// }
+//
+// public back(): void {
+//   this.updateQuestionPointer.emit('back');
+// }
+
+// public updateGroupPoint(point: number): void {
+//   this.point = point;
+//   this.updatePoints.emit({ questionId: this.question.id, point });
+// }
+
+// public ngOnChanges(changes: SimpleChanges): void {
+// if (changes.flush) {
+//   this.flush = changes.flush.currentValue;
+//   if (this.flush) {
+//     this.questionValidation();
+//   }
+// }
+// }

@@ -5,6 +5,7 @@ import { Observable, Subject, of } from 'rxjs';
 import { filter, switchMap, takeUntil, map, catchError } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { SurveyComponent as SurveyCoreComponent } from '@perx/core';
 
 interface IAnswer {
   questionId: string;
@@ -19,6 +20,7 @@ interface IAnswer {
 export class SurveyComponent implements OnInit, OnDestroy {
   @ViewChild('overflowContainer', { static: false }) private overflowContainer: ElementRef;
   @ViewChild('overFarrow', { static: false }) private overFarrow: ElementRef;
+  @ViewChild('coreSurvey', { static: false }) private coreSurvey: SurveyCoreComponent;
   public data$: Observable<ISurvey>;
   public intervalId: number;
   public survey: ISurvey;
@@ -235,14 +237,20 @@ export class SurveyComponent implements OnInit, OnDestroy {
     const {questions} = this.survey; // to find if the question is required or not
     // updateQuestion will be called when questionPointer cause child to emit currentPointer
     if (action === 'next') {
-      if (!questions[this.questionPointer].required) {
-        // able to go next if not required
-        this.questionPointer++;
-      }
-      const answerToCurrentQuestion = this.answers.find(answer => parseInt(answer.questionId, 10) === this.questionPointer);
-      if (answerToCurrentQuestion && answerToCurrentQuestion.content) {
-        // able to go next if answer has been answered
-        this.questionPointer++;
+      // core validate
+      const questionComponentsArr = this.coreSurvey.questionComponents.toArray();
+      // call validate on the particular question
+      questionComponentsArr[this.questionPointer].questionValidation();
+      if (!questionComponentsArr[this.questionPointer].errorState.hasError) {
+        if (!questions[this.questionPointer].required) {
+          // able to go next if not required
+          this.questionPointer++;
+        }
+        const answerToCurrentQuestion = this.answers.find(answer => parseInt(answer.questionId, 10) === this.questionPointer);
+        if (answerToCurrentQuestion && answerToCurrentQuestion.content) {
+          // able to go next if answer has been answered
+          this.questionPointer++;
+        }
       }
     } else {
       this.questionPointer--;

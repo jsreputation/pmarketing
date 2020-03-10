@@ -17,6 +17,7 @@
         <h1>{{survey.title}}</h1>
         <h2 *ngIf="survey.subTitle">{{survey.subTitle}}</h2>
         <perx-core-survey
+          #coreSurvey
           [data]="data$"
           [questionPointer]="questionPointer"
           (surveyDone)="updateSurveyStatus($event)"
