@@ -1,34 +1,41 @@
-<div class="content-container">
-  <img src="assets/signup-top-image.svg" class="top-image">
-  <div class="login-form">
-    <h1>Log In</h1>
-    <p>
-      <span *ngIf="useSignUpButton else signUpMsg"></span>
-      <ng-template #signUpMsg>
-        Not registered to DigitalPLUS! Card? <a routerLink="/signup" class="link">Sign up</a>
-      </ng-template>
-    </p>
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <mat-form-field appearance="standard" class="full-width__input">
-        <span matPrefix>+63<span class="prefix-spacer"></span></span>
-        <input type="tel" autocomplete="tel-national" matInput placeholder="Enter Mobile Number" formControlName="mobileNumber">
-        <mat-error *ngIf="mobileNumber && mobileNumber.hasError('required')">
-          Mobile Number is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field appearance="standard" class="full-width__input">
-        <input type="password" matInput placeholder="PIN Code" formControlName="pinCode">
-        <mat-error *ngIf="pinCode && pinCode.hasError('required')">
-          PIN Code is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-      <a [routerLink]="[ '/forgot-pin' ]" class="link forgot-pin">Forgot Pin Code?</a>
-      <button mat-flat-button type="submit" color="primary" class="full-width__button">Log In</button>
-      <div *ngIf="useSignUpButton" class="sign-up-block-container">
-        <p class="sign-up-block-msg">No account?</p>
-        <button routerLink="/signup" mat-stroked-button class="full-width_sign_button" color="primary">Sign Up</button>
-      </div>
-    </form>
+<div class="background-cont">
+  <div class="content-container">
+    <div class="top-image">
+      <img src="assets/signup-top-image.svg">
+    </div>
+    <div class="login-form">
+      <h1>Log In</h1>
+      <p>
+        <span *ngIf="useSignUpButton else signUpMsg"></span>
+        <ng-template #signUpMsg>
+          Not registered to DigitalPLUS! Card? <a routerLink="/signup" class="link">Sign up</a>
+        </ng-template>
+      </p>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="standard" class="full-width__input">
+          <span matPrefix>+63<span class="prefix-spacer"></span></span>
+          <input type="tel" autocomplete="tel-national" matInput placeholder="Enter Mobile Number" formControlName="mobileNumber">
+          <mat-error *ngIf="mobileNumber && mobileNumber.hasError('required')">
+            Mobile Number is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="standard" class="full-width__input">
+          <input type="password" matInput placeholder="PIN Code" formControlName="pinCode">
+          <mat-error *ngIf="pinCode && pinCode.hasError('required')">
+            PIN Code is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        <a [routerLink]="[ '/forgot-pin' ]" class="link forgot-pin">Forgot Pin Code?</a>
+        <button mat-flat-button type="submit" color="primary" class="full-width__button">Log In</button>
+        <div *ngIf="useSignUpButton" class="sign-up-block-container">
+          <p class="sign-up-block-msg">No account?</p>
+          <button routerLink="/signup" mat-stroked-button class="full-width_sign_button" color="primary">Sign Up</button>
+        </div>
+      </form>
+    </div>
+    <div class="btm-img-container">
+      <img src="assets/signup-bottom-image.png">
+    </div>
   </div>
-  <img src="assets/signup-bottom-image.png" class="bottom-image">
 </div>
+
