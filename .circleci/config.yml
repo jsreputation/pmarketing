@@ -247,6 +247,7 @@ jobs:
 
             if [ $APP == 'petron-demo' ] || \
             [ $APP == 'oracle-demo' ] || \
+            [ $APP == 'daiichi' ] || \
             [ $APP == 'feature-demo' ] || \
             [ $APP == 'partners-demo' ] || \
             [ $APP == 'perx-demo' ]
@@ -258,7 +259,7 @@ jobs:
             echo "APP_BASE: ${APP_BASE}"
 
             export APP_ENV="prod"
-            if [[ ( $APP == 'starhub' || $APP == 'abenson' ) && $TARGET_ENV != 'production' ]]
+            if [[ ( $APP == 'starhub' || $APP == 'abenson' || $APP == 'daiichi') && $TARGET_ENV != 'production' ]]
             then
               export APP_ENV="staging"
             fi
