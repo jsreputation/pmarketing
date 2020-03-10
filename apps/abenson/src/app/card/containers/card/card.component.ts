@@ -29,6 +29,7 @@ export class CardComponent implements OnInit {
   public transactionsLoaded: boolean = false;
   public transactionsEnded: boolean = false;
   private loyaltyId?: number = undefined;
+  private loyaltyCurrency?: string = undefined;
   private activeTabId: number = 0;
   private transactionsPageId: number = 1;
   private tabsId: any = {
@@ -71,7 +72,7 @@ export class CardComponent implements OnInit {
         sku: tr.sku ? `sku${tr.sku}` : undefined,
         qty: tr.quantity ? (parseInt(tr.quantity, 10) > 1 ? `${tr.quantity} items` : `${tr.quantity} item`) : undefined,
         untprc: tr.purchaseAmount ?
-          `${this.currencyPipe.transform(tr.purchaseAmount, 'PHP', 'symbol-narrow', '1.0-0', 'en-PH')}` : undefined
+          `${this.currencyPipe.transform(tr.purchaseAmount, this.loyaltyCurrency, 'symbol-narrow', '1.0-0', 'en-PH')}` : undefined
       });
     });
 
