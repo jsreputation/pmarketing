@@ -21,7 +21,8 @@ import {
   MatToolbarModule,
   MatListModule,
   MatDialogModule,
-  MatMenuModule
+  MatMenuModule,
+  MatInputModule
 } from '@angular/material';
 import { GameModule } from './game/game.module';
 import { HistoryComponent } from './history/history.component';
@@ -67,7 +68,6 @@ import { CampaignStampsComponent } from './campaign-stamps/campaign-stamps.compo
 import { CatalogsComponent } from './catalogs/catalogs.component';
 import { CatalogRewardCardComponent } from './catalog-reward-card/catalog-reward-card.component';
 import { CatalogComponent } from './catalog/catalog.component';
-import {MatInputModule} from "@angular/material/input";
 
 const comps: any[] = [
   AccountComponent,
