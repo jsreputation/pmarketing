@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NotificationService, ISurvey, SurveyService, IPopupConfig, IPrePlayStateData, AuthenticationService } from '@perx/core';
+import { NotificationService, ISurvey, SurveyService, IPopupConfig, IPrePlayStateData, AuthenticationService } from '@perxtech/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable, Subject, of } from 'rxjs';
 import { filter, switchMap, takeUntil, map, catchError } from 'rxjs/operators';

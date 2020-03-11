@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
 
 import { Router, ActivatedRoute } from '@angular/router';
-import { IReward, RewardsService } from '@perx/core';
+import { IReward, RewardsService } from '@perxtech/core';
 import { Observable } from 'rxjs';
 
 @Component({

@@ -9,12 +9,12 @@ import {
   AuthenticationService,
   NotificationService,
   IPrePlayStateData,
-} from '@perx/core';
+} from '@perxtech/core';
 import { map, tap, first, filter, switchMap, bufferCount, catchError, takeUntil } from 'rxjs/operators';
 import { Observable, interval, throwError, Subject, combineLatest } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import {IPlayOutcome} from '@perx/core';
+import { IPlayOutcome } from '@perxtech/core';
 
 @Component({
   selector: 'perx-blackcomb-pages-game',

@@ -14,8 +14,8 @@ import {
 import { SoundModule } from './sound/sound.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ProfileComponent } from './profile/profile.component';
-import { AuthenticationService, ProfileModule, ThemesService, ConfigService } from '@perx/core';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import { AuthenticationService, ProfileModule, ThemesService, ConfigService } from '@perxtech/core';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 
 describe('AppComponent', () => {
@@ -51,7 +51,7 @@ describe('AppComponent', () => {
         { provide: MatDialogRef, useValue: {} },
         { provide: MAT_DIALOG_DATA, useValue: [] },
         { provide: ThemesService, useValue: themesServiceStub },
-        { provide: ConfigService, useValue: configServiceStub}
+        { provide: ConfigService, useValue: configServiceStub }
       ],
     }).compileComponents();
   }));

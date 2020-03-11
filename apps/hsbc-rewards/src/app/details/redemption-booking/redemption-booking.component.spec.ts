@@ -17,7 +17,7 @@ import {
   RewardsService,
   IReward,
   IVoucherService
-} from '@perx/core';
+} from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Observable, of } from 'rxjs';
@@ -56,7 +56,7 @@ describe('RedemptionBookingComponent', () => {
   };
 
   const dialogServiceStub = {
-    open: (componentRef: any, config: any) => of({componentRef, config})
+    open: (componentRef: any, config: any) => of({ componentRef, config })
   };
 
   beforeEach(async(() => {

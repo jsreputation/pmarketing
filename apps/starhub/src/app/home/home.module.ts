@@ -21,7 +21,7 @@ import {
   CampaignModule,
   OutcomeModule,
   PopupComponent,
-} from '@perx/core';
+} from '@perxtech/core';
 
 import { environment } from 'src/environments/environment';
 import { HomeRoutingModule } from './home-routing.module';

@@ -3,11 +3,11 @@ import { V4SettingsService } from './v4-settings.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AuthenticationService } from '../auth/authentication/authentication.service';
 import { of } from 'rxjs';
-import { IWAppAccessTokenResponse } from '@perx/whistler';
+import { IWAppAccessTokenResponse } from '@perxtech/whistler';
 import { HttpClient } from '@angular/common/http';
-import {IConfig} from '../config/models/config.model';
+import { IConfig } from '../config/models/config.model';
 import { ITheme } from '../utils/themes/themes.model';
-import {ConfigService} from '../config/config.service';
+import { ConfigService } from '../config/config.service';
 
 const authenticationServiceStub: Partial<AuthenticationService> = {
   getAppToken: () => of()

@@ -7,7 +7,7 @@ import {
   IMerchantTransactionHistory,
   IMerchantPurchaseTransactionHistory,
   IMerchantRewardTransactionHistory
-} from '@perx/core';
+} from '@perxtech/core';
 
 @Component({
   selector: 'app-transaction-history',

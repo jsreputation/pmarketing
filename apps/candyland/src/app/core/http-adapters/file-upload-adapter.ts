@@ -1,4 +1,4 @@
-import { IWDocumentAttributes, IJsonApiItem, WFileUploadStatus } from '@perx/whistler';
+import { IWDocumentAttributes, IJsonApiItem, WFileUploadStatus } from '@perxtech/whistler';
 import { FileUploadStatus } from '@cl-core/services/iadvanced-upload-file.service';
 import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
 export class FileUploadAdapter {

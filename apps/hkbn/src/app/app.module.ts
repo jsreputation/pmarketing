@@ -38,7 +38,7 @@ import {
   IConfig,
   TokenStorage,
   LanguageService,
-} from '@perx/core';
+} from '@perxtech/core';
 
 import { environment } from '../environments/environment';
 

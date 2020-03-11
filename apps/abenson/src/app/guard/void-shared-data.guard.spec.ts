@@ -3,7 +3,7 @@ import { TestBed, inject } from '@angular/core/testing';
 import { VoidSharedDataGuard } from './void-shared-data.guard';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AccountComponent } from '../account/account.component';
-import { ProfileModule } from '@perx/core';
+import { ProfileModule } from '@perxtech/core';
 
 describe('VoidSharedDataGuard', () => {
   beforeEach(() => {

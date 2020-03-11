@@ -1,4 +1,4 @@
-import { IWMerchantAttributes, IWMerchantBranchAttributes, IJsonApiPostData, IJsonApiItem } from '@perx/whistler';
+import { IWMerchantAttributes, IWMerchantBranchAttributes, IJsonApiPostData, IJsonApiItem } from '@perxtech/whistler';
 import { IMerchantForm } from '@cl-core/models/merchant/merchant-form-interface';
 import { IBranch } from '@cl-core/models/merchant/branch-interface';
 

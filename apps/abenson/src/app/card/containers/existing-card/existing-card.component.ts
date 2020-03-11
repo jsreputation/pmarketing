@@ -18,7 +18,7 @@ import {
   LoyaltyService,
   ICardNumber,
   isEmptyArray,
-} from '@perx/core';
+} from '@perxtech/core';
 
 @Component({
   selector: 'app-existing-card',

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ConfigService, IConfig, isEmptyString } from '@perx/core';
+import { ConfigService, IConfig, isEmptyString } from '@perxtech/core';
 
 @Component({
   selector: 'app-redemption',

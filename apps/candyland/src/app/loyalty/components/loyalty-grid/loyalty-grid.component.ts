@@ -2,7 +2,7 @@ import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { IEngagementItemMenuOption } from '@cl-shared/components/engagement-item/engagement-item.component';
 import { CustomDataSource } from '@cl-shared/table';
 import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
-import { IStatusLabelConfig } from '@perx/candyshop';
+import { IStatusLabelConfig } from '@perxtech/candyshop';
 
 @Component({
   selector: 'cl-loyalty-grid',

@@ -8,7 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatRippleModule } from '@angular/material/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthenticationService, IMerchantAdminService, ConfigService } from '@perx/core';
+import { AuthenticationService, IMerchantAdminService, ConfigService } from '@perxtech/core';
 import { Router } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { of } from 'rxjs';
@@ -20,7 +20,7 @@ describe('RegisterComponent', () => {
     validateInvite: () => of()
   };
   beforeEach(async(() => {
-    const routerStub: Partial<Router> = { navigateByUrl: () => Promise.resolve(true)};
+    const routerStub: Partial<Router> = { navigateByUrl: () => Promise.resolve(true) };
     const configServiceStub: Partial<ConfigService> = {
       readAppConfig: () => of()
     };

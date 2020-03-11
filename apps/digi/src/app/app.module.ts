@@ -19,7 +19,7 @@ import {
   TokenStorage,
   LanguageService,
   ThemesService
-} from '@perx/core';
+} from '@perxtech/core';
 import { GameComponent } from './game/game.component';
 
 import { MatToolbarModule, MatButtonModule, MatDialogModule } from '@angular/material';

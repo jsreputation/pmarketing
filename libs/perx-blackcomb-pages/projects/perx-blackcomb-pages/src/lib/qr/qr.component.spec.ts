@@ -17,7 +17,7 @@ import { of } from 'rxjs';
 import { QRCodeModule } from 'angularx-qrcode';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { ProfileService, ThemesService, ConfigService } from '@perx/core';
+import { ProfileService, ThemesService, ConfigService } from '@perxtech/core';
 
 import { QRComponent } from './qr.component';
 

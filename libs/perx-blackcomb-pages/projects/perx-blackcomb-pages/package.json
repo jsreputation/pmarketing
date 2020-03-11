@@ -1,5 +1,5 @@
 {
-  "name": "@perx/blackcomb-pages",
+  "name": "@perxtech/blackcomb-pages",
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^8.0.0",

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule, MatIconModule, MatMenuModule, MatSortModule, MatTableModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
-import { ButtonModule, ProgressBarModule } from '@perx/candyshop';
+import { ButtonModule, ProgressBarModule } from '@perxtech/candyshop';
 import { RewardsListComponent } from './rewards-list.component';
 import { TranslateModule } from '@ngx-translate/core';
 

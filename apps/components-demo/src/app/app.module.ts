@@ -14,10 +14,10 @@ import {
   SurveyModule as PerxSurveyModule,
   ProfileModule as PerxProfileModule,
   ConfigModule
-} from '@perx/core';
+} from '@perxtech/core';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatToolbarModule, MatCardModule, MatRippleModule, MatIconModule, MatDialogModule} from '@angular/material';
+import { MatToolbarModule, MatCardModule, MatRippleModule, MatIconModule, MatDialogModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { UtilsModule } from './utils/utils.module';
 import { HomeComponent } from './home/home.component';
@@ -30,7 +30,7 @@ import * as Hammer from 'hammerjs';
 // https://medium.com/angular-in-depth/gestures-in-an-angular-application-dde71804c0d0
 // to override default settings
 export class MyHammerConfig extends HammerGestureConfig {
-  public overrides: any =  {
+  public overrides: any = {
     swipe: { direction: Hammer.DIRECTION_ALL }, // in order to swipe up and down
     pinch: { enable: false },
     rotate: { enable: false }
@@ -44,7 +44,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     HomeComponent
   ],
   imports: [
-    ConfigModule.forRoot({...environment}),
+    ConfigModule.forRoot({ ...environment }),
     MatToolbarModule,
     BrowserModule,
     AppRoutingModule,

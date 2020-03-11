@@ -1,6 +1,6 @@
 import { Observable, of } from 'rxjs';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
-import { IJsonApiItemPayload, IWOutcomeAttributes } from '@perx/whistler';
+import { IJsonApiItemPayload, IWOutcomeAttributes } from '@perxtech/whistler';
 import { OutcomesService } from '@cl-core-services';
 
 export class MockOutcomeService implements Partial<OutcomesService> {

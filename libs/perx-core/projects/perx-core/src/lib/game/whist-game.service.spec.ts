@@ -11,7 +11,7 @@ import {
   IJsonApiItem,
   IJsonApiItemPayload,
   IWGameEngagementAttributes,
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 import { WhistlerVouchersService } from '../vouchers/whistler-vouchers.service';
@@ -226,7 +226,7 @@ describe('WhistlerGameService', () => {
       }));
       const spy = jest.spyOn(vouchersServiceMockLocal, 'getFullVoucher');
       jest.spyOn(gameService, 'play').mockImplementation(() => {
-        vouchersServiceMockLocal.getFullVoucher({attributes: undefined, id: '', type: ''});
+        vouchersServiceMockLocal.getFullVoucher({ attributes: undefined, id: '', type: '' });
         return of({
           vouchers: [],
           rawPayload: ''

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { EngagementsHttpsService } from '@perx/whistler-services';
+import { EngagementsHttpsService } from '@perxtech/whistler-services';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 import { EngagementTypeAPIMapping } from '@cl-core/models/engagement/engagement-type.enum';
-import { IWEngagementAttributes, IJsonApiItemPayload, IJsonApiListPayload } from '@perx/whistler';
+import { IWEngagementAttributes, IJsonApiItemPayload, IJsonApiListPayload } from '@perxtech/whistler';
 import { IEngagementType } from '@cl-core/models/engagement/engagement.interface';
 import { HttpClient } from '@angular/common/http';
 import { IGraphic } from '@cl-core/models/graphic.interface';

@@ -18,7 +18,7 @@ import {
   IJsonApiListPayload,
   IWProfileAttributes,
   IJsonApiItem,
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { TokenStorage } from '../../utils/storage/token-storage.service';
 import { IMessageResponse } from '../../perx-core.models';
 

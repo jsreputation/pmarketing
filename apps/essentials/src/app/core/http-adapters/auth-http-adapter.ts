@@ -1,4 +1,4 @@
-import { IJsonApiPostData } from '@perx/whistler';
+import { IJsonApiPostData } from '@perxtech/whistler';
 
 export class AuthHttpAdapter {
   public static transformFromLogin(data: ILogin): Partial<IJsonApiPostData<ILogin>> {

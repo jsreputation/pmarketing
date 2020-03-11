@@ -9,7 +9,7 @@ import { DashboardChartsParametersService } from '../../services/dashboard-chart
 import { UserService } from '@cl-core/services/user.service';
 import { DashboardGameCard } from '@cl-shared/models/dashboard/dashboard-game-card.interface';
 import { DateTimeParser } from '@cl-helpers/date-time-parser';
-import { DatepickerRangeValue } from '@perx/candyshop';
+import { DatepickerRangeValue } from '@perxtech/candyshop';
 
 @Component({
   selector: 'cl-dashboard-page',

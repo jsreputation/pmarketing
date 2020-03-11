@@ -13,7 +13,7 @@ import {
 } from '@angular/material';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
 import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter.module';
-import { ButtonModule, InfoHintModule } from '@perx/candyshop';
+import { ButtonModule, InfoHintModule } from '@perxtech/candyshop';
 import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
 import { RoleLabelModule } from '@cl-shared/components/role-label/role-label.module';
 import { InviteNewUsersPopupComponent } from './containers/invite-new-users-popup/invite-new-users-popup.component';

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { StampHttpService } from '@perx/whistler-services';
+import { StampHttpService } from '@perxtech/whistler-services';
 import { Observable, of } from 'rxjs';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 import { map } from 'rxjs/operators';
-import { IWStampEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
+import { IWStampEngagementAttributes, IJsonApiItemPayload } from '@perxtech/whistler';
 import { HttpClient } from '@angular/common/http';
 import { IStampsDefaultValue } from '@cl-core/models/games/stamps/stamps-default-value.interface';
 import { IStampsEntityForm } from '@cl-core/models/games/stamps/stamps-entity-form.interface';

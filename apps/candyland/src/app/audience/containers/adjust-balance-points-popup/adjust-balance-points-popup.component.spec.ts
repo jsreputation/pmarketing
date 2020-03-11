@@ -9,7 +9,7 @@ import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/t
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
-import { ButtonModule } from '@perx/candyshop';
+import { ButtonModule } from '@perxtech/candyshop';
 
 describe('AdjustBalancePointsPopupComponent', () => {
   let component: AdjustBalancePointsPopupComponent;
@@ -39,7 +39,7 @@ describe('AdjustBalancePointsPopupComponent', () => {
             }
           }
         },
-        {provide: MAT_DIALOG_DATA, useValue: {}}
+        { provide: MAT_DIALOG_DATA, useValue: {} }
       ],
       declarations: [AdjustBalancePointsPopupComponent]
     })

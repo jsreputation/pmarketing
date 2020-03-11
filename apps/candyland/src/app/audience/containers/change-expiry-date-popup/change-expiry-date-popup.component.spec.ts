@@ -4,7 +4,7 @@ import { ChangeExpiryDatePopupComponent } from './change-expiry-date-popup.compo
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatDialogRef, MatDialogModule, MAT_DIALOG_DATA, MatIconModule, MatDatepickerModule } from '@angular/material';
 import { DatePickerModule } from '@cl-shared';
-import { ButtonModule } from '@perx/candyshop';
+import { ButtonModule } from '@perxtech/candyshop';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -37,7 +37,7 @@ describe('ChangeExpiryDatePopupComponent', () => {
             }
           }
         },
-        {provide: MAT_DIALOG_DATA, useValue: {}}
+        { provide: MAT_DIALOG_DATA, useValue: {} }
       ],
       declarations: [ChangeExpiryDatePopupComponent]
     })

@@ -1,5 +1,5 @@
 {
-  "name": "@perx/whistler-services",
+  "name": "@perxtech/whistler-services",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -19,7 +19,7 @@
     "@angular/compiler": "~8.0.0",
     "@angular/core": "~8.0.0",
     "@angular/forms": "~8.0.0",
-    "@perx/whistler": "^0.0.0",
+    "@perxtech/whistler": "^0.0.0",
     "@angular/material": "~8.0.1",
     "@angular/platform-browser": "~8.0.0",
     "@angular/platform-browser-dynamic": "~8.0.0",

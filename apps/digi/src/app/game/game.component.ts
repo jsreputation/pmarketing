@@ -12,7 +12,7 @@ import {
   IGameComponent,
   PopUpClosedCallBack,
   IPlayOutcome,
-} from '@perx/core';
+} from '@perxtech/core';
 import { map, take } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { StatusLabelMapping, IVoucherService } from '@perx/core';
+import { StatusLabelMapping, IVoucherService } from '@perxtech/core';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap, catchError } from 'rxjs/operators';
 import { voucher } from 'src/assets/mock/vouchers';
 import { of, Observable } from 'rxjs';
-import { IVoucher } from '@perx/core/dist/perx-core/lib/vouchers/models/voucher.model';
+import { IVoucher } from '@perxtech/core/dist/perx-core/lib/vouchers/models/voucher.model';
 
 @Component({
   selector: 'app-voucher-detail',

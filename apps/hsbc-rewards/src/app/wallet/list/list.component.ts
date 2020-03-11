@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Voucher, IVoucherService, VoucherComponent, VoucherState, StatusLabelMapping } from '@perx/core';
+import { Voucher, IVoucherService, VoucherComponent, VoucherState, StatusLabelMapping } from '@perxtech/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({

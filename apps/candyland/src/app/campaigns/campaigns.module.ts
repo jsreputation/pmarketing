@@ -40,7 +40,7 @@ import {
   DownloadLinkModule,
   ProgressBarModule,
   StatusLabelModule
-} from '@perx/candyshop';
+} from '@perxtech/candyshop';
 import {
   SeparateRangeDatePickerFilterModule
 } from '@cl-shared/table/separate-range-date-picker-filter/separate-range-date-picker-filter.module';
@@ -77,7 +77,7 @@ import { ReviewCampaignComponent } from './containers/review-campaign/review-cam
 import { CreateEngagementPopupModule } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.module';
 import { NewCampaignRewardsLimitsPageComponent } from './containers/new-campaign-rewards-limits-page/new-campaign-rewards-limits-page.component';
 import { SimpleMobileViewModule, PipesModule } from '@cl-shared';
-import { SurveyModule as PerxSurveyModule, GameModule, ConfigModule, PuzzlesModule, RewardsModule as PerxRewardsModule } from '@perx/core';
+import { SurveyModule as PerxSurveyModule, GameModule, ConfigModule, PuzzlesModule, RewardsModule as PerxRewardsModule } from '@perxtech/core';
 import { environment } from '@cl-environments/environment';
 import { CampaignsMobilePreviewComponent } from './components/campaigns-mobile-preview/campaigns-mobile-preview.component';
 import { NewCampaignNotificationsComponent } from './containers/new-campaign-notifications/new-campaign-notifications.component';

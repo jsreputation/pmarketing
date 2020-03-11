@@ -1,7 +1,7 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
-import { WRedemptionType } from '@perx/whistler';
-import { OptionConfig } from '@perx/candyshop';
+import { WRedemptionType } from '@perxtech/whistler';
+import { OptionConfig } from '@perxtech/candyshop';
 
 @Component({
   selector: 'cl-reward-voucher-code-form-group',

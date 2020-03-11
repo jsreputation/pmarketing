@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { NotificationService, IConfig, ConfigService, TokenStorage } from '@perx/core';
+import { NotificationService, IConfig, ConfigService, TokenStorage } from '@perxtech/core';
 import {
   PageProperties,
   BarSelectedItem,
@@ -54,7 +54,7 @@ export class AppComponent implements OnInit {
 
   public ngOnInit(): void {
 
-    const lang  = this.store.getAppInfoProperty('merck-customer') || this.translateService.currentLang || this.translateService.defaultLang;
+    const lang = this.store.getAppInfoProperty('merck-customer') || this.translateService.currentLang || this.translateService.defaultLang;
     this.translateService.use(lang);
     this.translateService.onLangChange.subscribe((change: LangChangeEvent) => {
       this.store.setAppInfoProperty(change.lang, 'merck-customer');

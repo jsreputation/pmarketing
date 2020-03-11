@@ -8,7 +8,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { ProfileService } from '@perx/core';
+import { ProfileService } from '@perxtech/core';
 import { Router } from '@angular/router';
 
 @Component({

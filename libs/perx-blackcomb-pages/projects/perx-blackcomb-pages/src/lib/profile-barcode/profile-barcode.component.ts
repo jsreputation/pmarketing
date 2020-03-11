@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 
-import { ProfileService, ThemesService, ITheme, ConfigService, IConfig, IProfile } from '@perx/core';
+import { ProfileService, ThemesService, ITheme, ConfigService, IConfig, IProfile } from '@perxtech/core';
 import { forkJoin } from 'rxjs';
 
 @Component({

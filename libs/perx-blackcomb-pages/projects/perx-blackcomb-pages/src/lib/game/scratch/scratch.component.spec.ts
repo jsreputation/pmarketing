@@ -9,7 +9,7 @@ import {
   GameModule,
   IGameService,
   IGame,
-} from '@perx/core';
+} from '@perxtech/core';
 
 import { of } from 'rxjs';
 

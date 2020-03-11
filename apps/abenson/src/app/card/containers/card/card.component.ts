@@ -12,7 +12,7 @@ import {
 import {
   LoyaltyService,
   ITransaction, ILoyalty, ConfigService, IConfig,
-} from '@perx/core';
+} from '@perxtech/core';
 import { IAbensonConfig } from '../../../model/IAbenson.model';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 

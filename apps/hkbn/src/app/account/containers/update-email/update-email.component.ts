@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { HkbnValidators } from '../../../helpers/hkbn-validators';
-import { ProfileService, NotificationService } from '@perx/core';
+import { ProfileService, NotificationService } from '@perxtech/core';
 import { map, flatMap, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';

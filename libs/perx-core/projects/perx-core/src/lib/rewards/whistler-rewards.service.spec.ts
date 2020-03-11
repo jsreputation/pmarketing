@@ -13,7 +13,7 @@ import {
   IJsonApiListPayload,
   IJsonApiItemPayload,
   WRedemptionType,
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 
 describe('WhistlerRewardsService', () => {
   let httpClientSpy: Partial<HttpClient>;

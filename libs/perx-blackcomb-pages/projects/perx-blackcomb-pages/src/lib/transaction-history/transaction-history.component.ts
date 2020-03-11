@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {DatePipe} from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { Observable, forkJoin, of } from 'rxjs';
 
 import {
@@ -8,7 +8,7 @@ import {
   IRewardTransactionHistory,
   IPurchaseTransactionHistory,
   TransactionPipe
-} from '@perx/core';
+} from '@perxtech/core';
 
 import { ShowTitleInHeader } from '../layout/layout.component';
 
@@ -48,7 +48,7 @@ export class TransactionHistoryComponent implements OnInit, ShowTitleInHeader {
 
     this.descFn = (tr: ITransactionHistory) =>
       `${tr.transactionDetails && tr.transactionDetails.data &&
-        (tr.transactionDetails.data as IPurchaseTransactionHistory).productName}`;
+      (tr.transactionDetails.data as IPurchaseTransactionHistory).productName}`;
 
     this.subTitleFn = (tr: ITransactionHistory) => `${this.datePipe.transform(tr.transactedAt, 'dd/MM/yyyy')}`;
     this.priceLabelFn = (tr: ITransactionHistory) => `${this.transactionPipe.transform(tr.pointsAmount || 0)}`;

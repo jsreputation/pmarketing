@@ -25,7 +25,7 @@ import {
   SurveyService,
   ConfigService,
   IConfig,
-} from '@perx/core';
+} from '@perxtech/core';
 
 import { SignInComponent } from './sign-in.component';
 import { Location } from '@angular/common';

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { LoadingRoutingModule } from './loading-routing.module';
-import { PerxBlackcombPagesModule } from '@perx/blackcomb-pages';
+import { PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({

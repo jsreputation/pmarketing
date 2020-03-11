@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute} from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import {
   ProfileService
-} from '@perx/core';
+} from '@perxtech/core';
 
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { ShowTitleInHeader } from '../layout/layout.component';

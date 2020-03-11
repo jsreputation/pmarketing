@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { InstantRewardsHttpService } from '@perx/whistler-services';
+import { InstantRewardsHttpService } from '@perxtech/whistler-services';
 import { Observable } from 'rxjs';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 import { map } from 'rxjs/operators';
-import { IWInstantOutcomeEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
+import { IWInstantOutcomeEngagementAttributes, IJsonApiItemPayload } from '@perxtech/whistler';
 import { HttpClient } from '@angular/common/http';
 import { IRewardDefaultValue } from '@cl-core/models/games/reward/reward-default-value.interface';
 import { IRewardForm } from '@cl-core/models/games/reward/reward-form-interface';

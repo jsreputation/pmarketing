@@ -1,5 +1,5 @@
 {
-  "name": "@perx/components-demo",
+  "name": "@perxtech/components-demo",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -24,10 +24,10 @@
     "@angular/platform-browser": "~8.0.0",
     "@angular/platform-browser-dynamic": "~8.0.0",
     "@angular/router": "~8.0.0",
-    "@perx/blackcomb-pages": "^0.0.0",
-    "@perx/candyshop": "^0.0.0",
-    "@perx/chart": "^0.0.0",
-    "@perx/core": "^0.0.0",
+    "@perxtech/blackcomb-pages": "^0.0.0",
+    "@perxtech/candyshop": "^0.0.0",
+    "@perxtech/chart": "^0.0.0",
+    "@perxtech/core": "^0.0.0",
     "@swimlane/ngx-charts": "^12.0.1",
     "ngx-auth": "^5.0.0",
     "rxjs": "~6.4.0",

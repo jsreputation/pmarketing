@@ -2,7 +2,7 @@ import { Observable, of } from 'rxjs';
 import { IComm, ICommMessage } from '@cl-core/models/comm/schedule';
 import {
   IJsonApiItemPayload, IWCommEventAttributes, IWCommMessageAttributes, IWCommTemplateAttributes, WMessageChannel
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { ITableData } from '@cl-core/models/data-list.interface';
 import { CommsService } from '@cl-core-services';
 

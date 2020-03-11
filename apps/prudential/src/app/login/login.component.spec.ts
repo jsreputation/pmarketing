@@ -6,7 +6,7 @@ import {
   MatProgressSpinnerModule
 } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { ProfileModule, AuthenticationService, ConfigService } from '@perx/core';
+import { ProfileModule, AuthenticationService, ConfigService } from '@perxtech/core';
 import { FormsModule } from '@angular/forms';
 import { of } from 'rxjs';
 

@@ -1,4 +1,4 @@
-import { ILoyalty } from '@perx/core';
+import { ILoyalty } from '@perxtech/core';
 
 export const loyalties: ILoyalty[] = [
   {

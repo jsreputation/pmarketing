@@ -3,7 +3,7 @@ import {
   IJsonApiItem,
   IJsonApiListPayload,
   IWAssignedAttributes
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { ITableData } from '@cl-core/models/data-list.interface';
 import { IAudienceVoucher } from '@cl-core/models/vouchers/audience-voucher.interface';
 import { AudiencesVouchersService } from '@cl-core-services';

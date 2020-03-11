@@ -1,5 +1,5 @@
 {
-  "name": "@perx/blackcomb-pages",
+  "name": "@perxtech/blackcomb-pages",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -25,7 +25,7 @@
     "@angular/platform-browser-dynamic": "~8.0.0",
     "@angular/router": "~8.0.0",
     "@ngx-translate/core": "^11.0.1",
-    "@perx/core": "^0.0.0",
+    "@perxtech/core": "^0.0.0",
     "angularx-qrcode": "^1.6.4",
     "ngx-infinite-scroll": "^8.0.1",
     "ngx-multi-line-ellipsis": "^1.0.4",

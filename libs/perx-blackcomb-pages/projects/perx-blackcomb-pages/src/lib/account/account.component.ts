@@ -28,7 +28,7 @@ import {
   ThemesService,
   LoyaltyService,
   ILoyalty, SettingsService,
-} from '@perx/core';
+} from '@perxtech/core';
 
 @Component({
   selector: 'perx-blackcomb-pages-account',

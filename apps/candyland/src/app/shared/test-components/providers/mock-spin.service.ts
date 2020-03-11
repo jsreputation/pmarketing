@@ -1,7 +1,7 @@
 import { Observable, of } from 'rxjs';
 import {
   IJsonApiItemPayload, IWSpinGameEngagementAttributes
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { ISpinEntityForm } from '@cl-core/models/games/spin/spin-form.interface';
 import { ISpinDefaultValue } from '@cl-core/models/games/spin/spin-default-value.interface';
 import { SpinService } from '@cl-core/services/spin.service';

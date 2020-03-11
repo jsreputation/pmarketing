@@ -10,7 +10,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from '../../../shared/shared.module';
 import { ChangeCityComponent } from './change-city.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ProfileService } from '@perx/core';
+import { ProfileService } from '@perxtech/core';
 import { of, throwError } from 'rxjs';
 import { Location } from '@angular/common';
 import { Type } from '@angular/core';

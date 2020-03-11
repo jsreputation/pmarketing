@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoyaltyService, ILoyalty } from '@perx/core';
+import { LoyaltyService, ILoyalty } from '@perxtech/core';
 
 @Component({
   selector: 'hkbn-enlarged-qr',

@@ -1,5 +1,5 @@
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { StampService, IStampCard } from '@perx/core';
+import { StampService, IStampCard } from '@perxtech/core';
 import { Component, OnInit } from '@angular/core';
 import { filter, switchMap } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';

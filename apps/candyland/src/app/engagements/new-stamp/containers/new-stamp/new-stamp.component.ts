@@ -12,10 +12,10 @@ import { tap, map, switchMap, takeUntil } from 'rxjs/operators';
 
 import { StampDataService } from '../../shared/stamp-data.service';
 import { ControlsName } from '../../../../models/controls-name';
-import { PuzzleCollectStamp, PuzzleCollectStampState } from '@perx/core';
+import { PuzzleCollectStamp, PuzzleCollectStampState } from '@perxtech/core';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.component';
-import { IWEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
+import { IWEngagementAttributes, IJsonApiItemPayload } from '@perxtech/whistler';
 import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
 import { CommonSelect } from '@cl-core/models/common-select.interface';
 import { IStampsDefaultValue } from '@cl-core/models/games/stamps/stamps-default-value.interface';

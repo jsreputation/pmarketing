@@ -9,7 +9,7 @@ import {
   LoyaltyService,
   ProfileService,
   IProfile
-} from '@perx/core';
+} from '@perxtech/core';
 import { of } from 'rxjs';
 
 describe('SummaryComponent', () => {

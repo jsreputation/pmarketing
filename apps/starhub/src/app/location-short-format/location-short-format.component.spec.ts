@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LocationShortFormatComponent } from './location-short-format.component';
-import { LocationsService, GeoLocationService, ILocation } from '@perx/core';
+import { LocationsService, GeoLocationService, ILocation } from '@perxtech/core';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
 
@@ -30,7 +30,7 @@ describe('LocationShortFormatComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LocationShortFormatComponent ],
+      declarations: [LocationShortFormatComponent],
       imports: [
         RouterTestingModule
       ],

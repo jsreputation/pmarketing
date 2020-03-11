@@ -19,7 +19,7 @@ import {
   LoyaltyService,
   ILoyalty,
   isEmptyArray,
-} from '@perx/core';
+} from '@perxtech/core';
 
 const REQ_PAGE_SIZE: number = 10;
 

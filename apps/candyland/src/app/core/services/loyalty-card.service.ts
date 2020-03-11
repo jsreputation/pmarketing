@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ClHttpParams } from '@cl-helpers/http-params';
 import { map } from 'rxjs/operators';
-import { LoyaltyCardHttpService } from '@perx/whistler-services';
+import { LoyaltyCardHttpService } from '@perxtech/whistler-services';
 import { ITableService } from '@cl-shared/table';
 import { JsonApiParser } from '@cl-helpers/json-api-parser';
 import { LoyaltyCardHttpAdapter } from '@cl-core/http-adapters/loyalty-card-http-adapter';
 import { IAudiencesLoyaltyCard } from '@cl-core/models/audiences/audiences-loyalty.model';
-import { IJsonApiItemPayload, IWLoyaltyCard } from '@perx/whistler';
+import { IJsonApiItemPayload, IWLoyaltyCard } from '@perxtech/whistler';
 import { HttpParamsOptions } from '@cl-core/models/params-map';
 import { ITableData } from '@cl-core/models/data-list.interface';
 

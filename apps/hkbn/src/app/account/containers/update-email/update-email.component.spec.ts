@@ -6,7 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { ProfileService } from '@perx/core';
+import { ProfileService } from '@perxtech/core';
 import { of, throwError } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Type } from '@angular/core';

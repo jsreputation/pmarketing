@@ -3,7 +3,7 @@ import { HttpHeaders, HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { ConfigService, TokenStorage } from '@perx/core';
+import { ConfigService, TokenStorage } from '@perxtech/core';
 
 interface IDictionary {
   [k: string]: string;

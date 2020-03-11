@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { SmsValidationComponent } from './sms-validation.component';
-import { AuthenticationService, UtilsModule } from '@perx/core';
+import { AuthenticationService, UtilsModule } from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';

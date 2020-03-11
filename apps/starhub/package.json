@@ -1,5 +1,5 @@
 {
-  "name": "@perx/starhub",
+  "name": "@perxtech/starhub",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -28,8 +28,8 @@
     "@angular/platform-browser": "~8.0.0",
     "@angular/platform-browser-dynamic": "~8.0.0",
     "@angular/router": "~8.0.0",
-    "@perx/blackcomb-pages": "^0.0.0",
-    "@perx/core": "^0.0.0",
+    "@perxtech/blackcomb-pages": "^0.0.0",
+    "@perxtech/core": "^0.0.0",
     "ngx-auth": "^5.0.0",
     "ngx-infinite-scroll": "^8.0.1",
     "ngx-multi-line-ellipsis": "^1.0.4",

@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ForgotPasswordComponent } from './forgot-password.component';
-import { AuthenticationService } from '@perx/core';
+import { AuthenticationService } from '@perxtech/core';
 import { of } from 'rxjs';
 import {
   MatSelectModule,
@@ -20,7 +20,7 @@ describe('ForgotPasswordComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ForgotPasswordComponent ],
+      declarations: [ForgotPasswordComponent],
       imports: [
         FormsModule,
         ReactiveFormsModule,
@@ -41,8 +41,8 @@ describe('ForgotPasswordComponent', () => {
         {
           provide: Router,
           useValue: {
-            navigate: () => {},
-            getCurrentNavigation: () =>  (
+            navigate: () => { },
+            getCurrentNavigation: () => (
               {
                 extras: {
                   state: {

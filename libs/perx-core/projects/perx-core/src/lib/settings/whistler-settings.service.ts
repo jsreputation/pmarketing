@@ -10,16 +10,16 @@ import { map } from 'rxjs/operators';
 import {
   IJsonApiListPayload,
   IWTenant,
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 
 import {
   IMicrositeSettings,
   IRssFeeds,
   PagesObject,
 } from './models/settings.model';
-import {SettingsService} from './settings.service';
-import {ConfigService} from '../config/config.service';
-import {IConfig} from '../config/models/config.model';
+import { SettingsService } from './settings.service';
+import { ConfigService } from '../config/config.service';
+import { IConfig } from '../config/models/config.model';
 
 @Injectable({
   providedIn: 'root'

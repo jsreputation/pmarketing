@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of, combineLatest } from 'rxjs';
 import { ClHttpParams } from '@cl-helpers/http-params';
 import { map, switchMap } from 'rxjs/operators';
-import { LoyaltyRulesHttpService } from '@perx/whistler-services';
+import { LoyaltyRulesHttpService } from '@perxtech/whistler-services';
 import { LoyaltyRuleHttpAdapter } from '@cl-core/http-adapters/loyalty-rule-http-adapter';
 import { JsonApiParser } from '@cl-helpers/json-api-parser';
 import {
@@ -14,7 +14,7 @@ import {
   IJsonApiItemPayload,
   IJsonApiListPayload,
   IJsonApiItem
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { ILoyaltyRule, ILoyaltyRuleCondition, ILoyaltyRulePoint, ILoyaltyRuleSet } from '@cl-core/models/loyalty/loyalty-rules.model';
 import { HttpParamsOptions } from '@cl-core/models/params-map';
 

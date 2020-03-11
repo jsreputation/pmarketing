@@ -1,7 +1,7 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { AuthenticationService, ConfigService, TokenStorage } from '@perx/core';
+import { AuthenticationService, ConfigService, TokenStorage } from '@perxtech/core';
 import {
   MatSnackBarModule,
   MatIconModule,
@@ -28,12 +28,12 @@ describe('AppComponent', () => {
   };
 
   const routerStub = {
-    navigateByUrl: () => {},
-    navigate: () => {},
+    navigateByUrl: () => { },
+    navigate: () => { },
   };
 
   const locationStub: Partial<Location> = {
-    back: () => {}
+    back: () => { }
   };
 
   const configServiceStub: Partial<ConfigService> = {

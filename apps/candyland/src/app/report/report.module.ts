@@ -6,7 +6,7 @@ import { SurveyComponent } from './containers/survey/survey.component';
 import { StampComponent } from './containers/stamp/stamp.component';
 import { ReportHeaderComponent } from './components/report-header/report-header.component';
 import { ChartCardModule, QuestionTypeModule } from '@cl-shared';
-import { ButtonModule } from '@perx/candyshop';
+import { ButtonModule } from '@perxtech/candyshop';
 import { MatCardModule } from '@angular/material';
 import { ReportLinearGraphicComponent } from './components/report-linear-graphic/report-linear-graphic.component';
 import { SingleReportCardComponent } from './components/single-report-card/single-report-card.component';
@@ -17,7 +17,7 @@ import { DynamicGraphicDirective } from './components/single-report-card/shared/
 import { MultipleChoiceGraphicComponent } from './components/multiple-choice-graphic/multiple-choice-graphic.component';
 import { LongTextGraphicComponent } from './components/long-text-graphic/long-text-graphic.component';
 import { QuestionGroupGraphicComponent } from './components/question-group-graphic/question-group-graphic.component';
-import { CustomLineProgressModule } from '@perx/candyshop';
+import { CustomLineProgressModule } from '@perxtech/candyshop';
 
 @NgModule({
   declarations: [

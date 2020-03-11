@@ -26,7 +26,7 @@ import {
 } from '@cl-core-services';
 
 import { Type } from '../../audience.model';
-import { OptionConfig } from '@perx/candyshop';
+import { OptionConfig } from '@perxtech/candyshop';
 import { IAudiencesUserForm } from '@cl-core/models/audiences/user.interface';
 
 @Component({

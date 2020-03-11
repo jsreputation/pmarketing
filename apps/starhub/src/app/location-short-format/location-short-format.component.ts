@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ILocation, LocationsService, filterDuplicateLocations } from '@perx/core';
+import { ILocation, LocationsService, filterDuplicateLocations } from '@perxtech/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 

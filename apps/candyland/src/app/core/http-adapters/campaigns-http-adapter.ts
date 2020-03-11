@@ -11,10 +11,10 @@ import {
   IJsonApiListPayload,
   IJsonApiPatchData,
   IJsonApiPostData,
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign';
 import { DateTimeParser } from '@cl-helpers/date-time-parser';
-import { WCampaignStatus, IWAudienceFilter } from '@perx/whistler';
+import { WCampaignStatus, IWAudienceFilter } from '@perxtech/whistler';
 import { CampaignStatus, InformationCollectionSettingType } from '@cl-core/models/campaign/campaign.enum';
 import { ITableData } from '@cl-core/models/data-list.interface';
 

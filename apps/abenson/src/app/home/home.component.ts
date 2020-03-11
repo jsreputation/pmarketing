@@ -8,12 +8,12 @@ import {
   CampaignType,
   ConfigService,
   IConfig, ILoyalty
-} from '@perx/core';
+} from '@perxtech/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { IAbensonConfig } from '../model/IAbenson.model';
-import {CurrencyPipe, DatePipe} from '@angular/common';
+import { CurrencyPipe, DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-home',

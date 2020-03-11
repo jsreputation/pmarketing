@@ -10,7 +10,7 @@ import {
   VoucherState,
   PuzzlesModule,
   ConfigService,
-} from '@perx/core';
+} from '@perxtech/core';
 import { of } from 'rxjs';
 import { MatCardModule, MatRippleModule, MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';

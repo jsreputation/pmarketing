@@ -12,7 +12,7 @@ import { ICustomTireForm, ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-f
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateDefaultLanguageService } from '@cl-core/translate-services/translate-default-language.service';
 import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.interface';
-import { IWTierRewardCostsAttributes, IJsonApiItem } from '@perx/whistler';
+import { IWTierRewardCostsAttributes, IJsonApiItem } from '@perxtech/whistler';
 import { oc } from 'ts-optchain';
 import { TenantService } from '@cl-core/services/tenant.service';
 import { IMerchantForm } from '@cl-core/models/merchant/merchant-form-interface';
@@ -20,7 +20,7 @@ import { ILoyaltyFormGroup, ILoyaltyTiersFormGroup, IBasicTier } from '@cl-core/
 import { Currency } from '@cl-core/models/merchant/currency';
 import { IMerchant } from '@cl-core/models/merchant/merchant-simple-interface';
 import { ITierRewardCost } from '@cl-core/models/reward/tier-reward-cost-intrface';
-import { OptionConfig } from '@perx/candyshop';
+import { OptionConfig } from '@perxtech/candyshop';
 
 @Component({
   selector: 'cl-manage-rewards',

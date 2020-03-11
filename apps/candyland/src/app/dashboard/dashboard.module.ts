@@ -6,7 +6,7 @@ import { DashboardOverviewPageComponent } from 'src/app/dashboard/containers/das
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardPageComponent } from './containers/dashboard-page/dashboard-page.component';
 import { DashboardGameCardComponent } from './components/dashboard-game-card/dashboard-game-card.component';
-import { ButtonModule } from '@perx/candyshop';
+import { ButtonModule } from '@perxtech/candyshop';
 import { BusinessInsightComponent } from './components/business-insight/business-insight.component';
 import { CreateEngagementPopupModule } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.module';
 import { MatRadioModule, MatSelectModule, MatTabsModule } from '@angular/material';

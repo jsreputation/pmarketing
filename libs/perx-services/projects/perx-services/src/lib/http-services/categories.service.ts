@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ApiConfigService } from '../configs/api-config';
-import { IPCategories } from '@perx/model';
+import { IPCategories } from '@perxtech/model';
 import { Observable } from 'rxjs';
 
 @Injectable({

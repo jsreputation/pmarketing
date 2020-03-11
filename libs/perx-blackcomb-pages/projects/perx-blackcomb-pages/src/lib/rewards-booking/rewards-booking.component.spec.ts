@@ -7,7 +7,7 @@ import {
   LocationsService,
   IVoucherService,
   LoyaltyService
-} from '@perx/core';
+} from '@perxtech/core';
 
 import { of } from 'rxjs';
 import {
@@ -42,12 +42,12 @@ describe('RewardsBookingComponent', () => {
   };
 
   const dialogServiceStub = {
-    open: (componentRef: any, config: any) => of({componentRef, config})
+    open: (componentRef: any, config: any) => of({ componentRef, config })
   };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RewardsBookingComponent ],
+      declarations: [RewardsBookingComponent],
       imports: [
         LocationModule,
         MatRadioModule,

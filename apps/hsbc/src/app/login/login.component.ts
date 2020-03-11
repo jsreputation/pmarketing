@@ -28,7 +28,7 @@ import {
   TokenStorage,
   isEmptyString,
   SettingsService,
-} from '@perx/core';
+} from '@perxtech/core';
 import { IHsbcConfig } from '../model/IHsbc.model';
 
 @Component({

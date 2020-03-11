@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 
 import { AccountComponent } from './account.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthenticationService, ProfileModule, ProfileService, IProfile } from '@perx/core';
+import { AuthenticationService, ProfileModule, ProfileService, IProfile } from '@perxtech/core';
 import { of, Observable } from 'rxjs';
 import { profile } from '../mock/profile.mock';
 import { Router } from '@angular/router';

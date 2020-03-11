@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { NotificationService, IChangePasswordData, AuthenticationService } from '@perx/core';
+import { NotificationService, IChangePasswordData, AuthenticationService } from '@perxtech/core';
 import { Router } from '@angular/router';
 import { ShowTitleInHeader } from '../layout/layout.component';
 

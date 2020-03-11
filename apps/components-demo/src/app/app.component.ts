@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
-import { AuthenticationService, NotificationService, PopupComponent, ConfigService, IConfig } from '@perx/core';
+import { AuthenticationService, NotificationService, PopupComponent, ConfigService, IConfig } from '@perxtech/core';
 import { MatDialog } from '@angular/material';
 
 @Component({

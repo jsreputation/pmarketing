@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { LayoutRoutingModule } from './layout-routing.module';
-import { PerxBlackcombPagesModule } from '@perx/blackcomb-pages';
+import { PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
 import { HomeModule } from '../home/home.module';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { VouchersModule, RewardsModule, GameModule } from '@perx/core';
+import { VouchersModule, RewardsModule, GameModule } from '@perxtech/core';
 import { WalletModule } from '../wallet/wallet.module';
 import { SharedModule } from '../shared/shared.module';
 import { HistoryModule } from '../history/history.module';
