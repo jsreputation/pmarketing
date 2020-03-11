@@ -56,13 +56,13 @@
     "tslint-consistent-codestyle": "^1.15.1",
     "typescript": "~3.4.3"
   },
-  "main": "dist/perx-whistler-services/bundles/perx-whistler-services.umd.js",
-  "module": "dist/perx-whistler-services/fesm5/perx-whistler-services.js",
-  "es2015": "dist/perx-whistler-services/fesm2015/perx-whistler-services.js",
-  "esm5": "dist/perx-whistler-services/esm5/perx-whistler-services.js",
-  "esm2015": "dist/perx-whistler-services/esm2015/perx-whistler-services.js",
-  "fesm5": "dist/perx-whistler-services/fesm5/perx-whistler-services.js",
-  "fesm2015": "dist/perx-whistler-services/fesm2015/perx-whistler-services.js",
-  "typings": "dist/perx-whistler-services/perx-whistler-services.d.ts",
-  "metadata": "dist/perx-whistler-services/perx-whistler-services.metadata.json"
+  "main": "dist/perx-whistler-services/bundles/perxtech-whistler-services.umd.js",
+  "module": "dist/perx-whistler-services/fesm5/perxtech-whistler-services.js",
+  "es2015": "dist/perx-whistler-services/fesm2015/perxtech-whistler-services.js",
+  "esm5": "dist/perx-whistler-services/esm5/perxtech-whistler-services.js",
+  "esm2015": "dist/perx-whistler-services/esm2015/perxtech-whistler-services.js",
+  "fesm5": "dist/perx-whistler-services/fesm5/perxtech-whistler-services.js",
+  "fesm2015": "dist/perx-whistler-services/fesm2015/perxtech-whistler-services.js",
+  "typings": "dist/perx-whistler-services/perxtech-whistler-services.d.ts",
+  "metadata": "dist/perx-whistler-services/perxtech-whistler-services.metadata.json"
 }
