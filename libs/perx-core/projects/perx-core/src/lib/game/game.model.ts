@@ -140,9 +140,9 @@ export interface IPinata {
 }
 
 export interface IScratch {
-  coverImg: string;
-  underlyingSuccessImg: string;
-  underlyingFailImg: string;
+  coverImg?: string;
+  underlyingSuccessImg?: string;
+  underlyingFailImg?: string;
   uncoverPortionToTrigger: number;
   nbTaps: number;
 }
