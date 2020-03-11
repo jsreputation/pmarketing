@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "npm run config && ng serve --host 0.0.0.0",
     "start:csenable": "COMING_SOON=true npm run config && ng serve --host 0.0.0.0",
-    "start:staging": "PRODUCTION=true npm run config && ng serve --host 0.0.0.0 --configuration staging",
+    "start:staging": "npm run config && ng serve --host 0.0.0.0 --configuration staging",
     "build": "npm run config && ng build",
     "build:abenson:prod": "PRODUCTION=true COMING_SOON=true npm run config && ng build --prod",
     "build:abenson:staging": "PRODUCTION=true COMING_SOON=true npm run config && ng build --configuration staging",
