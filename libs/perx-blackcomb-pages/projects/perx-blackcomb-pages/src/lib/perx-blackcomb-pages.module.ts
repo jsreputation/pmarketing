@@ -20,39 +20,19 @@ import {
   MatDatepickerModule,
   MatToolbarModule,
   MatListModule,
-  MatDialogModule, MatMenuModule
+  MatDialogModule,
+  MatMenuModule,
+  MatInputModule
 } from '@angular/material';
 import { GameModule } from './game/game.module';
 import { HistoryComponent } from './history/history.component';
 import {
-  RepeatTimesDirective,
-  SortRewardsPipe,
-  RewardsCollectionComponent,
-  VouchersComponent,
-  PinRedemptionComponent,
-  BcodeRedemptionComponent,
-  QrcodeRedemptionComponent,
-  BarcodeRedemptionComponent,
-  RewardComponent as PerxRewardComponent,
-  SurveyComponent as PerxSurveyComponent,
-  PuzzleCollectStampsComponent,
-  QuestionComponent,
-  SelectComponent,
-  PhoneComponent,
-  GroupComponent,
-  RatingComponent,
-  PictureSelectComponent,
-  LongTextComponent,
-  DateComponent,
-  VoucherComponent,
-  RewardsListTabbedComponent,
-  RewardsListComponent,
-  LoyaltySummaryComponent,
-  LoyaltyTransactionsListComponent,
-  NewsfeedComponent,
-  PinInputComponent,
-  PasswordComponent,
-  PuzzleListComponent
+  UtilsModule,
+  VouchersModule,
+  PuzzlesModule,
+  LoyaltyModule,
+  RewardsModule,
+  SurveyModule
 } from '@perx/core';
 
 import { RewardComponent } from './reward/reward.component';
@@ -70,7 +50,7 @@ import { StampCardComponent } from './stamp-card/stamp-card.component';
 import { SurveyComponent } from './survey/survey.component';
 import { VoucherDetailComponent } from './voucher-detail/voucher-detail.component';
 import { WalletComponent } from './wallet/wallet.component';
-import { SignUpComponent } from './sign-up/sign-up.component';
+import { SignUpComponent as PerxSignUpComponent} from './sign-up/sign-up.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { LayoutComponent } from './layout/layout.component';
 import { HomeComponent } from './home/home.component';
@@ -87,72 +67,50 @@ import { EditProfileFieldComponent } from './edit-profile-field/edit-profile-fie
 import { CampaignStampsComponent } from './campaign-stamps/campaign-stamps.component';
 import { CatalogsComponent } from './catalogs/catalogs.component';
 import { CatalogRewardCardComponent } from './catalog-reward-card/catalog-reward-card.component';
-import {CatalogComponent} from './catalog/catalog.component';
+import { CatalogComponent } from './catalog/catalog.component';
 
 const comps: any[] = [
   AccountComponent,
   ContentComponent,
   HistoryComponent,
-  VouchersComponent,
-  SignUpComponent,
-  RepeatTimesDirective,
-  RewardsCollectionComponent,
+  PerxSignUpComponent,
   RewardComponent,
-  PinRedemptionComponent,
-  BcodeRedemptionComponent,
-  QrcodeRedemptionComponent,
-  BarcodeRedemptionComponent,
   LoadingComponent,
   RedeemComponent,
   SignIn2Component,
   SignInComponent,
   QRComponent,
   RewardDetailsComponent,
-  PerxRewardComponent,
   StampCardComponent,
   SurveyComponent,
-  PerxSurveyComponent,
-  PuzzleCollectStampsComponent,
-  QuestionComponent,
-  SelectComponent,
-  PhoneComponent,
-  GroupComponent,
-  RatingComponent,
-  PasswordComponent,
-  PictureSelectComponent,
-  LongTextComponent,
-  DateComponent,
   VoucherDetailComponent,
-  VoucherComponent,
   WalletComponent,
-  RewardsListTabbedComponent,
-  LoyaltySummaryComponent,
-  LoyaltyTransactionsListComponent,
-  RewardsListComponent,
   LayoutComponent,
   HomeComponent,
   GamesCollectionComponent,
   CampaignsCollectionComponent,
-  NewsfeedComponent,
   WalletHistoryComponent,
   TransactionHistoryComponent,
   ProfileComponent,
   ChangePasswordComponent,
   EnterPinComponent,
-  PinInputComponent,
   RewardsBookingComponent,
   ProfileBarcodeComponent,
   EditProfileFieldComponent,
-  PuzzleListComponent,
   CampaignStampsComponent,
   CatalogComponent,
   CatalogsComponent,
   CatalogRewardCardComponent,
-  SortRewardsPipe
 ];
 
 @NgModule({
   imports: [
+    UtilsModule,
+    VouchersModule,
+    PuzzlesModule,
+    LoyaltyModule,
+    RewardsModule,
+    SurveyModule,
     RouterModule,
     CommonModule,
     MatProgressBarModule,
@@ -161,6 +119,7 @@ const comps: any[] = [
     MatCardModule,
     MatButtonModule,
     MatMenuModule,
+    MatInputModule,
     MatRippleModule,
     MatGridListModule,
     MatTabsModule,

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { WalletComponent } from '@perx/blackcomb-pages';
+import { WalletComponent, PerxBlackcombPagesModule } from '@perx/blackcomb-pages';
 import { SharedModule } from '../shared/shared.module';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
@@ -13,12 +13,10 @@ const routes: Routes = [{
 }];
 
 @NgModule({
-  declarations: [
-    WalletComponent
-  ],
   imports: [
     SharedModule,
     CommonModule,
+    PerxBlackcombPagesModule,
     RouterModule.forChild(routes),
     VouchersModule,
     TranslateModule,
