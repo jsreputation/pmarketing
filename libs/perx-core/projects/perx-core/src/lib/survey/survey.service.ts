@@ -97,6 +97,30 @@ export class SurveyService {
     };
   }
 
+  public patchSurveyAnswer(answers: IAnswer[], campaignId: number, surveyId: number): Observable<{ hasOutcomes: boolean }> {
+    const body = {
+      data: {
+        type: 'answers',
+        attributes: {
+          engagement_id: surveyId,
+          campaign_entity_id: campaignId,
+          content: answers
+        }
+      }
+    };
+
+    return this.http.patch<IJsonApiItemPayload<IWPostAnswerAttributes>>(`${this.baseUrl}/survey/answers`, body, {
+      headers: { 'Content-Type': 'application/vnd.api+json' }
+    }).pipe(
+      map((res) => {
+        const hasOutcomes = res.data.attributes.results.attributes.results.length > 0;
+        return {
+          hasOutcomes
+        };
+      })
+    );
+  }
+
   public postSurveyAnswer(answers: IAnswer[], campaignId: number, surveyId: number): Observable<{ hasOutcomes: boolean }> {
     const body = {
       data: {

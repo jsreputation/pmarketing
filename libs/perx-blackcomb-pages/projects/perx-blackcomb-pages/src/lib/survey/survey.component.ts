@@ -141,6 +141,11 @@ export class SurveyComponent implements OnInit, OnDestroy {
   }
 
   public get progressBarValue(): number {
+    const surveyId = this.survey && this.survey.id ? Number.parseInt(this.survey.id, 10) : null;
+    // current questionPointer, WARNING: not implemented yet, stub
+    if (surveyId) {
+      this.surveyService.patchSurveyAnswer(this.answers, this.route.snapshot.params.id, surveyId);
+    }
     return (this.questionPointer + 1) / this.totalLength * 100 || 0;
   }
 
