@@ -190,16 +190,27 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   public preplayGameCompleted(): void {
-    const userAction$: Observable<IEngagementTransaction | void> =
+    const userAction$: Observable<IEngagementTransaction | IPlayOutcome> =
       this.gameService.prePlayConfirm(this.transactionId, this.informationCollectionSetting)
         .pipe(
-          tap((gameTransaction: IEngagementTransaction) => {
-            if (gameTransaction.voucherIds && gameTransaction.voucherIds.length > 0) {
-              // set this as a property
-              this.rewardCount = gameTransaction.voucherIds.length.toString();
-              this.fillSuccess(this.rewardCount);
-            } else {
-              this.fillFailure();
+          tap((response: IEngagementTransaction | IPlayOutcome) => {
+            if (this.isIEngagementTrascation(response)) {
+              let gameTransaction = response as IEngagementTransaction;
+              if (gameTransaction.voucherIds && gameTransaction.voucherIds.length > 0) {
+                // set this as a property
+                this.rewardCount = gameTransaction.voucherIds.length.toString();
+                this.fillSuccess(this.rewardCount);
+              } else {
+                this.fillFailure();
+              }
+            } else if (this.isIPlayOutcome(response)) {
+              const vouchers = response.vouchers;
+              if (vouchers.length > 0) {
+                this.rewardCount = vouchers.length.toString();
+                this.fillSuccess(this.rewardCount);
+              } else {
+                this.fillFailure();
+              }
             }
           }),
           catchError((err: HttpErrorResponse) => {
@@ -208,7 +219,7 @@ export class GameComponent implements OnInit, OnDestroy {
           })
         );
     // display a loader before redirecting to next page
-    const delay = 3000;
+    const delay = 2000;
     const nbSteps = 60;
     const processBar$ = interval(delay / nbSteps)
       .pipe(
@@ -220,6 +231,13 @@ export class GameComponent implements OnInit, OnDestroy {
       () => this.redirectUrlAndPopUp(),
       () => this.redirectUrlAndPopUp()
     );
+  }
+
+  private isIEngagementTrascation(object: any): object is IEngagementTransaction {
+    return 'voucherIds' in object;
+  }
+  private isIPlayOutcome(object: any): object is IPlayOutcome {
+    return 'vouchers' in object;
   }
 
   private redirectUrlAndPopUp(): void {
