@@ -63,6 +63,7 @@ export class CardComponent implements OnInit {
     ).subscribe((loyalty) => {
       if (loyalty) {
         this.loyaltyId = loyalty.id;
+        this.loyaltyCurrency = loyalty.currency;
         this.membershipId = parseInt(loyalty.membershipIdentifier || '0', 10);
       }
       this.priceLabelFn = (tr: ITransaction) => `Points ${tr.points < 0 ? 'spent' : 'earned'}`;
