@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RewardDetailsComponent } from '@perx/blackcomb-pages';
+import { RewardDetailsComponent, PerxBlackcombPagesModule } from '@perx/blackcomb-pages';
 import { RouterModule, Routes } from '@angular/router';
 import { RewardsModule } from '@perx/core';
 import { TranslateModule } from '@ngx-translate/core';
@@ -12,12 +12,10 @@ const routes: Routes = [{
 }];
 
 @NgModule({
-  declarations: [
-    RewardDetailsComponent,
-  ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
+    PerxBlackcombPagesModule,
     RewardsModule,
     TranslateModule,
     MatButtonModule

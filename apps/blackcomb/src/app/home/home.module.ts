@@ -14,7 +14,8 @@ import {
   HomeComponent,
   GamesCollectionComponent,
   CampaignsCollectionComponent,
-  CatalogsComponent
+  CatalogsComponent,
+  PerxBlackcombPagesModule
 } from '@perx/blackcomb-pages';
 import { TranslateModule } from '@ngx-translate/core';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
@@ -24,12 +25,6 @@ const routes: Routes = [{
 }];
 
 @NgModule({
-  declarations: [
-    HomeComponent,
-    GamesCollectionComponent,
-    CampaignsCollectionComponent,
-    CatalogsComponent
-  ],
   imports: [
     CommonModule,
     RouterModule,
@@ -39,6 +34,7 @@ const routes: Routes = [{
     RewardsModule,
     MatCardModule,
     MatButtonModule,
+    PerxBlackcombPagesModule,
     TranslateModule.forChild(),
     RouterModule.forChild(routes),
     InfiniteScrollModule,

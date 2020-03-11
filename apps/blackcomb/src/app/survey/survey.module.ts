@@ -19,7 +19,7 @@ import {
   MatCheckboxModule
 } from '@angular/material';
 import { environment } from 'src/environments/environment';
-import { SurveyComponent } from '@perx/blackcomb-pages';
+import { PerxBlackcombPagesModule } from '@perx/blackcomb-pages';
 // import { of } from 'rxjs';
 // import { survey } from '../mock/survey.mock';
 
@@ -28,9 +28,9 @@ import { SurveyComponent } from '@perx/blackcomb-pages';
 // };
 
 @NgModule({
-  declarations: [SurveyComponent],
   imports: [
     ConfigModule.forRoot({ ...environment }),
+    PerxBlackcombPagesModule,
     CommonModule,
     MatCardModule,
     MatButtonModule,
