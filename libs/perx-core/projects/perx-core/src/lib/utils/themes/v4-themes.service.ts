@@ -69,7 +69,7 @@ export class V4ThemesService extends ThemesService {
       properties: {
         '--font': setting.json_value.font,
         '--title': setting.json_value.title,
-        '--logo': setting.json_value.logo.file,
+        '--logo': setting.json_value.logo.value.file,
         '--accent': setting.json_value.accent_color,
         '--primary': setting.json_value.primary_color,
         '--button_text_color': setting.json_value.CTA_button_text_color,
