@@ -64,7 +64,7 @@ export function defaultScratch(): IScratch {
     coverImg: '',
     underlyingFailImg: '',
     underlyingSuccessImg: '',
-    uncoverPortionToTrigger: 90,
+    uncoverPortionToTrigger: 60,
     nbTaps: 5
   };
 }
