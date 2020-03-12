@@ -195,7 +195,7 @@ export class GameComponent implements OnInit, OnDestroy {
         .pipe(
           tap((response: IEngagementTransaction | IPlayOutcome) => {
             if (this.isIEngagementTrascation(response)) {
-              let gameTransaction = response as IEngagementTransaction;
+              const gameTransaction = response as IEngagementTransaction;
               if (gameTransaction.voucherIds && gameTransaction.voucherIds.length > 0) {
                 // set this as a property
                 this.rewardCount = gameTransaction.voucherIds.length.toString();
