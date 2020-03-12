@@ -15,7 +15,7 @@ export interface ThemeJsonApiItem<T> {
 
 export interface IThemeV4ApiProperties {
   font: string;
-  logo: { file: string, section: string, filename: string };
+  logo: { value: { file: string, section: string, filename: string }};
   title: string;
   font_color: string;
   accent_color: string;
