@@ -64,7 +64,7 @@ export class V4CampaignService implements ICampaignService {
     const campaignBanner = campaign.images.find(i =>
       ['campaign_banner', 'header'].some(ty => ty === i.type)
     );
-    const campaignBannerUrl = campaignBanner ? campaignBanner.url : undefined;
+    const campaignBannerUrl = oc(campaignBanner).url();
     const rewards =
       campaign.rewards &&
       campaign.rewards.map((reward: IV4Reward) =>
