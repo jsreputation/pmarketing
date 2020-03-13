@@ -15,7 +15,7 @@ import { LIGHT } from './themes.model';
 
 import { Config } from '../../config/config';
 import { IConfig } from '../../config/models/config.model';
-import { oc } from "ts-optchain";
+import { oc } from 'ts-optchain';
 
 @Injectable({
   providedIn: 'root'
