@@ -1,0 +1,32 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+build:
+  tagPolicy:
+    gitCommit:
+      variant: AbbrevCommitSha
+  artifacts:
+    - image: perxtech/microsite-apps-ng
+      docker:
+        buildArgs:
+          app: "{{.APP}}"
+          apihost: "{{.APIHOST}}"
+          basehref: "{{.BASE_HREF}}"
+          preauth: "{{.PREAUTH}}"
+          iswhistler: "{{.IS_WHISTLER}}"
+          sourcetype: "{{.SOURCE_TYPE}}"
+          env: "{{.APP_ENV}}"
+          appbase: "{{.APP_BASE}}"
+          redirectdest: "{{.REDIRECT_AFTER_LOGIN}}"
+  local:
+    push: true
+    useBuildkit: true
+
+profiles:
+  # If an environment variable DOCKER_TAG, tag the image with that
+  - name: build_with_tag
+    activation:
+      - env: DOCKER_TAG=.+
+    build:
+      tagPolicy:
+        envTemplate:
+          template: "{{.IMAGE_NAME}}:{{.DOCKER_TAG}}"
