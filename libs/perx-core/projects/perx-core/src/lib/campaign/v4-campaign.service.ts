@@ -1,11 +1,16 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ICampaign, CampaignType, CampaignState } from './models/campaign.model';
-import {ICampaignFilterOptions, ICampaignService} from './icampaign.service';
+import {
+  ICampaign,
+  CampaignType,
+  CampaignState
+} from './models/campaign.model';
+import { ICampaignFilterOptions, ICampaignService } from './icampaign.service';
 import { V4RewardsService, IV4Reward } from '../rewards/v4-rewards.service';
 import { Config } from '../config/config';
+import { oc } from 'ts-optchain';
 
 interface IV4Image {
   type: string;
@@ -52,11 +57,19 @@ export class V4CampaignService implements ICampaignService {
   }
 
   public static v4CampaignToCampaign(campaign: IV4Campaign): ICampaign {
-    const thumbnail = campaign.images.find(image => ['catalog_thumbnail', 'campaign_thumbnail'].some(ty => ty === image.type));
-    const thumbnailUrl = thumbnail ? thumbnail.url : undefined;
-    const campaignBanner = campaign.images.find(i => i.type === 'campaign_banner');
-    const campaignBannerUrl = campaignBanner ? campaignBanner.url : undefined;
-    const rewards = campaign.rewards && campaign.rewards.map((reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward));
+    const thumbnail = campaign.images.find(image =>
+      ['catalog_thumbnail', 'campaign_thumbnail'].some(ty => ty === image.type)
+    );
+    const thumbnailUrl = oc(thumbnail).url();
+    const campaignBanner = campaign.images.find(i =>
+      ['campaign_banner', 'header'].some(ty => ty === i.type)
+    );
+    const campaignBannerUrl = oc(campaignBanner).url();
+    const rewards =
+      campaign.rewards &&
+      campaign.rewards.map((reward: IV4Reward) =>
+        V4RewardsService.v4RewardToReward(reward)
+      );
 
     return {
       id: campaign.id,
@@ -72,12 +85,14 @@ export class V4CampaignService implements ICampaignService {
     };
   }
 
-  public getCampaigns(filterOptions?: ICampaignFilterOptions): Observable<ICampaign[]> {
+  public getCampaigns(
+    filterOptions?: ICampaignFilterOptions
+  ): Observable<ICampaign[]> {
     let params = new HttpParams();
     if (filterOptions) {
       Object.keys(filterOptions).forEach(key => {
         if (filterOptions.hasOwnProperty(key)) {
-          if ( key === 'type' ) {
+          if (key === 'type') {
             params = params.set('campaign_type', filterOptions[key] || '');
           } else {
             params = params.set(key, filterOptions[key]);
@@ -85,18 +100,26 @@ export class V4CampaignService implements ICampaignService {
         }
       });
     }
-    return this.http.get<IV4CampaignsResponse>(`${this.baseUrl}/v4/campaigns`, { params })
+    return this.http
+      .get<IV4CampaignsResponse>(`${this.baseUrl}/v4/campaigns`, { params })
       .pipe(
         map(resp => resp.data),
-        map((campaigns: IV4Campaign[]) => campaigns.map(campaign => V4CampaignService.v4CampaignToCampaign(campaign)))
+        map((campaigns: IV4Campaign[]) =>
+          campaigns.map(campaign =>
+            V4CampaignService.v4CampaignToCampaign(campaign)
+          )
+        )
       );
   }
 
   public getCampaign(id: number): Observable<ICampaign> {
-    return this.http.get<IV4CampaignResponse>(`${this.baseUrl}/v4/campaigns/${id}`)
+    return this.http
+      .get<IV4CampaignResponse>(`${this.baseUrl}/v4/campaigns/${id}`)
       .pipe(
         map(resp => resp.data),
-        map((campaign: IV4Campaign) => V4CampaignService.v4CampaignToCampaign(campaign))
+        map((campaign: IV4Campaign) =>
+          V4CampaignService.v4CampaignToCampaign(campaign)
+        )
       );
   }
 }
