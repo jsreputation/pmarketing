@@ -29,7 +29,7 @@ export class LongTextComponent implements OnChanges, OnInit {
 
   public ngOnInit(): void {
     this.subject.pipe(
-      debounceTime(500)
+      debounceTime(300)
     ).subscribe(inputValue => {
       this.updateAnswers.emit({ content: inputValue });
     });
