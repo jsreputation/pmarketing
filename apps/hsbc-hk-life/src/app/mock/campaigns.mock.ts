@@ -11,8 +11,8 @@ export const campaigns: ICampaign[] = [
   // },
   // {
   //     id: 2,
-  //     name: 'Blackcomb GAME',
-  //     description: 'Blackcomb description',
+  //     name: 'HSBC HK GAME',
+  //     description: 'hsbchk description',
   //     type: CampaignType.game,
   //     state: CampaignState.active,
   //     endsAt: '2017-11-17T03:24:00'
@@ -20,7 +20,7 @@ export const campaigns: ICampaign[] = [
   {
     id: 3,
     name: 'Prudential Event',
-    description: 'Blackcomb description',
+    description: 'HSBC HK description',
     type: CampaignType.survey,
     state: CampaignState.active,
     endsAt: new Date('2017-10-17T03:24:00'),
@@ -29,7 +29,7 @@ export const campaigns: ICampaign[] = [
   {
     id: 1,
     name: 'Prudential Event',
-    description: 'Blackcomb description',
+    description: 'HSBC HK description',
     type: CampaignType.survey,
     state: CampaignState.active,
     endsAt: new Date('2017-10-17T03:24:00'),
