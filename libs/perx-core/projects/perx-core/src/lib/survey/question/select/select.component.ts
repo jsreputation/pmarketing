@@ -37,7 +37,7 @@ export class SelectComponent implements OnChanges {
     let result: string[] = [];
     if (this.payload.multiple && this.selectedChoices) {
       result = Object.entries(this.selectedChoices)
-        .filter(([key, value]) => key !== undefined && value !== undefined && value !== false)
+        .filter(([key, value]) => key !== undefined && value !== undefined && value)
         .map(data => data[0]);
     } else {
       result[0] = this.selectedChoice.toString();
