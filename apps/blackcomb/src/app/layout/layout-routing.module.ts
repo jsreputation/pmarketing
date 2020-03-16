@@ -9,41 +9,41 @@ const routes: Routes = [
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'home' },
       {
-        path: 'home', loadChildren: (): any => import('../home/home.module').then((mod: any) => mod.HomeModule),
+        path: 'home', loadChildren: () => import('../home/home.module').then(mod => mod.HomeModule),
         canActivate: [ProtectedGuard]
       },
       {
-        path: 'wallet', loadChildren: (): any => import('../wallet/wallet.module').then((mod: any) => mod.WalletModule),
+        path: 'wallet', loadChildren: () => import('../wallet/wallet.module').then(mod => mod.WalletModule),
         canActivate: [ProtectedGuard]
       },
       {
-        path: 'history', loadChildren: (): any => import('../history/history.module').then((mod: any) => mod.HistoryModule),
+        path: 'history', loadChildren: () => import('../history/history.module').then(mod => mod.HistoryModule),
         canActivate: [ProtectedGuard]
       },
       {
-        path: 'redeem/:id', loadChildren: (): any => import('../redeem/redeem.module').then((mod: any) => mod.RedeemModule),
+        path: 'redeem/:id', loadChildren: () => import('../redeem/redeem.module').then(mod => mod.RedeemModule),
         canActivate: [ProtectedGuard]
       },
       {
         path: 'voucher-detail/:id',
-        loadChildren: (): any => import('../voucher-detail/voucher-detail.module').then((mod: any) => mod.VoucherDetailModule),
+        loadChildren: () => import('../voucher-detail/voucher-detail.module').then(mod => mod.VoucherDetailModule),
         canActivate: [ProtectedGuard]
       },
       {
         path: 'stamp/:id',
-        loadChildren: (): any => import('../campaign-stamps/campaign-stamps.module').then((mod: any) => mod.CampaignStampsModule),
+        loadChildren: () => import('../campaign-stamps/campaign-stamps.module').then(mod => mod.CampaignStampsModule),
         canActivate: [ProtectedGuard]
       },
       {
-        path: 'pi', loadChildren: (): any => import('../pi/pi.module').then((mod: any) => mod.PiModule),
+        path: 'pi', loadChildren: () => import('../pi/pi.module').then(mod => mod.PiModule),
         canActivate: [ProtectedGuard]
       },
       {
-        path: 'qr', loadChildren: (): any => import('../qr/qr.module').then((mod: any) => mod.QRModule),
+        path: 'qr', loadChildren: () => import('../qr/qr.module').then(mod => mod.QRModule),
         canActivate: [ProtectedGuard]
       },
       {
-        path: 'account', loadChildren: (): any => import('../account/account.module').then((mod: any) => mod.AccountModule),
+        path: 'account', loadChildren: () => import('../account/account.module').then(mod => mod.AccountModule),
         canActivate: [ProtectedGuard]
       },
       {
@@ -53,57 +53,57 @@ const routes: Routes = [
       },
       {
         path: 'stamp-card/:id',
-        loadChildren: (): any => import('../stamp/stamp.module').then((mod: any) => mod.StampModule),
+        loadChildren: () => import('../stamp/stamp.module').then(mod => mod.StampModule),
         canActivate: [ProtectedGuard]
       },
       {
         path: 'survey/:id',
-        loadChildren: (): any => import('../survey/survey.module').then((mod: any) => mod.SurveyModule),
+        loadChildren: () => import('../survey/survey.module').then(mod => mod.SurveyModule),
         canActivate: [ProtectedGuard]
       },
       {
         path: 'game/:id',
-        loadChildren: (): any => import('../game/game.module').then((mod: any) => mod.GameModule),
+        loadChildren: () => import('../game/game.module').then(mod => mod.GameModule),
         canActivate: [ProtectedGuard]
       },
       {
         path: 'give_reward/:id',
-        loadChildren: (): any => import('../instant-reward/instant-reward.module').then((mod: any) => mod.InstantRewardModule),
+        loadChildren: () => import('../instant-reward/instant-reward.module').then(mod => mod.InstantRewardModule),
         canActivate: [ProtectedGuard]
       },
       {
         path: 'reward-detail/:id',
-        loadChildren: (): any => import('../rewards-detail/rewards-detail.module').then((mod: any) => mod.RewardsDetailModule),
+        loadChildren: () => import('../rewards-detail/rewards-detail.module').then(mod => mod.RewardsDetailModule),
         canActivate: [ProtectedGuard]
       },
       {
         path: 'c/:key',
-        loadChildren: (): any => import('../content/content.module').then((mod: any) => mod.ContentModule),
+        loadChildren: () => import('../content/content.module').then(mod => mod.ContentModule),
         canActivate: [ProtectedGuard]
       },
       {
         path: 'profile',
-        loadChildren: (): any => import('../profile/profile.module').then((mod: any) => mod.ProfileModule)
+        loadChildren: () => import('../profile/profile.module').then(mod => mod.ProfileModule)
       },
       {
         path: 'transaction-history',
-        loadChildren: (): any => import('../transaction-history/transaction-history.module')
-          .then((mod: any) => mod.TransactionHistoryModule)
+        loadChildren: () => import('../transaction-history/transaction-history.module')
+          .then(mod => mod.TransactionHistoryModule)
       },
       {
         path: 'change-password',
-        loadChildren: (): any => import('../change-password/change-password.module')
-          .then((mod: any) => mod.ChangePasswordModule)
+        loadChildren: () => import('../change-password/change-password.module')
+          .then(mod => mod.ChangePasswordModule)
       },
       {
         path: 'edit-profile/:type',
-        loadChildren: (): any => import('../edit-profile-field/edit-profile-field.module')
+        loadChildren: () => import('../edit-profile-field/edit-profile-field.module')
           .then((mod: any) => mod.EditProfileFieldModule)
       },
       {
         path: 'catalogs',
-        loadChildren: (): any => import('../catalog/catalog.module')
-          .then((mod: any) => mod.CatalogModule)
+        loadChildren: () => import('../catalog/catalog.module')
+          .then(mod => mod.CatalogModule)
       }
     ]
   }
