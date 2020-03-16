@@ -54,9 +54,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   private firstComefirstServeCampaign: ICampaign;
 
   private async initCampaign(): Promise<void> {
+    // https://iamturns.com/continue-rxjs-streams-when-errors-occur/ also look at CatchError, exactly for dis purpose
     this.games$ = this.gamesService.getActiveGames()
       .pipe(
         tap((games: IGame[]) => this.showGames = games.length > 0),
+        switchMap((games: IGame[]) => of(games).pipe(catchError(err => of(err)))),
         takeLast(1)
       );
     this.campaigns$ = this.campaignService.getCampaigns({type: CampaignType.stamp})

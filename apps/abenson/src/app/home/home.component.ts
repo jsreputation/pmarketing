@@ -11,7 +11,7 @@ import {
 } from '@perx/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {map, share} from 'rxjs/operators';
 import { IAbensonConfig } from '../model/IAbenson.model';
 import {CurrencyPipe, DatePipe} from '@angular/common';
 
@@ -42,7 +42,10 @@ export class HomeComponent implements OnInit {
       this.comingSoon = config.custom ? config.custom.comingSoon as boolean : false;
     });
     this.campaigns$ = this.campaignService.getCampaigns()
-      .pipe(map((campaign) => campaign.filter(el => el.type === CampaignType.game)));
+      .pipe(
+        map((campaign) => campaign.filter(el => el.type === CampaignType.game)),
+        share()
+      );
     this.vouchers$ = this.vouchersService.getAll();
     this.filter = [VoucherState.issued, VoucherState.reserved, VoucherState.released];
     this.subTitleFn = (loyalty: ILoyalty) => `Equivalent to ${this.currencyPipe.transform(loyalty.currencyBalance, loyalty.currency, 'symbol-narrow', '1.0-0', 'en-PH')} e-Cash`;
