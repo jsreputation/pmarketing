@@ -101,7 +101,7 @@ export function defaultSpin(): ISpin {
 
 export interface ISpin {
   numberOfWedges: number;
-  rewardSlots: number[];
+  rewardSlots?: number[];
   colorCtrls: {[index: number]: string};
   rewardIcon: string;
   wheelImg: string;

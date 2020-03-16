@@ -13,7 +13,9 @@ import {
   IGameOutcome,
   IPlayOutcome,
   IEngagementTransaction,
-  defaultScratch
+  defaultScratch,
+  defaultSpin,
+  ISpin
 } from './game.model';
 import {
   map,
@@ -26,7 +28,8 @@ import { IV4Voucher, V4VouchersService } from '../vouchers/v4-vouchers.service';
 const enum GameType {
   shakeTheTree = 'shake_the_tree',
   pinata = 'hit_the_pinata',
-  scratch = 'scratch_card'
+  scratch = 'scratch_card',
+  spin = 'spin_the_wheel'
 }
 
 interface Asset {
@@ -89,9 +92,19 @@ interface PinataDisplayProperties extends GameProperties {
   number_of_taps: number;
 }
 
+interface SpinDisplayProperties extends GameProperties {
+  number_of_wedges: number,
+  wedge_colors: string[],
+  background_image: Asset,
+  reward_image: Asset,
+  wheel_image: Asset,
+  wheel_position: string,
+  pointer_image: Asset
+}
+
 interface Game {
   campaign_id?: number;
-  display_properties: TreeDisplayProperties | PinataDisplayProperties | ScratchDisplayProperties;
+  display_properties: TreeDisplayProperties | PinataDisplayProperties | ScratchDisplayProperties | SpinDisplayProperties;
   game_type: GameType;
   id: number;
   number_of_tries: number;
@@ -146,7 +159,7 @@ export class V4GameService implements IGameService {
 
   private static v4GameToGame(game: Game): IGame {
     let type = TYPE.unknown;
-    let config: ITree | IPinata | IScratch;
+    let config: ITree | IPinata | IScratch | ISpin;
     if (game.game_type === GameType.shakeTheTree) {
       type = TYPE.shakeTheTree;
       const dpts: TreeDisplayProperties = game.display_properties as TreeDisplayProperties;
@@ -180,6 +193,19 @@ export class V4GameService implements IGameService {
         underlyingSuccessImg: oc(dpps).post_success_image.value.image_url() || oc(dpps).post_success_image.value.file(),
         underlyingFailImg: oc(dpps).post_fail_image.value.image_url() || oc(dpps).post_success_image.value.file()
       };
+    } else if (game.game_type === GameType.spin) {
+      type = TYPE.spin;
+      const dpps: SpinDisplayProperties = game.display_properties as SpinDisplayProperties;
+      config = {
+        ...defaultSpin(),
+        numberOfWedges: dpps.number_of_wedges,
+        colorCtrls: Object.assign(dpps.wedge_colors),
+        rewardIcon: oc(dpps).reward_image.value.image_url('') || oc(dpps).reward_image.value.file(''),
+        wheelImg: oc(dpps).wheel_image.value.image_url('') || oc(dpps).wheel_image.value.file(''),
+        wheelPosition: oc(dpps).wheel_position('center'),
+        pointerImg: oc(dpps).pointer_image.value.image_url('') || oc(dpps).pointer_image.value.file(''),
+        background: oc(dpps).background_image.value.image_url('') || oc(dpps).background_image.value.file('')
+      }
     } else {
       throw new Error(`${game.game_type} is not mapped yet`);
     }
