@@ -93,13 +93,13 @@ interface PinataDisplayProperties extends GameProperties {
 }
 
 interface SpinDisplayProperties extends GameProperties {
-  number_of_wedges: number,
-  wedge_colors: string[],
-  background_image: Asset,
-  reward_image: Asset,
-  wheel_image: Asset,
-  wheel_position: string,
-  pointer_image: Asset
+  number_of_wedges: number;
+  wedge_colors: string[];
+  background_image: Asset;
+  reward_image: Asset;
+  wheel_image: Asset;
+  wheel_position: string;
+  pointer_image: Asset;
 }
 
 interface Game {
@@ -205,7 +205,7 @@ export class V4GameService implements IGameService {
         wheelPosition: oc(dpps).wheel_position('center'),
         pointerImg: oc(dpps).pointer_image.value.image_url('') || oc(dpps).pointer_image.value.file(''),
         background: oc(dpps).background_image.value.image_url('') || oc(dpps).background_image.value.file('')
-      }
+      };
     } else {
       throw new Error(`${game.game_type} is not mapped yet`);
     }
