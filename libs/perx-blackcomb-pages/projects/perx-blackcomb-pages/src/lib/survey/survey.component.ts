@@ -45,8 +45,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
   public totalLength: number;
   public currentPointer: number;
   public questionPointer: number = 0;
-  private hideArrow = () =>
-    this.overFarrow.nativeElement.classList.add('hidden');
+  private hideArrow = () => this.overFarrow.nativeElement.classList.add('hidden');
   private isAnonymousUser: boolean;
   private informationCollectionSetting: string;
   private destroy$: Subject<any> = new Subject();
@@ -234,17 +233,17 @@ export class SurveyComponent implements OnInit, OnDestroy {
       !surveyId || (this.isAnonymousUser && isCollectDataRequired)
         ? of({ hasOutcomes: true })
         : this.surveyService
-            .postSurveyAnswer(
-              this.answers,
-              this.route.snapshot.params.id,
-              surveyId
-            )
-            .pipe(
-              catchError((err: HttpErrorResponse) => {
-                this.popupData = this.noRewardsPopUp;
-                throw err;
-              })
-            );
+          .postSurveyAnswer(
+            this.answers,
+            this.route.snapshot.params.id,
+            surveyId
+          )
+          .pipe(
+            catchError((err: HttpErrorResponse) => {
+              this.popupData = this.noRewardsPopUp;
+              throw err;
+            })
+          );
 
     userAction$.subscribe(
       res => {
