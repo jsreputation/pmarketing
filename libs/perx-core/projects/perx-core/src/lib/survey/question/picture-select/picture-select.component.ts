@@ -49,7 +49,7 @@ export class PictureSelectComponent implements OnChanges {
     let result: string[] = [];
     if (this.payload.multiple && this.selectedChoices) {
       result = Object.entries(this.selectedChoices)
-        .filter(([key, value]) => key !== undefined && value !== undefined)
+        .filter(([key, value]) => key !== undefined && value)
         .map(data => data[0]);
     } else {
       result[0] = this.selectedChoice.toString();
