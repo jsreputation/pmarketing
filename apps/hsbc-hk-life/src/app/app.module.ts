@@ -76,6 +76,7 @@ import { switchMap, tap } from 'rxjs/operators';
 
 // https://medium.com/angular-in-depth/gestures-in-an-angular-application-dde71804c0d0
 // to override default settings
+@Injectable()
 export class MyHammerConfig extends HammerGestureConfig {
   public overrides: any = {
     swipe: { direction: Hammer.DIRECTION_ALL }, // in order to swipe up and down
