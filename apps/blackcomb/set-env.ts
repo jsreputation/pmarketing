@@ -28,12 +28,12 @@ const displayProperties = `"displayProperties": {
           {
               "key": "contact-us",
               "title": "Contact Us",
-              "content_url": ""
+              "content_url": "${process.env.CONTACTUSURL ? process.env.CONTACTUSURL : ''}"
           },
           {
               "key": "tnc",
               "title": "Terms and Conditions",
-              "content_url": ""
+              "content_url": "${process.env.TNCURL ? process.env.TNCURL : ''}"
           }
       ]
   }
