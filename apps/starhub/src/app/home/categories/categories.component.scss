@@ -4,26 +4,35 @@
   display: flex;
   flex-direction: row;
   overflow-x: scroll;
-  padding: 1rem 0;
+  padding: 2.4rem 0;
 }
 
 mat-card {
-  flex: 1 0 28%;
+  flex: 1 0 8rem;
+  height: 8rem;
+  max-width: 8rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-right: 1rem;
+  margin-right: 1.6rem;
   border-radius: 0.8rem;
+  padding: 1.2rem 0.8rem;
+  box-sizing: border-box;
 
   .icon {
-    @include icon(3.5rem);
+    @include icon(3.2rem);
+
+    img {
+      width: 3.2rem;
+      height: 3.2rem;
+    }
   }
 
   .category-title {
     color: #666666;
     font-size: 1.2rem;
     width: 100%;
-    margin-top: 0.5rem;
+    margin-top: 0.8rem;
     text-align: center;
   }
 }
