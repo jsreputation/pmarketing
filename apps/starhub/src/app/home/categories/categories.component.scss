@@ -10,6 +10,7 @@
 mat-card {
   flex: 1 0 8rem;
   height: 8rem;
+  max-width: 8rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,6 +21,11 @@ mat-card {
 
   .icon {
     @include icon(3.2rem);
+
+    img {
+      width: 3.2rem;
+      height: 3.2rem;
+    }
   }
 
   .category-title {
