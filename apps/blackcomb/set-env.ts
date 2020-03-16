@@ -16,7 +16,7 @@ require('dotenv').config();
 const rssFeeds = `{
   "data": [
     {
-      "url": "${process.env.RSS_FEEDS ? process.env.RSS_FEEDS : 'https://cdn.perxtech.io/content/starhub/rss.xml'}",
+      "url": "${process.env.RSS_FEEDS ? process.env.RSS_FEEDS : ''}",
       "page": "home"
     }
   ]
