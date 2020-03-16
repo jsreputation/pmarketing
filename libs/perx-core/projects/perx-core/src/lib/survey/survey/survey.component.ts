@@ -1,28 +1,45 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit,
+  OnDestroy,
+  OnChanges,
+  SimpleChanges,
+  ViewChildren,
+  QueryList,
+} from '@angular/core';
 import { IAnswer, ISurvey, ITracker, IPoints } from '../models/survey.model';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import {QuestionComponent} from '../question/question.component';
 
 @Component({
   selector: 'perx-core-survey',
   templateUrl: './survey.component.html',
   styleUrls: ['./survey.component.scss']
 })
-export class SurveyComponent implements OnInit, OnDestroy {
+export class SurveyComponent implements OnInit, OnChanges, OnDestroy {
   @Input('data')
   public data$: Observable<ISurvey>;
 
   @Input()
   public hideIndex: boolean = false;
 
+  @Input()
+  public questionPointer: number = 0;
+
   @Output()
   public totalLength: EventEmitter<number> = new EventEmitter();
 
   @Output()
-  public currentPointer: EventEmitter<number> = new EventEmitter();
+  public currentPointer: EventEmitter<number> = new EventEmitter(false);
 
   @Output()
   public surveyDone: EventEmitter<IAnswer[]> = new EventEmitter();
+
+  @ViewChildren('questionsList') public questionComponents: QueryList<QuestionComponent>;
 
   public answersTracker: ITracker = {};
 
@@ -30,9 +47,18 @@ export class SurveyComponent implements OnInit, OnDestroy {
 
   public data: ISurvey;
 
-  public questionPointer: number = 0;
+  public viewChecked: boolean = false;
 
   private destroy$: Subject<any> = new Subject();
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    const questionPointerChange = changes.questionPointer;
+    if (questionPointerChange && this.questionComponents) {
+      // emitting helps to update calling setCurrentPointer on parentElement
+      // signal has been called with answer alrdy
+      this.currentPointer.emit(questionPointerChange.currentValue);
+    }
+  }
 
   public ngOnInit(): void {
     if (this.data$) {
@@ -68,21 +94,14 @@ export class SurveyComponent implements OnInit, OnDestroy {
       this.totalLength.emit(totalQuestion);
       this.currentPointer.emit(currentPoint);
     }
-    if (currentPoint >= totalQuestion) {
-      const answers: IAnswer[] = Object.entries(this.answersTracker).map(([id, answer]) => ({
-        questionId: id,
-        content: answer.content
-      }));
-      this.surveyDone.emit(answers);
-    }
-  }
-
-  public updateQuestionPointer(action: string): void {
-    if (action === 'next') {
-      this.questionPointer++;
-    } else {
-      this.questionPointer--;
-    }
+    // to keep track of questions answered state, update after each question answered / updated
+    // OLD: if (currentPoint >= totalQuestion) {
+    const answers: IAnswer[] = Object.entries(this.answersTracker).map(([id, answer]) => ({
+      questionId: id,
+      content: answer.content
+    }));
+    this.surveyDone.emit(answers);
+    // }
   }
 
   public calculatePoints(): number {
