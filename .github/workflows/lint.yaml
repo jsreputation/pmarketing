@@ -5,6 +5,8 @@ jobs:
     name: lint
     runs-on: ubuntu-latest
     steps:
+      - name: Cancel redundant jobs
+        uses: technote-space/auto-cancel-redundant-job@v1
       - uses: azure/k8s-set-context@v1
         with:
           method: kubeconfig
