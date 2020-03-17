@@ -26,8 +26,7 @@
                 {{reward.merchantName}}
               </div>
               <ng-template #showDescription>
-                <div class="description" ngxEllipsis [lines]="2">
-                  {{reward.description}}
+                <div class="description" [innerHtml]="reward.description | striphtml" ngxEllipsis [lines]="2">
                 </div>
               </ng-template>
               <div

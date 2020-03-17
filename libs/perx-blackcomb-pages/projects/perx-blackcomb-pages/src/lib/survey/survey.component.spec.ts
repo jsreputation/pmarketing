@@ -21,7 +21,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WInformationCollectionSettingType } from '@perx/whistler';
 
 interface IAnswer {
-  question_id: string;
+  questionId: string;
   content: any;
 }
 
@@ -195,13 +195,13 @@ describe('SurveyComponent', () => {
     it('should updateSurveyStatus', () => {
       const answers: IAnswer[] = [
         {
-          question_id: '1',
+          questionId: '1',
           content: 'test'
         }
       ];
       component.updateSurveyStatus(answers);
       expect(component.answers.length).toBe(1);
-      expect(component.answers[0].question_id).toBe('1');
+      expect(component.answers[0].questionId).toBe('1');
       expect(component.answers[0].content).toBe('test');
     });
 
