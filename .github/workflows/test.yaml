@@ -1,0 +1,143 @@
+name: test
+on: [pull_request]
+jobs:
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel redundant jobs
+        uses: technote-space/auto-cancel-redundant-job@v1
+      - uses: actions/checkout@v2
+      - uses: azure/k8s-set-context@v1
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.BUILDER_KUBE_CONFIG }}
+      - name: Check branch name
+        run: |
+          REGEX="[[:alpha:]]+-[[:digit:]]+"
+          if [[ ! ${GITHUB_HEAD_REF} =~ ${REGEX} ]]; then
+            echo "Branch name ${GITHUB_HEAD_REF} doesn't meet naming convention: ${REGEX}"
+            exit 1
+          fi
+      - name: Get list of apps
+        run: |
+          APP_FOLDERS=$(ls -d apps/*)
+          LIBS_FOLDERS=$(ls -d libs/*)
+          BACKEND_FOLDERS=$(ls -d backend/*)
+
+          echo ::set-env name=APP_FOLDERS::${APP_FOLDERS[@]}
+          echo ::set-env name=LIBS_FOLDERS::${LIBS_FOLDERS[@]}
+          echo ::set-env name=BACKEND_FOLDERS::${BACKEND_FOLDERS[@]}
+
+          # Set tekton label
+          LABEL=$(echo ${GITHUB_REF//[^0-9a-zA-Z-_\.]/-} | cut -c-60)
+          # Workaround to ensure label name ended with alphanumeric char
+          LABEL+=0
+          echo ::set-env name=TEKTON_LABEL::${LABEL}
+      - name: Download tekton cli and install parallel
+        run: |
+          curl -L https://github.com/tektoncd/cli/releases/download/v0.6.0/tkn_0.6.0_Linux_x86_64.tar.gz \
+          | sudo tar xzv -C /usr/local/bin tkn
+          # sudo apt-get --allow-releaseinfo-change update &&
+          sudo apt-get install -y parallel
+      - name: Remove existing tasks
+        run: |
+          EXISTING_TASKS=$(kubectl -n build get taskrun -l github.ref=${TEKTON_LABEL},tekton.dev/task=microsite-apps-ng-test -o=name)
+          if [ ${#EXISTING_TASKS[@]} -ne 0 ]; then
+            parallel kubectl -n build delete {} ::: ${EXISTING_TASKS[@]}
+          else
+            echo "No existing taskruns"
+          fi
+      - name: Create tekton tasks
+        run: |
+          declare -a TEKTON_TASKS
+          FOLDERS=("${APP_FOLDERS[@]}" "${LIBS_FOLDERS[@]}" "${BACKEND_FOLDERS[@]}")
+          for f in ${FOLDERS[@]}; do
+          TEKTON_TASK=$(cat <<EOT | kubectl -n build create -f - --output=jsonpath={.metadata.name}
+          apiVersion: tekton.dev/v1alpha1
+          kind: TaskRun
+          metadata:
+            generateName: microsite-apps-ng-test-${f//[^0-9a-zA-Z-]/-}-
+            labels:
+              github.ref: ${TEKTON_LABEL}
+              task: test
+          spec:
+            serviceAccountName: tekton
+            taskRef:
+              name: microsite-apps-ng-test
+            inputs:
+              resources:
+                - name: workspace
+                  resourceSpec:
+                    type: git
+                    params:
+                      - name: url
+                        value: git@github.com:PerxTech/microsite-apps-ng.git
+                      - name: revision
+                        value: ${{ github.ref }}
+              params:
+                - name: folder
+                  value: ${f}
+            podTemplate:
+              securityContext:
+                runAsUser: 0
+                runAsGroup: 0
+              nodeSelector:
+                dedicated: build
+              tolerations:
+                - key: "dedicated"
+                  value: "build"
+                  effect: "NoSchedule"
+          EOT
+          )
+          TEKTON_TASKS+=(${TEKTON_TASK})
+          done
+          echo "Tasks: ${TEKTON_TASKS[@]}"
+          echo ::set-env name=TEKTON_TASKS::${TEKTON_TASKS[@]}
+      - name: Check task result
+        run: |
+          start=$SECONDS
+          RUNNING_TASKS=(${TEKTON_TASKS[@]})
+          until [[ -z "${RUNNING_TASKS// }" ]] || [[ $(( SECONDS - start )) -gt 1200 ]]; do
+            echo "Tasks: \"${RUNNING_TASKS// }\""
+            for TASKRUN_NAME in ${RUNNING_TASKS[@]}; do
+              REASON=$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')
+              STATUS=$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].status}')
+              if [[ "${REASON}" = "Succeeded" ]] && [[ "${STATUS}" = "True" ]]; then
+                RUNNING_TASKS=("${RUNNING_TASKS[@]/$TASKRUN_NAME}")
+              fi
+              if [[ "${REASON}" = "Failed" ]] && [[ "${STATUS}" = "False" ]]; then
+                echo "Taskrun ${TASKRUN_NAME} is failed, fail sthe job"
+                exit 1
+              fi
+              echo "Taskrun ${TASKRUN_NAME} reason is ${REASON}, status is ${STATUS}"
+            done
+            sleep 20
+            echo "Running for $(( SECONDS - start )) seconds"
+          done
+      - name: Display dashboard link ang generate error logs
+        if: always()
+        run: |
+          touch test_error.log
+          for TASKRUN_NAME in ${TEKTON_TASKS[@]}; do
+            TASKRUN_STATUS=$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')
+            if [ "${TASKRUN_STATUS}" = "Failed" ]; then
+              echo ">>>> Taskrun ${TASKRUN_NAME} status is ${TASKRUN_STATUS} <<<<"
+              echo "Follow dashboard link to get the details: http://tekton-dashboard.perxtech.io/#/namespaces/build/taskruns/${TASKRUN_NAME}"
+              tkn -n build taskrun logs ${TASKRUN_NAME} -f >> test_error.log
+            fi
+          done
+      - name: Upload tests log
+        if: always()
+        uses: actions/upload-artifact@v1
+        with:
+          name: Test logs
+          path: test_error.log
+      - name: Taskruns cleanup
+        if: always()
+        run: |
+          for TASKRUN_NAME in ${TEKTON_TASKS[@]}; do
+            if [ "$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')" == "Succeeded" ]; then
+              tkn -n build taskrun delete ${TASKRUN_NAME}
+            fi
+          done
