@@ -13,9 +13,9 @@ import { ThemesService } from './themes.service';
 import {ITheme, IThemeV4ApiProperties, ThemeJsonApiItem, ThemeJsonApiItemPayLoad} from './themes.model';
 import { LIGHT } from './themes.model';
 
+import { Config } from '../../config/config';
 import { IConfig } from '../../config/models/config.model';
 import { oc } from 'ts-optchain';
-import { ConfigService } from '../../config/config.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,12 +24,10 @@ export class V4ThemesService extends ThemesService {
   private themeSettingEndpoint: string;
   private responseCache: Map<string, ITheme> = new Map();
 
-  constructor(private http: HttpClient, private configService: ConfigService) {
+  constructor(private http: HttpClient, config: Config) {
     super();
-    this.configService.readAppConfig().subscribe(
-      (config: IConfig<void>) => {
-        this.themeSettingEndpoint = `${config.apiHost}/v4/settings/microsite_settings`;
-      });
+    this.themeSettingEndpoint = `${config.apiHost}/v4/settings/microsite_settings`;
+
   }
 
   public getThemeSetting(config?: IConfig<ITheme>): Observable<ITheme> {

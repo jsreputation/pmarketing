@@ -8,12 +8,10 @@ import { Config } from '../config/config';
 import { IVoucherService } from '../vouchers/ivoucher.service';
 import { WhistlerStampService } from './whistler-stamp.service';
 import { ICampaignService } from '../campaign/icampaign.service';
-import { ConfigService } from '../config/config.service';
 
 export function stampServiceFactory(
   http: HttpClient,
   config: Config,
-  configService: ConfigService,
   vouchersService: IVoucherService,
   campaignService: ICampaignService
 ): StampService {
@@ -21,7 +19,7 @@ export function stampServiceFactory(
   if (config.isWhistler) {
     return new WhistlerStampService(http, config, campaignService);
   }
-  return new V4StampService(http, configService, vouchersService, campaignService);
+  return new V4StampService(http, config, vouchersService, campaignService);
 }
 
 @NgModule({
@@ -33,7 +31,7 @@ export function stampServiceFactory(
     {
       provide: StampService,
       useFactory: stampServiceFactory,
-      deps: [HttpClient, Config, ConfigService, IVoucherService, ICampaignService]
+      deps: [HttpClient, Config, IVoucherService, ICampaignService]
     }
   ]
 })

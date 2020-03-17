@@ -4,9 +4,8 @@ import { Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { IMerchantsService } from './imerchants.service';
 import { IImage, IMerchant, IOutlet, ITag } from './models/merchants.model';
+import { Config } from '../config/config';
 import { oc } from 'ts-optchain';
-import { ConfigService } from '../config/config.service';
-import { IConfig } from '../config/models/config.model';
 
 interface IV4GetMerchantsResponse {
   data: IV4Merchant[];
@@ -48,16 +47,11 @@ interface IV4Outlet {
 export class V4MerchantsService implements IMerchantsService {
   private merchants: { [id: number]: { [page: number]: IMerchant } } = {};
   private merchantsWithoutId: IV4Merchant[] = [];
-  private apiHost: string;
 
   constructor(
     private http: HttpClient,
-    private configService: ConfigService
+    private config: Config
   ) {
-    this.configService.readAppConfig().subscribe(
-      (config: IConfig<void>) => {
-        this.apiHost = config.apiHost as string;
-      });
   }
 
   public static v4OutletsToOutlets(outlets: IV4Outlet[] | undefined): IOutlet[] | null {
@@ -113,7 +107,7 @@ export class V4MerchantsService implements IMerchantsService {
     }
 
     return this.http.get<IV4GetMerchantsResponse>(
-      `${this.apiHost}/v4/merchants`,
+      `${this.config.apiHost}/v4/merchants`,
       {
         params: {
           page: `${page}`
@@ -141,7 +135,7 @@ export class V4MerchantsService implements IMerchantsService {
       return of(this.merchants[merchantId][page]);
     }
 
-    return this.http.get<IV4GetMerchantResponse>(`${this.apiHost}/v4/merchants/${merchantId}?page=${page}`)
+    return this.http.get<IV4GetMerchantResponse>(`${this.config.apiHost}/v4/merchants/${merchantId}?page=${page}`)
       .pipe(
         map(res => res.data),
         map((merchant: IV4Merchant) => ({

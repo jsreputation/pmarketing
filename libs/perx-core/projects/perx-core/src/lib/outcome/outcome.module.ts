@@ -7,12 +7,10 @@ import { Config } from '../config/config';
 import { InstantOutcomeService } from './instant-outcome.service';
 import { IVoucherService } from '../vouchers/ivoucher.service';
 import { ICampaignService } from '../campaign/icampaign.service';
-import { ConfigService } from '../config/config.service';
 
 export function instantRewardsSvcFactory(
   http: HttpClient,
   config: Config,
-  configService: ConfigService,
   voucherService: IVoucherService,
   campaignService: ICampaignService
 ): InstantOutcomeService {
@@ -21,7 +19,7 @@ export function instantRewardsSvcFactory(
     return new WhistlerInstantOutcomeService(http, config, voucherService);
   }
 
-  return new V4InstantOutcomeService(http, configService, campaignService);
+  return new V4InstantOutcomeService(http, config, campaignService);
 }
 
 @NgModule({
@@ -31,7 +29,7 @@ export function instantRewardsSvcFactory(
     {
       provide: InstantOutcomeService,
       useFactory: instantRewardsSvcFactory,
-      deps: [HttpClient, Config, ConfigService, IVoucherService, ICampaignService]
+      deps: [HttpClient, Config, IVoucherService, ICampaignService]
     }
   ]
 })

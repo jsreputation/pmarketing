@@ -20,19 +20,17 @@ import { MaterialModule } from '../shared/material.module';
 import { UtilsModule } from '../utils/utils.module';
 import { Config } from '../config/config';
 import { RewardsService } from '../rewards/rewards.service';
-import { ConfigService } from '../config/config.service';
 
 export function vouchersServiceFactory(
   http: HttpClient,
   config: Config,
-  configService: ConfigService,
   rewardsService: RewardsService,
 ): IVoucherService {
   if (config.isWhistler) {
     return new WhistlerVouchersService(http, config, rewardsService);
   }
   // Make decision on what to instantiate base on config
-  return new V4VouchersService(http, configService);
+  return new V4VouchersService(http, config);
 }
 
 const components = [
@@ -64,7 +62,7 @@ const components = [
     {
       provide: IVoucherService,
       useFactory: vouchersServiceFactory,
-      deps: [HttpClient, Config, ConfigService, RewardsService]
+      deps: [HttpClient, Config, RewardsService]
     }
   ]
 })

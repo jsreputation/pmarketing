@@ -8,11 +8,10 @@ import { filter, flatMap, map, mergeAll, scan, switchMap, tap, mergeMap } from '
 import { IVoucherService } from './ivoucher.service';
 import { IGetVoucherParams, IRedeemOptions, IVoucher, VoucherState } from './models/voucher.model';
 
+import { Config } from '../config/config';
 import { IRewardParams } from '../rewards/models/reward.model';
 import { IV4Reward, V4RewardsService } from '../rewards/v4-rewards.service';
 import { RedemptionType } from '../perx-core.models';
-import { ConfigService } from '../config/config.service';
-import { IConfig } from '../config/models/config.model';
 
 interface IV4Meta {
   count?: number;
@@ -80,16 +79,11 @@ export interface IV4Voucher {
 })
 export class V4VouchersService implements IVoucherService {
   private vouchers: IVoucher[] = [];
-  private apiHost: string;
 
   constructor(
     private http: HttpClient,
-    private configService: ConfigService
+    private config: Config
   ) {
-    this.configService.readAppConfig().subscribe(
-      (config: IConfig<void>) => {
-        this.apiHost = config.apiHost as string;
-      });
   }
 
   public static v4VoucherToVoucher(v: IV4Voucher): IVoucher {
@@ -171,7 +165,7 @@ export class V4VouchersService implements IVoucherService {
   }
 
   private get vouchersUrl(): string {
-    return `${this.apiHost}/v4/vouchers?redeemed_within=-1&expired_within=-1`;
+    return `${this.config.apiHost}/v4/vouchers?redeemed_within=-1&expired_within=-1`;
   }
 
   public get(id: number, useCache: boolean = true, voucherParams?: IGetVoucherParams, locale: string = 'en'): Observable<IVoucher> {
@@ -186,7 +180,7 @@ export class V4VouchersService implements IVoucherService {
     if (voucherParams && voucherParams.sourceType) {
       params = params.set('source_type', voucherParams.sourceType);
     }
-    const url = `${this.apiHost}/v4/vouchers/${id}`;
+    const url = `${this.config.apiHost}/v4/vouchers/${id}`;
     return this.http.get<IV4VoucherResponse>(url, { headers, params })
       .pipe(
         map(resp => resp.data),
@@ -202,7 +196,7 @@ export class V4VouchersService implements IVoucherService {
 
   public redeemVoucher(id: number, options?: IRedeemOptions, locale: string = 'en'): Observable<any> {
     const headers = new HttpHeaders().set('Accept-Language', locale);
-    const url = `${this.apiHost}/v4/vouchers/${id}/redeem`;
+    const url = `${this.config.apiHost}/v4/vouchers/${id}/redeem`;
     const post: IRedeemOptions | null = !options ? null : options;
 
     return this.http.post(url, post, { headers })
@@ -295,7 +289,7 @@ export class V4VouchersService implements IVoucherService {
     if (rewardParams && rewardParams.sourceType) {
       params = params.set('source_type', rewardParams.sourceType);
     }
-    return this.http.post<IV4ReserveRewardResponse>(`${this.apiHost}/v4/rewards/${rewardId}/reserve`, null, { headers, params })
+    return this.http.post<IV4ReserveRewardResponse>(`${this.config.apiHost}/v4/rewards/${rewardId}/reserve`, null, { headers, params })
       .pipe(
         map((res: IV4ReserveRewardResponse) => res.data),
         mergeMap((minVoucher: IV4MinifiedVoucher) => this.get(minVoucher.id, undefined, undefined, locale))
@@ -308,7 +302,7 @@ export class V4VouchersService implements IVoucherService {
     if (sourceType) {
       params = params.set('source_type', sourceType);
     }
-    return this.http.post<IV4ReserveRewardResponse>(`${this.apiHost}/v4/rewards/${rewardId}/issue`, { headers, params })
+    return this.http.post<IV4ReserveRewardResponse>(`${this.config.apiHost}/v4/rewards/${rewardId}/issue`, { headers, params })
       .pipe(
         map(res => res.data),
         switchMap((minVoucher: IV4MinifiedVoucher) => this.get(minVoucher.id, undefined, undefined, locale)),
