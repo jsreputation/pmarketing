@@ -1,11 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { RewardsService, IReward, LoyaltyService, ILoyalty, IVoucherService, NotificationService, IPopupConfig, PopupComponent } from '@perx/core';
+import { 
+  RewardsService, 
+  IReward, 
+  LoyaltyService, 
+  ILoyalty, 
+  IVoucherService, 
+  NotificationService, 
+  IPopupConfig, 
+  PopupComponent, 
+  Voucher 
+} from '@perx/core';
 import { switchMap, mergeMap, tap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { RewardConfirmComponent } from '../reward-confirm/reward-confirm.component';
-import { IVoucher } from '@perx/core/dist/perx-core/lib/vouchers/models/voucher.model';
 
 export interface IRewardConfirmComponentParam {
   title: string;
@@ -57,7 +66,7 @@ export class RewardDetailComponent implements OnInit {
       });
   }
 
-  private exchangePoints(): Observable<IVoucher> {
+  private exchangePoints(): Observable<Voucher> {
     return this.voucherService.issueReward(this.rewardData.id);
   }
 

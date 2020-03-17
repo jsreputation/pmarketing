@@ -14,7 +14,6 @@ import {
   VoucherState,
 } from '@perx/core';
 import { Observable, Subject } from 'rxjs';
-import { IVoucher } from '@perx/core/dist/perx-core/lib/vouchers/models/voucher.model';
 import { switchMap } from 'rxjs/operators';
 
 @Component({
@@ -26,7 +25,7 @@ export class QRCodeComponent implements OnInit {
   @Input()
   public voucherId: number;
   @Input('voucher')
-  public voucher$: Observable<IVoucher>;
+  public voucher$: Observable<Voucher>;
 
   public voucherState: VoucherState;
   public code?: string;
