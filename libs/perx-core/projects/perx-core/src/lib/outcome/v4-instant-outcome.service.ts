@@ -22,7 +22,7 @@ interface IV4IssueCampaignResponse {
 })
 export class V4InstantOutcomeService implements InstantOutcomeService {
   private apiHost: string;
-  
+
   constructor(
     private http: HttpClient,
     private configService: ConfigService,
@@ -54,9 +54,9 @@ export class V4InstantOutcomeService implements InstantOutcomeService {
   public claim(campaignId: number): Observable<IVoucher[]> {
     return this.http
       .post<IV4IssueCampaignResponse>(
-      `${this.apiHost}/v4/campaigns/${campaignId}/issue_all`,
-      null
-    )
+        `${this.apiHost}/v4/campaigns/${campaignId}/issue_all`,
+        null
+      )
       .pipe(
         map(resp => resp.data),
         map((vouchers: IV4Voucher[]) =>
