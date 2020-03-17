@@ -11,11 +11,10 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'striphtml'
 })
 export class StripHtmlPipe implements PipeTransform {
-  transform(value: any): any {
+  public transform(value: any): any {
     if ((value === null) || (value === '')) {
       return '';
-    } else {
-      return value.replace(/<(?:.|\n)*?>/gm, ' ');
     }
+    return value.replace(/<(?:.|\n)*?>/gm, ' ');
   }
 }

@@ -172,7 +172,7 @@ export { LanguageService } from './lib/utils/language/language.service';
 export { LanguageInterceptor } from './lib/utils/language.interceptor';
 export { LocaleIdFactory } from './lib/utils/language/locale-id.factory';
 export { FeedItemPopupComponent } from './lib/utils/feed-item-popup/feed-item-popup.component';
-export { StripHtmlPipe } from './lib/utils/directives/striphtml-pipe'
+export { StripHtmlPipe } from './lib/utils/directives/striphtml-pipe';
 /**
  * Puzzles
  */
