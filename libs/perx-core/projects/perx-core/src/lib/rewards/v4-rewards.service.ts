@@ -129,6 +129,7 @@ interface IV4CatalogResults {
 })
 export class V4RewardsService extends RewardsService {
   private apiHost: string;
+  private baseHref: string;
 
   constructor(
     private http: HttpClient,
@@ -138,6 +139,7 @@ export class V4RewardsService extends RewardsService {
     this.configService.readAppConfig().subscribe(
       (config: IConfig<void>) => {
         this.apiHost = config.apiHost as string;
+        this.baseHref = config.baseHref as string;
       });
   }
 
@@ -341,7 +343,7 @@ export class V4RewardsService extends RewardsService {
   }
 
   public getCategories(): Observable<ITabConfigExtended[]> {
-    return this.http.get<ITabConfigExtended[]>(`${this.config.baseHref}assets/categories-tabs.json`);
+    return this.http.get<ITabConfigExtended[]>(`${this.baseHref}assets/categories-tabs.json`);
   }
 
   public getRewardPricesOptions(id: number, locale: string = 'en'): Observable<IPrice[]> {
