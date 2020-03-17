@@ -1,6 +1,5 @@
 import {
   Injectable,
-  Optional,
 } from '@angular/core';
 import {
   HttpClient,
@@ -28,9 +27,10 @@ import {
   ITransactionHistory
 } from './models/loyalty.model';
 
-import { Config } from '../config/config';
 import { IV4Reward, IV4Tag } from '../rewards/v4-rewards.service';
 import { ICustomProperties } from '../profile/profile.model';
+import { ConfigService } from '../config/config.service';
+import { IConfig } from '../config/models/config.model';
 
 const DEFAULT_PAGE_COUNT: number = 10;
 
@@ -146,10 +146,13 @@ export class V4LoyaltyService extends LoyaltyService {
 
   constructor(
     private http: HttpClient,
-    @Optional() config: Config
+    private configService: ConfigService
   ) {
     super();
-    this.apiHost = config.apiHost as string;
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig<void>) => {
+        this.apiHost = config.apiHost as string;
+      });
   }
 
   public static v4LoyaltyToLoyalty(loyalty: IV4Loyalty): ILoyalty {

@@ -9,8 +9,9 @@ import {
 } from './models/campaign.model';
 import { ICampaignFilterOptions, ICampaignService } from './icampaign.service';
 import { V4RewardsService, IV4Reward } from '../rewards/v4-rewards.service';
-import { Config } from '../config/config';
 import { oc } from 'ts-optchain';
+import { IConfig } from '../config/models/config.model';
+import { ConfigService } from '../config/config.service';
 
 interface IV4Image {
   type: string;
@@ -52,8 +53,11 @@ interface IV4CampaignsResponse {
 export class V4CampaignService implements ICampaignService {
   public baseUrl: string;
 
-  constructor(private http: HttpClient, config: Config) {
-    this.baseUrl = config.apiHost as string;
+  constructor(private http: HttpClient, private configService: ConfigService) {
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig<void>) => {
+        this.baseUrl = config.apiHost as string;
+      });
   }
 
   public static v4CampaignToCampaign(campaign: IV4Campaign): ICampaign {
