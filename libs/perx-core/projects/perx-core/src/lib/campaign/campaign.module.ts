@@ -9,14 +9,13 @@ import { WhistlerCampaignService } from './whistler-campaign.service';
 import { RewardPopupComponent } from './reward-popup/reward-popup.component';
 import { ExpireTimerComponent } from './reward-popup/expire-timer/expire-timer.component';
 import { MatDialogModule, MatButtonModule } from '@angular/material';
-import { ConfigService } from '../config/config.service';
 
-export function campaignServiceFactory(http: HttpClient, config: Config, configService: ConfigService): ICampaignService {
+export function campaignServiceFactory(http: HttpClient, config: Config): ICampaignService {
   if (config.isWhistler) {
     return new WhistlerCampaignService(http, config);
   }
   // Make decision on what to instantiate base on config
-  return new V4CampaignService(http, configService);
+  return new V4CampaignService(http, config);
 }
 
 @NgModule({
@@ -33,7 +32,7 @@ export function campaignServiceFactory(http: HttpClient, config: Config, configS
     {
       provide: ICampaignService,
       useFactory: campaignServiceFactory,
-      deps: [HttpClient, Config, ConfigService]
+      deps: [HttpClient, Config]
     }
   ],
   exports: [

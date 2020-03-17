@@ -20,9 +20,8 @@ import {
   switchMap,
 } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
+import { Config } from '../config/config';
 import { IV4Voucher, V4VouchersService } from '../vouchers/v4-vouchers.service';
-import { ConfigService } from '../config/config.service';
-import { IConfig } from '../config/models/config.model';
 
 const enum GameType {
   shakeTheTree = 'shake_the_tree',
@@ -140,12 +139,9 @@ export class V4GameService implements IGameService {
   private hostName: string;
   constructor(
     private httpClient: HttpClient,
-    private configService: ConfigService
+    config: Config,
   ) {
-    this.configService.readAppConfig().subscribe(
-      (config: IConfig<void>) => {
-        this.hostName = config.apiHost as string;
-      });
+    this.hostName = config.apiHost as string;
   }
 
   private static v4GameToGame(game: Game): IGame {

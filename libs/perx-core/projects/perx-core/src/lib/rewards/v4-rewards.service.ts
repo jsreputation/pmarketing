@@ -22,11 +22,10 @@ import {
   IPrice,
   ICategoryTags,
 } from './models/reward.model';
+import { Config } from '../config/config';
 
 import {RewardStateHelper} from './reward-state-helper';
 import {ITabConfigExtended} from './rewards-list-tabbed/rewards-list-tabbed.component';
-import { ConfigService } from '../config/config.service';
-import { IConfig } from '../config/models/config.model';
 
 export interface IV4Tag {
   id: number;
@@ -129,18 +128,13 @@ interface IV4CatalogResults {
 })
 export class V4RewardsService extends RewardsService {
   private apiHost: string;
-  private baseHref: string;
 
   constructor(
     private http: HttpClient,
-    private configService: ConfigService
+    private config: Config
   ) {
     super();
-    this.configService.readAppConfig().subscribe(
-      (config: IConfig<void>) => {
-        this.apiHost = config.apiHost as string;
-        this.baseHref = config.baseHref as string;
-      });
+    this.apiHost = this.config.apiHost as string;
   }
 
 
@@ -343,7 +337,7 @@ export class V4RewardsService extends RewardsService {
   }
 
   public getCategories(): Observable<ITabConfigExtended[]> {
-    return this.http.get<ITabConfigExtended[]>(`${this.baseHref}assets/categories-tabs.json`);
+    return this.http.get<ITabConfigExtended[]>(`${this.config.baseHref}assets/categories-tabs.json`);
   }
 
   public getRewardPricesOptions(id: number, locale: string = 'en'): Observable<IPrice[]> {

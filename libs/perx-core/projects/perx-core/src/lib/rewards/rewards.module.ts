@@ -14,7 +14,6 @@ import { HttpClient } from '@angular/common/http';
 import { Config } from '../config/config';
 import { WhistlerRewardsService } from './whistler-rewards.service';
 import { StampsCardsListComponent } from '../stamp/stamps-cards-list/stamps-cards-list.component';
-import { ConfigService } from '../config/config.service';
 
 const components = [
   RewardsCollectionComponent,
@@ -24,12 +23,12 @@ const components = [
   StampsCardsListComponent
 ];
 
-export function rewardsServiceFactory(http: HttpClient, config: Config, configService: ConfigService): RewardsService {
+export function rewardsServiceFactory(http: HttpClient, config: Config): RewardsService {
   if (config.isWhistler) {
     return new WhistlerRewardsService(http, config);
   }
   // Make decision on what to instantiate base on config
-  return new V4RewardsService(http, configService);
+  return new V4RewardsService(http, config);
 }
 
 @NgModule({
@@ -50,7 +49,7 @@ export function rewardsServiceFactory(http: HttpClient, config: Config, configSe
     {
       provide: RewardsService,
       useFactory: rewardsServiceFactory,
-      deps: [HttpClient, Config, ConfigService]
+      deps: [HttpClient, Config]
     }
   ]
 })

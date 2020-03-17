@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { oc } from 'ts-optchain';
-import { Observable, of, throwError, from, timer } from 'rxjs';
+import {Observable, of, throwError, from, timer} from 'rxjs';
 import {
   map,
   flatMap,
@@ -27,10 +27,9 @@ import { IVoucher } from '../vouchers/models/voucher.model';
 
 import { IVoucherService } from '../vouchers/ivoucher.service';
 import { StampService } from './stamp.service';
+import { Config } from '../config/config';
 import { ICampaignService } from '../campaign/icampaign.service';
 import { CampaignType, ICampaign } from '../campaign/models/campaign.model';
-import { ConfigService } from '../config/config.service';
-import { IConfig } from '../config/models/config.model';
 
 interface IV4GetStampCardResponse {
   data: IV4StampCard;
@@ -168,14 +167,11 @@ export class V4StampService implements StampService {
 
   constructor(
     private http: HttpClient,
-    private configService: ConfigService,
+    config: Config,
     private vouchersService: IVoucherService,
     private campaignService: ICampaignService
   ) {
-    this.configService.readAppConfig().subscribe(
-      (config: IConfig<void>) => {
-        this.baseUrl = config.apiHost as string;
-      });
+    this.baseUrl = config.apiHost as string;
   }
 
   private static v4StampToStamp(stamp: IV4Stamp): IStamp {
