@@ -99,7 +99,7 @@ export class OrderComponent implements OnInit {
                   partDataRequests.push(this.merchantAdminService.createTransaction(
                     this.payload.id, merchantUsername, product.price, product.currency,
                     'purchase', `${dateStamp}-${this.payload.id}`, merchantName,
-                    product.name + ' ' + product.description));
+                    `${product.name} ${product.description}`));
                 }
               }
               return forkJoin(partDataRequests);
