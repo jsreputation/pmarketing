@@ -26,7 +26,7 @@ describe('V4CampaignService', () => {
   const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of(environment)
   };
-  
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, ConfigModule.forRoot({ ...environment })],
