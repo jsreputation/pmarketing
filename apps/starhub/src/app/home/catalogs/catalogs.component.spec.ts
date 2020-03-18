@@ -11,7 +11,7 @@ import {
 import { of } from 'rxjs';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
-import { RewardsService } from '@perx/core';
+import { RewardsService } from '@perxtech/core';
 
 import { catalogs } from 'src/app/catalogs.mock';
 import { CatalogsComponent } from './catalogs.component';
@@ -25,7 +25,7 @@ describe('CatalogsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CatalogsComponent ],
+      declarations: [CatalogsComponent],
       imports: [
         MatIconModule,
         MatCardModule,

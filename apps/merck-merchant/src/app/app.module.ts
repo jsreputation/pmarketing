@@ -31,7 +31,7 @@ import {
   AuthenticationService,
   ThemesService,
   IConfig
-} from '@perx/core';
+} from '@perxtech/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';

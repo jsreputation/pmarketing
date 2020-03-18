@@ -6,13 +6,13 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthenticationService, ProfileService } from '@perx/core';
+import { AuthenticationService, ProfileService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { Type } from '@angular/core';
 import { Router } from '@angular/router';
-import { IChangePasswordData } from '@perx/core';
+import { IChangePasswordData } from '@perxtech/core';
 
 const password = 'password';
 

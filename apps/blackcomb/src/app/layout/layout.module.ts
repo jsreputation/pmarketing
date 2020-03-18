@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { LayoutRoutingModule } from './layout-routing.module';
-import { PerxBlackcombPagesModule } from '@perx/blackcomb-pages';
+import { PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { VouchersModule, RewardsModule } from '@perx/core';
+import { VouchersModule, RewardsModule } from '@perxtech/core';
 import { SharedModule } from '../shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -23,4 +23,4 @@ import { TranslateModule } from '@ngx-translate/core';
     PerxBlackcombPagesModule
   ]
 })
-export class LayoutModule { }
+export class LayoutModule {}

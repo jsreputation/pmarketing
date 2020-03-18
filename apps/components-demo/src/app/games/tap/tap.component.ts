@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IGameComponent } from '@perx/core';
+import { IGameComponent } from '@perxtech/core';
 
 @Component({
   selector: 'app-tap',
@@ -7,7 +7,7 @@ import { IGameComponent } from '@perx/core';
   styleUrls: ['./tap.component.scss']
 })
 export class TapComponent {
-  @ViewChild('tap', {static: false})
+  @ViewChild('tap', { static: false })
   private shake: IGameComponent;
 
   public reset(): void {

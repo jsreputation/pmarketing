@@ -9,7 +9,7 @@ import {
   Voucher,
   ConfigService,
   IConfig
-} from '@perx/core';
+} from '@perxtech/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';

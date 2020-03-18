@@ -11,7 +11,7 @@ import {
   ILoyalty,
   ThemesService,
   IReward
-} from '@perx/core';
+} from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable, of } from 'rxjs';
@@ -47,7 +47,7 @@ describe('RewardComponent', () => {
       baseHref: '',
     })
   };
-  const vouchersServiceStub: Partial<IVoucherService>  = {
+  const vouchersServiceStub: Partial<IVoucherService> = {
     issueReward: () => of()
   };
 

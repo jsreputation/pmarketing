@@ -1,4 +1,4 @@
-import { ILocation } from '@perx/core';
+import { ILocation } from '@perxtech/core';
 
 export const test1: ILocation[] = [
   {

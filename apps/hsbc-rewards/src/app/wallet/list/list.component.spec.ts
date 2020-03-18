@@ -1,10 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { VouchersModule, IVoucherService, RewardsService } from '@perx/core';
+import { VouchersModule, IVoucherService, RewardsService } from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { ListComponent } from './list.component';
 import { of } from 'rxjs';
-import { IReward } from '@perx/core';
+import { IReward } from '@perxtech/core';
 
 describe('ListComponent', () => {
   let component: ListComponent;

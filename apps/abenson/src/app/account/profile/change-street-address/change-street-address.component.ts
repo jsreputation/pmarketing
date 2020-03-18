@@ -13,7 +13,7 @@ import { Location } from '@angular/common';
 import {
   ICustomProperties,
   ProfileService,
-} from '@perx/core';
+} from '@perxtech/core';
 
 @Component({
   selector: 'app-change-street-address',
@@ -54,7 +54,7 @@ export class ChangeStreetAddressComponent implements OnInit {
       this.profileService.setCustomProperties(this.customProperties).subscribe(() => {
         this.location.back();
       },
-      (err) => {console.log(err); });
+      (err) => { console.log(err); });
     }
     return;
   }

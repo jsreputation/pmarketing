@@ -1,4 +1,4 @@
-import { ITheme } from '@perx/core';
+import { ITheme } from '@perxtech/core';
 
 const stampCard = {
   '--pre_stamp_image': 'assets/hsbc-prestamp.png',

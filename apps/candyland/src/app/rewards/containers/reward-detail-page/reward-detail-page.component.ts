@@ -10,11 +10,11 @@ import { PrepareTableFilters } from '@cl-helpers/prepare-table-filters';
 import { RewardReplenishPopupComponent } from 'src/app/rewards/containers/reward-replenish-popup/reward-replenish-popup.component';
 import { RewardsService, MerchantsService, MessageService } from '@cl-core/services';
 import { VouchersService } from '@cl-core/services/vouchers.service';
-import { IWVouchersApi } from '@perx/whistler';
+import { IWVouchersApi } from '@perxtech/whistler';
 import { oc } from 'ts-optchain';
 import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.interface';
 import { IMerchantForm } from '@cl-core/models/merchant/merchant-form-interface';
-import { OptionConfig } from '@perx/candyshop';
+import { OptionConfig } from '@perxtech/candyshop';
 
 interface IRewardDetailData {
   name?: string;

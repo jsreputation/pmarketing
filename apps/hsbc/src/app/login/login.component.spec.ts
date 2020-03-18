@@ -5,7 +5,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './login.component';
 import { MatCardModule, MatProgressSpinnerModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import {AuthenticationService, UtilsModule, TokenStorage, ConfigService, SettingsService} from '@perx/core';
+import { AuthenticationService, UtilsModule, TokenStorage, ConfigService, SettingsService } from '@perxtech/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 

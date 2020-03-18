@@ -19,7 +19,7 @@ import {
   ConfigService,
   TokenStorage,
   LanguageService
-} from '@perx/core';
+} from '@perxtech/core';
 import {
   MatToolbarModule,
   MatButtonModule,

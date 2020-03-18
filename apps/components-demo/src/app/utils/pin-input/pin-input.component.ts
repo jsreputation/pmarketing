@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NotificationService } from '@perx/core';
+import { NotificationService } from '@perxtech/core';
 
 @Component({
   selector: 'app-pin-input',

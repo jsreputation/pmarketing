@@ -11,7 +11,7 @@ import {
 import {
   UtilsModule,
   LoyaltyModule,
-} from '@perx/core';
+} from '@perxtech/core';
 
 @NgModule({
   declarations: [],

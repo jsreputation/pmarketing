@@ -10,7 +10,7 @@ import {
   IMerchantAdminService,
   IMessageResponse,
   NotificationService,
-} from '@perx/core';
+} from '@perxtech/core';
 
 @Component({
   selector: 'app-forgot-password',

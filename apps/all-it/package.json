@@ -1,5 +1,5 @@
 {
-  "name": "@perx/all-it",
+  "name": "@perxtech/all-it",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -28,7 +28,7 @@
     "@angular/service-worker": "~8.0.0",
     "@ngx-translate/core": "^11.0.1",
     "@ngx-translate/http-loader": "^4.0.0",
-    "@perx/core": "^0.0.0",
+    "@perxtech/core": "^0.0.0",
     "ngx-infinite-scroll": "^8.0.1",
     "rxjs": "~6.4.0",
     "tslib": "^1.9.0",

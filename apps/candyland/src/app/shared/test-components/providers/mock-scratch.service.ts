@@ -1,7 +1,7 @@
 import { Observable, of } from 'rxjs';
 import {
   IJsonApiItemPayload, IWScratchGameEngagementAttributes
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { IGameDefaultData } from '@cl-core/models/games/game-default-data.interface';
 import { IScratchForm } from '@cl-core/models/games/scratch/scratch-form.interface';
 import { ScratchService } from '@cl-core-services';

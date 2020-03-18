@@ -15,11 +15,11 @@ import {
   IVoucherService,
   ThemesService,
   ConfigService
-} from '@perx/core';
+} from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SoundModule } from '../sound/sound.module';
 import { of } from 'rxjs';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 
 describe('PuzzleComponent', () => {
@@ -79,7 +79,7 @@ describe('PuzzleComponent', () => {
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: StampService, useValue: stampServiceStub },
         { provide: AuthenticationService, useValue: authenticationServiceStub },
-        { provide: ConfigService, useValue: configServiceStub},
+        { provide: ConfigService, useValue: configServiceStub },
         {
           provide: ActivatedRoute,
           useValue: {

@@ -12,7 +12,7 @@ import {
   MatTableModule
 } from '@angular/material';
 import { InkModule } from '../../components/ink/ink.module';
-import { ButtonModule, StatusLabelModule } from '@perx/candyshop';
+import { ButtonModule, StatusLabelModule } from '@perxtech/candyshop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EngagementTypeComponent } from './engagement-type/engagement-type.component';
 import { EngagementsListPageComponent } from '../../../engagements/containers/engagements-list-page/engagements-list-page.component';

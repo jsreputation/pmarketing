@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { CampaignsHttpAdapter } from '@cl-core/http-adapters/campaigns-http-adapter';
-import { CampaignsHttpsService } from '@perx/whistler-services';
+import { CampaignsHttpsService } from '@perxtech/whistler-services';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { ClHttpParams } from '@cl-helpers/http-params';
-import { IWCampaignAttributes, IJsonApiListPayload, IJsonApiItemPayload, IJsonApiItem, IJsonApiPatchData } from '@perx/whistler';
+import { IWCampaignAttributes, IJsonApiListPayload, IJsonApiItemPayload, IJsonApiItem, IJsonApiPatchData } from '@perxtech/whistler';
 import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
 import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign';
 import { CampaignStatus } from '@cl-core/models/campaign/campaign.enum';

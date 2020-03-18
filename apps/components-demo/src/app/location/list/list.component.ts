@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { ILocation, sortByDistance, GeoLocationService } from '@perx/core';
+import { ILocation, sortByDistance, GeoLocationService } from '@perxtech/core';
 import { test1 } from '../mock';
 
 @Component({
@@ -14,7 +14,7 @@ export class ListComponent implements OnInit {
   private position: Observable<Position>;
   public sorting: boolean = true;
 
-  constructor(private geoLocationService: GeoLocationService) {}
+  constructor(private geoLocationService: GeoLocationService) { }
 
   public ngOnInit(): void {
     this.locations = of(test1);

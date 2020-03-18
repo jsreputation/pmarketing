@@ -1,7 +1,7 @@
 import { listAnimation } from '../games-collection/games-collection.animation';
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ICampaign } from '@perx/core';
+import { ICampaign } from '@perxtech/core';
 
 @Component({
   selector: 'perx-blackcomb-pages-campaigns-collection',

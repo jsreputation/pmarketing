@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { RewardsService, IReward, PopupComponent } from '@perx/core';
+import { RewardsService, IReward, PopupComponent } from '@perxtech/core';
 import { MatDialog } from '@angular/material';
 
 @Component({
@@ -31,8 +31,8 @@ export class RewardComponent implements OnInit {
   public rewardClickedHandler(reward: IReward): void {
     const data = {
       title: 'Clicked!',
-      text: `ID: ${  reward.id  }\n` +
-        `Reward Name: ${  reward.name}`,
+      text: `ID: ${reward.id}\n` +
+        `Reward Name: ${reward.name}`,
     };
     this.dialog.open(PopupComponent, { data });
   }

@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
-import { IReward, RewardsService } from '@perx/core';
+import { IReward, RewardsService } from '@perxtech/core';
 import { Observable } from 'rxjs';
 import { MacaronService, IMacaron } from '../../services/macaron.service';
 import { map } from 'rxjs/operators';

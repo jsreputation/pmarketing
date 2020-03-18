@@ -4,10 +4,10 @@ import {
   IJsonApiItemPayload, IJsonApiPatchData,
   IJsonApiPostData,
   IWIAMUserAttributes,
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { map } from 'rxjs/operators';
 import { IamUserHttpAdapter } from '@cl-core/http-adapters/iam-user-http-adapter';
-import { IamUserHttpService } from '@perx/whistler-services';
+import { IamUserHttpService } from '@perxtech/whistler-services';
 import Utils from '@cl-helpers/utils';
 import { ITableService } from '@cl-shared';
 import { ClHttpParams } from '@cl-helpers/http-params';

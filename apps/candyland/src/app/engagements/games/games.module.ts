@@ -13,14 +13,14 @@ import {
 import { environment } from '@cl-environments/environment';
 import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.module';
 import { DirectivesModule } from '@cl-shared/directives/directives.module';
-import { ButtonModule } from '@perx/candyshop';
+import { ButtonModule } from '@perxtech/candyshop';
 import { ImagesPreviewModule } from '@cl-shared/components/images-preview/images-preview.module';
 import { SelectGraphicModule } from '@cl-shared/components/select-graphic/select-graphic.module';
 import { SelectGraphicWrapModule } from '@cl-shared/components/select-graphic-wrap/select-graphic-wrap.module';
 import {
   GameModule,
   ConfigModule,
-} from '@perx/core';
+} from '@perxtech/core';
 
 import { GamesRoutingModule } from './games-routing.module';
 import { NewShakePageComponent } from './containers/new-shake-page/new-shake-page.component';
@@ -31,11 +31,11 @@ import { GameComponent } from './containers/game/game.component';
 
 import { SettingsMobilePreviewModule } from '../../settings/components/settings-mobile-preview/settings-mobile-preview.module';
 import { TranslateModule } from '@ngx-translate/core';
-import {ClColorPickerModule} from '@cl-shared/components/cl-color-picker/cl-color-picker.module';
+import { ClColorPickerModule } from '@cl-shared/components/cl-color-picker/cl-color-picker.module';
 import { CheckboxGroupModule } from '@cl-shared/components/checkbox-group/checkbox-group.module';
-import {UploadGraphicModule} from '@cl-shared/components/upload-graphic/upload-graphic.module';
-import {NewSnakePageComponent} from './containers/new-snake-page/new-snake-page.component';
-import {SelectGraphicWrapDialogModule} from '@cl-shared/components/select-graphic-wrap-dialog/select-graphic-wrap-dialog.module';
+import { UploadGraphicModule } from '@cl-shared/components/upload-graphic/upload-graphic.module';
+import { NewSnakePageComponent } from './containers/new-snake-page/new-snake-page.component';
+import { SelectGraphicWrapDialogModule } from '@cl-shared/components/select-graphic-wrap-dialog/select-graphic-wrap-dialog.module';
 
 @NgModule({
   declarations: [

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HkbnValidators } from '../../../helpers/hkbn-validators';
-import { IChangePasswordData } from '@perx/core';
+import { IChangePasswordData } from '@perxtech/core';
 
 @Component({
   selector: 'hkbn-change-password-form',

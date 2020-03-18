@@ -7,7 +7,7 @@ import {
   MatListModule
 } from '@angular/material';
 import { Location } from '@angular/common';
-import { ProfileService, LoyaltyService, IProfile } from '@perx/core';
+import { ProfileService, LoyaltyService, IProfile } from '@perxtech/core';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
 import { Type } from '@angular/core';
@@ -17,7 +17,7 @@ describe('ProfileComponent', () => {
   let component: ProfileComponent;
   let fixture: ComponentFixture<ProfileComponent>;
   const locationStub: Partial<Location> = {
-    back: () => {}
+    back: () => { }
   };
 
   const userInfo: IProfile = {
@@ -51,8 +51,8 @@ describe('ProfileComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProfileComponent ],
-      imports: [ MatIconModule, MatToolbarModule, MatListModule, TranslateModule.forRoot() ],
+      declarations: [ProfileComponent],
+      imports: [MatIconModule, MatToolbarModule, MatListModule, TranslateModule.forRoot()],
       providers: [
         { provide: Location, useValue: locationStub },
         { provide: ProfileService, useValue: profileServiceStub },
@@ -74,14 +74,14 @@ describe('ProfileComponent', () => {
   });
 
   describe('onSubScreenNavigate', () => {
-    it ('should navigate to reset password screen on edit password icon click', () => {
+    it('should navigate to reset password screen on edit password icon click', () => {
       const router: Router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
       const routerSpy = spyOn(router, 'navigate');
       component.onSubScreenNavigate('reset-password');
       expect(routerSpy).toHaveBeenCalledWith(['reset-password']);
     });
 
-    it ('should navigate to condition screen on edit condition icon click', () => {
+    it('should navigate to condition screen on edit condition icon click', () => {
       const router: Router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
       const routerSpy = spyOn(router, 'navigate');
       component.onSubScreenNavigate('account/condition');

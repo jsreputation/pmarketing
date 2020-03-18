@@ -1,4 +1,4 @@
-import {IReward, ICategoryTags} from '@perx/core';
+import { IReward, ICategoryTags } from '@perxtech/core';
 
 const travelCategory: ICategoryTags[] = [{
   id: 36,

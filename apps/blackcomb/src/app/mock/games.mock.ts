@@ -1,4 +1,4 @@
-import { IGame, GameType } from '@perx/core';
+import { IGame, GameType } from '@perxtech/core';
 
 export const games: IGame[] = [
   {

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { EditProfileFieldComponent } from '@perx/blackcomb-pages';
+import { EditProfileFieldComponent } from '@perxtech/blackcomb-pages';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedModule } from '../shared/shared.module';

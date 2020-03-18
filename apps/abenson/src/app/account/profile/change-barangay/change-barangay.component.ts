@@ -13,7 +13,7 @@ import { Location } from '@angular/common';
 import {
   ICustomProperties,
   ProfileService,
-} from '@perx/core';
+} from '@perxtech/core';
 
 @Component({
   selector: 'app-change-barangay',
@@ -53,7 +53,7 @@ export class ChangeBarangayComponent implements OnInit {
       this.profileService.setCustomProperties(this.customProperties).subscribe(() => {
         this.location.back();
       },
-      (err) => {console.error(err); });
+      (err) => { console.error(err); });
     }
     return;
   }

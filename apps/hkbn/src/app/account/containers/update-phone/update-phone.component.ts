@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { map } from 'rxjs/operators';
-import { AuthenticationService, GeneralStaticDataService, ICountryCode } from '@perx/core';
+import { AuthenticationService, GeneralStaticDataService, ICountryCode } from '@perxtech/core';
 import { HkbnValidators } from '../../../helpers/hkbn-validators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataTransferService } from 'src/app/services/data-transfer.service';

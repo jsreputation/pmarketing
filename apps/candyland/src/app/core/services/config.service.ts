@@ -3,7 +3,7 @@ import { combineLatest, Observable } from 'rxjs';
 import { ConfigHttpService } from '@cl-core/http-services/config-http.service';
 import { TranslateService } from '@ngx-translate/core';
 import { map } from 'rxjs/operators';
-import { IStatusLabelConfig } from '@perx/candyshop';
+import { IStatusLabelConfig } from '@perxtech/candyshop';
 
 @Injectable({
   providedIn: 'root'

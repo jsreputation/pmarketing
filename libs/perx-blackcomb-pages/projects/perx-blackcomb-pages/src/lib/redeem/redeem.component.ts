@@ -1,6 +1,6 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute, ParamMap, Router} from '@angular/router';
-import {Location} from '@angular/common';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { Location } from '@angular/common';
 import {
   IPopupConfig,
   IVoucherService,
@@ -10,10 +10,10 @@ import {
   RedemptionType,
   Voucher,
   VoucherState
-} from '@perx/core';
-import {of, Subject, Subscription} from 'rxjs';
-import {filter, map, switchMap, takeUntil, tap} from 'rxjs/operators';
-import {TranslateService} from '@ngx-translate/core';
+} from '@perxtech/core';
+import { of, Subject, Subscription } from 'rxjs';
+import { filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'perx-blackcomb-redeem',
@@ -195,7 +195,7 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
   }
 
   public full(pin: string): void {
-    this.vouchersService.redeemVoucher(this.voucher.id, {pin})
+    this.vouchersService.redeemVoucher(this.voucher.id, { pin })
       .subscribe(
         () => {
           this.notificationService.addPopup({

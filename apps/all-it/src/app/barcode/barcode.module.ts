@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProfileBarcodeComponent } from '@perx/blackcomb-pages';
+import { ProfileBarcodeComponent } from '@perxtech/blackcomb-pages';
 import { RouterModule, Routes } from '@angular/router';
-import { UtilsModule } from '@perx/core';
+import { UtilsModule } from '@perxtech/core';
 import { MatButtonModule } from '@angular/material/button';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgxBarcodeModule } from 'ngx-barcode';
@@ -25,4 +25,4 @@ const routes: Routes = [{
     NgxBarcodeModule
   ]
 })
-export class BarcodeModule {}
+export class BarcodeModule { }

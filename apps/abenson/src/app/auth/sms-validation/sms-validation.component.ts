@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, Observable, of } from 'rxjs';
 import { takeUntil, map, filter, catchError, mergeMap } from 'rxjs/operators';
-import { AuthenticationService, LoyaltyService, isEmptyArray, ILoyalty, ProfileService, NotificationService } from '@perx/core';
+import { AuthenticationService, LoyaltyService, isEmptyArray, ILoyalty, ProfileService, NotificationService } from '@perxtech/core';
 import { SharedDataService } from 'src/app/services/shared-data.service';
 
 @Component({
@@ -40,7 +40,7 @@ export class SmsValidationComponent implements OnInit {
       this.authenticationService.getAppToken().subscribe(() => {
         this.appAccessTokenFetched = true;
       }, (err) => {
-        console.error(`Error${  err}`);
+        console.error(`Error${err}`);
       });
     }
 

@@ -11,7 +11,7 @@ import {
   CampaignType,
   IGame,
   RewardPopupComponent, ConfigService
-} from '@perx/core';
+} from '@perxtech/core';
 import { NoRenewaleInNamePipe } from '../no-renewale-in-name.pipe';
 import { MatToolbar, MatDialog } from '@angular/material';
 import { catchError, switchMap } from 'rxjs/operators';

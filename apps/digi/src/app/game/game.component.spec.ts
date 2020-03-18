@@ -6,7 +6,7 @@ import {
 
 import { GameComponent } from './game.component';
 import { HeaderComponent } from '../header/header.component';
-import { CampaignModule, GameModule, IGameService, ICampaignService } from '@perx/core';
+import { CampaignModule, GameModule, IGameService, ICampaignService } from '@perxtech/core';
 import { MatToolbarModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';

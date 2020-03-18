@@ -18,7 +18,7 @@ import {
   IJsonApiItemPayload,
   IWBasicTierAttributes,
   IWCustomTierAttributes
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 
 import {
   ILoyalty,

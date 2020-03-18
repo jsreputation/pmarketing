@@ -1,8 +1,8 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {ICatalog, IReward, RewardsService, SortingMode} from '@perx/core';
-import {map, scan} from 'rxjs/operators';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { ICatalog, IReward, RewardsService, SortingMode } from '@perxtech/core';
+import { map, scan } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
 
 interface ISortMenuOption {
   action: 'Latest' | 'Ending' | 'AZ' | 'ZA';
@@ -24,10 +24,10 @@ export class CatalogComponent implements OnInit {
   public rewardsPageId: number = 1;
 
   public sortOptions: ISortMenuOption[] = [
-    {action: 'Latest', label: 'Most Recent' },
-    {action: 'Ending', label: 'Ending Soon' },
-    {action: 'AZ', label: 'Alphabet A - Z' },
-    {action: 'ZA', label: 'Alphabet Z - A' }
+    { action: 'Latest', label: 'Most Recent' },
+    { action: 'Ending', label: 'Ending Soon' },
+    { action: 'AZ', label: 'Alphabet A - Z' },
+    { action: 'ZA', label: 'Alphabet Z - A' }
   ];
 
   public selectedCategory: string;
@@ -90,7 +90,7 @@ export class CatalogComponent implements OnInit {
     this.router.navigate([`/reward-detail/${reward.id}`]);
   }
 
-  public getCurrentSelectedOrder(): string  {
+  public getCurrentSelectedOrder(): string {
     return this.selectedSortingCriteria;
   }
 
@@ -102,7 +102,7 @@ export class CatalogComponent implements OnInit {
     this.fetchRewards();
   }
 
-  public sortChoice({action}: ISortMenuOption): void {
+  public sortChoice({ action }: ISortMenuOption): void {
     this.selectedSortingCriteria = action as SortingMode;
   }
 

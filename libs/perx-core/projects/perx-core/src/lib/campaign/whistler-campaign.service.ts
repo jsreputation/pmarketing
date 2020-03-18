@@ -17,7 +17,7 @@ import {
   IJsonApiItemPayload,
   WCampaignStatus,
   WEngagementType,
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 
 import {
   ICampaign,

@@ -13,7 +13,7 @@ import {
 } from '@angular/material';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { StatusLabelModule } from '@perx/candyshop';
+import { StatusLabelModule } from '@perxtech/candyshop';
 
 @NgModule({
   declarations: [

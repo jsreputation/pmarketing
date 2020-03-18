@@ -13,7 +13,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import {
   LoyaltyModule,
   LoyaltyService,
-} from '@perx/core';
+} from '@perxtech/core';
 
 import { HistoryComponent } from './history.component';
 

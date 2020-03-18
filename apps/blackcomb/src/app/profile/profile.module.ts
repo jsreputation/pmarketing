@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProfileComponent, PerxBlackcombPagesModule } from '@perx/blackcomb-pages';
+import { ProfileComponent, PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
 import { RouterModule, Routes } from '@angular/router';
 import { MatListModule, MatIconModule } from '@angular/material';
 

@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PerxChartModule } from '@perx/chart';
+import { PerxChartModule } from '@perxtech/chart';
 import { TableComponent } from './table.component';
 
 describe('TableComponent', () => {
@@ -9,8 +9,8 @@ describe('TableComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TableComponent ],
-      imports: [ PerxChartModule ]
+      declarations: [TableComponent],
+      imports: [PerxChartModule]
     })
       .compileComponents();
   }));

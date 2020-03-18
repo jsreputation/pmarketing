@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, Location } from '@angular/common';
-import { AuthenticationService, IConfig, ConfigService } from '@perx/core';
+import { AuthenticationService, IConfig, ConfigService } from '@perxtech/core';
 import { Router } from '@angular/router';
 import { VoucherComponent } from './vouchers/voucher/voucher.component';
 import { TncComponent } from './tnc/tnc.component';
@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
     private router: Router,
     private authService: AuthenticationService,
     private configService: ConfigService,
-    @Inject(PLATFORM_ID) private platformId: object) {}
+    @Inject(PLATFORM_ID) private platformId: object) { }
 
   public ngOnInit(): void {
     this.configService.readAppConfig().subscribe(

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FeedItem, FeedReaderService } from '@perx/core';
+import { FeedItem, FeedReaderService } from '@perxtech/core';
 import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
 import { PopupComponent } from '../popup/popup.component';

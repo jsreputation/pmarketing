@@ -6,7 +6,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { ButtonModule, ProgressBarModule } from '@perx/candyshop';
+import { ButtonModule, ProgressBarModule } from '@perxtech/candyshop';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CustomDataSource } from '@cl-shared/table';
 import { of } from 'rxjs';

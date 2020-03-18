@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { SignUpComponent } from '@perx/blackcomb-pages';
+import { SignUpComponent } from '@perxtech/blackcomb-pages';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: SignUpComponent },

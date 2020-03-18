@@ -9,7 +9,7 @@ import {
 import {
   IGame,
   IScratch,
-} from '@perx/core';
+} from '@perxtech/core';
 
 @Component({
   selector: 'perx-blackcomb-pages-scratch',

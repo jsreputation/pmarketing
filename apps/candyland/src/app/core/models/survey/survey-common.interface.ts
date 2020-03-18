@@ -1,4 +1,4 @@
-import { IWQuestion } from '@perx/whistler';
+import { IWQuestion } from '@perxtech/whistler';
 
 export interface ISurveyForm {
   id: string;

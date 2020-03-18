@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IProfile, ILoyalty, LoyaltyService, ProfileService } from '@perx/core';
+import { IProfile, ILoyalty, LoyaltyService, ProfileService } from '@perxtech/core';
 import { of, Observable, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { mockLoyalty, mockProfile } from './../loyalty-mock';

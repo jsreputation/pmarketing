@@ -5,7 +5,7 @@ import { switchMap, tap, takeUntil, filter } from 'rxjs/operators';
 
 import { DashboardService } from '@cl-core/services';
 import { DashboardChartsParametersService } from '../../services/dashboard-charts-parameters.service';
-import { CardType } from '@perx/chart';
+import { CardType } from '@perxtech/chart';
 import { ITotal } from '@cl-core/models/dashboard/total-active-interface';
 import { FormControl } from '@angular/forms';
 

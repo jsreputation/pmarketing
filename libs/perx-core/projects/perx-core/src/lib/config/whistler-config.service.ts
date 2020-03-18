@@ -4,13 +4,13 @@ import { HttpClient } from '@angular/common/http';
 import {
   Observable,
 } from 'rxjs';
-import {map, share} from 'rxjs/operators';
+import { map, share } from 'rxjs/operators';
 
 import {
   IJsonApiListPayload,
   IWTenant,
   IWSetting,
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 
 import {
   IConfig,

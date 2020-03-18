@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SignInComponent, PerxBlackcombPagesModule } from '@perx/blackcomb-pages';
+import { SignInComponent, PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
 import { RouterModule, Routes } from '@angular/router';
 import {
   MatFormFieldModule,
@@ -27,4 +27,4 @@ const routes: Routes = [{
     MatButtonModule
   ]
 })
-export class PiModule {}
+export class PiModule { }

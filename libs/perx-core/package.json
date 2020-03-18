@@ -1,5 +1,5 @@
 {
-  "name": "@perx/core",
+  "name": "@perxtech/core",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -23,7 +23,7 @@
     "@angular/platform-browser": "~8.0.0",
     "@angular/platform-browser-dynamic": "~8.0.0",
     "@angular/router": "~8.0.0",
-    "@perx/whistler": "^0.0.0",
+    "@perxtech/whistler": "^0.0.0",
     "angularx-qrcode": "^1.6.1",
     "hammerjs": "^2.0.8",
     "ngx-ellipsis": "^2.0.9",
@@ -64,15 +64,15 @@
     "tslint-no-focused-test": "^0.5.0",
     "typescript": "~3.4.3"
   },
-  "main": "./dist/perx-core/bundles/perx-core.umd.js",
-  "module": "./dist/perx-core/fesm5/perx-core.js",
-  "es2015": "./dist/perx-core/fesm2015/perx-core.js",
-  "esm5": "./dist/perx-core/esm5/perx-core.js",
-  "esm2015": "./dist/perx-core/esm2015/perx-core.js",
-  "fesm5": "./dist/perx-core/fesm5/perx-core.js",
-  "fesm2015": "./dist/perx-core/fesm2015/perx-core.js",
-  "typings": "./dist/perx-core/perx-core.d.ts",
-  "metadata": "./dist/perx-core/perx-core.metadata.json",
+  "main": "./dist/perx-core/bundles/perxtech-core.umd.js",
+  "module": "./dist/perx-core/fesm5/perxtech-core.js",
+  "es2015": "./dist/perx-core/fesm2015/perxtech-core.js",
+  "esm5": "./dist/perx-core/esm5/perxtech-core.js",
+  "esm2015": "./dist/perx-core/esm2015/perxtech-core.js",
+  "fesm5": "./dist/perx-core/fesm5/perxtech-core.js",
+  "fesm2015": "./dist/perx-core/fesm2015/perxtech-core.js",
+  "typings": "./dist/perx-core/perxtech-core.d.ts",
+  "metadata": "./dist/perx-core/perxtech-core.metadata.json",
   "eslintConfig": {
     "extends": [
       "../../.eslintrc"

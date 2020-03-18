@@ -1,7 +1,7 @@
 import { Observable, of } from 'rxjs';
 import {
   IJsonApiItemPayload, IWPinataGameEngagementAttributes
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { IPinataForm } from '@cl-core/models/games/pinata/pinate-form.interface';
 import { IGameDefaultData } from '@cl-core/models/games/game-default-data.interface';
 

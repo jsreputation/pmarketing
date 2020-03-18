@@ -5,7 +5,7 @@ import { Observable, of, Subject } from 'rxjs';
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
 
 import { settingsFonts, SettingsService, settingsStyles } from '@cl-core/services';
-import { IReward } from '@perx/core';
+import { IReward } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { TenantService } from '@cl-core/services/tenant.service';
 import { ISimpleValue } from '@cl-core/models/simpl-value.interface';

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IPTriggers, IPPostTrigger, IPPostTriggerResponse } from '@perx/model';
+import { IPTriggers, IPPostTrigger, IPPostTriggerResponse } from '@perxtech/model';
 import { HttpClient } from '@angular/common/http';
 import { ApiConfigService } from '../configs/api-config';
 import { map } from 'rxjs/operators';

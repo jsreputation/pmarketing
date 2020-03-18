@@ -14,7 +14,7 @@ import {
   ITheme,
   ConfigService,
   IConfig
-} from '@perx/core';
+} from '@perxtech/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subject, iif, of, throwError } from 'rxjs';
 import { catchError, tap, switchMap, retryWhen, delay, mergeMap } from 'rxjs/operators';

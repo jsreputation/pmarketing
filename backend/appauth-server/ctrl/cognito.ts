@@ -2,7 +2,7 @@ import axios from 'axios';
 import { ICredentials } from '../types/apiConfig';
 import { Request, Response } from 'express';
 import { NextFunction } from 'express';
-import { IWProfileAttributes } from '@perx/whistler';
+import { IWProfileAttributes } from '@perxtech/whistler';
 import { getQueryHost } from '../utils/utils';
 
 export const login = (getCredentials: ((url: string) => Promise<ICredentials>)) => async (

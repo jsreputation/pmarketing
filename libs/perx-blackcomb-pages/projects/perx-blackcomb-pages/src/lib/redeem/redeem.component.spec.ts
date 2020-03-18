@@ -11,7 +11,7 @@ import {
   Voucher,
   VouchersModule,
   VoucherState
-} from '@perx/core';
+} from '@perxtech/core';
 import { of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
@@ -66,7 +66,7 @@ describe('RedeemComponent', () => {
     getFromCampaign: () => of()
   };
   const notificationServiceStub: Partial<NotificationService> = {
-    addPopup: () => {}
+    addPopup: () => { }
   };
 
   beforeEach(async(() => {
@@ -74,7 +74,7 @@ describe('RedeemComponent', () => {
       declarations: [RedeemComponent],
       imports: [
         RouterTestingModule.withRoutes([
-          { path: 'login',  component: RedeemComponent },
+          { path: 'login', component: RedeemComponent },
           { path: 'wallet', redirectTo: '/' },
         ]),
         VouchersModule,

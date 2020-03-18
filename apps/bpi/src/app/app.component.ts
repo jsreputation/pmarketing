@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { PopupComponent, NotificationService, AuthenticationService, ConfigService, IConfig } from '@perx/core';
+import { PopupComponent, NotificationService, AuthenticationService, ConfigService, IConfig } from '@perxtech/core';
 import { Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
     private dialog: MatDialog,
     private configService: ConfigService,
     @Inject(PLATFORM_ID) private platformId: object
-  ) {}
+  ) { }
 
   public ngOnInit(): void {
 

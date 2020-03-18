@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IReward, RewardsService, LoyaltyService, ILoyalty, IProfile } from '@perx/core';
-import { ITabConfig, IPrice } from '@perx/core';
+import { IReward, RewardsService, LoyaltyService, ILoyalty, IProfile } from '@perxtech/core';
+import { ITabConfig, IPrice } from '@perxtech/core';
 import { Observable, of, Subject, throwError } from 'rxjs';
 import { flatMap, map, filter } from 'rxjs/operators';
 import { MatTabChangeEvent } from '@angular/material/tabs';

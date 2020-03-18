@@ -1,7 +1,7 @@
 import { Observable, of } from 'rxjs';
 import {
   IJsonApiItem, IJsonApiItemPayload, IJsonApiListPayload, IWAudiences, IWProfileAttributes
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { IAudiencesUserForm } from '@cl-core/models/audiences/user.interface';
 import { ITableData } from '@cl-core/models/data-list.interface';
 import { AudiencesUserService } from '@cl-core-services';

@@ -3,7 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { ResetPasswordComponent } from './reset-password.component';
-import { AuthenticationService, IProfile, NotificationService, ProfileService } from '@perx/core';
+import { AuthenticationService, IProfile, NotificationService, ProfileService } from '@perxtech/core';
 import {
   MatFormFieldModule,
   MatInputModule

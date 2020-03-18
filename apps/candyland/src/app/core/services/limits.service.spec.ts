@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { LimitsService } from './limits.service';
-import { LimitsHttpsService } from '@perx/whistler-services';
+import { LimitsHttpsService } from '@perxtech/whistler-services';
 import { of } from 'rxjs';
 
 describe('LimitsService', () => {

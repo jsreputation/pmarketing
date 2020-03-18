@@ -14,7 +14,7 @@ import { scan } from 'rxjs/operators';
 import {
   ICatalog,
   RewardsService,
-} from '@perx/core';
+} from '@perxtech/core';
 
 const REQ_PAGE_SIZE: number = 10;
 

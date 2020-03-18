@@ -29,7 +29,7 @@ import {
   IJsonApiListPayload,
   IJsonApiItem,
   IWOutcomeAttributes
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { ICampaign, ICampaignOutcome } from '@cl-core/models/campaign/campaign';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { IComm } from '@cl-core/models/comm/schedule';

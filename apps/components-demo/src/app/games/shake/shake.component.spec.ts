@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ShakeComponent } from './shake.component';
 import { MatSliderModule, MatFormFieldModule, MatInputModule } from '@angular/material';
-import { GameModule } from '@perx/core';
+import { GameModule } from '@perxtech/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('ShakeComponent', () => {

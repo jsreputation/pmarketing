@@ -3,7 +3,7 @@ import { SnakeHttpService } from '@cl-core/http-services/snake-http.service';
 import { Observable } from 'rxjs';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 import { map } from 'rxjs/operators';
-import { IWSnakeGameEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
+import { IWSnakeGameEngagementAttributes, IJsonApiItemPayload } from '@perxtech/whistler';
 import { ISnakeForm } from '@cl-core/models/games/snake/snake-form';
 import { IGameDefaultData } from '@cl-core/models/games/game-default-data.interface';
 

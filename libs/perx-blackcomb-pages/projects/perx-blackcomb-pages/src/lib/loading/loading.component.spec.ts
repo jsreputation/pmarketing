@@ -10,7 +10,7 @@ import {
   Config,
   NotificationService,
   ConfigService
-} from '@perx/core';
+} from '@perxtech/core';
 import { of } from 'rxjs';
 import { Router, ActivatedRoute, convertToParamMap } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';

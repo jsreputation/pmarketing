@@ -21,7 +21,7 @@ import { ErrorHandlerModule } from '../ui/error-handler/error-handler.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatSlideToggleModule } from '@angular/material';
 import { VerificationOtpComponent } from './containers/verification-otp/verification-otp.component';
-import { UtilsModule } from '@perx/core';
+import { UtilsModule } from '@perxtech/core';
 
 @NgModule({
   declarations: [

@@ -10,7 +10,7 @@ import {
   IJsonApiPostData,
   IJsonApiListPayload,
   relationshipsDataToArray,
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 
 import { SOURCE_TYPE } from '../../app.constants';
 import { IAudience, IPools } from '@cl-core/models/audiences/audiences';

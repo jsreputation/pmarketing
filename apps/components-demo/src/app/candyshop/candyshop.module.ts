@@ -32,7 +32,7 @@ import {
   TimePickerModule,
   UserModule,
   StatisticsProgressBarModule, ColorPickerModule
-} from '@perx/candyshop';
+} from '@perxtech/candyshop';
 import { MatIconModule } from '@angular/material/icon';
 import { UPLOAD_FILE_URL } from '../../../../../libs/perx-candyshop/projects/perx-candyshop/src/lib/upload-file/upload-file.module';
 import { CandyshopFileUploaderComponent } from './candyshop-file-uploader/candyshop-file-uploader.component';

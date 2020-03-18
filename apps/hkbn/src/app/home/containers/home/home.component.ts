@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IReward, ILoyalty, LoyaltyService, RewardsService, IProfile, ITabConfigExtended } from '@perx/core';
+import { IReward, ILoyalty, LoyaltyService, RewardsService, IProfile, ITabConfigExtended } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, of, forkJoin, BehaviorSubject } from 'rxjs';
 import { map, flatMap, finalize } from 'rxjs/operators';

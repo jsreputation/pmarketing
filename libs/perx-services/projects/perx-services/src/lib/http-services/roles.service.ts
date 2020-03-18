@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ApiConfigService } from '../configs/api-config';
 import { Observable } from 'rxjs';
-import { IPRoles, IPPostRole, IPPostRoleResponse } from '@perx/model';
+import { IPRoles, IPPostRole, IPPostRoleResponse } from '@perxtech/model';
 import { map } from 'rxjs/operators';
 
 export interface IRolesQuery {
