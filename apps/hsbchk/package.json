@@ -1,5 +1,5 @@
 {
-    "name": "@perx/hsbc-hk-life",
+    "name": "@perxtech/hsbchk",
     "version": "0.0.0",
     "scripts": {
         "ng": "ng",
