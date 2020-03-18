@@ -16,7 +16,7 @@ require('dotenv').config();
 const rssFeeds = `{
   "data": [
     {
-      "url": "${process.env.RSS_FEEDS ? process.env.RSS_FEEDS : 'https://cdn.perxtech.io/content/starhub/rss.xml'}",
+      "url": "${process.env.RSS_FEEDS ? process.env.RSS_FEEDS : ''}",
       "page": "home"
     }
   ]
@@ -28,12 +28,12 @@ const displayProperties = `"displayProperties": {
           {
               "key": "contact-us",
               "title": "Contact Us",
-              "content_url": ""
+              "content_url": "${process.env.CONTACTUSURL ? process.env.CONTACTUSURL : ''}"
           },
           {
               "key": "tnc",
               "title": "Terms and Conditions",
-              "content_url": ""
+              "content_url": "${process.env.TNCURL ? process.env.TNCURL : ''}"
           }
       ]
   }

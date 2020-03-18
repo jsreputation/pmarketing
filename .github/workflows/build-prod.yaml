@@ -91,14 +91,24 @@ jobs:
       - name: Check task result
         run: |
           start=$SECONDS
-          RUNNING_TASKS=(${TEKTON_TASKS[@]})
-          until [[ -z "${RUNNING_TASKS// }" ]] || [[ $(( SECONDS - start )) -gt 1200 ]]; do
-            echo "Tasks: \"${RUNNING_TASKS// }\""
+          declare -a RUNNING_TASKS
+          for TASK in ${TEKTON_TASKS[@]}; do
+            RUNNING_TASKS+=(${TASK})
+            echo "Added task ${TASK} to the list"
+          done
+           until [[ ${#RUNNING_TASKS[@]} -eq 0 ]] || [[ $(( SECONDS - start )) -gt 1200 ]]; do
+            echo "Remaining tasks: ${#RUNNING_TASKS[@]}"
             for TASKRUN_NAME in ${RUNNING_TASKS[@]}; do
               REASON=$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')
               STATUS=$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].status}')
               if [[ "${REASON}" = "Succeeded" ]] && [[ "${STATUS}" = "True" ]]; then
-                RUNNING_TASKS=("${RUNNING_TASKS[@]/$TASKRUN_NAME}")
+                for i in "${!RUNNING_TASKS[@]}"; do
+                  if [[ ${RUNNING_TASKS[i]} = $TASKRUN_NAME ]]; then
+                    unset 'RUNNING_TASKS[i]'
+                  fi
+                done
+                echo "TaskRun $TASKRUN_NAME got succeeded and deleted from TaskRuns array"
+                continue
               fi
               if [[ "${REASON}" = "Failed" ]] && [[ "${STATUS}" = "False" ]]; then
                 echo "Taskrun ${TASKRUN_NAME} is failed, fail the job"
@@ -118,7 +128,7 @@ jobs:
             if [ "${TASKRUN_STATUS}" = "Failed" ]; then
               echo ">>>> Taskrun ${TASKRUN_NAME} status is ${TASKRUN_STATUS} <<<<"
               echo "Follow dashboard link to get the details: http://tekton-dashboard.perxtech.io/#/namespaces/build/taskruns/${TASKRUN_NAME}"
-              tkn -n build taskrun logs ${TASKRUN_NAME} -f >> build_error.log
+              tkn -n build taskrun logs ${TASKRUN_NAME} -f | sed -r "s/\x1B\[([0-9]{1,3}(;[0-9]{1,2})?)?[mGK]//g" >> build_error.log
             fi
           done
       - name: Upload build log
