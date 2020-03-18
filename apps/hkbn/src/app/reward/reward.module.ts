@@ -4,7 +4,7 @@ import { RewardComponent } from './containers/reward/reward.component';
 import { MatButtonModule, MatDialogModule } from '@angular/material';
 import { RewardRoutingModule } from './reward-routing.module';
 import { RewardConfirmComponent } from './components/reward-confirm/reward-confirm.component';
-import { RewardsModule, VouchersModule, UtilsModule } from '@perx/core';
+import { RewardsModule, VouchersModule, UtilsModule } from '@perxtech/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({

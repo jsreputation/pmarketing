@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthenticationService, NotificationService, ISignUpData, IProfile } from '@perx/core';
+import { AuthenticationService, NotificationService, ISignUpData, IProfile } from '@perxtech/core';
 
 @Component({
   selector: 'app-signup',
@@ -32,7 +32,7 @@ export class SignupComponent {
       this.authService.getAppToken().subscribe(() => {
         this.appAccessTokenFetched = true;
       }, (err) => {
-        console.error(`Error${  err}`);
+        console.error(`Error${err}`);
       });
     }
   }

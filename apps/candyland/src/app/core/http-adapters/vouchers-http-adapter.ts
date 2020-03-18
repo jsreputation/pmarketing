@@ -2,7 +2,7 @@ import {
   IWVoucherStatsApi,
   IWVouchersApi,
   IJsonApiPostData,
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 
 import { SOURCE_TYPE } from '../../app.constants';
 

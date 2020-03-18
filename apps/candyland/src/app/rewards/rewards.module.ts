@@ -57,7 +57,7 @@ import {
   ProgressBarModule,
   StatisticsProgressBarModule,
   StatusLabelModule
-} from '@perx/candyshop';
+} from '@perxtech/candyshop';
 import { TagListModule } from '@cl-shared/components/tag-list/tag-list.module';
 import { RewardLoyaltyFormGroupComponent } from './components/reward-loyalty-form-group/reward-loyalty-form-group.component';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -66,7 +66,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { VouchersUploadService } from '@cl-core/services/vouchers-upload.service';
 import { IAdvancedUploadFileService } from '@cl-core/services/iadvanced-upload-file.service';
 import { MessageService } from '@cl-core-services';
-import { DownloadButtonModule } from '@perx/candyshop';
+import { DownloadButtonModule } from '@perxtech/candyshop';
 
 @NgModule({
   providers: [

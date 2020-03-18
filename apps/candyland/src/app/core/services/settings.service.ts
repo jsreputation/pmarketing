@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { SettingsHttpAdapter } from '@cl-core/http-adapters/settings-http-adapter';
-import { SettingsHttpService } from '@perx/whistler-services';
+import { SettingsHttpService } from '@perxtech/whistler-services';
 import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { ClHttpParams } from '@cl-helpers/http-params';
 import { Role } from '@cl-helpers/role.enum';
-import { IReward } from '@perx/core';
+import { IReward } from '@perxtech/core';
 import { RoleLabelConfig } from '@cl-shared';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ISimpleValue } from '@cl-core/models/simpl-value.interface';

@@ -1,4 +1,4 @@
-import { IWCampaignDisplayProperties } from '@perx/whistler';
+import { IWCampaignDisplayProperties } from '@perxtech/whistler';
 
 export interface IOutcome {
   title: string;

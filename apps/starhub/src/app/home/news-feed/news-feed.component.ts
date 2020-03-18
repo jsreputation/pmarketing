@@ -11,7 +11,7 @@ import {
   FeedReaderService,
   IRssFeeds,
   IRssFeedsData,
-} from '@perx/core';
+} from '@perxtech/core';
 
 import {
   AnalyticsService,
@@ -33,12 +33,12 @@ export class NewsFeedComponent implements OnInit {
   private async initNewsFeedItems(): Promise<void> {
     const rssFeeds: IRssFeeds = await this.settingsService.readRssFeeds().toPromise();
     if (!(rssFeeds && rssFeeds.data.length > 0)) {
-      return ;
+      return;
     }
 
     const rssFeedsHome: IRssFeedsData | undefined = rssFeeds.data.find(feed => feed.page === 'home');
     if (!rssFeedsHome) {
-      return ;
+      return;
     }
 
     const rssFeedsUrl: string = rssFeedsHome.url;
@@ -62,7 +62,7 @@ export class NewsFeedComponent implements OnInit {
   }
 
   public updateScrollIndex(index: number): void {
-    this.newsBeforeScroll = Array(index >= 0 ? index : 0 );
+    this.newsBeforeScroll = Array(index >= 0 ? index : 0);
     if (this.items && this.items.length > 0 && index >= 0) {
       this.newsAfterScroll = Array(this.items.length - index - 1);
     } else {
@@ -82,7 +82,7 @@ export class NewsFeedComponent implements OnInit {
     });
     this.dialog.open(FeedItemPopupComponent, {
       panelClass: 'app-full-bleed-dialog',
-      data: {...item, ...(this.showButton ? {} : {hideButton: true})},
+      data: { ...item, ...(this.showButton ? {} : { hideButton: true }) },
       height: '85vh',
       minWidth: '35.5rem',
       maxWidth: '94vw'

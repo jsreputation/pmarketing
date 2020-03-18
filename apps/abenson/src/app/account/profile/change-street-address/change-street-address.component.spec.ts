@@ -18,7 +18,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { of, throwError } from 'rxjs';
 
-import { ProfileService } from '@perx/core';
+import { ProfileService } from '@perxtech/core';
 
 import { ChangeStreetAddressComponent } from './change-street-address.component';
 import { Type } from '@angular/core';

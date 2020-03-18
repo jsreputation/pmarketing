@@ -1,4 +1,4 @@
-import { Voucher, VoucherState, IVoucherService, RedemptionType } from '@perx/core';
+import { Voucher, VoucherState, IVoucherService, RedemptionType } from '@perxtech/core';
 import { of, BehaviorSubject } from 'rxjs';
 
 export const vouchersServiceStub: Partial<IVoucherService> = {

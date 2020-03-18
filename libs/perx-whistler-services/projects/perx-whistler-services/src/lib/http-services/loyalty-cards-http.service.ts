@@ -7,7 +7,7 @@ import {
   IJsonApiPostItem,
   IJsonApiPatchItem,
   IWLoyaltyCard
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { ApiConfigServices } from '../configs/api-config';
 
 @Injectable()

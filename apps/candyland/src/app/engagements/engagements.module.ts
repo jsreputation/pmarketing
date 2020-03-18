@@ -16,7 +16,7 @@ import {
   MatButtonModule, MatFormFieldModule, MatRadioModule, MatSelectModule
 } from '@angular/material';
 import { MatMenuModule } from '@angular/material/menu';
-import { ButtonModule, StatusLabelModule } from '@perx/candyshop';
+import { ButtonModule, StatusLabelModule } from '@perxtech/candyshop';
 import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
 import { InkModule } from '@cl-shared/components/ink/ink.module';
 import { CreateEngagementPopupModule } from '../shared/containers/create-engagement-popup/create-engagement-popup.module';

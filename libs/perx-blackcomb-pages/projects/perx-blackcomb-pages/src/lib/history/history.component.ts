@@ -1,6 +1,6 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import { Voucher, IVoucherService, VoucherState, StatusLabelMapping } from '@perx/core';
-import {forkJoin, Observable, of, Subject} from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Voucher, IVoucherService, VoucherState, StatusLabelMapping } from '@perxtech/core';
+import { forkJoin, Observable, of, Subject } from 'rxjs';
 
 const REQ_PAGE_SIZE: number = 10;
 @Component({

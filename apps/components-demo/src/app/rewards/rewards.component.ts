@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { INavLink } from '../navlink.model';
-import { NotificationService, PopupComponent } from '@perx/core';
+import { NotificationService, PopupComponent } from '@perxtech/core';
 import { SubscriptionLike } from 'rxjs';
 import { MatDialog } from '@angular/material';
 

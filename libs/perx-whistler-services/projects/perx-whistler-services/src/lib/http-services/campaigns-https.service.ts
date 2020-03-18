@@ -7,7 +7,7 @@ import {
   IJsonApiItemPayload,
   IJsonApiPatchItem,
   IJsonApiPostItem
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { ApiConfigServices } from '../configs/api-config';
 
 @Injectable()

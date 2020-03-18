@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import {IGame, SnakeGameComponent} from '@perx/core';
+import { IGame, SnakeGameComponent } from '@perxtech/core';
 import { SnakeComponent } from './snake.component';
 
 describe('SnakeComponent', () => {

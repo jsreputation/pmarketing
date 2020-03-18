@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VouchersComponent, PopupType } from './vouchers.component';
-import { VouchersModule, IVoucherService, RewardsService, IMerchantsService } from '@perx/core';
+import { VouchersModule, IVoucherService, RewardsService, IMerchantsService } from '@perxtech/core';
 import { MatDialog } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -18,7 +18,7 @@ describe('VouchersComponent', () => {
   const matDialogStub = new MatDialogStub();
   const voucherServiceStub: Partial<IVoucherService> = {
     get: () => of(),
-    getAll: () => of ()
+    getAll: () => of()
   };
 
   const rewardsServiceStub: Partial<RewardsService> = {

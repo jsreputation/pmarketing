@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IVoucherService, Voucher, IConfig, ConfigService } from '@perx/core';
+import { IVoucherService, Voucher, IConfig, ConfigService } from '@perxtech/core';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -39,7 +39,7 @@ export class VoucherComponent implements OnInit {
   }
 
   private fetchVouchers(srcType: string): void {
-    this.voucherService.get(this.id, false, {sourceType: srcType, type: null})
+    this.voucherService.get(this.id, false, { sourceType: srcType, type: null })
       .subscribe(voucher => {
         this.voucher = voucher;
         if (voucher.state !== 'issued' && this.sourceType === 'hsbc-collect2') {

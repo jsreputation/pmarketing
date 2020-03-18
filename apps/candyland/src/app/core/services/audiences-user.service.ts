@@ -13,9 +13,9 @@ import {
   IJsonApiItem,
   IJsonApiPatchData,
   IWAudiences
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { ManageListPopupComponentOutput } from 'src/app/audience/containers/manage-list-popup/manage-list-popup.component';
-import { AudiencesHttpsService } from '@perx/whistler-services';
+import { AudiencesHttpsService } from '@perxtech/whistler-services';
 import { IAudiencesUserForm } from '@cl-core/models/audiences/user.interface';
 import { HttpParamsOptions } from '@cl-core/models/params-map';
 import { ITableData } from '@cl-core/models/data-list.interface';

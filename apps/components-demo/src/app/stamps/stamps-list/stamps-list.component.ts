@@ -1,5 +1,5 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { IStampCard, StampCardState } from '@perx/core';
+import { IStampCard, StampCardState } from '@perxtech/core';
 import { of, Observable } from 'rxjs';
 
 @Component({
@@ -43,7 +43,7 @@ export class StampsListComponent implements OnInit {
 
   public ngOnInit(): void { }
 
-  public log(stampCard: IStampCard ): void {
+  public log(stampCard: IStampCard): void {
     this.selectedStampCard.emit(stampCard);
   }
 }

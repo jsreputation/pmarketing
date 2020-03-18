@@ -1,6 +1,6 @@
 import { Observable, of } from 'rxjs';
 import { IAudiencesLoyaltyCard } from '@cl-core/models/audiences/audiences-loyalty.model';
-import { IJsonApiItemPayload, IWLoyaltyCard } from '@perx/whistler';
+import { IJsonApiItemPayload, IWLoyaltyCard } from '@perxtech/whistler';
 import { ITableData } from '@cl-core/models/data-list.interface';
 import { LoyaltyCardService } from '@cl-core/services/loyalty-card.service';
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiConfigService } from '../configs/api-config';
-import { IPLoginRequest, IPLoginResonse, IPAuthorizations } from '@perx/model';
+import { IPLoginRequest, IPLoginResonse, IPAuthorizations } from '@perxtech/model';
 
 @Injectable({
   providedIn: 'root'

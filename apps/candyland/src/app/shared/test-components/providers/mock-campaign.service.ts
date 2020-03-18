@@ -4,7 +4,7 @@ import {
   IJsonApiItemPayload,
   IJsonApiListPayload,
   IWCampaignAttributes
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
 import { ITableData } from '@cl-core/models/data-list.interface';
 import { CampaignsService } from '@cl-core-services';

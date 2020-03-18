@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { IData } from '@perx/chart';
+import { IData } from '@perxtech/chart';
 import { data } from '../trend-mock';
 
 @Component({
@@ -8,7 +8,7 @@ import { data } from '../trend-mock';
   templateUrl: './trend.component.html',
   styleUrls: ['./trend.component.scss']
 })
-export class TrendComponent  {
+export class TrendComponent {
 
   public data: Observable<IData> = of(data);
 

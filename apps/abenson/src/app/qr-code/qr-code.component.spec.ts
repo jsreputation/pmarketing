@@ -3,7 +3,7 @@ import { Type } from '@angular/core';
 
 import { QRCodeComponent } from './qr-code.component';
 import { NgxBarcodeModule } from 'ngx-barcode';
-import {VouchersModule, IVoucherService, NotificationService, VoucherState} from '@perx/core';
+import { VouchersModule, IVoucherService, NotificationService, VoucherState } from '@perxtech/core';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { vouchers } from '../mock/vouchers.mock';

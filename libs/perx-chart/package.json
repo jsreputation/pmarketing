@@ -1,5 +1,5 @@
 {
-  "name": "@perx/chart",
+  "name": "@perxtech/chart",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -51,15 +51,15 @@
     "tslint-no-focused-test": "^0.5.0",
     "typescript": "~3.4.3"
   },
-  "main": "dist/perx-chart/bundles/perx-chart.umd.js",
-  "module": "dist/perx-chart/fesm5/perx-chart.js",
-  "es2015": "dist/perx-chart/fesm2015/perx-chart.js",
-  "esm5": "dist/perx-chart/esm5/perx-chart.js",
-  "esm2015": "dist/perx-chart/esm2015/perx-chart.js",
-  "fesm5": "dist/perx-chart/fesm5/perx-chart.js",
-  "fesm2015": "dist/perx-chart/fesm2015/perx-chart.js",
-  "typings": "dist/perx-chart/perx-chart.d.ts",
-  "metadata": "dist/perx-chart/perx-chart.metadata.json",
+  "main": "dist/perx-chart/bundles/perxtech-chart.umd.js",
+  "module": "dist/perx-chart/fesm5/perxtech-chart.js",
+  "es2015": "dist/perx-chart/fesm2015/perxtech-chart.js",
+  "esm5": "dist/perx-chart/esm5/perxtech-chart.js",
+  "esm2015": "dist/perx-chart/esm2015/perxtech-chart.js",
+  "fesm5": "dist/perx-chart/fesm5/perxtech-chart.js",
+  "fesm2015": "dist/perx-chart/fesm2015/perxtech-chart.js",
+  "typings": "dist/perx-chart/perxtech-chart.d.ts",
+  "metadata": "dist/perx-chart/perxtech-chart.metadata.json",
   "jest": {
     "preset": "jest-preset-angular",
     "roots": [

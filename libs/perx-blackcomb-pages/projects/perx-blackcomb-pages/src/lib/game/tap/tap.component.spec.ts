@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TapComponent } from './tap.component';
-import { GameModule, IGameService, IGame } from '@perx/core';
+import { GameModule, IGameService, IGame } from '@perxtech/core';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
 

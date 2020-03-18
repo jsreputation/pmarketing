@@ -1,5 +1,5 @@
 import { Observable, of } from 'rxjs';
-import { IJsonApiItemPayload, IWLoginAttributes } from '@perx/whistler';
+import { IJsonApiItemPayload, IWLoginAttributes } from '@perxtech/whistler';
 import { IAMUser } from '@es-core/models/auth/IAMUser.interface';
 
 export class TestAuthService {
@@ -8,7 +8,7 @@ export class TestAuthService {
     return '1';
   }
 
-  public initAuth(): void {}
+  public initAuth(): void { }
 
   public updateUser(): Observable<IAMUser> {
     return of({
@@ -41,10 +41,11 @@ export class TestAuthService {
           time_zone: '5555555',
           username: 'admin'
         }
-      }});
+      }
+    });
   }
 
-  public logout(): void {}
+  public logout(): void { }
 
   public resetPassword(accountId: string, username: string): Observable<any> {
     return of({

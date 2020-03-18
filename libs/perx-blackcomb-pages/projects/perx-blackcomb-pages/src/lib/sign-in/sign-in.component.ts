@@ -40,7 +40,7 @@ import {
   SurveyService,
   IConfig,
   ConfigService,
-} from '@perx/core';
+} from '@perxtech/core';
 
 interface ISigninConfig {
   redirectAfterLogin: string;

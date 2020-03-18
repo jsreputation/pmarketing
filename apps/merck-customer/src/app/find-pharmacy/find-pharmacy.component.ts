@@ -22,7 +22,7 @@ import {
   ILocation,
   IMerchantsService,
   IMerchant,
-} from '@perx/core';
+} from '@perxtech/core';
 
 import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
 
@@ -73,7 +73,7 @@ export class FindPharmacyComponent implements OnInit, PageAppearence, OnDestroy 
     this.locations = this.locationsService.getAllLocations(this.merchants).pipe(takeUntil(this.destroy$));
 
     this.locationsService.getTags(this.merchants).subscribe((res) => {
-      this.tags = res.map(tag => ({name: tag, isSelected: false}));
+      this.tags = res.map(tag => ({ name: tag, isSelected: false }));
     });
   }
 

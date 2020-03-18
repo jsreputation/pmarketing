@@ -1,5 +1,5 @@
 {
-  "name": "@perx/candyland",
+  "name": "@perxtech/candyland",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -33,11 +33,11 @@
     "@angular/service-worker": "~8.0.0",
     "@ngx-translate/core": "^11.0.1",
     "@ngx-translate/http-loader": "^4.0.0",
-    "@perx/candyshop": "^0.0.0",
-    "@perx/whistler-services": "^0.0.0",
-    "@perx/chart": "^0.0.0",
-    "@perx/core": "^0.0.0",
-    "@perx/whistler": "^0.0.0",
+    "@perxtech/candyshop": "^0.0.0",
+    "@perxtech/whistler-services": "^0.0.0",
+    "@perxtech/chart": "^0.0.0",
+    "@perxtech/core": "^0.0.0",
+    "@perxtech/whistler": "^0.0.0",
     "@sentry/browser": "^5.10.1",
     "cucumber-parallel": "^2.0.3",
     "hammerjs": "^2.0.8",

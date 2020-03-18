@@ -1,10 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CatalogsComponent } from './catalogs.component';
-import {InfiniteScrollModule} from 'ngx-infinite-scroll';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { MatCardModule } from '@angular/material';
-import {IReward, RewardsService} from '@perx/core';
-import {of} from 'rxjs';
+import { IReward, RewardsService } from '@perxtech/core';
+import { of } from 'rxjs';
 
 describe('CatalogsComponent', () => {
   let component: CatalogsComponent;
@@ -30,7 +30,7 @@ describe('CatalogsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CatalogsComponent ],
+      declarations: [CatalogsComponent],
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub }
       ],

@@ -6,7 +6,7 @@ import {
   ConfigModule,
   AuthenticationModule,
   // SurveyService
-} from '@perx/core';
+} from '@perxtech/core';
 
 import { SurveyRoutingModule } from './survey-routing.module';
 import {
@@ -18,7 +18,7 @@ import {
   MatCheckboxModule
 } from '@angular/material';
 import { environment } from 'src/environments/environment';
-import { SurveyComponent } from '@perx/blackcomb-pages';
+import { SurveyComponent } from '@perxtech/blackcomb-pages';
 // import { of } from 'rxjs';
 // import { survey } from '../mock/survey.mock';
 

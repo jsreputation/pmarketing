@@ -1,10 +1,10 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CampaignStampsComponent } from './campaign-stamps.component';
-import {ConfigService, PuzzlesModule, StampService} from '@perx/core';
-import {InfiniteScrollModule} from 'ngx-infinite-scroll';
-import {RouterTestingModule} from '@angular/router/testing';
-import {of} from 'rxjs';
+import { ConfigService, PuzzlesModule, StampService } from '@perxtech/core';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { RouterTestingModule } from '@angular/router/testing';
+import { of } from 'rxjs';
 
 const stampServiceStub: Partial<StampService> = {
   getCards: () => of(),
@@ -25,7 +25,7 @@ describe('CampaignStampsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CampaignStampsComponent ],
+      declarations: [CampaignStampsComponent],
       imports: [
         RouterTestingModule,
         PuzzlesModule,

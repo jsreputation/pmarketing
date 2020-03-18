@@ -9,7 +9,7 @@ import {
   SearchFilterModule,
   NoDataModule
 } from '@cl-shared';
-import { ButtonModule, StatusLabelModule } from '@perx/candyshop';
+import { ButtonModule, StatusLabelModule } from '@perxtech/candyshop';
 import { TabsFilterModule } from '../../../shared/table/tabs-filter/tabs-filter.module';
 import {
   MatIconModule,

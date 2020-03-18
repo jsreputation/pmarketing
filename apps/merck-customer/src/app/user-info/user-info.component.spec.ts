@@ -6,7 +6,7 @@ import {
   FormsModule,
   ReactiveFormsModule
 } from '@angular/forms';
-import { ProfileModule, ProfileService } from '@perx/core';
+import { ProfileModule, ProfileService } from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
   MatButtonModule,
@@ -24,7 +24,7 @@ describe('UserInfoComponent', () => {
   beforeEach(async(() => {
     const routerStub = { navigateByUrl: () => ({}) };
     TestBed.configureTestingModule({
-      declarations: [ UserInfoComponent ],
+      declarations: [UserInfoComponent],
       imports: [
         FormsModule,
         ReactiveFormsModule,
@@ -39,7 +39,7 @@ describe('UserInfoComponent', () => {
         { provide: Router, useValue: routerStub },
         {
           provide: ProfileService,
-          useValue: {setCustomProperties: () => of(null)}
+          useValue: { setCustomProperties: () => of(null) }
         }
       ]
     })

@@ -1,5 +1,5 @@
 import { Observable, of } from 'rxjs';
-import { IJsonApiListPayload, IWAudiences } from '@perx/whistler';
+import { IJsonApiListPayload, IWAudiences } from '@perxtech/whistler';
 import { IPoolUserLink, AudiencesService } from '@cl-core-services';
 import { IAudience } from '@cl-core/models/audiences/audiences';
 import { ITableData } from '@cl-core/models/data-list.interface';

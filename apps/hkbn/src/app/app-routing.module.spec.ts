@@ -4,7 +4,7 @@ import { NgModuleFactoryLoader, Type } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
-import { VouchersModule, IVoucherService, Voucher } from '@perx/core';
+import { VouchersModule, IVoucherService, Voucher } from '@perxtech/core';
 import { NotificationWrapperService } from './services/notification-wrapper.service';
 import { TranslateService } from '@ngx-translate/core';
 import { of, Observable } from 'rxjs';

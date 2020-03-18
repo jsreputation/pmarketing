@@ -11,7 +11,7 @@ import {
   IPrice,
   IVoucherService,
   PopUpClosedCallBack
-} from '@perx/core';
+} from '@perxtech/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, flatMap, map } from 'rxjs/operators';
 import { forkJoin, Observable, of, throwError } from 'rxjs';
@@ -44,7 +44,7 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
     private build: FormBuilder,
     private notificationService: NotificationService,
     private router: Router
-  ) {}
+  ) { }
 
   public ngOnInit(): void {
     this.getData();

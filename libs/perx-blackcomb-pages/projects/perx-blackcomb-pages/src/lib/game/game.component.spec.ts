@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed, fakeAsync, tick, discardPeriodicTasks} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick, discardPeriodicTasks } from '@angular/core/testing';
 
 import { GameComponent } from './game.component';
 import { of, throwError } from 'rxjs';
@@ -13,15 +13,15 @@ import {
   AuthenticationService,
   NotificationService,
   ConfigService
-} from '@perx/core';
+} from '@perxtech/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Type } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
 import { ConfigToMappedSlotPipe, ConfigToSlicesPipe, SpinComponent } from './spin/spin.component';
-import { WInformationCollectionSettingType } from '@perx/whistler';
-import {SnakeComponent} from './snake/snake.component';
+import { WInformationCollectionSettingType } from '@perxtech/whistler';
+import { SnakeComponent } from './snake/snake.component';
 
 const gamePi: IGame = {
   id: 1,
@@ -167,7 +167,7 @@ describe('GameComponent', () => {
     }));
   });
 
-  it('should call redirectUrlAndPopup', fakeAsync( () => {
+  it('should call redirectUrlAndPopup', fakeAsync(() => {
     const authService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
       AuthenticationService as Type<AuthenticationService>);
     const gameService: IGameService = fixture.debugElement.injector.get<IGameService>(IGameService as Type<IGameService>);

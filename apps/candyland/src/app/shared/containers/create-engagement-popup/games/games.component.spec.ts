@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { GamesComponent } from './games.component';
 import { GameComponent } from './game/game.component';
 import { MatFormFieldModule, MatRadioModule, MatSelectModule } from '@angular/material';
-import { ButtonModule } from '@perx/candyshop';
+import { ButtonModule } from '@perxtech/candyshop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 // tslint:disable
@@ -26,7 +26,7 @@ describe('GamesComponent', () => {
         GamesComponent,
         GameComponent
       ],
-      schemas: [ NO_ERRORS_SCHEMA ],
+      schemas: [NO_ERRORS_SCHEMA],
     })
       .compileComponents();
   }));

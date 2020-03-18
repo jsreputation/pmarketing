@@ -1,4 +1,4 @@
-import { IStampCard, StampCardState, StampState } from '@perx/core';
+import { IStampCard, StampCardState, StampState } from '@perxtech/core';
 
 export const puzzle: IStampCard[] = [
   {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ProfileService, ICustomProperties, NotificationService } from '@perx/core';
+import { ProfileService, ICustomProperties, NotificationService } from '@perxtech/core';
 import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
@@ -64,7 +64,7 @@ export class UserInfoComponent implements PageAppearence, OnInit {
         this.notificationService.addSnack(this.conditionMessage);
       },
       err => {
-        this.notificationService.addSnack(`ProfileService::SetCustomProperties : ${  err}`);
+        this.notificationService.addSnack(`ProfileService::SetCustomProperties : ${err}`);
       });
   }
 }

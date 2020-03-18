@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
-import { AuthenticationService, ConfigService, IConfig } from '@perx/core';
+import { AuthenticationService, ConfigService, IConfig } from '@perxtech/core';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

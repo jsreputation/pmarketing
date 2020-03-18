@@ -23,7 +23,7 @@ import {
   Config,
   ConfigService,
   IConfig,
-} from '@perx/core';
+} from '@perxtech/core';
 
 import { SignIn2Component } from '../sign-in-2/sign-in-2.component';
 import { HomeComponent } from '../home/home.component';
@@ -33,8 +33,8 @@ import { WalletComponent } from '../wallet/wallet.component';
 import { WalletHistoryComponent } from '../wallet-history/wallet-history.component';
 import { ProfileComponent } from '../profile/profile.component';
 import { BACK_ARROW_URLS } from '../perx-blackcomb-pages.constants';
-import {TransactionHistoryComponent} from '../transaction-history/transaction-history.component';
-import {CampaignStampsComponent} from '../campaign-stamps/campaign-stamps.component';
+import { TransactionHistoryComponent } from '../transaction-history/transaction-history.component';
+import { CampaignStampsComponent } from '../campaign-stamps/campaign-stamps.component';
 
 export interface ShowTitleInHeader {
   getTitle(): string;

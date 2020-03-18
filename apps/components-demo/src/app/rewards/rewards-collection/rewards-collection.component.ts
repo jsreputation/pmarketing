@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IReward, RewardsService, NotificationService } from '@perx/core';
+import { IReward, RewardsService, NotificationService } from '@perxtech/core';
 import { Observable, of } from 'rxjs';
 import { mock } from '../reward-mock';
 
@@ -33,8 +33,8 @@ export class RewardsCollectionComponent implements OnInit {
   public rewardClickedHandler(reward: IReward): void {
     this.notificationService.addPopup({
       title: 'Clicked!',
-      text: `ID: ${  reward.id  }\n` +
-        `Reward Name: ${  reward.name}`,
+      text: `ID: ${reward.id}\n` +
+        `Reward Name: ${reward.name}`,
     });
   }
 }

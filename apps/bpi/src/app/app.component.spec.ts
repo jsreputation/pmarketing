@@ -3,7 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MatDialogModule } from '@angular/material';
 import { MatDialog } from '@angular/material';
-import { AuthenticationService, NotificationService, ConfigService } from '@perx/core';
+import { AuthenticationService, NotificationService, ConfigService } from '@perxtech/core';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 

@@ -27,7 +27,7 @@ import {
   IReward,
   RewardsService,
   ICatalog,
-} from '@perx/core';
+} from '@perxtech/core';
 
 import {
   CategorySelectComponent,

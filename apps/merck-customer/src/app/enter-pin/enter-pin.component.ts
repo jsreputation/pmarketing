@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AuthenticationService, NotificationService } from '@perx/core';
+import { AuthenticationService, NotificationService } from '@perxtech/core';
 import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
 
 export enum PinMode {
@@ -102,7 +102,7 @@ export class EnterPinComponent implements OnInit, PageAppearence {
           this.notificationService.addSnack('Resend Otp request sent');
         },
         err => {
-          console.error(`ResendOTP: ${  err}`);
+          console.error(`ResendOTP: ${err}`);
           this.notificationService.addSnack(err.error.message);
         });
     }

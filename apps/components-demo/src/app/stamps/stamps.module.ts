@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { StampsRoutingModule } from './stamps-routing.module';
 import { CardComponent } from './card/card.component';
 import { StampsComponent } from './stamps/stamps.component';
-import { PuzzlesModule, RewardsModule, CampaignModule, StampModule } from '@perx/core';
+import { PuzzlesModule, RewardsModule, CampaignModule, StampModule } from '@perxtech/core';
 import { MatSliderModule, MatCheckboxModule, MatTabsModule, MatIconModule } from '@angular/material';
 
 @NgModule({

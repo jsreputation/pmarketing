@@ -1,12 +1,12 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {ProfileModule} from '@perx/core';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ProfileModule } from '@perxtech/core';
 
-import {AccountRoutingModule} from './account-routing.module';
-import {AccountComponent} from './account.component';
-import {FaqModule} from './faq/faq.module';
-import {MatListModule} from '@angular/material/list';
-import {MatRippleModule} from '@angular/material/core';
+import { AccountRoutingModule } from './account-routing.module';
+import { AccountComponent } from './account.component';
+import { FaqModule } from './faq/faq.module';
+import { MatListModule } from '@angular/material/list';
+import { MatRippleModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DataService } from '@perx/chart';
+import { DataService } from '@perxtech/chart';
 import { MessageService } from './message.service';
 
 @Injectable({

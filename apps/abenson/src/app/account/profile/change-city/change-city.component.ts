@@ -13,7 +13,7 @@ import { Location } from '@angular/common';
 import {
   ICustomProperties,
   ProfileService,
-} from '@perx/core';
+} from '@perxtech/core';
 
 @Component({
   selector: 'app-change-city',

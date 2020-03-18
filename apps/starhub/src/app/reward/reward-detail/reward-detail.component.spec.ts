@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { RewardDetailComponent } from './reward-detail.component';
 import { MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { RewardsService, LocationsService } from '@perx/core';
+import { RewardsService, LocationsService } from '@perxtech/core';
 import { LocationShortFormatComponent } from '../../location-short-format/location-short-format.component';
 import { of } from 'rxjs';
 import { ExpireTimerComponent } from '../expire-timer/expire-timer.component';

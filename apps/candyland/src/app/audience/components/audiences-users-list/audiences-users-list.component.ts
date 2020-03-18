@@ -17,7 +17,7 @@ import {
   switchMap,
 } from 'rxjs/operators';
 
-import { IWProfileAttributes } from '@perx/whistler';
+import { IWProfileAttributes } from '@perxtech/whistler';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
 

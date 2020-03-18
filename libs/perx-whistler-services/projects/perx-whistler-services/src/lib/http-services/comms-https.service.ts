@@ -9,7 +9,7 @@ import {
   IJsonApiPatchItem,
   IJsonApiPostItem,
   IWCommMessageAttributes
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { ApiConfigServices } from '../configs/api-config';
 
 @Injectable()

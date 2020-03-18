@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material';
 import { of, Observable } from 'rxjs';
-import { VouchersModule, Voucher, ConfigModule } from '@perx/core';
+import { VouchersModule, Voucher, ConfigModule } from '@perxtech/core';
 
 import { ListRoutingModule } from './list-routing.module';
 import { ListComponent } from './list.component';
@@ -19,7 +19,7 @@ export class VoucherStubService {
 @NgModule({
   declarations: [ListComponent],
   imports: [
-    ConfigModule.forRoot({...environment}),
+    ConfigModule.forRoot({ ...environment }),
     CommonModule,
     ListRoutingModule,
     VouchersModule,

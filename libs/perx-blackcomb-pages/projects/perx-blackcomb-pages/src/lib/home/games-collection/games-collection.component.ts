@@ -1,7 +1,7 @@
 import { listAnimation } from './games-collection.animation';
 import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IGame } from '@perx/core';
+import { IGame } from '@perxtech/core';
 
 @Component({
   selector: 'perx-blackcomb-games-collection',

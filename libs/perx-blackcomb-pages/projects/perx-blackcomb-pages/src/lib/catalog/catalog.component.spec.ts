@@ -1,12 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {InfiniteScrollModule} from 'ngx-infinite-scroll';
-import {MatCardModule, MatIconModule, MatMenuModule} from '@angular/material';
-import {ActivatedRoute, Router} from '@angular/router';
-import {RewardsService, SortRewardsPipe} from '@perx/core';
-import {of} from 'rxjs';
-import {CatalogComponent} from './catalog.component';
-import {CatalogRewardCardComponent} from '../catalog-reward-card/catalog-reward-card.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { MatCardModule, MatIconModule, MatMenuModule } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
+import { RewardsService, SortRewardsPipe } from '@perxtech/core';
+import { of } from 'rxjs';
+import { CatalogComponent } from './catalog.component';
+import { CatalogRewardCardComponent } from '../catalog-reward-card/catalog-reward-card.component';
 
 describe('CatalogComponent', () => {
   let component: CatalogComponent;
@@ -21,7 +21,7 @@ describe('CatalogComponent', () => {
         id: 42
       },
       queryParamMap: {
-        get: () => of ()
+        get: () => of()
       }
     }
   };

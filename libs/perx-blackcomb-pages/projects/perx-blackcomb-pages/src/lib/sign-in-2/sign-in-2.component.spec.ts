@@ -4,10 +4,10 @@ import { SignIn2Component } from './sign-in-2.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import {AuthenticationService, Config, ConfigService, ThemesService} from '@perx/core';
+import { AuthenticationService, Config, ConfigService, ThemesService } from '@perxtech/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
-import { IWAppAccessTokenResponse } from '@perx/whistler';
+import { IWAppAccessTokenResponse } from '@perxtech/whistler';
 import { Type } from '@angular/core';
 import { Router } from '@angular/router';
 

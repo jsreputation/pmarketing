@@ -7,7 +7,7 @@ import {
   SurveyQuestionType,
   ISurvey,
   IPopupConfig
-} from '@perx/core';
+} from '@perxtech/core';
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { SurveyComponent } from './survey.component';
@@ -18,7 +18,7 @@ import { of } from 'rxjs';
 import { convertToParamMap, ActivatedRoute, Router } from '@angular/router';
 import { Type } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { WInformationCollectionSettingType } from '@perx/whistler';
+import { WInformationCollectionSettingType } from '@perxtech/whistler';
 
 interface IAnswer {
   questionId: string;

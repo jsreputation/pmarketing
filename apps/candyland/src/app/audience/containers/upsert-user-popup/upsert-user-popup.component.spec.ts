@@ -32,7 +32,7 @@ import {
   UploadFileModule,
 } from '@cl-shared';
 
-import { ButtonModule } from '@perx/candyshop';
+import { ButtonModule } from '@perxtech/candyshop';
 
 import { UpsertUserPopupComponent } from './upsert-user-popup.component';
 import { AudiencesService, SurveyService } from '@cl-core-services';
@@ -71,7 +71,7 @@ describe('UpsertUserPopupComponent', () => {
             }
           }
         },
-        {provide: MAT_DIALOG_DATA, useValue: {}},
+        { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: AudiencesService, useClass: MockAudienceService },
         { provide: SurveyService, useClass: MockSurveyService },
       ],

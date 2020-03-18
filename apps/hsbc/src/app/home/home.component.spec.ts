@@ -16,7 +16,7 @@ import {
   ThemesService,
   VouchersModule,
   StampCardState
-} from '@perx/core';
+} from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatCardModule, MatIconModule, MatRippleModule, MatTabsModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';

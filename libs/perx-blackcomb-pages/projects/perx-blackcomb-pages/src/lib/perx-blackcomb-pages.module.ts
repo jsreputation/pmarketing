@@ -33,7 +33,7 @@ import {
   LoyaltyModule,
   RewardsModule,
   SurveyModule
-} from '@perx/core';
+} from '@perxtech/core';
 
 import { RewardComponent } from './reward/reward.component';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
@@ -50,7 +50,7 @@ import { StampCardComponent } from './stamp-card/stamp-card.component';
 import { SurveyComponent } from './survey/survey.component';
 import { VoucherDetailComponent } from './voucher-detail/voucher-detail.component';
 import { WalletComponent } from './wallet/wallet.component';
-import { SignUpComponent as PerxSignUpComponent} from './sign-up/sign-up.component';
+import { SignUpComponent as PerxSignUpComponent } from './sign-up/sign-up.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { LayoutComponent } from './layout/layout.component';
 import { HomeComponent } from './home/home.component';

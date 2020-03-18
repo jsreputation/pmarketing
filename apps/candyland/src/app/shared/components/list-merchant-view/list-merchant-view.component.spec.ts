@@ -14,7 +14,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatMenuModule } from '@angular/material/menu';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
-import { StatusLabelModule } from '@perx/candyshop';
+import { StatusLabelModule } from '@perxtech/candyshop';
 
 describe('ListMerchantViewComponent', () => {
   let component: ListMerchantViewComponent;

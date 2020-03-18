@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Params, Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
   IEngagementTransaction,
   IGame,
@@ -7,13 +7,13 @@ import {
   IPlayOutcome,
   NotificationService,
   Voucher
-} from '@perx/core';
-import {Location} from '@angular/common';
-import {catchError, map, switchMap, take, takeUntil, tap} from 'rxjs/operators';
-import {AnalyticsService, PageType} from '../analytics.service';
-import {GameOutcomeService} from '../congrats/game-outcome/game-outcome.service';
-import {Observable, Subject, throwError} from 'rxjs';
-import {HttpErrorResponse} from '@angular/common/http';
+} from '@perxtech/core';
+import { Location } from '@angular/common';
+import { catchError, map, switchMap, take, takeUntil, tap } from 'rxjs/operators';
+import { AnalyticsService, PageType } from '../analytics.service';
+import { GameOutcomeService } from '../congrats/game-outcome/game-outcome.service';
+import { Observable, Subject, throwError } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-game',

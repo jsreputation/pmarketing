@@ -11,7 +11,7 @@ import {
   MatInputModule
 } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AuthenticationService } from '@perx/core';
+import { AuthenticationService } from '@perxtech/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.module';
 import { Router } from '@angular/router';
@@ -68,7 +68,7 @@ describe('LoginComponent', () => {
   it('should redirect to forgot password, when call forgotPassword method', () => {
     const navigateSpy = spyOn(router, 'navigate');
     component.forgotPassword();
-    expect(navigateSpy).toHaveBeenCalledWith(['/forgot-password'], {queryParams: {identifier: ''}});
+    expect(navigateSpy).toHaveBeenCalledWith(['/forgot-password'], { queryParams: { identifier: '' } });
   });
 
   describe('login method', () => {
@@ -86,20 +86,20 @@ describe('LoginComponent', () => {
     });
 
     it('should call login method, authorize and redirect to root page', async () => {
-      loginSpy = loginSpy.and.returnValue(of({bearer_token: 'SWWERW'}));
+      loginSpy = loginSpy.and.returnValue(of({ bearer_token: 'SWWERW' }));
       getInterruptedUrlSpy = getInterruptedUrlSpy.and.returnValue(null);
 
-      await component.login({user: '639876543210', pass: 'qwerty123', stayLoggedIn: false});
+      await component.login({ user: '639876543210', pass: 'qwerty123', stayLoggedIn: false });
 
       expect(loginSpy).toHaveBeenCalledWith('639876543210', 'qwerty123');
       expect(navigateSpy).toHaveBeenCalledWith(['/']);
     });
 
     it('should call login method, authorize and redirect to InterruptedUrl page', async () => {
-      loginSpy = loginSpy.and.returnValue(of({bearer_token: 'SWWERW'}));
+      loginSpy = loginSpy.and.returnValue(of({ bearer_token: 'SWWERW' }));
       getInterruptedUrlSpy = getInterruptedUrlSpy.and.returnValue('/wallet');
 
-      await component.login({user: '639876543210', pass: 'qwerty123', stayLoggedIn: false});
+      await component.login({ user: '639876543210', pass: 'qwerty123', stayLoggedIn: false });
 
       expect(loginSpy).toHaveBeenCalledWith('639876543210', 'qwerty123');
       expect(navigateSpy).toHaveBeenCalledWith(['/wallet']);

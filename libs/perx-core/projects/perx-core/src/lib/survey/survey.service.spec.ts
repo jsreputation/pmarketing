@@ -18,7 +18,7 @@ import {
   IJsonApiItemPayload,
   IJsonApiItem,
   IWSurveyEngagementAttributes,
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { ConfigModule } from '../config/config.module';
 
 describe('SurveyService', () => {

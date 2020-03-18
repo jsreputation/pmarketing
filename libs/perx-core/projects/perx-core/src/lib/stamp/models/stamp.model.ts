@@ -1,6 +1,6 @@
 import { IVoucher } from '../../vouchers/models/voucher.model';
 import { PuzzleCollectReward } from '../../puzzles/models/puzzle-stamp.model';
-import { IWProperties } from '@perx/whistler';
+import { IWProperties } from '@perxtech/whistler';
 
 export interface ICampaignOutcome {
   id: number;

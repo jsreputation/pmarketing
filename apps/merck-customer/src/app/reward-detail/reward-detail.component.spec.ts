@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { RewardsService, RewardsModule } from '@perx/core';
+import { RewardsService, RewardsModule } from '@perxtech/core';
 import { RewardDetailComponent } from './reward-detail.component';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
 import { of } from 'rxjs';
@@ -11,18 +11,18 @@ describe('RewardDetailComponent', () => {
   let component: RewardDetailComponent;
   let fixture: ComponentFixture<RewardDetailComponent>;
   const routerStub = {
-    navigateByUrl: () => {}
+    navigateByUrl: () => { }
   };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RewardDetailComponent ],
-      imports: [ RouterTestingModule, RewardsModule, TranslateModule.forRoot()
+      declarations: [RewardDetailComponent],
+      imports: [RouterTestingModule, RewardsModule, TranslateModule.forRoot()
       ],
       providers: [
         {
           provide: RewardsService,
-          useValue: {getReward: () => of()}
+          useValue: { getReward: () => of() }
         },
         {
           provide: ActivatedRoute,

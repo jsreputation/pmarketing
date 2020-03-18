@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { ClHttpParams } from '@cl-helpers/http-params';
-import { LimitsHttpsService } from '@perx/whistler-services';
+import { LimitsHttpsService } from '@perxtech/whistler-services';
 import { map } from 'rxjs/operators';
 import { LimitsHttpAdapter } from '@cl-core/http-adapters/limits-http-adapter';
-import { IWLimitAttributes, IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload } from '@perx/whistler';
+import { IWLimitAttributes, IJsonApiListPayload, IJsonApiItem, IJsonApiItemPayload } from '@perxtech/whistler';
 import { ILimit } from '@cl-core/models/limit/limit.interface';
 import { EngagementTypeAPIMapping } from '@cl-core/models/engagement/engagement-type.enum';
 import { HttpParamsOptions } from '@cl-core/models/params-map';
