@@ -4,9 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "PREAUTH=true npm run config && ng serve --host 0.0.0.0",
-    "start:prod": "APIHOST=https://api.perxtech.net RSS_FEEDS=https://cdn.perxtech.net/content/starhub/rss.xml PREAUTH=true npm run config && ng serve --host 0.0.0.0 --prod",
+    "start:prod": "APIHOST=https://api-starhub.perxtech.net RSS_FEEDS=https://cdn.perxtech.net/content/starhub/rss.xml PREAUTH=true npm run config && ng serve --host 0.0.0.0",
     "build": "npm run config && ng build",
-    "build:starhub:prod": "RSS_FEEDS=https://cdn.perxtech.net/content/starhub/rss.xml PRODUCTION=true npm run config && ng build --prod",
+    "build:starhub:prod": "RSS_FEEDS=https://cdn.perxtech.net/content/starhub/rss.xml PRODUCTION=true APIHOST=https://api-starhub.perxtech.net npm run config && ng build --prod",
     "build:starhub:staging": "PRODUCTION=true npm run config && ng build --configuration staging",
     "config": "ts-node --project tsconfig.node.json set-env.ts",
     "clean": "rm -rf ./dist ./node_modules",

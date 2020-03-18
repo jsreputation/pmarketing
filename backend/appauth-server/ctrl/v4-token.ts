@@ -30,8 +30,8 @@ export const v4Token = (getCredentials: ((url: string) => Promise<ICredentials>)
       },
       {
         params: {
-          client_id: endpointCredential.perx_access_key_id,
-          client_secret: endpointCredential.perx_secret_access_key,
+          client_id: endpointCredential.perx_access_key_id.replace(/\W/, ''),
+          client_secret: endpointCredential.perx_secret_access_key.replace(/\W/, ''),
           identifier: userId
         }
       }
