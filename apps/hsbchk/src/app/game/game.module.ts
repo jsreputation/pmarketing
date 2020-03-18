@@ -5,8 +5,8 @@ import { MatProgressBarModule } from '@angular/material';
 import {
   GameModule as PerxGameModule,
   AuthenticationModule,
-} from '@perx/core';
-import { GameModule as BCGameModule } from '@perx/blackcomb-pages';
+} from '@perxtech/core';
+import { GameModule as BCGameModule } from '@perxtech/blackcomb-pages';
 
 import { GameRoutingModule } from './game-routing.module';
 

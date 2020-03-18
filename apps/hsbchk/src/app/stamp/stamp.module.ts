@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StampRoutingModule } from './stamp-routing.module';
-import { PuzzlesModule, StampModule as PerxStampsModule } from '@perx/core';
+import { PuzzlesModule, StampModule as PerxStampsModule } from '@perxtech/core';
 import { MatButtonModule } from '@angular/material';
-import { PerxBlackcombPagesModule } from '@perx/blackcomb-pages';
+import { PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
 
 @NgModule({
   imports: [

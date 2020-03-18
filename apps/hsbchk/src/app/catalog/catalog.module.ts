@@ -8,11 +8,11 @@ import {
   RouterModule,
   Routes,
 } from '@angular/router';
-import {RewardsModule, UtilsModule} from '@perx/core';
+import {RewardsModule, UtilsModule} from '@perxtech/core';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 
-import { CatalogComponent, PerxBlackcombPagesModule } from '@perx/blackcomb-pages';
+import { CatalogComponent, PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
 
 const routes: Routes = [{
   path: '',
