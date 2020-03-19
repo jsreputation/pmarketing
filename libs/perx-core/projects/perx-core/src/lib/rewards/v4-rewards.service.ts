@@ -109,6 +109,16 @@ interface IV4GetCatalogResponse {
   data: IV4Catalog;
 }
 
+interface IV4GetCategoriesResponse {
+  data: IV4Category[];
+}
+
+interface IV4Category {
+  id: number;
+  description: string;
+  title: string;
+}
+
 interface IV4Catalog {
   id: number;
   name: string;
@@ -129,7 +139,6 @@ interface IV4CatalogResults {
 })
 export class V4RewardsService extends RewardsService {
   private apiHost: string;
-  private baseHref: string;
 
   constructor(
     private http: HttpClient,
@@ -139,7 +148,6 @@ export class V4RewardsService extends RewardsService {
     this.configService.readAppConfig().subscribe(
       (config: IConfig<void>) => {
         this.apiHost = config.apiHost as string;
-        this.baseHref = config.baseHref as string;
       });
   }
 
@@ -211,6 +219,17 @@ export class V4RewardsService extends RewardsService {
       catalogBanner,
       rewardCount: catalog.catalog_results.count,
       rewards
+    };
+  }
+
+  private static v4CategoriesToCategories(category: IV4Category): ITabConfigExtended {
+    return {
+      tabName: category.title,
+      rewardsType: category.title,
+      currentPage: 1,
+      completePagination: false,
+      filterKey: null,
+      filterValue: null,
     };
   }
 
@@ -343,7 +362,11 @@ export class V4RewardsService extends RewardsService {
   }
 
   public getCategories(): Observable<ITabConfigExtended[]> {
-    return this.http.get<ITabConfigExtended[]>(`${this.baseHref}assets/categories-tabs.json`);
+    return this.http.get<IV4GetCategoriesResponse>(`${this.apiHost}/v4/categories`).pipe(
+      map(res => res.data),
+      map(res => Object.values(res.reduce((acc, cur) => Object.assign(acc, { [cur.id]: cur }), {}))),
+      map((categories: IV4Category[]) => categories.map(category => V4RewardsService.v4CategoriesToCategories(category)))
+    );
   }
 
   public getRewardPricesOptions(id: number, locale: string = 'en'): Observable<IPrice[]> {
