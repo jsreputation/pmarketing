@@ -154,16 +154,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   private getTabs(): Observable<ITabConfigExtended[]> {
-    return this.rewardsService.getCategories()
-      .pipe(
-        switchMap((stubTabs: ITabConfigExtended[]) => this.translate
-          .get(stubTabs.map(tab => tab.tabName))
-          .pipe(map((translation) => stubTabs.map((tab) => {
-            tab.tabName = translation[tab.tabName];
-            return tab;
-          })))
-        )
-      );
+    return this.rewardsService.getCategories();
   }
 
   public goToCampaignPage(campaign: ICampaign): void {
