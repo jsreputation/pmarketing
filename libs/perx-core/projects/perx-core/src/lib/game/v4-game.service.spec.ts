@@ -14,6 +14,7 @@ import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 import { ConfigModule } from '../config/config.module';
 import { RedemptionType } from '../perx-core.models';
+import { ConfigService } from '../../public-api';
 
 describe('V4GameService', () => {
   let httpTestingController: HttpTestingController;
@@ -24,6 +25,9 @@ describe('V4GameService', () => {
     preAuth: false,
     baseHref: '/'
   };
+  const configServiceStub: Partial<ConfigService> = {
+    readAppConfig: () => of(environment)
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -31,6 +35,9 @@ describe('V4GameService', () => {
         HttpClientTestingModule,
         ConfigModule.forRoot({ ...environment })
       ],
+      providers: [
+        { provide: ConfigService, useValue: configServiceStub }
+      ]
     });
 
     httpTestingController = TestBed.get<HttpTestingController>(HttpTestingController as Type<HttpTestingController>);

@@ -14,10 +14,12 @@ import { SnakeGameComponent } from './snake/snake.component';
 import { MineSweeperComponent } from './mine-sweeper/mine-sweeper.component';
 import { ICampaignService } from '../campaign/icampaign.service';
 import { AuthenticationService } from '../auth/authentication/authentication.service';
+import { ConfigService } from '../config/config.service';
 
 export function gameServiceFactory(
   http: HttpClient,
   config: Config,
+  configService: ConfigService,
   vouchSvc: IVoucherService,
   campaignService?: ICampaignService,
   auth?: AuthenticationService
@@ -26,7 +28,7 @@ export function gameServiceFactory(
   if (config.isWhistler) {
     return new WhistlerGameService(http, config, vouchSvc, campaignService, auth);
   }
-  return new V4GameService(http, config);
+  return new V4GameService(http, configService);
 }
 // https://github.com/ng-packagr/ng-packagr/issues/641
 // @dynamic
@@ -49,6 +51,7 @@ export function gameServiceFactory(
       deps: [
         HttpClient,
         Config,
+        ConfigService,
         IVoucherService,
         [new Optional(), ICampaignService],
         [new Optional(), AuthenticationService]

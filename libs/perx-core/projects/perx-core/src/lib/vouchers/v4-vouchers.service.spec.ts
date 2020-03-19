@@ -17,6 +17,8 @@ import { VouchersModule } from './vouchers.module';
 
 import { ConfigModule } from '../config/config.module';
 import { RedemptionType } from '../perx-core.models';
+import { ConfigService } from '../config/config.service';
+import { of } from 'rxjs';
 
 describe('V4VouchersService', () => {
   let httpTestingController: HttpTestingController;
@@ -129,6 +131,9 @@ describe('V4VouchersService', () => {
     preAuth: false,
     baseHref: '/'
   };
+  const configServiceStub: Partial<ConfigService> = {
+    readAppConfig: () => of(environment)
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -136,6 +141,9 @@ describe('V4VouchersService', () => {
         HttpClientTestingModule,
         VouchersModule,
         ConfigModule.forRoot({ ...environment })
+      ],
+      providers: [
+        { provide: ConfigService, useValue: configServiceStub }
       ]
     });
     // httpClient = TestBed.get(HttpClient);
