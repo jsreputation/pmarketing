@@ -6,10 +6,10 @@ import {
   AuthenticationService,
   IPopupConfig,
   IPrePlayStateData,
+  IQuiz,
   NotificationService,
   QuizComponent as QuizCoreComponent,
-  QuizService,
-  IQuiz
+  QuizService
 } from '@perxtech/core';
 import { Observable, of, Subject } from 'rxjs';
 import { catchError, filter, map, switchMap, takeUntil } from 'rxjs/operators';
