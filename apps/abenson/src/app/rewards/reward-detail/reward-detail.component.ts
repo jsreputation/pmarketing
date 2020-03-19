@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { 
-  RewardsService, 
-  IReward, 
-  LoyaltyService, 
-  ILoyalty, 
-  IVoucherService, 
-  NotificationService, 
-  IPopupConfig, 
-  PopupComponent, 
-  Voucher 
+import {
+  RewardsService,
+  IReward,
+  LoyaltyService,
+  ILoyalty,
+  IVoucherService,
+  NotificationService,
+  IPopupConfig,
+  PopupComponent,
+  Voucher
 } from '@perxtech/core';
 import { switchMap, mergeMap, tap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
