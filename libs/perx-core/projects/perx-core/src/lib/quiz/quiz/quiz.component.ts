@@ -4,7 +4,6 @@ import {
   Input,
   OnChanges,
   OnDestroy,
-  OnInit,
   Output,
   QueryList,
   SimpleChanges,
@@ -20,7 +19,7 @@ import { QuizQuestionComponent } from '../question/question.component';
   templateUrl: './quiz.component.html',
   styleUrls: ['./quiz.component.scss']
 })
-export class QuizComponent implements OnInit, OnChanges, OnDestroy {
+export class QuizComponent implements OnChanges, OnDestroy {
   @Input('data')
   public data$: Observable<IQuiz>;
 
@@ -49,7 +48,7 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
 
   public viewChecked: boolean = false;
 
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
 
   public ngOnChanges(changes: SimpleChanges): void {
     const questionPointerChange = changes.questionPointer;
@@ -58,10 +57,7 @@ export class QuizComponent implements OnInit, OnChanges, OnDestroy {
       // signal has been called with answer alrdy
       this.currentPointer.emit(questionPointerChange.currentValue);
     }
-  }
-
-  public ngOnInit(): void {
-    if (this.data$) {
+    if (changes.data$ && this.data$) {
       this.data$
         .pipe(takeUntil(this.destroy$))
         .subscribe(data => {
