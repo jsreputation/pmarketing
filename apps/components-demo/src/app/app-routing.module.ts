@@ -44,7 +44,8 @@ const routes: Routes = [
   },
   {
     path: 'candyshop', loadChildren: () => import('./candyshop/candyshop.module').then(mod => mod.CandyshopModule)
-  }
+  },
+  { path: 'quiz', loadChildren: () => import('./quiz/quiz.module').then(m => m.QuizModule) }
 ];
 
 @NgModule({

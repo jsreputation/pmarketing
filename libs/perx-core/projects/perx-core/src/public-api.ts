@@ -211,7 +211,18 @@ export { GroupComponent } from './lib/survey/question/group/group.component';
 export { RatingComponent } from './lib/survey/question/rating/rating.component';
 export { DateComponent } from './lib/survey/question/date/date.component';
 export { PasswordComponent } from './lib/survey/question/password/password.component';
-
+/**
+ * Quiz
+ */
+export { QuizModule } from './lib/quiz/quiz.module';
+export { QuizService } from './lib/quiz/quiz.service';
+export { IQuiz, QuizQuestionType, IQQuestion, IQAnswer } from './lib/quiz/models/quiz.model';
+export { QuizComponent } from './lib/quiz/quiz/quiz.component';
+export { QuizQuestionComponent } from './lib/quiz/question/question.component';
+export { QuizSelectComponent } from './lib/quiz/question/select/select.component';
+export { QuizPictureSelectComponent } from './lib/quiz/question/picture-select/picture-select.component';
+export { QuizLongTextComponent } from './lib/quiz/question/long-text/long-text.component';
+export { QuizRatingComponent } from './lib/quiz/question/rating/rating.component';
 /**
  * Config
  */

@@ -1,0 +1,52 @@
+<div class="question-container" [ngClass]="{ hidden : !isActive }">
+    <div class="question-content" *ngIf="question">
+        <div class="question">
+          <span *ngIf="!hideIndex">
+            {{(alpha ? alpha + '. ' :  id + 1 + '. ' ) + question?.question}}
+          </span>
+          <span *ngIf="hideIndex">
+            {{ (question?.question) }}
+          </span>
+            <span class="required-star">
+                {{question?.required ? '*': ''}}
+            </span>
+        </div>
+        <div class="description" [innerHTML]="question?.description"></div>
+      <!-- for group component below (updatePoints)="updateGroupPoint($event)"-->
+        <perx-core-quiz-select
+            *ngIf="question.payload.type === quizQuestionType.multipleChoice"
+            [payload]="question.payload"
+            (updateAnswers)="updateAnswer($event)"
+        ></perx-core-quiz-select>
+        <perx-core-quiz-rating
+            *ngIf="question.payload.type === quizQuestionType.rating"
+            [payload]="question.payload"
+            (updateAnswers)="updateAnswer($event)"
+        ></perx-core-quiz-rating>
+        <perx-core-quiz-picture-select
+            *ngIf="question.payload.type === quizQuestionType.pictureChoice"
+            [payload]="question.payload"
+            (updateAnswers)="updateAnswer($event)"
+        ></perx-core-quiz-picture-select>
+        <perx-core-quiz-long-text
+            *ngIf="question.payload.type === quizQuestionType.longText"
+            [payload]="question.payload"
+            (updateAnswers)="updateAnswer($event)"
+        ></perx-core-quiz-long-text>
+        <div
+            class="error-message">
+            <div [ngClass]="{ error: errorState?.isRequired }">
+                Answer is <strong>required</strong>
+            </div>
+            <div [ngClass]="{ error: errorState?.exceedMaxLength }">
+                Exceed <strong>max length</strong>
+            </div>
+            <div [ngClass]="{ error: errorState?.isValidDateRange }">
+                Date Range is <strong>invalid</strong>
+            </div>
+            <div [ngClass]="{ error: errorState?.inValidEmail }">
+                Email is <strong>invalid</strong>
+            </div>
+        </div>
+    </div>
+</div>
