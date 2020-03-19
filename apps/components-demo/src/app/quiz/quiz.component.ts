@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IQuiz, QuizQuestionType } from '@perxtech/core';
-import { Subject, ReplaySubject } from 'rxjs';
+import { ReplaySubject, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-quiz',
@@ -41,6 +41,6 @@ export class QuizComponent implements OnInit {
       ],
       results: {}
     };
-    this.questions.next(quiz)
+    this.questions.next(quiz);
   }
 }

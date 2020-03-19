@@ -1,9 +1,8 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { NgModule } from '@angular/core';
+import { QuizModule as CoreQuizModule } from '@perxtech/core';
 import { QuizRoutingModule } from './quiz-routing.module';
 import { QuizComponent } from './quiz.component';
-import { QuizModule as CoreQuizModule } from '@perxtech/core';
 
 @NgModule({
   declarations: [QuizComponent],
