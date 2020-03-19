@@ -9,15 +9,12 @@ import {
   IQuiz,
   NotificationService,
   QuizComponent as QuizCoreComponent,
-  QuizService
+  QuizService,
+  IQAnswer,
+  ITracker
 } from '@perxtech/core';
 import { Observable, of, Subject } from 'rxjs';
 import { catchError, filter, map, switchMap, takeUntil } from 'rxjs/operators';
-
-interface IAnswer {
-  questionId: string;
-  content: any;
-}
 
 @Component({
   selector: 'perx-blackcomb-quiz',
@@ -29,19 +26,18 @@ export class QuizComponent implements OnInit, OnDestroy {
   private overflowContainer: ElementRef | undefined;
   @ViewChild('overFarrow', { static: false }) private overFarrow: ElementRef;
   @ViewChild('coreQuiz', { static: false })
-  private coreSurvey: QuizCoreComponent;
+  private coreQuiz: QuizCoreComponent;
   public data$: Observable<IQuiz>;
-  public intervalId: number;
   public quiz: IQuiz;
-  public answers: IAnswer[] = [];
+  public answers: ITracker<IQAnswer> = {};
   public totalLength: number;
-  public currentPointer: number;
   public questionPointer: number = 0;
-  private hideArrow = () => this.overFarrow.nativeElement.classList.add('hidden');
   private isAnonymousUser: boolean;
   private informationCollectionSetting: string;
   private destroy$: Subject<any> = new Subject();
   private popupData: IPopupConfig;
+  public complete: boolean = false;
+
   public successPopUp: IPopupConfig = {
     title: 'SURVEY_SUCCESS_TITLE',
     text: 'SURVEY_SUCCESS_TEXT',
@@ -65,7 +61,9 @@ export class QuizComponent implements OnInit, OnDestroy {
     private auth: AuthenticationService,
     private cd: ChangeDetectorRef,
     private ngZone: NgZone
-  ) { }
+  ) {
+    this.hideArrow = this.hideArrow.bind(this);
+  }
 
   public ngOnInit(): void {
     this.initTranslate();
@@ -140,45 +138,49 @@ export class QuizComponent implements OnInit, OnDestroy {
   }
 
   public get progressBarValue(): number {
-    // current questionPointer, WARNING: not implemented yet, stub
-    if (this.quizId) {
-      this.quizService.patchQuizAnswer(
-        this.answers,
-        this.route.snapshot.params.id,
-        this.quizId
-      );
-    }
     return ((this.questionPointer + 1) / this.totalLength) * 100 || 0;
   }
 
-  public get surveyComplete(): boolean {
-    const { questions } = this.quiz; // to find if the question is required or not
-    if (
-      this.questionPointer === this.totalLength - 1 &&
-      !questions[this.questionPointer].required
-    ) {
-      return true;
-    }
-    return (
-      this.questionPointer === this.totalLength - 1 &&
-      this.answers[this.questionPointer] &&
-      this.answers[this.questionPointer].content
-    );
+  private questionChanged(): void {
+    this.cd.detectChanges();
+
+    this.checkShowOverArrow();
+    this.cd.detectChanges();
   }
 
-  public onSubmit(): void {
+  public updateQuizStatus(answers: ITracker<IQAnswer>): void {
+    this.answers = answers;
+    // console.log('updateQuizStatus', this.totalLength, this.questionPointer)
+    // current questionPointer, WARNING: not implemented yet, stub
+    if (this.quizId) {
+      this.quizService.patchQuizAnswer(
+        Object.values(this.answers),
+        this.campaignId || 0,
+        this.quizId
+      );
+    }
+  }
+
+  public done(): void {
+    this.complete = true;
+    // console.log('done');
+    // console.log(this.totalLength, this.questionPointer)
+  }
+
+  public submit(): void {
     const surveyId = this.quizId;
+    const campaignId = this.campaignId;
     const isCollectDataRequired = !!(
       this.informationCollectionSetting === 'pi_required' ||
       this.informationCollectionSetting === 'signup_required'
     );
     const userAction$: Observable<{ hasOutcomes: boolean }> =
-      !surveyId || (this.isAnonymousUser && isCollectDataRequired)
+      !surveyId || !campaignId || (this.isAnonymousUser && isCollectDataRequired)
         ? of({ hasOutcomes: true })
         : this.quizService
           .postQuizAnswer(
-            this.answers,
-            this.route.snapshot.params.id,
+            Object.values(this.answers),
+            campaignId,
             surveyId
           )
           .pipe(
@@ -200,6 +202,37 @@ export class QuizComponent implements OnInit, OnDestroy {
         this.redirectUrlAndPopUp();
       }
     );
+  }
+
+  public next(): void {
+    // updateQuestion will be called when questionPointer cause child to emit currentPointer
+    // core validate
+    const questionComponentsArr = this.coreQuiz.questionComponents.toArray();
+    // call validate on the particular question
+    if (questionComponentsArr[this.questionPointer].questionValidation()) {
+      this.questionPointer++;
+      this.questionChanged();
+    }
+    // console.log(this.totalLength, this.questionPointer)
+  }
+
+  public back(): void {
+    this.questionPointer--;
+  }
+
+  private checkShowOverArrow(): void {
+    let card: HTMLElement;
+    let arrow: HTMLElement;
+    if (this.overflowContainer && this.overflowContainer.nativeElement) {
+      card = this.overflowContainer.nativeElement;
+      arrow = this.overFarrow.nativeElement;
+      const isOverflowing = card.clientHeight < card.scrollHeight;
+      if (isOverflowing) {
+        arrow.classList.remove('hidden');
+      } else {
+        arrow.classList.add('hidden');
+      }
+    }
   }
 
   private initTranslate(): void {
@@ -237,16 +270,14 @@ export class QuizComponent implements OnInit, OnDestroy {
 
   private redirectUrlAndPopUp(): void {
     const surveyId = this.quizId;
-    const campaignId = this.route.snapshot.params.id
-      ? Number.parseInt(this.route.snapshot.params.id, 10)
-      : null;
+    const campaignId = this.campaignId;
     const state: IPrePlayStateData = {
       popupData: this.popupData,
       engagementType: 'survey',
       surveyId,
       collectInfo: true,
       campaignId,
-      answers: this.answers
+      answers: Object.values(this.answers)
     };
 
     if (
@@ -265,67 +296,17 @@ export class QuizComponent implements OnInit, OnDestroy {
     }
   }
 
-  public setTotalLength(totalLength: number): void {
-    this.totalLength = totalLength;
-  }
-
-  public setCurrentPointer(currentPointer: number): void {
-    // has to have two detectChanges here
-    this.currentPointer = currentPointer;
-    this.cd.detectChanges();
-
-    this.checkShowOverArrow();
-    this.cd.detectChanges();
-  }
-
-  public updateSurveyStatus(answers: IAnswer[]): void {
-    if (this.answers) {
-      this.answers = answers;
-    }
-  }
-
-  public checkShowOverArrow(): void {
-    let card: HTMLElement;
-    let arrow: HTMLElement;
-    if (this.overflowContainer && this.overflowContainer.nativeElement) {
-      card = this.overflowContainer.nativeElement;
-      arrow = this.overFarrow.nativeElement;
-      const isOverflowing = card.clientHeight < card.scrollHeight;
-      if (isOverflowing) {
-        arrow.classList.remove('hidden');
-      } else {
-        arrow.classList.add('hidden');
-      }
-    }
-  }
-
-  public updateQuestionPointer(action: string): void {
-    const { questions } = this.quiz; // to find if the question is required or not
-    // updateQuestion will be called when questionPointer cause child to emit currentPointer
-    if (action === 'next') {
-      // core validate
-      const questionComponentsArr = this.coreSurvey.questionComponents.toArray();
-      // call validate on the particular question
-      questionComponentsArr[this.questionPointer].questionValidation();
-      if (!questionComponentsArr[this.questionPointer].errorState.hasError) {
-        if (!questions[this.questionPointer].required) {
-          // able to go next if not required
-          this.questionPointer++;
-        }
-        const answerToCurrentQuestion = this.answers.find(
-          answer => parseInt(answer.questionId, 10) === this.questionPointer
-        );
-        if (answerToCurrentQuestion && answerToCurrentQuestion.content) {
-          // able to go next if answer has been answered
-          this.questionPointer++;
-        }
-      }
-    } else {
-      this.questionPointer--;
-    }
+  private hideArrow(): void {
+    this.overFarrow.nativeElement.classList.add('hidden');
   }
 
   private get quizId(): number | null {
     return this.quiz && this.quiz.id ? Number.parseInt(this.quiz.id, 10) : null;
+  }
+
+  private get campaignId(): number | null {
+    return this.route.snapshot.params.id
+      ? Number.parseInt(this.route.snapshot.params.id, 10)
+      : null;
   }
 }

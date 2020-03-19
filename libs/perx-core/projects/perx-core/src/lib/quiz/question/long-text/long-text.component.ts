@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { IQAnswer } from '../../models/quiz.model';
 
 interface IPayloadLongText {
   type: string;
@@ -21,7 +20,7 @@ export class QuizLongTextComponent implements OnChanges, OnInit {
   public flush: boolean;
 
   @Output()
-  public updateAnswers: EventEmitter<IQAnswer> = new EventEmitter<IQAnswer>();
+  public updateAnswers: EventEmitter<string> = new EventEmitter<string>();
 
   public answer: string;
   private subject: Subject<string> = new Subject();
@@ -30,7 +29,7 @@ export class QuizLongTextComponent implements OnChanges, OnInit {
     this.subject.pipe(
       debounceTime(300)
     ).subscribe(inputValue => {
-      this.updateAnswers.emit({ content: inputValue });
+      this.updateAnswers.emit(inputValue);
     });
   }
 

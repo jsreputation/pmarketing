@@ -1,12 +1,12 @@
 import { IWCampaignDisplayProperties } from '@perxtech/whistler';
 
 export interface IQAnswer {
-  questionId?: string;
+  questionId: string;
   content: any;
 }
 
 export interface IPoints {
-  questionId?: string;
+  questionId: string;
   point: number;
 }
 
@@ -14,12 +14,12 @@ export interface IDateRange {
   from: string;
   to: string;
 }
-export interface ITracker {
-  [key: string]: any;
+export interface ITracker<T = any> {
+  [key: string]: T;
 }
 
 export interface IQQuestion {
-  id?: string;
+  id: string;
   question: string;
   description?: string;
   required: boolean;
@@ -68,13 +68,14 @@ export interface IErrors {
   exceedMaxLength?: boolean;
   isValidPhoneNumber?: boolean;
   isValidDateRange?: boolean;
-  inValidEmail?: boolean;
+  isInvalidEmail?: boolean;
 }
 
 export interface IPayload {
   type: QuizQuestionType;
   [key: string]: any;
 }
+
 export enum SurveyRatingIcons {
   star = 'star_border',
   starSelected = 'star',

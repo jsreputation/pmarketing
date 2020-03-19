@@ -90,9 +90,10 @@
 
 .bottom-nav-container {
   display: flex;
+  flex-direction: row;
   justify-content: space-around;
   flex: 0 0 7rem;
-  background: white; //var(--surface_colour) !important;
+  background: var(--surface_colour, white) !important;
   font-size: 1rem;
   line-height: 1.6rem;
 
@@ -100,7 +101,8 @@
     text-decoration: none;
     text-align: center;
     height: 4rem;
-    width: 13rem;
+    // width: 13rem;
+    flex: 1;
   }
 }
 

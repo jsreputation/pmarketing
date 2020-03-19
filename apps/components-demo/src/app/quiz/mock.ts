@@ -5,6 +5,7 @@ export const quiz: IQuiz = {
   backgroundImgUrl: 'assets/quiz/background.png',
   questions: [
     {
+      id: 'jo',
       question: 'Quel est le premier doigt de la main de l\'homme et de certains vertébrés?',
       required: true,
       payload: {
@@ -19,6 +20,7 @@ export const quiz: IQuiz = {
       }
     },
     {
+      id: 'joe',
       question: 'Suite à la réforme territoriale, combien la France métropolitaine compte-t-elle de régions ?',
       required: true,
       payload: {

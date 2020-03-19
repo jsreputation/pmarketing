@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { IQAnswer, ITracker } from '../../models/quiz.model';
+import { ITracker } from '../../models/quiz.model';
 
 interface IPayloadPictureSelect {
   type: string;
@@ -25,7 +25,7 @@ export class QuizPictureSelectComponent implements OnChanges {
   public flush: boolean;
 
   @Output()
-  public updateAnswers: EventEmitter<IQAnswer> = new EventEmitter<IQAnswer>();
+  public updateAnswers: EventEmitter<string[]> = new EventEmitter<string[]>();
 
   public selectedChoices: ITracker = {};
   public selectedChoice: number;
@@ -54,7 +54,7 @@ export class QuizPictureSelectComponent implements OnChanges {
     } else {
       result[0] = this.selectedChoice.toString();
     }
-    this.updateAnswers.emit({ content: result });
+    this.updateAnswers.emit(result);
   }
   public isSelected(index: number): boolean {
     return this.payload.multiple ? this.selectedChoices && this.selectedChoices[index] : this.selectedChoice === index;
