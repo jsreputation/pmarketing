@@ -9,6 +9,7 @@ import { ConfigModule } from '../config/config.module';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 import { IV4Reward } from '../rewards/v4-rewards.service';
+import { ConfigService } from '../config/config.service';
 
 describe('V4CampaignService', () => {
   let httpTestingController: HttpTestingController;
@@ -22,12 +23,16 @@ describe('V4CampaignService', () => {
     preAuth: false,
     baseHref: '/'
   };
+  const configServiceStub: Partial<ConfigService> = {
+    readAppConfig: () => of(environment)
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, ConfigModule.forRoot({ ...environment })],
       providers: [
-        { provide: IVoucherService, useValue: vouchersServiceMock }
+        { provide: IVoucherService, useValue: vouchersServiceMock },
+        { provide: ConfigService, useValue: configServiceStub }
       ]
     });
     // httpClient = TestBed.get(HttpClient);
