@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfileService, AuthenticationService, IChangePasswordData } from '@perxtech/core';
+import { ProfileService, AuthenticationService, IChangePasswordData, IChangePhoneData } from '@perxtech/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
 import { Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { flatMap } from 'rxjs/operators';
 import { NotificationWrapperService } from 'src/app/services/notification-wrapper.service';
-import { IChangePhoneData } from '@perxtech/core/dist/perx-core/lib/auth/authentication/models/authentication.model';
 
 @Component({
   selector: 'hkbn-verification-otp',

@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of, Observable } from 'rxjs';
 import { switchMap, tap, flatMap } from 'rxjs/operators';
-import { IChangePhoneData } from '@perxtech/core/dist/perx-core/lib/auth/authentication/models/authentication.model';
-import { AuthenticationService, NotificationService, IChangePasswordData, ProfileService, PopupComponent } from '@perxtech/core';
+import { AuthenticationService, NotificationService, IChangePasswordData, ProfileService, PopupComponent, IChangePhoneData } from '@perxtech/core';
 import { SharedDataService } from 'src/app/services/shared-data.service';
 import { MatDialog } from '@angular/material';
 
