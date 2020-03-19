@@ -39,4 +39,4 @@ export { CampaignStampsComponent } from './lib/campaign-stamps/campaign-stamps.c
 export { CatalogsComponent } from './lib/catalogs/catalogs.component';
 export { CatalogComponent } from './lib/catalog/catalog.component';
 export { CatalogRewardCardComponent } from './lib/catalog-reward-card/catalog-reward-card.component';
-
+export { QuizComponent } from './lib/quiz/quiz.component';
