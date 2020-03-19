@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { QrRedemptionRoutingModule } from './qr-redemption-routing.module';
 import { QrRedemptionComponent } from './qr-redemption.component';
-import { VouchersModule } from '@perx/core';
+import { VouchersModule } from '@perxtech/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({

@@ -1,6 +1,6 @@
 import { Observable, of } from 'rxjs';
 import { IAMUserMock } from '@cl-shared/test-components/mock-data/iam-user-mock';
-import { IJsonApiItemPayload, IWLoginAttributes } from '@perx/whistler';
+import { IJsonApiItemPayload, IWLoginAttributes } from '@perxtech/whistler';
 import { IAMUser } from '@cl-core/models/settings/IAMUser.interface';
 import { ILogin } from '@cl-core/models/auth/login.interface';
 

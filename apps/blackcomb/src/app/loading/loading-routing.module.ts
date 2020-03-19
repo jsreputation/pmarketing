@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoadingComponent } from '@perx/blackcomb-pages';
+import { LoadingComponent } from '@perxtech/blackcomb-pages';
 
 const routes: Routes = [{
   path: '',

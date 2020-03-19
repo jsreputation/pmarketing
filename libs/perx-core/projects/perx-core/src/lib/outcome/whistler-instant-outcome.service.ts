@@ -19,7 +19,7 @@ import {
   WInstantOutcomeStatus,
   IWAssignedAttributes,
   IWProperties
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { IEngagementTransaction } from '../game/game.model';
 import { IVoucher } from '../vouchers/models/voucher.model';
 import { IVoucherService } from '../vouchers/ivoucher.service';
@@ -97,7 +97,7 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
   }
 
   private static outcomeToOutcome(outcome: IWProperties): IOutcomeMsg {
-    return  {
+    return {
       title: outcome.headLine ? outcome.headLine : '',
       subTitle: outcome.subHeadLine ? outcome.subHeadLine : '',
       button: outcome.buttonTxt ? outcome.buttonTxt : '',
@@ -107,19 +107,19 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
 
   public claim(campaignId: number): Observable<IVoucher[]> {
     const buildBody: Observable<IJsonApiPostItem<IWInstantOutcomeTxnReq>> =
-    this.getEngagementId(campaignId)
-      .pipe(
-        map((campaign: IWCampaignProperties ): IJsonApiPostItem<IWInstantOutcomeTxnReq> => ({
-          data: {
-            type: 'transactions',
-            attributes: {
-              engagement_id: campaign.engagementId,
-              campaign_entity_id: campaignId,
-              status: WInstantOutcomeStatus.confirmed
+      this.getEngagementId(campaignId)
+        .pipe(
+          map((campaign: IWCampaignProperties): IJsonApiPostItem<IWInstantOutcomeTxnReq> => ({
+            data: {
+              type: 'transactions',
+              attributes: {
+                engagement_id: campaign.engagementId,
+                campaign_entity_id: campaignId,
+                status: WInstantOutcomeStatus.confirmed
+              }
             }
-          }
-        }))
-      );
+          }))
+        );
 
     return buildBody.pipe(
       switchMap(

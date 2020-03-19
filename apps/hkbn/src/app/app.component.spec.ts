@@ -6,7 +6,7 @@ import {
   MatDialogModule,
   // MatSnackBar
 } from '@angular/material';
-import { NotificationService, PopupComponent, UtilsModule } from '@perx/core';
+import { NotificationService, PopupComponent, UtilsModule } from '@perxtech/core';
 import { Observable, of } from 'rxjs';
 import { SnackbarModule } from './ui/snackbar/snackbar.module';
 // import { SnackbarComponent } from './ui/snackbar/snackbar.component';

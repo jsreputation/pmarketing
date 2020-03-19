@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IWSurveyEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
+import { IWSurveyEngagementAttributes, IJsonApiItemPayload } from '@perxtech/whistler';
 import { ApiConfigServices } from '../configs/api-config';
 
 @Injectable()

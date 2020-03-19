@@ -13,9 +13,9 @@ import {
   WSurveyQuestionType,
   IJsonApiItemPayload,
   IWProperties
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 
-import { IWCampaignDisplayProperties } from '@perx/whistler';
+import { IWCampaignDisplayProperties } from '@perxtech/whistler';
 
 @Injectable({
   providedIn: 'root'

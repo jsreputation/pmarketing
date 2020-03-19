@@ -8,7 +8,7 @@ import { TokenStorage } from '../utils/storage/token-storage.service';
 import { WhistlerProfileService } from './whistler-profile.service';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
-import { IWProfileAttributes, IJsonApiItem } from '@perx/whistler';
+import { IWProfileAttributes, IJsonApiItem } from '@perxtech/whistler';
 const tokenStorageStrud: Partial<TokenStorage> = {
   getAppInfoProperty: () => 'test'
 };

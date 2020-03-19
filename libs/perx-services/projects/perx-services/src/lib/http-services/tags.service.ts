@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ApiConfigService } from '../configs/api-config';
 import { Observable } from 'rxjs';
-import { IPTags, IPPostTag, IPPostTagResponse, IPTag } from '@perx/model';
+import { IPTags, IPPostTag, IPPostTagResponse, IPTag } from '@perxtech/model';
 import { map } from 'rxjs/operators';
 
 @Injectable({

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {IGameOutcome, Voucher} from '@perx/core';
+import { IGameOutcome, Voucher } from '@perxtech/core';
 
 @Injectable({
   providedIn: 'root'

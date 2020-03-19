@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IReward } from '@perx/core';
+import { IReward } from '@perxtech/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SortingMode } from './category.model';

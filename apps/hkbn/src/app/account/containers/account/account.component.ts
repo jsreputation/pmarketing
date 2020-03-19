@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IProfile, ProfileService } from '@perx/core';
+import { IProfile, ProfileService } from '@perxtech/core';
 import { Observable } from 'rxjs';
 
 @Component({

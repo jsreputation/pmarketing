@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
-import { ConfigService, IConfig, IStampCard, StampService, StampState, Voucher } from '@perx/core';
+import { ConfigService, IConfig, IStampCard, StampService, StampState, Voucher } from '@perxtech/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
 import { oc } from 'ts-optchain';

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IPMerchants, IPPutMerchant } from '@perx/model/dist/perx-model/lib/merchants/merchants';
-import { IPPostMerchant, IPPostMerchantResponse } from '@perx/model';
+import { IPMerchants, IPPutMerchant } from '@perxtech/model/dist/perx-model/lib/merchants/merchants';
+import { IPPostMerchant, IPPostMerchantResponse } from '@perxtech/model';
 import { HttpClient } from '@angular/common/http';
 import { ApiConfigService } from '../configs/api-config';
 

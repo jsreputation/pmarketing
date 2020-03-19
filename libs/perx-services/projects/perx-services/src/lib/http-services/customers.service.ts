@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PCustomerState, IPCustomers } from '@perx/model';
+import { PCustomerState, IPCustomers } from '@perxtech/model';
 import { HttpClient } from '@angular/common/http';
 import { ApiConfigService } from '../configs/api-config';
 

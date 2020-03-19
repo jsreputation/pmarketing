@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfileService, IProfile, AuthenticationService, LoyaltyService, ILoyalty } from '@perx/core';
+import { ProfileService, IProfile, AuthenticationService, LoyaltyService, ILoyalty } from '@perxtech/core';
 import { Router } from '@angular/router';
 import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
 

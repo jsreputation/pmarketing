@@ -1,7 +1,7 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { VouchersModule, IVoucherService } from '@perx/core';
+import { VouchersModule, IVoucherService } from '@perxtech/core';
 import { of } from 'rxjs';
 
 const vouchersServiceStub: Partial<IVoucherService> = {

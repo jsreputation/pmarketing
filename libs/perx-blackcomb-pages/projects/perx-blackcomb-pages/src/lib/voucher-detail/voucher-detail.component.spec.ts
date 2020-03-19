@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { VoucherDetailComponent } from './voucher-detail.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { IVoucherService, VouchersModule, Voucher, VoucherState } from '@perx/core';
+import { IVoucherService, VouchersModule, Voucher, VoucherState } from '@perxtech/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
@@ -80,6 +80,6 @@ describe('VoucherDetailComponent', () => {
     const routerSpy = spyOn(routerService, 'navigate');
     component.onRedeem();
     tick();
-    expect(routerSpy).toHaveBeenCalledWith([ 'redeem', 1 ]);
+    expect(routerSpy).toHaveBeenCalledWith(['redeem', 1]);
   }));
 });

@@ -2,12 +2,12 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { CodeRedemptionComponent } from './code-redemption.component';
 import { MatButtonModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { VouchersModule, IVoucherService, Voucher } from '@perx/core';
+import { VouchersModule, IVoucherService, Voucher } from '@perxtech/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { mockVoucher } from '../voucher.mock';
 import { NotificationWrapperService } from 'src/app/services/notification-wrapper.service';
-import { VoucherState } from '@perx/core';
+import { VoucherState } from '@perxtech/core';
 import { Location } from '@angular/common';
 
 const NotificationWrapperServiceStub: Partial<NotificationWrapperService> = {

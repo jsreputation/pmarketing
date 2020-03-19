@@ -1,4 +1,4 @@
-import { IMeta } from '@perx/whistler';
+import { IMeta } from '@perxtech/whistler';
 
 export interface ITableData<T> {
   data: T[];

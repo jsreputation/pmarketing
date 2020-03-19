@@ -21,12 +21,14 @@ import { StorageModule } from './storage/storage.module';
 import { FeedItemPopupComponent } from './feed-item-popup/feed-item-popup.component';
 import { MatIconModule } from '@angular/material/icon';
 import { SortRewardsPipe } from './directives/sort-rewards-pipe';
+import { StripHtmlPipe } from './directives/striphtml-pipe';
+import { ConfigService } from '../config/config.service';
 
-export function themesServiceFactory(http: HttpClient, config: Config): ThemesService {
+export function themesServiceFactory(http: HttpClient, config: Config, configService: ConfigService): ThemesService {
   if (config.isWhistler) {
     return new WhistlerThemesService(http, config);
   }
-  return new V4ThemesService(http, config);
+  return new V4ThemesService(http, configService);
 }
 
 const directives = [
@@ -57,7 +59,8 @@ export function notificationServiceFactory(): NotificationService {
     ...directives,
     ...components,
     DistancePipe,
-    SortRewardsPipe
+    SortRewardsPipe,
+    StripHtmlPipe
   ],
   entryComponents: [
     ...components,
@@ -75,7 +78,8 @@ export function notificationServiceFactory(): NotificationService {
     ...directives,
     ...components,
     DistancePipe,
-    SortRewardsPipe
+    SortRewardsPipe,
+    StripHtmlPipe
   ],
   providers: [
     { provide: NotificationService, useFactory: notificationServiceFactory },
@@ -84,7 +88,7 @@ export function notificationServiceFactory(): NotificationService {
     {
       provide: ThemesService,
       useFactory: themesServiceFactory,
-      deps: [HttpClient, Config]
+      deps: [HttpClient, Config, ConfigService]
     }
   ]
 })

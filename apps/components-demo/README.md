@@ -1,6 +1,6 @@
 # ComponentsDemo
 
-This project is currently a WIP as a functional self-documenting app of the components exposed from @perx/core library.
+This project is currently a WIP as a functional self-documenting app of the components exposed from @perxtech/core library.
 
 ## Dependencies
 * node 10.14 or greater

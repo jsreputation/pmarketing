@@ -7,7 +7,7 @@ import { SettingsMobilePreviewModule } from '../../components/settings-mobile-pr
 import { ClColorPickerModule } from '@cl-shared/components/cl-color-picker/cl-color-picker.module';
 import { UploadGraphicModule } from '@cl-shared/components/upload-graphic/upload-graphic.module';
 import { SimpleMobileViewModule } from '@cl-shared';
-import { RewardsModule as PerxRewardsModule, RewardsService, ThemesService } from '@perx/core';
+import { RewardsModule as PerxRewardsModule, RewardsService, ThemesService } from '@perxtech/core';
 import { DirectivesModule } from '@cl-shared/directives/directives.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';

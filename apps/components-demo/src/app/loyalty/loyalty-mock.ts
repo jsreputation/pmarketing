@@ -1,4 +1,4 @@
-import { IProfile, ILoyalty, ITransaction } from '@perx/core';
+import { IProfile, ILoyalty, ITransaction } from '@perxtech/core';
 
 export const mockProfile: IProfile = {
   id: 952,

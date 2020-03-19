@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule, MatSelectModule } from '@angular/material';
-import { ButtonModule } from '@perx/candyshop';
+import { ButtonModule } from '@perxtech/candyshop';
 import { TranslateModule } from '@ngx-translate/core';
 import { QuestionTypeComponent } from './question-type.component';
 

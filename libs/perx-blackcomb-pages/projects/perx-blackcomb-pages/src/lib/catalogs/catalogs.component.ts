@@ -1,10 +1,10 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import {
   ICatalog,
   RewardsService,
-} from '@perx/core';
-import {scan} from 'rxjs/operators';
+} from '@perxtech/core';
+import { scan } from 'rxjs/operators';
 
 const REQ_PAGE_SIZE: number = 10;
 

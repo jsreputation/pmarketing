@@ -12,7 +12,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MessageService } from '@cl-core-services';
 import { LoyaltyCardService } from '@cl-core/services/loyalty-card.service';
 import { MockLoyaltyCardService } from '@cl-shared/test-components/providers/mock-loyalty-card.service';
-import { ButtonModule } from '@perx/candyshop';
+import { ButtonModule } from '@perxtech/candyshop';
 
 describe('AddLoyaltyPopupComponent', () => {
   let component: AddLoyaltyPopupComponent;

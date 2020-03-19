@@ -9,7 +9,7 @@ import {
   ThemesService,
   ConfigService,
   IConfig
-} from '@perx/core';
+} from '@perxtech/core';
 import { LoginComponent } from './auth/login/login.component';
 import { HomeComponent } from './home/home.component';
 import { HistoryComponent } from './history/history.component';

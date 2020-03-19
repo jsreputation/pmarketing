@@ -10,7 +10,7 @@ import {
   NotificationService,
   ThemesService,
   ITheme
-} from '@perx/core';
+} from '@perxtech/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
@@ -36,8 +36,8 @@ const authenticationServiceStub: Partial<AuthenticationService> = {
 };
 
 const notificationServiceStub: Partial<NotificationService> = {
-  addSnack: () => {},
-  addPopup: () => {}
+  addSnack: () => { },
+  addPopup: () => { }
 };
 
 const themeServiceStub: Partial<ThemesService> = {
@@ -51,7 +51,7 @@ describe('EnterPinComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EnterPinComponent ],
+      declarations: [EnterPinComponent],
       imports: [
         UtilsModule,
         NoopAnimationsModule,
@@ -61,9 +61,9 @@ describe('EnterPinComponent', () => {
       ],
       providers: [
         { provide: ProfileService, useValue: profileServiceStub },
-        { provide: AuthenticationService, useValue: authenticationServiceStub},
-        { provide: NotificationService, useValue: notificationServiceStub},
-        { provide: ThemesService, useValue: themeServiceStub},
+        { provide: AuthenticationService, useValue: authenticationServiceStub },
+        { provide: NotificationService, useValue: notificationServiceStub },
+        { provide: ThemesService, useValue: themeServiceStub },
         { provide: ActivatedRoute, useValue: { paramMap: of(convertToParamMap({ type: 'password' })) } },
       ]
     })

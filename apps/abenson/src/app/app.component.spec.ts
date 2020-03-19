@@ -2,7 +2,7 @@ import { TestBed, async, fakeAsync, ComponentFixture, tick } from '@angular/core
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MatDialogModule, MatToolbarModule, MatIconModule, MatSnackBarModule, MatDialog, MatSnackBar } from '@angular/material';
-import { NotificationService, AuthenticationService, IVoucherService, ICampaignService, ProfileService, ConfigService, ThemesService } from '@perx/core';
+import { NotificationService, AuthenticationService, IVoucherService, ICampaignService, ProfileService, ConfigService, ThemesService } from '@perxtech/core';
 import { HomeComponent } from './home/home.component';
 import { TermsAndConditionComponent } from './account/profile-additions/containers/terms-and-condition/terms-and-condition.component';
 import { ProfileComponent } from './account/profile/profile.component';

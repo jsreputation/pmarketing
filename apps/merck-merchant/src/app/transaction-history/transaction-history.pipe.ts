@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ITransactionHistory, TransactionDetailType } from '@perx/core';
+import { ITransactionHistory, TransactionDetailType } from '@perxtech/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 

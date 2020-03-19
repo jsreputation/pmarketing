@@ -12,7 +12,7 @@ import {
   IJsonApiListPayload,
   IJsonApiItemPayload,
   IJsonApiPostItem,
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { SOURCE_TYPE } from '../app.constants';
 import { ApiConfigServices } from '../configs/api-config';
 

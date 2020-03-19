@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { RedemptionComponent } from './redemption.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatIconModule, MatDividerModule } from '@angular/material';
-import { VouchersModule, IVoucherService, VoucherState, UtilsModule, RewardsService, Voucher, RedemptionType, NotificationService } from '@perx/core';
+import { VouchersModule, IVoucherService, VoucherState, UtilsModule, RewardsService, Voucher, RedemptionType, NotificationService } from '@perxtech/core';
 import { RewardDetailComponent } from '../reward/reward-detail/reward-detail.component';
 import { LocationShortFormatComponent } from '../location-short-format/location-short-format.component';
 import { ExpireTimerComponent } from '../reward/expire-timer/expire-timer.component';
@@ -65,7 +65,7 @@ describe('RedemptionComponent', () => {
   };
 
   const notificationServiceStub: Partial<NotificationService> = {
-    addSnack: () => {}
+    addSnack: () => { }
   };
 
   let params: Subject<Params>;

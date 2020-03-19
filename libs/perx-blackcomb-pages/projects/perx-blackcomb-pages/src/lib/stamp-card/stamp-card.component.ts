@@ -7,10 +7,10 @@ import {
   PuzzleCollectReward,
   IStamp,
   StampState
-} from '@perx/core';
+} from '@perxtech/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import {filter, switchMap, takeUntil, map, tap, pairwise} from 'rxjs/operators';
-import {Subject} from 'rxjs';
+import { filter, switchMap, takeUntil, map, tap, pairwise } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { oc } from 'ts-optchain';
 
@@ -121,8 +121,8 @@ export class StampCardComponent implements OnInit, OnDestroy {
       ).subscribe(([prevStamps, currStamps]) => {
         // after skip once we get definitely prev and current
         if ((currStamps && currStamps.stamps) &&
-        (prevStamps && prevStamps.stamps) &&
-        prevStamps.stamps.length < currStamps.stamps.length) {
+          (prevStamps && prevStamps.stamps) &&
+          prevStamps.stamps.length < currStamps.stamps.length) {
           this.stampCard = currStamps;
           this.notificationService.addSnack('You got a new stamp!');
         }

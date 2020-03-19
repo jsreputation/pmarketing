@@ -11,7 +11,7 @@ import {
 import {
   AuthenticationService,
   NotificationService,
-} from '@perx/core';
+} from '@perxtech/core';
 
 import {
   PageAppearence,

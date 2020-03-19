@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
-import { Voucher, IVoucherService } from '@perx/core';
+import { Voucher, IVoucherService } from '@perxtech/core';
 import { Observable, forkJoin, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { PageType, AnalyticsService } from 'src/app/analytics.service';

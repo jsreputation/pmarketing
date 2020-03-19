@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
-import { AuthenticationService, ConfigService, IConfig } from '@perx/core';
+import { AuthenticationService, ConfigService, IConfig } from '@perxtech/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({

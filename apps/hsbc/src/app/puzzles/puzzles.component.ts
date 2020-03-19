@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
-import {ConfigService, IConfig, isEmptyString, IStampCard, NotificationService} from '@perx/core';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ConfigService, IConfig, isEmptyString, IStampCard, NotificationService } from '@perxtech/core';
 
 @Component({
   selector: 'app-puzzles',

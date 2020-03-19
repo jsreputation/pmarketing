@@ -1,8 +1,8 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {EngagementsListComponent} from './engagements-list.component';
+import { EngagementsListComponent } from './engagements-list.component';
 // tslint:disable
-import {NO_ERRORS_SCHEMA} from '@angular/core';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import {
   MatButtonModule,
   MatDialogModule,
@@ -13,16 +13,16 @@ import {
   MatTableDataSource,
   MatTableModule
 } from '@angular/material';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {ReactiveFormsModule} from '@angular/forms';
-import {TableFiltersModule} from '../../../shared/table/table-filters/table-filters.module';
-import {SearchFilterModule} from '../../../shared/table/search-filter/search-filter.module';
-import {TabsFilterModule} from '../../../shared/table/tabs-filter/tabs-filter.module';
-import {NoDataModule} from '../../../shared/table/no-data/no-data.module';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
+import { TableFiltersModule } from '../../../shared/table/table-filters/table-filters.module';
+import { SearchFilterModule } from '../../../shared/table/search-filter/search-filter.module';
+import { TabsFilterModule } from '../../../shared/table/tabs-filter/tabs-filter.module';
+import { NoDataModule } from '../../../shared/table/no-data/no-data.module';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { IEngagementType } from '@cl-core/models/engagement/engagement.interface';
 import { TranslateModule } from '@ngx-translate/core';
-import { ButtonModule, StatusLabelModule } from '@perx/candyshop';
+import { ButtonModule, StatusLabelModule } from '@perxtech/candyshop';
 
 describe('RewardsCampaignsListComponent', () => {
   let component: EngagementsListComponent;

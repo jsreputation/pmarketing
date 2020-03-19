@@ -1,10 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AuthenticationService, NotificationService } from '@perx/core';
+import { AuthenticationService, NotificationService, ISignUpData } from '@perxtech/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, Observable, of } from 'rxjs';
 import { takeUntil, switchMap } from 'rxjs/operators';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
-import { ISignUpData } from '@perx/core/dist/perx-core/lib/auth/authentication/models/authentication.model';
 
 @Component({
   selector: 'hkbn-sms-validation',

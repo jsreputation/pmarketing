@@ -7,10 +7,10 @@ import { combineLatest, Observable, of, Subject } from 'rxjs';
 import { tap, map, switchMap, takeUntil } from 'rxjs/operators';
 
 import { ControlsName } from '../../../../models/controls-name';
-import { ISlice } from '@perx/core';
+import { ISlice } from '@perxtech/core';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.component';
-import { IWSpinGameEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
+import { IWSpinGameEngagementAttributes, IJsonApiItemPayload } from '@perxtech/whistler';
 import { SpinService } from '@cl-core/services/spin.service';
 import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
 import { CommonSelect } from '@cl-core/models/common-select.interface';

@@ -13,7 +13,7 @@ import {
 } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ProfileService, AuthenticationService } from '@perx/core';
+import { ProfileService, AuthenticationService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -39,8 +39,8 @@ describe('AccountComponent', () => {
       ],
       declarations: [AccountComponent, AccountSummaryComponent],
       providers: [
-        {provide: ProfileService, useValue: {whoAmI: () => of(null)}},
-        {provide: AuthenticationService, useValue: {}}
+        { provide: ProfileService, useValue: { whoAmI: () => of(null) } },
+        { provide: AuthenticationService, useValue: {} }
       ]
     })
       .compileComponents();

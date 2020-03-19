@@ -11,7 +11,7 @@ import {
   AuthenticationService,
   NotificationService,
   IProfile,
-} from '@perx/core';
+} from '@perxtech/core';
 
 import {
   PageAppearence,
@@ -75,7 +75,7 @@ export class SignupComponent implements PageAppearence {
       this.authService.getAppToken().subscribe(() => {
         this.appAccessTokenFetched = true;
       }, (err) => {
-        console.error(`Error${  err}`);
+        console.error(`Error${err}`);
       });
     }
   }

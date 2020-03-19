@@ -1,5 +1,5 @@
 {
-  "name": "@perx/candyshop",
+  "name": "@perxtech/candyshop",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -63,15 +63,15 @@
     "tslint-consistent-codestyle": "^1.15.1",
     "typescript": "~3.4.3"
   },
-  "main": "dist/perx-candyshop/bundles/perx-candyshop.umd.js",
-  "module": "dist/perx-candyshop/fesm5/perx-candyshop.js",
-  "es2015": "dist/perx-candyshop/fesm2015/perx-candyshop.js",
-  "esm5": "dist/perx-candyshop/esm5/perx-candyshop.js",
-  "esm2015": "dist/perx-candyshop/esm2015/perx-candyshop.js",
-  "fesm5": "dist/perx-candyshop/fesm5/perx-candyshop.js",
-  "fesm2015": "dist/perx-candyshop/fesm2015/perx-candyshop.js",
-  "typings": "dist/perx-candyshop/perx-candyshop.d.ts",
-  "metadata": "dist/perx-candyshop/perx-candyshop.metadata.json",
+  "main": "dist/perx-candyshop/bundles/perxtech-candyshop.umd.js",
+  "module": "dist/perx-candyshop/fesm5/perxtech-candyshop.js",
+  "es2015": "dist/perx-candyshop/fesm2015/perxtech-candyshop.js",
+  "esm5": "dist/perx-candyshop/esm5/perxtech-candyshop.js",
+  "esm2015": "dist/perx-candyshop/esm2015/perxtech-candyshop.js",
+  "fesm5": "dist/perx-candyshop/fesm5/perxtech-candyshop.js",
+  "fesm2015": "dist/perx-candyshop/fesm2015/perxtech-candyshop.js",
+  "typings": "dist/perx-candyshop/perxtech-candyshop.d.ts",
+  "metadata": "dist/perx-candyshop/perxtech-candyshop.metadata.json",
   "jest": {
     "preset": "jest-preset-angular",
     "roots": [

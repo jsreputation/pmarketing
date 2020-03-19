@@ -5,7 +5,7 @@ import { MatButtonModule, MatIconModule, MatListModule, MatSidenavModule, MatToo
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { AuthenticationService, ProfileService } from '@perx/core';
+import { AuthenticationService, ProfileService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { Location } from '@angular/common';
 
@@ -26,7 +26,7 @@ describe('HeaderComponent', () => {
         TranslateModule.forRoot(),
       ],
       providers: [
-        {provide: ProfileService, useValue: {whoAmI: () => of(true)}},
+        { provide: ProfileService, useValue: { whoAmI: () => of(true) } },
         {
           provide: AuthenticationService, useValue: {
             logout: () => {

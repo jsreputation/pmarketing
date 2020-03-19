@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ApiConfigService } from '../configs/api-config';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { IPCustomImageRatios, IPCustomImageRatioPutResponse, IPCustomImageRatio } from '@perx/model';
+import { IPCustomImageRatios, IPCustomImageRatioPutResponse, IPCustomImageRatio } from '@perxtech/model';
 
 @Injectable({
   providedIn: 'root'

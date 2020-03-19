@@ -11,13 +11,14 @@ import { HttpClient } from '@angular/common/http';
 import { WhistlerLoyaltyService } from './whistler-loyalty.service';
 import { AuthenticationService } from '../auth/authentication/authentication.service';
 import {MatProgressBarModule, MatProgressSpinnerModule} from '@angular/material';
+import { ConfigService } from '../config/config.service';
 
-export function loyaltyServiceFactory(http: HttpClient, config: Config): LoyaltyService {
+export function loyaltyServiceFactory(http: HttpClient, config: Config, configService: ConfigService): LoyaltyService {
   // Make decision on what to instantiate base on config
   if (config.isWhistler) {
     return new WhistlerLoyaltyService(http, config);
   }
-  return new V4LoyaltyService(http, config);
+  return new V4LoyaltyService(http, configService);
 }
 
 @NgModule({
@@ -42,7 +43,7 @@ export function loyaltyServiceFactory(http: HttpClient, config: Config): Loyalty
     {
       provide: LoyaltyService,
       useFactory: loyaltyServiceFactory,
-      deps: [HttpClient, Config, AuthenticationService]
+      deps: [HttpClient, Config, ConfigService, AuthenticationService]
     }
   ]
 })

@@ -12,7 +12,7 @@ import {
   VoucherState,
   IReward,
   Voucher
-} from '@perx/core';
+} from '@perxtech/core';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
 import { Location } from '@angular/common';
@@ -22,7 +22,7 @@ describe('RedeemComponent', () => {
   let component: RedeemComponent;
   let fixture: ComponentFixture<RedeemComponent>;
 
-  history.pushState({data: '{"id": 1234, "name": "John", "rewardId": 149}'}, '', '');
+  history.pushState({ data: '{"id": 1234, "name": "John", "rewardId": 149}' }, '', '');
   const locationStub: Partial<Location> = {
     back: () => {
     }

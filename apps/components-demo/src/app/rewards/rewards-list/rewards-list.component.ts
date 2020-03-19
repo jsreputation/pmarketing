@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IReward, NotificationService, RewardsService } from '@perx/core';
+import { IReward, NotificationService, RewardsService } from '@perxtech/core';
 import { Observable, of } from 'rxjs';
 import { mock } from '../reward-mock';
 

@@ -8,7 +8,7 @@ import {
 import {
   GameModule as PerxGameModule,
   CampaignModule
-} from '@perx/core';
+} from '@perxtech/core';
 
 import { TapComponent } from './tap/tap.component';
 import { ShakeComponent } from './shake/shake.component';

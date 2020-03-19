@@ -15,7 +15,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TextMaskModule } from 'angular2-text-mask';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { IProfile, AuthenticationService, ProfileService, NotificationService } from '@perx/core';
+import { IProfile, AuthenticationService, ProfileService, NotificationService } from '@perxtech/core';
 import { of, throwError } from 'rxjs';
 import { Type } from '@angular/core';
 

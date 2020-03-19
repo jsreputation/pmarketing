@@ -36,7 +36,7 @@ import {
   IWTreeDisplayProperties,
   WGameType,
   IWProperties,
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { WhistlerVouchersService } from '../vouchers/whistler-vouchers.service';
 import { ICampaignService } from '../campaign/icampaign.service';
 import { ICampaign, CampaignType } from '../campaign/models/campaign.model';
@@ -227,7 +227,7 @@ export class WhistlerGameService implements IGameService {
   }
 
   private static outcomeToGameOutcome(outcome: IWProperties): IGameOutcome {
-    return  {
+    return {
       title: outcome.headLine ? outcome.headLine : '',
       subTitle: outcome.subHeadLine ? outcome.subHeadLine : '',
       button: outcome.buttonTxt ? outcome.buttonTxt : '',

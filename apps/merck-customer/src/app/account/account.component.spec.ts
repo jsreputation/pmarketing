@@ -5,7 +5,7 @@ import {
   MatCardModule,
   MatListModule
 } from '@angular/material';
-import { ProfileService, AuthenticationService, LoyaltyService, IProfile } from '@perx/core';
+import { ProfileService, AuthenticationService, LoyaltyService, IProfile } from '@perxtech/core';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
 import { Type } from '@angular/core';

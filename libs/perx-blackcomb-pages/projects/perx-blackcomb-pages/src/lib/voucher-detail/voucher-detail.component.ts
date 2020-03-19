@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { IVoucherService, Voucher } from '@perx/core';
+import { IVoucherService, Voucher } from '@perxtech/core';
 import { filter, switchMap, takeUntil, map } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
@@ -15,6 +15,7 @@ export class VoucherDetailComponent implements OnInit, OnDestroy {
   public expiryLabelFn: (v: Voucher) => string;
   public descriptionLabel: string = 'Description';
   public tncLabel: string = 'Terms and Conditions';
+  public voucherId: number;
 
   constructor(
     private router: Router,
@@ -33,8 +34,8 @@ export class VoucherDetailComponent implements OnInit, OnDestroy {
         filter((params: ParamMap) => params.has('id')),
         map((params: ParamMap) => params.get('id')),
         switchMap((id: string) => {
-          const idN: number = Number.parseInt(id, 10);
-          return this.vouchersService.get(idN);
+          this.voucherId = Number.parseInt(id, 10);
+          return this.vouchersService.get(this.voucherId);
         }),
         takeUntil(this.destroy$)
       );
@@ -62,8 +63,6 @@ export class VoucherDetailComponent implements OnInit, OnDestroy {
   }
 
   public onRedeem(): void {
-    this.voucher$.subscribe((v: Voucher) => {
-      this.router.navigate(['redeem', v.id]);
-    });
+    this.router.navigate(['redeem', this.voucherId]);
   }
 }

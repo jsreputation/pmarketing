@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { VoucherDetailComponent, PerxBlackcombPagesModule } from '@perx/blackcomb-pages';
+import { VoucherDetailComponent, PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
 import { RouterModule, Routes } from '@angular/router';
-import { VouchersModule } from '@perx/core';
+import { VouchersModule } from '@perxtech/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material';
 
@@ -21,4 +21,4 @@ const routes: Routes = [{
     MatButtonModule
   ]
 })
-export class VoucherDetailModule {}
+export class VoucherDetailModule { }

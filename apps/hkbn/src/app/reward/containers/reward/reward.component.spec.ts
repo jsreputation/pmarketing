@@ -15,7 +15,7 @@ import {
   IVoucherService,
   RewardsService,
   RedemptionType
-} from '@perx/core';
+} from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
 import { of, Observable } from 'rxjs';

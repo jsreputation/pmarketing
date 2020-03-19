@@ -1,8 +1,8 @@
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IVoucher } from '@perx/core/projects/perx-core/src/lib/vouchers/models/voucher.model';
+import { IVoucher } from '@perxtech/core/projects/perx-core/src/lib/vouchers/models/voucher.model';
 import { Observable } from 'rxjs';
-import { Voucher, IVoucherService, VoucherState } from '@perx/core';
+import { Voucher, IVoucherService, VoucherState } from '@perxtech/core';
 import { map } from 'rxjs/operators';
 
 @Component({

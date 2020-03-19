@@ -15,15 +15,15 @@ import {
   MatTabsModule
 } from '@angular/material';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { GameModule } from '@perx/core';
+import { GameModule } from '@perxtech/core';
 import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.module';
 import { ConfirmModalModule } from '@cl-shared';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { TenantStoreService } from '@cl-core-services';
 import { TenantMockStore } from '@cl-shared/test-components/tenant-mock-store/tenant-mock-store';
-import {ButtonModule} from '@perx/candyshop';
-import {SelectGraphicWrapDialogModule} from '@cl-shared/components/select-graphic-wrap-dialog/select-graphic-wrap-dialog.module';
+import { ButtonModule } from '@perxtech/candyshop';
+import { SelectGraphicWrapDialogModule } from '@cl-shared/components/select-graphic-wrap-dialog/select-graphic-wrap-dialog.module';
 
 describe('NewSnakePageComponent', () => {
   let component: NewSnakePageComponent;
@@ -52,9 +52,9 @@ describe('NewSnakePageComponent', () => {
         SelectGraphicWrapDialogModule,
         TranslateModule.forRoot(),
       ],
-      declarations: [ NewSnakePageComponent ],
+      declarations: [NewSnakePageComponent],
       providers: [
-        {provide: LocalStorageService, useValue: {}},
+        { provide: LocalStorageService, useValue: {} },
         { provide: TenantStoreService, useClass: TenantMockStore }
       ]
     })

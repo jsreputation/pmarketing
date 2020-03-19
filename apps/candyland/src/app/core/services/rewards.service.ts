@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { RewardHttpService } from '@perx/whistler-services';
+import { RewardHttpService } from '@perxtech/whistler-services';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
@@ -14,12 +14,12 @@ import {
   IJsonApiItem,
   IJsonApiPostData,
   IJsonApiPatchData
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.interface';
 import { HttpParamsOptions } from '@cl-core/models/params-map';
 import { ITableData } from '@cl-core/models/data-list.interface';
-import { OptionConfig } from '@perx/candyshop';
+import { OptionConfig } from '@perxtech/candyshop';
 import { ILoyaltyFormGroup, ILoyaltyTiersFormGroup, IBasicTier } from '@cl-core/models/reward/reward-loyalty-form-interface';
 import { ITierRewardCost } from '@cl-core/models/reward/tier-reward-cost-intrface';
 

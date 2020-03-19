@@ -15,7 +15,7 @@ import {
 } from '@angular/material';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
 import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter.module';
-import { ButtonModule, StatusLabelModule } from '@perx/candyshop';
+import { ButtonModule, StatusLabelModule } from '@perxtech/candyshop';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({

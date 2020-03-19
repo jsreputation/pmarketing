@@ -1,4 +1,4 @@
-import { SurveyModule } from '@perx/core';
+import { SurveyModule } from '@perxtech/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 

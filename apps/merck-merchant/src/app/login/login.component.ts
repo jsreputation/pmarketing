@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
-import {Validators, FormBuilder, FormGroup, AbstractControl} from '@angular/forms';
-import { AuthenticationService, NotificationService, TokenStorage } from '@perx/core';
+import { Validators, FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
+import { AuthenticationService, NotificationService, TokenStorage } from '@perxtech/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';
 

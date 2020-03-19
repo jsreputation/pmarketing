@@ -4,7 +4,7 @@ import { WalletComponent } from './wallet.component';
 import { NavigateToolbarComponent } from '../navigate-toolbar/navigate-toolbar.component';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { VouchersModule, IVoucherService, ICampaignService, ConfigService } from '@perx/core';
+import { VouchersModule, IVoucherService, ICampaignService, ConfigService } from '@perxtech/core';
 import { of } from 'rxjs';
 
 describe('WalletComponent', () => {

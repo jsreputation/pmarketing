@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
-import { IStatusLabelConfig } from '@perx/candyshop';
+import { IStatusLabelConfig } from '@perxtech/candyshop';
 
 @Component({
   selector: 'cl-view-scheme-info',
@@ -10,5 +10,5 @@ import { IStatusLabelConfig } from '@perx/candyshop';
 export class ViewSchemeInfoComponent {
   @Input() public loyalty: ILoyaltyForm;
   @Input() public currency: string;
-  @Input()  public statusLabel: IStatusLabelConfig;
+  @Input() public statusLabel: IStatusLabelConfig;
 }

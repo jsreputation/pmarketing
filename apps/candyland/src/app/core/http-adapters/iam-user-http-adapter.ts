@@ -2,7 +2,7 @@ import {
   IWIAMUserAttributes,
   IJsonApiItem,
   IJsonApiPostData
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { IAMUser } from '@cl-core/models/settings/IAMUser.interface';
 import { ITableData } from '@cl-core/models/data-list.interface';
 

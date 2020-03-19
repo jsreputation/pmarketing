@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MerchantHttpAdapter } from '@cl-core/http-adapters/merchant-http-adapter';
-import { MerchantHttpService } from '@perx/whistler-services';
+import { MerchantHttpService } from '@perxtech/whistler-services';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { combineLatest, Observable, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
@@ -9,7 +9,7 @@ import {
   IWMerchantBranchAttributes,
   IJsonApiItemPayload,
   IJsonApiListPayload
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { JsonApiParser } from '@cl-helpers/json-api-parser';
 import { ClHttpParams } from '@cl-helpers/http-params';
 import { IMerchantForm } from '@cl-core/models/merchant/merchant-form-interface';

@@ -12,7 +12,7 @@ import {
   ICampaign,
   ConfigService,
   IConfig
-} from '@perx/core';
+} from '@perxtech/core';
 import { PopupType } from '../vouchers/vouchers.component';
 
 @Component({
@@ -41,7 +41,7 @@ export class GameComponent implements OnInit {
     private campaignService: ICampaignService,
     private gameService: IGameService,
     private configService: ConfigService,
-  ) {}
+  ) { }
 
   public ngOnInit(): void {
     this.configService.readAppConfig().subscribe(

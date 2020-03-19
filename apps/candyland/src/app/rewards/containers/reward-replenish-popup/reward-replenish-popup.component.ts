@@ -10,7 +10,7 @@ import {
 } from '@angular/material';
 
 import * as moment from 'moment';
-import { IWVouchersApi } from '@perx/whistler';
+import { IWVouchersApi } from '@perxtech/whistler';
 
 @Component({
   selector: 'cl-reward-replenish-popup',

@@ -1,6 +1,6 @@
 import cacheManager from 'cache-manager';
 import Jimp from 'jimp';
-import { IJsonApiItem, IWTenant } from '@perx/whistler';
+import { IJsonApiItem, IWTenant } from '@perxtech/whistler';
 import { Manifest, DARK, LIGHT } from '../types/manifest-model';
 import { ICredentials } from '../types/apiConfig';
 import { Request, Response, NextFunction } from 'express';

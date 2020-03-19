@@ -18,7 +18,7 @@ import { RegistrationFormComponent } from './components/registration-form/regist
 import { ErrorHandlerModule } from '../ui/error-handler/error-handler.module';
 import { ForgotPasswordComponent } from './containers/forgot-password/forgot-password.component';
 import { SmsValidationComponent } from './containers/sms-validation/sms-validation.component';
-import { UtilsModule } from '@perx/core';
+import { UtilsModule } from '@perxtech/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 const COMPONENTS = [

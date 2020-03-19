@@ -5,7 +5,7 @@ import { ApplicationInitStatus, APP_INITIALIZER } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { setLanguage } from './app.module';
 import { environment } from 'src/environments/environment';
-import { ConfigService, AuthenticationService, ThemesService } from '@perx/core';
+import { ConfigService, AuthenticationService, ThemesService } from '@perxtech/core';
 import { of } from 'rxjs';
 
 const translateServiceStub: Partial<TranslateService> = {

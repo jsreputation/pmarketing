@@ -13,7 +13,7 @@ import {
   IVoucherService,
   VoucherState,
   Voucher,
-} from '@perx/core';
+} from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
 
@@ -39,7 +39,7 @@ export class WalletComponent implements OnInit, OnDestroy {
     private vouchersService: IVoucherService,
     private datePipe: DatePipe,
     private translate: TranslateService,
-  ) {}
+  ) { }
 
 
   public ngOnInit(): void {

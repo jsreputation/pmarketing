@@ -12,7 +12,7 @@ import {
   MatTableModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ButtonModule } from '@perx/candyshop';
+import { ButtonModule } from '@perxtech/candyshop';
 import { RewardsListModule } from '@cl-shared/components/rewards-list/rewards-list.module';
 import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter.module';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
@@ -50,8 +50,8 @@ describe('SelectRewardPopupComponent', () => {
           provide: RewardsService, useClass: MockRewardsServices
         }
       ],
-      declarations: [ SelectRewardPopupComponent ],
-      schemas: [ NO_ERRORS_SCHEMA ]
+      declarations: [SelectRewardPopupComponent],
+      schemas: [NO_ERRORS_SCHEMA]
     })
       .compileComponents();
   }));

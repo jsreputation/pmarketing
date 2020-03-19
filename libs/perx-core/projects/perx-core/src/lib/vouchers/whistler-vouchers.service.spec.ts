@@ -10,7 +10,7 @@ import {
   IJsonApiItem,
   IJsonApiItemPayload,
   IJsonApiListPayload
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 
 import { IVoucher } from './models/voucher.model';
 import { WhistlerVouchersService } from './whistler-vouchers.service';

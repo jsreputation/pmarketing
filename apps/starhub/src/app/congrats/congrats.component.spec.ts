@@ -7,7 +7,7 @@ import {
 import { CongratsComponent } from './congrats.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
-import { IGameService } from '@perx/core';
+import { IGameService } from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { GameOutcomeService } from './game-outcome/game-outcome.service';
 import { vouchers } from '../vouchers.mock';
@@ -24,11 +24,11 @@ describe('CongratsComponent', () => {
 
   const gameOutcomeServiceStub: Partial<GameOutcomeService> = {
     getVouchersRewarded: () => [],
-    clearVoucherList: () => {}
+    clearVoucherList: () => { }
   };
 
   const analyticsServiceStub: Partial<AnalyticsService> = {
-    addEvent: () => {}
+    addEvent: () => { }
   };
 
   const routerStub: Partial<Router> = { navigateByUrl: () => Promise.resolve(true) };
@@ -36,10 +36,10 @@ describe('CongratsComponent', () => {
   beforeEach(async(() => {
 
     TestBed.configureTestingModule({
-      declarations: [ CongratsComponent ],
-      imports: [ MatToolbarModule, MatCardModule, RouterTestingModule ],
+      declarations: [CongratsComponent],
+      imports: [MatToolbarModule, MatCardModule, RouterTestingModule],
       providers: [
-        { provide: ActivatedRoute, useValue: { queryParams: of({gameId: 1}) } },
+        { provide: ActivatedRoute, useValue: { queryParams: of({ gameId: 1 }) } },
         { provide: IGameService, useValue: gameServiceStub },
         { provide: GameOutcomeService, useValue: gameOutcomeServiceStub },
         { provide: AnalyticsService, useValue: analyticsServiceStub },

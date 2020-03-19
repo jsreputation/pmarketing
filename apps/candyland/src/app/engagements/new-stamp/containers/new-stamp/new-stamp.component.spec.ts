@@ -8,7 +8,7 @@ import { GameMobilePreviewStampModule } from '@cl-shared/components/game-mobile-
 import { MatCardModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatTabsModule } from '@angular/material';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { PuzzlesModule } from '@perx/core';
+import { PuzzlesModule } from '@perxtech/core';
 import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.module';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { MatSliderModule } from '@angular/material/slider';
@@ -16,7 +16,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DirectivesModule } from '@cl-shared/directives/directives.module';
 import { CheckboxGroupModule } from '@cl-shared/components/checkbox-group/checkbox-group.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { ButtonModule, InfoHintModule } from '@perx/candyshop';
+import { ButtonModule, InfoHintModule } from '@perxtech/candyshop';
 import { StampsService, TenantStoreService, UploadFileService } from '@cl-core-services';
 import { TenantMockStore } from '@cl-shared/test-components/tenant-mock-store/tenant-mock-store';
 import { MockStampsService } from '@cl-shared/test-components/providers/mock-stamps.service';
@@ -58,14 +58,14 @@ describe('NewStampPageComponent', () => {
       ],
       declarations: [NewStampComponent],
       providers: [
-        {provide: LocalStorageService, useValue: {}},
-        {provide: TenantStoreService, useClass: TenantMockStore},
-        {provide: StampsService, useClass: MockStampsService},
-        {provide: UploadFileService, useClass: MockUploadFileService},
+        { provide: LocalStorageService, useValue: {} },
+        { provide: TenantStoreService, useClass: TenantMockStore },
+        { provide: StampsService, useClass: MockStampsService },
+        { provide: UploadFileService, useClass: MockUploadFileService },
         {
           provide: WINDOW, useValue: {
             scrollTo(a: any, b: any): any {
-              return {a, b};
+              return { a, b };
             }
           }
         }

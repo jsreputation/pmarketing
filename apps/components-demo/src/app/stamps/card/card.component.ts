@@ -15,7 +15,7 @@ import {
   PuzzleCollectStamp,
   PuzzleCollectStampState,
   PuzzleCollectReward,
-} from '@perx/core';
+} from '@perxtech/core';
 
 @Component({
   selector: 'app-card',
@@ -37,7 +37,7 @@ export class CardComponent implements OnInit {
     const checkboxIdStr: string = sourceIdStr.substr(sourceIdStr.lastIndexOf('-') + 1);
     const rewardPosition: number = +checkboxIdStr;
     if (event.checked) {
-      this.rewardArr.push({rewardPosition});
+      this.rewardArr.push({ rewardPosition });
     } else {
       this.rewardArr = this.rewardArr.filter(reward => reward.rewardPosition !== rewardPosition);
     }

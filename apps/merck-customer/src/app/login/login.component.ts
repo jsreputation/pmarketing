@@ -23,7 +23,7 @@ import {
   ProfileService,
   ConfigService,
   IConfig,
-} from '@perx/core';
+} from '@perxtech/core';
 
 import {
   PageAppearence,

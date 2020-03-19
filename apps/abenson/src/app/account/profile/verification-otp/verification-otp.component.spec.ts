@@ -1,14 +1,14 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { VerificationOtpComponent } from './verification-otp.component';
-import { UtilsModule, ProfileService, AuthenticationService, IProfile, NotificationService } from '@perx/core';
+import { UtilsModule, ProfileService, AuthenticationService, IProfile, NotificationService } from '@perxtech/core';
 import { of, BehaviorSubject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IChangePhoneData } from '@perx/core/dist/perx-core/lib/auth/authentication/models/authentication.model';
+import { IChangePhoneData } from '@perxtech/core/dist/perx-core/lib/auth/authentication/models/authentication.model';
 import { Type } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedDataService } from 'src/app/services/shared-data.service';
 import { RouterTestingModule } from '@angular/router/testing';
-import { IWMessageResponse } from '@perx/whistler';
+import { IWMessageResponse } from '@perxtech/whistler';
 import { MatDialogModule } from '@angular/material/dialog';
 
 describe('VerificationOtpComponent', () => {

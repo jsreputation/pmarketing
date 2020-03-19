@@ -1,7 +1,7 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {BehaviorSubject, combineLatest, forkJoin, Observable, of, Subject} from 'rxjs';
-import {catchError, filter, map, mergeMap, switchMap, take, takeLast, takeUntil, tap} from 'rxjs/operators';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { BehaviorSubject, combineLatest, forkJoin, Observable, of, Subject } from 'rxjs';
+import { catchError, filter, map, mergeMap, switchMap, take, takeLast, takeUntil, tap } from 'rxjs/operators';
 
 import {
   AuthenticationService,
@@ -26,10 +26,10 @@ import {
   RewardsService,
   SettingsService,
   ThemesService,
-} from '@perx/core';
-import {TranslateService} from '@ngx-translate/core';
-import {Title} from '@angular/platform-browser';
-import {MatDialog, MatTabChangeEvent} from '@angular/material';
+} from '@perxtech/core';
+import { TranslateService } from '@ngx-translate/core';
+import { Title } from '@angular/platform-browser';
+import { MatDialog, MatTabChangeEvent } from '@angular/material';
 
 @Component({
   selector: 'perx-blackcomb-home',
@@ -61,7 +61,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         switchMap((games: IGame[]) => of(games).pipe(catchError(err => of(err)))),
         takeLast(1)
       );
-    this.campaigns$ = this.campaignService.getCampaigns({type: CampaignType.stamp})
+    this.campaigns$ = this.campaignService.getCampaigns({ type: CampaignType.stamp })
       .pipe(
         tap((campaigns: ICampaign[]) => this.showCampaigns = campaigns.length > 0),
         takeLast(1)
