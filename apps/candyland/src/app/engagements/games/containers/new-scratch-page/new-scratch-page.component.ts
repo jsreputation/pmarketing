@@ -40,11 +40,11 @@ import {
 
 import { ControlsName } from '../../../../models/controls-name';
 import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.component';
-import { IWScratchGameEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
+import { IWScratchGameEngagementAttributes, IJsonApiItemPayload } from '@perxtech/whistler';
 import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
 import { IGameDefaultData } from '@cl-core/models/games/game-default-data.interface';
 import { ITenantsProperties } from '@cl-core/models/settings/tenants.properties.interface';
-import { IGraphic } from '@perx/candyshop';
+import { IGraphic } from '@perxtech/candyshop';
 import { IScratchForm } from '@cl-core/models/games/scratch/scratch-form.interface';
 
 @Component({

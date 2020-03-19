@@ -13,7 +13,7 @@ import {
   ConfigModule,
   ICampaignService,
   ConfigService
-} from '@perx/core';
+} from '@perxtech/core';
 import { APP_BASE_HREF } from '@angular/common';
 import { MatProgressBarModule, MatProgressSpinnerModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';

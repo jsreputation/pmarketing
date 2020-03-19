@@ -1,4 +1,4 @@
-import { IReward } from '@perx/core';
+import { IReward } from '@perxtech/core';
 
 export const MockRewardsMobilePreview: IReward[] = [
   {

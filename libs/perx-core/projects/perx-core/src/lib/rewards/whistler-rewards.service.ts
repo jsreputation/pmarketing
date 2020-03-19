@@ -16,10 +16,10 @@ import {
   IWMerchantAttributes,
   IWRelationshipsDataType,
   WRedemptionType
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { oc } from 'ts-optchain';
 import { RedemptionType } from '../perx-core.models';
-import {ITabConfigExtended} from './rewards-list-tabbed/rewards-list-tabbed.component';
+import { ITabConfigExtended } from './rewards-list-tabbed/rewards-list-tabbed.component';
 
 @Injectable({
   providedIn: 'root'

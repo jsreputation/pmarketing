@@ -4,7 +4,7 @@ import {
   StampService,
   StampState,
   StampCardState
-} from '@perx/core';
+} from '@perxtech/core';
 
 @Component({
   selector: 'app-congrats',

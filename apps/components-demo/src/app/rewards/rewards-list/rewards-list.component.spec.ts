@@ -10,7 +10,7 @@ import {
   RewardsModule,
   RewardsService,
   ThemesService,
-} from '@perx/core';
+} from '@perxtech/core';
 
 import { RewardsListComponent } from './rewards-list.component';
 

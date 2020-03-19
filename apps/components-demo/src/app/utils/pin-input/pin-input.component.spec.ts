@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PinInputComponent } from './pin-input.component';
-import { UtilsModule } from '@perx/core';
+import { UtilsModule } from '@perxtech/core';
 
 describe('PinInputComponent', () => {
   let component: PinInputComponent;

@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IMerchantAdminService, NotificationService, IMerchantProfile, ConfigService } from '@perx/core';
+import { IMerchantAdminService, NotificationService, IMerchantProfile, ConfigService } from '@perxtech/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';

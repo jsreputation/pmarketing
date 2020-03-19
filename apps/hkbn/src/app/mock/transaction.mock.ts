@@ -1,4 +1,4 @@
-import { ITransaction } from '@perx/core';
+import { ITransaction } from '@perxtech/core';
 
 export const transactions: ITransaction[] = [
   {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { IStatusLabelConfig } from '@perx/candyshop';
+import { IStatusLabelConfig } from '@perxtech/candyshop';
 
 @Injectable({
   providedIn: 'root'

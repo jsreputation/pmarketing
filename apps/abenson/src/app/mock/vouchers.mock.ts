@@ -2,10 +2,10 @@ import {
   Voucher,
   VoucherState,
   RedemptionType,
-} from '@perx/core';
+} from '@perxtech/core';
 
 // @ts-ignore
-export const vouchers: Voucher[] = Array.from({length: 6}, (voucher, id) => ({
+export const vouchers: Voucher[] = Array.from({ length: 6 }, (voucher, id) => ({
   id,
   reward: {
     id,

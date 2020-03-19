@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import {
   ITransaction,
   ILoyalty
-} from '@perx/core';
+} from '@perxtech/core';
 
 
 export class CardComponentMock implements OnInit {

@@ -21,7 +21,7 @@ import {
   IReward,
   ThemesService,
   ILoyalty
-} from '@perx/core';
+} from '@perxtech/core';
 
 import { HomeComponent } from './home.component';
 

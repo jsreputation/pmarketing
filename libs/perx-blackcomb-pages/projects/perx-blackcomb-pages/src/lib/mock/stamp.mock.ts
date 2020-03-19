@@ -1,10 +1,10 @@
 import {
   IStamp,
   StampState,
-} from '@perx/core';
+} from '@perxtech/core';
 
 // @ts-ignore
-export const stamps: IStamp[] = Array.from({length: 5}, (stamp, id) => ({
+export const stamps: IStamp[] = Array.from({ length: 5 }, (stamp, id) => ({
   id,
   userAccountId: id,
   stampCardId: id,

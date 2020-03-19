@@ -17,7 +17,7 @@ import { ConfirmModalModule, SimpleMobileViewModule } from '@cl-shared';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { TranslateModule } from '@ngx-translate/core';
-import { ButtonModule } from '@perx/candyshop';
+import { ButtonModule } from '@perxtech/candyshop';
 
 import { TenantMockStore } from '@cl-shared/test-components/tenant-mock-store/tenant-mock-store';
 import { MockSurveyService } from '@cl-shared/test-components/providers/mock-survey.service';
@@ -51,20 +51,21 @@ describe('NewSurveyPageComponent', () => {
         TranslateModule.forRoot(),
         TestComponentsModule,
       ],
-      schemas: [ NO_ERRORS_SCHEMA ],
-      declarations: [ NewSurveyComponent ],
+      schemas: [NO_ERRORS_SCHEMA],
+      declarations: [NewSurveyComponent],
       providers: [
-        {provide: RoutingStateService, useValue: {}},
+        { provide: RoutingStateService, useValue: {} },
         {
           provide: StampDataService, useValue: {}
         },
-        { provide: LocalStorageService, useValue: {}},
+        { provide: LocalStorageService, useValue: {} },
         { provide: TenantStoreService, useClass: TenantMockStore },
         { provide: SurveyService, useClass: MockSurveyService },
         { provide: UploadFileService, useClass: MockUploadFileService },
-        { provide: WINDOW, useValue: {
-          scrollTo(a: any, b: any): any { return {a, b}; }
-        }
+        {
+          provide: WINDOW, useValue: {
+            scrollTo(a: any, b: any): any { return { a, b }; }
+          }
         }
       ]
     })

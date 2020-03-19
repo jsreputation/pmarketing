@@ -11,7 +11,7 @@ import {
 import {
   QuestionMultipleChoiceFieldComponent
 } from '@cl-shared/questions/question-multiple-choice-field/question-multiple-choice-field.component';
-import { WSurveyQuestionType } from '@perx/whistler';
+import { WSurveyQuestionType } from '@perxtech/whistler';
 
 const componentMapper = {
   [WSurveyQuestionType.rating]: QuestionRatingFieldComponent,

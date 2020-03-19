@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfileService, IProfile } from '@perx/core';
+import { ProfileService, IProfile } from '@perxtech/core';
 import { Router } from '@angular/router';
 import { ShowTitleInHeader } from '../layout/layout.component';
 
@@ -17,7 +17,7 @@ export class ProfileComponent implements OnInit, ShowTitleInHeader {
   ) { }
 
   public ngOnInit(): void {
-    this.profileService.whoAmI().subscribe(res => this.profile = res );
+    this.profileService.whoAmI().subscribe(res => this.profile = res);
   }
 
   public onEditPasswordClicked(): void {

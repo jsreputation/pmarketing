@@ -2,7 +2,7 @@ import {
   IWIAMUserAttributes,
   IJsonApiItem,
   IJsonApiPostData
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { IAMUser } from '@es-core/models/auth/IAMUser.interface';
 
 export class IamUserHttpAdapter {
@@ -17,7 +17,7 @@ export class IamUserHttpAdapter {
       },
       relationships: {
         groups: {
-          data: [{id: data.roleId, type: 'groups'}]
+          data: [{ id: data.roleId, type: 'groups' }]
         }
       }
     };
@@ -38,7 +38,7 @@ export class IamUserHttpAdapter {
       properties: data.attributes.properties,
       display_properties: data.attributes.display_properties,
       jwt_payload_iss: data.attributes.jwt_payload ? data.attributes.jwt_payload.iss : undefined,
-      jwt_payload_sub: data.attributes.jwt_payload ? data.attributes.jwt_payload.sub  : undefined,
+      jwt_payload_sub: data.attributes.jwt_payload ? data.attributes.jwt_payload.sub : undefined,
       attached_policies: data.attributes.attached_policies,
       relationships_groups_id: IamUserHttpAdapter.setGroupId(data),
       email: data.attributes.email || (data.attributes.properties ? data.attributes.properties.email : undefined)
@@ -62,7 +62,7 @@ export class IamUserHttpAdapter {
 
   public static transformToTableData(data: any): ITableData<IAMUser> {
     const formatData = IamUserHttpAdapter.transformToUsers(data);
-    return {data: formatData, meta: data.meta};
+    return { data: formatData, meta: data.meta };
   }
 
   private static setGroupId(data: any): number | null {

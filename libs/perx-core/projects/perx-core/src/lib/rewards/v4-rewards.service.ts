@@ -13,7 +13,7 @@ import {
 } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 
-import { IWRewardDisplayProperties } from '@perx/whistler';
+import { IWRewardDisplayProperties } from '@perxtech/whistler';
 
 import { RewardsService } from './rewards.service';
 import {
@@ -24,8 +24,8 @@ import {
 } from './models/reward.model';
 import { Config } from '../config/config';
 
-import {RewardStateHelper} from './reward-state-helper';
-import {ITabConfigExtended} from './rewards-list-tabbed/rewards-list-tabbed.component';
+import { RewardStateHelper } from './reward-state-helper';
+import { ITabConfigExtended } from './rewards-list-tabbed/rewards-list-tabbed.component';
 
 export interface IV4Tag {
   id: number;

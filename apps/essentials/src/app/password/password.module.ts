@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { MatButtonModule, MatIconModule, MatInputModule } from '@angular/material';
-import { ButtonModule } from '@perx/candyshop';
+import { ButtonModule } from '@perxtech/candyshop';
 import { ForgetPasswordComponent } from './containers/forget-password/forget-password.component';
 import { UpdateUserComponent } from './containers/update-user/update-user.component';
 import { CommonModule } from '@angular/common';

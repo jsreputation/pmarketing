@@ -30,7 +30,7 @@ import {
   VouchersModule,
   ILoyalty,
   RewardsService, ThemesService
-} from '@perx/core';
+} from '@perxtech/core';
 
 import { HomeComponent } from './home.component';
 
@@ -74,7 +74,8 @@ describe('HomeComponent', () => {
       providers: [
         {
           provide: ProfileService,
-          useValue: { whoAmI: () => of(null) } },
+          useValue: { whoAmI: () => of(null) }
+        },
         {
           provide: LoyaltyService,
           useValue: loyaltyServiceStub,

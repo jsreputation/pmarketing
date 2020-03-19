@@ -2,7 +2,7 @@ import {
   IStampCard,
   StampCardState,
   StampState,
-} from '@perx/core';
+} from '@perxtech/core';
 
 export const stampCard: IStampCard = {
   id: 1,

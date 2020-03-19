@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import {
   IGame,
-} from '@perx/core';
+} from '@perxtech/core';
 
 @Component({
   selector: 'app-tap',

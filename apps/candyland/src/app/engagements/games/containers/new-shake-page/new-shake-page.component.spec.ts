@@ -11,7 +11,7 @@ import {
 import { of } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { GameModule } from '@perx/core';
+import { GameModule } from '@perxtech/core';
 import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.module';
 import { ShakeTreeService, TenantStoreService, UploadFileService } from '@cl-core/services';
 import { ConfirmModalModule } from '@cl-shared';
@@ -20,7 +20,7 @@ import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { DirectivesModule } from '@cl-shared/directives/directives.module';
 import { WINDOW } from '@cl-core/services/window.service';
 import { TranslateModule } from '@ngx-translate/core';
-import { ButtonModule } from '@perx/candyshop';
+import { ButtonModule } from '@perxtech/candyshop';
 import { TenantMockStore } from '@cl-shared/test-components/tenant-mock-store/tenant-mock-store';
 import { MockUploadFileService } from '@cl-shared/test-components/providers/mock-upload-file.service';
 // tslint:disable
@@ -53,7 +53,7 @@ describe('NewShakePageComponent', () => {
         TranslateModule.forRoot(),
         TestComponentsModule
       ],
-      declarations: [ NewShakePageComponent ],
+      declarations: [NewShakePageComponent],
       providers: [
         {
           provide: ShakeTreeService, useValue: {
@@ -78,7 +78,7 @@ describe('NewShakePageComponent', () => {
                 format: '.png',
                 active: 'false'
               }],
-              background: [ {
+              background: [{
                 id: 1,
                 type: 'background1',
                 title: 'icon',
@@ -94,15 +94,16 @@ describe('NewShakePageComponent', () => {
           provide: EngagementHttpAdapter,
           useValue: {}
         },
-        {provide: LocalStorageService, useValue: {}},
-        { provide: WINDOW, useValue: {
-          scrollTo(a: any, b: any): any { return {a, b}; }
-        }
+        { provide: LocalStorageService, useValue: {} },
+        {
+          provide: WINDOW, useValue: {
+            scrollTo(a: any, b: any): any { return { a, b }; }
+          }
         },
         { provide: TenantStoreService, useClass: TenantMockStore },
         { provide: UploadFileService, useClass: MockUploadFileService },
       ],
-      schemas: [ NO_ERRORS_SCHEMA ],
+      schemas: [NO_ERRORS_SCHEMA],
     })
       .compileComponents();
   }));

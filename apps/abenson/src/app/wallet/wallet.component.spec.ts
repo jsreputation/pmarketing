@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { WalletComponent } from './wallet.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTabsModule } from '@angular/material';
-import { IVoucherService, Voucher, VouchersModule, ConfigService } from '@perx/core';
+import { IVoucherService, Voucher, VouchersModule, ConfigService } from '@perxtech/core';
 import { Observable, of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 

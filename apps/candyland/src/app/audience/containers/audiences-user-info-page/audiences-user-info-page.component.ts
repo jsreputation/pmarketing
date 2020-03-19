@@ -35,7 +35,7 @@ import {
   WMessageChannel,
   IJsonApiItemPayload,
   IWCommMessageAttributes,
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
 import { CustomDataSource, DataSourceStates } from '@cl-shared';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';

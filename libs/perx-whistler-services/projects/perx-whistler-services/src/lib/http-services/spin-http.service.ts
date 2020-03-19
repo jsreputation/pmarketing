@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, } from 'rxjs';
-import { IWSpinGameEngagementAttributes, IJsonApiItemPayload, IJsonApiPostItem, IJsonApiPatchItem } from '@perx/whistler';
+import { IWSpinGameEngagementAttributes, IJsonApiItemPayload, IJsonApiPostItem, IJsonApiPatchItem } from '@perxtech/whistler';
 import { ApiConfigServices } from '../configs/api-config';
 
 @Injectable()

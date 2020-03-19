@@ -1,7 +1,7 @@
 import { async, TestBed, inject, fakeAsync, tick } from '@angular/core/testing';
 import { UnauthorizedInterceptor } from './unauthorized.interceptor';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthenticationService } from '@perx/core';
+import { AuthenticationService } from '@perxtech/core';
 import { throwError } from 'rxjs';
 import { HttpRequest, HttpHandler, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { AppComponent } from '../app.component';

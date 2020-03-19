@@ -10,7 +10,7 @@ import {
   ThemesService,
   ITheme,
   IMessageResponse
-} from '@perx/core';
+} from '@perxtech/core';
 import { filter, map } from 'rxjs/operators';
 
 export enum PinMode {

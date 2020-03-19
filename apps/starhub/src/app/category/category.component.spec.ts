@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { CategoryComponent } from './category.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatIconModule, MatToolbarModule, MatCardModule, MatBottomSheetModule, MatBottomSheet } from '@angular/material';
-import { RewardsService } from '@perx/core';
+import { RewardsService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { rewards } from '../rewards.mock';
 import { catalogs } from '../catalogs.mock';
@@ -37,7 +37,7 @@ describe('CategoryComponent', () => {
     navigate: () => Promise.resolve(true)
   };
   const matBottomSheetStub = {
-    open: () => {}
+    open: () => { }
   };
 
   beforeEach(async(() => {
@@ -65,7 +65,8 @@ describe('CategoryComponent', () => {
       ],
     })
       .overrideModule(BrowserDynamicTestingModule, {
-        set: { entryComponents: [CategorySelectComponent, CategorySortComponent] } }
+        set: { entryComponents: [CategorySelectComponent, CategorySortComponent] }
+      }
       )
       .compileComponents();
   }));
@@ -109,7 +110,7 @@ describe('CategoryComponent', () => {
     const router = TestBed.get<Router>(Router as Type<Router>);
     const routerSpy = spyOn(router, 'navigate');
     component.selected(reward);
-    expect(routerSpy).toHaveBeenCalledWith([ '/reward' ], { queryParams: { id: 1 } } );
+    expect(routerSpy).toHaveBeenCalledWith(['/reward'], { queryParams: { id: 1 } });
   });
 
   it('should update category on categorySelectedCallback', () => {

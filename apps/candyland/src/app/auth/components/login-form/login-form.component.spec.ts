@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoginFormComponent } from './login-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ButtonModule } from '@perx/candyshop';
+import { ButtonModule } from '@perxtech/candyshop';
 import { LogoModule } from '../../../shared/components/logo/logo.module';
 import { MatFormFieldModule, MatIconModule, MatInputModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -37,7 +37,7 @@ describe('LoginFormComponent', () => {
           useClass: TestAuthServisec
         }
       ],
-      declarations: [ LoginFormComponent ]
+      declarations: [LoginFormComponent]
     })
       .compileComponents();
   }));

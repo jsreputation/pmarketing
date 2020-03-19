@@ -14,7 +14,7 @@ import {
   IJsonApiItemPayload,
   IJsonApiItem,
   IWAttbsObjStamp,
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { oc } from 'ts-optchain';
 import { ICampaignService } from '../campaign/icampaign.service';
 import { CampaignType, ICampaign } from '../campaign/models/campaign.model';

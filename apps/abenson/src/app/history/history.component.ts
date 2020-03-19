@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Voucher, IVoucherService, VoucherState } from '@perx/core';
+import { Voucher, IVoucherService, VoucherState } from '@perxtech/core';
 import { Observable } from 'rxjs';
 
 @Component({

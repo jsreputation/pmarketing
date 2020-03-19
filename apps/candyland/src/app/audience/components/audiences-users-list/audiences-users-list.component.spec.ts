@@ -15,9 +15,9 @@ import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { AudiencesUsersListComponent } from './audiences-users-list.component';
-import {MessageService} from '@cl-core-services';
+import { MessageService } from '@cl-core-services';
 import { MockAudiencesUserService } from '@cl-shared/test-components/providers/mock-audiences-user.service';
-import { StatusLabelModule } from '@perx/candyshop';
+import { StatusLabelModule } from '@perxtech/candyshop';
 
 describe('AudiencesUsersListComponent', () => {
   let component: AudiencesUsersListComponent;

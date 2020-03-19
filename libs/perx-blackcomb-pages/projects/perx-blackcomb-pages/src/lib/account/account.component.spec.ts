@@ -26,7 +26,7 @@ import {
   NotificationService,
   IConfig,
   ThemesService, SettingsService
-} from '@perx/core';
+} from '@perxtech/core';
 
 import { AccountComponent } from './account.component';
 
@@ -61,7 +61,7 @@ describe('AccountComponent', () => {
   const authenticationServiceStub: Partial<AuthenticationService> = {
     logout: () => { }
   };
-  const loyalityServiceStub  = {
+  const loyalityServiceStub = {
     getLoyalty: () => of({})
   };
 

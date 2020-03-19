@@ -9,8 +9,8 @@ import {
   Routes,
 } from '@angular/router';
 
-import { UtilsModule } from '@perx/core';
-import { AccountComponent, PerxBlackcombPagesModule } from '@perx/blackcomb-pages';
+import { UtilsModule } from '@perxtech/core';
+import { AccountComponent, PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
 
 const routes: Routes = [{
   path: '',

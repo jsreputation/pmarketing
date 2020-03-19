@@ -4,7 +4,7 @@ import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-sourc
 import { EngagementType } from '@cl-core/models/engagement/engagement-type.enum';
 import { ICampaignTableData } from '@cl-core/models/campaign/campaign';
 import { CampaignStatus } from '@cl-core/models/campaign/campaign.enum';
-import { IStatusLabelConfig } from '@perx/candyshop';
+import { IStatusLabelConfig } from '@perxtech/candyshop';
 
 @Component({
   selector: 'cl-campaigns-list',

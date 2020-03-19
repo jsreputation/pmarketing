@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RedeemComponent, PerxBlackcombPagesModule } from '@perx/blackcomb-pages';
+import { RedeemComponent, PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
 import { RouterModule, Routes } from '@angular/router';
-import { UtilsModule, VouchersModule } from '@perx/core';
+import { UtilsModule, VouchersModule } from '@perxtech/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material';
 

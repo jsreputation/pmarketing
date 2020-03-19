@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { IVoucherService, Voucher } from '@perx/core';
+import { IVoucherService, Voucher } from '@perxtech/core';
 import { filter, switchMap, takeUntil, map } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';

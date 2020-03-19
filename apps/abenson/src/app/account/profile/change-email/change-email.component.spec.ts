@@ -10,7 +10,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from '../../../shared/shared.module';
 
 import { ChangeEmailComponent } from './change-email.component';
-import { ProfileService } from '@perx/core';
+import { ProfileService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Type } from '@angular/core';

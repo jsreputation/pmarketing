@@ -1,4 +1,4 @@
-import { IJsonApiPostData } from '@perx/whistler';
+import { IJsonApiPostData } from '@perxtech/whistler';
 import { ILogin } from '@cl-core/models/auth/login.interface';
 
 export class AuthHttpAdapter {

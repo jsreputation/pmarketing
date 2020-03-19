@@ -4,7 +4,7 @@ import {
   MatButtonModule, MatIconModule, MatInputModule, MatMenuModule, MatSelectModule
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ButtonModule } from '@perx/candyshop';
+import { ButtonModule } from '@perxtech/candyshop';
 import { TranslateModule } from '@ngx-translate/core';
 import { TransactionConditionGroupComponent } from './transaction-condition-group/transaction-condition-group.component';
 import { AmountConditionGroupComponent } from './amount-condition-group/amount-condition-group.component';

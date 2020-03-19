@@ -4,7 +4,7 @@ import {
 } from '@angular/material';
 import { AudiencesListComponent } from './audiences-list.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { StatusLabelModule } from '@perx/candyshop';
+import { StatusLabelModule } from '@perxtech/candyshop';
 
 describe('AudiencesListComponent', () => {
   let component: AudiencesListComponent;

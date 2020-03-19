@@ -9,8 +9,8 @@ import {
   IJsonApiPostItem,
   IJsonApiPatchItem,
   IJsonApiPatchData
-} from '@perx/whistler';
-import { IWCognitoEndpointAttributes } from '@perx/whistler';
+} from '@perxtech/whistler';
+import { IWCognitoEndpointAttributes } from '@perxtech/whistler';
 import { ApiConfigServices } from '../configs/api-config';
 
 @Injectable({

@@ -16,7 +16,7 @@ import {
   IVoucherService,
   RewardsService,
   IMerchantsService
-} from '@perx/core';
+} from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AUTH_SERVICE } from 'ngx-auth';
 

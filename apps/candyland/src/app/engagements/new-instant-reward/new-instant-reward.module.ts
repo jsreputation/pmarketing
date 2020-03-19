@@ -16,14 +16,14 @@ import { GameMobilePreviewModule } from '@cl-shared/components/game-mobile-previ
 
 import {
   RewardsModule as PerxRewardsModule, ConfigModule,
-} from '@perx/core';
+} from '@perxtech/core';
 import { environment } from '@cl-environments/environment';
 import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.module';
 import { ConfirmModalModule } from '@cl-shared';
 import { NewInstantRewardManagePageComponent } from './containers/new-instant-reward-manage-page/new-instant-reward-manage-page.component';
 import { DirectivesModule } from '@cl-shared/directives/directives.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { ButtonModule, InfoHintModule } from '@perx/candyshop';
+import { ButtonModule, InfoHintModule } from '@perxtech/candyshop';
 
 @NgModule({
   declarations: [

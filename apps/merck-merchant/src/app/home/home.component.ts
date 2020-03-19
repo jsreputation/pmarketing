@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService, TokenStorage } from '@perx/core';
+import { AuthenticationService, TokenStorage } from '@perxtech/core';
 import { Router } from '@angular/router';
 
 @Component({

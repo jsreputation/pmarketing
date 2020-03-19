@@ -1,5 +1,5 @@
 {
-  "name": "@perx/blackcomb-pages",
+  "name": "@perxtech/blackcomb-pages",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -25,7 +25,7 @@
     "@angular/platform-browser-dynamic": "~8.0.0",
     "@angular/router": "~8.0.0",
     "@ngx-translate/core": "^11.0.1",
-    "@perx/core": "^0.0.0",
+    "@perxtech/core": "^0.0.0",
     "angularx-qrcode": "^1.6.4",
     "ngx-infinite-scroll": "^8.0.1",
     "ngx-multi-line-ellipsis": "^1.0.4",
@@ -56,15 +56,15 @@
     "tslint-no-focused-test": "^0.5.0",
     "typescript": "~3.4.3"
   },
-  "main": "dist/perx-blackcomb-pages/bundles/perx-blackcomb-pages.umd.js",
-  "module": "dist/perx-blackcomb-pages/fesm5/perx-blackcomb-pages.js",
-  "es2015": "dist/perx-blackcomb-pages/fesm2015/perx-blackcomb-pages.js",
-  "esm5": "dist/perx-blackcomb-pages/esm5/perx-blackcomb-pages.js",
-  "esm2015": "dist/perx-blackcomb-pages/esm2015/perx-blackcomb-pages.js",
-  "fesm5": "dist/perx-blackcomb-pages/fesm5/perx-blackcomb-pages.js",
-  "fesm2015": "dist/perx-blackcomb-pages/fesm2015/perx-blackcomb-pages.js",
-  "typings": "dist/perx-blackcomb-pages/perx-blackcomb-pages.d.ts",
-  "metadata": "dist/perx-blackcomb-pages/perx-blackcomb-pages.metadata.json",
+  "main": "dist/perx-blackcomb-pages/bundles/perxtech-blackcomb-pages.umd.js",
+  "module": "dist/perx-blackcomb-pages/fesm5/perxtech-blackcomb-pages.js",
+  "es2015": "dist/perx-blackcomb-pages/fesm2015/perxtech-blackcomb-pages.js",
+  "esm5": "dist/perx-blackcomb-pages/esm5/perxtech-blackcomb-pages.js",
+  "esm2015": "dist/perx-blackcomb-pages/esm2015/perxtech-blackcomb-pages.js",
+  "fesm5": "dist/perx-blackcomb-pages/fesm5/perxtech-blackcomb-pages.js",
+  "fesm2015": "dist/perx-blackcomb-pages/fesm2015/perxtech-blackcomb-pages.js",
+  "typings": "dist/perx-blackcomb-pages/perxtech-blackcomb-pages.d.ts",
+  "metadata": "dist/perx-blackcomb-pages/perxtech-blackcomb-pages.metadata.json",
   "jest": {
     "preset": "jest-preset-angular",
     "roots": [

@@ -27,7 +27,7 @@ import {
   // ConfigService
   // StampService,
   // ICampaignService
-} from '@perx/core';
+} from '@perxtech/core';
 import { environment } from '../environments/environment';
 import {
   MatButtonModule,

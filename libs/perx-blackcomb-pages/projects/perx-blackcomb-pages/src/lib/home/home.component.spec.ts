@@ -19,17 +19,17 @@ import {
   IReward,
   AuthenticationService,
   TokenStorage, SettingsService
-} from '@perx/core';
+} from '@perxtech/core';
 import { of } from 'rxjs';
 import { MatCardModule, MatDialogModule } from '@angular/material';
 import { GamesCollectionComponent } from './games-collection/games-collection.component';
-import {TranslateModule, TranslateService} from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { profile } from '../mock/profile.mock';
 import { HttpClientModule } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import {CampaignsCollectionComponent} from './campaigns-collection/campaigns-collection.component';
-import {CatalogsComponent} from '../catalogs/catalogs.component';
+import { CampaignsCollectionComponent } from './campaigns-collection/campaigns-collection.component';
+import { CatalogsComponent } from '../catalogs/catalogs.component';
 
 const rewardsServiceStub: Partial<RewardsService> = {
   getAllRewards: () => of([]),

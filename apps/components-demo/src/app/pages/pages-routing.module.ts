@@ -15,7 +15,7 @@ import {
   StampCardComponent,
   SurveyComponent,
   VoucherDetailComponent
-} from '@perx/blackcomb-pages';
+} from '@perxtech/blackcomb-pages';
 const routes: Routes = [{
   path: '',
   component: PagesComponent,

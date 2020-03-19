@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TransactionHistoryComponent } from './transaction-history.component';
-import { LoyaltyModule, LoyaltyService } from '@perx/core';
+import { LoyaltyModule, LoyaltyService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
@@ -15,7 +15,7 @@ describe('TransactionHistoryComponent', () => {
         LoyaltyModule,
         InfiniteScrollModule
       ],
-      declarations: [ TransactionHistoryComponent ],
+      declarations: [TransactionHistoryComponent],
       providers: [
         {
           provide: LoyaltyService,

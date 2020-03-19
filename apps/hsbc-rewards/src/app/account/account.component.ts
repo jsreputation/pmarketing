@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {FormGroup} from '@angular/forms';
-import {ProfileService, AuthenticationService, IProfile} from '@perx/core';
-import {Router} from '@angular/router';
-import {take} from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { ProfileService, AuthenticationService, IProfile } from '@perxtech/core';
+import { Router } from '@angular/router';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-account',

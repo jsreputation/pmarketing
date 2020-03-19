@@ -62,7 +62,7 @@ import {
   AuthenticationService,
   ThemesService,
   IConfig
-} from '@perx/core';
+} from '@perxtech/core';
 
 import * as Hammer from 'hammerjs';
 import * as Sentry from '@sentry/browser';

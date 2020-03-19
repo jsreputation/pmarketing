@@ -6,7 +6,7 @@ import {
   IJsonApiPatchData,
   IWCustomTierAttributes,
   IWBasicTierAttributes
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { IAudiencesLoyalty, IAudiencesLoyaltyCard, IAudiencesTier } from '@cl-core/models/audiences/audiences-loyalty.model';
 
 export class LoyaltyCardHttpAdapter {

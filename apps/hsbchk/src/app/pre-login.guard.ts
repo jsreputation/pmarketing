@@ -1,4 +1,4 @@
-import {AuthenticationService} from '@perx/core';
+import {AuthenticationService} from '@perxtech/core';
 import {Injectable} from '@angular/core';
 import {CanActivate, ActivatedRouteSnapshot} from '@angular/router';
 

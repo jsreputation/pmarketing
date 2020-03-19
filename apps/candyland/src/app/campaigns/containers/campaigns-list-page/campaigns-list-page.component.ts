@@ -11,7 +11,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { CampaignStatus } from '@cl-core/models/campaign/campaign.enum';
 // import { EngagementType } from '@cl-core/models/engagement/engagement-type.enum';
-import { IStatusLabelConfig } from '@perx/candyshop';
+import { IStatusLabelConfig } from '@perxtech/candyshop';
 
 @Component({
   selector: 'cl-campaigns-list-page',
@@ -39,7 +39,7 @@ export class CampaignsListPageComponent implements OnInit, OnDestroy {
   }
 
   public editCampaign(campaign: ICampaignTableData): void {
-    this.router.navigateByUrl(`/campaigns/edit/${  campaign.id}`);
+    this.router.navigateByUrl(`/campaigns/edit/${campaign.id}`);
   }
 
   public duplicateCampaign(campaign: ICampaignTableData): void {

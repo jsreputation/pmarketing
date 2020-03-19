@@ -14,12 +14,12 @@ import {
   MatTabsModule
 } from '@angular/material';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { GameModule } from '@perx/core';
+import { GameModule } from '@perxtech/core';
 import { SimpleMobileViewModule } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.module';
 import { ConfirmModalModule } from '@cl-shared';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { TranslateModule } from '@ngx-translate/core';
-import { ButtonModule } from '@perx/candyshop';
+import { ButtonModule } from '@perxtech/candyshop';
 import { PinataService, TenantStoreService, UploadFileService } from '@cl-core-services';
 import { TenantMockStore } from '@cl-shared/test-components/tenant-mock-store/tenant-mock-store';
 import { MockPinataService } from '@cl-shared/test-components/providers/mock-pinata.service';
@@ -55,15 +55,16 @@ describe('NewPinataPageComponent', () => {
         TranslateModule.forRoot(),
         TestComponentsModule
       ],
-      declarations: [ NewPinataPageComponent ],
+      declarations: [NewPinataPageComponent],
       providers: [
         { provide: LocalStorageService, useValue: {} },
         { provide: TenantStoreService, useClass: TenantMockStore },
         { provide: PinataService, useClass: MockPinataService },
         { provide: UploadFileService, useClass: MockUploadFileService },
-        { provide: WINDOW, useValue: {
-          scrollTo(a: any, b: any): any { return {a, b}; }
-        }
+        {
+          provide: WINDOW, useValue: {
+            scrollTo(a: any, b: any): any { return { a, b }; }
+          }
         }
       ],
       schemas: [NO_ERRORS_SCHEMA],

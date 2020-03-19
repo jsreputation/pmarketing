@@ -1,7 +1,7 @@
 import { Observable, of } from 'rxjs';
 import {
   IJsonApiItemPayload, IWStampEngagementAttributes
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { IStampsDefaultValue } from '@cl-core/models/games/stamps/stamps-default-value.interface';
 import { IStampsEntityForm } from '@cl-core/models/games/stamps/stamps-entity-form.interface';
 import { StampsGraphicData } from '@cl-core/models/reports/stamps-report/stamps-report.interface';

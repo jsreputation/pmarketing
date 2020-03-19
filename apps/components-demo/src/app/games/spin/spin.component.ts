@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { ISlice } from '@perx/core';
+import { ISlice } from '@perxtech/core';
 
 @Component({
   selector: 'app-spin',
   templateUrl: './spin.component.html',
   styleUrls: ['./spin.component.scss']
 })
-export class SpinComponent  {
+export class SpinComponent {
   public mockSlices: ISlice[] = [
     {
       id: '1',
@@ -52,8 +52,8 @@ export class SpinComponent  {
       backgroundColor: 'white',
       label: 'white'
     },
-    {id: '5', label: 'efg', backgroundColor: 'lightgreen', labelColor: 'lightgreen'},
-    {id: '6', label: 'abc', backgroundColor: 'black', labelColor: 'black'}
+    { id: '5', label: 'efg', backgroundColor: 'lightgreen', labelColor: 'lightgreen' },
+    { id: '6', label: 'abc', backgroundColor: 'black', labelColor: 'black' }
     // {id: '7', label: 'bcd', backgroundColor: '#8c383e', labelColor: '#ffffff'},
     // {id: '8', label: 'cde', backgroundColor: '#fca562', labelColor: '#000000'},
     // {id: '9', label: 'def', backgroundColor: '#4ab5b0', labelColor: '#000000'},

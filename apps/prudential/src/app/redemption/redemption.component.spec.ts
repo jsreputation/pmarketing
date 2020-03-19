@@ -4,12 +4,12 @@ import { RedemptionComponent } from './redemption.component';
 import { MatCardModule } from '@angular/material';
 import {
   Voucher, VoucherState, VouchersModule, IVoucherService, RewardsService, IMerchantsService
-} from '@perx/core';
+} from '@perxtech/core';
 
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
-import {MerchantService} from '@perx/hsbc-rewards/src/app/shared/service/merchant.service';
+import { MerchantService } from '@perxtech/hsbc-rewards/src/app/shared/service/merchant.service';
 
 describe('RedemptionComponent', () => {
   let component: RedemptionComponent;

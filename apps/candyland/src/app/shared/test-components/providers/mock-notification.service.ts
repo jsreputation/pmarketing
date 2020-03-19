@@ -1,6 +1,6 @@
 import { IChannel } from '@cl-core/models/campaign/channel-interface';
 import { Observable, of } from 'rxjs';
-import { IJsonApiListPayload, IWNotificationAttributes } from '@perx/whistler';
+import { IJsonApiListPayload, IWNotificationAttributes } from '@perxtech/whistler';
 import { InformationCollectionSettingType } from '@cl-core/models/campaign/campaign.enum';
 import { NotificationService } from '@cl-core/services/notification.service';
 

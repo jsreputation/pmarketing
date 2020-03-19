@@ -1,4 +1,4 @@
-import { Voucher, VoucherState, RedemptionType } from '@perx/core';
+import { Voucher, VoucherState, RedemptionType } from '@perxtech/core';
 
 export const vouchers: Voucher[] = [
   {

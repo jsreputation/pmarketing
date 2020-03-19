@@ -1,5 +1,5 @@
 {
-    "name": "@perx/hsbc-hk-life",
+    "name": "@perxtech/hsbchk",
     "version": "0.0.0",
     "scripts": {
         "ng": "ng",
@@ -30,8 +30,8 @@
         "@angular/service-worker": "~8.0.0",
         "@ngx-translate/core": "^11.0.1",
         "@ngx-translate/http-loader": "^4.0.0",
-        "@perx/blackcomb-pages": "^0.0.0",
-        "@perx/core": "^0.0.0",
+        "@perxtech/blackcomb-pages": "^0.0.0",
+        "@perxtech/core": "^0.0.0",
         "@sentry/browser": "^5.10.1",
         "ngx-infinite-scroll": "^8.0.1",
         "rxjs": "~6.4.0",

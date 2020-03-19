@@ -1,5 +1,5 @@
 import { IVoucher } from '../vouchers/models/voucher.model';
-import { IWCampaignDisplayProperties } from '@perx/whistler';
+import { IWCampaignDisplayProperties } from '@perxtech/whistler';
 
 export enum GameType {
   unknown = -1,
@@ -102,7 +102,7 @@ export function defaultSpin(): ISpin {
 export interface ISpin {
   numberOfWedges: number;
   rewardSlots: number[];
-  colorCtrls: {[index: number]: string};
+  colorCtrls: { [index: number]: string };
   rewardIcon: string;
   wheelImg: string;
   wheelPosition: string;

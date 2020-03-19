@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HistoryComponent, PerxBlackcombPagesModule } from '@perx/blackcomb-pages';
+import { HistoryComponent, PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
 import { RouterModule, Routes } from '@angular/router';
-import { VouchersModule } from '@perx/core';
+import { VouchersModule } from '@perxtech/core';
 import { TranslateModule } from '@ngx-translate/core';
 import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 

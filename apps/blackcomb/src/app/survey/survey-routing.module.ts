@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { SurveyComponent } from '@perx/blackcomb-pages';
+import { SurveyComponent } from '@perxtech/blackcomb-pages';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: SurveyComponent },

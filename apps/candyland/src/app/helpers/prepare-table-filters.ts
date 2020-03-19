@@ -1,4 +1,4 @@
-import { OptionConfig } from '@perx/candyshop';
+import { OptionConfig } from '@perxtech/candyshop';
 
 export class PrepareTableFilters {
 

@@ -11,7 +11,7 @@ import {
   IJsonApiItem,
   IJsonApiItemPayload,
   IWMerchantAttributes,
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 
 describe('WhistlerMerchantsService', () => {
   let httpTestingController: HttpTestingController;

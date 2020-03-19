@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { VoucherComponent } from './voucher.component';
-import { VouchersModule, IVoucherService, Voucher, VoucherState, RewardsService, IMerchantsService, RedemptionType } from '@perx/core';
+import { VouchersModule, IVoucherService, Voucher, VoucherState, RewardsService, IMerchantsService, RedemptionType } from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';

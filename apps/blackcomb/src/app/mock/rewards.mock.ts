@@ -1,5 +1,5 @@
 // tslint:disable: max-line-length
-import { IReward } from '@perx/core';
+import { IReward } from '@perxtech/core';
 
 export const rewards: IReward[] = [
   {

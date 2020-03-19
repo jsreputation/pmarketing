@@ -9,7 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
 import { WINDOW } from '@cl-core/services/window.service';
-import { ButtonModule } from '@perx/candyshop';
+import { ButtonModule } from '@perxtech/candyshop';
 
 describe('SendMessagePopupComponent', () => {
   let component: SendMessagePopupComponent;
@@ -38,11 +38,11 @@ describe('SendMessagePopupComponent', () => {
             }
           }
         },
-        {provide: MAT_DIALOG_DATA, useValue: {}},
+        { provide: MAT_DIALOG_DATA, useValue: {} },
         {
           provide: WINDOW, useValue: {
             scrollTo(a: any, b: any): any {
-              return {a, b};
+              return { a, b };
             }
           }
         }

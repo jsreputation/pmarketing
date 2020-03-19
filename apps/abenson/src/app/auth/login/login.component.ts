@@ -14,7 +14,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import {
   AuthenticationService,
   NotificationService,
-} from '@perx/core';
+} from '@perxtech/core';
 
 @Component({
   selector: 'app-login',
@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
       this.authService.getAppToken().subscribe(() => {
         this.appAccessTokenFetched = true;
       }, (err) => {
-        console.error(`Error${  err}`);
+        console.error(`Error${err}`);
       });
     }
 

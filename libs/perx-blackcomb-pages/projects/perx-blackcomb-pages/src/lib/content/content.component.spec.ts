@@ -1,4 +1,4 @@
-import { PagesObject, SettingsService } from '@perx/core';
+import { PagesObject, SettingsService } from '@perxtech/core';
 import { of, ReplaySubject, throwError, Observable, } from 'rxjs';
 import {
   async,

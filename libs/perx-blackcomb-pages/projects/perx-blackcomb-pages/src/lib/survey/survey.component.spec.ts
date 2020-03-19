@@ -7,7 +7,7 @@ import {
   SurveyQuestionType,
   ISurvey,
   IPopupConfig
-} from '@perx/core';
+} from '@perxtech/core';
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { SurveyComponent } from './survey.component';
@@ -18,10 +18,10 @@ import { of } from 'rxjs';
 import { convertToParamMap, ActivatedRoute, Router } from '@angular/router';
 import { Type } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { WInformationCollectionSettingType } from '@perx/whistler';
+import { WInformationCollectionSettingType } from '@perxtech/whistler';
 
 interface IAnswer {
-  question_id: string;
+  questionId: string;
   content: any;
 }
 
@@ -195,13 +195,13 @@ describe('SurveyComponent', () => {
     it('should updateSurveyStatus', () => {
       const answers: IAnswer[] = [
         {
-          question_id: '1',
+          questionId: '1',
           content: 'test'
         }
       ];
       component.updateSurveyStatus(answers);
       expect(component.answers.length).toBe(1);
-      expect(component.answers[0].question_id).toBe('1');
+      expect(component.answers[0].questionId).toBe('1');
       expect(component.answers[0].content).toBe('test');
     });
 

@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SweepComponent } from './sweep.component';
-import { MineSweeperComponent } from '@perx/core';
+import { MineSweeperComponent } from '@perxtech/core';
 
 describe('SweepComponent', () => {
   let component: SweepComponent;
@@ -9,7 +9,7 @@ describe('SweepComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SweepComponent, MineSweeperComponent ]
+      declarations: [SweepComponent, MineSweeperComponent]
     })
       .compileComponents();
   }));

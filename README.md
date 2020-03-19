@@ -76,7 +76,7 @@ When importing the following Modules you will also have to include sister module
 ```typescript
 import {
   AuthenticationModule,
-} from '@perx/core';
+} from '@perxtech/core';
 import { environment } from '../environments/environment';
 
 @NgModule({
@@ -92,7 +92,7 @@ imports: [
 import {
   RewardsModule,
   VouchersModule,
-} from '@perx/core';
+} from '@perxtech/core';
 import { environment } from '../environments/environment';
 
 @NgModule({

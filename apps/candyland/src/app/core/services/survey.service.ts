@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SurveyHttpService } from '@perx/whistler-services';
+import { SurveyHttpService } from '@perxtech/whistler-services';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SurveyHttpAdapter } from '@cl-core/http-adapters/survey-http-adapter';
@@ -7,9 +7,9 @@ import {
   ICountries,
   ISurveyForm,
 } from '@cl-core/models/survey/survey-common.interface';
-import { IWSurveyEngagementAttributes, IJsonApiItemPayload, WSurveyQuestionType } from '@perx/whistler';
+import { IWSurveyEngagementAttributes, IJsonApiItemPayload, WSurveyQuestionType } from '@perxtech/whistler';
 import { HttpClient } from '@angular/common/http';
-import { GeneralStaticDataService } from '@perx/core';
+import { GeneralStaticDataService } from '@perxtech/core';
 import { IEngagementQuestionType } from '@cl-core/models/engagement-question/engagement-question-type.interface';
 import { IApacCountries } from '@cl-core/models/apac-countries.interface';
 import { IGraphic } from '@cl-core/models/graphic.interface';
