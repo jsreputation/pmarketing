@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-
-import { QuizComponent } from './quiz.component';
-import { QuizCoreComponent } from './quiz-core/quiz-core.component';
+import { RouterModule, Routes } from '@angular/router';
 import { QuizComponent as QuizBcComponent } from '@perxtech/blackcomb-pages';
+import { QuizCoreComponent } from './quiz-core/quiz-core.component';
+import { QuizComponent } from './quiz.component';
 
 const routes: Routes = [
   {

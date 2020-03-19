@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Subject, ReplaySubject } from 'rxjs';
 import { IQuiz } from '@perxtech/core';
+import { ReplaySubject, Subject } from 'rxjs';
 import { quiz } from '../mock';
 
 @Component({
@@ -14,6 +14,6 @@ export class QuizCoreComponent implements OnInit {
   public currentPointer: number = 0;
 
   public ngOnInit(): void {
-    this.questions.next(quiz)
+    this.questions.next(quiz);
   }
 }
