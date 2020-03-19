@@ -26,7 +26,7 @@ interface IAnswer {
 })
 export class QuizComponent implements OnInit, OnDestroy {
   @ViewChild('overflowContainer', { static: false })
-  private overflowContainer: ElementRef;
+  private overflowContainer: ElementRef | undefined;
   @ViewChild('overFarrow', { static: false }) private overFarrow: ElementRef;
   @ViewChild('coreQuiz', { static: false })
   private coreSurvey: QuizCoreComponent;
@@ -133,14 +133,10 @@ export class QuizComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
-    this.overflowContainer.nativeElement.removeEventListener(
-      'scroll',
-      this.hideArrow
-    );
-    this.overflowContainer.nativeElement.removeEventListener(
-      'click',
-      this.hideArrow
-    );
+    if (this.overflowContainer !== undefined) {
+      this.overflowContainer.nativeElement.removeEventListener('scroll', this.hideArrow);
+      this.overflowContainer.nativeElement.removeEventListener('click', this.hideArrow);
+    }
   }
 
   public get progressBarValue(): number {

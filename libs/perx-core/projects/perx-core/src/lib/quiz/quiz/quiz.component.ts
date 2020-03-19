@@ -109,6 +109,4 @@ export class QuizComponent implements OnChanges, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
-
-
 }

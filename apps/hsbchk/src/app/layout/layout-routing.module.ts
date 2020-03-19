@@ -104,9 +104,10 @@ const routes: Routes = [
         path: 'catalogs',
         loadChildren: () => import('../catalog/catalog.module')
           .then(mod => mod.CatalogModule)
-      }
+      },
+      { path: 'quiz/:id', loadChildren: () => import('../quiz/quiz.module').then(m => m.QuizModule) }
     ]
-  }
+  },
 
 ];
 
