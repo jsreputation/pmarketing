@@ -21,6 +21,7 @@ import { StorageModule } from './storage/storage.module';
 import { FeedItemPopupComponent } from './feed-item-popup/feed-item-popup.component';
 import { MatIconModule } from '@angular/material/icon';
 import { SortRewardsPipe } from './directives/sort-rewards-pipe';
+import { StripHtmlPipe } from './directives/striphtml-pipe';
 import { ConfigService } from '../config/config.service';
 
 export function themesServiceFactory(http: HttpClient, config: Config, configService: ConfigService): ThemesService {
@@ -58,7 +59,8 @@ export function notificationServiceFactory(): NotificationService {
     ...directives,
     ...components,
     DistancePipe,
-    SortRewardsPipe
+    SortRewardsPipe,
+    StripHtmlPipe
   ],
   entryComponents: [
     ...components,
@@ -76,7 +78,8 @@ export function notificationServiceFactory(): NotificationService {
     ...directives,
     ...components,
     DistancePipe,
-    SortRewardsPipe
+    SortRewardsPipe,
+    StripHtmlPipe
   ],
   providers: [
     { provide: NotificationService, useFactory: notificationServiceFactory },

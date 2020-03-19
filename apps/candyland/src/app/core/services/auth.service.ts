@@ -6,12 +6,12 @@ import { UserService } from '@cl-core/services/user.service';
 import { Observable, of } from 'rxjs';
 import { AuthHttpAdapter } from '@cl-core/http-adapters/auth-http-adapter';
 import { catchError, map, tap, filter, switchMap } from 'rxjs/operators';
-import { IWLoginAttributes, IJsonApiItemPayload } from '@perx/whistler';
+import { IWLoginAttributes, IJsonApiItemPayload } from '@perxtech/whistler';
 import { parseJwt } from '@cl-helpers/parse-jwt';
 import { HttpResponse } from '@angular/common/http';
 import { IamUserService } from './iam-user.service';
 import { IamUserHttpAdapter } from '@cl-core/http-adapters/iam-user-http-adapter';
-import { AuthHttpService } from '@perx/whistler-services';
+import { AuthHttpService } from '@perxtech/whistler-services';
 import { IAMUser } from '@cl-core/models/settings/IAMUser.interface';
 import { ILogin } from '@cl-core/models/auth/login.interface';
 

@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {IGame, ISnake} from '@perx/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { IGame, ISnake } from '@perxtech/core';
 
 @Component({
   selector: 'perx-blackcomb-pages-snake',

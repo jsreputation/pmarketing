@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
-import { IReward, RewardsService, IProfile, ILoyalty, ITabConfigExtended } from '@perx/core';
+import { IReward, RewardsService, IProfile, ILoyalty, ITabConfigExtended } from '@perxtech/core';
 import { Observable, of, Subject, forkJoin } from 'rxjs';
 import { Router } from '@angular/router';
 import { flatMap, map } from 'rxjs/operators';
@@ -60,9 +60,9 @@ export class HomeComponent implements OnInit, PageAppearence {
       (msg) => this.titleFn = (profile) => {
         let returnString = msg;
         if (profile && profile.firstName && profile.firstName !== '') {
-          returnString =  `${returnString  }, ${  profile.firstName}`;
+          returnString = `${returnString}, ${profile.firstName}`;
         } else if (profile && profile.lastName && profile.lastName !== '') {
-          returnString =  `${returnString  }, ${  profile.lastName}`;
+          returnString = `${returnString}, ${profile.lastName}`;
         }
         return returnString;
       }

@@ -24,7 +24,7 @@ import {
   LocationsService,
   IMerchantsService,
   IMerchant,
-} from '@perx/core';
+} from '@perxtech/core';
 
 import { FindPharmacyComponent } from './find-pharmacy.component';
 
@@ -39,7 +39,7 @@ describe('FindPharmacyComponent', () => {
 
   const merchantsServiceStub: Partial<IMerchantsService> = {
     getAllMerchants: () => of(),
-    getMerchant: () => of({name: 'merchant-name', id: 1})
+    getMerchant: () => of({ name: 'merchant-name', id: 1 })
   };
 
   const locationsStub = [

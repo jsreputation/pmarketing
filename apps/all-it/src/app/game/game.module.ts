@@ -5,14 +5,14 @@ import { MatProgressBarModule } from '@angular/material';
 import {
   GameModule as PerxGameModule,
   AuthenticationModule,
-} from '@perx/core';
+} from '@perxtech/core';
 import {
   GameComponent,
   ShakeComponent,
   TapComponent,
   ScratchComponent,
   SpinComponent
-} from '@perx/blackcomb-pages';
+} from '@perxtech/blackcomb-pages';
 
 import { GameRoutingModule } from './game-routing.module';
 

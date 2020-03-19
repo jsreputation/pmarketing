@@ -13,7 +13,7 @@ import {
 } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 
-import { IWRewardDisplayProperties } from '@perx/whistler';
+import { IWRewardDisplayProperties } from '@perxtech/whistler';
 
 import { RewardsService } from './rewards.service';
 import {
@@ -23,8 +23,8 @@ import {
   ICategoryTags,
 } from './models/reward.model';
 
-import {RewardStateHelper} from './reward-state-helper';
-import {ITabConfigExtended} from './rewards-list-tabbed/rewards-list-tabbed.component';
+import { RewardStateHelper } from './reward-state-helper';
+import { ITabConfigExtended } from './rewards-list-tabbed/rewards-list-tabbed.component';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
 

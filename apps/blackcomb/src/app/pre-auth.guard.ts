@@ -1,4 +1,4 @@
-import { Config } from '@perx/core';
+import { Config } from '@perxtech/core';
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 

@@ -1,4 +1,4 @@
-import { WRedemptionType } from '@perx/whistler';
+import { WRedemptionType } from '@perxtech/whistler';
 import { ILoyaltyFormGroup } from './reward-loyalty-form-interface';
 
 export interface IRewardEntityValidityPeriodForm {

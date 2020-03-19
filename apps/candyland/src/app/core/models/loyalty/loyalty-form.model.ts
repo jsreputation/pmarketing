@@ -1,4 +1,4 @@
-import {IJoinMethod} from '@perx/core';
+import { IJoinMethod } from '@perxtech/core';
 
 export interface ILoyaltyForm {
   id?: string;

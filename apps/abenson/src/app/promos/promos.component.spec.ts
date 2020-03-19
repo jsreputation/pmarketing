@@ -4,7 +4,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { PromosComponent } from './promos.component';
 import { of } from 'rxjs';
-import { FeedReaderService } from '@perx/core';
+import { FeedReaderService } from '@perxtech/core';
 
 describe('PromosComponent', () => {
   let component: PromosComponent;

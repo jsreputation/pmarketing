@@ -7,7 +7,7 @@ import { TapComponent } from './tap/tap.component';
 import { GamesComponent } from './games.component';
 import { ScratchComponent } from './scratch/scratch.component';
 import { SpinComponent } from './spin/spin.component';
-import { GameModule } from '@perx/core';
+import { GameModule } from '@perxtech/core';
 import {
   MatTabsModule,
   MatFormFieldModule,

@@ -1,7 +1,7 @@
 import { Observable, of } from 'rxjs';
 import {
   IJsonApiItemPayload, IWInstantOutcomeEngagementAttributes
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { IRewardDefaultValue } from '@cl-core/models/games/reward/reward-default-value.interface';
 import { IRewardForm } from '@cl-core/models/games/reward/reward-form-interface';
 import { InstantRewardsService } from '@cl-core-services';

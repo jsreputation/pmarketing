@@ -1,7 +1,7 @@
 import { HttpInterceptor, HttpEvent, HttpRequest, HttpHandler, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '@perx/core';
+import { AuthenticationService } from '@perxtech/core';
 import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 

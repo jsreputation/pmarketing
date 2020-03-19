@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { IWEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
+import { IWEngagementAttributes, IJsonApiItemPayload } from '@perxtech/whistler';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 import { IEngagementType } from '@cl-core/models/engagement/engagement.interface';
 

@@ -9,7 +9,7 @@ import {
   MatSelectModule,
   MatInputModule
 } from '@angular/material';
-import { AuthenticationService, NotificationService } from '@perx/core';
+import { AuthenticationService, NotificationService } from '@perxtech/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { Type } from '@angular/core';

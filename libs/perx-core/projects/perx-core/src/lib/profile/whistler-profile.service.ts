@@ -13,7 +13,7 @@ import {
   IWProfileAttributes,
   IJsonApiItem,
   IJsonApiListPayload,
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { TokenStorage } from '../utils/storage/token-storage.service';
 
 @Injectable({

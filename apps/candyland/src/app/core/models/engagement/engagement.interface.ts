@@ -1,4 +1,4 @@
-import { IWQuestion } from '@perx/whistler';
+import { IWQuestion } from '@perxtech/whistler';
 // import { ImageControlValue } from '@cl-helpers/image-control-value';
 
 export type IEngagementType =

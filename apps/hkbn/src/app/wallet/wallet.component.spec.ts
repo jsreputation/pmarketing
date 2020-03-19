@@ -4,7 +4,7 @@ import { WalletComponent } from './wallet.component';
 import { MatTabsModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { VouchersModule, IVoucherService, Voucher } from '@perx/core';
+import { VouchersModule, IVoucherService, Voucher } from '@perxtech/core';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable, of } from 'rxjs';

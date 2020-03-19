@@ -1,4 +1,4 @@
-import { SurveyModule as PerxSurveyModule, ICampaignService, ISurvey, SurveyService } from '@perx/core';
+import { SurveyModule as PerxSurveyModule, ICampaignService, ISurvey, SurveyService } from '@perxtech/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SurveyComponent } from './survey.component';

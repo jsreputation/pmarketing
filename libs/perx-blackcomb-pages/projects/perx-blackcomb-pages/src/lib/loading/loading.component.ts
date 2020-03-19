@@ -28,7 +28,7 @@ import {
   ICampaignService,
   IConfig,
   ConfigService
-} from '@perx/core';
+} from '@perxtech/core';
 
 import * as uuid from 'uuid';
 

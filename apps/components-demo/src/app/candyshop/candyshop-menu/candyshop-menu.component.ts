@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IMenu } from '@perx/candyshop';
+import { IMenu } from '@perxtech/candyshop';
 
 @Component({
   selector: 'app-candyshop-menu',

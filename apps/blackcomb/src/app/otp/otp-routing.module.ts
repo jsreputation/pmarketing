@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { EnterPinComponent } from '@perx/blackcomb-pages';
+import { EnterPinComponent } from '@perxtech/blackcomb-pages';
 
 const routes: Routes = [{
   path: '',

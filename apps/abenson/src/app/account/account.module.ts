@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { AccountRoutingModule } from './account-routing.module';
 import { AccountComponent } from './account.component';
-import { ProfileModule } from '@perx/core';
+import { ProfileModule } from '@perxtech/core';
 
 @NgModule({
   declarations: [AccountComponent],

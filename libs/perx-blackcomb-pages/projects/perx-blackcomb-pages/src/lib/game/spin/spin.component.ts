@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, Output, Pipe, PipeTransform} from '@angular/core';
-import {IGame, ISpin, ISlice} from '@perx/core';
+import { Component, EventEmitter, Input, Output, Pipe, PipeTransform } from '@angular/core';
+import { IGame, ISpin, ISlice } from '@perxtech/core';
 
 @Pipe({
   name: 'slicesPipe',
@@ -10,12 +10,12 @@ export class ConfigToSlicesPipe implements PipeTransform {
     let islices: ISlice[] = [];
     let standardProperties;
     for (let i = 0; i < configObject.numberOfWedges; i++) {
-      standardProperties = {id: i, backgroundColor: configObject.colorCtrls[i]};
+      standardProperties = { id: i, backgroundColor: configObject.colorCtrls[i] };
       if (configObject.rewardSlots.includes(i)) {
-        islices = [...islices, {...standardProperties, backgroundImage: configObject.rewardIcon}];
+        islices = [...islices, { ...standardProperties, backgroundImage: configObject.rewardIcon }];
         continue;
       }
-      islices = [...islices, {...standardProperties}];
+      islices = [...islices, { ...standardProperties }];
     }
     return islices;
   }

@@ -8,13 +8,13 @@ import { RedemptionBookingRoutingModule } from './redemption-booking-routing.mod
 
 import { DetailHeaderModule } from '../detail-header/detail-header.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { RewardsModule, VouchersModule, UtilsModule, ConfigModule, MerchantsModule } from '@perx/core';
+import { RewardsModule, VouchersModule, UtilsModule, ConfigModule, MerchantsModule } from '@perxtech/core';
 import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [RedemptionBookingComponent],
   imports: [
-    ConfigModule.forRoot({...environment}),
+    ConfigModule.forRoot({ ...environment }),
     CommonModule,
     RedemptionBookingRoutingModule,
     DetailHeaderModule,

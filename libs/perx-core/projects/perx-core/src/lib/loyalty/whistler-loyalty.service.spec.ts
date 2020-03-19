@@ -10,7 +10,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ConfigModule } from '../config/config.module';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
-import { IJsonApiItem, IWLoyalty, IWLoyaltyCard } from '@perx/whistler';
+import { IJsonApiItem, IWLoyalty, IWLoyaltyCard } from '@perxtech/whistler';
 import { ILoyalty } from './models/loyalty.model';
 import { skip } from 'rxjs/operators';
 

@@ -6,10 +6,10 @@ import {
   IJsonApiListPayload,
   IWRewardEntityAttributes, IWTierRewardCostsAttributes,
   WRedemptionType
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.interface';
 import { ITableData } from '@cl-core/models/data-list.interface';
-import { OptionConfig } from '@perx/candyshop';
+import { OptionConfig } from '@perxtech/candyshop';
 import { ITierRewardCost } from '@cl-core/models/reward/tier-reward-cost-intrface';
 import { RewardsService } from '@cl-core-services';
 

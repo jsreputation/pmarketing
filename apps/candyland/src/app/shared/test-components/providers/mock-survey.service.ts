@@ -2,7 +2,7 @@ import { Observable, of } from 'rxjs';
 import { ICountries, ISurveyForm } from '@cl-core/models/survey/survey-common.interface';
 import {
   IJsonApiItemPayload, IWSurveyEngagementAttributes, WSurveyQuestionType
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { IEngagementQuestionType } from '@cl-core/models/engagement-question/engagement-question-type.interface';
 import { IGraphic } from '@cl-core/models/graphic.interface';
 import { IBaseQuestionReport } from '@cl-core/models/reports/survey-report/survey-report.interface';

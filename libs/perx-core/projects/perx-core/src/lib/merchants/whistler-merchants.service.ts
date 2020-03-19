@@ -12,7 +12,7 @@ import {
   IJsonApiItemPayload,
   IMeta,
   IWMerchantAttributes,
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 
 @Injectable({
   providedIn: 'root'

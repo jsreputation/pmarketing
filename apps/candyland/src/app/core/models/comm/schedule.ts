@@ -1,4 +1,4 @@
-import { WMessageChannel } from '@perx/whistler/dist/whistler/lib/comm/comm';
+import { WMessageChannel } from '@perxtech/whistler/dist/whistler/lib/comm/comm';
 
 export interface IComm {
   message?: string;

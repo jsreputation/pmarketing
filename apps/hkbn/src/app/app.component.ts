@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NotificationService, PopupComponent } from '@perx/core';
+import { NotificationService, PopupComponent } from '@perxtech/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { SnackbarComponent } from './ui/snackbar/snackbar.component';
 
@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
 
   public ngOnInit(): void {
     this.notificationService.$popup.subscribe(data => {
-      this.dialog.open(PopupComponent, {data});
+      this.dialog.open(PopupComponent, { data });
     });
 
     this.notificationService.$snack.subscribe((data) => {

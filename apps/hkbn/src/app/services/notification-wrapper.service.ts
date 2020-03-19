@@ -1,4 +1,4 @@
-import { NotificationService, IPopupConfig } from '@perx/core';
+import { NotificationService, IPopupConfig } from '@perxtech/core';
 import { Injectable } from '@angular/core';
 import { AppModule } from '../app.module';
 @Injectable({

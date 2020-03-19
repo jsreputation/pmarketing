@@ -14,7 +14,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import {
   AuthenticationService,
   NotificationService,
-} from '@perx/core';
+} from '@perxtech/core';
 
 @Component({
   selector: 'app-forgot-pin',

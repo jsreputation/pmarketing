@@ -1,6 +1,6 @@
 import { Observable, of } from 'rxjs';
 import { ILimit } from '@cl-core/models/limit/limit.interface';
-import { IJsonApiItemPayload, IWLimitAttributes } from '@perx/whistler';
+import { IJsonApiItemPayload, IWLimitAttributes } from '@perxtech/whistler';
 import { LimitsService } from '@cl-core-services';
 
 export class MockLimitsService implements Partial<LimitsService> {

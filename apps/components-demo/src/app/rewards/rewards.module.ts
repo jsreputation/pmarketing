@@ -9,7 +9,7 @@ import {
   AuthenticationModule,
   RewardsModule as PerxRewardsModule,
   UtilsModule as PerxCoreUtilsModule
-} from '@perx/core';
+} from '@perxtech/core';
 import { RouterModule } from '@angular/router';
 import { RewardComponent } from './reward/reward.component';
 import { MatButtonModule, MatTabsModule } from '@angular/material';

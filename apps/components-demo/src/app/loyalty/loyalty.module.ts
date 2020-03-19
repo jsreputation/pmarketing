@@ -12,11 +12,11 @@ import {
   ProfileModule,
   LoyaltyModule as PerxLoyaltyModule,
   ConfigModule
-} from '@perx/core';
+} from '@perxtech/core';
 @NgModule({
   declarations: [LoyaltyComponent, LoyaltySummaryComponent, LoyaltyTransactionsListComponent],
   imports: [
-    ConfigModule.forRoot({...environment}),
+    ConfigModule.forRoot({ ...environment }),
     CommonModule,
     LoyaltyRoutingModule,
     MatTabsModule,

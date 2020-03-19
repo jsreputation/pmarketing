@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ScratchComponent } from './scratch.component';
 import { MatSliderModule, MatFormFieldModule, MatInputModule } from '@angular/material';
-import { GameModule } from '@perx/core';
+import { GameModule } from '@perxtech/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('ScratchComponent', () => {
@@ -11,7 +11,7 @@ describe('ScratchComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ScratchComponent ],
+      declarations: [ScratchComponent],
       imports: [
         MatSliderModule,
         GameModule,

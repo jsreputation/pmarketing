@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { StatusLabelMapping, IVoucherService, Voucher } from '@perx/core';
+import { StatusLabelMapping, IVoucherService, Voucher } from '@perxtech/core';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap, catchError } from 'rxjs/operators';
 import { voucher } from 'src/assets/mock/vouchers';

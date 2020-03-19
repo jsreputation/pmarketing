@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { RewardComponent } from './reward.component';
 import { MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { RewardsService, NotificationService, IVoucherService, VoucherState } from '@perx/core';
+import { RewardsService, NotificationService, IVoucherService, VoucherState } from '@perxtech/core';
 import { LocationShortFormatComponent } from '../location-short-format/location-short-format.component';
 import { RewardDetailComponent } from './reward-detail/reward-detail.component';
 import { ExpireTimerComponent } from './expire-timer/expire-timer.component';
@@ -11,7 +11,7 @@ import { of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Type } from '@angular/core';
-import {IMacaron, MacaronService} from '../services/macaron.service';
+import { IMacaron, MacaronService } from '../services/macaron.service';
 import { AnalyticsService } from '../analytics.service';
 
 const rewardStub = {
@@ -144,7 +144,7 @@ describe('RewardComponent', () => {
           termsAndConditions: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
           howToRedeem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
           merchantId: 2,
-          categoryTags: [{id: 1, title: 'test'}]
+          categoryTags: [{ id: 1, title: 'test' }]
         })
       );
       const macaronService: MacaronService = fixture.debugElement.injector.get<MacaronService>(MacaronService as Type<MacaronService>);

@@ -5,7 +5,7 @@ import {
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { ProfileService, ThemesService, ITheme, ConfigService, IConfig } from '@perx/core';
+import { ProfileService, ThemesService, ITheme, ConfigService, IConfig } from '@perxtech/core';
 import { filter, map } from 'rxjs/operators';
 
 @Component({

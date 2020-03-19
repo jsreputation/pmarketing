@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 
 import { RewardsCardsComponent } from './rewards-cards.component';
 import { MatIconModule, MatCardModule } from '@angular/material';
-import { RewardsService, IReward } from '@perx/core';
+import { RewardsService, IReward } from '@perxtech/core';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
 import { MacaronService } from 'src/app/services/macaron.service';

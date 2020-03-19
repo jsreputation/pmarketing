@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ChartsRoutingModule } from './charts-routing.module';
 import { ChartsComponent } from './charts.component';
 import { VerticalBarComponent } from './vertical-bar/vertical-bar.component';
-import { PerxChartModule } from '@perx/chart';
+import { PerxChartModule } from '@perxtech/chart';
 import { HorizontalBarComponent } from './horizontal-bar/horizontal-bar.component';
 import { PieComponent } from './pie/pie.component';
 import {

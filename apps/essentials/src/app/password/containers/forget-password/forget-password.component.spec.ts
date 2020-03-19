@@ -7,7 +7,7 @@ import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ButtonModule } from '@perx/candyshop';
+import { ButtonModule } from '@perxtech/candyshop';
 
 describe('ForgetPasswordComponent', () => {
   let component: ForgetPasswordComponent;

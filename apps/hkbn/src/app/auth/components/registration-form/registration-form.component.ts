@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output, ViewEncapsulation, Input, OnInit } fro
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { HkbnValidators } from '../../../helpers/hkbn-validators';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
-import { ICountryCode, ISignUpData } from '@perx/core';
+import { ICountryCode, ISignUpData } from '@perxtech/core';
 
 @Component({
   selector: 'hkbn-registration-form',

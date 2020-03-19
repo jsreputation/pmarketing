@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { PuzzleCollectStamp, PuzzleCollectStampState, IReward } from '@perx/core';
+import { PuzzleCollectStamp, PuzzleCollectStampState, IReward } from '@perxtech/core';
 import { BehaviorSubject, Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ITenantsProperties } from '@cl-core/models/settings/tenants.properties.interface';

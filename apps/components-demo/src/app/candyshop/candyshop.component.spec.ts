@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CandyshopComponent } from './candyshop.component';
-import { ButtonModule } from '@perx/candyshop';
+import { ButtonModule } from '@perxtech/candyshop';
 import { RouterTestingModule } from '@angular/router/testing';
 
 describe('CandyshopComponent', () => {

@@ -12,7 +12,7 @@ import {
   IVoucherService,
   Voucher,
   VoucherState,
-} from '@perx/core';
+} from '@perxtech/core';
 import { Observable, Subject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 

@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
-import { AuthenticationService, NotificationService, ConfigService, IConfig } from '@perx/core';
+import { AuthenticationService, NotificationService, ConfigService, IConfig } from '@perxtech/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
       this.authService.getAppToken().subscribe(() => {
         this.appAccessTokenFetched = true;
       }, (err) => {
-        console.error(`Error${  err}`);
+        console.error(`Error${err}`);
       });
     }
     this.configService.readAppConfig().subscribe(

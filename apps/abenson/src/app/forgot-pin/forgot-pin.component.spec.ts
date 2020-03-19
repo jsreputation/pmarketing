@@ -17,7 +17,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { of } from 'rxjs';
 
-import { AuthenticationService } from '@perx/core';
+import { AuthenticationService } from '@perxtech/core';
 
 import { ForgotPinComponent } from './forgot-pin.component';
 

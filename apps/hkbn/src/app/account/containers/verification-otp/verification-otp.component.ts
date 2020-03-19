@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfileService, AuthenticationService, IChangePasswordData, IChangePhoneData } from '@perx/core';
+import { ProfileService, AuthenticationService, IChangePasswordData, IChangePhoneData } from '@perxtech/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
 import { Observable } from 'rxjs';

@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { VouchersComponent } from './vouchers.component';
 import { MatCardModule, MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { IVoucherService } from '@perx/core';
+import { IVoucherService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 import { Router } from '@angular/router';

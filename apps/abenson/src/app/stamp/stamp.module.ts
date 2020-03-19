@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { StampRoutingModule } from './stamp-routing.module';
 import { CardComponent } from './card/card.component';
-import { PuzzlesModule, StampModule as PerxStampModule } from '@perx/core';
+import { PuzzlesModule, StampModule as PerxStampModule } from '@perxtech/core';
 import { MatButtonModule } from '@angular/material';
 
 @NgModule({

@@ -22,7 +22,7 @@ import {
 import { of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { IMerchantAdminService } from '@perx/core';
+import { IMerchantAdminService } from '@perxtech/core';
 
 import { ForgotPasswordComponent } from './forgot-password.component';
 

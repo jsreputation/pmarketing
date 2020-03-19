@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AuthenticationService, NotificationService, ISignUpData } from '@perx/core';
+import { AuthenticationService, NotificationService, ISignUpData } from '@perxtech/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, Observable, of } from 'rxjs';
 import { takeUntil, switchMap } from 'rxjs/operators';

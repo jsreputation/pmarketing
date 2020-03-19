@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { IChangePasswordData, IChangePhoneData, ISignUpData } from '@perx/core';
+import { IChangePasswordData, IChangePhoneData, ISignUpData } from '@perxtech/core';
 
 @Injectable({
   providedIn: 'root'

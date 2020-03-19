@@ -10,7 +10,7 @@ import {
   ILoyalty,
   IPrice,
   IVoucherService
-} from '@perx/core';
+} from '@perxtech/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, flatMap, map } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';

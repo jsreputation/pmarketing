@@ -1,7 +1,7 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { OptionConfig } from '@perx/candyshop';
+import { OptionConfig } from '@perxtech/candyshop';
 import { Currency } from '@cl-core/models/merchant/currency';
 
 @Component({

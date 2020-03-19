@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { StatusLabelMapping, Voucher, IVoucherService, VoucherState } from '@perx/core';
+import { StatusLabelMapping, Voucher, IVoucherService, VoucherState } from '@perxtech/core';
 import { Router } from '@angular/router';
 
 @Component({

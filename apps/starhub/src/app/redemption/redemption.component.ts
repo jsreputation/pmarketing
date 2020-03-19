@@ -8,7 +8,7 @@ import {
   ICategoryTags,
   IReward,
   isEmptyArray,
-} from '@perx/core';
+} from '@perxtech/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { Location } from '@angular/common';

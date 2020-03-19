@@ -1,4 +1,4 @@
-import {AuthenticationService, ConfigService, ICampaignService, TokenStorage} from '@perx/core';
+import { AuthenticationService, ConfigService, ICampaignService, TokenStorage } from '@perxtech/core';
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';

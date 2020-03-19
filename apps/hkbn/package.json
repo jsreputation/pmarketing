@@ -1,5 +1,5 @@
 {
-  "name": "@perx/hkbn",
+  "name": "@perxtech/hkbn",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -29,7 +29,7 @@
     "@angular/router": "~8.0.0",
     "@ngx-translate/core": "^11.0.1",
     "@ngx-translate/http-loader": "^4.0.0",
-    "@perx/core": "^0.0.0",
+    "@perxtech/core": "^0.0.0",
     "angular2-text-mask": "^9.0.0",
     "angularx-qrcode": "^1.6.4",
     "hammerjs": "^2.0.8",

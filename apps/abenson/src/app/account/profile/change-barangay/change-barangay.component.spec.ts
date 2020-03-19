@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule, MatInputModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { ProfileService } from '@perx/core';
+import { ProfileService } from '@perxtech/core';
 import { of, throwError } from 'rxjs';
 import { Location } from '@angular/common';
 import { Type } from '@angular/core';

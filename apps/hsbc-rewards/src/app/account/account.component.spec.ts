@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {ProfileService, ProfileModule, AuthenticationService, IProfile} from '@perx/core';
+import { ProfileService, ProfileModule, AuthenticationService, IProfile } from '@perxtech/core';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 

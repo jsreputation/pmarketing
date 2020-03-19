@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { DashboardHttpService } from '@cl-core/http-services/dashboard-http.service';
 import { combineLatest, Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { DataService, IData } from '@perx/chart';
+import { DataService, IData } from '@perxtech/chart';
 import { ITotal } from '@cl-core/models/dashboard/total-active-interface';
 import { DashboardGameCard } from '@cl-shared/models/dashboard/dashboard-game-card.interface';
 import { HttpParamsOptions } from '@cl-core/models/params-map';

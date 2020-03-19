@@ -9,7 +9,7 @@ import { RuleSetMatchType } from '@cl-core/models/loyalty/rule-set-match-type.en
 import { RuleConditionType } from '@cl-core/models/loyalty/rule-condition-type.enum';
 import { RuleOperatorType } from '@cl-core/models/loyalty/rule-operator-type.enum';
 import { TenantService } from '@cl-core/services/tenant.service';
-import { OptionConfig } from '@perx/candyshop';
+import { OptionConfig } from '@perxtech/candyshop';
 
 const matchType: OptionConfig[] = [
   { value: RuleSetMatchType.first, title: 'LOYALTY_FEATURE.MATCH_TYPE.MATCH_FIRST' },

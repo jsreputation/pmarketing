@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { RewardsRoutingModule } from './rewards-routing.module';
 import { RewardDetailComponent } from './reward-detail/reward-detail.component';
-import { RewardsModule as PerxRewardsModule } from '@perx/core';
+import { RewardsModule as PerxRewardsModule } from '@perxtech/core';
 import { SharedModule } from '../shared/shared.module';
 import { RewardConfirmComponent } from './reward-confirm/reward-confirm.component';
 

@@ -13,7 +13,7 @@ import {
   MatSelectModule,
   MatTabsModule, MatProgressBarModule
 } from '@angular/material';
-import { ButtonModule, StatusLabelModule } from '@perx/candyshop';
+import { ButtonModule, StatusLabelModule } from '@perxtech/candyshop';
 import { NoDataModule, PaginationModule } from '@cl-shared/table';
 import { LoyaltyGridComponent } from 'src/app/loyalty/components/loyalty-grid/loyalty-grid.component';
 import { LoyaltyItemComponent } from 'src/app/loyalty/components/loyalty-item/loyalty-item.component';
@@ -56,7 +56,7 @@ import { MultiplierResultGroupComponent } from './components/multiplier-result-g
 import { BonusResultGroupComponent } from './components/bonus-result-group/bonus-result-group.component';
 import { PointsEarnedInfoPipe } from './points-earned-info.pipe';
 import { PointsExpiredInfoPipe } from './points-expired-info.pipe';
-import { StepperModule } from '@perx/candyshop';
+import { StepperModule } from '@perxtech/candyshop';
 import { DirectivesModule } from '@cl-shared/directives/directives.module';
 
 @NgModule({

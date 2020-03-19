@@ -11,11 +11,11 @@ import {
   share,
 } from 'rxjs/operators';
 
-import { IJsonApiListPayload } from '@perx/whistler';
+import { IJsonApiListPayload } from '@perxtech/whistler';
 import {
   IWSetting,
   IWTenant,
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 
 import {
   ITheme,

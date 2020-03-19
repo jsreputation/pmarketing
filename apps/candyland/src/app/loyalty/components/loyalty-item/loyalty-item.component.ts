@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { StatusLabel } from '@cl-helpers/status-label.enum';
 import { LoyaltyAction } from '../../models/loyalty-action.enum';
 import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
-import { IStatusLabelConfig } from '@perx/candyshop';
+import { IStatusLabelConfig } from '@perxtech/candyshop';
 
 export interface IEngagementItemMenuOption {
   action: string;
@@ -29,12 +29,12 @@ export class LoyaltyItemComponent {
   }
 
   public tapped(option: IEngagementItemMenuOption): void {
-    this.menuTapped.emit({action: option.action, loyalty: this.data});
+    this.menuTapped.emit({ action: option.action, loyalty: this.data });
   }
 
   public navigateToReview(): void {
     if (this.linkable) {
-      this.router.navigate([`loyalty/review/${  this.data.id}`]);
+      this.router.navigate([`loyalty/review/${this.data.id}`]);
     }
   }
 }

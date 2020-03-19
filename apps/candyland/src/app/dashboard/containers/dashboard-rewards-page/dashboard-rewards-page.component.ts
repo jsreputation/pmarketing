@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { switchMap, takeUntil, tap, map } from 'rxjs/operators';
 
 import { DashboardChartsParametersService } from '../../services/dashboard-charts-parameters.service';
-import { CardType } from '@perx/chart';
+import { CardType } from '@perxtech/chart';
 import { DashboardService } from '@cl-core-services';
 
 @Component({

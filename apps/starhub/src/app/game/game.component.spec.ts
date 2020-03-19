@@ -3,12 +3,12 @@ import {
   MatIconModule,
   MatToolbarModule,
 } from '@angular/material';
-import { GameModule, IGameService, GameType, NotificationService, IPlayOutcome, IGame } from '@perx/core';
+import { GameModule, IGameService, GameType, NotificationService, IPlayOutcome, IGame } from '@perxtech/core';
 import { GameComponent } from './game.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { Location } from '@angular/common';
-import { ScratchComponent, ShakeComponent, TapComponent } from '@perx/blackcomb-pages';
+import { ScratchComponent, ShakeComponent, TapComponent } from '@perxtech/blackcomb-pages';
 import { Type } from '@angular/core';
 
 const mockGame: IGame = {

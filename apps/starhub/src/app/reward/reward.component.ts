@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { RewardsService, NotificationService, IVoucherService } from '@perx/core';
+import { RewardsService, NotificationService, IVoucherService } from '@perxtech/core';
 import { filter, map, switchMap } from 'rxjs/operators';
-import { IReward } from '@perx/core';
+import { IReward } from '@perxtech/core';
 import { AnalyticsService, PageType } from '../analytics.service';
 import { IMacaron, MacaronService } from '../services/macaron.service';
 
@@ -53,7 +53,7 @@ export class RewardComponent implements OnInit {
           this.isButtonEnable = this.macaron.isButtonEnabled;
         }
 
-        if (reward.inventory && reward.inventory.rewardLimitPerUserBalance === 0 ) {
+        if (reward.inventory && reward.inventory.rewardLimitPerUserBalance === 0) {
           this.isButtonEnable = false;
         }
       });

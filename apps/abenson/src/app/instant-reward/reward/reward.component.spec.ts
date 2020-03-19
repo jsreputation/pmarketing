@@ -16,7 +16,7 @@ import {
   RewardsModule,
   RewardsService,
   ThemesService,
-} from '@perx/core';
+} from '@perxtech/core';
 
 import { RewardComponent } from './reward.component';
 

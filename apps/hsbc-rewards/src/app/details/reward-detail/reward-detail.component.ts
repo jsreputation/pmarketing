@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RewardsService, IReward, IPrice } from '@perx/core';
+import { RewardsService, IReward, IPrice } from '@perxtech/core';
 import { switchMap, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 

@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TapComponent } from './tap.component';
-import { GameModule } from '@perx/core';
+import { GameModule } from '@perxtech/core';
 
 describe('TapComponent', () => {
   let component: TapComponent;

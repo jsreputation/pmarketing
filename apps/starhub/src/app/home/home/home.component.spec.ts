@@ -14,7 +14,7 @@ import {
   ICampaignService,
   TokenStorage,
   ConfigService
-} from '@perx/core';
+} from '@perxtech/core';
 import { of, throwError } from 'rxjs';
 import { loyalty } from 'src/app/loyalty.mock';
 import { Type } from '@angular/core';

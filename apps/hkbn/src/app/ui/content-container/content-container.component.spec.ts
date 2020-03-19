@@ -5,7 +5,7 @@ import { HeaderModule } from '../header/header.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
-import { AuthenticationService, ProfileService } from '@perx/core';
+import { AuthenticationService, ProfileService } from '@perxtech/core';
 import { of } from 'rxjs';
 
 describe('ContentContainerComponent', () => {

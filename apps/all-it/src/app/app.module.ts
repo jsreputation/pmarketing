@@ -20,7 +20,7 @@ import {
   AuthenticationService,
   ThemesService,
   IConfig
-} from '@perx/core';
+} from '@perxtech/core';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';

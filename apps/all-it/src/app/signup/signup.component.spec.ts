@@ -13,7 +13,7 @@ import {
 } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthenticationService, NotificationService } from '@perx/core';
+import { AuthenticationService, NotificationService } from '@perxtech/core';
 
 describe('SignupComponent', () => {
   let component: SignupComponent;
@@ -24,12 +24,12 @@ describe('SignupComponent', () => {
   };
 
   const notificationServiceStub: Partial<NotificationService> = {
-    addSnack: () => {}
+    addSnack: () => { }
   };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SignupComponent ],
+      declarations: [SignupComponent],
       imports: [
         MatButtonModule,
         MatFormFieldModule,
@@ -46,7 +46,7 @@ describe('SignupComponent', () => {
       ],
       providers: [
         { provide: AuthenticationService, useValue: authServiceStub },
-        { provide: NotificationService, useValue: notificationServiceStub}
+        { provide: NotificationService, useValue: notificationServiceStub }
       ]
     })
       .compileComponents();

@@ -4,7 +4,7 @@ import { EngagementTypeComponent } from './engagement-type.component';
 import { TypeItemComponent } from './type-item/type-item.component';
 import { MatDialogModule, MatFormFieldModule, MatIconModule, MatRadioModule, MatSelectModule } from '@angular/material';
 import { InkModule } from '../../../components/ink/ink.module';
-import { ButtonModule } from '@perx/candyshop';
+import { ButtonModule } from '@perxtech/candyshop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 

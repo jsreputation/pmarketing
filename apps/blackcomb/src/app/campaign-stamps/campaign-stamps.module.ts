@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CampaignStampsComponent, PerxBlackcombPagesModule } from '@perx/blackcomb-pages';
+import { CampaignStampsComponent, PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
 import { RouterModule, Routes } from '@angular/router';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { PuzzlesModule } from '@perx/core';
+import { PuzzlesModule } from '@perxtech/core';
 const routes: Routes = [{
   path: '',
   component: CampaignStampsComponent

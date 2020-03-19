@@ -3,7 +3,7 @@ import {
   Observable,
   of
 } from 'rxjs';
-import { Voucher, IVoucherService, StatusLabelMapping } from '@perx/core';
+import { Voucher, IVoucherService, StatusLabelMapping } from '@perxtech/core';
 import { mock } from '../mock';
 
 @Component({

@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Injectable } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { IWQuestion, WSurveyQuestionType } from '@perx/whistler';
+import { IWQuestion, WSurveyQuestionType } from '@perxtech/whistler';
 
 @Injectable()
 export class QuestionFormFieldService {

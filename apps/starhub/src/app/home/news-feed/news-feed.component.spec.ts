@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NewsFeedComponent } from './news-feed.component';
 import { MatCardModule, MatButtonModule, MatDialogModule, MatDialog } from '@angular/material';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
-import { SettingsService, FeedReaderService } from '@perx/core';
+import { SettingsService, FeedReaderService } from '@perxtech/core';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { of } from 'rxjs';
 
@@ -51,7 +51,7 @@ describe('NewsFeedComponent', () => {
       ],
       providers: [
         { provide: FeedReaderService, useValue: feedReaderServiceStub },
-        { provide: SettingsService, useValue: settingsServiceStub},
+        { provide: SettingsService, useValue: settingsServiceStub },
       ]
     })
       .compileComponents();

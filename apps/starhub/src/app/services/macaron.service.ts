@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ICampaign, IReward } from '@perx/core';
+import { ICampaign, IReward } from '@perxtech/core';
 
 export interface IMacaron {
   label: string;

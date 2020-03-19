@@ -1,4 +1,4 @@
-import { IProfile } from '@perx/core';
+import { IProfile } from '@perxtech/core';
 
 export const profile: IProfile = {
   id: 952,

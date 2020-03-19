@@ -8,7 +8,7 @@ import {
   IProfile,
   AuthenticationService,
   IVoucherService,
-} from '@perx/core';
+} from '@perxtech/core';
 
 @Component({
   selector: 'app-profile',

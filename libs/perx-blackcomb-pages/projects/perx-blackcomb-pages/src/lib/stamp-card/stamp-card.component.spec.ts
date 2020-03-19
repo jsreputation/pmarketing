@@ -21,10 +21,10 @@ import {
   PuzzlesModule,
   StampCardState,
   StampService,
-} from '@perx/core';
+} from '@perxtech/core';
 
 import { StampCardComponent } from './stamp-card.component';
-import {stamps} from '../mock/stamp.mock';
+import { stamps } from '../mock/stamp.mock';
 
 describe('StampCardComponent', () => {
   let component: StampCardComponent;
@@ -37,7 +37,7 @@ describe('StampCardComponent', () => {
   };
 
   const notificationStub: Partial<NotificationService> = {
-    addPopup: () => {}
+    addPopup: () => { }
   };
 
   beforeEach(async(() => {

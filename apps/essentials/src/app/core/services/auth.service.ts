@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthHttpService } from '@perx/whistler-services';
+import { AuthHttpService } from '@perxtech/whistler-services';
 import { parseJwt } from '@es-helpers/parse-jwt';
 import { Observable, of } from 'rxjs';
 import { map, tap, switchMap, filter, catchError } from 'rxjs/operators';
-import { IJsonApiItemPayload, IWIAMUserAttributes } from '@perx/whistler';
+import { IJsonApiItemPayload, IWIAMUserAttributes } from '@perxtech/whistler';
 import { HttpResponse } from '@angular/common/http';
 import { AuthHttpAdapter } from '@es-core/http-adapters/auth-http-adapter';
 import { IamUserService } from '@es-core/services/iam-user.service';
@@ -116,7 +116,7 @@ export class AuthService {
           this.saveToken(tokenString);
           const tokenObj = parseJwt(tokenString);
           const userName = tokenObj.sub.split('/').pop();
-          return this.iamUserService.getUsers({'filter[username]': userName}).pipe(
+          return this.iamUserService.getUsers({ 'filter[username]': userName }).pipe(
             map(users => users[0]),
             tap((user: IAMUser) => this.saveUser(user))
           );
