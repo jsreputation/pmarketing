@@ -33,8 +33,9 @@ export class QuizRatingComponent implements OnChanges {
   }
 
   public quizRatingIcons(index: number): SurveyRatingIcons {
-    const iconName = index <= this.selectedChoice ? `${this.payload.shape}Selected` : this.payload.shape;
-    return SurveyRatingIcons[iconName || 'star']; // default icon if is undefined
+    const shape: string = this.payload.shape || 'star';
+    const iconName = index <= this.selectedChoice ? `${shape}Selected` : shape;
+    return SurveyRatingIcons[iconName]; // default icon if is undefined
   }
 
   public onSelect(index: number): void {
