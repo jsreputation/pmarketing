@@ -33,6 +33,8 @@
     "build:oracle-demo:prod": "echo 'skipping oracle-demo build'",
     "build:perx-demo:prod": "lerna run build:lib && lerna run build:perx-demo:prod --",
     "build:perx-demo:staging": "lerna run build:lib && lerna run build:perx-demo:staging --",
+    "build:hsbchk:prod": "lerna run build:lib && lerna run build:hsbchk:prod --",
+    "build:hsbchk:staging": "lerna run build:lib && lerna run build:hsbchk:staging --",
     "build:oracle-pay:prod": "echo 'skipping oracle-pay build'",
     "build:perx:prod": "echo 'skipping perx build'",
     "build:backend": "lerna run build:backend",
