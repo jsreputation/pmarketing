@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
-import { ICampaign, CampaignType, ICampaignService, IGameService, IGame } from '@perxtech/core';
+import { ICampaign, CampaignType, ICampaignService, IGameService, IGame, ConfigService } from '@perxtech/core';
 import { map, scan, switchMap, tap } from 'rxjs/operators';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { IMacaron, MacaronService } from '../../services/macaron.service';
@@ -29,12 +29,15 @@ export class CampaignsComponent implements OnInit {
     private campaignService: ICampaignService,
     private gameService: IGameService,
     private macaronService: MacaronService,
+    private configService: ConfigService,
   ) {
     this.initCampaignsScan();
   }
 
   public ngOnInit(): void {
-    this.loadCampaigns();
+    this.configService.readAppConfig().subscribe(() => {
+      this.loadCampaigns();
+    });
   }
 
   public loadCampaigns(): void {
