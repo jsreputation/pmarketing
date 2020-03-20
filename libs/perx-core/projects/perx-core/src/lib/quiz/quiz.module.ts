@@ -23,26 +23,27 @@ import { QuizService } from './quiz.service';
 import { QuizComponent } from './quiz/quiz.component';
 import { ResultsComponent } from './results/results.component';
 import { V4QuizService } from './v4-quiz.service';
+import { SecondsToStringPipe } from './seconds-to-string.pipe';
 
 export function quizServiceFactory(http: HttpClient, campaignService: ICampaignService, config: Config): QuizService {
   // Make decision on what to instantiate base on config
   return new V4QuizService(http, campaignService, config);
 }
 
-const components = [
+const componentsAndPipes = [
   QuizComponent,
   QuizQuestionComponent,
   QuizRatingComponent,
   QuizPictureSelectComponent,
   QuizLongTextComponent,
   QuizSelectComponent,
-  ResultsComponent
+  ResultsComponent,
+  SecondsToStringPipe
 ];
 
 @NgModule({
-  declarations: [
-    ...components,
-  ],
+  declarations: [...componentsAndPipes,],
+  exports: [...componentsAndPipes],
   imports: [
     CommonModule,
     FormsModule,
@@ -64,9 +65,7 @@ const components = [
       deps: [HttpClient, ICampaignService, Config]
     }
   ],
-  exports: [
-    ...components
-  ]
+
 })
 export class QuizModule {
 }

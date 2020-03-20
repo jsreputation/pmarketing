@@ -33,7 +33,8 @@ import {
   LoyaltyModule,
   RewardsModule,
   SurveyModule,
-  QuizModule
+  QuizModule,
+  SecondsToStringPipe
 } from '@perxtech/core';
 
 import { RewardComponent } from './reward/reward.component';
@@ -151,6 +152,9 @@ const comps: any[] = [
   ],
   declarations: [
     ...comps,
+  ],
+  providers: [
+    SecondsToStringPipe
   ]
 })
 export class PerxBlackcombPagesModule {

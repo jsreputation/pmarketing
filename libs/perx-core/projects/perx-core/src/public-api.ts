@@ -224,6 +224,7 @@ export { QuizPictureSelectComponent } from './lib/quiz/question/picture-select/p
 export { QuizLongTextComponent } from './lib/quiz/question/long-text/long-text.component';
 export { QuizRatingComponent } from './lib/quiz/question/rating/rating.component';
 export { ResultsComponent } from './lib/quiz/results/results.component';
+export { SecondsToStringPipe } from './lib/quiz/seconds-to-string.pipe';
 
 /**
  * Config
