@@ -23,6 +23,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { SortRewardsPipe } from './directives/sort-rewards-pipe';
 import { StripHtmlPipe } from './directives/striphtml-pipe';
 import { ConfigService } from '../config/config.service';
+import { TimerComponent, ForceLengthxPipe } from './timer/timer.component';
 
 export function themesServiceFactory(http: HttpClient, config: Config, configService: ConfigService): ThemesService {
   if (config.isWhistler) {
@@ -41,7 +42,9 @@ const components = [
   PopupComponent,
   PinInputComponent,
   NewsfeedComponent,
-  FeedItemPopupComponent];
+  FeedItemPopupComponent,
+  TimerComponent,
+];
 
 // make sure we have only one instance of the NotificationService
 export function notificationServiceFactory(): NotificationService {
@@ -60,7 +63,8 @@ export function notificationServiceFactory(): NotificationService {
     ...components,
     DistancePipe,
     SortRewardsPipe,
-    StripHtmlPipe
+    StripHtmlPipe,
+    ForceLengthxPipe
   ],
   entryComponents: [
     ...components,
