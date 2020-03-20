@@ -52,6 +52,11 @@ const routes: Routes = [
         canActivate: [ProtectedGuard]
       },
       {
+        path: 'lucky-draw',
+        loadChildren: () => import('../lucky-draw-details/lucky-draw-details.module').then((mod) => mod.LuckyDrawDetailsModule),
+        canActivate: [ProtectedGuard]
+      },
+      {
         path: 'stamp-card/:id',
         loadChildren: () => import('../stamp/stamp.module').then(mod => mod.StampModule),
         canActivate: [ProtectedGuard]
