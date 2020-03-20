@@ -42,7 +42,7 @@ const componentsAndPipes = [
 ];
 
 @NgModule({
-  declarations: [...componentsAndPipes,],
+  declarations: [...componentsAndPipes],
   exports: [...componentsAndPipes],
   imports: [
     CommonModule,

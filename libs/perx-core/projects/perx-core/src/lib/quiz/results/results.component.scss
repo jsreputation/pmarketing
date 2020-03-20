@@ -6,12 +6,16 @@
   width: 1.6rem;
   color: white;
 }
+
 .correct {
   background-color: #27c400;
+
   @include icon;
 }
+
 .wrong {
   background-color: #d90a1e;
+
   @include icon;
 }
 

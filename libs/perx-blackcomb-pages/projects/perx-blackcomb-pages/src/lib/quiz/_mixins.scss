@@ -7,7 +7,7 @@
   background-size: cover;
 }
 
-@mixin quizPage() {
+@mixin quizPage {
   width: 100%;
   display: flex;
   flex: 1 1 36rem;
@@ -27,6 +27,11 @@
 }
 
 @mixin quizCard {
+  display: flex;
+  flex-direction: column;
+  min-height: 34rem;
+  align-items: center;
+  background-size: cover;
 }
 
 @mixin quizBottomBar {

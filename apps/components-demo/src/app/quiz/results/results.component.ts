@@ -8,7 +8,7 @@ import { results } from '../mock';
   styleUrls: ['./results.component.scss']
 })
 export class ResultsComponent {
-  get results(): IPoints[] {
+  public get results(): IPoints[] {
     return results;
   }
 }

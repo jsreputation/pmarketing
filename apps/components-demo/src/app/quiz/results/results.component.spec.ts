@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { QuizModule } from '@perxtech/core';
 import { ResultsComponent } from './results.component';
 
 describe('ResultsComponent', () => {
@@ -7,7 +8,8 @@ describe('ResultsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ResultsComponent]
+      declarations: [ResultsComponent],
+      imports: [QuizModule]
     })
       .compileComponents();
   }));
