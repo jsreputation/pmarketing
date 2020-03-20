@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { UtilsModule } from '@perxtech/core';
 import { TimerComponent } from './timer.component';
+
 
 describe('TimerComponent', () => {
   let component: TimerComponent;
@@ -8,9 +9,10 @@ describe('TimerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TimerComponent ]
+      declarations: [TimerComponent],
+      imports: [UtilsModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -1,16 +1,18 @@
-import { ReactiveFormsModule } from '@angular/forms';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PinInputComponent } from './pin-input/pin-input.component';
-import { UtilsComponent } from './utils.component';
-import { UtilsModule as PerxCoreUtilsModule } from '@perxtech/core';
+import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatTabsModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
-import { UtilsRoutingModule } from './utils-routing.module';
+import { UtilsModule as PerxCoreUtilsModule } from '@perxtech/core';
+
+import { PinInputComponent } from './pin-input/pin-input.component';
 import { PopupComponent } from './popup/popup.component';
-import { MatTabsModule, MatButtonModule, MatCheckboxModule, MatInputModule, MatFormFieldModule } from '@angular/material';
+import { UtilsRoutingModule } from './utils-routing.module';
+import { UtilsComponent } from './utils.component';
+import { TimerComponent } from './timer/timer.component';
 
 @NgModule({
-  declarations: [PinInputComponent, UtilsComponent, PopupComponent],
+  declarations: [PinInputComponent, UtilsComponent, PopupComponent, TimerComponent],
   imports: [
     RouterModule,
     CommonModule,
