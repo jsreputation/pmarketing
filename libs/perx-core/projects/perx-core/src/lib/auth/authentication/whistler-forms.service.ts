@@ -42,6 +42,6 @@ export class WhistlerFormsService implements IFormsService {
   }
 
   public getLuckyDrawDetailsForm(): Observable<ISurvey | undefined> {
-    return throwError("Not implement yet.");
+    return throwError('Not implement yet.');
   }
 }

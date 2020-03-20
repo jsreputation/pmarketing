@@ -210,7 +210,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
           error => console.log(error)
         ),
       // map(() => void 0)
-    );
+      );
   }
 
   public resetPassword(resetPasswordInfo: IResetPasswordData): Observable<IMessageResponse> {
@@ -239,7 +239,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
           data => console.log(data),
           error => console.log(error)
         ),
-    );
+      );
   }
 
   private signUpDataToV4SignUpData(data: ISignUpData): IV4SignUpData {
