@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-timer',
@@ -6,4 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./timer.component.scss']
 })
 export class TimerComponent {
+  public reset$: Subject<boolean> = new Subject();
+  public reset(): void {
+    this.reset$.next(true);
+    this.reset$.next(true);
+  }
 }

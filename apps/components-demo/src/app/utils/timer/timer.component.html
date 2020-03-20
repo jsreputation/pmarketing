@@ -1,2 +1,2 @@
-<perx-core-timer class="timer"></perx-core-timer>
-<button mat-stroked-button color="primary">Reset</button>
+<perx-core-timer class="timer" [reset]="reset$"></perx-core-timer>
+<button mat-stroked-button color="primary" (click)="reset()">Reset</button>
