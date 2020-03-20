@@ -3,7 +3,16 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { CampaignsComponent } from './campaigns.component';
 import { MatCardModule, MatIconModule, MatRippleModule } from '@angular/material';
 import { of } from 'rxjs';
-import { ICampaignService, CampaignType, CampaignState, IGameService, ICampaign, IGame, GameType } from '@perxtech/core';
+import {
+  ICampaignService,
+  CampaignType,
+  CampaignState,
+  IGameService,
+  ICampaign,
+  IGame,
+  GameType,
+  ConfigService
+} from '@perxtech/core';
 import { Type } from '@angular/core';
 import { game } from '../../game.mock';
 import { IMacaron, MacaronService } from 'src/app/services/macaron.service';
@@ -22,6 +31,16 @@ describe('CampaignsComponent', () => {
   const gameServiceStub: Partial<IGameService> = {
     getGamesFromCampaign: () => of(game)
   };
+  const configServiceStub: Partial<ConfigService> = {
+    readAppConfig: () => of({
+      apiHost: '',
+      production: false,
+      preAuth: false,
+      isWhistler: false,
+      baseHref: '',
+      rssFeeds: '',
+    })
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -34,6 +53,7 @@ describe('CampaignsComponent', () => {
       ],
       providers: [
         { provide: ICampaignService, useValue: campaignServiceStub },
+        { provide: ConfigService, useValue: configServiceStub },
         { provide: IGameService, useValue: gameServiceStub }
       ]
     })
