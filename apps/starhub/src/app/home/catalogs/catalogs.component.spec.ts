@@ -11,7 +11,7 @@ import {
 import { of } from 'rxjs';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
-import { RewardsService } from '@perxtech/core';
+import { ConfigService, RewardsService } from '@perxtech/core';
 
 import { catalogs } from 'src/app/catalogs.mock';
 import { CatalogsComponent } from './catalogs.component';
@@ -22,7 +22,16 @@ describe('CatalogsComponent', () => {
   const catalogsServiceStub: Partial<RewardsService> = {
     getCatalogs: () => of(catalogs),
   };
-
+  const configServiceStub: Partial<ConfigService> = {
+    readAppConfig: () => of({
+      apiHost: '',
+      production: false,
+      preAuth: false,
+      isWhistler: false,
+      baseHref: '',
+      rssFeeds: '',
+    })
+  };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CatalogsComponent],
@@ -32,6 +41,7 @@ describe('CatalogsComponent', () => {
         InfiniteScrollModule,
       ],
       providers: [
+        { provide: ConfigService, useValue: configServiceStub },
         { provide: RewardsService, useValue: catalogsServiceStub }
       ]
     })
