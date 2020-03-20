@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { IQAnswer, SurveyRatingIcons } from '../../models/quiz.model';
+import { SurveyRatingIcons } from '../../models/quiz.model';
 
 interface IPayloadRating {
   type: string;
@@ -22,7 +22,7 @@ export class QuizRatingComponent implements OnChanges {
   public flush: boolean;
 
   @Output()
-  public updateAnswers: EventEmitter<IQAnswer> = new EventEmitter<IQAnswer>();
+  public updateAnswers: EventEmitter<number> = new EventEmitter<number>();
 
   public selectedChoice: number;
 
@@ -40,7 +40,7 @@ export class QuizRatingComponent implements OnChanges {
 
   public onSelect(index: number): void {
     this.selectedChoice = index;
-    this.updateAnswers.emit({ content: index });
+    this.updateAnswers.emit(index);
   }
 
   public isSelected(index: number): boolean {

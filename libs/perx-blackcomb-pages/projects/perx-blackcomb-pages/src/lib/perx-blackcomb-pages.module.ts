@@ -32,7 +32,8 @@ import {
   PuzzlesModule,
   LoyaltyModule,
   RewardsModule,
-  SurveyModule
+  SurveyModule,
+  QuizModule
 } from '@perxtech/core';
 
 import { RewardComponent } from './reward/reward.component';
@@ -68,6 +69,7 @@ import { CampaignStampsComponent } from './campaign-stamps/campaign-stamps.compo
 import { CatalogsComponent } from './catalogs/catalogs.component';
 import { CatalogRewardCardComponent } from './catalog-reward-card/catalog-reward-card.component';
 import { CatalogComponent } from './catalog/catalog.component';
+import { QuizComponent } from './quiz/quiz.component';
 
 const comps: any[] = [
   AccountComponent,
@@ -138,15 +140,16 @@ const comps: any[] = [
     MatToolbarModule,
     MatListModule,
     InfiniteScrollModule,
-    MatDialogModule
+    MatDialogModule,
+    QuizModule
   ],
   exports: [
     ...comps,
   ],
   declarations: [
     ...comps,
+    QuizComponent,
   ]
 })
 export class PerxBlackcombPagesModule {
-
 }

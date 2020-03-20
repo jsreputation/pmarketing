@@ -1,27 +1,25 @@
 <!--<img [src]="survey.backgroundImgUrl" alt="survey-bg" *ngIf="survey.backgroundImgUrl" class="background_img_url">-->
-<div *ngIf="survey" class="survey-main-container"
-  [ngStyle]="{'background': survey.backgroundImgUrl ? 'url(' + survey.backgroundImgUrl + ')' : ''}">
+<div *ngIf="quiz" class="survey-main-container"
+  [ngStyle]="{'background-image': quiz.backgroundImgUrl ? 'url(' + quiz.backgroundImgUrl + ')' : '' }">
   <div class="survey-page">
-    <div class="progress-text">
-      <p>Question <strong>{{questionPointer + 1}}</strong> out of {{totalLength}}</p>
-    </div>
-    <div class="progress-bar">
-      <mat-progress-bar mode="determinate" color="primary" [value]="progressBarValue"></mat-progress-bar>
-      <!--      <div class="progress-bar-label">-->
-      <!--        {{ progressBarValue }}% Complete-->
-      <!--      </div>-->
+    <div class="progress">
+      <p class="progress-text">Question <strong>{{questionPointer + 1}}</strong> out of {{totalLength}}</p>
+      <mat-progress-bar class="progress-bar" mode="determinate" color="primary" [value]="progressBarValue">
+      </mat-progress-bar>
     </div>
     <div class="survey-card-wrap" #overflowContainer>
       <mat-card class="survey-card">
-        <h1>{{survey.title}}</h1>
-        <h2 *ngIf="survey.subTitle">{{survey.subTitle}}</h2>
-        <perx-core-survey
-          #coreSurvey
+        <h1>{{quiz.title}}</h1>
+        <h2 *ngIf="quiz.subTitle">{{quiz.subTitle}}</h2>
+        <perx-core-quiz
+          [hideIndex]="true"
+          #coreQuiz
           [data]="data$"
           [questionPointer]="questionPointer"
-          (surveyDone)="updateSurveyStatus($event)"
-          (totalLength)="setTotalLength($event)"
-          (currentPointer)="setCurrentPointer($event)"></perx-core-survey>
+          (done)="done()"
+          (totalLength)="totalLength = $event"
+          (answers)="updateQuizStatus($event)">
+        </perx-core-quiz>
         <div #overFarrow class="arrow hidden">
           <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -33,13 +31,17 @@
     </div>
   </div>
   <mat-toolbar class="bottom-nav-container mat-elevation-z2">
-    <button color="primary" *ngIf="questionPointer >= 1" (click)="updateQuestionPointer('back')" mat-stroked-button>
+    <button color="primary" *ngIf="questionPointer >= 1" (click)="back()" mat-stroked-button>
       Previous
     </button>
-    <button color="primary" *ngIf="this.questionPointer !== this.totalLength - 1"
-      (click)="updateQuestionPointer('next')" mat-button>
+    <button color="primary" *ngIf="this.questionPointer !== this.totalLength - 1" (click)="next()" mat-flat-button>
       Next
     </button>
-    <button *ngIf="surveyComplete" mat-flat-button color="primary" (click)="onSubmit()">Submit</button>
+    <button
+      *ngIf="this.questionPointer === this.totalLength-1"
+      mat-flat-button
+      color="primary"
+      (click)="submit()"
+      [disabled]="!complete">Submit</button>
   </mat-toolbar>
 </div>

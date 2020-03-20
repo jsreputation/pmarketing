@@ -2,14 +2,24 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   IJsonApiItemPayload,
-  IWCampaignDisplayProperties, IWPostAnswerAttributes,
-  IWProperties, IWSurveyEngagementAttributes, WSurveyQuestionType
+  IWCampaignDisplayProperties,
+  IWPostAnswerAttributes,
+  IWProperties,
+  IWSurveyEngagementAttributes,
+  //  WSurveyQuestionType
 } from '@perxtech/whistler';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { ICampaign, ICampaignService } from '../../public-api';
 import { Config } from '../config/config';
-import { IQAnswer, IQQuestion, IQuiz, ISurveyOutcome, MaterialColor, QuizQuestionType } from './models/quiz.model';
+import {
+  IQAnswer,
+  // IQQuestion,
+  IQuiz,
+  ISurveyOutcome,
+  MaterialColor,
+  //  QuizQuestionType
+} from './models/quiz.model';
 import { QuizService } from './quiz.service';
 
 @Injectable({
@@ -114,18 +124,18 @@ export class V4QuizService implements QuizService {
     };
   }
 
-  private static WQTypeToQType(t: WSurveyQuestionType): QuizQuestionType {
-    // todo have a smarter mapping
-    return t as unknown as QuizQuestionType;
-  }
+  // private static WQTypeToQType(t: WSurveyQuestionType): QuizQuestionType {
+  //   // todo have a smarter mapping
+  //   return t as unknown as QuizQuestionType;
+  // }
 
   private static WQuizToQuiz(survey: IJsonApiItemPayload<Partial<IWSurveyEngagementAttributes>>): IQuiz {
     const dp = survey.data.attributes.display_properties;
     if (dp) {
-      const questions: IQQuestion[] = dp.questions.map(q => {
-        const payload = { ...q.payload, type: V4QuizService.WQTypeToQType(q.payload.type) };
-        return { ...q, payload };
-      });
+      // const questions: IQQuestion[] = dp.questions.map(q => {
+      //   const payload = { ...q.payload, type: V4QuizService.WQTypeToQType(q.payload.type) };
+      //   return { ...q, payload };
+      // });
       return {
         id: survey.data.id,
         title: dp.title || '',
@@ -133,7 +143,7 @@ export class V4QuizService implements QuizService {
         progressBarColor: MaterialColor[dp.progress_bar_color],
         cardBackgroundImgUrl: dp.card_background_img_url,
         backgroundImgUrl: dp.background_img_url,
-        questions,
+        questions: [],
         results: {}
       };
     }
