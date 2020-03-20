@@ -1,0 +1,19 @@
+<div class="content-container">
+    <h2 translate>LUCKY_DRAW_DETAILS</h2> -->
+    <perx-core-survey
+    [hideIndex]="true"
+    [data]="data$"
+    (surveyDone)="updateFormStatus($event)"
+    (totalLength)="setTotalLength($event)"
+    (currentPointer)="setCurrentPointer($event)"></perx-core-survey>
+
+    <button
+    [disabled]="!formComplete"
+    mat-flat-button
+    color="primary"
+    (click)="onSubmit()"
+    translate>
+    SUBMIT_AND_VERIFY
+    </button>
+  </div>
+  
