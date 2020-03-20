@@ -216,13 +216,15 @@ export { PasswordComponent } from './lib/survey/question/password/password.compo
  */
 export { QuizModule } from './lib/quiz/quiz.module';
 export { QuizService } from './lib/quiz/quiz.service';
-export { IQuiz, QuizQuestionType, IQQuestion, IQAnswer, ITracker } from './lib/quiz/models/quiz.model';
+export { IQuiz, QuizQuestionType, IQQuestion, IQAnswer, ITracker, IPoints } from './lib/quiz/models/quiz.model';
 export { QuizComponent } from './lib/quiz/quiz/quiz.component';
 export { QuizQuestionComponent } from './lib/quiz/question/question.component';
 export { QuizSelectComponent } from './lib/quiz/question/select/select.component';
 export { QuizPictureSelectComponent } from './lib/quiz/question/picture-select/picture-select.component';
 export { QuizLongTextComponent } from './lib/quiz/question/long-text/long-text.component';
 export { QuizRatingComponent } from './lib/quiz/question/rating/rating.component';
+export { ResultsComponent } from './lib/quiz/results/results.component';
+
 /**
  * Config
  */

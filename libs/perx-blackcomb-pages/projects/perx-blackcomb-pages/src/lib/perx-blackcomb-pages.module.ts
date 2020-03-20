@@ -70,6 +70,7 @@ import { CatalogsComponent } from './catalogs/catalogs.component';
 import { CatalogRewardCardComponent } from './catalog-reward-card/catalog-reward-card.component';
 import { CatalogComponent } from './catalog/catalog.component';
 import { QuizComponent } from './quiz/quiz.component';
+import { QuizResultsComponent } from './quiz-results/quiz-results.component';
 
 const comps: any[] = [
   AccountComponent,
@@ -103,6 +104,8 @@ const comps: any[] = [
   CatalogComponent,
   CatalogsComponent,
   CatalogRewardCardComponent,
+  QuizComponent,
+  QuizResultsComponent,
 ];
 
 @NgModule({
@@ -148,7 +151,6 @@ const comps: any[] = [
   ],
   declarations: [
     ...comps,
-    QuizComponent,
   ]
 })
 export class PerxBlackcombPagesModule {

@@ -1,0 +1,28 @@
+@mixin icon {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  height: 1.6rem;
+  width: 1.6rem;
+  color: white;
+}
+.correct {
+  background-color: #27c400;
+  @include icon;
+}
+.wrong {
+  background-color: #d90a1e;
+  @include icon;
+}
+
+h3 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 1.6rem;
+  color: #212121;
+}
+
+p {
+  color: #212121;
+}

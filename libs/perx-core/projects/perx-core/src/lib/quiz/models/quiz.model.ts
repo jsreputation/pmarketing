@@ -7,6 +7,8 @@ export interface IQAnswer {
 
 export interface IPoints {
   questionId: string;
+  time?: number;
+  question: string;
   point: number;
 }
 
@@ -26,6 +28,7 @@ export interface IQQuestion {
   payload: IPayload;
   answer?: any;
 }
+
 export enum MaterialColor {
   primary = 'primary',
   accent = 'accent',

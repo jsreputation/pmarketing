@@ -9,6 +9,7 @@ import { quiz } from './mock';
 import { QuizCoreComponent } from './quiz-core/quiz-core.component';
 import { QuizRoutingModule } from './quiz-routing.module';
 import { QuizComponent } from './quiz.component';
+import { ResultsComponent } from './results/results.component';
 
 const mockQuizService: Partial<QuizService> = {
   getQuizFromCampaign: () => new BehaviorSubject<IQuiz>(quiz)
@@ -18,7 +19,7 @@ const mockTranslateService: Partial<TranslateService> = {
 };
 
 @NgModule({
-  declarations: [QuizComponent, QuizCoreComponent],
+  declarations: [QuizComponent, QuizCoreComponent, ResultsComponent],
   imports: [
     CommonModule,
     QuizRoutingModule,
