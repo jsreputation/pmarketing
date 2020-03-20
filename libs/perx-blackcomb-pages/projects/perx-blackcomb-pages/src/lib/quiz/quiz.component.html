@@ -4,11 +4,12 @@
   <div class="survey-page">
     <div class="progress">
       <p class="progress-text">Question <strong>{{questionPointer + 1}}</strong> out of {{totalLength}}</p>
-      <mat-progress-bar class="progress-bar" mode="determinate" color="primary" [value]="progressBarValue">
+      <mat-progress-bar class="progress-bar" mode="determinate" color="warn" [value]="progressBarValue">
       </mat-progress-bar>
     </div>
     <div class="survey-card-wrap" #overflowContainer>
-      <mat-card class="survey-card">
+      <mat-card class="survey-card"
+        [ngStyle]="{'background-image': quiz.cardBackgroundImgUrl ? 'url(' + quiz.cardBackgroundImgUrl + ')' : '' }">
         <h1>{{quiz.title}}</h1>
         <h2 *ngIf="quiz.subTitle">{{quiz.subTitle}}</h2>
         <perx-core-quiz

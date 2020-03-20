@@ -3,6 +3,7 @@ import { IPoints, IQuiz, QuizQuestionType } from '@perxtech/core';
 export const quiz: IQuiz = {
   title: 'Question pour un champion',
   backgroundImgUrl: 'assets/quiz/background.png',
+  cardBackgroundImgUrl: 'assets/quiz/card.png',
   questions: [
     {
       id: 'jo',
