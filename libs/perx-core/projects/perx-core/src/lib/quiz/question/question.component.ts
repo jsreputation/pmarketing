@@ -50,7 +50,7 @@ export class QuizQuestionComponent {
     this.point = this.question && this.question.required ?
       (this.question.answer === 0 || (this.question.answer && this.question.answer.length > 0) ? 1 : 0) : 1;
     // }
-    this.updatePoints.emit({ questionId: this.question.id, point: this.point });
+    this.updatePoints.emit({ questionId: this.question.id, point: this.point, question: this.question.question });
   }
 
   public questionValidation(): boolean {

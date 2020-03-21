@@ -1,22 +1,12 @@
 @import "../custom-theme.scss";
+@import "./_mixins";
 
 .survey-main-container {
-  height: 100%;
-  width: 100%;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  background-size: cover;
+  @include quizContainer();
 }
 
 .survey-page {
-  width: 100%;
-  display: flex;
-  flex: 1 1 36rem;
-  flex-direction: column;
-  align-items: center;
-  box-sizing: border-box;
-  overflow-y: auto;
+  @include quizPage();
 
   .progress {
     z-index: 1;
@@ -42,19 +32,10 @@
   }
 
   .survey-card-wrap {
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    max-height: 45rem;
-    width: 34rem;
-    margin-top: 2rem;
-    z-index: 1;
+    @include quizCardWrap();
 
     .survey-card {
-      display: flex;
-      flex-direction: column;
-      min-height: 34rem;
-      align-items: center;
-      background-size: cover;
+      @include quizCard();
 
       h1 {
         font-style: normal;
@@ -74,34 +55,8 @@
   }
 }
 
-.question-action-container {
-  margin-bottom: 1rem;
-
-  button {
-    margin-right: 1rem;
-  }
-}
-
 .bottom-nav-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  flex: 0 0 7rem;
-  background: var(--surface_colour, white) !important;
-  font-size: 1rem;
-  line-height: 1.6rem;
-
-  button {
-    text-decoration: none;
-    text-align: center;
-    height: 4rem;
-    // width: 13rem;
-    flex: 1;
-
-    &:not(:last-child) {
-      margin-right: 1.6rem;
-    }
-  }
+  @include quizBottomBar();
 }
 
 .hidden {

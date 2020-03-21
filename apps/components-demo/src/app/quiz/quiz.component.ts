@@ -9,6 +9,8 @@ import { INavLink } from '../navlink.model';
 export class QuizComponent {
   public navLinks: INavLink[] = [
     { path: 'core', label: 'PerxCore' },
-    { path: 'bc/1', label: 'Blackcomb' }
+    { path: 'bc/1', label: 'Blackcomb' },
+    { path: 'results', label: 'Results' },
+    { path: 'results-bc', label: 'Blackcomb results' }
   ];
 }
