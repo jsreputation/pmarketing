@@ -1,4 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatCardModule } from '@angular/material/card';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { RouterTestingModule } from '@angular/router/testing';
+import { QuizModule, SecondsToStringPipe } from '@perxtech/core';
 import { QuizResultsComponent } from './quiz-results.component';
 
 describe('QuizResultsComponent', () => {
@@ -7,7 +11,14 @@ describe('QuizResultsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [QuizResultsComponent]
+      declarations: [QuizResultsComponent],
+      imports: [
+        QuizModule,
+        MatCardModule,
+        MatToolbarModule,
+        RouterTestingModule
+      ],
+      providers: [SecondsToStringPipe]
     })
       .compileComponents();
   }));
