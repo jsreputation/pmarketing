@@ -5,9 +5,9 @@ import { TranslateService } from '@ngx-translate/core';
 import {
   AuthenticationService,
   IPopupConfig,
-  IPrePlayStateData,
+  // IPrePlayStateData,
   IQuiz,
-  NotificationService,
+  // NotificationService,
   QuizComponent as QuizCoreComponent,
   QuizService,
   IQAnswer,
@@ -35,7 +35,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   private isAnonymousUser: boolean;
   private informationCollectionSetting: string;
   private destroy$: Subject<any> = new Subject();
-  private popupData: IPopupConfig;
+  // private popupData: IPopupConfig;
   public complete: boolean = false;
 
   public successPopUp: IPopupConfig = {
@@ -53,7 +53,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   };
 
   constructor(
-    private notificationService: NotificationService,
+    // private notificationService: NotificationService,
     private router: Router,
     private route: ActivatedRoute,
     private quizService: QuizService,
@@ -185,20 +185,20 @@ export class QuizComponent implements OnInit, OnDestroy {
           )
           .pipe(
             catchError((err: HttpErrorResponse) => {
-              this.popupData = this.noRewardsPopUp;
+              // this.popupData = this.noRewardsPopUp;
               throw err;
             })
           );
 
     userAction$.subscribe(
-      res => {
-        this.popupData = res.hasOutcomes
-          ? this.successPopUp
-          : this.noRewardsPopUp;
+      (/*res*/) => {
+        // this.popupData = res.hasOutcomes
+        //   ? this.successPopUp
+        //   : this.noRewardsPopUp;
         this.redirectUrlAndPopUp();
       },
       () => {
-        this.popupData = this.noRewardsPopUp;
+        // this.popupData = this.noRewardsPopUp;
         this.redirectUrlAndPopUp();
       }
     );
@@ -269,31 +269,31 @@ export class QuizComponent implements OnInit, OnDestroy {
   }
 
   private redirectUrlAndPopUp(): void {
-    const surveyId = this.quizId;
-    const campaignId = this.campaignId;
-    const state: IPrePlayStateData = {
-      popupData: this.popupData,
-      engagementType: 'survey',
-      surveyId,
-      collectInfo: true,
-      campaignId,
-      answers: Object.values(this.answers)
-    };
+    // const surveyId = this.quizId;
+    // const campaignId = this.campaignId;
+    // const state: IPrePlayStateData = {
+    //   // popupData: this.popupData,
+    //   engagementType: 'survey',
+    //   surveyId,
+    //   collectInfo: true,
+    //   campaignId,
+    //   answers: Object.values(this.answers)
+    // };
 
-    if (
-      this.isAnonymousUser &&
-      this.informationCollectionSetting === 'pi_required'
-    ) {
-      this.router.navigate(['/pi'], { state });
-    } else if (
-      this.isAnonymousUser &&
-      this.informationCollectionSetting === 'signup_required'
-    ) {
-      this.router.navigate(['/signup'], { state });
-    } else {
-      this.router.navigate(['/wallet']);
-      this.notificationService.addPopup(this.popupData);
-    }
+    // if (
+    //   this.isAnonymousUser &&
+    //   this.informationCollectionSetting === 'pi_required'
+    // ) {
+    //   this.router.navigate(['/pi'], { state });
+    // } else if (
+    //   this.isAnonymousUser &&
+    //   this.informationCollectionSetting === 'signup_required'
+    // ) {
+    //   this.router.navigate(['/signup'], { state });
+    // } else {
+    this.router.navigate(['/quiz-results', { results: [] }]);
+    // this.notificationService.addPopup(this.popupData);
+    // }
   }
 
   private hideArrow(): void {

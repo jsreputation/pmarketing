@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Data } from '@angular/router';
+import { ActivatedRoute, Data, Params } from '@angular/router';
 import { IPoints, SecondsToStringPipe } from '@perxtech/core';
-import { filter, map } from 'rxjs/operators';
+import { merge } from 'rxjs';
+import { filter, map, tap } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 
 @Component({
@@ -17,10 +18,11 @@ export class QuizResultsComponent implements OnInit {
   constructor(private secondsToString: SecondsToStringPipe, private activatedRoute: ActivatedRoute) { }
 
   public ngOnInit(): void {
-    this.activatedRoute.data
+    merge(this.activatedRoute.data, this.activatedRoute.params)
       .pipe(
-        filter((data: Data) => data.results),
-        map((data: Data) => data.results)
+        tap(s => console.log(s)),
+        filter((data: Data | Params) => data.results),
+        map((data: Data | Params) => data.results)
       )
       .subscribe((res: IPoints[]) => this.results = res);
   }
