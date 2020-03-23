@@ -104,7 +104,7 @@ export interface ISpin {
   rewardSlots?: number[];
   colorCtrls: {[index: number]: string};
   rewardIcon: string;
-  wheelImg: string;
+  wheelImg: string; // diff from rimimage but hvnt implemented yet, will use rim 4 nw
   wheelPosition: string;
   pointerImg: string;
   background: string;

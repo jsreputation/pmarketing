@@ -98,7 +98,8 @@ interface SpinDisplayProperties extends GameProperties {
   wedge_colors: string[];
   background_image: Asset;
   reward_image: Asset;
-  wheel_image: Asset;
+  rim_image: Asset;
+  wheel_image?: Asset;
   wheel_position: string;
   pointer_image: Asset;
 }
@@ -204,11 +205,11 @@ export class V4GameService implements IGameService {
         ...defaultSpin(),
         numberOfWedges: dpps.number_of_wedges,
         colorCtrls: Object.assign(dpps.wedge_colors),
-        rewardIcon: oc(dpps).reward_image.value.image_url('') || oc(dpps).reward_image.value.file(''),
-        wheelImg: oc(dpps).wheel_image.value.image_url('') || oc(dpps).wheel_image.value.file(''),
+        rewardIcon: oc(dpps).reward_image.value.image_url(''),
+        wheelImg: oc(dpps).rim_image.value.image_url(''),
         wheelPosition: oc(dpps).wheel_position('center'),
-        pointerImg: oc(dpps).pointer_image.value.image_url('') || oc(dpps).pointer_image.value.file(''),
-        background: oc(dpps).background_image.value.image_url('') || oc(dpps).background_image.value.file('')
+        pointerImg: oc(dpps).pointer_image.value.image_url(''),
+        background: oc(dpps).background_image.value.image_url('')
       };
     } else {
       throw new Error(`${game.game_type} is not mapped yet`);
