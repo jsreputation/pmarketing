@@ -37,7 +37,10 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   public classPosition: string;
 
   @Input()
-  public slotToLand: number = 0;
+  public willWin: boolean = false;
+
+  @Input()
+  public rewardSlots: number[]; // to loop through for function below to find slot
 
   @Output()
   public completed: EventEmitter<void> = new EventEmitter<void>();
@@ -56,6 +59,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   private spinTimeout: number;
   private wheelImgLoaded!: HTMLImageElement;
   private angleToBeSpun: number;
+  private slotToLand: number; // moved in, since it needs to be changed dynamically instd of pipe
 
   @ViewChild('canvas', { static: true })
   private canvasEl: ElementRef<HTMLCanvasElement>;
@@ -91,7 +95,8 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   public ngOnChanges(changes: SimpleChanges): void {
     if ((changes.slices && this.slices)
       || (changes.wheelImg && this.wheelImg)
-      || (changes.pointerImg && this.pointerImg)) {
+      || (changes.pointerImg && this.pointerImg)
+      || (changes.willWin)) {
       this.init();
     }
   }
@@ -121,10 +126,20 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
     this.canvas.addEventListener('mousemove', this.handleMove.bind(this), { once: true });
   }
 
+  private determineSlot(): number {
+      if (this.willWin) {
+        let landedSlot = Math.floor(Math.random() * this.rewardSlots.length);
+        return this.rewardSlots[landedSlot]; // w // get a random number out of the reward slots
+      }
+      // RESERVE 0 as non-winning slot ***
+      return 0;
+  }
+
   private init(): void {
     this.arcDeg = 360 / this.slices.length;
     this.startAngle = this.arcDeg / 2 * Math.PI / 180;
     this.arc = this.arcDeg * Math.PI / 180; // converting back to radians
+    this.slotToLand = this.determineSlot();
     const angleNeeded = this.getAngleNeeded(this.slotToLand);
 
     this.spinTimeout = 0;
@@ -287,6 +302,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
     this.spinTime += 30;
     if (this.spinTime >= this.spinTimeTotal) {
       this.stopRotateWheel();
+      this.completed.emit();
       return;
     }
     const spinAngle: number =
@@ -297,8 +313,8 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
     const that = this;
     this.spinTimeout = window.setTimeout(() => {
       that.rotateWheel();
-      this.completed.emit();
-    }, 10); // change from 30
+      // this.completed.emit();
+    }, 15); // change from 30 // was 10
   }
 
   private stopRotateWheel(): void {

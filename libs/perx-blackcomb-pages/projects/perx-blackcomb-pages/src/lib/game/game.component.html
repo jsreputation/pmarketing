@@ -22,7 +22,8 @@
       *ngSwitchCase="gt.spin"
       [willWin]="willWin"
       [game]="game"
-      (broken)=gameCompleted()
+      (loaded)="loadPreplay()"
+      (broken)=preplayGameCompleted()
     ></perx-blackcomb-pages-spin>
     <perx-blackcomb-pages-snake
       *ngSwitchCase="gt.snake"

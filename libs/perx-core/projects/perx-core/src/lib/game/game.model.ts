@@ -83,7 +83,7 @@ export function defaultSnake(): ISnake {
 export function defaultSpin(): ISpin {
   return {
     numberOfWedges: 5,
-    rewardSlots: [2, 4],
+    rewardSlots: [1], // until db can set rewards, temp hardcore so reward icon appears at least for a slot
     colorCtrls: {
       0: 'red',
       1: 'yellow',
@@ -101,7 +101,7 @@ export function defaultSpin(): ISpin {
 
 export interface ISpin {
   numberOfWedges: number;
-  rewardSlots?: number[];
+  rewardSlots: number[];
   colorCtrls: {[index: number]: string};
   rewardIcon: string;
   wheelImg: string; // diff from rimimage but hvnt implemented yet, will use rim 4 nw
