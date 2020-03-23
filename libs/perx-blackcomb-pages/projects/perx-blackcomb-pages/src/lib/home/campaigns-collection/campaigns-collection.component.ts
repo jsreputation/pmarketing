@@ -33,13 +33,13 @@ export class CampaignsCollectionComponent {
 
   public getRewardsCount(campaign: ICampaign): number | undefined {
     if (!campaign.rewards) {
-      return undefined;
+      return;
     }
     return campaign.rewards.reduce((sum, reward) => {
-      const balance = oc(reward).inventory.rewardTotalBalance()
+      const balance = oc(reward).inventory.rewardTotalBalance();
       if (balance !== undefined && balance !== null) {
         if (sum !== undefined) {
-          //@ts-ignore
+          // @ts-ignore
           return sum + balance;
         }
         return balance;
