@@ -20,9 +20,15 @@ export class QuizResultsComponent implements OnInit {
   public ngOnInit(): void {
     merge(this.activatedRoute.data, this.activatedRoute.params)
       .pipe(
-        tap(s => console.log(s)),
         filter((data: Data | Params) => data.results),
-        map((data: Data | Params) => data.results)
+        map((data: Data | Params) => data.results),
+        map((res: IPoints[] | string) => {
+          if (typeof res === 'string') {
+            res = JSON.parse(res);
+          }
+          return res;
+        }),
+        tap(s => console.log(s)),
       )
       .subscribe((res: IPoints[]) => this.results = res);
   }
