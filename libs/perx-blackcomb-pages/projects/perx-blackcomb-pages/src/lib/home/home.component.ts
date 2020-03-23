@@ -68,7 +68,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     private instantOutcomeService: InstantOutcomeService,
     private dialog: MatDialog,
     private settingsService: SettingsService,
-
   ) {
   }
 
@@ -124,9 +123,9 @@ export class HomeComponent implements OnInit, OnDestroy {
               takeUntil(this.destroy$)
             )));
       })).subscribe((tab) => {
-        this.staticTab = tab;
-        this.tabs$.next(this.staticTab);
-      });
+      this.staticTab = tab;
+      this.tabs$.next(this.staticTab);
+    });
   }
 
   private getTabs(): Observable<ITabConfigExtended[]> {
@@ -142,7 +141,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   public catalogSelected(catalog: ICatalog): void {
-    this.router.navigate(['/catalogs'], { queryParams: { catalog: catalog.id } });
+    this.router.navigate(['/catalogs'], {queryParams: {catalog: catalog.id}});
   }
 
   public onScroll(): void {
@@ -172,7 +171,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   private fetchPopupCampaigns(): void {
-    this.campaignService.getCampaigns({ type: CampaignType.give_reward })
+    this.campaignService.getCampaigns({type: CampaignType.give_reward})
       .pipe(
         catchError(() => of([]))
       )
@@ -203,7 +202,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             // @ts-ignore
             validTo: new Date(this.firstComefirstServeCampaign.endsAt)
           };
-          this.dialog.open(RewardPopupComponent, { data });
+          this.dialog.open(RewardPopupComponent, {data});
         },
         err => console.error('Something fishy, we should not be here, without any reward or game. ERR print', err)
       );
@@ -230,14 +229,14 @@ export class HomeComponent implements OnInit, OnDestroy {
         switchMap((games: IGame[]) => of(games).pipe(catchError(err => of(err)))),
         takeLast(1)
       );
-    this.gameCampaigns$ = this.campaignService.getCampaigns({ type: CampaignType.stamp })
+    this.gameCampaigns$ = this.campaignService.getCampaigns({type: CampaignType.stamp})
       .pipe(
         tap((campaigns: ICampaign[]) => this.showCampaigns = campaigns.length > 0),
         takeLast(1)
       );
 
-    this.quizCampaigns$ = this.campaignService.getCampaigns({ type: CampaignType.quiz });
-    if (this.appConfig.showNewsfeedOnHomepage){
+    this.quizCampaigns$ = this.campaignService.getCampaigns({type: CampaignType.quiz});
+    if (this.appConfig.showNewsfeedOnHomepage) {
       const rssFeeds: IRssFeeds = await this.settingsService.readRssFeeds().toPromise();
       if (!(rssFeeds && rssFeeds.data.length > 0)) {
         return;
