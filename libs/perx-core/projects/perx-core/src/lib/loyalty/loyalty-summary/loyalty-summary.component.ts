@@ -74,7 +74,7 @@ export class LoyaltySummaryComponent implements OnInit {
       this.loyaltyService.getLoyalty(this.loyaltyId)
         .pipe(
           catchError(val => {
-            if (val.status == 401) {
+            if (val.status === 401) {
               this.loyaltyProgramExists = true;
             }
             return of();
