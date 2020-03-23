@@ -54,10 +54,15 @@ export class CampaignsComponent implements OnInit {
           tempCampaigns = campaigns;
         }),
         switchMap(
-          (campaigns: ICampaign[]) => combineLatest(...campaigns.map(campaign => this.gameService.getGamesFromCampaign(campaign.id)))
+          (campaigns: ICampaign[]) => {
+            return combineLatest(...campaigns.map(campaign => {
+              return this.gameService.getGamesFromCampaign(campaign.id).pipe(
+                catchError(() => of([]))
+              )
+            }));
+          }
         ),
         map((games: IGame[][]) => [].concat(...games as []) as IGame[]),
-        catchError(() => of([]))
       )
       .subscribe((games: IGame[]) => {
         this.games = games;
