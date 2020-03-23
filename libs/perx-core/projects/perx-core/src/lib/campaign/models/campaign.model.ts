@@ -6,7 +6,8 @@ export enum CampaignType {
   give_reward = 'give_reward', // instant_outcome
   stamp = 'stamp', // loyalty
   game = 'game',
-  survey = 'survey'
+  survey = 'survey',
+  quiz = 'quiz'
 }
 
 export enum CampaignState {

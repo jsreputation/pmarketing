@@ -8,7 +8,8 @@ import {
   UtilsModule,
   RewardPopupComponent,
   CampaignModule,
-  OutcomeModule
+  OutcomeModule,
+  ICampaignService
 } from '@perxtech/core';
 import {
   HomeComponent,
@@ -19,10 +20,18 @@ import {
 } from '@perxtech/blackcomb-pages';
 import { TranslateModule } from '@ngx-translate/core';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { of } from 'rxjs';
+import { campaigns } from '../mock/quiz.mock';
+import { map } from 'rxjs/operators';
 const routes: Routes = [{
   path: '',
   component: HomeComponent
 }];
+
+const campaignServiceStub: Partial<ICampaignService> = {
+  getCampaigns: ({ type }) => of([...campaigns])
+    .pipe(map(cs => cs.filter(c => c.type === type)))
+};
 
 @NgModule({
   imports: [
@@ -50,6 +59,9 @@ const routes: Routes = [{
   ],
   entryComponents: [
     RewardPopupComponent
+  ],
+  providers: [
+    { provide: ICampaignService, useValue: campaignServiceStub }
   ]
 })
 export class HomeModule { }

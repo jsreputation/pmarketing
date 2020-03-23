@@ -27,7 +27,7 @@ export class TimerComponent implements OnChanges {
   private startTime!: number;
 
   @Input()
-  public timeToRun: number = 3000; // input in seconds
+  public timeToRun: number = 3000; // input in milliseconds
 
   @Output()
   public questionDone: EventEmitter<{ timeTaken: number }> = new EventEmitter();

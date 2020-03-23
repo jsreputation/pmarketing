@@ -291,7 +291,7 @@ export class QuizComponent implements OnInit, OnDestroy {
     // ) {
     //   this.router.navigate(['/signup'], { state });
     // } else {
-    this.router.navigate(['/quiz-results', { results: [] }]);
+    this.router.navigate(['/quiz-results', { results: [] }], { skipLocationChange: true });
     // this.notificationService.addPopup(this.popupData);
     // }
   }

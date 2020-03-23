@@ -31,6 +31,12 @@
     }
   }
 
+  .timer {
+    color: white;
+    font-size: 2.4rem;
+    margin-top: 2.4rem;
+  }
+
   .survey-card-wrap {
     @include quizCardWrap();
 
