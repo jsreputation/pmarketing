@@ -11,7 +11,8 @@ import {
   QuizComponent as QuizCoreComponent,
   QuizService,
   IQAnswer,
-  ITracker
+  ITracker,
+  IPoints
 } from '@perxtech/core';
 import { Observable, of, Subject } from 'rxjs';
 import { catchError, filter, map, switchMap, takeUntil } from 'rxjs/operators';
@@ -291,7 +292,15 @@ export class QuizComponent implements OnInit, OnDestroy {
     // ) {
     //   this.router.navigate(['/signup'], { state });
     // } else {
-    this.router.navigate(['/quiz-results', { results: [] }]);
+    // NL todo temporary stuff until we have a way to get the proper number of points
+    const results: IPoints[] = this.quiz.questions.map(q => ({
+      questionId: q.id,
+      question: q.question,
+      point: Math.random() < .3 ? 0 : 1,
+      time: Math.random() * 20
+    }));
+    const resultsStr = JSON.stringify(results);
+    this.router.navigate(['/quiz-results', { results: resultsStr }], { skipLocationChange: true });
     // this.notificationService.addPopup(this.popupData);
     // }
   }

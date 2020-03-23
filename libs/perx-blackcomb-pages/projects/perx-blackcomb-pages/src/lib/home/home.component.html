@@ -1,10 +1,10 @@
 <div class="page"
   *ngIf="theme && theme.properties && appConfig"
-  infiniteScroll  [infiniteScrollDistance]="2"
+  infiniteScroll [infiniteScrollDistance]="2"
   [infiniteScrollThrottle]="50"
   (scrolled)="onScroll()"
   [scrollWindow]="false">
-  <div class="loyalty-block">
+  <div class="loyalty-block" *ngIf="appConfig.showLoyaltyBlockOnHomePage">
     <perx-core-loyalty-summary [titleFn]="titleFn"></perx-core-loyalty-summary>
     <div class="loyalty-item loyalty-item-qr" *ngIf="appConfig.showUserQR">
       <a
@@ -12,8 +12,7 @@
         class="enlarge home-qr-button"
         routerLink="/qr"
         translate
-        *ngIf="!appConfig.showBarcodeOnHomeProfilePage"
-      >
+        *ngIf="!appConfig.showBarcodeOnHomeProfilePage">
         {{ 'MY_QR' | translate }}
       </a>
       <a
@@ -21,31 +20,41 @@
         class="enlarge home-qr-button"
         routerLink="/barcode"
         translate
-        *ngIf="appConfig.showBarcodeOnHomeProfilePage"
-      >
+        *ngIf="appConfig.showBarcodeOnHomeProfilePage">
         {{ 'MY_BAR_CODE' | translate }}
       </a>
 
     </div>
   </div>
   <perx-core-newsfeed [items$]="newsFeedItems" *ngIf="appConfig.showNewsfeedOnHomepage"></perx-core-newsfeed>
+  <!-- Stamp card campaigns-->
   <div class="campaigns">
     <div *ngIf="showCampaigns" class="title" translate>STAMP_CAMPAIGNS</div>
-    <perx-blackcomb-pages-campaigns-collection [campaigns]="campaigns$" (selected)="goToCampaignPage($event)"></perx-blackcomb-pages-campaigns-collection>
+    <perx-blackcomb-pages-campaigns-collection [campaigns]="gameCampaigns$" (selected)="goToCampaignPage($event)">
+    </perx-blackcomb-pages-campaigns-collection>
   </div>
-  <div class="catalogs">
+  <div class="catalogs" *ngIf="appConfig.showCatalogOnHomePage">
     <div class="title">Catalog</div>
     <perx-blackcomb-pages-catalogs (tapped)="catalogSelected($event)"></perx-blackcomb-pages-catalogs>
   </div>
-  <div class="games">
+  <!-- Game campaigns-->
+  <div class="campaigns">
     <div *ngIf="showGames" class="title" translate>GAMES</div>
     <perx-blackcomb-games-collection [games]="games$"></perx-blackcomb-games-collection>
+  </div>
+  <!-- Quiz campaigns -->
+  <div *ngIf="appConfig.showQuizOnHomePage">
+    <div class="title">Quiz</div>
+    <perx-blackcomb-pages-campaigns-collection [defaultNbCampaigns]="3" [campaigns]="quizCampaigns$"
+      (selected)="goToCampaignPage($event)">
+    </perx-blackcomb-pages-campaigns-collection>
   </div>
   <div class="rewards-collection" *ngIf="(rewards$ | async)?.length > 0">
     <div class="title" translate>FEATURED_REWARDS</div>
     <perx-core-rewards-collection [rewardsList]="rewards$" (tapped)="goToReward($event)"></perx-core-rewards-collection>
   </div>
   <div class="rewards-collection">
-    <perx-core-rewards-list-tabbed [tabs$]="tabs$" (tapped)="goToReward($event)" (tabChanged)="tabChanged($event)"></perx-core-rewards-list-tabbed>
+    <perx-core-rewards-list-tabbed [tabs$]="tabs$" (tapped)="goToReward($event)" (tabChanged)="tabChanged($event)">
+    </perx-core-rewards-list-tabbed>
   </div>
 </div>

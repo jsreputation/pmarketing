@@ -63,6 +63,7 @@ export class WhistlerCampaignService implements ICampaignService {
       case CampaignType.survey:
         return 'Perx::Survey::Engagement';
     }
+    return '';
   }
 
   private static WCStatus2CampaignState(status?: WCampaignStatus): CampaignState {
