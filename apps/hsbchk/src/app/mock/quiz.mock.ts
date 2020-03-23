@@ -62,4 +62,4 @@ export const campaigns: ICampaign[] = [
     endsAt: null,
     campaignBannerUrl: 'assets/quiz/hard.png'
   },
-]
+];

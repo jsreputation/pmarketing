@@ -234,7 +234,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         takeLast(1)
       );
 
-    this.quizCampaigns$ = this.campaignService.getCampaigns({ type: CampaignType.quiz })
+    this.quizCampaigns$ = this.campaignService.getCampaigns({ type: CampaignType.quiz });
     const rssFeeds: IRssFeeds = await this.settingsService.readRssFeeds().toPromise();
     if (!(rssFeeds && rssFeeds.data.length > 0)) {
       return;
