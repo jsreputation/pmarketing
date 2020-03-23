@@ -8,7 +8,7 @@
       </mat-progress-bar>
     </div>
     <perx-core-timer class="timer" [timeToRun]="30000"></perx-core-timer>
-    <div class="survey-card-wrap" #overflowContainer>
+    <div #overflowContainer>
       <mat-card class="survey-card"
         [ngStyle]="{'background-image': quiz.cardBackgroundImgUrl ? 'url(' + quiz.cardBackgroundImgUrl + ')' : '' }">
         <h1>{{quiz.title}}</h1>

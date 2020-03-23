@@ -45,15 +45,18 @@
   <!-- Quiz campaigns -->
   <div *ngIf="appConfig.showQuizOnHomePage">
     <div class="title">Quiz</div>
-    <perx-blackcomb-pages-campaigns-collection [defaultNbCampaigns]="3" [campaigns]="quizCampaigns$"
+    <perx-blackcomb-pages-campaigns-collection
+      [defaultNbCampaigns]="3"
+      [campaigns]="quizCampaigns$"
+      [withRewardsCounter]="appConfig.showCampaignRewardsCounterOnHomepage"
       (selected)="goToCampaignPage($event)">
     </perx-blackcomb-pages-campaigns-collection>
   </div>
-  <div class="rewards-collection" *ngIf="(rewards$ | async)?.length > 0">
+  <div class="rewards-collection" *ngIf="appConfig.showRewardsOnHomepage && (rewards$ | async)?.length > 0">
     <div class="title" translate>FEATURED_REWARDS</div>
     <perx-core-rewards-collection [rewardsList]="rewards$" (tapped)="goToReward($event)"></perx-core-rewards-collection>
   </div>
-  <div class="rewards-collection">
+  <div class="rewards-collection" *ngIf="appConfig.showRewardsOnHomepage">
     <perx-core-rewards-list-tabbed [tabs$]="tabs$" (tapped)="goToReward($event)" (tabChanged)="tabChanged($event)">
     </perx-core-rewards-list-tabbed>
   </div>

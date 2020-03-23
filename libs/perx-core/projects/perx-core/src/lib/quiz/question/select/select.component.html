@@ -11,13 +11,14 @@
     <ng-template #elseBlock>
         <div class="choice-container">
             <mat-radio-group
+                [color]="'primary'"
                 class="selection-radio-group"
                 aria-labelledby="single-selection"
                 [(ngModel)]="selectedChoice"
                 (change)="emitValue()">
                 <mat-radio-button
                     class="selection-radio-button"
-                    *ngFor="let choice of payload?.choices; let i = index"
+                    *ngFor="let choice of payload?.choices"
                     [value]="choice">
                     {{choice}}
                 </mat-radio-button>

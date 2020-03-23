@@ -37,26 +37,22 @@
     margin-top: 2.4rem;
   }
 
-  .survey-card-wrap {
-    @include quizCardWrap();
+  .survey-card {
+    @include quizCard();
 
-    .survey-card {
-      @include quizCard();
+    h1 {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 2rem;
+      text-align: center;
+    }
 
-      h1 {
-        font-style: normal;
-        font-weight: 500;
-        font-size: 2rem;
-        text-align: center;
-      }
-
-      h2 {
-        font-style: normal;
-        font-weight: normal;
-        font-size: 1.2rem;
-        text-align: start;
-        color: #666666;
-      }
+    h2 {
+      font-style: normal;
+      font-weight: normal;
+      font-size: 1.2rem;
+      text-align: start;
+      color: #666666;
     }
   }
 }
