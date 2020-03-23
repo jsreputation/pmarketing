@@ -17,16 +17,13 @@
   overflow-y: auto;
 }
 
-@mixin quizCardWrap {
+@mixin quizCard {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   max-height: 45rem;
   width: 34rem;
   margin-top: 2rem;
   z-index: 1;
-}
-
-@mixin quizCard {
   display: flex;
   flex-direction: column;
   min-height: 34rem;

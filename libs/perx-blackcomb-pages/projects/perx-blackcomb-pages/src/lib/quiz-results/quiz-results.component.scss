@@ -8,11 +8,13 @@
 .survey-page {
   @include quizPage();
 
-  .survey-card-wrap {
-    @include quizCardWrap();
+  .survey-card {
+    @include quizCard();
 
-    .survey-card {
-      @include quizCard();
+    padding: 0;
+
+    perx-core-results {
+      width: 100%;
     }
   }
 
