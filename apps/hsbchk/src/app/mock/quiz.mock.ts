@@ -1,5 +1,18 @@
-import { IQuiz, QuizQuestionType, ICampaign, CampaignType, CampaignState } from '@perxtech/core';
+import { CampaignState, CampaignType, ICampaign, IQuiz, IReward, QuizQuestionType } from '@perxtech/core';
 
+const getReward = () => ({
+  id: 42,
+  name: '',
+  subtitle: '',
+  description: '',
+  validFrom: null,
+  validTo: null,
+  rewardBanner: '',
+  termsAndConditions: '',
+  inventory: {
+    rewardTotalBalance: Math.floor(Math.random() * 1000)
+  }
+});
 export const quiz: IQuiz = {
   title: 'Question pour un champion',
   subTitle: 'Select one option from the choices below ',
@@ -42,7 +55,8 @@ export const campaigns: ICampaign[] = [
     type: CampaignType.quiz,
     state: CampaignState.active,
     endsAt: null,
-    campaignBannerUrl: 'assets/quiz/easy.png'
+    campaignBannerUrl: 'assets/quiz/easy.png',
+    rewards: [getReward()]
   },
   {
     id: 2,
@@ -51,7 +65,8 @@ export const campaigns: ICampaign[] = [
     type: CampaignType.quiz,
     state: CampaignState.active,
     endsAt: null,
-    campaignBannerUrl: 'assets/quiz/medium.png'
+    campaignBannerUrl: 'assets/quiz/medium.png',
+    rewards: [getReward()]
   },
   {
     id: 3,
@@ -60,6 +75,7 @@ export const campaigns: ICampaign[] = [
     type: CampaignType.quiz,
     state: CampaignState.active,
     endsAt: null,
-    campaignBannerUrl: 'assets/quiz/hard.png'
+    campaignBannerUrl: 'assets/quiz/hard.png',
+    rewards: [getReward()]
   },
 ];
