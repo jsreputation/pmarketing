@@ -123,9 +123,9 @@ export class HomeComponent implements OnInit, OnDestroy {
               takeUntil(this.destroy$)
             )));
       })).subscribe((tab) => {
-      this.staticTab = tab;
-      this.tabs$.next(this.staticTab);
-    });
+        this.staticTab = tab;
+        this.tabs$.next(this.staticTab);
+      });
   }
 
   private getTabs(): Observable<ITabConfigExtended[]> {
