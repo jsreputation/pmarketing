@@ -77,7 +77,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       .subscribe((res: any) => {
         this.titleFn = (profile: IProfile) => `${res.HELLO} ${profile && profile.lastName ? profile.lastName : ''},`;
       });
-    this.initCampaign();
     this.rewards$ = this.rewardsService.getAllRewards(['featured']);
     this.getTabbedList();
 
@@ -90,7 +89,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
 
     this.configService.readAppConfig<void>().subscribe(
-      (config: IConfig<void>) => this.appConfig = config
+      (config: IConfig<void>) => {
+        this.appConfig = config;
+        this.initCampaign();
+      }
     );
 
     this.authService.isAuthorized().subscribe((isAuth: boolean) => {
