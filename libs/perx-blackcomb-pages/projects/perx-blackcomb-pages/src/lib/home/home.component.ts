@@ -237,17 +237,17 @@ export class HomeComponent implements OnInit, OnDestroy {
       );
 
     this.quizCampaigns$ = this.campaignService.getCampaigns({ type: CampaignType.quiz });
-    const rssFeeds: IRssFeeds = await this.settingsService.readRssFeeds().toPromise();
-    if (!(rssFeeds && rssFeeds.data.length > 0)) {
-      return;
+    if (this.appConfig.showNewsfeedOnHomepage){
+      const rssFeeds: IRssFeeds = await this.settingsService.readRssFeeds().toPromise();
+      if (!(rssFeeds && rssFeeds.data.length > 0)) {
+        return;
+      }
+      const rssFeedsHome: IRssFeedsData | undefined = rssFeeds.data.find(feed => feed.page === 'home');
+      if (!rssFeedsHome) {
+        return;
+      }
+      const rssFeedsUrl: string = rssFeedsHome.url;
+      this.newsFeedItems = this.feedService.getFromUrl(rssFeedsUrl);
     }
-
-    const rssFeedsHome: IRssFeedsData | undefined = rssFeeds.data.find(feed => feed.page === 'home');
-    if (!rssFeedsHome) {
-      return;
-    }
-
-    const rssFeedsUrl: string = rssFeedsHome.url;
-    this.newsFeedItems = this.feedService.getFromUrl(rssFeedsUrl);
   }
 }
