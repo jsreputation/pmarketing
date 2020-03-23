@@ -7,6 +7,7 @@ import {
 
 import {
   GameModule as PerxGameModule,
+  GameServiceModule as PerxGameServiceModule,
   CampaignModule
 } from '@perxtech/core';
 
@@ -44,6 +45,7 @@ import { MatDialogModule } from '@angular/material/dialog';
   ],
   imports: [
     PerxGameModule,
+    PerxGameServiceModule.forChild(),
     CampaignModule,
     CommonModule,
     MatProgressBarModule,

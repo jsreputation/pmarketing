@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { V4CampaignService } from './v4-campaign.service';
 import { HttpClient } from '@angular/common/http';
@@ -29,17 +29,33 @@ export function campaignServiceFactory(http: HttpClient, config: Config, configS
     MatDialogModule,
     MatButtonModule
   ],
-  providers: [
-    {
-      provide: ICampaignService,
-      useFactory: campaignServiceFactory,
-      deps: [HttpClient, Config, ConfigService]
-    }
-  ],
+  providers: [],
   exports: [
     RewardPopupComponent,
     ExpireTimerComponent
   ]
 })
 export class CampaignModule {
+}
+
+@NgModule({
+})
+export class CampaignServiceModule {
+  public static forRoot(): ModuleWithProviders<CampaignServiceModule> {
+    return {
+      ngModule: CampaignServiceModule,
+      providers: [
+        {
+          provide: ICampaignService,
+          useFactory: campaignServiceFactory,
+          deps: [HttpClient, Config, ConfigService]
+        }
+      ]
+    };
+  }
+  public static forChild(): ModuleWithProviders<CampaignServiceModule> {
+    return {
+      ngModule: CampaignServiceModule
+    };
+  }
 }

@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { V4InstantOutcomeService } from './v4-instant-outcome.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { CampaignModule } from '../campaign/campaign.module';
+import {CampaignModule, CampaignServiceModule} from '../campaign/campaign.module';
 import { ConfigModule } from '../config/config.module';
 
 describe('V4InstantOutcomeService', () => {
@@ -11,6 +11,7 @@ describe('V4InstantOutcomeService', () => {
       imports: [
         HttpClientTestingModule,
         CampaignModule,
+        CampaignServiceModule.forRoot(),
         ConfigModule.forRoot({})
       ]
     })

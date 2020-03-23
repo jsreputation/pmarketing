@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {EMPTY, Observable} from 'rxjs';
+import {catchError, map, shareReplay} from 'rxjs/operators';
 import {
   ICampaign,
   CampaignType,
@@ -51,6 +51,7 @@ interface IV4CampaignsResponse {
 
 @Injectable({ providedIn: 'root' })
 export class V4CampaignService implements ICampaignService {
+  public campaignsCache: Observable<ICampaign>[] = [];
   public baseUrl: string;
 
   constructor(private http: HttpClient, private configService: ConfigService) {
@@ -117,13 +118,21 @@ export class V4CampaignService implements ICampaignService {
   }
 
   public getCampaign(id: number): Observable<ICampaign> {
-    return this.http
+    if (this.campaignsCache[id]) {
+      return this.campaignsCache[id];
+    }
+    return this.campaignsCache[id] = this.http
       .get<IV4CampaignResponse>(`${this.baseUrl}/v4/campaigns/${id}`)
       .pipe(
         map(resp => resp.data),
         map((campaign: IV4Campaign) =>
           V4CampaignService.v4CampaignToCampaign(campaign)
-        )
+        ),
+        shareReplay(1),
+        catchError(_ => {
+          delete this.campaignsCache[id];
+          return EMPTY;
+        })
       );
   }
 }

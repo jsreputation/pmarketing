@@ -58,7 +58,7 @@ export { IFormsService } from './lib/auth/authentication/iforms.service';
 /**
  * Campaigns
  */
-export { CampaignModule } from './lib/campaign/campaign.module';
+export { CampaignModule, CampaignServiceModule } from './lib/campaign/campaign.module';
 export { ICampaignService, ICampaignFilterOptions } from './lib/campaign/icampaign.service';
 export {
   CampaignType,
@@ -82,7 +82,10 @@ export { StampsCardsListComponent } from './lib/stamp/stamps-cards-list/stamps-c
 /**
  *  Games
  */
-export { GameModule } from './lib/game/game.module';
+export {
+  GameModule,
+  GameServiceModule
+} from './lib/game/game.module';
 export {
   IGame,
   GameType,
