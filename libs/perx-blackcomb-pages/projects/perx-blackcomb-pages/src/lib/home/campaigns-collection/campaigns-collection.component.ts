@@ -12,6 +12,7 @@ import { ICampaign } from '@perxtech/core';
 export class CampaignsCollectionComponent {
   @Input('campaigns')
   public campaigns$: Observable<ICampaign[]>;
+  @Input()
   public defaultNbCampaigns: number = 2;
   public showAllCampaigns: boolean = false;
 

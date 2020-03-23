@@ -10,17 +10,31 @@ export interface IConfig<T> {
   sourceType?: string;
   custom?: T;
   displayProperties?: IWSetting;
-  showAccountsPage?: boolean;
-  showHistoryPage?: boolean;
+
+
+  /* home page flags */
   showHomePage?: boolean;
-  showExpiryOnRewardDetail?: boolean;
   showNewsfeedOnHomepage?: boolean;
+  showBarcodeOnHomeProfilePage?: boolean;
+  showLoyaltyBlockOnHomePage?: boolean;
+  showCatalogOnHomePage?: boolean;
+  showQuizOnHomePage?: boolean;
+
+  /* Misc */
   showQrPageSubtitle?: boolean;
   showUserQR?: boolean;
-  showBarcodeOnHomeProfilePage?: boolean;
+  showHistoryPage?: boolean;
+
+  /* Login page */
   showSubtitleLogin?: boolean;
   redirectAfterLogin?: string;
+
+  /* Account page */
+  showAccountsPage?: boolean;
   showUserInfoOnAccountsPage?: boolean;
   showTransactionHistoryOnAccountsPage?: boolean;
+
+  /* Reward page */
   showVoucherBookingFromRewardsPage?: boolean;
+  showExpiryOnRewardDetail?: boolean;
 }

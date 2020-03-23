@@ -45,42 +45,16 @@ export class HomeComponent implements OnInit, OnDestroy {
   public newsFeedItems: Observable<FeedItem[]>;
   public rewards$: Observable<IReward[]>;
   public games$: Observable<IGame[]>;
-  public campaigns$: Observable<ICampaign[]>;
+  public gameCampaigns$: Observable<ICampaign[]>;
   public tabs$: BehaviorSubject<ITabConfigExtended[]> = new BehaviorSubject<ITabConfigExtended[]>([]);
   public staticTab: ITabConfigExtended[];
   public titleFn: (profile: IProfile) => string;
   public showGames: boolean = false;
   public showCampaigns: boolean = false;
   private firstComefirstServeCampaign: ICampaign;
+  public quizCampaigns$: Observable<ICampaign[]>;
 
-  private async initCampaign(): Promise<void> {
-    // https://iamturns.com/continue-rxjs-streams-when-errors-occur/ also look at CatchError, exactly for dis purpose
-    this.games$ = this.gamesService.getActiveGames()
-      .pipe(
-        tap((games: IGame[]) => this.showGames = games.length > 0),
-        switchMap((games: IGame[]) => of(games).pipe(catchError(err => of(err)))),
-        takeLast(1)
-      );
-    this.campaigns$ = this.campaignService.getCampaigns({ type: CampaignType.stamp })
-      .pipe(
-        tap((campaigns: ICampaign[]) => this.showCampaigns = campaigns.length > 0),
-        takeLast(1)
-      );
-    const rssFeeds: IRssFeeds = await this.settingsService.readRssFeeds().toPromise();
-    if (!(rssFeeds && rssFeeds.data.length > 0)) {
-      return;
-    }
-
-    const rssFeedsHome: IRssFeedsData | undefined = rssFeeds.data.find(feed => feed.page === 'home');
-    if (!rssFeedsHome) {
-      return;
-    }
-
-    const rssFeedsUrl: string = rssFeedsHome.url;
-    this.newsFeedItems = this.feedService.getFromUrl(rssFeedsUrl);
-  }
-
-  constructor(
+  public constructor(
     private rewardsService: RewardsService,
     private gamesService: IGameService,
     private router: Router,
@@ -244,5 +218,34 @@ export class HomeComponent implements OnInit, OnDestroy {
         console.error('Something fishy, we should not be here, without any reward or game. ERR print', err);
       }
     );
+  }
+
+  private async initCampaign(): Promise<void> {
+    // https://iamturns.com/continue-rxjs-streams-when-errors-occur/ also look at CatchError, exactly for this purpose
+    this.games$ = this.gamesService.getActiveGames()
+      .pipe(
+        tap((games: IGame[]) => this.showGames = games.length > 0),
+        switchMap((games: IGame[]) => of(games).pipe(catchError(err => of(err)))),
+        takeLast(1)
+      );
+    this.gameCampaigns$ = this.campaignService.getCampaigns({ type: CampaignType.stamp })
+      .pipe(
+        tap((campaigns: ICampaign[]) => this.showCampaigns = campaigns.length > 0),
+        takeLast(1)
+      );
+
+    this.quizCampaigns$ = this.campaignService.getCampaigns({ type: CampaignType.quiz })
+    const rssFeeds: IRssFeeds = await this.settingsService.readRssFeeds().toPromise();
+    if (!(rssFeeds && rssFeeds.data.length > 0)) {
+      return;
+    }
+
+    const rssFeedsHome: IRssFeedsData | undefined = rssFeeds.data.find(feed => feed.page === 'home');
+    if (!rssFeedsHome) {
+      return;
+    }
+
+    const rssFeedsUrl: string = rssFeedsHome.url;
+    this.newsFeedItems = this.feedService.getFromUrl(rssFeedsUrl);
   }
 }

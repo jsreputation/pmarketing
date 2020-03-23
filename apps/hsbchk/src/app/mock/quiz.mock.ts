@@ -1,4 +1,4 @@
-import { IQuiz, QuizQuestionType } from '@perxtech/core';
+import { IQuiz, QuizQuestionType, ICampaign, CampaignType, CampaignState } from '@perxtech/core';
 
 export const quiz: IQuiz = {
   title: 'Question pour un champion',
@@ -33,3 +33,33 @@ export const quiz: IQuiz = {
   ],
   results: {}
 };
+
+export const campaigns: ICampaign[] = [
+  {
+    id: 1,
+    name: 'Easy Difficulty: Week 1',
+    description: 'Play now',
+    type: CampaignType.quiz,
+    state: CampaignState.active,
+    endsAt: null,
+    campaignBannerUrl: 'assets/quiz/easy.png'
+  },
+  {
+    id: 2,
+    name: 'Medium Difficulty: Week 1',
+    description: 'Play now',
+    type: CampaignType.quiz,
+    state: CampaignState.active,
+    endsAt: null,
+    campaignBannerUrl: 'assets/quiz/medium.png'
+  },
+  {
+    id: 3,
+    name: 'Hard Difficulty: Week 1',
+    description: 'Play now',
+    type: CampaignType.quiz,
+    state: CampaignState.active,
+    endsAt: null,
+    campaignBannerUrl: 'assets/quiz/hard.png'
+  },
+]
