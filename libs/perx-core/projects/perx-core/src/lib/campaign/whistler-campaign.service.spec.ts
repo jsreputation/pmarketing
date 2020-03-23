@@ -10,7 +10,7 @@ import {
   IJsonApiListPayload,
   IJsonApiItem,
   IJsonApiItemPayload,
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 

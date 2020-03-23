@@ -1,5 +1,5 @@
 {
-  "name": "@perx/oracle-pay",
+  "name": "@perxtech/oracle-pay",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -25,7 +25,7 @@
     "@angular/platform-browser": "~8.0.0",
     "@angular/platform-browser-dynamic": "~8.0.0",
     "@angular/router": "~8.0.0",
-    "@perx/core": "^0.0.0",
+    "@perxtech/core": "^0.0.0",
     "rxjs": "~6.4.0",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"

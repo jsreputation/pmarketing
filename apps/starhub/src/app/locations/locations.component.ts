@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { ILocation, LocationsService, IReward, filterDuplicateLocations, IVoucherService } from '@perx/core';
+import { ILocation, LocationsService, IReward, filterDuplicateLocations, IVoucherService } from '@perxtech/core';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Params } from '@angular/router';
 import { filter, map, tap } from 'rxjs/operators';

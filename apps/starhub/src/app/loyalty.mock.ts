@@ -1,4 +1,4 @@
-import { ILoyalty } from '@perx/core';
+import { ILoyalty } from '@perxtech/core';
 
 export const loyalty: ILoyalty = {
   beginDate: '2019-08-20T03:28:23.241Z',

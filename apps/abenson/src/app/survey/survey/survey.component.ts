@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NotificationService, ISurvey, SurveyService } from '@perx/core';
+import { NotificationService, ISurvey, SurveyService } from '@perxtech/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';

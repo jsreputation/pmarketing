@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
-import { IReward, RewardsService } from '@perx/core';
+import { ConfigService, IReward, RewardsService } from '@perxtech/core';
 import { Observable } from 'rxjs';
 import { MacaronService, IMacaron } from '../../services/macaron.service';
 import { map } from 'rxjs/operators';
@@ -18,25 +18,32 @@ export class RewardsCardsComponent implements OnInit {
 
   constructor(
     private rewardsService: RewardsService,
-    private macaronService: MacaronService
+    private macaronService: MacaronService,
+    private configService: ConfigService
   ) {
   }
 
   public ngOnInit(): void {
-    this.rewardsSnapping$ = this.rewardsService.getAllRewards(['snapping'])
-      .pipe(
-        map((rewards: IReward[]) => this.sortRewards(rewards))
-      );
-    this.rewardsFeatured$ = this.rewardsService.getAllRewards(['featured'])
-      .pipe(
-        map((rewards: IReward[]) => this.sortRewards(rewards))
-      );
+    this.configService.readAppConfig().subscribe(() => {
+      this.rewardsSnapping$ = this.rewardsService.getAllRewards(['snapping'])
+        .pipe(
+          map((rewards: IReward[]) => this.sortRewards(rewards))
+        );
+      this.rewardsFeatured$ = this.rewardsService.getAllRewards(['featured'])
+        .pipe(
+          map((rewards: IReward[]) => this.sortRewards(rewards))
+        );
+    });
   }
 
   private sortRewards(rewards: IReward[]): IReward[] {
     return rewards.sort((a: IReward, b: IReward) => {
-      if (!a.sellingFrom) { return 1; }
-      if (!b.sellingFrom) { return -1; }
+      if (!a.sellingFrom) {
+        return 1;
+      }
+      if (!b.sellingFrom) {
+        return -1;
+      }
       return a.sellingFrom.getTime() - b.sellingFrom.getTime();
     });
   }

@@ -11,7 +11,7 @@ import {
   IChangePhoneData,
   IResetPasswordData,
 } from '../authentication/models/authentication.model';
-import { IWAppAccessTokenResponse, IWLoginResponse } from '@perx/whistler';
+import { IWAppAccessTokenResponse, IWLoginResponse } from '@perxtech/whistler';
 import { ProfileService } from '../../profile/profile.service';
 import { IV4ProfileResponse, V4ProfileService } from '../../profile/v4-profile.service';
 import { TokenStorage } from '../../utils/storage/token-storage.service';

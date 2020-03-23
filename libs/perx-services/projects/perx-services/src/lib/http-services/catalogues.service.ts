@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ApiConfigService } from '../configs/api-config';
-import { PCatalogueState, IPCatalogues, IPPostCatalogue, IPPostCatalogueReponse } from '@perx/model';
+import { PCatalogueState, IPCatalogues, IPPostCatalogue, IPPostCatalogueReponse } from '@perxtech/model';
 import { Observable } from 'rxjs';
-import { IPPutCatalog } from '@perx/model/dist/perx-model/lib/catalogues/catalogues';
+import { IPPutCatalog } from '@perxtech/model/dist/perx-model/lib/catalogues/catalogues';
 
 export interface ICatloguesQuery {
   state?: PCatalogueState;

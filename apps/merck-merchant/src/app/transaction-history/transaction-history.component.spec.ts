@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatIconModule, MatToolbarModule, MatTabsModule } from '@angular/material';
-import { LoyaltyModule } from '@perx/core';
+import { LoyaltyModule } from '@perxtech/core';
 import { Location } from '@angular/common';
 
 import { TransactionHistoryComponent } from './transaction-history.component';
 import { TransactionHistoryPipe } from './transaction-history.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
-import { IMerchantAdminService } from '@perx/core';
+import { IMerchantAdminService } from '@perxtech/core';
 
 describe('TransactionHistoryComponent', () => {
   let component: TransactionHistoryComponent;
   let fixture: ComponentFixture<TransactionHistoryComponent>;
   const locationStub: Partial<Location> = {
-    back: () => {}
+    back: () => { }
   };
   const merchantAdminServiceStub: Partial<IMerchantAdminService> = {
     getTransactionHistory: () => of(),

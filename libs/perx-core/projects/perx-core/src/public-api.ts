@@ -52,7 +52,7 @@ export { BarcodeRedemptionComponent } from './lib/vouchers/barcode-redemption/ba
 export { AuthenticationModule } from './lib/auth/authentication/authentication.module';
 export { AuthenticationService, RequiresOtpError } from './lib/auth/authentication/authentication.service';
 export { TokenStorage } from './lib/utils/storage/token-storage.service';
-export { IChangePasswordData, ISignUpData } from './lib/auth/authentication/models/authentication.model';
+export { IChangePasswordData, IChangePhoneData, ISignUpData } from './lib/auth/authentication/models/authentication.model';
 export { IFormsService } from './lib/auth/authentication/iforms.service';
 
 /**
@@ -172,6 +172,9 @@ export { LanguageService } from './lib/utils/language/language.service';
 export { LanguageInterceptor } from './lib/utils/language.interceptor';
 export { LocaleIdFactory } from './lib/utils/language/locale-id.factory';
 export { FeedItemPopupComponent } from './lib/utils/feed-item-popup/feed-item-popup.component';
+export { StripHtmlPipe } from './lib/utils/directives/striphtml-pipe';
+export { TimerComponent } from './lib/utils/timer/timer.component';
+
 /**
  * Puzzles
  */
@@ -210,6 +213,20 @@ export { GroupComponent } from './lib/survey/question/group/group.component';
 export { RatingComponent } from './lib/survey/question/rating/rating.component';
 export { DateComponent } from './lib/survey/question/date/date.component';
 export { PasswordComponent } from './lib/survey/question/password/password.component';
+/**
+ * Quiz
+ */
+export { QuizModule } from './lib/quiz/quiz.module';
+export { QuizService } from './lib/quiz/quiz.service';
+export { IQuiz, QuizQuestionType, IQQuestion, IQAnswer, ITracker, IPoints } from './lib/quiz/models/quiz.model';
+export { QuizComponent } from './lib/quiz/quiz/quiz.component';
+export { QuizQuestionComponent } from './lib/quiz/question/question.component';
+export { QuizSelectComponent } from './lib/quiz/question/select/select.component';
+export { QuizPictureSelectComponent } from './lib/quiz/question/picture-select/picture-select.component';
+export { QuizLongTextComponent } from './lib/quiz/question/long-text/long-text.component';
+export { QuizRatingComponent } from './lib/quiz/question/rating/rating.component';
+export { ResultsComponent } from './lib/quiz/results/results.component';
+export { SecondsToStringPipe } from './lib/quiz/seconds-to-string.pipe';
 
 /**
  * Config

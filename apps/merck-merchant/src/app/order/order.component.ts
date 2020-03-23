@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductService, IProduct } from '../services/product.service';
-import { IMerchantAdminService, IMerchantAdminTransaction, IMerchantProfile, NotificationService, TokenStorage } from '@perx/core';
+import { IMerchantAdminService, IMerchantAdminTransaction, IMerchantProfile, NotificationService, TokenStorage } from '@perxtech/core';
 import { from, throwError, Observable, forkJoin } from 'rxjs';
 import { mergeMap, switchMap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
@@ -82,7 +82,7 @@ export class OrderComponent implements OnInit {
     // 0 padded date
     const date = new Date();
     // @ts-ignore
-    const dateStamp = (`0${  date.getDate()}`).slice(-2) + (`0${  date.getMonth() + 1}`).slice(-2) + date.getFullYear().toString();
+    const dateStamp = (`0${date.getDate()}`).slice(-2) + (`0${date.getMonth() + 1}`).slice(-2) + date.getFullYear().toString();
 
     this.merchantAdminService.getMerchantProfile()
       .pipe(
@@ -98,7 +98,8 @@ export class OrderComponent implements OnInit {
                 for (let i = 0; i < product.quantity; i++) {
                   partDataRequests.push(this.merchantAdminService.createTransaction(
                     this.payload.id, merchantUsername, product.price, product.currency,
-                    'purchase', `${dateStamp  }-${  this.payload.id}`, merchantName, product.name));
+                    'purchase', `${dateStamp}-${this.payload.id}`, merchantName,
+                    `${product.name} ${product.description}`));
                 }
               }
               return forkJoin(partDataRequests);

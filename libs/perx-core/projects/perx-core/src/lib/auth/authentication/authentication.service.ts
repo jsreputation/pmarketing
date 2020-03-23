@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import {
   IWAppAccessTokenResponse
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { AuthService } from 'ngx-auth';
 
 import {

@@ -37,7 +37,7 @@ import {
   ITheme,
   RewardPopupComponent,
   IPopupConfig
-} from '@perx/core';
+} from '@perxtech/core';
 
 import { SoundService } from '../sound/sound.service';
 import { MatDialog } from '@angular/material';

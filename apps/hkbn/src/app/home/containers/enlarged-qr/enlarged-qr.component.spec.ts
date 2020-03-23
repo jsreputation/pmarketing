@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { LoyaltyService, ILoyalty } from '@perx/core';
+import { LoyaltyService, ILoyalty } from '@perxtech/core';
 import { Observable, of } from 'rxjs';
 import { mockLoyalty } from '../loyalty.mock';
 

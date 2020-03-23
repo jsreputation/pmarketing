@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CardComponent } from './card.component';
-import { PuzzlesModule, ConfigService, ThemesService, ICampaignService, StampService } from '@perx/core';
+import { PuzzlesModule, ConfigService, ThemesService, ICampaignService, StampService } from '@perxtech/core';
 import { MatSliderModule, MatCheckboxModule, MatIconModule } from '@angular/material';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';

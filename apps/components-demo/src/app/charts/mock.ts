@@ -1,4 +1,4 @@
-import { BaseType, IData } from '@perx/chart';
+import { BaseType, IData } from '@perxtech/chart';
 
 export const singleData: IData = {
   // columns: ['age', 'count'],

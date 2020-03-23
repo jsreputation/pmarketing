@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { ITransaction, LoyaltyService } from '@perx/core';
+import { ITransaction, LoyaltyService } from '@perxtech/core';
 import { mockLoyalty, mockTransactions } from '../loyalty-mock';
 
 @Component({

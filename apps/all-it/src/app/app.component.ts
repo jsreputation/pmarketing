@@ -29,14 +29,14 @@ import {
   AuthenticationService,
   ConfigService,
   IConfig,
-} from '@perx/core';
+} from '@perxtech/core';
 import {
   HomeComponent,
   HistoryComponent,
   AccountComponent,
   SignIn2Component,
   WalletComponent,
-} from '@perx/blackcomb-pages';
+} from '@perxtech/blackcomb-pages';
 
 import { BACK_ARROW_URLS } from './app.constants';
 

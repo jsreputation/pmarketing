@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 
 import { QrRedemptionComponent } from './qr-redemption.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { VouchersModule, IVoucherService, Voucher, VoucherState } from '@perx/core';
+import { VouchersModule, IVoucherService, Voucher, VoucherState } from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { mockVoucher } from '../voucher.mock';
 import { Observable, of, BehaviorSubject } from 'rxjs';

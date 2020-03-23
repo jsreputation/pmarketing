@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AudiencesHttpAdapter } from '@cl-core/http-adapters/audiences-http-adapter';
-import { AudiencesHttpsService } from '@perx/whistler-services';
+import { AudiencesHttpsService } from '@perxtech/whistler-services';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { ClHttpParams } from '@cl-helpers/http-params';
-import { IWAudiences, IJsonApiItem, IJsonApiListPayload } from '@perx/whistler';
+import { IWAudiences, IJsonApiItem, IJsonApiListPayload } from '@perxtech/whistler';
 import { IAudience } from '@cl-core/models/audiences/audiences';
 import { HttpParamsOptions } from '@cl-core/models/params-map';
 import { ITableData } from '@cl-core/models/data-list.interface';

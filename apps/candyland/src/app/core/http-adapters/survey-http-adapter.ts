@@ -1,5 +1,5 @@
 import { ImageControlValue } from '@cl-helpers/image-control-value';
-import { IWSurveyEngagementAttributes, WSurveyQuestionType, IJsonApiItem } from '@perx/whistler';
+import { IWSurveyEngagementAttributes, WSurveyQuestionType, IJsonApiItem } from '@perxtech/whistler';
 import { ISurveyForm } from '@cl-core/models/survey/survey-common.interface';
 
 export class SurveyHttpAdapter {

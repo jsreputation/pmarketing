@@ -26,7 +26,7 @@ import {
   IGameService,
   IReward,
   ConfigService, SettingsService
-} from '@perx/core';
+} from '@perxtech/core';
 
 import { rewards } from 'src/app/rewards.mock';
 import { catalogs } from 'src/app/catalogs.mock';
@@ -100,8 +100,8 @@ describe('DiscoverComponent', () => {
         { provide: FeedReaderService, useValue: feedReaderServiceStub },
         { provide: Router, useValue: routerStub },
         { provide: IGameService, useValue: gameServiceStub },
-        { provide: ConfigService, useValue: configServiceStub},
-        { provide: SettingsService, useValue: settingsServiceStub},
+        { provide: ConfigService, useValue: configServiceStub },
+        { provide: SettingsService, useValue: settingsServiceStub },
       ]
     })
       .compileComponents();

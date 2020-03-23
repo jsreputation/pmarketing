@@ -1,4 +1,4 @@
-import { IWRewardDisplayProperties } from '@perx/whistler';
+import { IWRewardDisplayProperties } from '@perxtech/whistler';
 
 export interface IReward {
   id: number;

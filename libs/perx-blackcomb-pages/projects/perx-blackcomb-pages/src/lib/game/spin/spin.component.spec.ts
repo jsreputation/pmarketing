@@ -7,7 +7,7 @@ import {
 import {
   GameModule,
   GameType
-} from '@perx/core';
+} from '@perxtech/core';
 
 import {
   ConfigToMappedSlotPipe,
@@ -22,7 +22,7 @@ const dummyIGame = {
   config: {
     numberOfWedges: 5,
     rewardSlots: [1, 2, 4],
-    colorCtrls: {0: 'black', 1: 'yellow', 2: 'green', 3: 'blue', 4: 'red'},
+    colorCtrls: { 0: 'black', 1: 'yellow', 2: 'green', 3: 'blue', 4: 'red' },
     rewardIcon: '',
     wheelImg: '',
     wheelPosition: '',

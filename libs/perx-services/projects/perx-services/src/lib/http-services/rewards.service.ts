@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IPRewards, PRewardState, IPPostReward, IPPostRewardResponse } from '@perx/model';
+import { IPRewards, PRewardState, IPPostReward, IPPostRewardResponse } from '@perxtech/model';
 import { HttpClient } from '@angular/common/http';
 import { ApiConfigService } from '../configs/api-config';
 

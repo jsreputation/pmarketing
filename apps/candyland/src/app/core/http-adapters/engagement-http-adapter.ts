@@ -14,7 +14,7 @@ import {
   WGameType,
   IJsonApiItem,
   IJsonApiPostData
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import {
   IEngagementInstantReward,
   IEngagementScratchType,

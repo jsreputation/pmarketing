@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IGraphic } from '@perx/candyshop';
+import { IGraphic } from '@perxtech/candyshop';
 
 @Component({
   selector: 'app-candyshop-graphic-uploader',

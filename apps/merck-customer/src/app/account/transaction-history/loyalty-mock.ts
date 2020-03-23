@@ -1,4 +1,4 @@
-import {ILoyalty, ITransaction, ITransactionHistory, TransactionDetailType} from '@perx/core';
+import { ILoyalty, ITransaction, ITransactionHistory, TransactionDetailType } from '@perxtech/core';
 
 export const mockLoyalty: ILoyalty = {
   id: 1,

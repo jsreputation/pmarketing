@@ -1,6 +1,6 @@
 import { Component, Output, EventEmitter, Input, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
-import { StampService } from '@perx/core';
-import { IStampCard , StampCardState, StampState } from '@perx/core';
+import { StampService } from '@perxtech/core';
+import { IStampCard, StampCardState, StampState } from '@perxtech/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 

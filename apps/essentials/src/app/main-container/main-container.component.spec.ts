@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MainContainerComponent } from './main-container.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { SidenavMenuModule } from '@perx/candyshop';
+import { SidenavMenuModule } from '@perxtech/candyshop';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';

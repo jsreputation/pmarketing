@@ -9,7 +9,7 @@ import {
   IJsonApiItem,
   IJsonApiListPayload,
   IJsonApiPostData
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { RulePointType } from '@cl-core/models/loyalty/rule-point-type.enum';
 import { RuleSetMatchType } from '@cl-core/models/loyalty/rule-set-match-type.enum';
 import { RuleConditionType } from '@cl-core/models/loyalty/rule-condition-type.enum';

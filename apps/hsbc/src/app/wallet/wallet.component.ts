@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import {Router, ActivatedRoute} from '@angular/router';
-import {ICampaignService, NotificationService, CampaignType, IConfig, ConfigService} from '@perx/core';
-import {map} from 'rxjs/operators';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ICampaignService, NotificationService, CampaignType, IConfig, ConfigService } from '@perxtech/core';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-wallet',

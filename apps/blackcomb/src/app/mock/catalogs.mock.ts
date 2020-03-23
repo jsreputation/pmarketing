@@ -1,4 +1,4 @@
-import { ICatalog } from '@perx/core';
+import { ICatalog } from '@perxtech/core';
 
 export const catalogs: ICatalog[] = [
   {

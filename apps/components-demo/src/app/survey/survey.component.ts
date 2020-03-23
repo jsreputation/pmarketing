@@ -1,4 +1,4 @@
-import { ISurvey } from '@perx/core';
+import { ISurvey } from '@perxtech/core';
 import { Component, OnInit } from '@angular/core';
 
 import { mock } from './mock/survey-mock';

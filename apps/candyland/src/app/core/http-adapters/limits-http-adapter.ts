@@ -4,7 +4,7 @@ import {
   IWGameLimitAttributes,
   IJsonApiItem,
   IJsonApiPostData
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { ILimit } from '@cl-core/models/limit/limit.interface';
 
 enum LimitsDurationToAPIMapping {

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ContentComponent, PerxBlackcombPagesModule } from '@perx/blackcomb-pages';
+import { ContentComponent, PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatProgressSpinnerModule } from '@angular/material';
@@ -19,4 +19,4 @@ const routes: Routes = [{
     MatProgressSpinnerModule
   ]
 })
-export class ContentModule {}
+export class ContentModule { }

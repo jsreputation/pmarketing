@@ -1,11 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HistoryComponent } from './history.component';
-import { VouchersModule, IVoucherService } from '@perx/core';
+import { VouchersModule, IVoucherService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
-import {InfiniteScrollModule} from 'ngx-infinite-scroll';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 describe('HistoryComponent', () => {
   let component: HistoryComponent;

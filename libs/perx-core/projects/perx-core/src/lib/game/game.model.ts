@@ -1,5 +1,5 @@
 import { IVoucher } from '../vouchers/models/voucher.model';
-import { IWCampaignDisplayProperties } from '@perx/whistler';
+import { IWCampaignDisplayProperties } from '@perxtech/whistler';
 
 export enum GameType {
   unknown = -1,

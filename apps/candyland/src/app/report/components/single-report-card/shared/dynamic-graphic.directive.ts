@@ -1,5 +1,5 @@
 import { ComponentFactoryResolver, Directive, Input, OnChanges, OnInit, ViewContainerRef } from '@angular/core';
-import { WSurveyQuestionType } from '@perx/whistler';
+import { WSurveyQuestionType } from '@perxtech/whistler';
 import { RatingGraphicComponent } from '../../rating-graphic/rating-graphic.component';
 import { PictureChoiceGraphicComponent } from '../../picture-choice-graphic/picture-choice-graphic.component';
 import { MultipleChoiceGraphicComponent } from '../../multiple-choice-graphic/multiple-choice-graphic.component';

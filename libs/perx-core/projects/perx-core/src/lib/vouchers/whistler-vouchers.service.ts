@@ -15,7 +15,7 @@ import {
   IJsonApiItem,
   IJsonApiItemPayload,
   IWPurchaseAttributes,
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { oc } from 'ts-optchain';
 
 @Injectable({

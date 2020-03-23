@@ -1,0 +1,100 @@
+@import "../custom-theme.scss";
+@import "./_mixins";
+
+.survey-main-container {
+  @include quizContainer();
+}
+
+.survey-page {
+  @include quizPage();
+
+  .progress {
+    z-index: 1;
+    width: 100%;
+    background-color: black;
+    padding: 2.4rem 0;
+
+    .progress-text {
+      font-size: 1.6rem;
+      letter-spacing: 0.4px;
+      text-align: left;
+      color: white;
+      font-style: normal;
+      font-weight: normal;
+      margin: 0 1.6rem 1.1rem;
+    }
+
+    .progress-bar {
+      width: auto;
+      margin: 0 1.6rem;
+      border-radius: 1rem;
+    }
+  }
+
+  .survey-card-wrap {
+    @include quizCardWrap();
+
+    .survey-card {
+      @include quizCard();
+
+      h1 {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 2rem;
+        text-align: center;
+      }
+
+      h2 {
+        font-style: normal;
+        font-weight: normal;
+        font-size: 1.2rem;
+        text-align: start;
+        color: #666666;
+      }
+    }
+  }
+}
+
+.bottom-nav-container {
+  @include quizBottomBar();
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.arrow {
+  position: absolute;
+  top: 32.8rem;
+  animation: anim 3s infinite;
+}
+
+@keyframes anim {
+  0% {
+    transform: translateY(0);
+  }
+
+  20% {
+    transform: translateY(0);
+  }
+
+  40% {
+    transform: translateY(-30px);
+  }
+
+  50% {
+    transform: translateY(0);
+  }
+
+  60% {
+    transform: translateY(-15px);
+  }
+
+  80% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}

@@ -19,7 +19,7 @@ import {
   IConfig,
   TokenStorage,
   LanguageService
-} from '@perx/core';
+} from '@perxtech/core';
 import { HeaderComponent } from './header/header.component';
 import { GameComponent } from './game/game.component';
 import { CongratsComponent } from './congrats/congrats.component';

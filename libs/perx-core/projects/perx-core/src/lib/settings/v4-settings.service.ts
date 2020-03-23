@@ -11,7 +11,7 @@ import {
   switchMap,
 } from 'rxjs/operators';
 
-import { IWSetting } from '@perx/whistler';
+import { IWSetting } from '@perxtech/whistler';
 
 import {
   IConfig
@@ -20,8 +20,8 @@ import {
 import { AuthenticationService } from '../auth/authentication/authentication.service';
 import { ICustomProperties } from '../profile/profile.model';
 import { SettingsService } from './settings.service';
-import {IMicrositeSettings, IRssFeeds, PagesObject} from './models/settings.model';
-import {ConfigService} from '../config/config.service';
+import { IMicrositeSettings, IRssFeeds, PagesObject } from './models/settings.model';
+import { ConfigService } from '../config/config.service';
 
 interface IV4MicrositeSettingsResponse {
   data: IV4MicrositeSettings;

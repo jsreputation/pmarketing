@@ -5,7 +5,7 @@ import {
 } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import {Observable, of} from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { NgxBarcodeModule } from 'ngx-barcode';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import {
@@ -14,7 +14,7 @@ import {
   LoyaltyService,
   ProfileService,
   ITransaction, ConfigService, IConfig,
-} from '@perx/core';
+} from '@perxtech/core';
 
 import { CardComponent } from './card.component';
 

@@ -10,7 +10,7 @@ import { SurveyService } from '../../survey/survey.service';
 import {
   IWCognitoTenantAttributes,
   IJsonApiListPayload,
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 
 @Injectable({
   providedIn: 'root'

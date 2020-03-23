@@ -20,7 +20,7 @@ import {
   AuthenticationService,
   NotificationService,
   ISignUpData,
-} from '@perx/core';
+} from '@perxtech/core';
 
 // import {SharedDataService} from 'src/app/services/shared-data.service';
 

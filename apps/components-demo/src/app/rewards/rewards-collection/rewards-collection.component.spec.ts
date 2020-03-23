@@ -9,8 +9,8 @@ import { of } from 'rxjs';
 import {
   RewardsModule as PerxRewardsModule,
   ThemesService,
-} from '@perx/core';
-import { RewardsService } from '@perx/core';
+} from '@perxtech/core';
+import { RewardsService } from '@perxtech/core';
 
 import { RewardsCollectionComponent } from './rewards-collection.component';
 

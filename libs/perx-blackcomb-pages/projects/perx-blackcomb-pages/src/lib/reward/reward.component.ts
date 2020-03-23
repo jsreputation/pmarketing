@@ -12,7 +12,7 @@ import {
   NotificationService,
   IPrePlayStateData,
   IPrice
-} from '@perx/core';
+} from '@perxtech/core';
 import { map, switchMap, catchError, tap, takeUntil, mergeMap, } from 'rxjs/operators';
 
 import { TranslateService } from '@ngx-translate/core';

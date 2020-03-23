@@ -6,7 +6,7 @@ import { CreateMerchantComponent } from './containers/create-merchant/create-mer
 import { ListMerchantComponent } from './containers/list-merchant/list-merchant.component';
 import { DetailedMerchantComponent } from './containers/detailed-merchant/detailed-merchant.component';
 import { MerchantRoutingModule } from './merchant-routing.module';
-import { ButtonModule } from '@perx/candyshop';
+import { ButtonModule } from '@perxtech/candyshop';
 import { MatCardModule, MatFormFieldModule, MatInputModule, MatPaginatorModule, MatProgressBarModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CreateMerchantFormModule } from '@cl-shared/components/create-merchant-form/create-merchant-form.module';

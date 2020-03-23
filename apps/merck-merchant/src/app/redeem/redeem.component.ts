@@ -6,7 +6,7 @@ import {
   RewardsService,
   IReward,
   IMerchantAdminService, Voucher
-} from '@perx/core';
+} from '@perxtech/core';
 import { flatMap } from 'rxjs/operators';
 import { HttpResponseBase } from '@angular/common/http';
 import { TranslateService } from '@ngx-translate/core';

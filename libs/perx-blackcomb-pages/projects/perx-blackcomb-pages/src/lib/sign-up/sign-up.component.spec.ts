@@ -12,7 +12,7 @@ import {
   ConfigService,
   IConfig,
   IAnswer
-} from '@perx/core';
+} from '@perxtech/core';
 import { SignUpComponent } from './sign-up.component';
 import { of, Observable, throwError } from 'rxjs';
 import { MatSnackBar, MatInputModule } from '@angular/material';
@@ -20,7 +20,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Location } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { IWAppAccessTokenResponse } from '@perx/whistler';
+import { IWAppAccessTokenResponse } from '@perxtech/whistler';
 import { Type } from '@angular/core';
 
 const answers: IAnswer[] = [
@@ -117,7 +117,7 @@ describe('SignUpComponent', () => {
         { provide: Location, useValue: locationStub },
         { provide: SurveyService, useValue: surveyServiceStub },
         { provide: ThemesService, useValue: themeServiceStub },
-        { provide: ConfigService, useValue: configServiceStub}
+        { provide: ConfigService, useValue: configServiceStub }
       ]
     })
       .compileComponents();

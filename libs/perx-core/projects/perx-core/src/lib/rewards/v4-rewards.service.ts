@@ -13,7 +13,7 @@ import {
 } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 
-import { IWRewardDisplayProperties } from '@perx/whistler';
+import { IWRewardDisplayProperties } from '@perxtech/whistler';
 
 import { RewardsService } from './rewards.service';
 import {
@@ -22,10 +22,11 @@ import {
   IPrice,
   ICategoryTags,
 } from './models/reward.model';
-import { Config } from '../config/config';
 
-import {RewardStateHelper} from './reward-state-helper';
-import {ITabConfigExtended} from './rewards-list-tabbed/rewards-list-tabbed.component';
+import { RewardStateHelper } from './reward-state-helper';
+import { ITabConfigExtended } from './rewards-list-tabbed/rewards-list-tabbed.component';
+import { ConfigService } from '../config/config.service';
+import { IConfig } from '../config/models/config.model';
 
 export interface IV4Tag {
   id: number;
@@ -108,6 +109,16 @@ interface IV4GetCatalogResponse {
   data: IV4Catalog;
 }
 
+interface IV4GetCategoriesResponse {
+  data: IV4Category[];
+}
+
+interface IV4Category {
+  id: number;
+  description: string;
+  title: string;
+}
+
 interface IV4Catalog {
   id: number;
   name: string;
@@ -131,10 +142,13 @@ export class V4RewardsService extends RewardsService {
 
   constructor(
     private http: HttpClient,
-    private config: Config
+    private configService: ConfigService
   ) {
     super();
-    this.apiHost = this.config.apiHost as string;
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig<void>) => {
+        this.apiHost = config.apiHost as string;
+      });
   }
 
 
@@ -205,6 +219,17 @@ export class V4RewardsService extends RewardsService {
       catalogBanner,
       rewardCount: catalog.catalog_results.count,
       rewards
+    };
+  }
+
+  private static v4CategoriesToCategories(category: IV4Category): ITabConfigExtended {
+    return {
+      tabName: category.title,
+      rewardsType: category.title,
+      currentPage: 1,
+      completePagination: false,
+      filterKey: null,
+      filterValue: null,
     };
   }
 
@@ -337,7 +362,11 @@ export class V4RewardsService extends RewardsService {
   }
 
   public getCategories(): Observable<ITabConfigExtended[]> {
-    return this.http.get<ITabConfigExtended[]>(`${this.config.baseHref}assets/categories-tabs.json`);
+    return this.http.get<IV4GetCategoriesResponse>(`${this.apiHost}/v4/categories`).pipe(
+      map(res => res.data),
+      map(res => Object.values(res.reduce((acc, cur) => Object.assign(acc, { [cur.id]: cur }), {}))),
+      map((categories: IV4Category[]) => categories.map(category => V4RewardsService.v4CategoriesToCategories(category)))
+    );
   }
 
   public getRewardPricesOptions(id: number, locale: string = 'en'): Observable<IPrice[]> {

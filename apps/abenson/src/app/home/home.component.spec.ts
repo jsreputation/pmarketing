@@ -13,7 +13,7 @@ import {
   IProfile,
   ConfigService,
   IConfig
-} from '@perx/core';
+} from '@perxtech/core';
 import { of, Observable } from 'rxjs';
 import { MatCardModule } from '@angular/material';
 

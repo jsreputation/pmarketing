@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoginComponent } from './login.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ButtonModule } from '@perx/candyshop';
+import { ButtonModule } from '@perxtech/candyshop';
 import { LogoModule } from '../../../shared/components/logo/logo.module';
 import { MatFormFieldModule, MatIconModule, MatInputModule } from '@angular/material';
 import { LoginFormComponent } from '../../components/login-form/login-form.component';

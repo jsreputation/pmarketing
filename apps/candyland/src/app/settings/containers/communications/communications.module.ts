@@ -8,7 +8,7 @@ import {
   MatRadioModule, MatSlideToggleModule
 } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ButtonModule } from '@perx/candyshop';
+import { ButtonModule } from '@perxtech/candyshop';
 
 @NgModule({
   declarations: [CommunicationsComponent],

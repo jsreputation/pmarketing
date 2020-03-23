@@ -4,7 +4,7 @@ import cacheManager from 'cache-manager';
 import { ICredentials } from '../types/apiConfig';
 import { getRootCredentials } from './credentialsWhistler';
 import { createToken } from '../ctrl/createToken';
-import { IJsonApiItem, IWCognitoEndpointAttributes } from '@perx/whistler';
+import { IJsonApiItem, IWCognitoEndpointAttributes } from '@perxtech/whistler';
 
 const cache = cacheManager.caching({ store: 'memory', max: 100, ttl: 0 });
 

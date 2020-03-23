@@ -11,7 +11,7 @@ import {
 } from '@cl-core/services';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { SimpleMobileViewComponent } from '@cl-shared/components/simple-mobile-view/simple-mobile-view.component';
-import { IWEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
+import { IWEngagementAttributes, IJsonApiItemPayload } from '@perxtech/whistler';
 import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
 import { IPinataForm } from '@cl-core/models/games/pinata/pinate-form.interface';
 import { IGameDefaultData } from '@cl-core/models/games/game-default-data.interface';

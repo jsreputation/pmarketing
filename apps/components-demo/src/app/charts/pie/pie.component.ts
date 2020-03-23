@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { IData } from '@perx/chart';
+import { IData } from '@perxtech/chart';
 import { singleData } from '../mock';
 
 @Component({

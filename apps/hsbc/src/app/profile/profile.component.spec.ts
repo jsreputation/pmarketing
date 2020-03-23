@@ -11,7 +11,7 @@ import {
   IProfile,
   ProfileModule,
   IVoucherService,
-} from '@perx/core';
+} from '@perxtech/core';
 
 import { ProfileComponent } from './profile.component';
 

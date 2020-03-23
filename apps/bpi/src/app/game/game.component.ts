@@ -10,7 +10,7 @@ import {
   StampCardState,
   StampState,
   NotificationService
-} from '@perx/core';
+} from '@perxtech/core';
 import { map } from 'rxjs/operators';
 
 @Component({

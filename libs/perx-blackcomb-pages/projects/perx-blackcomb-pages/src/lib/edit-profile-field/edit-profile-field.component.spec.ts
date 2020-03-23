@@ -4,7 +4,7 @@ import { EditProfileFieldComponent, FieldType } from './edit-profile-field.compo
 import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
-import { ProfileModule, ProfileService } from '@perx/core';
+import { ProfileModule, ProfileService } from '@perxtech/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -22,7 +22,7 @@ describe('EditProfileFieldComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditProfileFieldComponent ],
+      declarations: [EditProfileFieldComponent],
       imports: [
         MatFormFieldModule,
         MatInputModule,
@@ -36,7 +36,7 @@ describe('EditProfileFieldComponent', () => {
         ])
       ],
       providers: [
-        { provide: ProfileService, useValue: profileServiceStub},
+        { provide: ProfileService, useValue: profileServiceStub },
         { provide: ActivatedRoute, useValue: { paramMap: of(convertToParamMap({ type: 'email' })) } },
       ]
     })

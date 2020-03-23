@@ -1,4 +1,4 @@
-import { IWLoyaltyRuleConditionValueType } from '@perx/whistler';
+import { IWLoyaltyRuleConditionValueType } from '@perxtech/whistler';
 import { RulePointType } from '@cl-core/models/loyalty/rule-point-type.enum';
 import { RuleConditionType } from '@cl-core/models/loyalty/rule-condition-type.enum';
 import { RuleOperatorType } from '@cl-core/models/loyalty/rule-operator-type.enum';

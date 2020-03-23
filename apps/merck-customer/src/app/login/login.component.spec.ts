@@ -3,7 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { LoginComponent } from './login.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthenticationService, ProfileService, ConfigService } from '@perx/core';
+import { AuthenticationService, ProfileService, ConfigService } from '@perxtech/core';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import {

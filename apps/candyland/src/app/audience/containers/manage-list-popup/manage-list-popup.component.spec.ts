@@ -9,7 +9,7 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA
 } from '@angular/material';
-import { ButtonModule } from '@perx/candyshop';
+import { ButtonModule } from '@perxtech/candyshop';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { AudiencesService } from '@cl-core-services';
@@ -37,8 +37,8 @@ describe('ManageListPopupComponent', () => {
             }
           }
         },
-        {provide: MAT_DIALOG_DATA, useValue: {}},
-        {provide: AudiencesService, useClass: MockAudienceService }
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+        { provide: AudiencesService, useClass: MockAudienceService }
       ],
       declarations: [ManageListPopupComponent]
     })

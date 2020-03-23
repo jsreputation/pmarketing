@@ -1,5 +1,5 @@
 import { Observable, of } from 'rxjs';
-import { IReward } from '@perx/core';
+import { IReward } from '@perxtech/core';
 import { RoleLabelConfig } from '@cl-shared';
 import { ICognitoEndpoint } from '@cl-core/models/settings/cognito-endpoint.interface';
 import { IAMGroup } from '@cl-core/models/settings/group.interface';

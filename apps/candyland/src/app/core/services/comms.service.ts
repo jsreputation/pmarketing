@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ClHttpParams } from '@cl-helpers/http-params';
-import { CommsHttpsService } from '@perx/whistler-services';
+import { CommsHttpsService } from '@perxtech/whistler-services';
 import { map } from 'rxjs/operators';
 import { CommsHttpAdapter } from '@cl-core/http-adapters/comms-http-adapter';
 import {
@@ -12,10 +12,10 @@ import {
   IJsonApiItemPayload,
   IJsonApiPatchData,
   IJsonApiPostData
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { IComm, ICommMessage } from '@cl-core/models/comm/schedule';
 import { ICampaign } from '@cl-core/models/campaign/campaign';
-import { IWCommMessageAttributes } from '@perx/whistler/dist/whistler/lib/comm/comm';
+import { IWCommMessageAttributes } from '@perxtech/whistler/dist/whistler/lib/comm/comm';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { HttpParamsOptions } from '@cl-core/models/params-map';
 import { ITableData } from '@cl-core/models/data-list.interface';

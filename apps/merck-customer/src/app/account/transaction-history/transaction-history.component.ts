@@ -7,7 +7,7 @@ import {
   TransactionPipe,
   IRewardTransactionHistory,
   IPurchaseTransactionHistory
-} from '@perx/core';
+} from '@perxtech/core';
 import { DatePipe } from '@angular/common';
 import { MatTabChangeEvent } from '@angular/material';
 

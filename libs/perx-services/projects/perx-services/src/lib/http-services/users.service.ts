@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ApiConfigService } from '../configs/api-config';
 import { Observable } from 'rxjs';
-import { IPUsers, IPUser } from '@perx/model';
-import { IPPostUser } from '@perx/model/dist/perx-model/lib/users/users';
+import { IPUsers, IPUser } from '@perxtech/model';
+import { IPPostUser } from '@perxtech/model/dist/perx-model/lib/users/users';
 
 export interface IUsersQuery {
   page?: number;

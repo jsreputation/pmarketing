@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IGameService, IGame, PopupComponent, GameType } from '@perx/core';
+import { IGameService, IGame, PopupComponent, GameType } from '@perxtech/core';
 import { flatMap, take, map, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material';

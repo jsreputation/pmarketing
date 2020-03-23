@@ -15,7 +15,7 @@ import {
   IConfig,
   TokenStorage,
   LanguageService,
-} from '@perx/core';
+} from '@perxtech/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';

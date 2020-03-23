@@ -7,7 +7,7 @@ import {
   Subject,
 } from 'rxjs';
 import { ActivatedRoute, Params } from '@angular/router';
-import { SettingsService, PagesObject, AccountPageObject } from '@perx/core';
+import { SettingsService, PagesObject, AccountPageObject } from '@perxtech/core';
 import { HttpClient } from '@angular/common/http';
 
 @Component({

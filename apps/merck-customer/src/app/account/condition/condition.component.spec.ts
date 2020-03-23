@@ -11,7 +11,7 @@ import {
   MatRadioButton
 } from '@angular/material';
 import { Location } from '@angular/common';
-import { ProfileService, IProfile } from '@perx/core';
+import { ProfileService, IProfile } from '@perxtech/core';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';

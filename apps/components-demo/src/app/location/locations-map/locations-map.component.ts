@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ILocation } from '@perx/core';
+import { ILocation } from '@perxtech/core';
 import { BehaviorSubject } from 'rxjs';
 import { test1, test2 } from '../mock';
 

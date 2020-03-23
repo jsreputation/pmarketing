@@ -1,7 +1,7 @@
 import { Observable, of } from 'rxjs';
 import {
   IJsonApiItemPayload, IWMerchantAttributes, IWMerchantBranchAttributes
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { IMerchantForm } from '@cl-core/models/merchant/merchant-form-interface';
 import { ITableData } from '@cl-core/models/data-list.interface';
 import { MerchantsService } from '@cl-core-services';

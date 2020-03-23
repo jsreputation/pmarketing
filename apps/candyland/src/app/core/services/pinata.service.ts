@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { PinataHttpService } from '@perx/whistler-services';
+import { PinataHttpService } from '@perxtech/whistler-services';
 import { Observable } from 'rxjs';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 import { map } from 'rxjs/operators';
-import { IWPinataGameEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
+import { IWPinataGameEngagementAttributes, IJsonApiItemPayload } from '@perxtech/whistler';
 import { HttpClient } from '@angular/common/http';
 import { IPinataForm } from '@cl-core/models/games/pinata/pinate-form.interface';
 import { IGameDefaultData } from '@cl-core/models/games/game-default-data.interface';

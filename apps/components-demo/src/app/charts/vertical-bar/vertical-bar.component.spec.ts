@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { VerticalBarComponent } from './vertical-bar.component';
-import { PerxChartModule } from '@perx/chart';
+import { PerxChartModule } from '@perxtech/chart';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('VerticalBarComponent', () => {
@@ -10,7 +10,7 @@ describe('VerticalBarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ VerticalBarComponent ],
+      declarations: [VerticalBarComponent],
       imports: [
         PerxChartModule,
         NoopAnimationsModule

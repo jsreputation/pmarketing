@@ -8,13 +8,13 @@ import {
   UtilsModule,
   RewardPopupComponent,
   CampaignModule
-} from '@perx/core';
+} from '@perxtech/core';
 import {
   HomeComponent,
   CampaignsCollectionComponent,
   GamesCollectionComponent,
   CatalogsComponent
-} from '@perx/blackcomb-pages';
+} from '@perxtech/blackcomb-pages';
 import { TranslateModule } from '@ngx-translate/core';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 const routes: Routes = [{

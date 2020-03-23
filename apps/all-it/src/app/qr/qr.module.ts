@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UtilsModule } from '@perx/core';
+import { UtilsModule } from '@perxtech/core';
 import {
   RouterModule,
   Routes
 } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 
-import { QRCodeModule} from 'angularx-qrcode';
+import { QRCodeModule } from 'angularx-qrcode';
 
-import { QRComponent } from '@perx/blackcomb-pages';
+import { QRComponent } from '@perxtech/blackcomb-pages';
 import { TranslateModule } from '@ngx-translate/core';
 
 const routes: Routes = [{

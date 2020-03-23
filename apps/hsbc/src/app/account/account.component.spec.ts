@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AccountComponent } from './account.component';
 import { NavigateToolbarComponent } from '../navigate-toolbar/navigate-toolbar.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthenticationService, ProfileService, IVoucherService, IProfile, ProfileModule } from '@perx/core';
+import { AuthenticationService, ProfileService, IVoucherService, IProfile, ProfileModule } from '@perxtech/core';
 import { of } from 'rxjs';
 
 describe('AccountComponent', () => {
@@ -27,7 +27,7 @@ describe('AccountComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AccountComponent, NavigateToolbarComponent ],
+      declarations: [AccountComponent, NavigateToolbarComponent],
       imports: [
         RouterTestingModule,
         ProfileModule

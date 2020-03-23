@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TenantHttpService } from '@perx/whistler-services';
+import { TenantHttpService } from '@perxtech/whistler-services';
 import { Observable, of } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
 import { ClHttpParams } from '@cl-helpers/http-params';

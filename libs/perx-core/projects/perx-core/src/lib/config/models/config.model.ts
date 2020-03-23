@@ -1,4 +1,4 @@
-import { IWSetting } from '@perx/whistler';
+import { IWSetting } from '@perxtech/whistler';
 
 export interface IConfig<T> {
   apiHost: string;

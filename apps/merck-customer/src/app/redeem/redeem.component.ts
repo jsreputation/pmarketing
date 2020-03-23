@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { ProfileService } from '@perx/core';
+import { ProfileService } from '@perxtech/core';
 
 @Component({
   selector: 'mc-redeem',

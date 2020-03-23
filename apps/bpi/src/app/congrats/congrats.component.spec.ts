@@ -4,7 +4,7 @@ import { CongratsComponent } from './congrats.component';
 import { HeaderComponent } from '../header/header.component';
 import { MatToolbarModule } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
-import { StampService } from '@perx/core';
+import { StampService } from '@perxtech/core';
 import { of } from 'rxjs';
 
 describe('CongratsComponent', () => {

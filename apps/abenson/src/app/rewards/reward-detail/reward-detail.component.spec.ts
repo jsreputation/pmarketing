@@ -2,13 +2,13 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RewardDetailComponent } from './reward-detail.component';
 import { MatDialogModule } from '@angular/material';
-import { RewardsModule, RewardsService, LoyaltyService, IVoucherService } from '@perx/core';
+import { RewardsModule, RewardsService, LoyaltyService, IVoucherService } from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { rewards } from 'src/app/mock/rewards.mock';
 import { loyalty } from 'src/app/mock/loyalty.mock';
-import {VoucherState} from '@perx/core';
-import {RedemptionType} from '@perx/core';
+import { VoucherState } from '@perxtech/core';
+import { RedemptionType } from '@perxtech/core';
 
 const rewardsServiceStub: Partial<RewardsService> = {
   getReward: () => of(rewards[0])
@@ -19,7 +19,7 @@ const LoyaltyServiceStub: Partial<LoyaltyService> = {
 };
 
 const iVoucherServiceStub: Partial<IVoucherService> = {
-  issueReward: () => of( {
+  issueReward: () => of({
     id: 1,
     expiry: null,
     state: VoucherState.redeemed,

@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { LoyaltyHttpService } from '@perx/whistler-services';
+import { LoyaltyHttpService } from '@perxtech/whistler-services';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { Observable } from 'rxjs';
 import { ClHttpParams } from '@cl-helpers/http-params';
 import { LoyaltyHttpAdapter } from '@cl-core/http-adapters/loyalty-http-adapter';
 import { map, switchMap } from 'rxjs/operators';
-import { IWBasicTierAttributes, IJsonApiItemPayload } from '@perx/whistler';
+import { IWBasicTierAttributes, IJsonApiItemPayload } from '@perxtech/whistler';
 import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
 import { JsonApiParser } from '@cl-helpers/json-api-parser';
 import { IAudiencesLoyalty } from '@cl-core/models/audiences/audiences-loyalty.model';

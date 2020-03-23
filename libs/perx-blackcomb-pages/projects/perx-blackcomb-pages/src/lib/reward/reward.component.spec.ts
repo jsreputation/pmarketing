@@ -18,8 +18,8 @@ import {
   NotificationService,
   ThemesService,
   IOutcome
-} from '@perx/core';
-import { WInformationCollectionSettingType } from '@perx/whistler';
+} from '@perxtech/core';
+import { WInformationCollectionSettingType } from '@perxtech/whistler';
 import { RewardComponent } from './reward.component';
 import { Type } from '@angular/core';
 
