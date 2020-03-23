@@ -1,4 +1,4 @@
-import { CampaignState, CampaignType, ICampaign, IQuiz, IReward, QuizQuestionType } from '@perxtech/core';
+import { CampaignState, CampaignType, ICampaign, IQuiz, QuizQuestionType } from '@perxtech/core';
 
 const getReward = () => ({
   id: 42,
