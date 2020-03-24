@@ -11,7 +11,6 @@ import { AuthenticationService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { ForgotPasswordComponent } from './forgot-password.component';
 
-
 describe('ForgotPasswordComponent', () => {
   let component: ForgotPasswordComponent;
   let fixture: ComponentFixture<ForgotPasswordComponent>;
