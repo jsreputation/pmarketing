@@ -25,7 +25,7 @@
                     This is <strong>required</strong>
                 </mat-error>
             </mat-form-field>
-            <div class="subtitle forgot-password">
+            <div class="subtitle forgot-password" *ngIf="appConfig.showForgetPasswordOnLogin">
                 <a [routerLink]="['/forgot-password']" class="link">Forgot
                     Password?</a>
             </div>
