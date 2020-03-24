@@ -203,13 +203,13 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   }
 
   public forgotPassword(phone: string): Observable<IMessageResponse> {
-    return this.http.get<IMessageResponse>(`${this.customersEndPoint}/forget_password`, { params: { phone } })
+    const encodedPhone = encodeURIComponent(phone);
+    return this.http.get<IMessageResponse>(`${this.customersEndPoint}/forget_password?phone=${encodedPhone}`)
       .pipe(
         tap( // Log the result or error
           data => console.log(data),
           error => console.log(error)
         ),
-      // map(() => void 0)
       );
   }
 
