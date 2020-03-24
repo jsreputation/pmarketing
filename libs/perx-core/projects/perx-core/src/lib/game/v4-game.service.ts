@@ -283,13 +283,12 @@ export class V4GameService implements IGameService {
         })),
         catchError((err: HttpErrorResponse) => {
           let errorStateObj: {errorState: string};
-          if (err.error && err.error.message && err.error.code) {
+          if (err.error && err.error.message && err.error.code && err.error.code === 40) {
+            errorStateObj = {errorState: err.error.mesage};
             if (err.error.message.match(/move/i)) {
               errorStateObj = {errorState: Error400States.move};
             } else if (err.error.message.match(/balance/i)) {
               errorStateObj = {errorState: Error400States.balance};
-            } else {
-              errorStateObj = {errorState: err.error.message};
             }
             return throwError(errorStateObj);
           }
