@@ -20,6 +20,7 @@ export interface ICampaign {
   id: number;
   name: string;
   description: string | null;
+  tnc?: string;
   type: CampaignType;
   state: CampaignState;
   endsAt: Date | null;
