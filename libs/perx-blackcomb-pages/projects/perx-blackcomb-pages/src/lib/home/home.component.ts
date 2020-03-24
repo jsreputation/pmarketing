@@ -68,7 +68,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     private instantOutcomeService: InstantOutcomeService,
     private dialog: MatDialog,
     private settingsService: SettingsService,
-
   ) {
   }
 
@@ -77,7 +76,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       .subscribe((res: any) => {
         this.titleFn = (profile: IProfile) => `${res.HELLO} ${profile && profile.lastName ? profile.lastName : ''},`;
       });
-    this.initCampaign();
     this.rewards$ = this.rewardsService.getAllRewards(['featured']);
     this.getTabbedList();
 
@@ -90,7 +88,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
 
     this.configService.readAppConfig<void>().subscribe(
-      (config: IConfig<void>) => this.appConfig = config
+      (config: IConfig<void>) => {
+        this.appConfig = config;
+        this.initCampaign();
+      }
     );
 
     this.authService.isAuthorized().subscribe((isAuth: boolean) => {
@@ -140,7 +141,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   public catalogSelected(catalog: ICatalog): void {
-    this.router.navigate(['/catalogs'], { queryParams: { catalog: catalog.id } });
+    this.router.navigate(['/catalogs'], {queryParams: {catalog: catalog.id}});
   }
 
   public onScroll(): void {
@@ -170,7 +171,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   private fetchPopupCampaigns(): void {
-    this.campaignService.getCampaigns({ type: CampaignType.give_reward })
+    this.campaignService.getCampaigns({type: CampaignType.give_reward})
       .pipe(
         catchError(() => of([]))
       )
@@ -201,7 +202,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             // @ts-ignore
             validTo: new Date(this.firstComefirstServeCampaign.endsAt)
           };
-          this.dialog.open(RewardPopupComponent, { data });
+          this.dialog.open(RewardPopupComponent, {data});
         },
         err => console.error('Something fishy, we should not be here, without any reward or game. ERR print', err)
       );
@@ -228,24 +229,24 @@ export class HomeComponent implements OnInit, OnDestroy {
         switchMap((games: IGame[]) => of(games).pipe(catchError(err => of(err)))),
         takeLast(1)
       );
-    this.gameCampaigns$ = this.campaignService.getCampaigns({ type: CampaignType.stamp })
+    this.gameCampaigns$ = this.campaignService.getCampaigns({type: CampaignType.stamp})
       .pipe(
         tap((campaigns: ICampaign[]) => this.showCampaigns = campaigns.length > 0),
         takeLast(1)
       );
 
-    this.quizCampaigns$ = this.campaignService.getCampaigns({ type: CampaignType.quiz });
-    const rssFeeds: IRssFeeds = await this.settingsService.readRssFeeds().toPromise();
-    if (!(rssFeeds && rssFeeds.data.length > 0)) {
-      return;
+    this.quizCampaigns$ = this.campaignService.getCampaigns({type: CampaignType.quiz});
+    if (this.appConfig.showNewsfeedOnHomepage) {
+      const rssFeeds: IRssFeeds = await this.settingsService.readRssFeeds().toPromise();
+      if (!(rssFeeds && rssFeeds.data.length > 0)) {
+        return;
+      }
+      const rssFeedsHome: IRssFeedsData | undefined = rssFeeds.data.find(feed => feed.page === 'home');
+      if (!rssFeedsHome) {
+        return;
+      }
+      const rssFeedsUrl: string = rssFeedsHome.url;
+      this.newsFeedItems = this.feedService.getFromUrl(rssFeedsUrl);
     }
-
-    const rssFeedsHome: IRssFeedsData | undefined = rssFeeds.data.find(feed => feed.page === 'home');
-    if (!rssFeedsHome) {
-      return;
-    }
-
-    const rssFeedsUrl: string = rssFeedsHome.url;
-    this.newsFeedItems = this.feedService.getFromUrl(rssFeedsUrl);
   }
 }

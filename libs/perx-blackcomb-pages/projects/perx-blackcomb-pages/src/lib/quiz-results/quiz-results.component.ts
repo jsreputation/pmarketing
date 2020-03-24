@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Data, Params } from '@angular/router';
-import { IPoints, SecondsToStringPipe } from '@perxtech/core';
+import { ActivatedRoute, Data, Params, Router } from '@angular/router';
+import { IPoints, SecondsToStringPipe, NotificationService, IPopupConfig } from '@perxtech/core';
 import { merge } from 'rxjs';
-import { filter, map, tap } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 
 @Component({
@@ -15,7 +15,12 @@ export class QuizResultsComponent implements OnInit {
 
   public backgroundImgUrl: string = 'assets/quiz/background.png';
 
-  constructor(private secondsToString: SecondsToStringPipe, private activatedRoute: ActivatedRoute) { }
+  constructor(
+    private secondsToString: SecondsToStringPipe,
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private notificationService: NotificationService
+  ) { }
 
   public ngOnInit(): void {
     merge(this.activatedRoute.data, this.activatedRoute.params)
@@ -28,7 +33,7 @@ export class QuizResultsComponent implements OnInit {
           }
           return res;
         }),
-        tap(s => console.log(s)),
+        // tap(s => console.log(s)),
       )
       .subscribe((res: IPoints[]) => this.results = res);
   }
@@ -46,5 +51,15 @@ export class QuizResultsComponent implements OnInit {
     return `You took a total of ${this.secondsToString.transform(total)}`;
   }
 
-  public next(): void { }
+  public next(): void {
+    const points = this.results.reduce((sum, p) => sum + p.point, 0);
+    const popup: IPopupConfig = {
+      title: `Congratulations! You scored ${points} points`,
+      text: 'Here\'s a reward for you.',
+      buttonTxt: 'View Reward',
+      imageUrl: 'assets/quiz/reward.png'
+    };
+    this.notificationService.addPopup(popup);
+    this.router.navigate(['/wallet']);
+  }
 }

@@ -111,7 +111,7 @@ export class QuizComponent implements OnInit, OnDestroy {
           // setTimeout allows me delay so that i am confirmed access the nativeElement
           window.setTimeout(() => {
             // handle scroll event on angular,
-            if (this.overflowContainer) {
+            if (this.overflowContainer && this.overflowContainer.nativeElement) {
               this.overflowContainer.nativeElement.addEventListener(
                 'scroll',
                 this.hideArrow,
