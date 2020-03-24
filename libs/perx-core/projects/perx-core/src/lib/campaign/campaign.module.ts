@@ -20,6 +20,5 @@ import { MatDialogModule, MatButtonModule } from '@angular/material';
     ExpireTimerComponent
   ]
 })
-export class CampaignModule {
-}
+export class CampaignModule {}
 

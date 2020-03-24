@@ -84,7 +84,7 @@ export { StampsCardsListComponent } from './lib/stamp/stamps-cards-list/stamps-c
  *  Games
  */
 export {
-  GameModule,
+  GameModule
 } from './lib/game/game.module';
 export { GameServiceModule } from './lib/game/game.service.module';
 export {
