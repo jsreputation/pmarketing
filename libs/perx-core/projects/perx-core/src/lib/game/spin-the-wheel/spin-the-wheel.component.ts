@@ -127,12 +127,12 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   }
 
   private determineSlot(): number {
-      if (this.willWin) {
-        let landedSlot = Math.floor(Math.random() * this.rewardSlots.length);
-        return this.rewardSlots[landedSlot]; // w // get a random number out of the reward slots
-      }
-      // RESERVE 0 as non-winning slot ***
-      return 0;
+    if (this.willWin) {
+      const landedSlot = Math.floor(Math.random() * this.rewardSlots.length);
+      return this.rewardSlots[landedSlot]; // w // get a random number out of the reward slots
+    }
+    // RESERVE 0 as non-winning slot ***
+    return 0;
   }
 
   private init(): void {

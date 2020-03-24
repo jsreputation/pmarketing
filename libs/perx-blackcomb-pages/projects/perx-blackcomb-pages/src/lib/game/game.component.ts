@@ -190,11 +190,8 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   public preplayGameCompleted(): void {
-    const userAction$: Observable<IEngagementTransaction | IPlayOutcome> =
-      this.gameData$.pipe(
-        switchMap(
-          (game: IGame) => this.gameService.prePlayConfirm(game.id, this.informationCollectionSetting)
-        ),
+    const userAction$: Observable<IEngagementTransaction | IPlayOutcome> = this
+      .gameService.prePlayConfirm(this.transactionId, this.informationCollectionSetting).pipe(
         tap((response: IEngagementTransaction | IPlayOutcome) => {
           if (this.isIEngagementTrascation(response)) {
             const gameTransaction = response as IEngagementTransaction;
@@ -220,7 +217,6 @@ export class GameComponent implements OnInit, OnDestroy {
           throw err;
         })
       );
-
 
     // display a loader before redirecting to next page
     const delay = 2000;
