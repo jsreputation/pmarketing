@@ -13,7 +13,8 @@ import {
 } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthenticationService, NotificationService } from '@perxtech/core';
+import { AuthenticationService, NotificationService, ThemesService } from '@perxtech/core';
+import { of } from 'rxjs';
 
 describe('SignUpComponent', () => {
   let component: SignUpComponent;
@@ -25,6 +26,10 @@ describe('SignUpComponent', () => {
 
   const notificationServiceStub: Partial<NotificationService> = {
     addSnack: () => { }
+  };
+
+  const themesServiceStub: Partial<ThemesService> = {
+    getThemeSetting: () => of()
   };
 
   beforeEach(async(() => {
@@ -46,7 +51,8 @@ describe('SignUpComponent', () => {
       ],
       providers: [
         { provide: AuthenticationService, useValue: authServiceStub },
-        { provide: NotificationService, useValue: notificationServiceStub }
+        { provide: NotificationService, useValue: notificationServiceStub },
+        { provide: ThemesService, useValue: themesServiceStub }
       ]
     })
       .compileComponents();
