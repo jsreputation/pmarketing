@@ -10,7 +10,6 @@ import {
 } from '@perxtech/core';
 
 import {
-  ConfigToMappedSlotPipe,
   ConfigToSlicesPipe,
   SpinComponent,
 } from './spin.component';
@@ -43,8 +42,7 @@ describe('SpinComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         SpinComponent,
-        ConfigToSlicesPipe,
-        ConfigToMappedSlotPipe
+        ConfigToSlicesPipe
       ],
       imports: [
         GameModule,

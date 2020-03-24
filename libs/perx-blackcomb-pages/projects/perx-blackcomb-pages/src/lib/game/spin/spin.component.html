@@ -7,7 +7,8 @@
       <div class="spin-wrapper">
         <perx-core-spin-the-wheel
           [enabled]="isEnabled"
-          [slotToLand]="config | slotPipe:willWin"
+          [willWin]="willWin"
+          [rewardSlots]="config.rewardSlots"
           [classPosition]="spinPosition"
           [pointerImg]="config.pointerImg"
           [wheelImg]="config.wheelImg"

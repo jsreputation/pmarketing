@@ -16,7 +16,6 @@ import { ScratchComponent } from './scratch/scratch.component';
 import { GameComponent } from './game.component';
 import { SnakeComponent } from './snake/snake.component';
 import {
-  ConfigToMappedSlotPipe,
   ConfigToSlicesPipe,
   SpinComponent,
 } from './spin/spin.component';
@@ -30,7 +29,6 @@ import { MatDialogModule } from '@angular/material/dialog';
     GameComponent,
     SpinComponent,
     ConfigToSlicesPipe,
-    ConfigToMappedSlotPipe,
     SnakeComponent
   ],
   exports: [
@@ -40,7 +38,6 @@ import { MatDialogModule } from '@angular/material/dialog';
     SpinComponent,
     SnakeComponent,
     ConfigToSlicesPipe,
-    ConfigToMappedSlotPipe
   ],
   imports: [
     PerxGameModule,
