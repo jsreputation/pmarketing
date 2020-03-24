@@ -1,18 +1,16 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { Type } from '@angular/core';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-import { ForgotPasswordComponent } from './forgot-password.component';
-import { AuthenticationService } from '@perxtech/core';
-import { of } from 'rxjs';
-import {
-  MatSelectModule,
-  MatFormFieldModule,
-  MatInputModule
-} from '@angular/material';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
-import { Type } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { AuthenticationService } from '@perxtech/core';
+import { of } from 'rxjs';
+import { ForgotPasswordComponent } from './forgot-password.component';
+
 
 describe('ForgotPasswordComponent', () => {
   let component: ForgotPasswordComponent;
@@ -70,7 +68,7 @@ describe('ForgotPasswordComponent', () => {
 
   it('should redirect to enter-pin/password on fogrot password submit', fakeAsync(() => {
     const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>
-    (AuthenticationService as Type<AuthenticationService>);
+      (AuthenticationService as Type<AuthenticationService>);
     const authSpy = spyOn(authenticationService, 'forgotPassword').and.returnValue(
       of({
         message: 'success'
