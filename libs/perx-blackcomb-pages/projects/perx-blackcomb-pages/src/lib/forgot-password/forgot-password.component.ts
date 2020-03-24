@@ -14,6 +14,7 @@ import { filter, mergeMap, takeUntil, map } from 'rxjs/operators';
 export class ForgotPasswordComponent implements OnInit, OnDestroy {
   public currentStep: number = 1;
   public usersPhone: string;
+  private static PASSWORD_MIN_LENGTH: number = 3;
 
   public phoneStepForm: FormGroup = new FormGroup({
     phone: new FormControl(null, [
@@ -25,8 +26,8 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   });
 
   public newPasswordForm: FormGroup = new FormGroup({
-    newPassword: new FormControl(null, [Validators.required, Validators.minLength(6)]),
-    passwordConfirmation: new FormControl(null, [Validators.required, Validators.minLength(6)])
+    newPassword: new FormControl(null, [Validators.required, Validators.minLength(ForgotPasswordComponent.PASSWORD_MIN_LENGTH)]),
+    passwordConfirmation: new FormControl(null, [Validators.required, Validators.minLength(ForgotPasswordComponent.PASSWORD_MIN_LENGTH)])
   }, [ForgotPasswordComponent.equalityValidator('newPassword', 'passwordConfirmation')]);
 
   private otp: string;
@@ -45,6 +46,10 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private notificationService: NotificationService
   ) { }
+
+  public get phone(): AbstractControl | null { return this.phoneStepForm.get('phone'); }
+  public get password(): AbstractControl | null { return this.newPasswordForm.get('newPassword'); }
+  public get passwordConfirmation(): AbstractControl | null { return this.newPasswordForm.get('passwordConfirmation'); }
 
   public ngOnInit(): void {
     this.route.queryParams
