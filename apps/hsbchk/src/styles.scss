@@ -55,7 +55,7 @@ button.mat-primary {
 }
 
 button.mat-accent {
-  background-color: var(--accent) !important;
+  background-color: var(--accent, red) !important;
   color: var(--button_text_color) !important;
 }
 

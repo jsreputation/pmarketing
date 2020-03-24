@@ -121,7 +121,6 @@ export class HomeComponent implements OnInit {
     this.campaignService.getCampaigns()
       .pipe(
         catchError(() => {
-          this.router.navigateByUrl('error');
           return of([]);
         })
       )
