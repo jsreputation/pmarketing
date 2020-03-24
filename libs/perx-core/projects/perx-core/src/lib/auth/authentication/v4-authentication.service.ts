@@ -209,8 +209,8 @@ export class V4AuthenticationService extends AuthenticationService implements Au
           data => console.log(data),
           error => console.log(error)
         ),
-        // map(() => void 0)
-      );
+      // map(() => void 0)
+    );
   }
 
   public resetPassword(resetPasswordInfo: IResetPasswordData): Observable<IMessageResponse> {
@@ -239,7 +239,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
           data => console.log(data),
           error => console.log(error)
         ),
-      );
+    );
   }
 
   private signUpDataToV4SignUpData(data: ISignUpData): IV4SignUpData {
@@ -278,6 +278,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       result.personal_properties.anonymous = data.anonymous;
     }
 
+    result.personal_properties = { ...result.personal_properties, ...data.customProperties };
     return result;
   }
 

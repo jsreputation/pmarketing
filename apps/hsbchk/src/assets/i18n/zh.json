@@ -1,4 +1,8 @@
 {
   "SUBMIT_AND_VERIFY": "提交並發送驗證短訊",
-  "LUCKY_DRAW_DETAILS": "幸運抽獎細節"
+  "LUCKY_DRAW_DETAILS": "幸運抽獎細節",
+  "SUBMIT": "提交",
+  "SIGN_UP": "註冊",
+  "LOG_IN": "登錄",
+  "HAVE_AN_ACCOUNT": "已有賬戶"
 }
