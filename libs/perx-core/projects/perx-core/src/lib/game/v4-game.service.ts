@@ -14,7 +14,7 @@ import {
   IPlayOutcome,
   IEngagementTransaction,
   defaultScratch,
-  error400States
+  Error400States
 } from './game.model';
 import {
   catchError,
@@ -282,14 +282,16 @@ export class V4GameService implements IGameService {
           }, [] as number[])
         })),
         catchError((err: HttpErrorResponse) => {
-          if (err.error && err.error.message) {
+          let errorStateObj: {errorState: string};
+          if (err.error && err.error.message && err.error.code) {
             if (err.error.message.match(/move/i)) {
-              return throwError({errorState: error400States.move});
+              errorStateObj = {errorState: Error400States.move};
             } else if (err.error.message.match(/balance/i)) {
-              return throwError({errorState: error400States.balance});
+              errorStateObj = {errorState: Error400States.balance};
             } else {
-              return throwError({errorState: err.error.message})
+              errorStateObj = {errorState: err.error.message};
             }
+            return throwError(errorStateObj);
           }
           return throwError(err);
         })

@@ -160,7 +160,7 @@ export interface ISlice {
   backgroundImage?: string;
 }
 
-export enum error400States {
+export enum Error400States {
   move = 'Move limit has reached',
   balance = 'Not enough points balance'
 }

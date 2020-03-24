@@ -132,7 +132,6 @@ export class GameComponent implements OnInit, OnDestroy {
         }
       },
       (err: {errorState: string} | HttpErrorResponse) => {
-        console.log(err, 'let me see what is the error');
         if (!(err instanceof HttpErrorResponse) && err.errorState) {
           this.popupData = {
             title: err.errorState,
