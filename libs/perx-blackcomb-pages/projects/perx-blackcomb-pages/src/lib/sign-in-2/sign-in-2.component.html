@@ -25,7 +25,12 @@
                     This is <strong>required</strong>
                 </mat-error>
             </mat-form-field>
-            <button mat-flat-button type="submit" color="primary" class="full-width__button">{{'LOGIN' | translate}}</button>
+            <div class="subtitle forgot-password">
+                <a [routerLink]="['/forgot-password']" class="link">Forgot
+                    Password?</a>
+            </div>
+            <button mat-flat-button type=" submit" color="primary"
+                class="full-width__button">{{'LOGIN' | translate}}</button>
         </form>
     </div>
 </div>

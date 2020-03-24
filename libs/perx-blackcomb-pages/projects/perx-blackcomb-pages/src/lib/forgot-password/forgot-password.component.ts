@@ -44,9 +44,9 @@ export class ForgotPasswordComponent {
   }
 
   public onSubmit(): void {
-    const mobileNumber = (this.resetPasswordForm.value.mobileNo as string);
-    const countryCode = (this.resetPasswordForm.value.countryCode as string);
-    const codeAndMobile = countryCode + mobileNumber;
+    const mobileNumber: string = (this.resetPasswordForm.value.mobileNo as string);
+    const countryCode: string = (this.resetPasswordForm.value.countryCode as string);
+    const codeAndMobile = `${countryCode}${mobileNumber}`.trim();
     // remove non numeric and special characters except leading '+'
     const cleanedMobileNo = `+${codeAndMobile.replace(/[^0-9]/g, '')}`;
 
