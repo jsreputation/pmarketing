@@ -52,7 +52,7 @@ export class ForgotPasswordComponent {
 
     try {
       this.authService.forgotPassword(cleanedMobileNo).subscribe(
-        () => this.router.navigate(['enter-pin/password'], { state: { mobileNo: cleanedMobileNo } }),
+        () => this.router.navigate(['otp/password'], { state: { mobileNo: cleanedMobileNo } }),
         err => {
           if (err instanceof HttpErrorResponse) {
             if (err.status === 0) {
