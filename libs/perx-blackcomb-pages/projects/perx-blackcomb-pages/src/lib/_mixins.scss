@@ -89,3 +89,30 @@ $button-height-min: 4.8rem;
     text-decoration: none;
   }
 }
+
+//used in sign-in, signup, forgot-password
+@mixin loginContentContainer {
+  width: 100%;
+  height: 100%;
+  background-color: var(--login_background_colour);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+//used in sign-in, signup, forgot-password
+@mixin loginCard {
+  background-color: var(--surface_colour);
+  max-width: 35.4rem;
+  padding: 1.5rem;
+  margin: 1.5rem;
+  font-size: 1.6rem;
+  border-radius: 0.8rem;
+
+  h1 {
+    font-weight: 500;
+    font-size: 3.4rem;
+    margin-bottom: 1rem;
+  }
+}
