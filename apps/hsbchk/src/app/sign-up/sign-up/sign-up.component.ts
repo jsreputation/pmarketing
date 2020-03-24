@@ -9,13 +9,14 @@ import { Subject, Observable } from 'rxjs';
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss']
 })
+
 export class SignUpComponent implements OnInit, OnDestroy{
   public signupForm: FormGroup;
   public errorMessage: string | null;
   public appAccessTokenFetched: boolean = false;
   private destroy$: Subject<any> = new Subject();
   public theme: Observable<ITheme>;
-  
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
