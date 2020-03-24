@@ -7,6 +7,7 @@
     "start": "npm run config && ng serve --host 0.0.0.0",
     "build": "npm run config && ng build",
     "build:candyland:production": "PRODUCTION=true npm run config && npm run ng-high-memory -- build --prod",
+    "build:candyland:staging": "PRODUCTION=true npm run config && npm run ng-high-memory -- build --prod",
     "config": "ts-node --project tsconfig.node.json set-env.ts",
     "clean": "rm -rf ./dist ./node_modules",
     "test": "jest",
