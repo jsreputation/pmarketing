@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "PREAUTH=true npm run config && ng serve --host 0.0.0.0",
     "build": "npm run config && ng build",
-    "build:digi:production": "PRODUCTION=true npm run config && ng build --prod",
+    "build:digi:production": "APIHOST=https://api.perxtech.net PRODUCTION=true npm run config && ng build --prod",
     "build:digi:staging": "PRODUCTION=true npm run config && ng build --prod",
     "clean": "rm -rf ./dist ./node_modules",
     "config": "ts-node --project tsconfig.node.json set-env.ts",
