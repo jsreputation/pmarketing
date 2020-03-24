@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "npm run config && ng serve --host 0.0.0.0",
     "build": "npm run config && ng build",
-    "build:merck-merchant:prod": "PRODUCTION=true npm run config && ng build --prod",
+    "build:merck-merchant:production": "PRODUCTION=true npm run config && ng build --prod",
     "config": "ts-node --project tsconfig.node.json set-env.ts",
     "test": "jest",
     "lint": "stylelint \"src/**/*.*css\" && eslint \"./src/**/*.ts\"",
