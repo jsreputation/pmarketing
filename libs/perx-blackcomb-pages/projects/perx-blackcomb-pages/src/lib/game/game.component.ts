@@ -33,7 +33,7 @@ export class GameComponent implements OnInit, OnDestroy {
   private isAnonymousUser: boolean;
   private informationCollectionSetting: string;
   private rewardCount: string;
-  public willWin: boolean;
+  public willWin: boolean = false;
   public successPopUp: IPopupConfig = {
     title: 'GAME_SUCCESS_TITLE',
     text: 'GAME_SUCCESS_TEXT',
@@ -190,34 +190,34 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   public preplayGameCompleted(): void {
-    const userAction$: Observable<IEngagementTransaction | IPlayOutcome> =
-      this.gameService.prePlayConfirm(this.transactionId, this.informationCollectionSetting)
-        .pipe(
-          tap((response: IEngagementTransaction | IPlayOutcome) => {
-            if (this.isIEngagementTrascation(response)) {
-              const gameTransaction = response as IEngagementTransaction;
-              if (gameTransaction.voucherIds && gameTransaction.voucherIds.length > 0) {
-                // set this as a property
-                this.rewardCount = gameTransaction.voucherIds.length.toString();
-                this.fillSuccess(this.rewardCount);
-              } else {
-                this.fillFailure();
-              }
-            } else if (this.isIPlayOutcome(response)) {
-              const vouchers = response.vouchers;
-              if (vouchers.length > 0) {
-                this.rewardCount = vouchers.length.toString();
-                this.fillSuccess(this.rewardCount);
-              } else {
-                this.fillFailure();
-              }
+    const userAction$: Observable<IEngagementTransaction | IPlayOutcome> = this
+      .gameService.prePlayConfirm(this.transactionId, this.informationCollectionSetting).pipe(
+        tap((response: IEngagementTransaction | IPlayOutcome) => {
+          if (this.isIEngagementTrascation(response)) {
+            const gameTransaction = response as IEngagementTransaction;
+            if (gameTransaction.voucherIds && gameTransaction.voucherIds.length > 0) {
+              // set this as a property
+              this.rewardCount = gameTransaction.voucherIds.length.toString();
+              this.fillSuccess(this.rewardCount);
+            } else {
+              this.fillFailure();
             }
-          }),
-          catchError((err: HttpErrorResponse) => {
-            this.popupData = this.noRewardsPopUp;
-            throw err;
-          })
-        );
+          } else if (this.isIPlayOutcome(response)) {
+            const vouchers = response.vouchers;
+            if (vouchers.length > 0) {
+              this.rewardCount = vouchers.length.toString();
+              this.fillSuccess(this.rewardCount);
+            } else {
+              this.fillFailure();
+            }
+          }
+        }),
+        catchError((err: HttpErrorResponse) => {
+          this.popupData = this.noRewardsPopUp;
+          throw err;
+        })
+      );
+
     // display a loader before redirecting to next page
     const delay = 2000;
     const nbSteps = 60;
