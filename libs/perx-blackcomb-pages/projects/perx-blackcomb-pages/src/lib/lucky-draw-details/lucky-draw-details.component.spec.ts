@@ -38,7 +38,7 @@ const configServiceStub: Partial<ConfigService> = {
 
 const formsSvcStub: Partial<IFormsService> = {
   getLuckyDrawDetailsForm: () => of()
-}
+};
 
 const gameServiceStub: Partial<IGameService> = {
   prePlayConfirm: () => of()

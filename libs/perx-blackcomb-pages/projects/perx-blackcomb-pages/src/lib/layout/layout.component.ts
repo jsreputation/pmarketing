@@ -113,7 +113,7 @@ export class LayoutComponent implements OnInit {
       ref instanceof WalletComponent ||
       ref instanceof WalletHistoryComponent ||
       ref instanceof ProfileComponent ||
-      ref instanceof CampaignStampsComponent ||
+      ref instanceof CampaignStampsComponent || 
       ref instanceof TransactionHistoryComponent || 
       ref instanceof LuckyDrawDetailsComponent;
 
