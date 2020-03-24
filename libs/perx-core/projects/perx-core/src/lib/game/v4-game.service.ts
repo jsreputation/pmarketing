@@ -140,7 +140,7 @@ interface IV4GameCampaigns {
 })
 export class V4GameService implements IGameService {
   private hostName: string;
-  public campaignsCache: Observable<IGame[]>[] = [];
+  public gamesCache: Observable<IGame[]>[] = [];
 
   constructor(
     private httpClient: HttpClient,
@@ -259,18 +259,18 @@ export class V4GameService implements IGameService {
   }
 
   public getGamesFromCampaign(campaignId: number): Observable<IGame[]> {
-    if (this.campaignsCache[campaignId]) {
+    if (this.gamesCache[campaignId]) {
       // retrieving from game store
-      return this.campaignsCache[campaignId];
+      return this.gamesCache[campaignId];
     }
     // getting games for the first time
-    return this.campaignsCache[campaignId] = this.httpClient.get<GamesResponse>(`${this.hostName}/v4/campaigns/${campaignId}/games`)
+    return this.gamesCache[campaignId] = this.httpClient.get<GamesResponse>(`${this.hostName}/v4/campaigns/${campaignId}/games`)
       .pipe(
         map(res => res.data),
         map((games: Game[]) => games.map((game: Game): IGame => V4GameService.v4GameToGame(game))),
         shareReplay(1),
         catchError(_ => {
-          delete this.campaignsCache[campaignId];
+          delete this.gamesCache[campaignId];
           return EMPTY;
         })
       );
