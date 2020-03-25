@@ -131,8 +131,17 @@ export class GameComponent implements OnInit, OnDestroy {
           this.fillFailure();
         }
       },
-      () => {
-        this.popupData = this.noRewardsPopUp;
+      (err: {errorState: string} | HttpErrorResponse) => {
+        if (!(err instanceof HttpErrorResponse) && err.errorState) {
+          this.popupData = {
+            title: err.errorState,
+            text: '',
+            buttonTxt: 'BACK_TO_WALLET',
+            imageUrl: '',
+          };
+        } else {
+          this.popupData = this.noRewardsPopUp;
+        }
         this.redirectUrlAndPopUp(); // wont call preplayConfirm direct away if preplay fail
       }
     );

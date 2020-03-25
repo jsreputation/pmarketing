@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, of, combineLatest } from 'rxjs';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {Observable, of, combineLatest, throwError} from 'rxjs';
 import { IGameService } from './igame.service';
 import {
   IGame,
@@ -14,10 +14,12 @@ import {
   IPlayOutcome,
   IEngagementTransaction,
   defaultScratch,
+  Error400States,
   defaultSpin,
   ISpin
 } from './game.model';
 import {
+  catchError,
   map,
   switchMap,
 } from 'rxjs/operators';
@@ -305,7 +307,20 @@ export class V4GameService implements IGameService {
             }
             return accRewardIds;
           }, [] as number[])
-        }))
+        })),
+        catchError((err: HttpErrorResponse) => {
+          let errorStateObj: {errorState: string};
+          if (err.error && err.error.message && err.error.code && err.error.code === 40) {
+            errorStateObj = {errorState: err.error.mesage};
+            if (err.error.message.match(/move/i)) {
+              errorStateObj = {errorState: Error400States.move};
+            } else if (err.error.message.match(/balance/i)) {
+              errorStateObj = {errorState: Error400States.balance};
+            }
+            return throwError(errorStateObj);
+          }
+          return throwError(err);
+        })
       );
   }
 
