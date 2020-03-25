@@ -178,6 +178,7 @@ export { LocaleIdFactory } from './lib/utils/language/locale-id.factory';
 export { FeedItemPopupComponent } from './lib/utils/feed-item-popup/feed-item-popup.component';
 export { StripHtmlPipe } from './lib/utils/directives/striphtml-pipe';
 export { TimerComponent } from './lib/utils/timer/timer.component';
+export { SafeHtmlPipe } from './lib/utils/safe-html.pipe';
 
 /**
  * Puzzles

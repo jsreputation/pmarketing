@@ -12,18 +12,22 @@ require('dotenv').config();
 // Debug environment variables
 const displayProperties = `"displayProperties": {
   "account": {
-      "pages": [
-          {
-              "key": "contact-us",
-              "title": "Contact Us",
-              "content_url": ""
-          },
-          {
-              "key": "tnc",
-              "title": "Terms and Conditions",
-              "content_url": ""
-          }
-      ]
+    "pages": [
+      {
+        "title": "Life Talk",
+        "content_url": "https://www.google.com/search?q=life+talk"
+      },
+      {
+        "key": "contact-us",
+        "title": "Contact Us",
+        "content_url": ""
+      },
+      {
+        "key": "tnc",
+        "title": "Terms and Conditions",
+        "content_url": ""
+      }
+    ]
   }
 }`;
 
@@ -46,17 +50,20 @@ const appConfigFile = `{
   "baseHref": "${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}",
   "defaultLang": "${process.env.DEFAULT_LANG ? process.env.DEFAULT_LANG : 'en'}",
   "showSubtitleLogin": ${process.env.SHOW_LOGIN_SUBTITLE ? process.env.SHOW_LOGIN_SUBTITLE : false},
+  "showForgetPasswordOnLogin": ${process.env.SHOW_FORGET_PASSWORD_ON_LOGIN ? process.env.SHOW_FORGET_PASSWORD_ON_LOGIN : false},
+
   "showHomePage": ${process.env.SHOW_HOME_PAGE ? process.env.SHOW_HOME_PAGE : false},
   "showHistoryPage": ${process.env.SHOW_HISTORY_PAGE ? process.env.SHOW_HISTORY_PAGE : true},
   "showAccountsPage": ${process.env.SHOW_ACCOUNTS_PAGE ? process.env.SHOW_ACCOUNTS_PAGE : true},
+
   "showNewsfeedOnHomepage": ${process.env.SHOW_NEWSFEED_HOMEPAGE ? process.env.SHOW_NEWSFEED_HOMEPAGE : false},
-  
   "showLoyaltyBlockOnHomePage": ${process.env.SHOW_LOYALTY_BLOCK_ON_HOMEPAGE ? process.env.SHOW_LOYALTY_BLOCK_ON_HOMEPAGE : true},
   "showCatalogOnHomePage": ${process.env.SHOW_CATALOG_ON_HOMEPAGE ? process.env.SHOW_CATALOG_ON_HOMEPAGE : true},
   "showQuizOnHomePage" : ${process.env.SHOW_QUIZ_ON_HOMEPAGE ? process.env.SHOW_QUIZ_ON_HOMEPAGE : false},
   "showCampaignRewardsCounterOnHomepage": ${process.env.SHOW_CAMPAIGN_REWARDS_COUNTER_ON_HOMEPAGE ? process.env.SHOW_CAMPAIGN_REWARDS_COUNTER_ON_HOMEPAGE : false},
   "showRewardsOnHomepage": ${process.env.SHOW_REWARDS_ON_HOMEPAGE ? process.env.SHOW_REWARDS_ON_HOMEPAGE : false},
-  
+  "showCampaignLandingPage": ${process.env.SHOW_CAMPAIGN_LANDING_PAGE ? process.env.SHOW_CAMPAIGN_LANDING_PAGE : false},
+
   "showQrPageSubtitle": ${process.env.SHOW_QRPAGE_SUBTITLE ? process.env.SHOW_QRPAGE_SUBTITLE : false},
   "showUserQR": ${process.env.SHOW_USER_QR ? process.env.SHOW_USER_QR : true},
   "showExpiryOnRewardDetail": ${process.env.SHOW_EXPIRY_REWARD_DETAIL ? process.env.SHOW_EXPIRY_REWARD_DETAIL : true},

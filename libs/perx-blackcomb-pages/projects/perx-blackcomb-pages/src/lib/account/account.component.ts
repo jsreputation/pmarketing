@@ -82,4 +82,15 @@ export class AccountComponent implements OnInit {
   public onProfileClicked(): void {
     this.router.navigateByUrl('profile');
   }
+
+  public goToPage(page: AccountPageObject): void {
+    if (page.key) {
+      this.router.navigate(['/c', page.key]);
+    } else {
+      const a = document.createElement('a');
+      a.href = page.content_url;
+      a.target = '_blank';
+      a.click();
+    }
+  }
 }

@@ -21,6 +21,7 @@ export interface IConfig<T> {
   showQuizOnHomePage?: boolean;
   showCampaignRewardsCounterOnHomepage?: boolean;
   showRewardsOnHomepage?: boolean;
+  showCampaignLandingPage?: boolean;
 
   /* Misc */
   showQrPageSubtitle?: boolean;
@@ -30,6 +31,7 @@ export interface IConfig<T> {
   /* Login page */
   showSubtitleLogin?: boolean;
   redirectAfterLogin?: string;
+  showForgetPasswordOnLogin?: boolean;
 
   /* Account page */
   showAccountsPage?: boolean;
