@@ -16,6 +16,7 @@
     "build:candyland:production": "echo 'skipping candyland build'",
     "build:candyland:staging": "echo 'skipping candyland build'",
     "build:components-demo": "lerna run build:lib && lerna run build:components-demo -- ",
+    "build:components-demo:production": "lerna run build:lib && lerna run build:components-demo:production --",
     "build:components-demo:staging": "lerna run build:lib && lerna run build:components-demo:staging --",
     "build:daiichi-dlvn:production": "lerna run build:lib && lerna run build:daiichi-dlvn:production --",
     "build:daiichi-dlvn:staging": "lerna run build:lib && lerna run build:daiichi-dlvn:staging --",
