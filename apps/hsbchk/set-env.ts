@@ -12,24 +12,28 @@ require('dotenv').config();
 // Debug environment variables
 const displayProperties = `"displayProperties": {
   "account": {
-      "pages": [
-          {
-              "key": "contact-us",
-              "title": "Contact Us",
-              "content_url": ""
-          },
-          {
-              "key": "tnc",
-              "title": "Terms and Conditions",
-              "content_url": ""
-          }
-      ]
+    "pages": [
+      {
+        "title": "Life Talk",
+        "content_url": "https://www.google.com/search?q=life+talk"
+      },
+      {
+        "key": "contact-us",
+        "title": "Contact Us",
+        "content_url": ""
+      },
+      {
+        "key": "tnc",
+        "title": "Terms and Conditions",
+        "content_url": ""
+      }
+    ]
   }
 }`;
 
 // `environment.ts` file structure that uses the environment variables
 const envConfigFile = `export const environment = {
-  apiHost: '${process.env.APIHOST ? process.env.APIHOST : 'https://api-dev1.uat.whistler.perxtech.io'}',
+  apiHost: '${process.env.APIHOST ? process.env.APIHOST : 'https://api.perxtech.io'}',
   production: ${process.env.PRODUCTION ? process.env.PRODUCTION : false},
   preAuth: ${process.env.PREAUTH ? process.env.PREAUTH : true},
   isWhistler: ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : true},
@@ -39,7 +43,7 @@ const envConfigFile = `export const environment = {
 `;
 
 const appConfigFile = `{
-  "apiHost": "${process.env.APIHOST ? process.env.APIHOST : 'https://api-dev1.uat.whistler.perxtech.io'}",
+  "apiHost": "${process.env.APIHOST ? process.env.APIHOST : 'https://api.perxtech.io'}",
   "production": ${process.env.PRODUCTION ? process.env.PRODUCTION : false},
   "preAuth": ${process.env.PREAUTH ? process.env.PREAUTH : true},
   "isWhistler": ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : true},
@@ -58,7 +62,8 @@ const appConfigFile = `{
   "showQuizOnHomePage" : ${process.env.SHOW_QUIZ_ON_HOMEPAGE ? process.env.SHOW_QUIZ_ON_HOMEPAGE : false},
   "showCampaignRewardsCounterOnHomepage": ${process.env.SHOW_CAMPAIGN_REWARDS_COUNTER_ON_HOMEPAGE ? process.env.SHOW_CAMPAIGN_REWARDS_COUNTER_ON_HOMEPAGE : false},
   "showRewardsOnHomepage": ${process.env.SHOW_REWARDS_ON_HOMEPAGE ? process.env.SHOW_REWARDS_ON_HOMEPAGE : false},
-  
+  "showCampaignLandingPage": ${process.env.SHOW_CAMPAIGN_LANDING_PAGE ? process.env.SHOW_CAMPAIGN_LANDING_PAGE : false},
+
   "showQrPageSubtitle": ${process.env.SHOW_QRPAGE_SUBTITLE ? process.env.SHOW_QRPAGE_SUBTITLE : false},
   "showUserQR": ${process.env.SHOW_USER_QR ? process.env.SHOW_USER_QR : true},
   "showExpiryOnRewardDetail": ${process.env.SHOW_EXPIRY_REWARD_DETAIL ? process.env.SHOW_EXPIRY_REWARD_DETAIL : true},

@@ -73,7 +73,9 @@ import { CatalogComponent } from './catalog/catalog.component';
 import { QuizComponent } from './quiz/quiz.component';
 import { QuizResultsComponent } from './quiz-results/quiz-results.component';
 import { LuckyDrawDetailsComponent } from './lucky-draw-details/lucky-draw-details.component';
+import { CampaignLandingPageComponent } from './campaign-landing-page/campaign-landing-page.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ReferralComponent } from './referral/referral.component';
 
 const comps: any[] = [
   AccountComponent,
@@ -110,7 +112,9 @@ const comps: any[] = [
   QuizComponent,
   QuizResultsComponent,
   LuckyDrawDetailsComponent,
+  CampaignLandingPageComponent,
   ForgotPasswordComponent,
+  ReferralComponent,
 ];
 
 @NgModule({

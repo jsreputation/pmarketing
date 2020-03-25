@@ -25,6 +25,11 @@ const routes: Routes = [
         canActivate: [ProtectedGuard]
       },
       {
+        path: 'campaign-welcome/:id',
+        loadChildren: () => import('../campaign-landing/campaign-landing.module').then(mod => mod.CampaignLandingModule),
+        canActivate: [ProtectedGuard]
+      },
+      {
         path: 'voucher-detail/:id',
         loadChildren: () => import('../voucher-detail/voucher-detail.module').then(mod => mod.VoucherDetailModule),
         canActivate: [ProtectedGuard]
@@ -107,6 +112,7 @@ const routes: Routes = [
       },
       { path: 'quiz/:id', loadChildren: () => import('../quiz/quiz.module').then(m => m.QuizModule) },
       { path: 'quiz-results', loadChildren: () => import('../quiz-result/quiz-result.module').then(m => m.QuizResultModule) },
+      { path: 'referral', loadChildren: () => import('../referral/referral.module').then(m => m.ReferralModule) }
     ]
   },
 

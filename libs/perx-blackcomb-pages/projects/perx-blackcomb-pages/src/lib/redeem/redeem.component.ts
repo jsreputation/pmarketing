@@ -101,6 +101,10 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
               this.subHeadLine = voucher.reward.displayProperties.merchantPinText.subHeadLine || this.subHeadLine;
             }
 
+            if (voucher.reward.howToRedeem) {
+              this.codeInstructionsText = voucher.reward.howToRedeem;
+            }
+
             if (voucher.reward.displayProperties && voucher.reward.displayProperties.rewardSuccessPopUp) {
               this.rewardSuccessPopUp.title = voucher.reward.displayProperties.rewardSuccessPopUp.headLine;
               this.rewardSuccessPopUp.text = voucher.reward.displayProperties.rewardSuccessPopUp.subHeadLine;

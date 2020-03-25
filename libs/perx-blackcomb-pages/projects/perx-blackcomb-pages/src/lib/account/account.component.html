@@ -1,6 +1,6 @@
 <ng-container *ngIf="profile; else ghostBlock">
   <div class="page-container" *ngIf="theme | async as th"
-       [ngStyle]="{'background-color': th?.properties['--account_background_color']}">
+    [ngStyle]="{'background-color': th?.properties['--account_background_color']}">
     <div *ngIf="appConfig | async as aConfig">
       <div *ngIf="aConfig.showUserInfoOnAccountsPage" class="section">
         <mat-card class="basic-info mat-elevation-z0" (click)="onProfileClicked()">
@@ -19,7 +19,7 @@
             Transaction History
           </mat-list-item>
 
-          <mat-list-item [routerLink]="'/c/' +page.key" *ngFor="let page of pages">
+          <mat-list-item (click)="goToPage(page)" *ngFor="let page of pages">
             {{page.title}}
           </mat-list-item>
         </mat-nav-list>
