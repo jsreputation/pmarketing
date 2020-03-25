@@ -250,6 +250,10 @@ export class HomeComponent implements OnInit, OnDestroy {
         return;
       }
       const rssFeedsUrl: string = rssFeedsHome.url;
+
+      if (rssFeedsUrl === '') {
+        return;
+      }
       this.newsFeedItems = this.feedService.getFromUrl(rssFeedsUrl);
     }
   }
