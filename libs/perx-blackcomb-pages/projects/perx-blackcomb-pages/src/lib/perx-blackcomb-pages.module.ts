@@ -75,6 +75,7 @@ import { QuizResultsComponent } from './quiz-results/quiz-results.component';
 import { CampaignLandingPageComponent } from './campaign-landing-page/campaign-landing-page.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
+import { ReferralComponent } from './referral/referral.component';
 
 const comps: any[] = [
   AccountComponent,
@@ -112,7 +113,8 @@ const comps: any[] = [
   QuizResultsComponent,
   CampaignLandingPageComponent,
   ForgotPasswordComponent,
-  LandingPageComponent
+  LandingPageComponent,
+  ReferralComponent,
 ];
 
 @NgModule({
