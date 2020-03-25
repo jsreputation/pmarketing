@@ -10,5 +10,17 @@
   "SUBMIT": "Submit",
   "SIGN_UP": "Sign Up",
   "LOG_IN": "Log In",
-  "HAVE_AN_ACCOUNT": "Have an account"
+  "HAVE_AN_ACCOUNT": "Have an account",
+  "MOBILE": "Mobile",
+  "EMAIL": "Email",
+  "PASSWORD": "Password",
+  "CONFIRM_PASSWORD": "Confirm Password",
+  "NICKNAME": "Nickname",
+  "UPDATE_DETAILS_FOR_LUCKY_DRAW": "To participate in the Lucky Draw, please input your details below.",
+  "FULL_NAME": "Full Name (as per HKID)",
+  "FOUR_DIGITS_HKID": "First 4 digits of HKID (for Lucky Draw)",
+  "MARKETING_AGREE": "I agree HSBC Life to save my personal information for lucky draw and future direct marketing purpose",
+  "REFERRAL_CODE_OPTIONAL": "Referral Code (optional)",
+  "LUCKY_DRAW_REFER": "For details, please refer to the",
+  "TERM_AGREE": "I agree with the"
 }
