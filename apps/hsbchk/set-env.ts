@@ -12,18 +12,22 @@ require('dotenv').config();
 // Debug environment variables
 const displayProperties = `"displayProperties": {
   "account": {
-      "pages": [
-          {
-              "key": "contact-us",
-              "title": "Contact Us",
-              "content_url": ""
-          },
-          {
-              "key": "tnc",
-              "title": "Terms and Conditions",
-              "content_url": ""
-          }
-      ]
+    "pages": [
+      {
+        "title": "Life Talk",
+        "content_url": "https://www.google.com/search?q=life+talk"
+      },
+      {
+        "key": "contact-us",
+        "title": "Contact Us",
+        "content_url": ""
+      },
+      {
+        "key": "tnc",
+        "title": "Terms and Conditions",
+        "content_url": ""
+      }
+    ]
   }
 }`;
 
