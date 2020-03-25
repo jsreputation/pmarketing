@@ -27,10 +27,9 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
         map((params: Params) => Number.parseInt(params.id, 10)),
         switchMap((id) => this.campaignService.getCampaign(id))
       )
-      .subscribe((c) => {
-        this.backgroundUrl = c.campaignBannerUrl || '';
-        this.campaign = c;
-        console.log(c);
+      .subscribe((campaign) => {
+        this.backgroundUrl = campaign.campaignBannerUrl || '';
+        this.campaign = campaign;
       });
   }
 

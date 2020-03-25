@@ -133,7 +133,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   public goToCampaignPage(campaign: ICampaign): void {
-    if (this.appConfig.withCampaignLandingPage) {
+    if (this.appConfig.showCampaignLandingPage) {
       this.router.navigate([`campaign-welcome/${campaign.id}`]);
     } else {
       this.router.navigate([`${campaign.type}/${campaign.id}`]);
