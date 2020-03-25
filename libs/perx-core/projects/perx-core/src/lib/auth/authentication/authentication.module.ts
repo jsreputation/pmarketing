@@ -58,7 +58,7 @@ export function FormsServiceFactory(config: Config, http: HttpClient): IFormsSer
       useFactory: AuthServiceFactory,
       deps: [HttpClient, Config, TokenStorage, ProfileService, ConfigService]
     },
-    { provide: IFormsService, useFactory: FormsServiceFactory, deps: [Config, HttpClient] }
+    { provide: IFormsService, useFactory: FormsServiceFactory, deps: [Config, ConfigService, HttpClient] }
   ]
 })
 export class AuthenticationModule { }

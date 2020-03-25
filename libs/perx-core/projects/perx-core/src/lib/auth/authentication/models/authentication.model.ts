@@ -1,3 +1,5 @@
+import { ICustomProperties } from '../../../profile/profile.model';
+
 export interface ISignUpData {
   firstName?: string;
   lastName?: string;
@@ -11,6 +13,7 @@ export interface ISignUpData {
   password: string;
   passwordConfirmation: string;
   anonymous?: boolean;
+  customProperties?: ICustomProperties;
 }
 
 export interface IResetPasswordData {
