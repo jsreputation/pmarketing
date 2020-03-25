@@ -26,5 +26,5 @@ spec:
       resources: *resources
     - name: build
       workingDir: "/workspace/project"
-      command: ["yarn", "build:$(inputs.params.app-name):prod"]
+      command: ["yarn", "build:$(inputs.params.app-name):production"]
       resources: *resources
