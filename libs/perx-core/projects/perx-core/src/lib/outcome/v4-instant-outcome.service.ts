@@ -41,7 +41,7 @@ export class V4InstantOutcomeService implements InstantOutcomeService {
         ({
           title: 'Thanks for being with us!',
           subTitle: '',
-          button: 'claim',
+          button: '',
           banner: oc(c).campaignBannerUrl(''),
           backgroundImgUrl: oc(c).campaignBannerUrl(''),
           cardBackgroundImgUrl: '',
