@@ -15,6 +15,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthenticationService, NotificationService, ThemesService } from '@perxtech/core';
 import { of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('SignUpComponent', () => {
   let component: SignUpComponent;
@@ -47,7 +48,8 @@ describe('SignUpComponent', () => {
         ReactiveFormsModule,
         FormsModule,
         RouterTestingModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        TranslateModule
       ],
       providers: [
         { provide: AuthenticationService, useValue: authServiceStub },
