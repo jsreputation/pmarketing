@@ -153,7 +153,7 @@ export class GameComponent implements OnInit, OnDestroy {
     () => {
       this.popupData = this.noRewardsPopUp;
       this.redirectUrlAndPopUp(); // wont call preplayConfirm direct away if preplay fail
-    })
+    });
   }
 
   public gameCompletedLoad(): void {
