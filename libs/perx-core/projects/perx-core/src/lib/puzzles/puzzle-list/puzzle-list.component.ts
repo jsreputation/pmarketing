@@ -2,7 +2,7 @@ import { Component, Output, EventEmitter, Input, OnChanges, SimpleChanges, OnDes
 import { StampService } from '../../stamp/stamp.service';
 import { IStampCard, StampCardState, StampState } from '../../stamp/models/stamp.model';
 import { Subject, Observable } from 'rxjs';
-import {takeUntil, tap} from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-core-puzzle-list',
@@ -88,9 +88,13 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
       this.puzzles = null;
       this.cards = null;
       if (this.campaignId !== null) {
-        this.puzzles = this.stampService.getCards(this.campaignId)
+        this.puzzles = this.stampService.getCards(this.campaignId);
+        this.puzzles
           .pipe(
-            tap((res: IStampCard[]) => {
+            takeUntil(this.destroy$)
+          )
+          .subscribe(
+            (res: IStampCard[]) => {
               this.cards = res;
               this.initTotal(res);
               // assume all is completed
@@ -114,9 +118,8 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
               if (completed) {
                 this.completed.emit();
               }
-            }),
-            takeUntil(this.destroy$)
-          )
+            }
+          );
       }
     }
     if (changes.puzzles && this.puzzles) {
