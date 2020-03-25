@@ -35,7 +35,7 @@ const routes: Routes = [
     loadChildren: () => import('./welcome/welcome.module').then((mod) => mod.WelcomeModule),
     canActivate: [PublicGuard, PreAuthGuard]
   },
-  { path: '**', redirectTo: '/login', canActivate: [ProtectedGuard] },
+  { path: '**', redirectTo: '/welcome', canActivate: [ProtectedGuard] },
   { path: '**', redirectTo: '/loading', canActivate: [PublicGuard] },
 ];
 
