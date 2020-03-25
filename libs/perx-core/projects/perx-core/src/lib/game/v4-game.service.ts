@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, of, combineLatest, throwError } from 'rxjs';
+import { Observable, of, combineLatest, throwError, EMPTY } from 'rxjs';
 import { IGameService } from './igame.service';
 import {
   IGame,
