@@ -71,7 +71,7 @@ export interface IV4Reward {
   merchant_name?: string;
   merchant_website?: string;
   terms_and_conditions?: string;
-  how_to_redeem?: string;
+  steps_to_redeem?: string;
   tags?: IV4Tag[];
   category_tags?: ICategoryTags[];
   inventory?: IV4Inventory;
@@ -194,7 +194,7 @@ export class V4RewardsService extends RewardsService {
       merchantImg,
       merchantWebsite: reward.merchant_website,
       termsAndConditions: oc(reward).terms_and_conditions(''),
-      howToRedeem: oc(reward).how_to_redeem(''),
+      howToRedeem: oc(reward).steps_to_redeem(''),
       categoryTags: reward.category_tags,
       inventory,
       displayProperties: reward.display_properties,
