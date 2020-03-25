@@ -2,7 +2,7 @@ import { Component, Output, EventEmitter, Input, OnChanges, SimpleChanges, OnDes
 import { StampService } from '../../stamp/stamp.service';
 import { IStampCard, StampCardState, StampState } from '../../stamp/models/stamp.model';
 import { Subject, Observable } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import {takeUntil, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'perx-core-puzzle-list',
@@ -88,34 +88,35 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
       this.puzzles = null;
       this.cards = null;
       if (this.campaignId !== null) {
-        this.puzzles = this.stampService.getCards(this.campaignId);
-        this.puzzles
-          .pipe(takeUntil(this.destroy$))
-          .subscribe((res: IStampCard[]) => {
-            this.cards = res;
-            this.initTotal(res);
-            // assume all is completed
-            let completed = true;
-            // loop over all puzzles
-            for (const puzzle of res) {
-              if (puzzle.stamps === undefined || puzzle.stamps.length === 0) {
-                // if there is no stamps objet at all then, it is not completed
-                completed = false;
-              } else if (puzzle.stamps.some(stamp => stamp.state === StampState.issued)) {
-                // if any transction is issued, then it is not all completed
-                completed = false;
-              }
+        this.puzzles = this.stampService.getCards(this.campaignId)
+          .pipe(
+            tap((res: IStampCard[]) => {
+              this.cards = res;
+              this.initTotal(res);
+              // assume all is completed
+              let completed = true;
+              // loop over all puzzles
+              for (const puzzle of res) {
+                if (puzzle.stamps === undefined || puzzle.stamps.length === 0) {
+                  // if there is no stamps objet at all then, it is not completed
+                  completed = false;
+                } else if (puzzle.stamps.some(stamp => stamp.state === StampState.issued)) {
+                  // if any transction is issued, then it is not all completed
+                  completed = false;
+                }
 
-              // if one is not completed, we do not need to loop any further
-              if (!completed) {
-                break;
+                // if one is not completed, we do not need to loop any further
+                if (!completed) {
+                  break;
+                }
               }
-            }
-            // if completed emit an event.
-            if (completed) {
-              this.completed.emit();
-            }
-          });
+              // if completed emit an event.
+              if (completed) {
+                this.completed.emit();
+              }
+            }),
+            takeUntil(this.destroy$)
+          )
       }
     }
     if (changes.puzzles && this.puzzles) {
