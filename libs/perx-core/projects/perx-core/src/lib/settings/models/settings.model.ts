@@ -19,7 +19,7 @@ export interface IRssFeedsData {
 export interface AccountPageObject {
   title: string;
   content_url: string;  // eslint-disable-line
-  key: string;
+  key?: string; // if not present, the link will be to the page directly, if present, the content will be shown embeded within blackcomb
 }
 
 export interface PagesObject {
