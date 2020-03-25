@@ -30,7 +30,12 @@ const routes: Routes = [
     loadChildren: () => import('./layout/layout.module').then((mod) => mod.LayoutModule),
     canActivate: [PreLoginGuard, ProtectedGuard]
   },
-  { path: '**', redirectTo: '/home', canActivate: [ProtectedGuard] },
+  {
+    path: 'welcome',
+    loadChildren: () => import('./welcome/welcome.module').then((mod) => mod.WelcomeModule),
+    canActivate: [PublicGuard, PreAuthGuard]
+  },
+  { path: '**', redirectTo: '/login', canActivate: [ProtectedGuard] },
   { path: '**', redirectTo: '/loading', canActivate: [PublicGuard] },
 ];
 

@@ -1,0 +1,17 @@
+<div class="landing-container">
+  <mat-toolbar class="toolbar mat-elevation-z3">
+    <span></span>
+    <img class="logo" [attr.src]="theme.properties['--logo']" [attr.alt]="theme.properties['--title']" *ngIf="theme" />
+    <span></span>
+  </mat-toolbar>
+  <div class="landing-content">
+    <img class="banner" [attr.src]="banner">
+    <div [innerHTML]="content"></div>
+  </div>
+  <mat-toolbar class="bottom-nav-container mat-elevation-z2">
+    <a
+      [routerLink]="['/login']"
+      mat-flat-button
+      color="primary">Login</a>
+  </mat-toolbar>
+</div>
