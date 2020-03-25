@@ -19,7 +19,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Type } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
-import { ConfigToMappedSlotPipe, ConfigToSlicesPipe, SpinComponent } from './spin/spin.component';
+import { ConfigToSlicesPipe, SpinComponent } from './spin/spin.component';
 import { WInformationCollectionSettingType } from '@perxtech/whistler';
 import { SnakeComponent } from './snake/snake.component';
 
@@ -115,8 +115,7 @@ describe('GameComponent', () => {
         ScratchComponent,
         SpinComponent,
         SnakeComponent,
-        ConfigToSlicesPipe,
-        ConfigToMappedSlotPipe
+        ConfigToSlicesPipe
       ],
       imports: [
         MatProgressBarModule,

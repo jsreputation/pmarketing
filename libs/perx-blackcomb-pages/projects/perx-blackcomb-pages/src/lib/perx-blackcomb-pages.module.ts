@@ -73,6 +73,7 @@ import { CatalogComponent } from './catalog/catalog.component';
 import { QuizComponent } from './quiz/quiz.component';
 import { QuizResultsComponent } from './quiz-results/quiz-results.component';
 import { CampaignLandingPageComponent } from './campaign-landing-page/campaign-landing-page.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 const comps: any[] = [
   AccountComponent,
@@ -109,6 +110,7 @@ const comps: any[] = [
   QuizComponent,
   QuizResultsComponent,
   CampaignLandingPageComponent,
+  ForgotPasswordComponent,
 ];
 
 @NgModule({
@@ -147,7 +149,7 @@ const comps: any[] = [
     MatListModule,
     InfiniteScrollModule,
     MatDialogModule,
-    QuizModule
+    QuizModule,
   ],
   exports: [
     ...comps,

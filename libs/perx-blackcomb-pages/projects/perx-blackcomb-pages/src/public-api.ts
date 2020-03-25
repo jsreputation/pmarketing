@@ -10,7 +10,6 @@ export { ScratchComponent } from './lib/game/scratch/scratch.component';
 export { SpinComponent } from './lib/game/spin/spin.component';
 export { SnakeComponent } from './lib/game/snake/snake.component';
 export { ConfigToSlicesPipe } from './lib/game/spin/spin.component';
-export { ConfigToMappedSlotPipe } from './lib/game/spin/spin.component';
 export { HistoryComponent } from './lib/history/history.component';
 export { HomeComponent } from './lib/home/home.component';
 export { RewardComponent } from './lib/reward/reward.component';
@@ -42,3 +41,4 @@ export { CatalogRewardCardComponent } from './lib/catalog-reward-card/catalog-re
 export { QuizComponent } from './lib/quiz/quiz.component';
 export { QuizResultsComponent } from './lib/quiz-results/quiz-results.component';
 export { CampaignLandingPageComponent } from './lib/campaign-landing-page/campaign-landing-page.component';
+export { ForgotPasswordComponent } from './lib/forgot-password/forgot-password.component';
