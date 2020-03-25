@@ -198,9 +198,11 @@ export class HomeComponent implements OnInit, OnDestroy {
         (firstComeFirstServed: ICampaign) => {
           // if there is a 1st come 1st served campaign, display the popup
           this.firstComefirstServeCampaign = firstComeFirstServed;
+          const popupImageURL = this.firstComefirstServeCampaign.campaignBannerUrl ?
+            this.firstComefirstServeCampaign.campaignBannerUrl : 'assets/bd-campaign.svg';
           const data = {
             text: this.firstComefirstServeCampaign.description,
-            imageUrl: 'assets/bd-campaign.svg',
+            imageUrl: popupImageURL,
             buttonTxt: 'Check it out',
             afterClosedCallBack: this,
             // @ts-ignore
