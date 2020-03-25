@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { SignUpComponent } from './sign-up/sign-up.component';
+import { LuckyDrawDetailsComponent } from '@perxtech/blackcomb-pages';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', component: SignUpComponent },
+  { path: '', pathMatch: 'full', component: LuckyDrawDetailsComponent },
   { path: '*', redirectTo: '' }
 ];
 
@@ -11,4 +11,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class SignUpRoutingModule { }
+export class LuckyDrawDetailsRoutingModule { }

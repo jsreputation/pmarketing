@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, Pipe, PipeTransform} from '@angular/core';
+import {Component, EventEmitter, Input, Output, Pipe, PipeTransform} from '@angular/core';
 import { IGame, ISpin, ISlice } from '@perxtech/core';
 
 @Pipe({
@@ -26,7 +26,7 @@ export class ConfigToSlicesPipe implements PipeTransform {
   templateUrl: './spin.component.html',
   styleUrls: ['./spin.component.scss']
 })
-export class SpinComponent implements  OnInit {
+export class SpinComponent {
   @Input() public willWin: boolean = false;
 
   @Input() public game: IGame;
@@ -36,10 +36,6 @@ export class SpinComponent implements  OnInit {
   public isEnabled: boolean = false;
 
   @Output() public loaded: EventEmitter<boolean> = new EventEmitter();
-
-  public ngOnInit(): void {
-    this.loaded.emit();
-  }
 
   public get config(): ISpin {
     return this.game.config as ISpin;
@@ -51,6 +47,11 @@ export class SpinComponent implements  OnInit {
 
   public gameCompleted(): void {
     this.broken.emit();
+  }
+
+  public startLoad(): void {
+    this.isEnabled = true;
+    this.loaded.emit();
   }
 
 }

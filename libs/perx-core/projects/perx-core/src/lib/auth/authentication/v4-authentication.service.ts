@@ -278,6 +278,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       result.personal_properties.anonymous = data.anonymous;
     }
 
+    result.personal_properties = { ...result.personal_properties, ...data.customProperties };
     return result;
   }
 
