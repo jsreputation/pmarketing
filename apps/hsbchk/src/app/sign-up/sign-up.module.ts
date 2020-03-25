@@ -7,6 +7,7 @@ import { PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
 import { MatButtonModule } from '@angular/material/button';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,
-    GameModule
+    GameModule,
+    TranslateModule
   ],
   declarations: [SignUpComponent]
 })

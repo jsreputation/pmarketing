@@ -2,7 +2,7 @@
     <img class="logo" [attr.src]="th?.properties['--logo']" [attr.alt]="th?.properties['--title']" />
     <div class="content-container">
         <div class="main-heading" translate>SIGN_UP</div>
-        <div class="subtitle"><ng-container translate>HAVE_AN_ACCOUNT? </ng-container><span class="link" (click)="goToLogin()" translate>LOG_IN</span></div>
+        <div class="subtitle"><span translate>HAVE_AN_ACCOUNT</span>? <span class="link" (click)="goToLogin()" translate>LOG_IN</span></div>
         <div class="error_msg">
             <span>{{errorMessage}}</span>
           </div>
