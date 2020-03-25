@@ -21,6 +21,7 @@ export interface IConfig<T> {
   showQuizOnHomePage?: boolean;
   showCampaignRewardsCounterOnHomepage?: boolean;
   showRewardsOnHomepage?: boolean;
+  showCampaignLandingPage?: boolean;
 
   /* Misc */
   showQrPageSubtitle?: boolean;
