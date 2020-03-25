@@ -147,7 +147,7 @@ const reward: IV4Reward = {
   merchant_name: 'test',
   merchant_website: 'test',
   terms_and_conditions: 'test',
-  how_to_redeem: 'test',
+  steps_to_redeem: 'test',
   tags: [],
   category_tags: [],
   inventory: { reward_limit_per_user: 1, reward_limit_per_user_balance: null },
