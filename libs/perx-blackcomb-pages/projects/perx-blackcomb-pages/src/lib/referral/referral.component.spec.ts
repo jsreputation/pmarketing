@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { ReferralComponent } from './referral.component';
 
 describe('ReferralComponent', () => {
@@ -8,7 +8,10 @@ describe('ReferralComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ReferralComponent ]
+      declarations: [ReferralComponent],
+      imports: [
+        MatToolbarModule
+      ]
     })
       .compileComponents();
   }));
