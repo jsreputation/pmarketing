@@ -24,6 +24,7 @@ import { SortRewardsPipe } from './directives/sort-rewards-pipe';
 import { StripHtmlPipe } from './directives/striphtml-pipe';
 import { ConfigService } from '../config/config.service';
 import { TimerComponent, ForceLengthPipe } from './timer/timer.component';
+import { SafeHtmlPipe } from './safe-html.pipe';
 
 export function themesServiceFactory(http: HttpClient, config: Config, configService: ConfigService): ThemesService {
   if (config.isWhistler) {
@@ -46,6 +47,13 @@ const components = [
   TimerComponent,
 ];
 
+const pipes = [
+  DistancePipe,
+  SortRewardsPipe,
+  StripHtmlPipe,
+  SafeHtmlPipe
+];
+
 // make sure we have only one instance of the NotificationService
 export function notificationServiceFactory(): NotificationService {
   // @ts-ignore
@@ -61,9 +69,7 @@ export function notificationServiceFactory(): NotificationService {
   declarations: [
     ...directives,
     ...components,
-    DistancePipe,
-    SortRewardsPipe,
-    StripHtmlPipe,
+    ...pipes,
     ForceLengthPipe
   ],
   entryComponents: [
@@ -81,9 +87,7 @@ export function notificationServiceFactory(): NotificationService {
   exports: [
     ...directives,
     ...components,
-    DistancePipe,
-    SortRewardsPipe,
-    StripHtmlPipe
+    ...pipes
   ],
   providers: [
     { provide: NotificationService, useFactory: notificationServiceFactory },

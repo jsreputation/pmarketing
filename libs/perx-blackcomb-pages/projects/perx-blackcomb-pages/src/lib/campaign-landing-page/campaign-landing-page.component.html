@@ -1,0 +1,16 @@
+<div class="main-container"
+  [ngStyle]="{'background-image': 'url(' + backgroundUrl + ')' }">
+  <div class="landing-page">
+    <div class="header">
+      <h1 class="title">{{campaign?.name}}</h1>
+      <h2 class="subtitle">{{campaign?.description}}</h2>
+    </div>
+    <div class="tnc" [innerHtml]="campaign?.tnc | safeHtml"></div>
+  </div>
+  <mat-toolbar class="bottom-nav-container mat-elevation-z2">
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="next()">Take the quiz</button>
+  </mat-toolbar>
+</div>

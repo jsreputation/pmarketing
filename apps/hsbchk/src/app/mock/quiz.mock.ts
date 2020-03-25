@@ -1,4 +1,6 @@
-import { CampaignState, CampaignType, ICampaign, IQuiz, QuizQuestionType } from '@perxtech/core';
+import { CampaignState, CampaignType, ICampaign, ICampaignService, IQuiz, QuizQuestionType } from '@perxtech/core';
+import { of } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 
 const getReward = () => ({
   id: 42,
@@ -55,8 +57,13 @@ export const campaigns: ICampaign[] = [
     type: CampaignType.quiz,
     state: CampaignState.active,
     endsAt: null,
-    campaignBannerUrl: 'assets/quiz/easy.png',
-    rewards: [getReward()]
+    campaignBannerUrl: 'assets/quiz/background.png',
+    rewards: [getReward()],
+    tnc: `<iframe width="400"  src="https://www.youtube.com/embed/L94GSggRvE4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <br>
+    The LIFE Dojo game starts every Thursday at 9:30pm. Watch the video above and answer the question in 15 seconds. Get at least one right answer and grab it while it lasts!
+    <br/><br/>
+    <a>Get more health and finance tips<br>from LIFE Talk</a>`
   },
   {
     id: 2,
@@ -79,3 +86,14 @@ export const campaigns: ICampaign[] = [
     rewards: [getReward()]
   },
 ];
+
+export const campaignServiceStub: Partial<ICampaignService> = {
+  getCampaign: (id) => of(campaigns)
+    .pipe(
+      map(cs => cs.filter(c => c.id === id)),
+      filter(cs => cs.length > 0),
+      map(cs => cs[0])
+    ),
+  getCampaigns: ({ type }) => of([...campaigns])
+    .pipe(map(cs => cs.filter(c => c.type === type)))
+};

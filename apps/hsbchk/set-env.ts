@@ -12,18 +12,22 @@ require('dotenv').config();
 // Debug environment variables
 const displayProperties = `"displayProperties": {
   "account": {
-      "pages": [
-          {
-              "key": "contact-us",
-              "title": "Contact Us",
-              "content_url": ""
-          },
-          {
-              "key": "tnc",
-              "title": "Terms and Conditions",
-              "content_url": ""
-          }
-      ]
+    "pages": [
+      {
+        "title": "Life Talk",
+        "content_url": "https://www.google.com/search?q=life+talk"
+      },
+      {
+        "key": "contact-us",
+        "title": "Contact Us",
+        "content_url": ""
+      },
+      {
+        "key": "tnc",
+        "title": "Terms and Conditions",
+        "content_url": ""
+      }
+    ]
   }
 }`;
 
@@ -58,6 +62,7 @@ const appConfigFile = `{
   "showQuizOnHomePage" : ${process.env.SHOW_QUIZ_ON_HOMEPAGE ? process.env.SHOW_QUIZ_ON_HOMEPAGE : false},
   "showCampaignRewardsCounterOnHomepage": ${process.env.SHOW_CAMPAIGN_REWARDS_COUNTER_ON_HOMEPAGE ? process.env.SHOW_CAMPAIGN_REWARDS_COUNTER_ON_HOMEPAGE : false},
   "showRewardsOnHomepage": ${process.env.SHOW_REWARDS_ON_HOMEPAGE ? process.env.SHOW_REWARDS_ON_HOMEPAGE : false},
+  "showCampaignLandingPage": ${process.env.SHOW_CAMPAIGN_LANDING_PAGE ? process.env.SHOW_CAMPAIGN_LANDING_PAGE : false},
 
   "showQrPageSubtitle": ${process.env.SHOW_QRPAGE_SUBTITLE ? process.env.SHOW_QRPAGE_SUBTITLE : false},
   "showUserQR": ${process.env.SHOW_USER_QR ? process.env.SHOW_USER_QR : true},
