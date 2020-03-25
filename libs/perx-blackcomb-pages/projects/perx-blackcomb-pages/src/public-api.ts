@@ -42,3 +42,4 @@ export { QuizComponent } from './lib/quiz/quiz.component';
 export { QuizResultsComponent } from './lib/quiz-results/quiz-results.component';
 export { CampaignLandingPageComponent } from './lib/campaign-landing-page/campaign-landing-page.component';
 export { ForgotPasswordComponent } from './lib/forgot-password/forgot-password.component';
+export { ReferralComponent } from './lib/referral/referral.component';
