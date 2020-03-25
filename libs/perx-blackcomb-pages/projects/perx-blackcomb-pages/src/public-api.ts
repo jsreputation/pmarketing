@@ -40,4 +40,5 @@ export { CatalogComponent } from './lib/catalog/catalog.component';
 export { CatalogRewardCardComponent } from './lib/catalog-reward-card/catalog-reward-card.component';
 export { QuizComponent } from './lib/quiz/quiz.component';
 export { QuizResultsComponent } from './lib/quiz-results/quiz-results.component';
+export { CampaignLandingPageComponent } from './lib/campaign-landing-page/campaign-landing-page.component';
 export { ForgotPasswordComponent } from './lib/forgot-password/forgot-password.component';
