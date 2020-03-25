@@ -112,6 +112,7 @@ const routes: Routes = [
       },
       { path: 'quiz/:id', loadChildren: () => import('../quiz/quiz.module').then(m => m.QuizModule) },
       { path: 'quiz-results', loadChildren: () => import('../quiz-result/quiz-result.module').then(m => m.QuizResultModule) },
+      { path: 'referral', loadChildren: () => import('../referral/referral.module').then(m => m.ReferralModule) }
     ]
   },
 
