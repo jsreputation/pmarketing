@@ -1,19 +1,11 @@
 @import "../mixins";
 
 .content-container {
-  width: 100%;
-  min-height: 100%;
-  background-color: var(--login_background_colour);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include loginContentContainer;
 }
 
 .sign-up {
-  border-radius: 0.5rem;
-  margin: 2rem 1.6rem;
-  padding: 1.6rem;
-  background: var(--surface_colour);
+  @include loginCard;
 
   .error_msg {
     padding-bottom: 1rem;

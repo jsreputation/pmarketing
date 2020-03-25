@@ -1,13 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {Observable, of} from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { LoyaltyService } from '../loyalty.service';
 import { ProfileService } from '../../profile/profile.service';
 import { IProfile } from '../../profile/profile.model';
 import { ILoyalty } from '../models/loyalty.model';
 import { DatePipe } from '@angular/common';
-import {catchError} from 'rxjs/operators';
-// import {tap} from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-core-loyalty-summary',
@@ -22,7 +21,8 @@ export class LoyaltySummaryComponent implements OnInit {
   public profile$: Observable<IProfile> | undefined;
 
   @Input('loyalty')
-  public loyalty$: Observable<ILoyalty | undefined> | undefined;
+  public loyalty$: Observable<ILoyalty>;
+  public loyalty: ILoyalty;
 
   @Input()
   public subTitleFn: (loyalty: ILoyalty) => string;
@@ -34,11 +34,13 @@ export class LoyaltySummaryComponent implements OnInit {
   public summaryExpiringFn: (loyalty: ILoyalty) => string;
 
   public loyaltyProgramExists: boolean = true;
+
   constructor(
     private profileService: ProfileService,
     private loyaltyService: LoyaltyService,
     private datePipe: DatePipe
-  ) { }
+  ) {
+  }
 
   public ngOnInit(): void {
     if (!this.subTitleFn) {
@@ -69,18 +71,33 @@ export class LoyaltySummaryComponent implements OnInit {
     }
 
     if (!this.loyalty$) {
-      this.loyalty$ = this.loyaltyService.getLoyalty(this.loyaltyId).pipe(
-        catchError(val => {
-          if (val.status === 401) {
-            this.loyaltyProgramExists = true;
+      this.loyaltyService.getLoyalty(this.loyaltyId)
+        .pipe(
+          catchError(val => {
+            if (val.status === 401) {
+              this.loyaltyProgramExists = true;
+            }
+            return of();
+          })
+        )
+        .subscribe(
+          (loyalty: ILoyalty) => {
+            this.loyalty = loyalty;
           }
-          return of(undefined);
-        })
+        );
+    } else {
+      this.loyalty$.subscribe(
+        (loyalty: ILoyalty) => {
+          this.loyalty = loyalty;
+        }
       );
     }
   }
 
-  public getPercentageToNext(currentPoints: number, nextPoints: number): number {
-    return Math.round((currentPoints / nextPoints) * 100);
+  public getPercentageToNext(currentPoints: number, nextPoints: number | undefined): number {
+    if (currentPoints && nextPoints) {
+      return Math.round((currentPoints / nextPoints) * 100);
+    }
+    return 0;
   }
 }

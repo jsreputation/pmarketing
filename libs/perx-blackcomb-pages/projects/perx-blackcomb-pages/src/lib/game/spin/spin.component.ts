@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, Pipe, PipeTransform } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, Pipe, PipeTransform} from '@angular/core';
 import { IGame, ISpin, ISlice } from '@perxtech/core';
 
 @Pipe({
@@ -21,36 +21,12 @@ export class ConfigToSlicesPipe implements PipeTransform {
   }
 }
 
-@Pipe({
-  name: 'slotPipe',
-  pure: true // wont retrigger unless inputs change so getter wont keep calling
-})
-export class ConfigToMappedSlotPipe implements PipeTransform {
-  public transform(config: ISpin, willWin: boolean): number {
-    let slotToLandIndex = config
-      .rewardSlots[Math.floor(Math.random() * config.rewardSlots.length)]; // which index of reward Positions
-    if (willWin) {
-      // console.log(slotToLandIndex, 'slot to land index');
-      // console.log('actual slot', config.rewardSlots[slotToLandIndex]);
-      return config.rewardSlots[slotToLandIndex]; // get a random number out of the reward slots
-    }
-    // return first index not inside of the array of winning indexes
-    // using color ctrls as proxy to each index position
-    // problem: what if all of the slots contains reward? -> should we enforce must have one non-reward slot?
-    // issue is that audience sees a rewardIcon expects a reward but preplay shows no rewards to be redeemed,
-    //     console.log(config.rewardSlots, 'reward slots'); // double confirm the one returned below is not inside
-    slotToLandIndex = +Object.keys(config.colorCtrls).filter(key => !config.rewardSlots.includes(+key))[0];
-    //     console.log(slotToLandIndex, 'non winning slot chosen');
-    return slotToLandIndex;
-  }
-}
-
 @Component({
   selector: 'perx-blackcomb-pages-spin',
   templateUrl: './spin.component.html',
   styleUrls: ['./spin.component.scss']
 })
-export class SpinComponent {
+export class SpinComponent implements  OnInit {
   @Input() public willWin: boolean = false;
 
   @Input() public game: IGame;
@@ -59,12 +35,18 @@ export class SpinComponent {
 
   public isEnabled: boolean = false;
 
+  @Output() public loaded: EventEmitter<boolean> = new EventEmitter();
+
+  public ngOnInit(): void {
+    this.loaded.emit();
+  }
+
   public get config(): ISpin {
     return this.game.config as ISpin;
   }
 
   public get spinPosition(): string {
-    return this.config.wheelPosition.includes('down') ? 'mobile-preview-v2' : 'mobile-preview-plugin';
+    return this.config.wheelPosition.includes('bottom') ? 'mobile-preview-v2' : 'mobile-preview-plugin';
   }
 
   public gameCompleted(): void {

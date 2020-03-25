@@ -30,6 +30,7 @@ export interface IConfig<T> {
   /* Login page */
   showSubtitleLogin?: boolean;
   redirectAfterLogin?: string;
+  showForgetPasswordOnLogin?: boolean;
 
   /* Account page */
   showAccountsPage?: boolean;

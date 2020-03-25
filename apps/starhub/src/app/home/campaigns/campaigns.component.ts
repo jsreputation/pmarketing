@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { ICampaign, CampaignType, ICampaignService, IGameService, IGame, ConfigService } from '@perxtech/core';
-import { map, scan, switchMap, tap } from 'rxjs/operators';
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { catchError, map, scan, switchMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
 import { IMacaron, MacaronService } from '../../services/macaron.service';
 
 const REQ_PAGE_SIZE: number = 10;
@@ -54,9 +54,15 @@ export class CampaignsComponent implements OnInit {
           tempCampaigns = campaigns;
         }),
         switchMap(
-          (campaigns: ICampaign[]) => combineLatest(...campaigns.map(campaign => this.gameService.getGamesFromCampaign(campaign.id)))
+          (campaigns: ICampaign[]) => {
+            return combineLatest(...campaigns.map(campaign => {
+              return this.gameService.getGamesFromCampaign(campaign.id).pipe(
+                catchError(() => of([]))
+              )
+            }));
+          }
         ),
-        map((games: IGame[][]) => [].concat(...games as []) as IGame[])
+        map((games: IGame[][]) => [].concat(...games as []) as IGame[]),
       )
       .subscribe((games: IGame[]) => {
         this.games = games;

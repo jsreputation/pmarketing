@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ProtectedGuard, PublicGuard } from 'ngx-auth';
 import { PreLoginGuard } from './pre-login.guard';
+
 const routes: Routes = [
   {
     path: 'login',
@@ -15,6 +16,11 @@ const routes: Routes = [
     canActivate: [PublicGuard, PreAuthGuard]
   },
   { path: 'otp/:type', loadChildren: () => import('./otp/otp.module').then((mod) => mod.OtpModule) },
+  {
+    path: 'forgot-password',
+    loadChildren: () => import('./forgot-password/forgot-password.module').then((mod) => mod.ForgotPasswordModule),
+    canActivate: [PublicGuard, PreAuthGuard]
+  },
   {
     path: 'loading',
     loadChildren: () => import('./loading/loading.module').then((mod) => mod.LoadingModule)
