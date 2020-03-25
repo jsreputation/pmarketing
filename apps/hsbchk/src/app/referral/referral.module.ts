@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PerxBlackcombPagesModule, ReferralComponent } from '@perxtech/blackcomb-pages';
 
