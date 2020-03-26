@@ -58,4 +58,50 @@ export class V4FormsService implements IFormsService {
       ]
     });
   }
+
+  public getLuckyDrawDetailsForm(): Observable<ISurvey | undefined> {
+    return of({
+      title: '',
+      results: {},
+      questions: [
+        {
+          id: 'sign-up',
+          question: '',
+          required: false,
+          payload: {
+            type: SurveyQuestionType.questionGroup,
+            questions: [
+              {
+                id: 'hkidNumber',
+                question: 'HKID Number',
+                required: true,
+                payload: {
+                  type: SurveyQuestionType.longText
+                }
+              },
+              {
+                id: 'nickName',
+                question: 'Nick Name',
+                required: true,
+                payload: {
+                  type: SurveyQuestionType.longText
+                }
+              },
+              {
+                id: 'tnc',
+                question: 'Term and Condition',
+                required: true,
+                payload: {
+                  type: SurveyQuestionType.multipleChoice,
+                  choices: [
+                    'I agree HSBC Life to save my personal information for lucky draw and future direct marketing purpose (For details, please refer to the PICS)',
+                  ]
+                }
+              },
+            ]
+          }
+        }
+      ]
+    });
+  }
 }
