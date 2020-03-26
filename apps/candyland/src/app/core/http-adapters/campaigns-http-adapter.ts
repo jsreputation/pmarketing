@@ -1,4 +1,4 @@
-import { IAudienceFilter } from './../models/campaign/campaign';
+import { IAudienceFilter } from '../models/campaign/campaign';
 import * as moment from 'moment';
 import {
   EngagementTypeAPIMapping, EngagementTypeFromAPIMapping
