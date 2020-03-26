@@ -25,8 +25,6 @@ import { Config } from '../config/config';
 import { HttpClient } from '@angular/common/http';
 import { ICampaignService } from '../campaign/icampaign.service';
 import { PasswordComponent } from './question/password/password.component';
-import { SwipeListComponent } from './question/swipe-list/swipe-list.component';
-import { SwipeItemComponent } from './question/swipe-list/swipe-item/swipe-item.component';
 import { MatListModule } from '@angular/material/list';
 
 export function surveyServiceFactory(http: HttpClient, campaignService: ICampaignService, config: Config): SurveyService {
@@ -45,8 +43,6 @@ const components = [
   DateComponent,
   PhoneComponent,
   PasswordComponent,
-  SwipeListComponent,
-  SwipeItemComponent
 ];
 
 @NgModule({

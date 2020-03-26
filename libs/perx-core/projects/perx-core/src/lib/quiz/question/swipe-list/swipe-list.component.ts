@@ -1,10 +1,16 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { trigger, style, keyframes, transition, animate, query, stagger } from '@angular/animations';
+import {trigger, style, transition, animate, query, stagger, keyframes} from '@angular/animations';
+import {
+  Configuration,
+  Constants,
+  ListType,
+  Warnings
+} from '../../models/quiz.model';
 
-import { Configuration } from './interfaces/configuration';
-import { ListType } from './enums/list-type';
-import { Warnings } from './enums/warnings';
-import { Constants } from './constants/constants';
+interface IPayloadSwipe {
+  type: string;
+  choices: any[]; // follow the format passed down actually
+}
 
 @Component({
   selector: 'perx-core-swipe-list',
@@ -20,22 +26,24 @@ import { Constants } from './constants/constants';
           ])
         ], {optional: true})
       ])
-    ]),
+    ]), // snap animation ->
     trigger('slideLeft', [
-      transition('* => *', animate(100, keyframes([
+      transition('* => *', animate(100, keyframes([ // update faster so more responsive snap if dont hit threshold
           style({left: '*', offset: 0}),
-          style({left: '0', offset: 1}),
+          style({left: '0', offset: 1}), // offset 1 : the snap occurs on timing 100 -> https://angular.io/guide/transition-and-triggers
         ])
       ))
     ])
   ]
 })
-export class SwipeListComponent implements OnInit {
+export class QuizSwipeListComponent implements OnInit {
 
-  @Input() items: any;
+  @Input() payload: IPayloadSwipe;
   @Input() configuration: Configuration;
-  @Output() deletedItem = new EventEmitter<any>();
-  public ngstdIndexNumber: number = 0;
+  @Output()
+  public updateAnswers: EventEmitter<any[]> = new EventEmitter<any[]>();
+  public answerArr: any[];
+  public ngstdIndexNumber?: number; // undefined so visual snapping at first dont occur
   private disableWarnings = false;
   public listType: string = '';
   private slideThreshold: number;
@@ -43,14 +51,12 @@ export class SwipeListComponent implements OnInit {
   private isValidConfig: boolean = false;
   private elementLeftSign = true;
 
-  constructor() {
-  }
-
   ngOnInit() {
-    this.initializeSWipeList();
+    this.initializeSwipeList();
+    this.answerArr = [...this.payload.choices];
   }
 
-  initializeSWipeList(): void {
+  initializeSwipeList(): void {
     this.detectInvalidConfig();
     this.setDisableWarnings();
     this.setslideThreshold();
@@ -133,7 +139,7 @@ export class SwipeListComponent implements OnInit {
     }
   }
 
-  getClassName(): string {
+  public getClassName(): string {
     if (!this.isValidConfig) {
       return `${Constants.DEFAULT_CLASS_NAME}`;
     } else {
@@ -145,25 +151,36 @@ export class SwipeListComponent implements OnInit {
     }
   }
 
-  panend(_action, index, elementRefrence): void {
+  public panend(_action, index, elementRefrence): void {
+    console.log('pan end is called');
     const currentMargin = this.getLeftPosition(elementRefrence);
     if (currentMargin > this.slideThreshold ||
       (currentMargin < -this.slideThreshold && this.numberOfDeleteIcon === Constants.NUMBER_OF_DELETE_ICONS)) {
       this.removeElement(index);
     } else {
-      this.ngstdIndexNumber = index;
+      this.ngstdIndexNumber = undefined; // make undefined so it snaps back when mouse release
     }
   }
 
-  panmove(action, elementRefrence): void {
-    elementRefrence.style.left = action.deltaX + 'px';
-    elementRefrence.offsetLeft > 0 ? this.elementLeftSign = true : this.elementLeftSign = false;
+  public panmove(action, index, elementRefrence): void {
+    this.ngstdIndexNumber = index; // trigger snap animation from moving instd of ending so doesnt get stuck // does this work?
+    // no need to eliminate anymore if left only one element, remaining ans is chosen
+    if (this.answerArr.length !== 1) {
+      elementRefrence.style.left = action.deltaX + 'px';
+      elementRefrence.offsetLeft > 0 ? this.elementLeftSign = true : this.elementLeftSign = false;
+      // over threshold i want to snap to the end
+      const currentMargin = this.getLeftPosition(elementRefrence);
+      // snapping action when cross threshold
+      if (currentMargin > this.slideThreshold ||
+        (currentMargin < -this.slideThreshold && this.numberOfDeleteIcon === Constants.NUMBER_OF_DELETE_ICONS)) {
+        elementRefrence.style.display = 'none';
+      }
+    }
   }
 
   alignComplete(event): void {
     event.element.style.left = '0px';
     event.element.offsetLeft > 0 ? this.elementLeftSign = true : this.elementLeftSign = false;
-    this.ngstdIndexNumber = 0;
   }
 
   getLeftSign() {
@@ -171,9 +188,12 @@ export class SwipeListComponent implements OnInit {
   }
 
   removeElement(index): void {
-    const deletedItem = this.items[index];
-    this.items.splice(index, 1);
-    this.deletedItem.emit(deletedItem);
+    // console.log(this.payload.choices[index], 'supposed to delete this');
+    // cant splice cause index will change because of mutating, but index will always be the same from payload
+    this.answerArr =  this.answerArr.filter((answer) => answer.title !== this.payload.choices[index].title);
+    // console.log(this.answerArr, 'see if the filter works');
+    // emit back up our standing answers;
+    this.updateAnswers.emit(this.answerArr);
   }
 
   getLeftPosition(elementRefrence): number {

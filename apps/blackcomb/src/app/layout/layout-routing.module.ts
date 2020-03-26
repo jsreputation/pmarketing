@@ -67,6 +67,11 @@ const routes: Routes = [
         canActivate: [ProtectedGuard]
       },
       {
+        path: 'quiz/:id',
+        loadChildren: () => import('../quiz/quiz.module').then(mod => mod.QuizModule),
+        canActivate: [ProtectedGuard]
+      },
+      {
         path: 'game/:id',
         loadChildren: () => import('../game/game.module').then(mod => mod.GameModule),
         canActivate: [ProtectedGuard]
