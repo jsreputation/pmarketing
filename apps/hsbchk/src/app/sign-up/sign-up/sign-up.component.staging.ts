@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthenticationService, NotificationService, ISignUpData, ThemesService, ITheme } from '@perxtech/core';
+import { AuthenticationService, NotificationService, ISignUpData, ThemesService, ITheme, GeneralStaticDataService, ICountryCode } from '@perxtech/core';
 import { Subject, Observable } from 'rxjs';
 
 @Component({
@@ -16,19 +16,26 @@ export class SignUpComponent implements OnInit, OnDestroy {
   public appAccessTokenFetched: boolean = false;
   private destroy$: Subject<any> = new Subject();
   public theme: Observable<ITheme>;
+  public countryCode: string;
+  public countriesList$: Observable<ICountryCode[]>;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private themesService: ThemesService,
     private authService: AuthenticationService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private generalStaticDataService: GeneralStaticDataService
   ) {
     this.initForm();
     this.getAppToken();
   }
 
   public ngOnInit(): void {
+    this.countriesList$ = this.generalStaticDataService.getCountriesList([
+      'Hong Kong',
+      'Singapore'
+    ]);
     this.initForm();
     const token = this.authService.getAppAccessToken();
     if (token) {
@@ -93,7 +100,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
     const nickname = this.signupForm.value.nickname;
     const referralCode = this.signupForm.value.referralCode;
     const hkid = this.signupForm.value.hkid;
-    const mobileNumber = `852${this.signupForm.value.mobileNo}`;
+    const mobileNumber = `${this.countryCode}${this.signupForm.value.mobileNo}`;
     const emailValue = this.signupForm.value.email;
     const lastName = this.signupForm.value.fullName ? this.signupForm.value.fullName : nickname;
 
@@ -121,5 +128,9 @@ export class SignUpComponent implements OnInit, OnDestroy {
 
   public goToLogin(): void {
     this.router.navigateByUrl('/signin');
+  }
+
+  public updateCoutryCode(value: string): void {
+    this.countryCode = value.substring(1);
   }
 }

@@ -60,6 +60,38 @@
                   "maximumError": "5mb"
                 }
               ]
+            },
+            "staging": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/index.html",
+                  "with": "src/index.prod.html"
+                },
+                {
+                  "replace": "src/app/sign-up/sign-up/sign-up.component.html",
+                  "with": "src/app/sign-up/sign-up/sign-up.component.staging.html"
+                },
+                {
+                  "replace": "src/app/sign-up/sign-up/sign-up.component.ts",
+                  "with": "src/app/sign-up/sign-up/sign-up.component.staging.ts"
+                }
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
             }
           }
         },
@@ -72,6 +104,9 @@
           "configurations": {
             "production": {
               "browserTarget": "hsbchk:build:production"
+            },
+            "staging": {
+              "browserTarget": "hsbchk:build:staging"
             }
           }
         },
