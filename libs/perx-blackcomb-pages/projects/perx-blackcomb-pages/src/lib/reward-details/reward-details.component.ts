@@ -27,7 +27,7 @@ interface IRewardConfig {
 export class RewardDetailsComponent implements OnInit, OnDestroy {
   public reward$: Observable<IReward>;
   public displayPriceFn: (price: IPrice) => string;
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
   public descriptionLabel: string = 'Description';
   public tncLabel: string = 'Terms and Conditions';
   public buttonLabel: string = 'Redeem';
