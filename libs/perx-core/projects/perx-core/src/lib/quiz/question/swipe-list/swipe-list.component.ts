@@ -152,7 +152,6 @@ export class QuizSwipeListComponent implements OnInit {
   }
 
   public panend(_action, index, elementRefrence): void {
-    console.log('pan end is called');
     const currentMargin = this.getLeftPosition(elementRefrence);
     if (currentMargin > this.slideThreshold ||
       (currentMargin < -this.slideThreshold && this.numberOfDeleteIcon === Constants.NUMBER_OF_DELETE_ICONS)) {

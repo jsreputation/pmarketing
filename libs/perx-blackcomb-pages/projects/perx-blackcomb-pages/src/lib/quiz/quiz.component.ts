@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import {
   AuthenticationService,
@@ -15,7 +15,7 @@ import {
   IPoints, QuizQuestionType
 } from '@perxtech/core';
 import { Observable, of, Subject } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import {catchError, filter, map, switchMap, takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'perx-blackcomb-quiz',
@@ -69,178 +69,65 @@ export class QuizComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.initTranslate();
     this.isAnonymousUser = this.auth.getAnonymous();
-    this.quiz = ({
-      id: '1',
-      title: 'mocked quiz',
-      subTitle: 'subtitle',
-      questions: [{
-        id: '0',
-        question: 'why are you gay?',
-        required: true,
-        payload: {
-          type: QuizQuestionType.swipeDelete
-        }}
-       ],
-      results: {}
-    });
-    this.data$ = of({
-      id: '1',
-      title: 'mocked quiz',
-      subTitle: 'subtitle',
-      questions: [{
-        id: '0',
-        question: 'why are you gay?',
-        required: true,
-        payload: {
-          type: QuizQuestionType.swipeDelete,
-          choices: [
-            {
-              title: 'Iron Man',
-              icon: `pan_tool`,
-              img: `/assets/ironman.jpg`,
-              description: `Iron Man is a fictional superhero.`,
-              data: {
-                name: 'Tony Stark',
-                abilities: [
-                  'Flying', 'Shooting', 'billionaire'
-                ]
-              }
-            },
-            {
-              title: 'Capton America',
-              icon: `view_stream`,
-              img: `/assets/captainamerica.jpg`,
-              description: `Captain America is the alter ego of Steve Rogers.`,
-              data: {
-                name: 'Steve Rogers',
-                abilities: [
-                  'Strong', 'Very Strong'
-                ]
-              }
-            },
-            {
-              title: 'Dr Strange',
-              icon: `offline_bolt`,
-              img: `/assets/drstange.jpg`,
-              description: `He is a master of Mystic Art`,
-              data: {
-                name: 'Steven Strange',
-                abilities: [
-                  'Mystic Art'
-                ]
-              }
-            },
-            {
-              title: 'Shaktiman',
-              icon: `flash_on`,
-              img: `/assets/shatiman.jpg`,
-              description: `Shaktimaan is an Indian fictional superhero.`,
-              data: {
-                name: 'Pandit Gangadhar',
-                abilities: [
-                  'Attractive male', 'Healing', 'Will power-based constructs', 'Flying'
-                ]
-              }
-            },
-            {
-              title: 'The Winter Soldier',
-              icon: `trending_up`,
-              img: `/assets/wintersoldier.jpg`,
-              description: `Barnes grew up as an Army brat. `,
-              data: {
-                name: 'James Buchanan "Bucky" Barnes',
-                abilities: [
-                  'Hand to hand combat and Martial arts', 'Strong Arm'
-                ]
-              }
-            },
-            {
-              title: 'The Batman',
-              icon: `attach_money`,
-              img: `/assets/batman.jpg`,
-              description: `Batman does not possess any superpowers.`,
-              data: {
-                name: 'Bruce wayne',
-                abilities: [
-                  'Rich', 'Strong'
-                ]
-              }
-            },
-            {
-              title: 'The Superman',
-              icon: `send`,
-              img: `/assets/superman.jpg`,
-              description: `He is from krypton.`,
-              data: {
-                name: 'Clark Kent',
-                abilities: [
-                  'Attractive male', 'Healing', 'Will power-based constructs', 'Flying'
-                ]
-              }
+
+    this.data$ = this.route.paramMap.pipe(
+      filter((params: ParamMap) => params.has('id')),
+      map((params: ParamMap) => params.get('id')),
+      map((id: string) => Number.parseInt(id, 10)),
+      switchMap((idN: number) => this.quizService.getQuizFromCampaign(idN)),
+      filter(quiz => !!quiz),
+      takeUntil(this.destroy$)
+    );
+    this.data$.subscribe(
+      (quiz: IQuiz) => {
+        this.quiz = quiz;
+        const { displayProperties } = this.quiz;
+        if (
+          displayProperties &&
+          displayProperties.informationCollectionSetting
+        ) {
+          this.informationCollectionSetting =
+            displayProperties.informationCollectionSetting;
+        }
+        const successOutcome = quiz.results.outcome;
+        const noOutcome = quiz.results.noOutcome;
+        if (noOutcome) {
+          this.noRewardsPopUp.title = noOutcome.title;
+          this.noRewardsPopUp.text = noOutcome.subTitle;
+          this.noRewardsPopUp.imageUrl =
+            noOutcome.image || this.noRewardsPopUp.imageUrl;
+          this.noRewardsPopUp.buttonTxt =
+            noOutcome.button || this.noRewardsPopUp.buttonTxt;
+        }
+        if (successOutcome) {
+          this.successPopUp.title = successOutcome.title;
+          this.successPopUp.text = successOutcome.subTitle;
+          this.successPopUp.imageUrl =
+            successOutcome.image || this.successPopUp.imageUrl;
+          this.successPopUp.buttonTxt =
+            successOutcome.button || this.successPopUp.buttonTxt;
+        }
+        this.ngZone.runOutsideAngular(() => {
+          // everytime an event fires change detection gets run, we run these events outside angular to minimise cd change
+          // setTimeout allows me delay so that i am confirmed access the nativeElement
+          window.setTimeout(() => {
+            // handle scroll event on angular,
+            if (this.overflowContainer && this.overflowContainer.nativeElement) {
+              this.overflowContainer.nativeElement.addEventListener(
+                'scroll',
+                this.hideArrow,
+                { passive: true }
+              );
+              this.overflowContainer.nativeElement.addEventListener(
+                'click',
+                this.hideArrow
+              );
             }
-          ]
-        }}
-      ],
-      results: {}
-    });
-    // this.data$ = this.route.paramMap.pipe(
-    //   filter((params: ParamMap) => params.has('id')),
-    //   map((params: ParamMap) => params.get('id')),
-    //   map((id: string) => Number.parseInt(id, 10)),
-    //   switchMap((idN: number) => this.quizService.getQuizFromCampaign(idN)),
-    //   filter(quiz => !!quiz),
-    //   takeUntil(this.destroy$)
-    // );
-    // this.data$.subscribe(
-    //   (quiz: IQuiz) => {
-    //     this.quiz = quiz;
-    //     const { displayProperties } = this.quiz;
-    //     if (
-    //       displayProperties &&
-    //       displayProperties.informationCollectionSetting
-    //     ) {
-    //       this.informationCollectionSetting =
-    //         displayProperties.informationCollectionSetting;
-    //     }
-    //     const successOutcome = quiz.results.outcome;
-    //     const noOutcome = quiz.results.noOutcome;
-    //     if (noOutcome) {
-    //       this.noRewardsPopUp.title = noOutcome.title;
-    //       this.noRewardsPopUp.text = noOutcome.subTitle;
-    //       this.noRewardsPopUp.imageUrl =
-    //         noOutcome.image || this.noRewardsPopUp.imageUrl;
-    //       this.noRewardsPopUp.buttonTxt =
-    //         noOutcome.button || this.noRewardsPopUp.buttonTxt;
-    //     }
-    //     if (successOutcome) {
-    //       this.successPopUp.title = successOutcome.title;
-    //       this.successPopUp.text = successOutcome.subTitle;
-    //       this.successPopUp.imageUrl =
-    //         successOutcome.image || this.successPopUp.imageUrl;
-    //       this.successPopUp.buttonTxt =
-    //         successOutcome.button || this.successPopUp.buttonTxt;
-    //     }
-    //     this.ngZone.runOutsideAngular(() => {
-    //       // everytime an event fires change detection gets run, we run these events outside angular to minimise cd change
-    //       // setTimeout allows me delay so that i am confirmed access the nativeElement
-    //       window.setTimeout(() => {
-    //         // handle scroll event on angular,
-    //         if (this.overflowContainer && this.overflowContainer.nativeElement) {
-    //           this.overflowContainer.nativeElement.addEventListener(
-    //             'scroll',
-    //             this.hideArrow,
-    //             { passive: true }
-    //           );
-    //           this.overflowContainer.nativeElement.addEventListener(
-    //             'click',
-    //             this.hideArrow
-    //           );
-    //         }
-    //       }, 0);
-    //     });
-    //   },
-    //   () => this.router.navigate(['/wallet'])
-    // );
+          }, 0);
+        });
+      },
+      () => this.router.navigate(['/wallet'])
+    );
   }
 
   public ngOnDestroy(): void {
