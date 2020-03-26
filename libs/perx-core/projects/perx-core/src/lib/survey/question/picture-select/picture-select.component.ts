@@ -1,4 +1,4 @@
-import { IAnswer, ITracker } from './../../models/survey.model';
+import { IAnswer, ITracker } from '../../models/survey.model';
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 
 interface IPayloadPictureSelect {

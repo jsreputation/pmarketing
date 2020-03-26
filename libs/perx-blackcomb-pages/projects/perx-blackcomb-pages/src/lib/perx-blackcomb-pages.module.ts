@@ -75,6 +75,7 @@ import { QuizResultsComponent } from './quiz-results/quiz-results.component';
 import { LuckyDrawDetailsComponent } from './lucky-draw-details/lucky-draw-details.component';
 import { CampaignLandingPageComponent } from './campaign-landing-page/campaign-landing-page.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
 import { ReferralComponent } from './referral/referral.component';
 
 const comps: any[] = [
@@ -114,6 +115,7 @@ const comps: any[] = [
   LuckyDrawDetailsComponent,
   CampaignLandingPageComponent,
   ForgotPasswordComponent,
+  LandingPageComponent,
   ReferralComponent,
 ];
 

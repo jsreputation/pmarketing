@@ -1,4 +1,4 @@
-import { ISurvey } from './../../survey/models/survey.model';
+import { ISurvey } from '../../survey/models/survey.model';
 import { HttpClient } from '@angular/common/http';
 import { Config } from '../../config/config';
 import { Observable, throwError } from 'rxjs';

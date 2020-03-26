@@ -1,4 +1,4 @@
-import { IWAssignedAttributes } from './../voucher/assigneds';
+import { IWAssignedAttributes } from '../voucher/assigneds';
 import { IJsonApiItem } from '../../public-api';
 
 export interface IWInstantOutcomeTransactionAttributes {
