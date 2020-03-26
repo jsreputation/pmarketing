@@ -14,7 +14,6 @@ import {
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { AnalyticsService, IEvent, PageType } from './analytics.service';
-
 export interface IdataLayerSH {
   pageName: string;
   channel: string;
@@ -115,7 +114,8 @@ export class AppComponent implements OnInit {
       switchMap(() => this.loyaltyService.getLoyalty()),
       switchMap(() => this.profileService.whoAmI())
     ).subscribe((profile: IProfile) => {
-      (window as any).dataLayer.push({ user_properties: { identifier: profile.identifier } });
+      (window as any).dataLayer.push({user_properties: {identifier: profile.identifier}});
+      (window as any).appboy.changeUser(profile.identifier);
     });
   }
 
