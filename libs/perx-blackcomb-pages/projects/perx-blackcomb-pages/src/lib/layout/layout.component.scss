@@ -10,9 +10,9 @@
 .toolbar {
   @include toolbar();
 
-  .header-title {
-    color: var(--font_color);
-  }
+  // .header-title {
+  //   color: var(--font_color);
+  // }
 }
 
 .main-app-container {
