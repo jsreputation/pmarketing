@@ -54,6 +54,7 @@ export { AuthenticationService, RequiresOtpError } from './lib/auth/authenticati
 export { TokenStorage } from './lib/utils/storage/token-storage.service';
 export { IChangePasswordData, IChangePhoneData, ISignUpData } from './lib/auth/authentication/models/authentication.model';
 export { IFormsService } from './lib/auth/authentication/iforms.service';
+export { ProtectedGuard } from './lib/auth/authentication/protected.guard';
 
 /**
  * Campaigns
