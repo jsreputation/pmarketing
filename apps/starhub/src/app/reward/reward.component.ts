@@ -37,6 +37,10 @@ export class RewardComponent implements OnInit {
       )
       .subscribe((reward: IReward) => {
         this.reward = reward;
+        (window as any).appboy.logCustomEvent(
+          'user_view_reward',
+          {'reward_id': reward.id, 'reward_name': reward.name}
+        );
         if (reward.categoryTags && reward.categoryTags.length > 0) {
           const category = reward.categoryTags[0].title;
           this.analyticsService.addEvent({
