@@ -48,7 +48,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
   private hideArrow = () => this.overFarrow.nativeElement.classList.add('hidden');
   private isAnonymousUser: boolean;
   private informationCollectionSetting: string;
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
   private popupData: IPopupConfig;
   public successPopUp: IPopupConfig = {
     title: 'SURVEY_SUCCESS_TITLE',
@@ -106,7 +106,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
     private auth: AuthenticationService,
     private cd: ChangeDetectorRef,
     private ngZone: NgZone
-  ) {}
+  ) { }
 
   public ngOnInit(): void {
     this.initTranslate();
