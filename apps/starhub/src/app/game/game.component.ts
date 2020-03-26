@@ -26,7 +26,7 @@ export class GameComponent implements OnInit {
   public gameData$: Observable<IGame>;
   public game: IGame;
   public gameTransaction: IEngagementTransaction;
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
   public willWin: boolean = false;
 
   constructor(

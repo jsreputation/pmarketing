@@ -22,7 +22,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
   public errorMessage: string | null;
   public preAuth: boolean;
   public failedAuth: boolean;
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
   public theme: Observable<ITheme>;
   public appConfig: IConfig<ISigninConfig>;
   public appAccessTokenFetched: boolean;

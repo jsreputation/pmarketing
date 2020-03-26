@@ -44,7 +44,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
   private campaignId: number | null = null;
   private campaignData: ICampaign | null = null;
 
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
   private appConfig: IConfig<void>;
 
   constructor(
