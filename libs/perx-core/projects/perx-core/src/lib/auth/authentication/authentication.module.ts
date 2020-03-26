@@ -19,6 +19,7 @@ import { V4FormsService } from './v4-forms.service';
 import { TokenStorage } from '../../utils/storage/token-storage.service';
 import { UtilsModule } from '../../utils/utils.module';
 import { ConfigService } from '../../config/config.service';
+import { ProtectedGuard } from './protected.guard';
 
 export function AuthServiceFactory(
   http: HttpClient,
@@ -46,6 +47,7 @@ export function FormsServiceFactory(config: Config, http: HttpClient): IFormsSer
   declarations: [],
   exports: [],
   providers: [
+    ProtectedGuard,
     { provide: PROTECTED_FALLBACK_PAGE_URI, useValue: '/' },
     { provide: PUBLIC_FALLBACK_PAGE_URI, useValue: '/login' },
     {

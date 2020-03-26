@@ -1,8 +1,9 @@
-import { PreAuthGuard } from './pre-auth.guard';
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { ProtectedGuard, PublicGuard } from 'ngx-auth';
+import { RouterModule, Routes } from '@angular/router';
+import { PublicGuard } from 'ngx-auth';
+import { PreAuthGuard } from './pre-auth.guard';
 import { PreLoginGuard } from './pre-login.guard';
+import { ProtectedGuard } from '@perxtech/core';
 
 const routes: Routes = [
   {
