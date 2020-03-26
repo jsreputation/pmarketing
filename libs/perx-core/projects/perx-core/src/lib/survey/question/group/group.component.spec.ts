@@ -11,7 +11,7 @@ import {
   MatRadioModule
 } from '@angular/material';
 import { GroupComponent } from './group.component';
-import { QuestionComponent } from './../question.component';
+import { QuestionComponent } from '../question.component';
 import { SelectComponent } from '../select/select.component';
 import { RatingComponent } from '../rating/rating.component';
 import { PictureSelectComponent } from '../picture-select/picture-select.component';
@@ -19,7 +19,7 @@ import { LongTextComponent } from '../long-text/long-text.component';
 import { DateComponent } from '../date/date.component';
 import { PhoneComponent } from '../phone/phone.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {PasswordComponent} from '../password/password.component';
+import { PasswordComponent } from '../password/password.component';
 
 describe('GroupComponent', () => {
   let component: GroupComponent;
