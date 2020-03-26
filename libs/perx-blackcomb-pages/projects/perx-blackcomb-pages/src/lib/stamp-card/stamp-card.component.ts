@@ -38,7 +38,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
   public stamps: IStamp[] | undefined;
   public stampCard: IStampCard | null;
   private idN: number;
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
   private rewardSuccessPopUp: IPopupConfig = {
     title: 'STAMP_SUCCESS_TITLE',
     buttonTxt: 'VIEW_REWARD'

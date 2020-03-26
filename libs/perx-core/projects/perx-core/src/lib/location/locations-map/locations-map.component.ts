@@ -35,7 +35,7 @@ export class LocationsMapComponent implements OnInit, OnChanges, OnDestroy {
   public userMarker: google.maps.Marker;
   public markersArray: google.maps.Marker[] = [];
   public userLocation: Subject<Position> = new Subject();
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
   @Input()
   public key: string | null = null;
 

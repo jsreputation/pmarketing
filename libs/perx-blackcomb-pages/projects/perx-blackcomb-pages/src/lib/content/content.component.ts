@@ -18,7 +18,7 @@ import { HttpClient } from '@angular/common/http';
 export class ContentComponent implements OnInit, OnDestroy {
   public content$: Observable<string | void>;
   public error$: Subject<boolean> = new Subject<boolean>();
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
   constructor(
     private settingsService: SettingsService,
     private route: ActivatedRoute,

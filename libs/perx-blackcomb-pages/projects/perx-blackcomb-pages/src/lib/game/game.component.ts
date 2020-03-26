@@ -28,7 +28,7 @@ export class GameComponent implements OnInit, OnDestroy {
   private gameId: number;
   private transactionId: number;
   public progressValue: number;
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
   private popupData: IPopupConfig;
   private isAnonymousUser: boolean;
   private informationCollectionSetting: string;
@@ -131,7 +131,7 @@ export class GameComponent implements OnInit, OnDestroy {
           this.fillFailure();
         }
       },
-      (err: {errorState: string} | HttpErrorResponse) => {
+      (err: { errorState: string } | HttpErrorResponse) => {
         if (!(err instanceof HttpErrorResponse) && err.errorState) {
           this.popupData = {
             title: err.errorState,
@@ -159,10 +159,10 @@ export class GameComponent implements OnInit, OnDestroy {
         this.fillFailure();
       }
     },
-    () => {
-      this.popupData = this.noRewardsPopUp;
-      this.redirectUrlAndPopUp(); // wont call preplayConfirm direct away if preplay fail
-    });
+      () => {
+        this.popupData = this.noRewardsPopUp;
+        this.redirectUrlAndPopUp(); // wont call preplayConfirm direct away if preplay fail
+      });
   }
 
   public gameCompletedLoad(): void {
