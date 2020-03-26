@@ -80,7 +80,10 @@ export class GameComponent implements OnInit {
               });
             }
 
-            (window as any).appboy.logCustomEvent('user_view_game');
+            (window as any).appboy.logCustomEvent(
+              'user_view_game',
+              {'game_id': this.game.id, 'campaign_id': this.game.campaignId}
+            );
             this.analytics.addEvent({
               pageName: `rewards:game:${this.title}`,
               pageType: PageType.static,
@@ -139,8 +142,10 @@ export class GameComponent implements OnInit {
         map((game: IPlayOutcome) => game.vouchers),
       ).subscribe(
         (vouchs: Voucher[]) => {
-          (window as any).appboy.logCustomEvent('user_played_game');
-          if (vouchs.length === 0) {
+          (window as any).appboy.logCustomEvent(
+            'user_played_game',
+            {'game_id': this.game.id, 'campaign_id': this.game.campaignId}
+          );          if (vouchs.length === 0) {
             this.showNoRewardsPopUp();
           } else {
             this.gameOutcomeService.setVouchersList(vouchs);
