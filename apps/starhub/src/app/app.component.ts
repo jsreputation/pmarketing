@@ -115,7 +115,9 @@ export class AppComponent implements OnInit {
       switchMap(() => this.profileService.whoAmI())
     ).subscribe((profile: IProfile) => {
       (window as any).dataLayer.push({user_properties: {identifier: profile.identifier}});
-      (window as any).appboy.changeUser(profile.identifier);
+      if ((window as any).appboy) {
+        (window as any).appboy.changeUser(profile.identifier);
+      }
     });
   }
 

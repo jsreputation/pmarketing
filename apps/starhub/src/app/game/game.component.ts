@@ -80,10 +80,12 @@ export class GameComponent implements OnInit {
               });
             }
 
-            (window as any).appboy.logCustomEvent(
-              'user_view_game',
-              {'game_id': this.game.id, 'campaign_id': this.game.campaignId}
-            );
+            if ((window as any).appboy) {
+              (window as any).appboy.logCustomEvent(
+                'user_view_game',
+                {'game_id': this.game.id, 'campaign_id': this.game.campaignId}
+              );
+            }
             this.analytics.addEvent({
               pageName: `rewards:game:${this.title}`,
               pageType: PageType.static,
@@ -141,20 +143,23 @@ export class GameComponent implements OnInit {
       .pipe(
         map((game: IPlayOutcome) => game.vouchers),
       ).subscribe(
-        (vouchs: Voucher[]) => {
+      (vouchs: Voucher[]) => {
+        if ((window as any).appboy) {
           (window as any).appboy.logCustomEvent(
             'user_played_game',
             {'game_id': this.game.id, 'campaign_id': this.game.campaignId}
-          );          if (vouchs.length === 0) {
-            this.showNoRewardsPopUp();
-          } else {
-            this.gameOutcomeService.setVouchersList(vouchs);
-            if (this.game.results && this.game.results.outcome) {
-              this.gameOutcomeService.setOutcome(this.game.results.outcome);
-            }
-            this.router.navigate(['/congrats']);
+          );
+        }
+        if (vouchs.length === 0) {
+          this.showNoRewardsPopUp();
+        } else {
+          this.gameOutcomeService.setVouchersList(vouchs);
+          if (this.game.results && this.game.results.outcome) {
+            this.gameOutcomeService.setOutcome(this.game.results.outcome);
           }
-        },
+          this.router.navigate(['/congrats']);
+        }
+      },
         () => this.showNoRewardsPopUp()
       );
   }
@@ -182,24 +187,25 @@ export class GameComponent implements OnInit {
     this.gameService.play(this.game.id)
       .pipe(
         map((game: IPlayOutcome) => game.vouchers)
-      )
-      .subscribe(
-        (vouchs: Voucher[]) => {
+      ).subscribe(
+      (vouchs: Voucher[]) => {
+        if ((window as any).appboy) {
           (window as any).appboy.logCustomEvent(
             'user_played_game',
             {'game_id': this.game.id, 'campaign_id': this.game.campaignId}
           );
-          if (vouchs.length === 0) {
-            this.showNoRewardsPopUp();
-          } else {
-            this.gameOutcomeService.setVouchersList(vouchs);
-            if (this.game.results && this.game.results.outcome) {
-              this.gameOutcomeService.setOutcome(this.game.results.outcome);
-            }
-            this.router.navigate(['/congrats']);
+        }
+        if (vouchs.length === 0) {
+          this.showNoRewardsPopUp();
+        } else {
+          this.gameOutcomeService.setVouchersList(vouchs);
+          if (this.game.results && this.game.results.outcome) {
+            this.gameOutcomeService.setOutcome(this.game.results.outcome);
           }
-        },
-        () => this.showNoRewardsPopUp()
+          this.router.navigate(['/congrats']);
+        }
+      },
+      () => this.showNoRewardsPopUp()
       );
   }
 
