@@ -1,3 +1,6 @@
+@import "../custom-theme";
+@import "../quiz/_mixins";
+@import "../layout/mixins";
 @import "../content.scss";
 
 .loading {
@@ -7,4 +10,14 @@
   height: 100%;
   width: 100%;
   align-items: center;
+}
+
+.landing-container {
+  @include quizContainer();
+
+  background-color: transparent;
+}
+
+.toolbar {
+  @include toolbar();
 }
