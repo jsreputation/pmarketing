@@ -208,8 +208,10 @@ export class QuizSwipeListComponent implements OnInit {
     // cant splice cause index will change because of mutating, but index will always be the same from payload
     this.answerArr =  this.answerArr.filter((answer) => answer.title !== this.payload.choices[index].title);
     // console.log(this.answerArr, 'see if the filter works');
-    // emit back up our standing answers;
-    this.updateAnswers.emit(this.answerArr);
+    // emit back up our standing answers when there is only one answer left
+    if (this.answerArr.length === 1) { // we need to assume payload is > 1
+      this.updateAnswers.emit(this.answerArr);
+    }
   }
 
   public getLeftPosition(elementReference: HTMLDivElement): number {

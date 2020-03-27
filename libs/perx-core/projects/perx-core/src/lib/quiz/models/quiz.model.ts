@@ -62,7 +62,8 @@ export enum QuizQuestionType {
   pictureChoice = 'picture-select',
   longText = 'long-text',
   multipleChoice = 'select',
-  swipeDelete = 'swipe-delete'
+  swipeDelete = 'swipe-delete',
+  swipeSelect = 'swipe-select'
 }
 
 export interface IErrors {
@@ -96,6 +97,7 @@ export interface Configuration {
   classname?: string;
   disableWarnings?: boolean;
   numberOfDeleteIcon?: number;
+  numberOfSelectIcon?: number;
 }
 
 export enum ListType {
