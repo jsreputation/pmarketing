@@ -82,11 +82,6 @@ const routes: Routes = [
         canActivate: [ProtectedGuard]
       },
       {
-        path: 'c/:key',
-        loadChildren: () => import('../content/content.module').then(mod => mod.ContentModule),
-        canActivate: [ProtectedGuard]
-      },
-      {
         path: 'profile',
         loadChildren: () => import('../profile/profile.module').then(mod => mod.ProfileModule)
       },
