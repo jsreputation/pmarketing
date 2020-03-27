@@ -35,7 +35,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   public questionPointer: number = 0;
   private isAnonymousUser: boolean;
   private informationCollectionSetting: string;
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
   // private popupData: IPopupConfig;
   public complete: boolean = false;
 

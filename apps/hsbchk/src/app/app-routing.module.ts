@@ -1,8 +1,9 @@
-import { PreAuthGuard } from './pre-auth.guard';
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { ProtectedGuard, PublicGuard } from 'ngx-auth';
+import { RouterModule, Routes } from '@angular/router';
+import { PublicGuard } from 'ngx-auth';
+import { PreAuthGuard } from './pre-auth.guard';
 import { PreLoginGuard } from './pre-login.guard';
+import { ProtectedGuard } from '@perxtech/core';
 
 const routes: Routes = [
   {
@@ -29,6 +30,11 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('./layout/layout.module').then((mod) => mod.LayoutModule),
     canActivate: [PreLoginGuard, ProtectedGuard]
+  },
+  {
+    path: 'welcome',
+    loadChildren: () => import('./welcome/welcome.module').then((mod) => mod.WelcomeModule),
+    canActivate: [PublicGuard, PreAuthGuard]
   },
   { path: '**', redirectTo: '/home', canActivate: [ProtectedGuard] },
   { path: '**', redirectTo: '/loading', canActivate: [PublicGuard] },

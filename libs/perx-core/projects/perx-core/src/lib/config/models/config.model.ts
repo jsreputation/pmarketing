@@ -11,7 +11,6 @@ export interface IConfig<T> {
   custom?: T;
   displayProperties?: IWSetting;
 
-
   /* home page flags */
   showHomePage?: boolean;
   showNewsfeedOnHomepage?: boolean;
@@ -31,6 +30,7 @@ export interface IConfig<T> {
   /* Login page */
   showSubtitleLogin?: boolean;
   redirectAfterLogin?: string;
+  redirectBeforeLogin?: string; // this is used for routing the user on the landing page before login
   showForgetPasswordOnLogin?: boolean;
 
   /* Account page */

@@ -2,12 +2,11 @@
   <mat-toolbar class="toolbar mat-elevation-z3" *ngIf="showHeader">
     <mat-icon
       class="backArrow"
-      (click)="backArrowClick()"
-    >
+      (click)="backArrowClick()">
       {{backArrowIcon}}
     </mat-icon>
-    <a class="logoWrapper" [routerLink]="[ '/home' ]">
-      <img *ngIf="!headerTitle" class="logo" [attr.src]="theme.properties['--logo']" [attr.alt]="theme.properties['--title']" />
+    <a class="logoWrapper" *ngIf="!headerTitle" [routerLink]="[ '/home' ]">
+      <img class="logo" [attr.src]="theme.properties['--logo']" [attr.alt]="theme.properties['--title']" />
     </a>
     <span *ngIf="headerTitle" class="header-title">{{headerTitle}}</span>
     <!-- ghost stuff-->

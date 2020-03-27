@@ -14,7 +14,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   public signupForm: FormGroup;
   public errorMessage: string | null;
   public appAccessTokenFetched: boolean = false;
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
   public theme: Observable<ITheme>;
 
   constructor(

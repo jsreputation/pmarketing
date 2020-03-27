@@ -50,7 +50,7 @@ export class RewardComponent implements OnInit, OnDestroy {
     imageUrl: '',
   };
 
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
 
   constructor(
     private outcomeService: InstantOutcomeService,

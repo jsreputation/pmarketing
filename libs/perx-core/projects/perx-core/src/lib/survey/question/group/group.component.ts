@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
-import { IQuestion, IAnswer, ITracker, IPoints } from './../../models/survey.model';
+import { IQuestion, IAnswer, ITracker, IPoints } from '../../models/survey.model';
 
 interface IPayloadGroup {
   type: string;
