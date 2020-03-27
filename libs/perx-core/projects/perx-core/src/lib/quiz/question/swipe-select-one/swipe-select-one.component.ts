@@ -1,4 +1,5 @@
-import { Component,
+import {
+  Component,
   OnInit,
   Input,
   Output,
@@ -17,7 +18,8 @@ import {
 import {
   Configuration,
   Constants,
-  ListType, QuizQuestionType,
+  ListType,
+  QuizQuestionType,
   Warnings
 } from '../../models/quiz.model';
 
