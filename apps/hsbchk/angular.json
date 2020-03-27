@@ -73,10 +73,6 @@
               "buildOptimizer": true,
               "fileReplacements": [
                 {
-                  "replace": "src/index.html",
-                  "with": "src/index.prod.html"
-                },
-                {
                   "replace": "src/app/sign-up/sign-up/sign-up.component.html",
                   "with": "src/app/sign-up/sign-up/sign-up.component.staging.html"
                 },
