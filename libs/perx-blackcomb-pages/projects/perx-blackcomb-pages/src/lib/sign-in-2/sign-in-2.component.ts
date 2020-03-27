@@ -1,4 +1,14 @@
-import { AuthenticationService, NotificationService, Config, ITheme, ThemesService, ConfigService, IConfig, GeneralStaticDataService, ICountryCode } from '@perxtech/core';
+import {
+  AuthenticationService,
+  NotificationService,
+  Config,
+  ITheme,
+  ThemesService,
+  ConfigService,
+  IConfig,
+  GeneralStaticDataService,
+  ICountryCode
+} from '@perxtech/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, Navigation } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';

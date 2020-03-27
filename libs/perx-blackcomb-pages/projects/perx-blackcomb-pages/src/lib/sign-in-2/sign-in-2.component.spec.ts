@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { RouterTestingModule } from '@angular/router/testing';
 import { SignIn2Component } from './sign-in-2.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatFormFieldModule, MatInputModule, MatSelectModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthenticationService, Config, ConfigService, ThemesService } from '@perxtech/core';
 import { TranslateModule } from '@ngx-translate/core';
@@ -59,6 +59,7 @@ describe('SignIn2Component', () => {
         FormsModule,
         MatFormFieldModule,
         MatInputModule,
+        MatSelectModule,
         ReactiveFormsModule,
         NoopAnimationsModule,
         TranslateModule.forRoot()
