@@ -229,6 +229,7 @@ export { QuizLongTextComponent } from './lib/quiz/question/long-text/long-text.c
 export { QuizRatingComponent } from './lib/quiz/question/rating/rating.component';
 export { ResultsComponent } from './lib/quiz/results/results.component';
 export { SecondsToStringPipe } from './lib/quiz/seconds-to-string.pipe';
+export { QuizSwipeOneComponent } from './lib/quiz/question/swipe-select-one/swipe-select-one.component';
 
 /**
  * Config
