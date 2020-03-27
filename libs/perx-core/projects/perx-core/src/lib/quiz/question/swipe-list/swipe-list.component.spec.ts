@@ -2,7 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QuizSwipeListComponent } from './swipe-list.component';
 import {
-  MatDividerModule, MatIconModule,
+  MatDividerModule,
+  MatIconModule,
   MatListModule
 } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';

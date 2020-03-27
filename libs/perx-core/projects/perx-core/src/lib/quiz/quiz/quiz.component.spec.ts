@@ -17,7 +17,7 @@ import { QuizSelectComponent } from '../question/select/select.component';
 import { QuizSwipeListComponent } from '../question/swipe-list/swipe-list.component';
 
 import { QuizComponent } from './quiz.component';
-import { MatListModule, MatDividerModule } from '@angular/material';
+import { MatListModule } from '@angular/material';
 
 describe('QuizComponent', () => {
   let component: QuizComponent;
@@ -46,7 +46,6 @@ describe('QuizComponent', () => {
         MatRadioModule,
         FormsModule,
         MatListModule,
-        MatDividerModule,
         ReactiveFormsModule,
       ]
     })
