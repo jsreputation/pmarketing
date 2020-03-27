@@ -24,7 +24,7 @@ export class PuzzleListComponent implements OnChanges, OnDestroy {
 
   @Output()
   public completed: EventEmitter<void> = new EventEmitter<void>();
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
 
   constructor(private stampService: StampService) { }
 

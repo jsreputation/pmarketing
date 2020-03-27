@@ -12,7 +12,7 @@ import {
   mergeMap,
   toArray,
   switchMap,
-  skip
+  skip, share
 } from 'rxjs/operators';
 
 import {
@@ -280,7 +280,8 @@ export class V4StampService implements StampService {
       map((res: IV4GetStampCardsResponse) => res.data),
       map((stampCards: IV4StampCard[]) => stampCards.map(
         (stampCard: IV4StampCard) => V4StampService.v4StampCardToStampCard(stampCard)
-      ))
+      )),
+      share()
     );
   }
 

@@ -56,7 +56,7 @@ export class SignInComponent implements OnInit, OnDestroy {
   public errorMessage: string | null = null;
   public preAuth: boolean;
   public failedAuth: boolean;
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
   private stateData: IPrePlayStateData;
   private maxRetryTimes: number = 5;
   private retryTimes: number = 0;

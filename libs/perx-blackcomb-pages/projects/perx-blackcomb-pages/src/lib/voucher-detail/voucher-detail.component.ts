@@ -26,7 +26,7 @@ export class VoucherDetailComponent implements OnInit, OnDestroy {
   ) { }
 
   public voucher$: Observable<Voucher>;
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
 
   public ngOnInit(): void {
     this.voucher$ = this.activeRoute.paramMap

@@ -13,7 +13,7 @@ import {
 import { IAnswer, ISurvey, ITracker, IPoints } from '../models/survey.model';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import {QuestionComponent} from '../question/question.component';
+import { QuestionComponent } from '../question/question.component';
 
 @Component({
   selector: 'perx-core-survey',
@@ -49,7 +49,7 @@ export class SurveyComponent implements OnInit, OnChanges, OnDestroy {
 
   public viewChecked: boolean = false;
 
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
 
   public ngOnChanges(changes: SimpleChanges): void {
     const questionPointerChange = changes.questionPointer;

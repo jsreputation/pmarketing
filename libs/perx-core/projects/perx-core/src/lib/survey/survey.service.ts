@@ -1,4 +1,4 @@
-import { ICampaign } from './../campaign/models/campaign.model';
+import { ICampaign } from '../campaign/models/campaign.model';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ISurvey, IQuestion, MaterialColor, IAnswer, SurveyQuestionType, ISurveyOutcome } from './models/survey.model';

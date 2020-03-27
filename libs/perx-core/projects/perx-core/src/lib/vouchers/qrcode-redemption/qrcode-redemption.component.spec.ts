@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 
 import { QrcodeRedemptionComponent } from './qrcode-redemption.component';
 import { VouchersModule } from '../vouchers.module';
-import { ConfigModule } from './../../config/config.module';
+import { ConfigModule } from '../../config/config.module';
 import { IVoucherService } from '../ivoucher.service';
 import { of } from 'rxjs';
 import { IVoucher, VoucherState } from '../models/voucher.model';
