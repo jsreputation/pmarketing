@@ -13,7 +13,7 @@ export interface IConfig<T> {
 
   /* login page flags */
   countryCodePrefix?: string;
-  
+
   /* home page flags */
   showHomePage?: boolean;
   showNewsfeedOnHomepage?: boolean;
