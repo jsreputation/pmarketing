@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import {
@@ -12,7 +12,7 @@ import {
   QuizService,
   IQAnswer,
   ITracker,
-  IPoints, QuizQuestionType
+  IPoints
 } from '@perxtech/core';
 import { Observable, of, Subject } from 'rxjs';
 import {catchError, filter, map, switchMap, takeUntil} from 'rxjs/operators';
@@ -61,7 +61,7 @@ export class QuizComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private auth: AuthenticationService,
     private cd: ChangeDetectorRef,
-    // private ngZone: NgZone
+    private ngZone: NgZone
   ) {
     this.hideArrow = this.hideArrow.bind(this);
   }

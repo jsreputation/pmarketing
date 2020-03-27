@@ -89,13 +89,13 @@ export enum SurveyRatingIcons {
   circleSelected = 'brightness_1',
 }
 
-/** For SlideList Component **/
+// For SlideList Component
 export interface Configuration {
-  slideThreshold ?: number;
-  listType ?: string;
-  classname ?: string;
+  slideThreshold?: number;
+  listType?: string;
+  classname?: string;
   disableWarnings?: boolean;
-  numberOfDeleteIcon?: number
+  numberOfDeleteIcon?: number;
 }
 
 export enum ListType {
@@ -115,15 +115,15 @@ export enum Warnings {
 }
 
 export const Constants = {
-  CONFIG_NOT_LOADED : `You have not provided the configuration values, default will be loaded.`,
-  ADDING_DEFAULT_SLIDE_THRESHOLD: `Will keep it default i.e.`,
-  SLIDE_THRESHOLD_NOT_FOUND: `You have not provided the slideThreshold.`,
-  ZERO_SLIDE_THRESHOLD_NOT_ALLOWED: `slideThreshold value can not be 0 or less than 0.`,
-  MAX_SLIDE_THRESHOLD_NOT_ALLOWED: `slideThreshold value should be less than 50.`,
-  INVALID_SLIDE_THRESHOLD_NOT_ALLOWED: `slideThreshold value is invalid, Expecting number between 0 to 50.`,
+  CONFIG_NOT_LOADED : 'You have not provided the configuration values, default will be loaded.',
+  ADDING_DEFAULT_SLIDE_THRESHOLD: 'Will keep it default i.e.',
+  SLIDE_THRESHOLD_NOT_FOUND: 'You have not provided the slideThreshold.',
+  ZERO_SLIDE_THRESHOLD_NOT_ALLOWED: 'slideThreshold value can not be 0 or less than 0.',
+  MAX_SLIDE_THRESHOLD_NOT_ALLOWED: 'slideThreshold value should be less than 50.',
+  INVALID_SLIDE_THRESHOLD_NOT_ALLOWED: 'slideThreshold value is invalid, Expecting number between 0 to 50.',
   MAX_SLIDE_THRESHOLD: 50,
   MIN_SLIDE_THRESHOLD: 0,
   DEFAULT_SLIDE_THRESHOLD: 50,
   NUMBER_OF_DELETE_ICONS : 2,
-  DEFAULT_CLASS_NAME: `ngstd-main-canvas`
+  DEFAULT_CLASS_NAME: 'ngstd-main-canvas'
 };
