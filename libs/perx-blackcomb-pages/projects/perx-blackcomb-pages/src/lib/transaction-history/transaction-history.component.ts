@@ -10,15 +10,14 @@ import {
   TransactionPipe
 } from '@perxtech/core';
 
-import { ShowTitleInHeader } from '../layout/layout.component';
+// import { ShowTitleInHeader } from '../layout/layout.component';
 
 @Component({
   selector: 'perx-blackcomb-pages-transaction-history',
   templateUrl: './transaction-history.component.html',
   styleUrls: ['./transaction-history.component.scss']
 })
-export class TransactionHistoryComponent implements OnInit, ShowTitleInHeader {
-
+export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader */ {
   public transactions: Observable<ITransactionHistory[]>;
   public purchasesTitleFn: (tr: ITransactionHistory) => string;
   public redemptionsTitleFn: (tr: ITransactionHistory) => string;
@@ -32,9 +31,9 @@ export class TransactionHistoryComponent implements OnInit, ShowTitleInHeader {
   constructor(
     private loyaltyService: LoyaltyService,
     private transactionPipe: TransactionPipe,
-    private datePipe: DatePipe) {
+    private datePipe: DatePipe
+  ) { }
 
-  }
   public ngOnInit(): void {
     this.transactions = this.loyaltyService.getTransactionHistory(this.pageNumber, this.pageSize);
 
@@ -68,7 +67,7 @@ export class TransactionHistoryComponent implements OnInit, ShowTitleInHeader {
     this.pageNumber++;
   }
 
-  public getTitle(): string {
-    return 'Transaction History';
-  }
+  // public getTitle(): string {
+  //   return 'Transaction History';
+  // }
 }
