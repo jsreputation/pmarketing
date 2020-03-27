@@ -11,6 +11,9 @@ export interface IConfig<T> {
   custom?: T;
   displayProperties?: IWSetting;
 
+  /* login page flags */
+  countryCodePrefix?: string;
+  
   /* home page flags */
   showHomePage?: boolean;
   showNewsfeedOnHomepage?: boolean;
