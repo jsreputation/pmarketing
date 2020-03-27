@@ -16,7 +16,6 @@ import { QuizRatingComponent } from './rating/rating.component';
 import { QuizSelectComponent } from './select/select.component';
 import { QuizSwipeListComponent } from './swipe-list/swipe-list.component';
 import {
-  MatDividerModule,
   MatListModule
 } from '@angular/material';
 
@@ -37,7 +36,6 @@ describe('QuizQuestionComponent', () => {
       imports: [
         MatFormFieldModule,
         MatInputModule,
-        MatDividerModule,
         MatButtonModule,
         MatIconModule,
         MatDatepickerModule,

@@ -26,7 +26,6 @@ import { ResultsComponent } from './results/results.component';
 import { V4QuizService } from './v4-quiz.service';
 import { SecondsToStringPipe } from './seconds-to-string.pipe';
 import { HAMMER_GESTURE_CONFIG, HammerGestureConfig } from '@angular/platform-browser';
-import { MatDividerModule } from '@angular/material';
 
 export function quizServiceFactory(http: HttpClient, campaignService: ICampaignService, config: Config): QuizService {
   // Make decision on what to instantiate base on config
@@ -79,8 +78,7 @@ export class MyHammerConfig extends HammerGestureConfig {
     MatNativeDateModule,
     MatCheckboxModule,
     MatRadioModule,
-    MatListModule,
-    MatDividerModule
+    MatListModule
   ],
   providers: [
     {
