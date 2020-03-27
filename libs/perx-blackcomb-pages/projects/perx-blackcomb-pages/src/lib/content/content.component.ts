@@ -1,14 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { map, switchMap, filter, catchError, takeUntil } from 'rxjs/operators';
-import {
-  of,
-  combineLatest,
-  Observable,
-  Subject,
-} from 'rxjs';
-import { ActivatedRoute, Params } from '@angular/router';
-import { SettingsService, PagesObject, AccountPageObject } from '@perxtech/core';
+import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { AccountPageObject, ITheme, PagesObject, SettingsService, ThemesService } from '@perxtech/core';
+import { combineLatest, Observable, of, Subject } from 'rxjs';
+import { catchError, filter, map, switchMap, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-blackcomb-pages-content',
@@ -19,10 +15,15 @@ export class ContentComponent implements OnInit, OnDestroy {
   public content$: Observable<string | void>;
   public error$: Subject<boolean> = new Subject<boolean>();
   private destroy$: Subject<void> = new Subject();
+  public theme: ITheme;
+
   constructor(
     private settingsService: SettingsService,
     private route: ActivatedRoute,
-    private http: HttpClient
+    private http: HttpClient,
+    private themeService: ThemesService,
+    private location: Location,
+    private router: Router
   ) { }
 
   public ngOnInit(): void {
@@ -40,10 +41,20 @@ export class ContentComponent implements OnInit, OnDestroy {
         }),
         takeUntil(this.destroy$)
       );
+
+    this.themeService.getThemeSetting().subscribe(theme => this.theme = theme);
   }
 
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  public goBack(): void {
+    try {
+      this.location.back();
+    } catch {
+      this.router.navigateByUrl('');
+    }
   }
 }

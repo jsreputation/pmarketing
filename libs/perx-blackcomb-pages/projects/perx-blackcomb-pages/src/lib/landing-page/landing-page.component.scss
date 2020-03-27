@@ -10,10 +10,6 @@
 
 .toolbar {
   @include toolbar();
-
-  .logo {
-    height: 100%;
-  }
 }
 
 .landing-content {
