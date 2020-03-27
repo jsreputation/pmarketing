@@ -42,7 +42,7 @@ export class ContentComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       );
 
-    this.themeService.getThemeSetting().subscribe(theme => this.theme = theme)
+    this.themeService.getThemeSetting().subscribe(theme => this.theme = theme);
   }
 
   public ngOnDestroy(): void {
