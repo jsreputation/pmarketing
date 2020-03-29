@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, filter } from 'rxjs/operators';
 import { Config } from '../config/config';
 import { IQAnswer, IQuiz } from './models/quiz.model';
 import { QuizService } from './quiz.service';
@@ -107,6 +107,7 @@ export class V4QuizService implements QuizService {
     return this.http.get<V4GamesResponse>(`${this.baseUrl}/v4/campaigns/${campaignId}/games`)
       .pipe(
         map((res) => res.data),
+        filter((games: V4Game[]) => games.length > 0),
         map((games: V4Game[]) => games[0]),
         map((game: V4Game): IQuiz => ({
           id: game.id,

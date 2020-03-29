@@ -1,50 +1,28 @@
 import { HttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
-import { IJsonApiItem, IJsonApiItemPayload, IWPostAnswerAttributes, IWSurveyEngagementAttributes } from '@perxtech/whistler';
 import { of } from 'rxjs';
-import { ICampaignService } from '../campaign/icampaign.service';
-import { CampaignState, CampaignType, ICampaign } from '../campaign/models/campaign.model';
+// import { ICampaignService } from '../campaign/icampaign.service';
+// import { CampaignState, CampaignType, ICampaign } from '../campaign/models/campaign.model';
 import { ConfigModule } from '../config/config.module';
 import { IQuiz } from './models/quiz.model';
 import { V4QuizService } from './v4-quiz.service';
 
-describe('V4SurveyService', () => {
+describe('V4QuizService', () => {
   let httpClientSpy: Partial<HttpClient>;
   let service: V4QuizService;
-  const mockCampaign: ICampaign = {
-    id: 1,
-    name: 'Survey Campaign',
-    description: '',
-    type: CampaignType.survey, // will be changed to quiz once it's ready
-    state: CampaignState.active,
-    engagementId: 2,
-    endsAt: new Date()
-  };
-  const iCampaignServiceStub: Partial<ICampaignService> = {
-    getCampaign: () => of(mockCampaign)
-  };
-  const noQuestionMockSurvey: IJsonApiItem<IWSurveyEngagementAttributes> = {
-    id: '',
-    type: '',
-    links: {
-      self: ''
-    },
-    attributes: {
-      id: '1',
+  const noQuestionMockQuiz = {
+    id: 2,
+    user_account_id: 3,
+    state: null,
+    campaign_id: 4,
+    game_type: 'quiz',
+    display_properties: {
       title: 'yo',
-      description: 'what are you here for',
-      image_url: '',
-      properties: {},
-      display_properties: {
-        title: 'yoyo',
-        sub_title: '',
-        background_img_url: '',
-        progress_bar_color: '',
-        card_background_img_url: '',
-        questions: []
-      }
-    }
+      questions: []
+    },
+    number_of_tries: 100
   };
+
   const environment = {
     apiHost: 'https://blabla',
     production: false,
@@ -64,7 +42,6 @@ describe('V4SurveyService', () => {
         ConfigModule.forRoot({ ...environment })
       ],
       providers: [
-        { provide: ICampaignService, useValue: iCampaignServiceStub },
         { provide: HttpClient, useValue: httpClientSpy }
       ]
     });
@@ -76,9 +53,11 @@ describe('V4SurveyService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should get a survey from a campaign id', (done: jest.DoneCallback) => {
-    const res: IJsonApiItemPayload<IWSurveyEngagementAttributes> = {
-      data: noQuestionMockSurvey,
+  it('should get a quiz from a campaign id', (done: jest.DoneCallback) => {
+    const res = {
+      data: [
+        noQuestionMockQuiz
+      ],
     };
     getFnSpy.mockReturnValue(of(res));
 
@@ -86,41 +65,24 @@ describe('V4SurveyService', () => {
       .subscribe(
         (s: IQuiz) => {
           expect(s.questions.length).toBe(0);
-          expect(s.title).toBe(noQuestionMockSurvey.attributes.display_properties.title);
+          expect(s.title).toBe('yo');
           done();
         },
         fail
       );
     expect(getFnSpy.mock.calls.length).toBe(1);
-    expect(getFnSpy.mock.calls[0]).toEqual(['https://blabla/survey/engagements/2?campaign_id=42']);
+    expect(getFnSpy.mock.calls[0]).toEqual(['https://blabla/v4/campaigns/42/games']);
   });
 
-  it('should post a survey answers', (done: jest.DoneCallback) => {
-    const res: IJsonApiItemPayload<IWPostAnswerAttributes> = {
+  it('should post a quiz answer', (done: jest.DoneCallback) => {
+    const res = {
       data: {
-        id: '',
-        type: '',
-        links: { self: '' },
-        attributes: {
-          urn: '',
-          created_at: '',
-          updated_at: '',
-          engagement_id: 2,
-          campaign_entity_id: 2,
-          results: {
-            id: '',
-            attributes: {
-              results: []
-            },
-            relationships: {},
-            type: ''
-          }
-        }
+        outcomes: []
       },
     };
     postFnMock.mockReturnValue(of(res));
 
-    service.postQuizAnswer([], 3, 1)
+    service.postQuizAnswer({ questionId: '', content: [] }, 3)
       .subscribe(
         (s: { hasOutcomes: boolean }) => {
           expect(s.hasOutcomes).toBeFalsy();
@@ -130,9 +92,9 @@ describe('V4SurveyService', () => {
       );
     expect(postFnMock.mock.calls.length).toBe(1);
     expect(postFnMock.mock.calls[0]).toEqual([
-      'https://blabla/survey/answers',
-      { data: { type: 'answers', attributes: { engagement_id: 1, campaign_entity_id: 3, content: [] } } },
-      { headers: { 'Content-Type': 'application/vnd.api+json' } }
+      'https://blabla/v4/game_transactions/3',
+      { answer: { answer: [], question_id: '', time_taken: -1 } }
+      // { headers: { 'Content-Type': 'application/vnd.api+json' } }
     ]);
   });
 
