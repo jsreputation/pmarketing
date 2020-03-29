@@ -7,14 +7,30 @@
             <span>{{errorMessage}}</span>
           </div>
         <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-            <mat-form-field appearance="standard" class="full-width__input">
-                <span matPrefix>+852&nbsp;<span class="prefix-spacer"></span></span>
-                <input matInput [placeholder]="'MOBILE' | translate" formControlName="mobileNo" type="number" required>
-                <mat-error *ngIf="signupForm.get('mobileNo').hasError('required')">
-                    <span>Mobile is </span><strong>required</strong>
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="standard" class="full-width__input">
+            <div class="mobile-group">
+                <div class="country-code">
+                    <mat-form-field>
+                        <mat-label>Country Code</mat-label>
+                        <mat-select (selectionChange)="updateCoutryCode($event.source.value)" [value]="countryCode">
+                            <mat-option *ngFor="let country of countriesList$ | async" [value]="country.phone">
+                                <span>{{country.name}}&nbsp;</span>
+                                <span>{{country.phone}}</span>
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="mobile-number">
+                    <mat-form-field appearance="fill">
+                        <mat-label translate>MOBILE</mat-label>
+                        <input matInput [placeholder]="'MOBILE' | translate" formControlName="mobileNo" type="number" required>
+                        <mat-error *ngIf="signupForm.get('mobileNo').hasError('required')">
+                            <span>Mobile is </span><strong>required</strong>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <mat-form-field appearance="fill" class="full-width__input">
+                <mat-label translate>EMAIL</mat-label>
                 <input matInput [placeholder]="'EMAIL' | translate" formControlName="email" required>
                 <mat-error *ngIf="signupForm.get('email').hasError('required')">
                     <span>Email is</span><strong>required</strong>
@@ -23,7 +39,8 @@
                     <span>Incorrect email format</span>
                 </mat-error>
             </mat-form-field>
-            <mat-form-field appearance="standard" class="full-width__input">
+            <mat-form-field appearance="fill" class="full-width__input">
+                <mat-label translate>PASSWORD</mat-label>
                 <input matInput [placeholder]="PASSWORD" formControlName="password" type="password" autocomplete="on" required>
                 <mat-error *ngIf="signupForm.get('password').hasError('required')">
                     <span>Password is </span><strong>required</strong>
@@ -32,7 +49,8 @@
                     <span>Password should be atleast six characters long</span>
                 </mat-error>
             </mat-form-field>
-            <mat-form-field appearance="standard" class="full-width__input">
+            <mat-form-field appearance="fill" class="full-width__input">
+                <mat-label translate>CONFIRM_PASSWORD</mat-label>
                 <input matInput [placeholder]="'CONFIRM_PASSWORD' | translate" formControlName="confirmPassword" type="password" autocomplete="on" required>
                 <mat-error *ngIf="signupForm.get('confirmPassword').hasError('required')">
                     <span>Confirm Password is </span><strong>required</strong>
@@ -41,13 +59,15 @@
                     <span>Password should be atleast six characters long</span>
                 </mat-error>
             </mat-form-field>
-            <mat-form-field appearance="standard" class="full-width__input">
+            <mat-form-field appearance="fill" class="full-width__input">
+                <mat-label translate>NICKNAME</mat-label>
                 <input matInput [placeholder]="'NICKNAME' | translate" formControlName="nickname" required>
                 <mat-error *ngIf="signupForm.get('nickname').hasError('required')">
                     <span>Nickname is </span><strong>required</strong>
                 </mat-error>
             </mat-form-field>
-            <mat-form-field appearance="standard" class="full-width__input">
+            <mat-form-field appearance="fill" class="full-width__input">
+                <mat-label translate>REFERRAL_CODE_OPTIONAL</mat-label>
                 <input matInput [placeholder]="'REFERRAL_CODE_OPTIONAL' | translate" formControlName="referralCode">
             </mat-form-field>
             <div class="checkbox-container">
@@ -55,10 +75,12 @@
                 <span class="wrap-checkbox-text">{{'TERM_AGREE' | translate}} <a href="#" class="terms">Game T&#38;C and PICS.</a></span>
             </div>
             <h2 translate>UPDATE_DETAILS_FOR_LUCKY_DRAW</h2>
-            <mat-form-field appearance="standard" class="full-width__input">
+            <mat-form-field appearance="fill" class="full-width__input">
+                <mat-label translate>FULL_NAME</mat-label>
                 <input matInput [placeholder]="'FULL_NAME' | translate" formControlName="fullName">
             </mat-form-field>
-            <mat-form-field appearance="standard" class="full-width__input">
+            <mat-form-field appearance="fill" class="full-width__input">
+                <mat-label translate>FOUR_DIGITS_HKID</mat-label>
                 <input matInput [placeholder]="'FOUR_DIGITS_HKID' | translate" formControlName="hkid">
             </mat-form-field>
             <div class="checkbox-container">

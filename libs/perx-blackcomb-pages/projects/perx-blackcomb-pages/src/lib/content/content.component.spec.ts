@@ -1,17 +1,14 @@
-import { PagesObject, SettingsService } from '@perxtech/core';
-import { of, ReplaySubject, throwError, Observable, } from 'rxjs';
-import {
-  async,
-  ComponentFixture,
-  TestBed,
-  fakeAsync,
-  flushMicrotasks,
-} from '@angular/core/testing';
-import { ContentComponent } from './content.component';
-import { ActivatedRoute, Params } from '@angular/router';
-import { MatProgressSpinnerModule } from '@angular/material';
-import { TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
+import { async, ComponentFixture, fakeAsync, flushMicrotasks, TestBed } from '@angular/core/testing';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { ActivatedRoute, Params } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
+import { PagesObject, SettingsService, ThemesService } from '@perxtech/core';
+import { Observable, of, ReplaySubject, throwError } from 'rxjs';
+import { ContentComponent } from './content.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ContentComponent', () => {
   let component: ContentComponent;
@@ -24,6 +21,15 @@ describe('ContentComponent', () => {
   };
   const getSpy: jest.Mock = jest.fn();
   const httpClientStub: Partial<HttpClient> = { get: getSpy };
+  const themeServiceStub: Partial<ThemesService> = {
+    getThemeSetting: () => of({
+      name: '',
+      properties: {
+        '--background': 'white',
+        '--font_color': 'blue'
+      }
+    })
+  };
 
   beforeEach(async(() => {
     params = new ReplaySubject<Params>();
@@ -35,12 +41,16 @@ describe('ContentComponent', () => {
       declarations: [ContentComponent],
       imports: [
         MatProgressSpinnerModule,
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
+        MatToolbarModule,
+        MatIconModule,
+        RouterTestingModule
       ],
       providers: [
         { provide: SettingsService, useValue: settingsServiceStub },
         { provide: ActivatedRoute, useValue: activatedRouteStub },
-        { provide: HttpClient, useValue: httpClientStub }
+        { provide: HttpClient, useValue: httpClientStub },
+        { provide: ThemesService, useValue: themeServiceStub }
       ]
     })
       .compileComponents();
