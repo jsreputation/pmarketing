@@ -23,8 +23,8 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.activatedRoute.params
       .pipe(
-        filter((params: Params) => params.id),
-        map((params: Params) => Number.parseInt(params.id, 10)),
+        filter((params: Params) => params.cid),
+        map((params: Params) => Number.parseInt(params.cid, 10)),
         switchMap((id) => this.campaignService.getCampaign(id))
       )
       .subscribe((campaign) => {

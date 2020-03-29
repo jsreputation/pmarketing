@@ -25,7 +25,7 @@ const routes: Routes = [
         canActivate: [ProtectedGuard]
       },
       {
-        path: 'campaign-welcome/:id',
+        path: 'campaign-welcome/:cid',
         loadChildren: () => import('../campaign-landing/campaign-landing.module').then(mod => mod.CampaignLandingModule),
         canActivate: [ProtectedGuard]
       },
