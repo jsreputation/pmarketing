@@ -26,6 +26,7 @@ import {
   RewardsService,
   SettingsService,
   ThemesService,
+  GameType
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
@@ -45,7 +46,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public newsFeedItems: Observable<FeedItem[]>;
   public rewards$: Observable<IReward[]>;
   public games$: Observable<IGame[]>;
-  public gameCampaigns$: Observable<ICampaign[]>;
+  public stampCampaigns$: Observable<ICampaign[]>;
   public tabs$: BehaviorSubject<ITabConfigExtended[]> = new BehaviorSubject<ITabConfigExtended[]>([]);
   public staticTab: ITabConfigExtended[];
   public titleFn: (profile: IProfile) => string;
@@ -235,13 +236,13 @@ export class HomeComponent implements OnInit, OnDestroy {
         switchMap((games: IGame[]) => of(games).pipe(catchError(err => of(err)))),
         takeLast(1)
       );
-    this.gameCampaigns$ = this.campaignService.getCampaigns({ type: CampaignType.stamp })
+    this.stampCampaigns$ = this.campaignService.getCampaigns({ type: CampaignType.stamp })
       .pipe(
         tap((campaigns: ICampaign[]) => this.showCampaigns = campaigns.length > 0),
         takeLast(1)
       );
 
-    this.quizCampaigns$ = this.campaignService.getCampaigns({ type: CampaignType.quiz });
+    this.quizCampaigns$ = this.campaignService.getCampaigns({ gameType: GameType.quiz });
     if (this.appConfig.showNewsfeedOnHomepage) {
       const rssFeeds: IRssFeeds = await this.settingsService.readRssFeeds().toPromise();
       if (!(rssFeeds && rssFeeds.data.length > 0)) {

@@ -3,6 +3,7 @@ import { ICampaign, ICampaignService } from '@perxtech/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { oc } from 'ts-optchain';
 
 @Component({
   selector: 'perx-blackcomb-pages-campaign-landing-page',
@@ -11,6 +12,7 @@ import { Subject } from 'rxjs';
 })
 export class CampaignLandingPageComponent implements OnInit, OnDestroy {
   public campaign: ICampaign | undefined;
+  public config;
   public backgroundUrl: string = '';
   private destroy$: Subject<void> = new Subject();
 
@@ -30,6 +32,7 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
       .subscribe((campaign) => {
         this.backgroundUrl = campaign.campaignBannerUrl || '';
         this.campaign = campaign;
+        this.config = oc(campaign).displayProperties.landingPage();
       });
   }
 

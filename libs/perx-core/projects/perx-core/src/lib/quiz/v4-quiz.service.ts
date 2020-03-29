@@ -3,12 +3,11 @@ import { Injectable } from '@angular/core';
 import {
   IJsonApiItemPayload,
   IWCampaignDisplayProperties,
-  IWPostAnswerAttributes,
   IWProperties,
   IWSurveyEngagementAttributes,
   //  WSurveyQuestionType
 } from '@perxtech/whistler';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { ICampaign, ICampaignService } from '../../public-api';
 import { Config } from '../config/config';
@@ -21,6 +20,18 @@ import {
   //  QuizQuestionType
 } from './models/quiz.model';
 import { QuizService } from './quiz.service';
+
+export interface QuizDisplayProperties {
+  title: string;
+  questions: any[];
+  landing_page: {
+    body: string;
+    media?: { youtube?: string; };
+    heading: string;
+    button_text: string;
+    sub_heading: string;
+  };
+}
 
 @Injectable({
   providedIn: 'root'
@@ -67,52 +78,9 @@ export class V4QuizService implements QuizService {
       );
   }
 
-  public patchQuizAnswer(answers: IQAnswer[], campaignId: number, surveyId: number): Observable<{ hasOutcomes: boolean }> {
-    const body = {
-      data: {
-        type: 'answers',
-        attributes: {
-          engagement_id: surveyId,
-          campaign_entity_id: campaignId,
-          content: answers
-        }
-      }
-    };
-
-    return this.http.patch<IJsonApiItemPayload<IWPostAnswerAttributes>>(`${this.baseUrl}/survey/answers`, body, {
-      headers: { 'Content-Type': 'application/vnd.api+json' }
-    }).pipe(
-      map((res) => {
-        const hasOutcomes = res.data.attributes.results.attributes.results.length > 0;
-        return {
-          hasOutcomes
-        };
-      })
-    );
-  }
-
-  public postQuizAnswer(answers: IQAnswer[], campaignId: number, surveyId: number): Observable<{ hasOutcomes: boolean }> {
-    const body = {
-      data: {
-        type: 'answers',
-        attributes: {
-          engagement_id: surveyId,
-          campaign_entity_id: campaignId,
-          content: answers
-        }
-      }
-    };
-
-    return this.http.post<IJsonApiItemPayload<IWPostAnswerAttributes>>(`${this.baseUrl}/survey/answers`, body, {
-      headers: { 'Content-Type': 'application/vnd.api+json' }
-    }).pipe(
-      map((res) => {
-        const hasOutcomes = res.data.attributes.results.attributes.results.length > 0;
-        return {
-          hasOutcomes
-        };
-      })
-    );
+  // @ts-ignore
+  public postQuizAnswer(answer: IQAnswer, moveId: number): Observable<{ hasOutcomes: boolean }> {
+    return throwError('Not implemented yet');
   }
 
   private static outcomeToGameOutcome(outcome: IWProperties): ISurveyOutcome {

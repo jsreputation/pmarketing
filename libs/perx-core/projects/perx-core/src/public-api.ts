@@ -176,6 +176,7 @@ export { FeedItemPopupComponent } from './lib/utils/feed-item-popup/feed-item-po
 export { StripHtmlPipe } from './lib/utils/directives/striphtml-pipe';
 export { TimerComponent } from './lib/utils/timer/timer.component';
 export { SafeHtmlPipe } from './lib/utils/safe-html.pipe';
+export { SafeUrlPipe } from './lib/utils/safe-url.pipe';
 
 /**
  * Puzzles

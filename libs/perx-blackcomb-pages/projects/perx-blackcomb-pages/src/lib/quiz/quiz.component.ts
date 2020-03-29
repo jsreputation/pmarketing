@@ -154,10 +154,9 @@ export class QuizComponent implements OnInit, OnDestroy {
     // console.log('updateQuizStatus', this.totalLength, this.questionPointer)
     // current questionPointer, WARNING: not implemented yet, stub
     if (this.quizId) {
-      this.quizService.patchQuizAnswer(
-        Object.values(this.answers),
+      this.quizService.postQuizAnswer(
+        Object.values(this.answers)[0],
         this.campaignId || 0,
-        this.quizId
       );
     }
   }
@@ -180,9 +179,8 @@ export class QuizComponent implements OnInit, OnDestroy {
         ? of({ hasOutcomes: true })
         : this.quizService
           .postQuizAnswer(
-            Object.values(this.answers),
+            Object.values(this.answers)[0],
             campaignId,
-            surveyId
           )
           .pipe(
             catchError((err: HttpErrorResponse) => {

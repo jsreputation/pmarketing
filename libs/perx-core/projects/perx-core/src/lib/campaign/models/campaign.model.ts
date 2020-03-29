@@ -1,13 +1,22 @@
 import { IReward } from '../../rewards/models/reward.model';
 import { IWCampaignDisplayProperties } from '@perxtech/whistler';
 
+export interface CampaignDisplayProperties extends IWCampaignDisplayProperties {
+  landingPage?: {
+    body: string;
+    media?: { youtube?: string; }
+    heading: string;
+    buttonText: string;
+    subHeading: string;
+  };
+}
+
 export enum CampaignType {
   // eslint-disable-next-line
   give_reward = 'give_reward', // instant_outcome
   stamp = 'stamp', // loyalty
   game = 'game',
-  survey = 'survey',
-  quiz = 'quiz'
+  survey = 'survey'
 }
 
 export enum CampaignState {
@@ -30,7 +39,7 @@ export interface ICampaign {
   campaignBannerUrl?: string;
   engagementId?: number;
   rawPayload?: any;
-  displayProperties?: IWCampaignDisplayProperties;
+  displayProperties?: CampaignDisplayProperties;
 }
 
 export enum CommChannel {
