@@ -18,7 +18,8 @@ import {
   IConfig,
   ConfigService,
   TokenStorage,
-  LanguageService
+  LanguageService,
+  CampaignServiceModule
 } from '@perxtech/core';
 import {
   MatToolbarModule,
@@ -137,6 +138,7 @@ export const setLanguage = (
     MatCheckboxModule,
     HttpClientModule,
     CampaignModule,
+    CampaignServiceModule.forRoot(),
     RewardsModule,
     NgxBarcodeModule,
     TranslateModule.forRoot({

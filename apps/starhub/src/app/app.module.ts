@@ -40,6 +40,7 @@ import {
   TokenStorage,
   LanguageService,
   LoyaltyModule,
+  CampaignServiceModule,
 } from '@perxtech/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -156,6 +157,7 @@ export const appInit =
     LocationModule,
     ScrollingModule,
     CampaignModule,
+    CampaignServiceModule.forRoot(),
     MerchantsModule,
     QRCodeModule,
     NgxBarcodeModule,
