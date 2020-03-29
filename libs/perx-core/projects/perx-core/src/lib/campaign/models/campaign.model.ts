@@ -1,14 +1,20 @@
 import { IReward } from '../../rewards/models/reward.model';
-import { IWCampaignDisplayProperties } from '@perxtech/whistler';
+import { WInformationCollectionSettingType, IWProperties } from '@perxtech/whistler';
 
-export interface CampaignDisplayProperties extends IWCampaignDisplayProperties {
-  landingPage?: {
-    body: string;
-    media?: { youtube?: string; }
-    heading: string;
-    buttonText: string;
-    subHeading: string;
-  };
+export interface CampaignDisplayProperties {
+  landingPage?: CampaignLandingPage;
+  informationCollectionSetting?: WInformationCollectionSettingType;
+  weblink?: boolean;
+  noRewardsPopUp?: IWProperties;
+  successPopUp?: IWProperties;
+}
+
+export interface CampaignLandingPage {
+  body: string;
+  media?: { youtube?: string; };
+  heading: string;
+  buttonText: string;
+  subHeading: string;
 }
 
 export enum CampaignType {

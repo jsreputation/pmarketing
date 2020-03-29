@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ICampaign, ICampaignService } from '@perxtech/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { filter, map, switchMap } from 'rxjs/operators';
+import { CampaignLandingPage, ICampaign, ICampaignService } from '@perxtech/core';
 import { Subject } from 'rxjs';
+import { filter, map, switchMap } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 
 @Component({
@@ -12,7 +12,7 @@ import { oc } from 'ts-optchain';
 })
 export class CampaignLandingPageComponent implements OnInit, OnDestroy {
   public campaign: ICampaign | undefined;
-  public config;
+  public config: CampaignLandingPage | undefined;
   public backgroundUrl: string = '';
   private destroy$: Subject<void> = new Subject();
 
