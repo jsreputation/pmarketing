@@ -70,10 +70,10 @@ export class QuizComponent implements OnInit, OnDestroy {
     this.initTranslate();
     this.isAnonymousUser = this.auth.getAnonymous();
     this.data$ = this.route.paramMap.pipe(
-      filter((params: ParamMap) => params.has('id')),
-      map((params: ParamMap) => params.get('id')),
-      map((id: string) => Number.parseInt(id, 10)),
-      switchMap((idN: number) => this.quizService.getQuizFromCampaign(idN)),
+      filter((params: ParamMap) => params.has('cid')),
+      map((params: ParamMap) => params.get('cid')),
+      map((cid: string) => Number.parseInt(cid, 10)),
+      switchMap((cidN: number) => this.quizService.getQuizFromCampaign(cidN)),
       filter(quiz => !!quiz),
       takeUntil(this.destroy$)
     );

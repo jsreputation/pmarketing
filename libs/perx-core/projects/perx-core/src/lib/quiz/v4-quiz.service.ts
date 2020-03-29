@@ -1,24 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  IJsonApiItemPayload,
-  IWCampaignDisplayProperties,
-  IWProperties,
-  IWSurveyEngagementAttributes,
-  //  WSurveyQuestionType
-} from '@perxtech/whistler';
-import { Observable, throwError } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
-import { ICampaign, ICampaignService } from '../../public-api';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Config } from '../config/config';
-import {
-  IQAnswer,
-  // IQQuestion,
-  IQuiz,
-  ISurveyOutcome,
-  MaterialColor,
-  //  QuizQuestionType
-} from './models/quiz.model';
+import { IQAnswer, IQuiz } from './models/quiz.model';
 import { QuizService } from './quiz.service';
 
 export interface QuizDisplayProperties {
@@ -33,6 +18,78 @@ export interface QuizDisplayProperties {
   };
 }
 
+interface V4NextMoveResponse {
+  data: {
+    acquired_via: string;
+    id: number;
+    user_account_id: number;
+    state: string;
+    campaign_id: number;
+    game_id: number;
+    outcomes: any[],
+    reason: null;
+    issued_at: string;
+    created_by_type: string;
+    created_by_id: number;
+    expiry_date: null | string;
+    answers: any[];
+  };
+}
+
+interface V4QuizAnswerRequest {
+  answer: V4AnswerRequest;
+}
+
+interface V4AnswerRequest {
+  question_id: string;
+  answer: string[];
+  time_taken: number;
+}
+
+interface V4AnswerResponse extends V4AnswerRequest {
+  is_correct: boolean;
+  score: number;
+}
+
+interface V4QuizAnswerResponse {
+  data: {
+    id: number;
+    user_account_id: 321;
+    state: string;
+    campaign_id: number;
+    game_id: number;
+    move_params: {
+      answers: V4AnswerResponse[];
+    };
+    outcomes: any[];
+  };
+}
+
+interface V4Game {
+  id: number;
+  user_account_id: number;
+  state: null;
+  campaign_id: number;
+  game_type: string;
+  display_properties: QuizDisplayProperties;
+  number_of_tries: number;
+}
+
+interface V4GamesResponse {
+  data: V4Game[];
+  meta: {
+    count: number;
+    size: number;
+    page: number;
+    current_page: number;
+    per_page: number;
+    prev_page: null;
+    next_page: null;
+    total_pages: number;
+    total_count: number;
+  };
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -41,80 +98,40 @@ export class V4QuizService implements QuizService {
 
   constructor(
     private http: HttpClient,
-    private campaignService: ICampaignService,
-    config: Config,
+    config: Config
   ) {
     this.baseUrl = config.apiHost || '';
   }
 
-  public getQuizFromCampaign(id: number): Observable<IQuiz> {
-    let disProp: IWCampaignDisplayProperties | undefined;
-    return this.campaignService.getCampaign(id)
+  public getQuizFromCampaign(campaignId: number): Observable<IQuiz> {
+    return this.http.get<V4GamesResponse>(`${this.baseUrl}/v4/campaigns/${campaignId}/games`)
       .pipe(
-        switchMap(
-          (campaign: ICampaign) => {
-            disProp = campaign.displayProperties;
-            return this.http.get<IJsonApiItemPayload<IWSurveyEngagementAttributes>>(
-              `${this.baseUrl}/survey/engagements/${campaign.engagementId}?campaign_id=${id}`
-            );
-          }
-        ),
-        // tap(s => console.error('got survey', s)),
-        map((res: IJsonApiItemPayload<IWSurveyEngagementAttributes>) => {
-          const surveyData = V4QuizService.WQuizToQuiz(res);
-          const results: { [key: string]: ISurveyOutcome } = {};
-          if (disProp && disProp.successPopUp) {
-            results.outcome = V4QuizService.outcomeToGameOutcome(disProp.successPopUp);
-          }
-          if (disProp && disProp.noRewardsPopUp) {
-            results.noOutcome = V4QuizService.outcomeToGameOutcome(disProp.noRewardsPopUp);
-          }
-          return {
-            ...surveyData,
-            results,
-            displayProperties: { ...surveyData.displayProperties, ...disProp }
-          };
-        })
+        map((res) => res.data),
+        map((games: V4Game[]) => games[0]),
+        map((game: V4Game): IQuiz => ({
+          title: game.display_properties.title,
+          results: {},
+          questions: game.display_properties.questions
+        }))
       );
   }
 
-  // @ts-ignore
+  public getMove(gameId: number): Observable<{ moveId: number; }> {
+    return this.http.get<V4NextMoveResponse>(`${this.baseUrl}/v4/games/${gameId}/next_move`)
+      .pipe(
+        map((api) => ({ moveId: api.data.id }))
+      );
+  }
+
   public postQuizAnswer(answer: IQAnswer, moveId: number): Observable<{ hasOutcomes: boolean }> {
-    return throwError('Not implemented yet');
-  }
-
-  private static outcomeToGameOutcome(outcome: IWProperties): ISurveyOutcome {
-    return {
-      title: outcome.headLine ? outcome.headLine : '',
-      subTitle: outcome.subHeadLine ? outcome.subHeadLine : '',
-      button: outcome.buttonTxt ? outcome.buttonTxt : '',
-      image: outcome.imageURL
+    const payload: V4QuizAnswerRequest = {
+      answer: {
+        question_id: answer.questionId,
+        answer: answer.content,
+        time_taken: answer.timeTaken || -1
+      }
     };
-  }
-
-  // private static WQTypeToQType(t: WSurveyQuestionType): QuizQuestionType {
-  //   // todo have a smarter mapping
-  //   return t as unknown as QuizQuestionType;
-  // }
-
-  private static WQuizToQuiz(survey: IJsonApiItemPayload<Partial<IWSurveyEngagementAttributes>>): IQuiz {
-    const dp = survey.data.attributes.display_properties;
-    if (dp) {
-      // const questions: IQQuestion[] = dp.questions.map(q => {
-      //   const payload = { ...q.payload, type: V4QuizService.WQTypeToQType(q.payload.type) };
-      //   return { ...q, payload };
-      // });
-      return {
-        id: survey.data.id,
-        title: dp.title || '',
-        subTitle: dp.sub_title,
-        progressBarColor: MaterialColor[dp.progress_bar_color],
-        cardBackgroundImgUrl: dp.card_background_img_url,
-        backgroundImgUrl: dp.background_img_url,
-        questions: [],
-        results: {}
-      };
-    }
-    throw new Error('Display properties does not exist for mapping to occur');
+    return this.http.post<V4QuizAnswerResponse>(`${this.baseUrl}/v4/game_transactions/${moveId}`, payload)
+      .pipe(map(res => ({ hasOutcomes: res.data.outcomes.length > 0 })));
   }
 }

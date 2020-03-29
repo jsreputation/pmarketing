@@ -43,7 +43,7 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
 
   public next(): void {
     if (this.campaign) {
-      this.router.navigate([`${this.campaign.type}/${this.campaign.id}`]);
+      this.router.navigate([`quiz/${this.campaign.id}`]);
     }
   }
 }

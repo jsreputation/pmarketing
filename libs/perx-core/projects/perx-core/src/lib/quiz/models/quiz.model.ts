@@ -3,6 +3,7 @@ import { IWCampaignDisplayProperties } from '@perxtech/whistler';
 export interface IQAnswer {
   questionId: string;
   content: any;
+  timeTaken?: number; // in seconds
 }
 
 export interface IPoints {
