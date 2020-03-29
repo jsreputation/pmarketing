@@ -109,6 +109,7 @@ export class V4QuizService implements QuizService {
         map((res) => res.data),
         map((games: V4Game[]) => games[0]),
         map((game: V4Game): IQuiz => ({
+          id: game.id,
           title: game.display_properties.title,
           results: {},
           questions: game.display_properties.questions

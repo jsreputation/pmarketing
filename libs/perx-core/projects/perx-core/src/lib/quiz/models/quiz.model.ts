@@ -44,7 +44,7 @@ export interface ISurveyOutcome {
 }
 
 export interface IQuiz {
-  id?: string;
+  id?: number;
   title: string;
   subTitle?: string;
   progressBarColor?: MaterialColor;
