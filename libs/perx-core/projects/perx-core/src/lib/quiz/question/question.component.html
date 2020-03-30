@@ -29,11 +29,11 @@
             *ngIf="question.payload.type === quizQuestionType.longText"
             [payload]="question.payload"
             (updateAnswers)="updateAnswer($event)"></perx-core-quiz-long-text>
-      <perx-core-swipe-one
+      <perx-core-swipe-select
             *ngIf="question.payload.type === quizQuestionType.swipeSelect"
             [payload]="question.payload"
             (updateAnswers)="updateAnswer($event)"
-      ></perx-core-swipe-one>
+      ></perx-core-swipe-select>
         <div
             class="error-message">
             <div [ngClass]="{ error: errorState?.isRequired }">

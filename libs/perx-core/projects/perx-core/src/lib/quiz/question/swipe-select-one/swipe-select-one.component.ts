@@ -29,7 +29,7 @@ interface IPayloadSwipeOne {
 }
 
 @Component({
-  selector: 'perx-core-swipe-one',
+  selector: 'perx-core-swipe-select',
   templateUrl: './swipe-select-one.component.html',
   styleUrls: ['./swipe-select-one.component.scss'],
   animations: [
