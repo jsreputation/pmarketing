@@ -14,7 +14,6 @@ import {
   CampaignModule,
   LoyaltyModule,
   OutcomeModule,
-  GameServiceModule,
   RewardPopupComponent,
   RewardsModule,
   UtilsModule,
@@ -45,7 +44,6 @@ const routes: Routes = [{
     CampaignModule,
     CampaignServiceModule.forChild(),
     OutcomeModule,
-    // GameServiceModule.forChild()
   ],
   exports: [
     HomeComponent,
