@@ -12,6 +12,7 @@ import {
 } from '@perxtech/blackcomb-pages';
 import {
   CampaignModule,
+  GameServiceModule as PerxGameServiceModule,
   ICampaignService,
   LoyaltyModule,
   OutcomeModule,
@@ -43,7 +44,8 @@ const routes: Routes = [{
     InfiniteScrollModule,
     MatDialogModule,
     CampaignModule,
-    OutcomeModule
+    OutcomeModule,
+    PerxGameServiceModule.forChild()
   ],
   exports: [
     HomeComponent,
