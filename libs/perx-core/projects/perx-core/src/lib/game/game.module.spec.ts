@@ -2,7 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { HttpClient } from '@angular/common/http';
 import { IVoucherService } from '../vouchers/ivoucher.service';
-import { gameServiceFactory } from './game.module';
+import { gameServiceFactory } from './game.service.module';
 import { V4GameService } from './v4-game.service';
 import { WhistlerGameService } from './whist-game.service';
 import { ConfigService } from '../../public-api';
