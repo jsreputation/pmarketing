@@ -1,4 +1,14 @@
-import { AuthenticationService, NotificationService, Config, ITheme, ThemesService, ConfigService, IConfig } from '@perxtech/core';
+import {
+  AuthenticationService,
+  NotificationService,
+  Config,
+  ITheme,
+  ThemesService,
+  ConfigService,
+  IConfig,
+  GeneralStaticDataService,
+  ICountryCode
+} from '@perxtech/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, Navigation } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
@@ -27,6 +37,9 @@ export class SignIn2Component implements OnInit, OnDestroy {
   public appConfig: IConfig<ISigninConfig>;
   public appAccessTokenFetched: boolean;
   private custId: string;
+  public countryCodePrefix: string | undefined;
+  public countryCode: string;
+  public countriesList$: Observable<ICountryCode[]>;
 
   constructor(
     private router: Router,
@@ -36,7 +49,8 @@ export class SignIn2Component implements OnInit, OnDestroy {
     private themesService: ThemesService,
     private config: Config,
     private configService: ConfigService,
-    public translate: TranslateService
+    public translate: TranslateService,
+    public generalStaticDataService: GeneralStaticDataService
   ) {
     this.preAuth = this.config.preAuth ? this.config.preAuth : false;
     const nav: Navigation | null = this.router.getCurrentNavigation();
@@ -45,7 +59,15 @@ export class SignIn2Component implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.initForm();
-    this.configService.readAppConfig<ISigninConfig>().subscribe((conf) => this.appConfig = conf);
+    this.configService.readAppConfig<ISigninConfig>().subscribe((conf) => {
+      this.appConfig = conf;
+      this.countryCodePrefix = conf.countryCodePrefix;
+    });
+    this.countriesList$ = this.generalStaticDataService.getCountriesList([
+      'Hong Kong',
+      'Philippines',
+      'Singapore'
+    ]);
     const token = this.authService.getAppAccessToken();
     if (token) {
       this.appAccessTokenFetched = true;
@@ -79,7 +101,8 @@ export class SignIn2Component implements OnInit, OnDestroy {
 
   public onSubmit(): void {
     const customerIdField = this.loginForm.get('customerID');
-    const username: string = customerIdField !== null && customerIdField.value ? customerIdField.value : '';
+    const username: string = customerIdField !== null &&
+      customerIdField.value ? `${this.countryCodePrefix ? this.countryCodePrefix : this.countryCode}${customerIdField.value}` : '';
     const pwdField = this.loginForm.get('password');
     const password: string = pwdField ? pwdField.value : '';
     this.errorMessage = null;
@@ -117,5 +140,9 @@ export class SignIn2Component implements OnInit, OnDestroy {
           }
         }
       );
+  }
+
+  public updateCoutryCode(value: string): void {
+    this.countryCode = value.substring(1);
   }
 }

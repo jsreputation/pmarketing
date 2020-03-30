@@ -20,7 +20,7 @@ import {
   ConfigModule,
   CampaignModule,
   OutcomeModule,
-  PopupComponent,
+  PopupComponent, CampaignServiceModule,
 } from '@perxtech/core';
 
 import { environment } from 'src/environments/environment';
@@ -64,6 +64,7 @@ import { NoRenewaleInNamePipe } from './no-renewale-in-name.pipe';
     LoyaltyModule,
     InfiniteScrollModule,
     CampaignModule,
+    CampaignServiceModule.forChild(),
     OutcomeModule
   ],
   bootstrap: [
