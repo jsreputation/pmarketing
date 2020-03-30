@@ -4,6 +4,7 @@ import { V4InstantOutcomeService } from './v4-instant-outcome.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { CampaignModule } from '../campaign/campaign.module';
 import { ConfigModule } from '../config/config.module';
+import { CampaignServiceModule } from '../campaign/campaign.service.module';
 
 describe('V4InstantOutcomeService', () => {
   beforeEach(() =>
@@ -11,6 +12,7 @@ describe('V4InstantOutcomeService', () => {
       imports: [
         HttpClientTestingModule,
         CampaignModule,
+        CampaignServiceModule.forRoot(),
         ConfigModule.forRoot({})
       ]
     })

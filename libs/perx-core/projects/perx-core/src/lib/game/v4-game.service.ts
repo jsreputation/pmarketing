@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, of, combineLatest, throwError } from 'rxjs';
+import { Observable, of, combineLatest, throwError, EMPTY } from 'rxjs';
 import { IGameService } from './igame.service';
 import {
   IGame,
@@ -21,6 +21,7 @@ import {
 import {
   catchError,
   map,
+  shareReplay,
   switchMap,
 } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
@@ -155,6 +156,8 @@ interface IV4GameCampaigns {
 })
 export class V4GameService implements IGameService {
   private hostName: string;
+  public gamesCache: Observable<IGame[]>[] = [];
+
   constructor(
     private httpClient: HttpClient,
     private configService: ConfigService
@@ -285,11 +288,21 @@ export class V4GameService implements IGameService {
   }
 
   public getGamesFromCampaign(campaignId: number): Observable<IGame[]> {
-    return this.httpClient.get<GamesResponse>(`${this.hostName}/v4/campaigns/${campaignId}/games`)
+    if (this.gamesCache[campaignId]) {
+      // retrieving from game store
+      return this.gamesCache[campaignId];
+    }
+    // getting games for the first time
+    return this.gamesCache[campaignId] = this.httpClient.get<GamesResponse>(`${this.hostName}/v4/campaigns/${campaignId}/games`)
       .pipe(
         map(res => res.data),
         map((games: Game[]) => games.filter((game: Game) => game.game_type !== GameType.quiz)),
-        map((games: Game[]) => games.map((game: Game): IGame => V4GameService.v4GameToGame(game)))
+        map((games: Game[]) => games.map((game: Game): IGame => V4GameService.v4GameToGame(game))),
+        shareReplay(1),
+        catchError(_ => {
+          delete this.gamesCache[campaignId];
+          return EMPTY;
+        })
       );
   }
 

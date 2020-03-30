@@ -18,7 +18,8 @@ import {
   AuthenticationService,
   IConfig,
   TokenStorage,
-  LanguageService
+  LanguageService,
+  CampaignServiceModule
 } from '@perxtech/core';
 import { HeaderComponent } from './header/header.component';
 import { GameComponent } from './game/game.component';
@@ -74,6 +75,7 @@ export const setLanguage = (
     RewardsModule,
     AuthenticationModule,
     CampaignModule,
+    CampaignServiceModule.forRoot(),
     StampModule,
     BrowserAnimationsModule,
     HttpClientModule,

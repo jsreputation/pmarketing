@@ -60,6 +60,7 @@ export { ProtectedGuard } from './lib/auth/authentication/protected.guard';
  * Campaigns
  */
 export { CampaignModule } from './lib/campaign/campaign.module';
+export { CampaignServiceModule } from './lib/campaign/campaign.service.module';
 export { ICampaignService, ICampaignFilterOptions } from './lib/campaign/icampaign.service';
 export {
   CampaignType,
@@ -84,7 +85,10 @@ export { StampsCardsListComponent } from './lib/stamp/stamps-cards-list/stamps-c
 /**
  *  Games
  */
-export { GameModule } from './lib/game/game.module';
+export {
+  GameModule
+} from './lib/game/game.module';
+export { GameServiceModule } from './lib/game/game.service.module';
 export {
   IGame,
   GameType,
