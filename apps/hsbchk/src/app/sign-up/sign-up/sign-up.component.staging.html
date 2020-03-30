@@ -91,10 +91,15 @@
                 mat-flat-button
                 type="submit"
                 class="full-width__button"
-                [disabled]="!(signupForm.valid && signupForm.get('accept_terms').value)"
-                translate
-                >
-                SUBMIT
+                [disabled]="!(signupForm.valid && signupForm.get('accept_marketing').value && signupForm.get('accept_terms').value)"
+                translate>
+              <i *ngIf="loadingSubmit" class="loading-spin" >
+                <mat-progress-spinner
+                  [diameter]="30"
+                  mode="indeterminate">
+                </mat-progress-spinner>
+              </i>
+              <span *ngIf="!loadingSubmit">SUBMIT</span>
             </button>
         </form>
     </div>
