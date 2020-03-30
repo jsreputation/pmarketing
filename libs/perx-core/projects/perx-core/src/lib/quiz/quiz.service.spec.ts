@@ -1,8 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
-// import { ICampaignService } from '../campaign/icampaign.service';
-// import { CampaignState, CampaignType, ICampaign } from '../campaign/models/campaign.model';
 import { ConfigModule } from '../config/config.module';
 import { IQuiz } from './models/quiz.model';
 import { V4QuizService } from './v4-quiz.service';
@@ -30,13 +28,13 @@ describe('V4QuizService', () => {
     preAuth: false,
     baseHref: '/'
   };
-  let postFnMock: jest.Mock;
   let getFnSpy: jest.Mock;
+  let putFnMock: jest.Mock;
 
   beforeEach(() => {
-    postFnMock = jest.fn();
     getFnSpy = jest.fn();
-    httpClientSpy = { get: getFnSpy, post: postFnMock };
+    putFnMock = jest.fn();
+    httpClientSpy = { get: getFnSpy, put: putFnMock };
     TestBed.configureTestingModule({
       imports: [
         ConfigModule.forRoot({ ...environment })
@@ -77,10 +75,11 @@ describe('V4QuizService', () => {
   it('should post a quiz answer', (done: jest.DoneCallback) => {
     const res = {
       data: {
-        outcomes: []
+        outcomes: [],
+        answers: []
       },
     };
-    postFnMock.mockReturnValue(of(res));
+    putFnMock.mockReturnValue(of(res));
 
     service.postQuizAnswer({ questionId: '', content: [] }, 3)
       .subscribe(
@@ -90,9 +89,9 @@ describe('V4QuizService', () => {
         },
         fail
       );
-    expect(postFnMock.mock.calls.length).toBe(1);
-    expect(postFnMock.mock.calls[0]).toEqual([
-      'https://blabla/v4/game_transactions/3',
+    expect(putFnMock.mock.calls.length).toBe(1);
+    expect(putFnMock.mock.calls[0]).toEqual([
+      'https://blabla/v4/game_transactions/3/answer_quiz',
       { answer: { answer: [], question_id: '', time_taken: -1 } }
       // { headers: { 'Content-Type': 'application/vnd.api+json' } }
     ]);
