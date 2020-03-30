@@ -15,7 +15,7 @@ import {
 } from '@perxtech/core';
 import { SignUpComponent } from './sign-up.component';
 import { of, Observable, throwError } from 'rxjs';
-import { MatSnackBar, MatInputModule } from '@angular/material';
+import {MatSnackBar, MatInputModule, MatProgressSpinnerModule} from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Location } from '@angular/common';
@@ -106,6 +106,7 @@ describe('SignUpComponent', () => {
           { path: 'wallet', redirectTo: '/' },
           { path: 'login', redirectTo: '/' }
         ]),
+        MatProgressSpinnerModule
       ],
       providers: [
         { provide: IFormsService, useValue: formSvcStub },
