@@ -3,7 +3,15 @@ import {
   MatIconModule,
   MatToolbarModule,
 } from '@angular/material';
-import { GameModule, IGameService, GameType, NotificationService, IPlayOutcome, IGame } from '@perxtech/core';
+import {
+  GameModule,
+  IGameService,
+  GameType,
+  NotificationService,
+  IPlayOutcome,
+  IGame,
+  ConfigService
+} from '@perxtech/core';
 import { GameComponent } from './game.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
@@ -37,7 +45,15 @@ const mockGame: IGame = {
     }
   }
 };
-
+const configServiceStub: Partial<ConfigService> = {
+  readAppConfig: () => of({
+    apiHost: '',
+    production: false,
+    preAuth: false,
+    isWhistler: false,
+    baseHref: ''
+  })
+};
 describe('GameComponent', () => {
   let component: GameComponent;
   let fixture: ComponentFixture<GameComponent>;
@@ -63,6 +79,7 @@ describe('GameComponent', () => {
         { provide: IGameService, useValue: gameServiceStub },
         { provide: Location, useValue: locationStub },
         { provide: NotificationService, useValue: notificationServiceStub },
+        { provide: ConfigService, useValue: configServiceStub },
       ]
     })
       .compileComponents();

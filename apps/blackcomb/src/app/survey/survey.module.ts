@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import {
   SurveyModule as PerxSurveyModule,
   CampaignModule as PerxCampaignModule,
+  CampaignServiceModule as PerxSvcCampaignModule,
   ConfigModule,
   AuthenticationModule,
   // SurveyService
@@ -41,6 +42,7 @@ import { PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
     MatCheckboxModule,
     SurveyRoutingModule,
     PerxCampaignModule,
+    PerxSvcCampaignModule.forChild(),
     PerxSurveyModule,
     AuthenticationModule
   ],

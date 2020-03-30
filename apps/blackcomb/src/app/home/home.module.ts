@@ -8,7 +8,7 @@ import {
   UtilsModule,
   RewardPopupComponent,
   CampaignModule,
-  OutcomeModule
+  OutcomeModule, CampaignServiceModule
 } from '@perxtech/core';
 import {
   HomeComponent,
@@ -40,6 +40,7 @@ const routes: Routes = [{
     InfiniteScrollModule,
     MatDialogModule,
     CampaignModule,
+    CampaignServiceModule.forChild(),
     OutcomeModule
   ],
   exports: [
