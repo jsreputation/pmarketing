@@ -27,4 +27,9 @@
 
     @include form-subtitle;
   }
+
+  .loading-spin {
+    display: inline-block;
+    margin: auto;
+  }
 }

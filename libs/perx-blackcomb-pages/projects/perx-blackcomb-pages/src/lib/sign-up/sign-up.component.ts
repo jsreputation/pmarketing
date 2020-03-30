@@ -48,6 +48,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   private oldAnonymousStatus: boolean;
   public appAccessTokenFetched: boolean;
   public theme: Observable<ITheme>;
+  public loadingSubmit: boolean = false;
 
   constructor(
     private formSvc: IFormsService,
@@ -117,6 +118,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
       if (this.stateData && this.stateData.collectInfo) {
         this.submitDataAndCollectInformation(pi, userObj);
       }
+      this.loadingSubmit = true;
       this.authService.createUserAndAutoLogin(pi, userObj)
         .subscribe(
           () => {

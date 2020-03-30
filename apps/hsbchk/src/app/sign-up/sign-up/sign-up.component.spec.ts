@@ -9,7 +9,8 @@ import {
   MatCheckboxModule,
   MatIconModule,
   MatNativeDateModule,
-  MatDatepickerModule
+  MatDatepickerModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -45,6 +46,7 @@ describe('SignUpComponent', () => {
         MatIconModule,
         MatNativeDateModule,
         MatDatepickerModule,
+        MatProgressSpinnerModule,
         ReactiveFormsModule,
         FormsModule,
         RouterTestingModule,
