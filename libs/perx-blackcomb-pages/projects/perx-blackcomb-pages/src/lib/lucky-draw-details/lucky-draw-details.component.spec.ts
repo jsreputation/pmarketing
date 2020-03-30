@@ -14,12 +14,13 @@ import {
 } from '@perxtech/core';
 import { LuckyDrawDetailsComponent } from './lucky-draw-details.component';
 import { of, Observable } from 'rxjs';
-import { MatSnackBar, MatInputModule } from '@angular/material';
+import {MatSnackBar, MatInputModule, MatFormFieldModule, MatCheckboxModule} from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Location } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { IWAppAccessTokenResponse } from '@perxtech/whistler';
+import {ReactiveFormsModule} from '@angular/forms';
 
 const configStub: Partial<Config> = {
   preAuth: false
@@ -96,6 +97,10 @@ describe('LuckyDrawDetailsComponent', () => {
         MatInputModule,
         HttpClientModule,
         NoopAnimationsModule,
+        MatFormFieldModule,
+        MatCheckboxModule,
+        ReactiveFormsModule,
+        MatInputModule,
         TranslateModule.forRoot(),
         RouterTestingModule.withRoutes([
           { path: 'wallet', redirectTo: '/' },

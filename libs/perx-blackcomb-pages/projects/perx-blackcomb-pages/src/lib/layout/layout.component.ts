@@ -26,7 +26,6 @@ import {
 } from '@perxtech/core';
 
 import { SignIn2Component } from '../sign-in-2/sign-in-2.component';
-import { LuckyDrawDetailsComponent } from '../lucky-draw-details/lucky-draw-details.component';
 import { HomeComponent } from '../home/home.component';
 import { HistoryComponent } from '../history/history.component';
 import { AccountComponent } from '../account/account.component';
@@ -114,8 +113,7 @@ export class LayoutComponent implements OnInit {
       ref instanceof WalletHistoryComponent ||
       ref instanceof ProfileComponent ||
       ref instanceof CampaignStampsComponent ||
-      ref instanceof TransactionHistoryComponent ||
-      ref instanceof LuckyDrawDetailsComponent;
+      ref instanceof TransactionHistoryComponent;
 
     this.headerTitle = (ref.getTitle) ? ref.getTitle() : '';
     this.cd.detectChanges();
