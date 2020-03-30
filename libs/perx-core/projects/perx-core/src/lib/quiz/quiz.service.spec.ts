@@ -93,7 +93,6 @@ describe('V4QuizService', () => {
     expect(putFnMock.mock.calls[0]).toEqual([
       'https://blabla/v4/game_transactions/3/answer_quiz',
       { answer: { answer: [], question_id: '', time_taken: -1 } }
-      // { headers: { 'Content-Type': 'application/vnd.api+json' } }
     ]);
   });
 
