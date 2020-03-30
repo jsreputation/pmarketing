@@ -81,7 +81,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
       accept_terms: [false, Validators.required],
-      accept_marketing: [false, Validators.required]
+      accept_marketing: [false]
     });
   }
 
