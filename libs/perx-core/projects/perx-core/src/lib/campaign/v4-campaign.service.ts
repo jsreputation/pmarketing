@@ -15,6 +15,7 @@ import { IConfig } from '../config/models/config.model';
 import { ConfigService } from '../config/config.service';
 import { TreeDisplayProperties, PinataDisplayProperties, ScratchDisplayProperties, SpinDisplayProperties } from '../game/v4-game.service';
 import { QuizDisplayProperties } from '../quiz/v4-quiz.service';
+import { GameType } from '../game/game.model';
 
 interface IV4Image {
   type: string;
@@ -128,8 +129,12 @@ export class V4CampaignService implements ICampaignService {
     if (filterOptions) {
       Object.keys(filterOptions).forEach(key => {
         if (filterOptions.hasOwnProperty(key)) {
-          if (['type', 'gameType'].includes(key)) {
+          if (key === 'type') {
             params = params.set('campaign_type', filterOptions[key] || '');
+          } else if (key === 'gameType') {
+            if (filterOptions.gameType !== GameType.unknown) {
+              params = params.set('game_type', filterOptions.gameType || '');
+            }
           } else {
             params = params.set(key, filterOptions[key]);
           }

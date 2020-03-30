@@ -4,7 +4,7 @@ import { IQAnswer, IQuiz } from './models/quiz.model';
 export interface IAnswerResult {
   hasOutcomes: boolean;
   points: number;
-};
+}
 
 export abstract class QuizService {
   public abstract getQuizFromCampaign(id: number): Observable<IQuiz>;

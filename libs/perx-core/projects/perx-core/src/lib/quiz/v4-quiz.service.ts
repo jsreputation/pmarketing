@@ -4,7 +4,8 @@ import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 import { Config } from '../config/config';
 import { IQAnswer, IQuiz } from './models/quiz.model';
-import { QuizService } from './quiz.service';
+import { QuizService, IAnswerResult } from './quiz.service';
+import { oc } from 'ts-optchain';
 
 export interface QuizDisplayProperties {
   title: string;
@@ -42,7 +43,7 @@ interface V4QuizAnswerRequest {
 
 interface V4AnswerRequest {
   question_id: string;
-  answer: string[];
+  answer: (string | number)[];
   time_taken: number;
 }
 
@@ -58,9 +59,9 @@ interface V4QuizAnswerResponse {
     state: string;
     campaign_id: number;
     game_id: number;
-    move_params: {
-      answers: V4AnswerResponse[];
-    };
+    // move_params: {
+    answers: V4AnswerResponse[];
+    // };
     outcomes: any[];
   };
 }
@@ -119,13 +120,13 @@ export class V4QuizService implements QuizService {
   }
 
   public getMove(gameId: number): Observable<{ moveId: number; }> {
-    return this.http.get<V4NextMoveResponse>(`${this.baseUrl}/v4/games/${gameId}/next_move`)
+    return this.http.post<V4NextMoveResponse>(`${this.baseUrl}/v4/games/${gameId}/next_move`, null)
       .pipe(
         map((api) => ({ moveId: api.data.id }))
       );
   }
 
-  public postQuizAnswer(answer: IQAnswer, moveId: number): Observable<{ hasOutcomes: boolean }> {
+  public postQuizAnswer(answer: IQAnswer, moveId: number): Observable<IAnswerResult> {
     const payload: V4QuizAnswerRequest = {
       answer: {
         question_id: answer.questionId,
@@ -133,7 +134,13 @@ export class V4QuizService implements QuizService {
         time_taken: answer.timeTaken || -1
       }
     };
-    return this.http.post<V4QuizAnswerResponse>(`${this.baseUrl}/v4/game_transactions/${moveId}`, payload)
-      .pipe(map(res => ({ hasOutcomes: res.data.outcomes.length > 0 })));
+    return this.http.put<V4QuizAnswerResponse>(`${this.baseUrl}/v4/game_transactions/${moveId}/answer_quiz`, payload)
+      .pipe(map(res => {
+        const result = res.data.answers.find(ans => answer.questionId === ans.question_id);
+        return {
+          hasOutcomes: res.data.outcomes.length > 0,
+          points: oc(result).score() || 0
+        };
+      }));
   }
 }

@@ -37,11 +37,11 @@ export class QuizQuestionComponent {
 
   public get quizQuestionType(): typeof QuizQuestionType { return QuizQuestionType; }
 
-  public updateAnswer(content: any): void {
+  public updateAnswer(content: (string | number)[]): void {
     this.question.answer = content.toString();
     const questionId = this.question.id;
     this.updateNonGroupPoint();
-    this.updateAnswers.emit({ questionId, content: content.toString() });
+    this.updateAnswers.emit({ questionId, content });
     this.questionValidation();
   }
 

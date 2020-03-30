@@ -116,13 +116,11 @@ export class QuizComponent implements OnInit, OnDestroy {
     const questionComponentsArr = this.coreComponent.questionComponents.toArray();
     const questionPointer = this.questionPointer;
     // call validate on the particular question
-    if (questionComponentsArr[questionPointer].questionValidation()) {
-      if (this.moveId) {
-        this.pushAnswer(questionPointer).subscribe(() => { });
-        this.resetTimer();
-        this.questionPointer++;
-        this.questionChanged();
-      }
+    if (questionComponentsArr[questionPointer].questionValidation() && this.moveId) {
+      this.pushAnswer(questionPointer).subscribe(() => { });
+      this.resetTimer();
+      this.questionPointer++;
+      this.questionChanged();
     }
   }
 
@@ -143,7 +141,6 @@ export class QuizComponent implements OnInit, OnDestroy {
       this.moveId,
     ).pipe(
       tap((res: IAnswerResult) => {
-        console.log(res);
         this.points[questionPointer] = {
           questionId: answer.questionId,
           question: this.quiz.questions[questionPointer].question,

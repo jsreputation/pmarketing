@@ -2,7 +2,7 @@ import { IWCampaignDisplayProperties } from '@perxtech/whistler';
 
 export interface IQAnswer {
   questionId: string;
-  content: any;
+  content: (string | number)[];
   timeTaken?: number; // in seconds
 }
 
