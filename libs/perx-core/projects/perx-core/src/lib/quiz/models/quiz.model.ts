@@ -62,7 +62,7 @@ export enum QuizQuestionType {
   pictureChoice = 'picture-select',
   longText = 'long-text',
   multipleChoice = 'select',
-  swipeDelete = 'swipe-delete',
+  swipeDelete = 'swipe-eliminate',
   swipeSelect = 'swipe-select'
 }
 

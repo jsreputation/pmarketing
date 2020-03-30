@@ -7,7 +7,7 @@ export const mockQuiz = ({
   subTitle: 'subtitle',
   questions: [{
     id: '0',
-    question: 'why are you gay?',
+    question: 'quiz question 1?',
     required: true,
     payload: {
       type: QuizQuestionType.swipeDelete
@@ -22,7 +22,7 @@ export const mockData$ = of({
   subTitle: 'subtitle',
   questions: [{
     id: '0',
-    question: 'why are you gay?',
+    question: 'quiz question 1?',
     required: true,
     payload: {
       type: QuizQuestionType.swipeDelete,
