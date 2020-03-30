@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProfileComponent, PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
-import { RouterModule, Routes } from '@angular/router';
-import { MatListModule, MatIconModule } from '@angular/material';
-
-const routes: Routes = [{
-  path: '',
-  component: ProfileComponent
-}];
+import { PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
+import {MatListModule, MatIconModule, MatFormFieldModule, MatCheckboxModule, MatInputModule} from '@angular/material';
+import { LuckyDrawComponent } from './lucky-draw/lucky-draw.component';
+import { ProfileRoutingModule } from './profile-routing.module';
+import { TranslateModule } from '@ngx-translate/core';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -15,7 +13,13 @@ const routes: Routes = [{
     MatListModule,
     MatIconModule,
     PerxBlackcombPagesModule,
-    RouterModule.forChild(routes)
-  ]
+    ProfileRoutingModule,
+    TranslateModule,
+    MatFormFieldModule,
+    MatCheckboxModule,
+    ReactiveFormsModule,
+    MatInputModule
+  ],
+  declarations: [LuckyDrawComponent]
 })
 export class ProfileModule { }

@@ -33,6 +33,7 @@ import {
   LanguageService,
   LocaleIdFactory,
   MerchantsModule as PerxMerchantsModule,
+  CampaignServiceModule as PerxCampaignServiceModule,
   OutcomeModule,
   PerxCoreModule,
   ProfileModule,
@@ -138,6 +139,8 @@ export const setLanguage = (
         useClass: LanguageService
       }
     }),
+    PerxCampaignServiceModule.forRoot(),
+    PerxGameServiceModule.forRoot()
     // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   bootstrap: [AppComponent],
