@@ -140,5 +140,10 @@ $heading-font-color: #1b1b25;
     .button-bg-color {
       background: var(--button_background_color) !important;
     }
+
+    .loading-spin {
+      display: inline-block;
+      margin: auto;
+    }
   }
 }

@@ -40,7 +40,8 @@ export const v4Token = (getCredentials: ((url: string) => Promise<ICredentials>)
     res.json(endpointRequest.data);
   } catch (e) {
     if (e.response && e.response.data && e.response.status) {
-      res.status(400).json(e.response.data.error);
+      const errMsg = e.response.data.error || e.response.data.message;
+      res.status(e.response.status).json(errMsg);
     } else {
       next(e);
     }
