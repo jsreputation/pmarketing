@@ -1,13 +1,6 @@
 import { ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import {
-  IQuiz,
-  QuizComponent as QuizCoreComponent,
-  QuizService,
-  IQAnswer,
-  ITracker,
-  IPoints
-} from '@perxtech/core';
+import { IPoints, IQAnswer, IQuiz, ITracker, QuizComponent as QuizCoreComponent, QuizService } from '@perxtech/core';
 import { Observable, Subject } from 'rxjs';
 import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
 
@@ -33,7 +26,6 @@ export class QuizComponent implements OnInit, OnDestroy {
   private moveId: number | undefined;
 
   constructor(
-    // private notificationService: NotificationService,
     private router: Router,
     private route: ActivatedRoute,
     private quizService: QuizService,
@@ -102,13 +94,6 @@ export class QuizComponent implements OnInit, OnDestroy {
 
   public updateQuizStatus(answers: ITracker<IQAnswer>): void {
     this.answers = answers;
-    // current questionPointer, WARNING: not implemented yet, stub
-    if (this.quizId) {
-      this.quizService.postQuizAnswer(
-        Object.values(this.answers)[0],
-        this.campaignId || 0,
-      );
-    }
   }
 
   public done(): void {
@@ -121,9 +106,10 @@ export class QuizComponent implements OnInit, OnDestroy {
       return;
     }
 
+    const answer = Object.values(this.answers)[this.questionPointer];
     this.quizService
       .postQuizAnswer(
-        Object.values(this.answers)[0],
+        answer,
         this.moveId,
       ).subscribe(
         () => this.redirectUrlAndPopUp(),
@@ -136,8 +122,17 @@ export class QuizComponent implements OnInit, OnDestroy {
     const questionComponentsArr = this.coreComponent.questionComponents.toArray();
     // call validate on the particular question
     if (questionComponentsArr[this.questionPointer].questionValidation()) {
-      this.questionPointer++;
-      this.questionChanged();
+      if (this.moveId) {
+        const answer = Object.values(this.answers)[this.questionPointer];
+
+        // current questionPointer, WARNING: not implemented yet, stub
+        this.quizService.postQuizAnswer(
+          { ...answer },
+          this.moveId,
+        );
+        this.questionPointer++;
+        this.questionChanged();
+      }
     }
   }
 
@@ -188,11 +183,5 @@ export class QuizComponent implements OnInit, OnDestroy {
 
   private get quizId(): number | null {
     return this.quiz && this.quiz.id || null;
-  }
-
-  private get campaignId(): number | null {
-    return this.route.snapshot.params.id
-      ? Number.parseInt(this.route.snapshot.params.id, 10)
-      : null;
   }
 }
