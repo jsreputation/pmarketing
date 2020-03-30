@@ -61,7 +61,7 @@ import {
   SettingsModule,
   AuthenticationService,
   ThemesService,
-  IConfig
+  IConfig,
 } from '@perxtech/core';
 
 import * as Hammer from 'hammerjs';

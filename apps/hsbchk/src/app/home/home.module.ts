@@ -14,9 +14,11 @@ import {
   CampaignModule,
   LoyaltyModule,
   OutcomeModule,
+  GameServiceModule,
   RewardPopupComponent,
   RewardsModule,
-  UtilsModule
+  UtilsModule,
+  CampaignServiceModule
 } from '@perxtech/core';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
@@ -41,7 +43,9 @@ const routes: Routes = [{
     InfiniteScrollModule,
     MatDialogModule,
     CampaignModule,
-    OutcomeModule
+    CampaignServiceModule.forChild(),
+    OutcomeModule,
+    // GameServiceModule.forChild()
   ],
   exports: [
     HomeComponent,
