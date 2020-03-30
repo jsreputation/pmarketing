@@ -65,11 +65,11 @@
                 <mat-checkbox formControlName="accept_marketing"></mat-checkbox>
                  <span class="wrap-checkbox-text">{{ 'MARKETING_AGREE' | translate }} ({{ 'LUCKY_DRAW_REFER' | translate }}  ( <a href="#">PICS</a>)</span>
             </div>
-            <button 
-                mat-flat-button 
-                type="submit" 
-                class="full-width__button" 
-                [disabled]="!(signupForm.valid && signupForm.get('accept_marketing').value && signupForm.get('accept_terms').value)" 
+            <button
+                mat-flat-button
+                type="submit"
+                class="full-width__button"
+                [disabled]="!(signupForm.valid && signupForm.get('accept_terms').value)"
                 translate
                 >
                 SUBMIT

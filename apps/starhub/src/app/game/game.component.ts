@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
+  ConfigService,
   IEngagementTransaction,
   IGame,
   IGameService,
@@ -36,12 +37,16 @@ export class GameComponent implements OnInit {
     private notificationService: NotificationService,
     private router: Router,
     private analytics: AnalyticsService,
-    private gameOutcomeService: GameOutcomeService
+    private gameOutcomeService: GameOutcomeService,
+    private configService: ConfigService
   ) {
   }
 
   public ngOnInit(): void {
-    this.gameData$ = this.loadGame();
+    this.configService.readAppConfig().subscribe(
+      () => {
+        this.gameData$ = this.loadGame();
+      });
   }
 
   public loadGame(): Observable<IGame> {

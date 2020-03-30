@@ -6,7 +6,7 @@ import { VouchersModule } from './vouchers/vouchers.module';
 import { PuzzlesModule } from './puzzles/puzzles.module';
 import { AuthenticationModule } from './auth/authentication/authentication.module';
 import { MerchantAdminModule } from './merchant-admin/merchant-admin.module';
-import {UtilsModule} from './utils/utils.module';
+import { UtilsModule } from './utils/utils.module';
 // import { FeedItemPopupComponent } from './utils/feed-item-popup/feed-item-popup.component';
 
 const modules = [
