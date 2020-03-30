@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { IPoints, IQAnswer, IQuiz, ITracker, QuizComponent as QuizCoreComponent, QuizService } from '@perxtech/core';
-import { Observable, Subject } from 'rxjs';
-import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
+import { IAnswerResult, IPoints, IQAnswer, IQuiz, ITracker, QuizComponent as QuizCoreComponent, QuizService } from '@perxtech/core';
+import { Observable, Subject, throwError } from 'rxjs';
+import { filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-blackcomb-quiz',
@@ -24,6 +24,8 @@ export class QuizComponent implements OnInit, OnDestroy {
   private coreComponent: QuizCoreComponent;
   private answers: ITracker<IQAnswer> = {};
   private moveId: number | undefined;
+  private points: ITracker<IPoints> = {};
+  private timer: number;
 
   constructor(
     private router: Router,
@@ -48,6 +50,7 @@ export class QuizComponent implements OnInit, OnDestroy {
       (quiz: IQuiz) => {
         this.quiz = quiz;
         this.fetchMoveId();
+        this.resetTimer();
 
         this.ngZone.runOutsideAngular(() => {
           // everytime an event fires change detection gets run, we run these events outside angular to minimise cd change
@@ -101,17 +104,8 @@ export class QuizComponent implements OnInit, OnDestroy {
   }
 
   public submit(): void {
-    if (!this.moveId) {
-      console.error('cannot go further without a move id');
-      return;
-    }
-
-    const answer = Object.values(this.answers)[this.questionPointer];
-    this.quizService
-      .postQuizAnswer(
-        answer,
-        this.moveId,
-      ).subscribe(
+    this.pushAnswer(this.questionPointer)
+      .subscribe(
         () => this.redirectUrlAndPopUp(),
         () => this.redirectUrlAndPopUp()
       );
@@ -120,16 +114,12 @@ export class QuizComponent implements OnInit, OnDestroy {
   public next(): void {
     // core validate
     const questionComponentsArr = this.coreComponent.questionComponents.toArray();
+    const questionPointer = this.questionPointer;
     // call validate on the particular question
-    if (questionComponentsArr[this.questionPointer].questionValidation()) {
+    if (questionComponentsArr[questionPointer].questionValidation()) {
       if (this.moveId) {
-        const answer = Object.values(this.answers)[this.questionPointer];
-
-        // current questionPointer, WARNING: not implemented yet, stub
-        this.quizService.postQuizAnswer(
-          { ...answer },
-          this.moveId,
-        );
+        this.pushAnswer(questionPointer).subscribe(() => { });
+        this.resetTimer();
         this.questionPointer++;
         this.questionChanged();
       }
@@ -138,6 +128,31 @@ export class QuizComponent implements OnInit, OnDestroy {
 
   public back(): void {
     this.questionPointer--;
+  }
+
+  private pushAnswer(questionPointer: number): Observable<void> {
+    if (!this.moveId) {
+      return throwError('Cannot push answer without move id');
+    }
+
+    const answer = Object.values(this.answers)[questionPointer];
+    const time = this.currentTime - this.timer;
+    // current questionPointer, WARNING: not implemented yet, stub
+    return this.quizService.postQuizAnswer(
+      { ...answer, timeTaken: time },
+      this.moveId,
+    ).pipe(
+      tap((res: IAnswerResult) => {
+        console.log(res);
+        this.points[questionPointer] = {
+          questionId: answer.questionId,
+          question: this.quiz.questions[questionPointer].question,
+          points: res.points,
+          time
+        };
+      }),
+      map(() => (void 0))
+    );
   }
 
   private fetchMoveId(): void {
@@ -166,14 +181,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   }
 
   private redirectUrlAndPopUp(): void {
-    // NL todo temporary stuff until we have a way to get the proper number of points
-    const results: IPoints[] = this.quiz.questions.map(q => ({
-      questionId: q.id,
-      question: q.question,
-      point: Math.random() < .3 ? 0 : 1,
-      time: Math.random() * 20
-    }));
-    const resultsStr = JSON.stringify(results);
+    const resultsStr = JSON.stringify(Object.values(this.points));
     this.router.navigate(['/quiz-results', { results: resultsStr }], { skipLocationChange: true });
   }
 
@@ -183,5 +191,13 @@ export class QuizComponent implements OnInit, OnDestroy {
 
   private get quizId(): number | null {
     return this.quiz && this.quiz.id || null;
+  }
+
+  private resetTimer(): void {
+    this.timer = this.currentTime;
+  }
+
+  private get currentTime(): number {
+    return (new Date()).getTime() / 1000;
   }
 }

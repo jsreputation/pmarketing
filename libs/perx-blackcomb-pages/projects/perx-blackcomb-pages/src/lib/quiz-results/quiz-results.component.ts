@@ -39,7 +39,7 @@ export class QuizResultsComponent implements OnInit {
   }
 
   public get title(): string {
-    const correctAnswers = this.results.reduce((sum, q) => sum + (q.point > 0 ? 1 : 0), 0);
+    const correctAnswers = this.results.reduce((sum, q) => sum + (q.points > 0 ? 1 : 0), 0);
     return `You got ${correctAnswers} out of ${this.results.length} questions correct!`;
   }
 
@@ -52,7 +52,7 @@ export class QuizResultsComponent implements OnInit {
   }
 
   public next(): void {
-    const points = this.results.reduce((sum, p) => sum + p.point, 0);
+    const points = this.results.reduce((sum, p) => sum + p.points, 0);
     const popup: IPopupConfig = {
       title: `Congratulations! You scored ${points} points`,
       text: 'Here\'s a reward for you.',

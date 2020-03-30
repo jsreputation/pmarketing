@@ -1,7 +1,7 @@
 <mat-list>
   <mat-list-item *ngFor="let result of results">
-    <mat-icon mat-list-icon *ngIf="result.point>0" class="correct">check</mat-icon>
-    <mat-icon mat-list-icon *ngIf="result.point===0" class="wrong">close</mat-icon>
+    <mat-icon mat-list-icon *ngIf="result.points>0" class="correct">check</mat-icon>
+    <mat-icon mat-list-icon *ngIf="result.points===0" class="wrong">close</mat-icon>
     <h3 mat-line>{{result.question}}</h3>
     <p mat-line *ngIf="result.time !== undefined">You took <strong>{{result.time | secondsToString}}</strong> to answer
       this.</p>
