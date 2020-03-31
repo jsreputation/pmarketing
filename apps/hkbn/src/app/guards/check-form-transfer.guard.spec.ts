@@ -1,5 +1,4 @@
 import { TestBed, inject, fakeAsync, tick } from '@angular/core/testing';
-// import 'jasmine';
 import { CheckFormTransferGuard } from './check-form-transfer.guard';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AccountSummaryComponent } from '../account/components/account-summary/account-summary.component';
@@ -63,7 +62,7 @@ describe('CheckFormTransferGuard', () => {
     })
   );
 
-  it('should check dataTransfer', inject([CheckFormTransferGuard, DataTransferService, ],
+  it('should check dataTransfer', inject([CheckFormTransferGuard, DataTransferService],
     fakeAsync((guard: CheckFormTransferGuard, dataTransfer: DataTransferService) => {
       fakeRoute.params.id = 'password';
       dataTransfer.newxUpdateData({ passwordConfirmation: password, otp: '999', newPassword: password, oldPassword: password });

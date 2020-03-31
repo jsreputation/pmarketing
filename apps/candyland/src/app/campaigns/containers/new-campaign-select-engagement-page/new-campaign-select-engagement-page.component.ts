@@ -15,6 +15,9 @@ import { ActivatedRoute } from '@angular/router';
 import { ICampaign } from '@cl-core/models/campaign/campaign';
 import { ILimit } from '@cl-core/models/limit/limit.interface';
 import { IEngagementType } from '@cl-core/models/engagement/engagement.interface';
+import { ITenantsProperties } from '@cl-core/models/settings/tenants.properties.interface';
+import { HttpParamsOptions } from '@cl-core/models/params-map';
+import { OptionConfig } from '@perxtech/candyshop';
 
 @Component({
   selector: 'cl-new-campaign-select-engagement-page',
@@ -32,6 +35,8 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
   public hasData: boolean;
   public noData: boolean;
   public templateIndex: number;
+  public campaignEngagementType: string;
+  public templateID: string;
   @ViewChild(MatPaginator, { static: false }) private paginator: MatPaginator;
 
   public get template(): AbstractControl {
@@ -49,7 +54,7 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
     private limitsService: LimitsService,
     private route: ActivatedRoute
   ) {
-    super(0, store, stepConditionService);
+    super(1, store, stepConditionService);
     this.initForm();
     this.initFiltersDefaultValue();
   }
@@ -58,6 +63,7 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
     super.ngOnInit();
     this.initData();
     this.subscribeFormValueChange();
+    this.subscribeStoreChanges();
   }
 
   public ngOnDestroy(): void {
@@ -165,6 +171,19 @@ export class NewCampaignSelectEngagementPageComponent extends AbstractStepWithFo
       .pipe(takeUntil(this.destroy$))
       .subscribe((val) => {
         this.store.updateCampaign(val);
+      });
+  }
+
+  private subscribeStoreChanges(): void {
+    this.store.currentCampaign$
+      .asObservable()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data: ICampaign) => {
+        if (data && data.template && (this.templateID !== data.template.id || !this.templateID)) {
+          this.templateID = data.template.id;
+          this.campaignEngagementType = data.template.attributes_type;
+          this.cd.detectChanges();
+        }
       });
   }
 

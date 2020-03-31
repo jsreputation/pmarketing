@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ProfileService, ProfileModule, AuthenticationService } from '@perx/core';
+import { ProfileService, ProfileModule, AuthenticationService, IProfile } from '@perxtech/core';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -17,29 +17,28 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 class MockComponent {
 }
 
-const userInfo = {
-  birthDate: null,
+const userInfo: IProfile = {
+  birthDate: new Date(),
   customProperties: { fname: 'warren', lname: 'woo', last_4: '1234' },
-  email: null,
-  firstName: null,
-  gender: null,
+  email: '',
+  firstName: '',
+  gender: 'butch',
   id: 59432,
   joinedDate: '2019-07-01T04:04:34.961Z',
   lastName: 'perx',
-  middleName: null,
-  passwordExpiryDate: null,
-  phone: null,
+  middleName: '',
+  passwordExpiryDate: 'forever',
+  phone: '666666',
   state: 'active'
 };
 
-const profileServiceStub = {
+const profileServiceStub: Partial<ProfileService> = {
   whoAmI: () => of(userInfo)
 };
-const dynamicCreateServiceStub = {
-  createComponent: () => {
-  }
+const dynamicCreateServiceStub: Partial<DynamicCreateService> = {
 };
-const authenticationServiceStub = { $failedAuth: of(true), logout: () => { } };
+const authenticationServiceStub: Partial<AuthenticationService> = { $failedAuth: of(true), logout: () => { } };
+
 describe('AccountComponent', () => {
   let component: AccountComponent;
   let fixture: ComponentFixture<AccountComponent>;

@@ -28,22 +28,38 @@ import {
   SidenavMenuModule,
   SmsEditorModule,
   StatusLabelModule,
-  TagListModule,
+  ChipListModule,
   TimePickerModule,
   UserModule,
-  VouchersProgressBarModule
-} from '@perx/candyshop';
+  StatisticsProgressBarModule, ColorPickerModule
+} from '@perxtech/candyshop';
 import { MatIconModule } from '@angular/material/icon';
+import { UPLOAD_FILE_URL } from '../../../../../libs/perx-candyshop/projects/perx-candyshop/src/lib/upload-file/upload-file.module';
+import { CandyshopFileUploaderComponent } from './candyshop-file-uploader/candyshop-file-uploader.component';
+import { CandyshopGraphicUploaderComponent } from './candyshop-graphic-uploader/candyshop-graphic-uploader.component';
+import { MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule, MatSelectModule } from '@angular/material';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
     CandyshopComponent,
     CandyshopSimpleComponent,
     CandyshopFormsComponent,
-    CandyshopMenuComponent
+    CandyshopMenuComponent,
+    CandyshopFileUploaderComponent,
+    CandyshopGraphicUploaderComponent
+  ],
+  providers: [
+    {
+      provide: UPLOAD_FILE_URL,
+      useValue: 'https://api-dev1.uat.whistler.perxtech.io/storage/documents'
+    }
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
     CandyshopRoutingModule,
     ButtonModule,
     CopyLinkModule,
@@ -62,16 +78,23 @@ import { MatIconModule } from '@angular/material/icon';
     SelectGraphicModule,
     SelectGraphicWrapModule,
     UploadGraphicModule.forRoot({}),
-    UploadFileModule.forRoot({}),
+    UploadFileModule,
     SidenavModule,
     SidenavMenuModule,
     SmsEditorModule,
     StatusLabelModule,
-    TagListModule,
+    ChipListModule,
     TimePickerModule,
     UserModule,
-    VouchersProgressBarModule,
-    MatIconModule
+    StatisticsProgressBarModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatCheckboxModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatDatepickerModule,
+    ColorPickerModule,
+    MatExpansionModule
   ]
 })
 export class CandyshopModule {

@@ -1,19 +1,18 @@
 import { TestBed } from '@angular/core/testing';
 import { NotificationWrapperService } from './notification-wrapper.service';
-import { NotificationService } from '@perx/core';
+import { NotificationService } from '@perxtech/core';
 
 describe('NotificationWrapperService', () => {
   let service: NotificationWrapperService;
   let notification: NotificationService;
-  const notificationServiceStub = {
-    $popup: { subscribe: () => ({}) },
+  const notificationServiceStub: Partial<NotificationService> = {
     addPopup: (val) => val
   };
   beforeEach(() => TestBed.configureTestingModule({
     providers: [{
       provide: NotificationService, useValue: notificationServiceStub
     },
-      NotificationWrapperService
+    NotificationWrapperService
     ]
   }));
   beforeEach(() => {
@@ -27,7 +26,7 @@ describe('NotificationWrapperService', () => {
 
   it('should call add popup from Notification', () => {
     const spy = spyOn(notification, 'addPopup');
-    const config = {title: 'hello'};
+    const config = { title: 'hello' };
     service.addPopup(config);
     expect(spy).toHaveBeenCalledWith(config);
   });

@@ -10,14 +10,18 @@ import {
   MerchantsModule as PerxMerchantsModule,
   CampaignModule as PerxCampaignModule,
   StampModule as PerxStampModule,
+  CampaignServiceModule as PerxCampaignServiceModule,
   VouchersModule,
   OutcomeModule,
   ProfileModule,
   RewardsModule,
   TokenStorage,
   LanguageService,
-  ConfigService
-} from '@perx/core';
+  ConfigService,
+  AuthenticationService,
+  ThemesService,
+  IConfig
+} from '@perxtech/core';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,11 +30,21 @@ import { environment } from '../environments/environment';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { MatDialogModule, MatSnackBarModule } from '@angular/material';
+import { tap, switchMap } from 'rxjs/operators';
 
-export const setLanguage = (translateService: TranslateService) => () => new Promise((resolve) => {
-  translateService.setDefaultLang(environment.defaultLang);
-  resolve();
-});
+export const setLanguage = (
+  translateService: TranslateService,
+  configService: ConfigService,
+  authService: AuthenticationService,
+  themesService: ThemesService) =>
+  () => new Promise((resolve) => {
+    configService.readAppConfig().pipe(
+      tap((config: IConfig<void>) => translateService.setDefaultLang(config.defaultLang || 'en')),
+      switchMap(() => authService.getAppToken()),
+      switchMap(() => themesService.getThemeSetting())
+    ).toPromise().then(() => resolve());
+  });
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -48,6 +62,7 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
     ProfileModule,
     UtilsModule,
     PerxCampaignModule,
+    PerxCampaignServiceModule.forRoot(),
     HttpClientModule,
     RewardsModule,
     MatDialogModule,
@@ -63,7 +78,12 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
   ],
   bootstrap: [AppComponent],
   providers: [
-    { provide: APP_INITIALIZER, useFactory: setLanguage, deps: [TranslateService], multi: true }
+    {
+      provide: APP_INITIALIZER,
+      useFactory: setLanguage,
+      deps: [TranslateService, ConfigService, AuthenticationService, ThemesService],
+      multi: true
+    }
   ],
 })
 export class AppModule { }

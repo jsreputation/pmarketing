@@ -3,29 +3,37 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { MainContainerComponent } from './main-container.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { SidenavMenuModule } from '@perx/candyshop';
+import { SidenavMenuModule } from '@perxtech/candyshop';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthService, LocalStorageService, SessionService } from '@es-core';
+import { TestAuthService } from '@es-shared';
 
-describe('LoginPageComponent', () => {
+describe('MainContainerComponent', () => {
   let component: MainContainerComponent;
   let fixture: ComponentFixture<MainContainerComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        imports: [
-          RouterTestingModule,
-          BrowserAnimationsModule,
-          SidenavMenuModule,
-          HttpClientModule,
-          TranslateModule.forRoot()
-        ],
-        providers: [AuthService, LocalStorageService, SessionService],
-        declarations: [MainContainerComponent],
-        schemas: [NO_ERRORS_SCHEMA]
-      })
+      imports: [
+        RouterTestingModule,
+        BrowserAnimationsModule,
+        SidenavMenuModule,
+        HttpClientModule,
+        TranslateModule.forRoot()
+      ],
+      providers: [
+        LocalStorageService,
+        SessionService,
+        {
+          provide: AuthService,
+          useClass: TestAuthService
+        }
+      ],
+      declarations: [MainContainerComponent],
+      schemas: [NO_ERRORS_SCHEMA]
+    })
       .compileComponents();
   }));
 

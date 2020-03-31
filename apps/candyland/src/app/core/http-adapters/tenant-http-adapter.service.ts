@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { IColor } from '@cl-core/http-adapters/settings-http-adapter';
-import { IJsonApiItem, IWSetting, IWTenant } from '@perx/whistler';
+import { IJsonApiItem, IWSetting, IWTenant } from '@perxtech/whistler';
+import { ITenant } from '@cl-core/models/settings/tenant.interface';
+import { ITenantsProperties } from '@cl-core/models/settings/tenants.properties.interface';
+import { IBrandingForm } from '@cl-core/models/settings/branding-form.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +30,7 @@ export class TenantHttpAdapterService {
       campaign_base_url: TenantHttpAdapterService.getTenantProperty('campaign_base_url', data)
     };
   }
-/* need add type to data*/
+  /* need add type to data*/
   private static getTenantProperty(property: string, data: IJsonApiItem<IWTenant>): any | null {
     return data && data.attributes.display_properties ? data.attributes.display_properties[property] : null;
   }
@@ -61,7 +64,7 @@ export class TenantHttpAdapterService {
     return {
       timeZone: data.time_zone,
       color: data['theme.color'],
-      currency: data['currency'],
+      currency: data.currency,
       style: data['theme.style'],
       accent: data['theme.accent'],
       buttonColor: data['theme.button_background_color'],

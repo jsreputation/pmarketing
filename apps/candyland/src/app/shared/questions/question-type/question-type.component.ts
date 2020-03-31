@@ -5,7 +5,8 @@ import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/f
 import { SurveyService } from '@cl-core-services';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { WSurveyQuestionType } from '@perx/whistler';
+import { WSurveyQuestionType } from '@perxtech/whistler';
+import { IEngagementQuestionType } from '@cl-core/models/engagement-question/engagement-question-type.interface';
 // tslint:disable
 export const EPANDED_TEXTAREA_VALUE_ACCESSOR = {
   provide: NG_VALUE_ACCESSOR,
@@ -23,15 +24,15 @@ export const EPANDED_TEXTAREA_VALUE_ACCESSOR = {
 })
 export class QuestionTypeComponent implements OnInit, ControlValueAccessor, OnDestroy {
   @Input() public addQuestionType = false;
-  @Input() typeList: IEngagementQuestionType[];
-  @Input() currentIndex: string;
-  @Input() level: number;
+  @Input() public typeList: IEngagementQuestionType[];
+  @Input() public currentIndex: string;
+  @Input() public level: number;
   @Input() public set setTypeQuestion(typeQuestion: string) {
     this.type.patchValue(typeQuestion);
   }
   @Input() public onlyView: boolean = false;
 
-  @Output() selectTypeQuestion = new EventEmitter<IEngagementQuestionType>();
+  @Output() public selectTypeQuestion = new EventEmitter<IEngagementQuestionType>();
 
   @ViewChild('matSelect', { static: true }) public matSelect: any;
   public type = new FormControl();
@@ -75,7 +76,7 @@ export class QuestionTypeComponent implements OnInit, ControlValueAccessor, OnDe
     return !(this.level > 0 && type === WSurveyQuestionType.questionGroup);
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.getSurveyQuestionType();
     this.subscribeControlValueChanges();
   }
@@ -99,19 +100,19 @@ export class QuestionTypeComponent implements OnInit, ControlValueAccessor, OnDe
       });
   }
 
-  registerOnChange(fn: any): void {
+  public registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  public registerOnTouched(fn: any): void {
     this.onTouch = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {
+  public setDisabledState(isDisabled: boolean): void {
     isDisabled ? this.type.disable() : this.type.enable();
   }
 
-  writeValue(obj: any): void {
+  public writeValue(obj: any): void {
     if (obj !== undefined) {
       this.type.patchValue(obj);
       this.onChange(obj);
@@ -119,9 +120,8 @@ export class QuestionTypeComponent implements OnInit, ControlValueAccessor, OnDe
     }
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
-
 }

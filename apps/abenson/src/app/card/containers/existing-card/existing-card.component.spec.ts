@@ -12,7 +12,7 @@ import { of } from 'rxjs';
 import {
   LoyaltyService,
   ProfileService
-} from '@perx/core';
+} from '@perxtech/core';
 
 import { ExistingCardComponent } from './existing-card.component';
 
@@ -22,11 +22,11 @@ describe('ExistingCardComponent', () => {
   let component: ExistingCardComponent;
   let profileService: ProfileService;
   let fixture: ComponentFixture<ExistingCardComponent>;
-  const loyaltyServiceStub = {
+  const loyaltyServiceStub: Partial<LoyaltyService> = {
     getLoyalties: () => of([]),
   };
-  const profileServiceStub = {
-    setCardNumber: () => of({})
+  const profileServiceStub: Partial<ProfileService> = {
+    setCardNumber: () => of()
   };
 
   beforeEach(async(() => {

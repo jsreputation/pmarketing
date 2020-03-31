@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { SmsValidationComponent } from './sms-validation.component';
-import { AuthenticationService, UtilsModule } from '@perx/core';
+import { AuthenticationService, UtilsModule } from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -70,7 +70,7 @@ describe('SmsValidationComponent', () => {
 
     it('should validate otp, authorize and redirect to root page', fakeAsync(() => {
       spyverifyOTP.and.returnValue(of({ message: 'OTP verified' }));
-      spyOnProperty(transferService.updateData$, 'value').and.returnValue(of(null));
+      jest.spyOn(transferService, 'updateData$', 'get').mockReturnValue(of(null));
       spyOn(authenticationService, 'login').and.returnValue(of(null));
       spyOn(component, 'login').and.returnValue(of(null));
       const spy = spyOn(router, 'navigateByUrl');

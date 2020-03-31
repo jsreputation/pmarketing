@@ -1,7 +1,7 @@
 Feature: Functionality flow for hit the pinata engagement.
 
 This will be the test flow for all the features of hit the pinata engagement type.
-@runThis
+
 Scenario: Ensure functionality of headline and and sub-headline message
   Given 4_I am on the hit the pinata creation page
   When  4_I input a test string in the headline and sub headline field.

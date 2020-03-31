@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule, DatePipe, CurrencyPipe } from '@angular/common';
 
 import { V4LoyaltyService } from './v4-loyalty.service';
 import { LoyaltyService } from './loyalty.service';
@@ -10,13 +10,15 @@ import { Config } from '../config/config';
 import { HttpClient } from '@angular/common/http';
 import { WhistlerLoyaltyService } from './whistler-loyalty.service';
 import { AuthenticationService } from '../auth/authentication/authentication.service';
+import {MatProgressBarModule, MatProgressSpinnerModule} from '@angular/material';
+import { ConfigService } from '../config/config.service';
 
-export function loyaltyServiceFactory(http: HttpClient, config: Config, auth: AuthenticationService): LoyaltyService {
+export function loyaltyServiceFactory(http: HttpClient, config: Config, configService: ConfigService): LoyaltyService {
   // Make decision on what to instantiate base on config
   if (config.isWhistler) {
-    return new WhistlerLoyaltyService(http, config, auth);
+    return new WhistlerLoyaltyService(http, config);
   }
-  return new V4LoyaltyService(http, config);
+  return new V4LoyaltyService(http, configService);
 }
 
 @NgModule({
@@ -27,6 +29,8 @@ export function loyaltyServiceFactory(http: HttpClient, config: Config, auth: Au
   ],
   imports: [
     CommonModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule
   ],
   exports: [
     LoyaltySummaryComponent,
@@ -35,10 +39,11 @@ export function loyaltyServiceFactory(http: HttpClient, config: Config, auth: Au
   providers: [
     DatePipe,
     TransactionPipe,
+    CurrencyPipe,
     {
       provide: LoyaltyService,
       useFactory: loyaltyServiceFactory,
-      deps: [HttpClient, Config, AuthenticationService]
+      deps: [HttpClient, Config, ConfigService, AuthenticationService]
     }
   ]
 })

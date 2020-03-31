@@ -4,10 +4,10 @@ import { NgModuleFactoryLoader, Type } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
-import { VouchersModule, IVoucherService, Voucher } from '@perx/core';
+import { VouchersModule, IVoucherService, Voucher } from '@perxtech/core';
 import { NotificationWrapperService } from './services/notification-wrapper.service';
 import { TranslateService } from '@ngx-translate/core';
-import { of, BehaviorSubject, Observable } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import { mockVoucher } from './wallet/voucher.mock';
 import { routes } from './app-routing.module';
 import { VoucherDetailsComponent } from './wallet/voucher-details/voucher-details.component';
@@ -15,10 +15,10 @@ import { CodeRedemptionModule } from './wallet/code-redemption/code-redemption.m
 import { RewardModule } from './reward/reward.module';
 import { AccountModule } from './account/account.module';
 
-const NotificationWrapperServiceStub = {
+const NotificationWrapperServiceStub: Partial<NotificationWrapperService> = {
   addPopup: () => { }
 };
-const translateServiceStub = {
+const translateServiceStub: Partial<TranslateService> = {
   defaultLang: null,
   setDefaultLang(leng: string): void { this.defaultLang = leng; },
   get: (str) => of(str instanceof Array ? str.reduce((ac, next) => {
@@ -26,10 +26,9 @@ const translateServiceStub = {
     return ac;
   }, {}) : str)
 };
-const vouchersServiceStub = {
-  state: new BehaviorSubject(mockVoucher),
+const vouchersServiceStub: Partial<IVoucherService> = {
   get: (): Observable<Voucher> => of(mockVoucher),
-  stateChangedForVoucher: (): Observable<Voucher> => vouchersServiceStub.state,
+  stateChangedForVoucher: (): Observable<Voucher> => of(mockVoucher),
   redeemVoucher: (): Observable<any> => of({})
 };
 describe('AppRoutingModule', () => {

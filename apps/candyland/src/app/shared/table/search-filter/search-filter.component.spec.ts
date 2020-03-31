@@ -21,7 +21,7 @@ describe('SearchFilterComponent', () => {
       ],
       declarations: [ SearchFilterComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

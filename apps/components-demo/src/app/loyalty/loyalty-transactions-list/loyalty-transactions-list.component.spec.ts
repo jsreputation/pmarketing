@@ -2,13 +2,13 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatTabsModule } from '@angular/material';
 import { LoyaltyTransactionsListComponent } from './loyalty-transactions-list.component';
-import { LoyaltyModule as PerxLoyaltyModule, LoyaltyService } from '@perx/core';
+import { LoyaltyModule as PerxLoyaltyModule, LoyaltyService } from '@perxtech/core';
 import { of } from 'rxjs';
 
 describe('TransactionsListComponent', () => {
   let component: LoyaltyTransactionsListComponent;
   let fixture: ComponentFixture<LoyaltyTransactionsListComponent>;
-  const loyaltyServiceStub = {
+  const loyaltyServiceStub: Partial<LoyaltyService> = {
     getAllTransactions: () => of([])
   };
 

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { INavLink } from '../navlink.model';
-import { NotificationService, PopupComponent } from '@perx/core';
+import { NotificationService, PopupComponent } from '@perxtech/core';
 import { SubscriptionLike } from 'rxjs';
 import { MatDialog } from '@angular/material';
 
@@ -18,9 +18,7 @@ export class RewardsComponent implements OnInit, OnDestroy {
   ];
   private popupSubscription: SubscriptionLike;
 
-  constructor(private dialog: MatDialog,
-              private notificationService: NotificationService) {
-  }
+  constructor(private dialog: MatDialog, private notificationService: NotificationService) { }
 
   public ngOnInit(): void {
     this.popupSubscription = this.notificationService.$popup.subscribe(data => {

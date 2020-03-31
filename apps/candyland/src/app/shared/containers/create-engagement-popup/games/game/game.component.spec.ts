@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GameComponent } from './game.component';
 import { MatFormFieldModule, MatIconModule, MatRadioModule, MatSelectModule } from '@angular/material';
-import { ButtonModule } from '../../../../components/button/button.module';
+import { ButtonModule } from '@perxtech/candyshop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { GamesType } from '../shared/games-type';
 import { TranslateModule } from '@ngx-translate/core';
@@ -22,9 +22,9 @@ describe('GameComponent', () => {
         ReactiveFormsModule,
         TranslateModule.forRoot(),
       ],
-      declarations: [ GameComponent ]
+      declarations: [GameComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

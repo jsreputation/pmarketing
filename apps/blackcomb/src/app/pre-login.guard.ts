@@ -1,6 +1,6 @@
-import {AuthenticationService} from '@perx/core';
-import {Injectable} from '@angular/core';
-import {CanActivate, ActivatedRouteSnapshot} from '@angular/router';
+import { AuthenticationService } from '@perxtech/core';
+import { Injectable } from '@angular/core';
+import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'

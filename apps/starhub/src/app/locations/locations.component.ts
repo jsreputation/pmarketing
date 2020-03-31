@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { ILocation, LocationsService, IReward, filterDuplicateLocations, IVoucherService } from '@perx/core';
+import { ILocation, LocationsService, IReward, filterDuplicateLocations, IVoucherService } from '@perxtech/core';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Params } from '@angular/router';
 import { filter, map, tap } from 'rxjs/operators';
@@ -49,7 +49,7 @@ export class LocationsComponent implements OnInit {
             pageName: `rewards:discover:locations:${category}:${reward.name}`,
             pageType: PageType.detailPage,
             siteSectionLevel2: 'rewards:discover',
-            siteSectionLevel3: `rewards:discover:locations`
+            siteSectionLevel3: 'rewards:discover:locations'
           });
         }
       );

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { IVoucherService, RedemptionType, Voucher } from '@perx/core';
+import { IVoucherService, RedemptionType, Voucher } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({

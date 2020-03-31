@@ -24,7 +24,7 @@ export class ForgetPasswordComponent implements OnInit {
     private messageService: MessageService
   ) { }
 
-  get username(): AbstractControl | null { return this.formForget.get('username'); }
+  public get username(): AbstractControl | null { return this.formForget.get('username'); }
 
   private createForm(state: StateObjIntf): void {
     this.formForget = this.fb.group({
@@ -42,7 +42,7 @@ export class ForgetPasswordComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    this.authService.resetPassword(this.formForget.value.username)
+    this.authService.resetPassword('retail', this.formForget.value.username)
       .subscribe(
         () => this.messageService.show('Check your emails 📧'),
         () => this.messageService.show('Something went wrong', 'warning'),

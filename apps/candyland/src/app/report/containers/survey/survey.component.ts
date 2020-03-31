@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { RoutingStateService, SurveyService, CsvReportService } from '@cl-core-services';
+import { IBaseQuestionReport } from '@cl-core/models/reports/survey-report/survey-report.interface';
 
 @Component({
   selector: 'cl-survey',
@@ -39,7 +40,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
   }
 
   public downloadReport(): void {
-    this.csvReportService.downloadReport('survey_campaign_report', { campaign_id: this.id });
+    this.csvReportService.downloadReport('report_survey_result_summary', { campaign_id: this.id });
   }
   public onClose(): void {
     this.routingState.comeBackPreviousUrl();

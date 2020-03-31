@@ -16,7 +16,7 @@ describe('CampaignsComponent', () => {
       ],
       declarations: [ CampaignsComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

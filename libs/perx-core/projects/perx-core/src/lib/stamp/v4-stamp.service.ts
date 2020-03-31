@@ -1,14 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { oc } from 'ts-optchain';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of, throwError, from, timer } from 'rxjs';
 import {
   map,
   flatMap,
   mergeAll,
   scan,
   tap,
-  filter
+  filter,
+  mergeMap,
+  toArray,
+  switchMap,
+  skip, share
 } from 'rxjs/operators';
 
 import {
@@ -23,7 +27,10 @@ import { IVoucher } from '../vouchers/models/voucher.model';
 
 import { IVoucherService } from '../vouchers/ivoucher.service';
 import { StampService } from './stamp.service';
-import { Config } from '../config/config';
+import { ICampaignService } from '../campaign/icampaign.service';
+import { CampaignType, ICampaign } from '../campaign/models/campaign.model';
+import { ConfigService } from '../config/config.service';
+import { IConfig } from '../config/models/config.model';
 
 interface IV4GetStampCardResponse {
   data: IV4StampCard;
@@ -97,44 +104,52 @@ interface IV4StampCard {
     card_image?: {
       value?: {
         image_url?: string;
+        file?: string; // default if image_url is not present
       }
     };
     //  todo: temporarily map this until v4 dashboard fixes naming
     card_background_image?: {
       value?: {
         image_url?: string;
+        file?: string;
       }
     };
     gift_active_image?: {
       value?: {
         image_url?: string;
+        file?: string;
       }
     };
     stamp_active_image?: {
       value?: {
         image_url?: string;
+        file?: string;
       }
     };
     gift_inactive_image?: {
       value?: {
         image_url?: string;
+        file?: string;
       }
     };
     stamp_inactive_image?: {
       value?: {
         image_url?: string;
+        file?: string;
       }
     };
     total_slots?: number;
     display_campaign_as: string;
-    background_img?: {
+    background_image?: {
       value?: {
         image_url?: string;
+        file?: string;
       }
     };
     thumbnail_image?: {
       value?: {
         image_url?: string;
+        file?: string;
       }
     };
     reward_positions?: number[];
@@ -153,10 +168,14 @@ export class V4StampService implements StampService {
 
   constructor(
     private http: HttpClient,
-    config: Config,
-    private vouchersService: IVoucherService
+    private configService: ConfigService,
+    private vouchersService: IVoucherService,
+    private campaignService: ICampaignService
   ) {
-    this.baseUrl = config.apiHost as string;
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig<void>) => {
+        this.baseUrl = config.apiHost as string;
+      });
   }
 
   private static v4StampToStamp(stamp: IV4Stamp): IStamp {
@@ -191,16 +210,31 @@ export class V4StampService implements StampService {
   }
 
   private static v4StampCardToStampCard(stampCard: IV4StampCard): IStampCard {
-    const cardImageUrl = oc(stampCard).display_properties.card_image.value.image_url();
+    const stampCardDP = oc(stampCard).display_properties;
+    const cardImageUrl = stampCardDP.card_image.value.image_url(
+      stampCardDP.card_image.value.file(undefined) as unknown as string
+    );
     const cardImage = cardImageUrl ? { value: { imageUrl: cardImageUrl } } : undefined;
     //  todo: temporarily map this until v4 dashboard fixes naming
-    const cardBackgroundImageUrl = oc(stampCard).display_properties.card_background_image.value.image_url();
+    const cardBackgroundImageUrl = stampCardDP.card_background_image.value.image_url(
+      stampCardDP.card_background_image.value.file(undefined) as unknown as string
+    );
     const cardBackgroundImage = cardBackgroundImageUrl ? { value: { imageUrl: cardBackgroundImageUrl } } : undefined;
-    const rewardPreStamp = oc(stampCard).display_properties.gift_inactive_image.value.image_url(undefined);
-    const rewardPostStamp = oc(stampCard).display_properties.gift_active_image.value.image_url(undefined);
-    const preStampImg = oc(stampCard).display_properties.stamp_inactive_image.value.image_url(undefined);
-    const postStampImg = oc(stampCard).display_properties.stamp_active_image.value.image_url(undefined);
-    const backgroundImgUrl = oc(stampCard).display_properties.background_img.value.image_url();
+    const rewardPreStamp = stampCardDP.gift_inactive_image.value.image_url(
+      stampCardDP.gift_inactive_image.value.file(undefined) as unknown as string
+    );
+    const rewardPostStamp = stampCardDP.gift_active_image.value.image_url(
+      stampCardDP.gift_active_image.value.file(undefined) as unknown as string
+    );
+    const preStampImg = stampCardDP.stamp_inactive_image.value.image_url(
+      stampCardDP.stamp_inactive_image.value.file(undefined) as unknown as string
+    );
+    const postStampImg = stampCardDP.stamp_active_image.value.image_url(
+      stampCardDP.stamp_active_image.value.file(undefined) as unknown as string
+    );
+    const backgroundImgUrl = stampCardDP.background_image.value.image_url(
+      stampCardDP.background_image.value.file(undefined) as unknown as string
+    );
     const backgroundImg = backgroundImgUrl ? { value: { imageUrl: backgroundImgUrl } } : undefined;
     return {
       id: stampCard.id,
@@ -213,6 +247,7 @@ export class V4StampService implements StampService {
         rewards: oc(stampCard).campaign_config.rewards([])
           .map((rewards: IV4Outcome) => V4StampService.v4OutcomeToOutcome(rewards)),
       },
+      results: {},
       displayProperties: {
         numberOfCols: stampCard.display_properties.number_of_cols,
         numberOfRows: stampCard.display_properties.number_of_rows,
@@ -224,7 +259,7 @@ export class V4StampService implements StampService {
         preStampImg,
         postStampImg,
         totalSlots: stampCard.display_properties.total_slots,
-        displayCampaignAs: stampCard.display_properties.display_campaign_as,
+        displayCampaignAs: oc(stampCard).display_properties.display_campaign_as('stamp_card'),
         backgroundImg,
         rewardPositions: stampCard.display_properties.reward_positions,
         thumbnailImg: oc(stampCard).display_properties.thumbnail_image.value.image_url()
@@ -246,6 +281,7 @@ export class V4StampService implements StampService {
       map((stampCards: IV4StampCard[]) => stampCards.map(
         (stampCard: IV4StampCard) => V4StampService.v4StampCardToStampCard(stampCard)
       )),
+      share()
     );
   }
 
@@ -275,6 +311,14 @@ export class V4StampService implements StampService {
       mergeAll(),
       scan((acc: IStamp[], curr: IStamp[]) => acc.concat(curr), []),
       map((stamps: IStamp[]) => stamps.sort((v1, v2) => v1.id - v2.id))
+    );
+  }
+
+  // pipe pairwise inside the component,bcz get Proxy for some reason, unable to get access to the value cached in svc
+  public stampsChangedForStampCard(campaignId: number, intervalPeriod: number = 1500): Observable<IStampCard> {
+    return timer(0, intervalPeriod).pipe(
+      switchMap((_) => this.getCurrentCard(campaignId)),
+      skip(1)
     );
   }
 
@@ -329,7 +373,25 @@ export class V4StampService implements StampService {
     );
   }
 
-  public play(): Observable<boolean> {
-    return of(true);
+  public getActiveCards(stampType?: string): Observable<IStampCard[]> {
+    return this.campaignService.getCampaigns()
+      .pipe(
+        map(campaigns => campaigns.filter(camp => camp.type === CampaignType.stamp)),
+        map(campaigns => {
+          if (stampType === 'puzzle') {
+            return campaigns.filter(camp => camp.type === CampaignType.stamp).slice(0, 1);
+          }
+          return campaigns;
+        }),
+        mergeMap(
+          (campaigns: ICampaign[]) => from(campaigns).pipe(
+            mergeMap((campaign: ICampaign) => this.getCurrentCard(campaign.id)),
+            toArray(),
+            map((stampCards: IStampCard[]) => stampCards.filter(card =>
+              card.displayProperties.displayCampaignAs && card.displayProperties.displayCampaignAs === stampType
+            )),
+          )
+        ),
+      );
   }
 }

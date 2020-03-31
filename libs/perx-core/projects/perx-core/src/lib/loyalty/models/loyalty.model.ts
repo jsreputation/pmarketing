@@ -21,6 +21,10 @@ export interface ILoyalty {
   pointsBalance: number;
   currencyBalance?: number;
   currency?: string;
+  nextTierPoints?: number;
+  nextTierPointsDiff?: number;
+  nextTierName?: string;
+  highestTier?: string;
   expiringPoints?: IExpiringPoints[];
   cardId?: number;
 }
@@ -28,6 +32,9 @@ export interface ILoyalty {
 export interface ITransaction {
   id: number;
   name?: string;
+  sku?: string;
+  quantity?: string;
+  purchaseAmount?: string;
   points: number;
   pointsBalance: number;
   currencyBalance: number;

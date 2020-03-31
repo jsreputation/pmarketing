@@ -1,3 +1,5 @@
+import { OptionConfig } from '@perxtech/candyshop';
+
 export class PrepareTableFilters {
 
   public static prepareTabsFilterConfig(counterObject: { [key: string]: number }, data: any[] = null): OptionConfig[] {
@@ -6,14 +8,14 @@ export class PrepareTableFilters {
 
     if (data) {
       config.push({
-        title: 'All (' + data.length + ')',
+        title: `All (${data.length})`,
         value: null
       });
     }
 
     Object.keys(counterObject).forEach((key) => {
       config.push({
-        title: key + ' (' + counterObject[key] + ')',
+        title: `${key} (${counterObject[key]})`,
         value: key
       });
     });

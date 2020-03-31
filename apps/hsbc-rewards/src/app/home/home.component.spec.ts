@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomeComponent } from './home.component';
-import { RewardsService, ILoyalty, IProfile, IPrice, IReward, ITabConfig, LoyaltyService } from '@perx/core';
+import { RewardsService, ILoyalty, IProfile, IPrice, IReward, ITabConfig, LoyaltyService } from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Component, Input, ViewChild } from '@angular/core';
@@ -47,7 +47,7 @@ export class RewardsListTabbedMockComponent {
 
 @Component({
   selector: 'mock-host-component',
-  template: `<div class="reward-body" infiniteScroll [infiniteScrollContainer]></div>`
+  template: '<div class="reward-body" infiniteScroll [infiniteScrollContainer]></div>'
 })
 class MockHostComponent {
   @ViewChild(HomeComponent, { read: undefined, static: true })
@@ -58,10 +58,10 @@ describe('HomeComponent', () => {
   let mockHostFixture: ComponentFixture<MockHostComponent>;
   let mockHostComponent: MockHostComponent;
 
-  const rewardsServiceStub = {
+  const rewardsServiceStub: Partial<RewardsService> = {
     getAllRewards: () => of([])
   };
-  const loyaltyServiceStub = {
+  const loyaltyServiceStub: Partial<LoyaltyService> = {
     getLoyalties: () => of([])
   };
 

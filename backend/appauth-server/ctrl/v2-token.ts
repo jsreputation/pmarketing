@@ -17,8 +17,8 @@ export const v2Token = (getCredentials: ((url: string) => Promise<ICredentials>)
       null,
       {
         params: {
-          client_id: endpointCredential.perx_access_key_id,
-          client_secret: endpointCredential.perx_secret_access_key,
+          client_id: endpointCredential.perx_access_key_id.replace(/\W/, ''),
+          client_secret: endpointCredential.perx_secret_access_key.replace(/\W/, ''),
           grant_type: 'client_credentials'
         }
       }
@@ -26,7 +26,7 @@ export const v2Token = (getCredentials: ((url: string) => Promise<ICredentials>)
     res.json(endpointRequest.data);
   } catch (e) {
     if (e.response && e.response && e.response.status) {
-      res.status(e.response.status).json(e.response.data);
+      res.status(400).json(e.response.data);
     } else {
       next(e);
     }

@@ -5,7 +5,7 @@ import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NotificationService, AuthenticationService } from '@perx/core';
+import { NotificationService, AuthenticationService } from '@perxtech/core';
 import { Type } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 describe('ChangePasswordComponent', () => {
   let component: ChangePasswordComponent;
   let fixture: ComponentFixture<ChangePasswordComponent>;
-  const notificationServiceStub = { addSnack: () => {} };
+  const notificationServiceStub: Partial<NotificationService> = { addSnack: () => { } };
 
   const authenticationServiceStub: Partial<AuthenticationService> = {
     requestVerificationToken: () => of()
@@ -22,7 +22,7 @@ describe('ChangePasswordComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChangePasswordComponent ],
+      declarations: [ChangePasswordComponent],
       imports: [
         MatFormFieldModule,
         FormsModule,
@@ -34,7 +34,7 @@ describe('ChangePasswordComponent', () => {
       ],
       providers: [
         { provide: NotificationService, useValue: notificationServiceStub },
-        { provide: AuthenticationService, useValue: authenticationServiceStub}
+        { provide: AuthenticationService, useValue: authenticationServiceStub }
       ]
     })
       .compileComponents();

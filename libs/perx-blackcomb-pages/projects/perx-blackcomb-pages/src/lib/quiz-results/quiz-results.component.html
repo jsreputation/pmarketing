@@ -1,0 +1,17 @@
+<!--<img [src]="survey.backgroundImgUrl" alt="survey-bg" *ngIf="survey.backgroundImgUrl" class="background_img_url">-->
+<div class="survey-main-container"
+  [ngStyle]="{'background-image': backgroundImgUrl ? 'url(' + backgroundImgUrl + ')' : '' }">
+  <div class="survey-page">
+    <h1>{{title}}</h1>
+    <h2 *ngIf="subTitle">{{subTitle}}</h2>
+    <mat-card class="survey-card">
+      <perx-core-results [results]="results">
+      </perx-core-results>
+    </mat-card>
+  </div>
+  <mat-toolbar class="bottom-nav-container mat-elevation-z2">
+    <button color="primary" (click)="next()" mat-flat-button>
+      Next
+    </button>
+  </mat-toolbar>
+</div>

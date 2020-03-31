@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
-import { AuthenticationService, NotificationService, PopupComponent, ConfigService, IConfig } from '@perx/core';
+import { AuthenticationService, NotificationService, PopupComponent, ConfigService, IConfig } from '@perxtech/core';
 import { MatDialog } from '@angular/material';
 
 @Component({
@@ -19,10 +19,10 @@ export class AppComponent implements OnInit {
     private notificationService: NotificationService,
     private dialog: MatDialog,
     private configService: ConfigService,
-    @Inject(PLATFORM_ID) private platformId: object) {}
+    @Inject(PLATFORM_ID) private platformId: object
+  ) { }
 
   public ngOnInit(): void {
-
     this.configService.readAppConfig().subscribe(
       (config: IConfig<void>) => {
         this.preAuth = config.preAuth as boolean;
@@ -47,7 +47,7 @@ export class AppComponent implements OnInit {
     );
   }
 
-  get loggedIn(): boolean {
+  public get loggedIn(): boolean {
     // todo
     return false;
   }

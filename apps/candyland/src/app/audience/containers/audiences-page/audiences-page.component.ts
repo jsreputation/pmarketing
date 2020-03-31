@@ -38,6 +38,8 @@ import {
   Type,
 } from '../../audience.model';
 import { IAudience } from '@cl-core/models/audiences/audiences';
+import { IAudiencesUserForm } from '@cl-core/models/audiences/user.interface';
+import { OptionConfig } from '@perxtech/candyshop';
 
 @Component({
   selector: 'cl-audiences-page',
@@ -132,7 +134,7 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
     this.cd.detectChanges();
   }
 
-  get hasData$(): Observable<boolean> {
+  public get hasData$(): Observable<boolean> {
     return combineLatest(this.dataSource.state$, this.audiencesDataSource.state$).pipe(
       map(([stateUser, stateAudience]) =>
         (stateUser === this.dataSourceStates.hasDataApi || stateAudience === this.dataSourceStates.hasDataApi) &&
@@ -142,7 +144,7 @@ export class AudiencesPageComponent implements OnInit, AfterViewInit, OnDestroy 
     );
   }
 
-  get noData$(): Observable<boolean> {
+  public get noData$(): Observable<boolean> {
     return this.dataSource.state$.pipe(
       map((stateUser) => stateUser === this.dataSourceStates.noDataApi),
       distinctUntilChanged()

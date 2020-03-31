@@ -5,14 +5,14 @@ import { MatInputModule, MatButtonModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthenticationService } from '@perx/core';
+import { AuthenticationService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
 import { SharedDataService } from 'src/app/services/shared-data.service';
 import { Router } from '@angular/router';
 
-const authenticationServiceStub = {
-  requestVerificationToken: () => of(null)
+const authenticationServiceStub: Partial<AuthenticationService> = {
+  requestVerificationToken: () => of(void 0)
 };
 
 describe('ChangePasswordComponent', () => {
@@ -56,9 +56,12 @@ describe('ChangePasswordComponent', () => {
   });
 
   it('change password', fakeAsync(() => {
-    spyOn(auth, 'requestVerificationToken').and.callThrough();
     const sharedSpy = spyOn(sharedData, 'addData');
     const routerSpy = spyOn(router, 'navigate');
+    auth.requestVerificationToken().subscribe(() => {
+      sharedData.addData('');
+      router.navigate(['account', 'profile', 'verify-otp', 'password']);
+    });
     component.changePassword();
     tick();
     expect(sharedSpy).toHaveBeenCalled();

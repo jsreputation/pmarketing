@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material';
 import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
+import { IMerchantForm } from '@cl-core/models/merchant/merchant-form-interface';
 
 @Component({
   selector: 'cl-list-merchant-view',
@@ -14,7 +15,7 @@ export class ListMerchantViewComponent implements AfterViewInit {
   @Input() public displayedColumns: string[] = ['logo', 'name', 'date', 'phone', 'branches', 'actions'];
   @Input() public selectable: boolean = false;
   @Output() public itemAction: EventEmitter<{ action: 'edit' | 'delete' | 'duplicate', merchant: IMerchantForm }>
-    = new EventEmitter<{ action: 'edit' | 'delete' | 'duplicate', merchant: IMerchantForm }>();
+  = new EventEmitter<{ action: 'edit' | 'delete' | 'duplicate', merchant: IMerchantForm }>();
   @Output() public selectedMerchant: EventEmitter<IMerchantForm> = new EventEmitter<IMerchantForm>();
   @Output() public clickDetail: EventEmitter<IMerchantForm> = new EventEmitter<IMerchantForm>();
   public selected: IMerchantForm;

@@ -3,7 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MatToolbarModule, MatListModule, MatSidenavModule, MatIconModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { ProfileModule, AuthenticationService, ConfigService } from '@perx/core';
+import { ProfileModule, AuthenticationService, ConfigService } from '@perxtech/core';
 import { DebugElement, Type } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
@@ -15,13 +15,13 @@ describe('AppComponent', () => {
   let debugElement: DebugElement;
   let router: Router;
 
-  const authServiceStub = {
+  const authServiceStub: Partial<AuthenticationService> = {
     $failedAuth: of(true)
   };
-  const locationStub = {
+  const locationStub: Partial<Location> = {
     back: () => { }
   };
-  const configServiceStub = {
+  const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of()
   };
 
@@ -62,7 +62,7 @@ describe('AppComponent', () => {
     expect(appComponent).toBeTruthy();
   });
 
-  it(`should have as title 'prudential'`, () => {
+  it('should have as title \'prudential\'', () => {
     expect(appComponent.title).toEqual('prudential');
   });
 

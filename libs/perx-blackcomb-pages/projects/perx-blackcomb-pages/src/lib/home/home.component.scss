@@ -1,5 +1,5 @@
 .loyalty-block {
-  background-color: #fff;
+  background-color: var(--surface_colour);
   display: flex;
   width: 100%;
   align-items: flex-end;
@@ -8,19 +8,19 @@
 
 .home-qr-button {
   background-color: var(--button_background_color);
-  color: #fff;
+  color: var(--button_text_color);
   margin-right: 1.6rem;
   margin-bottom: 1.6rem;
 }
 
 .page {
-  background-color: #E8E8E8;
+  background-color: var(--background);
   min-height: 100%;
   overflow-y: auto;
   height: 100%;
 }
 
-.games {
+.games, .campaigns {
   display: flex;
   flex-direction: column;
 }
@@ -29,7 +29,7 @@
   font-size: 2rem;
   margin: 2.4rem 1.5rem 1.6rem;
   line-height: 2.3rem;
-  color: #212121;
+  color: var(--font_color);
   font-weight: 500;
 }
 

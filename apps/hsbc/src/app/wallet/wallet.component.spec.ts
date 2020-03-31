@@ -4,22 +4,22 @@ import { WalletComponent } from './wallet.component';
 import { NavigateToolbarComponent } from '../navigate-toolbar/navigate-toolbar.component';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { VouchersModule, IVoucherService, ICampaignService, ConfigService } from '@perx/core';
+import { VouchersModule, IVoucherService, ICampaignService, ConfigService } from '@perxtech/core';
 import { of } from 'rxjs';
 
 describe('WalletComponent', () => {
   let component: WalletComponent;
   let fixture: ComponentFixture<WalletComponent>;
 
-  const vouchersServiceStub = {
+  const vouchersServiceStub: Partial<IVoucherService> = {
     getAll: () => of([])
   };
 
-  const configServiceStub = {
+  const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of()
   };
 
-  const campaignServiceStub = {
+  const campaignServiceStub: Partial<ICampaignService> = {
     getCampaigns: () => of()
   };
 
@@ -39,7 +39,7 @@ describe('WalletComponent', () => {
         { provide: ICampaignService, useValue: campaignServiceStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

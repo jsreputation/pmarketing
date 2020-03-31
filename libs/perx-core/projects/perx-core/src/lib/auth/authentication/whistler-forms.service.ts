@@ -1,7 +1,7 @@
-import { ISurvey } from './../../survey/models/survey.model';
+import { ISurvey } from '../../survey/models/survey.model';
 import { HttpClient } from '@angular/common/http';
 import { Config } from '../../config/config';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { IFormsService } from './iforms.service';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
@@ -10,7 +10,7 @@ import { SurveyService } from '../../survey/survey.service';
 import {
   IWCognitoTenantAttributes,
   IJsonApiListPayload,
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -39,5 +39,9 @@ export class WhistlerFormsService implements IFormsService {
           }
         }) : undefined)
       );
+  }
+
+  public getLuckyDrawDetailsForm(): Observable<ISurvey | undefined> {
+    return throwError('Not implement yet.');
   }
 }

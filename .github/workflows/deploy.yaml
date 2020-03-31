@@ -1,0 +1,241 @@
+name: deploy
+on:
+  push:
+    tags:
+      - '*[0-9]+.[0-9]+.[0-9]+'
+jobs:
+  docker_build:
+    name: Docker Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v2
+      - name: Login to Dockerhub
+        run: |
+          echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USER}} --password-stdin
+      - name: Set environment variables
+        run: |
+          REGEX="([[:alnum:]-]+)-(staging|production)-?([[:alnum:]-]*)-([0-9]+\.[0-9]+\.[0-9]+-?[0-9]*)"
+          echo "GITHUB_REF: ${GITHUB_REF}"
+          if [[ "${GITHUB_REF}" =~ $REGEX ]]; then
+            echo ::set-env name=APP::${BASH_REMATCH[1]}
+            echo ::set-env name=TARGET_ENV::${BASH_REMATCH[2]}
+            echo ::set-env name=SEM_VER::${BASH_REMATCH[4]}
+            echo ::set-env name=DOCKER_TAG::${GITHUB_REF##*/}
+          else
+            echo "Error! Unrecognized tag"
+            exit 1
+          fi
+      - name: Set env APIHOST
+        run: |
+          if [ ${TARGET_ENV} == 'staging' ]; then
+            APIHOST="https://api.perxtech.io"
+          elif [ ${TARGET_ENV} == 'production' ]; then
+            if [ $APP == 'hsbc' ] || [ $APP == 'hsbc-rewards' ] || [ $APP == 'hsbc-xmas' ]
+            then
+              APIHOST="https://api-hsbc.perxtech.net"
+            elif [ $APP == 'starhub' ]; then
+              APIHOST="https://api-starhub.perxtech.net"
+            else
+              APIHOST="https://api.perxtech.net"
+            fi
+          fi
+          echo APIHOST is ${APIHOST}
+          echo ::set-env name=APIHOST::${APIHOST}
+      - name: Set env PREAUTH
+        run: |
+          if [ $APP == 'prudential' ] || [ $APP == 'digi' ] || [ $APP == 'blackcomb' ] || [ $APP == 'bpi' ]
+          then
+            PREAUTH="true"
+          else
+            PREAUTH="false"
+          fi
+          echo PREAUTH is ${PREAUTH}
+          echo ::set-env name=PREAUTH::${PREAUTH}
+      - name: Set env BASE_HREF
+        run: |
+          if [ $APP == 'hsbc' ]
+          then
+            BASE_HREF="/site/hsbc/collect2/"
+          elif [ $APP == 'hsbc-rewards' ]
+          then
+            BASE_HREF="/site/hsbc/rewardscatalogue/"
+          elif [ $APP == 'hsbc-xmas' ]
+          then
+            BASE_HREF="/site/hsbc/xmas/"
+          else
+            BASE_HREF="/"
+          fi
+          echo BASE_HREF is ${BASE_HREF}
+          echo ::set-env name=BASE_HREF::${BASE_HREF}
+      - name: Set IS_WHISTLER to false
+        run: |
+          echo ::set-env name=IS_WHISTLER::false
+      - name: Set env SOURCE_TYPE
+        run: |
+          if [ $APP == 'hsbc' ]
+          then
+            SOURCE_TYPE="hsbc-collect2"
+          elif [ $APP == 'hsbc-rewards' ]
+          then
+            SOURCE_TYPE="hsbc-rewards"
+          elif [ $APP == 'hsbc-xmas' ]
+          then
+            SOURCE_TYPE="hsbc-xmas"
+          fi
+          echo SOURCE_TYPE is ${SOURCE_TYPE}
+          echo ::set-env name=SOURCE_TYPE::${SOURCE_TYPE}
+      - name: Set env REDIRECT_AFTER_LOGIN
+        run: |
+          if [ $APP == 'petron-demo' ] || \
+            [ $APP == 'oracle-demo' ] || \
+            [ $APP == 'feature-demo' ] || \
+            [ $APP == 'all-it' ] || \
+            [ $APP == 'partners-demo' ] || \
+            [ $APP == 'perx-demo' ] || \
+            [ $APP == 'perx-demo2' ] || \
+            [ $APP == 'perx-demo3' ] || \
+            [ $APP == 'perx-demo4' ]
+          then
+            REDIRECT_AFTER_LOGIN="/home"
+          elif [ $APP == 'blackcomb' ]
+          then
+            REDIRECT_AFTER_LOGIN="/wallet"
+          fi
+          echo REDIRECT_AFTER_LOGIN is ${REDIRECT_AFTER_LOGIN}
+          echo ::set-env name=REDIRECT_AFTER_LOGIN::${REDIRECT_AFTER_LOGIN}
+      - name: Transform env APP
+        run: |
+          if [ $APP == 'hsbc-xmas' ]
+          then
+            APP="hsbc"
+          elif [ $APP == 'perx-demo2' ] || [ $APP == 'perx-demo3' ] || [ $APP == 'perx-demo4' ]
+          then
+            APP="perx-demo"
+          fi
+          echo Final APP is ${APP}
+          echo ::set-env name=APP::${APP}
+      - name: Set env APP_BASE
+        run: |
+          if [ $APP == 'petron-demo' ] || \
+          [ $APP == 'oracle-demo' ] || \
+          [ $APP == 'daiichi-dlvn' ] || \
+          [ $APP == 'feature-demo' ] || \
+          [ $APP == 'partners-demo' ] || \
+          [ $APP == 'perx-demo' ]
+          then
+            APP_BASE="blackcomb"
+          else
+            APP_BASE=$APP
+          fi
+          echo APP_BASE is ${APP_BASE}
+          echo ::set-env name=APP_BASE::${APP_BASE}
+      - name: Set env APP_ENV
+        run: |
+          APP_ENV=$TARGET_ENV
+          echo APP_ENV is ${APP_ENV}
+          echo ::set-env name=APP_ENV::${APP_ENV}
+      - name: Install skaffold
+        env:
+          SKAFFOLD_VERSION: latest
+        run: |
+          curl -LsSo skaffold https://storage.googleapis.com/skaffold/releases/${SKAFFOLD_VERSION}/skaffold-linux-amd64
+          chmod +x skaffold
+          sudo mv skaffold /usr/local/bin
+      - name: Docker build
+        run: skaffold build
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs:
+      - docker_build
+    steps:
+      - name: Checkout microsite-deploy
+        uses: actions/checkout@v2
+        with:
+          repository: PerxTech/microsite-deploy
+          ref: master
+          token: ${{ secrets.MICROSITE_DEPLOY_TOKEN }}
+
+      - name: Set environment variables
+        run: |
+          REGEX="([[:alnum:]-]+)-(staging|production)-?([[:alnum:]-]*)-([0-9]+\.[0-9]+\.[0-9]+-?[0-9]*)"
+          echo "GITHUB_REF: ${GITHUB_REF}"
+          if [[ "${GITHUB_REF}" =~ $REGEX ]]; then
+            echo ::set-env name=APP::${BASH_REMATCH[1]}
+            echo ::set-env name=TARGET_ENV::${BASH_REMATCH[2]}
+            echo ::set-env name=SEM_VER::${BASH_REMATCH[4]}
+            echo ::set-env name=DOCKER_TAG::${GITHUB_REF##*/}
+          else
+            echo "Error! Unrecognized tag"
+            exit 1
+          fi
+
+      - name: Check env variables
+        run: |
+          echo "APP: $APP"
+          echo "TARGET_ENV: $TARGET_ENV"
+          echo "SEM_VER: $SEM_VER"
+          echo "DOCKER_TAG: $DOCKER_TAG"
+
+      - name: Login to Dockerhub
+        run: |
+          echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USER}} --password-stdin
+
+      - name: Generate kubeconfig
+        uses: azure/k8s-set-context@v1
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.AWS_KUBE_CONFIG }}
+
+      - name: Set kube context
+        run: |
+          kubectl config use-context ${TARGET_ENV}
+
+      - name: Install sops
+        env:
+          SOPS_VERSION: 3.5.0
+        run: |
+          curl -LsS  https://github.com/mozilla/sops/releases/download/v${SOPS_VERSION}/sops_${SOPS_VERSION}_amd64.deb -o sops.deb && \
+          sudo dpkg -i sops.deb
+
+      - name: Install helm
+        env:
+          HELM_VERSION: 2.16.1
+        run: |
+          curl -LsSO https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz
+          tar -zxvf helm-v${HELM_VERSION}-linux-amd64.tar.gz
+          sudo mv linux-amd64/helm /usr/local/bin/helm
+          helm init --client-only
+          helm repo add perx https://chartmuseum.perxtech.io --username perx --password ${{ secrets.HELM_PASSWORD }}
+          helm repo update
+
+      - name: Install skaffold
+        env:
+          SKAFFOLD_VERSION: latest
+        run: |
+          curl -LsSo skaffold https://storage.googleapis.com/skaffold/releases/${SKAFFOLD_VERSION}/skaffold-linux-amd64
+          chmod +x skaffold
+          sudo mv skaffold /usr/local/bin
+
+      - name: Deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          echo "Deploying ${APP}"
+          make deploy
+
+      - name: Invalidate Cloudfront distribution
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        if: contains( env.APP, 'hsbc' ) || contains( env.APP, 'hsbc-xmas' ) || contains( env.APP, 'hsbc-rewards' )
+        run: |
+          case $TARGET_ENV in
+            production ) DISTRIBUTION_ID=E3NTONYLQET6VX;;
+            staging    ) DISTRIBUTION_ID=ENIVGKPKYFPZI;;
+            *          ) echo "Environment not supported"; exit 1;;
+          esac
+          aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/*"

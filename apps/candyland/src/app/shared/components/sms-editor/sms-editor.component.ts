@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { OptionConfig } from '@perxtech/candyshop';
 
 @Component({
   selector: 'cl-sms-editor',
@@ -13,7 +14,7 @@ export class SmsEditorComponent {
 
   public selectShortCode(value: string): void {
     const tempValue = this.control.value ? this.control.value : '';
-    const newValue = tempValue + ` ${value} `;
+    const newValue = `${tempValue} ${value} `;
     this.control.patchValue(newValue);
   }
 

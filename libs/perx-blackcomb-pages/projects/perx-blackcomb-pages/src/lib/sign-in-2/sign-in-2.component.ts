@@ -1,4 +1,14 @@
-import { AuthenticationService, NotificationService, Config, ITheme, ThemesService, ConfigService, IConfig } from '@perx/core';
+import {
+  AuthenticationService,
+  NotificationService,
+  Config,
+  ITheme,
+  ThemesService,
+  ConfigService,
+  IConfig,
+  GeneralStaticDataService,
+  ICountryCode
+} from '@perxtech/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, Navigation } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
@@ -10,7 +20,6 @@ import { oc } from 'ts-optchain';
 
 interface ISigninConfig {
   redirectAfterLogin: string;
-  showSubtitleLogin: boolean;
 }
 
 @Component({
@@ -23,11 +32,14 @@ export class SignIn2Component implements OnInit, OnDestroy {
   public errorMessage: string | null;
   public preAuth: boolean;
   public failedAuth: boolean;
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
   public theme: Observable<ITheme>;
   public appConfig: IConfig<ISigninConfig>;
   public appAccessTokenFetched: boolean;
   private custId: string;
+  public countryCodePrefix: string | undefined;
+  public countryCode: string;
+  public countriesList$: Observable<ICountryCode[]>;
 
   constructor(
     private router: Router,
@@ -37,7 +49,8 @@ export class SignIn2Component implements OnInit, OnDestroy {
     private themesService: ThemesService,
     private config: Config,
     private configService: ConfigService,
-    public translate: TranslateService
+    public translate: TranslateService,
+    public generalStaticDataService: GeneralStaticDataService
   ) {
     this.preAuth = this.config.preAuth ? this.config.preAuth : false;
     const nav: Navigation | null = this.router.getCurrentNavigation();
@@ -46,14 +59,23 @@ export class SignIn2Component implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.initForm();
-    this.theme = this.themesService.getThemeSetting();
-    this.configService.readAppConfig<ISigninConfig>().subscribe((conf) => this.appConfig = conf);
+    this.configService.readAppConfig<ISigninConfig>().subscribe((conf) => {
+      this.appConfig = conf;
+      this.countryCodePrefix = conf.countryCodePrefix;
+    });
+    this.countriesList$ = this.generalStaticDataService.getCountriesList([
+      'Hong Kong',
+      'Philippines',
+      'Singapore'
+    ]);
     const token = this.authService.getAppAccessToken();
     if (token) {
       this.appAccessTokenFetched = true;
+      this.theme = this.themesService.getThemeSetting();
     } else {
       this.authService.getAppToken().subscribe(() => {
         this.appAccessTokenFetched = true;
+        this.theme = this.themesService.getThemeSetting();
       }, (err) => {
         console.error(`Error${err}`);
       });
@@ -79,7 +101,8 @@ export class SignIn2Component implements OnInit, OnDestroy {
 
   public onSubmit(): void {
     const customerIdField = this.loginForm.get('customerID');
-    const username: string = customerIdField !== null && customerIdField.value ? customerIdField.value : '';
+    const username: string = customerIdField !== null &&
+      customerIdField.value ? `${this.countryCodePrefix ? this.countryCodePrefix : this.countryCode}${customerIdField.value}` : '';
     const pwdField = this.loginForm.get('password');
     const password: string = pwdField ? pwdField.value : '';
     this.errorMessage = null;
@@ -92,6 +115,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
           // set global userID var for GA tracking
           if (!((window as any).primaryIdentifier)) {
             (window as any).primaryIdentifier = username;
+            this.authService.saveAnonymous(false);
           }
           this.redirectAfterLogin();
         },
@@ -110,11 +134,17 @@ export class SignIn2Component implements OnInit, OnDestroy {
               this.translate.get('INVALID_CREDENTIALS')
                 // tslint:disable-next-line: rxjs-no-nested-subscribe
                 .subscribe(t => this.errorMessage = t);
+            } else {
+              this.errorMessage = err.error;
             }
           } else {
             this.errorMessage = err;
           }
         }
       );
+  }
+
+  public updateCoutryCode(value: string): void {
+    this.countryCode = value.substring(1);
   }
 }

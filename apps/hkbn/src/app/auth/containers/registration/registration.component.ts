@@ -1,7 +1,7 @@
-import { AuthenticationService, IProfile, ICountryCode, GeneralStaticDataService } from '@perx/core';
+import { AuthenticationService, IProfile, ICountryCode, GeneralStaticDataService } from '@perxtech/core';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ISignUpData } from '@perx/core';
+import { ISignUpData } from '@perxtech/core';
 
 const countries = ['China', 'Hong Kong', 'Macau'];
 
@@ -27,13 +27,17 @@ export class RegistrationComponent implements OnInit {
       this.auth.getAppToken().subscribe(() => {
         this.appAccessTokenFetched = true;
       }, (err) => {
-        console.error('Error' + err);
+        console.error(`Error${err}`);
       });
     }
     this.generalStaticDataService.getCountriesList(countries).subscribe((codes) => this.countryCodes = codes);
   }
   public submitHandler(data: ISignUpData): void {
-    this.auth.signup(data).subscribe((profile: IProfile) => {
+    this.auth.signup(data).subscribe((profile: IProfile | null) => {
+      if (!profile) {
+        return;
+      }
+
       this.router.navigate(['sms-validation'], { queryParams: { identifier: profile.phone } });
     });
   }

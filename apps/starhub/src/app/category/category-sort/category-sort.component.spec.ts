@@ -12,9 +12,7 @@ describe('CategorySortComponent', () => {
 
   const dataStub = {
     sortOrderSelectedCallback: () => {},
-    getCurrentSelectedOrder: () => {
-      return SortingMode.latest;
-    }
+    getCurrentSelectedOrder: () => SortingMode.latest
   };
 
   beforeEach(async(() => {

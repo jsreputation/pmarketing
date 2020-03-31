@@ -7,8 +7,9 @@ import { map, takeUntil } from 'rxjs/operators';
 
 import { DashboardChartsParametersService } from '../../services/dashboard-charts-parameters.service';
 import { UserService } from '@cl-core/services/user.service';
-import { DashboardGameCard } from '@cl-shared/models/dashboard/dashboard-game-car.interface';
+import { DashboardGameCard } from '@cl-shared/models/dashboard/dashboard-game-card.interface';
 import { DateTimeParser } from '@cl-helpers/date-time-parser';
+import { DatepickerRangeValue } from '@perxtech/candyshop';
 
 @Component({
   selector: 'cl-dashboard-page',

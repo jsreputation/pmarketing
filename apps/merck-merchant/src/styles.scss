@@ -2,6 +2,14 @@
 @import "./custom-theme.scss";
 @import 'https://fonts.googleapis.com/icon?family=Material+Icons';
 
+$main-blue-theme: #0F69AF;
+$inputfield-background:#F8F8FC;
+$error-message-container-color: #FFC832;
+$heading-font-color: #1B1B25;
+$subheading-light-gray-color: #494953;
+$home-page-background-color: #E5E5E5;
+$bottom-bar-text-color: #93939D;
+
 html {
   font-size: 62.5%;
   font-style: normal;
@@ -35,9 +43,13 @@ body {
 .main-container {
   height: 100%;
 
-  > img {
-    display: block;
-    margin: 0 auto;
+  > a {
+    display: flex;
+    justify-content: center;
+
+    ~ img {
+      display: block;
+    }
   }
 }
 

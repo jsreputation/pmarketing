@@ -14,7 +14,7 @@ import {
   ITheme,
   ConfigService,
   IConfig
-} from '@perx/core';
+} from '@perxtech/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subject, iif, of, throwError } from 'rxjs';
 import { catchError, tap, switchMap, retryWhen, delay, mergeMap } from 'rxjs/operators';
@@ -48,6 +48,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   private oldAnonymousStatus: boolean;
   public appAccessTokenFetched: boolean;
   public theme: Observable<ITheme>;
+  public loadingSubmit: boolean = false;
 
   constructor(
     private formSvc: IFormsService,
@@ -117,6 +118,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
       if (this.stateData && this.stateData.collectInfo) {
         this.submitDataAndCollectInformation(pi, userObj);
       }
+      this.loadingSubmit = true;
       this.authService.createUserAndAutoLogin(pi, userObj)
         .subscribe(
           () => {

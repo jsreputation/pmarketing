@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
-import { LoyaltyHttpService } from '@cl-core/http-services/loyalty-http.service';
+import { LoyaltyHttpService } from '@perxtech/whistler-services';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { Observable } from 'rxjs';
 import { ClHttpParams } from '@cl-helpers/http-params';
 import { map } from 'rxjs/operators';
 import { LoyaltyHttpAdapter } from '@cl-core/http-adapters/loyalty-http-adapter';
 import { ICustomTireForm } from '@cl-core/models/loyalty/loyalty-form.model';
+import { HttpParamsOptions } from '@cl-core/models/params-map';
+import { ITableData } from '@cl-core/models/data-list.interface';
 
 @Injectable({
   providedIn: 'root'

@@ -8,6 +8,8 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialogModule, MatDialogRef } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
+import { EngagementsService } from '@cl-core-services';
+import { MockEngagementsService } from '@cl-shared/test-components/providers/mock-engagements.service';
 
 describe('EngagementsListPageComponent', () => {
   let component: EngagementsListPageComponent;
@@ -15,24 +17,25 @@ describe('EngagementsListPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        imports: [
-          TableFiltersModule,
-          HttpClientTestingModule,
-          RouterTestingModule,
-          MatDialogModule,
-          TranslateModule.forRoot()
-        ],
-        providers: [
-          {
-            provide: MatDialogRef, useValue: {
-              close: () => {
-              }
+      imports: [
+        TableFiltersModule,
+        HttpClientTestingModule,
+        RouterTestingModule,
+        MatDialogModule,
+        TranslateModule.forRoot()
+      ],
+      providers: [
+        {
+          provide: MatDialogRef, useValue: {
+            close: () => {
             }
           }
-        ],
-        declarations: [EngagementsListPageComponent],
-        schemas: [NO_ERRORS_SCHEMA]
-      })
+        },
+        { provide: EngagementsService, useClass: MockEngagementsService }
+      ],
+      declarations: [EngagementsListPageComponent],
+      schemas: [NO_ERRORS_SCHEMA]
+    })
       .compileComponents();
   }));
 

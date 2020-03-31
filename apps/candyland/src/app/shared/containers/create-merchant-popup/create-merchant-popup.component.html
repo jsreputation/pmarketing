@@ -6,7 +6,7 @@
         <span translate>CREATE_MERCHANT</span>
       </ng-template>
     </h2>
-    <button class="dialog-closed btn-transparent" [mat-dialog-close]="false">
+    <button class="dialog-closed cs-btn-transparent" [mat-dialog-close]="false">
       <mat-icon>close</mat-icon>
     </button>
   </header>
@@ -19,17 +19,17 @@
   </mat-dialog-content>
   <footer class="dialog-actions">
 
-    <cl-button [classList]="'secondary'" class="actions-close" (click)="close()" [disableRipple]="true">
+    <cs-button [classList]="'secondary'" class="actions-close" (click)="close()" [disableRipple]="true">
       <span>{{'BTN_CANCEL' | translate}}</span>
-    </cl-button>
+    </cs-button>
 
-    <cl-button [classList]="'primary'" (click)="addMerchant()" [disableRipple]="true">
+    <cs-button [classList]="'primary'" (click)="addMerchant()" [disableRipple]="true">
       <span *ngIf="data; else editBtnText">{{'SAVE_MERCHANT' | translate}}</span>
       <ng-template #editBtnText>
         <span>
           {{'ADD_MERCHANT' | translate}}
         </span>
       </ng-template>
-    </cl-button>
+    </cs-button>
   </footer>
 </aside>

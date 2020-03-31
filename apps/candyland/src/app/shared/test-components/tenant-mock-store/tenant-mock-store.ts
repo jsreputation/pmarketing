@@ -1,7 +1,8 @@
 import { of } from 'rxjs';
+import { TenantStoreService } from '@cl-core-services';
 
-export class TenantMockStore {
-  get tenant(): any {
+export class TenantMockStore implements Partial<TenantStoreService> {
+  public get tenant(): any {
     return of({});
   }
   public get tenant$(): any {

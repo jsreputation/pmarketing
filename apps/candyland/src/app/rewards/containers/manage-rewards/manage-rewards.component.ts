@@ -3,7 +3,7 @@ import { FormArray, AbstractControl, FormGroup, FormControl } from '@angular/for
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, combineLatest, forkJoin, Observable, of, Subject, throwError } from 'rxjs';
 import { filter, map, switchMap, tap, takeUntil, distinctUntilChanged, debounceTime, catchError, mergeMap } from 'rxjs/operators';
-import { RewardsService, MerchantsService } from '@cl-core/services';
+import { RewardsService, MerchantsService, TenantStoreService } from '@cl-core/services';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { NewRewardFormService } from '../../services/new-reward-form.service';
 import { CreateMerchantPopupComponent, SelectMerchantPopupComponent, ToggleControlService } from '@cl-shared';
@@ -12,8 +12,15 @@ import { ICustomTireForm, ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-f
 import { TranslateService } from '@ngx-translate/core';
 import { TranslateDefaultLanguageService } from '@cl-core/translate-services/translate-default-language.service';
 import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.interface';
-import { IWTierRewardCostsAttributes, IJsonApiItem } from '@perx/whistler';
+import { IWTierRewardCostsAttributes, IJsonApiItem } from '@perxtech/whistler';
 import { oc } from 'ts-optchain';
+import { TenantService } from '@cl-core/services/tenant.service';
+import { IMerchantForm } from '@cl-core/models/merchant/merchant-form-interface';
+import { ILoyaltyFormGroup, ILoyaltyTiersFormGroup, IBasicTier } from '@cl-core/models/reward/reward-loyalty-form-interface';
+import { Currency } from '@cl-core/models/merchant/currency';
+import { IMerchant } from '@cl-core/models/merchant/merchant-simple-interface';
+import { ITierRewardCost } from '@cl-core/models/reward/tier-reward-cost-intrface';
+import { OptionConfig } from '@perxtech/candyshop';
 
 @Component({
   selector: 'cl-manage-rewards',
@@ -31,7 +38,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   public loyalties: ILoyaltyForm[];
   public rewardLoyaltyForm: FormArray;
   public getRewardLoyaltyData$: BehaviorSubject<ILoyaltyFormGroup[] | null> = new BehaviorSubject<ILoyaltyFormGroup[] | null>(null);
-
+  public currency$: Observable<Currency[]>;
   private tierForSent: any = {
     update: [],
     delete: [],
@@ -53,7 +60,9 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     private toggleControlService: ToggleControlService,
     private loyaltyService: LoyaltyService,
     private readonly translate: TranslateService,
-    private translateDefaultLanguage: TranslateDefaultLanguageService
+    private translateDefaultLanguage: TranslateDefaultLanguageService,
+    private tenantStoreService: TenantStoreService,
+    private tenantService: TenantService
   ) { }
 
   public ngOnInit(): void {
@@ -63,6 +72,8 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     this.handleMerchantIdChanges();
     this.handleRouteParams();
     this.setTranslateLanguage();
+    this.getTenantCurrency();
+    this.getCurrency();
   }
 
   public ngOnDestroy(): void {
@@ -206,20 +217,25 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
       tap((id: any) => {
         this.id = id;
         this.patchLoyaltiesForm(this.id);
+        if (!id) {
+          this.setDefaultCurrencyToRewardForm();
+        }
       }),
-      switchMap((id: string) => id ? this.rewardsService.getRewardToForm(id) : of(null)),
+      switchMap((id: string) => id
+        ? combineLatest(...[this.rewardsService.getRewardToForm(id), this.getTenantCurrency()])
+        : of([null, this.getTenantCurrency()])),
       takeUntil(this.destroy$),
     )
       .subscribe(
-        (reward: IRewardEntityForm | undefined) => {
+        ([reward, currency]) => {
           // handle the loyalties to patch form
           if (!reward) {
             return;
           }
+          this.setDefaultCurrencyExistReward(reward, currency);
           this.getRewardLoyaltyData$.next(reward ? reward.loyalties : null);
-
           this.reward = reward;
-          const patchData = reward || this.newRewardFormService.getDefaultValue();
+          const patchData = reward || this.newRewardFormService.getDefaultValue(currency);
           this.form.patchValue(patchData);
         },
         () => this.router.navigateByUrl('/rewards')
@@ -308,7 +324,7 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
   private filterRewardTierList(rewardTierList: ITierRewardCost[]): { [key: string]: ITierRewardCost } {
     const result: { [key: string]: ITierRewardCost } = {};
     rewardTierList.forEach((rewardTier) => {
-      if ('' + this.id === '' + rewardTier.rewardId) {
+      if (`${this.id}` === `${rewardTier.rewardId}`) {
         const prefix = rewardTier.tierType === this.newRewardFormService.tierTypes.basicType ? 'basic' : 'custom';
         result[prefix + rewardTier.tierId] = rewardTier;
       }
@@ -321,12 +337,13 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     loyalties.data.forEach((loyalty: ILoyaltyForm) => {
       const loyaltyFormGroup = this.newRewardFormService.getLoyaltyFormGroup();
       let programStatus;
-      const basicTier = rewardTierMap['basic' + loyalty.basicTierId];
+      const basicTier = rewardTierMap[`basic${loyalty.basicTierId}`];
       // handler of custom tears
       this.setCustomTiers(loyalty, loyaltyFormGroup);
 
       if (basicTier && basicTier.tierType === this.newRewardFormService.tierTypes.basicType) {
         programStatus = true;
+        // eslint-disable-next-line
         basicTier['statusTiers'] = true;
         this.newRewardFormService.setDefaultRewardTiers(basicTier);
       }
@@ -355,10 +372,11 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
       if (rewardTierMap) {
         let hasSelectedCustomTier = false;
         (loyaltyGroup.get('tiers') as FormArray).controls.forEach((tier) => {
-          const rewardTier = rewardTierMap['custom' + tier.value.tierId];
+          const rewardTier = rewardTierMap[`custom${tier.value.tierId}`];
           if (rewardTier && rewardTier.tierType === this.newRewardFormService.tierTypes.customType) {
             // add to object for know what to do next remove or update
             hasSelectedCustomTier = true;
+            // eslint-disable-next-line
             rewardTier['statusTiers'] = true;
             this.newRewardFormService.setDefaultRewardTiers(rewardTier);
             tier.patchValue({ ...rewardTier });
@@ -394,5 +412,28 @@ export class ManageRewardsComponent implements OnInit, OnDestroy {
     });
 
     return result;
+  }
+
+  private getTenantCurrency(): Observable<string> {
+    return this.tenantStoreService.currency$
+      .pipe(
+        takeUntil(this.destroy$)
+      );
+  }
+
+  private getCurrency(): void {
+    this.currency$ = this.tenantService.getCurrency();
+  }
+
+  private setDefaultCurrencyToRewardForm(): void {
+    this.getTenantCurrency()
+      .subscribe((currency) => {
+        const patchData = this.newRewardFormService.getDefaultValue(currency);
+        this.form.patchValue(patchData);
+      });
+  }
+
+  private setDefaultCurrencyExistReward(reward: IRewardEntityForm, currency: string): void {
+    reward.rewardInfo.currency = reward.rewardInfo.currency ? reward.rewardInfo.currency : currency;
   }
 }

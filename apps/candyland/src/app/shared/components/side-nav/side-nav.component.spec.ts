@@ -7,11 +7,11 @@ import { UserModule } from '../user/user.module';
 import { SidenavMenuModule } from '../sidenav-menu/sidenav-menu.module';
 import { MatIconModule, MatSidenavModule, MatToolbarModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthService } from '@cl-core-services';
-import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { SessionService } from '@cl-core/services/session.service';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
+import { AuthService } from '@cl-core-services';
+import { TestAuthServisec } from '@cl-shared/test-components/providers/test-auth.servisec';
 
 describe('SideNavComponent', () => {
   let component: SideNavComponent;
@@ -31,10 +31,16 @@ describe('SideNavComponent', () => {
         HttpClientModule,
         TranslateModule.forRoot(),
       ],
-      providers: [ AuthService, LocalStorageService, SessionService ],
+      providers: [
+        SessionService,
+        {
+          provide: AuthService,
+          useClass: TestAuthServisec
+        }
+      ],
       declarations: [ SideNavComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

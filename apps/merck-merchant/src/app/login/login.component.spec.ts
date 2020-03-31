@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { AuthenticationService, TokenStorage } from '@perx/core';
+import { AuthenticationService, TokenStorage } from '@perxtech/core';
 import { LoginComponent } from './login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AuthenticationModule } from '@perx/core';
+import { AuthenticationModule } from '@perxtech/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import {
@@ -67,20 +67,20 @@ describe('LoginComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should navigate to reset onForgotPassword click', () => {
+  it('should navigate to forgot onForgotPassword click', () => {
     const routerStub: Router = fixture.debugElement.injector.get(Router);
     spyOn(routerStub, 'navigateByUrl').and.callThrough();
     component.onForgotPassword();
-    expect(routerStub.navigateByUrl).toHaveBeenCalledWith('/reset');
+    expect(routerStub.navigateByUrl).toHaveBeenCalledWith('/forgot');
   });
 
   it('should navigate to home if authenticated', fakeAsync(() => {
     const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
       AuthenticationService as Type<AuthenticationService>
     );
-    component.loginForm.controls['name'].setValue('test');
-    component.loginForm.controls['email'].setValue('test@test.com');
-    component.loginForm.controls['password'].setValue('test1234');
+    component.loginForm.controls.name.setValue('test');
+    component.loginForm.controls.email.setValue('test@test.com');
+    component.loginForm.controls.password.setValue('test1234');
 
     const authSpy = spyOn(authenticationService, 'login').and.returnValue(of(void 0));
     const routerStub: Router = fixture.debugElement.injector.get(Router);

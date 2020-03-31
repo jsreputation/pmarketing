@@ -1,4 +1,5 @@
-import { WRedemptionType } from '@perx/whistler';
+import { WRedemptionType } from '@perxtech/whistler';
+import { ILoyaltyFormGroup } from './reward-loyalty-form-interface';
 
 export interface IRewardEntityValidityPeriodForm {
   startDate?: string;
@@ -33,7 +34,6 @@ export interface IRewardVoucherForm {
 export interface IRewardEntityForm {
   id?: string;
   name: string;
-  currency?: string;
   loyalties?: ILoyaltyFormGroup[];
   displayProperties?: any;
   rewardInfo: {
@@ -46,6 +46,7 @@ export interface IRewardEntityForm {
     termsAndCondition: string;
     tags?: string[];
     merchantId: string | null;
+    currency?: string;
   };
   vouchers?: IRewardVoucherForm;
 }

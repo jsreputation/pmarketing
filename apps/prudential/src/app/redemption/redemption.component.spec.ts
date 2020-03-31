@@ -4,32 +4,32 @@ import { RedemptionComponent } from './redemption.component';
 import { MatCardModule } from '@angular/material';
 import {
   Voucher, VoucherState, VouchersModule, IVoucherService, RewardsService, IMerchantsService
-} from '@perx/core';
+} from '@perxtech/core';
 
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
+import { MerchantService } from '@perxtech/hsbc-rewards/src/app/shared/service/merchant.service';
 
 describe('RedemptionComponent', () => {
   let component: RedemptionComponent;
   let fixture: ComponentFixture<RedemptionComponent>;
-  const mockVoucher: Partial<Voucher> = {
+  const mockVoucher: Voucher = {
     id: 2,
+    reward: null,
     state: VoucherState.issued,
     expiry: null,
   };
 
-  const voucherServiceStub = {
-    get: () => {
-      return of(mockVoucher);
-    }
+  const voucherServiceStub: Partial<IVoucherService> = {
+    get: () => of(mockVoucher)
   };
-  const rewardsServiceStub = {
+  const rewardsServiceStub: Partial<RewardsService> = {
     getReward: () => of()
   };
 
-  const merchantsServiceStub = {
-    getMerchant: () => of()
+  const merchantsServiceStub: Partial<MerchantService> = {
+    getMerchants: () => of()
   };
 
   beforeEach(async(() => {

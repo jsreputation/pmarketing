@@ -6,7 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatButtonModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthenticationService, UtilsModule } from '@perx/core';
+import { AuthenticationService, UtilsModule } from '@perxtech/core';
 import { Observable, of } from 'rxjs';
 import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.module';
 import { ActivatedRoute } from '@angular/router';
@@ -14,7 +14,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { Type } from '@angular/core';
 
 class ActivatedRouteMock {
-  get queryParams(): Observable<any> {
+  public get queryParams(): Observable<any> {
     return of(true);
   }
 }
@@ -69,17 +69,15 @@ describe('ForgotPasswordComponent', () => {
 
   it('should init identifier from queryParams, if it exist', () => {
     const activatedRoute = TestBed.get(ActivatedRoute);
-    spyOnProperty(activatedRoute, 'queryParams', 'get').and.returnValue(of({identifier: '63987654'}));
+    jest.spyOn(activatedRoute, 'queryParams', 'get').mockReturnValue(of({ identifier: '63987654' }));
     fixture.detectChanges();
-    expect(component.phoneStepForm.value).toEqual({phone: '63987654'});
+    expect(component.phoneStepForm.value).toEqual({ phone: '63987654' });
   });
 
   it('phoneHandler should move to step 2', () => {
     fixture.detectChanges();
-    component.phoneStepForm.setValue({phone: '63987654'});
+    component.phoneStepForm.setValue({ phone: '63987654' });
     component.phoneHandler();
-    console.log(component.phoneStepForm.value);
-    console.log(component.phoneStepForm.valid);
     fixture.detectChanges();
     expect(component.currentStep).toEqual(2);
   });
@@ -107,7 +105,7 @@ describe('ForgotPasswordComponent', () => {
   it('should do nothing if password form invalid', () => {
     fixture.detectChanges();
     const authenticationService = TestBed.get<AuthenticationService>(AuthenticationService as Type<AuthenticationService>);
-    const resetPasswordSpy = spyOn(authenticationService, 'resetPassword').and.returnValue(of({message: 'password reset'}));
+    const resetPasswordSpy = spyOn(authenticationService, 'resetPassword').and.returnValue(of({ message: 'password reset' }));
     component.changePassword();
     expect(resetPasswordSpy.calls.count()).toBe(0);
   });
@@ -115,19 +113,19 @@ describe('ForgotPasswordComponent', () => {
   it('should reset user password, when call changePassword method and data is valid', () => {
     fixture.detectChanges();
     const authenticationService = TestBed.get<AuthenticationService>(AuthenticationService as Type<AuthenticationService>);
-    const resetPasswordSpy = spyOn(authenticationService, 'resetPassword').and.returnValue(of({message: 'password reset'}));
-    const loginSpy = spyOn(authenticationService, 'login').and.returnValue(of({bearer_token: 'SWWERW'}));
+    const resetPasswordSpy = spyOn(authenticationService, 'resetPassword').and.returnValue(of({ message: 'password reset' }));
+    const loginSpy = spyOn(authenticationService, 'login').and.returnValue(of({ bearer_token: 'SWWERW' }));
 
-    component.phoneStepForm.setValue({phone: '63987654'});
+    component.phoneStepForm.setValue({ phone: '63987654' });
     component.phoneHandler();
     fixture.detectChanges();
 
     component.handlePin('334245');
 
-    component.newPasswordForm.setValue({newPassword: 'qwerty123', passwordConfirmation: 'qwerty123'});
+    component.newPasswordForm.setValue({ newPassword: 'qwerty123', passwordConfirmation: 'qwerty123' });
     component.changePassword();
     expect(resetPasswordSpy).toHaveBeenCalledWith(
-      {phone: '63987654', otp: '334245', newPassword: 'qwerty123', passwordConfirmation: 'qwerty123'}
+      { phone: '63987654', otp: '334245', newPassword: 'qwerty123', passwordConfirmation: 'qwerty123' }
     );
 
     expect(loginSpy).toHaveBeenCalledWith('63987654', 'qwerty123');

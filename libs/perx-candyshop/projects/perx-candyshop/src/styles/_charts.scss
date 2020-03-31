@@ -199,7 +199,7 @@ $vertical-tabs-width: ($horizontal-padding * 7.5);
     }
 
     .tab-item-title {
-      @include typo-caption;
+      @include cs-typo-caption;
 
       font-size: 1rem;
       text-align: center;

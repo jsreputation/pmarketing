@@ -14,13 +14,15 @@ import { QuestionPictureChoiceFieldModule } from '@cl-shared/questions/question-
 import {
   QuestionMultipleChoiceFieldModule
 } from '@cl-shared/questions/question-multiple-choice-field/question-multiple-choice-field.module';
-import { ButtonModule } from '@cl-shared/components/button/button.module';
+import { ButtonModule } from '@perxtech/candyshop';
 import { MatFormFieldModule, MatInputModule, MatSlideToggleModule } from '@angular/material';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { QuestionFormFieldService } from '@cl-shared/questions/question-form-field/shared/services/question-form-field.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
+import { environment } from '@cl-environments/environment';
+import { HttpServicesModule } from '@perxtech/whistler-services';
 
 describe('QuestionFormFieldComponent', () => {
   let component: QuestionFormFieldComponent;
@@ -46,7 +48,11 @@ describe('QuestionFormFieldComponent', () => {
         MatInputModule,
         MatSlideToggleModule,
         DragDropModule,
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
+        HttpServicesModule.forRoot(
+          environment.apiHost,
+          environment.apiCdn
+        ),
       ],
       declarations: [
         QuestionFormFieldComponent,
@@ -56,18 +62,18 @@ describe('QuestionFormFieldComponent', () => {
       ],
       providers: [
         {
-          provide: QuestionFormFieldService, useValue: {getFocusedElem: (a: any) => a + ''}
+          provide: QuestionFormFieldService, useValue: { getFocusedElem: (a: any) => `${a}` }
         }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(QuestionFormFieldComponent);
     component = fixture.componentInstance;
     component.group = new FormGroup({
-      id:  new FormControl(null),
+      id: new FormControl(null),
       selectedType: new FormControl(null),
       question: new FormControl(null),
       scale: new FormControl(null),

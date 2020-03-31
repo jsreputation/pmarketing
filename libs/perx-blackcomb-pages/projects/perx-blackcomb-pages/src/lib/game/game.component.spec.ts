@@ -1,18 +1,27 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick, discardPeriodicTasks } from '@angular/core/testing';
 
 import { GameComponent } from './game.component';
 import { of, throwError } from 'rxjs';
 import { ShakeComponent } from './shake/shake.component';
 import { TapComponent } from './tap/tap.component';
 import { ScratchComponent } from './scratch/scratch.component';
-import { GameModule, IGameService, GameType, IGame, AuthenticationService, NotificationService } from '@perx/core';
+import {
+  GameModule,
+  IGameService,
+  GameType,
+  IGame,
+  AuthenticationService,
+  NotificationService,
+  ConfigService
+} from '@perxtech/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Type } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
-import { ConfigToMappedSlotPipe, ConfigToSlicesPipe, SpinComponent } from './spin/spin.component';
-import { WInformationCollectionSettingType } from '@perx/whistler';
+import { ConfigToSlicesPipe, SpinComponent } from './spin/spin.component';
+import { WInformationCollectionSettingType } from '@perxtech/whistler';
+import { SnakeComponent } from './snake/snake.component';
 
 const gamePi: IGame = {
   id: 1,
@@ -84,7 +93,18 @@ describe('GameComponent', () => {
   const authServiceStub: Partial<AuthenticationService> = {
     getAnonymous: () => true,
   };
-  const notificationServiceStub: Partial<NotificationService> = {};
+  const notificationServiceStub: Partial<NotificationService> = {
+    addPopup: () => void 0
+  };
+  const configServiceStub: Partial<ConfigService> = {
+    readAppConfig: () => of({
+      apiHost: '',
+      production: false,
+      preAuth: false,
+      isWhistler: false,
+      baseHref: '',
+    })
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -94,8 +114,8 @@ describe('GameComponent', () => {
         TapComponent,
         ScratchComponent,
         SpinComponent,
-        ConfigToSlicesPipe,
-        ConfigToMappedSlotPipe
+        SnakeComponent,
+        ConfigToSlicesPipe
       ],
       imports: [
         MatProgressBarModule,
@@ -108,7 +128,8 @@ describe('GameComponent', () => {
         { provide: ActivatedRoute, useValue: { params: of({ id: 1 }) } },
         { provide: Router, useValue: routerStub },
         { provide: AuthenticationService, useValue: authServiceStub },
-        { provide: NotificationService, useValue: notificationServiceStub }
+        { provide: NotificationService, useValue: notificationServiceStub },
+        { provide: ConfigService, useValue: configServiceStub }
       ]
     })
       // .overrideModule(BrowserDynamicTestingModule, { set: { entryComponents: [PopupComponent] } })
@@ -145,29 +166,32 @@ describe('GameComponent', () => {
     }));
   });
 
-  it('should call redirectUrlAndPopup', () => {
+  it('should call redirectUrlAndPopup', fakeAsync(() => {
     const authService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
       AuthenticationService as Type<AuthenticationService>);
     const gameService: IGameService = fixture.debugElement.injector.get<IGameService>(IGameService as Type<IGameService>);
     const router: Router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
-
     spyOn(authService, 'getAnonymous').and.returnValue(false);
     spyOn(gameService, 'getGamesFromCampaign').and.returnValue(of([gameSignup]));
-    spyOn(gameService, 'prePlay').and.returnValue(of({ id: 3, voucherIds: [1, 2, 3] }));
-
     const error = 'error';
-    const spy = spyOn(gameService, 'prePlayConfirm').and.returnValue(throwError(error));
+    const spy = spyOn(gameService, 'prePlay').and.returnValue(throwError(error));
     const routerSpy = spyOn(router, 'navigate');
     component.ngOnInit();
-    component.gameCompleted();
+    component.loadPreplay();
+    component.preplayGameCompleted();
+    tick(1000);
+    fixture.detectChanges();
+    tick();
+    discardPeriodicTasks();
     expect(spy).toHaveBeenCalled();
     expect(routerSpy).toHaveBeenCalledWith(['/wallet']);
-  });
+  }));
 
   it('should set willWin true value', () => {
     const gameService: IGameService = fixture.debugElement.injector.get<IGameService>(IGameService as Type<IGameService>);
     const spy = spyOn(gameService, 'prePlay').and.returnValue(of({ id: 3, voucherIds: [1, 2, 3] }));
     component.ngOnInit();
+    component.loadPreplay();
     expect(spy).toHaveBeenCalled();
     expect(component.willWin).toBe(true);
   });
@@ -176,6 +200,7 @@ describe('GameComponent', () => {
     const gameService: IGameService = fixture.debugElement.injector.get<IGameService>(IGameService as Type<IGameService>);
     const spy = spyOn(gameService, 'prePlay').and.returnValue(of({ id: 3, voucherIds: [] }));
     component.ngOnInit();
+    component.loadPreplay();
     expect(spy).toHaveBeenCalled();
     expect(component.willWin).toBe(false);
   });

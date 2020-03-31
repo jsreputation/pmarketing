@@ -4,6 +4,7 @@
   @include main-wrap;
 
   padding: unset;
+  background-repeat: no-repeat;
 
   perx-core-puzzle-collect-stamps {
     flex: 1;
@@ -25,6 +26,7 @@
     width: 100%;
     display: flex;
     flex: 1;
+    align-items: center;
 
     .contain-child {
       display: block;

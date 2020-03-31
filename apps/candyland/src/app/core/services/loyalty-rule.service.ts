@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of, combineLatest } from 'rxjs';
 import { ClHttpParams } from '@cl-helpers/http-params';
 import { map, switchMap } from 'rxjs/operators';
-import { LoyaltyRulesHttpService } from '@cl-core/http-services/loyalty-rules-http.service';
+import { LoyaltyRulesHttpService } from '@perxtech/whistler-services';
 import { LoyaltyRuleHttpAdapter } from '@cl-core/http-adapters/loyalty-rule-http-adapter';
 import { JsonApiParser } from '@cl-helpers/json-api-parser';
 import {
@@ -14,8 +14,9 @@ import {
   IJsonApiItemPayload,
   IJsonApiListPayload,
   IJsonApiItem
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { ILoyaltyRule, ILoyaltyRuleCondition, ILoyaltyRulePoint, ILoyaltyRuleSet } from '@cl-core/models/loyalty/loyalty-rules.model';
+import { HttpParamsOptions } from '@cl-core/models/params-map';
 
 @Injectable({
   providedIn: 'root'
@@ -179,7 +180,7 @@ export class LoyaltyRuleService {
   }
 
   public createRulePoint(data: ILoyaltyRulePoint):
-    Observable<ILoyaltyRulePoint> {
+  Observable<ILoyaltyRulePoint> {
     const sendData: any = LoyaltyRuleHttpAdapter.transformFromPointForm(data);
     return this.rulesHttpService.createRulePoint({ data: sendData })
       .pipe(
@@ -189,7 +190,7 @@ export class LoyaltyRuleService {
   }
 
   public updateRulePoint(id: string, data: ILoyaltyRulePoint):
-    Observable<ILoyaltyRulePoint> {
+  Observable<ILoyaltyRulePoint> {
     const sendData: any = LoyaltyRuleHttpAdapter.transformFromPointForm(data);
     sendData.id = id;
     return this.rulesHttpService.updateRulePoint(id, { data: sendData })

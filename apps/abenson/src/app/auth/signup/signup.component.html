@@ -2,63 +2,64 @@
   <img src="assets/signup-top-image.svg" class="top-image">
   <div class="signup-form">
     <h1>Sign Up</h1>
-    <p>Have an account? <span routerLink="/login" class="link">Sign in</span></p>
+    <p>Have an account? <span routerLink="/login" class="link">Log In</span></p>
 
     <form
         #form='ngForm'
         [formGroup]="signUpForm"
         (ngSubmit)="onSubmit()"
     >
-      <mat-form-field appearance="fill" class="full-width__input">
-        <mat-label>First Name</mat-label>
+      <mat-form-field appearance="standard" class="full-width__input">
         <input matInput placeholder="First Name" formControlName="firstName">
-        <mat-error *ngIf="signUpForm.get('firstName').hasError('required')">
+        <mat-error *ngIf="firstName && firstName.hasError('required')">
           First Name is <strong>required</strong>
         </mat-error>
       </mat-form-field>
-      <mat-form-field appearance="fill" class="full-width__input">
-        <mat-label>Last Name</mat-label>
+      <mat-form-field appearance="standard" class="full-width__input">
         <input matInput placeholder="Last Name" formControlName="lastName">
-        <mat-error *ngIf="signUpForm.get('lastName').hasError('required')">
+        <mat-error *ngIf="lastName && lastName.hasError('required')">
           Last Name is <strong>required</strong>
         </mat-error>
       </mat-form-field>
-      <mat-form-field appearance="fill" class="full-width__input">
-        <mat-label>Mobile Number</mat-label>
-        <input matInput placeholder="Mobile Number" formControlName="phone">
-        <mat-error *ngIf="signUpForm.get('phone').hasError('required')">
+      <mat-form-field appearance="standard" class="full-width__input">
+        <input matInput placeholder="Email (optional)" formControlName="email">
+        <mat-error *ngIf="email && email.hasError('required')">
+          Email is <strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="standard" class="full-width__input">
+        <span matPrefix>+63<span class="prefix-spacer"></span></span>
+        <input type="tel" matInput autocomplete="tel-national" placeholder="Mobile Number" formControlName="phone">
+        <mat-error *ngIf="phone && phone.hasError('required')">
           Mobile Number is <strong>required</strong>
         </mat-error>
       </mat-form-field>
-      <mat-form-field appearance="fill" class="full-width__input">
-        <mat-label>Create your 4-Digit Pin Code</mat-label>
+      <mat-form-field appearance="standard" class="full-width__input">
         <input [type]="hide ? 'password' : 'text'" matInput placeholder="Create your 4-Digit Pin Code" formControlName="password">
         <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-        <mat-error *ngIf="signUpForm.get('password').hasError('required')">
+        <mat-error *ngIf="password && password.hasError('required')">
           Pin Code is <strong>required</strong>
         </mat-error>
-        <mat-error *ngIf="signUpForm.get('password').hasError('minlength') ||
-                          signUpForm.get('password').hasError('maxlength')">
+        <mat-error *ngIf="password && (password.hasError('minlength') || password.hasError('maxlength'))">
           Pin Code should be 4 characters long
         </mat-error>
       </mat-form-field>
-      <mat-form-field appearance="fill" class="full-width__input">
-        <mat-label>16 Digit Plus! Card Number (optional)</mat-label>
-        <input matInput placeholder="16 Digit Plus! Card Number (optional)" formControlName="cardNumber">
-        <mat-error *ngIf="signUpForm.get('phone').hasError('required')">
-          Mobile Number is <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+<!--      <mat-form-field appearance="standard" class="full-width__input">-->
+<!--        <mat-label>16 Digit Plus! Card Number (optional)</mat-label>-->
+<!--        <input matInput placeholder="16 Digit Plus! Card Number (optional)" formControlName="cardNumber">-->
+<!--        <mat-error *ngIf="phone && phone.hasError('required')">-->
+<!--          Mobile Number is <strong>required</strong>-->
+<!--        </mat-error>-->
+<!--      </mat-form-field>-->
       <div class="checkbox-container">
         <div class="checkbox-content">
-          <mat-checkbox formControlName="accept_terms"></mat-checkbox>
+          <mat-checkbox formControlName="acceptTerms"></mat-checkbox>
           <span>
             I have read and agree to the Terms and Privacy Policy and to receive email newsletters from PLUS! Rewards.
           </span>
         </div>
         <mat-error
-          *ngIf="signUpForm.get('accept_terms').invalid &&
-                 (signUpForm.get('accept_terms').touched || form.submitted)"
+          *ngIf="acceptTerms && (acceptTerms.invalid && (acceptTerms.touched || form.submitted))"
           class="checkbox-error"
         >
           Please accept the terms and conditions
@@ -67,5 +68,7 @@
       <button mat-flat-button type="submit" color="primary" class="full-width__button">Sign Up</button>
     </form>
   </div>
-  <img src="assets/signup-bottom-image.svg" class="bottom-image">
+  <div class="btm-img-container">
+    <img src="assets/signup-bottom-image.png" class="bottom-image">
+  </div>
 </div>

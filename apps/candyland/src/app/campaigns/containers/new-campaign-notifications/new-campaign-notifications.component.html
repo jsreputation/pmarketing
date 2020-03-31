@@ -17,78 +17,6 @@
     </div>
   </mat-expansion-panel>
 
-  <!--start audience-->
-  <mat-expansion-panel class="card" expanded *ngIf="form">
-    <mat-expansion-panel-header class="card-header">
-      <h2 class="card-title">
-        {{'CAMPAIGN.SELECT_AUDIENCE' | translate}}
-      </h2>
-    </mat-expansion-panel-header>
-    <div class="card-content">
-      <div class="card-row">
-        <mat-form-field>
-          <mat-select [placeholder]="'CAMPAIGN.SELECT_AUDIENCE' | translate" [formControl]="audience.get('select')">
-            <mat-option *ngFor="let pool of pools" [value]="pool?.value?.id">{{pool?.name}}</mat-option>
-          </mat-select>
-          <mat-error *ngIf="audience.get('select').hasError('required') && audience.get('select').touched">
-            {{'ERROR_REQUIRED' | translate}}.
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div class="card-row">
-        <mat-checkbox color="primary" [(ngModel)]="audienceFiltersEnabled" [disabled]="!audience.get('select').value">
-          {{'CAMPAIGN.AUDIENCE_FILTER' | translate}}
-        </mat-checkbox>
-      </div>
-      <div *ngIf="audienceFiltersEnabled">
-        <div class="card-section">
-          <div class="card-header">
-            <h3 class="card-title">
-              {{'CAMPAIGN.AGE' | translate}}
-            </h3>
-            <mat-slide-toggle [formControl]="filters.get('agesEnabled')"></mat-slide-toggle>
-          </div>
-          <div class="card-content">
-            <div class="card-row" *ngFor="let age of ages.controls">
-              <mat-form-field>
-                <mat-select [formControl]="age.get('from')">
-                  <mat-option *ngFor="let fromAge of ageRange | async;" [value]="fromAge">{{fromAge}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-              <span>
-                {{'TO' | translate}}
-              </span>
-              <mat-form-field>
-                <mat-select [formControl]="age.get('to')">
-                  <mat-option *ngFor="let toAge of ageRange | async;" [value]="toAge">{{toAge}}</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <cl-button [disable]="filters.get('agesEnabled').value === false"
-              classList="tertiary ph-0" (click)="addAge()">{{'CAMPAIGN.ADD_AGE_RANGE' | translate}}</cl-button>
-          </div>
-        </div>
-        <div class="card-section">
-          <div class="card-header">
-            <h3 class="card-title">
-              {{'CAMPAIGN.GENDER' | translate}}
-            </h3>
-            <mat-slide-toggle [formControl]="filters.get('genderEnabled')"></mat-slide-toggle>
-          </div>
-          <div class="card-content">
-            <mat-radio-group color="primary" [formControl]="filters.get('gender')">
-              <ng-container *ngFor="let type of config?.genderTypes">
-                <mat-radio-button [value]="type?.value">{{type?.title | translate}}</mat-radio-button>
-              </ng-container>
-            </mat-radio-group>
-          </div>
-        </div>
-      </div>
-    </div>
-  </mat-expansion-panel>
-  <!--end audience-->
-
   <mat-expansion-panel class="card"
                        expanded
                        *ngIf="getWebLink()?.value">
@@ -149,9 +77,9 @@
                                           (deleteGroup)="deleteLaunchGroup($event)"
                                           (sendSms)="onSendSms($event)"
               ></cl-campaign-launch-message>
-              <cl-button classList="tertiary ph-0" (click)="addNewLaunchGroup()">
+              <cs-button classList="tertiary ph-0" (click)="addNewLaunchGroup()">
                 {{'BTN_ADD_QUESTION' | translate}}
-              </cl-button>
+              </cs-button>
             </ng-container>
             <ng-container *ngSwitchCase="notificationsMenu.campaignNotCompleted">
               <cl-campaign-not-completed-form-group *ngFor="let group of getCompletedGroup().controls; let index = index;"
@@ -163,9 +91,9 @@
                                                     (sendSms)="onSendSms($event)"
               >
               </cl-campaign-not-completed-form-group>
-              <cl-button classList="tertiary ph-0" (click)="addNewCompletedGroup()">
+              <cs-button classList="tertiary ph-0" (click)="addNewCompletedGroup()">
                 {{'BTN_ADD_QUESTION' | translate}}
-              </cl-button>
+              </cs-button>
             </ng-container>
             <ng-container *ngSwitchCase="notificationsMenu.beforeCampaignEnds">
               <cl-before-campaign-ends-form-group *ngFor="let group of getCampaignEndsGroup().controls; let index = index;"
@@ -177,9 +105,9 @@
                                                     (sendSms)="onSendSms($event)"
               >
               </cl-before-campaign-ends-form-group>
-              <cl-button classList="tertiary ph-0" (click)="addNewCampaignEndsGroup()">
+              <cs-button classList="tertiary ph-0" (click)="addNewCampaignEndsGroup()">
                 {{'BTN_ADD_QUESTION' | translate}}
-              </cl-button>
+              </cs-button>
             </ng-container>
             <ng-container *ngSwitchCase="notificationsMenu.beforeRewardExpires">
               <cl-before-reward-expires-form-group *ngFor="let group of getRewardExpiresGroup().controls; let index = index;"
@@ -190,9 +118,9 @@
                                                   (deleteGroup)="deleteRewardExpiresGroup($event)"
               >
               </cl-before-reward-expires-form-group>
-              <cl-button classList="tertiary ph-0" (click)="addNewRewardExpiresGroup()">
+              <cs-button classList="tertiary ph-0" (click)="addNewRewardExpiresGroup()">
                 {{'BTN_ADD_QUESTION' | translate}}
-              </cl-button>
+              </cs-button>
             </ng-container>
             <ng-container *ngSwitchCase="notificationsMenu.noOfStampsToNextReward">
               <cl-no-stamps-to-next-reward-form-group *ngFor="let group of getNoStampsRewardGroup().controls; let index = index;"
@@ -204,9 +132,9 @@
                                                   (deleteGroup)="deleteNoStampsRewardGroup($event)"
               >
               </cl-no-stamps-to-next-reward-form-group>
-              <cl-button classList="tertiary ph-0" (click)="addNewNoStampsRewardGroup()">
+              <cs-button classList="tertiary ph-0" (click)="addNewNoStampsRewardGroup()">
                 {{'BTN_ADD_QUESTION' | translate}}
-              </cl-button>
+              </cs-button>
             </ng-container>
             <ng-container *ngSwitchCase="notificationsMenu.earnedStamp">
               <cl-earned-stamp-form-group *ngFor="let group of getEarnedStampGroup().controls; let index = index;"
@@ -218,9 +146,9 @@
                                                   (deleteGroup)="deleteEarnedStampGroup($event)"
               >
               </cl-earned-stamp-form-group>
-              <cl-button classList="tertiary ph-0" (click)="addNewEarnedStampGroup()">
+              <cs-button classList="tertiary ph-0" (click)="addNewEarnedStampGroup()">
                 {{'BTN_ADD_QUESTION' | translate}}
-              </cl-button>
+              </cs-button>
             </ng-container>
             <ng-container *ngSwitchCase="notificationsMenu.earnedReward">
               <cl-earned-reward-form-group *ngFor="let group of getEarnedRewardGroup().controls; let index = index;"
@@ -233,9 +161,9 @@
                                           (deleteGroup)="deleteEarnedRewardGroup($event)"
               >
               </cl-earned-reward-form-group>
-              <cl-button classList="tertiary ph-0" (click)="addNewEarnedRewardGroup()">
+              <cs-button classList="tertiary ph-0" (click)="addNewEarnedRewardGroup()">
                 {{'BTN_ADD_QUESTION' | translate}}
-              </cl-button>
+              </cs-button>
             </ng-container>
           </section>
         </ng-container>

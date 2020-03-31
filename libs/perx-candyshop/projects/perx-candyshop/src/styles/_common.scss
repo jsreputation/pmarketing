@@ -139,16 +139,6 @@
   width: 100%;
 }
 
-.control-img_asset {
-  padding-bottom: $vertical-padding;
-  overflow-x: auto;
-
-  .card-fieldset-label {
-    position: sticky;
-    left: 0;
-  }
-}
-
 // INVALID FORM NEXT FIELD CLEAR GAP
 .mat-form-field-invalid {
   transition: 0.3s cubic-bezier(0.35, 0, 0.25, 1);
@@ -228,7 +218,7 @@
   border-radius: $border-radius;
 
   &::before {
-    @include typo-caption;
+    @include cs-typo-caption;
 
     content: '!';
     margin-right: 10px;
@@ -413,5 +403,11 @@
 .upload-btn {
   span ~ span {
     display: none;
+  }
+
+  .date-picker {
+    width: 100%;
+    min-width: 10rem;
+    max-width: 17rem;
   }
 }

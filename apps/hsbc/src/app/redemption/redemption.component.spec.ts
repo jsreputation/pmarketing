@@ -12,16 +12,16 @@ import {
   VouchersModule,
   VoucherState,
   RedemptionType,
-} from '@perx/core';
+} from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import {ActivatedRoute} from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 describe('RedemptionComponent', () => {
   let component: RedemptionComponent;
-  let fixture: ComponentFixture< RedemptionComponent>;
+  let fixture: ComponentFixture<RedemptionComponent>;
   const mockVoucher: Voucher = {
     id: 2,
     reward: {
@@ -49,14 +49,14 @@ describe('RedemptionComponent', () => {
     code: 'string;',
     expiry: null,
   };
-  const vouchersServiceStub = {
+  const vouchersServiceStub: Partial<IVoucherService> = {
     get: () => of(mockVoucher)
   };
-  const themesServiceStub = {};
-  const feedReaderServiceStub = {};
-  const authenticationServiceStub = {};
-  const profileServiceStub = {};
-  const configServiceStub = {
+  const themesServiceStub: Partial<ThemesService> = {};
+  const feedReaderServiceStub: Partial<FeedReaderService> = {};
+  const authenticationServiceStub: Partial<AuthenticationService> = {};
+  const profileServiceStub: Partial<ProfileService> = {};
+  const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of()
   };
   const activatedRouteStub = {
@@ -84,7 +84,7 @@ describe('RedemptionComponent', () => {
         { provide: FeedReaderService, useValue: feedReaderServiceStub },
         { provide: AuthenticationService, useValue: authenticationServiceStub },
         { provide: IVoucherService, useValue: vouchersServiceStub },
-        { provide : ConfigService, useValue: configServiceStub},
+        { provide: ConfigService, useValue: configServiceStub },
         { provide: ActivatedRoute, useValue: activatedRouteStub },
       ]
     })

@@ -17,7 +17,7 @@ import {
   switchMap,
 } from 'rxjs/operators';
 
-import { IWProfileAttributes } from '@perx/whistler';
+import { IWProfileAttributes } from '@perxtech/whistler';
 import { AudiencesUserService } from '@cl-core/services/audiences-user.service';
 import { CustomDataSource } from '@cl-shared/table/data-source/custom-data-source';
 
@@ -28,6 +28,7 @@ import {
 import { UpsertUserPopupComponent } from '../../containers/upsert-user-popup/upsert-user-popup.component';
 import { MessageService } from '@cl-core-services';
 import Utils from '@cl-helpers/utils';
+import { IAudiencesUserForm } from '@cl-core/models/audiences/user.interface';
 
 @Component({
   selector: 'cl-audiences-users-list',

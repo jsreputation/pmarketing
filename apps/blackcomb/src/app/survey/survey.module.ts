@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import {
   SurveyModule as PerxSurveyModule,
   CampaignModule as PerxCampaignModule,
+  CampaignServiceModule as PerxSvcCampaignModule,
   ConfigModule,
   AuthenticationModule,
   // SurveyService
-} from '@perx/core';
+} from '@perxtech/core';
 
 import { SurveyRoutingModule } from './survey-routing.module';
 import {
@@ -15,10 +16,11 @@ import {
   MatProgressBarModule,
   MatDatepickerModule,
   MatRadioModule,
+  MatToolbarModule,
   MatCheckboxModule
 } from '@angular/material';
 import { environment } from 'src/environments/environment';
-import { SurveyComponent } from '@perx/blackcomb-pages';
+import { PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
 // import { of } from 'rxjs';
 // import { survey } from '../mock/survey.mock';
 
@@ -27,18 +29,20 @@ import { SurveyComponent } from '@perx/blackcomb-pages';
 // };
 
 @NgModule({
-  declarations: [SurveyComponent],
   imports: [
     ConfigModule.forRoot({ ...environment }),
+    PerxBlackcombPagesModule,
     CommonModule,
     MatCardModule,
     MatButtonModule,
     MatProgressBarModule,
+    MatToolbarModule,
     MatDatepickerModule,
     MatRadioModule,
     MatCheckboxModule,
     SurveyRoutingModule,
     PerxCampaignModule,
+    PerxSvcCampaignModule.forChild(),
     PerxSurveyModule,
     AuthenticationModule
   ],

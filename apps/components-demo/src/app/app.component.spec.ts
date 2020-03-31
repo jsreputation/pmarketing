@@ -2,12 +2,12 @@ import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MatDialogModule, MatToolbarModule, MatIconModule } from '@angular/material';
-import { AuthenticationService, ConfigService } from '@perx/core';
+import { AuthenticationService, ConfigService } from '@perxtech/core';
 import { of } from 'rxjs';
 
 describe('AppComponent', () => {
-  const authenticationServiceStub = {};
-  const configServiceStub = {
+  const authenticationServiceStub: Partial<AuthenticationService> = {};
+  const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of()
   };
 
@@ -23,7 +23,7 @@ describe('AppComponent', () => {
         AppComponent
       ],
       providers: [
-        {provide: AuthenticationService, useValue: authenticationServiceStub},
+        { provide: AuthenticationService, useValue: authenticationServiceStub },
         { provide: ConfigService, useValue: configServiceStub }
       ]
     }).compileComponents();

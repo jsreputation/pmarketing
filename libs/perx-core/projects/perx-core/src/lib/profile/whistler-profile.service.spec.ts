@@ -8,7 +8,7 @@ import { TokenStorage } from '../utils/storage/token-storage.service';
 import { WhistlerProfileService } from './whistler-profile.service';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
-import { IWProfileAttributes, IJsonApiItem } from '@perx/whistler';
+import { IWProfileAttributes, IJsonApiItem } from '@perxtech/whistler';
 const tokenStorageStrud: Partial<TokenStorage> = {
   getAppInfoProperty: () => 'test'
 };
@@ -31,8 +31,8 @@ describe('WhistlerProfileService', () => {
 
   it('should call whoAmI', fakeAsync(inject([WhistlerProfileService, HttpClient, TokenStorage],
     (profileService: WhistlerProfileService, http: HttpClient, storage: TokenStorage) => {
-      const spy = spyOn(http, 'get');
-      spy.and.returnValue(of({
+      const spy = jest.spyOn(http, 'get');
+      spy.mockReturnValue(of({
         data: [{
           id: '1',
           attributes: {}
@@ -40,9 +40,9 @@ describe('WhistlerProfileService', () => {
       }));
       profileService.whoAmI().subscribe(() => { });
       tick();
-      spy.and.returnValue(of({ data: [] }));
-      spyOn(storage, 'getAppInfoProperty').and.returnValue('');
-      profileService.whoAmI().subscribe(() => { }, (er) => expect(er.message).toEqual(`There is no user with pi ''`));
+      spy.mockReturnValue(of({ data: [] }));
+      jest.spyOn(storage, 'getAppInfoProperty').mockReturnValue('');
+      profileService.whoAmI().subscribe(() => { }, (er) => expect(er.message).toEqual('There is no user with pi \'\''));
       tick();
     })));
 });

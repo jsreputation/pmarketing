@@ -1,7 +1,7 @@
 <aside class="dialog" role="dialog" aria-labelledby="dialogTitle-selectMerchant">
   <header class="dialog-header-wrap">
     <h2 class="dialog-title" id="dialogTitle-selectMerchant" translate>EXISTING_MERCHANT_POPUP.SELECT_MERCHANT</h2>
-    <button class="dialog-closed btn-transparent" [mat-dialog-close]="true">
+    <button class="dialog-closed cs-btn-transparent" [mat-dialog-close]="true">
       <mat-icon>close</mat-icon>
     </button>
   </header>
@@ -37,7 +37,7 @@
   <!--<mat-dialog-actions>-->
   <footer class="dialog-actions"
   >
-    <cl-button [classList]="'secondary'"
+    <cs-button [classList]="'secondary'"
               class="actions-close"
               (click)="close()"
               [disableRipple]="true"
@@ -45,9 +45,9 @@
         <span translate>
           BTN_CANCEL
         </span>
-    </cl-button>
+    </cs-button>
 
-    <cl-button [classList]="'primary'"
+    <cs-button [classList]="'primary'"
               [disable]="!selectMerchant"
               (click)="add()"
               [disableRipple]="true"
@@ -55,7 +55,7 @@
         <span translate>
           BTN_ADD_MERCHANT
         </span>
-    </cl-button>
+    </cs-button>
   </footer>
   <!--</mat-dialog-actions>-->
 </aside>

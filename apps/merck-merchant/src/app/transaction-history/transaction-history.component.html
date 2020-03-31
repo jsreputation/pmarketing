@@ -9,22 +9,22 @@
   <mat-tab-group mat-stretch-tabs class="tabs">
     <mat-tab label="Sales">
       <perx-core-loyalty-transactions-list
-        *ngIf="transactions"
-        [transactions]="transactions | transactionHistory: true"
-        [titleFn]="purchasesTitleFn"
-        [subTitleFn]="subTitleFn"
-        [descFn]="descFn"
-        [priceLabelFn]="priceLabelFn"
+        *ngIf="purchaseTransactions"
+        [transactions]="purchaseTransactions"
+        [titleFn]="salesTitleFn"
+        [subTitleFn]="salesSubTitleFn"
+        [descFn]="salesDescFn"
+        [priceLabelFn]="salespriceLabelFn"
       >
       </perx-core-loyalty-transactions-list>
     </mat-tab>
     <mat-tab label="Redemption">
       <perx-core-loyalty-transactions-list
-        *ngIf="transactions"
-        [transactions]="transactions | transactionHistory: false"
+        *ngIf="rewardTransactions"
+        [transactions]="rewardTransactions"
         [titleFn]="redemptionsTitleFn"
-        [subTitleFn]="subTitleFn"
-        [priceLabelFn]="priceLabelFn"
+        [subTitleFn]="redemptionsSubTitleFn"
+        [priceLabelFn]="redemptionsPriceLabelFn"
       >
       </perx-core-loyalty-transactions-list>
     </mat-tab>

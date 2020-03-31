@@ -13,7 +13,7 @@ require('dotenv').config();
 
 // `environment.ts` file structure that uses the environment variables
 const envConfigFile = `export const environment = {
-  apiHost: '${process.env.APIHOST ? process.env.APIHOST : 'https://api.getperx.io'}',
+  apiHost: '${process.env.APIHOST ? process.env.APIHOST : 'https://api.perxtech.io'}',
   production: ${process.env.PRODUCTION ? process.env.PRODUCTION : false},
   preAuth: ${process.env.PREAUTH ? process.env.PREAUTH : false},
   isWhistler: ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : false},
@@ -22,13 +22,13 @@ const envConfigFile = `export const environment = {
 `;
 
 const appConfigFile = `{
-  "apiHost": "${process.env.APIHOST ? process.env.APIHOST : 'https://api.getperx.io'}",
+  "apiHost": "${process.env.APIHOST ? process.env.APIHOST : 'https://api.perxtech.io'}",
   "production": ${process.env.PRODUCTION ? process.env.PRODUCTION : false},
   "preAuth": ${process.env.PREAUTH ? process.env.PREAUTH : false},
   "isWhistler": ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : false},
   "baseHref": "${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}",
   "sourceType": "${process.env.SOURCE_TYPE ? process.env.SOURCE_TYPE : ''}",
-  "custom": {"campaignId": ${process.env.CAMPAIGN_ID ? process.env.CAMPAIGN_ID : ''}}
+  "custom": {"campaignId": "${process.env.CAMPAIGN_ID ? process.env.CAMPAIGN_ID : ''}"}
 }
 `;
 

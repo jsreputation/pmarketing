@@ -1,4 +1,4 @@
-import { AuthenticationService, ConfigService } from '@perx/core';
+import { AuthenticationService, ConfigService } from '@perxtech/core';
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
@@ -6,7 +6,7 @@ import { MatDialogModule, MatToolbarModule, MatIconModule, MatSnackBarModule } f
 import { TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
 
-const authServiceStub = {};
+const authServiceStub: Partial<AuthenticationService> = {};
 
 describe('AppComponent', () => {
 

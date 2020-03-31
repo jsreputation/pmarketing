@@ -10,8 +10,8 @@ import { Location } from '@angular/common';
 describe('PrivacyPolicyComponent', () => {
   let component: PrivacyPolicyComponent;
   let fixture: ComponentFixture<PrivacyPolicyComponent>;
-  const locationStub = {
-    goBack: () => {}
+  const locationStub: Partial<Location> = {
+    back: () => {}
   };
 
   beforeEach(async(() => {
@@ -22,7 +22,7 @@ describe('PrivacyPolicyComponent', () => {
         { provide: Location, useValue: locationStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

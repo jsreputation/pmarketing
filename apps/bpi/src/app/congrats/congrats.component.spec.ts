@@ -4,17 +4,17 @@ import { CongratsComponent } from './congrats.component';
 import { HeaderComponent } from '../header/header.component';
 import { MatToolbarModule } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
-import { StampService } from '@perx/core';
+import { StampService } from '@perxtech/core';
 import { of } from 'rxjs';
 
 describe('CongratsComponent', () => {
   let component: CongratsComponent;
   let fixture: ComponentFixture<CongratsComponent>;
   const router = {
-    navigate: jasmine.createSpy('navigate')
+    navigate: jest.fn()
   };
 
-  const stampServiceStub = {
+  const stampServiceStub: Partial<StampService> = {
     // @ts-ignore
     getCards: (id: number) => (of([]))
   };

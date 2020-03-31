@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { WalletComponent } from './wallet.component';
-import { VouchersModule } from '@perx/core';
+import { VouchersModule } from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatTabsModule } from '@angular/material';
 
@@ -11,14 +11,14 @@ describe('WalletComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WalletComponent ],
+      declarations: [WalletComponent],
       imports: [
         VouchersModule,
         RouterTestingModule,
         MatTabsModule
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

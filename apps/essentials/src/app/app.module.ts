@@ -8,7 +8,7 @@ import {
   translateLoader,
   WINDOW_PROVIDERS
 } from '@es-core';
-import { SidenavModule } from '@perx/candyshop';
+import { SidenavModule } from '@perxtech/candyshop';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -22,6 +22,7 @@ import { environment } from '../environments/environment';
 import { GestureConfig } from '@angular/material/core';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TestPageComponent } from './test-page/test-page.component';
+import { HttpServicesModule } from '@perxtech/whistler-services';
 
 // import * as Sentry from '@sentry/browser';
 
@@ -50,6 +51,10 @@ import { TestPageComponent } from './test-page/test-page.component';
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
+    HttpServicesModule.forRoot(
+      environment.apiHost,
+      environment.apiCdn
+    ),
     AuthModule,
     MatSnackBarModule,
     MatButtonModule,
@@ -59,19 +64,19 @@ import { TestPageComponent } from './test-page/test-page.component';
         provide: TranslateLoader,
         deps: [HttpClient],
         useFactory: (httpClient) => translateLoader(httpClient, [
-          {prefix: './assets/i18n/', suffix: '.json'},
-          {prefix: '/assets/i18n/common/', suffix: '.json'}
+          { prefix: './assets/i18n/', suffix: '.json' },
+          { prefix: '/assets/i18n/common/', suffix: '.json' }
         ])
       }
     }),
-    ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     LocalStorageService,
     SessionService,
     WINDOW_PROVIDERS,
-    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
-    {provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig},
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig },
     {
       provide: APP_INITIALIZER,
       useFactory: setLanguage,

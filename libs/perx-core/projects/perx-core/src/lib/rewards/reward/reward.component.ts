@@ -30,6 +30,9 @@ export class RewardComponent implements OnInit {
     if (!this.displayPriceFn) {
       this.displayPriceFn = (rewardPrice: IPrice) => {
         if (rewardPrice.price && rewardPrice.price > 0) {
+          if (rewardPrice.points && rewardPrice.points > 0) {
+            return `${rewardPrice.currencyCode} ${rewardPrice.price} and ${rewardPrice.points} points`;
+          }
           return `${rewardPrice.currencyCode} ${rewardPrice.price}`;
         }
 

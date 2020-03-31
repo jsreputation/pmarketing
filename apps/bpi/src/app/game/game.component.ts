@@ -10,7 +10,7 @@ import {
   StampCardState,
   StampState,
   NotificationService
-} from '@perx/core';
+} from '@perxtech/core';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -218,7 +218,7 @@ export class GameComponent implements OnInit {
 
     if (cardSelectedRedeemed === cardSelectedLength && cardSelectedRedeemed < totalSlots) {
       const text = requiredKeysToUnlock === 1 ?
-        `You only need 1 key to earn your Netflix rebate. Keep using your BPI Credit Card to get your Netflix rebate of up to 6 months.` :
+        'You only need 1 key to earn your Netflix rebate. Keep using your BPI Credit Card to get your Netflix rebate of up to 6 months.' :
         // tslint:disable-next-line:max-line-length
         `You only need ${requiredKeysToUnlock} keys to earn your Netflix rebate. Keep using your BPI Credit Card to get your Netflix rebate of up to 6 months.`;
       this.notificationService.addPopup({
@@ -236,9 +236,7 @@ export class GameComponent implements OnInit {
     const totalSlots = cardSelected.displayProperties.totalSlots;
     const index = this.cards.findIndex(card => card.id === id);
 
-    const redeemedStamps = cardSelected.stamps.map(stamp => {
-      return { ...stamp, state: StampState.redeemed };
-    });
+    const redeemedStamps = cardSelected.stamps.map(stamp => ({ ...stamp, state: StampState.redeemed }));
 
     this.cards[index].stamps = redeemedStamps;
     this.checkKeys(cardSelected);

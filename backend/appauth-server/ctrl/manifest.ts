@@ -1,6 +1,6 @@
 import cacheManager from 'cache-manager';
 import Jimp from 'jimp';
-import { IJsonApiItem, IWTenant } from '@perx/whistler';
+import { IJsonApiItem, IWTenant } from '@perxtech/whistler';
 import { Manifest, DARK, LIGHT } from '../types/manifest-model';
 import { ICredentials } from '../types/apiConfig';
 import { Request, Response, NextFunction } from 'express';
@@ -103,7 +103,7 @@ export const manifest = (getCredentials: ((url: string) => Promise<ICredentials>
     });
   } catch (e) {
     if (e.response && e.response.data && e.response.status) {
-      res.status(e.response.status).json(e.response.data);
+      res.status(400).json(e.response.data);
     } else {
       try {
         getLocalManifest(appPath, res, req);

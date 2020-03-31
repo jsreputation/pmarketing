@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
-import {ConfigService, IConfig, isEmptyString, IStampCard, NotificationService} from '@perx/core';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ConfigService, IConfig, isEmptyString, IStampCard, NotificationService } from '@perxtech/core';
 
 @Component({
   selector: 'app-puzzles',
@@ -27,7 +27,7 @@ export class PuzzlesComponent implements OnInit {
     );
     this.route.paramMap.subscribe(params => {
       if (isEmptyString(params.get('campaignId'))) {
-        throw new Error(`campaignId is required`);
+        throw new Error('campaignId is required');
       }
 
       this.campaignId = Number.parseInt(params.get('campaignId') as string, 10);

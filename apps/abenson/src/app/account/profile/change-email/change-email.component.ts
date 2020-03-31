@@ -3,11 +3,12 @@ import {
   OnInit,
 } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { ProfileService } from '@perx/core';
+import { ProfileService } from '@perxtech/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -17,6 +18,10 @@ import { Router } from '@angular/router';
 })
 export class ChangeEmailComponent implements OnInit {
   public emailChangeForm: FormGroup;
+
+  public get email(): AbstractControl | null {
+    return this.emailChangeForm.get('email');
+  }
 
   constructor(
     private fb: FormBuilder,

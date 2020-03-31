@@ -9,8 +9,8 @@ import { of } from 'rxjs';
 import {
   RewardsModule as PerxRewardsModule,
   ThemesService,
-} from '@perx/core';
-import { RewardsService } from '@perx/core';
+} from '@perxtech/core';
+import { RewardsService } from '@perxtech/core';
 
 import { RewardsCollectionComponent } from './rewards-collection.component';
 
@@ -18,10 +18,10 @@ describe('RewardsCollectionComponent', () => {
   let component: RewardsCollectionComponent;
   let fixture: ComponentFixture<RewardsCollectionComponent>;
 
-  const rewardsServiceStub = {
+  const rewardsServiceStub: Partial<RewardsService> = {
     getAllRewards: () => of([])
   };
-  const themesServiceStub = {
+  const themesServiceStub: Partial<ThemesService> = {
     getThemeSetting: () => of()
   };
 

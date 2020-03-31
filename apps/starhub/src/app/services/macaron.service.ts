@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {ICampaign, IReward} from '@perx/core';
+import { ICampaign, IReward } from '@perxtech/core';
 
 export interface IMacaron {
   label: string;
@@ -46,6 +46,7 @@ export class MacaronService {
     }
 
     if (validToDate && validToDate.getTime() < nowTime) {
+      // console.log(validToDate, validToDate.getTime(), nowTime);
       return {
         label: 'Expired',
         class: 'expired',

@@ -2,7 +2,7 @@ import {
   IStampCard,
   StampCardState,
   StampState,
-} from '@perx/core';
+} from '@perxtech/core';
 
 export const stampCard: IStampCard = {
   id: 1,
@@ -18,6 +18,7 @@ export const stampCard: IStampCard = {
       { rewardPosition: 2 }
     ]
   },
+  results: {},
   displayProperties: {
     numberOfCols: 1,
     numberOfRows: 1,

@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SurveyComponent } from './survey.component';
 import { MatFormFieldModule, MatRadioModule, MatSelectModule } from '@angular/material';
-import { ButtonModule } from '../../../components/button/button.module';
+import { ButtonModule } from '@perxtech/candyshop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -20,9 +20,9 @@ describe('SurveyComponent', () => {
         MatRadioModule,
         ReactiveFormsModule,
       ],
-      declarations: [ SurveyComponent ]
+      declarations: [SurveyComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

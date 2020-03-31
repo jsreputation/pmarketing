@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ClHttpParams } from '@cl-helpers/http-params';
-import { OutcomesHttpsService } from '@cl-core/http-services/outcomes-https.service';
+import { OutcomesHttpsService } from '@perxtech/whistler-services';
 import { map } from 'rxjs/operators';
 import { OutcomesHttpAdapter } from '@cl-core/http-adapters/outcomes-http-adapter';
-import { IWOutcomeAttributes, IJsonApiItem, IJsonApiListPayload, IJsonApiItemPayload } from '@perx/whistler';
+import { IWOutcomeAttributes, IJsonApiItem, IJsonApiListPayload, IJsonApiItemPayload } from '@perxtech/whistler';
 import { IOutcome } from '@cl-core/models/outcome/outcome';
 import { ICampaignOutcome } from '@cl-core/models/campaign/campaign';
+import { HttpParamsOptions } from '@cl-core/models/params-map';
 
 @Injectable({
   providedIn: 'root'
@@ -44,8 +45,7 @@ export class OutcomesService {
     return this.outcomesHttpsService.createOutcome({ data: sendData });
   }
 
-  public deleteOutcome(id: string): Observable<any> {
+  public deleteOutcome(id: string): Observable<void> {
     return this.outcomesHttpsService.deleteOutcome(id);
   }
-
 }

@@ -1,11 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ProfileService } from '@perx/core';
+import { ProfileService } from '@perxtech/core';
 import { ProfileComponent } from './profile.component';
 import { of } from 'rxjs';
 import { MatListModule, MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 
-const profileServiceStub = {
+const profileServiceStub: Partial<ProfileService> = {
   whoAmI: () => of()
 };
 
@@ -15,7 +15,7 @@ describe('ProfileComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProfileComponent ],
+      declarations: [ProfileComponent],
       imports: [
         MatListModule,
         MatIconModule,

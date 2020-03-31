@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  AuthenticationService,
   NotificationService,
   PopupComponent,
   IPopupConfig,
@@ -10,13 +9,11 @@ import {
   TokenStorage,
   ThemesService,
   ITheme,
-  RewardPopupComponent
-} from '@perx/core';
+  RewardPopupComponent, IProfile, LoyaltyService, ProfileService, ConfigService
+} from '@perxtech/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
-import { ActivatedRoute, Params } from '@angular/router';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, switchMap } from 'rxjs/operators';
 import { AnalyticsService, IEvent, PageType } from './analytics.service';
-
 export interface IdataLayerSH {
   pageName: string;
   channel: string;
@@ -47,15 +44,18 @@ export class AppComponent implements OnInit {
   public theme: ITheme;
 
   constructor(
-    private authenticationService: AuthenticationService,
+    // private authenticationService: AuthenticationService,
     private notificationService: NotificationService,
-    private activeRoute: ActivatedRoute,
+    // private activeRoute: ActivatedRoute,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private gameService: IGameService,
     private tokenStorage: TokenStorage,
     private analytics: AnalyticsService,
-    private themeService: ThemesService
+    private themeService: ThemesService,
+    private loyaltyService: LoyaltyService,
+    private profileService: ProfileService,
+    private configService: ConfigService
   ) {
     this.data.pageName = '';
     this.data.channel = 'msa';
@@ -85,15 +85,6 @@ export class AppComponent implements OnInit {
 
     this.notificationService.$snack.subscribe((msg: string) => this.snackBar.open(msg, 'x', { duration: 2000 }));
 
-    this.activeRoute.queryParams
-      .pipe(
-        filter((params: Params) => params.token),
-        map((params: Params) => params.token)
-      )
-      .subscribe((token: string) => {
-        this.authenticationService.saveUserAccessToken(token);
-      });
-
     this.analytics.events$.subscribe(
       (event: IEvent) => {
         if (event.pageType === PageType.overlay) {
@@ -118,6 +109,16 @@ export class AppComponent implements OnInit {
         _satellite.track('msa-rewards-virtual-page');
       }
     );
+
+    this.configService.readAppConfig().pipe(
+      switchMap(() => this.loyaltyService.getLoyalty()),
+      switchMap(() => this.profileService.whoAmI())
+    ).subscribe((profile: IProfile) => {
+      (window as any).dataLayer.push({user_properties: {identifier: profile.identifier}});
+      if ((window as any).appboy) {
+        (window as any).appboy.changeUser(profile.identifier);
+      }
+    });
   }
 
   protected checkGame(campaign: ICampaign): void {

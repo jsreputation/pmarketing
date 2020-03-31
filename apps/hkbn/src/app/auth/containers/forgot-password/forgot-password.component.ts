@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { HkbnValidators } from '../../../helpers/hkbn-validators';
-import { AuthenticationService } from '@perx/core';
+import { AuthenticationService } from '@perxtech/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { filter, takeUntil, mergeMap } from 'rxjs/operators';
@@ -84,14 +84,12 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     const value = this.newPasswordForm.value;
     this.authenticationService.resetPassword({ phone: this.identifier, otp: this.otp, ...value }).pipe(
       mergeMap(
-        () => {
-          return this.authenticationService.login(this.identifier, value.newPassword);
-        }
+        () => this.authenticationService.login(this.identifier, value.newPassword)
       )).subscribe(
-        () => {
-          this.router.navigate(['/']);
-        }
-      );
+      () => {
+        this.router.navigate(['/']);
+      }
+    );
   }
 
 }

@@ -1,11 +1,12 @@
 import { ComponentFixture, TestBed, async, tick, fakeAsync } from '@angular/core/testing';
 import { Router, convertToParamMap } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-import { ICampaignService, PerxCoreModule, StampService, StampCardState, StampState, NotificationService } from '@perx/core';
+import { ICampaignService, PerxCoreModule, StampService, StampCardState, StampState, NotificationService } from '@perxtech/core';
 import { GameComponent } from './game.component';
 import { HeaderComponent } from '../header/header.component';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
+import { IStamp } from '@perxtech/core';
 
 describe('GameComponent', () => {
   let component: GameComponent;
@@ -13,17 +14,53 @@ describe('GameComponent', () => {
 
   beforeEach(() => {
     const router = {
-      navigate: jasmine.createSpy('navigate')
+      navigate: jest.fn()
     };
-    const stampServiceStub = {
-      getCards: () => ({ pipe: () => ({ subscribe: () => ({}) }) }),
-      stampAll: () => ({ subscribe: () => ({}) })
+    const stampServiceStub: Partial<StampService> = {
+      getCards: () => (of([
+        {
+          id: 1,
+          state: StampCardState.active,
+          title: 'Test',
+          campaignConfig: null,
+          results: {},
+          displayProperties: {
+            numberOfCols: undefined,
+            numberOfRows: undefined,
+            cardImage: undefined,
+            preStampImg: undefined,
+            postStampImg: undefined,
+            rewardPreStamp: undefined,
+            rewardPostStamp: undefined,
+            bgImage: undefined,
+            cardBgImage: undefined,
+            totalSlots: undefined,
+            displayCampaignAs: '',
+            backgroundImg: undefined,
+            rewardPositions: undefined,
+            thumbnailImg: undefined,
+            noRewardsPopUp: {
+              headLine: 'Headline',
+              subHeadLine: 'Sub headline',
+              imageURL: 'url',
+              buttonTxt: 'button'
+            },
+            successPopUp: {
+              headLine: 'Headline',
+              subHeadLine: 'Sub headline',
+              imageURL: 'url',
+              buttonTxt: 'button'
+            }
+          }
+        }
+      ])),
+      stampAll: () => of([{ state: StampState.issued } as IStamp])
     };
-    const campaignServiceStub = {
-      getCampaigns: () => ({ pipe: () => ({ subscribe: () => ({}) }) })
+    const campaignServiceStub: Partial<ICampaignService> = {
+      getCampaigns: () => of()
     };
 
-    const notificationServiceStub = { addPopup: () => ({}) };
+    const notificationServiceStub: Partial<NotificationService> = { addPopup: () => ({}) };
     TestBed.configureTestingModule({
       declarations: [GameComponent, HeaderComponent],
       imports: [PerxCoreModule],
@@ -73,6 +110,7 @@ describe('GameComponent', () => {
           totalSlots: 5,
           rewards: [],
         },
+        results: {},
         displayProperties: {
           numberOfCols: 1,
           numberOfRows: 5,
@@ -148,6 +186,7 @@ describe('GameComponent', () => {
             totalSlots: 5,
             rewards: [],
           },
+          results: {},
           displayProperties: {
             numberOfCols: 1,
             numberOfRows: 5,
@@ -232,6 +271,7 @@ describe('GameComponent', () => {
           stampCardId: 1,
           createdAt: '',
           updatedAt: '',
+          results: {}
         },
         {
           id: 1609,
@@ -242,6 +282,7 @@ describe('GameComponent', () => {
           stampCardId: 1,
           createdAt: '',
           updatedAt: '',
+          results: {}
         },
         {
           id: 1610,
@@ -252,6 +293,7 @@ describe('GameComponent', () => {
           stampCardId: 1,
           createdAt: '',
           updatedAt: '',
+          results: {}
         },
         {
           id: 1611,
@@ -262,6 +304,7 @@ describe('GameComponent', () => {
           stampCardId: 1,
           createdAt: '',
           updatedAt: '',
+          results: {}
         },
         {
           id: 1612,
@@ -272,6 +315,7 @@ describe('GameComponent', () => {
           stampCardId: 1,
           createdAt: '',
           updatedAt: '',
+          results: {}
         }]
       ));
 
@@ -292,6 +336,7 @@ describe('GameComponent', () => {
           totalSlots: 5,
           rewards: [],
         },
+        results: {},
         displayProperties: {
           numberOfCols: 1,
           numberOfRows: 5,
@@ -339,6 +384,7 @@ describe('GameComponent', () => {
           stampCardId: 1,
           createdAt: '',
           updatedAt: '',
+          results: {}
         }]
       ));
 
@@ -358,6 +404,7 @@ describe('GameComponent', () => {
           totalSlots: 5,
           rewards: [],
         },
+        results: {},
         displayProperties: {
           numberOfCols: 1,
           numberOfRows: 5,
@@ -436,6 +483,7 @@ describe('GameComponent', () => {
             stampCardId: 1,
             createdAt: '',
             updatedAt: '',
+            results: {}
           },
           {
             id: 1609,
@@ -446,6 +494,7 @@ describe('GameComponent', () => {
             stampCardId: 1,
             createdAt: '',
             updatedAt: '',
+            results: {}
           },
           {
             id: 1610,
@@ -456,6 +505,7 @@ describe('GameComponent', () => {
             stampCardId: 1,
             createdAt: '',
             updatedAt: '',
+            results: {}
           },
           {
             id: 1611,
@@ -466,6 +516,7 @@ describe('GameComponent', () => {
             stampCardId: 1,
             createdAt: '',
             updatedAt: '',
+            results: {}
           }
         ]
       ));
@@ -486,6 +537,7 @@ describe('GameComponent', () => {
           totalSlots: 5,
           rewards: [],
         },
+        results: {},
         displayProperties: {
           numberOfCols: 1,
           numberOfRows: 5,
@@ -547,6 +599,7 @@ describe('GameComponent', () => {
             stampCardId: 1,
             createdAt: '',
             updatedAt: '',
+            results: {}
           },
         ],
       };
@@ -574,6 +627,7 @@ describe('GameComponent', () => {
             stampCardId: 1,
             createdAt: '',
             updatedAt: '',
+            results: {}
           },
           {
             id: 1609,
@@ -584,6 +638,7 @@ describe('GameComponent', () => {
             stampCardId: 1,
             createdAt: '',
             updatedAt: '',
+            results: {}
           },
           {
             id: 1610,
@@ -594,6 +649,7 @@ describe('GameComponent', () => {
             stampCardId: 1,
             createdAt: '',
             updatedAt: '',
+            results: {}
           },
           {
             id: 1611,
@@ -604,6 +660,7 @@ describe('GameComponent', () => {
             stampCardId: 1,
             createdAt: '',
             updatedAt: '',
+            results: {}
           },
           {
             id: 1612,
@@ -614,6 +671,7 @@ describe('GameComponent', () => {
             stampCardId: 1,
             createdAt: '',
             updatedAt: '',
+            results: {}
           }
         ]
       ));
@@ -635,6 +693,7 @@ describe('GameComponent', () => {
           totalSlots: 5,
           rewards: [],
         },
+        results: {},
         displayProperties: {
           numberOfCols: 1,
           numberOfRows: 5,
@@ -713,6 +772,7 @@ describe('GameComponent', () => {
             stampCardId: 1,
             createdAt: '',
             updatedAt: '',
+            results: {}
           },
           {
             id: 1609,
@@ -723,6 +783,7 @@ describe('GameComponent', () => {
             stampCardId: 1,
             createdAt: '',
             updatedAt: '',
+            results: {}
           },
           {
             id: 1610,
@@ -733,6 +794,7 @@ describe('GameComponent', () => {
             stampCardId: 1,
             createdAt: '',
             updatedAt: '',
+            results: {}
           },
           {
             id: 1611,
@@ -743,6 +805,7 @@ describe('GameComponent', () => {
             stampCardId: 1,
             createdAt: '',
             updatedAt: '',
+            results: {}
           },
         ]
       ));
@@ -763,6 +826,7 @@ describe('GameComponent', () => {
           totalSlots: 5,
           rewards: [],
         },
+        results: {},
         displayProperties: {
           numberOfCols: 1,
           numberOfRows: 5,
@@ -841,6 +905,7 @@ describe('GameComponent', () => {
             stampCardId: 1,
             createdAt: '',
             updatedAt: '',
+            results: {}
           },
           {
             id: 1609,
@@ -851,6 +916,7 @@ describe('GameComponent', () => {
             stampCardId: 1,
             createdAt: '',
             updatedAt: '',
+            results: {}
           },
           {
             id: 1610,
@@ -861,6 +927,7 @@ describe('GameComponent', () => {
             stampCardId: 1,
             createdAt: '',
             updatedAt: '',
+            results: {}
           },
           {
             id: 1611,
@@ -871,6 +938,7 @@ describe('GameComponent', () => {
             stampCardId: 1,
             createdAt: '',
             updatedAt: '',
+            results: {}
           },
         ]
       ));

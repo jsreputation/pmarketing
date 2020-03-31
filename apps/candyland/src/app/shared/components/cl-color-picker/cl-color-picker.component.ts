@@ -15,6 +15,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class ClColorPickerComponent implements ControlValueAccessor {
   @Input() public formatData: string = 'hex';
+  @Input() public colorWrap: string = '';
   @Input('aria-label') public ariaLabel: string = 'Color picker';
 
   public color: string = '#2883e9';

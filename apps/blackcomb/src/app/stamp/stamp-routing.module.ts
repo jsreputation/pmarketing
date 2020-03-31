@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { StampCardComponent } from '@perx/blackcomb-pages';
+import { StampCardComponent } from '@perxtech/blackcomb-pages';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: StampCardComponent },

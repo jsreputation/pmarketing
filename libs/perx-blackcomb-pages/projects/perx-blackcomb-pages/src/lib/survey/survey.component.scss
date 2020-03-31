@@ -1,20 +1,32 @@
 @import "../custom-theme.scss";
 
-.survey-page {
-  min-height: 100%;
-  width: 100%;
+.survey-main-container {
+  height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 1rem;
-  box-sizing: border-box;
+}
 
-  .background_img_url {
-    position: absolute;
+.survey-page {
+  width: 100%;
+  display: flex;
+  flex: 1 1 36rem;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 1rem 3rem;
+  box-sizing: border-box;
+  //.background_img_url {
+  //  position: absolute;
+  //  width: 100%;
+  //  height: 100%;
+  //}
+
+  .progress-text {
+    z-index: 1;
     width: 100%;
-    height: 100%;
-    //offset the padding
-    transform: translateY(-1rem);
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+    letter-spacing: 0.4px;
+    text-align: left;
   }
 
   .progress-bar {
@@ -24,20 +36,25 @@
       width: 100%;
       font-size: 1.2rem;
       line-height: 1.6rem;
-      color: #fff;
       letter-spacing: 0.4px;
       text-align: left;
     }
   }
 
+  .survey-card-wrap {
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    max-height: 45rem;
+    width: 34rem;
+    margin-top: 2rem;
+    z-index: 1;
+  }
+
   .survey-card {
     display: flex;
     flex-direction: column;
+    min-height: 34rem;
     align-items: center;
-    min-width: 34rem;
-    max-width: 80%;
-    margin-top: 2rem;
-    z-index: 1;
 
     h1 {
       font-style: normal;
@@ -53,9 +70,69 @@
       text-align: start;
       color: #666666;
     }
+  }
+}
 
-    button {
-      width: 100%;
-    }
+.question-action-container {
+  margin-bottom: 1rem;
+
+  button {
+    margin-right: 1rem;
+  }
+}
+
+.bottom-nav-container {
+  display: flex;
+  justify-content: space-around;
+  flex: 0 0 7rem;
+  background: var(--surface_colour) !important;
+  font-size: 1rem;
+  line-height: 1.6rem;
+
+  button {
+    text-decoration: none;
+    text-align: center;
+    height: 4rem;
+    width: 13rem;
+  }
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.arrow {
+  position: absolute;
+  top: 32.8rem;
+  animation: anim 3s infinite;
+}
+
+@keyframes anim {
+  0% {
+    transform: translateY(0);
+  }
+
+  20% {
+    transform: translateY(0);
+  }
+
+  40% {
+    transform: translateY(-30px);
+  }
+
+  50% {
+    transform: translateY(0);
+  }
+
+  60% {
+    transform: translateY(-15px);
+  }
+
+  80% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(0);
   }
 }

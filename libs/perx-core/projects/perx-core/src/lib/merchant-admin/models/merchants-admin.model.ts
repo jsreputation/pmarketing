@@ -1,28 +1,28 @@
 export interface IMerchantAdminTransaction {
-    id: number;
-    userAccountId: number;
-    updatedAt: Date;
-    transactionType: string;
-    amount: number;
-    transactionDate: Date;
-    currency: string;
-    workflowId?: number | null;
-    createdAt: Date;
-    properties?: string | null;
-    transactionReference: string;
+  id: number;
+  userAccountId: number;
+  updatedAt: Date;
+  transactionType: string;
+  amount: number;
+  transactionDate: Date;
+  currency: string;
+  workflowId?: number | null;
+  createdAt: Date;
+  properties?: string | null;
+  transactionReference: string;
 }
 
 export interface IMerchantAccount {
-    id: number;
-    customerId: number | null;
-    name: string;
-    state: string;
-    logo: string | null;
-    url: string | null;
-    type: string | null;
-    favourite: string | null;
-    isFeatured: boolean;
-    tags: IMerchantTag[];
+  id: number;
+  customerId: number | null;
+  name: string;
+  state: string;
+  logo: string | null;
+  url: string | null;
+  type: string | null;
+  favourite: string | null;
+  isFeatured: boolean;
+  tags: IMerchantTag[];
 }
 
 export interface IMerchantTag {
@@ -44,8 +44,7 @@ export interface IMerchantProfile {
 }
 
 export const enum MerchantTransactionDetailType {
-  'transaction' = 'Transaction',
-  'reward' = 'Reward::Transaction'
+  'purchase' = 'purchase',
 }
 
 export interface IMerchantPurchaseTransactionHistory {
@@ -57,15 +56,15 @@ export interface IMerchantPurchaseTransactionHistory {
   transactionRef?: string;
   price?: number;
   currency?: string;
+  pointsIssued: number;
 }
 
 export interface IMerchantRewardTransactionHistory {
   id: number;
-  state: string;
-  voucherExpiry: Date;
+  issuedDate: Date;
   userAccount: string;
+  customerName: string;
   rewardName: string;
-  redemptionLocation?: string;
 }
 
 export interface IMerchantCustomProperties {
@@ -83,4 +82,10 @@ export interface IMerchantTransactionHistory {
     type?: MerchantTransactionDetailType,
     data?: IMerchantPurchaseTransactionHistory | IMerchantRewardTransactionHistory
   };
+}
+
+export interface IResetPasswordData {
+  clientId: string;
+  resetPasswordToken: string;
+  password: string;
 }

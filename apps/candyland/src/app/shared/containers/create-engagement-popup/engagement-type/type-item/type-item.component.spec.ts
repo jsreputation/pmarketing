@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TypeItemComponent } from './type-item.component';
 import { MatFormFieldModule, MatIconModule, MatRadioModule, MatSelectModule } from '@angular/material';
-import { ButtonModule } from '../../../../components/button/button.module';
+import { ButtonModule } from '@perxtech/candyshop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -20,15 +20,15 @@ describe('TypeItemComponent', () => {
         ReactiveFormsModule,
         TranslateModule.forRoot(),
       ],
-      declarations: [ TypeItemComponent ]
+      declarations: [TypeItemComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TypeItemComponent);
     component = fixture.componentInstance;
-    component.typeItem =   {
+    component.typeItem = {
       id: 1,
       type: 'survey',
       title: 'Survey',

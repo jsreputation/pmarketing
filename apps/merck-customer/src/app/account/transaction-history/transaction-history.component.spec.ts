@@ -4,22 +4,22 @@ import { TransactionHistoryComponent } from './transaction-history.component';
 import { TransactionHistoryPipe } from './transaction-history.pipe';
 import { MatIconModule, MatToolbarModule, MatTabsModule } from '@angular/material';
 import { Location } from '@angular/common';
-import { LoyaltyModule, LoyaltyService } from '@perx/core';
+import { LoyaltyModule, LoyaltyService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {mockLoyalty, mockTransactions, mockTransactionsHistory} from './loyalty-mock';
+import { mockLoyalty, mockTransactions, mockTransactionsHistory } from './loyalty-mock';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 describe('TransactionHistoryComponent', () => {
   let component: TransactionHistoryComponent;
   let fixture: ComponentFixture<TransactionHistoryComponent>;
-  const locationStub = {
-    goBack: () => {}
+  const locationStub: Partial<Location> = {
+    back: () => { }
   };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TransactionHistoryComponent, TransactionHistoryPipe ],
+      declarations: [TransactionHistoryComponent, TransactionHistoryPipe],
       imports: [
         MatIconModule,
         MatToolbarModule,
@@ -43,7 +43,7 @@ describe('TransactionHistoryComponent', () => {
         }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

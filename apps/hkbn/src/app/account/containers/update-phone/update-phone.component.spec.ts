@@ -8,7 +8,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TextMaskModule } from 'angular2-text-mask';
 import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.module';
 import { TranslateModule } from '@ngx-translate/core';
-import { ProfileService, AuthenticationService } from '@perx/core';
+import { ProfileService, AuthenticationService } from '@perxtech/core';
 import { of } from 'rxjs';
 
 describe('UpdatePhoneComponent', () => {

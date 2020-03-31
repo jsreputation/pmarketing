@@ -3,20 +3,22 @@ import { Injectable } from '@angular/core';
 import { tap, mergeMap, catchError, map, switchMap } from 'rxjs/operators';
 import { Observable, of, throwError, iif, Subject } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { AuthenticationService, IMessageResponse, RequiresOtpError } from './authentication.service';
+import { AuthenticationService, RequiresOtpError } from './authentication.service';
 import { IProfile } from '../../profile/profile.model';
 import {
   ISignUpData,
-  IResetPasswordData,
   IChangePasswordData,
-  IChangePhoneData
+  IChangePhoneData,
+  IResetPasswordData,
 } from '../authentication/models/authentication.model';
-import { IWAppAccessTokenResponse, IWLoginResponse } from '@perx/whistler';
+import { IWAppAccessTokenResponse, IWLoginResponse } from '@perxtech/whistler';
 import { ProfileService } from '../../profile/profile.service';
-import { Config } from '../../config/config';
 import { IV4ProfileResponse, V4ProfileService } from '../../profile/v4-profile.service';
 import { TokenStorage } from '../../utils/storage/token-storage.service';
+import { IMessageResponse } from '../../perx-core.models';
 import { oc } from 'ts-optchain';
+import { ConfigService } from '../../config/config.service';
+import { IConfig } from '../../config/models/config.model';
 
 interface IV4SignUpData {
   first_name?: string;
@@ -56,25 +58,30 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   private lastURL: string;
   private retries: number = 0;
   private maxRetries: number = 2;
+  public isSignUpEnded: boolean = true;
   public preauth: boolean = false;
+
   constructor(
-    config: Config,
+    private configService: ConfigService,
     private http: HttpClient,
     private tokenStorage: TokenStorage,
     private profileService: ProfileService
   ) {
     super();
-    if (!config.production) {
-      this.appAuthEndPoint = 'http://localhost:4000/v2/oauth';
-      this.userAuthEndPoint = 'http://localhost:4000/v4/oauth';
-    } else {
-      this.appAuthEndPoint = `${config.baseHref}v2/oauth`;
-      this.userAuthEndPoint = `${config.baseHref}v4/oauth`;
-    }
-    if (config.preAuth) {
-      this.preauth = config.preAuth;
-    }
-    this.customersEndPoint = `${config.apiHost}/v4/customers`;
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig<void>) => {
+        if (!config.production) {
+          this.appAuthEndPoint = 'http://localhost:4000/v2/oauth';
+          this.userAuthEndPoint = 'http://localhost:4000/v4/oauth';
+        } else {
+          this.appAuthEndPoint = `${config.baseHref}v2/oauth`;
+          this.userAuthEndPoint = `${config.baseHref}v4/oauth`;
+        }
+        if (config.preAuth) {
+          this.preauth = config.preAuth;
+        }
+        this.customersEndPoint = `${config.apiHost}/v4/customers`;
+      });
     this.$failedAuthObservableSubject = new Subject();
   }
 
@@ -135,9 +142,9 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       url: location.host,
       username: user,
       password: pass,
-      ...mechId && { mech_id: mechId },
-      ...campaignId && { campaign_id: campaignId },
-      ...scope && { scope }
+      ...(mechId && { mech_id: mechId }),
+      ...(campaignId && { campaign_id: campaignId }),
+      ...(scope && { scope })
     };
     return this.http.post<IWLoginResponse>(`${this.userAuthEndPoint}/token`, authenticateBody);
   }
@@ -196,13 +203,13 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   }
 
   public forgotPassword(phone: string): Observable<IMessageResponse> {
-    return this.http.get<IMessageResponse>(`${this.customersEndPoint}/forget_password`, { params: { phone } })
+    const encodedPhone = encodeURIComponent(phone);
+    return this.http.get<IMessageResponse>(`${this.customersEndPoint}/forget_password?phone=${encodedPhone}`)
       .pipe(
         tap( // Log the result or error
           data => console.log(data),
           error => console.log(error)
         ),
-        // map(() => void 0)
       );
   }
 
@@ -240,13 +247,20 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       last_name: data.lastName || '',
       first_name: data.firstName,
       middle_name: data.middleName,
-      email: data.email,
-      gender: data.gender,
-      birthday: data.birthDay,
       password: data.password,
       password_confirmation: data.passwordConfirmation,
       phone: data.phone,
     };
+
+    if (data.email) {
+      result.email = data.email;
+    }
+    if (data.birthDay) {
+      result.birthday = data.birthDay;
+    }
+    if (data.gender) {
+      result.gender = data.gender;
+    }
 
     if (data.title || data.postcode || data.anonymous) {
       result.personal_properties = {};
@@ -264,11 +278,12 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       result.personal_properties.anonymous = data.anonymous;
     }
 
+    result.personal_properties = { ...result.personal_properties, ...data.customProperties };
     return result;
   }
 
   // @todo merge createUserAndAutoLogin with signup
-  public createUserAndAutoLogin(pi: string, userObj?: { [key: string]: any }, anonymous?: boolean): Observable<void> {
+  public createUserAndAutoLogin(pi: string, userObj?: { [key: string]: any }, anonymous?: boolean): Observable<void | null> {
     const profile: ISignUpData = {
       phone: pi,
       firstName: oc(userObj).firstName(undefined),
@@ -285,13 +300,23 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     };
     const otp$ = throwError(new RequiresOtpError());
     const success$ = of(void 0);
-    return this.signup(profile)
+    const profileData: Observable<IProfile | null> = this.signup(profile);
+    if (!profileData) {
+      return of(null);
+    }
+
+    return profileData
       .pipe(
         switchMap((p: IProfile) => iif(() => p.state === 'initial', otp$, success$))
       );
   }
 
-  public signup(profile: ISignUpData): Observable<IProfile> {
+  public signup(profile: ISignUpData): Observable<IProfile | null> {
+    if (!this.isSignUpEnded) {
+      return of(null);
+    }
+
+    this.isSignUpEnded = false;
     const profileV4 = this.signUpDataToV4SignUpData(profile);
     return this.http.post<IV4ProfileResponse>(`${this.customersEndPoint}/signup`, profileV4)
       .pipe(
@@ -299,7 +324,10 @@ export class V4AuthenticationService extends AuthenticationService implements Au
           data => console.log(data),
           error => console.log(error)
         ),
-        map((resp: IV4ProfileResponse) => V4ProfileService.v4ProfileToProfile(resp.data))
+        map((resp: IV4ProfileResponse) => {
+          this.isSignUpEnded = true;
+          return V4ProfileService.v4ProfileToProfile(resp.data);
+        })
       );
   }
 

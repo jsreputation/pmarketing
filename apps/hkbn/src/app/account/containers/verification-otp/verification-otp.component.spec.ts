@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 
 import { VerificationOtpComponent } from './verification-otp.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { UtilsModule, ProfileService, AuthenticationService } from '@perx/core';
+import { UtilsModule, ProfileService, AuthenticationService } from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
@@ -11,16 +11,16 @@ const mockProfile = {
   phone: '999'
 };
 
-const profileServiceStub = {
+const profileServiceStub: Partial<ProfileService> = {
   whoAmI: () => of(mockProfile)
 };
 
-const notificationWrapperServiceStub = {
+const notificationWrapperServiceStub: Partial<NotificationWrapperService> = {
   addPopup: () => { },
   addSnack: () => { }
 };
 
-const authenticationServiceStub = {
+const authenticationServiceStub: Partial<AuthenticationService> = {
   verifyOTP: () => of(null),
   requestVerificationToken: () => of(null),
   resendOTP: () => of(null),

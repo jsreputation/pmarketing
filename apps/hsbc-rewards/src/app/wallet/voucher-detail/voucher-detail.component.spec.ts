@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { VouchersModule, IVoucherService } from '@perx/core';
+import { VouchersModule, IVoucherService } from '@perxtech/core';
 
 import { VoucherDetailComponent } from './voucher-detail.component';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -8,7 +8,7 @@ import { DetailHeaderModule } from 'src/app/details/detail-header/detail-header.
 describe('VoucherDetailComponent', () => {
   let component: VoucherDetailComponent;
   let fixture: ComponentFixture<VoucherDetailComponent>;
-  const voucherServiceStub = {};
+  const voucherServiceStub: Partial<IVoucherService> = {};
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [VoucherDetailComponent],

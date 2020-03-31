@@ -1,8 +1,9 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IMerchantAdminService, NotificationService, IMerchantProfile, AuthenticationService } from '@perx/core';
+import { IMerchantAdminService, NotificationService, IMerchantProfile, ConfigService } from '@perxtech/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-register',
@@ -16,31 +17,19 @@ export class RegisterComponent implements OnInit {
   public merchantProfile: IMerchantProfile;
   private invitationToken: string;
   private clientId: string;
-  public appAccessTokenFetched: boolean;
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private notificationService: NotificationService,
     private merchantAdminService: IMerchantAdminService,
-    private authService: AuthenticationService,
+    private configService: ConfigService,
     @Inject(PLATFORM_ID) private platformId: object
   ) {
     this.isMerchantNameLoading = true;
     this.initForm();
-    this.getAppToken();
   }
-  private getAppToken(): void {
-    const token = this.authService.getAppAccessToken();
-    if (token) {
-      this.appAccessTokenFetched = true;
-    } else {
-      this.authService.getAppToken().subscribe(() => {
-        this.appAccessTokenFetched = true;
-      }, (err) => {
-        console.error('Error' + err);
-      });
-    }
-  }
+
   public ngOnInit(): void {
 
     if (isPlatformBrowser(this.platformId)) {
@@ -52,8 +41,9 @@ export class RegisterComponent implements OnInit {
       }
       this.invitationToken = notSaveToken;
       this.clientId = notSaveClientId;
-
-      this.merchantAdminService.validateInvite(this.invitationToken, this.clientId).subscribe(
+      this.configService.readAppConfig().pipe(
+        switchMap(() => this.merchantAdminService.validateInvite(this.invitationToken, this.clientId))
+      ).subscribe(
         (profile: IMerchantProfile) => {
           this.merchantProfile = profile;
         },

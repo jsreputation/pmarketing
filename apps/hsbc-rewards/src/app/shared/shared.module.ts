@@ -17,7 +17,7 @@ import {
   MatCheckboxModule,
   MatSelectModule,
 } from '@angular/material';
-import { UtilsModule } from '@perx/core';
+import { UtilsModule } from '@perxtech/core';
 
 @NgModule({
   declarations: [],

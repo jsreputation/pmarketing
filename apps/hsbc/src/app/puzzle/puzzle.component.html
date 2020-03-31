@@ -1,7 +1,8 @@
 <!-- Template stuff aimed at being replaced by real components -->
-
-<div class="main-puzzle-container">
-    <ng-container *ngIf="card">
+<div *ngIf="card"
+     class="main-puzzle-container"
+     [ngStyle]="{'background-image': 'url(' + (backgroundImage|| card.displayProperties.backgroundImg?.value.imageUrl) + ')'}">
+    <ng-container>
         <ng-container *ngIf="card.displayProperties.displayCampaignAs === 'puzzle'">
             <h1 [ngPlural]="totalAvailablePieces">
                 <ng-template ngPluralCase="=1">You have 1 puzzle piece</ng-template>
@@ -11,20 +12,16 @@
                 [nbAvailablePieces]="availablePieces" (moved)="onMoved()">
             </perx-core-puzzle-play>
         </ng-container>
-
         <perx-core-puzzle-collect-stamps *ngIf="card.displayProperties.displayCampaignAs === 'stamp_card'"
             [defaultstampCardImage] = "'#eb202f'"
             [defaultCardBgImage]="'#fff'"
             [nbSlots]="card.displayProperties.totalSlots"
             [stamps]="card.stamps"
             [rewards]="rewards"
-            [preStampImg]="preStampImg"
-            [postStampImg]="postStampImg"
-            [rewardPreStamp]="rewardPreStamp"
-            [rewardPostStamp]="rewardPostStamp"
-            [availableStampImg]="availableStampImg"
-            [availableRewardImg]="availableRewardImg"
-            [backgroundImage]="card.displayProperties.backgroundImg?.value.imageUrl || backgroundImage"
+            [preStampImg]="card.displayProperties.preStampImg"
+            [postStampImg]="card.displayProperties.postStampImg"
+            [rewardPreStamp]="card.displayProperties.rewardPreStamp"
+            [rewardPostStamp]="card.displayProperties.rewardPostStamp"
             [cardBgImage]="card.displayProperties.cardImage?.value.imageUrl || cardBgImage"
             [title]="card.title || title"
             [subTitle]="card.subTitle || subTitle"

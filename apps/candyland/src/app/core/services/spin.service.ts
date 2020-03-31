@@ -2,19 +2,21 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 import { map } from 'rxjs/operators';
-import { SpinHttpService } from '@cl-core/http-services/spin-http.service';
-import { IWSpinGameEngagementAttributes, IJsonApiItemPayload, IJsonApiPatchData } from '@perx/whistler';
+import { SpinHttpService } from '@perxtech/whistler-services';
+import { IWSpinGameEngagementAttributes, IJsonApiItemPayload, IJsonApiPatchData } from '@perxtech/whistler';
+import { HttpClient } from '@angular/common/http';
+import { ISpinDefaultValue } from '@cl-core/models/games/spin/spin-default-value.interface';
+import { ISpinEntityForm } from '@cl-core/models/games/spin/spin-form.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SpinService {
 
-  constructor(private spinHttpService: SpinHttpService) {
-  }
+  constructor(private http: HttpClient, private spinHttpService: SpinHttpService) { }
 
   public getSpinData(): Observable<ISpinDefaultValue> {
-    return this.spinHttpService.getSpinData();
+    return this.http.get<ISpinDefaultValue>('assets/actives/spin/spin-data.json');
   }
 
   public getSpin(id: string): Observable<Partial<ISpinEntityForm>> {

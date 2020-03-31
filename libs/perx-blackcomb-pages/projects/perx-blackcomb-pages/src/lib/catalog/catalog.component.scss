@@ -1,0 +1,33 @@
+:host {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+}
+
+#subhead-category {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.content {
+  height: 100%;
+  overflow-y: scroll;
+  background-color: #f2f2f2;
+  padding: 0 1.5rem;
+
+  .scroll-content {
+    height: 100%;
+  }
+
+  h1.catergory-title {
+    font-size: 3rem;
+    margin: 2.7rem 0;
+  }
+}
+
+#icon {
+  cursor: pointer;
+}

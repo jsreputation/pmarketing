@@ -1,7 +1,7 @@
 <div [class]="puzzles ? 'card-list-container' : 'card-list-container loading'">
   <div *ngIf="puzzles; then thenBlock else elseBlock"></div>
   <ng-template #thenBlock>
-    <mat-card matRipple *ngFor="let puzzle of puzzles; let i=index" [matRippleDisabled]="!isActive(puzzle)"
+    <mat-card matRipple *ngFor="let puzzle of puzzles | async; let i=index" [matRippleDisabled]="!isActive(puzzle)"
       [class.disabled]="!isActive(puzzle)" [tabindex]="isActive(puzzle) ? 0 : -1"
       (click)="isActive(puzzle) && puzzleSelected(puzzle)">
       <div class="puzzle-content">
@@ -9,15 +9,16 @@
           <img *ngIf="puzzle.displayProperties.thumbnailImg"
             [ngClass]="isActive(puzzle) ? 'puzzle-img' : 'puzzle-img grayscale' "
             [src]="puzzle.displayProperties.thumbnailImg">
-          <div *ngIf="!puzzle.displayProperties.thumbnailImg" [ngStyle]="{'background-color': thumbnailDefault}" class="thumbnail-default"></div>
+          <div *ngIf="!puzzle.displayProperties.thumbnailImg" [ngStyle]="{'background-color': thumbnailDefault}"
+            class="thumbnail-default"></div>
         </div>
         <div class="puzzle-details">
           <h1>
             <ng-container>
-              {{titleFn(i, puzzles?.length)}}
+              {{titleFn(i, (puzzles | async)?.length)}}
             </ng-container>
             <span class="badge-warn">
-              {{nbPlacedStamps(puzzle)}}/{{total}}
+              {{nbPlacedStamps(puzzle)}}/{{puzzle?.displayProperties.totalSlots}}
             </span>
           </h1>
           <p>{{nbAvailableStamps(puzzle)}} {{puzzleTextFn(puzzle)}}</p>

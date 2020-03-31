@@ -1,0 +1,20 @@
+<ng-container [formGroup]="group">
+  <div class="loyalty-row input-group">
+    <mat-form-field floatLabel="never" class="loyalty-rule-input">
+      <mat-select formControlName="operator">
+        <ng-container *ngFor="let operatorOption of config?.ruleOperators">
+          <mat-option [value]="operatorOption?.value">
+            {{operatorOption?.title | translate}}
+          </mat-option>
+        </ng-container>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field floatLabel="never" class="loyalty-rule-input">
+      <input type="number"
+             [min]="1"
+             matInput
+             [placeholder]="'LOYALTY_FEATURE.AMOUNT_PLACEHOLDER' | translate"
+             formControlName="value">
+    </mat-form-field>
+  </div>
+</ng-container>

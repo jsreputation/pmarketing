@@ -3,9 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { IMerchantsService } from './imerchants.service';
-import {IImage, IMerchant, IOutlet, ITag} from './models/merchants.model';
-import { Config } from '../config/config';
-import {oc} from 'ts-optchain';
+import { IImage, IMerchant, IOutlet, ITag } from './models/merchants.model';
+import { oc } from 'ts-optchain';
+import { ConfigService } from '../config/config.service';
+import { IConfig } from '../config/models/config.model';
 
 interface IV4GetMerchantsResponse {
   data: IV4Merchant[];
@@ -47,11 +48,16 @@ interface IV4Outlet {
 export class V4MerchantsService implements IMerchantsService {
   private merchants: { [id: number]: { [page: number]: IMerchant } } = {};
   private merchantsWithoutId: IV4Merchant[] = [];
+  private apiHost: string;
 
   constructor(
     private http: HttpClient,
-    private config: Config
+    private configService: ConfigService
   ) {
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig<void>) => {
+        this.apiHost = config.apiHost as string;
+      });
   }
 
   public static v4OutletsToOutlets(outlets: IV4Outlet[] | undefined): IOutlet[] | null {
@@ -94,8 +100,7 @@ export class V4MerchantsService implements IMerchantsService {
         }
       };
       // do the first query
-      this.getMerchants(1, false)
-        .subscribe(process);
+      return this.getMerchants(1, false).subscribe(process);
     });
   }
 
@@ -108,7 +113,7 @@ export class V4MerchantsService implements IMerchantsService {
     }
 
     return this.http.get<IV4GetMerchantsResponse>(
-      `${this.config.apiHost}/v4/merchants`,
+      `${this.apiHost}/v4/merchants`,
       {
         params: {
           page: `${page}`
@@ -119,7 +124,7 @@ export class V4MerchantsService implements IMerchantsService {
         this.merchantsWithoutId = res.data;
         return res.data;
       }),
-      map( (merchants: IV4Merchant[]) => merchants.map((merchant: IV4Merchant) => ({
+      map((merchants: IV4Merchant[]) => merchants.map((merchant: IV4Merchant) => ({
         ...merchant,
         outlets: V4MerchantsService.v4OutletsToOutlets(merchant.outlets)
       }))),
@@ -136,10 +141,10 @@ export class V4MerchantsService implements IMerchantsService {
       return of(this.merchants[merchantId][page]);
     }
 
-    return this.http.get<IV4GetMerchantResponse>(`${this.config.apiHost}/v4/merchants/${merchantId}?page=${page}`)
+    return this.http.get<IV4GetMerchantResponse>(`${this.apiHost}/v4/merchants/${merchantId}?page=${page}`)
       .pipe(
         map(res => res.data),
-        map( (merchant: IV4Merchant) => ({
+        map((merchant: IV4Merchant) => ({
           ...merchant,
           outlets: V4MerchantsService.v4OutletsToOutlets(merchant.outlets)
         })),

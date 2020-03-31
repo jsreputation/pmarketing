@@ -3,8 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NewCampaignRewardsLimitsPageComponent } from './new-campaign-rewards-limits-page.component';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { MatCheckboxModule } from '@angular/material';
-import { ButtonModule } from '@cl-shared';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { ButtonModule } from '@perxtech/candyshop';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // tslint:disable-next-line:import-blacklist
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
@@ -24,30 +24,30 @@ describe('NewCampaignRewardsLimitsPageComponent', () => {
       getToggleConfig: () => ([])
     };
     TestBed.configureTestingModule({
-        imports: [
-          BrowserDynamicTestingModule,
-          MatCheckboxModule,
-          ButtonModule,
-          FormsModule,
-          ReactiveFormsModule,
-          TranslateModule.forRoot(),
-        ],
-        providers: [
-          {
-            provide: CampaignCreationStoreService, useValue: {
-              updateCampaign: () => {
-              },
-              resetCampaign: () => {
-              },
-              currentCampaign$: new BehaviorSubject({})
-            }
-          },
-          {provide: StepConditionService, useValue: {registerStepCondition: () => ({})}},
-          {provide: NewCampaignRewardsStampsFormService, useValue: NewCampaignRewardsStampsFormServiceStub}
-        ],
-        declarations: [NewCampaignRewardsLimitsPageComponent],
-        schemas: [NO_ERRORS_SCHEMA]
-      })
+      imports: [
+        BrowserDynamicTestingModule,
+        MatCheckboxModule,
+        ButtonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        TranslateModule.forRoot(),
+      ],
+      providers: [
+        {
+          provide: CampaignCreationStoreService, useValue: {
+            updateCampaign: () => {
+            },
+            resetCampaign: () => {
+            },
+            currentCampaign$: new BehaviorSubject({})
+          }
+        },
+        { provide: StepConditionService, useValue: { registerStepCondition: () => ({}) } },
+        { provide: NewCampaignRewardsStampsFormService, useValue: NewCampaignRewardsStampsFormServiceStub }
+      ],
+      declarations: [NewCampaignRewardsLimitsPageComponent],
+      schemas: [NO_ERRORS_SCHEMA]
+    })
       .compileComponents();
   }));
 

@@ -7,7 +7,7 @@ import { Router, UrlTree } from '@angular/router';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthService, MessageService } from '@es-core';
-import { ButtonModule } from '@perx/candyshop';
+import { ButtonModule } from '@perxtech/candyshop';
 
 describe('UpdateUserComponent', () => {
   let component: UpdateUserComponent;

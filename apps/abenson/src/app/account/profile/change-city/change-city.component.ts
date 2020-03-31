@@ -3,6 +3,7 @@ import {
   OnInit,
 } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormGroup,
   Validators,
@@ -12,7 +13,7 @@ import { Location } from '@angular/common';
 import {
   ICustomProperties,
   ProfileService,
-} from '@perx/core';
+} from '@perxtech/core';
 
 @Component({
   selector: 'app-change-city',
@@ -22,6 +23,10 @@ import {
 export class ChangeCityComponent implements OnInit {
   public cityChangeForm: FormGroup;
   public customProperties: ICustomProperties;
+
+  public get newCity(): AbstractControl | null {
+    return this.cityChangeForm.get('newCity');
+  }
 
   constructor(
     private fb: FormBuilder,

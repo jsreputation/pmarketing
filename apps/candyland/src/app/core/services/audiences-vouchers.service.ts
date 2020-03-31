@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
 import { AudiencesHttpAdapter } from '@cl-core/http-adapters/audiences-http-adapter';
-import { AudiencesHttpsService } from '@cl-core/http-services/audiences-https.service';
+import { AudiencesHttpsService } from '@perxtech/whistler-services';
 import { combineLatest, Observable, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { ClHttpParams } from '@cl-helpers/http-params';
 import Utils from '@cl-helpers/utils';
-import { IWAssignedAttributes, IJsonApiItem, IJsonApiListPayload } from '@perx/whistler';
+import { IWAssignedAttributes, IJsonApiItem, IJsonApiListPayload } from '@perxtech/whistler';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 import { RewardsService } from './rewards.service';
+import { IAudienceVoucher } from '@cl-core/models/vouchers/audience-voucher.interface';
+import { HttpParamsOptions } from '@cl-core/models/params-map';
+import { ITableData } from '@cl-core/models/data-list.interface';
 
 @Injectable({
   providedIn: 'root'

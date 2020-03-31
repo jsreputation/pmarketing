@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { INavLink } from '../navlink.model';
 import { SubscriptionLike } from 'rxjs';
 import { MatDialog } from '@angular/material';
-import { NotificationService, PopupComponent } from '@perx/core';
+import { NotificationService, PopupComponent } from '@perxtech/core';
 // tap history home reward loading login redeem reward-detail stamp survey tnc voucher
 @Component({
   selector: 'app-pages',

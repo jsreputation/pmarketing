@@ -6,10 +6,21 @@
       </ng-container>
     </div>
   </ng-container>
-  <ng-container *ngIf="loyalty$ | async as loyalty; else elseBlockLoyalty">
+  <ng-container *ngIf="loyalty; else elseBlockLoyalty">
+    <p *ngIf="loyalty.membershipTierName" class="tier-description">{{loyalty.membershipTierName}} member</p>
+
     <div class="points">
-      {{loyalty.pointsBalance ? loyalty.pointsBalance.toLocaleString('en-sg') : 0 }}
+      {{loyalty.pointsBalance | number}}
     </div>
+
+    <ng-container *ngIf="loyalty.membershipTierName && loyalty.highestTier">
+      <div *ngIf="loyalty.membershipTierName !== loyalty.highestTier" class="progress-bar">
+        <mat-progress-bar mode="determinate" [value]="getPercentageToNext(loyalty.pointsBalance, loyalty.nextTierPoints)"></mat-progress-bar>
+        <div class="points-to">
+          Points to {{loyalty.nextTierName}}: {{loyalty.nextTierPointsDiff}}
+        </div>
+      </div>
+    </ng-container>
     <div>
       {{subTitleFn(loyalty)}}
     </div>
@@ -23,7 +34,9 @@
   </ng-template>
 
   <ng-template #elseBlockLoyalty>
-    <div class="points ghost"></div>
+    <div class="points ghost">
+      <mat-spinner *ngIf="!loyaltyProgramExists"  diameter="50" color="primary"></mat-spinner>
+    </div>
     <div class="expiring-points ghost"></div>
   </ng-template>
 </div>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ILocation } from '@perx/core';
+import { ILocation } from '@perxtech/core';
 import { BehaviorSubject } from 'rxjs';
 import { test1, test2 } from '../mock';
 
@@ -10,7 +10,7 @@ import { test1, test2 } from '../mock';
 export class LocationsMapComponent {
 
   public currentList: string = 'list1';
-  public key: string = `AIzaSyDdNa7j6XYHHzYbzQDGTn52Rfj-wDw7X7w`;
+  public key: string = 'AIzaSyDdNa7j6XYHHzYbzQDGTn52Rfj-wDw7X7w';
   public locations: BehaviorSubject<ILocation[]> = new BehaviorSubject(test1);
 
   public onChange(newValue: string): void {

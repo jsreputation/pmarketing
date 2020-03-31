@@ -5,7 +5,7 @@ import { DebugElement } from '@angular/core';
 import { DetailHeaderComponent } from './detail-header.component';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
-import { IReward, RewardsService } from '@perx/core';
+import { IReward, RewardsService } from '@perxtech/core';
 
 describe('DetailHeaderComponent', () => {
   let component: DetailHeaderComponent;
@@ -23,7 +23,7 @@ describe('DetailHeaderComponent', () => {
     termsAndConditions: '',
     howToRedeem: '',
   };
-  const rewardsServiceStub = {
+  const rewardsServiceStub: Partial<RewardsService> = {
     getReward: () => of(mockReward)
   };
 

@@ -1,8 +1,7 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
-import { environment } from '../../environments/environment';
 import { isPlatformBrowser } from '@angular/common';
-import { AuthenticationService } from '@perx/core';
+import { AuthenticationService, ConfigService, IConfig } from '@perxtech/core';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -16,15 +15,20 @@ export class LoginComponent implements OnInit {
   public failedAuth: boolean;
   constructor(
     private router: Router,
+    private configService: ConfigService,
     private authService: AuthenticationService,
     @Inject(PLATFORM_ID) private platformId: object
   ) {
-    this.preAuth = environment.preAuth;
     this.failedAuth = false;
 
   }
 
   public ngOnInit(): void {
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig<void>) => {
+        this.preAuth = config.preAuth as boolean;
+      }
+    );
     const token = this.authService.getAppAccessToken();
     if (token) {
       this.appAccessTokenFetched = true;
@@ -32,7 +36,7 @@ export class LoginComponent implements OnInit {
       this.authService.getAppToken().subscribe(() => {
         this.appAccessTokenFetched = true;
       }, (err) => {
-        console.error('Error' + err);
+        console.error(`Error${err}`);
       });
     }
     if (this.preAuth && isPlatformBrowser(this.platformId) && !this.authService.getUserAccessToken()) {

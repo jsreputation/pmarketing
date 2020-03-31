@@ -3,8 +3,10 @@ import {
   IWCognitoEndpointAttributes,
   IJsonApiItem,
   IJsonApiPostData,
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { IAMUser } from '@cl-core/models/settings/IAMUser.interface';
+import { ICognitoEndpoint } from '@cl-core/models/settings/cognito-endpoint.interface';
+import { IAMGroup } from '@cl-core/models/settings/group.interface';
 
 export interface IColor {
   labelView: string;
@@ -50,10 +52,10 @@ export class SettingsHttpAdapter {
   public static transformToGroup(data: any): IAMGroup {
     return {
       id: data.id,
-    type: data.type,
-    name: data.attributes.name,
-    createdAt: data.attributes.careatd_at,
-    updatedAt: data.attributes.updated_at
+      type: data.type,
+      name: data.attributes.name,
+      createdAt: data.attributes.careatd_at,
+      updatedAt: data.attributes.updated_at
     };
   }
 }

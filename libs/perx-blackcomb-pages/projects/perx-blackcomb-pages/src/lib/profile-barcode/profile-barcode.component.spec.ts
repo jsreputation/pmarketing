@@ -4,7 +4,7 @@ import { ProfileBarcodeComponent } from './profile-barcode.component';
 import { NgxBarcodeModule } from 'ngx-barcode';
 import { TranslateModule } from '@ngx-translate/core';
 import { Location } from '@angular/common';
-import { ProfileService, ThemesService, ConfigService } from '@perx/core';
+import { ProfileService, ThemesService, ConfigService } from '@perxtech/core';
 import { of } from 'rxjs';
 
 describe('ProfileBarcodeComponent', () => {
@@ -20,7 +20,7 @@ describe('ProfileBarcodeComponent', () => {
 
   const profileServiceStub: Partial<ProfileService> = { whoAmI: () => of({ id: 2, firstName: '', lastName: '' }) };
 
-  const configServiceStub = { readAppConfig: () => of() };
+  const configServiceStub: Partial<ConfigService> = { readAppConfig: () => of() };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -28,12 +28,12 @@ describe('ProfileBarcodeComponent', () => {
         NgxBarcodeModule,
         TranslateModule.forRoot()
       ],
-      declarations: [ ProfileBarcodeComponent ],
+      declarations: [ProfileBarcodeComponent],
       providers: [
         { provide: ProfileService, useValue: profileServiceStub },
         { provide: Location, useValue: locationStub },
         { provide: ThemesService, useValue: themesServiceStub },
-        { provide: ConfigService, useValue: configServiceStub}
+        { provide: ConfigService, useValue: configServiceStub }
       ]
     })
       .compileComponents();

@@ -5,6 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { RoutingStateService, StampsService, CsvReportService } from '@cl-core-services';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { StampsGraphicData } from '@cl-core/models/reports/stamps-report/stamps-report.interface';
 
 @Component({
   selector: 'cl-stamp',
@@ -39,7 +40,7 @@ export class StampComponent implements OnInit, OnDestroy {
   }
 
   public downloadReport(): void {
-    this.csvReportService.downloadReport('stamp_campaign_report', { campaign_id: this.id });
+    this.csvReportService.downloadReport('report_stamp_campaigns_summary', { campaign_id: this.id });
   }
 
   public onClose(): void {

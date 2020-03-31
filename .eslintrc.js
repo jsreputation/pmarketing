@@ -18,21 +18,21 @@ module.exports = {
     "import",
   ],
   "rules": {
-    "indent": ["error", 2, { "SwitchCase": 1 }],
+    // "indent": ["error", 2, { "SwitchCase": 1 }],
     // "import/no-deprecated": "warn",
     "@typescript-eslint/adjacent-overload-signatures": "error",
     "@typescript-eslint/array-type": "error",
     "@typescript-eslint/ban-types": "error",
     "@typescript-eslint/class-name-casing": "error",
-    // "@typescript-eslint/explicit-member-accessibility": [
-    //     "error",
-    //     {
-    //         "overrides": {
-    //             "constructors": "off"
-    //         }
-    //     }
-    // ],
-    // "@typescript-eslint/indent": "error",
+    "@typescript-eslint/explicit-member-accessibility": [
+      "error",
+      {
+        "overrides": {
+          "constructors": "off"
+        }
+      }
+    ],
+    "@typescript-eslint/indent": ["error", 2],
     "@typescript-eslint/interface-name-prefix": "off",
     // "@typescript-eslint/no-angle-bracket-type-assertion": "error",
     "@typescript-eslint/no-empty-interface": "error",
@@ -58,7 +58,7 @@ module.exports = {
     "complexity": "off",
     "constructor-super": "error",
     "curly": "error",
-    "dot-notation": "error",
+    "dot-notation": "warn",
     "eol-last": "error",
     "guard-for-in": "error",
     "max-classes-per-file": "off",
@@ -112,6 +112,7 @@ module.exports = {
     ],
     "use-isnan": "error",
     "valid-typeof": "off",
+    "quotes": ["error", "single"],
     "@typescript-eslint/tslint/config": [
       "error",
       {
@@ -119,7 +120,8 @@ module.exports = {
           "rxjs-tslint-rules",
           "codelyzer",
           "rxjs-tslint",
-          "tslint-consistent-codestyle"
+          "tslint-consistent-codestyle",
+          "tslint-no-focused-test"
         ],
         "rules": {
           "align": [
@@ -166,6 +168,7 @@ module.exports = {
               "format": "PascalCase"
             }
           ],
+          "no-focused-test": true,
           "no-accessor-recursion": true,
           "no-async-without-await": true,
           "no-collapsible-if": true,
@@ -201,10 +204,6 @@ module.exports = {
             "allow-named-functions"
           ],
           "prefer-const-enum": true,
-          "quotemark": [
-            true,
-            "single"
-          ],
           "rxjs-collapse-imports": true,
           // "rxjs-no-create": true,
           // "rxjs-no-ignored-subscribe": true,

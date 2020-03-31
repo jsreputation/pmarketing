@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
-import { EngagementsHttpsService } from '@cl-core/http-services/engagements-https.service';
+import { EngagementsHttpsService } from '@perxtech/whistler-services';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
 import { EngagementTypeAPIMapping } from '@cl-core/models/engagement/engagement-type.enum';
-import { IWEngagementAttributes, IJsonApiItemPayload, IJsonApiListPayload } from '@perx/whistler';
+import { IWEngagementAttributes, IJsonApiItemPayload, IJsonApiListPayload } from '@perxtech/whistler';
 import { IEngagementType } from '@cl-core/models/engagement/engagement.interface';
+import { HttpClient } from '@angular/common/http';
+import { IGraphic } from '@cl-core/models/graphic.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EngagementsService {
-  constructor(private http: EngagementsHttpsService) {
-  }
+  constructor(private http: EngagementsHttpsService, public httpClient: HttpClient) { }
 
   public getEngagements(): Observable<IEngagementType[]> {
     return this.http.getEngagements()
@@ -32,10 +33,16 @@ export class EngagementsService {
   }
 
   public getEngagementType(): Observable<IGraphic[]> {
-    return this.http.getEngagementType();
+    return this.httpClient.get<IGraphic[]>('assets/actives/engagement-type.json')
+      .pipe(
+        map(res => (res as IGraphic[]))
+      );
   }
 
   public getGamesType(): Observable<IGraphic[]> {
-    return this.http.getGamesType();
+    return this.httpClient.get<IGraphic[]>('assets/actives/games-type.json')
+      .pipe(
+        map(res => (res as IGraphic[]))
+      );
   }
 }

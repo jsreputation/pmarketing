@@ -1,0 +1,21 @@
+{
+    "SUBMIT_AND_VERIFY": "提交並發送驗證短訊",
+    "LUCKY_DRAW_DETAILS": "幸運抽獎細節",
+    "SUBMIT": "提交",
+    "SIGN_UP": "註冊",
+    "LOG_IN": "登錄",
+    "HAVE_AN_ACCOUNT": "已有賬戶",
+    "MOBILE": "移動電話",
+    "EMAIL": "電子郵件",
+    "PASSWORD": "密碼",
+    "CONFIRM_PASSWORD": "確認密碼",
+    "NICKNAME": "暱稱",
+    "UPDATE_DETAILS_FOR_LUCKY_DRAW": "要參加幸運大抽獎，請在下面輸入您的詳細信息",
+    "FULL_NAME": "全名（根據香港身份證)",
+    "FOUR_DIGITS_HKID": "身份證的前4位數字（抽獎)",
+    "MARKETING_AGREE": "我同意匯豐人壽保存我的個人信息以用於幸運抽獎和未來的直接營銷目的",
+    "REFERRAL_CODE_OPTIONAL": "推薦代碼（可選)",
+    "LUCKY_DRAW_REFER": "有關詳細信息，請參閱",
+    "TERM_AGREE": "我同意"
+  }
+  

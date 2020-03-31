@@ -11,7 +11,7 @@ import {
   MatRadioButton
 } from '@angular/material';
 import { Location } from '@angular/common';
-import { ProfileService, IProfile } from '@perx/core';
+import { ProfileService, IProfile } from '@perxtech/core';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
@@ -21,8 +21,8 @@ const radioButton = {} as MatRadioButton;
 describe('ConditionComponent', () => {
   let component: ConditionComponent;
   let fixture: ComponentFixture<ConditionComponent>;
-  const locationStub = {
-    goBack: () => { }
+  const locationStub: Partial<Location> = {
+    back: () => { }
   };
 
   const userInfo: IProfile = {
@@ -45,7 +45,7 @@ describe('ConditionComponent', () => {
     }
   };
 
-  const profileServiceStub = {
+  const profileServiceStub: Partial<ProfileService> = {
     whoAmI: () => of(userInfo),
     setCustomProperties: () => of()
   };

@@ -15,7 +15,7 @@
     justify-content: center;
     align-items: center;
 
-    @include check-select;
+    @include cs-check-select;
 
     &.selectable {
       cursor: pointer;

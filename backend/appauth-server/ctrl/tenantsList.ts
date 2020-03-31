@@ -1,7 +1,7 @@
-import { IJsonApiListPayload } from './../../../libs/perx-whistler/dist/whistler/lib/jsonapi.payload.d';
-import { fetchTheme } from './../utils/theme';
+import { IJsonApiListPayload } from '../../../libs/perx-whistler/dist/whistler/lib/jsonapi.payload.d';
+import { fetchTheme } from '../utils/theme';
 import { ICredentials } from '../types/apiConfig';
-import { IJsonApiItem, IWTenant } from '@perx/whistler';
+import { IJsonApiItem, IWTenant } from '@perxtech/whistler';
 
 export interface ITenantListData {
   id: string;

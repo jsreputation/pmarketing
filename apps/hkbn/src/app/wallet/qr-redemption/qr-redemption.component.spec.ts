@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 
 import { QrRedemptionComponent } from './qr-redemption.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { VouchersModule, IVoucherService, Voucher, VoucherState } from '@perx/core';
+import { VouchersModule, IVoucherService, Voucher, VoucherState } from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { mockVoucher } from '../voucher.mock';
 import { Observable, of, BehaviorSubject } from 'rxjs';
@@ -10,14 +10,15 @@ import { NotificationWrapperService } from 'src/app/services/notification-wrappe
 import { Location } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
-const NotificationWrapperServiceStub = {
+const NotificationWrapperServiceStub: Partial<NotificationWrapperService> = {
   addPopup: () => { }
 };
 
-const vouchersServiceStub = {
-  state: new BehaviorSubject(mockVoucher),
+const stateBvrSubj = new BehaviorSubject(mockVoucher);
+
+const vouchersServiceStub: Partial<IVoucherService> = {
   get: (): Observable<Voucher> => of(mockVoucher),
-  stateChangedForVoucher: (): Observable<Voucher> => vouchersServiceStub.state,
+  stateChangedForVoucher: (): Observable<Voucher> => stateBvrSubj,
   redeemVoucher: (id): Observable<any> => of(id)
 };
 
@@ -58,13 +59,13 @@ describe('QrRedemptionComponent', () => {
   });
 
   it('expect change status', fakeAsync(() => {
-    vouchersServiceStub.state.next({ ...mockVoucher, state: VoucherState.issued });
+    stateBvrSubj.next({ ...mockVoucher, state: VoucherState.issued });
     tick();
     expect(component.status).toBe(VoucherState.issued);
   }));
 
   it('should navigate to wallet', fakeAsync(() => {
-    vouchersServiceStub.state.next({ ...mockVoucher, state: VoucherState.redeemed });
+    stateBvrSubj.next({ ...mockVoucher, state: VoucherState.redeemed });
     tick();
     expect(location.path(false)).toBe('/wallet');
   }));

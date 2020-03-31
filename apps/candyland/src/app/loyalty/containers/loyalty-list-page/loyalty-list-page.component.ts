@@ -5,10 +5,10 @@ import { LoyaltyAction } from '../../models/loyalty-action.enum';
 import { IEngagementItemMenuOption } from '../../components/loyalty-item/loyalty-item.component';
 import { Router } from '@angular/router';
 import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
-import { StatusLabelConfig } from '@cl-shared';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ConfigService } from '@cl-core-services';
+import { IStatusLabelConfig } from '@perxtech/candyshop';
 
 @Component({
   selector: 'cl-loyalty-list-page',
@@ -22,11 +22,11 @@ export class LoyaltyListPageComponent implements OnInit, OnDestroy {
   public dataSource: CustomDataSource<ILoyaltyForm>;
   public dataSourceStates: typeof DataSourceStates = DataSourceStates;
   public menuOptions: IEngagementItemMenuOption[] = [
-    {action: this.loyaltyAction.edit, label: 'BTN_EDIT'},
-    {action: this.loyaltyAction.duplicate, label: 'BTN_DUPLICATE'},
-    {action: this.loyaltyAction.delete, label: 'BTN_DELETE'},
+    { action: this.loyaltyAction.edit, label: 'BTN_EDIT' },
+    { action: this.loyaltyAction.duplicate, label: 'BTN_DUPLICATE' },
+    { action: this.loyaltyAction.delete, label: 'BTN_DELETE' },
   ];
-  public statusLabel: { [key: string]: StatusLabelConfig };
+  public statusLabel: IStatusLabelConfig;
   private destroy$: Subject<void> = new Subject();
   constructor(
     private loyaltyService: LoyaltyService,
@@ -68,14 +68,14 @@ export class LoyaltyListPageComponent implements OnInit, OnDestroy {
         this.updateLoyaltyStatus(event.loyalty.id, this.loyaltyAction.activate);
         break;
       case this.loyaltyAction.paused:
-        this.updateLoyaltyStatus(event.loyalty.id,  this.loyaltyAction.paused);
+        this.updateLoyaltyStatus(event.loyalty.id, this.loyaltyAction.paused);
         break;
     }
   }
 
   private navigateToEdit(id: string): void {
     if (id) {
-      this.router.navigate(['loyalty/edit/' + id]);
+      this.router.navigate([`loyalty/edit/${id}`]);
     }
   }
 

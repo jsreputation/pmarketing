@@ -4,7 +4,17 @@ import { HomeComponent } from './home.component';
 import { MatToolbarModule, MatTabsModule, MatDialogModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoRenewaleInNamePipe } from '../no-renewale-in-name.pipe';
-import { LoyaltyService, IProfile, ProfileService, FeedReaderService, AuthenticationService, ICampaignService, TokenStorage } from '@perx/core';
+import {
+  LoyaltyService,
+  IProfile,
+  ProfileService,
+  FeedReaderService,
+  AuthenticationService,
+  InstantOutcomeService,
+  ICampaignService,
+  TokenStorage,
+  ConfigService
+} from '@perxtech/core';
 import { of, throwError } from 'rxjs';
 import { loyalty } from 'src/app/loyalty.mock';
 import { Type } from '@angular/core';
@@ -24,14 +34,21 @@ const tokenStorageStub: Partial<TokenStorage> = {
 const campaignServiceStub: Partial<ICampaignService> = {
   getCampaigns: () => of(campaigns),
   getCampaign: () => of(campaigns[0]),
-  issueAll: () => of()
+};
+
+const configServiceStub: Partial<ConfigService> = {
+  readAppConfig: () => of(),
+};
+
+const instantOutcomeServiceStub: Partial<InstantOutcomeService> = {
+  claim: () => of([])
 };
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
   let router: Router;
-  const loyaltyServiceStub = {
+  const loyaltyServiceStub: Partial<LoyaltyService> = {
     getLoyalty: () => of()
   };
   const mockProfile: IProfile = {
@@ -41,11 +58,11 @@ describe('HomeComponent', () => {
     lastName: ''
   };
 
-  const profileServiceStub = {
+  const profileServiceStub: Partial<ProfileService> = {
     whoAmI: () => of()
   };
 
-  const newsFeedServiceStub = {};
+  const newsFeedServiceStub: Partial<FeedReaderService> = {};
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -64,8 +81,10 @@ describe('HomeComponent', () => {
         { provide: ProfileService, useValue: profileServiceStub },
         { provide: FeedReaderService, useValue: newsFeedServiceStub },
         { provide: ICampaignService, useValue: campaignServiceStub },
+        { provide: InstantOutcomeService, useValue: instantOutcomeServiceStub },
         { provide: AuthenticationService, useValue: authServiceStub },
-        { provide: TokenStorage, useValue: tokenStorageStub }
+        { provide: TokenStorage, useValue: tokenStorageStub },
+        { provide: ConfigService, useValue: configServiceStub }
       ]
     })
       .compileComponents();
@@ -78,6 +97,7 @@ describe('HomeComponent', () => {
     router = TestBed.get<Router>(Router as Type<Router>);
     component = fixture.componentInstance;
     fixture.detectChanges();
+
   });
 
   it('should create', () => {
@@ -86,25 +106,34 @@ describe('HomeComponent', () => {
 
   describe('onInit', () => {
     it('should get loyalty from loyaltyService.getLoyalty ', fakeAsync(() => {
+      const configService: ConfigService = fixture.debugElement.injector.get<ConfigService>(ConfigService as Type<ConfigService>);
       const loyaltyService: LoyaltyService = fixture.debugElement.injector.get<LoyaltyService>(LoyaltyService as Type<LoyaltyService>);
       const loyaltyServiceSpy = spyOn(loyaltyService, 'getLoyalty').and.returnValue(
         of(loyalty)
       );
       tick();
       component.ngOnInit();
-      expect(loyaltyServiceSpy).toHaveBeenCalled();
-      expect(component.loyalty).toBe(loyalty);
+      configService.readAppConfig().subscribe(
+        () => {
+          expect(loyaltyServiceSpy).toHaveBeenCalled();
+          expect(component.loyalty).toBe(loyalty);
+        });
     }));
 
     it('should get profile from profileService.whoAmI ', fakeAsync(() => {
+      const configService: ConfigService = fixture.debugElement.injector.get<ConfigService>(ConfigService as Type<ConfigService>);
       const profileService: ProfileService = fixture.debugElement.injector.get<ProfileService>(ProfileService as Type<ProfileService>);
       const profileServiceSpy = spyOn(profileService, 'whoAmI').and.returnValue(
         of(mockProfile)
       );
       tick();
       component.ngOnInit();
-      expect(profileServiceSpy).toHaveBeenCalled();
-      expect(component.profile).toBe(mockProfile);
+      configService.readAppConfig().subscribe(
+        () => {
+          expect(profileServiceSpy).toHaveBeenCalled();
+          expect(component.profile).toBe(mockProfile);
+        }
+      );
     }));
   });
 
@@ -147,6 +176,7 @@ describe('HomeComponent', () => {
   }));
 
   it('should redirect to error screen', fakeAsync(() => {
+    const configService: ConfigService = fixture.debugElement.injector.get<ConfigService>(ConfigService as Type<ConfigService>);
     const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
     const campaignsServiceSpy = spyOn(campaigndService, 'getCampaigns').and.returnValue(
       throwError({ code: 500, message: 'server failed' })
@@ -155,19 +185,27 @@ describe('HomeComponent', () => {
     const routerSpy = spyOn(router, 'navigateByUrl').and.callThrough();
     component.ngOnInit();
     tick();
-    expect(campaignsServiceSpy).toHaveBeenCalled();
-    expect(routerSpy).toHaveBeenCalledWith('error');
+    configService.readAppConfig().subscribe(
+      () => {
+        expect(campaignsServiceSpy).toHaveBeenCalled();
+        expect(routerSpy).toHaveBeenCalledWith('error');
+      });
   }));
 
   it('should call ICampaignService.getCampaigns', fakeAsync(() => {
+    const configService: ConfigService = fixture.debugElement.injector.get<ConfigService>(ConfigService as Type<ConfigService>);
     const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
     const campaignsServiceSpy = spyOn(campaigndService, 'getCampaigns').and.returnValue(of(campaigns));
     component.ngOnInit();
     tick();
-    expect(campaignsServiceSpy).toHaveBeenCalled();
+    configService.readAppConfig().subscribe(
+      () => {
+        expect(campaignsServiceSpy).toHaveBeenCalled();
+      });
   }));
 
   it('should call ICampaignService.getCampaign and filter CampaignType.give_reward', fakeAsync(() => {
+    const configService: ConfigService = fixture.debugElement.injector.get<ConfigService>(ConfigService as Type<ConfigService>);
     const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
     const campaignsServiceSpy = spyOn(campaigndService, 'getCampaigns').and.returnValue(of(campaigns));
 
@@ -175,11 +213,17 @@ describe('HomeComponent', () => {
     const campaignServiceSpy = spyOn(campaignService, 'getCampaign').and.returnValue(of(campaigns[0]));
     component.ngOnInit();
     tick();
-    expect(campaignsServiceSpy).toHaveBeenCalled();
-    expect(campaignServiceSpy).toHaveBeenCalled();
+    configService.readAppConfig().subscribe(
+      () => {
+        expect(campaignsServiceSpy).toHaveBeenCalled();
+        expect(campaignServiceSpy).toHaveBeenCalled();
+      });
+
   }));
 
   it('should call ICampaignService.getCampaign and filter CampaignType.game', fakeAsync(() => {
+    const configService: ConfigService = fixture.debugElement.injector.get<ConfigService>(ConfigService as Type<ConfigService>);
+
     const campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
     const campaignsServiceSpy = spyOn(campaigndService, 'getCampaigns').and.returnValue(of(campaigns));
 
@@ -187,7 +231,11 @@ describe('HomeComponent', () => {
     const campaignServiceSpy = spyOn(campaignService, 'getCampaign').and.returnValue(of(campaigns[0]));
     component.ngOnInit();
     tick();
-    expect(campaignsServiceSpy).toHaveBeenCalled();
-    expect(campaignServiceSpy).toHaveBeenCalled();
+
+    configService.readAppConfig().subscribe(
+      () => {
+        expect(campaignsServiceSpy).toHaveBeenCalled();
+        expect(campaignServiceSpy).toHaveBeenCalled();
+      });
   }));
 });

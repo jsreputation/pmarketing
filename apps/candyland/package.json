@@ -1,20 +1,22 @@
 {
-  "name": "@perx/candyland",
+  "name": "@perxtech/candyland",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "ng-high-memory": "node --max_old_space_size=4000 ../../node_modules/@angular/cli/bin/ng",
     "start": "npm run config && ng serve --host 0.0.0.0",
     "build": "npm run config && ng build",
-    "build:candyland:prod": "PRODUCTION=true npm run config && npm run ng-high-memory -- build --prod",
+    "build:candyland:production": "PRODUCTION=true npm run config && npm run ng-high-memory -- build --prod",
+    "build:candyland:staging": "PRODUCTION=true npm run config && npm run ng-high-memory -- build --prod",
     "config": "ts-node --project tsconfig.node.json set-env.ts",
     "clean": "rm -rf ./dist ./node_modules",
-    "test": "ng test",
-    "lint": "ng lint && stylelint src/**/*.*css && eslint \"./src/*/*.ts\"",
-    "lint:fix": "ng lint --fix && stylelint \"src/**/*.*css\" --fix && eslint \"./src/*/*.ts\" --fix",
+    "test": "jest",
+    "lint": "stylelint src/**/*.*css && eslint \"./src/**/*.ts\"",
+    "lint:fix": "stylelint \"src/**/*.*css\" --fix && eslint \"./src/**/*.ts\" --fix",
     "styleLint": "stylelint src/**/*.*css",
     "pree2e": "webdriver-manager update",
-    "e2e-pro": "protractor"
+    "e2e-pro-candyland": "protractor",
+    "test:watch": "jest --watch"
   },
   "private": true,
   "dependencies": {
@@ -32,10 +34,11 @@
     "@angular/service-worker": "~8.0.0",
     "@ngx-translate/core": "^11.0.1",
     "@ngx-translate/http-loader": "^4.0.0",
-    "@perx/candyshop": "^0.0.0",
-    "@perx/chart": "^0.0.0",
-    "@perx/core": "^0.0.0",
-    "@perx/whistler": "^0.0.0",
+    "@perxtech/candyshop": "^0.0.0",
+    "@perxtech/whistler-services": "^0.0.0",
+    "@perxtech/chart": "^0.0.0",
+    "@perxtech/core": "^0.0.0",
+    "@perxtech/whistler": "^0.0.0",
     "@sentry/browser": "^5.10.1",
     "cucumber-parallel": "^2.0.3",
     "hammerjs": "^2.0.8",
@@ -43,7 +46,6 @@
     "lodash.isempty": "^4.4.0",
     "lodash.isequal": "^4.5.0",
     "lodash.transform": "^4.6.0",
-    "mat-color-picker": "^1.4.3",
     "moment": "^2.24.0",
     "ngx-auth": "^5.0.0",
     "ngx-color-picker": "^8.1.0",
@@ -61,8 +63,7 @@
     "@angular/language-service": "~8.0.0",
     "@types/chai": "^4.2.0",
     "@types/cucumber": "^4.0.7",
-    "@types/jasmine": "~3.3.8",
-    "@types/jasminewd2": "~2.0.3",
+    "@types/jest": "25.1.3",
     "@types/node": "~10.14.13",
     "@types/protractor-browser-logs": "^1.0.9",
     "@typescript-eslint/eslint-plugin": "~2.3.0",
@@ -74,13 +75,8 @@
     "cucumber-html-report": "^0.6.5",
     "cucumber-html-reporter": "^5.0.2",
     "eslint": "~6.4.0",
-    "jasmine-core": "~3.4.0",
-    "jasmine-spec-reporter": "~4.2.1",
-    "karma": "~4.1.0",
-    "karma-chrome-launcher": "~2.2.0",
-    "karma-coverage-istanbul-reporter": "~2.0.1",
-    "karma-jasmine": "~2.0.1",
-    "karma-jasmine-html-reporter": "^1.4.0",
+    "jest": "25.1.0",
+    "jest-preset-angular": "8.0.0",
     "protractor": "^5.4.2",
     "protractor-browser-logs": "^1.0.456",
     "protractor-console": "^3.0.0",
@@ -92,5 +88,38 @@
     "tslint-consistent-codestyle": "^1.15.1",
     "tslint-no-focused-test": "^0.5.0",
     "typescript": "~3.4.3"
+  },
+  "jest": {
+    "preset": "jest-preset-angular",
+    "roots": [
+      "src"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!ngx-barcode)"
+    ],
+    "transform": {
+      "^.+\\.(ts|js|html)$": "ts-jest"
+    },
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/setup-jest.ts"
+    ],
+    "moduleNameMapper": {
+      "@cl-helpers/(.*)": "<rootDir>/src/app/helpers/$1",
+      "@cl-core-services": "<rootDir>/src/app/core/services",
+      "@cl-core/(.*)": "<rootDir>/src/app/core/$1",
+      "@cl-shared/(.*)": "<rootDir>/src/app/shared/$1",
+      "@cl-shared": "<rootDir>/src/app/shared",
+      "@cl-environments/(.*)": "<rootDir>/src/environments/$1"
+    },
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "<rootDir>/tsconfig.spec.json",
+        "stringifyContentPathRegex": "\\.html$",
+        "astTransformers": [
+          "jest-preset-angular/build/InlineFilesTransformer",
+          "jest-preset-angular/build/StripStylesTransformer"
+        ]
+      }
+    }
   }
 }

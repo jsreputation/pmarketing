@@ -2,19 +2,20 @@
   <h1 class="title">
     {{'CAMPAIGNS' | translate}}
   </h1>
-  <cl-button routerLink="/campaigns/new-campaign" classList="primary cta cta-new">
+  <cs-button routerLink="/campaigns/new-campaign" classList="primary cs-btn-mobile">
+    <i class="cs-btn-mobile-icon icon new-icon"></i>
     {{'BTN_CREATE_NEW' | translate}}
-  </cl-button>
+  </cs-button>
 </header>
 
-<section class="content">
+<section class="content" [ngSwitch]>
   <ng-container [ngSwitch]="dataSource.state$ | async">
     <ng-container *ngSwitchCase="dataSourceStates.hasDataApi">
       <!--    filters-->
       <cl-table-filters [dataSource]="dataSource">
         <ng-container *clTableFilter="'name'; let filter">
           <cl-search-filter class="search-block" [control]="filter"
-                            [placeholder]="'CAMPAIGN.SEARCH_FOR_CAMPAIGN' | translate"></cl-search-filter>
+            [placeholder]="'CAMPAIGN.SEARCH_FOR_CAMPAIGN' | translate"></cl-search-filter>
         </ng-container>
         <div class="range-date-filter" *clTableFilter="'rangeDate'; let filter">
           <cl-range-date-picker-filter class="range-date-filter-input" [control]="filter"></cl-range-date-picker-filter>
@@ -37,20 +38,20 @@
       <div class="table-card">
         <!--  table-->
         <cl-campaigns-list [dataSource]="dataSource"
-                           [statusLabel]="statusLabel"
-                           [displayedColumns]="displayedColumns"
-                           (editAction)="editCampaign($event)"
-                           (duplicateAction)="duplicateCampaign($event)"
-                           (emitOpenReport)="openReport($event)"
-                           (activateCampaign)="activateCampaign($event)"
-                           (pauseCampaign)="pauseCampaign($event)">
+          [statusLabel]="statusLabel"
+          [displayedColumns]="displayedColumns"
+          (editAction)="editCampaign($event)"
+          (duplicateAction)="duplicateCampaign($event)"
+          (emitOpenReport)="openReport($event)"
+          (activateCampaign)="activateCampaign($event)"
+          (pauseCampaign)="pauseCampaign($event)">
         </cl-campaigns-list>
         <!--/ table-->
 
         <!--paginator-->
         <cl-paginator [dataSource]="dataSource"
-                      [pageSize]="5"
-                      [pageSizeOptions]="[5, 10, 20]"></cl-paginator>
+          [pageSize]="5"
+          [pageSizeOptions]="[5, 10, 20]"></cl-paginator>
         <!--/ paginator-->
       </div>
     </ng-container>
@@ -63,6 +64,15 @@
       <p class="no-data-text">
         {{'CAMPAIGN.NO_DATA_TEXT' | translate}}
       </p>
+    </cl-no-data>
+
+    <div *ngSwitchCase="dataSourceStates.firstLoading">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+    <cl-no-data *ngSwitchCase="dataSourceStates.errorApi">
+      <h2 class="no-data-title">
+        <span>Something broke</span> <span style="display: inline-block;">:(</span>
+      </h2>
     </cl-no-data>
   </ng-container>
 </section>

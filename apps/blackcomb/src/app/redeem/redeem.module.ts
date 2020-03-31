@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RedeemComponent } from '@perx/blackcomb-pages';
+import { RedeemComponent, PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
 import { RouterModule, Routes } from '@angular/router';
-import { VouchersModule } from '@perx/core';
+import { UtilsModule, VouchersModule } from '@perxtech/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material';
 
@@ -12,15 +12,14 @@ const routes: Routes = [{
 }];
 
 @NgModule({
-  declarations: [
-    RedeemComponent,
-  ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
+    PerxBlackcombPagesModule,
     VouchersModule,
     TranslateModule,
-    MatButtonModule
+    MatButtonModule,
+    UtilsModule
   ]
 })
-export class RedeemModule {}
+export class RedeemModule { }

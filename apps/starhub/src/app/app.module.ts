@@ -1,18 +1,26 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
-import { ScrollingModule } from '@angular/cdk/scrolling';
-import { ErrorHandler, Injectable, NgModule } from '@angular/core';
 import {
-  MatDialogModule,
-  MatIconModule,
-  MatCardModule,
-  MatToolbarModule,
-  MatRippleModule,
-  MatButtonModule,
+  HttpClient,
+  HttpClientModule
+} from '@angular/common/http';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import {
+  APP_INITIALIZER,
+  ErrorHandler,
+  Injectable,
+  NgModule
+} from '@angular/core';
+import {
   MatBottomSheetModule,
+  MatButtonModule,
+  MatCardModule,
+  MatDialogModule,
   MatDividerModule,
-  MatSnackBarModule
+  MatIconModule,
+  MatRippleModule,
+  MatSnackBarModule,
+  MatToolbarModule
 } from '@angular/material';
 
 import { QRCodeModule } from 'angularx-qrcode';
@@ -21,17 +29,28 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import {
   AuthenticationModule,
-  UtilsModule,
-  ProfileModule,
-  RewardsModule,
-  VouchersModule,
-  GameModule,
-  LocationModule,
-  ConfigModule,
+  AuthenticationService,
   CampaignModule,
+  CampaignServiceModule,
+  ConfigModule,
+  ConfigService,
+  FeedItemPopupComponent,
+  GameModule,
+  GameServiceModule as PerxGameServiceModule,
+  IConfig,
+  LanguageService,
+  LocationModule,
+  LoyaltyModule,
   MerchantsModule,
+  ProfileModule,
   RewardPopupComponent,
-} from '@perx/core';
+  RewardsModule,
+  SettingsModule,
+  ThemesService,
+  TokenStorage,
+  UtilsModule,
+  VouchersModule,
+} from '@perxtech/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -53,6 +72,20 @@ import { ErrorComponent } from './error/error.component';
 
 import { environment } from '../environments/environment';
 import * as Sentry from '@sentry/browser';
+import {
+  switchMap,
+  tap
+} from 'rxjs/operators';
+import {
+  TranslateLoader,
+  TranslateModule,
+  TranslateService
+} from '@ngx-translate/core';
+import {
+  ScratchComponent,
+  ShakeComponent,
+  TapComponent
+} from '@perxtech/blackcomb-pages';
 
 Sentry.init({
   dsn: 'https://b7939e78d33d483685b1c82e9c076384@sentry.io/1873560'
@@ -69,6 +102,32 @@ export class SentryErrorHandler implements ErrorHandler {
     // Sentry.showReportDialog({ eventId });
   }
 }
+
+// app token only needed for the settings APIs
+export const appInit =
+  (
+    translateService: TranslateService,
+    configService: ConfigService,
+    authService: AuthenticationService,
+    themesService: ThemesService
+  ) => () => new Promise((resolve) => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get('token');
+    if (token) {
+      authService.saveUserAccessToken(token);
+    } else {
+      console.error('Could not retrieve user token');
+    }
+
+    configService.readAppConfig().pipe(
+      tap((config: IConfig<void>) => translateService.setDefaultLang(config.defaultLang || 'en')),
+      switchMap(() => authService.getAppToken()),
+      switchMap(() => themesService.getThemeSetting())
+    ).toPromise().then(() => resolve());
+    resolve();
+  });
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -87,9 +146,13 @@ export class SentryErrorHandler implements ErrorHandler {
     CongratsComponent,
     ExpireTimerComponent,
     ErrorComponent,
+    ShakeComponent,
+    TapComponent,
+    ScratchComponent,
   ],
   imports: [
-    ConfigModule.forRoot({...environment}),
+    ConfigModule.forRoot({ ...environment }),
+    SettingsModule.forRoot({ ...environment }),
     BrowserModule,
     CampaignModule,
     AppRoutingModule,
@@ -114,17 +177,35 @@ export class SentryErrorHandler implements ErrorHandler {
     LocationModule,
     ScrollingModule,
     CampaignModule,
+    CampaignServiceModule.forRoot(),
+    PerxGameServiceModule.forRoot(),
     MerchantsModule,
     QRCodeModule,
     NgxBarcodeModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    LoyaltyModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        deps: [HttpClient, ConfigService, TokenStorage],
+        useClass: LanguageService
+      }
+    })
   ],
   entryComponents: [
     CategorySelectComponent,
     CategorySortComponent,
-    RewardPopupComponent
+    RewardPopupComponent,
+    FeedItemPopupComponent
   ],
-  providers: [{ provide: ErrorHandler, useClass: SentryErrorHandler }],
+  providers: [
+    { provide: ErrorHandler, useClass: SentryErrorHandler },
+    {
+      provide: APP_INITIALIZER, useFactory: appInit,
+      deps: [TranslateService, ConfigService, AuthenticationService, ThemesService], multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

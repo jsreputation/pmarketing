@@ -9,7 +9,7 @@ import {
   ThemesService,
   ConfigService,
   IConfig
-} from '@perx/core';
+} from '@perxtech/core';
 import { LoginComponent } from './auth/login/login.component';
 import { HomeComponent } from './home/home.component';
 import { HistoryComponent } from './history/history.component';
@@ -54,10 +54,9 @@ export class AppComponent implements OnInit {
 
   public ngOnInit(): void {
     this.configService.readAppConfig<ITheme>()
-      .pipe(flatMap((config: IConfig<ITheme>) => this.themeService.getThemeSetting(config)));
-    this.themeService.getThemeSetting().subscribe(
-      theme => this.theme = theme
-    );
+      .pipe(flatMap((config: IConfig<ITheme>) => this.themeService.getThemeSetting(config))).subscribe(
+        theme => this.theme = theme
+      );
     this.notificationService.$popup
       .subscribe((data: IPopupConfig) => this.dialog.open(PopupComponent, { data }));
     this.notificationService.$snack

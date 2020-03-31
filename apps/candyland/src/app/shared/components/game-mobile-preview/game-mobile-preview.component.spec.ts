@@ -4,6 +4,8 @@ import { GameMobilePreviewComponent } from './game-mobile-preview.component';
 import { MatTabsModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
+import { UploadFileService } from '@cl-core-services';
+import { MockUploadFileService } from '@cl-shared/test-components/providers/mock-upload-file.service';
 
 describe('GameMobilePreviewComponent', () => {
   let component: GameMobilePreviewComponent;
@@ -16,9 +18,10 @@ describe('GameMobilePreviewComponent', () => {
         MatTabsModule,
         TranslateModule.forRoot()
       ],
-      declarations: [ GameMobilePreviewComponent ]
+      declarations: [ GameMobilePreviewComponent ],
+      providers: [{ provide: UploadFileService, useClass: MockUploadFileService }]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { ITransaction, LoyaltyService } from '@perx/core';
+import { ITransaction, LoyaltyService } from '@perxtech/core';
 import { mockLoyalty, mockTransactions } from '../loyalty-mock';
 
 @Component({
@@ -15,8 +15,8 @@ export class LoyaltyTransactionsListComponent implements OnInit {
 
   public ngOnInit(): void {
     this.loyaltyService.getAllTransactions(mockLoyalty.id).subscribe(
-        (transactions) => this.transactions = of(transactions),
-        () => this.transactions = of(mockTransactions)
-      );
+      (transactions) => this.transactions = of(transactions),
+      () => this.transactions = of(mockTransactions)
+    );
   }
 }

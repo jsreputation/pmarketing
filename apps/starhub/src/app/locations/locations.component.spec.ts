@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed, inject, fakeAsync, tick } from '@angu
 import { LocationsComponent } from './locations.component';
 import { MatIconModule, MatToolbarModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Voucher as IVoucher, UtilsModule, LocationsService, GeoLocationService, RewardsService, IMerchantsService, IVoucherService } from '@perx/core';
+import { Voucher as IVoucher, UtilsModule, LocationsService, GeoLocationService, RewardsService, IMerchantsService, IVoucherService } from '@perxtech/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { of, Subject } from 'rxjs';
 import { Location } from '@angular/common';
@@ -12,14 +12,14 @@ import { AnalyticsService } from '../analytics.service';
 import { vouchers } from '../vouchers.mock';
 import { rewards } from '../rewards.mock';
 
-const vouchersServiceStub = {
+const vouchersServiceStub: Partial<IVoucherService> = {
   get: () => of(vouchers[0])
 };
 
 describe('LocationsComponent', () => {
   let component: LocationsComponent;
   let fixture: ComponentFixture<LocationsComponent>;
-  const merchantsServiceStub = {
+  const merchantsServiceStub: Partial<IMerchantsService> = {
     getMerchant: () => of()
   };
 
@@ -51,17 +51,17 @@ describe('LocationsComponent', () => {
       distance: 1,
     }
   ];
-  const locationsServiceStub = {
+  const locationsServiceStub: Partial<LocationsService> = {
     getFromMerchant: () => of(location)
   };
-  const geoLocationServiceStub = {
+  const geoLocationServiceStub: Partial<GeoLocationService> = {
     positions: () => of(position)
   };
-  const locationStub = {
+  const locationStub: Partial<Location> = {
     back: () => { }
   };
   let params: Subject<Params>;
-  const rewardsServiceStub = {
+  const rewardsServiceStub: Partial<RewardsService> = {
     getReward: () => of({
       id: 1,
       name: 'Reward Test',
@@ -88,7 +88,7 @@ describe('LocationsComponent', () => {
     })
   };
 
-  const analyticsServiceStub = {
+  const analyticsServiceStub: Partial<AnalyticsService> = {
     addEvent: () => { }
   };
 

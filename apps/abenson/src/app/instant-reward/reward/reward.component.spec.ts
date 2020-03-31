@@ -16,7 +16,7 @@ import {
   RewardsModule,
   RewardsService,
   ThemesService,
-} from '@perx/core';
+} from '@perxtech/core';
 
 import { RewardComponent } from './reward.component';
 
@@ -24,11 +24,11 @@ describe('RewardComponent', () => {
   let component: RewardComponent;
   let fixture: ComponentFixture<RewardComponent>;
 
-  const themesServiceStub = {
+  const themesServiceStub: Partial<ThemesService> = {
     getThemeSetting: () => of()
   };
 
-  const rewardsServiceStub = {
+  const rewardsServiceStub: Partial<RewardsService> = {
     getAllRewards: () => of(),
   };
 

@@ -1,3 +1,3 @@
 export interface IGameComponent {
-    reset(): void;
+  reset(): void;
 }

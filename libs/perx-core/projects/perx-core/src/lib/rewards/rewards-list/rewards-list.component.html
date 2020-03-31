@@ -26,16 +26,20 @@
                 {{reward.merchantName}}
               </div>
               <ng-template #showDescription>
-                <div class="description" ellipsis>
-                  {{reward.description}}
+                <div class="description" [innerHtml]="reward.description | striphtml" ngxEllipsis [lines]="2">
                 </div>
               </ng-template>
               <div
                 class="reward-price-details"
                 [ngStyle]="{'color': themeFontColor ? themeFontColor : colorPrimary}">
                 <div *ngIf="reward.rewardPrice && reward.rewardPrice.length > 0">
-                  <div *ngFor="let rewardPrice of reward.rewardPrice">
-                    {{displayPriceFn(rewardPrice)}}
+                  <div *ngFor="let rewardPrice of reward.rewardPrice; let i = index">
+                    <div *ngIf="reward.rewardPrice && reward.rewardPrice.length > 1; else singlePriceBlock">
+                      <span *ngIf="i === 0">From {{displayPriceFn(rewardPrice)}}</span>
+                    </div>
+                    <ng-template #singlePriceBlock>
+                      {{displayPriceFn(rewardPrice)}}
+                    </ng-template>
                   </div>
                 </div>
               </div>

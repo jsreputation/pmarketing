@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { UtilsModule, AuthenticationService } from '@perx/core';
+import { UtilsModule, AuthenticationService } from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { EnterPinComponent } from './enter-pin.component';
@@ -13,7 +13,7 @@ describe('EnterPinComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EnterPinComponent ],
+      declarations: [EnterPinComponent],
       imports: [
         UtilsModule,
         RouterTestingModule.withRoutes([{
@@ -24,7 +24,7 @@ describe('EnterPinComponent', () => {
       providers: [
         {
           provide: AuthenticationService,
-          useValue: {forgotPassword: () => of()}
+          useValue: { forgotPassword: () => of() }
         },
         {
           provide: ActivatedRoute,
@@ -35,8 +35,8 @@ describe('EnterPinComponent', () => {
         {
           provide: Router,
           useValue: {
-            navigate: () => {},
-            getCurrentNavigation: () =>  (
+            navigate: () => { },
+            getCurrentNavigation: () => (
               {
                 extras: {
                   state: {
@@ -49,7 +49,7 @@ describe('EnterPinComponent', () => {
         }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -76,7 +76,7 @@ describe('EnterPinComponent', () => {
 
   it('should resend otp resendOtp', fakeAsync(() => {
     const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>
-      (AuthenticationService as Type<AuthenticationService>);
+    (AuthenticationService as Type<AuthenticationService>);
     const authSpy = spyOn(authenticationService, 'forgotPassword').and.returnValue(
       of({
         message: 'success'

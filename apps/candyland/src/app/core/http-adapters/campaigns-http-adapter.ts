@@ -1,4 +1,4 @@
-import { IAudienceFilter } from './../models/campaign/campaign';
+import { IAudienceFilter } from '../models/campaign/campaign';
 import * as moment from 'moment';
 import {
   EngagementTypeAPIMapping, EngagementTypeFromAPIMapping
@@ -11,11 +11,12 @@ import {
   IJsonApiListPayload,
   IJsonApiPatchData,
   IJsonApiPostData,
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { ICampaignTableData, ICampaign } from '@cl-core/models/campaign/campaign';
 import { DateTimeParser } from '@cl-helpers/date-time-parser';
-import { WCampaignStatus, IWAudienceFilter } from '@perx/whistler';
+import { WCampaignStatus, IWAudienceFilter } from '@perxtech/whistler';
 import { CampaignStatus, InformationCollectionSettingType } from '@cl-core/models/campaign/campaign.enum';
+import { ITableData } from '@cl-core/models/data-list.interface';
 
 export class CampaignsHttpAdapter {
   private static WStat2Stat: { [k in WCampaignStatus]: CampaignStatus } = {
@@ -111,7 +112,7 @@ export class CampaignsHttpAdapter {
     const campaignData = data.attributes;
     return {
       audience: {
-        select: '' + data.attributes.pool_id,
+        select: `${data.attributes.pool_id}`,
         filters: CampaignsHttpAdapter.transformAudienceFilterFromAPI(data.attributes.audience_segment || {})
       },
       id: data.id,
@@ -145,9 +146,9 @@ export class CampaignsHttpAdapter {
     const startTime = data.campaignInfo.startTime ? data.campaignInfo.startTime : moment().format('LT');
     const endTime = data.campaignInfo.endTime ? data.campaignInfo.endTime : moment().format('LT');
     const startDate = data.campaignInfo.startDate
-      ? moment(moment(data.campaignInfo.startDate).format('l') + ' ' + startTime).format()
+      ? moment(`${moment(data.campaignInfo.startDate).format('l')} ${startTime}`).format()
       : null;
-    const endDate = data.campaignInfo.endDate ? moment(moment(data.campaignInfo.endDate).format('l') + ' ' + endTime).format() : null;
+    const endDate = data.campaignInfo.endDate ? moment(`${moment(data.campaignInfo.endDate).format('l')} ${endTime}`).format() : null;
     // When user not select weblink, default the information collection setting back to not required. Double confirm with Nocolas
     const informationCollectionSetting = data.notification.webNotification.webLink
       ? data.notification.webNotification.webLinkOptions

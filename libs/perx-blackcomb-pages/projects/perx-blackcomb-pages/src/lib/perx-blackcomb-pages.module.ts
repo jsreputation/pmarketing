@@ -20,39 +20,22 @@ import {
   MatDatepickerModule,
   MatToolbarModule,
   MatListModule,
-  MatDialogModule
+  MatDialogModule,
+  MatMenuModule,
+  MatInputModule
 } from '@angular/material';
 import { GameModule } from './game/game.module';
 import { HistoryComponent } from './history/history.component';
 import {
-  RepeatTimesDirective,
-  RewardsCollectionComponent,
-  VouchersComponent,
-  PinRedemptionComponent,
-  BcodeRedemptionComponent,
-  QrcodeRedemptionComponent,
-  BarcodeRedemptionComponent,
-  RewardComponent as PerxRewardComponent,
-  SurveyComponent as PerxSurveyComponent,
-  PuzzleCollectStampsComponent,
-  QuestionComponent,
-  SelectComponent,
-  PhoneComponent,
-  GroupComponent,
-  RatingComponent,
-  PictureSelectComponent,
-  LongTextComponent,
-  DateComponent,
-  VoucherComponent,
-  RewardsListTabbedComponent,
-  RewardsListComponent,
-  LoyaltySummaryComponent,
-  LoyaltyTransactionsListComponent,
-  NewsfeedComponent,
-  PinInputComponent,
-  PasswordComponent,
-  PuzzleListComponent
-} from '@perx/core';
+  UtilsModule,
+  VouchersModule,
+  PuzzlesModule,
+  LoyaltyModule,
+  RewardsModule,
+  SurveyModule,
+  QuizModule,
+  SecondsToStringPipe
+} from '@perxtech/core';
 
 import { RewardComponent } from './reward/reward.component';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
@@ -69,11 +52,12 @@ import { StampCardComponent } from './stamp-card/stamp-card.component';
 import { SurveyComponent } from './survey/survey.component';
 import { VoucherDetailComponent } from './voucher-detail/voucher-detail.component';
 import { WalletComponent } from './wallet/wallet.component';
-import { SignUpComponent } from './sign-up/sign-up.component';
+import { SignUpComponent as PerxSignUpComponent } from './sign-up/sign-up.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { LayoutComponent } from './layout/layout.component';
 import { HomeComponent } from './home/home.component';
 import { GamesCollectionComponent } from './home/games-collection/games-collection.component';
+import { CampaignsCollectionComponent } from './home/campaigns-collection/campaigns-collection.component';
 import { WalletHistoryComponent } from './wallet-history/wallet-history.component';
 import { ProfileComponent } from './profile/profile.component';
 import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
@@ -82,65 +66,67 @@ import { EnterPinComponent } from './enter-pin/enter-pin.component';
 import { RewardsBookingComponent } from './rewards-booking/rewards-booking.component';
 import { ProfileBarcodeComponent } from './profile-barcode/profile-barcode.component';
 import { EditProfileFieldComponent } from './edit-profile-field/edit-profile-field.component';
+import { CampaignStampsComponent } from './campaign-stamps/campaign-stamps.component';
+import { CatalogsComponent } from './catalogs/catalogs.component';
+import { CatalogRewardCardComponent } from './catalog-reward-card/catalog-reward-card.component';
+import { CatalogComponent } from './catalog/catalog.component';
+import { QuizComponent } from './quiz/quiz.component';
+import { QuizResultsComponent } from './quiz-results/quiz-results.component';
+import { LuckyDrawDetailsComponent } from './lucky-draw-details/lucky-draw-details.component';
+import { CampaignLandingPageComponent } from './campaign-landing-page/campaign-landing-page.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
+import { ReferralComponent } from './referral/referral.component';
 
 const comps: any[] = [
   AccountComponent,
   ContentComponent,
   HistoryComponent,
-  VouchersComponent,
-  SignUpComponent,
-  RepeatTimesDirective,
-  RewardsCollectionComponent,
+  PerxSignUpComponent,
   RewardComponent,
-  PinRedemptionComponent,
-  BcodeRedemptionComponent,
-  QrcodeRedemptionComponent,
-  BarcodeRedemptionComponent,
   LoadingComponent,
   RedeemComponent,
   SignIn2Component,
   SignInComponent,
   QRComponent,
   RewardDetailsComponent,
-  PerxRewardComponent,
   StampCardComponent,
   SurveyComponent,
-  PerxSurveyComponent,
-  PuzzleCollectStampsComponent,
-  QuestionComponent,
-  SelectComponent,
-  PhoneComponent,
-  GroupComponent,
-  RatingComponent,
-  PasswordComponent,
-  PictureSelectComponent,
-  LongTextComponent,
-  DateComponent,
   VoucherDetailComponent,
-  VoucherComponent,
   WalletComponent,
-  RewardsListTabbedComponent,
-  LoyaltySummaryComponent,
-  LoyaltyTransactionsListComponent,
-  RewardsListComponent,
   LayoutComponent,
   HomeComponent,
   GamesCollectionComponent,
-  NewsfeedComponent,
+  CampaignsCollectionComponent,
   WalletHistoryComponent,
   TransactionHistoryComponent,
   ProfileComponent,
   ChangePasswordComponent,
   EnterPinComponent,
-  PinInputComponent,
   RewardsBookingComponent,
   ProfileBarcodeComponent,
   EditProfileFieldComponent,
-  PuzzleListComponent
+  CampaignStampsComponent,
+  CatalogComponent,
+  CatalogsComponent,
+  CatalogRewardCardComponent,
+  QuizComponent,
+  QuizResultsComponent,
+  LuckyDrawDetailsComponent,
+  CampaignLandingPageComponent,
+  ForgotPasswordComponent,
+  LandingPageComponent,
+  ReferralComponent,
 ];
 
 @NgModule({
   imports: [
+    UtilsModule,
+    VouchersModule,
+    PuzzlesModule,
+    LoyaltyModule,
+    RewardsModule,
+    SurveyModule,
     RouterModule,
     CommonModule,
     MatProgressBarModule,
@@ -148,6 +134,8 @@ const comps: any[] = [
     MatIconModule,
     MatCardModule,
     MatButtonModule,
+    MatMenuModule,
+    MatInputModule,
     MatRippleModule,
     MatGridListModule,
     MatTabsModule,
@@ -166,15 +154,18 @@ const comps: any[] = [
     MatToolbarModule,
     MatListModule,
     InfiniteScrollModule,
-    MatDialogModule
+    MatDialogModule,
+    QuizModule,
   ],
   exports: [
     ...comps,
   ],
   declarations: [
     ...comps,
+  ],
+  providers: [
+    SecondsToStringPipe
   ]
 })
 export class PerxBlackcombPagesModule {
-
 }

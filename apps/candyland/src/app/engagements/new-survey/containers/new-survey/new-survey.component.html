@@ -1,27 +1,27 @@
 <article class="survey-wrap" [formGroup]="form" *ngIf="surveyData">
   <header class="page-header full-with">
     <mat-form-field class="pagetitle-input" floatLabel="never">
-      <input type="text"  matInput formControlName="name" [placeholder]="'ENTER_TITLE_HERE' | translate">
+      <input type="text" matInput formControlName="name" [placeholder]="'ENTER_TITLE_HERE' | translate">
       <mat-error *ngIf="name.hasError('required')"><span translate>ERROR_REQUIRED</span></mat-error>
       <mat-error *ngIf="name.hasError('minlength')"><span translate>ERROR_MIN_LENGTH</span> 1</mat-error>
       <mat-error *ngIf="name.hasError('maxlength')"><span translate>ERROR_MAX_LENGTH</span> 60</mat-error>
     </mat-form-field>
     <div class="btn-group">
-      <cl-button [classList]="'secondary'"
+      <cs-button [classList]="'secondary'"
                  class="btn-cancel"
                  (click)="comeBack()"
       >
       <span translate>
         BTN_CANCEL
       </span>
-      </cl-button>
-      <cl-button [classList]="'primary cta cta-save'"
-                 (click)="save()"
-      >
-      <span translate>
+      </cs-button>
+      <cs-button classList="primary cs-btn-mobile"
+                 (click)="save()">
+        <i class="cs-btn-mobile-icon icon save-icon"></i>
+        <span translate>
         BTN_SAVE
       </span>
-      </cl-button>
+      </cs-button>
     </div>
   </header>
   <section class="content form-limiter">
@@ -31,23 +31,31 @@
           <h2 class="card-fieldset-title sub-title" translate>
             MESSAGES
           </h2>
-          <div class="messages-form" >
+          <div class="messages-form">
             <div class="control-input">
               <mat-form-field class="messages-input">
-                <input type="text" [placeholder]="'HEADLINE_MESSAGE' | translate" matInput formControlName="headlineMessage">
+                <input type="text" [placeholder]="'HEADLINE_MESSAGE' | translate" matInput
+                       formControlName="headlineMessage">
                 <mat-hint align="end">{{headlineMessage.value?.length || 0}}/60</mat-hint>
-                <mat-error *ngIf="headlineMessage.hasError('required')"><span translate>ERROR_REQUIRED</span></mat-error>
-                <mat-error *ngIf="headlineMessage.hasError('minlength')"><span translate>ERROR_MIN_LENGTH</span> 5</mat-error>
-                <mat-error *ngIf="headlineMessage.hasError('maxlength')"><span translate>ERROR_MAX_LENGTH</span> 60</mat-error>
+                <mat-error *ngIf="headlineMessage.hasError('required')"><span translate>ERROR_REQUIRED</span>
+                </mat-error>
+                <mat-error *ngIf="headlineMessage.hasError('minlength')"><span translate>ERROR_MIN_LENGTH</span> 5
+                </mat-error>
+                <mat-error *ngIf="headlineMessage.hasError('maxlength')"><span translate>ERROR_MAX_LENGTH</span> 60
+                </mat-error>
               </mat-form-field>
             </div>
             <div class="control-input">
               <mat-form-field class="messages-input">
-                <input type="text" matInput [placeholder]="'SUB-HEADLINE_MESSAGE' | translate" formControlName="subHeadlineMessage">
+                <input type="text" matInput [placeholder]="'SUB-HEADLINE_MESSAGE' | translate"
+                       formControlName="subHeadlineMessage">
                 <mat-hint align="end">{{subHeadlineMessage.value?.length || 0}}/{{subHeadlineMaxLength}}</mat-hint>
-                <mat-error *ngIf="subHeadlineMessage.hasError('required')"><span translate>ERROR_REQUIRED</span></mat-error>
-                <mat-error *ngIf="subHeadlineMessage.hasError('minlength')"><span translate>ERROR_MIN_LENGTH</span> 5</mat-error>
-                <mat-error *ngIf="subHeadlineMessage.hasError('maxlength')"><span translate>ERROR_MAX_LENGTH</span> {{subHeadlineMaxLength}}</mat-error>
+                <mat-error *ngIf="subHeadlineMessage.hasError('required')"><span translate>ERROR_REQUIRED</span>
+                </mat-error>
+                <mat-error *ngIf="subHeadlineMessage.hasError('minlength')"><span translate>ERROR_MIN_LENGTH</span> 5
+                </mat-error>
+                <mat-error *ngIf="subHeadlineMessage.hasError('maxlength')"><span
+                  translate>ERROR_MAX_LENGTH</span> {{subHeadlineMaxLength}}</mat-error>
               </mat-form-field>
             </div>
           </div>
@@ -59,9 +67,9 @@
 
           <!--questions form array-->
           <div cdkDropList
-              (cdkDropListDropped)="drop($event)"
-              class="drag-list"
-              [cdkDropListData]="surveyQuestion.controls"
+               (cdkDropListDropped)="drop($event)"
+               class="drag-list"
+               [cdkDropListData]="surveyQuestion.controls"
           >
             <cl-question-form-field *ngFor="let item of surveyQuestion.controls; let i = index;"
                                     cdkDrag
@@ -85,11 +93,11 @@
                             [addQuestionType]="true"
                             (selectTypeQuestion)="choseTypeQuestion($event)"
           >
-            <cl-button [classList]="'primary'">
+            <cs-button [classList]="'primary'">
             <span translate>
             ADD_QUESTION
             </span>
-            </cl-button>
+            </cs-button>
           </cl-question-type>
         </mat-card>
 
@@ -182,24 +190,26 @@
                 <input type="text" [placeholder]="'BUTTON_TEXT' | translate" matInput formControlName="buttonText">
                 <mat-hint align="end">{{buttonText.value?.length || 0}}/20</mat-hint>
                 <mat-error *ngIf="buttonText.hasError('required')"><span translate>ERROR_REQUIRED</span></mat-error>
-                <mat-error *ngIf="buttonText.hasError('minlength')"><span translate>ERROR_MIN_LENGTH</span> 2</mat-error>
-                <mat-error *ngIf="buttonText.hasError('maxlength')"><span translate>ERROR_MAX_LENGTH</span> 20</mat-error>
+                <mat-error *ngIf="buttonText.hasError('minlength')"><span translate>ERROR_MIN_LENGTH</span> 2
+                </mat-error>
+                <mat-error *ngIf="buttonText.hasError('maxlength')"><span translate>ERROR_MAX_LENGTH</span> 20
+                </mat-error>
               </mat-form-field>
             </div>
           </div>
         </mat-card>
       </div>
       <cl-simple-mobile-view class="second-tab"
-                            [background]=" getImgLink(background, '/assets/images/stamps/card-background/card-bg-1.png')"
-                            [mobileImageClass]="'mobile-non-header'"
-                            [headerColor]="tenantSettings?.headerColor"
-                            [logo]="tenantSettings?.logo"
-                            [logoType]="tenantSettings?.logoType"
-                            [fontFamily]="tenantSettings?.font"
+                             [background]=" getImgLink(background, '/assets/images/stamps/card-background/card-bg-1.png')"
+                             [mobileImageClass]="'mobile-non-header'"
+                             [headerColor]="tenantSettings?.headerColor"
+                             [logo]="tenantSettings?.logo"
+                             [logoType]="tenantSettings?.logoType"
+                             [fontFamily]="tenantSettings?.font"
       >
         <div class="plugin-block">
           <div class="mobile-preview-card"
-              [ngStyle]="{
+               [ngStyle]="{
               'background-image': 'url(' + getImgLink(cardBackground, '/assets/images/stamps/card-background/card-bg-1.png') + ')',
               'font-family': tenantSettings?.font
               }"

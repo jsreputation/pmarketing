@@ -18,8 +18,8 @@ import {
   NotificationService,
   ThemesService,
   IOutcome
-} from '@perx/core';
-import { WInformationCollectionSettingType } from '@perx/whistler';
+} from '@perxtech/core';
+import { WInformationCollectionSettingType } from '@perxtech/whistler';
 import { RewardComponent } from './reward.component';
 import { Type } from '@angular/core';
 
@@ -30,6 +30,7 @@ const mockOutcome: IOutcome = {
   banner: 'banner',
   backgroundImgUrl: '',
   cardBackgroundImgUrl: '',
+  results: {},
   displayProperties: {
     informationCollectionSetting: WInformationCollectionSettingType.not_required,
     noRewardsPopUp: {
@@ -49,7 +50,7 @@ describe('RewardComponent', () => {
   let component: RewardComponent;
   let fixture: ComponentFixture<RewardComponent>;
 
-  const themesServiceStub = {
+  const themesServiceStub: Partial<ThemesService> = {
     getThemeSetting: () => of()
   };
 

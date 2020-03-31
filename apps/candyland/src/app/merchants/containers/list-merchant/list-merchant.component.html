@@ -1,6 +1,9 @@
 <header class="page-header">
   <h1 class="title">{{'MERCHANTS' | translate}}</h1>
-  <cl-button (click)="openDialogCreate()" classList="primary cta cta-new">{{'BTN_CREATE_NEW' | translate}}</cl-button>
+  <cs-button (click)="openDialogCreate()" classList="primary cs-btn-mobile">
+    <i class="cs-btn-mobile-icon icon new-icon"></i>
+    {{'BTN_CREATE_NEW' | translate}}
+  </cs-button>
 </header>
 
 <section class="content merchant-list-content">
@@ -10,22 +13,20 @@
       <cl-table-filters [dataSource]="dataSource" classList="block">
         <ng-container *clTableFilter="'name'; let filter">
           <cl-search-filter class="search-block" [control]="filter"
-                            [placeholder]="'SEARCH_FOR_MERCHANTS' | translate"></cl-search-filter>
+            [placeholder]="'SEARCH_FOR_MERCHANTS' | translate"></cl-search-filter>
         </ng-container>
       </cl-table-filters>
       <div class="table-card">
         <!--table-->
         <div class="merchant-list-wrapper">
           <cl-list-merchant-view [dataSource]="dataSource"
-                                 (itemAction)="handlerAction($event)"
-          >
+            (itemAction)="handlerAction($event)">
           </cl-list-merchant-view>
         </div>
         <!--paginator-->
         <cl-paginator [dataSource]="dataSource"
-                      [pageSize]="5"
-                      [pageSizeOptions]="[5, 10, 20]"
-        ></cl-paginator>
+          [pageSize]="5"
+          [pageSizeOptions]="[5, 10, 20]"></cl-paginator>
         <!--/ paginator-->
       </div>
     </ng-container>
@@ -38,6 +39,15 @@
       <p class="no-data-text">
         {{'NO_DATA_TEXT' | translate}}
       </p>
+    </cl-no-data>
+
+    <div *ngSwitchCase="dataSourceStates.firstLoading">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+    <cl-no-data *ngSwitchCase="dataSourceStates.errorApi">
+      <h2 class="no-data-title">
+        <span>Something broke</span> <span style="display: inline-block;">:(</span>
+      </h2>
     </cl-no-data>
   </div>
 </section>

@@ -31,11 +31,11 @@ exports.config = {
       './src/steps/**/*.steps.ts',
       './src/features/'
     ],
-    tags: ['@demo','@runThis'],
+    tags: ['@demo','@runThis','@TestCaseKey'],
     ui:       'bdd',
     reporter: 'dot',
     strict: true,
-    format: 'json:src/resultsOutput/result.json',
+    format: 'json:./src/resultsOutput/result.json',
     timeout: 35000,
     bail:true,
     dryRun: false,
@@ -56,8 +56,8 @@ exports.config = {
     var reporter = require('cucumber-html-reporter');
     var options = {
       theme: 'bootstrap',
-      jsonFile: './src/resultsOutput/result.json',
-      output: './src/resultsOutput/cucumber_report.html',
+      jsonFile: require('path').join(__dirname,'./src/resultsOutput/result.json'),
+      output: require('path').join(__dirname,'./src/resultsOutput/cucumber_report.html'),
       reportSuiteAsScenarios: true,
       launchReport: true,
       scenarioTimestamp: true,

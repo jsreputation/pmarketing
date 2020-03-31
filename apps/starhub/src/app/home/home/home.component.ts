@@ -7,10 +7,11 @@ import {
   AuthenticationService,
   ICampaignService,
   ICampaign,
+  InstantOutcomeService,
   CampaignType,
   IGame,
-  RewardPopupComponent
-} from '@perx/core';
+  RewardPopupComponent, ConfigService
+} from '@perxtech/core';
 import { NoRenewaleInNamePipe } from '../no-renewale-in-name.pipe';
 import { MatToolbar, MatDialog } from '@angular/material';
 import { catchError, switchMap } from 'rxjs/operators';
@@ -44,14 +45,20 @@ export class HomeComponent implements OnInit {
     private profileService: ProfileService,
     private authenticationService: AuthenticationService,
     private campaignService: ICampaignService,
+    private instantOutcomeService: InstantOutcomeService,
+    private configService: ConfigService,
     private router: Router,
     private dialog: MatDialog,
   ) { }
 
   public ngOnInit(): void {
-    this.loyaltyService.getLoyalty().subscribe((loyalty: ILoyalty) => this.loyalty = loyalty);
-    this.profileService.whoAmI().subscribe((p: IProfile) => this.profile = p);
-    this.getAccessToken();
+    this.configService.readAppConfig().subscribe(
+      () => {
+        this.loyaltyService.getLoyalty().subscribe((loyalty: ILoyalty) => this.loyalty = loyalty);
+        this.profileService.whoAmI().subscribe((p: IProfile) => this.profile = p);
+        this.getAccessToken();
+      }
+    );
   }
 
   private getAccessToken(): void {
@@ -114,7 +121,6 @@ export class HomeComponent implements OnInit {
     this.campaignService.getCampaigns()
       .pipe(
         catchError(() => {
-          this.router.navigateByUrl('error');
           return of([]);
         })
       )
@@ -129,9 +135,11 @@ export class HomeComponent implements OnInit {
           // if there is a 1st come 1st served campaign, display the popup
           if (firstComeFirstServed.length > 0) {
             this.firstComefirstServeCampaign = firstComeFirstServed[0];
+            const popupImageURL = this.firstComefirstServeCampaign.campaignBannerUrl ?
+              this.firstComefirstServeCampaign.campaignBannerUrl : 'assets/bd-campaign.svg';
             const data = {
               text: this.firstComefirstServeCampaign.description,
-              imageUrl: 'assets/bd-campaign.svg',
+              imageUrl: popupImageURL,
               buttonTxt: 'Check it out',
               afterClosedCallBack: this,
               // @ts-ignore
@@ -149,16 +157,16 @@ export class HomeComponent implements OnInit {
 
   public dialogClosed(): void {
     if (this.game) {
-      this.router.navigate([`/game`], { queryParams: { id: this.game.id } });
+      this.router.navigate(['/game'], { queryParams: { id: this.game.id } });
     } else {
-      this.campaignService.issueAll(this.firstComefirstServeCampaign.id).subscribe(
+      this.instantOutcomeService.claim(this.firstComefirstServeCampaign.id).subscribe(
         () => {
-          this.router.navigate([`/home/vouchers`]);
+          this.router.navigate(['/home/vouchers']);
         },
         (err) => {
           if (err.error && err.error.code === 4103) {
             // user has already been issued voucher
-            this.router.navigate([`/home/vouchers`]);
+            this.router.navigate(['/home/vouchers']);
           }
           console.error(`Something fishy, we should not be here, without any reward or game. ERR print: ${err.error.message}`);
         }

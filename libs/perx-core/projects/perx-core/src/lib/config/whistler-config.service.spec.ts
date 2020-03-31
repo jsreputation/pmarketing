@@ -26,7 +26,7 @@ describe('WhistlerConfigService', () => {
     })));
   it('read app config', fakeAsync(inject([WhistlerConfigService, HttpClient],
     (config: WhistlerConfigService, http: HttpClient) => {
-      const spy = spyOn(http, 'post').and.returnValue(of({
+      const spy = jest.spyOn(http, 'post').mockReturnValue(of({
         data: [{
           attributes: {
             display_properties: {
@@ -39,19 +39,5 @@ describe('WhistlerConfigService', () => {
       config.readAppConfig().subscribe(() => { });
       tick();
       expect(spy).toHaveBeenCalled();
-    })));
-  it('getAccountSettings', fakeAsync(inject([WhistlerConfigService, HttpClient],
-    (config: WhistlerConfigService, http: HttpClient) => {
-      const spy = spyOn(http, 'post').and.returnValue(of({
-        data: [{ attributes: { display_properties: { account: null } } }]
-      }));
-      config.getAccountSettings().subscribe(() => { });
-      tick();
-      expect(spy).toHaveBeenCalled();
-      // get cashe
-      spy.calls.reset();
-      config.getAccountSettings().subscribe(() => { });
-      tick();
-      expect(spy).not.toHaveBeenCalled();
     })));
 });

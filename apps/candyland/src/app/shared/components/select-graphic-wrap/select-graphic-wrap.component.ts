@@ -13,6 +13,7 @@ import { AbstractControl, ControlValueAccessor, FormBuilder, NG_VALUE_ACCESSOR }
 import { ImageControlValue } from '@cl-helpers/image-control-value';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
+import { IGraphic } from '@cl-core/models/graphic.interface';
 
 @Component({
   selector: 'cl-select-graphic-wrap',
@@ -30,6 +31,7 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
   @Input() public graphicList: IGraphic[];
   @Input() public showUpload: boolean = true;
   @Input() public isRequired: boolean;
+  @Input() public placeHolder: string;
   @Output() private selectGraphic: EventEmitter<IGraphic> = new EventEmitter<IGraphic>();
 
   public set setGraphic(val: any) {
@@ -41,9 +43,7 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
     }
   }
 
-  constructor(private fb: FormBuilder,
-              private cd: ChangeDetectorRef) {
-  }
+  constructor(private fb: FormBuilder, private cd: ChangeDetectorRef) { }
 
   public selectedGraphic: IGraphic;
   public controlUpload: AbstractControl;
@@ -113,7 +113,7 @@ export class SelectGraphicWrapComponent implements OnInit, ControlValueAccessor,
 
   private patchDefaultControl(value: any): void {
     this.createDefaultControl();
-    this.controlDefault.patchValue(value, {emitEvent: false});
+    this.controlDefault.patchValue(value, { emitEvent: false });
   }
 
   private subscribeControlDefaultValueChanges(): void {

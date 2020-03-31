@@ -3,7 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { LoginComponent } from './login.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthenticationService, ProfileService } from '@perx/core';
+import { AuthenticationService, ProfileService, ConfigService } from '@perxtech/core';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import {
@@ -20,15 +20,18 @@ describe('LoginComponent', () => {
   let fixture: ComponentFixture<LoginComponent>;
 
   beforeEach(async(() => {
-    const routerStub = {
-      navigateByUrl: () => ({}),
-      navigate: () => ({})
+    const routerStub: Partial<Router> = {
+      navigateByUrl: () => Promise.resolve(true),
+      navigate: () => Promise.resolve(true)
     };
 
-    const profileStub = {
+    const profileStub: Partial<ProfileService> = {
       getCustomProperties: () => of({
         questionaire_answered: false
       })
+    };
+    const configServiceStub = {
+      readAppConfig: () => of()
     };
 
     TestBed.configureTestingModule({
@@ -55,6 +58,7 @@ describe('LoginComponent', () => {
             getAppAccessToken: () => 'token'
           }
         },
+        { provide: ConfigService, useValue: configServiceStub },
         { provide: ProfileService, useValue: profileStub }
       ]
     })

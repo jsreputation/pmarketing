@@ -1,125 +1,36 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { BehaviorSubject, combineLatest, forkJoin, Observable, of, Subject } from 'rxjs';
+import { catchError, filter, map, mergeMap, switchMap, take, takeLast, takeUntil, tap } from 'rxjs/operators';
 
 import {
-  Observable,
-  BehaviorSubject,
-  forkJoin,
-  of,
-  Subject,
-  combineLatest,
-} from 'rxjs';
-import {
-  tap,
-  takeUntil,
-  map,
-  mergeMap,
-  takeLast,
-  catchError,
-  switchMap
-} from 'rxjs/operators';
-
-import {
-  RewardsService,
-  IReward,
-  ITabConfigExtended,
-  IGameService,
-  IGame,
-  IProfile,
-  FeedReaderService,
-  FeedItem,
-  ThemesService,
-  ITheme,
-  IConfig,
-  ConfigService,
   AuthenticationService,
-  ICampaignService,
-  ICampaign,
   CampaignType,
-  RewardPopupComponent
-} from '@perx/core';
+  ConfigService,
+  FeedItem,
+  FeedReaderService,
+  ICampaign,
+  ICatalog,
+  ICampaignService,
+  InstantOutcomeService,
+  IConfig,
+  IGame,
+  IGameService,
+  IProfile,
+  IReward,
+  IRssFeeds,
+  IRssFeedsData,
+  ITabConfigExtended,
+  ITheme,
+  RewardPopupComponent,
+  RewardsService,
+  SettingsService,
+  ThemesService,
+  GameType
+} from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
-import { MatTabChangeEvent, MatDialog } from '@angular/material';
-
-const stubTabs: ITabConfigExtended[] = [
-  {
-    filterKey: null,
-    filterValue: null,
-    tabName: 'ALL',
-    rewardsType: null,
-    currentPage: 1,
-    completePagination: false
-  },
-  {
-    filterKey: null,
-    filterValue: null,
-    tabName: 'FOOD_BEVERAGE',
-    rewardsType: 'Food & Beverage',
-    currentPage: 1,
-    completePagination: false
-  },
-  {
-    filterKey: null,
-    filterValue: null,
-    tabName: 'TRAVEL',
-    rewardsType: 'Travel',
-    currentPage: 1,
-    completePagination: false
-  },
-  {
-    filterKey: null,
-    filterValue: null,
-    tabName: 'ELECTRONICS',
-    rewardsType: 'Electronics',
-    currentPage: 1,
-    completePagination: false
-  },
-  {
-    filterKey: null,
-    filterValue: null,
-    tabName: 'WELLNESS',
-    rewardsType: 'Wellness',
-    currentPage: 1,
-    completePagination: false
-  },
-  {
-    filterKey: null,
-    filterValue: null,
-    tabName: 'ENTERTAINMENT',
-    rewardsType: 'Entertainment',
-    currentPage: 1,
-    completePagination: false
-  },
-  {
-    filterKey: null,
-    filterValue: null,
-    tabName: 'SHOPPING',
-    rewardsType: 'Shopping',
-    currentPage: 1,
-    completePagination: false
-  },
-  {
-    filterKey: null,
-    filterValue: null,
-    tabName: 'MERCHANT_SELF',
-    rewardsType: 'Merchant Self',
-    currentPage: 1,
-    completePagination: false
-  },
-  {
-    filterKey: null,
-    filterValue: null,
-    tabName: 'OTHERS',
-    rewardsType: 'Others',
-    currentPage: 1,
-    completePagination: false
-  },
-];
+import { MatDialog, MatTabChangeEvent } from '@angular/material';
 
 @Component({
   selector: 'perx-blackcomb-home',
@@ -135,22 +46,16 @@ export class HomeComponent implements OnInit, OnDestroy {
   public newsFeedItems: Observable<FeedItem[]>;
   public rewards$: Observable<IReward[]>;
   public games$: Observable<IGame[]>;
+  public stampCampaigns$: Observable<ICampaign[]>;
   public tabs$: BehaviorSubject<ITabConfigExtended[]> = new BehaviorSubject<ITabConfigExtended[]>([]);
   public staticTab: ITabConfigExtended[];
   public titleFn: (profile: IProfile) => string;
   public showGames: boolean = false;
+  public showCampaigns: boolean = false;
   private firstComefirstServeCampaign: ICampaign;
-  private initCampaign(): void {
-    this.games$ = this.gamesService.getActiveGames()
-      .pipe(
-        tap((games: IGame[]) => this.showGames = games.length > 0),
-        takeLast(1)
-      );
+  public quizCampaigns$: Observable<ICampaign[]>;
 
-    this.newsFeedItems = this.feedService.getFromUrl('https://cdn.perxtech.io/content/starhub/rss.xml');
-  }
-
-  constructor(
+  public constructor(
     private rewardsService: RewardsService,
     private gamesService: IGameService,
     private router: Router,
@@ -161,7 +66,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     private configService: ConfigService,
     private authService: AuthenticationService,
     private campaignService: ICampaignService,
-    private dialog: MatDialog
+    private instantOutcomeService: InstantOutcomeService,
+    private dialog: MatDialog,
+    private settingsService: SettingsService,
   ) {
   }
 
@@ -170,7 +77,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       .subscribe((res: any) => {
         this.titleFn = (profile: IProfile) => `${res.HELLO} ${profile && profile.lastName ? profile.lastName : ''},`;
       });
-    this.initCampaign();
     this.rewards$ = this.rewardsService.getAllRewards(['featured']);
     this.getTabbedList();
 
@@ -183,7 +89,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
 
     this.configService.readAppConfig<void>().subscribe(
-      (config: IConfig<void>) => this.appConfig = config
+      (config: IConfig<void>) => {
+        this.appConfig = config;
+        this.initCampaign();
+      }
     );
 
     this.authService.isAuthorized().subscribe((isAuth: boolean) => {
@@ -219,15 +128,25 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.tabs$.next(this.staticTab);
       });
   }
+
   private getTabs(): Observable<ITabConfigExtended[]> {
-    return this.translate.get(stubTabs.map(tab => tab.tabName))
-      .pipe(map((translation) => stubTabs.map((tab) => {
-        tab.tabName = translation[tab.tabName];
-        return tab;
-      })));
+    return this.rewardsService.getCategories();
   }
+
+  public goToCampaignPage(campaign: ICampaign): void {
+    if (this.appConfig.showCampaignLandingPage) {
+      this.router.navigate([`campaign-welcome/${campaign.id}`]);
+    } else {
+      this.router.navigate([`${campaign.type}/${campaign.id}`]);
+    }
+  }
+
   public goToReward(reward: IReward): void {
     this.router.navigate([`/reward-detail/${reward.id}`]);
+  }
+
+  public catalogSelected(catalog: ICatalog): void {
+    this.router.navigate(['/catalogs'], { queryParams: { catalog: catalog.id } });
   }
 
   public onScroll(): void {
@@ -257,54 +176,88 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   private fetchPopupCampaigns(): void {
-    this.campaignService.getCampaigns()
+    this.campaignService.getCampaigns({ type: CampaignType.give_reward })
       .pipe(
-        catchError(() => {
-          this.router.navigateByUrl('error');
-          return of([]);
-        })
+        catchError(() => of([]))
       )
       .pipe(
         // for each campaign, get detailed version
-        switchMap((campaigns: ICampaign[]) => combineLatest(...campaigns.map(campaign => this.campaignService.getCampaign(campaign.id)))),
+        mergeMap((campaigns: ICampaign[]) => combineLatest(
+          ...campaigns.map(campaign => this.campaignService.getCampaign(campaign.id).pipe(catchError(() => of(void 0))))
+        )),
+        // just keep campaigns of type give_reward
+        map((campaigns: ICampaign[]) => campaigns.filter(campaign => campaign !== undefined && campaign.type === CampaignType.give_reward)),
+        // don't go further if it is an empty array
+        filter((campaigns: ICampaign[]) => campaigns.length > 0),
+        // get the first element
+        map((campaigns: ICampaign[]) => campaigns[0]),
+        // once we have one, we stop polling
+        take(1),
+        takeUntil(this.destroy$)
       )
       .subscribe(
-        (campaigns: ICampaign[]) => {
-          const firstComeFirstServed: ICampaign[] = campaigns
-            .filter(campaign => campaign.type === CampaignType.give_reward);
+        (firstComeFirstServed: ICampaign) => {
           // if there is a 1st come 1st served campaign, display the popup
-          if (firstComeFirstServed.length > 0) {
-            this.firstComefirstServeCampaign = firstComeFirstServed[0];
-            const data = {
-              text: this.firstComefirstServeCampaign.description,
-              imageUrl: 'assets/bd-campaign.svg',
-              buttonTxt: 'Check it out',
-              afterClosedCallBack: this,
-              // @ts-ignore
-              validTo: new Date(this.firstComefirstServeCampaign.endsAt)
-            };
-            this.dialog.open(RewardPopupComponent, { data });
-            return;
-          }
+          this.firstComefirstServeCampaign = firstComeFirstServed;
+          const popupImageURL = this.firstComefirstServeCampaign.campaignBannerUrl ?
+            this.firstComefirstServeCampaign.campaignBannerUrl : 'assets/bd-campaign.svg';
+          const data = {
+            text: this.firstComefirstServeCampaign.description,
+            imageUrl: popupImageURL,
+            buttonTxt: 'Check it out',
+            afterClosedCallBack: this,
+            // @ts-ignore
+            validTo: new Date(this.firstComefirstServeCampaign.endsAt)
+          };
+          this.dialog.open(RewardPopupComponent, { data });
         },
-        (err) => {
-          console.error(`Something fishy, we should not be here, without any reward or game. ERR print: ${err.error.message}`);
-        }
+        err => console.error('Something fishy, we should not be here, without any reward or game. ERR print', err)
       );
   }
 
   public dialogClosed(): void {
-    this.campaignService.issueAll(this.firstComefirstServeCampaign.id).subscribe(
-      () => {
-        this.router.navigate([`/wallet`]);
-      },
+    this.instantOutcomeService.claim(this.firstComefirstServeCampaign.id).subscribe(
+      () => this.router.navigate(['/wallet']),
       (err) => {
         if (err.error && err.error.code === 4103) {
           // user has already been issued voucher
-          this.router.navigate([`/home/vouchers`]);
+          this.router.navigate(['/wallet']);
         }
-        console.error(`Something fishy, we should not be here, without any reward or game. ERR print: ${err.error.message}`);
+        console.error('Something fishy, we should not be here, without any reward or game. ERR print', err);
       }
     );
+  }
+
+  private async initCampaign(): Promise<void> {
+    // https://iamturns.com/continue-rxjs-streams-when-errors-occur/ also look at CatchError, exactly for this purpose
+    this.games$ = this.gamesService.getActiveGames()
+      .pipe(
+        tap((games: IGame[]) => this.showGames = games.length > 0),
+        switchMap((games: IGame[]) => of(games).pipe(catchError(err => of(err)))),
+        takeLast(1)
+      );
+    this.stampCampaigns$ = this.campaignService.getCampaigns({ type: CampaignType.stamp })
+      .pipe(
+        tap((campaigns: ICampaign[]) => this.showCampaigns = campaigns.length > 0),
+        takeLast(1)
+      );
+
+    this.quizCampaigns$ = this.campaignService.getCampaigns({ gameType: GameType.quiz });
+    if (this.appConfig.showNewsfeedOnHomepage) {
+      const rssFeeds: IRssFeeds = await this.settingsService.readRssFeeds().toPromise();
+      if (!(rssFeeds && rssFeeds.data.length > 0)) {
+        return;
+      }
+      const rssFeedsHome: IRssFeedsData | undefined = rssFeeds.data.find(feed => feed.page === 'home');
+      if (!rssFeedsHome) {
+        return;
+      }
+      const rssFeedsUrl: string = rssFeedsHome.url;
+
+      if (rssFeedsUrl === '') {
+        return;
+      }
+      this.newsFeedItems = this.feedService.getFromUrl(rssFeedsUrl);
+    }
   }
 }

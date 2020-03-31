@@ -4,11 +4,11 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { PuzzlesModule, IVoucherService } from '@perx/core';
-import { VouchersModule as PerxVouchersModule } from '@perx/core';
+import { PuzzlesModule, IVoucherService } from '@perxtech/core';
+import { VouchersModule as PerxVouchersModule } from '@perxtech/core';
 import { HttpClientModule } from '@angular/common/http';
 
-const vouchersServiceStub = {};
+const vouchersServiceStub: Partial<IVoucherService> = {};
 
 @NgModule({
   declarations: [

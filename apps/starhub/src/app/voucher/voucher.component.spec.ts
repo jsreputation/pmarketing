@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { VoucherComponent } from './voucher.component';
 import { MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { IVoucherService, VoucherState, RedemptionType, RewardsService, Voucher } from '@perx/core';
+import { IVoucherService, VoucherState, RedemptionType, RewardsService, Voucher } from '@perxtech/core';
 import { LocationShortFormatComponent } from '../location-short-format/location-short-format.component';
 import { RewardDetailComponent } from '../reward/reward-detail/reward-detail.component';
 import { ExpireTimerComponent } from '../reward/expire-timer/expire-timer.component';
@@ -13,10 +13,10 @@ import { rewards } from '../rewards.mock';
 import { AnalyticsService } from '../analytics.service';
 import { Type } from '@angular/core';
 
-const rewardsServiceStub = {
+const rewardsServiceStub: Partial<RewardsService> = {
   getReward: () => of(rewards[0])
 };
-const analyticsServiceStub = {
+const analyticsServiceStub: Partial<AnalyticsService> = {
   addEvent: () => { }
 };
 describe('VoucherComponent', () => {
@@ -54,7 +54,7 @@ describe('VoucherComponent', () => {
     expiry: null,
     redemptionDate: null,
   };
-  const vouchersServiceStub = {
+  const vouchersServiceStub: Partial<IVoucherService> = {
     get: () => of(voucher)
   };
   let params: Subject<Params>;

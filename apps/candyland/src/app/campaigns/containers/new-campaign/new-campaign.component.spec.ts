@@ -13,9 +13,25 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MatDialogModule } from '@angular/material';
 import { LocalStorageService } from '@cl-core/services/local-storage.service';
 import { TranslateModule } from '@ngx-translate/core';
-import { MessageService, TenantStoreService } from '@cl-core-services';
+import {
+  AudiencesUserService, CampaignsService,
+  CommsService,
+  LimitsService,
+  MessageService,
+  OutcomesService,
+  SettingsService,
+  TenantStoreService
+} from '@cl-core-services';
 import { CampaignChannelsFormService } from '../../services/campaign-channels-form.service';
 import { TenantMockStore } from '@cl-shared/test-components/tenant-mock-store/tenant-mock-store';
+import { MockCampaignService } from '@cl-shared/test-components/providers/mock-campaign.service';
+import { MockSettingsService } from '@cl-shared/test-components/providers/mock-settings.service';
+import { MockCommsServices } from '@cl-shared/test-components/providers/mock-comms.services';
+import { MockOutcomeService } from '@cl-shared/test-components/providers/mock-outcome.service';
+import { MockLimitsService } from '@cl-shared/test-components/providers/mock-limits.service';
+import { MockAudiencesUserService } from '@cl-shared/test-components/providers/mock-audiences-user.service';
+import { NotificationService } from '@cl-core/services/notification.service';
+import { MockNotificationService } from '@cl-shared/test-components/providers/mock-notification.service';
 
 describe('NewCampaignComponent', () => {
   let component: NewCampaignComponent;
@@ -55,11 +71,18 @@ describe('NewCampaignComponent', () => {
         },
         { provide: LocalStorageService, useValue: {} },
         { provide: CampaignChannelsFormService, useValue: {
-            getForm () {
-              return new FormGroup({});
-            }
-          } },
-        { provide: TenantStoreService, useClass: TenantMockStore }
+          getForm() {
+            return new FormGroup({});
+          }
+        } },
+        { provide: TenantStoreService, useClass: TenantMockStore },
+        { provide: CampaignsService, useClass: MockCampaignService },
+        { provide: SettingsService, useClass: MockSettingsService },
+        { provide: CommsService, useClass: MockCommsServices },
+        { provide: OutcomesService, useClass: MockOutcomeService },
+        { provide: LimitsService, useClass: MockLimitsService },
+        { provide: AudiencesUserService, useClass: MockAudiencesUserService },
+        { provide: NotificationService, useClass: MockNotificationService },
       ],
       schemas: [NO_ERRORS_SCHEMA]
     })

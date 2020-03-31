@@ -1,4 +1,5 @@
-import { IWAssignedAttributes } from './../voucher/assigneds';
+import { IWAssignedAttributes } from '../voucher/assigneds';
+import { IJsonApiItem } from '../../public-api';
 
 export interface IWInstantOutcomeTransactionAttributes {
   urn: string;
@@ -7,24 +8,16 @@ export interface IWInstantOutcomeTransactionAttributes {
   engagement_id: number;
   campaign_entity_id: number;
   user_id: number;
-  results?: {
-    id: string;
-    type: string;
-    attributes: {
-      campaign_entity_id: number;
-      source_type: string;
-      source_id: number;
-      status: string;
-      urn: string;
-      created_at: string;
-      updated_at: string;
-      results: {
-        id: string;
-        type: string;
-        attributes: IWAssignedAttributes;
-      }[];
-    };
-  };
+  results?: IJsonApiItem<{
+    campaign_entity_id: number;
+    source_type: string;
+    source_id: number;
+    status: string;
+    urn: string;
+    created_at: string;
+    updated_at: string;
+    results: IJsonApiItem<IWAssignedAttributes>[];
+  }>;
 }
 
 export interface IWInstantOutcomeTxnReq {

@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfileService, AuthenticationService, IChangePasswordData } from '@perx/core';
+import { ProfileService, AuthenticationService, IChangePasswordData, IChangePhoneData } from '@perxtech/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
 import { Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { flatMap } from 'rxjs/operators';
 import { NotificationWrapperService } from 'src/app/services/notification-wrapper.service';
-import { IChangePhoneData } from '@perx/core/dist/perx-core/lib/auth/authentication/models/authentication.model';
 
 @Component({
   selector: 'hkbn-verification-otp',
@@ -65,9 +64,7 @@ export class VerificationOtpComponent implements OnInit {
         return this.authService.changePassword(data as IChangePasswordData)
           .pipe(flatMap(() => this.translate.get('PASSWORD_SUCCESS_UPDATE')));
       case 'phone':
-        return this.authService.changePhone(data as IChangePhoneData).pipe(flatMap(() => {
-          return this.translate.get('MOBILE_SUCCESS_UPDATE');
-        }));
+        return this.authService.changePhone(data as IChangePhoneData).pipe(flatMap(() => this.translate.get('MOBILE_SUCCESS_UPDATE')));
     }
   }
   public resendSms(): void {

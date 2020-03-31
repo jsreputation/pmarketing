@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RewardsService } from './rewards.service';
-import { Observable, of } from 'rxjs';
+import { Observable, Subject, ReplaySubject, AsyncSubject } from 'rxjs';
 import { IReward, ICatalog, IPrice } from './models/reward.model';
 import { Config } from '../config/config';
-import { map, tap } from 'rxjs/operators';
+import { map, tap, distinctUntilChanged, take } from 'rxjs/operators';
 
 import {
   IWRewardEntityAttributes,
@@ -16,9 +16,10 @@ import {
   IWMerchantAttributes,
   IWRelationshipsDataType,
   WRedemptionType
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { oc } from 'ts-optchain';
 import { RedemptionType } from '../perx-core.models';
+import { ITabConfigExtended } from './rewards-list-tabbed/rewards-list-tabbed.component';
 
 @Injectable({
   providedIn: 'root'
@@ -26,11 +27,12 @@ import { RedemptionType } from '../perx-core.models';
 export class WhistlerRewardsService implements RewardsService {
   private baseUrl: string;
   // basic local cache
-  private rewards: { [k: number]: IReward } = {};
+  private rewards: { [k: number]: Subject<IReward> } = {};
 
-  constructor(private http: HttpClient, config: Config) {
+  constructor(private http: HttpClient, private config: Config) {
     this.baseUrl = `${config.apiHost}/reward/entities`;
   }
+
   private static WRedemptionToRT(rt: WRedemptionType): RedemptionType {
     switch (rt) {
       case WRedemptionType.promoCode:
@@ -98,7 +100,12 @@ export class WhistlerRewardsService implements RewardsService {
       // we do not want to get all pages in parallel, so we get pages one after the other in order not to dos the server
       const process = (res: IReward[]) => {
         // save each reward in local cache
-        res.forEach(r => this.rewards[r.id] = r);
+        res.forEach(r => {
+          if (!this.rewards[r.id]) {
+            this.rewards[r.id] = new AsyncSubject<IReward>();
+          }
+          this.rewards[r.id].next(r);
+        });
         meta = res[0] && res[0].rawPayload || { ...meta };
         current = current.concat(res);
         subject.next(current);
@@ -112,7 +119,7 @@ export class WhistlerRewardsService implements RewardsService {
         }
       };
       // do the first query
-      this.getRewards(1, undefined, tags, categories).subscribe(process);
+      return this.getRewards(1, undefined, tags, categories).subscribe(process);
     });
   }
 
@@ -178,34 +185,43 @@ export class WhistlerRewardsService implements RewardsService {
       )
       ),
       // save each reward in local cache
-      tap((rewards: IReward[]) => rewards.forEach(r => this.rewards[r.id] = r))
+      tap((rewards: IReward[]) => {
+        rewards.forEach(r => {
+          if (!this.rewards[r.id]) {
+            this.rewards[r.id] = new AsyncSubject<IReward>();
+          }
+          this.rewards[r.id].next(r);
+        });
+      })
     );
   }
 
   // @ts-ignore
   public getReward(id: number, userId?: string): Observable<IReward> {
-    if (this.rewards[id]) {
-      return of(this.rewards[id]);
+    if (!this.rewards[id]) {
+      this.rewards[id] = new ReplaySubject();
+
+      const params = {
+        include: 'organization,tier_reward_costs'
+      };
+      this.http.get<IJsonApiItemPayload<IWRewardEntityAttributes>>(`${this.baseUrl}/${id}`, { params })
+        .pipe(
+          map((reward: IJsonApiItemPayload<IWRewardEntityAttributes>) => {
+            const tierRewardCosts = reward.included && reward.included.length > 0 ? reward.included.filter(include => include.type === 'tier_reward_costs') : null;
+            const merchants = reward.included && reward.included.length > 0 ? reward.included.filter(include => include.type === 'Ros::Organization::Org') : null;
+            return {
+              reward: reward.data,
+              merchants,
+              tierRewardCosts
+            };
+          }),
+          map(res => WhistlerRewardsService.WRewardToReward(res.reward, res.merchants, res.tierRewardCosts)),
+          // save reward in local cache
+          // tap((reward: IReward) => this.rewards[id] = reward)
+        ).subscribe((reward: IReward) => { this.rewards[id].next(reward); });
     }
 
-    const params = {
-      include: 'organization,tier_reward_costs'
-    };
-    return this.http.get<IJsonApiItemPayload<IWRewardEntityAttributes>>(`${this.baseUrl}/${id}`, { params })
-      .pipe(
-        map((reward: IJsonApiItemPayload<IWRewardEntityAttributes>) => {
-          const tierRewardCosts = reward.included && reward.included.length > 0 ? reward.included.filter(include => include.type === 'tier_reward_costs') : null;
-          const merchants = reward.included && reward.included.length > 0 ? reward.included.filter(include => include.type === 'Ros::Organization::Org') : null;
-          return {
-            reward: reward.data,
-            merchants,
-            tierRewardCosts
-          };
-        }),
-        map(res => WhistlerRewardsService.WRewardToReward(res.reward, res.merchants, res.tierRewardCosts)),
-        // save reward in local cache
-        tap((reward: IReward) => this.rewards[id] = reward)
-      );
+    return this.rewards[id].pipe(distinctUntilChanged(), take(1));
   }
 
   // @ts-ignore
@@ -215,6 +231,10 @@ export class WhistlerRewardsService implements RewardsService {
 
   public getAllCatalogs(): Observable<ICatalog[]> {
     throw new Error('Method not implemented.');
+  }
+
+  public getCategories(): Observable<ITabConfigExtended[]> {
+    return this.http.get<ITabConfigExtended[]>(`${this.config.baseHref}assets/categories-tabs.json`);
   }
 
   // @ts-ignore

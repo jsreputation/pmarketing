@@ -1,16 +1,18 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import {
-  Voucher,
-  IVoucherService,
-  RedemptionType,
   IPopupConfig,
+  IVoucherService,
   NotificationService,
-  PopUpClosedCallBack, VoucherState
-} from '@perx/core';
+  PinInputComponent,
+  PopUpClosedCallBack,
+  RedemptionType,
+  Voucher,
+  VoucherState
+} from '@perxtech/core';
 import { of, Subject, Subscription } from 'rxjs';
-import { filter, switchMap, takeUntil, map, tap } from 'rxjs/operators';
+import { filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -20,15 +22,18 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
   public status: VoucherState;
+  public pinInputError: boolean = false;
+  @ViewChild('pinInput', { static: false })
+  private pinInputComponent: PinInputComponent;
 
   public voucher$: Subscription;
-  public voucherId: number;
+  public voucher: Voucher;
   public redemptionType: RedemptionType;
   private destroy$: Subject<void> = new Subject<void>();
   public rt: typeof RedemptionType = RedemptionType;
   public headLine: string;
   public subHeadLine: string;
-  public codeInstructionsText: string = `Please input this code when redeeming your reward at the Merchant`;
+  public codeInstructionsText: string = 'This reward will automatically be redeemed for you by the merchant.';
   public rewardSuccessPopUp: IPopupConfig = {
     title: 'REDEEM_SUCCESSFULLY',
     text: 'REDEEM_SUCCESS_TEXT',
@@ -79,17 +84,25 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
         filter((params: ParamMap) => params.has('id')),
         map((params: ParamMap) => params.get('id')),
         map((id: string) => Number.parseInt(id, 10)),
-        tap((id: number) => this.voucherId = id),
         switchMap((id: number) => this.vouchersService.get(id)),
         tap((voucher: Voucher) => {
+          this.voucher = voucher;
           if (this.rewardSuccessPopUp.text && voucher.reward) {
             this.rewardSuccessPopUp.text = this.rewardSuccessPopUp.text.replace('{{reward}}', voucher.reward.name);
           }
-          this.redemptionType = voucher.redemptionType ? voucher.redemptionType : RedemptionType.none;
+          // seems that the compiler isn't smart enough to determine the type in this ternary
+          this.redemptionType =
+            voucher.redemptionType && (voucher.redemptionType !== RedemptionType.txtCode) ? voucher.redemptionType :
+              voucher.code ? (voucher.redemptionType as RedemptionType) : RedemptionType.offline;
+
           if (voucher.reward) {
             if (voucher.reward.displayProperties && voucher.reward.displayProperties.merchantPinText) {
               this.headLine = voucher.reward.displayProperties.merchantPinText.headLine || this.headLine;
               this.subHeadLine = voucher.reward.displayProperties.merchantPinText.subHeadLine || this.subHeadLine;
+            }
+
+            if (voucher.reward.howToRedeem) {
+              this.codeInstructionsText = voucher.reward.howToRedeem;
             }
 
             if (voucher.reward.displayProperties && voucher.reward.displayProperties.rewardSuccessPopUp) {
@@ -102,7 +115,8 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
             }
 
             if (voucher.reward.displayProperties && voucher.reward.displayProperties.codeInstructionsText) {
-              this.codeInstructionsText = voucher.reward.displayProperties.codeInstructionsText.headLine || '';
+              this.codeInstructionsText = voucher.reward.displayProperties.codeInstructionsText.headLine ||
+                'Please input this code when redeeming your reward at the Merchant';
             }
 
             if (voucher.reward.displayProperties && voucher.reward.displayProperties.errorPopUp) {
@@ -147,17 +161,17 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
     this.destroy$.complete();
   }
 
-  public pinInputSuccess(): void {
-    this.popup(this.rewardSuccessPopUp);
-  }
+  // public pinInputSuccess(): void {
+  //   this.popup(this.rewardSuccessPopUp);
+  // }
 
-  public errorHandler(status: number): void {
-    if (status === 401) {
-      this.needLoginPopup();
-    } else {
-      this.errorPopup();
-    }
-  }
+  // public errorHandler(status: number): void {
+  //   if (status === 401) {
+  //     this.needLoginPopup();
+  //   } else {
+  //     this.errorPopup();
+  //   }
+  // }
 
   public needLoginPopup(): void {
     this.translate.get(['REEDEM_QUEST', 'GO_TO_LOGIN'])
@@ -182,5 +196,28 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
 
   public dialogClosed(): void {
     this.router.navigate(['/login']);
+  }
+
+  public full(pin: string): void {
+    this.vouchersService.redeemVoucher(this.voucher.id, { pin })
+      .subscribe(
+        () => {
+          this.notificationService.addPopup({
+            title: 'Successfully Redeemed!',
+            text: `You have redeemed ${this.voucher.reward ? this.voucher.reward.name : ''}.`,
+            buttonTxt: 'Close',
+            imageUrl: 'assets/redeem_success.png',
+          });
+          this.router.navigate(['wallet']);
+        },
+        () => {
+          this.pinInputError = true;
+          this.notificationService.addSnack('Sorry! Voucher redemption failed.');
+        }
+      );
+  }
+
+  public updatePin(): void {
+    this.pinInputComponent.error = false;
   }
 }

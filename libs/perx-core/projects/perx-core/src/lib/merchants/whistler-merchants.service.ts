@@ -12,7 +12,7 @@ import {
   IJsonApiItemPayload,
   IMeta,
   IWMerchantAttributes,
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 
 @Injectable({
   providedIn: 'root'
@@ -44,18 +44,18 @@ export class WhistlerMerchantsService implements IMerchantsService {
   public getAllMerchants(): Observable<IMerchant[]> {
     let i = 1;
     const current = {};
-    return new Observable((sub) => {
-      this.getMerchantsPage(i).pipe(
-        expand((response) =>
-          (response.meta && response.meta.page_count && response.meta.page_count > i) ? this.getMerchantsPage(++i) : EMPTY
-        ),
-        map((value) => value.data.map((el) => WhistlerMerchantsService.WMerchantToMerchant(el))),
-        tap((data) => data.forEach((el) => current[el.id] = el)),
-        finalize(() => this.merchants = current)
-      ).subscribe(() => {
-        sub.next(Object.values(Object.assign(current, this.merchants)));
-      });
-    });
+    return new Observable(
+      (sub) => this.getMerchantsPage(i)
+        .pipe(
+          expand((response) =>
+            (response.meta && response.meta.page_count && response.meta.page_count > i) ? this.getMerchantsPage(++i) : EMPTY
+          ),
+          map((value) => value.data.map((el) => WhistlerMerchantsService.WMerchantToMerchant(el))),
+          tap((data) => data.forEach((el) => current[el.id] = el)),
+          finalize(() => this.merchants = current)
+        )
+        .subscribe(() => sub.next(Object.values(Object.assign(current, this.merchants))))
+    );
   }
 
   private getMerchantsPage(page: number): Observable<IJsonApiListPayload<IWMerchantAttributes>> {

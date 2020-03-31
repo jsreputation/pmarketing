@@ -21,7 +21,7 @@ import {
   IReward,
   ICategoryTags,
   isEmptyArray,
-} from '@perx/core';
+} from '@perxtech/core';
 
 import {
   AnalyticsService,

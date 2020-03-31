@@ -10,9 +10,11 @@ import { PrepareTableFilters } from '@cl-helpers/prepare-table-filters';
 import { RewardReplenishPopupComponent } from 'src/app/rewards/containers/reward-replenish-popup/reward-replenish-popup.component';
 import { RewardsService, MerchantsService, MessageService } from '@cl-core/services';
 import { VouchersService } from '@cl-core/services/vouchers.service';
-import { IWVouchersApi } from '@perx/whistler';
+import { IWVouchersApi } from '@perxtech/whistler';
 import { oc } from 'ts-optchain';
 import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.interface';
+import { IMerchantForm } from '@cl-core/models/merchant/merchant-form-interface';
+import { OptionConfig } from '@perxtech/candyshop';
 
 interface IRewardDetailData {
   name?: string;
@@ -70,6 +72,7 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
       .subscribe((stats: { [k: string]: number }) => {
         this.data.vouchersStatistics = [];
         // tslint:disable-next-line: forin
+        /* eslint-disable-next-line guard-for-in */
         for (const k in stats) {
           this.data.vouchersStatistics.push({ type: k, value: stats[k] });
         }
@@ -94,7 +97,7 @@ export class RewardDetailPageComponent implements OnInit, AfterViewInit, OnDestr
       );
   }
 
-  get availableVouchers(): number {
+  public get availableVouchers(): number {
     if (!this.data.vouchersStatistics) {
       this.data.vouchersStatistics = [];
     }

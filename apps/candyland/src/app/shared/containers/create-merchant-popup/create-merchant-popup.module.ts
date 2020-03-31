@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CreateMerchantPopupComponent } from './create-merchant-popup.component';
-import { ButtonModule } from '@cl-shared/components/button/button.module';
+import { ButtonModule } from '@perxtech/candyshop';
 import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
 import { MatButtonModule, MatDialogModule, MatIconModule, MatMenuModule } from '@angular/material';
 import { CreateMerchantFormModule } from '@cl-shared/components/create-merchant-form/create-merchant-form.module';

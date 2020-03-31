@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {IReward, NotificationService, RewardsService, ITabConfig} from '@perx/core';
-import {of, Subject} from 'rxjs';
-import {mock} from '../reward-mock';
+import { Component, OnInit } from '@angular/core';
+import { IReward, NotificationService, RewardsService, ITabConfig } from '@perxtech/core';
+import { of, Subject } from 'rxjs';
+import { mock } from '../reward-mock';
 
 @Component({
   selector: 'app-rewards-list-tabbed',
@@ -12,9 +12,7 @@ export class RewardsListTabbedComponent implements OnInit {
   public tabs$: Subject<ITabConfig[]> = new Subject<ITabConfig[]>();
   public tabs: ITabConfig[];
 
-  constructor(private rewardsService: RewardsService,
-              private notificationService: NotificationService) {
-  }
+  constructor(private rewardsService: RewardsService, private notificationService: NotificationService) { }
 
   public ngOnInit(): void {
     this.getRewards();
@@ -66,8 +64,8 @@ export class RewardsListTabbedComponent implements OnInit {
   public rewardClickedHandler(reward: IReward): void {
     this.notificationService.addPopup({
       title: 'Clicked!',
-      text: 'ID: ' + reward.id + '\n' +
-        'Reward Name: ' + reward.name,
+      text: `ID: ${reward.id}\n` +
+        `Reward Name: ${reward.name}`,
     });
   }
 }

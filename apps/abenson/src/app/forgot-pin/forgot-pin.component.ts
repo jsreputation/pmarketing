@@ -3,6 +3,7 @@ import {
   OnInit,
 } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormGroup,
   Validators,
@@ -13,7 +14,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import {
   AuthenticationService,
   NotificationService,
-} from '@perx/core';
+} from '@perxtech/core';
 
 @Component({
   selector: 'app-forgot-pin',
@@ -22,6 +23,10 @@ import {
 })
 export class ForgotPinComponent implements OnInit {
   public forgotPinForm: FormGroup;
+
+  public get mobileNumber(): AbstractControl | null {
+    return this.forgotPinForm.get('mobileNumber');
+  }
 
   constructor(
     private fb: FormBuilder,
@@ -41,7 +46,7 @@ export class ForgotPinComponent implements OnInit {
   }
 
   public onSubmit(): void {
-    const mobileNumber = (this.forgotPinForm.value.mobileNumber as string);
+    const mobileNumber = this.forgotPinForm.value.mobileNumber as string;
 
     try {
       this.authenticationService.forgotPassword(mobileNumber).subscribe(

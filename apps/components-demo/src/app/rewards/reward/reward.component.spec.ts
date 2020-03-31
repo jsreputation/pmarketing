@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RewardComponent } from './reward.component';
 import {
   RewardsModule, RewardsService, IReward
-} from '@perx/core';
+} from '@perxtech/core';
 import { MatButtonModule } from '@angular/material';
 import { of } from 'rxjs';
 
@@ -15,7 +15,7 @@ describe('RewardComponent', () => {
     description: '', subtitle: '', validFrom: null,
     validTo: null, rewardThumbnail: '', rewardBanner: '', merchantImg: '', termsAndConditions: '', howToRedeem: ''
   };
-  const rewardsServiceStub = {
+  const rewardsServiceStub: Partial<RewardsService> = {
     getReward: () => of(mockReward)
   };
 

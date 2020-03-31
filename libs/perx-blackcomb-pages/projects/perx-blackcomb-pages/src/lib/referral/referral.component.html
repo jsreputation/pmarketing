@@ -1,0 +1,17 @@
+<div class="referral-main-container">
+  <div class="referral-page">
+    <h1 translate>Refer a friend</h1>
+    <p [innerHTML]="tnc"></p>
+    <div class="code" (click)="copy()">
+      <span>{{code}}</span>
+      <span class="material-icons">share</span>
+    </div>
+    <img src="assets/referral/referral.png">
+  </div>
+  <mat-toolbar class="bottom-nav-container mat-elevation-z2">
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="share()">Share Referral Code</button>
+  </mat-toolbar>
+</div>

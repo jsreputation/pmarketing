@@ -2,10 +2,14 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QuestionTypeComponent } from 'src/app/shared/questions/question-type/question-type.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ButtonModule } from '@cl-shared/components/button/button.module';
+import { ButtonModule } from '@perxtech/candyshop';
 import { MatIconModule, MatSelectModule } from '@angular/material';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { environment } from '@cl-environments/environment';
+import { HttpServicesModule } from '@perxtech/whistler-services';
+import { UploadFileService } from '@cl-core-services';
+import { MockUploadFileService } from '@cl-shared/test-components/providers/mock-upload-file.service';
 
 describe('QuestionTypeComponent', () => {
   let component: QuestionTypeComponent;
@@ -20,11 +24,16 @@ describe('QuestionTypeComponent', () => {
 
         MatSelectModule,
         MatIconModule,
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
+        HttpServicesModule.forRoot(
+          environment.apiHost,
+          environment.apiCdn
+        ),
       ],
-      declarations: [ QuestionTypeComponent ]
+      providers: [{ provide: UploadFileService, useClass: MockUploadFileService }],
+      declarations: [QuestionTypeComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -1,10 +1,8 @@
 import { TestBed, fakeAsync, inject, tick } from '@angular/core/testing';
 
 import { WhistlerCampaignService } from './whistler-campaign.service';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ConfigModule } from '../config/config.module';
 import { ICampaign } from './models/campaign.model';
-import { Type } from '@angular/core';
 
 import {
   IWCampaignAttributes,
@@ -12,13 +10,14 @@ import {
   IJsonApiListPayload,
   IJsonApiItem,
   IJsonApiItemPayload,
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 
 describe('WhistlerCampaignService', () => {
-  let httpTestingController: HttpTestingController;
   let service: WhistlerCampaignService;
+  let httpClientSpy: Partial<HttpClient>;
+  let getSpy: jest.Mock;
 
   const environment = {
     apiHost: 'https://blabla',
@@ -98,13 +97,17 @@ describe('WhistlerCampaignService', () => {
   };
 
   beforeEach(() => {
+    getSpy = jest.fn();
+    httpClientSpy = { get: getSpy };
+
     TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule,
         ConfigModule.forRoot({ ...environment })
       ],
+      providers: [
+        { provide: HttpClient, useValue: httpClientSpy }
+      ]
     });
-    httpTestingController = TestBed.get<HttpTestingController>(HttpTestingController as Type<HttpTestingController>);
     service = TestBed.get(WhistlerCampaignService);
   });
 
@@ -112,36 +115,26 @@ describe('WhistlerCampaignService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should get empty campaigns', (done: DoneFn) => {
-    service.getCampaigns()
-      .subscribe((campaigns: ICampaign[]) => {
-        expect(campaigns.length).toBe(0);
-        done();
-      });
-
-    const req = httpTestingController.expectOne('https://blabla/campaign/entities?page[number]=1');
-    expect(req.request.method).toEqual('GET');
+  it('should get empty campaigns', (done: jest.DoneCallback) => {
     const res: IJsonApiListPayload<IWCampaignAttributes> = {
       data: [],
       meta: {
         page_count: 1
       }
     };
-    req.flush(res);
+    getSpy.mockReturnValue(of(res));
 
-    httpTestingController.verify();
-  });
-
-  it('should get campaigns pages', (done: DoneFn) => {
     service.getCampaigns()
       .subscribe((campaigns: ICampaign[]) => {
-        // only one campaign is expected
-        expect(campaigns.length).toBe(1);
+        expect(campaigns.length).toBe(0);
         done();
       });
 
-    const req1 = httpTestingController.expectOne('https://blabla/campaign/entities?page[number]=1');
-    expect(req1.request.method).toEqual('GET');
+    expect(getSpy.mock.calls.length).toBe(1);
+    expect(getSpy.mock.calls[0]).toEqual(['https://blabla/campaign/entities', { params: { 'page[number]': '1' } }]);
+  });
+
+  it('should get campaigns pages', (done: jest.DoneCallback) => {
     const res: IJsonApiListPayload<IWCampaignAttributes> = {
       data: [
         mockCampaign,
@@ -152,12 +145,22 @@ describe('WhistlerCampaignService', () => {
         page_count: 1
       }
     };
-    req1.flush(res);
+    getSpy.mockReturnValue(of(res));
 
-    httpTestingController.verify();
+    service.getCampaigns()
+      .subscribe((campaigns: ICampaign[]) => {
+        // only one campaign is expected as the 2 other ones are not active yet
+        expect(campaigns.length).toBe(1);
+        done();
+      });
+
+    expect(getSpy.mock.calls.length).toBe(1);
+    expect(getSpy.mock.calls[0]).toEqual(['https://blabla/campaign/entities', { params: { 'page[number]': '1' } }]);
   });
 
-  it('should get one campaign', (done: DoneFn) => {
+  it('should get one campaign', (done: jest.DoneCallback) => {
+    const res: IJsonApiItemPayload<IWCampaignAttributes> = { data: mockCampaign };
+    getSpy.mockReturnValue(of(res));
     service.getCampaign(42)
       .subscribe((campaign: ICampaign) => {
         expect(`${campaign.id}`).toEqual(mockCampaign.id);
@@ -165,14 +168,8 @@ describe('WhistlerCampaignService', () => {
         done();
       });
 
-    const req1 = httpTestingController.expectOne('https://blabla/campaign/entities/42');
-    expect(req1.request.method).toEqual('GET');
-    const res: IJsonApiItemPayload<IWCampaignAttributes> = {
-      data: mockCampaign
-    };
-    req1.flush(res);
-
-    httpTestingController.verify();
+    expect(getSpy.mock.calls.length).toBe(1);
+    expect(getSpy.mock.calls[0]).toEqual(['https://blabla/campaign/entities/42']);
   });
 
   it('endDate should be null if end_date_time is null or not defined', () => {
@@ -186,12 +183,12 @@ describe('WhistlerCampaignService', () => {
   });
 
   it('startsAfter handle null values', fakeAsync(inject([WhistlerCampaignService, HttpClient],
-    (campaign: WhistlerCampaignService, http: HttpClient) => {
-      const spy = spyOn(http, 'get').and.returnValue(of(campaingMock));
+    (campaign: WhistlerCampaignService) => {
+      getSpy.mockReturnValue(of(campaingMock));
       campaign.getCampaigns().subscribe(() => { });
       // second call for write value to cashe
       campaign.getCampaigns().subscribe(() => { });
       tick();
-      expect(spy).toHaveBeenCalled();
+      expect(httpClientSpy.get).toHaveBeenCalled();
     })));
 });

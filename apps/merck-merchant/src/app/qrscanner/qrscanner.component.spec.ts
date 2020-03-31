@@ -11,7 +11,7 @@ import { Location } from '@angular/common';
 describe('QrscannerComponent', () => {
   let component: QrscannerComponent;
   let fixture: ComponentFixture<QrscannerComponent>;
-  const locationStub = { back: () => {} };
+  const locationStub: Partial<Location> = { back: () => {} };
   const routerStub = { navigate: () => ({}) };
   let params: Subject<Params>;
 
@@ -28,7 +28,7 @@ describe('QrscannerComponent', () => {
 
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

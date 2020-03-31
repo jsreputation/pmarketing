@@ -16,7 +16,7 @@ import {
   IVoucherService,
   RewardsService,
   IMerchantsService
-} from '@perx/core';
+} from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AUTH_SERVICE } from 'ngx-auth';
 
@@ -29,21 +29,19 @@ describe('ActivationCodeComponent', () => {
   let router: Router;
   // let dialog: MatDialog;
   let overlayContainerElement: HTMLElement;
-  const authenticationServiceStub = {};
-  const profileServiceStub = {
+  const authenticationServiceStub: Partial<AuthenticationService> = {};
+  const profileServiceStub: Partial<ProfileService> = {
     whoAmI: () => of()
   };
-  const voucherServiceStub = {
-    get: () => {
-      return of('');
-    }
+  const voucherServiceStub: Partial<IVoucherService> = {
+    get: () => of()
   };
 
-  const rewardsServiceStub = {
+  const rewardsServiceStub: Partial<RewardsService> = {
     getReward: () => of()
   };
 
-  const merchantsServiceStub = {
+  const merchantsServiceStub: Partial<IMerchantsService> = {
     getMerchant: () => of()
   };
 
@@ -101,7 +99,7 @@ describe('ActivationCodeComponent', () => {
     spyOn(router, 'navigate').and.stub();
     component.voucherId = 1;
     component.pinInputSuccess();
-    expect(router.navigate).toHaveBeenCalledWith([`/redemption/1`]);
+    expect(router.navigate).toHaveBeenCalledWith(['/redemption/1']);
   });
 
   it('show goBack to previous page once cancelled', () => {

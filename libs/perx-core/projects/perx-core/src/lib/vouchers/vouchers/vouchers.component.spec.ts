@@ -17,11 +17,11 @@ import { RedemptionType } from '../../perx-core.models';
 describe('VouchersComponent', () => {
   let component: VouchersComponent;
   let fixture: ComponentFixture<VouchersComponent>;
-  const rewardsServiceStub = {
+  const rewardsServiceStub: Partial<RewardsService> = {
     getReward: () => of()
   };
 
-  const merchantsServiceStub = {
+  const merchantsServiceStub: Partial<IMerchantsService> = {
     getMerchant: () => of()
   };
 
@@ -77,8 +77,8 @@ describe('VouchersComponent', () => {
     },
   };
 
-  const voucherServiceStub = {
-    get: () => of(''),
+  const voucherServiceStub: Partial<IVoucherService> = {
+    get: () => of(mockIssuedVoucherDetail),
     getAll: () => of([])
   };
 
@@ -113,7 +113,7 @@ describe('VouchersComponent', () => {
 
   it('should remain if voucher is redeemed', () => {
     // tslint:disable-next-line: deprecation
-    spyOn(component.route, 'emit');
+    jest.spyOn(component.route, 'emit').mockImplementation(() => {});
     component.onClick(mockRedeemedVoucherDetail);
     // tslint:disable-next-line: deprecation
     expect(component.route.emit).not.toHaveBeenCalled();
@@ -121,7 +121,7 @@ describe('VouchersComponent', () => {
 
   it('should emit with voucher id if voucher is issued', () => {
     // tslint:disable-next-line: deprecation
-    spyOn(component.route, 'emit');
+    jest.spyOn(component.route, 'emit').mockImplementation(() => {});
     component.onClick(mockIssuedVoucherDetail);
     // tslint:disable-next-line: deprecation
     expect(component.route.emit).toHaveBeenCalledWith(21);
@@ -498,7 +498,7 @@ describe('VouchersComponent', () => {
       reserved: 'Pending',
       released: 'Declined',
     };
-    const tappedSpy = spyOn(component.tapped, 'emit');
+    const tappedSpy = jest.spyOn(component.tapped, 'emit');
 
     fixture.detectChanges();
     const voucherIssued = fixture.debugElement.queryAll(By.css('mat-card'))[1];

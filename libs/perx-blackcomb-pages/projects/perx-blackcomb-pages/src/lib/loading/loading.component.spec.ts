@@ -10,7 +10,7 @@ import {
   Config,
   NotificationService,
   ConfigService
-} from '@perx/core';
+} from '@perxtech/core';
 import { of } from 'rxjs';
 import { Router, ActivatedRoute, convertToParamMap } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -38,9 +38,14 @@ describe('LoadingComponent', () => {
     addPopup: () => { }
   };
 
-  const configServiceStub = {
+  const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of({
-      redirectAfterLogin: '/home'
+      redirectAfterLogin: '/home',
+      apiHost: 'string',
+      production: true,
+      preAuth: true,
+      isWhistler: true,
+      baseHref: ''
     })
   };
 

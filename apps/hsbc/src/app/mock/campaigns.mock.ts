@@ -1,4 +1,4 @@
-import { ICampaign, CampaignType, CampaignState } from '@perx/core';
+import { ICampaign, CampaignType, CampaignState } from '@perxtech/core';
 
 export const campaigns: ICampaign[] = [
   {

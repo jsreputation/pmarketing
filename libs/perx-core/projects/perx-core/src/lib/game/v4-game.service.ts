@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, of, combineLatest } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, of, combineLatest, throwError, EMPTY } from 'rxjs';
 import { IGameService } from './igame.service';
 import {
   IGame,
@@ -8,22 +8,33 @@ import {
   defaultTree,
   ITree,
   IPinata,
+  IScratch,
   defaultPinata,
   IGameOutcome,
   IPlayOutcome,
-  IEngagementTransaction
+  IEngagementTransaction,
+  defaultScratch,
+  Error400States,
+  defaultSpin,
+  ISpin
 } from './game.model';
 import {
+  catchError,
   map,
+  shareReplay,
   switchMap,
 } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
-import { Config } from '../config/config';
 import { IV4Voucher, V4VouchersService } from '../vouchers/v4-vouchers.service';
+import { ConfigService } from '../config/config.service';
+import { IConfig } from '../config/models/config.model';
 
 const enum GameType {
   shakeTheTree = 'shake_the_tree',
-  pinata = 'hit_the_pinata'
+  pinata = 'hit_the_pinata',
+  scratch = 'scratch_card',
+  spin = 'spin_the_wheel',
+  quiz = 'quiz'
 }
 
 interface Asset {
@@ -63,7 +74,7 @@ interface GameProperties {
   background_image?: Asset;
 }
 
-interface TreeDisplayProperties extends GameProperties {
+export interface TreeDisplayProperties extends GameProperties {
   number_of_gifts_shown?: number;
   number_of_gifts_to_drop: number;
   gift_image: Asset;
@@ -73,16 +84,33 @@ interface TreeDisplayProperties extends GameProperties {
   number_of_taps: number;
 }
 
-interface PinataDisplayProperties extends GameProperties {
+export interface ScratchDisplayProperties extends GameProperties {
+  prescratch_image: Asset;
+  post_success_image: Asset;
+  post_fail_image: Asset;
+}
+
+export interface PinataDisplayProperties extends GameProperties {
   still_image: Asset;
   cracking_image?: Asset;
   opened_image: Asset;
   number_of_taps: number;
 }
 
+export interface SpinDisplayProperties extends GameProperties {
+  number_of_wedges: number;
+  wedge_colors: string[];
+  background_image: Asset;
+  reward_image: Asset;
+  rim_image: Asset;
+  wheel_image?: Asset;
+  wheel_position: string;
+  pointer_image: Asset;
+}
+
 interface Game {
   campaign_id?: number;
-  display_properties: TreeDisplayProperties | PinataDisplayProperties;
+  display_properties: TreeDisplayProperties | PinataDisplayProperties | ScratchDisplayProperties | SpinDisplayProperties;
   game_type: GameType;
   id: number;
   number_of_tries: number;
@@ -104,7 +132,7 @@ interface IV4PlayResponse {
     game_id: number;
     id: number;
     outcomes: IV4Voucher[];
-    state: string;
+    state: 'reserved' | 'issued';
     use_account_id: number;
   };
 }
@@ -128,17 +156,21 @@ interface IV4GameCampaigns {
 })
 export class V4GameService implements IGameService {
   private hostName: string;
+  public gamesCache: Observable<IGame[]>[] = [];
 
   constructor(
     private httpClient: HttpClient,
-    config: Config,
+    private configService: ConfigService
   ) {
-    this.hostName = config.apiHost as string;
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig<void>) => {
+        this.hostName = config.apiHost as string;
+      });
   }
 
   private static v4GameToGame(game: Game): IGame {
     let type = TYPE.unknown;
-    let config: ITree | IPinata;
+    let config: ITree | IPinata | IScratch | ISpin;
     if (game.game_type === GameType.shakeTheTree) {
       type = TYPE.shakeTheTree;
       const dpts: TreeDisplayProperties = game.display_properties as TreeDisplayProperties;
@@ -162,6 +194,28 @@ export class V4GameService implements IGameService {
         brokenImg: dpps.opened_image.value.image_url || dpps.opened_image.value.file,
         breakingImg: oc(dpps).cracking_image.value.image_url() || oc(dpps).cracking_image.value.file(),
         nbTaps: dpps.number_of_taps || 5
+      };
+    } else if (game.game_type === GameType.scratch) {
+      type = TYPE.scratch;
+      const dpps: ScratchDisplayProperties = game.display_properties as ScratchDisplayProperties;
+      config = {
+        ...defaultScratch(),
+        coverImg: oc(dpps).prescratch_image.value.image_url() || oc(dpps).prescratch_image.value.file(),
+        underlyingSuccessImg: oc(dpps).post_success_image.value.image_url() || oc(dpps).post_success_image.value.file(),
+        underlyingFailImg: oc(dpps).post_fail_image.value.image_url() || oc(dpps).post_success_image.value.file()
+      };
+    } else if (game.game_type === GameType.spin) {
+      type = TYPE.spin;
+      const dpps: SpinDisplayProperties = game.display_properties as SpinDisplayProperties;
+      config = {
+        ...defaultSpin(),
+        numberOfWedges: dpps.number_of_wedges,
+        colorCtrls: Object.assign(dpps.wedge_colors),
+        rewardIcon: oc(dpps).reward_image.value.image_url(''),
+        wheelImg: oc(dpps).rim_image.value.image_url(''),
+        wheelPosition: oc(dpps).wheel_position('center'),
+        pointerImg: oc(dpps).pointer_image.value.image_url(''),
+        background: oc(dpps).background_image.value.image_url('')
       };
     } else {
       throw new Error(`${game.game_type} is not mapped yet`);
@@ -234,20 +288,71 @@ export class V4GameService implements IGameService {
   }
 
   public getGamesFromCampaign(campaignId: number): Observable<IGame[]> {
-    return this.httpClient.get<GamesResponse>(`${this.hostName}/v4/campaigns/${campaignId}/games`)
+    if (this.gamesCache[campaignId]) {
+      // retrieving from game store
+      return this.gamesCache[campaignId];
+    }
+    // getting games for the first time
+    return this.gamesCache[campaignId] = this.httpClient.get<GamesResponse>(`${this.hostName}/v4/campaigns/${campaignId}/games`)
       .pipe(
         map(res => res.data),
-        map((games: Game[]) => games.map((game: Game): IGame => V4GameService.v4GameToGame(game)))
+        map((games: Game[]) => games.filter((game: Game) => game.game_type !== GameType.quiz)),
+        map((games: Game[]) => games.map((game: Game): IGame => V4GameService.v4GameToGame(game))),
+        shareReplay(1),
+        catchError(_ => {
+          delete this.gamesCache[campaignId];
+          return EMPTY;
+        })
       );
   }
 
   // @ts-ignore
-  public prePlay(engagementId: number, campaignId?: number): Observable<IEngagementTransaction> {
-    throw new Error('Not implemented.');
+  public prePlay(gameId: number): Observable<IEngagementTransaction> {
+    return this.httpClient
+      .put<IV4PlayResponse>(`${this.hostName}/v4/games/${gameId}/reserve`, null)
+      .pipe(
+        map(res => ({
+          id: res.data.id,
+          voucherIds: res.data.outcomes.map(
+            outcome => outcome.id
+          ).filter(id => id),
+          rewardIds: res.data.outcomes.reduce((accRewardIds, currVouch) => {
+            if (currVouch.reward) {
+              return accRewardIds.concat(currVouch.reward.id);
+            }
+            return accRewardIds;
+          }, [] as number[])
+        })),
+        catchError((err: HttpErrorResponse) => {
+          let errorStateObj: { errorState: string };
+          if (err.error && err.error.message && err.error.code && err.error.code === 40) {
+            errorStateObj = { errorState: err.error.mesage };
+            if (err.error.message.match(/move/i)) {
+              errorStateObj = { errorState: Error400States.move };
+            } else if (err.error.message.match(/balance/i)) {
+              errorStateObj = { errorState: Error400States.balance };
+            }
+            return throwError(errorStateObj);
+          }
+          return throwError(err);
+        })
+      );
   }
-  // @ts-ignore
-  public prePlayConfirm(transactionId: number): Observable<void> {
-    throw new Error('Not implemented.');
+
+  public prePlayConfirm(gameId: number): Observable<IPlayOutcome | void> {
+    // todo: transactionId is used as the game/engagementId until preplay games are implemented in v4
+    return this.httpClient
+      .put<IV4PlayResponse>(`${this.hostName}/v4/game_transactions/${gameId}/confirm`, null)
+      .pipe(
+        map((res: IV4PlayResponse) => {
+          // @ts-ignore
+          const vs: IV4Voucher[] = res.data.outcomes.filter((out) => out.outcome_type === 'reward');
+          return {
+            vouchers: vs.map(v => V4VouchersService.v4VoucherToVoucher(v)),
+            rawPayload: res
+          };
+        })
+      );
   }
 
   public getActiveGames(): Observable<IGame[]> {
@@ -276,12 +381,14 @@ export class V4GameService implements IGameService {
           // @ts-ignore
           const games: IGame[][] = s;
           const res: IGame[] = [];
+          // eslint-disable-next-line guard-for-in
           for (const i in games) {
+            const gs = games[i].filter(game => game.type !== TYPE.quiz);
             // if there is no underlying game, move on to next campaign
-            if (games[i].length === 0) {
+            if (gs.length === 0) {
               continue;
             }
-            const g = games[i][0];
+            const g = gs[0];
             const c = campaigns[i];
             g.imgUrl = oc(c).images[0].url();
             res.push(g);

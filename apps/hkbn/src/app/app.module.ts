@@ -33,7 +33,12 @@ import {
   VouchersModule,
   MerchantsModule,
   ConfigModule,
-} from '@perx/core';
+  ConfigService,
+  ThemesService,
+  IConfig,
+  TokenStorage,
+  LanguageService,
+} from '@perxtech/core';
 
 import { environment } from '../environments/environment';
 
@@ -47,22 +52,32 @@ import { VoucherDetailsComponent } from './wallet/voucher-details/voucher-detail
 import { UnauthorizedInterceptor } from './auth/unauthorized.interceptor';
 import { SnackbarModule } from './ui/snackbar/snackbar.module';
 import { HistoryComponent } from './history/history.component';
+import { tap, switchMap } from 'rxjs/operators';
 
-const getAppAccessToken = (authenticationService: AuthenticationService) => () => authenticationService.getAppToken().toPromise();
-
-export const setLanguage = (translateService: TranslateService) => () => new Promise((resolve) => {
-  translateService.setDefaultLang(environment.defaultLang);
-  resolve();
-});
+export const setLanguage = (
+  translateService: TranslateService,
+  configService: ConfigService,
+  authService: AuthenticationService,
+  themesService: ThemesService) =>
+  () => new Promise((resolve) => {
+    configService.readAppConfig().pipe(
+      tap((config: IConfig<void>) => translateService.setDefaultLang(config.defaultLang || 'zh')),
+      switchMap(() => authService.getAppToken()),
+      switchMap(() => themesService.getThemeSetting())
+    ).toPromise().then(() => resolve());
+  });
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
 }
 
 const PROVIDERS = [
-  {provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true},
-  {provide: APP_INITIALIZER, useFactory: getAppAccessToken, deps: [AuthenticationService], multi: true},
-  {provide: APP_INITIALIZER, useFactory: setLanguage, deps: [TranslateService], multi: true},
+  { provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true },
+  {
+    provide: APP_INITIALIZER,
+    useFactory: setLanguage,
+    deps: [TranslateService, ConfigService, AuthenticationService, ThemesService], multi: true
+  },
 ];
 
 @NgModule({
@@ -73,7 +88,7 @@ const PROVIDERS = [
     HistoryComponent
   ],
   imports: [
-    ConfigModule.forRoot({...environment}),
+    ConfigModule.forRoot({ ...environment }),
     BrowserModule,
     AuthModule,
     AuthenticationModule,
@@ -100,6 +115,13 @@ const PROVIDERS = [
     MatButtonModule,
     SnackbarModule,
     InfiniteScrollModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        deps: [HttpClient, ConfigService, TokenStorage],
+        useClass: LanguageService
+      }
+    }),
   ],
   providers: [
     ...PROVIDERS

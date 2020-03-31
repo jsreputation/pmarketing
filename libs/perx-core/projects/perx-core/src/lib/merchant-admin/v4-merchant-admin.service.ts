@@ -6,31 +6,36 @@ import {
 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { oc } from 'ts-optchain';
 
 import { IMerchantAdminService } from './imerchant-admin.service';
 import {
   IMerchantAdminTransaction,
   IMerchantProfile,
   IMerchantAccount,
-  IMerchantTransactionHistory,
+  // IMerchantTransactionHistory,
   IMerchantCustomProperties,
-  MerchantTransactionDetailType,
+  // MerchantTransactionDetailType,
   IMerchantPurchaseTransactionHistory,
-  IMerchantRewardTransactionHistory
+  IMerchantRewardTransactionHistory,
+  IResetPasswordData
 } from './models/merchants-admin.model';
 
-import { Config } from '../config/config';
 import {
   IV4Reward,
   V4RewardsService,
-  IV4Tag,
+  // IV4Tag,
 } from '../rewards/v4-rewards.service';
 import {
   IVoucher,
   VoucherState,
 } from '../vouchers/models/voucher.model';
-import { RedemptionType } from '../perx-core.models';
-import { oc } from 'ts-optchain';
+import {
+  IMessageResponse,
+  RedemptionType,
+} from '../perx-core.models';
+import {ConfigService} from '../config/config.service';
+import {IConfig} from '../config/models/config.model';
 
 interface IV4MerchantAdminTransaction {
   id: number;
@@ -131,39 +136,41 @@ interface IV4MerchantPurchaseTransactionHistory {
   created_at: Date;
   properties?: IMerchantCustomProperties;
   transaction_reference: string;
+  points_earned: number;
 }
 
 interface IV4MerchantRewardTransactionHistory {
   id: number;
-  state: string;
-  voucher_code?: string;
-  reserved_expires_at?: Date;
-  voucher_key?: string;
-  voucher_expires_at: Date;
-  user_account: {
-    identifier: string;
-  };
-  reward: IV4Reward;
-  redemption_location?: string;
-  tags?: IV4Tag[];
+  created_at: Date;
+  issued_date: Date;
+  redemption_date: Date;
+  updated_at: Date;
+  customer_name: string;
+  merchant_name: string;
+  reward_name: string;
+  voucher_code: string;
 }
 
-interface IV4MerchantTransactionHistory {
-  id: number;
-  name: string;
-  identifier: string;
-  transacted_at: Date;
-  amount: number;
-  transacted_cents?: number; // property will probably be removed
-  properties: IMerchantCustomProperties;
-  transaction_details: {
-    type: MerchantTransactionDetailType;
-    data: IV4MerchantPurchaseTransactionHistory | IV4MerchantRewardTransactionHistory;
-  };
-}
+// interface IV4MerchantTransactionHistory {
+//   id: number;
+//   name: string;
+//   identifier: string;
+//   transacted_at: Date;
+//   amount: number;
+//   transacted_cents?: number; // property will probably be removed
+//   properties: IMerchantCustomProperties;
+//   transaction_details: {
+//     type: MerchantTransactionDetailType;
+//     data: IV4MerchantPurchaseTransactionHistory | IV4MerchantRewardTransactionHistory;
+//   };
+// }
 
 interface IV4MerchantTransactionHistoryResponse {
-  data: IV4MerchantTransactionHistory[];
+  data: IV4MerchantPurchaseTransactionHistory[];
+}
+
+interface IV4MerchantRewardHistoryResponse {
+  data: IV4MerchantRewardTransactionHistory[];
 }
 
 @Injectable({
@@ -171,63 +178,54 @@ interface IV4MerchantTransactionHistoryResponse {
 })
 export class V4MerchantAdminService implements IMerchantAdminService {
   public apiHost: string;
+  private merchantEndPoint: string | null = null;
 
   constructor(
     private http: HttpClient,
-    private config: Config,
+    private configService: ConfigService,
   ) {
-    this.apiHost = config.apiHost as string;
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig<void>) => {
+        this.apiHost = config.apiHost as string;
+        if (!config.production) {
+          this.merchantEndPoint = 'http://localhost:4000/v4/merchant_admin';
+        } else {
+          this.merchantEndPoint = `${config.baseHref}v4/merchant_admin`;
+        }
+      }
+    );
   }
 
-  public static v4TransactionHistoryToTransactionHistory(transactionHistory: IV4MerchantTransactionHistory): IMerchantTransactionHistory {
+  public static v4PurchaseTransactionHistoryToPurchaseTransactionHistory(
+    transactionHistory: IV4MerchantPurchaseTransactionHistory): IMerchantPurchaseTransactionHistory {
 
-    const transactionDetails = oc(transactionHistory).transaction_details.data();
-    let data: IMerchantPurchaseTransactionHistory | IMerchantRewardTransactionHistory | undefined;
-
-    if (transactionDetails) {
-      switch (transactionHistory.transaction_details.type) {
-        case MerchantTransactionDetailType.reward:
-          const rthDetails = transactionDetails as IV4MerchantRewardTransactionHistory;
-          data = {
-            id: transactionDetails.id,
-            state: rthDetails.state,
-            voucherExpiry: rthDetails.voucher_expires_at,
-            userAccount: rthDetails.user_account.identifier,
-            rewardName: rthDetails.reward.name,
-            redemptionLocation: rthDetails.redemption_location,
-          };
-          break;
-        case MerchantTransactionDetailType.transaction:
-          const pthDetails = transactionDetails as IV4MerchantPurchaseTransactionHistory;
-          const pthProps = oc(pthDetails).properties() as {
-            merchant_username: string;
-            pharmacy: string;
-            product: string;
-          };
-          data = {
-            id: transactionDetails.id,
-            productName: oc(pthProps).product(),
-            pharmacyName: oc(pthProps).pharmacy(),
-            issuerName: oc(pthProps).merchant_username(),
-            transactionDate: pthDetails.transaction_date,
-            transactionRef: pthDetails.transaction_reference,
-            price: pthDetails.amount,
-            currency: pthDetails.currency,
-          };
-          break;
-      }
-    }
+    const purchaseProperties = oc(transactionHistory).properties() as {
+      merchant_username: string;
+      pharmacy: string;
+      product: string;
+    };
     return {
       id: transactionHistory.id,
-      name: transactionHistory.name,
-      identifier: transactionHistory.identifier,
-      transactedAt: transactionHistory.transacted_at,
-      pointsAmount: transactionHistory.amount,
-      properties: transactionHistory.properties,
-      transactionDetails: {
-        type: oc(transactionHistory).transaction_details.type(),
-        data
-      }
+      productName: oc(purchaseProperties).product(),
+      pharmacyName: oc(purchaseProperties).pharmacy(),
+      issuerName: oc(purchaseProperties).merchant_username(),
+      transactionDate: transactionHistory.transaction_date,
+      transactionRef: transactionHistory.transaction_reference,
+      price: transactionHistory.amount,
+      currency: transactionHistory.currency,
+      pointsIssued: transactionHistory.points_earned
+    };
+  }
+
+  public static v4RewardTransactionHistoryToRewardTransactionHistory(
+    transaction: IV4MerchantRewardTransactionHistory
+  ): IMerchantRewardTransactionHistory {
+    return {
+      id: transaction.id,
+      issuedDate: transaction.issued_date,
+      userAccount: transaction.merchant_name,
+      customerName: transaction.customer_name,
+      rewardName: transaction.reward_name
     };
   }
 
@@ -285,7 +283,7 @@ export class V4MerchantAdminService implements IMerchantAdminService {
     pharmacy: string,
     productName: string
   ): Observable<IMerchantAdminTransaction> {
-    const url = `${this.config.apiHost}/v4/merchant_admin/transactions`;
+    const url = `${this.apiHost}/v4/merchant_admin/transactions`;
     const body = {
       user_account_id: userId,
       transaction_data: {
@@ -308,7 +306,7 @@ export class V4MerchantAdminService implements IMerchantAdminService {
   }
 
   public redeemVoucher(id: number): Observable<IVoucher> {
-    const url = `${this.config.apiHost}/v4/merchant_admin/vouchers/${id}/redeem`;
+    const url = `${this.apiHost}/v4/merchant_admin/vouchers/${id}/redeem`;
 
     return this.http.put<IV4RedeemVoucherResponse>(url, null).pipe(
       map((res) => V4MerchantAdminService.v4VoucherToVoucher(res.data))
@@ -318,7 +316,7 @@ export class V4MerchantAdminService implements IMerchantAdminService {
   public issueVoucher(id: number, userId: string = ''): Observable<IVoucher> {
     const headers = new HttpHeaders().set('user-id', userId);
 
-    const url = `${this.config.apiHost}/v4/merchant_admin/rewards/${id}/issue`;
+    const url = `${this.apiHost}/v4/merchant_admin/rewards/${id}/issue`;
 
     return this.http.post<IV4RedeemVoucherResponse>(url, null, { headers }).pipe(
       map((res) => V4MerchantAdminService.v4VoucherToVoucher(res.data))
@@ -330,7 +328,7 @@ export class V4MerchantAdminService implements IMerchantAdminService {
       .set('invitation_token', token)
       .set('client_id', clientId);
 
-    const url = `${this.config.apiHost}/v4/merchant_user_account_invitations/accept`;
+    const url = `${this.apiHost}/v4/merchant_user_account_invitations/accept`;
 
     return this.http.get<IV4MerchantUserInvitationResponse>(url, { params }).pipe(
       map((res) => V4MerchantAdminService.v4MerchantProfileToMerchantProfile(res.data))
@@ -346,7 +344,7 @@ export class V4MerchantAdminService implements IMerchantAdminService {
       password_confirmation: password,
     };
 
-    const url = `${this.config.apiHost}/v4/merchant_user_account_invitations`;
+    const url = `${this.apiHost}/v4/merchant_user_account_invitations`;
 
     return this.http.put(url, body).pipe(
       // response is always HTTP 200 in this format regardless if it is a error or success and backend should resolve this
@@ -356,13 +354,17 @@ export class V4MerchantAdminService implements IMerchantAdminService {
   }
 
   public getMerchantProfile(): Observable<IMerchantProfile> {
-    const url = `${this.config.apiHost}/v4/merchant_admin/me`;
+    const url = `${this.apiHost}/v4/merchant_admin/me`;
     return this.http.get<IV4MerchantUserInvitationResponse>(url).pipe(
       map((res) => V4MerchantAdminService.v4MerchantProfileToMerchantProfile(res.data)
       ));
   }
 
-  public getTransactionHistory(page: number = 1, pageSize: number = 10, locale: string = 'en'): Observable<IMerchantTransactionHistory[]> {
+  public getTransactionHistory(
+    page: number = 1,
+    pageSize: number = 10,
+    locale: string = 'en'
+  ): Observable<IMerchantPurchaseTransactionHistory[]> {
     const headers = new HttpHeaders().set('Accept-Language', locale);
     return this.http.get<IV4MerchantTransactionHistoryResponse>(
       `${this.apiHost}/v4/merchant_admin/transactions_history`,
@@ -375,10 +377,36 @@ export class V4MerchantAdminService implements IMerchantAdminService {
       }
     ).pipe(
       map((res: IV4MerchantTransactionHistoryResponse) => res.data),
-      map((transactionHistories: IV4MerchantTransactionHistory[]) => transactionHistories.map(
-        (transactionHistory: IV4MerchantTransactionHistory) =>
-          V4MerchantAdminService.v4TransactionHistoryToTransactionHistory(transactionHistory)
+      map((transactionHistories: IV4MerchantPurchaseTransactionHistory[]) => transactionHistories.map(
+        (transactionHistory: IV4MerchantPurchaseTransactionHistory) =>
+          V4MerchantAdminService.v4PurchaseTransactionHistoryToPurchaseTransactionHistory(transactionHistory)
       ))
+    );
+  }
+
+  public getRewardTransactionHistory(): Observable<IMerchantRewardTransactionHistory[]> {
+    const url = `${this.apiHost}/v4/merchant_admin/reward_transactions?state=redeemed`;
+    return this.http.get<IV4MerchantRewardHistoryResponse>(url).pipe(
+      map((res: IV4MerchantRewardHistoryResponse) => res.data),
+      map((transactionHistories: IV4MerchantRewardTransactionHistory[]) => transactionHistories.map(
+        (transactionHistory: IV4MerchantRewardTransactionHistory) =>
+          V4MerchantAdminService.v4RewardTransactionHistoryToRewardTransactionHistory(transactionHistory)
+      ))
+    );
+  }
+
+  public forgotPassword(email: string): Observable<IMessageResponse> {
+    return this.http.post<IMessageResponse>(`${this.merchantEndPoint}/forgot_password`, { email });
+  }
+
+  public resetPassword(resetPasswordInfo: IResetPasswordData): Observable<IMessageResponse> {
+    return this.http.post<IMessageResponse>(
+      `${this.apiHost}/v4/merchant_admin/reset_password`,
+      {
+        client_id: resetPasswordInfo.clientId,
+        reset_password_token: resetPasswordInfo.resetPasswordToken,
+        password: resetPasswordInfo.password,
+      }
     );
   }
 }

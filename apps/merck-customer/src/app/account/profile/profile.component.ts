@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ProfileService, IProfile, LoyaltyService, ILoyalty, ICustomProperties } from '@perx/core';
+import { ProfileService, IProfile, LoyaltyService, ILoyalty, ICustomProperties } from '@perxtech/core';
 import { Router } from '@angular/router';
 import { PageAppearence, PageProperties, BarSelectedItem } from '../../page-properties';
 import { TranslateService } from '@ngx-translate/core';

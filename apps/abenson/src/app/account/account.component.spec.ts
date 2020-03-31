@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 
 import { AccountComponent } from './account.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthenticationService, ProfileModule, ProfileService, IProfile } from '@perx/core';
+import { AuthenticationService, ProfileModule, ProfileService, IProfile } from '@perxtech/core';
 import { of, Observable } from 'rxjs';
 import { profile } from '../mock/profile.mock';
 import { Router } from '@angular/router';
@@ -13,11 +13,11 @@ describe('AccountComponent', () => {
   let fixture: ComponentFixture<AccountComponent>;
   let auth: AuthenticationService;
   let router: Router;
-  const authenticationServiceStub = {
+  const authenticationServiceStub: Partial<AuthenticationService> = {
     logout: () => { }
   };
 
-  const profileServiceStub = {
+  const profileServiceStub: Partial<ProfileService> = {
     whoAmI: (): Observable<IProfile> => of(profile)
   };
 

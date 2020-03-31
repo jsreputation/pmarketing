@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToggleControlConfig } from 'src/app/core/models/toggle-control-config.interface';
 import { RewardTierTypes } from '../models/reward-tier-types.enum';
+import { ILoyaltyTiersFormGroup, IBasicTier } from '@cl-core/models/reward/reward-loyalty-form-interface';
 
 @Injectable()
 export class NewRewardFormService {
@@ -27,6 +28,7 @@ export class NewRewardFormService {
         termsAndCondition: [],
         tags: [],
         merchantId: [null],
+        currency: [null, [Validators.required]]
       }),
       vouchers: this.fb.group({
         voucherCode: this.fb.group({
@@ -130,9 +132,10 @@ export class NewRewardFormService {
     ];
   }
 
-  public getDefaultValue(): { [key: string]: any } {
+  public getDefaultValue(currency: string): { [key: string]: any } {
     return {
       rewardInfo: {
+        currency,
         redemptionType: 'QR Code'
       },
       vouchers: {

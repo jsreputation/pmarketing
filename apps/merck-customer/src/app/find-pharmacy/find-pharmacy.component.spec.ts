@@ -24,7 +24,7 @@ import {
   LocationsService,
   IMerchantsService,
   IMerchant,
-} from '@perx/core';
+} from '@perxtech/core';
 
 import { FindPharmacyComponent } from './find-pharmacy.component';
 
@@ -32,14 +32,14 @@ describe('FindPharmacyComponent', () => {
   let component: FindPharmacyComponent;
   let fixture: ComponentFixture<FindPharmacyComponent>;
 
-  const locationServiceStub = {
+  const locationServiceStub: Partial<LocationsService> = {
     getAllLocations: () => of(),
     getTags: () => of()
   };
 
-  const merchantsServiceStub = {
+  const merchantsServiceStub: Partial<IMerchantsService> = {
     getAllMerchants: () => of(),
-    getMerchant: () => of({name: 'merchant-name'})
+    getMerchant: () => of({ name: 'merchant-name', id: 1 })
   };
 
   const locationsStub = [
@@ -98,7 +98,7 @@ describe('FindPharmacyComponent', () => {
   describe('OnInit', () => {
     it('should get all locations', fakeAsync(() => {
       const locationsService: LocationsService = fixture.debugElement.injector.get<LocationsService>
-        (LocationsService as Type<LocationsService>);
+      (LocationsService as Type<LocationsService>);
       const locationsServiceSpy = spyOn(locationsService, 'getAllLocations').and.returnValue(of(locationsStub));
       component.ngOnInit();
       tick();
@@ -111,7 +111,7 @@ describe('FindPharmacyComponent', () => {
 
     it('should get all tags', fakeAsync(() => {
       const locationsTags: LocationsService = fixture.debugElement.injector.get<LocationsService>
-        (LocationsService as Type<LocationsService>);
+      (LocationsService as Type<LocationsService>);
       const locationsTagsSpy = spyOn(locationsTags, 'getTags').and.returnValue(of(tagsStub));
       component.ngOnInit();
       tick();

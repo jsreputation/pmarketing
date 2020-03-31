@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { StatusLabel } from '@cl-helpers/status-label.enum';
 import { LoyaltyAction } from '../../models/loyalty-action.enum';
 import { ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
-import { StatusLabelConfig } from '@cl-shared';
+import { IStatusLabelConfig } from '@perxtech/candyshop';
 
 export interface IEngagementItemMenuOption {
   action: string;
@@ -20,7 +20,7 @@ export class LoyaltyItemComponent {
   @Input() public data: ILoyaltyForm;
   @Input() public menuOptions: IEngagementItemMenuOption[] = [];
   @Input() public linkable: boolean = false;
-  @Input() public statusLabel: { [key: string]: StatusLabelConfig };
+  @Input() public statusLabel: IStatusLabelConfig;
   @Output() public menuTapped: EventEmitter<{ loyalty: ILoyaltyForm, action: string }> = new EventEmitter();
   public statusType: typeof StatusLabel = StatusLabel;
   public loyaltyAction: typeof LoyaltyAction = LoyaltyAction;
@@ -29,12 +29,12 @@ export class LoyaltyItemComponent {
   }
 
   public tapped(option: IEngagementItemMenuOption): void {
-    this.menuTapped.emit({action: option.action, loyalty: this.data});
+    this.menuTapped.emit({ action: option.action, loyalty: this.data });
   }
 
   public navigateToReview(): void {
     if (this.linkable) {
-      this.router.navigate(['loyalty/review/' + this.data.id]);
+      this.router.navigate([`loyalty/review/${this.data.id}`]);
     }
   }
 }

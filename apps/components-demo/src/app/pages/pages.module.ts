@@ -16,7 +16,7 @@ import {
   RewardsModule,
   PuzzlesModule,
   SurveyModule
-} from '@perx/core';
+} from '@perxtech/core';
 import {
   AccountComponent,
   GameComponent,
@@ -33,7 +33,7 @@ import {
   StampCardComponent,
   SurveyComponent,
   VoucherDetailComponent
-} from '@perx/blackcomb-pages';
+} from '@perxtech/blackcomb-pages';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({

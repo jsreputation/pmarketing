@@ -15,7 +15,8 @@ import {
 } from './profile.model';
 import { ProfileService } from './profile.service';
 
-import { Config } from '../config/config';
+import { ConfigService } from '../config/config.service';
+import { IConfig } from '../config/models/config.model';
 
 interface IV4Profile {
   id: number;
@@ -45,10 +46,13 @@ export class V4ProfileService extends ProfileService {
 
   constructor(
     private http: HttpClient,
-    config: Config
+    private configService: ConfigService
   ) {
     super();
-    this.apiHost = config.apiHost as string;
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig<void>) => {
+        this.apiHost = config.apiHost as string;
+      });
   }
 
   public static v4ProfileToProfile(profile: IV4Profile): IProfile {
@@ -86,7 +90,8 @@ export class V4ProfileService extends ProfileService {
             personal_properties: {
               ...profile.customProperties,
               ...data
-            }
+            },
+            email: null,
           })
       )
     );

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService, NotificationService } from '@perx/core';
+import { AuthenticationService, NotificationService } from '@perxtech/core';
 import { LoginFormValue } from '../../components/login-form/login-form.component';
 import { Router } from '@angular/router';
 
@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
       this.authService.getAppToken().subscribe(() => {
         this.appAccessTokenFetched = true;
       }, (err) => {
-        console.error('Error' + err);
+        console.error(`Error${err}`);
       });
     }
   }

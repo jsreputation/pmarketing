@@ -17,7 +17,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { of } from 'rxjs';
 
-import { AuthenticationService } from '@perx/core';
+import { AuthenticationService } from '@perxtech/core';
 
 import { ForgotPinComponent } from './forgot-pin.component';
 
@@ -26,7 +26,7 @@ describe('ForgotPinComponent', () => {
   let authenticationService: AuthenticationService;
   let fixture: ComponentFixture<ForgotPinComponent>;
   const router = {
-    navigate: jasmine.createSpy('navigate')
+    navigate: jest.fn()
   };
   const authenticationServiceStub: Partial<AuthenticationService> = {
     forgotPassword: () => of(),
@@ -35,7 +35,7 @@ describe('ForgotPinComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        ForgotPinComponent ,
+        ForgotPinComponent,
       ],
       imports: [
         FormsModule,
@@ -46,7 +46,7 @@ describe('ForgotPinComponent', () => {
       ],
       providers: [
         { provide: Router, useValue: router },
-        { provide: AuthenticationService, useValue: authenticationServiceStub },
+        { provide: AuthenticationService, useValue: authenticationServiceStub }
       ],
     })
       .compileComponents();

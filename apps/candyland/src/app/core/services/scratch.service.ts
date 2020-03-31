@@ -1,22 +1,22 @@
 import { Injectable } from '@angular/core';
-
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
 import { EngagementHttpAdapter } from '@cl-core/http-adapters/engagement-http-adapter';
-import { ScratchHttpService } from '@cl-core/http-services/scratch-http.service';
-import { IWScratchGameEngagementAttributes, IJsonApiItemPayload } from '@perx/whistler';
+import { ScratchHttpService } from '@perxtech/whistler-services';
+import { IWScratchGameEngagementAttributes, IJsonApiItemPayload } from '@perxtech/whistler';
+import { HttpClient } from '@angular/common/http';
+import { IGameDefaultData } from '@cl-core/models/games/game-default-data.interface';
+import { IScratchForm } from '@cl-core/models/games/scratch/scratch-form.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ScratchService {
 
-  constructor(private scratchHttpService: ScratchHttpService) {
-  }
+  constructor(private scratchHttpService: ScratchHttpService, private http: HttpClient) { }
 
   public getScratchData(): Observable<IGameDefaultData> {
-    return this.scratchHttpService.getScratchData();
+    return this.http.get<IGameDefaultData>('assets/actives/scratch/scratch-data.json');
   }
 
   public getScratch(id: string): Observable<IScratchForm> {

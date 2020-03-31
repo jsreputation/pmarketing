@@ -1,4 +1,4 @@
-import { ISurvey } from '@perx/core';
+import { ISurvey } from '@perxtech/core';
 import { Component, OnInit } from '@angular/core';
 
 import { mock } from './mock/survey-mock';
@@ -14,7 +14,7 @@ export class SurveyComponent implements OnInit {
   public data: Observable<ISurvey>;
 
   public ngOnInit(): void {
-    console.log(mock);
+    // console.log(mock);
     this.data = of(mock);
   }
 }

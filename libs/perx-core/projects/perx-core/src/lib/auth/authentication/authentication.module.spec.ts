@@ -14,6 +14,19 @@ import { UtilsModule } from '../../utils/utils.module';
 import { LocalTokenStorage } from '../../utils/storage/local-token-storage.service';
 import { TokenType } from '../../utils/storage/models/token-storage.model';
 import { TokenStorageServiceFactory } from '../../utils/storage/storage.module';
+import { of } from 'rxjs';
+import { ConfigService } from '../../config/config.service';
+
+const configServiceStub: Partial<ConfigService> = {
+  readAppConfig: () => of({
+    redirectAfterLogin: '/home',
+    apiHost: 'string',
+    production: true,
+    preAuth: true,
+    isWhistler: true,
+    baseHref: ''
+  })
+};
 
 describe('AuthenticationModule', () => {
   beforeEach(() => TestBed.configureTestingModule({
@@ -29,14 +42,15 @@ describe('AuthenticationModule', () => {
       {
         provide: ProfileService,
         useValue: {},
-      }
+      },
+      { provide: ConfigService, useValue: configServiceStub }
     ]
   }));
-  it('should create AuthService', inject([HttpClient, TokenStorage, ProfileService],
-    (http: HttpClient, token: TokenStorage, profile: ProfileService) => {
-      let service = AuthServiceFactory(http, { isWhistler: true }, token, profile);
+  it('should create AuthService', inject([HttpClient, TokenStorage, ProfileService, ConfigService],
+    (http: HttpClient, token: TokenStorage, profile: ProfileService, configService: ConfigService) => {
+      let service = AuthServiceFactory(http, { isWhistler: true }, token, profile, configService);
       expect(service instanceof WhistlerAuthenticationService);
-      service = AuthServiceFactory(http, { isWhistler: false }, token, profile);
+      service = AuthServiceFactory(http, { isWhistler: false }, token, profile, configService);
       expect(service instanceof V4AuthenticationService);
     }));
 

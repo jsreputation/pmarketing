@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { combineLatest, Observable } from 'rxjs';
-import { UploadFileHttpService } from '@cl-core/http-services/upload-file-http.service';
+import { UploadFileHttpService } from '@perxtech/whistler-services';
 import { map } from 'rxjs/operators';
 import { FileUploadAdapter } from '@cl-core/http-adapters/file-upload-adapter';
 import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';

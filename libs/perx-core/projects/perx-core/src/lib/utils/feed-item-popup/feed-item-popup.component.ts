@@ -12,7 +12,13 @@ import { FeedItem } from '../feed-reader.service';
   styleUrls: ['./feed-item-popup.component.scss']
 })
 export class FeedItemPopupComponent {
+  public showButton: boolean = true;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public item: FeedItem
-  ) { }
+  ) {
+    if (item.hideButton) {
+      this.showButton = !item.hideButton;
+    }
+  }
 }

@@ -7,7 +7,8 @@
       <div class="spin-wrapper">
         <perx-core-spin-the-wheel
           [enabled]="isEnabled"
-          [slotToLand]="config | slotPipe:willWin"
+          [willWin]="willWin"
+          [rewardSlots]="config.rewardSlots"
           [classPosition]="spinPosition"
           [pointerImg]="config.pointerImg"
           [wheelImg]="config.wheelImg"
@@ -16,13 +17,13 @@
         </perx-core-spin-the-wheel>
 
         <div class="game-footer">
-          <button class="js-play"
-                  [hidden]="isEnabled"
-                  mat-flat-button
-                  color="primary"
-                  (click)="isEnabled = true">
-            {{ game.texts.button }}
-          </button>
+            <button class="js-play"
+                mat-flat-button
+                color="primary"
+                [ngStyle]="{ 'visibility': isEnabled ? 'hidden': 'visible'}"
+                (click)="startLoad()">
+              {{ game.texts.button }}
+            </button>
         </div>
       </div>
     </div>

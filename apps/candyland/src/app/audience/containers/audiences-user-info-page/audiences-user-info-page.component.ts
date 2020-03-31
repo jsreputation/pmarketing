@@ -35,7 +35,7 @@ import {
   WMessageChannel,
   IJsonApiItemPayload,
   IWCommMessageAttributes,
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
 import { CustomDataSource, DataSourceStates } from '@cl-shared';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
@@ -56,6 +56,8 @@ import { AdjustLoyaltyTierPopupComponent } from '../adjust-loyalty-tier-popup/ad
 import { AdjustBalancePointsPopupComponent } from '../adjust-balance-points-popup/adjust-balance-points-popup.component';
 import { LoyaltyService } from '@cl-core/services/loyalty.service';
 import { IAudiencesLoyalty, IAudiencesLoyaltyCard, IAudiencesTier } from '@cl-core/models/audiences/audiences-loyalty.model';
+import { IAudiencesUserForm } from '@cl-core/models/audiences/user.interface';
+import { IAudienceVoucher } from '@cl-core/models/vouchers/audience-voucher.interface';
 
 @Component({
   selector: 'cl-audiences-user-info-page',
@@ -125,9 +127,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
     dialogRef.afterClosed().pipe(takeUntil(this.destroy$))
       .pipe(
         filter(Boolean),
-        switchMap((entity: string) => {
-          return this.vouchersService.updateVoucherExpiry(item.id, entity);
-        })
+        switchMap((entity: string) => this.vouchersService.updateVoucherExpiry(item.id, entity))
       )
       .subscribe(
         () => {
@@ -245,9 +245,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
     dialogRef.afterClosed()
       .pipe(
         filter(Boolean),
-        switchMap((updatedCard: IAudiencesLoyaltyCard) => {
-          return this.loyaltyCardService.updateLoyaltyCard(updatedCard.id, updatedCard);
-        }),
+        switchMap((updatedCard: IAudiencesLoyaltyCard) => this.loyaltyCardService.updateLoyaltyCard(updatedCard.id, updatedCard)),
         takeUntil(this.destroy$)
       )
       .subscribe(
@@ -268,9 +266,7 @@ export class AudiencesUserInfoPageComponent implements OnInit, AfterViewInit, On
     dialogRef.afterClosed()
       .pipe(
         filter(Boolean),
-        switchMap((updatedCard: IAudiencesLoyaltyCard) => {
-          return this.loyaltyCardService.updateLoyaltyCard(updatedCard.id, updatedCard);
-        }),
+        switchMap((updatedCard: IAudiencesLoyaltyCard) => this.loyaltyCardService.updateLoyaltyCard(updatedCard.id, updatedCard)),
         takeUntil(this.destroy$)
       )
       .subscribe(

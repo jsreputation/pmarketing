@@ -5,7 +5,7 @@ import {
   MatCardModule,
   MatListModule
 } from '@angular/material';
-import { ProfileService, AuthenticationService, LoyaltyService, IProfile } from '@perx/core';
+import { ProfileService, AuthenticationService, LoyaltyService, IProfile } from '@perxtech/core';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
 import { Type } from '@angular/core';
@@ -31,19 +31,19 @@ describe('AccountComponent', () => {
     }
   };
 
-  const profileServiceStub = {
+  const profileServiceStub: Partial<ProfileService> = {
     whoAmI: () => of(userInfo)
   };
 
-  const authenticationServiceStub = {
+  const authenticationServiceStub: Partial<AuthenticationService> = {
     logout: () => { }
   };
 
-  const routerStub = {
-    navigate: () => { }
+  const routerStub: Partial<Router> = {
+    navigate: () => Promise.resolve(true)
   };
 
-  const loyaltyServiceStub = {
+  const loyaltyServiceStub: Partial<LoyaltyService> = {
     getLoyalty: () => of()
   };
 
@@ -87,7 +87,7 @@ describe('AccountComponent', () => {
 
   it('should redirect to login after logging out', () => {
     const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>
-      (AuthenticationService as Type<AuthenticationService>);
+    (AuthenticationService as Type<AuthenticationService>);
     const router: Router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
     const logoutSpy = spyOn(authenticationService, 'logout');
     const routerSpy = spyOn(router, 'navigate');

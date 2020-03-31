@@ -1,5 +1,5 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { CardType } from '@perx/chart';
+import { CardType } from '@perxtech/chart';
 
 @Component({
   selector: 'cl-chart-card',

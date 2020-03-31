@@ -30,8 +30,8 @@ export const v4Token = (getCredentials: ((url: string) => Promise<ICredentials>)
       },
       {
         params: {
-          client_id: endpointCredential.perx_access_key_id,
-          client_secret: endpointCredential.perx_secret_access_key,
+          client_id: endpointCredential.perx_access_key_id.replace(/\W/, ''),
+          client_secret: endpointCredential.perx_secret_access_key.replace(/\W/, ''),
           identifier: userId
         }
       }
@@ -40,7 +40,8 @@ export const v4Token = (getCredentials: ((url: string) => Promise<ICredentials>)
     res.json(endpointRequest.data);
   } catch (e) {
     if (e.response && e.response.data && e.response.status) {
-      res.status(e.response.status).json(e.response.data);
+      const errMsg = e.response.data.error || e.response.data.message;
+      res.status(e.response.status).json(errMsg);
     } else {
       next(e);
     }

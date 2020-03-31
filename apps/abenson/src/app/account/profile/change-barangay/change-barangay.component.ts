@@ -1,7 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+} from '@angular/core';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Location } from '@angular/common';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ICustomProperties, ProfileService } from '@perx/core';
+
+import {
+  ICustomProperties,
+  ProfileService,
+} from '@perxtech/core';
 
 @Component({
   selector: 'app-change-barangay',
@@ -11,6 +23,10 @@ import { ICustomProperties, ProfileService } from '@perx/core';
 export class ChangeBarangayComponent implements OnInit {
   public barangayChangeForm: FormGroup;
   public customProperties: ICustomProperties;
+
+  public get newBarangay(): AbstractControl | null {
+    return this.barangayChangeForm.get('newBarangay');
+  }
 
   constructor(
     private fb: FormBuilder,
@@ -37,7 +53,7 @@ export class ChangeBarangayComponent implements OnInit {
       this.profileService.setCustomProperties(this.customProperties).subscribe(() => {
         this.location.back();
       },
-      (err) => {console.error(err); });
+      (err) => { console.error(err); });
     }
     return;
   }

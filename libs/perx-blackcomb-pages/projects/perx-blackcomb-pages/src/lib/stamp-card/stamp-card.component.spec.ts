@@ -21,10 +21,10 @@ import {
   PuzzlesModule,
   StampCardState,
   StampService,
-} from '@perx/core';
+} from '@perxtech/core';
 
 import { StampCardComponent } from './stamp-card.component';
-import {stamps} from '../mock/stamp.mock';
+import { stamps } from '../mock/stamp.mock';
 
 describe('StampCardComponent', () => {
   let component: StampCardComponent;
@@ -36,8 +36,8 @@ describe('StampCardComponent', () => {
     putStamp: () => of(stampCard.stamps[0])
   };
 
-  const notificationStub = {
-    addPopup: () => {}
+  const notificationStub: Partial<NotificationService> = {
+    addPopup: () => { }
   };
 
   beforeEach(async(() => {
@@ -76,6 +76,7 @@ describe('StampCardComponent', () => {
         state: StampCardState.active,
         title: 'Test',
         campaignConfig: null,
+        results: {},
         displayProperties: {
           numberOfCols: undefined,
           numberOfRows: undefined,
@@ -120,6 +121,7 @@ describe('StampCardComponent', () => {
         state: StampCardState.active,
         title: 'Test',
         campaignConfig: null,
+        results: {},
         displayProperties: {
           numberOfCols: undefined,
           numberOfRows: undefined,
@@ -152,13 +154,13 @@ describe('StampCardComponent', () => {
   describe('handleStamp', () => {
     it('should throw error if card is empty ', async () => {
       component.stampCard = null;
-      let errorMessage = `No error thrown`;
+      let errorMessage = 'No error thrown';
       try {
         await component.handleStamp(stamps[0]);
       } catch (error) {
         errorMessage = error.message;
       }
-      expect(errorMessage).toBe(`card or stamps is required`);
+      expect(errorMessage).toBe('card or stamps is required');
     });
   });
 });

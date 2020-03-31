@@ -1,5 +1,4 @@
-import { TokenType } from '../../utils/storage/models/token-storage.model';
-import { IWSetting } from '@perx/whistler';
+import { IWSetting } from '@perxtech/whistler';
 
 export interface IConfig<T> {
   apiHost: string;
@@ -11,34 +10,38 @@ export interface IConfig<T> {
   sourceType?: string;
   custom?: T;
   displayProperties?: IWSetting;
-  showAccountsPage?: boolean;
-  showHistoryPage?: boolean;
+
+  /* login page flags */
+  countryCodePrefix?: string;
+
+  /* home page flags */
   showHomePage?: boolean;
-  showExpiryOnRewardDetail?: boolean;
   showNewsfeedOnHomepage?: boolean;
+  showBarcodeOnHomeProfilePage?: boolean;
+  showLoyaltyBlockOnHomePage?: boolean;
+  showCatalogOnHomePage?: boolean;
+  showQuizOnHomePage?: boolean;
+  showCampaignRewardsCounterOnHomepage?: boolean;
+  showRewardsOnHomepage?: boolean;
+  showCampaignLandingPage?: boolean;
+
+  /* Misc */
   showQrPageSubtitle?: boolean;
   showUserQR?: boolean;
-  showBarcodeOnHomeProfilePage?: boolean;
+  showHistoryPage?: boolean;
+
+  /* Login page */
   showSubtitleLogin?: boolean;
   redirectAfterLogin?: string;
+  redirectBeforeLogin?: string; // this is used for routing the user on the landing page before login
+  showForgetPasswordOnLogin?: boolean;
+
+  /* Account page */
+  showAccountsPage?: boolean;
   showUserInfoOnAccountsPage?: boolean;
   showTransactionHistoryOnAccountsPage?: boolean;
+
+  /* Reward page */
   showVoucherBookingFromRewardsPage?: boolean;
-}
-
-export interface IMicrositeSettings {
-  id: number;
-  key: string;
-  stringValue: string;
-  jsonValue: { [key: string]: string | number | boolean | TokenType };
-}
-
-export interface AccountPageObject {
-  title: string;
-  content_url: string;  // eslint-disable-line
-  key: string;
-}
-
-export interface PagesObject {
-  pages: AccountPageObject[];
+  showExpiryOnRewardDetail?: boolean;
 }

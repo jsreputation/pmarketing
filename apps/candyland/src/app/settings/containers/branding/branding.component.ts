@@ -5,9 +5,12 @@ import { Observable, of, Subject } from 'rxjs';
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
 
 import { settingsFonts, SettingsService, settingsStyles } from '@cl-core/services';
-import { IReward } from '@perx/core';
+import { IReward } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { TenantService } from '@cl-core/services/tenant.service';
+import { ISimpleValue } from '@cl-core/models/simpl-value.interface';
+import { ITenant } from '@cl-core/models/settings/tenant.interface';
+import { IBrandingForm } from '@cl-core/models/settings/branding-form.interface';
 
 @Component({
   selector: 'cl-branding',
@@ -29,9 +32,11 @@ export class BrandingComponent implements OnInit, OnDestroy {
   public tabsLabels: string[];
   private destroy$: Subject<void> = new Subject<void>();
 
-  constructor(private settingsService: SettingsService,
-              private translate: TranslateService,
-              private tenantService: TenantService) { }
+  constructor(
+    private settingsService: SettingsService,
+    private translate: TranslateService,
+    private tenantService: TenantService
+  ) { }
 
   public get headerNavbarColor(): AbstractControl {
     return this.formBranding.get('headerNavbarColor');
@@ -138,7 +143,7 @@ export class BrandingComponent implements OnInit, OnDestroy {
         })),
         takeUntil(this.destroy$),
       )
-      .subscribe(() => {});
+      .subscribe(() => { });
   }
 
   private updateTenant(): Observable<ITenant> {

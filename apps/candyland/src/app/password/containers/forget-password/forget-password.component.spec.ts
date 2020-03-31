@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ForgetPasswordComponent } from './forget-password.component';
 import { MatFormFieldModule, MatIconModule, MatInputModule } from '@angular/material';
-import { ButtonModule } from '@cl-shared/components/button/button.module';
+import { ButtonModule } from '@perxtech/candyshop';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Location } from '@angular/common';
 import { SpyLocation } from '@angular/common/testing';

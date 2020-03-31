@@ -1,5 +1,5 @@
 {
-  "name": "@perx/api-proxy",
+  "name": "@perxtech/api-proxy",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -11,8 +11,8 @@
     "start:dev": "tsc-watch -p tsconfig.build.json --onSuccess \"node dist/main.js\"",
     "start:debug": "tsc-watch -p tsconfig.build.json --onSuccess \"node --inspect-brk dist/main.js\"",
     "start:prod": "node dist/main.js",
-    "lint": "tslint -p tsconfig.json",
-    "lint:fix": "tslint -p tsconfig.json --fix",
+    "lint": "eslint \"./src/**/*.ts\" \"./test/**/*.ts\"",
+    "lint:fix": "eslint \"./src/*.ts\" \"./test/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",

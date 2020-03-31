@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IReward, ILoyalty, LoyaltyService, RewardsService, IProfile, ITabConfigExtended } from '@perx/core';
+import { IReward, ILoyalty, LoyaltyService, RewardsService, IProfile, ITabConfigExtended } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, of, forkJoin, BehaviorSubject } from 'rxjs';
 import { map, flatMap, finalize } from 'rxjs/operators';
@@ -79,14 +79,14 @@ export class HomeComponent implements OnInit {
     this.translate.get(['YOU_HAVE', 'HELLO', 'POINTS_EXPITING'])
       .subscribe((res: any) => {
         this.subTitleFn = () => res.YOU_HAVE;
-        this.titleFn = (profile: IProfile) => res.HELLO + ` ${profile.lastName},`;
+        this.titleFn = (profile: IProfile) => `${res.HELLO} ${profile.lastName},`;
         this.summaryExpiringFn = (loyalty: ILoyalty) =>
           loyalty && loyalty.expiringPoints && loyalty.expiringPoints.length && loyalty.expiringPoints[0].points &&
-          loyalty.expiringPoints[0].points !== 0 ? res.POINTS_EXPITING
-            .replace('{{points}}', (loyalty.expiringPoints[0].points ? loyalty.expiringPoints[0].points : 0)
-              .toString())
-            .replace('{{date}}', loyalty.expiringPoints[0].expireDate ?
-              this.datePipe.transform(loyalty.expiringPoints[0].expireDate, 'd MMM y') : '') : '';
+            loyalty.expiringPoints[0].points !== 0 ? res.POINTS_EXPITING
+              .replace('{{points}}', (loyalty.expiringPoints[0].points ? loyalty.expiringPoints[0].points : 0)
+                .toString())
+              .replace('{{date}}', loyalty.expiringPoints[0].expireDate ?
+                this.datePipe.transform(loyalty.expiringPoints[0].expireDate, 'd MMM y') : '') : '';
       });
 
   }
@@ -101,19 +101,20 @@ export class HomeComponent implements OnInit {
   }
 
   private getTabedRewards(): void {
-    this.getTags().pipe(flatMap((tabs: ITabConfigExtended[]) => {
-      return forkJoin(tabs.map((tab: ITabConfigExtended) => {
-        return this.translate.get(tab.tabName).pipe(flatMap((name) => {
-          tab.tabName = name;
-          return this.rewardsService.getAllRewards(null, tab.rewardsType ? [tab.rewardsType] : null);
-        }), map((rewardsList) => tab.rewardsList = of(rewardsList)),
-          finalize(() => {
-            this.tabs$.next(this.staticTab);
-          })
-        );
-      }));
-    })).subscribe(() => {
-      this.tabs$.next(this.staticTab);
-    });
+    this.getTags().pipe(
+      flatMap(
+        (tabs: ITabConfigExtended[]) => forkJoin(
+          tabs.map((tab: ITabConfigExtended) => this.translate.get(tab.tabName)
+            .pipe(
+              flatMap((name) => {
+                tab.tabName = name;
+                return this.rewardsService.getAllRewards(null, tab.rewardsType ? [tab.rewardsType] : null);
+              }),
+              map((rewardsList) => tab.rewardsList = of(rewardsList)),
+              finalize(() => this.tabs$.next(this.staticTab))
+            ))
+        )
+      )
+    ).subscribe(() => this.tabs$.next(this.staticTab));
   }
 }

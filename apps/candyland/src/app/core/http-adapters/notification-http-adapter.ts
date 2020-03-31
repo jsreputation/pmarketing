@@ -1,4 +1,4 @@
-import { IWNotificationAttributes, IJsonApiItem } from '@perx/whistler';
+import { IWNotificationAttributes, IJsonApiItem } from '@perxtech/whistler';
 import { CampaignChannelsLaunchType } from '../../campaigns/models/campaign-channels-launch-type.enum';
 import { NotificationsMenu } from '../../campaigns/models/notifications-menu-enum';
 import { ICampaignNotificationGroup, ITemplate, IChannel } from '@cl-core/models/campaign/channel-interface';
@@ -24,9 +24,12 @@ export class NotificationHttpAdapter {
 
     if (type === NotificationHttpAdapter.launchType.launchDate
       && data.time && data.type) {
+      // eslint-disable-next-line
       res.attributes.payload['send_at'] = data.time;
-      res.attributes['notification_type'] = type;
+      res.attributes.notification_type = type;
+      // eslint-disable-next-line
       res.attributes.payload['new_status'] = 'ended';
+      // eslint-disable-next-line
       res.attributes.payload['send_on'] = {
         period: data.numberPeriod,
         units: data.type
@@ -36,8 +39,10 @@ export class NotificationHttpAdapter {
     // type campaign_launch_date
     if (type === NotificationHttpAdapter.launchType.launchDate
       && !data.numberPeriod && !data.type) {
+      // eslint-disable-next-line
       res.attributes.payload['send_at'] = data.launchDateTime;
-      res.attributes['notification_type'] = type;
+      res.attributes.notification_type = type;
+      // eslint-disable-next-line
       res.attributes.payload['new_status'] = 'active';
     }
 
@@ -46,8 +51,9 @@ export class NotificationHttpAdapter {
       && data.birthdayTime
       && !data.monthDay
     ) {
-      res.attributes['notification_type'] = NotificationHttpAdapter.launchType.users_date_birth;
-      res.attributes['segment'] = 'this_day';
+      res.attributes.notification_type = NotificationHttpAdapter.launchType.users_date_birth;
+      res.attributes.segment = 'this_day';
+      // eslint-disable-next-line
       res.attributes.payload['send_at'] = data.birthdayTime;
     }
 
@@ -57,15 +63,19 @@ export class NotificationHttpAdapter {
       && data.birthdayTime
       && data.monthDay
     ) {
-      res.attributes['notification_type'] = NotificationHttpAdapter.launchType.users_month_birth;
-      res.attributes['segment'] = 'this_month';
+      res.attributes.notification_type = NotificationHttpAdapter.launchType.users_month_birth;
+      res.attributes.segment = 'this_month';
+      // eslint-disable-next-line
       res.attributes.payload['send_at'] = data.birthdayTime;
+      // eslint-disable-next-line
       res.attributes.payload['on_day'] = data.monthDay;
     }
 
     if (type === NotificationHttpAdapter.launchType.campaignNotCompleted) {
-      res.attributes['notification_type'] = data.sentType;
+      res.attributes.notification_type = data.sentType;
+      // eslint-disable-next-line
       res.attributes.payload['send_at'] = data.time;
+      // eslint-disable-next-line
       res.attributes.payload['send_on'] = {
         period: data.numberPeriod,
         units: data.type
@@ -73,6 +83,7 @@ export class NotificationHttpAdapter {
     }
 
     if (data.id) {
+      // eslint-disable-next-line
       res['id'] = data.id;
     }
 
@@ -140,18 +151,18 @@ export class NotificationHttpAdapter {
       monthDay: null,
     };
     if (notification.attributes.notification_type === NotificationHttpAdapter.launchType.launchDate) {
-      result['launchDateTime'] = notification.attributes.payload.send_at;
+      result.launchDateTime = notification.attributes.payload.send_at;
     }
 
     if (notification.attributes.notification_type === NotificationHttpAdapter.launchType.users_date_birth) {
       if (notification.attributes.segment === 'this_day') {
-        result['sentType'] = NotificationHttpAdapter.launchType.usersDateBirth;
-        result['birthdayTime'] = notification.attributes.payload.send_at;
+        result.sentType = NotificationHttpAdapter.launchType.usersDateBirth;
+        result.birthdayTime = notification.attributes.payload.send_at;
       }
       if (notification.attributes.segment === 'this_month') {
-        result['sentType'] = NotificationHttpAdapter.launchType.usersMonthBirth;
-        result['birthdayTime'] = notification.attributes.payload.send_at;
-        result['monthDay'] = notification.attributes.payload.on_day;
+        result.sentType = NotificationHttpAdapter.launchType.usersMonthBirth;
+        result.birthdayTime = notification.attributes.payload.send_at;
+        result.monthDay = notification.attributes.payload.on_day;
       }
     }
     return result;
@@ -171,6 +182,7 @@ export class NotificationHttpAdapter {
       [NotificationHttpAdapter.notificationsFormGroups.beforeCampaignEnds]: []
     };
     data.forEach((item) => {
+      // eslint-disable-next-line
       channelForm['sms'] = true;
       const type = item.sentType;
       if (type === NotificationHttpAdapter.launchType.launchDate

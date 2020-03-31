@@ -1,7 +1,8 @@
 import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { PuzzleCollectStamp, PuzzleCollectStampState, IReward } from '@perx/core';
+import { PuzzleCollectStamp, PuzzleCollectStampState, IReward } from '@perxtech/core';
 import { BehaviorSubject, Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { ITenantsProperties } from '@cl-core/models/settings/tenants.properties.interface';
 
 @Component({
   selector: 'cl-campaigns-mobile-preview',
@@ -60,15 +61,13 @@ export class CampaignsMobilePreviewComponent implements OnInit, OnDestroy {
   }
 
   private prepareStampsData(): void {
-    if (this.engagement.nb_of_slots) {
+    if (this.engagement && this.engagement.nb_of_slots) {
       for (let i = 0; i <= this.engagement.nb_of_slots; i++) {
         this.stamps.push({
           id: 1,
           state: PuzzleCollectStampState.redeemed
         });
-        this.stampsSlotNumberData = this.engagement.slots.map((item: number) => {
-          return { rewardPosition: item - 1 };
-        });
+        this.stampsSlotNumberData = this.engagement.slots.map((item: number) => ({ rewardPosition: item - 1 }));
       }
     } else {
       this.stamps = [];
@@ -77,14 +76,14 @@ export class CampaignsMobilePreviewComponent implements OnInit, OnDestroy {
   }
 
   private setSurveyQuestion(data: any): void {
-    if (data.attributes_type === 'survey') {
+    if (data && data.attributes_type === 'survey') {
       this.questionData$.next({ questions: [data.questions] });
       this.cd.detectChanges();
     }
   }
 
   private setReward(data: any): void {
-    if (data.attributes_type === 'instant_reward') {
+    if (data && data.attributes_type === 'instant_reward') {
       this.reward$.next([{
         id: 1,
         name: 'Reward Name',

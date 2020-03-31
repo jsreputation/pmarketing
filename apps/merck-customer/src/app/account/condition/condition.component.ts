@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PageAppearence, PageProperties, BarSelectedItem } from '../../page-properties';
-import { ProfileService, IProfile, NotificationService } from '@perx/core';
+import { ProfileService, IProfile, NotificationService } from '@perxtech/core';
 import { MatRadioChange, MatSlideToggleChange } from '@angular/material';
 
 @Component({
@@ -75,7 +75,7 @@ export class ConditionComponent implements OnInit, PageAppearence {
     this.profileService.setCustomProperties(this.profile.customProperties).subscribe(
       () => this.notificationService.addSnack('Condition Updated.'),
       err => {
-        this.notificationService.addSnack('ProfileService::SetCustomProperties : ' + err);
+        this.notificationService.addSnack(`ProfileService::SetCustomProperties : ${err.error.message}`);
       });
   }
 

@@ -6,7 +6,7 @@ import {
   MatDialogModule,
   // MatSnackBar
 } from '@angular/material';
-import { NotificationService, PopupComponent, UtilsModule } from '@perx/core';
+import { NotificationService, PopupComponent, UtilsModule } from '@perxtech/core';
 import { Observable, of } from 'rxjs';
 import { SnackbarModule } from './ui/snackbar/snackbar.module';
 // import { SnackbarComponent } from './ui/snackbar/snackbar.component';
@@ -14,11 +14,11 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Type } from '@angular/core';
 
 class MockNotificationService {
-  get $popup(): Observable<any> {
+  public get $popup(): Observable<any> {
     return of(true);
   }
 
-  get $snack(): Observable<any> {
+  public get $snack(): Observable<any> {
     return of(true);
   }
 }
@@ -58,8 +58,7 @@ describe('AppComponent', () => {
     const notificationService = TestBed.get<NotificationService>(NotificationService as Type<NotificationService>);
     const dialog = TestBed.get<MatDialog>(MatDialog as Type<MatDialog>);
 
-    spyOnProperty(notificationService, '$popup', 'get')
-      .and.returnValue(of({ title: 'Test' }));
+    jest.spyOn(notificationService, '$popup', 'get').mockReturnValue(of({ title: 'Test' }));
     const openSpy = spyOn(dialog, 'open');
 
     fixture.detectChanges();

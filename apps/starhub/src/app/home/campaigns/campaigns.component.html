@@ -1,10 +1,18 @@
-<div *ngIf="campaigns && campaigns.length > 0" class="main-container">
-  <h1>Games for you</h1>
-  <div class="cards">
+<div *ngIf="(campaigns$ | async) as campaigns " class="main-container">
+  <h1>Play and win</h1>
+  <div class="cards"
+   *ngIf="campaigns.length > 0"
+   infiniteScroll
+   [infiniteScrollDistance]="2"
+   [infiniteScrollThrottle]="500"
+   (scrolled)="onScroll()"
+   [scrollWindow]="false"
+   [horizontal]="true"
+  >
     <mat-card *ngFor="let campaign of campaigns" (click)="selected(campaign)" matRipple
       [matRippleDisabled]="campaign?.macaron?.class === 'coming-soon'">
       <div class="featured-image">
-        <img mat-card-image [src]="campaign.thumbnailUrl">
+        <img mat-card-image [src]="campaign.thumbnailUrl ? campaign.thumbnailUrl: ''" >
         <div *ngIf="campaign?.macaron as macaron" class="macaron-container">
           <span [ngClass]="macaron.class">{{macaron.label}}</span>
         </div>

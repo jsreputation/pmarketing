@@ -69,9 +69,9 @@
     "ADD_REWARD": "Add Reward",
     "CAMPAIGN": "campaign",
     "InformationCollectionSettingTypes": {
-      "NO_INFORMATION": "No information collection required",
-      "PI_INFORMATION": "PI information collection required",
-      "SIGNUP_INFORMATION": "Signup information collection required"
+      "NO_INFORMATION": "Anonymous",
+      "PI_INFORMATION": "Signin using PI",
+      "SIGNUP_INFORMATION": "Signup"
     },
     "CHANNEL_TYPES": {
       "WEBLINK": "Weblink",
@@ -89,11 +89,13 @@
       "FEMALE": "Female",
       "NOT_SPECIFY": "Not specify"
     },
-    "BUILD_AWARE": "Build awareness",
-    "ACQUIRE_CUST": "Acquire customers",
-    "DRIVE_SALES": "Drive sales",
-    "REENGAGE_AUD": "Re-engage audience",
-    "SURPRISE_DELIGHT": "Surprise & Delight",
+    "GOALS": {
+      "BUILD_AWARE": "Build awareness",
+      "ACQUIRE_CUST": "Acquire customers",
+      "DRIVE_SALES": "Drive sales",
+      "REENGAGE_AUD": "Re-engage audience",
+      "SURPRISE_DELIGHT": "Surprise & Delight"
+    },
     "URL": "Campaign Url",
     "USER_ID": "User ID",
     "FIRST_NAME": "First name",
@@ -112,7 +114,7 @@
     "THANK_YOU": "Thank You",
     "EARNED_A_STAMP": "Earned a Stamp",
     "EARNED_A_REWARD": "Earned a Reward",
-    "INFORMATION_COLLECTION": "Information collection",
+    "INFORMATION_COLLECTION": "Weblink - Authentication Mechanism",
     "ON_CAMPAIGN_LAUNCH_MESSAGE": "On Campaign Launch Message",
     "MESSAGE_WILL_BE_SENT_ON": "Message will be sent on",
     "AT": "at",
@@ -131,6 +133,14 @@
     "AUDIENCE_FILTER": "Filter Audience",
     "AGE": "Age",
     "GENDER": "Gender",
-    "ADD_AGE_RANGE": "+ Add Age Range"
+    "ADD_AGE_RANGE": "+ Add Age Range",
+    "DONE": {
+      "DEFAULT_TITLE": "Yay! You just created a campaign",
+      "DOWNLOAD_SUBTITLE": "Download your individual links",
+      "COPY_SUBTITLE": "Copy the link and share your campaign.",
+      "COPY_MESSAGE": "Link copied to clipboard!",
+      "LINK_WARNING_MESSAGE": "Your account does not appear to be linked to a microsite, please contact your Customer Support"
+    },
+    "OUTCOMES": "Outcomes"
   }
 }

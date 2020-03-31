@@ -9,11 +9,12 @@ import { ConfigModule } from '../config/config.module';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 import { IV4Reward } from '../rewards/v4-rewards.service';
+import { ConfigService } from '../config/config.service';
 
 describe('V4CampaignService', () => {
   let httpTestingController: HttpTestingController;
   let service: V4CampaignService;
-  const vouchersServiceMock = jasmine.createSpyObj('IVoucherService', ['']);
+  const vouchersServiceMock: Partial<IVoucherService> = {};
 
   const environment = {
     apiHost: 'https://api.perxtech.io',
@@ -22,12 +23,16 @@ describe('V4CampaignService', () => {
     preAuth: false,
     baseHref: '/'
   };
+  const configServiceStub: Partial<ConfigService> = {
+    readAppConfig: () => of(environment)
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule, ConfigModule.forRoot({ ...environment })],
       providers: [
-        { provide: IVoucherService, useValue: vouchersServiceMock }
+        { provide: IVoucherService, useValue: vouchersServiceMock },
+        { provide: ConfigService, useValue: configServiceStub }
       ]
     });
     // httpClient = TestBed.get(HttpClient);
@@ -39,7 +44,7 @@ describe('V4CampaignService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should get campaigns', (done: DoneFn) => {
+  it('should get campaigns', (done: jest.DoneCallback) => {
     service.getCampaigns()
       .subscribe((campaigns: ICampaign[]) => {
         expect(campaigns.length).toBe(0);
@@ -55,7 +60,7 @@ describe('V4CampaignService', () => {
     httpTestingController.verify();
   });
 
-  it('should get campaigns with details', (done: DoneFn) => {
+  it('should get campaigns with details', (done: jest.DoneCallback) => {
     service.getCampaigns()
       .subscribe((campaigns: ICampaign[]) => {
         expect(campaigns.length).toBe(1);
@@ -119,17 +124,19 @@ describe('V4CampaignService', () => {
   });
 
   it('getCampaign', fakeAsync(inject([V4CampaignService, HttpClient], (campaingService: V4CampaignService, http: HttpClient) => {
-    const spy = spyOn(http, 'get').and.returnValue(of({data: {
-      images: [{
-        type: 'campaign_thumbnail',
-        url: 'test'
-      }],
-      rewards: [{
-        id: 1,
-        description: 'test'
-      } as IV4Reward],
-      ends_at: '11.12.2020'
-    }}));
+    const spy = jest.spyOn(http, 'get').mockReturnValue(of({
+      data: {
+        images: [{
+          type: 'campaign_thumbnail',
+          url: 'test'
+        }],
+        rewards: [{
+          id: 1,
+          description: 'test'
+        } as IV4Reward],
+        ends_at: '11.12.2020'
+      }
+    }));
     campaingService.getCampaign(1).subscribe(() => { });
     tick();
     expect(spy).toHaveBeenCalled();

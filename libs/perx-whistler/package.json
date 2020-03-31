@@ -1,14 +1,13 @@
 {
-  "name": "@perx/whistler",
+  "name": "@perxtech/whistler",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "build:lib": "ng build",
     "clean": "rm -rf ./dist ./node_modules",
-    "lint": "ng lint && eslint \"projects/**/*.ts\"",
+    "lint": "eslint \"projects/**/*.ts\"",
     "lint:fix": "eslint \"projects/**/*.ts\" --fix",
-    "test~": "jest",
-    "test": "echo \"no test!\""
+    "test": "jest"
   },
   "private": true,
   "dependencies": {
@@ -20,19 +19,20 @@
     "@angular/cli": "~8.0.6",
     "@angular/compiler-cli": "~8.0.3",
     "@angular/language-service": "~8.0.3",
+    "@types/jest": "^24.0.25",
     "@types/node": "~8.9.4",
+    "@typescript-eslint/eslint-plugin": "^2.18.0",
+    "@typescript-eslint/parser": "^2.3.3",
     "codelyzer": "^5.0.0",
+    "eslint-import-resolver-typescript": "^2.0.0",
+    "eslint-plugin-import": "^2.19.1",
+    "jest": "^24.9.0",
     "ng-packagr": "^5.1.0",
+    "rxjs-tslint-rules": "^4.25.0",
+    "ts-jest": "^24.3.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.19.0",
-    "typescript": "~3.4.3",
-    "rxjs-tslint-rules": "^4.25.0",
-    "@types/jest": "^24.0.25",
-    "jest": "^24.9.0",
-    "ts-jest": "^24.3.0",
-    "eslint-plugin-import": "^2.19.1",
-    "@typescript-eslint/parser": "^2.3.3",
-    "eslint-import-resolver-typescript": "^2.0.0"
+    "typescript": "~3.4.3"
   },
   "main": "./dist/whistler/bundles/whistler.umd.js",
   "module": "./dist/whistler/fesm5/whistler.js",

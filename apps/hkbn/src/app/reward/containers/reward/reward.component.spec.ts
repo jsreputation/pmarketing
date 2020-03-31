@@ -15,7 +15,7 @@ import {
   IVoucherService,
   RewardsService,
   RedemptionType
-} from '@perx/core';
+} from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
 import { of, Observable } from 'rxjs';
@@ -67,11 +67,11 @@ describe('RewardComponent', () => {
     expiry: null,
   };
 
-  const vouchersServiceStub = {
+  const vouchersServiceStub: Partial<IVoucherService> = {
     issueReward: (): Observable<Voucher> => of(mockVoucher)
   };
 
-  const rewardsServiceStub = {
+  const rewardsServiceStub: Partial<RewardsService> = {
     getReward: (): Observable<IReward> => of(mockReward)
   };
 
@@ -87,7 +87,7 @@ describe('RewardComponent', () => {
     currency: '',
   };
 
-  const loyaltyServiceStub = {
+  const loyaltyServiceStub: Partial<LoyaltyService> = {
     getLoyalties: (): Observable<ILoyalty[]> => of([mockLoyalty]),
     getLoyalty: (): Observable<ILoyalty> => of(mockLoyalty)
   };

@@ -6,6 +6,7 @@ import {
 import { AuthService } from '@cl-core-services';
 import { UserService } from '@cl-core/services/user.service';
 import { Observable } from 'rxjs';
+import { IAMUser } from '@cl-core/models/auth/IAMUser.interface';
 
 export function fnTransition(stateChangeExpr: string, time: string): any {
   return transition(stateChangeExpr, [
@@ -49,14 +50,16 @@ export class SideNavComponent implements OnInit, OnDestroy {
   public mobileQuery: MediaQueryList;
   private myMobileQueryListener: () => void;
 
-  constructor(private authService: AuthService,
-              private userService: UserService,
-              changeDetectorRef: ChangeDetectorRef,
-              media: MediaMatcher) {
-                this.mobileQuery = media.matchMedia('(max-width: 768px)');
-                this.myMobileQueryListener = () => changeDetectorRef.detectChanges();
-                // tslint:disable-next-line: deprecation
-                this.mobileQuery.addListener(this.myMobileQueryListener);
+  constructor(
+    private authService: AuthService,
+    private userService: UserService,
+    changeDetectorRef: ChangeDetectorRef,
+    media: MediaMatcher
+  ) {
+    this.mobileQuery = media.matchMedia('(max-width: 768px)');
+    this.myMobileQueryListener = () => changeDetectorRef.detectChanges();
+    // tslint:disable-next-line: deprecation
+    this.mobileQuery.addListener(this.myMobileQueryListener);
   }
 
   public ngOnInit(): void {

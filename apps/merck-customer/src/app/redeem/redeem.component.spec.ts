@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { QRCodeModule } from 'angularx-qrcode';
-import { ProfileService } from '@perx/core';
+import { ProfileService } from '@perxtech/core';
 import { RedeemComponent } from './redeem.component';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
@@ -12,7 +12,7 @@ import { TranslateModule } from '@ngx-translate/core';
 describe('RedeemComponent', () => {
   let component: RedeemComponent;
   let fixture: ComponentFixture<RedeemComponent>;
-  const locationStub = {
+  const locationStub: Partial<Location> = {
     back: () => { }
   };
 
@@ -55,7 +55,7 @@ describe('RedeemComponent', () => {
 
   it('should set rewardId and reward details onInit', fakeAsync(() => {
     const profileService: ProfileService = fixture.debugElement.injector.get<ProfileService>
-      (ProfileService as Type<ProfileService>);
+    (ProfileService as Type<ProfileService>);
     const profileSpy = spyOn(profileService, 'whoAmI').and.returnValue(
       of({
         id: 1,

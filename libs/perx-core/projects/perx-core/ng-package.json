@@ -10,7 +10,7 @@
       "ts-optchain": "tsOptchain",
       "ngx-auth": "ngxAuth",
       "ngx-multi-line-ellipsis": "ngxMultiLineEllipsis",
-      "@perx/whistler": "@perx/whistler"
+      "@perxtech/whistler": "@perxtech/whistler"
     }
   },
   "whitelistedNonPeerDependencies": [

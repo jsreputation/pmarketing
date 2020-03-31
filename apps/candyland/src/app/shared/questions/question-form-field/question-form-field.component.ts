@@ -3,7 +3,7 @@ import {
 } from '@angular/core';
 import { QuestionFormFieldService } from '@cl-shared/questions/question-form-field/shared/services/question-form-field.service';
 import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { WSurveyQuestionType } from '@perx/whistler';
+import { WSurveyQuestionType } from '@perxtech/whistler';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 

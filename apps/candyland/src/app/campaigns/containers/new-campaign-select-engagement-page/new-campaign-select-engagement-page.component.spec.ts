@@ -13,6 +13,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PipesModule } from '@cl-shared/pipes/pipes.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { EngagementsService, LimitsService } from '@cl-core-services';
+import { MockEngagementsService } from '@cl-shared/test-components/providers/mock-engagements.service';
+import { MockLimitsService } from '@cl-shared/test-components/providers/mock-limits.service';
 
 describe('NewCampaignSelectEngagementPageComponent', () => {
   let component: NewCampaignSelectEngagementPageComponent;
@@ -35,10 +38,12 @@ describe('NewCampaignSelectEngagementPageComponent', () => {
       declarations: [NewCampaignSelectEngagementPageComponent],
       providers: [
         {provide: CampaignCreationStoreService, useValue: {
-            updateCampaign: (data: any) => data,
-            currentCampaign: {template: null},
-            currentCampaign$: new Subject()}},
+          updateCampaign: (data: any) => data,
+          currentCampaign: {template: null},
+          currentCampaign$: new Subject()}},
         {provide: StepConditionService, useValue: {registerStepCondition: () => ({}) }},
+        { provide: EngagementsService, useClass: MockEngagementsService },
+        { provide: LimitsService, useClass: MockLimitsService },
       ],
       schemas: [NO_ERRORS_SCHEMA]
     })

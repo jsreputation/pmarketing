@@ -5,11 +5,9 @@
         </button>
         <img [src]="item.image" *ngIf="item.image">
     </div>
-    <p mat-dialog-content>
-        {{item.description}}
-    </p>
+    <p mat-dialog-content [innerHtml]="item.description"></p>
     <div class="spacer"></div>
-    <div mat-dialog-actions>
+    <div mat-dialog-actions *ngIf="!item.hideButton">
         <a mat-flat-button color="primary" [href]="item.link">{{item.title}}</a>
     </div>
 </div>

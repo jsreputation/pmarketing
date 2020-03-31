@@ -1,0 +1,34 @@
+.cs-chip-list {
+  .mat-form-field-appearance-legacy .mat-form-field-wrapper {
+    width: 100% !important;
+  }
+
+  &-row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+
+    //& > * {
+    //  margin-right: 1.5rem;
+    //
+    //  &:last-of-type {
+    //    margin-right: 0;
+    //  }
+    //}
+
+    &.stretch {
+      justify-content: stretch;
+
+      & > * {
+        flex: 1;
+      }
+    }
+
+    &.form-field {
+      align-items: flex-end;
+      height: 5.66rem;
+      padding-bottom: 1.25em;
+    }
+  }
+}

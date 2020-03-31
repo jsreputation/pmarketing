@@ -6,10 +6,10 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { IProfile } from '../../profile/profile.model';
 import { AuthenticationService } from './authentication.service';
 import {
-  IResetPasswordData,
   ISignUpData,
   IChangePasswordData,
-  IChangePhoneData
+  IChangePhoneData,
+  IResetPasswordData,
 } from './models/authentication.model';
 import { Config } from '../../config/config';
 import {
@@ -18,9 +18,9 @@ import {
   IJsonApiListPayload,
   IWProfileAttributes,
   IJsonApiItem,
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { TokenStorage } from '../../utils/storage/token-storage.service';
-import { IMessageResponse } from './authentication.service';
+import { IMessageResponse } from '../../perx-core.models';
 
 interface IUserJWTRequest {
   identifier: string;
@@ -199,7 +199,14 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   }
 
   public getAppToken(): Observable<IWAppAccessTokenResponse> {
-    return throwError('Not implement yet');
+    console.error('WhistlerAuthenticationService Not implement yet');
+    // return a dummy token
+    return of({
+      access_token: 'dummy token',
+      token_type: 'dummy_type',
+      expires_in: 0,
+      created_at: 0
+    });
   }
 
   public setInterruptedUrl(url: string): void {
@@ -216,17 +223,17 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
 
   // @ts-ignore
   public forgotPassword(phone: string): Observable<IMessageResponse> {
-    return throwError('Not implement yet');
+    return throwError('WhistlerAuthenticationService Not implement yet');
   }
 
   // @ts-ignore
   public resetPassword(resetPasswordInfo: IResetPasswordData): Observable<IMessageResponse> {
-    return throwError('Not implement yet');
+    return throwError('WhistlerAuthenticationService Not implement yet');
   }
 
   // @ts-ignore
   public resendOTP(phone: string): Observable<IMessageResponse> {
-    return throwError('Not implement yet');
+    return throwError('WhistlerAuthenticationService Not implement yet');
   }
 
   // TODO createUserAndAutoLogin and sinup should be merged
@@ -266,27 +273,27 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
 
   // @ts-ignore
   public signup(profile: ISignUpData): Observable<IProfile> {
-    return throwError('Not implement yet');
+    return throwError('WhistlerAuthenticationService Not implement yet');
   }
 
   // @ts-ignore
   public requestVerificationToken(phone?: string): Observable<void> {
-    return throwError('Not implement yet');
+    return throwError('WhistlerAuthenticationService Not implement yet');
   }
 
   // @ts-ignore
   public changePhone(changePhoneData: IChangePhoneData): Observable<void> {
-    return throwError('Not implement yet');
+    return throwError('WhistlerAuthenticationService Not implement yet');
   }
 
   // @ts-ignore
   public verifyOTP(phone: string, otp: string): Observable<IMessageResponse> {
-    return throwError('Not implement yet');
+    return throwError('WhistlerAuthenticationService Not implement yet');
   }
 
   // @ts-ignore
   public changePassword(changePasswordData: IChangePasswordData): Observable<IMessageResponse> {
-    return throwError('Not implement yet');
+    return throwError('WhistlerAuthenticationService Not implement yet');
   }
 
   public getAccessToken(): Observable<string> {

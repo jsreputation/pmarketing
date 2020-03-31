@@ -3,21 +3,21 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MatDialogModule } from '@angular/material';
 import { MatDialog } from '@angular/material';
-import { AuthenticationService, NotificationService, ConfigService } from '@perx/core';
+import { AuthenticationService, NotificationService, ConfigService } from '@perxtech/core';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
-  let notificationService: NotificationService;
+  let notificationService: Partial<NotificationService>;
 
   beforeEach(async(() => {
-    const notificationServiceStub = { $popup: { subscribe: () => ({}) } };
+    const notificationServiceStub: Partial<NotificationService> = { $popup: of() };
     const matDialogStub = { open: () => ({}) };
-    const authenticationServiceStub = { $failedAuth: of(true) };
-    const routerStub = { navigateByUrl: () => ({}) };
-    const configServiceStub = {
+    const authenticationServiceStub: Partial<AuthenticationService> = { $failedAuth: of(true) };
+    const routerStub: Partial<Router> = { navigateByUrl: () => Promise.resolve(true) };
+    const configServiceStub: Partial<ConfigService> = {
       readAppConfig: () => of()
     };
 
@@ -60,7 +60,7 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'bpi'`, () => {
+  it('should have as title \'bpi\'', () => {
     fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app.title).toEqual('bpi');

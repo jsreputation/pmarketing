@@ -6,14 +6,14 @@ import { MatButtonModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { LoyaltyService, ILoyalty } from '@perx/core';
+import { LoyaltyService, ILoyalty } from '@perxtech/core';
 import { Observable, of } from 'rxjs';
 import { mockLoyalty } from '../loyalty.mock';
 
 describe('EnlargedQrComponent', () => {
   let component: EnlargedQrComponent;
   let fixture: ComponentFixture<EnlargedQrComponent>;
-  const loyaltyServiceStub = {
+  const loyaltyServiceStub: Partial<LoyaltyService> = {
     getLoyalty: (): Observable<ILoyalty> => of(mockLoyalty)
   };
 

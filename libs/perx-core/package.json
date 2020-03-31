@@ -1,14 +1,15 @@
 {
-  "name": "@perx/core",
+  "name": "@perxtech/core",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "build:lib": "ng build",
     "clean": "rm -rf ./dist ./node_modules",
-    "test": "ng test",
-    "lint": "ng lint && stylelint \"projects/**/*.*css\" && eslint \"projects/**/*.ts\"",
-    "lint:fix": "stylelint \"projects/**/*.*css\" --fix && ng lint --fix && eslint \"projects/**/*.ts\" --fix",
-    "e2e~": "ng e2e"
+    "test": "jest",
+    "lint": "stylelint \"projects/**/*.*css\" && eslint \"projects/**/*.ts\"",
+    "lint:fix": "stylelint \"projects/**/*.*css\" --fix && eslint \"projects/**/*.ts\" --fix",
+    "e2e~": "ng e2e",
+    "test:watch": "jest --watch"
   },
   "private": true,
   "dependencies": {
@@ -22,35 +23,34 @@
     "@angular/platform-browser": "~8.0.0",
     "@angular/platform-browser-dynamic": "~8.0.0",
     "@angular/router": "~8.0.0",
-    "@perx/whistler": "^0.0.0",
+    "@perxtech/whistler": "^0.0.0",
     "angularx-qrcode": "^1.6.1",
+    "hammerjs": "^2.0.8",
     "ngx-ellipsis": "^2.0.9",
     "ngx-multi-line-ellipsis": "^1.0.4",
     "rxjs": "~6.4.0",
     "ts-optchain": "^0.1.7",
     "tslib": "^1.9.0",
     "ttypescript": "^1.5.7",
-    "zone.js": "~0.9.1",
-    "hammerjs": "^2.0.8"
+    "zone.js": "~0.9.1"
+  },
+  "optionalDependencies": {
+    "canvas": "^2.6.1"
   },
   "devDependencies": {
+    "rxjs-compat": "^6.5.4",
+    "jest-environment-jsdom-fourteen": "^1.0.1",
     "@angular-devkit/build-angular": "~0.800.0",
     "@angular-devkit/build-ng-packagr": "~0.800.0",
     "@angular/cli": "~8.0.0",
     "@angular/compiler-cli": "~8.0.0",
     "@angular/language-service": "~8.0.0",
     "@types/googlemaps": "^3.37.0",
-    "@types/jasmine": "~3.3.8",
-    "@types/jasminewd2": "~2.0.3",
+    "@types/jest": "24.9.0",
     "@types/node": "~10.14.13",
     "codelyzer": "^5.0.0",
-    "jasmine-core": "~3.4.0",
-    "jasmine-spec-reporter": "~4.2.1",
-    "karma": "~4.1.0",
-    "karma-chrome-launcher": "~2.2.0",
-    "karma-coverage-istanbul-reporter": "~2.0.1",
-    "karma-jasmine": "~2.0.1",
-    "karma-jasmine-html-reporter": "^1.4.0",
+    "jest": "24.9.0",
+    "jest-preset-angular": "8.0.0",
     "ng-packagr": "^5.1.0",
     "protractor": "~5.4.0",
     "rxjs-tslint": "0.1.5",
@@ -64,15 +64,15 @@
     "tslint-no-focused-test": "^0.5.0",
     "typescript": "~3.4.3"
   },
-  "main": "./dist/perx-core/bundles/perx-core.umd.js",
-  "module": "./dist/perx-core/fesm5/perx-core.js",
-  "es2015": "./dist/perx-core/fesm2015/perx-core.js",
-  "esm5": "./dist/perx-core/esm5/perx-core.js",
-  "esm2015": "./dist/perx-core/esm2015/perx-core.js",
-  "fesm5": "./dist/perx-core/fesm5/perx-core.js",
-  "fesm2015": "./dist/perx-core/fesm2015/perx-core.js",
-  "typings": "./dist/perx-core/perx-core.d.ts",
-  "metadata": "./dist/perx-core/perx-core.metadata.json",
+  "main": "./dist/perx-core/bundles/perxtech-core.umd.js",
+  "module": "./dist/perx-core/fesm5/perxtech-core.js",
+  "es2015": "./dist/perx-core/fesm2015/perxtech-core.js",
+  "esm5": "./dist/perx-core/esm5/perxtech-core.js",
+  "esm2015": "./dist/perx-core/esm2015/perxtech-core.js",
+  "fesm5": "./dist/perx-core/fesm5/perxtech-core.js",
+  "fesm2015": "./dist/perx-core/fesm2015/perxtech-core.js",
+  "typings": "./dist/perx-core/perxtech-core.d.ts",
+  "metadata": "./dist/perx-core/perxtech-core.metadata.json",
   "eslintConfig": {
     "extends": [
       "../../.eslintrc"
@@ -98,5 +98,32 @@
         }
       }
     ]
+  },
+  "jest": {
+    "preset": "jest-preset-angular",
+    "testEnvironment": "jest-environment-jsdom-fourteen",
+    "roots": [
+      "projects"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!ngx-barcode)"
+    ],
+    "transform": {
+      "^.+\\.(ts|js|html)$": "ts-jest"
+    },
+    "setupFilesAfterEnv": [
+      "<rootDir>/projects/setup-jest.ts"
+    ],
+    "moduleNameMapper": {},
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "<rootDir>/projects/perx-core/tsconfig.spec.json",
+        "stringifyContentPathRegex": "\\.html$",
+        "astTransformers": [
+          "jest-preset-angular/build/InlineFilesTransformer",
+          "jest-preset-angular/build/StripStylesTransformer"
+        ]
+      }
+    }
   }
 }

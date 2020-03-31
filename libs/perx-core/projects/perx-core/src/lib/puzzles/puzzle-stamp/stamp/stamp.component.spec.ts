@@ -80,7 +80,7 @@ describe('StampComponent', () => {
       }
     ];
     component.stampColumn = 0;
-    spyOn(component.moveCard, 'emit');
+    jest.spyOn(component.moveCard, 'emit').mockImplementation(() => {});
     component.onCardUnlock();
     expect(component.moveCard.emit).toHaveBeenCalled();
   });

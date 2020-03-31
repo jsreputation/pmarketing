@@ -7,7 +7,7 @@ import {
 import {
   IGame,
   ITree
-} from '@perx/core';
+} from '@perxtech/core';
 
 @Component({
   selector: 'perx-blackcomb-pages-shake',

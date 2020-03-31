@@ -14,6 +14,8 @@ import { IOutcome } from '@cl-core/models/outcome/outcome';
 import { ILimit } from '@cl-core/models/limit/limit.interface';
 import { IEngagementType } from '@cl-core/models/engagement/engagement.interface';
 import { CampaignStatus } from '@cl-core/models/campaign/campaign.enum';
+import { ITenantsProperties } from '@cl-core/models/settings/tenants.properties.interface';
+import { HttpParamsOptions } from '@cl-core/models/params-map';
 
 @Component({
   selector: 'cl-review-campaign',
@@ -79,10 +81,10 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
       ).pipe(
         map(
           ([campaign, outcomes]:
-            [ICampaign | null, IOutcome[] | null]) => ({
-              ...campaign,
-              outcomes: this.outcomeToRewardCollection(outcomes)
-            })
+          [ICampaign | null, IOutcome[] | null]) => ({
+            ...campaign,
+            outcomes: this.outcomeToRewardCollection(outcomes)
+          })
         ),
         switchMap((campaign: ICampaign) => {
           const limitParams: HttpParamsOptions = {
@@ -97,17 +99,15 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
           );
         }),
         map(([campaign, engagement, limits, outcomes]:
-          [
-            ICampaign | null, IEngagementType | null, ILimit | null,
-            ICampaignOutcome[] | null
-          ]) => {
-          return {
-            ...campaign,
-            template: engagement,
-            limits,
-            outcomes
-          };
-        }),
+        [
+          ICampaign | null, IEngagementType | null, ILimit | null,
+          ICampaignOutcome[] | null
+        ]) => ({
+          ...campaign,
+          template: engagement,
+          limits,
+          outcomes
+        })),
         takeUntil(this.destroy$),
       ).subscribe(
         campaign => {
@@ -129,7 +129,7 @@ export class ReviewCampaignComponent implements OnInit, OnDestroy {
   }
 
   private getRewards(outcomeList: ICampaignOutcome[]):
-    Observable<ICampaignOutcome[]> {
+  Observable<ICampaignOutcome[]> {
     if (!outcomeList || !outcomeList.length) {
       return of([]);
     }

@@ -1,12 +1,35 @@
-import { Component, OnInit, Inject, PLATFORM_ID, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Inject,
+  PLATFORM_ID,
+  ChangeDetectorRef,
+} from '@angular/core';
+import {
+  Validators,
+  FormBuilder,
+  FormGroup,
+  AbstractControl,
+} from '@angular/forms';
 import { Router } from '@angular/router';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { AuthenticationService, NotificationService, ProfileService } from '@perx/core';
-import { HttpErrorResponse } from '@angular/common/http';
-import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
-import { environment } from '../../environments/environment';
 import { isPlatformBrowser } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
+
 import { TranslateService } from '@ngx-translate/core';
+
+import {
+  AuthenticationService,
+  NotificationService,
+  ProfileService,
+  ConfigService,
+  IConfig,
+} from '@perxtech/core';
+
+import {
+  PageAppearence,
+  PageProperties,
+  BarSelectedItem,
+} from '../page-properties';
 
 @Component({
   selector: 'mc-login',
@@ -19,11 +42,21 @@ export class LoginComponent implements OnInit, PageAppearence {
 
   public loginForm: FormGroup;
 
-  private appAccessTokenFetched: boolean = false;
-
   public currentSelectedLanguage: string = 'en';
 
   public preAuth: boolean;
+
+  public get mobileNo(): AbstractControl | null {
+    return this.loginForm.get('mobileNo');
+  }
+
+  public get password(): AbstractControl | null {
+    return this.loginForm.get('password');
+  }
+
+  public get countryCode(): AbstractControl | null {
+    return this.loginForm.get('countryCode');
+  }
 
   constructor(
     private router: Router,
@@ -32,11 +65,11 @@ export class LoginComponent implements OnInit, PageAppearence {
     private authService: AuthenticationService,
     private notificationService: NotificationService,
     private profileService: ProfileService,
+    private configService: ConfigService,
     private translateService: TranslateService,
     private cd: ChangeDetectorRef
   ) {
     this.initForm();
-    this.preAuth = environment.preAuth;
   }
 
   private initForm(): void {
@@ -49,16 +82,11 @@ export class LoginComponent implements OnInit, PageAppearence {
 
   public ngOnInit(): void {
     this.currentSelectedLanguage = this.translateService.currentLang || this.translateService.defaultLang;
-    const token = this.authService.getAppAccessToken();
-    if (token) {
-      this.appAccessTokenFetched = true;
-    } else {
-      this.authService.getAppToken().subscribe(() => {
-        this.appAccessTokenFetched = true;
-      }, (err) => {
-        console.error('Error' + err);
-      });
-    }
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig<void>) => {
+        this.preAuth = config.preAuth as boolean;
+      }
+    );
 
     if (this.preAuth && isPlatformBrowser(this.platformId) && !this.authService.getUserAccessToken()) {
       this.authService.autoLogin().subscribe(
@@ -128,16 +156,10 @@ export class LoginComponent implements OnInit, PageAppearence {
   }
 
   public goToSignup(): void {
-    if (!this.appAccessTokenFetched) {
-      return;
-    }
     this.router.navigateByUrl('/signup');
   }
 
   public goToForgotPassword(): void {
-    if (!this.appAccessTokenFetched) {
-      return;
-    }
     const mobileNumber = (this.loginForm.value.mobileNo as string);
     this.router.navigate(['forgot-password'], { state: { country: this.selectedCountry, mobileNo: mobileNumber } });
   }

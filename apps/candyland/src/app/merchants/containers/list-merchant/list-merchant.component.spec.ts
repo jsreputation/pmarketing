@@ -10,6 +10,8 @@ import { TableFiltersModule } from '@cl-shared';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { MatDialogRef, MatDialogModule } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
+import { MerchantsService } from '@cl-core-services';
+import { MockMerchantsService } from '@cl-shared/test-components/providers/mock-merchants.service';
 
 describe('ListMerchantComponent', () => {
   let component: ListMerchantComponent;
@@ -17,27 +19,28 @@ describe('ListMerchantComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-        imports: [
-          RouterTestingModule,
-          BrowserDynamicTestingModule,
-          FormsModule,
-          ReactiveFormsModule,
-          TableFiltersModule,
-          HttpClientTestingModule,
-          MatDialogModule,
-          TranslateModule.forRoot()
-        ],
-        providers: [
-          {
-            provide: MatDialogRef, useValue: {
-              close: () => {
-              }
+      imports: [
+        RouterTestingModule,
+        BrowserDynamicTestingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        TableFiltersModule,
+        HttpClientTestingModule,
+        MatDialogModule,
+        TranslateModule.forRoot()
+      ],
+      providers: [
+        {
+          provide: MatDialogRef, useValue: {
+            close: () => {
             }
           }
-        ],
-        declarations: [ListMerchantComponent],
-        schemas: [NO_ERRORS_SCHEMA]
-      })
+        },
+        { provide: MerchantsService, useClass: MockMerchantsService }
+      ],
+      declarations: [ListMerchantComponent],
+      schemas: [NO_ERRORS_SCHEMA]
+    })
       .compileComponents();
   }));
 

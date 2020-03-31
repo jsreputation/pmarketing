@@ -1,10 +1,11 @@
-import { ISurvey, SurveyQuestionType } from '@perx/core';
+import { ISurvey, SurveyQuestionType } from '@perxtech/core';
 
 export const survey: ISurvey = {
   id: '1',
   title: 'What all women should know about cancers',
   backgroundImgUrl: 'https://cdn.perxtech.io/content/prudential/BreastCancer_Banner.jpg',
   subTitle: 'A private event hosted by Prudential & Parkway Cancer Centre in conjunction with Breast Cancer month. Join us at our event to hear from Medical Oncologist sharing with you important insight to the condition.',
+  results: {},
   questions: [
     {
       question: 'Details',

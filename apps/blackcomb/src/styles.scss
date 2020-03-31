@@ -31,8 +31,8 @@ body {
   color: var(--font_color);
 }
 
-.mat-primary {
-  color: var(--primary) !important;
+.mat-dialog-container {
+  background-color: var(--popup_background_colour) !important;
 }
 
 button {
@@ -41,8 +41,8 @@ button {
 }
 
 button:disabled {
-  background-color: var(--background) !important;
-  color: var(--disabled_text_color) !important;
+  background-color: var(--disabled_text_color) !important;
+  color: white !important;
 }
 
 button.mat-primary {
@@ -60,7 +60,7 @@ button.mat-accent {
 }
 
 button.mat-default {
-  background-color: #fff !important;
+  background-color: var(--background) !important;
   color: var(--font_color) !important;
 }
 
@@ -96,10 +96,14 @@ button.mat-stroked-button {
   color: var(--accent);
 }
 
-.logo {
-  height: 100%;
+.toolbar {
+  padding: 1.6rem calc(1.3rem + 24px) 1.6rem 1.3rem !important;
 }
 
-.toolbar {
-  padding: 1.6rem 0 !important;
+.logoWrapper {
+  height: 100%;
+
+  .logo {
+    height: 100%;
+  }
 }

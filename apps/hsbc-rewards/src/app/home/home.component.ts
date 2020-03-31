@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IReward, RewardsService, LoyaltyService, ILoyalty, IProfile } from '@perx/core';
-import { ITabConfig, IPrice } from '@perx/core';
+import { IReward, RewardsService, LoyaltyService, ILoyalty, IProfile } from '@perxtech/core';
+import { ITabConfig, IPrice } from '@perxtech/core';
 import { Observable, of, Subject, throwError } from 'rxjs';
 import { flatMap, map, filter } from 'rxjs/operators';
 import { MatTabChangeEvent } from '@angular/material/tabs';
@@ -95,7 +95,7 @@ export class HomeComponent implements OnInit {
       if (profile && profile.lastName) {
         return `Welcome ${profile.lastName},`;
       }
-      return `Welcome`;
+      return 'Welcome';
     };
     this.subTitleFn = () => `Your total points as of ${this.datePipe.transform(new Date(), 'ddMMMyy')}`;
     this.summaryExpiringFn = (): string => '';

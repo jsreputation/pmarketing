@@ -15,17 +15,17 @@ import {
   IVoucherService,
   ThemesService,
   ConfigService
-} from '@perx/core';
+} from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SoundModule } from '../sound/sound.module';
 import { of } from 'rxjs';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 
 describe('PuzzleComponent', () => {
   let component: PuzzleComponent;
   let fixture: ComponentFixture<PuzzleComponent>;
-  const campaignServiceStub = {
+  const campaignServiceStub: Partial<ICampaignService> = {
     getCampaigns: () => of([])
   };
   const mockCard: IStampCard = {
@@ -38,6 +38,7 @@ describe('PuzzleComponent', () => {
       totalSlots: 1,
       rewards: []
     },
+    results: {},
     displayProperties: {
       numberOfCols: 1,
       numberOfRows: 1,
@@ -50,17 +51,17 @@ describe('PuzzleComponent', () => {
       displayCampaignAs: 'puzzle',
     },
   };
-  const stampServiceStub = {
+  const stampServiceStub: Partial<StampService> = {
     getStamps: () => of([]),
     getCurrentCard: () => of(mockCard),
     getCards: () => of([mockCard])
   };
 
-  const configServiceStub = {
+  const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of()
   };
 
-  const authenticationServiceStub = {};
+  const authenticationServiceStub: Partial<AuthenticationService> = {};
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [PuzzleComponent],
@@ -78,7 +79,7 @@ describe('PuzzleComponent', () => {
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: StampService, useValue: stampServiceStub },
         { provide: AuthenticationService, useValue: authenticationServiceStub },
-        { provide: ConfigService, useValue: configServiceStub},
+        { provide: ConfigService, useValue: configServiceStub },
         {
           provide: ActivatedRoute,
           useValue: {

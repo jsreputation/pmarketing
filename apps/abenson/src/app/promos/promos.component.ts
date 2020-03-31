@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FeedItem, FeedReaderService } from '@perx/core';
+import { FeedItem, FeedReaderService } from '@perxtech/core';
 import { MatDialog } from '@angular/material';
-import { PopupComponent } from '../popup/popup.component';
 import { Observable } from 'rxjs';
+import { PopupComponent } from '../popup/popup.component';
 
 interface FeedItemGroup {
   label: string;
@@ -36,7 +36,7 @@ export class PromosComponent implements OnInit {
   public readMore(item: FeedItem): void {
     this.dialog.open(PopupComponent, {
       panelClass: 'app-full-bleed-dialog',
-      data: item,
+      data: { ...item, description: item.descriptionWithURL, hideButton: true },
       height: '85vh',
       minWidth: '35.5rem',
       maxWidth: '94vw'

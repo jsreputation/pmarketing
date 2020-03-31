@@ -1,4 +1,4 @@
-import { IStampCard, StampCardState, StampState } from '@perx/core';
+import { IStampCard, StampCardState, StampState } from '@perxtech/core';
 
 export const stampCard: IStampCard[] = [
   {
@@ -15,6 +15,7 @@ export const stampCard: IStampCard[] = [
         { rewardPosition: 2 }
       ]
     },
+    results: {},
     displayProperties: {
       numberOfCols: 1,
       numberOfRows: 1,

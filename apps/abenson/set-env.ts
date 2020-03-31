@@ -17,19 +17,22 @@ const envConfigFile = `export const environment = {
   production: ${process.env.PRODUCTION ? process.env.PRODUCTION : false},
   preAuth: ${process.env.PREAUTH ? process.env.PREAUTH : false},
   isWhistler: ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : false},
-  baseHref: '${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}',
-  custom: {comingSoon: '${process.env.COMING_SOON ? process.env.COMING_SOON : true}'}
+  baseHref: '${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}'
 };
 `;
 
 const appConfigFile = `{
-  "apiHost": "${process.env.APIHOST ? process.env.APIHOST : 'https://api.getperx.io'}",
+  "apiHost": "${process.env.APIHOST ? process.env.APIHOST : 'https://api.perxtech.io'}",
   "production": ${process.env.PRODUCTION ? process.env.PRODUCTION : false},
   "preAuth": ${process.env.PREAUTH ? process.env.PREAUTH : false},
   "isWhistler": ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : false},
   "baseHref": "${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}",
   "sourceType": "${process.env.SOURCE_TYPE ? process.env.SOURCE_TYPE : ''}",
-  "redirectAfterLogin": "${process.env.redirectAfterLogin ? process.env.redirectAfterLogin : '/wallet'}"
+  "redirectAfterLogin": "${process.env.redirectAfterLogin ? process.env.redirectAfterLogin : '/wallet'}",
+  "custom": {
+    "comingSoon": ${process.env.COMING_SOON ? process.env.COMING_SOON : false},
+    "cardBrandingImage": "${process.env.CARD_BRANDING_IMG ? process.env.CARD_BRANDING_IMG : 'assets/abenson_plus_banner.png'}"
+  }
 }
 `;
 

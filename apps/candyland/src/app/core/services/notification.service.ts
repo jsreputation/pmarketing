@@ -3,9 +3,9 @@ import { ClHttpParams } from '@cl-helpers/http-params';
 import { map } from 'rxjs/operators';
 import { JsonApiParser } from '@cl-helpers/json-api-parser';
 import { Injectable } from '@angular/core';
-import { NotificationHttpService } from '@cl-core/http-services/notification-http.service';
+import { NotificationHttpService } from '@perxtech/whistler-services';
 import { NotificationHttpAdapter } from '@cl-core/http-adapters/notification-http-adapter';
-import { IWNotificationAttributes, IJsonApiListPayload } from '@perx/whistler';
+import { IWNotificationAttributes, IJsonApiListPayload } from '@perxtech/whistler';
 import { ICampaignNotificationGroup, IChannel } from '@cl-core/models/campaign/channel-interface';
 
 @Injectable({
@@ -15,8 +15,10 @@ export class NotificationService {
 
   constructor(private notificationHttpService: NotificationHttpService) { }
 
-  public createNotification(data: ICampaignNotificationGroup, campaignId: string)
-    : Observable<IJsonApiListPayload<IWNotificationAttributes>> {
+  public createNotification(
+    data: ICampaignNotificationGroup,
+    campaignId: string
+  ): Observable<IJsonApiListPayload<IWNotificationAttributes>> {
     const sendData = NotificationHttpAdapter.transformToNotification(data, campaignId);
     return this.notificationHttpService.createNotification({ data: sendData });
   }
@@ -32,11 +34,11 @@ export class NotificationService {
           const notifications = JsonApiParser.parseDataWithIncludes(
             res,
             NotificationHttpAdapter.handlerTransformNotifications, {
-            'Ros::Comm::Template': {
-              fieldName: 'template',
-              adapterFunction: NotificationHttpAdapter.transformTemplate
-            }
-          });
+              'Ros::Comm::Template': {
+                fieldName: 'template',
+                adapterFunction: NotificationHttpAdapter.transformTemplate
+              }
+            });
           return NotificationHttpAdapter.transformToChannelForm(notifications);
         }
         ),
@@ -47,8 +49,10 @@ export class NotificationService {
     return this.notificationHttpService.deleteNotification(id);
   }
 
-  public updateNotification(data: ICampaignNotificationGroup, campaignId: string)
-    : Observable<IJsonApiListPayload<IWNotificationAttributes>> {
+  public updateNotification(
+    data: ICampaignNotificationGroup,
+    campaignId: string
+  ): Observable<IJsonApiListPayload<IWNotificationAttributes>> {
     const sendData = NotificationHttpAdapter.transformToNotification(data, campaignId);
     return this.notificationHttpService.updateNotification(sendData.id, { data: sendData });
   }

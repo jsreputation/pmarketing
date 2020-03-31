@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SpinComponent } from './spin.component';
-import { GameModule } from '@perx/core';
+import { GameModule } from '@perxtech/core';
 
 describe('SpinComponent', () => {
   let component: SpinComponent;
@@ -9,10 +9,10 @@ describe('SpinComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SpinComponent ],
-      imports: [ GameModule ]
+      declarations: [SpinComponent],
+      imports: [GameModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

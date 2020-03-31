@@ -1,10 +1,18 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import {ConfigToMappedSlotPipe, ConfigToSlicesPipe, SpinComponent} from './spin.component';
-import {SpinTheWheelComponent} from '@perx/core';
 import {
+  async,
+  ComponentFixture,
+  TestBed,
+} from '@angular/core/testing';
+
+import {
+  GameModule,
   GameType
-} from '@perx/core';
+} from '@perxtech/core';
+
+import {
+  ConfigToSlicesPipe,
+  SpinComponent,
+} from './spin.component';
 
 const dummyIGame = {
   id: 1,
@@ -13,7 +21,7 @@ const dummyIGame = {
   config: {
     numberOfWedges: 5,
     rewardSlots: [1, 2, 4],
-    colorCtrls: {0: 'black', 1: 'yellow', 2: 'green', 3: 'blue', 4: 'red'},
+    colorCtrls: { 0: 'black', 1: 'yellow', 2: 'green', 3: 'blue', 4: 'red' },
     rewardIcon: '',
     wheelImg: '',
     wheelPosition: '',
@@ -34,10 +42,11 @@ describe('SpinComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         SpinComponent,
-        SpinTheWheelComponent,
-        ConfigToSlicesPipe,
-        ConfigToMappedSlotPipe
-      ]
+        ConfigToSlicesPipe
+      ],
+      imports: [
+        GameModule,
+      ],
     }).compileComponents();
   }));
 

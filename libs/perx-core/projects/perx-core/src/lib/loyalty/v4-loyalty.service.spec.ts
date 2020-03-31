@@ -78,7 +78,7 @@ interface IV4Loyalty {
   points_currency: string;
   points_to_currency_rate: number;
   aging_points?: IV4AgingPoints[];
-
+  tiers: any[];
   points_history?: IV4PointHistory[];
 }
 
@@ -147,7 +147,89 @@ const loyaltyRaw: IV4Loyalty = {
     points_balance_converted_to_currency: 6,
     points_date: 'test',
     properties: {}
-  }]
+  }],
+  tiers: [
+    {
+      id: 1,
+      name: 'Bronze',
+      attained: false,
+      points_requirement: 0,
+      points_difference: 0,
+      points_difference_converted_to_currency: 0,
+      multiplier_point: null,
+      multiplier_points_to_currency_rate: null,
+      images: [
+        {
+          url: 'https://perx-cdn.s3.amazonaws.com/merchant/membership_type/images/1/bronze-e19b0160-a4a3-4e10-ae3f-c6809b4e68b7.png',
+          type: ''
+        }
+      ],
+      tags: [],
+      custom_fields: null
+    },
+    {
+      id: 36,
+      name: 'random',
+      attained: false,
+      points_requirement: 500,
+      points_difference: 0,
+      points_difference_converted_to_currency: 0,
+      multiplier_point: null,
+      multiplier_points_to_currency_rate: null,
+      images: [],
+      tags: [],
+      custom_fields: null
+    },
+    {
+      id: 37,
+      name: 'Platinum',
+      attained: true,
+      points_requirement: 1000,
+      points_difference: 0,
+      points_difference_converted_to_currency: 0,
+      multiplier_point: null,
+      multiplier_points_to_currency_rate: null,
+      images: [],
+      tags: [],
+      custom_fields: null
+    },
+    {
+      id: 2,
+      name: 'Silver',
+      attained: false,
+      points_requirement: 20000,
+      points_difference: 10200,
+      points_difference_converted_to_currency: 10200,
+      multiplier_point: null,
+      multiplier_points_to_currency_rate: null,
+      images: [
+        {
+          url: 'https://perx-cdn.s3.amazonaws.com/merchant/membership_type/images/2/silver-e0cac38f-6dba-4dd2-af92-47b1b7891b1a.png',
+          type: ''
+        }
+      ],
+      tags: [],
+      custom_fields: null
+    },
+    {
+      id: 3,
+      name: 'Gold',
+      attained: false,
+      points_requirement: 50000,
+      points_difference: 40200,
+      points_difference_converted_to_currency: 40200,
+      multiplier_point: null,
+      multiplier_points_to_currency_rate: null,
+      images: [
+        {
+          url: 'https://perx-cdn.s3.amazonaws.com/merchant/membership_type/images/3/gold-8c758cfb-e318-4129-a28f-35c02d0d9b09.png',
+          type: ''
+        }
+      ],
+      tags: [],
+      custom_fields: null
+    }
+  ]
 };
 describe('LoyaltyService', () => {
   beforeEach(() => TestBed.configureTestingModule({
@@ -163,20 +245,7 @@ describe('LoyaltyService', () => {
   });
 
   it('should work with static method', () => {
-    expect(V4LoyaltyService.v4LoyaltyToLoyalty({
-      id: 1,
-      name: 'test',
-      description: 'test',
-      begins_at: '',
-      current_membership_tier_id: 4,
-      current_membership_tier_name: '',
-      membership_number: '',
-      points_balance: 3,
-      points_balance_converted_to_currency: 1,
-      points_currency: '10',
-      points_to_currency_rate: 33,
-      aging_points: [{ expiring_on_date: '1.1.1', points_expiring: 33 }]
-    })).toBeTruthy();
+    expect(V4LoyaltyService.v4LoyaltyToLoyalty(loyaltyRaw)).toBeTruthy();
     expect(V4LoyaltyService.v4PointHistoryToPointHistory(historyRaw)).toBeTruthy();
     const rewardTransaction = {
       ...transactionRaw,
@@ -199,8 +268,8 @@ describe('LoyaltyService', () => {
 
   it('getLoyalties', fakeAsync(inject([V4LoyaltyService, HttpClient],
     (loyaltyService: V4LoyaltyService, http: HttpClient) => {
-      const spy = spyOn(V4LoyaltyService, 'v4LoyaltyToLoyalty');
-      spyOn(http, 'get').and.returnValue(of({
+      const spy = jest.spyOn(V4LoyaltyService, 'v4LoyaltyToLoyalty');
+      jest.spyOn(http, 'get').mockReturnValue(of({
         data: [{
           id: 1
         }]
@@ -212,8 +281,8 @@ describe('LoyaltyService', () => {
 
   it('getLoyalty', fakeAsync(inject([V4LoyaltyService, HttpClient],
     (loyaltyService: V4LoyaltyService, http: HttpClient) => {
-      const spy = spyOn(V4LoyaltyService, 'v4LoyaltyToLoyalty');
-      spyOn(http, 'get').and.returnValue(of({ data: loyaltyRaw }));
+      const spy = jest.spyOn(V4LoyaltyService, 'v4LoyaltyToLoyalty');
+      jest.spyOn(http, 'get').mockReturnValue(of({ data: loyaltyRaw }));
       loyaltyService.getLoyalty().subscribe(() => { });
       tick();
       expect(spy).toHaveBeenCalled();
@@ -221,19 +290,19 @@ describe('LoyaltyService', () => {
 
   it('should get all transactions', fakeAsync(inject([V4LoyaltyService, HttpClient],
     (loyaltyService: V4LoyaltyService, http: HttpClient) => {
-      const spy = spyOn(http, 'get').and.returnValue(of({ data: loyaltyRaw }));
+      const spy = jest.spyOn(http, 'get').mockReturnValue(of({ data: loyaltyRaw }));
       loyaltyService.getAllTransactions().subscribe(() => { });
       tick();
       loyaltyService.getTransactions(1).subscribe(() => { });
       tick();
-      spy.and.returnValue(of({ data: loyaltyRaw, meta: { historyMeta: 'test', total_pages: 3 } }));
+      spy.mockReturnValue(of({ data: loyaltyRaw, meta: { historyMeta: 'test', total_pages: 3 } }));
       loyaltyService.getAllTransactions().subscribe((val) => expect(val[0].id).toBe(1));
       tick();
     })));
 
   it('should get transaction history', fakeAsync(inject([V4LoyaltyService, HttpClient],
     (loyaltyService: V4LoyaltyService, http: HttpClient) => {
-      spyOn(http, 'get').and.returnValue(of({ data: [transactionRaw] }));
+      jest.spyOn(http, 'get').mockReturnValue(of({ data: [transactionRaw] }));
       loyaltyService.getTransactionHistory().subscribe((val) => expect(val[0].id));
       tick();
     })));

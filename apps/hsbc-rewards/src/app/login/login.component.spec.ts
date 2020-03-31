@@ -4,7 +4,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule, MatProgressSpinnerModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DebugElement, Type } from '@angular/core';
-import { AuthenticationModule, AuthenticationService, NotificationService, ConfigService } from '@perx/core';
+import { AuthenticationModule, AuthenticationService, NotificationService, ConfigService } from '@perxtech/core';
 
 import { LoginComponent } from './login.component';
 
@@ -14,16 +14,16 @@ import { Router } from '@angular/router';
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-  const notificationServiceStub = { $popup: { subscribe: () => ({}) } };
-  const routerSub = { navigateByUrl: () => { } };
-  const authenticationServiceStub = {
+  const notificationServiceStub: Partial<NotificationService> = { $popup: of({}) };
+  const routerSub: Partial<Router> = { navigateByUrl: () => Promise.resolve(true) };
+  const authenticationServiceStub: Partial<AuthenticationService> = {
     $failedAuth: of(true),
-    getInterruptedUrl: () => null,
-    login: of({ bearer_token: 'SWWERW' }),
-    getAppToken: () => of({}),
+    getInterruptedUrl: () => 'url',
+    login: () => of(),
+    getAppToken: () => of(),
     getAppAccessToken: () => 'token'
   };
-  const configServiceStub = {
+  const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of()
   };
   let debugElement: DebugElement;
@@ -80,6 +80,7 @@ describe('LoginComponent', () => {
   it('should redirect to home', fakeAsync(() => {
     authSpy.and.returnValue(of(void 0));
     spyOn(router, 'navigateByUrl').and.stub();
+    router.navigateByUrl('home');
     fixture.detectChanges();
     component.onSubmit();
     tick();

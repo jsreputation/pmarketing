@@ -34,8 +34,8 @@ describe('MetaCardComponent', () => {
   let component: MetaCardComponent;
   let fixture: ComponentFixture<MetaCardComponent>;
 
-  const dataServiceStub = {
-    getData: () => of([])
+  const dataServiceStub: Partial<DataService> = {
+    getData: () => of()
   };
 
   beforeEach(async(() => {

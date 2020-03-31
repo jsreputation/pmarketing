@@ -6,7 +6,6 @@ import { EngagementsListPageComponent } from './containers/engagements-list-page
 import { EngagementsComponent } from './containers/engagements/engagements.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
-import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
 import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter.module';
 import { TabsFilterModule } from '@cl-shared/table/tabs-filter/tabs-filter.module';
 import {
@@ -17,7 +16,7 @@ import {
   MatButtonModule, MatFormFieldModule, MatRadioModule, MatSelectModule
 } from '@angular/material';
 import { MatMenuModule } from '@angular/material/menu';
-import { ButtonModule } from '@cl-shared/components/button/button.module';
+import { ButtonModule, StatusLabelModule } from '@perxtech/candyshop';
 import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
 import { InkModule } from '@cl-shared/components/ink/ink.module';
 import { CreateEngagementPopupModule } from '../shared/containers/create-engagement-popup/create-engagement-popup.module';

@@ -28,7 +28,7 @@ import {
   ICampaignService,
   IConfig,
   ConfigService
-} from '@perx/core';
+} from '@perxtech/core';
 
 import * as uuid from 'uuid';
 
@@ -44,7 +44,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
   private campaignId: number | null = null;
   private campaignData: ICampaign | null = null;
 
-  private destroy$: Subject<any> = new Subject();
+  private destroy$: Subject<void> = new Subject();
   private appConfig: IConfig<void>;
 
   constructor(
@@ -149,9 +149,9 @@ export class LoadingComponent implements OnInit, OnDestroy {
 
   private initCampaignEndedPopup(): void {
     this.notificationService.addPopup({
-      title: `Oops, the Campaign has ended`,
-      text: `We'll be in touch soon.`,
-      imageUrl: `assets/beer_and_tea.png`,
+      title: 'Oops, the Campaign has ended',
+      text: 'We\'ll be in touch soon.',
+      imageUrl: 'assets/beer_and_tea.png',
       buttonTxt: 'Back To Wallet',
     });
   }

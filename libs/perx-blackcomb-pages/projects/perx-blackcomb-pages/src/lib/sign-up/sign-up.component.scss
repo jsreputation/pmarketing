@@ -1,25 +1,17 @@
 @import "../mixins";
 
 .content-container {
-  width: 100%;
-  min-height: 100%;
-  background-color: var(--primary);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include loginContentContainer;
 }
 
 .sign-up {
-  border-radius: 0.5rem;
-  margin: 2rem 1.6rem;
-  padding: 1.6rem;
-  background: white;
+  @include loginCard;
 
   .error_msg {
     padding-bottom: 1rem;
 
     span {
-      color: #eb202f;
+      //color: #eb202f;
       font-size: 1.5rem;
     }
   }
@@ -27,13 +19,17 @@
   button {
     width: 100%;
     box-sizing: border-box;
-    padding: 1.2rem 1.5rem;
-    background: #fff;
+    background: var(--button_background_color);
   }
 
   .subtitle {
     margin-top: 1rem;
 
     @include form-subtitle;
+  }
+
+  .loading-spin {
+    display: inline-block;
+    margin: auto;
   }
 }

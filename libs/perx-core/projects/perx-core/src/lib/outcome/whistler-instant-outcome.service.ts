@@ -1,12 +1,10 @@
 import { InstantOutcomeService } from './instant-outcome.service';
-import { IOutcome } from './models/outcome.model';
+import { IOutcome, IOutcomeMsg } from './models/outcome.model';
 import { Observable, combineLatest, throwError, of } from 'rxjs';
 import { map, switchMap, mergeMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Config } from '../config/config';
-import { IReward } from '../rewards/models/reward.model';
-import { RewardsService } from '../rewards/rewards.service';
 import {
   IWInstantOutcomeDisplayProperties,
   IWInstantOutcomeTransactionAttributes,
@@ -19,9 +17,13 @@ import {
   IWCampaignDisplayProperties,
   IJsonApiPostItem,
   WInstantOutcomeStatus,
-  IWAssignedAttributes
-} from '@perx/whistler';
+  IWAssignedAttributes,
+  IWProperties
+} from '@perxtech/whistler';
 import { IEngagementTransaction } from '../game/game.model';
+import { IVoucher } from '../vouchers/models/voucher.model';
+import { IVoucherService } from '../vouchers/ivoucher.service';
+import { WhistlerVouchersService } from '../vouchers/whistler-vouchers.service';
 
 @Injectable({
   providedIn: 'root'
@@ -32,9 +34,13 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
   constructor(
     private http: HttpClient,
     private config: Config,
-    private rewardsService: RewardsService
+    private voucherService: IVoucherService
   ) {
     this.baseUrl = `${config.apiHost}/instant-outcome/transactions/`;
+  }
+
+  private get whistlerVoucherService(): WhistlerVouchersService {
+    return this.voucherService as WhistlerVouchersService;
   }
 
   private getEngagementId(
@@ -42,12 +48,12 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
   ): Observable<IWCampaignProperties | never> {
     return this.http
       .get<IJsonApiItemPayload<IWCampaignAttributes>>(
-        `${this.config.apiHost}/campaign/entities/${campaignId}`
-      )
+      `${this.config.apiHost}/campaign/entities/${campaignId}`
+    )
       .pipe(
         switchMap(res =>
           !(res.data && res.data.attributes)
-            ? throwError(`Unable to find Response`)
+            ? throwError('Unable to find Response')
             : of({
               engagementId: res.data.attributes.engagement_id,
               display_properties: res.data.attributes.display_properties || {}
@@ -63,7 +69,7 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
       switchMap((campaign: IWCampaignProperties) => {
         displayProps = campaign.display_properties || {};
         return this.http.get<
-          IJsonApiItemPayload<IWInstantOutcomeEngagementAttributes>
+        IJsonApiItemPayload<IWInstantOutcomeEngagementAttributes>
         >(
           `${this.config.apiHost}/instant-outcome/engagements/${
             campaign.engagementId
@@ -71,35 +77,51 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
         );
       }),
       map(res => res.data.attributes.display_properties),
-      map((outcomeData: IWInstantOutcomeDisplayProperties) => ({
-        title: outcomeData.title,
-        subTitle: outcomeData.sub_title,
-        button: outcomeData.button,
-        banner: outcomeData.banner,
-        backgroundImgUrl: outcomeData.background_img_url,
-        cardBackgroundImgUrl: outcomeData.card_background_img_url,
-        displayProperties: { ...outcomeData.displayProperties, ...displayProps }
-      }))
+      map((outcomeData: IWInstantOutcomeDisplayProperties) => {
+        const results: { [key: string]: IOutcomeMsg } = {};
+        if (displayProps && displayProps.noRewardsPopUp) {
+          results.noOutcome = WhistlerInstantOutcomeService.outcomeToOutcome(displayProps.noRewardsPopUp);
+        }
+        return {
+          title: outcomeData.title,
+          subTitle: outcomeData.sub_title,
+          button: outcomeData.button,
+          banner: outcomeData.banner,
+          backgroundImgUrl: outcomeData.background_img_url,
+          cardBackgroundImgUrl: outcomeData.card_background_img_url,
+          results,
+          displayProperties: { ...outcomeData.displayProperties, ...displayProps }
+        };
+      })
     );
   }
 
-  public claim(campaignId: number): Observable<IReward[]> {
-    const buildBody: Observable<IJsonApiPostItem<IWInstantOutcomeTxnReq>> =
-    this.getEngagementId(campaignId)
-      .pipe(
-        map((campaign: IWCampaignProperties ): IJsonApiPostItem<IWInstantOutcomeTxnReq> => ({
-          data: {
-            type: 'transactions',
-            attributes: {
-              engagement_id: campaign.engagementId,
-              campaign_entity_id: campaignId,
-              status: WInstantOutcomeStatus.confirmed
-            }
-          }
-        }))
-      );
+  private static outcomeToOutcome(outcome: IWProperties): IOutcomeMsg {
+    return {
+      title: outcome.headLine ? outcome.headLine : '',
+      subTitle: outcome.subHeadLine ? outcome.subHeadLine : '',
+      button: outcome.buttonTxt ? outcome.buttonTxt : '',
+      image: outcome.imageURL
+    };
+  }
 
-    const getRewardIds: Observable<number[]> = buildBody.pipe(
+  public claim(campaignId: number): Observable<IVoucher[]> {
+    const buildBody: Observable<IJsonApiPostItem<IWInstantOutcomeTxnReq>> =
+      this.getEngagementId(campaignId)
+        .pipe(
+          map((campaign: IWCampaignProperties): IJsonApiPostItem<IWInstantOutcomeTxnReq> => ({
+            data: {
+              type: 'transactions',
+              attributes: {
+                engagement_id: campaign.engagementId,
+                campaign_entity_id: campaignId,
+                status: WInstantOutcomeStatus.confirmed
+              }
+            }
+          }))
+        );
+
+    return buildBody.pipe(
       switchMap(
         (body: IJsonApiPostItem<IWInstantOutcomeTxnReq>): Observable<IJsonApiItemPayload<IWInstantOutcomeTransactionAttributes>> =>
           this.http.post<IJsonApiItemPayload<IWInstantOutcomeTransactionAttributes>>(
@@ -111,13 +133,13 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
       map((res: IJsonApiItemPayload<IWInstantOutcomeTransactionAttributes>) => res.data),
       map((data: IJsonApiItem<IWInstantOutcomeTransactionAttributes>) => data.attributes.results),
       switchMap(results => results !== undefined ? of(results) : throwError('Empty results object')),
-      map(results => results.attributes.results),
-      map((results): number[] => results.map(result => result.attributes.source_id))
-    );
-
-    return getRewardIds.pipe(
-      map((ids: number[]): Observable<IReward>[] => ids.map(id => this.rewardsService.getReward(id))),
-      mergeMap((queries: Observable<IReward>[]): Observable<IReward[]> => combineLatest(...queries))
+      mergeMap(
+        res => (
+          combineLatest(...res.attributes.results.map(
+            (result: IJsonApiItem<IWAssignedAttributes>) => this.whistlerVoucherService.getFullVoucher(result)
+          ))
+        )
+      )
     );
   }
 
@@ -168,10 +190,10 @@ export class WhistlerInstantOutcomeService implements InstantOutcomeService {
     };
     return this.http
       .patch<IJsonApiItemPayload<IWInstantOutcomeTransactionAttributes>>(
-        `${this.config.apiHost}/instant-outcome/transactions/${transactionId}`,
-        body,
-        { headers: { 'Content-Type': 'application/vnd.api+json' } }
-      )
+      `${this.config.apiHost}/instant-outcome/transactions/${transactionId}`,
+      body,
+      { headers: { 'Content-Type': 'application/vnd.api+json' } }
+    )
       .pipe(map(() => void 0));
   }
 }

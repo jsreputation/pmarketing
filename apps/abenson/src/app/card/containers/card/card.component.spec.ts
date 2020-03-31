@@ -5,7 +5,7 @@ import {
 } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { NgxBarcodeModule } from 'ngx-barcode';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import {
@@ -13,8 +13,8 @@ import {
   LoyaltyModule,
   LoyaltyService,
   ProfileService,
-  ITransaction,
-} from '@perx/core';
+  ITransaction, ConfigService, IConfig,
+} from '@perxtech/core';
 
 import { CardComponent } from './card.component';
 
@@ -36,9 +36,13 @@ describe('CardComponent', () => {
   let component: CardComponent;
   let fixture: ComponentFixture<CardComponent>;
   let loyaltyService: LoyaltyService;
-  const loyaltyServiceStub = {
+  const loyaltyServiceStub: Partial<LoyaltyService> = {
     getLoyalties: () => of([loyalty]),
+    getLoyalty: () => of(loyalty),
     getTransactions: () => of([])
+  };
+  const configServiceStub: Partial<ConfigService> = {
+    readAppConfig: <T>(): Observable<IConfig<T>> => of()
   };
   const mockProfile: IProfile = {
     id: 1,
@@ -46,7 +50,7 @@ describe('CardComponent', () => {
     firstName: '',
     lastName: ''
   };
-  const profileServiceStub = {
+  const profileServiceStub: Partial<ProfileService> = {
     whoAmI: () => of(mockProfile)
   };
 
@@ -62,6 +66,7 @@ describe('CardComponent', () => {
       ],
       providers: [
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
+        { provide: ConfigService, useValue: configServiceStub },
         { provide: ProfileService, useValue: profileServiceStub }
       ]
     })
@@ -85,11 +90,11 @@ describe('CardComponent', () => {
   });
 
   it('should change tab, trigger onscroll', () => {
-    const spy = spyOn(loyaltyService, 'getTransactions').and.returnValue(of());
+    const loyaltySpy = spyOn(loyaltyService, 'getTransactions').and.returnValue(of());
     component.transactionsEnded = false;
     component.tabChanged({ index: 1 } as MatTabChangeEvent);
     component.onScroll();
-    expect(spy).toHaveBeenCalled();
+    expect(loyaltySpy).toHaveBeenCalled();
   });
 
 });

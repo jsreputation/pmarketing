@@ -1,7 +1,7 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { MacaronService } from './macaron.service';
-import { IReward, CampaignType, CampaignState, ICampaign } from '@perx/core';
+import { IReward, CampaignType, CampaignState, ICampaign } from '@perxtech/core';
 
 describe('GameOutcomeService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
@@ -12,13 +12,15 @@ describe('GameOutcomeService', () => {
   });
 
   it('should return running out macaron', inject([MacaronService], (macaronService: MacaronService) => {
+    const endDate = new Date();
+    endDate.setDate(endDate.getDate() + 1);
     const reward: IReward = {
       id: 1,
       name: 'Reward Test',
       description: 'Reward Description',
       subtitle: 'Reward Subtitle',
       validFrom: new Date(),
-      validTo: new Date(),
+      validTo: endDate,
       rewardBanner: '',
       termsAndConditions: '',
       howToRedeem: '',

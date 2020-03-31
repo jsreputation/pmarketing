@@ -1,4 +1,4 @@
-import { PagesObject } from '@perx/core';
+import { PagesObject } from '@perxtech/core';
 
 export const pagesObject: PagesObject = {
   pages: [

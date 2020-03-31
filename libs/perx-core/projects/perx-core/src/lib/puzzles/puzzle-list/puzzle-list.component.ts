@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter, Input, OnChanges, SimpleChanges, OnDestroy, OnInit } from '@angular/core';
 import { StampService } from '../../stamp/stamp.service';
 import { IStampCard, StampCardState, StampState } from '../../stamp/models/stamp.model';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -10,8 +10,9 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./puzzle-list.component.scss']
 })
 export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
-
-  public puzzles: IStampCard[] | null;
+  @Input('cards')
+  public puzzles: Observable<IStampCard[]> | null = null;
+  private cards: IStampCard[] | null = null;
 
   @Input()
   public repeatGhostCount: number = 10;
@@ -37,15 +38,8 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
 
   @Output()
   public completed: EventEmitter<void> = new EventEmitter<void>();
-  private destroy$: Subject<any> = new Subject();
 
-  private initTotal(): void {
-    if (this.puzzles !== null && this.puzzles.length > 0) {
-      this.total = this.puzzles[0].displayProperties.totalSlots || null;
-    } else {
-      this.total = null;
-    }
-  }
+  private destroy$: Subject<void> = new Subject();
 
   constructor(private stampService: StampService) {
   }
@@ -58,40 +52,78 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
     if (!this.puzzleTextFn) {
       this.puzzleTextFn = () => 'new pieces';
     }
+
+    if (this.puzzles) {
+      this.puzzles
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((res: IStampCard[]) => {
+          this.initTotal(res);
+          // assume all is completed
+          let completed = true;
+          // loop over all puzzles
+          for (const puzzle of res) {
+            if (puzzle.stamps === undefined || puzzle.stamps.length === 0) {
+              // if there is no stamps objet at all then, it is not completed
+              completed = false;
+            } else if (puzzle.stamps.some(stamp => stamp.state === StampState.issued)) {
+              // if any transction is issued, then it is not all completed
+              completed = false;
+            }
+
+            // if one is not completed, we do not need to loop any further
+            if (!completed) {
+              break;
+            }
+          }
+          // if completed emit an event.
+          if (completed) {
+            this.completed.emit();
+          }
+        });
+    }
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.campaignId) {
       this.puzzles = null;
+      this.cards = null;
       if (this.campaignId !== null) {
-        this.stampService.getCards(this.campaignId)
-          .pipe(takeUntil(this.destroy$))
-          .subscribe((res: IStampCard[]) => {
-            this.puzzles = res;
-            this.initTotal();
-            // assume all is completed
-            let completed = true;
-            // loop over all puzzles
-            for (const puzzle of this.puzzles) {
-              if (puzzle.stamps === undefined || puzzle.stamps.length === 0) {
-                // if there is no stamps objet at all then, it is not completed
-                completed = false;
-              } else if (puzzle.stamps.some(stamp => stamp.state === StampState.issued)) {
-                // if any transction is issued, then it is not all completed
-                completed = false;
-              }
+        this.puzzles = this.stampService.getCards(this.campaignId);
+        this.puzzles
+          .pipe(
+            takeUntil(this.destroy$)
+          )
+          .subscribe(
+            (res: IStampCard[]) => {
+              this.cards = res;
+              this.initTotal(res);
+              // assume all is completed
+              let completed = true;
+              // loop over all puzzles
+              for (const puzzle of res) {
+                if (puzzle.stamps === undefined || puzzle.stamps.length === 0) {
+                  // if there is no stamps objet at all then, it is not completed
+                  completed = false;
+                } else if (puzzle.stamps.some(stamp => stamp.state === StampState.issued)) {
+                  // if any transction is issued, then it is not all completed
+                  completed = false;
+                }
 
-              // if one is not completed, we do not need to loop any further
-              if (!completed) {
-                break;
+                // if one is not completed, we do not need to loop any further
+                if (!completed) {
+                  break;
+                }
+              }
+              // if completed emit an event.
+              if (completed) {
+                this.completed.emit();
               }
             }
-            // if completed emit an event.
-            if (completed) {
-              this.completed.emit();
-            }
-          });
+          );
       }
+    }
+    if (changes.puzzles && this.puzzles) {
+      this.puzzles.subscribe(res => this.cards = res);
     }
   }
 
@@ -102,15 +134,12 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
   // in the UX only mark the 1st active puzzle as active
   public isActive(puzzle: IStampCard): boolean {
     // if there is no puzzle in list, it should never happen but return false
-    if (!Array.isArray(this.puzzles)) {
-      return false;
-    }
-    // if we have no information on stamps then it should not be active
-    if (!puzzle.stamps && puzzle.displayProperties.displayCampaignAs === 'puzzle') {
+    if (!Array.isArray(this.cards)) {
       return false;
     }
 
-    if (!puzzle.stamps && puzzle.displayProperties.displayCampaignAs === 'stamp_card') {
+    // if we have no information on stamps then it should not be active
+    if (!puzzle.stamps && ['puzzle', 'stamp_card'].includes(puzzle.displayProperties.displayCampaignAs)) {
       return false;
     }
 
@@ -123,7 +152,7 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
       }
 
       // get list of active puzzles
-      const activePuzzles = this.puzzles.filter(p => p.state === StampCardState.active &&
+      const activePuzzles = this.cards.filter(p => p.state === StampCardState.active &&
         p.stamps &&
         p.stamps.filter(st => st.state === StampState.redeemed).length < totalSlots);
 
@@ -136,15 +165,13 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
       if (puzzle.id === activePuzzles[0].id) {
         return true;
       }
-    }
-
-    if (puzzle.displayProperties.displayCampaignAs === 'stamp_card') {
+    } else if (puzzle.displayProperties.displayCampaignAs === 'stamp_card') {
       if (puzzle.stamps && puzzle.stamps.filter(st => st.state === StampState.redeemed).length >= totalSlots) {
         return false;
       }
 
       // get list of active puzzles
-      const activePuzzles = this.puzzles.filter(p => p.state === StampCardState.active &&
+      const activePuzzles = this.cards.filter(p => p.state === StampCardState.active &&
         p.stamps &&
         p.stamps.filter(st => st.state === StampState.redeemed).length < totalSlots);
 
@@ -186,5 +213,13 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  private initTotal(cards: IStampCard[]): void {
+    if (cards !== null && cards.length > 0) {
+      this.total = cards[0].displayProperties.totalSlots || null;
+    } else {
+      this.total = null;
+    }
   }
 }

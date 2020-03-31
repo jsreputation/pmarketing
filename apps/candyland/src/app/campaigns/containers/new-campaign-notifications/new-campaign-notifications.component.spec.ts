@@ -15,6 +15,11 @@ import { BehaviorSubject } from 'rxjs';
 import { ICampaign } from '@cl-core/models/campaign/campaign';
 import { MatCheckboxModule, MatSelectModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AudiencesService, StampsService } from '@cl-core-services';
+import { MockStampsService } from '@cl-shared/test-components/providers/mock-stamps.service';
+import { MockAudienceService } from '@cl-shared/test-components/providers/mock-audience.service';
+import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.service';
+import { MockLoyaltyCustomTierService } from '@cl-shared/test-components/providers/mock-loyalty-custom-tier.service';
 
 describe('NewCampaignNotificationsComponent', () => {
   let component: NewCampaignNotificationsComponent;
@@ -31,6 +36,7 @@ describe('NewCampaignNotificationsComponent', () => {
   const activatedRouteStub = {
     snapshot: {
       params: {
+        url: '1',
         id: 42
       }
     }
@@ -54,10 +60,13 @@ describe('NewCampaignNotificationsComponent', () => {
         RouterTestingModule,
         { provide: CampaignCreationStoreService, useValue: campaignCreationStoreServiceStub },
         { provide: StepConditionService, useValue: stepConditionServiceStub },
-        { provide: ActivatedRoute, useValue: activatedRouteStub }
+        { provide: ActivatedRoute, useValue: activatedRouteStub },
+        { provide: StampsService, useClass: MockStampsService },
+        { provide: AudiencesService, useClass: MockAudienceService },
+        { provide: LoyaltyCustomTierService, useClass: MockLoyaltyCustomTierService },
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

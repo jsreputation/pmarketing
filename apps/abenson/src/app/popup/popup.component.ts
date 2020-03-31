@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { FeedItem, ITheme } from '@perx/core';
+import { FeedItem, ITheme } from '@perxtech/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, Optional } from '@angular/core';
+import {Component, Input, Output, EventEmitter, Optional} from '@angular/core';
 import { IQuestion, SurveyQuestionType, IAnswer, IPoints, IErrors } from '../models/survey.model';
 
 @Component({
@@ -6,7 +6,7 @@ import { IQuestion, SurveyQuestionType, IAnswer, IPoints, IErrors } from '../mod
   templateUrl: './question.component.html',
   styleUrls: ['./question.component.scss']
 })
-export class QuestionComponent implements OnChanges {
+export class QuestionComponent {
 
   @Input()
   public id: number;
@@ -29,9 +29,9 @@ export class QuestionComponent implements OnChanges {
   @Input()
   public isSubQuestion: boolean;
 
-  // Used to flush group tree
-  @Input()
-  public flush: boolean;
+  // Used to flush group tree is passed into each question component if used
+  // @Input()
+  // public flush: boolean;
 
   @Output()
   public updateAnswers: EventEmitter<IAnswer> = new EventEmitter<IAnswer>();
@@ -45,15 +45,6 @@ export class QuestionComponent implements OnChanges {
   public errorState: IErrors = {};
 
   public point: number;
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.flush) {
-      this.flush = changes.flush.currentValue;
-      if (this.flush) {
-        this.questionValidation();
-      }
-    }
-  }
 
   public get surveyQuestionType(): typeof SurveyQuestionType { return SurveyQuestionType; }
 
@@ -69,35 +60,12 @@ export class QuestionComponent implements OnChanges {
     this.questionValidation();
   }
 
-  public updateGroupPoint(point: number): void {
-    this.point = point;
-    this.updatePoints.emit({ questionId: this.question.id, point });
-  }
-
   public updateNonGroupPoint(): void {
-    if (this.question.payload.type !== SurveyQuestionType.questionGroup) {
-      this.point = this.question && this.question.required ?
-        (this.question.answer === 0 || (this.question.answer && this.question.answer.length > 0) ? 1 : 0) : 1;
-      this.updatePoints.emit({ questionId: this.question.id, point: this.point });
-    }
-  }
-
-  public next(): void {
-    this.questionValidation();
-    if (!this.errorState.hasError) {
-      this.moveToNextQuestion();
-    } else if (this.question.payload.type === SurveyQuestionType.questionGroup) {
-      this.flush = !this.flush;
-    }
-  }
-
-  public moveToNextQuestion(): void {
-    this.updateNonGroupPoint();
-    this.updateQuestionPointer.emit('next');
-  }
-
-  public back(): void {
-    this.updateQuestionPointer.emit('back');
+    // if (this.question.payload.type !== SurveyQuestionType.questionGroup) {
+    this.point = this.question && this.question.required ?
+      (this.question.answer === 0 || (this.question.answer && this.question.answer.length > 0) ? 1 : 0) : 1;
+    // }
+    this.updatePoints.emit({ questionId: this.question.id, point: this.point });
   }
 
   public validateEmail(email: string): boolean {
@@ -122,3 +90,38 @@ export class QuestionComponent implements OnChanges {
     }
   }
 }
+
+
+// note: because next is handled now by parent it needs to be bought up
+
+// public next(): void {
+//   this.questionValidation();
+//   if (!this.errorState.hasError) {
+//     this.moveToNextQuestion();
+//   } else if (this.question.payload.type === SurveyQuestionType.questionGroup) {
+//     this.flush = !this.flush;
+//   }
+// }
+
+// public moveToNextQuestion(): void {
+//   this.updateNonGroupPoint();
+//   this.updateQuestionPointer.emit('next');
+// }
+//
+// public back(): void {
+//   this.updateQuestionPointer.emit('back');
+// }
+
+// public updateGroupPoint(point: number): void {
+//   this.point = point;
+//   this.updatePoints.emit({ questionId: this.question.id, point });
+// }
+
+// public ngOnChanges(changes: SimpleChanges): void {
+// if (changes.flush) {
+//   this.flush = changes.flush.currentValue;
+//   if (this.flush) {
+//     this.questionValidation();
+//   }
+// }
+// }

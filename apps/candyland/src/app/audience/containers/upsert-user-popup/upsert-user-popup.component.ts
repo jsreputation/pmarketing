@@ -26,6 +26,8 @@ import {
 } from '@cl-core-services';
 
 import { Type } from '../../audience.model';
+import { OptionConfig } from '@perxtech/candyshop';
+import { IAudiencesUserForm } from '@cl-core/models/audiences/user.interface';
 
 @Component({
   selector: 'cl-upsert-user-popup',
@@ -37,7 +39,7 @@ import { Type } from '../../audience.model';
 export class UpsertUserPopupComponent implements OnInit {
   public form: FormGroup;
   public pools: any;
-  public countriesList$: Observable<ICountries>;
+  public countriesList$: Observable<ICountries[]>;
   public genders: OptionConfig[] = [
     { title: 'Male', value: 'male' },
     { title: 'Female', value: 'female' }

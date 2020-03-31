@@ -6,7 +6,7 @@ COPY . /service
 WORKDIR /service
 RUN yarn
 
-ARG apihost='https://api.getperx.io'
+ARG apihost='https://api.perxtech.io'
 ARG basehref='/'
 ARG preauth='false'
 # iswhistler is used by all microsites

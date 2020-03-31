@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { HkbnValidators } from '../../../helpers/hkbn-validators';
-import { ProfileService, NotificationService } from '@perx/core';
+import { ProfileService, NotificationService } from '@perxtech/core';
 import { map, flatMap, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -38,10 +38,10 @@ export class UpdateEmailComponent implements OnInit {
     this.profileService.updateUserInfo(this.updateEmailGroup.value)
       .pipe(flatMap(() => this.translateService.get('EMAIL_SUCCESS_UPDATE')),
         catchError(() => this.translateService.get('EMAIL_ALREADY_EXISTS').pipe(throwError))).subscribe((message) => {
-          this.notification.addSnack(message);
-          this.router.navigate(['/account']);
-        }, (err) => {
-          this.notification.addSnack(err);
-        });
+        this.notification.addSnack(message);
+        this.router.navigate(['/account']);
+      }, (err) => {
+        this.notification.addSnack(err);
+      });
   }
 }

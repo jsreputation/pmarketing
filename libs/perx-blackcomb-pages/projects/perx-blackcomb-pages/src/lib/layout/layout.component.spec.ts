@@ -1,12 +1,12 @@
 import { async, TestBed, ComponentFixture, fakeAsync } from '@angular/core/testing';
 import { Title } from '@angular/platform-browser';
-import { Router} from '@angular/router';
+import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { LayoutComponent } from './layout.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatToolbarModule, MatIconModule, MatDialogModule } from '@angular/material';
-import { ThemesService, AuthenticationService, ConfigModule, ConfigService, ITheme } from '@perx/core';
+import { ThemesService, AuthenticationService, ConfigModule, ConfigService, ITheme } from '@perxtech/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 
@@ -31,7 +31,7 @@ describe('LayoutComponent', () => {
     $failedAuth: of(true)
   };
 
-  const configServiceStub = {
+  const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of()
   };
 

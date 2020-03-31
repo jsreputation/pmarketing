@@ -1,4 +1,4 @@
-import { SurveyModule as PerxSurveyModule, ICampaignService, ISurvey, SurveyService } from '@perx/core';
+import { SurveyModule as PerxSurveyModule, ICampaignService, ISurvey, SurveyService } from '@perxtech/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SurveyComponent } from './survey.component';
@@ -10,6 +10,7 @@ describe('SurveyComponent', () => {
   let component: SurveyComponent;
   let fixture: ComponentFixture<SurveyComponent>;
   const mockSurvey: ISurvey = {
+    results: {},
     title: '',
     questions: []
   };
@@ -21,7 +22,7 @@ describe('SurveyComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SurveyComponent ],
+      declarations: [SurveyComponent],
       imports: [
         MatCardModule,
         MatButtonModule,
@@ -39,7 +40,7 @@ describe('SurveyComponent', () => {
           provide: SurveyService, useValue: surveyServiceStub
         }
       ],
-      schemas: [ ]
+      schemas: []
     })
       .compileComponents();
   }));

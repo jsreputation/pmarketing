@@ -6,17 +6,17 @@ describe('LandingComponent', () => {
   let component: LandingComponent;
   let fixture: ComponentFixture<LandingComponent>;
   const router = {
-    navigate: jasmine.createSpy('navigate')
+    navigate: jest.fn()
   };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LandingComponent ],
+      declarations: [LandingComponent],
       providers: [
         { provide: Router, useValue: router }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

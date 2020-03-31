@@ -10,7 +10,7 @@ import {
   RewardsModule,
   RewardsService,
   ThemesService,
-} from '@perx/core';
+} from '@perxtech/core';
 
 import { RewardsListComponent } from './rewards-list.component';
 
@@ -18,13 +18,13 @@ describe('RewardsListComponent', () => {
   let component: RewardsListComponent;
   let fixture: ComponentFixture<RewardsListComponent>;
 
-  const themesServiceStub = {
+  const themesServiceStub: Partial<ThemesService> = {
     getThemeSetting: () => of()
   };
 
   beforeEach(async(() => {
-    const rewardsServiceStub = {
-      getAllRewards: () => ({ subscribe: () => ({}) })
+    const rewardsServiceStub: Partial<RewardsService> = {
+      getAllRewards: () => (of([]))
     };
     TestBed.configureTestingModule({
       imports: [RewardsModule],

@@ -1,4 +1,4 @@
-import { IWRewardDisplayProperties } from '@perx/whistler';
+import { IWRewardDisplayProperties } from '@perxtech/whistler';
 
 export interface IReward {
   id: number;
@@ -12,6 +12,7 @@ export interface IReward {
   rewardBanner: string;
   merchantImg?: string;
   rewardPrice?: IPrice[];
+  rewardState?: IRewardState | null;
   merchantId?: number;
   merchantName?: string;
   merchantWebsite?: string;
@@ -22,6 +23,13 @@ export interface IReward {
   redemptionText?: string;
   rawPayload?: any;
   displayProperties?: IWRewardDisplayProperties;
+}
+
+export interface IRewardState {
+  label: string;
+  class: string;
+  rewardBalance?: number;
+  isButtonEnabled: boolean;
 }
 
 export interface ICatalog {

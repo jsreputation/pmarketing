@@ -1,10 +1,10 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { VouchersModule, IVoucherService } from '@perx/core';
+import { VouchersModule, IVoucherService } from '@perxtech/core';
 import { of } from 'rxjs';
 
-const vouchersServiceStub = {
+const vouchersServiceStub: Partial<IVoucherService> = {
   getAll: () => of([])
 };
 
@@ -37,7 +37,7 @@ describe('AppComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it(`should have as title 'oracle-pay'`, () => {
+  it('should have as title \'oracle-pay\'', () => {
     expect(component.title).toEqual('oracle-pay');
   });
 

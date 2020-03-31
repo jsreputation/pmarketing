@@ -15,11 +15,11 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TextMaskModule } from 'angular2-text-mask';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { IProfile, AuthenticationService, ProfileService, NotificationService } from '@perx/core';
+import { IProfile, AuthenticationService, ProfileService, NotificationService } from '@perxtech/core';
 import { of, throwError } from 'rxjs';
 import { Type } from '@angular/core';
 
-const accountDataStub: IProfile = {
+const accountDataStub: Partial<IProfile> = {
   id: 0,
   firstName: 'Temp',
   state: 'issued',
@@ -27,14 +27,14 @@ const accountDataStub: IProfile = {
   phone: '999888199'
 };
 
-const authenticationServiceStub = {
+const authenticationServiceStub: Partial<AuthenticationService> = {
   requestVerificationToken: () => of(null)
 };
-const notificationServiceStub = {
+const notificationServiceStub: Partial<NotificationService> = {
   addPopup: () => ({}), addSnack: () => { }
 };
 
-const profileServiceStub = {
+const profileServiceStub: Partial<ProfileService> = {
   setCustomProperties: () => of(null)
 };
 

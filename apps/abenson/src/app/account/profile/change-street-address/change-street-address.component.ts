@@ -3,6 +3,7 @@ import {
   OnInit,
 } from '@angular/core';
 import {
+  AbstractControl,
   FormBuilder,
   FormGroup,
   Validators,
@@ -12,7 +13,7 @@ import { Location } from '@angular/common';
 import {
   ICustomProperties,
   ProfileService,
-} from '@perx/core';
+} from '@perxtech/core';
 
 @Component({
   selector: 'app-change-street-address',
@@ -22,6 +23,10 @@ import {
 export class ChangeStreetAddressComponent implements OnInit {
   public streetAddressChangeForm: FormGroup;
   private customProperties: ICustomProperties;
+
+  public get newStreetAddress(): AbstractControl | null {
+    return this.streetAddressChangeForm.get('newStreetAddress');
+  }
 
   constructor(
     private fb: FormBuilder,
@@ -49,7 +54,7 @@ export class ChangeStreetAddressComponent implements OnInit {
       this.profileService.setCustomProperties(this.customProperties).subscribe(() => {
         this.location.back();
       },
-      (err) => {console.log(err); });
+      (err) => { console.log(err); });
     }
     return;
   }

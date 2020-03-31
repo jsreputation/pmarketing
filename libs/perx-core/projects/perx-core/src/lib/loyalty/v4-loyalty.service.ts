@@ -1,6 +1,5 @@
 import {
   Injectable,
-  Optional,
 } from '@angular/core';
 import {
   HttpClient,
@@ -28,9 +27,10 @@ import {
   ITransactionHistory
 } from './models/loyalty.model';
 
-import { Config } from '../config/config';
 import { IV4Reward, IV4Tag } from '../rewards/v4-rewards.service';
 import { ICustomProperties } from '../profile/profile.model';
+import { ConfigService } from '../config/config.service';
+import { IConfig } from '../config/models/config.model';
 
 const DEFAULT_PAGE_COUNT: number = 10;
 
@@ -60,7 +60,7 @@ interface IV4Loyalty {
   points_currency: string;
   points_to_currency_rate: number;
   aging_points?: IV4AgingPoints[];
-
+  tiers: any[]; // will do proper mapping later on
   points_history?: IV4PointHistory[];
 }
 
@@ -82,7 +82,12 @@ interface IV4PointHistory {
   points_balance: number;
   points_balance_converted_to_currency: number;
   points_date: string;
-  properties: {};
+  properties: {
+    descr?: string;
+    sku?: string;
+    qty?: string;
+    untprc?: string;
+  };
 }
 
 interface IV4RewardTransactionHistory {
@@ -141,13 +146,31 @@ export class V4LoyaltyService extends LoyaltyService {
 
   constructor(
     private http: HttpClient,
-    @Optional() config: Config
+    private configService: ConfigService
   ) {
     super();
-    this.apiHost = config.apiHost as string;
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig<void>) => {
+        this.apiHost = config.apiHost as string;
+      });
   }
 
   public static v4LoyaltyToLoyalty(loyalty: IV4Loyalty): ILoyalty {
+    const copiedLoyalty: IV4Loyalty = { ...loyalty };
+    let nextTier;
+    let highestTierData;
+    let highestTier;
+    let highestPoints;
+    // they are in order, find the first one points_rqmt
+    if (copiedLoyalty.tiers && copiedLoyalty.tiers.length > 0) { // sort for extra assurance
+      nextTier = copiedLoyalty.tiers
+        .sort((tier1, tier2) => tier1.points_difference - tier2.points_difference)
+        .find(tier => tier.points_difference > 0);
+      // will improve > later on , name diff var to avoid linting shadowed var
+      highestPoints = Math.max(...copiedLoyalty.tiers.map(tier2 => tier2.points_requirement));
+      highestTierData = copiedLoyalty.tiers.find(tier3 => tier3.points_requirement === highestPoints);
+      highestTier = highestTierData ? highestTierData.name : undefined;
+    }
     return {
       id: loyalty.id,
       name: loyalty.name,
@@ -159,6 +182,10 @@ export class V4LoyaltyService extends LoyaltyService {
       pointsBalance: loyalty.points_balance,
       currencyBalance: loyalty.points_balance_converted_to_currency,
       currency: loyalty.points_currency,
+      nextTierPoints: nextTier ? nextTier.points_requirement : 0,
+      nextTierPointsDiff: nextTier ? nextTier.points_difference : 0,
+      nextTierName: nextTier ? nextTier.name : '',
+      highestTier,
       expiringPoints: loyalty.aging_points && loyalty.aging_points.map(aging => ({
         expireDate: aging.expiring_on_date,
         points: aging.points_expiring
@@ -167,9 +194,13 @@ export class V4LoyaltyService extends LoyaltyService {
   }
 
   public static v4PointHistoryToPointHistory(pointHistory: IV4PointHistory): ITransaction {
+    const properties = pointHistory.properties;
     return {
       id: pointHistory.id,
-      name: pointHistory.name,
+      name: pointHistory.name || properties.descr,
+      sku: properties.sku,
+      quantity: properties.qty,
+      purchaseAmount: properties.untprc,
       points: pointHistory.points,
       pointsBalance: pointHistory.points_balance,
       currencyBalance: pointHistory.points_balance_converted_to_currency,

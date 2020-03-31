@@ -30,7 +30,7 @@ import {
   VouchersModule,
   ILoyalty,
   RewardsService, ThemesService
-} from '@perx/core';
+} from '@perxtech/core';
 
 import { HomeComponent } from './home.component';
 
@@ -49,14 +49,14 @@ describe('HomeComponent', () => {
   let rewardsService: RewardsService;
   let translateService: TranslateService;
 
-  const themesServiceStub = {
+  const themesServiceStub: Partial<ThemesService> = {
     getThemeSetting: () => of()
   };
-  const loyaltyServiceStub = {
+  const loyaltyServiceStub: Partial<LoyaltyService> = {
     getLoyalty: (): Observable<ILoyalty> => of(mockLoyalty),
     getLoyalties: (): Observable<ILoyalty[]> => of([mockLoyalty])
   };
-  const rewardServiceStub = {
+  const rewardServiceStub: Partial<RewardsService> = {
     getAllRewards: (): Observable<IReward[]> => of([])
   };
   beforeEach(async(() => {
@@ -74,7 +74,8 @@ describe('HomeComponent', () => {
       providers: [
         {
           provide: ProfileService,
-          useValue: { whoAmI: () => of(null) } },
+          useValue: { whoAmI: () => of(null) }
+        },
         {
           provide: LoyaltyService,
           useValue: loyaltyServiceStub,

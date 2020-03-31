@@ -6,7 +6,7 @@ import { DashboardOverviewPageComponent } from 'src/app/dashboard/containers/das
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardPageComponent } from './containers/dashboard-page/dashboard-page.component';
 import { DashboardGameCardComponent } from './components/dashboard-game-card/dashboard-game-card.component';
-import { ButtonModule } from '@cl-shared/components/button/button.module';
+import { ButtonModule } from '@perxtech/candyshop';
 import { BusinessInsightComponent } from './components/business-insight/business-insight.component';
 import { CreateEngagementPopupModule } from '@cl-shared/containers/create-engagement-popup/create-engagement-popup.module';
 import { MatRadioModule, MatSelectModule, MatTabsModule } from '@angular/material';
@@ -16,7 +16,6 @@ import { VerticalBarChartModule } from '@cl-shared/charts/vertical-bar-chart/ver
 import { CirclePieChartModule } from '@cl-shared/charts/circle-pie-chart/circle-pie-chart.module';
 import { CalendarChartModule } from '@cl-shared/charts/calendar-chart/calendar-chart.module';
 import { PieChartModule } from '@cl-shared/charts/pie-chart/pie-chart.module';
-
 import { MapChartModule } from '@cl-shared/charts/map-chart/map-chart.module';
 import { TopFiveChartModule } from '@cl-shared/charts/top-five-chart/top-five-chart.module';
 import { HorizontalBarChartModule } from '@cl-shared/charts/horizontal-bar-chart/horizontal-bar-chart.module';

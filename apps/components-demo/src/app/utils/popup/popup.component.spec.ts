@@ -20,7 +20,7 @@ describe('PopupComponent', () => {
         MatInputModule,
         MatFormFieldModule ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

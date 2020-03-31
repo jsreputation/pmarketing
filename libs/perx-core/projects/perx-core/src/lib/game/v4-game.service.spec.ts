@@ -14,6 +14,7 @@ import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 import { ConfigModule } from '../config/config.module';
 import { RedemptionType } from '../perx-core.models';
+import { ConfigService } from '../../public-api';
 
 describe('V4GameService', () => {
   let httpTestingController: HttpTestingController;
@@ -24,6 +25,9 @@ describe('V4GameService', () => {
     preAuth: false,
     baseHref: '/'
   };
+  const configServiceStub: Partial<ConfigService> = {
+    readAppConfig: () => of(environment)
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -31,6 +35,9 @@ describe('V4GameService', () => {
         HttpClientTestingModule,
         ConfigModule.forRoot({ ...environment })
       ],
+      providers: [
+        { provide: ConfigService, useValue: configServiceStub }
+      ]
     });
 
     httpTestingController = TestBed.get<HttpTestingController>(HttpTestingController as Type<HttpTestingController>);
@@ -46,7 +53,7 @@ describe('V4GameService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should play one game', (done: DoneFn) => {
+  it('should play one game', (done: jest.DoneCallback) => {
     const service: V4GameService = TestBed.get(V4GameService);
     service.play(1)
       .subscribe(() => {
@@ -63,7 +70,7 @@ describe('V4GameService', () => {
     httpTestingController.verify();
   });
 
-  it('should get games from campaign Id', (done: DoneFn) => {
+  it('should get games from campaign Id', (done: jest.DoneCallback) => {
     const service: V4GameService = TestBed.get(V4GameService);
     service.getGamesFromCampaign(1)
       .subscribe((games: IGame[]) => {
@@ -89,7 +96,7 @@ describe('V4GameService', () => {
     httpTestingController.verify();
   });
 
-  it('should get many games from campaign Id', (done: DoneFn) => {
+  it('should get many games from campaign Id', (done: jest.DoneCallback) => {
     const service: V4GameService = TestBed.get(V4GameService);
     service.getGamesFromCampaign(1)
       .subscribe((games: IGame[]) => {
@@ -165,7 +172,7 @@ describe('V4GameService', () => {
     httpTestingController.verify();
   });
 
-  it('should get a shake the tree game from its id', (done: DoneFn) => {
+  it('should get a shake the tree game from its id', (done: jest.DoneCallback) => {
     const service: V4GameService = TestBed.get(V4GameService);
     service.get(42)
       .subscribe((game: IGame) => {
@@ -211,7 +218,7 @@ describe('V4GameService', () => {
     httpTestingController.verify();
   });
 
-  it('should get a pinata game from its id', (done: DoneFn) => {
+  it('should get a pinata game from its id', (done: jest.DoneCallback) => {
     const service: V4GameService = TestBed.get(V4GameService);
     service.get(42)
       .subscribe((game: IGame) => {
@@ -246,9 +253,9 @@ describe('V4GameService', () => {
   });
 
   it('handle error', fakeAsync(inject([V4GameService, HttpClient], (gameService: V4GameService, http: HttpClient) => {
-    spyOn(http, 'get').and.returnValue(of({ data: { game_type: '' } }));
+    jest.spyOn(http, 'get').mockReturnValue(of({ data: { game_type: '' } }));
     const handleErr = { err(): void { } };
-    const spy = spyOn(handleErr, 'err');
+    const spy = jest.spyOn(handleErr, 'err');
     gameService.get(1).subscribe(() => { }, handleErr.err);
     tick();
     expect(spy).toHaveBeenCalled();
@@ -299,8 +306,8 @@ describe('V4GameService', () => {
         user_account_id: 1,
       };
       const successHandle = { success(): void { } };
-      spyOn(http, 'get').and.returnValue(of({ data: game }));
-      const spy = spyOn(successHandle, 'success');
+      jest.spyOn(http, 'get').mockReturnValue(of({ data: game }));
+      const spy = jest.spyOn(successHandle, 'success');
       gameService.get(1).subscribe(successHandle.success);
       tick();
       expect(spy).toHaveBeenCalled();
@@ -312,13 +319,13 @@ describe('V4GameService', () => {
 
   it('play should filter voucher ', fakeAsync(inject([V4GameService, HttpClient],
     (gameService: V4GameService, http: HttpClient) => {
-      spyOn(http, 'put').and.returnValue(of({
+      jest.spyOn(http, 'put').mockReturnValue(of({
         data: {
           outcomes: [{ outcome_type: 'reward', redemption_type: RedemptionType.none }]
         }
       }));
       const handle = { success(): void { } };
-      const spy = spyOn(handle, 'success');
+      const spy = jest.spyOn(handle, 'success');
       gameService.play(1).subscribe(handle.success);
       tick();
       expect(spy).toHaveBeenCalled();

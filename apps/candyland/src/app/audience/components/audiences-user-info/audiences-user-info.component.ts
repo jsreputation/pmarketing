@@ -5,6 +5,7 @@ import {
 } from '@angular/core';
 
 import Utils from '@cl-helpers/utils';
+import { IAudiencesUserForm } from '@cl-core/models/audiences/user.interface';
 
 @Component({
   selector: 'cl-audiences-user-info',

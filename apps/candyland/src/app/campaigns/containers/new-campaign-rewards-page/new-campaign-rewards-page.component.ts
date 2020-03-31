@@ -9,6 +9,7 @@ import { StepConditionService } from 'src/app/campaigns/services/step-condition.
 import { AbstractStepWithForm } from '../../step-page-with-form';
 import { ICampaign } from '@cl-core/models/campaign/campaign';
 import { NewCampaignRewardsStampsFormService } from '../../services/new-campaign-rewards-stamps-form.service';
+import { ITenantsProperties } from '@cl-core/models/settings/tenants.properties.interface';
 
 @Component({
   selector: 'cl-new-campaign-rewards-page',
@@ -42,7 +43,7 @@ export class NewCampaignRewardsPageComponent extends AbstractStepWithForm implem
     private formService: NewCampaignRewardsStampsFormService,
     private route: ActivatedRoute
   ) {
-    super(1, store, stepConditionService);
+    super(1.1, store, stepConditionService);
     this.initForm();
   }
 

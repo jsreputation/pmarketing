@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { AuthenticationService, TokenStorage } from '@perx/core';
+import { AuthenticationService, TokenStorage } from '@perxtech/core';
 import { HomeComponent } from './home.component';
 import { HeaderComponent } from '../header/header.component';
 import { SalesContactComponent } from '../sales-contact/sales-contact.component';
@@ -13,31 +13,31 @@ describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
 
-  const locationStub = {
-    back: () => {}
+  const locationStub: Partial<Location> = {
+    back: () => { }
   };
 
-  const tokenStorageStub = {
-    clearAppInfoProperty: () => {}
+  const tokenStorageStub: Partial<TokenStorage> = {
+    clearAppInfoProperty: () => { }
   };
 
   beforeEach(async(() => {
     const routerStub = { navigate: () => ({}) };
 
     TestBed.configureTestingModule({
-      declarations: [ HomeComponent, HeaderComponent, SalesContactComponent ],
-      imports: [ MatToolbarModule, MatIconModule, TranslateModule.forRoot() ],
+      declarations: [HomeComponent, HeaderComponent, SalesContactComponent],
+      imports: [MatToolbarModule, MatIconModule, TranslateModule.forRoot()],
       providers: [
         { provide: Router, useValue: routerStub },
         { provide: Location, useValue: locationStub },
         {
           provide: AuthenticationService,
-          useValue: {logout: () => null}
+          useValue: { logout: () => null }
         },
-        { provide: TokenStorage, useValue: tokenStorageStub}
+        { provide: TokenStorage, useValue: tokenStorageStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

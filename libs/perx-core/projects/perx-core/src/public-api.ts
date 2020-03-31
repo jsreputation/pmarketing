@@ -3,7 +3,6 @@
  * Public API Surface of perx-core
  */
 export { PerxCoreModule } from './lib/perx-core.module';
-
 /**
  * Shared
  */
@@ -11,7 +10,10 @@ export {
   isEmptyString,
   isEmptyArray,
 } from './lib/utils/shared/helpers.util';
-export { RedemptionType } from './lib/perx-core.models';
+export {
+  RedemptionType,
+  IMessageResponse,
+} from './lib/perx-core.models';
 
 /**
  * Merchants
@@ -48,20 +50,23 @@ export { BarcodeRedemptionComponent } from './lib/vouchers/barcode-redemption/ba
  * Authentication
  */
 export { AuthenticationModule } from './lib/auth/authentication/authentication.module';
-export { AuthenticationService, RequiresOtpError, IMessageResponse } from './lib/auth/authentication/authentication.service';
+export { AuthenticationService, RequiresOtpError } from './lib/auth/authentication/authentication.service';
 export { TokenStorage } from './lib/utils/storage/token-storage.service';
-export { IChangePasswordData, ISignUpData } from './lib/auth/authentication/models/authentication.model';
+export { IChangePasswordData, IChangePhoneData, ISignUpData } from './lib/auth/authentication/models/authentication.model';
 export { IFormsService } from './lib/auth/authentication/iforms.service';
+export { ProtectedGuard } from './lib/auth/authentication/protected.guard';
 
 /**
  * Campaigns
  */
 export { CampaignModule } from './lib/campaign/campaign.module';
-export { ICampaignService } from './lib/campaign/icampaign.service';
+export { CampaignServiceModule } from './lib/campaign/campaign.service.module';
+export { ICampaignService, ICampaignFilterOptions } from './lib/campaign/icampaign.service';
 export {
   CampaignType,
   CampaignState,
   ICampaign,
+  CampaignLandingPage
 } from './lib/campaign/models/campaign.model';
 export { ExpireTimerComponent } from './lib/campaign/reward-popup/expire-timer/expire-timer.component';
 export { RewardPopupComponent } from './lib/campaign/reward-popup/reward-popup.component';
@@ -80,7 +85,10 @@ export { StampsCardsListComponent } from './lib/stamp/stamps-cards-list/stamps-c
 /**
  *  Games
  */
-export { GameModule } from './lib/game/game.module';
+export {
+  GameModule
+} from './lib/game/game.module';
+export { GameServiceModule } from './lib/game/game.service.module';
 export {
   IGame,
   GameType,
@@ -142,6 +150,7 @@ export {
   ICatalog,
   ICategoryTags,
   IPrice,
+  IRewardState
 } from './lib/rewards/models/reward.model';
 export { ITabConfig, ITabConfigExtended } from './lib/rewards/rewards-list-tabbed/rewards-list-tabbed.component';
 export { RewardsCollectionComponent } from './lib/rewards/rewards-collection/rewards-collection.component';
@@ -157,6 +166,7 @@ export {
   IPopupConfig,
   PopUpClosedCallBack
 } from './lib/utils/popup/popup.component';
+export { SortRewardsPipe, SortingMode } from './lib/utils/directives/sort-rewards-pipe';
 export { NotificationService } from './lib/utils/notification/notification.service';
 export { PinInputComponent } from './lib/utils/pin-input/pin-input.component';
 export { FeedReaderService, FeedItem } from './lib/utils/feed-reader.service';
@@ -168,6 +178,11 @@ export { LanguageService } from './lib/utils/language/language.service';
 export { LanguageInterceptor } from './lib/utils/language.interceptor';
 export { LocaleIdFactory } from './lib/utils/language/locale-id.factory';
 export { FeedItemPopupComponent } from './lib/utils/feed-item-popup/feed-item-popup.component';
+export { StripHtmlPipe } from './lib/utils/directives/striphtml-pipe';
+export { TimerComponent } from './lib/utils/timer/timer.component';
+export { SafeHtmlPipe } from './lib/utils/safe-html.pipe';
+export { SafeUrlPipe } from './lib/utils/safe-url.pipe';
+
 /**
  * Puzzles
  */
@@ -205,7 +220,21 @@ export { LongTextComponent } from './lib/survey/question/long-text/long-text.com
 export { GroupComponent } from './lib/survey/question/group/group.component';
 export { RatingComponent } from './lib/survey/question/rating/rating.component';
 export { DateComponent } from './lib/survey/question/date/date.component';
-export { PasswordComponent} from './lib/survey/question/password/password.component';
+export { PasswordComponent } from './lib/survey/question/password/password.component';
+/**
+ * Quiz
+ */
+export { QuizModule } from './lib/quiz/quiz.module';
+export { QuizService, IAnswerResult } from './lib/quiz/quiz.service';
+export { IQuiz, QuizQuestionType, IQQuestion, IQAnswer, ITracker, IPoints } from './lib/quiz/models/quiz.model';
+export { QuizComponent } from './lib/quiz/quiz/quiz.component';
+export { QuizQuestionComponent } from './lib/quiz/question/question.component';
+export { QuizSelectComponent } from './lib/quiz/question/select/select.component';
+export { QuizPictureSelectComponent } from './lib/quiz/question/picture-select/picture-select.component';
+export { QuizLongTextComponent } from './lib/quiz/question/long-text/long-text.component';
+export { QuizRatingComponent } from './lib/quiz/question/rating/rating.component';
+export { ResultsComponent } from './lib/quiz/results/results.component';
+export { SecondsToStringPipe } from './lib/quiz/seconds-to-string.pipe';
 
 /**
  * Config
@@ -214,11 +243,21 @@ export { ConfigModule } from './lib/config/config.module';
 export { Config } from './lib/config/config';
 export { ConfigService } from './lib/config/config.service';
 export {
-  IConfig,
+  IConfig
+} from './lib/config/models/config.model';
+
+/**
+ * Settings
+ */
+export { SettingsModule } from './lib/settings/settings.module';
+export { SettingsService } from './lib/settings/settings.service';
+export {
+  IRssFeeds,
+  IRssFeedsData,
   IMicrositeSettings,
   PagesObject,
   AccountPageObject,
-} from './lib/config/models/config.model';
+} from './lib/settings/models/settings.model';
 
 /**
  * PrePlay

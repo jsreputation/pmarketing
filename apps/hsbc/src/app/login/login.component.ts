@@ -27,7 +27,8 @@ import {
   IMicrositeSettings,
   TokenStorage,
   isEmptyString,
-} from '@perx/core';
+  SettingsService,
+} from '@perxtech/core';
 import { IHsbcConfig } from '../model/IHsbc.model';
 
 @Component({
@@ -53,7 +54,8 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private configService: ConfigService,
     private notificationService: NotificationService,
-    private tokenStorage: TokenStorage
+    private tokenStorage: TokenStorage,
+    private settingsService: SettingsService
   ) {
     this.initForm();
   }
@@ -79,9 +81,9 @@ export class LoginComponent implements OnInit {
       this.appAccessTokenFetched = true;
     } else {
       this.authService.getAppToken().subscribe(() => {
-         this.appAccessTokenFetched = true;
+        this.appAccessTokenFetched = true;
       }, (err) => {
-        console.error('Error' + err);
+        console.error(`Error${err}`);
       });
     }
     this.configService.readAppConfig<IHsbcConfig>().pipe(
@@ -97,7 +99,7 @@ export class LoginComponent implements OnInit {
         }
       }),
       tap(() => this.tokenStorage.clearAppInfoProperty(['userAccessToken', 'appAccessToken'])),
-      switchMap((config: IConfig<IHsbcConfig>) => this.configService.getTenantAppSettings(config.sourceType as string))
+      switchMap((config: IConfig<IHsbcConfig>) => this.settingsService.getTenantAppSettings(config.sourceType as string))
     ).subscribe((settings: IMicrositeSettings) => {
       this.loginBackgroundUrl = settings.jsonValue.background as string;
       this.sourceType = settings.jsonValue.source_type as string;
@@ -110,7 +112,7 @@ export class LoginComponent implements OnInit {
     const password: string | null = this.hsbcCardLastFourDigits ? (this.hsbcCardLastFourDigits.value as string).toUpperCase() : null;
     this.errorMessage = null;
     if (isEmptyString(username) || isEmptyString(password)) {
-      throw new Error(`username or password is required`);
+      throw new Error('username or password is required');
     }
 
     this.authService.login(username as string, password as string).subscribe(

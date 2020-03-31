@@ -15,14 +15,21 @@
       *ngSwitchCase="gt.scratch"
       [willWin]="willWin"
       [game]="game"
-      (broken)=gameCompleted()
+      (loaded)="loadPreplay()"
+      (broken)=preplayGameCompleted()>
     ></perx-blackcomb-pages-scratch>
     <perx-blackcomb-pages-spin
       *ngSwitchCase="gt.spin"
       [willWin]="willWin"
       [game]="game"
-      (broken)=gameCompleted()
+      (loaded)="loadPlay()"
+      (broken)=gameCompletedLoad()
     ></perx-blackcomb-pages-spin>
+    <perx-blackcomb-pages-snake
+      *ngSwitchCase="gt.snake"
+      [game]="game"
+      (broken)=gameCompleted()>
+    </perx-blackcomb-pages-snake>
   </div>
   <mat-progress-bar *ngIf="progressValue" [value]="progressValue" class="loader"></mat-progress-bar>
 </div>

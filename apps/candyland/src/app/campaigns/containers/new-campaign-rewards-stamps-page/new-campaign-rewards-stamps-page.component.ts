@@ -7,6 +7,7 @@ import { StepConditionService } from 'src/app/campaigns/services/step-condition.
 import { AbstractStepWithForm } from 'src/app/campaigns/step-page-with-form';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
 import { oc } from 'ts-optchain';
+import { ITenantsProperties } from '@cl-core/models/settings/tenants.properties.interface';
 
 @Component({
   selector: 'cl-new-campaign-rewards-stamps-page',
@@ -26,7 +27,7 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
     private toggleControlService: ToggleControlService,
     private formService: NewCampaignRewardsStampsFormService
   ) {
-    super(1, store, stepConditionService);
+    super(1.1, store, stepConditionService);
     this.initForm();
   }
 
@@ -109,18 +110,18 @@ export class NewCampaignRewardsStampsPageComponent extends AbstractStepWithForm 
   }
 
   private clearFormArray(formArray: FormArray): void {
-    while (formArray.length !== 0) {
+    while (formArray && formArray.length !== 0) {
       formArray.removeAt(0);
     }
   }
 
   private initUnsequenceRules(): void {
-    this.clearFormArray(this.stampRule);
+    this.clearFormArray(this.rules);
     this.addStampRule();
   }
 
   private initSequenceRules(stampsNumber: number): void {
-    this.clearFormArray(this.stampRule);
+    this.clearFormArray(this.rules);
     for (let i = 0; i < stampsNumber; i++) {
       this.addStampRule();
     }

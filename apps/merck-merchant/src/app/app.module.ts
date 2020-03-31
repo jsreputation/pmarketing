@@ -27,12 +27,16 @@ import {
   MerchantAdminModule,
   LanguageInterceptor,
   ConfigService,
-  TokenStorage
-} from '@perx/core';
+  TokenStorage,
+  AuthenticationService,
+  ThemesService,
+  IConfig
+} from '@perxtech/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
 import { HomeComponent } from './home/home.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { QrscannerComponent } from './qrscanner/qrscanner.component';
@@ -44,22 +48,33 @@ import { OrderQuantityComponent } from './order/order-quantity/order-quantity.co
 import { RedeemComponent } from './redeem/redeem.component';
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { RegisterComponent } from './register/register.component';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslateService, TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { PerxTranslateLoader } from './custom-translate.service';
 import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
 import { TransactionPipe } from './transaction-history/transaction.pipe';
 import { TransactionHistoryPipe } from './transaction-history/transaction-history.pipe';
+import { tap, switchMap } from 'rxjs/operators';
 
-export const setLanguage = (translateService: TranslateService) => () => new Promise((resolve) => {
-  translateService.setDefaultLang(environment.defaultLang);
-  resolve();
-});
+export const setLanguage = (
+  translateService: TranslateService,
+  configService: ConfigService,
+  authService: AuthenticationService,
+  themesService: ThemesService) =>
+  () => new Promise((resolve) => {
+    configService.readAppConfig().pipe(
+      tap((config: IConfig<void>) => translateService.setDefaultLang(config.defaultLang || 'en')),
+      switchMap(() => authService.getAppToken()),
+      switchMap(() => themesService.getThemeSetting())
+    ).toPromise().then(() => resolve());
+  });
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
+    ForgotPasswordComponent,
     ResetPasswordComponent,
     QrscannerComponent,
     HeaderComponent,
@@ -74,7 +89,7 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
     TransactionHistoryPipe
   ],
   imports: [
-    ConfigModule.forRoot({...environment}),
+    ConfigModule.forRoot({ ...environment }),
     BrowserModule,
     ProfileModule,
     AppRoutingModule,
@@ -109,8 +124,11 @@ export const setLanguage = (translateService: TranslateService) => () => new Pro
     })
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true},
-    { provide: APP_INITIALIZER, useFactory: setLanguage, deps: [TranslateService], multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true },
+    {
+      provide: APP_INITIALIZER, useFactory: setLanguage,
+      deps: [TranslateService, ConfigService, AuthenticationService, ThemesService], multi: true
+    }
   ],
   bootstrap: [AppComponent],
   entryComponents: [CustomSnackbarComponent]

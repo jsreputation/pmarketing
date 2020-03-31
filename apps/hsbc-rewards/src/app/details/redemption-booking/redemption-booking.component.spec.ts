@@ -17,7 +17,7 @@ import {
   RewardsService,
   IReward,
   IVoucherService
-} from '@perx/core';
+} from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Observable, of } from 'rxjs';
@@ -29,7 +29,7 @@ describe('RedemptionBookingComponent', () => {
   let component: RedemptionBookingComponent;
   let fixture: ComponentFixture<RedemptionBookingComponent>;
 
-  const locationsServiceStub = {};
+  const locationsServiceStub: Partial<LocationsService> = {};
 
   const loyaltyServiceStub: Partial<LoyaltyService> = {
     getLoyalty: (): Observable<ILoyalty> => of(),
@@ -47,16 +47,16 @@ describe('RedemptionBookingComponent', () => {
     termsAndConditions: '',
     howToRedeem: '',
   };
-  const rewardsServiceStub = {
+  const rewardsServiceStub: Partial<RewardsService> = {
     getReward: () => of(mockReward)
   };
 
-  const vouchersServiceStub = {
+  const vouchersServiceStub: Partial<IVoucherService> = {
     reserveReward: () => of()
   };
 
   const dialogServiceStub = {
-    open: (componentRef: any, config: any) => of({componentRef, config})
+    open: (componentRef: any, config: any) => of({ componentRef, config })
   };
 
   beforeEach(async(() => {

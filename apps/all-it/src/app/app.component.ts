@@ -28,16 +28,16 @@ import {
   ITheme,
   AuthenticationService,
   ConfigService,
-} from '@perx/core';
+  IConfig,
+} from '@perxtech/core';
 import {
   HomeComponent,
   HistoryComponent,
   AccountComponent,
   SignIn2Component,
   WalletComponent,
-} from '@perx/blackcomb-pages';
+} from '@perxtech/blackcomb-pages';
 
-import { environment } from 'src/environments/environment';
 import { BACK_ARROW_URLS } from './app.constants';
 
 @Component({
@@ -68,14 +68,14 @@ export class AppComponent implements OnInit {
     private translate: TranslateService,
     private config: ConfigService
   ) {
-    this.preAuth = environment.preAuth;
   }
 
   public ngOnInit(): void {
     this.config.readAppConfig()
       .pipe(switchMap((conf) => this.translate.getTranslation(conf.defaultLang as string)))
-      .subscribe(() => {
+      .subscribe((config: IConfig<void>) => {
         this.translationLoaded = true;
+        this.preAuth = config.preAuth as boolean;
       });
     this.authService.$failedAuth.subscribe(
       res => {

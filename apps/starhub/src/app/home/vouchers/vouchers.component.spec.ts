@@ -3,19 +3,21 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { VouchersComponent } from './vouchers.component';
 import { MatCardModule, MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { IVoucherService } from '@perx/core';
+import { IVoucherService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 import { Router } from '@angular/router';
 import { Type } from '@angular/core';
 import { vouchers } from 'src/app/vouchers.mock';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 describe('VouchersComponent', () => {
   let component: VouchersComponent;
   let fixture: ComponentFixture<VouchersComponent>;
   let router: Router;
-  const vouchersServiceStub = {
-    getAll: () => of(vouchers)
+  const vouchersServiceStub: Partial<IVoucherService> = {
+    getAll: () => of(vouchers),
+    getFromPage: () => of(vouchers)
   };
 
   const today = new Date();
@@ -31,7 +33,8 @@ describe('VouchersComponent', () => {
           path: 'voucher',
           component: VouchersComponent
         }]),
-        NgxMultiLineEllipsisModule
+        NgxMultiLineEllipsisModule,
+        InfiniteScrollModule
       ],
       providers: [
         { provide: IVoucherService, useValue: vouchersServiceStub }
@@ -53,9 +56,9 @@ describe('VouchersComponent', () => {
 
   it('should on ngOnInit', fakeAsync(() => {
     const voucherService: IVoucherService = fixture.debugElement.injector.get<IVoucherService>
-      (IVoucherService as Type<IVoucherService>);
+    (IVoucherService as Type<IVoucherService>);
 
-    const voucherServiceSpy = spyOn(voucherService, 'getAll').and.returnValue(of(vouchers));
+    const voucherServiceSpy = spyOn(voucherService, 'getFromPage').and.returnValue(of(vouchers));
     component.ngOnInit();
     tick();
     expect(voucherServiceSpy).toHaveBeenCalled();

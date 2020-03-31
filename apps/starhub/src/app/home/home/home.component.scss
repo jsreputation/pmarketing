@@ -51,15 +51,17 @@ mat-toolbar {
 .content {
   padding-top: 17rem;
   flex: 1;
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 100%;
   width: 100%;
+  box-sizing: border-box;
   // padding: 1.2rem;
 }
 
 .mat-tab-nav-bar {
   height: 4.9rem;
   border-bottom: 0;
+  padding: 0;
 
   a {
     height: 1.6rem;
@@ -73,9 +75,7 @@ mat-toolbar {
     color: #666666;
     align-items: center;
     justify-content: center;
-    margin: 0 2.4rem;
-    min-width: 0;
     padding: 2.4rem 1rem;
-    width: auto;
+    flex: 1;
   }
 }

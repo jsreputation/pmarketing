@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TenantHttpService } from '@cl-core/http-services/tenant-http.service';
+import { TenantHttpService } from '@perxtech/whistler-services';
 import { Observable, of } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
 import { ClHttpParams } from '@cl-helpers/http-params';
@@ -7,7 +7,13 @@ import { TenantHttpAdapterService } from '@cl-core/http-adapters/tenant-http-ada
 import { DefaultSetting, TenantStoreService } from '@cl-core-services';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DateTimeParser } from '@cl-helpers/date-time-parser';
+import { HttpClient } from '@angular/common/http';
 import { ITimeZone } from '@cl-core/models/settings/time-zone';
+import { ITenant } from '@cl-core/models/settings/tenant.interface';
+import { HttpParamsOptions } from '@cl-core/models/params-map';
+import { ITenantsProperties } from '@cl-core/models/settings/tenants.properties.interface';
+import { Currency } from '@cl-core/models/merchant/currency';
+import { IBrandingForm } from '@cl-core/models/settings/branding-form.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +23,7 @@ export class TenantService {
   constructor(
     private tenantHttpService: TenantHttpService,
     private fb: FormBuilder,
+    private http: HttpClient,
     private tenantStoreService: TenantStoreService
   ) { }
 
@@ -24,14 +31,12 @@ export class TenantService {
     params = {
       ...params,
       'page[number]': '1',
-      'page[size]': '20'
+      'page[size]': '1'
     };
     const httpParams = ClHttpParams.createHttpParams(params);
     return this.tenantHttpService.getTenant(httpParams)
       .pipe(
-        map(tenant => {
-          return TenantHttpAdapterService.transformToTenant(tenant.data[0]);
-        }),
+        map(tenant => TenantHttpAdapterService.transformToTenant(tenant.data[0])),
         tap(tenant => this.tenant = tenant)
       );
   }
@@ -60,9 +65,7 @@ export class TenantService {
     const sendData = TenantHttpAdapterService.transformToTenantAPI(data);
     return this.tenantHttpService.patchTenant({ data: sendData }, data.id)
       .pipe(
-        map((tenant) => {
-          return TenantHttpAdapterService.transformToTenant((tenant.data));
-        }),
+        map((tenant) => TenantHttpAdapterService.transformToTenant((tenant.data))),
         tap(tenant => {
           this.tenantStoreService.tenant = TenantHttpAdapterService.getTenantsSettings(tenant);
           this.tenant = tenant;
@@ -71,14 +74,14 @@ export class TenantService {
   }
 
   public getTimeZone(): Observable<ITimeZone[]> {
-    return this.tenantHttpService.getTimeZone()
+    return this.http.get<ITimeZone[]>('assets/actives/settings/time-zone.json')
       .pipe(
         map((zones: ITimeZone[]) => zones.sort(DateTimeParser.compareTimeZone))
       );
   }
 
   public getCurrency(): Observable<Currency[]> {
-    return this.tenantHttpService.getCurrency()
+    return this.http.get<Currency[]>('assets/actives/settings/currency.json')
       .pipe(
         map((data: Currency[]) => data.sort((a, b) => {
           const nameA = a.country.toLowerCase();

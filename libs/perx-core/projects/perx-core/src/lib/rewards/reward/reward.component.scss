@@ -2,7 +2,7 @@
 
 .reward-container {
   margin: 0 auto;
-  background: white;
+  background: var(--background);
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -97,9 +97,5 @@
   .section-content {
     font-size: 1.4rem;
     line-height: 2.5rem;
-
-    &.description {
-      white-space: pre-wrap;
-    }
   }
 }

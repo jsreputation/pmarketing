@@ -20,7 +20,7 @@ describe('SelectGraphicWrapComponent', () => {
       ],
       declarations: [ SelectGraphicWrapComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
-
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { ImageControlValue } from '@cl-helpers/image-control-value';
+import { IGraphic } from '@cl-core/models/graphic.interface';
 
 @Component({
   selector: 'cl-select-graphic',
@@ -18,7 +18,9 @@ import { ImageControlValue } from '@cl-helpers/image-control-value';
 export class SelectGraphicComponent implements ControlValueAccessor {
   @Input() public selectedGraphic: IGraphic;
   @Input() public graphicList: IGraphic[];
+  @Input() public diagBox: boolean = false;
   @Output() private selectGraphic: EventEmitter<IGraphic> = new EventEmitter<IGraphic>();
+
   public lock: boolean;
   public onChange: any = () => {
   }
@@ -52,4 +54,5 @@ export class SelectGraphicComponent implements ControlValueAccessor {
   public writeValue(obj: any): void {
     this.setGraphic = obj;
   }
+
 }

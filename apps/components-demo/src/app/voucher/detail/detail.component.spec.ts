@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DetailComponent } from './detail.component';
-import { VouchersModule, IVoucherService, Voucher, VoucherState, RedemptionType } from '@perx/core';
+import { VouchersModule, IVoucherService, Voucher, VoucherState, RedemptionType } from '@perxtech/core';
 import { of } from 'rxjs';
 
 describe('DetailComponent', () => {
@@ -33,7 +33,7 @@ describe('DetailComponent', () => {
     redemptionType: RedemptionType.none,
     expiry: null,
   };
-  const vouchersServiceStub = {
+  const vouchersServiceStub: Partial<IVoucherService> = {
     get: () => of(mockVoucher)
   };
 

@@ -3,6 +3,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { UploadFileService } from '@cl-core-services';
 import { IUploadedFile } from '@cl-core/models/upload-file/uploaded-file.interface';
+import { IGraphic } from '@cl-core/models/graphic.interface';
 
 @Component({
   selector: 'cl-upload-graphic',
@@ -21,6 +22,8 @@ export class UploadGraphicComponent implements ControlValueAccessor {
   @Input() public btnLabel: string = 'BTN_ADD_NEW';
   @Input() public classList: string = '';
   @Input() public isRequired: boolean;
+  @Input() public imgURL: any; // more flexible to be able to pass in too
+  @Input() public uploadText: string;
 
   @Input()
   public set selectGraphic(value: any) {
@@ -33,7 +36,6 @@ export class UploadGraphicComponent implements ControlValueAccessor {
   @Output() private selectUploadGraphic: EventEmitter<IGraphic> = new EventEmitter<IGraphic>();
   public lock: boolean;
   public imagePath: File;
-  public imgURL: any;
   public message: string;
   public loadedImg: boolean = false;
   // tslint:disable
@@ -52,9 +54,11 @@ export class UploadGraphicComponent implements ControlValueAccessor {
     }
   }
 
-  constructor(private sanitizer: DomSanitizer,
-              private cd: ChangeDetectorRef,
-              private uploadFileService: UploadFileService) {
+  constructor(
+    private sanitizer: DomSanitizer,
+    private cd: ChangeDetectorRef,
+    private uploadFileService: UploadFileService
+  ) {
   }
 
   public preview(files): void {
@@ -114,16 +118,16 @@ export class UploadGraphicComponent implements ControlValueAccessor {
   private uploadImage(file: File): void {
     this.uploadFileService.uploadImage(file)
       .subscribe((res: IUploadedFile) => {
-          this.imgURL = res.url;
-          this.loadedImg = true;
-          this.setSelectedGraphic(res.url);
-          this.message = null;
-          this.cd.markForCheck();
-        },
-        (err: Error) => {
-          this.setError('Image haven\'t loaded successfully!', err.message);
-          this.cd.markForCheck();
-        });
+        this.imgURL = res.url;
+        this.loadedImg = true;
+        this.setSelectedGraphic(res.url);
+        this.message = null;
+        this.cd.markForCheck();
+      },
+      (err: Error) => {
+        this.setError('Image haven\'t loaded successfully!', err.message);
+        this.cd.markForCheck();
+      });
   }
 
   private setError(message: string, serverError?: string) {

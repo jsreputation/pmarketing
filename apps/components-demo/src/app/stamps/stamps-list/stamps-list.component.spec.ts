@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { RewardsModule } from '@perx/core';
+import { RewardsModule } from '@perxtech/core';
 import { StampsListComponent } from './stamps-list.component';
 
 describe('StampsListComponent', () => {
@@ -8,10 +8,10 @@ describe('StampsListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StampsListComponent ],
+      declarations: [StampsListComponent],
       imports: [RewardsModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

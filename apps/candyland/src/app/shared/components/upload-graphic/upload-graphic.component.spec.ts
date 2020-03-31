@@ -4,6 +4,8 @@ import {UploadGraphicComponent} from './upload-graphic.component';
 import {MatIconModule} from '@angular/material';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { MockUploadFileService } from '@cl-shared/test-components/providers/mock-upload-file.service';
+import { UploadFileService } from '@cl-core-services';
 
 describe('DownloadButtonComponent', () => {
   let component: UploadGraphicComponent;
@@ -16,9 +18,10 @@ describe('DownloadButtonComponent', () => {
         HttpClientTestingModule,
         TranslateModule.forRoot(),
       ],
-      declarations: [ UploadGraphicComponent ]
+      declarations: [ UploadGraphicComponent ],
+      providers: [{ provide: UploadFileService, useClass: MockUploadFileService }]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { RewardDetailComponent } from './reward-detail.component';
 import { MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { RewardsService, LocationsService } from '@perx/core';
+import { RewardsService, LocationsService } from '@perxtech/core';
 import { LocationShortFormatComponent } from '../../location-short-format/location-short-format.component';
 import { of } from 'rxjs';
 import { ExpireTimerComponent } from '../expire-timer/expire-timer.component';
@@ -12,7 +12,7 @@ import { Location } from '@angular/common';
 import { Type } from '@angular/core';
 import { IMacaron } from 'src/app/services/macaron.service';
 
-const locationsServiceStub = {
+const locationsServiceStub: Partial<LocationsService> = {
   getFromMerchant: () => of()
 };
 
@@ -20,11 +20,11 @@ describe('RewardDetailComponent', () => {
   let component: RewardDetailComponent;
   let fixture: ComponentFixture<RewardDetailComponent>;
   let location: Location;
-  const rewardsServiceStub = {
+  const rewardsServiceStub: Partial<RewardsService> = {
     getReward: () => of()
   };
 
-  const locationStub = {
+  const locationStub: Partial<Location> = {
     back: () => { }
   };
 

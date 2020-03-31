@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthHttpService } from '@es-core/http-services/auth-http.service';
+import { AuthHttpService } from '@perxtech/whistler-services';
 import { parseJwt } from '@es-helpers/parse-jwt';
 import { Observable, of } from 'rxjs';
 import { map, tap, switchMap, filter, catchError } from 'rxjs/operators';
-import { IJsonApiItemPayload, IWIAMUserAttributes } from '@perx/whistler';
+import { IJsonApiItemPayload, IWIAMUserAttributes } from '@perxtech/whistler';
 import { HttpResponse } from '@angular/common/http';
 import { AuthHttpAdapter } from '@es-core/http-adapters/auth-http-adapter';
 import { IamUserService } from '@es-core/services/iam-user.service';
@@ -55,7 +55,7 @@ export class AuthService {
   }
 
   public signIn(data: ILogin): Observable<IJsonApiItemPayload<IWIAMUserAttributes>> {
-    const sendData = AuthHttpAdapter.transformFromLogin(data);
+    const sendData: any = AuthHttpAdapter.transformFromLogin(data);
     return this.http.signIn(sendData).pipe(
       tap((res: any) => {
         const tokenString: string | null = res.headers.get('authorization');
@@ -101,26 +101,26 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
-  public resetPassword(username: string): Observable<any> {
-    return this.http.resetPassword(username);
+  public resetPassword(accountId: string, username: string): Observable<any> {
+    return this.http.resetPassword(accountId, username);
   }
 
   public changePassword(password: string, token: string): Observable<any> {
     return this.http.changePassword(password, token)
       .pipe(
         switchMap((res: HttpResponse<any>) => {
-            const tokenString: string | null = res.headers.get('authorization');
-            if (tokenString === null) {
-              return of(null);
-            }
-            this.saveToken(tokenString);
-            const tokenObj = parseJwt(tokenString);
-            const userName = tokenObj.sub.split('/').pop();
-            return this.iamUserService.getUsers({'filter[username]': userName}).pipe(
-              map(users => users[0]),
-              tap((user: IAMUser) => this.saveUser(user))
-            );
+          const tokenString: string | null = res.headers.get('authorization');
+          if (tokenString === null) {
+            return of(null);
           }
+          this.saveToken(tokenString);
+          const tokenObj = parseJwt(tokenString);
+          const userName = tokenObj.sub.split('/').pop();
+          return this.iamUserService.getUsers({ 'filter[username]': userName }).pipe(
+            map(users => users[0]),
+            tap((user: IAMUser) => this.saveUser(user))
+          );
+        }
         )
       );
   }

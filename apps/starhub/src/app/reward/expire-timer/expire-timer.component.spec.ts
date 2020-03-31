@@ -10,7 +10,7 @@ describe('ExpireTimerComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ExpireTimerComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

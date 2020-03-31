@@ -9,7 +9,7 @@ import {
   MatSelectModule,
   MatInputModule
 } from '@angular/material';
-import { AuthenticationService, NotificationService } from '@perx/core';
+import { AuthenticationService, NotificationService } from '@perxtech/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { Type } from '@angular/core';
@@ -23,7 +23,7 @@ describe('SignupComponent', () => {
     navigateByUrl: () => ({}),
     navigate: () => { }
   };
-  const notificationServiceStub = { addSnack: () => { } };
+  const notificationServiceStub: Partial<NotificationService> = { addSnack: () => { } };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -75,7 +75,7 @@ describe('SignupComponent', () => {
       component.signupForm.controls.password.setValue(1234);
       component.signupForm.controls.confirmPassword.setValue(123);
       const notificationService: NotificationService = fixture.debugElement.injector.get<NotificationService>
-        (NotificationService as Type<NotificationService>);
+      (NotificationService as Type<NotificationService>);
       const notificationServiceSpy = spyOn(notificationService, 'addSnack');
       component.onSubmit();
       expect(notificationServiceSpy).toHaveBeenCalledWith('Passwords do not match.');
@@ -84,7 +84,7 @@ describe('SignupComponent', () => {
     it('should call addSnack if terms and conditions not accepted', () => {
       component.signupForm.controls.accept_terms.setValue(false);
       const notificationService: NotificationService = fixture.debugElement.injector.get<NotificationService>
-        (NotificationService as Type<NotificationService>);
+      (NotificationService as Type<NotificationService>);
       const notificationServiceSpy = spyOn(notificationService, 'addSnack');
       component.onSubmit();
       expect(notificationServiceSpy).toHaveBeenCalledWith('Please accept terms & conditions.');
@@ -94,7 +94,7 @@ describe('SignupComponent', () => {
       component.signupForm.controls.accept_terms.setValue(true);
       component.signupForm.controls.accept_marketing.setValue(false);
       const notificationService: NotificationService = fixture.debugElement.injector.get<NotificationService>
-        (NotificationService as Type<NotificationService>);
+      (NotificationService as Type<NotificationService>);
       const notificationServiceSpy = spyOn(notificationService, 'addSnack');
       component.onSubmit();
       expect(notificationServiceSpy).toHaveBeenCalledWith('Please agree to receive marketing communications from Merck Group hk.');
@@ -109,7 +109,7 @@ describe('SignupComponent', () => {
       component.signupForm.controls.countryCode.setValue(852);
       component.signupForm.controls.name.setValue('testUser');
       const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>
-        (AuthenticationService as Type<AuthenticationService>);
+      (AuthenticationService as Type<AuthenticationService>);
       const authenticationSpy = spyOn(authenticationService, 'signup').and.returnValue(
         of({
           id: 1,

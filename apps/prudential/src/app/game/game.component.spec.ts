@@ -13,7 +13,7 @@ import {
   ConfigModule,
   ICampaignService,
   ConfigService
-} from '@perx/core';
+} from '@perxtech/core';
 import { APP_BASE_HREF } from '@angular/common';
 import { MatProgressBarModule, MatProgressSpinnerModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -26,11 +26,11 @@ import { environment } from 'src/environments/environment';
 describe('GameComponent', () => {
   let component: GameComponent;
   let fixture: ComponentFixture<GameComponent>;
-  const gameServiceStub = {};
-  const campaignServiceStub = {
+  const gameServiceStub: Partial<IGameService> = {};
+  const campaignServiceStub: Partial<ICampaignService> = {
     getCampaigns: () => of([])
   };
-  const configServiceStub = {
+  const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of()
   };
 
@@ -45,7 +45,7 @@ describe('GameComponent', () => {
     config: { ...defaultTree(), treeImg: '', giftImg: '' },
   };
 
-  const vouchersServiceMock = jasmine.createSpyObj('IVoucherService', ['']);
+  const vouchersServiceStub: Partial<IVoucherService> = {};
 
   beforeEach(async(() => {
     const routerStub = { navigate: () => ({}) };
@@ -63,7 +63,7 @@ describe('GameComponent', () => {
       ],
       providers: [
         { provide: APP_BASE_HREF, useValue: '/' },
-        { provide: IVoucherService, useValue: vouchersServiceMock },
+        { provide: IVoucherService, useValue: vouchersServiceStub },
         { provide: IGameService, useValue: gameServiceStub },
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: Router, useValue: routerStub },

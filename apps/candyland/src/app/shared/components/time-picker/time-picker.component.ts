@@ -8,10 +8,11 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
-import {noop, Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
-import {customTimepickerTheme} from '@cl-shared/components/time-picker/custom-timepicker-theme';
+import { noop, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { customTimepickerTheme } from '@cl-shared/components/time-picker/custom-timepicker-theme';
 import { NgxMaterialTimepickerTheme } from 'ngx-material-timepicker';
+import { DatepickerRangeValue } from '@cl-core/models/sat-datepicker-range-value.interface';
 
 @Component({
   selector: 'cl-time-picker',
@@ -31,7 +32,7 @@ export class TimePickerComponent implements OnInit, OnDestroy, ControlValueAcces
   @Input() public control: AbstractControl = new FormControl(null, []);
   @Input() public placeholder: string = 'TIME';
 
-  @Input() set disabled(value: boolean) {
+  @Input() public set disabled(value: boolean) {
     this.setDisabledState(value);
   }
 

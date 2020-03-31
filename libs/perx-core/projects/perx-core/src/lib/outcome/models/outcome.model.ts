@@ -1,4 +1,4 @@
-import { IWCampaignDisplayProperties } from '@perx/whistler';
+import { IWCampaignDisplayProperties } from '@perxtech/whistler';
 
 export interface IOutcome {
   title: string;
@@ -7,5 +7,15 @@ export interface IOutcome {
   banner: string;
   backgroundImgUrl: string;
   cardBackgroundImgUrl: string;
+  results: {
+    noOutcome?: IOutcomeMsg;
+  };
   displayProperties?: IWCampaignDisplayProperties;
+}
+
+export interface IOutcomeMsg {
+  title: string;
+  subTitle: string;
+  image?: string;
+  button: string;
 }

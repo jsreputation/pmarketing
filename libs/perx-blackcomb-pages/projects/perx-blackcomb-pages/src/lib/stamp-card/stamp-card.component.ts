@@ -7,11 +7,12 @@ import {
   PuzzleCollectReward,
   IStamp,
   StampState
-} from '@perx/core';
+} from '@perxtech/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import {filter, switchMap, takeUntil, map} from 'rxjs/operators';
-import { Observable, Subject } from 'rxjs';
+import { filter, switchMap, takeUntil, map, tap, pairwise } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import { oc } from 'ts-optchain';
 
 export interface IRewardPopupConfig extends IPopupConfig {
   afterClosedCallBackRedirect?: PopUpClosedCallBack;
@@ -31,12 +32,13 @@ export interface PopUpClosedCallBack {
 export class StampCardComponent implements OnInit, OnDestroy {
   public title: string; // = 'Scratch & Win!'
   public subTitle?: string; //  = 'Collect all 10 stickers and win a reward!'
-  public background: string;
+  public background: string | undefined | null;
   public cardBackground: string;
   public isEnabled: boolean = false;
-  public stampCard$: Observable<IStampCard>;
+  public stamps: IStamp[] | undefined;
   public stampCard: IStampCard | null;
-  private destroy$: Subject<any> = new Subject();
+  private idN: number;
+  private destroy$: Subject<void> = new Subject();
   private rewardSuccessPopUp: IPopupConfig = {
     title: 'STAMP_SUCCESS_TITLE',
     buttonTxt: 'VIEW_REWARD'
@@ -48,7 +50,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
 
   public v4Rewards(card: IStampCard): PuzzleCollectReward[] {
     if (!card || !card.displayProperties.rewardPositions) {
-      throw new Error(`card or rewardPositions is required`);
+      throw new Error('card or rewardPositions is required');
     }
     return card.displayProperties.rewardPositions.map((el: number) => ({ rewardPosition: --el }));
   }
@@ -79,42 +81,52 @@ export class StampCardComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.initTranslate();
-
-    this.stampCard$ = this.route.paramMap
+    this.route.paramMap
       .pipe(
         filter((params: ParamMap) => params.has('id')),
         map((params: ParamMap) => params.get('id')),
         switchMap((id: string) => {
-          const idN = Number.parseInt(id, 10);
-          return this.stampService.getCurrentCard(idN);
+          this.idN = Number.parseInt(id, 10);
+          return this.stampService.getCurrentCard(this.idN);
         }),
+        tap((stampCard: IStampCard) => {
+          if (stampCard) {
+            this.stampCard = stampCard;
+            this.stamps = stampCard.stamps;
+            this.title = stampCard.title || '';
+            this.subTitle = stampCard.subTitle;
+            this.background = oc(stampCard).displayProperties.backgroundImg.value.imageUrl('');
+            this.cardBackground = stampCard.displayProperties.cardBgImage || '';
+            const successOutcome = stampCard.results.outcome;
+            const noOutcome = stampCard.results.noOutcome;
+            if (noOutcome) {
+              this.errorPopUp.title = noOutcome.title;
+              this.errorPopUp.text = noOutcome.subTitle;
+              this.errorPopUp.imageUrl = noOutcome.image || this.errorPopUp.imageUrl;
+              this.errorPopUp.buttonTxt = noOutcome.button || this.errorPopUp.buttonTxt;
+            }
+            if (successOutcome) {
+              this.rewardSuccessPopUp.title = successOutcome.title;
+              this.rewardSuccessPopUp.text = successOutcome.subTitle;
+              this.rewardSuccessPopUp.imageUrl = successOutcome.image || this.rewardSuccessPopUp.imageUrl;
+              this.rewardSuccessPopUp.buttonTxt = successOutcome.button || this.rewardSuccessPopUp.buttonTxt;
+            }
+          }
+        }),
+        switchMap(() => this.stampService.stampsChangedForStampCard(this.idN)
+          .pipe(
+            pairwise()
+          )),
         takeUntil(this.destroy$)
-      );
-    this.stampCard$.subscribe(
-      (stampCard: IStampCard) => {
-        this.stampCard = stampCard;
-        this.title = stampCard.title || '';
-        this.subTitle = stampCard.subTitle;
-        this.background = stampCard.displayProperties.bgImage || '';
-        this.cardBackground = stampCard.displayProperties.cardBgImage || '';
-        if (stampCard.displayProperties.noRewardsPopUp) {
-          this.errorPopUp.title = stampCard.displayProperties.noRewardsPopUp.headLine;
-          this.errorPopUp.text = stampCard.displayProperties.noRewardsPopUp.subHeadLine;
-          this.errorPopUp.buttonTxt = stampCard.displayProperties.noRewardsPopUp.buttonTxt || this.errorPopUp.buttonTxt;
-          this.errorPopUp.imageUrl = stampCard.displayProperties.noRewardsPopUp.imageURL || this.errorPopUp.imageUrl;
+      ).subscribe(([prevStamps, currStamps]) => {
+        // after skip once we get definitely prev and current
+        if ((currStamps && currStamps.stamps) &&
+          (prevStamps && prevStamps.stamps) &&
+          prevStamps.stamps.length < currStamps.stamps.length) {
+          this.stampCard = currStamps;
+          this.notificationService.addSnack('You got a new stamp!');
         }
-
-        if (stampCard.displayProperties.successPopUp) {
-          this.rewardSuccessPopUp.title = stampCard.displayProperties.successPopUp.headLine;
-          this.rewardSuccessPopUp.text = stampCard.displayProperties.successPopUp.subHeadLine;
-          this.rewardSuccessPopUp.buttonTxt = stampCard.displayProperties.successPopUp.buttonTxt || this.rewardSuccessPopUp.buttonTxt;
-          this.rewardSuccessPopUp.imageUrl = stampCard.displayProperties.successPopUp.imageURL || this.rewardSuccessPopUp.imageUrl;
-        }
-      },
-      () => {
-        this.router.navigate(['/wallet']);
-      }
-    );
+      }, () => this.router.navigate(['/wallet']));
   }
 
   public ngOnDestroy(): void {
@@ -124,7 +136,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
 
   public async handleStamp(stamp: IStamp): Promise<void> {
     if (!this.stampCard || !this.stampCard.stamps) {
-      throw new Error(`card or stamps is required`);
+      throw new Error('card or stamps is required');
     }
 
     // build ordered list of stamps to be stamped
@@ -144,7 +156,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
         (stamp: IStamp) => {
           if (stamp.state === StampState.redeemed) {
             if (!this.stampCard || !this.stampCard.stamps) {
-              throw new Error(`card or stamps is required`);
+              throw new Error('card or stamps is required');
             }
 
             // if (!this.cols || !this.rows) {
@@ -175,7 +187,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
               const data: IRewardPopupConfig = {
                 title: 'Congratulations!',
                 text: 'Here is a reward for you.',
-                imageUrl: 'assets/gift-image.svg',
+                imageUrl: 'assets/prize.png',
                 disableOverlayClose: true,
                 url: `/voucher/${voucherId}`,
                 afterClosedCallBackRedirect: this,
@@ -186,7 +198,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
 
           } else {
             if (!this.stampCard || !this.stampCard.stamps) {
-              throw new Error(`card or stamps is required`);
+              throw new Error('card or stamps is required');
             }
 
             const issuedLeft = this.stampCard.stamps.filter(s => s.state === StampState.issued);

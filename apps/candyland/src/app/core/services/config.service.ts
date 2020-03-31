@@ -1,19 +1,18 @@
 import { Injectable } from '@angular/core';
 import { combineLatest, Observable } from 'rxjs';
-import { StatusLabelConfig } from '@cl-shared';
 import { ConfigHttpService } from '@cl-core/http-services/config-http.service';
 import { TranslateService } from '@ngx-translate/core';
 import { map } from 'rxjs/operators';
+import { IStatusLabelConfig } from '@perxtech/candyshop';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConfigService {
 
-  constructor(private configHttp: ConfigHttpService,
-              private translate: TranslateService) {}
+  constructor(private configHttp: ConfigHttpService, private translate: TranslateService) { }
 
-  public prepareStatusesLabel(): Observable<{ [key: string]: StatusLabelConfig }> {
+  public prepareStatusesLabel(): Observable<IStatusLabelConfig> {
     return combineLatest([this.getTranslationStatuses(), this.getStatusLabel()])
       .pipe(
         map(
@@ -32,7 +31,7 @@ export class ConfigService {
     return this.translate.get('STATUSES_TYPE');
   }
 
-  public getStatusLabel(): Observable<{ [key: string]: StatusLabelConfig }> {
+  public getStatusLabel(): Observable<IStatusLabelConfig> {
     return this.configHttp.getStatusLabel();
   }
 }

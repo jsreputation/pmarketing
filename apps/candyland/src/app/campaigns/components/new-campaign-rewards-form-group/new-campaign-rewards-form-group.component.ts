@@ -4,17 +4,17 @@ import {
   OnDestroy,
   ChangeDetectorRef,
   ChangeDetectionStrategy,
-  Input, OnChanges, SimpleChanges
+  Input, OnChanges, SimpleChanges, ViewChildren, QueryList
 } from '@angular/core';
 import {
-  AbstractControl,
-  FormGroup
+  FormGroup, Validators
 } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 
 import {
   combineLatest,
-  of, Subject,
+  of,
+  Subject,
 } from 'rxjs';
 import {
   map,
@@ -28,6 +28,8 @@ import { RewardsService } from '@cl-core/services/rewards.service';
 import { SelectRewardPopupComponent } from '@cl-shared/containers/select-reward-popup/select-reward-popup.component';
 import { CampaignCreationStoreService } from '../../services/campaigns-creation-store.service';
 import { SOURCE_TYPE } from '../../../app.constants';
+import { RewardItemComponent } from '../reward-item/reward-item.component';
+import { ICampaign } from '@cl-core/models/campaign/campaign';
 
 @Component({
   selector: 'cl-new-campaign-rewards-form-group',
@@ -37,17 +39,19 @@ import { SOURCE_TYPE } from '../../../app.constants';
 })
 export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, OnChanges {
   @Input() public title: string = 'CAMPAIGN.REWARDS';
-  @Input() public slotNumber: number = 0;
+  @Input() public slotNumber: number = 0; // slotNumber -1 interfaces with probNoRewards, see limit page for details
   @Input() public enableProbability: boolean = false;
+  @ViewChildren(RewardItemComponent) public viewItemChildren !: QueryList<RewardItemComponent>;
 
   private destroy$: Subject<void> = new Subject();
 
-  @Input() public formParent: FormGroup | AbstractControl; // turn into an input
+  @Input() public formParent: FormGroup; // turn into an input
   @Input() public isSpinEngagement: boolean = false;
 
   public outcomes: ICampaignOutcome[] = [];
   private isFirstInit: boolean;
   public sumMoreThanError: boolean = false;
+  public minSumError: boolean = false;
 
   public noOutcome: ICampaignOutcome = {
     outcome: {
@@ -65,14 +69,14 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
   ) {
   }
 
-  public get campaign(): any {
+  public get campaign(): ICampaign {
     return this.store.currentCampaign;
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (!this.isFirstInit && this.outcomes.length !== 0 && changes.enableProbability !== undefined &&
       (changes.enableProbability.currentValue !== changes.enableProbability.previousValue)) {
-      this.updateOutcomes();
+      this.updateOutcomesInCampaign();
     }
   }
 
@@ -87,10 +91,11 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
         if (isCreateNew || isFirstTimeRenderFromEdit) {
           this.isFirstInit = false;
           this.initOutcomesList();
-          this.updateOutcomes();
+          this.updateOutcomesInCampaign();
           this.cd.detectChanges();
         }
       });
+    this.handlerForToucheFormGroup();
   }
 
   public ngOnDestroy(): void {
@@ -107,7 +112,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
         if (reward) {
           this.addOutcome({
             outcome: {
-              probability: 0,
+              probability: null,
               limit: null,
               resultId: Number.parseInt(reward.id, 10),
               resultType: SOURCE_TYPE,
@@ -123,12 +128,14 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
   }
 
   public initOutcomesList(): void {
-    const noOutcomeData = this.campaign.outcomes && this.campaign.outcomes.find(
-      data => data.outcome.slotNumber === this.slotNumber && !data.outcome.resultId);
-    if (noOutcomeData && noOutcomeData.outcome) {
-      this.outcomes = [noOutcomeData];
-    } else {
-      this.outcomes = [this.noOutcome];
+    if (!this.isSpinEngagement) {
+      const noOutcomeData = this.campaign.outcomes && this.campaign.outcomes.find(
+        data => data.outcome.slotNumber === this.slotNumber && !data.outcome.resultId);
+      if (noOutcomeData && noOutcomeData.outcome) {
+        this.outcomes = [noOutcomeData];
+      } else {
+        this.outcomes = [this.noOutcome];
+      }
     }
 
     const possibleOutcomes = this.campaign.outcomes && this.campaign.outcomes.filter(
@@ -143,7 +150,7 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
       }
     );
     const possibleOutcomes$ = possibleOutcomes && possibleOutcomes.map(data =>
-      this.rewardsService.getReward(data.outcome.resultId).pipe(
+      this.rewardsService.getReward(`${data.outcome.resultId}`).pipe(
         map((reward: IRewardEntity) =>
           ({ ...data, reward })),
         catchError(() => of(null))
@@ -161,49 +168,69 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
     this.cd.detectChanges();
   }
   public updateOutcomesInCampaign(): void {
+    if (!this.isSpinEngagement) {
+      if (!this.enableProbability) { // false
+        this.outcomes[0].outcome.slotNumber = -1;
+      } else {
+        this.outcomes[0].outcome.slotNumber = this.slotNumber;
+      }
+    }
     const otherSlotOutcomes = this.campaign.outcomes && this.campaign.outcomes.length > 0 ?
       this.campaign.outcomes.filter(
         outcomeData => outcomeData.outcome.slotNumber !== this.slotNumber && outcomeData.outcome.slotNumber >= 0
       ) : [];
     this.campaign.outcomes = [...otherSlotOutcomes, ...this.outcomes];
     // bypasses null/undefined/0, will scan thru the campaign outcomes for final check
-    // if set to true enableProbability then just true, (from checkbbox)
-    this.campaign.enabledProb = this.enableProbability || this.campaign.outcomes.some(({outcome}) => outcome.probability);
-    this.store.currentCampaign = {...this.campaign};
-    this.isSpinEngagement ?
-      (this.updateSlotCount().updateSumMoreThanCheck()) : (this.sumMoreThanError = this.updateSumMoreThanCheck());
+    // if set to true enableProbability then just true, (from checkbox)
+    this.campaign.enabledProb = this.enableProbability || this.campaign.outcomes.some(({ outcome }) => outcome.probability !== undefined);
+    this.store.currentCampaign = { ...this.campaign };
+    this.isSpinEngagement ? (this.updateSlotCount().updateSumMoreThanCheck()) : (this.sumMoreThanError = this.updateSumMoreThanCheck());
+    this.formParent.updateValueAndValidity();
+    this.cd.detectChanges();
   }
 
   public updateSlotCount(): this {
     const checkedOutcomes = this.outcomes.filter(outcome => outcome.outcome.slotNumber >= 0 && outcome.reward);
-    if (checkedOutcomes.length === 0) {
+    if (checkedOutcomes.length === 0 && this.formParent.get('totalFilledAllSlots').get(`notEmpty-${this.slotNumber}`)) {
       this.formParent.get('totalFilledAllSlots').get(`notEmpty-${this.slotNumber}`).patchValue(0);
     }
-    if (checkedOutcomes.length > 0) {
+    if (checkedOutcomes.length > 0 && this.formParent.get('totalFilledAllSlots').get(`notEmpty-${this.slotNumber}`)) {
       this.formParent.get('totalFilledAllSlots').get(`notEmpty-${this.slotNumber}`).patchValue(1);
     }
-    this.formParent.updateValueAndValidity();
     return this;
   }
   // called for non spin campaigns
   public updateSumMoreThanCheck(): boolean {
+    const slotProbControl = this.formParent.get('totalProbAllSlots').get(`totalProbability-${this.slotNumber}`);
+    if (!this.enableProbability && slotProbControl) {
+      if (slotProbControl) {
+        slotProbControl.reset();
+        this.minSumError = false;
+        slotProbControl.clearValidators();
+      }
+      return;
+    }
     const totalNum = this.outcomes.reduce((total, item) => {
       if (item.outcome.probability) {
         total += item.outcome.probability;
       }
       return total;
     }, 0);
-    const slotProbControl = this.formParent.get('totalProbAllSlots').get(`totalProbability-${this.slotNumber}`);
     if (slotProbControl) {
+      if (this.slotNumber !== -1) {
+        slotProbControl.setValidators(Validators.min(0));
+      }
       slotProbControl.patchValue(totalNum);
+      this.minSumError = totalNum <= 0;
     }
-    this.formParent.updateValueAndValidity();
     return totalNum > 100;
   }
 
   public updateOutcomeData(index: number, value: { probability: number, limit: number }): void {
-    this.outcomes[index].outcome.probability = value.probability;
-    this.outcomes[index].outcome.limit = value.limit;
+    if (this.outcomes) {
+      this.outcomes[index].outcome.probability = value.probability;
+      this.outcomes[index].outcome.limit = value.limit;
+    }
     this.updateOutcomesInCampaign();
   }
 
@@ -215,16 +242,41 @@ export class NewCampaignRewardsFormGroupComponent implements OnInit, OnDestroy, 
     this.updateOutcomesInCampaign();
   }
 
-  public updateOutcomes(): void {
-    if (!this.enableProbability) {
-      if (this.outcomes.length) {
-        this.outcomes[0].outcome.slotNumber = -1;
-      }
-    } else {
-      this.outcomes[0].outcome.slotNumber = this.slotNumber;
-    }
-    this.updateOutcomesInCampaign();
-    this.cd.detectChanges();
+  private handlerForToucheFormGroup(): void {
+    this.store.currentCampaign$
+      .asObservable()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        if (this.formParent.get('totalProbAllSlots').touched) {
+          this.viewItemChildren.forEach((component) => {
+            component.group.get('limit').markAsTouched();
+            component.group.get('probability').markAsTouched();
+            component.runChangeDetection();
+          });
+        }
+
+        // it is needed for the set or remove error unpatchedSlot
+        // when we choose spin type of engagement
+        // for the Outcomes step
+        if (this.formParent.get('totalFilledAllSlots').touched
+        &&  this.checkValueSlots((this.formParent.get('totalProbAllSlots') as FormGroup)) && this.isSpinEngagement) {
+          this.formParent.get('totalFilledAllSlots').setErrors({unpatchedSlot: true});
+          this.formParent.updateValueAndValidity();
+          this.cd.markForCheck();
+        }
+        if (!this.isSpinEngagement) {
+          this.formParent.get('totalFilledAllSlots').setErrors(null);
+          this.formParent.updateValueAndValidity();
+        }
+      });
   }
 
+  private checkValueSlots(group?: FormGroup): boolean {
+    const controls = group.controls;
+    for (const key in controls) {
+      if (controls.hasOwnProperty(key)) {
+        return controls[key].value <= 0;
+      }
+    }
+  }
 }

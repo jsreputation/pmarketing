@@ -1,6 +1,6 @@
-import { HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { RewardHttpService } from '@cl-core/http-services/reward-http.service';
+import { RewardHttpService } from '@perxtech/whistler-services';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { forkJoin, Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
@@ -14,17 +14,23 @@ import {
   IJsonApiItem,
   IJsonApiPostData,
   IJsonApiPatchData
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { IRewardEntity } from '@cl-core/models/reward/reward-entity.interface';
 import { IRewardEntityForm } from '@cl-core/models/reward/reward-entity-form.interface';
+import { HttpParamsOptions } from '@cl-core/models/params-map';
+import { ITableData } from '@cl-core/models/data-list.interface';
+import { OptionConfig } from '@perxtech/candyshop';
+import { ILoyaltyFormGroup, ILoyaltyTiersFormGroup, IBasicTier } from '@cl-core/models/reward/reward-loyalty-form-interface';
+import { ITierRewardCost } from '@cl-core/models/reward/tier-reward-cost-intrface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RewardsService implements ITableService<IRewardEntity> {
-
-  constructor(private rewardHttp: RewardHttpService) {
-  }
+  constructor(
+    private rewardHttp: RewardHttpService,
+    private http: HttpClient,
+  ) { }
 
   public getTableData(params: HttpParamsOptions): Observable<ITableData<IRewardEntity>> {
     params.include = 'organization';
@@ -39,7 +45,7 @@ export class RewardsService implements ITableService<IRewardEntity> {
   }
 
   public getreward(): Observable<OptionConfig[]> {
-    return this.rewardHttp.getreward();
+    return this.http.get<OptionConfig[]>('assets/actives/rewards/rewards-options.json');
   }
 
   public getReward(id: string): Observable<IRewardEntity> {
@@ -71,7 +77,7 @@ export class RewardsService implements ITableService<IRewardEntity> {
   }
 
   public updateReward(id: string, data: IRewardEntityForm, loyalties?: ILoyaltyFormGroup[]):
-    Observable<IJsonApiItemPayload<IWRewardEntityAttributes>> {
+  Observable<IJsonApiItemPayload<IWRewardEntityAttributes>> {
     const sendData: IJsonApiPatchData<IWRewardEntityAttributes> = {
       ...RewardHttpAdapter.transformFromRewardForm(data, loyalties),
       id
@@ -86,9 +92,7 @@ export class RewardsService implements ITableService<IRewardEntity> {
     return this.rewardHttp.getRewardTierList(1, id)
       .pipe(
         map((data: IJsonApiListPayload<IWTierRewardCostsAttributes>) => {
-          const listQuery: Observable<IJsonApiListPayload<IWTierRewardCostsAttributes>>[] = [
-            of(data)
-          ];
+          const listQuery: Observable<IJsonApiListPayload<IWTierRewardCostsAttributes>>[] = [of(data)];
           if (!data.meta || data.meta.page_count <= 1) {
             for (let index = 2; index <= data.meta.page_count; index++) {
               listQuery.push(this.getRewardTierPage(index, id));
@@ -112,21 +116,19 @@ export class RewardsService implements ITableService<IRewardEntity> {
     return this.rewardHttp.getRewardTier(id);
   }
 
-  public createRewardTier(tier: ILoyaltyTiersFormGroup | IBasicTier, id: string)
-    : Observable<IJsonApiItem<IWTierRewardCostsAttributes>> {
+  public createRewardTier(tier: ILoyaltyTiersFormGroup | IBasicTier, id: string): Observable<IJsonApiItem<IWTierRewardCostsAttributes>> {
     const loyaltyCostValue = RewardHttpAdapter.transformFromLoyaltyForm(tier, id);
 
     return this.rewardHttp.createRewardTier(loyaltyCostValue);
   }
 
-  public patchRewardTier(tier: ILoyaltyTiersFormGroup, id: string)
-    : Observable<IJsonApiItem<IWTierRewardCostsAttributes>> {
+  public patchRewardTier(tier: ILoyaltyTiersFormGroup, id: string): Observable<IJsonApiItem<IWTierRewardCostsAttributes>> {
     const loyaltyCostValue = { id, ...RewardHttpAdapter.transformFromLoyaltyForm(tier, id) };
 
     return this.rewardHttp.patchRewardTier(loyaltyCostValue);
   }
 
-  public deleteRewardTier(tier: ILoyaltyTiersFormGroup | IBasicTier): Observable<any> {
+  public deleteRewardTier(tier: ILoyaltyTiersFormGroup | IBasicTier): Observable<void> {
     // const loyaltyCostValue = RewardHttpAdapter.transformFromLoyaltyForm(tier, '0');
     return this.rewardHttp.deleteRewardTier(tier.tierRewardCostsId);
   }
@@ -138,5 +140,4 @@ export class RewardsService implements ITableService<IRewardEntity> {
   private prepareTransformationLoyaltyCost(data: any[]): ITierRewardCost[] {
     return data.map((item) => RewardHttpAdapter.transformToLoyaltyCost(item));
   }
-
 }

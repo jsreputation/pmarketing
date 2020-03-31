@@ -1,7 +1,7 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {PuzzlesComponent} from './puzzles.component';
-import {MatListModule} from '@angular/material';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { PuzzlesComponent } from './puzzles.component';
+import { MatListModule } from '@angular/material';
 import {
   CampaignModule,
   VouchersModule,
@@ -10,22 +10,22 @@ import {
   StampService,
   AuthenticationService,
   ConfigService
-} from '@perx/core';
-import {RouterTestingModule} from '@angular/router/testing';
-import {of} from 'rxjs';
-import {NavigateToolbarComponent} from '../navigate-toolbar/navigate-toolbar.component';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {ActivatedRoute} from '@angular/router';
+} from '@perxtech/core';
+import { RouterTestingModule } from '@angular/router/testing';
+import { of } from 'rxjs';
+import { NavigateToolbarComponent } from '../navigate-toolbar/navigate-toolbar.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ActivatedRoute } from '@angular/router';
 
 describe('PuzzlesComponent', () => {
   let component: PuzzlesComponent;
   let fixture: ComponentFixture<PuzzlesComponent>;
-  const stampsServiceStub = {
+  const stampsServiceStub: Partial<StampService> = {
     getCards: () => of([])
   };
-  const authenticationServiceStub = {$failedAuth: of(true)};
+  const authenticationServiceStub: Partial<AuthenticationService> = { $failedAuth: of(true) };
 
-  const configServiceStub = {
+  const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of()
   };
 

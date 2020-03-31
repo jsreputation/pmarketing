@@ -13,10 +13,9 @@ import {
 } from '@angular/material';
 import { TableFiltersModule } from '@cl-shared/table/table-filters/table-filters.module';
 import { SearchFilterModule } from '@cl-shared/table/search-filter/search-filter.module';
-import { ButtonModule } from '@cl-shared/components/button/button.module';
+import { ButtonModule, InfoHintModule } from '@perxtech/candyshop';
 import { NoDataModule } from '@cl-shared/table/no-data/no-data.module';
 import { RoleLabelModule } from '@cl-shared/components/role-label/role-label.module';
-import { InfoHintModule } from '@cl-shared/components/info-hint/info-hint.module';
 import { InviteNewUsersPopupComponent } from './containers/invite-new-users-popup/invite-new-users-popup.component';
 import { InviteNewUsersPlatformComponent } from './components/invite-new-users-platform/invite-new-users-platform.component';
 import { InviteNewUsersRewardsComponent } from './components/invite-new-users-rewards/invite-new-users-rewards.component';

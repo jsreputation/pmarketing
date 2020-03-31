@@ -3,10 +3,20 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { CampaignsComponent } from './campaigns.component';
 import { MatCardModule, MatIconModule, MatRippleModule } from '@angular/material';
 import { of } from 'rxjs';
-import { ICampaignService, CampaignType, CampaignState, IGameService, ICampaign, IGame, GameType } from '@perx/core';
+import {
+  ICampaignService,
+  CampaignType,
+  CampaignState,
+  IGameService,
+  ICampaign,
+  IGame,
+  GameType,
+  ConfigService
+} from '@perxtech/core';
 import { Type } from '@angular/core';
 import { game } from '../../game.mock';
 import { IMacaron, MacaronService } from 'src/app/services/macaron.service';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 describe('CampaignsComponent', () => {
   let component: CampaignsComponent;
@@ -14,12 +24,22 @@ describe('CampaignsComponent', () => {
   let campaigndService: ICampaignService;
   let gameService: IGameService;
   let macaronService: MacaronService;
-  const campaignServiceStub = {
+  const campaignServiceStub: Partial<ICampaignService> = {
     getCampaigns: () => of([])
   };
 
-  const gameServiceStub = {
+  const gameServiceStub: Partial<IGameService> = {
     getGamesFromCampaign: () => of(game)
+  };
+  const configServiceStub: Partial<ConfigService> = {
+    readAppConfig: () => of({
+      apiHost: '',
+      production: false,
+      preAuth: false,
+      isWhistler: false,
+      baseHref: '',
+      rssFeeds: '',
+    })
   };
 
   beforeEach(async(() => {
@@ -28,10 +48,12 @@ describe('CampaignsComponent', () => {
       imports: [
         MatCardModule,
         MatIconModule,
-        MatRippleModule
+        MatRippleModule,
+        InfiniteScrollModule
       ],
       providers: [
         { provide: ICampaignService, useValue: campaignServiceStub },
+        { provide: ConfigService, useValue: configServiceStub },
         { provide: IGameService, useValue: gameServiceStub }
       ]
     })
@@ -101,7 +123,6 @@ describe('CampaignsComponent', () => {
       tick();
       expect(campaignsServiceSpy).toHaveBeenCalled();
       expect(component.games).toEqual(game);
-      expect(component.campaigns).toEqual([campaigns[0]]);
     }));
   });
   it('should handle ngOnInit with games', fakeAsync(() => {

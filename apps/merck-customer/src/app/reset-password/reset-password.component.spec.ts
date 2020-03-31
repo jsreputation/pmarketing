@@ -3,7 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { ResetPasswordComponent } from './reset-password.component';
-import { AuthenticationService, IProfile, NotificationService, ProfileService } from '@perx/core';
+import { AuthenticationService, IProfile, NotificationService, ProfileService } from '@perxtech/core';
 import {
   MatFormFieldModule,
   MatInputModule
@@ -27,7 +27,7 @@ describe('ResetPasswordComponent', () => {
     phone: '6512345678',
   };
 
-  const profileServiceStub = {
+  const profileServiceStub: Partial<ProfileService> = {
     whoAmI: () => of(mockProfile)
   };
   beforeEach(async(() => {
@@ -49,6 +49,8 @@ describe('ResetPasswordComponent', () => {
             login: () => {
             },
             resetPassword: () => of(),
+            getUserAccessToken: () => '',
+            getAppAccessToken: () => '',
             getInterruptedUrl: () => ''
           }
         },
@@ -81,21 +83,23 @@ describe('ResetPasswordComponent', () => {
       component.resetPasswordForm.controls.password.setValue(1234);
       component.resetPasswordForm.controls.confirmPassword.setValue(123);
       const notificationService: NotificationService = fixture.debugElement.injector.get<NotificationService>
-        (NotificationService as Type<NotificationService>);
+      (NotificationService as Type<NotificationService>);
       const notificationServiceSpy = spyOn(notificationService, 'addSnack');
       component.onUpdatePassword();
       expect(notificationServiceSpy).toHaveBeenCalledWith('Passwords do not match.');
     });
 
-    it('should reset password and call login', (done: DoneFn) => {
+    it('should reset password and call login', (done: jest.DoneCallback) => {
       const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>
-        (AuthenticationService as Type<AuthenticationService>);
+      (AuthenticationService as Type<AuthenticationService>);
       const authenticationServiceSpy = spyOn(authenticationService, 'resetPassword').and.returnValue(
         of({
           message: 'test',
           code: 1234,
         })
       );
+      const authenticationUserTokenSpy = spyOn(authenticationService, 'getUserAccessToken').and.returnValue('mock User Token');
+
       const profileService: ProfileService = fixture.debugElement.injector.get<ProfileService>(ProfileService as Type<ProfileService>);
       const profileServiceSpy = spyOn(profileService, 'whoAmI').and.returnValue(
         of(mockProfile)
@@ -103,6 +107,7 @@ describe('ResetPasswordComponent', () => {
       const loginSpy = spyOn(authenticationService, 'login').and.returnValue(of(void 0));
       spyOn(router, 'navigateByUrl').and.stub();
       component.onUpdatePassword();
+      expect(authenticationUserTokenSpy).toHaveBeenCalled();
       expect(profileServiceSpy).toHaveBeenCalled();
 
       profileService.whoAmI().subscribe(() => {

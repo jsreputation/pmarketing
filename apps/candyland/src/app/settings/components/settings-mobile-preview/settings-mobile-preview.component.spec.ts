@@ -3,6 +3,8 @@ import { MatTabsModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SettingsMobilePreviewComponent } from './settings-mobile-preview.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { MockUploadFileService } from '@cl-shared/test-components/providers/mock-upload-file.service';
+import { UploadFileService } from '@cl-core-services';
 
 describe('GameMobilePreviewComponent', () => {
   let component: SettingsMobilePreviewComponent;
@@ -15,9 +17,10 @@ describe('GameMobilePreviewComponent', () => {
         MatTabsModule,
         TranslateModule.forRoot(),
       ],
-      declarations: [ SettingsMobilePreviewComponent ]
+      declarations: [ SettingsMobilePreviewComponent ],
+      providers: [{ provide: UploadFileService, useClass: MockUploadFileService }]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LocationShortFormatComponent } from './location-short-format.component';
-import { LocationsService, GeoLocationService, ILocation } from '@perx/core';
+import { LocationsService, GeoLocationService, ILocation } from '@perxtech/core';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
 
@@ -21,16 +21,16 @@ describe('LocationShortFormatComponent', () => {
     timestamp: Date.now()
   };
 
-  const locationServiceStub = {
+  const locationServiceStub: Partial<LocationsService> = {
     getFromMerchant: () => of()
   };
-  const geoLocationServiceStub = {
+  const geoLocationServiceStub: Partial<GeoLocationService> = {
     positions: () => of(position)
   };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LocationShortFormatComponent ],
+      declarations: [LocationShortFormatComponent],
       imports: [
         RouterTestingModule
       ],
@@ -39,7 +39,7 @@ describe('LocationShortFormatComponent', () => {
         { provide: GeoLocationService, useValue: geoLocationServiceStub }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -71,7 +71,7 @@ describe('LocationShortFormatComponent', () => {
     ];
 
     const locationsService: LocationsService = fixture.debugElement.injector.get<LocationsService>
-      (LocationsService as Type<LocationsService>);
+    (LocationsService as Type<LocationsService>);
     const locationsServiceSpy = spyOn(locationsService, 'getFromMerchant').and.returnValue(of(
       location
     ));

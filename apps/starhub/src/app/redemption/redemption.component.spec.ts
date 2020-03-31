@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { RedemptionComponent } from './redemption.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatIconModule, MatDividerModule } from '@angular/material';
-import { VouchersModule, IVoucherService, VoucherState, UtilsModule, RewardsService, Voucher, RedemptionType, NotificationService } from '@perx/core';
+import { VouchersModule, IVoucherService, VoucherState, UtilsModule, RewardsService, Voucher, RedemptionType, NotificationService } from '@perxtech/core';
 import { RewardDetailComponent } from '../reward/reward-detail/reward-detail.component';
 import { LocationShortFormatComponent } from '../location-short-format/location-short-format.component';
 import { ExpireTimerComponent } from '../reward/expire-timer/expire-timer.component';
@@ -16,7 +16,7 @@ import { AnalyticsService } from '../analytics.service';
 import { NgxBarcodeModule } from 'ngx-barcode';
 import { QRCodeModule } from 'angularx-qrcode';
 
-const rewardsServiceStub = {
+const rewardsServiceStub: Partial<RewardsService> = {
   getReward: () => of(rewards[0])
 };
 
@@ -55,22 +55,22 @@ describe('RedemptionComponent', () => {
     expiry: null,
   };
 
-  const vouchersServiceStub = {
-    redeemVoucher: () => { },
+  const vouchersServiceStub: Partial<IVoucherService> = {
+    redeemVoucher: () => of(),
     get: () => of(voucher)
   };
 
-  const locationStub = {
+  const locationStub: Partial<Location> = {
     back: () => { }
   };
 
-  const notificationServiceStub = {
-    addSnack: () => {}
+  const notificationServiceStub: Partial<NotificationService> = {
+    addSnack: () => { }
   };
 
   let params: Subject<Params>;
 
-  const routerStub = { navigateByUrl: () => ({}) };
+  const routerStub: Partial<Router> = { navigateByUrl: () => Promise.resolve(true) };
 
   beforeEach(async(() => {
     params = new Subject<Params>();
@@ -133,7 +133,7 @@ describe('RedemptionComponent', () => {
     const voucherServiceSpy = spyOn(voucherService, 'redeemVoucher')
       .and.returnValue(throwError({}));
     const notificationService: NotificationService = fixture.debugElement.injector.get<NotificationService>
-      (NotificationService as Type<NotificationService>);
+    (NotificationService as Type<NotificationService>);
     const notificationSpy = spyOn(notificationService, 'addSnack').and.callThrough();
     component.voucher = voucherCustom;
     component.full('2222');

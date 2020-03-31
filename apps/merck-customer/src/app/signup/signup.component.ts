@@ -1,8 +1,23 @@
 import { Component } from '@angular/core';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthenticationService, NotificationService } from '@perx/core';
-import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
+import {
+  Validators,
+  FormBuilder,
+  FormGroup,
+  AbstractControl,
+} from '@angular/forms';
+
+import {
+  AuthenticationService,
+  NotificationService,
+  IProfile,
+} from '@perxtech/core';
+
+import {
+  PageAppearence,
+  PageProperties,
+  BarSelectedItem,
+} from '../page-properties';
 
 @Component({
   selector: 'mc-signup',
@@ -14,6 +29,34 @@ export class SignupComponent implements PageAppearence {
   public signupForm: FormGroup;
   public selectedCountry: string = '+852';
   public appAccessTokenFetched: boolean;
+
+  public get name(): AbstractControl | null {
+    return this.signupForm.get('name');
+  }
+
+  public get mobileNo(): AbstractControl | null {
+    return this.signupForm.get('mobileNo');
+  }
+
+  public get password(): AbstractControl | null {
+    return this.signupForm.get('password');
+  }
+
+  public get confirmPassword(): AbstractControl | null {
+    return this.signupForm.get('confirmPassword');
+  }
+
+  public get accept_terms(): AbstractControl | null {
+    return this.signupForm.get('accept_terms');
+  }
+
+  public get accept_marketing(): AbstractControl | null {
+    return this.signupForm.get('accept_marketing');
+  }
+
+  public get countryCode(): AbstractControl | null {
+    return this.signupForm.get('countryCode');
+  }
 
   constructor(
     private fb: FormBuilder,
@@ -32,7 +75,7 @@ export class SignupComponent implements PageAppearence {
       this.authService.getAppToken().subscribe(() => {
         this.appAccessTokenFetched = true;
       }, (err) => {
-        console.error('Error' + err);
+        console.error(`Error${err}`);
       });
     }
   }
@@ -58,7 +101,6 @@ export class SignupComponent implements PageAppearence {
   }
 
   public onSubmit(): void {
-
     try {
       const passwordString = this.signupForm.value.password as string;
       const confirmPassword = this.signupForm.value.confirmPassword as string;
@@ -92,15 +134,16 @@ export class SignupComponent implements PageAppearence {
         lastName: name,
         middleName: '',
         phone: cleanedMobileNo,
-        email: '',
-        birthDay: '',
-        gender: '',
         password: passwordString,
         passwordConfirmation: confirmPassword
       };
 
       this.authService.signup(signUpData).subscribe(
-        () => {
+        (data: IProfile | null) => {
+          if (!data) {
+            return;
+          }
+
           this.router.navigate(['enter-pin/register'], { state: { mobileNo: cleanedMobileNo } });
         },
         err => {

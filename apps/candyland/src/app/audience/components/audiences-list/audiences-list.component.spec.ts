@@ -2,9 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   MatTableModule,
 } from '@angular/material';
-import { StatusLabelModule } from '@cl-shared/components/status-label/status-label.module';
 import { AudiencesListComponent } from './audiences-list.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { StatusLabelModule } from '@perxtech/candyshop';
 
 describe('AudiencesListComponent', () => {
   let component: AudiencesListComponent;

@@ -1,5 +1,5 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
-import { IReward } from '@perx/core';
+import { IReward } from '@perxtech/core';
 import { Location } from '@angular/common';
 import { IMacaron } from '../../services/macaron.service';
 

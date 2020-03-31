@@ -1,24 +1,29 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NewsFeedComponent } from './news-feed.component';
 import { MatCardModule, MatButtonModule, MatDialogModule, MatDialog } from '@angular/material';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
-import { FeedReaderService } from '@perx/core';
+import { SettingsService, FeedReaderService } from '@perxtech/core';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { of } from 'rxjs';
-import { Type } from '@angular/core';
 
 describe('NewsFeedComponent', () => {
   let component: NewsFeedComponent;
   let fixture: ComponentFixture<NewsFeedComponent>;
-  const feedReaderServiceStub = {
+
+  const feedReaderServiceStub: Partial<FeedReaderService> = {
     getFromUrl: () => of([])
+  };
+
+  const settingsServiceStub: Partial<SettingsService> = {
+    readRssFeeds: () => of()
   };
 
   const items = [
     {
       title: '',
       description: 'Goodbye collecting points, Hello rewards in a snap!\n\nBecause change means no more rewards points and hello to instant deals.\n\nWith rewards from all your favourite brands, you can now enjoy everything you love, anytime you want.\n\nPlus, it’s all in one place now. For you to enjoy, in a snap.',
+      descriptionWithURL: '<div>Goodbye collecting points, Hello rewards in a snap!\n\nBecause change means no more rewards points and hello to instant deals.\n\nWith rewards from all your favourite brands, you can now enjoy everything you love, anytime you want.\n\nPlus, it’s all in one place now. For you to enjoy, in a snap.</div>',
       link: 'https://www.starhub.com/personal/rewards/starhub-rewards-programme/starhub-rewards.html',
       image: 'https://perx-cdn-staging.s3.amazonaws.com/merchant/account/photo_url/34/sh-rewards-hero-d990e310-78b7-43fe-b632-04d9b15ffd31.png',
       guid: 'TMRlovehate190813',
@@ -27,6 +32,7 @@ describe('NewsFeedComponent', () => {
     {
       title: '',
       description: 'Goodbye collecting points, Hello rewards in a snap!\n\nBecause change means no more rewards points and hello to instant deals.\n\nWith rewards from all your favourite brands, you can now enjoy everything you love, anytime you want.\n\nPlus, it’s all in one place now. For you to enjoy, in a snap.',
+      descriptionWithURL: '<div>Goodbye collecting points, Hello rewards in a snap!\n\nBecause change means no more rewards points and hello to instant deals.\n\nWith rewards from all your favourite brands, you can now enjoy everything you love, anytime you want.\n\nPlus, it’s all in one place now. For you to enjoy, in a snap.</div>',
       link: 'https://www.starhub.com/personal/rewards/starhub-rewards-programme/starhub-rewards.html',
       image: 'https://perx-cdn-staging.s3.amazonaws.com/merchant/account/photo_url/34/sh-rewards-hero-d990e310-78b7-43fe-b632-04d9b15ffd31.png',
       guid: 'TMRlovehate190813',
@@ -44,7 +50,8 @@ describe('NewsFeedComponent', () => {
         ScrollingModule
       ],
       providers: [
-        { provide: FeedReaderService, useValue: feedReaderServiceStub }
+        { provide: FeedReaderService, useValue: feedReaderServiceStub },
+        { provide: SettingsService, useValue: settingsServiceStub },
       ]
     })
       .compileComponents();
@@ -59,14 +66,6 @@ describe('NewsFeedComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  it('onInit', fakeAsync(() => {
-    const feedReaderService = TestBed.get<FeedReaderService>(FeedReaderService as Type<FeedReaderService>);
-    const feedReaderServiceSpy = spyOn(feedReaderService, 'getFromUrl').and.returnValue(of(items));
-    component.ngOnInit();
-    tick();
-    expect(feedReaderServiceSpy).toHaveBeenCalled();
-  }));
 
   describe('updateScrollIndex', () => {
     it('should update newsAfterScroll to Array(0) on updateScrollIndex', () => {

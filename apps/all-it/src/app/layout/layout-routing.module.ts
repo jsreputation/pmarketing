@@ -4,14 +4,13 @@ import {
   HomeComponent,
   WalletHistoryComponent,
   HistoryComponent,
-  RedeemComponent,
   VoucherDetailComponent,
   ContentComponent,
   RewardDetailsComponent,
   LayoutComponent,
   SignInComponent,
   RewardsBookingComponent
-} from '@perx/blackcomb-pages';
+} from '@perxtech/blackcomb-pages';
 import { WalletGuard } from '../wallet.guard';
 
 const routes: Routes = [
@@ -21,11 +20,13 @@ const routes: Routes = [
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'home' },
       { path: 'home', component: HomeComponent },
-      { path: 'wallet', component: WalletHistoryComponent, canActivate: [ WalletGuard ] },
+      { path: 'wallet', component: WalletHistoryComponent, canActivate: [WalletGuard] },
       { path: 'history', component: HistoryComponent },
-      { path: 'redeem/:id', component: RedeemComponent },
       { path: 'voucher-detail/:id', component: VoucherDetailComponent },
       { path: 'pi', component: SignInComponent },
+      {
+        path: 'redeem/:id', loadChildren: (): any => import('../redeem/redeem.module').then((mod: any) => mod.RedeemModule),
+      },
       {
         path: 'qr', loadChildren: (): any => import('../qr/qr.module').then((mod: any) => mod.QRModule)
 
@@ -57,22 +58,22 @@ const routes: Routes = [
       {
         path: 'transaction-history',
         loadChildren: (): any => import('../transaction-history/transaction-history.module')
-                      .then((mod: any) => mod.TransactionHistoryModule)
+          .then((mod: any) => mod.TransactionHistoryModule)
       },
       {
         path: 'change-password',
         loadChildren: (): any => import('../change-password/change-password.module')
-                      .then((mod: any) => mod.ChangePasswordModule)
+          .then((mod: any) => mod.ChangePasswordModule)
       },
       {
         path: 'barcode',
         loadChildren: (): any => import('../barcode/barcode.module')
-                      .then((mod: any) => mod.BarcodeModule)
+          .then((mod: any) => mod.BarcodeModule)
       },
       {
         path: 'edit-profile/:type',
         loadChildren: (): any => import('../edit-profile-field/edit-profile-field.module')
-                      .then((mod: any) => mod.EditProfileFieldModule)
+          .then((mod: any) => mod.EditProfileFieldModule)
       },
       { path: 'reward-detail/:id', component: RewardDetailsComponent },
       { path: 'booking/:id', component: RewardsBookingComponent },

@@ -7,21 +7,21 @@ import {
   SurveyQuestionType,
   ISurvey,
   IPopupConfig
-} from '@perx/core';
+} from '@perxtech/core';
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { SurveyComponent } from './survey.component';
-import { MatCardModule, MatButtonModule, MatProgressBarModule } from '@angular/material';
+import { MatCardModule, MatButtonModule, MatProgressBarModule, MatToolbarModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { convertToParamMap, ActivatedRoute, Router } from '@angular/router';
 import { Type } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { WInformationCollectionSettingType } from '@perx/whistler';
+import { WInformationCollectionSettingType } from '@perxtech/whistler';
 
 interface IAnswer {
-  question_id: string;
+  questionId: string;
   content: any;
 }
 
@@ -33,6 +33,7 @@ describe('SurveyComponent', () => {
     id: '1',
     title: 'Survey Test',
     subTitle: 'Test',
+    results: {},
     questions: [
       {
         id: '1',
@@ -80,6 +81,7 @@ describe('SurveyComponent', () => {
           { path: 'wallet', redirectTo: '/' }
         ]),
         MatProgressBarModule,
+        MatToolbarModule,
         PerxSurveyModule,
         TranslateModule.forRoot(),
         BrowserAnimationsModule
@@ -98,14 +100,14 @@ describe('SurveyComponent', () => {
           useValue: {
             paramMap: of(convertToParamMap({ id: 1 })),
             snapshot: {
-              params: {id: 1}
+              params: { id: 1 }
             }
           }
         },
         {
           provide: Router,
           useValue: {
-            navigate: () => {}
+            navigate: () => { }
           }
         },
       ]
@@ -162,6 +164,7 @@ describe('SurveyComponent', () => {
         id: '1',
         title: 'Survey Test',
         subTitle: 'Test',
+        results: {},
         questions: [
           {
             id: '1',
@@ -192,13 +195,13 @@ describe('SurveyComponent', () => {
     it('should updateSurveyStatus', () => {
       const answers: IAnswer[] = [
         {
-          question_id: '1',
+          questionId: '1',
           content: 'test'
         }
       ];
       component.updateSurveyStatus(answers);
       expect(component.answers.length).toBe(1);
-      expect(component.answers[0].question_id).toBe('1');
+      expect(component.answers[0].questionId).toBe('1');
       expect(component.answers[0].content).toBe('test');
     });
 
@@ -218,12 +221,17 @@ describe('SurveyComponent', () => {
         const routerSpy = spyOn(routerStub, 'navigate').and.callThrough();
 
         const state = {
-          popupData: { title: '', text: '', imageUrl: 'assets/congrats_image.png', buttonTxt: 'VIEW_REWARD' },
+          popupData: {
+            title: 'SURVEY_SUCCESS_TITLE',
+            text: 'SURVEY_SUCCESS_TEXT',
+            imageUrl: 'assets/congrats_image.png',
+            buttonTxt: 'CLOSE'
+          },
           engagementType: 'survey',
           surveyId: 1,
           collectInfo: true,
           campaignId: 1,
-          answers: undefined
+          answers: []
         };
 
         component.ngOnInit();
@@ -254,12 +262,17 @@ describe('SurveyComponent', () => {
         const routerSpy = spyOn(routerStub, 'navigate').and.callThrough();
 
         const state = {
-          popupData: { title: 'SURVEY_SUCCESS_TITLE', text: 'SURVEY_SUCCESS_TEXT', imageUrl: 'assets/congrats_image.png', buttonTxt: 'VIEW_REWARD' },
+          popupData: {
+            title: 'SURVEY_SUCCESS_TITLE',
+            text: 'SURVEY_SUCCESS_TEXT',
+            imageUrl: 'assets/congrats_image.png',
+            buttonTxt: 'CLOSE'
+          },
           engagementType: 'survey',
           surveyId: 1,
           collectInfo: true,
           campaignId: 1,
-          answers: undefined
+          answers: []
         };
 
         component.ngOnInit();

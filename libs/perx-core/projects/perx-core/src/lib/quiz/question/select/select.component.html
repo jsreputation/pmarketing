@@ -1,0 +1,28 @@
+<div class="date-wrapper" *ngIf="payload">
+    <ng-container *ngIf="payload.multiple; else elseBlock">
+        <div class="choice-container">
+            <div class="choice-content" *ngFor="let choice of payload?.choices; let i = index">
+                <mat-checkbox [(ngModel)]="selectedChoices[i]" (change)="emitValue()">
+                    {{choice}}
+                </mat-checkbox>
+            </div>
+        </div>
+    </ng-container>
+    <ng-template #elseBlock>
+        <div class="choice-container">
+            <mat-radio-group
+                [color]="'primary'"
+                class="selection-radio-group"
+                aria-labelledby="single-selection"
+                [(ngModel)]="selectedChoice"
+                (change)="emitValue()">
+                <mat-radio-button
+                    class="selection-radio-button"
+                    *ngFor="let choice of payload?.choices"
+                    [value]="choice">
+                    {{choice}}
+                </mat-radio-button>
+            </mat-radio-group>
+        </div>
+    </ng-template>
+</div>

@@ -7,13 +7,14 @@ import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '
 import { Observable, range, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil, toArray } from 'rxjs/operators';
 import { CampaignCreationStoreService, ICampaignConfig } from '../../services/campaigns-creation-store.service';
-import { AudiencesService, StampsService } from '@cl-core-services';
+import { StampsService } from '@cl-core-services';
 import { ICampaign } from '@cl-core/models/campaign/campaign';
 import { NewCampaignDetailFormService } from '../../services/new-campaign-detail-form.service';
 import { StepConditionService } from '../../services/step-condition.service';
 import Utils from '@cl-helpers/utils';
 import { ActivatedRoute } from '@angular/router';
 import { ToggleControlService } from '@cl-shared';
+import { CommonSelect } from '@cl-core/models/common-select.interface';
 
 @Component({
   selector: 'cl-new-campaign-notifications',
@@ -39,15 +40,16 @@ export class NewCampaignNotificationsComponent implements OnInit, OnChanges, OnD
   public isFirstInit: boolean;
   public triggerLabelsChip: boolean;
   public campaignId: string;
-  constructor(private campaignChannelsFormService: CampaignChannelsFormService,
-              public store: CampaignCreationStoreService,
-              private cd: ChangeDetectorRef,
-              private stampsService: StampsService,
-              private audiencesService: AudiencesService,
-              private newCampaignDetailFormService: NewCampaignDetailFormService,
-              public stepConditionService: StepConditionService,
-              private route: ActivatedRoute,
-              private toggleControlService: ToggleControlService) {
+  constructor(
+    private campaignChannelsFormService: CampaignChannelsFormService,
+    public store: CampaignCreationStoreService,
+    private cd: ChangeDetectorRef,
+    private stampsService: StampsService,
+    private newCampaignDetailFormService: NewCampaignDetailFormService,
+    public stepConditionService: StepConditionService,
+    private route: ActivatedRoute,
+    private toggleControlService: ToggleControlService
+  ) {
     this.initForm();
   }
 
@@ -58,7 +60,6 @@ export class NewCampaignNotificationsComponent implements OnInit, OnChanges, OnD
     this.getStampData();
     this.subscribeToStore();
 
-    this.initPools();
     this.config = this.store.config;
     this.initData();
   }
@@ -196,7 +197,7 @@ export class NewCampaignNotificationsComponent implements OnInit, OnChanges, OnD
     const optionControl = this.channelForm.get('webNotification.webLinkOptions');
     check ?
       optionControl
-      .patchValue('not_required')
+        .patchValue('not_required')
       : optionControl.patchValue('');
   }
 
@@ -239,12 +240,10 @@ export class NewCampaignNotificationsComponent implements OnInit, OnChanges, OnD
 
   private getStampNumbers(campaign: ICampaign): void {
     if (this.checkIsStamp(campaign)) {
-      this.stampNumbers = Array.from(Array(10).keys(), (item) => {
-        return {
-          value: item + 1,
-          viewValue: `${item + 1}`
-      };
-      });
+      this.stampNumbers = Array.from(Array(10).keys(), (item) => ({
+        value: item + 1,
+        viewValue: `${item + 1}`
+      }));
     }
   }
 
@@ -254,13 +253,6 @@ export class NewCampaignNotificationsComponent implements OnInit, OnChanges, OnD
 
   private initForm(): void {
     this.form = this.newCampaignDetailFormService.getForm();
-  }
-
-  private initPools(): any {
-    this.audiencesService.getAudiencesList()
-      .subscribe((data: any) => {
-        this.pools = data;
-      });
   }
 
   public addAge(): void {

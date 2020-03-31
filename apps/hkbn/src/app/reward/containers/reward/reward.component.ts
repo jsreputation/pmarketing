@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material';
 import { RewardConfirmComponent, IRewardConfirmComponentParam } from '../../components/reward-confirm/reward-confirm.component';
 import { combineLatest, Observable, of, Subject } from 'rxjs';
 import { map, switchMap, takeUntil, tap, filter, last } from 'rxjs/operators';
-import { IReward, NotificationService, LoyaltyService, ILoyalty, IPopupConfig, PopupComponent, IVoucherService, RewardsService } from '@perx/core';
+import { IReward, NotificationService, LoyaltyService, ILoyalty, IPopupConfig, PopupComponent, IVoucherService, RewardsService } from '@perxtech/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -83,7 +83,7 @@ export class RewardComponent implements OnInit, OnDestroy {
               afterClosedCallBack: this,
               buttonTxt: close
             })),
-            map(() => { return; })
+            map(() => (void 0))
           )
         )
       );

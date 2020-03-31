@@ -1,8 +1,20 @@
-import { AuthenticationService, NotificationService } from '@perx/core';
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+} from '@angular/core';
+import {
+  Validators,
+  FormBuilder,
+  FormGroup,
+  AbstractControl,
+} from '@angular/forms';
 import { Router } from '@angular/router';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
+
+import {
+  AuthenticationService,
+  NotificationService,
+} from '@perxtech/core';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +26,16 @@ export class LoginComponent implements OnInit {
   public errorMessage?: string;
   public preAuth: boolean;
   public appAccessTokenFetched: boolean;
+  public useSignUpButton: boolean = true;
+
+  public get mobileNumber(): AbstractControl | null {
+    return this.loginForm.get('mobileNumber');
+  }
+
+  public get pinCode(): AbstractControl | null {
+    return this.loginForm.get('pinCode');
+  }
+
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -30,7 +52,7 @@ export class LoginComponent implements OnInit {
       this.authService.getAppToken().subscribe(() => {
         this.appAccessTokenFetched = true;
       }, (err) => {
-        console.error('Error' + err);
+        console.error(`Error${err}`);
       });
     }
 
@@ -55,7 +77,7 @@ export class LoginComponent implements OnInit {
         if (!((window as any).primaryIdentifier)) {
           (window as any).primaryIdentifier = username;
         }
-        this.router.navigate([`home`]);
+        this.router.navigate(['card']);
       },
       (err) => {
         if (err instanceof HttpErrorResponse) {

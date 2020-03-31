@@ -1,0 +1,14 @@
+@mixin toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  height: 6rem;
+  z-index: 800;
+  font-size: 2rem;
+  line-height: 1.9rem;
+
+  .logo {
+    height: 100%;
+  }
+}

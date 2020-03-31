@@ -1,37 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatProgressBarModule } from '@angular/material';
-
+// BCGameModule already importing GamesModule
 import {
-  GameModule as PerxGameModule,
   AuthenticationModule,
-} from '@perx/core';
-import {
-  GameComponent,
-  ShakeComponent,
-  TapComponent,
-  ScratchComponent,
-  SpinComponent,
-  ConfigToSlicesPipe,
-  ConfigToMappedSlotPipe
-} from '@perx/blackcomb-pages';
+} from '@perxtech/core';
+import { GameModule as BCGameModule } from '@perxtech/blackcomb-pages';
 
 import { GameRoutingModule } from './game-routing.module';
 
 @NgModule({
-  declarations: [
-    GameComponent,
-    ShakeComponent,
-    TapComponent,
-    ScratchComponent,
-    SpinComponent,
-    ConfigToSlicesPipe,
-    ConfigToMappedSlotPipe
-  ],
   imports: [
     CommonModule,
     GameRoutingModule,
-    PerxGameModule,
+    BCGameModule,
     AuthenticationModule,
     MatProgressBarModule
   ]

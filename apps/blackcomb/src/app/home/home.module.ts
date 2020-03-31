@@ -7,12 +7,16 @@ import {
   RewardsModule,
   UtilsModule,
   RewardPopupComponent,
-  CampaignModule
-} from '@perx/core';
+  CampaignModule,
+  OutcomeModule, CampaignServiceModule
+} from '@perxtech/core';
 import {
   HomeComponent,
-  GamesCollectionComponent
-} from '@perx/blackcomb-pages';
+  GamesCollectionComponent,
+  CampaignsCollectionComponent,
+  CatalogsComponent,
+  PerxBlackcombPagesModule
+} from '@perxtech/blackcomb-pages';
 import { TranslateModule } from '@ngx-translate/core';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 const routes: Routes = [{
@@ -21,10 +25,6 @@ const routes: Routes = [{
 }];
 
 @NgModule({
-  declarations: [
-    HomeComponent,
-    GamesCollectionComponent
-  ],
   imports: [
     CommonModule,
     RouterModule,
@@ -34,15 +34,20 @@ const routes: Routes = [{
     RewardsModule,
     MatCardModule,
     MatButtonModule,
+    PerxBlackcombPagesModule,
     TranslateModule.forChild(),
     RouterModule.forChild(routes),
     InfiniteScrollModule,
     MatDialogModule,
-    CampaignModule
+    CampaignModule,
+    CampaignServiceModule.forChild(),
+    OutcomeModule
   ],
   exports: [
     HomeComponent,
-    GamesCollectionComponent
+    GamesCollectionComponent,
+    CampaignsCollectionComponent,
+    CatalogsComponent
   ],
   entryComponents: [
     RewardPopupComponent

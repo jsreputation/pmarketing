@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild, AfterViewInit } from '@angular
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { filter, map, mapTo, startWith, switchMap, takeUntil } from 'rxjs/operators';
-import { AuthenticationService, IProfile, ProfileService } from '@perx/core';
+import { AuthenticationService, IProfile, ProfileService } from '@perxtech/core';
 import { MatSidenavContainer } from '@angular/material';
 import { Location } from '@angular/common';
 

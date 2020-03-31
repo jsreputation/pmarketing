@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { AudiencesHttpAdapter } from '@cl-core/http-adapters/audiences-http-adapter';
-import { AudiencesHttpsService } from '@cl-core/http-services/audiences-https.service';
+import { AudiencesHttpsService } from '@perxtech/whistler-services';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ITableService } from '@cl-shared/table/data-source/table-service-interface';
 import { ClHttpParams } from '@cl-helpers/http-params';
-import { IWAudiences, IJsonApiItem, IJsonApiListPayload } from '@perx/whistler';
+import { IWAudiences, IJsonApiItem, IJsonApiListPayload } from '@perxtech/whistler';
 import { IAudience } from '@cl-core/models/audiences/audiences';
+import { HttpParamsOptions } from '@cl-core/models/params-map';
+import { ITableData } from '@cl-core/models/data-list.interface';
 
 export interface IPoolUserLink {
   name: string;
@@ -43,13 +45,11 @@ export class AudiencesService implements ITableService<IAudience> {
           const poolsList = res.data;
           return poolsList
             .filter((pool: IJsonApiItem<IWAudiences>) => !pool.attributes.system_generated)
-            .map((pool: IJsonApiItem<IWAudiences>) => {
-              return {
-                name: pool.attributes.name,
-                checked: false,
-                value: { id: pool.id, type: pool.type }
-              };
-            });
+            .map((pool: IJsonApiItem<IWAudiences>) => ({
+              name: pool.attributes.name,
+              checked: false,
+              value: { id: pool.id, type: pool.type }
+            }));
         }));
   }
 

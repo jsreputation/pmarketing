@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { Voucher, IVoucherService, RedemptionType, IPopupConfig, PopupComponent } from '@perx/core';
+import { Voucher, IVoucherService, RedemptionType, IPopupConfig, PopupComponent } from '@perxtech/core';
 import { Observable, throwError } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
 import { MatDialog, MatDialogRef } from '@angular/material';
@@ -43,7 +43,7 @@ export class RedeemComponent implements OnInit {
   public pinInputSuccess(): void {
     this.popup({
       title: 'Redeem Successfully',
-      text: 'ID: ' + this.voucherId
+      text: `ID: ${this.voucherId}`
     });
   }
 

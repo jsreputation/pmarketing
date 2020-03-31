@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ProfileComponent } from './profile.component';
 import { MatIconModule } from '@angular/material';
-import { ProfileService } from '@perx/core';
+import { ProfileService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 

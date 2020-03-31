@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
-import { AuthenticationService, ConfigService, IConfig } from '@perx/core';
+import { AuthenticationService, ConfigService, IConfig } from '@perxtech/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
     private authService: AuthenticationService,
     private configService: ConfigService,
     @Inject(PLATFORM_ID) private platformId: object
-  ) {}
+  ) { }
 
   public ngOnInit(): void {
     const token = this.authService.getAppAccessToken();
@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
       this.authService.getAppToken().subscribe(() => {
         this.appAccessTokenFetched = true;
       }, (err) => {
-        console.error('Error' + err);
+        console.error(`Error ${err}`);
       });
     }
     this.configService.readAppConfig().subscribe(

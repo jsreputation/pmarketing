@@ -16,20 +16,20 @@ import { LoyaltyCustomTierService } from '@cl-core/services/loyalty-custom-tier.
 import Utils from '@cl-helpers/utils';
 import { StatusLabel } from '@cl-helpers/status-label.enum';
 import { ICustomTireForm, ILoyaltyForm } from '@cl-core/models/loyalty/loyalty-form.model';
-import { IWBasicTierAttributes, IJsonApiItemPayload, IWLoyaltyRuleSetAttributes } from '@perx/whistler';
+import { IWBasicTierAttributes, IJsonApiItemPayload, IWLoyaltyRuleSetAttributes } from '@perxtech/whistler';
 import { RuleSetupPopupComponent } from '../rule-setup-popup/rule-setup-popup.component';
 import { LoyaltyRuleService } from '@cl-core/services/loyalty-rule.service';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { ILoyaltyRule, ILoyaltyRuleSet } from '@cl-core/models/loyalty/loyalty-rules.model';
 import { LoyaltyConfigService } from '../../services/loyalty-config.service';
-import {LoyaltyFormStepDetailsComponent} from '../../components/loyalty-form-step-details/loyalty-form-step-details.component';
+import { LoyaltyFormStepDetailsComponent } from '../../components/loyalty-form-step-details/loyalty-form-step-details.component';
 
 @Component({
   selector: 'cl-manage-loyalty-page',
   templateUrl: './manage-loyalty-page.component.html',
   styleUrls: ['./manage-loyalty-page.component.scss'],
   providers: [{
-    provide: STEPPER_GLOBAL_OPTIONS, useValue: {showError: true}
+    provide: STEPPER_GLOBAL_OPTIONS, useValue: { showError: true }
   }]
 })
 
@@ -50,8 +50,8 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
   public showDraftButton: boolean = true;
   private stepProgress$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   private loading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  @ViewChild('stepper', {static: false}) private stepper: MatStepper;
-  @ViewChild(LoyaltyFormStepDetailsComponent, { static: false}) public loyaltyFormStepComp: LoyaltyFormStepDetailsComponent;
+  @ViewChild('stepper', { static: false }) private stepper: MatStepper;
+  @ViewChild(LoyaltyFormStepDetailsComponent, { static: false }) public loyaltyFormStepComp: LoyaltyFormStepDetailsComponent;
   private loyaltyFormType: typeof LoyaltyStepForm = LoyaltyStepForm;
   protected destroy$: Subject<void> = new Subject();
 
@@ -106,16 +106,16 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
     this.stepProgress$.pipe(
       takeUntil(this.destroy$)
     ).subscribe(stepProgress => {
-        switch (stepProgress) {
-          case 1:
-            this.initCustomTiersDataSource();
-            break;
-          case 2:
-            this.initAllRuleSet();
-            break;
-        }
-        this.stepProgress = stepProgress;
+      switch (stepProgress) {
+        case 1:
+          this.initCustomTiersDataSource();
+          break;
+        case 2:
+          this.initAllRuleSet();
+          break;
       }
+      this.stepProgress = stepProgress;
+    }
     );
 
     this.loading$.pipe(
@@ -401,7 +401,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
       this.customTierDataSource = new CustomDataSource<ICustomTireForm>(
         this.customTierService,
         20,
-        {'filter[program_id]': this.loyaltyId});
+        { 'filter[program_id]': this.loyaltyId });
     }
   }
 
@@ -533,7 +533,7 @@ export class ManageLoyaltyPageComponent implements OnInit, OnDestroy {
 
   // rules
   private getRefDialogSetupRule(data: { ruleSet: ILoyaltyRuleSet, rule?: ILoyaltyRule | null } = null):
-    Observable<MatDialogRef<RuleSetupPopupComponent>> {
+  Observable<MatDialogRef<RuleSetupPopupComponent>> {
     const dialogRef: MatDialogRef<RuleSetupPopupComponent> = this.dialog.open(RuleSetupPopupComponent, {
       panelClass: 'tier-setup-dialog',
       data: {

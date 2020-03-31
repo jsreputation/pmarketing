@@ -6,17 +6,16 @@ import {
   IJsonApiPatchData,
   IWCustomTierAttributes,
   IWBasicTierAttributes
-} from '@perx/whistler';
+} from '@perxtech/whistler';
 import { IAudiencesLoyalty, IAudiencesLoyaltyCard, IAudiencesTier } from '@cl-core/models/audiences/audiences-loyalty.model';
 
 export class LoyaltyCardHttpAdapter {
-
   public static transformFromCreateLoyaltyCard(data: IAudiencesLoyaltyCard): IJsonApiPostData<IWLoyaltyCard> {
     return {
       type: 'cards',
       attributes: {
         user_id: data.userId,
-        balance: data.balance,
+        balance: `${data.balance}`,
       },
       relationships: {
         tier: {
@@ -43,7 +42,7 @@ export class LoyaltyCardHttpAdapter {
     };
 
     if ('balance' in data) {
-      updatedData.attributes.balance = data.balance;
+      updatedData.attributes.balance = `${data.balance} `;
     }
 
     // if ('loyalty' in data) {

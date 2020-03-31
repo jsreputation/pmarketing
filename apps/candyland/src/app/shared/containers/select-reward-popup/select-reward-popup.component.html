@@ -3,53 +3,54 @@
     <h2 class="dialog-title" id="dialogTitle-selectRewards">
       {{'CAMPAIGN.SELECT_REWARDS' | translate}}
     </h2>
-    <button class="dialog-closed btn-transparent" [mat-dialog-close]="false">
+    <button class="dialog-closed cs-btn-transparent" [mat-dialog-close]="false">
       <mat-icon>close</mat-icon>
     </button>
   </header>
   <mat-dialog-content>
-    <section class="dialog-content">
-      <div class="reward-list">
+    <section class="dialog-content" [ngSwitch]="dataSource.state$ | async">
+      <div class="reward-list" *ngSwitchCase="dataSourceStates.hasDataApi">
         <!--filters-->
         <cl-table-filters [dataSource]="dataSource" classList="block">
           <ng-container *clTableFilter="'name'; let filter">
-            <cl-search-filter class="search-block" [control]="filter" [placeholder]="'CAMPAIGN.SEARCH_FOR_REWARDS' | translate"></cl-search-filter>
+            <cl-search-filter class="search-block" [control]="filter"
+              [placeholder]="'CAMPAIGN.SEARCH_FOR_REWARDS' | translate"></cl-search-filter>
           </ng-container>
         </cl-table-filters>
         <!--table-->
         <div class="reward-list-wrapper">
           <cl-rewards-list [dataSource]="dataSource"
-                          [selectable]="true"
-                          [displayedColumns]="displayedColumns"
-                          (selectReward)="selectReward($event)">
+            [selectable]="true"
+            [displayedColumns]="displayedColumns"
+            (selectReward)="selectReward($event)">
           </cl-rewards-list>
         </div>
         <!--paginator-->
         <cl-paginator [dataSource]="dataSource"
-                      [pageSize]="5"
-                      [pageSizeOptions]="[5, 10, 20]"
-        ></cl-paginator>
+          [pageSize]="5"
+          [pageSizeOptions]="[5, 10, 20]"></cl-paginator>
       </div>
+      <mat-progress-bar mode="indeterminate" *ngSwitchCase="dataSourceStates.firstLoading"></mat-progress-bar>
     </section>
   </mat-dialog-content>
   <!--<mat-dialog-actions>-->
   <footer class="dialog-actions"
   >
-    <cl-button [classList]="'secondary'"
+    <cs-button [classList]="'secondary'"
               class="actions-close"
               (click)="close()"
               [disableRipple]="true">
       <span>{{'BTN_CANCEL' | translate}}</span>
-    </cl-button>
+    </cs-button>
 
-    <cl-button [classList]="'primary'"
+    <cs-button [classList]="'primary'"
               (click)="add()"
               [disable]="!selectedReward"
               [disableRipple]="true">
       <span>
         {{'CAMPAIGN.ADD_REWARD' | translate}}
       </span>
-    </cl-button>
+    </cs-button>
   </footer>
   <!--</mat-dialog-actions>-->
 </aside>

@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LoginFormComponent } from './login-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ButtonModule, LogoModule } from '@perx/candyshop';
+import { ButtonModule, LogoModule } from '@perxtech/candyshop';
 import { MatFormFieldModule, MatIconModule, MatInputModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -10,6 +10,7 @@ import { SessionService } from '@es-core/services/session.service';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthService } from '@es-core';
+import { TestAuthService } from '@es-shared';
 
 describe('LoginFormComponent', () => {
   let component: LoginFormComponent;
@@ -31,10 +32,17 @@ describe('LoginFormComponent', () => {
         HttpClientModule,
         TranslateModule.forRoot()
       ],
-      providers: [ AuthService, LocalStorageService, SessionService ],
-      declarations: [ LoginFormComponent ]
+      providers: [
+        LocalStorageService,
+        SessionService,
+        {
+          provide: AuthService,
+          useClass: TestAuthService
+        }
+      ],
+      declarations: [LoginFormComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

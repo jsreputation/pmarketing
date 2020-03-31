@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, ViewEncapsulation, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IProfile, ProfileService, NotificationService } from '@perx/core';
+import { IProfile, ProfileService, NotificationService } from '@perxtech/core';
 import { MatSlideToggleChange } from '@angular/material';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
 
@@ -45,8 +45,8 @@ export class AccountSummaryComponent implements OnChanges, OnInit {
   public agreement(event: MatSlideToggleChange): void {
     this.profileService.setCustomProperties({ subscribe_notification: event.checked }).subscribe(() => {
     },
-      (err) => {
-        this.ntfs.addSnack(err);
-      });
+    (err) => {
+      this.ntfs.addSnack(err);
+    });
   }
 }
