@@ -1,13 +1,13 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-
-import { PuzzleListComponent } from './puzzle-list.component';
-import { MatCardModule, MatRippleModule, MatIconModule } from '@angular/material';
+import { SimpleChanges, Type } from '@angular/core';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { MatCardModule, MatIconModule, MatRippleModule } from '@angular/material';
+import { of } from 'rxjs';
 import { EnvConfig } from '../../shared/env-config';
+import { IStampCard, StampState } from '../../stamp/models/stamp.model';
 import { StampService } from '../../stamp/stamp.service';
 import { UtilsModule } from '../../utils/utils.module';
-import { of } from 'rxjs';
-import { Type, SimpleChanges } from '@angular/core';
-import { IStampCard, StampState } from '../../stamp/models/stamp.model';
+import { PuzzleListComponent } from './puzzle-list.component';
+
 const SimpleChangesMock: SimpleChanges = {
   campaignId:
   {
@@ -16,7 +16,8 @@ const SimpleChangesMock: SimpleChanges = {
     firstChange: true,
     isFirstChange: () => true
   }
-}
+};
+
 describe('PuzzleListComponent', () => {
   let component: PuzzleListComponent;
   let fixture: ComponentFixture<PuzzleListComponent>;
@@ -83,11 +84,11 @@ describe('PuzzleListComponent', () => {
     component.ngOnChanges({});
     // campaignId is null branch
     component.campaignId = null;
-    component.ngOnChanges(SimpleChangesMock)
+    component.ngOnChanges(SimpleChangesMock);
   }));
 
-  it('init with title fn', ()=>{
-    const testFn = () => 'test'
+  it('init with title fn', () => {
+    const testFn = () => 'test';
     component.titleFn = testFn;
     component.puzzleTextFn = testFn;
     component.ngOnInit();
@@ -95,7 +96,7 @@ describe('PuzzleListComponent', () => {
     expect(component.puzzleTextFn).toEqual(testFn);
   });
 
-  it('init without title fn', ()=>{
+  it('init without title fn', () => {
     delete component.titleFn;
     delete component.puzzleTextFn;
     component.ngOnInit();
@@ -103,5 +104,5 @@ describe('PuzzleListComponent', () => {
     expect(title).toBe(`Puzzle #${component.indexToLetter(1)}`);
     const puzzle = component.puzzleTextFn();
     expect(puzzle).toBe('new pieces');
-  })
+  });
 });
