@@ -2,25 +2,27 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import {
-  MatToolbarModule,
-  MatTabsModule,
-  MatCardModule,
   MatButtonModule,
+  MatCardModule,
+  MatDialogModule,
   MatIconModule,
   MatRippleModule,
-  MatDialogModule,
+  MatTabsModule,
+  MatToolbarModule,
 } from '@angular/material';
 
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 
 import {
-  UtilsModule,
-  LoyaltyModule,
-  ConfigModule,
   CampaignModule,
+  CampaignServiceModule,
+  ConfigModule,
+  GameServiceModule as PerxGameServiceModule,
+  LoyaltyModule,
   OutcomeModule,
-  PopupComponent, CampaignServiceModule,
+  PopupComponent,
+  UtilsModule,
 } from '@perxtech/core';
 
 import { environment } from 'src/environments/environment';
@@ -48,7 +50,7 @@ import { NoRenewaleInNamePipe } from './no-renewale-in-name.pipe';
     NoRenewaleInNamePipe
   ],
   imports: [
-    ConfigModule.forRoot({ ...environment }),
+    ConfigModule.forRoot({...environment}),
     CommonModule,
     MatToolbarModule,
     MatTabsModule,
@@ -65,10 +67,10 @@ import { NoRenewaleInNamePipe } from './no-renewale-in-name.pipe';
     InfiniteScrollModule,
     CampaignModule,
     CampaignServiceModule.forChild(),
+    PerxGameServiceModule.forChild(),
     OutcomeModule
   ],
-  bootstrap: [
-  ],
+  bootstrap: [],
   providers: [
     NoRenewaleInNamePipe,
   ],
@@ -76,4 +78,5 @@ import { NoRenewaleInNamePipe } from './no-renewale-in-name.pipe';
     PopupComponent
   ]
 })
-export class HomeModule { }
+export class HomeModule {
+}
