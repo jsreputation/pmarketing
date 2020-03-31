@@ -14,6 +14,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   public signupForm: FormGroup;
   public errorMessage: string | null;
   public appAccessTokenFetched: boolean = false;
+  public loadingSubmit: boolean = false;
   private destroy$: Subject<void> = new Subject();
   public theme: Observable<ITheme>;
 
@@ -109,6 +110,8 @@ export class SignUpComponent implements OnInit, OnDestroy {
         hkid
       }
     };
+
+    this.loadingSubmit = true;
 
     this.authService.signup(signUpData).subscribe(
       () => {

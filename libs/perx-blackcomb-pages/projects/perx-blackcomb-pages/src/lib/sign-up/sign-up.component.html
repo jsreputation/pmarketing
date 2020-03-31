@@ -15,7 +15,13 @@
       mat-flat-button
       color="primary"
       (click)="onSubmit()">
-      Sign up
+      <i *ngIf="loadingSubmit" class="loading-spin" >
+        <mat-progress-spinner
+          [diameter]="30"
+          mode="indeterminate">
+        </mat-progress-spinner>
+        </i>
+      <span *ngIf="!loadingSubmit">Sign up</span>
     </button>
     <div class="subtitle" *ngIf="appConfig?.showSubtitleLogin">
       Already a member? <a class="link" [routerLink]="'/login'">Login</a>
