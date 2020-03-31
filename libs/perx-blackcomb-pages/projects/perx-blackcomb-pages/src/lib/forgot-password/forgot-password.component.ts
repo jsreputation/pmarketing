@@ -31,7 +31,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   }, [ForgotPasswordComponent.equalityValidator('newPassword', 'passwordConfirmation')]);
 
   private otp: string;
-  private identifier: string;
+  public identifier: string;
   private destroy$: Subject<void> = new Subject<void>();
   public countryCodesOptions: { value: string, label: string }[] = [
     { value: '852', label: 'HongKong' },
