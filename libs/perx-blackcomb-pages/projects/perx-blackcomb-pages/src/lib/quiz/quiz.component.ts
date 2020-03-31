@@ -15,6 +15,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   public totalLength: number;
   public questionPointer: number = 0;
   public complete: boolean = false;
+  public resetTimer$: Subject<void> = new Subject<void>();
 
   private destroy$: Subject<void> = new Subject();
   @ViewChild('overflowContainer', { static: false })
@@ -46,11 +47,19 @@ export class QuizComponent implements OnInit, OnDestroy {
       filter(quiz => !!quiz),
       takeUntil(this.destroy$)
     );
+
     this.data$.subscribe(
       (quiz: IQuiz) => {
         this.quiz = quiz;
         this.fetchMoveId();
         this.resetTimer();
+        // prepopulate answers
+        quiz.questions.forEach(q => {
+          this.answers[q.id] = {
+            questionId: q.id,
+            content: []
+          }
+        });
 
         this.ngZone.runOutsideAngular(() => {
           // everytime an event fires change detection gets run, we run these events outside angular to minimise cd change
@@ -116,7 +125,7 @@ export class QuizComponent implements OnInit, OnDestroy {
     const questionComponentsArr = this.coreComponent.questionComponents.toArray();
     const questionPointer = this.questionPointer;
     // call validate on the particular question
-    if (questionComponentsArr[questionPointer].questionValidation() && this.moveId) {
+    if (questionComponentsArr[questionPointer].questionValidation()) {
       this.pushAnswer(questionPointer).subscribe(() => { });
       this.resetTimer();
       this.questionPointer++;
@@ -126,6 +135,18 @@ export class QuizComponent implements OnInit, OnDestroy {
 
   public back(): void {
     this.questionPointer--;
+  }
+
+  public timesUp(): void {
+    const questionPointer = this.questionPointer;
+    if (this.quiz.questions.length - 1 === questionPointer) {
+      this.submit();
+    } else {
+      this.pushAnswer(questionPointer).subscribe(() => { });
+      this.questionPointer++;
+      this.questionChanged();
+      this.resetTimer();
+    }
   }
 
   private pushAnswer(questionPointer: number): Observable<void> {
@@ -192,6 +213,7 @@ export class QuizComponent implements OnInit, OnDestroy {
 
   private resetTimer(): void {
     this.timer = this.currentTime;
+    this.resetTimer$.next();
   }
 
   private get currentTime(): number {

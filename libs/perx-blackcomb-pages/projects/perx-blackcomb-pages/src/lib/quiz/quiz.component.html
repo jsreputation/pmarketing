@@ -7,7 +7,7 @@
       <mat-progress-bar class="progress-bar" mode="determinate" color="warn" [value]="progressBarValue">
       </mat-progress-bar>
     </div>
-    <perx-core-timer class="timer" [timeToRun]="30000"></perx-core-timer>
+    <perx-core-timer class="timer" [timeToRun]="30000" (done)="timesUp()" [reset]="resetTimer$"></perx-core-timer>
     <div #overflowContainer>
       <mat-card class="survey-card"
         [ngStyle]="{'background-image': quiz.cardBackgroundImgUrl ? 'url(' + quiz.cardBackgroundImgUrl + ')' : '' }">
