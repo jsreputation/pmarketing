@@ -11,7 +11,7 @@ import {
   IPoints,
   NotificationService, IAnswerResult
 } from '@perxtech/core';
-import { Observable, Subject } from 'rxjs';
+import {Observable, Subject, throwError} from 'rxjs';
 import {filter, map, switchMap, takeUntil, tap} from 'rxjs/operators';
 
 @Component({
@@ -176,7 +176,7 @@ export class QuizComponent implements OnInit, OnDestroy {
       return throwError('Cannot push answer without move id');
     }
 
-    const answer = Object.values(this.answers)[questionPointer];
+    const answer: any = Object.values(this.answers)[questionPointer];
     const time = this.currentTime - this.timer;
     // current questionPointer, WARNING: not implemented yet, stub
     return this.quizService.postQuizAnswer(
@@ -187,7 +187,7 @@ export class QuizComponent implements OnInit, OnDestroy {
         this.points[questionPointer] = {
           questionId: answer.questionId,
           question: this.quiz.questions[questionPointer].question,
-          point: res.points,
+          points: res.points,
           time
         };
       }),
