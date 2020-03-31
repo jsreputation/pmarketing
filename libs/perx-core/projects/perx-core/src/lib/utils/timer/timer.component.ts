@@ -1,6 +1,18 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, Pipe, PipeTransform } from '@angular/core';
-import { Observable, of, Subject, timer } from 'rxjs';
-import { catchError, delay, map, repeatWhen, takeUntil } from 'rxjs/operators';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  Pipe,
+  PipeTransform,
+  SimpleChanges
+} from '@angular/core';
+import { interval, merge, NEVER, Observable, Subject } from 'rxjs';
+import { map, scan, startWith, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 @Pipe({
   name: 'lengthForce',
@@ -16,6 +28,13 @@ export class ForceLengthPipe implements PipeTransform {
     return value.padEnd(x, '0');
   }
 }
+interface TimerState {
+  count: boolean;
+  countup: boolean;
+  speed: number;
+  value: number;
+  increase: number;
+}
 
 // @dynamic required to avoid error because of usage of lambda function in static method
 @Component({
@@ -23,7 +42,7 @@ export class ForceLengthPipe implements PipeTransform {
   templateUrl: './timer.component.html',
   styleUrls: ['./timer.component.scss']
 })
-export class TimerComponent implements OnInit, OnDestroy {
+export class TimerComponent implements OnInit, OnDestroy, AfterViewInit, OnChanges {
   @Input()
   public timeToRun: number = 3000; // input in milliseconds
 
@@ -36,17 +55,56 @@ export class TimerComponent implements OnInit, OnDestroy {
   // stream of formatted time values
   public timer$: Observable<string>;
   private destroy$: Subject<void> = new Subject();
+  private resetSubject$: Subject<void> = new Subject();
+  private startSubject$: Subject<void> = new Subject();
+  private stopSubject$: Subject<void> = new Subject();
+
   // refresh interval
   private INTERVAL: number = 100;
 
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes.reset$ && changes.reset$.currentValue) {
+      //forward reset ticks to resetSubject$
+      this.reset$.subscribe(() => this.resetSubject$.next());
+    }
+  }
+
   public ngOnInit(): void {
-    this.timer$ = this.timeSource()
-      .pipe(
-        // unfortunately we have to slightly delay the repeat, because we want to make sure that 
-        // timeSource also had time to stop
-        repeatWhen(() => this.reset$.pipe(delay(50))),
-        takeUntil(this.destroy$)
-      );
+    const reset: Observable<Partial<TimerState>> = this.resetSubject$.pipe(map(() => ({ value: this.timeToRun / this.INTERVAL, count: true })));
+    const start: Observable<Partial<TimerState>> = this.startSubject$.pipe(map(() => ({ count: true })));
+    const stop: Observable<Partial<TimerState>> = this.stopSubject$.pipe(map(() => ({ count: false })));
+
+    const initState: TimerState = { count: false, speed: this.INTERVAL, value: this.timeToRun / this.INTERVAL, countup: false, increase: 1 };
+    this.timer$ = merge(
+      reset,
+      start,
+      stop
+    ).pipe(
+      startWith(initState),
+      scan((state: TimerState, curr: Partial<TimerState>): TimerState => ({ ...state, ...curr }), {}),
+      switchMap(
+        (state: TimerState) =>
+          state.count ?
+            interval(state.speed)
+              .pipe(
+                tap(_ => state.value += state.countup ? state.increase : -state.increase),
+                map(_ => state.value)
+              )
+            : NEVER
+      ),
+      tap((ticks: number) => {
+        if (ticks <= 0) {
+          this.stopSubject$.next();
+          this.done.emit();
+        }
+      }),
+      map((ticks: number) => this.ticksToString(ticks)),
+      takeUntil(this.destroy$)
+    );
+  }
+
+  public ngAfterViewInit(): void {
+    this.startSubject$.next();
   }
 
   public ngOnDestroy(): void {
@@ -54,33 +112,17 @@ export class TimerComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  private timeSource(): Observable<string> {
-    return timer(0, this.INTERVAL)
-      .pipe(
-        map((ticks: number) => {
-          // first one needs to be offset
-          const date = ticks === 0 ? new Date(this.INTERVAL) : new Date(0);
-          // bcz start at 0 the emission
-          const ellapasedTime = (ticks + 1) * this.INTERVAL;
-          // wont exceed the timetoRun, time + 1 so one stpe in afacance to close properly at 0.00,
-          if (this.timeToRun > ellapasedTime) {
-            date.setUTCMilliseconds(this.timeToRun - ellapasedTime);
-          } else {
-            throw 'done';
-          }
-          const dateString = date.toLocaleTimeString('en-GB', {
-            timeZone: 'UTC',
-            minute: '2-digit',
-            second: '2-digit'
-          });
-          return `${dateString}:${date.getUTCMilliseconds()}`;
-        }),
-        catchError(() => {
-          // when we reach the end, we notify any potential listener
-          this.done.emit();
-          return of('00:00:00');
-        }),
-        takeUntil(this.reset$)
-      );
+  private ticksToString(ticks: number): string {
+    // bcz start at 0 the emission
+    const ellapasedTime = ticks * this.INTERVAL;
+    // wont exceed the timetoRun, time + 1 so one stpe in afacance to close properly at 0.00,
+    const date = new Date(ellapasedTime);
+
+    const dateString = date.toLocaleTimeString('en-GB', {
+      timeZone: 'UTC',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+    return `${dateString}:${date.getUTCMilliseconds()}`;
   }
 }
