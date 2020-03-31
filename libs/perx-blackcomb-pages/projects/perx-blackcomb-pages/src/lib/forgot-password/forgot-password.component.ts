@@ -81,7 +81,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
       return;
     }
     const phone: string = `${this.phoneStepForm.value.countryCode}${this.phoneStepForm.value.phone}`.trim();
-    this.identifier = `+${phone.replace(/[^0-9]/g, '')}`;
+    this.identifier = `${phone.replace(/[^0-9]/g, '')}`;
     this.usersPhone = this.identifier.slice(-2);
 
     this.authenticationService.forgotPassword(this.identifier)
@@ -92,7 +92,9 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   }
 
   public resend(): void {
-    this.authenticationService.resendOTP(this.otp).subscribe(() => { });
+    if (this.identifier) {
+      this.authenticationService.resendOTP(this.identifier).subscribe();
+    }
   }
 
   public handlePin(otp: string): void {
