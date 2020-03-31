@@ -83,7 +83,8 @@ describe('RewardComponent', () => {
     issueReward: () => of()
   };
   const locationStub: Partial<Location> = {
-    back: () => { }
+    back: () => {
+    }
   };
   const routerStub: Partial<Router> = { navigate: () => Promise.resolve(true) };
   const notificationServiceStub: Partial<NotificationService> = { addSnack: () => ({}) };
@@ -91,7 +92,7 @@ describe('RewardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RewardComponent, LocationShortFormatComponent, RewardDetailComponent, ExpireTimerComponent],
+      declarations: [ RewardComponent, LocationShortFormatComponent, RewardDetailComponent, ExpireTimerComponent ],
       imports: [
         MatIconModule,
         RouterTestingModule
@@ -178,7 +179,7 @@ describe('RewardComponent', () => {
           termsAndConditions: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
           howToRedeem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
           merchantId: 2,
-          categoryTags: [{ id: 1, title: 'test' }]
+          categoryTags: [ { id: 1, title: 'test' } ]
         })
       );
       const macaronServiceSpy = spyOn(macaronService, 'getMacaron').and.returnValue(
@@ -240,7 +241,7 @@ describe('RewardComponent', () => {
     const routerSpy = spyOn(router, 'navigate');
     component.save();
     expect(vouchersServiceSpy).toHaveBeenCalled();
-    expect(routerSpy).toHaveBeenCalledWith(['/home/vouchers']);
+    expect(routerSpy).toHaveBeenCalledWith([ '/home/vouchers' ]);
   });
 
 });
