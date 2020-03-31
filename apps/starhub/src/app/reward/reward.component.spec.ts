@@ -1,17 +1,35 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick
+} from '@angular/core/testing';
 
 import { RewardComponent } from './reward.component';
 import { MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { RewardsService, NotificationService, IVoucherService, VoucherState } from '@perxtech/core';
+import {
+  ConfigService,
+  IVoucherService,
+  NotificationService,
+  RewardsService,
+  VoucherState
+} from '@perxtech/core';
 import { LocationShortFormatComponent } from '../location-short-format/location-short-format.component';
 import { RewardDetailComponent } from './reward-detail/reward-detail.component';
 import { ExpireTimerComponent } from './expire-timer/expire-timer.component';
 import { of } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router
+} from '@angular/router';
 import { Location } from '@angular/common';
 import { Type } from '@angular/core';
-import { IMacaron, MacaronService } from '../services/macaron.service';
+import {
+  IMacaron,
+  MacaronService
+} from '../services/macaron.service';
 import { AnalyticsService } from '../analytics.service';
 
 const rewardStub = {
@@ -45,9 +63,18 @@ const macaronTrueStub: IMacaron = {
   isButtonEnabled: true
 };
 
+const configServiceStub: Partial<ConfigService> = {
+  readAppConfig: () => of()
+};
+
 describe('RewardComponent', () => {
   let component: RewardComponent;
   let fixture: ComponentFixture<RewardComponent>;
+  let configService: ConfigService;
+  let rewardsService: RewardsService;
+  let macaronService: MacaronService;
+  let analyticsService: AnalyticsService;
+  let vouchersService: IVoucherService;
   const rewardsServiceStub: Partial<RewardsService> = {
     getReward: () => of()
   };
@@ -56,7 +83,8 @@ describe('RewardComponent', () => {
     issueReward: () => of()
   };
   const locationStub: Partial<Location> = {
-    back: () => { }
+    back: () => {
+    }
   };
   const routerStub: Partial<Router> = { navigate: () => Promise.resolve(true) };
   const notificationServiceStub: Partial<NotificationService> = { addSnack: () => ({}) };
@@ -64,7 +92,7 @@ describe('RewardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RewardComponent, LocationShortFormatComponent, RewardDetailComponent, ExpireTimerComponent],
+      declarations: [ RewardComponent, LocationShortFormatComponent, RewardDetailComponent, ExpireTimerComponent ],
       imports: [
         MatIconModule,
         RouterTestingModule
@@ -81,6 +109,7 @@ describe('RewardComponent', () => {
         { provide: Router, useValue: routerStub },
         { provide: NotificationService, useValue: notificationServiceStub },
         { provide: MacaronService, useValue: macaronServiceStub },
+        { provide: ConfigService, useValue: configServiceStub },
       ]
     })
       .compileComponents();
@@ -88,6 +117,12 @@ describe('RewardComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RewardComponent);
+    configService = fixture.debugElement.injector.get<ConfigService>(ConfigService as Type<ConfigService>);
+    rewardsService = fixture.debugElement.injector.get<RewardsService>(RewardsService as Type<RewardsService>);
+    macaronService = fixture.debugElement.injector.get<MacaronService>(MacaronService as Type<MacaronService>);
+    analyticsService = fixture.debugElement.injector.get<AnalyticsService>(AnalyticsService as Type<AnalyticsService>);
+    vouchersService = fixture.debugElement.injector.get<IVoucherService>(IVoucherService as Type<IVoucherService>);
+
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -98,37 +133,37 @@ describe('RewardComponent', () => {
 
   describe('onInit', () => {
     it('should call rewards service and set isButtonEnable to false if rewardLimitPerUserBalance is 0', fakeAsync(() => {
-      const rewardsService: RewardsService = fixture.debugElement.injector.get<RewardsService>(RewardsService as Type<RewardsService>);
       const rewardsServiceSpy = spyOn(rewardsService, 'getReward').and.returnValue(
         of(rewardStub)
       );
-      const macaronService: MacaronService = fixture.debugElement.injector.get<MacaronService>(MacaronService as Type<MacaronService>);
       const macaronServiceSpy = spyOn(macaronService, 'getMacaron').and.returnValue(
         macaronFalseStub
       );
       component.ngOnInit();
+      configService.readAppConfig().subscribe(() => {
+        expect(rewardsServiceSpy).toHaveBeenCalled();
+        expect(macaronServiceSpy).toHaveBeenCalled();
+        expect(component.isButtonEnable).toBe(false);
+      });
       tick();
-      expect(rewardsServiceSpy).toHaveBeenCalled();
-      expect(macaronServiceSpy).toHaveBeenCalled();
-      expect(component.isButtonEnable).toBe(false);
+
     }));
 
     it('should call rewards service and set isButtonEnable to false if macaron is null', fakeAsync(() => {
-      const rewardsService: RewardsService = fixture.debugElement.injector.get<RewardsService>(RewardsService as Type<RewardsService>);
       const rewardsServiceSpy = spyOn(rewardsService, 'getReward').and.returnValue(
         of(rewardStub)
       );
-      const macaronService: MacaronService = fixture.debugElement.injector.get<MacaronService>(MacaronService as Type<MacaronService>);
       const macaronServiceSpy = spyOn(macaronService, 'getMacaron').and.returnValue(null);
       component.ngOnInit();
+      configService.readAppConfig().subscribe(() => {
+        expect(rewardsServiceSpy).toHaveBeenCalled();
+        expect(macaronServiceSpy).toHaveBeenCalled();
+        expect(component.isButtonEnable).toBe(false);
+      });
       tick();
-      expect(rewardsServiceSpy).toHaveBeenCalled();
-      expect(macaronServiceSpy).toHaveBeenCalled();
-      expect(component.isButtonEnable).toBe(false);
     }));
 
     it('should call rewards service and isButtonEnable should be true', fakeAsync(() => {
-      const rewardsService: RewardsService = fixture.debugElement.injector.get<RewardsService>(RewardsService as Type<RewardsService>);
       const rewardsServiceSpy = spyOn(rewardsService, 'getReward').and.returnValue(
         of({
           id: 1,
@@ -144,22 +179,22 @@ describe('RewardComponent', () => {
           termsAndConditions: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
           howToRedeem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
           merchantId: 2,
-          categoryTags: [{ id: 1, title: 'test' }]
+          categoryTags: [ { id: 1, title: 'test' } ]
         })
       );
-      const macaronService: MacaronService = fixture.debugElement.injector.get<MacaronService>(MacaronService as Type<MacaronService>);
       const macaronServiceSpy = spyOn(macaronService, 'getMacaron').and.returnValue(
         macaronTrueStub
       );
-      const analyticsService: AnalyticsService = fixture.debugElement.injector.get<AnalyticsService>(
-        AnalyticsService as Type<AnalyticsService>);
+
       const analyticsServiceSpy = spyOn(analyticsService, 'addEvent');
       component.ngOnInit();
+      configService.readAppConfig().subscribe(() => {
+        expect(rewardsServiceSpy).toHaveBeenCalled();
+        expect(macaronServiceSpy).toHaveBeenCalled();
+        expect(component.isButtonEnable).toBe(true);
+        expect(analyticsServiceSpy).toHaveBeenCalled();
+      });
       tick();
-      expect(rewardsServiceSpy).toHaveBeenCalled();
-      expect(macaronServiceSpy).toHaveBeenCalled();
-      expect(component.isButtonEnable).toBe(true);
-      expect(analyticsServiceSpy).toHaveBeenCalled();
     }));
   });
 
@@ -172,8 +207,7 @@ describe('RewardComponent', () => {
 
   it('should save reward', () => {
     component.reward = rewardStub;
-    const vouchersService: IVoucherService = fixture.debugElement.injector
-      .get<IVoucherService>(IVoucherService as Type<IVoucherService>);
+
     const vouchersServiceSpy = spyOn(vouchersService, 'issueReward').and.returnValue(
       of({
         id: 1,
@@ -207,7 +241,7 @@ describe('RewardComponent', () => {
     const routerSpy = spyOn(router, 'navigate');
     component.save();
     expect(vouchersServiceSpy).toHaveBeenCalled();
-    expect(routerSpy).toHaveBeenCalledWith(['/home/vouchers']);
+    expect(routerSpy).toHaveBeenCalledWith([ '/home/vouchers' ]);
   });
 
 });

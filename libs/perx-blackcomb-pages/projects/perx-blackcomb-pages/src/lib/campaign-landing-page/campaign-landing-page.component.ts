@@ -1,8 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ICampaign, ICampaignService } from '@perxtech/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { filter, map, switchMap } from 'rxjs/operators';
+import { CampaignLandingPage, ICampaign, ICampaignService } from '@perxtech/core';
 import { Subject } from 'rxjs';
+import { filter, map, switchMap } from 'rxjs/operators';
+import { oc } from 'ts-optchain';
 
 @Component({
   selector: 'perx-blackcomb-pages-campaign-landing-page',
@@ -11,6 +12,7 @@ import { Subject } from 'rxjs';
 })
 export class CampaignLandingPageComponent implements OnInit, OnDestroy {
   public campaign: ICampaign | undefined;
+  public config: CampaignLandingPage | undefined;
   public backgroundUrl: string = '';
   private destroy$: Subject<void> = new Subject();
 
@@ -23,13 +25,14 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.activatedRoute.params
       .pipe(
-        filter((params: Params) => params.id),
-        map((params: Params) => Number.parseInt(params.id, 10)),
+        filter((params: Params) => params.cid),
+        map((params: Params) => Number.parseInt(params.cid, 10)),
         switchMap((id) => this.campaignService.getCampaign(id))
       )
       .subscribe((campaign) => {
         this.backgroundUrl = campaign.campaignBannerUrl || '';
         this.campaign = campaign;
+        this.config = oc(campaign).displayProperties.landingPage();
       });
   }
 
@@ -40,7 +43,7 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
 
   public next(): void {
     if (this.campaign) {
-      this.router.navigate([`${this.campaign.type}/${this.campaign.id}`]);
+      this.router.navigate([`quiz/${this.campaign.id}`]);
     }
   }
 }

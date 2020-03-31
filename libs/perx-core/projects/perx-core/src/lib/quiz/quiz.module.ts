@@ -12,7 +12,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
-import { ICampaignService } from '../campaign/icampaign.service';
 import { Config } from '../config/config';
 import { QuizLongTextComponent } from './question/long-text/long-text.component';
 import { QuizPictureSelectComponent } from './question/picture-select/picture-select.component';
@@ -26,9 +25,9 @@ import { V4QuizService } from './v4-quiz.service';
 import { SecondsToStringPipe } from './seconds-to-string.pipe';
 import { QuizSwipeOneComponent } from './question/swipe-select-one/swipe-select-one.component';
 
-export function quizServiceFactory(http: HttpClient, campaignService: ICampaignService, config: Config): QuizService {
+export function quizServiceFactory(http: HttpClient, config: Config): QuizService {
   // Make decision on what to instantiate base on config
-  return new V4QuizService(http, campaignService, config);
+  return new V4QuizService(http, config);
 }
 
 const componentsAndPipes = [
@@ -64,7 +63,7 @@ const componentsAndPipes = [
     {
       provide: QuizService,
       useFactory: quizServiceFactory,
-      deps: [HttpClient, ICampaignService, Config]
+      deps: [HttpClient, Config]
     }
   ],
 

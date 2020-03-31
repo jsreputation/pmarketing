@@ -20,7 +20,7 @@ export class QuizLongTextComponent implements OnChanges, OnInit {
   public flush: boolean;
 
   @Output()
-  public updateAnswers: EventEmitter<string> = new EventEmitter<string>();
+  public updateAnswers: EventEmitter<string[]> = new EventEmitter<string[]>();
 
   public answer: string;
   private subject: Subject<string> = new Subject();
@@ -29,7 +29,7 @@ export class QuizLongTextComponent implements OnChanges, OnInit {
     this.subject.pipe(
       debounceTime(300)
     ).subscribe(inputValue => {
-      this.updateAnswers.emit(inputValue);
+      this.updateAnswers.emit([inputValue]);
     });
   }
 

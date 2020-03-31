@@ -2,14 +2,15 @@ import { IWCampaignDisplayProperties } from '@perxtech/whistler';
 
 export interface IQAnswer {
   questionId: string;
-  content: any;
+  content: (string | number)[];
+  timeTaken?: number; // in seconds
 }
 
 export interface IPoints {
   questionId: string;
   time?: number;
   question: string;
-  point: number;
+  points: number;
 }
 
 export interface IDateRange {
@@ -43,7 +44,7 @@ export interface ISurveyOutcome {
 }
 
 export interface IQuiz {
-  id?: string;
+  id?: number;
   title: string;
   subTitle?: string;
   progressBarColor?: MaterialColor;

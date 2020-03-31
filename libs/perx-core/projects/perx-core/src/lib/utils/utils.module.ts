@@ -25,6 +25,7 @@ import { StripHtmlPipe } from './directives/striphtml-pipe';
 import { ConfigService } from '../config/config.service';
 import { TimerComponent, ForceLengthPipe } from './timer/timer.component';
 import { SafeHtmlPipe } from './safe-html.pipe';
+import { SafeUrlPipe } from './safe-url.pipe';
 
 export function themesServiceFactory(http: HttpClient, config: Config, configService: ConfigService): ThemesService {
   if (config.isWhistler) {
@@ -51,7 +52,8 @@ const pipes = [
   DistancePipe,
   SortRewardsPipe,
   StripHtmlPipe,
-  SafeHtmlPipe
+  SafeHtmlPipe,
+  SafeUrlPipe
 ];
 
 // make sure we have only one instance of the NotificationService
