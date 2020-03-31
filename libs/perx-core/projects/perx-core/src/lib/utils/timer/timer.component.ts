@@ -36,7 +36,6 @@ interface TimerState {
   increase: number;
 }
 
-// @dynamic required to avoid error because of usage of lambda function in static method
 @Component({
   selector: 'perx-core-timer',
   templateUrl: './timer.component.html',
@@ -64,17 +63,25 @@ export class TimerComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.reset$ && changes.reset$.currentValue) {
-      //forward reset ticks to resetSubject$
+      // forward reset ticks to resetSubject$
       this.reset$.subscribe(() => this.resetSubject$.next());
     }
   }
 
   public ngOnInit(): void {
-    const reset: Observable<Partial<TimerState>> = this.resetSubject$.pipe(map(() => ({ value: this.timeToRun / this.INTERVAL, count: true })));
+    const reset: Observable<Partial<TimerState>> = this.resetSubject$.pipe(
+      map(() => ({ value: this.timeToRun / this.INTERVAL, count: true }))
+    );
     const start: Observable<Partial<TimerState>> = this.startSubject$.pipe(map(() => ({ count: true })));
     const stop: Observable<Partial<TimerState>> = this.stopSubject$.pipe(map(() => ({ count: false })));
 
-    const initState: TimerState = { count: false, speed: this.INTERVAL, value: this.timeToRun / this.INTERVAL, countup: false, increase: 1 };
+    const initState: TimerState = {
+      count: false,
+      speed: this.INTERVAL,
+      value: this.timeToRun / this.INTERVAL,
+      countup: false,
+      increase: 1
+    };
     this.timer$ = merge(
       reset,
       start,
