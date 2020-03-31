@@ -1,18 +1,26 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { ScrollingModule } from '@angular/cdk/scrolling';
-import { APP_INITIALIZER, ErrorHandler, Injectable, NgModule } from '@angular/core';
 import {
-  MatDialogModule,
-  MatIconModule,
-  MatCardModule,
-  MatToolbarModule,
-  MatRippleModule,
-  MatButtonModule,
+  HttpClient,
+  HttpClientModule
+} from '@angular/common/http';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import {
+  APP_INITIALIZER,
+  ErrorHandler,
+  Injectable,
+  NgModule
+} from '@angular/core';
+import {
   MatBottomSheetModule,
+  MatButtonModule,
+  MatCardModule,
+  MatDialogModule,
   MatDividerModule,
-  MatSnackBarModule
+  MatIconModule,
+  MatRippleModule,
+  MatSnackBarModule,
+  MatToolbarModule
 } from '@angular/material';
 
 import { QRCodeModule } from 'angularx-qrcode';
@@ -21,26 +29,27 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import {
   AuthenticationModule,
-  UtilsModule,
-  ProfileModule,
-  RewardsModule,
-  VouchersModule,
-  GameModule,
-  LocationModule,
-  ConfigModule,
-  CampaignModule,
-  MerchantsModule,
-  RewardPopupComponent,
-  FeedItemPopupComponent,
-  SettingsModule,
-  ConfigService,
   AuthenticationService,
+  CampaignModule,
+  CampaignServiceModule,
+  ConfigModule,
+  ConfigService,
+  FeedItemPopupComponent,
+  GameModule,
+  GameServiceModule as PerxGameServiceModule,
   IConfig,
+  LanguageService,
+  LocationModule,
+  LoyaltyModule,
+  MerchantsModule,
+  ProfileModule,
+  RewardPopupComponent,
+  RewardsModule,
+  SettingsModule,
   ThemesService,
   TokenStorage,
-  LanguageService,
-  LoyaltyModule,
-  CampaignServiceModule,
+  UtilsModule,
+  VouchersModule,
 } from '@perxtech/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -63,9 +72,20 @@ import { ErrorComponent } from './error/error.component';
 
 import { environment } from '../environments/environment';
 import * as Sentry from '@sentry/browser';
-import { tap, switchMap } from 'rxjs/operators';
-import { TranslateService, TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { ScratchComponent, ShakeComponent, TapComponent } from '@perxtech/blackcomb-pages';
+import {
+  switchMap,
+  tap
+} from 'rxjs/operators';
+import {
+  TranslateLoader,
+  TranslateModule,
+  TranslateService
+} from '@ngx-translate/core';
+import {
+  ScratchComponent,
+  ShakeComponent,
+  TapComponent
+} from '@perxtech/blackcomb-pages';
 
 Sentry.init({
   dsn: 'https://b7939e78d33d483685b1c82e9c076384@sentry.io/1873560'
@@ -158,6 +178,7 @@ export const appInit =
     ScrollingModule,
     CampaignModule,
     CampaignServiceModule.forRoot(),
+    PerxGameServiceModule.forRoot(),
     MerchantsModule,
     QRCodeModule,
     NgxBarcodeModule,
