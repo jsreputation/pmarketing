@@ -70,6 +70,11 @@ const configServiceStub: Partial<ConfigService> = {
 describe('RewardComponent', () => {
   let component: RewardComponent;
   let fixture: ComponentFixture<RewardComponent>;
+  let configService: ConfigService;
+  let rewardsService: RewardsService;
+  let macaronService: MacaronService;
+  let analyticsService: AnalyticsService;
+  let vouchersService: IVoucherService;
   const rewardsServiceStub: Partial<RewardsService> = {
     getReward: () => of()
   };
@@ -111,6 +116,12 @@ describe('RewardComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RewardComponent);
+    configService = fixture.debugElement.injector.get<ConfigService>(ConfigService as Type<ConfigService>);
+    rewardsService = fixture.debugElement.injector.get<RewardsService>(RewardsService as Type<RewardsService>);
+    macaronService = fixture.debugElement.injector.get<MacaronService>(MacaronService as Type<MacaronService>);
+    analyticsService = fixture.debugElement.injector.get<AnalyticsService>(AnalyticsService as Type<AnalyticsService>);
+    vouchersService = fixture.debugElement.injector.get<IVoucherService>(IVoucherService as Type<IVoucherService>);
+
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -121,12 +132,9 @@ describe('RewardComponent', () => {
 
   describe('onInit', () => {
     it('should call rewards service and set isButtonEnable to false if rewardLimitPerUserBalance is 0', fakeAsync(() => {
-      const configService: ConfigService = fixture.debugElement.injector.get<ConfigService>(ConfigService as Type<ConfigService>);
-      const rewardsService: RewardsService = fixture.debugElement.injector.get<RewardsService>(RewardsService as Type<RewardsService>);
       const rewardsServiceSpy = spyOn(rewardsService, 'getReward').and.returnValue(
         of(rewardStub)
       );
-      const macaronService: MacaronService = fixture.debugElement.injector.get<MacaronService>(MacaronService as Type<MacaronService>);
       const macaronServiceSpy = spyOn(macaronService, 'getMacaron').and.returnValue(
         macaronFalseStub
       );
@@ -141,12 +149,9 @@ describe('RewardComponent', () => {
     }));
 
     it('should call rewards service and set isButtonEnable to false if macaron is null', fakeAsync(() => {
-      const configService: ConfigService = fixture.debugElement.injector.get<ConfigService>(ConfigService as Type<ConfigService>);
-      const rewardsService: RewardsService = fixture.debugElement.injector.get<RewardsService>(RewardsService as Type<RewardsService>);
       const rewardsServiceSpy = spyOn(rewardsService, 'getReward').and.returnValue(
         of(rewardStub)
       );
-      const macaronService: MacaronService = fixture.debugElement.injector.get<MacaronService>(MacaronService as Type<MacaronService>);
       const macaronServiceSpy = spyOn(macaronService, 'getMacaron').and.returnValue(null);
       component.ngOnInit();
       configService.readAppConfig().subscribe(() => {
@@ -158,8 +163,6 @@ describe('RewardComponent', () => {
     }));
 
     it('should call rewards service and isButtonEnable should be true', fakeAsync(() => {
-      const configService: ConfigService = fixture.debugElement.injector.get<ConfigService>(ConfigService as Type<ConfigService>);
-      const rewardsService: RewardsService = fixture.debugElement.injector.get<RewardsService>(RewardsService as Type<RewardsService>);
       const rewardsServiceSpy = spyOn(rewardsService, 'getReward').and.returnValue(
         of({
           id: 1,
@@ -178,12 +181,10 @@ describe('RewardComponent', () => {
           categoryTags: [{ id: 1, title: 'test' }]
         })
       );
-      const macaronService: MacaronService = fixture.debugElement.injector.get<MacaronService>(MacaronService as Type<MacaronService>);
       const macaronServiceSpy = spyOn(macaronService, 'getMacaron').and.returnValue(
         macaronTrueStub
       );
-      const analyticsService: AnalyticsService = fixture.debugElement.injector.get<AnalyticsService>(
-        AnalyticsService as Type<AnalyticsService>);
+
       const analyticsServiceSpy = spyOn(analyticsService, 'addEvent');
       component.ngOnInit();
       configService.readAppConfig().subscribe(() => {
@@ -205,8 +206,7 @@ describe('RewardComponent', () => {
 
   it('should save reward', () => {
     component.reward = rewardStub;
-    const vouchersService: IVoucherService = fixture.debugElement.injector
-      .get<IVoucherService>(IVoucherService as Type<IVoucherService>);
+
     const vouchersServiceSpy = spyOn(vouchersService, 'issueReward').and.returnValue(
       of({
         id: 1,
