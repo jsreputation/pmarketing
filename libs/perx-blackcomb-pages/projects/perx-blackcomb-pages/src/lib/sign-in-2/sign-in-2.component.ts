@@ -134,6 +134,8 @@ export class SignIn2Component implements OnInit, OnDestroy {
               this.translate.get('INVALID_CREDENTIALS')
                 // tslint:disable-next-line: rxjs-no-nested-subscribe
                 .subscribe(t => this.errorMessage = t);
+            } else {
+              this.errorMessage = err.error;
             }
           } else {
             this.errorMessage = err;

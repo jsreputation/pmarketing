@@ -1,4 +1,11 @@
-import { MatSnackBarModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, MatSelectModule } from '@angular/material';
+import {
+  MatSnackBarModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatCheckboxModule,
+  MatSelectModule,
+  MatProgressSpinnerModule
+} from '@angular/material';
 import { SignUpRoutingModule } from './sign-up-routing.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -21,6 +28,7 @@ import { TranslateModule } from '@ngx-translate/core';
     MatButtonModule,
     MatCheckboxModule,
     MatFormFieldModule,
+    MatProgressSpinnerModule,
     MatInputModule,
     MatSelectModule,
     FormsModule,
