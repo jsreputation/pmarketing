@@ -1,10 +1,6 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import {ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import {
-  AuthenticationService,
-  IPopupConfig,
   // IPrePlayStateData,
   IQuiz,
   // NotificationService,
@@ -12,10 +8,11 @@ import {
   QuizService,
   IQAnswer,
   ITracker,
-  IPoints
+  IPoints,
+  NotificationService, IAnswerResult
 } from '@perxtech/core';
-import { Observable, of, Subject } from 'rxjs';
-import {catchError, filter, map, switchMap, takeUntil} from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import {filter, map, switchMap, takeUntil, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'perx-blackcomb-quiz',
@@ -23,90 +20,58 @@ import {catchError, filter, map, switchMap, takeUntil} from 'rxjs/operators';
   styleUrls: ['./quiz.component.scss']
 })
 export class QuizComponent implements OnInit, OnDestroy {
+  public data$: Observable<IQuiz>;
+  public quiz: IQuiz;
+  public totalLength: number;
+  public questionPointer: number = 0;
+  public complete: boolean = false;
+  public resetTimer$: Subject<void> = new Subject<void>();
+
+  private destroy$: Subject<void> = new Subject();
   @ViewChild('overflowContainer', { static: false })
   private overflowContainer: ElementRef | undefined;
   @ViewChild('overFarrow', { static: false }) private overFarrow: ElementRef;
-  @ViewChild('coreQuiz', { static: false })
-  private coreQuiz: QuizCoreComponent;
-  public data$: Observable<IQuiz>;
-  public quiz: IQuiz;
-  public answers: ITracker<IQAnswer> = {};
-  public totalLength: number;
-  public questionPointer: number = 0;
-  private isAnonymousUser: boolean;
-  private informationCollectionSetting: string;
-  private destroy$: Subject<void> = new Subject();
-  // private popupData: IPopupConfig;
-  public complete: boolean = false;
-
-  public successPopUp: IPopupConfig = {
-    title: 'SURVEY_SUCCESS_TITLE',
-    text: 'SURVEY_SUCCESS_TEXT',
-    imageUrl: 'assets/congrats_image.png',
-    buttonTxt: 'CLOSE'
-  };
-
-  public noRewardsPopUp: IPopupConfig = {
-    title: 'SURVEY_NO_REWARDS_TITLE',
-    text: 'SURVEY_NO_REWARDS_TEXT',
-    imageUrl: '',
-    buttonTxt: 'BACK_TO_WALLET'
-  };
+  @ViewChild('coreComponent', { static: false })
+  private coreComponent: QuizCoreComponent;
+  private answers: ITracker<IQAnswer> = {};
+  private moveId: number | undefined;
+  private points: ITracker<IPoints> = {};
+  private timer: number;
 
   constructor(
-    // private notificationService: NotificationService,
     private router: Router,
     private route: ActivatedRoute,
     private quizService: QuizService,
-    private translate: TranslateService,
-    private auth: AuthenticationService,
     private cd: ChangeDetectorRef,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private notificationService: NotificationService
   ) {
     this.hideArrow = this.hideArrow.bind(this);
   }
 
   public ngOnInit(): void {
-    this.initTranslate();
-    this.isAnonymousUser = this.auth.getAnonymous();
-
     this.data$ = this.route.paramMap.pipe(
-      filter((params: ParamMap) => params.has('id')),
-      map((params: ParamMap) => params.get('id')),
-      map((id: string) => Number.parseInt(id, 10)),
-      switchMap((idN: number) => this.quizService.getQuizFromCampaign(idN)),
+      filter((params: ParamMap) => params.has('cid')),
+      map((params: ParamMap) => params.get('cid')),
+      map((cid: string) => Number.parseInt(cid, 10)),
+      switchMap((cidN: number) => this.quizService.getQuizFromCampaign(cidN)),
       filter(quiz => !!quiz),
       takeUntil(this.destroy$)
     );
+
     this.data$.subscribe(
       (quiz: IQuiz) => {
         this.quiz = quiz;
-        const { displayProperties } = this.quiz;
-        if (
-          displayProperties &&
-          displayProperties.informationCollectionSetting
-        ) {
-          this.informationCollectionSetting =
-            displayProperties.informationCollectionSetting;
-        }
-        const successOutcome = quiz.results.outcome;
-        const noOutcome = quiz.results.noOutcome;
-        if (noOutcome) {
-          this.noRewardsPopUp.title = noOutcome.title;
-          this.noRewardsPopUp.text = noOutcome.subTitle;
-          this.noRewardsPopUp.imageUrl =
-            noOutcome.image || this.noRewardsPopUp.imageUrl;
-          this.noRewardsPopUp.buttonTxt =
-            noOutcome.button || this.noRewardsPopUp.buttonTxt;
-        }
-        if (successOutcome) {
-          this.successPopUp.title = successOutcome.title;
-          this.successPopUp.text = successOutcome.subTitle;
-          this.successPopUp.imageUrl =
-            successOutcome.image || this.successPopUp.imageUrl;
-          this.successPopUp.buttonTxt =
-            successOutcome.button || this.successPopUp.buttonTxt;
-        }
+        this.fetchMoveId();
+        this.resetTimer();
+        // prepopulate answers
+        quiz.questions.forEach(q => {
+          this.answers[q.id] = {
+            questionId: q.id,
+            content: []
+          };
+        });
+
         this.ngZone.runOutsideAngular(() => {
           // everytime an event fires change detection gets run, we run these events outside angular to minimise cd change
           // setTimeout allows me delay so that i am confirmed access the nativeElement
@@ -152,74 +117,94 @@ export class QuizComponent implements OnInit, OnDestroy {
 
   public updateQuizStatus(answers: ITracker<IQAnswer>): void {
     this.answers = answers;
-    // console.log('updateQuizStatus', this.totalLength, this.questionPointer)
-    // current questionPointer, WARNING: not implemented yet, stub
-    if (this.quizId) {
-      this.quizService.patchQuizAnswer(
-        Object.values(this.answers),
-        this.campaignId || 0,
-        this.quizId
-      );
-    }
   }
 
   public done(): void {
     this.complete = true;
-    // console.log('done');
-    // console.log(this.totalLength, this.questionPointer)
   }
 
   public submit(): void {
-    const surveyId = this.quizId;
-    const campaignId = this.campaignId;
-    const isCollectDataRequired = !!(
-      this.informationCollectionSetting === 'pi_required' ||
-      this.informationCollectionSetting === 'signup_required'
-    );
-    const userAction$: Observable<{ hasOutcomes: boolean }> =
-      !surveyId || !campaignId || (this.isAnonymousUser && isCollectDataRequired)
-        ? of({ hasOutcomes: true })
-        : this.quizService
-          .postQuizAnswer(
-            Object.values(this.answers),
-            campaignId,
-            surveyId
-          )
-          .pipe(
-            catchError((err: HttpErrorResponse) => {
-              // this.popupData = this.noRewardsPopUp;
-              throw err;
-            })
-          );
-
-    userAction$.subscribe(
-      (/*res*/) => {
-        // this.popupData = res.hasOutcomes
-        //   ? this.successPopUp
-        //   : this.noRewardsPopUp;
-        this.redirectUrlAndPopUp();
-      },
-      () => {
-        // this.popupData = this.noRewardsPopUp;
-        this.redirectUrlAndPopUp();
-      }
-    );
+    this.pushAnswer(this.questionPointer)
+      .subscribe(
+        () => this.redirectUrlAndPopUp(),
+        (err) => {
+          console.log(err);
+          this.notificationService.addSnack('There was an issue when trying to submit your last answer.');
+          this.redirectUrlAndPopUp();
+        }
+      );
   }
 
   public next(): void {
-    // updateQuestion will be called when questionPointer cause child to emit currentPointer
     // core validate
-    const questionComponentsArr = this.coreQuiz.questionComponents.toArray();
+    const questionComponentsArr = this.coreComponent.questionComponents.toArray();
+    const questionPointer = this.questionPointer;
     // call validate on the particular question
-    if (questionComponentsArr[this.questionPointer].questionValidation()) {
+    if (questionComponentsArr[questionPointer].questionValidation()) {
+      this.pushAnswer(questionPointer)
+        .subscribe(
+          () => { },
+          (err) => {
+            console.log(err);
+            this.notificationService.addSnack('There was an issue when trying to submit your last answer.');
+          }
+        );
+      this.resetTimer();
       this.questionPointer++;
       this.questionChanged();
     }
-    // console.log(this.totalLength, this.questionPointer)
   }
 
   public back(): void {
     this.questionPointer--;
+  }
+
+  public timesUp(): void {
+    const questionPointer = this.questionPointer;
+    if (this.quiz.questions.length - 1 === questionPointer) {
+      this.submit();
+    } else {
+      this.pushAnswer(questionPointer).subscribe(() => { });
+      this.questionPointer++;
+      this.questionChanged();
+      this.resetTimer();
+    }
+  }
+
+  private pushAnswer(questionPointer: number): Observable<void> {
+    if (!this.moveId) {
+      return throwError('Cannot push answer without move id');
+    }
+
+    const answer = Object.values(this.answers)[questionPointer];
+    const time = this.currentTime - this.timer;
+    // current questionPointer, WARNING: not implemented yet, stub
+    return this.quizService.postQuizAnswer(
+      { ...answer, timeTaken: time },
+      this.moveId,
+    ).pipe(
+      tap((res: IAnswerResult) => {
+        this.points[questionPointer] = {
+          questionId: answer.questionId,
+          question: this.quiz.questions[questionPointer].question,
+          point: res.points,
+          time
+        };
+      }),
+      map(() => (void 0))
+    );
+  }
+
+  private fetchMoveId(): void {
+    const quizId = this.quizId;
+    if (quizId === null) {
+      console.error('cannot fetch move without quiz id', this.quiz);
+      this.notificationService.addSnack('This quiz is currently unavailable. Sorry for the inconvenience');
+      this.router.navigate(['/home']);
+      return;
+    }
+    this.quizService.getMove(quizId)
+      .subscribe((move) => this.moveId = move.moveId);
   }
 
   private checkShowOverArrow(): void {
@@ -237,73 +222,9 @@ export class QuizComponent implements OnInit, OnDestroy {
     }
   }
 
-  private initTranslate(): void {
-    if (this.successPopUp.title) {
-      this.translate
-        .get(this.successPopUp.title)
-        .subscribe(text => (this.successPopUp.title = text));
-    }
-    if (this.successPopUp.text) {
-      this.translate
-        .get(this.successPopUp.text)
-        .subscribe(text => (this.successPopUp.text = text));
-    }
-    if (this.successPopUp.buttonTxt) {
-      this.translate
-        .get(this.successPopUp.buttonTxt)
-        .subscribe(text => (this.successPopUp.buttonTxt = text));
-    }
-    if (this.noRewardsPopUp.title) {
-      this.translate
-        .get(this.noRewardsPopUp.title)
-        .subscribe(text => (this.noRewardsPopUp.title = text));
-    }
-    if (this.noRewardsPopUp.text) {
-      this.translate
-        .get(this.noRewardsPopUp.text)
-        .subscribe(text => (this.noRewardsPopUp.text = text));
-    }
-    if (this.noRewardsPopUp.buttonTxt) {
-      this.translate
-        .get(this.noRewardsPopUp.buttonTxt)
-        .subscribe(text => (this.noRewardsPopUp.buttonTxt = text));
-    }
-  }
-
   private redirectUrlAndPopUp(): void {
-    // const surveyId = this.quizId;
-    // const campaignId = this.campaignId;
-    // const state: IPrePlayStateData = {
-    //   // popupData: this.popupData,
-    //   engagementType: 'survey',
-    //   surveyId,
-    //   collectInfo: true,
-    //   campaignId,
-    //   answers: Object.values(this.answers)
-    // };
-
-    // if (
-    //   this.isAnonymousUser &&
-    //   this.informationCollectionSetting === 'pi_required'
-    // ) {
-    //   this.router.navigate(['/pi'], { state });
-    // } else if (
-    //   this.isAnonymousUser &&
-    //   this.informationCollectionSetting === 'signup_required'
-    // ) {
-    //   this.router.navigate(['/signup'], { state });
-    // } else {
-    // NL todo temporary stuff until we have a way to get the proper number of points
-    const results: IPoints[] = this.quiz.questions.map(q => ({
-      questionId: q.id,
-      question: q.question,
-      point: Math.random() < .3 ? 0 : 1,
-      time: Math.random() * 20
-    }));
-    const resultsStr = JSON.stringify(results);
+    const resultsStr = JSON.stringify(Object.values(this.points));
     this.router.navigate(['/quiz-results', { results: resultsStr }], { skipLocationChange: true });
-    // this.notificationService.addPopup(this.popupData);
-    // }
   }
 
   private hideArrow(): void {
@@ -311,12 +232,15 @@ export class QuizComponent implements OnInit, OnDestroy {
   }
 
   private get quizId(): number | null {
-    return this.quiz && this.quiz.id ? Number.parseInt(this.quiz.id, 10) : null;
+    return this.quiz && this.quiz.id || null;
   }
 
-  private get campaignId(): number | null {
-    return this.route.snapshot.params.id
-      ? Number.parseInt(this.route.snapshot.params.id, 10)
-      : null;
+  private resetTimer(): void {
+    this.timer = this.currentTime;
+    this.resetTimer$.next();
+  }
+
+  private get currentTime(): number {
+    return (new Date()).getTime() / 1000;
   }
 }
