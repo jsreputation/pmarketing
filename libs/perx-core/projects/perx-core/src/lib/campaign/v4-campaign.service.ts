@@ -5,18 +5,28 @@ import {catchError, map, shareReplay} from 'rxjs/operators';
 import {
   ICampaign,
   CampaignType,
-  CampaignState
+  CampaignState,
+  CampaignDisplayProperties
 } from './models/campaign.model';
 import { ICampaignFilterOptions, ICampaignService } from './icampaign.service';
 import { V4RewardsService, IV4Reward } from '../rewards/v4-rewards.service';
 import { oc } from 'ts-optchain';
 import { IConfig } from '../config/models/config.model';
 import { ConfigService } from '../config/config.service';
+import { TreeDisplayProperties, PinataDisplayProperties, ScratchDisplayProperties, SpinDisplayProperties } from '../game/v4-game.service';
+import { QuizDisplayProperties } from '../quiz/v4-quiz.service';
+import { GameType } from '../game/game.model';
 
 interface IV4Image {
   type: string;
   url: string;
 }
+
+type DisplayProperties = TreeDisplayProperties |
+PinataDisplayProperties |
+ScratchDisplayProperties |
+SpinDisplayProperties |
+QuizDisplayProperties;
 
 interface IV4Campaign {
   id: number;
@@ -33,6 +43,7 @@ interface IV4Campaign {
   tags: any[];
   state: CampaignState;
   rewards?: IV4Reward[];
+  display_properties?: DisplayProperties | null;
 }
 
 interface IV4CampaignResponse {
@@ -75,6 +86,27 @@ export class V4CampaignService implements ICampaignService {
       campaign.rewards.map((reward: IV4Reward) =>
         V4RewardsService.v4RewardToReward(reward)
       );
+    let displayProperties: CampaignDisplayProperties | undefined;
+    const dp: DisplayProperties | null = campaign.display_properties || null;
+    if (dp && (dp as QuizDisplayProperties).landing_page) {
+      const lp = (dp as QuizDisplayProperties).landing_page;
+      displayProperties = {
+        landingPage: {
+          body: lp.body,
+          heading: lp.heading,
+          subHeading: lp.sub_heading,
+          buttonText: lp.button_text
+        }
+      };
+      let youtubeUrl = oc(lp).media.youtube() || null;
+      if (youtubeUrl) {
+        // youtubeUrl = 'https://www.youtube.com/watch?v=r6BqFtRCr_A';
+        youtubeUrl = youtubeUrl.replace('/watch?v=', '/embed/');
+
+        // @ts-ignore
+        displayProperties.landingPage.media = { youtube: youtubeUrl };
+      }
+    }
 
     return {
       id: campaign.id,
@@ -86,7 +118,8 @@ export class V4CampaignService implements ICampaignService {
       beginsAt: campaign.begins_at ? new Date(campaign.begins_at) : null,
       rewards,
       thumbnailUrl,
-      campaignBannerUrl
+      campaignBannerUrl,
+      displayProperties
     };
   }
 
@@ -99,6 +132,10 @@ export class V4CampaignService implements ICampaignService {
         if (filterOptions.hasOwnProperty(key)) {
           if (key === 'type') {
             params = params.set('campaign_type', filterOptions[key] || '');
+          } else if (key === 'gameType') {
+            if (filterOptions.gameType !== GameType.unknown) {
+              params = params.set('game_type', filterOptions.gameType || '');
+            }
           } else {
             params = params.set(key, filterOptions[key]);
           }
