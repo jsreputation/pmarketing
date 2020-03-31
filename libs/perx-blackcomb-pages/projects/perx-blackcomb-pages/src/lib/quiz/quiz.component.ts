@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { IAnswerResult, IPoints, IQAnswer, IQuiz, ITracker, QuizComponent as QuizCoreComponent, QuizService } from '@perxtech/core';
+import { IAnswerResult, IPoints, IQAnswer, IQuiz, ITracker, NotificationService, QuizComponent as QuizCoreComponent, QuizService } from '@perxtech/core';
 import { Observable, Subject, throwError } from 'rxjs';
 import { filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 
@@ -32,7 +32,8 @@ export class QuizComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private quizService: QuizService,
     private cd: ChangeDetectorRef,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private notificationService: NotificationService
   ) {
     this.hideArrow = this.hideArrow.bind(this);
   }
@@ -107,7 +108,11 @@ export class QuizComponent implements OnInit, OnDestroy {
     this.pushAnswer(this.questionPointer)
       .subscribe(
         () => this.redirectUrlAndPopUp(),
-        () => this.redirectUrlAndPopUp()
+        (err) => {
+          console.log(err);
+          this.notificationService.addSnack('There was an issue when trying to submit your last answer.');
+          this.redirectUrlAndPopUp()
+        }
       );
   }
 
@@ -117,7 +122,14 @@ export class QuizComponent implements OnInit, OnDestroy {
     const questionPointer = this.questionPointer;
     // call validate on the particular question
     if (questionComponentsArr[questionPointer].questionValidation() && this.moveId) {
-      this.pushAnswer(questionPointer).subscribe(() => { });
+      this.pushAnswer(questionPointer)
+        .subscribe(
+          () => { },
+          (err) => {
+            console.log(err);
+            this.notificationService.addSnack('There was an issue when trying to submit your last answer.');
+          }
+        );
       this.resetTimer();
       this.questionPointer++;
       this.questionChanged();
@@ -156,6 +168,8 @@ export class QuizComponent implements OnInit, OnDestroy {
     const quizId = this.quizId;
     if (quizId === null) {
       console.error('cannot fetch move without quiz id', this.quiz);
+      this.notificationService.addSnack('This quiz is currently unavailable. Sorry for the inconvenience');
+      this.router.navigate(['/home']);
       return;
     }
     this.quizService.getMove(quizId)
