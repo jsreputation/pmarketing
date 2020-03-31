@@ -59,7 +59,7 @@ export class QuizComponent implements OnInit, OnDestroy {
           this.answers[q.id] = {
             questionId: q.id,
             content: []
-          }
+          };
         });
 
         this.ngZone.runOutsideAngular(() => {
