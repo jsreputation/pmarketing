@@ -1,11 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
 import { Location } from '@angular/common';
-import { Router, ActivatedRoute, Params } from '@angular/router';
-import { RewardsService, NotificationService, IVoucherService } from '@perxtech/core';
-import { filter, map, switchMap } from 'rxjs/operators';
-import { IReward } from '@perxtech/core';
-import { AnalyticsService, PageType } from '../analytics.service';
-import { IMacaron, MacaronService } from '../services/macaron.service';
+import {
+  ActivatedRoute,
+  Params,
+  Router
+} from '@angular/router';
+import {
+  ConfigService,
+  IReward,
+  IVoucherService,
+  NotificationService,
+  RewardsService
+} from '@perxtech/core';
+import {
+  filter,
+  map,
+  switchMap
+} from 'rxjs/operators';
+import {
+  AnalyticsService,
+  PageType
+} from '../analytics.service';
+import {
+  IMacaron,
+  MacaronService
+} from '../services/macaron.service';
 
 @Component({
   selector: 'app-reward',
@@ -25,12 +47,14 @@ export class RewardComponent implements OnInit {
     private vouchersService: IVoucherService,
     private notificationService: NotificationService,
     private analyticsService: AnalyticsService,
-    private macaronService: MacaronService
+    private macaronService: MacaronService,
+    private configService: ConfigService
   ) { }
 
   public ngOnInit(): void {
-    this.activeRoute.queryParams
+    this.configService.readAppConfig()
       .pipe(
+        switchMap(() => this.activeRoute.queryParams),
         filter((params: Params) => params.id), // ignore anything not related to reward id
         map((params: Params) => params.id), // get reward id
         switchMap((id: number) => this.rewardsService.getReward(id)) // get the full reward information
