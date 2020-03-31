@@ -22,7 +22,7 @@ export class LuckyDrawDetailsComponent implements OnInit, OnDestroy {
   public profile: IProfile;
   private destroy$: Subject<void> = new Subject();
   public theme: Observable<ITheme>;
-  @ViewChild('luckEditForm', {static: false}) documentEditForm: FormGroupDirective;
+  @ViewChild('luckEditForm', {static: false}) public documentEditForm: FormGroupDirective;
 
   constructor(
     private fb: FormBuilder,

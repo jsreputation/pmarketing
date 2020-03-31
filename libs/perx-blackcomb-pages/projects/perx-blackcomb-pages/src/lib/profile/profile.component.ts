@@ -19,7 +19,6 @@ export class ProfileComponent implements OnInit/*, ShowTitleInHeader*/ {
   public ngOnInit(): void {
     this.profileService.whoAmI().subscribe(res => {
       this.profile = res;
-      console.log(this.profile, 'what does profile give me?')
     });
   }
 
