@@ -108,7 +108,6 @@ export class QuizComponent implements OnInit, OnDestroy {
   public updateQuizStatus(answers: ITracker<IQAnswer>): void {
     // patch previous answer object
     this.answers = { ...this.answers, ...answers };
-    console.log(this.answers);
   }
 
   public done(): void {
