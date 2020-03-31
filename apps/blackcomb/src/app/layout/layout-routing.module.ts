@@ -1,7 +1,8 @@
 import { ProtectedGuard } from 'ngx-auth';
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from '@perxtech/blackcomb-pages';
+
 const routes: Routes = [
   {
     path: '',
@@ -108,7 +109,7 @@ const routes: Routes = [
       {
         path: 'edit-profile/:type',
         loadChildren: () => import('../edit-profile-field/edit-profile-field.module')
-          .then((mod: any) => mod.EditProfileFieldModule)
+          .then(mod => mod.EditProfileFieldModule)
       },
       {
         path: 'catalogs',
