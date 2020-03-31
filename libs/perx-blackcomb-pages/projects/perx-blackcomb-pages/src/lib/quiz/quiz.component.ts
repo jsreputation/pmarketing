@@ -111,7 +111,7 @@ export class QuizComponent implements OnInit, OnDestroy {
         (err) => {
           console.log(err);
           this.notificationService.addSnack('There was an issue when trying to submit your last answer.');
-          this.redirectUrlAndPopUp()
+          this.redirectUrlAndPopUp();
         }
       );
   }
