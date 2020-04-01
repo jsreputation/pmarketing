@@ -221,6 +221,7 @@ export { GroupComponent } from './lib/survey/question/group/group.component';
 export { RatingComponent } from './lib/survey/question/rating/rating.component';
 export { DateComponent } from './lib/survey/question/date/date.component';
 export { PasswordComponent } from './lib/survey/question/password/password.component';
+
 /**
  * Quiz
  */
@@ -235,6 +236,7 @@ export { QuizLongTextComponent } from './lib/quiz/question/long-text/long-text.c
 export { QuizRatingComponent } from './lib/quiz/question/rating/rating.component';
 export { ResultsComponent } from './lib/quiz/results/results.component';
 export { SecondsToStringPipe } from './lib/quiz/seconds-to-string.pipe';
+export { QuizSwipeListComponent } from './lib/quiz/question/swipe-list/swipe-list.component';
 
 /**
  * Config

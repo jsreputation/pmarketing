@@ -1,8 +1,18 @@
-import { ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { IAnswerResult, IPoints, IQAnswer, IQuiz, ITracker, NotificationService, QuizComponent as QuizCoreComponent, QuizService } from '@perxtech/core';
-import { Observable, Subject, throwError } from 'rxjs';
-import { filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import {ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
+import {
+  // IPrePlayStateData,
+  IQuiz,
+  // NotificationService,
+  QuizComponent as QuizCoreComponent,
+  QuizService,
+  IQAnswer,
+  ITracker,
+  IPoints,
+  NotificationService, IAnswerResult
+} from '@perxtech/core';
+import {Observable, Subject, throwError} from 'rxjs';
+import {filter, map, switchMap, takeUntil, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'perx-blackcomb-quiz',
@@ -167,7 +177,7 @@ export class QuizComponent implements OnInit, OnDestroy {
       return throwError('Cannot push answer without move id');
     }
 
-    const answer = Object.values(this.answers)[questionPointer];
+    const answer: any = Object.values(this.answers)[questionPointer];
     const time = this.currentTime - this.timer;
     // current questionPointer, WARNING: not implemented yet, stub
     return this.quizService.postQuizAnswer(

@@ -62,7 +62,9 @@ export enum QuizQuestionType {
   rating = 'rating',
   pictureChoice = 'picture-select',
   longText = 'long-text',
-  multipleChoice = 'select'
+  multipleChoice = 'select',
+  swipeDelete = 'swipe-eliminate',
+  swipeSelect = 'swipe-select'
 }
 
 export interface IErrors {
@@ -88,3 +90,43 @@ export enum SurveyRatingIcons {
   circle = 'panorama_fish_eye',
   circleSelected = 'brightness_1',
 }
+
+// For SlideList Component
+export interface Configuration {
+  slideThreshold?: number;
+  listType?: string;
+  classname?: string;
+  disableWarnings?: boolean;
+  numberOfDeleteIcon?: number;
+  numberOfSelectIcon?: number;
+}
+
+export enum ListType {
+  SINGLELINE = 'singleline',
+  MULTILINE = 'multiline',
+  LISTWITHICON = 'listwithicon',
+  LISTWITHIMAGE = 'listwithimage',
+}
+
+export enum Warnings {
+  CONFIG_NOT_LOADED = 'CONFIG_NOT_LOADED',
+  ADDING_DEFAULT_SLIDE_THRESHOLD = 'ADDING_DEFAULT_SLIDE_THRESHOLD',
+  ZERO_SLIDE_THRESHOLD_NOT_ALLOWED = 'ZERO_SLIDE_THRESHOLD_NOT_ALLOWED',
+  SLIDE_THRESHOLD_NOT_FOUND = 'SLIDE_THRESHOLD_NOT_FOUND',
+  MAX_SLIDE_THRESHOLD_NOT_ALLOWED = 'MAX_SLIDE_THRESHOLD_NOT_ALLOWED',
+  INVALID_SLIDE_THRESHOLD_NOT_ALLOWED = 'INVALID_SLIDE_THRESHOLD_NOT_ALLOWED'
+}
+
+export const Constants = {
+  CONFIG_NOT_LOADED : 'You have not provided the configuration values, default will be loaded.',
+  ADDING_DEFAULT_SLIDE_THRESHOLD: 'Will keep it default i.e.',
+  SLIDE_THRESHOLD_NOT_FOUND: 'You have not provided the slideThreshold.',
+  ZERO_SLIDE_THRESHOLD_NOT_ALLOWED: 'slideThreshold value can not be 0 or less than 0.',
+  MAX_SLIDE_THRESHOLD_NOT_ALLOWED: 'slideThreshold value should be less than 50.',
+  INVALID_SLIDE_THRESHOLD_NOT_ALLOWED: 'slideThreshold value is invalid, Expecting number between 0 to 50.',
+  MAX_SLIDE_THRESHOLD: 50,
+  MIN_SLIDE_THRESHOLD: 0,
+  DEFAULT_SLIDE_THRESHOLD: 50,
+  NUMBER_OF_DELETE_ICONS : 2,
+  DEFAULT_CLASS_NAME: 'ngstd-main-canvas'
+};
