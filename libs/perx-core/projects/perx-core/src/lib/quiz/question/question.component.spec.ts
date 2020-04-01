@@ -14,10 +14,13 @@ import { QuizPictureSelectComponent } from './picture-select/picture-select.comp
 import { QuizQuestionComponent } from './question.component';
 import { QuizRatingComponent } from './rating/rating.component';
 import { QuizSelectComponent } from './select/select.component';
-import {QuizSwipeOneComponent} from './swipe-select-one/swipe-select-one.component';
-import {MatListModule} from '@angular/material';
+import { QuizSwipeOneComponent } from './swipe-select-one/swipe-select-one.component';
+import { QuizSwipeListComponent } from './swipe-list/swipe-list.component';
+import {
+  MatListModule
+} from '@angular/material';
 
-describe('QuestionComponent', () => {
+describe('QuizQuestionComponent', () => {
   let component: QuizQuestionComponent;
   let fixture: ComponentFixture<QuizQuestionComponent>;
 
@@ -29,7 +32,8 @@ describe('QuestionComponent', () => {
         QuizRatingComponent,
         QuizPictureSelectComponent,
         QuizLongTextComponent,
-        QuizSwipeOneComponent
+        QuizSwipeOneComponent,
+        QuizSwipeListComponent
       ],
       imports: [
         MatFormFieldModule,
@@ -41,6 +45,7 @@ describe('QuestionComponent', () => {
         MatNativeDateModule,
         MatCheckboxModule,
         MatRadioModule,
+        MatListModule,
         FormsModule,
         MatListModule,
         ReactiveFormsModule,

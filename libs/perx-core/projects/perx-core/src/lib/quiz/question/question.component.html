@@ -34,6 +34,10 @@
             [payload]="question.payload"
             (updateAnswers)="updateAnswer($event)"
       ></perx-core-swipe-select>
+      <perx-core-swipe-list
+            *ngIf="question.payload.type === quizQuestionType.swipeDelete"
+            [payload]="question.payload"
+            (updateAnswers)="updateAnswer($event)"></perx-core-swipe-list>
         <div
             class="error-message">
             <div [ngClass]="{ error: errorState?.isRequired }">

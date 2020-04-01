@@ -7,9 +7,15 @@ import { Subject } from 'rxjs';
   styleUrls: ['./timer.component.scss']
 })
 export class TimerComponent {
-  public reset$: Subject<boolean> = new Subject();
+  public status: string = ' ';
+  public reset$: Subject<void> = new Subject();
+
   public reset(): void {
-    this.reset$.next(true);
-    this.reset$.next(true);
+    this.status = ' ';
+    this.reset$.next();
+  }
+
+  public done(): void {
+    this.status = 'Time\'s up';
   }
 }

@@ -99,6 +99,7 @@ describe('ForgotPasswordComponent', () => {
     fixture.detectChanges();
     const authenticationService = TestBed.get<AuthenticationService>(AuthenticationService as Type<AuthenticationService>);
     const resendOTPSpy = spyOn(authenticationService, 'resendOTP').and.callThrough();
+    component.identifier = '6598951002';
     component.resend();
     expect(resendOTPSpy).toHaveBeenCalled();
   });
@@ -126,9 +127,9 @@ describe('ForgotPasswordComponent', () => {
     component.newPasswordForm.setValue({ newPassword: 'qwerty123', passwordConfirmation: 'qwerty123' });
     component.changePassword();
     expect(resetPasswordSpy).toHaveBeenCalledWith(
-      { phone: '+6563987654', otp: '334245', newPassword: 'qwerty123', passwordConfirmation: 'qwerty123' }
+      { phone: '6563987654', otp: '334245', newPassword: 'qwerty123', passwordConfirmation: 'qwerty123' }
     );
 
-    expect(loginSpy).toHaveBeenCalledWith('+6563987654', 'qwerty123');
+    expect(loginSpy).toHaveBeenCalledWith('6563987654', 'qwerty123');
   });
 });

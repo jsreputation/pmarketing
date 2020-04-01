@@ -22,7 +22,7 @@ export class QuizRatingComponent implements OnChanges {
   public flush: boolean;
 
   @Output()
-  public updateAnswers: EventEmitter<number> = new EventEmitter<number>();
+  public updateAnswers: EventEmitter<number[]> = new EventEmitter<number[]>();
 
   public selectedChoice: number;
 
@@ -40,7 +40,7 @@ export class QuizRatingComponent implements OnChanges {
 
   public onSelect(index: number): void {
     this.selectedChoice = index;
-    this.updateAnswers.emit(index);
+    this.updateAnswers.emit([index]);
   }
 
   public isSelected(index: number): boolean {

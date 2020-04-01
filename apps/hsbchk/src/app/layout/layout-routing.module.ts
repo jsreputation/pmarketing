@@ -1,7 +1,8 @@
 import { ProtectedGuard } from 'ngx-auth';
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from '@perxtech/blackcomb-pages';
+
 const routes: Routes = [
   {
     path: '',
@@ -25,7 +26,7 @@ const routes: Routes = [
         canActivate: [ProtectedGuard]
       },
       {
-        path: 'campaign-welcome/:id',
+        path: 'campaign-welcome/:cid',
         loadChildren: () => import('../campaign-landing/campaign-landing.module').then(mod => mod.CampaignLandingModule),
         canActivate: [ProtectedGuard]
       },
@@ -98,14 +99,14 @@ const routes: Routes = [
       {
         path: 'edit-profile/:type',
         loadChildren: () => import('../edit-profile-field/edit-profile-field.module')
-          .then((mod: any) => mod.EditProfileFieldModule)
+          .then(mod => mod.EditProfileFieldModule)
       },
       {
         path: 'catalogs',
         loadChildren: () => import('../catalog/catalog.module')
           .then(mod => mod.CatalogModule)
       },
-      { path: 'quiz/:id', loadChildren: () => import('../quiz/quiz.module').then(m => m.QuizModule) },
+      { path: 'quiz/:cid', loadChildren: () => import('../quiz/quiz.module').then(m => m.QuizModule) },
       { path: 'quiz-results', loadChildren: () => import('../quiz-result/quiz-result.module').then(m => m.QuizResultModule) },
       { path: 'referral', loadChildren: () => import('../referral/referral.module').then(m => m.ReferralModule) }
     ]

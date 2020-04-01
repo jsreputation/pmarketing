@@ -14,8 +14,13 @@ import { QuizPictureSelectComponent } from '../question/picture-select/picture-s
 import { QuizQuestionComponent } from '../question/question.component';
 import { QuizRatingComponent } from '../question/rating/rating.component';
 import { QuizSelectComponent } from '../question/select/select.component';
+import { QuizSwipeListComponent } from '../question/swipe-list/swipe-list.component';
+
 import { QuizComponent } from './quiz.component';
+<<<<<<< HEAD
 import { QuizSwipeOneComponent } from '../question/swipe-select-one/swipe-select-one.component';
+=======
+>>>>>>> e3f28a7a85e5519093741e7e7efc7009aae4451f
 import { MatListModule } from '@angular/material';
 
 describe('QuizComponent', () => {
@@ -31,7 +36,11 @@ describe('QuizComponent', () => {
         QuizRatingComponent,
         QuizPictureSelectComponent,
         QuizLongTextComponent,
+<<<<<<< HEAD
         QuizSwipeOneComponent
+=======
+        QuizSwipeListComponent
+>>>>>>> e3f28a7a85e5519093741e7e7efc7009aae4451f
       ],
       imports: [
         MatFormFieldModule,

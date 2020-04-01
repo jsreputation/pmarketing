@@ -66,6 +66,7 @@ export {
   CampaignType,
   CampaignState,
   ICampaign,
+  CampaignLandingPage
 } from './lib/campaign/models/campaign.model';
 export { ExpireTimerComponent } from './lib/campaign/reward-popup/expire-timer/expire-timer.component';
 export { RewardPopupComponent } from './lib/campaign/reward-popup/reward-popup.component';
@@ -180,6 +181,7 @@ export { FeedItemPopupComponent } from './lib/utils/feed-item-popup/feed-item-po
 export { StripHtmlPipe } from './lib/utils/directives/striphtml-pipe';
 export { TimerComponent } from './lib/utils/timer/timer.component';
 export { SafeHtmlPipe } from './lib/utils/safe-html.pipe';
+export { SafeUrlPipe } from './lib/utils/safe-url.pipe';
 
 /**
  * Puzzles
@@ -219,11 +221,12 @@ export { GroupComponent } from './lib/survey/question/group/group.component';
 export { RatingComponent } from './lib/survey/question/rating/rating.component';
 export { DateComponent } from './lib/survey/question/date/date.component';
 export { PasswordComponent } from './lib/survey/question/password/password.component';
+
 /**
  * Quiz
  */
 export { QuizModule } from './lib/quiz/quiz.module';
-export { QuizService } from './lib/quiz/quiz.service';
+export { QuizService, IAnswerResult } from './lib/quiz/quiz.service';
 export { IQuiz, QuizQuestionType, IQQuestion, IQAnswer, ITracker, IPoints } from './lib/quiz/models/quiz.model';
 export { QuizComponent } from './lib/quiz/quiz/quiz.component';
 export { QuizQuestionComponent } from './lib/quiz/question/question.component';
@@ -234,6 +237,7 @@ export { QuizRatingComponent } from './lib/quiz/question/rating/rating.component
 export { ResultsComponent } from './lib/quiz/results/results.component';
 export { SecondsToStringPipe } from './lib/quiz/seconds-to-string.pipe';
 export { QuizSwipeOneComponent } from './lib/quiz/question/swipe-select-one/swipe-select-one.component';
+export { QuizSwipeListComponent } from './lib/quiz/question/swipe-list/swipe-list.component';
 
 /**
  * Config

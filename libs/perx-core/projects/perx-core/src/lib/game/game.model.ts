@@ -7,7 +7,8 @@ export enum GameType {
   pinata = 'tap',
   scratch = 'scratch',
   spin = 'spin',
-  snake = 'snake'
+  snake = 'snake',
+  quiz = 'quiz'
 }
 
 export interface IEngagementTransaction {
@@ -102,7 +103,7 @@ export function defaultSpin(): ISpin {
 export interface ISpin {
   numberOfWedges: number;
   rewardSlots: number[];
-  colorCtrls: {[index: number]: string};
+  colorCtrls: { [index: number]: string };
   rewardIcon: string;
   wheelImg: string; // diff from rimimage but hvnt implemented yet, will use rim 4 nw
   wheelPosition: string;

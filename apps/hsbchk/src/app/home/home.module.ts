@@ -12,7 +12,7 @@ import {
 } from '@perxtech/blackcomb-pages';
 import {
   CampaignModule,
-  ICampaignService,
+  GameServiceModule as PerxGameServiceModule,
   LoyaltyModule,
   OutcomeModule,
   RewardPopupComponent,
@@ -20,7 +20,6 @@ import {
   UtilsModule
 } from '@perxtech/core';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { campaignServiceStub } from '../mock/quiz.mock';
 
 const routes: Routes = [{
   path: '',
@@ -43,7 +42,8 @@ const routes: Routes = [{
     InfiniteScrollModule,
     MatDialogModule,
     CampaignModule,
-    OutcomeModule
+    OutcomeModule,
+    PerxGameServiceModule.forChild()
   ],
   exports: [
     HomeComponent,
@@ -55,7 +55,6 @@ const routes: Routes = [{
     RewardPopupComponent
   ],
   providers: [
-    { provide: ICampaignService, useValue: campaignServiceStub }
   ]
 })
 export class HomeModule { }
