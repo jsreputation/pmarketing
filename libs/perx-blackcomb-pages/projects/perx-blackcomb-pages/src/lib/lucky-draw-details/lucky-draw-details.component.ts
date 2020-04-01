@@ -2,7 +2,6 @@ import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import {
   ITheme,
-  ThemesService,
   AuthenticationService,
   NotificationService,
   ProfileService,
@@ -27,7 +26,6 @@ export class LuckyDrawDetailsComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     // private router: Router,
-    private themesService: ThemesService,
     private authService: AuthenticationService,
     private profileService: ProfileService,
     private notificationService: NotificationService
@@ -37,20 +35,6 @@ export class LuckyDrawDetailsComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    const token = this.authService.getAppAccessToken();
-    if (token) {
-      this.appAccessTokenFetched = true;
-      this.theme = this.themesService.getThemeSetting();
-    } else {
-      this.authService.getAppToken().subscribe(() => {
-        this.appAccessTokenFetched = true;
-        this.theme = this.themesService.getThemeSetting();
-      }, (err) => {
-        console.error(`Error${err}`);
-      });
-    }
-    // need confirm the key or if this is even the correct svc
-    // referencing merck-condition page
     this.profileService.whoAmI().subscribe(res => {
       this.profile = res;
       if (!res.customProperties) {
@@ -105,7 +89,8 @@ export class LuckyDrawDetailsComponent implements OnInit, OnDestroy {
     this.profileService.setCustomProperties(luckyDrawData).subscribe(
       () => this.notificationService.addSnack('Information Updated.'),
       err => {
-        this.notificationService.addSnack(`ProfileService::SetCustomProperties : ${err.error.message}`);
+        console.error(`${err.error.message}`);
+        this.notificationService.addSnack(`Error Updating Profile`);
       });
   }
 }

@@ -39,7 +39,7 @@ export interface IConfig<T> {
   /* Account page */
   showAccountsPage?: boolean;
   showUserInfoOnAccountsPage?: boolean;
-  showAccountLuckyDrawDetailsPage?: boolean;
+  showLuckyDrawDetailsOnAccountsPage?: boolean;
   showTransactionHistoryOnAccountsPage?: boolean;
 
   /* Reward page */
