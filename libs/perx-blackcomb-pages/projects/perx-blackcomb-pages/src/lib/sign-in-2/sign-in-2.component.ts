@@ -102,7 +102,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
   public onSubmit(): void {
     const customerIdField = this.loginForm.get('customerID');
     const username: string = customerIdField !== null &&
-      customerIdField.value ? `${this.countryCodePrefix ? this.countryCodePrefix : this.countryCode}${customerIdField.value}` : '';
+      customerIdField.value ? `${this.countryCodePrefix ? this.countryCodePrefix : this.countryCode.substring(1)}${customerIdField.value}` : '';
     const pwdField = this.loginForm.get('password');
     const password: string = pwdField ? pwdField.value : '';
     this.errorMessage = null;

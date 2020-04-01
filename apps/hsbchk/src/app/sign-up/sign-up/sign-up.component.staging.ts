@@ -101,7 +101,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
     const nickname = this.signupForm.value.nickname;
     const referralCode = this.signupForm.value.referralCode;
     const hkid = this.signupForm.value.hkid;
-    const mobileNumber = `${this.countryCode}${this.signupForm.value.mobileNo}`;
+    const mobileNumber = `${this.countryCode.substring(1)}${this.signupForm.value.mobileNo}`;
     const emailValue = this.signupForm.value.email;
     const lastName = this.signupForm.value.fullName ? this.signupForm.value.fullName : nickname;
 
@@ -134,6 +134,6 @@ export class SignUpComponent implements OnInit, OnDestroy {
   }
 
   public updateCoutryCode(value: string): void {
-    this.countryCode = value.substring(1);
+    this.countryCode = value;
   }
 }
