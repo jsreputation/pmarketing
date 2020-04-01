@@ -26,7 +26,7 @@ const routes: Routes = [
         canActivate: [ProtectedGuard]
       },
       {
-        path: 'campaign-welcome/:id',
+        path: 'campaign-welcome/:cid',
         loadChildren: () => import('../campaign-landing/campaign-landing.module').then(mod => mod.CampaignLandingModule),
         canActivate: [ProtectedGuard]
       },
@@ -106,7 +106,7 @@ const routes: Routes = [
         loadChildren: () => import('../catalog/catalog.module')
           .then(mod => mod.CatalogModule)
       },
-      { path: 'quiz/:id', loadChildren: () => import('../quiz/quiz.module').then(m => m.QuizModule) },
+      { path: 'quiz/:cid', loadChildren: () => import('../quiz/quiz.module').then(m => m.QuizModule) },
       { path: 'quiz-results', loadChildren: () => import('../quiz-result/quiz-result.module').then(m => m.QuizResultModule) },
       { path: 'referral', loadChildren: () => import('../referral/referral.module').then(m => m.ReferralModule) },
       { path: 'lucky-draw-details',

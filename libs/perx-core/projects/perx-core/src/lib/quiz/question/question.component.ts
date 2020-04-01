@@ -37,11 +37,11 @@ export class QuizQuestionComponent {
 
   public get quizQuestionType(): typeof QuizQuestionType { return QuizQuestionType; }
 
-  public updateAnswer(content: any): void {
+  public updateAnswer(content: (string | number)[]): void {
     this.question.answer = content.toString();
     const questionId = this.question.id;
     this.updateNonGroupPoint();
-    this.updateAnswers.emit({ questionId, content: content.toString() });
+    this.updateAnswers.emit({ questionId, content });
     this.questionValidation();
   }
 
@@ -50,7 +50,7 @@ export class QuizQuestionComponent {
     this.point = this.question && this.question.required ?
       (this.question.answer === 0 || (this.question.answer && this.question.answer.length > 0) ? 1 : 0) : 1;
     // }
-    this.updatePoints.emit({ questionId: this.question.id, point: this.point, question: this.question.question });
+    this.updatePoints.emit({ questionId: this.question.id, points: this.point, question: this.question.question });
   }
 
   public questionValidation(): boolean {

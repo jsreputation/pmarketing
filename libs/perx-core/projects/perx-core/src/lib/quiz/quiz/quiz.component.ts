@@ -73,7 +73,7 @@ export class QuizComponent implements OnChanges, OnDestroy {
   }
 
   public updatePoints(points: IPoints): void {
-    this.pointsTracker[points.questionId] = points.point;
+    this.pointsTracker[points.questionId] = points.points;
   }
 
   // private get totalPoints(): number {

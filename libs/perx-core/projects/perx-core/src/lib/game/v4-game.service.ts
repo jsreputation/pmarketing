@@ -33,7 +33,8 @@ const enum GameType {
   shakeTheTree = 'shake_the_tree',
   pinata = 'hit_the_pinata',
   scratch = 'scratch_card',
-  spin = 'spin_the_wheel'
+  spin = 'spin_the_wheel',
+  quiz = 'quiz'
 }
 
 interface Asset {
@@ -73,7 +74,7 @@ interface GameProperties {
   background_image?: Asset;
 }
 
-interface TreeDisplayProperties extends GameProperties {
+export interface TreeDisplayProperties extends GameProperties {
   number_of_gifts_shown?: number;
   number_of_gifts_to_drop: number;
   gift_image: Asset;
@@ -83,20 +84,20 @@ interface TreeDisplayProperties extends GameProperties {
   number_of_taps: number;
 }
 
-interface ScratchDisplayProperties extends GameProperties {
+export interface ScratchDisplayProperties extends GameProperties {
   prescratch_image: Asset;
   post_success_image: Asset;
   post_fail_image: Asset;
 }
 
-interface PinataDisplayProperties extends GameProperties {
+export interface PinataDisplayProperties extends GameProperties {
   still_image: Asset;
   cracking_image?: Asset;
   opened_image: Asset;
   number_of_taps: number;
 }
 
-interface SpinDisplayProperties extends GameProperties {
+export interface SpinDisplayProperties extends GameProperties {
   number_of_wedges: number;
   wedge_colors: string[];
   background_image: Asset;
@@ -295,6 +296,7 @@ export class V4GameService implements IGameService {
     return this.gamesCache[campaignId] = this.httpClient.get<GamesResponse>(`${this.hostName}/v4/campaigns/${campaignId}/games`)
       .pipe(
         map(res => res.data),
+        map((games: Game[]) => games.filter((game: Game) => game.game_type !== GameType.quiz)),
         map((games: Game[]) => games.map((game: Game): IGame => V4GameService.v4GameToGame(game))),
         shareReplay(1),
         catchError(_ => {
@@ -322,13 +324,13 @@ export class V4GameService implements IGameService {
           }, [] as number[])
         })),
         catchError((err: HttpErrorResponse) => {
-          let errorStateObj: {errorState: string};
+          let errorStateObj: { errorState: string };
           if (err.error && err.error.message && err.error.code && err.error.code === 40) {
-            errorStateObj = {errorState: err.error.mesage};
+            errorStateObj = { errorState: err.error.mesage };
             if (err.error.message.match(/move/i)) {
-              errorStateObj = {errorState: Error400States.move};
+              errorStateObj = { errorState: Error400States.move };
             } else if (err.error.message.match(/balance/i)) {
-              errorStateObj = {errorState: Error400States.balance};
+              errorStateObj = { errorState: Error400States.balance };
             }
             return throwError(errorStateObj);
           }
@@ -379,12 +381,14 @@ export class V4GameService implements IGameService {
           // @ts-ignore
           const games: IGame[][] = s;
           const res: IGame[] = [];
+          // eslint-disable-next-line guard-for-in
           for (const i in games) {
+            const gs = games[i].filter(game => game.type !== TYPE.quiz);
             // if there is no underlying game, move on to next campaign
-            if (games[i].length === 0) {
+            if (gs.length === 0) {
               continue;
             }
-            const g = games[i][0];
+            const g = gs[0];
             const c = campaigns[i];
             g.imgUrl = oc(c).images[0].url();
             res.push(g);

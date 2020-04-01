@@ -38,46 +38,46 @@ export const results: IPoints[] = [
     questionId: '22',
     time: 25,
     question: 'Quel est le premier doigt de la main de l\'homme et de certains vertébrés?',
-    point: 0
+    points: 0
   },
   {
     questionId: '22',
     time: 25,
     question: 'Suite à la réforme territoriale, combien la France métropolitaine compte-t-elle de régions?',
-    point: 2
+    points: 2
   },
   {
     questionId: '23',
     question: 'Quel est le premier doigt de la main de l\'homme et de certains vertébrés?',
-    point: 3
+    points: 3
   },
   {
     questionId: '22',
     time: 25,
     question: 'Suite à la réforme territoriale, combien la France métropolitaine compte-t-elle de régions?',
-    point: 2
+    points: 2
   },
   {
     questionId: '22',
     time: 25,
     question: 'Quel est le premier doigt de la main de l\'homme et de certains vertébrés?',
-    point: 0
+    points: 0
   },
   {
     questionId: '22',
     time: 25,
     question: 'Suite à la réforme territoriale, combien la France métropolitaine compte-t-elle de régions?',
-    point: 2
+    points: 2
   },
   {
     questionId: '23',
     question: 'Quel est le premier doigt de la main de l\'homme et de certains vertébrés?',
-    point: 3
+    points: 3
   },
   {
     questionId: '22',
     time: 25,
     question: 'Suite à la réforme territoriale, combien la France métropolitaine compte-t-elle de régions?',
-    point: 2
+    points: 2
   }
 ];

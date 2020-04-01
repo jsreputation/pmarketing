@@ -7,7 +7,7 @@
       <mat-progress-bar class="progress-bar" mode="determinate" color="warn" [value]="progressBarValue">
       </mat-progress-bar>
     </div>
-    <perx-core-timer class="timer" [timeToRun]="30000"></perx-core-timer>
+    <perx-core-timer class="timer" [timeToRun]="30000" (done)="timesUp()" [reset]="resetTimer$"></perx-core-timer>
     <div #overflowContainer>
       <mat-card class="survey-card"
         [ngStyle]="{'background-image': quiz.cardBackgroundImgUrl ? 'url(' + quiz.cardBackgroundImgUrl + ')' : '' }">
@@ -15,7 +15,7 @@
         <h2 *ngIf="quiz.subTitle">{{quiz.subTitle}}</h2>
         <perx-core-quiz
           [hideIndex]="true"
-          #coreQuiz
+          #coreComponent
           [data]="data$"
           [questionPointer]="questionPointer"
           (done)="done()"
@@ -33,9 +33,9 @@
     </div>
   </div>
   <mat-toolbar class="bottom-nav-container mat-elevation-z2">
-    <button color="primary" *ngIf="questionPointer >= 1" (click)="back()" mat-stroked-button>
+    <!-- <button color="primary" *ngIf="questionPointer >= 1" (click)="back()" mat-stroked-button>
       Previous
-    </button>
+    </button> -->
     <button color="primary" *ngIf="this.questionPointer !== this.totalLength - 1" (click)="next()" mat-flat-button>
       Next
     </button>

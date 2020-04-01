@@ -5,7 +5,7 @@ import { LayoutRoutingModule } from './layout-routing.module';
 import { PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { VouchersModule, RewardsModule } from '@perxtech/core';
+import { VouchersModule, RewardsModule, GameServiceModule, CampaignServiceModule } from '@perxtech/core';
 import { SharedModule } from '../shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -20,7 +20,9 @@ import { TranslateModule } from '@ngx-translate/core';
     RewardsModule,
     SharedModule,
     TranslateModule,
-    PerxBlackcombPagesModule
+    PerxBlackcombPagesModule,
+    GameServiceModule.forRoot(),
+    CampaignServiceModule.forRoot()
   ]
 })
 export class LayoutModule { }

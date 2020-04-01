@@ -5,7 +5,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateService } from '@ngx-translate/core';
-import { AuthenticationService, Config, ICampaignService, QuizModule, UtilsModule } from '@perxtech/core';
+import { AuthenticationService, Config, ICampaignService, QuizModule, UtilsModule, NotificationService } from '@perxtech/core';
 import { BehaviorSubject } from 'rxjs';
 import { QuizComponent } from './quiz.component';
 
@@ -17,6 +17,7 @@ const translateServiceStub: Partial<TranslateService> = {
 const authenticationServiceStub: Partial<AuthenticationService> = {
   getAnonymous: () => false
 };
+const notificationServiceStub: Partial<NotificationService> = {};
 describe('QuizComponent', () => {
   let component: QuizComponent;
   let fixture: ComponentFixture<QuizComponent>;
@@ -37,7 +38,8 @@ describe('QuizComponent', () => {
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: Config, useValue: configStub },
         { provide: TranslateService, useValue: translateServiceStub },
-        { provide: AuthenticationService, useValue: authenticationServiceStub }
+        { provide: AuthenticationService, useValue: authenticationServiceStub },
+        { provide: NotificationService, useValue: notificationServiceStub }
       ]
     })
       .compileComponents();

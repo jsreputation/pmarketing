@@ -30,7 +30,7 @@
   <!-- Stamp card campaigns-->
   <div class="campaigns">
     <div *ngIf="showCampaigns" class="title" translate>STAMP_CAMPAIGNS</div>
-    <perx-blackcomb-pages-campaigns-collection [campaigns]="gameCampaigns$" (selected)="goToCampaignPage($event)">
+    <perx-blackcomb-pages-campaigns-collection [campaigns]="stampCampaigns$" (selected)="goToCampaignPage($event)">
     </perx-blackcomb-pages-campaigns-collection>
   </div>
   <div class="catalogs" *ngIf="appConfig.showCatalogOnHomePage">
