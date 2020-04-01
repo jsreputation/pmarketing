@@ -150,6 +150,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
           if (!userBearer) {
             throw new Error('Get authentication token failed!');
           }
+          this.$failedAuthObservableSubject.next(false);
           this.saveUserAccessToken(userBearer);
         },
         () => {
@@ -182,6 +183,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
           if (!userBearer) {
             throw new Error('Get authentication token failed!');
           }
+          this.$failedAuthObservableSubject.next(false);
           this.saveUserAccessToken(userBearer);
         },
         () => {
