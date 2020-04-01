@@ -60,22 +60,22 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
       'Singapore'
     ]);
     this.route.queryParams
-    .pipe(
-      filter((params) => !!params.identifier),
-      map((params) => params.identifier),
-      takeUntil(this.destroy$)
-    )
-    .subscribe((phone: string) => {
-      if (phone[0] === '+') {
-        phone = phone.slice(1);
-      }
-      const countryCodes = this.countryCodesOptions.map(op => op.value);
-      const countryCode = countryCodes.find(code => phone.startsWith(code)) || null;
-      if (countryCode !== null) {
-        phone = phone.slice(countryCode.length);
-      }
-      this.phoneStepForm.setValue({ phone, countryCode });
-    });
+      .pipe(
+        filter((params) => !!params.identifier),
+        map((params) => params.identifier),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((phone: string) => {
+        if (phone[0] === '+') {
+          phone = phone.slice(1);
+        }
+        const countryCodes = this.countryCodesOptions.map(op => op.value);
+        const countryCode = countryCodes.find(code => phone.startsWith(code)) || null;
+        if (countryCode !== null) {
+          phone = phone.slice(countryCode.length);
+        }
+        this.phoneStepForm.setValue({ phone, countryCode });
+      });
   }
 
   public compareCtryFn(c1: ICountryCode, c2: ICountryCode): boolean {

@@ -78,10 +78,10 @@ describe('ForgotPasswordComponent', () => {
   it('phoneHandler should move to step 2', () => {
     fixture.detectChanges();
     component.phoneStepForm.setValue({ phone: '63987654', countryCode: {
-        id: 36,
-        name: 'Singapore',
-        phone: '+65'
-      }});
+      id: 36,
+      name: 'Singapore',
+      phone: '+65'
+    }});
     component.phoneHandler();
     fixture.detectChanges();
     expect(component.currentStep).toEqual(2);
@@ -123,10 +123,10 @@ describe('ForgotPasswordComponent', () => {
     const loginSpy = spyOn(authenticationService, 'login').and.returnValue(of({ bearer_token: 'SWWERW' }));
 
     component.phoneStepForm.setValue({ phone: '63987654', countryCode: {
-        id: 36,
-        name: 'Singapore',
-        phone: '+65'
-      }});
+      id: 36,
+      name: 'Singapore',
+      phone: '+65'
+    }});
     component.phoneHandler();
     fixture.detectChanges();
 
