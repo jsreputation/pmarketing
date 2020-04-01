@@ -1,19 +1,43 @@
 import { AuthService } from 'ngx-auth';
 import { Injectable } from '@angular/core';
-import { tap, mergeMap, catchError, map, switchMap } from 'rxjs/operators';
-import { Observable, of, throwError, iif, Subject } from 'rxjs';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { AuthenticationService, RequiresOtpError } from './authentication.service';
+import {
+  catchError,
+  map,
+  mergeMap,
+  switchMap,
+  tap
+} from 'rxjs/operators';
+import {
+  iif,
+  Observable,
+  of,
+  Subject,
+  throwError
+} from 'rxjs';
+import {
+  HttpClient,
+  HttpErrorResponse
+} from '@angular/common/http';
+import {
+  AuthenticationService,
+  RequiresOtpError
+} from './authentication.service';
 import { IProfile } from '../../profile/profile.model';
 import {
-  ISignUpData,
   IChangePasswordData,
   IChangePhoneData,
   IResetPasswordData,
+  ISignUpData,
 } from '../authentication/models/authentication.model';
-import { IWAppAccessTokenResponse, IWLoginResponse } from '@perxtech/whistler';
+import {
+  IWAppAccessTokenResponse,
+  IWLoginResponse
+} from '@perxtech/whistler';
 import { ProfileService } from '../../profile/profile.service';
-import { IV4ProfileResponse, V4ProfileService } from '../../profile/v4-profile.service';
+import {
+  IV4ProfileResponse,
+  V4ProfileService
+} from '../../profile/v4-profile.service';
 import { TokenStorage } from '../../utils/storage/token-storage.service';
 import { IMessageResponse } from '../../perx-core.models';
 import { oc } from 'ts-optchain';
@@ -111,7 +135,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   }
 
   public refreshShouldHappen(response: HttpErrorResponse): boolean {
-    return this.retries < this.maxRetries && response.status === 401;
+    return response.status === 401;
   }
 
   public verifyTokenRequest(url: string): boolean {
