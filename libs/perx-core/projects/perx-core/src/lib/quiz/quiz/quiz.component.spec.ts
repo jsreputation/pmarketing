@@ -16,7 +16,7 @@ import { QuizRatingComponent } from '../question/rating/rating.component';
 import { QuizSelectComponent } from '../question/select/select.component';
 import { QuizSwipeListComponent } from '../question/swipe-list/swipe-list.component';
 import { QuizComponent } from './quiz.component';
-import { QuizSwipeOneComponent } from '../question/swipe-select-one/swipe-select-one.component';
+import { QuizSwipeSelectComponent } from '../question/swipe-select/swipe-select.component';
 
 import { MatListModule } from '@angular/material';
 
@@ -33,7 +33,7 @@ describe('QuizComponent', () => {
         QuizRatingComponent,
         QuizPictureSelectComponent,
         QuizLongTextComponent,
-        QuizSwipeOneComponent,
+        QuizSwipeSelectComponent,
         QuizSwipeListComponent
       ],
       imports: [

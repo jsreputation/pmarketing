@@ -24,8 +24,9 @@ import { QuizComponent } from './quiz/quiz.component';
 import { ResultsComponent } from './results/results.component';
 import { V4QuizService } from './v4-quiz.service';
 import { SecondsToStringPipe } from './seconds-to-string.pipe';
-import { QuizSwipeOneComponent } from './question/swipe-select-one/swipe-select-one.component';
+
 import { HAMMER_GESTURE_CONFIG, HammerGestureConfig } from '@angular/platform-browser';
+import { QuizSwipeSelectComponent } from './question/swipe-select/swipe-select.component';
 
 export function quizServiceFactory(http: HttpClient, config: Config): QuizService {
   // Make decision on what to instantiate base on config
@@ -42,7 +43,7 @@ const componentsAndPipes = [
   QuizSwipeListComponent,
   ResultsComponent,
   SecondsToStringPipe,
-  QuizSwipeOneComponent
+  QuizSwipeSelectComponent
 ];
 
 @Injectable()

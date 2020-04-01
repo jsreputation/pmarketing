@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { QuizSwipeOneComponent } from './swipe-select-one.component';
+import { QuizSwipeSelectComponent } from './swipe-select.component';
 import {
   MatDividerModule,
   MatIconModule,
@@ -7,13 +7,13 @@ import {
 } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-describe('QuizSwipeOneComponent', () => {
-  let component: QuizSwipeOneComponent;
-  let fixture: ComponentFixture<QuizSwipeOneComponent>;
+describe('QuizSwipeSelectComponent', () => {
+  let component: QuizSwipeSelectComponent;
+  let fixture: ComponentFixture<QuizSwipeSelectComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [QuizSwipeOneComponent],
+      declarations: [QuizSwipeSelectComponent],
       imports: [
         MatListModule,
         MatDividerModule,
@@ -25,7 +25,7 @@ describe('QuizSwipeOneComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(QuizSwipeOneComponent);
+    fixture = TestBed.createComponent(QuizSwipeSelectComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

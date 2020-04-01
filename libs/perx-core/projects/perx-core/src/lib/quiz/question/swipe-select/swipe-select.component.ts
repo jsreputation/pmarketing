@@ -30,8 +30,8 @@ interface IPayloadSwipeOne {
 
 @Component({
   selector: 'perx-core-swipe-select',
-  templateUrl: './swipe-select-one.component.html',
-  styleUrls: ['./swipe-select-one.component.scss'],
+  templateUrl: './swipe-select.component.html',
+  styleUrls: ['./swipe-select.component.scss'],
   animations: [
     trigger('listAnimation', [
       transition('* => *', [
@@ -52,7 +52,7 @@ interface IPayloadSwipeOne {
     ])
   ]
 })
-export class QuizSwipeOneComponent implements OnInit {
+export class QuizSwipeSelectComponent implements OnInit {
 
   @Input() public payload: IPayloadSwipeOne = {
     type: QuizQuestionType.swipeSelect,
