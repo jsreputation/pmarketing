@@ -90,7 +90,7 @@ export class LuckyDrawDetailsComponent implements OnInit, OnDestroy {
       () => this.notificationService.addSnack('Information Updated.'),
       err => {
         console.error(`${err.error.message}`);
-        this.notificationService.addSnack(`Error Updating Profile`);
+        this.notificationService.addSnack('Error Updating Profile');
       });
   }
 }
