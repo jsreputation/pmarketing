@@ -13,6 +13,11 @@
   }
 }
 
+@mixin toolBarArrow {
+  cursor: pointer;
+  color: var(--button_text_color, white);
+}
+
 @mixin deep-formfields {
   &[appearance="standard"],
   &[appearance="legacy"] {
