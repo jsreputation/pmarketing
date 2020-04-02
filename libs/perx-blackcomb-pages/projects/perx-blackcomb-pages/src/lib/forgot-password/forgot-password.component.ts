@@ -107,9 +107,8 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 
   public resend(): void {
     if (this.identifier) {
-      this.authenticationService.resendOTP(this.identifier).subscribe((res) => {
-        this.notificationService.addSnack(res.message);
-      },
+      this.authenticationService.resendOTP(this.identifier).subscribe((res) =>
+        this.notificationService.addSnack(res.message),
       (err) => this.handleError(err));
     }
   }
