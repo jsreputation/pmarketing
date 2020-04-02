@@ -1,0 +1,110 @@
+@import "../_mixins.scss";
+@import "../layout/mixins.scss";
+@import "../custom-theme.scss";
+
+$error-message-container-color: #ffc832;
+$heading-font-color: #1b1b25;
+
+.luck-wrapper {
+  @include loginContentContainer;
+
+  background-color: white; // set back to default
+
+  .content-container {
+    // specific to this page
+    width: 80%;
+    max-width: 80rem;
+    flex: 1;
+    border-radius: 0.8rem;
+    margin: 0 auto;
+
+    p.label {
+      color: #7d7d89;
+      font-size: 1.2rem;
+      line-height: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .luck-inputs h1 {
+      margin-top: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .actions-container {
+      padding: 1rem 1.2rem;
+      background-color: var(--surface_colour);
+    }
+
+    ::ng-deep {
+      @include deep-formfields;
+    }
+
+    h2 {
+      font-size: 1.6rem;
+      line-height: 2.4rem;
+      letter-spacing: 0.5px;
+      color: #212121;
+    }
+
+    .main-heading {
+      font-weight: 900;
+      font-size: 3.2rem;
+      color: $heading-font-color;
+    }
+
+    .subtitle {
+      font-weight: normal;
+      font-size: 1.2rem;
+      margin-top: 1rem;
+      color: $heading-font-color;
+
+      .link {
+        text-decoration: underline;
+      }
+    }
+
+    .error_msg {
+      padding-bottom: 1rem;
+
+      span {
+        color: #eb202f;
+        font-size: 1.5rem;
+      }
+    }
+
+    form {
+      height: 100%;
+
+      .checkbox-container {
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
+        margin: 1rem 0;
+
+        .wrap-checkbox-text {
+          margin-left: 0.8rem;
+
+          .terms {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+
+    .full-width__button {
+      padding: 1.3rem;
+      width: 100%;
+      color: white;
+      margin-bottom: 1.3rem;
+    }
+
+    .full-width__input {
+      width: 100%;
+      margin-top: 0;
+    }
+
+    .button-bg-color {
+      background: var(--button_background_color) !important;
+    }
+  }
+}
