@@ -20,4 +20,8 @@
 
 .toolbar {
   @include toolbar();
+
+  .backArrow {
+    @include toolBarArrow();
+  }
 }
