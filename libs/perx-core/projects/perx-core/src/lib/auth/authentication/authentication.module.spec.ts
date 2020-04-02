@@ -16,6 +16,7 @@ import { TokenType } from '../../utils/storage/models/token-storage.model';
 import { TokenStorageServiceFactory } from '../../utils/storage/storage.module';
 import { of } from 'rxjs';
 import { ConfigService } from '../../config/config.service';
+import { NotificationService } from '../../utils/notification/notification.service';
 
 const configServiceStub: Partial<ConfigService> = {
   readAppConfig: () => of({
@@ -46,11 +47,11 @@ describe('AuthenticationModule', () => {
       { provide: ConfigService, useValue: configServiceStub }
     ]
   }));
-  it('should create AuthService', inject([HttpClient, TokenStorage, ProfileService, ConfigService],
-    (http: HttpClient, token: TokenStorage, profile: ProfileService, configService: ConfigService) => {
-      let service = AuthServiceFactory(http, { isWhistler: true }, token, profile, configService);
+  it('should create AuthService', inject([HttpClient, TokenStorage, ProfileService, ConfigService, NotificationService],
+    (http: HttpClient, token: TokenStorage, profile: ProfileService, configService: ConfigService, notificationService: NotificationService) => {
+      let service = AuthServiceFactory(http, { isWhistler: true }, token, profile, configService, notificationService);
       expect(service instanceof WhistlerAuthenticationService);
-      service = AuthServiceFactory(http, { isWhistler: false }, token, profile, configService);
+      service = AuthServiceFactory(http, { isWhistler: false }, token, profile, configService, notificationService);
       expect(service instanceof V4AuthenticationService);
     }));
 
