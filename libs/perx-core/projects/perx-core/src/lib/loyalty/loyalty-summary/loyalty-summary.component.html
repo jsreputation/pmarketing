@@ -7,13 +7,13 @@
     </div>
   </ng-container>
   <ng-container *ngIf="loyalty; else elseBlockLoyalty">
-    <p *ngIf="loyalty.membershipTierName" class="tier-description">{{loyalty.membershipTierName}} member</p>
+    <p *ngIf="showLoyaltyProgress && loyalty.membershipTierName" class="tier-description">{{loyalty.membershipTierName}} member</p>
 
     <div class="points">
       {{loyalty.pointsBalance | number}}
     </div>
 
-    <ng-container *ngIf="loyalty.membershipTierName && loyalty.highestTier">
+    <ng-container *ngIf="showLoyaltyProgress && loyalty.membershipTierName && loyalty.highestTier">
       <div *ngIf="loyalty.membershipTierName !== loyalty.highestTier" class="progress-bar">
         <mat-progress-bar mode="determinate" [value]="getPercentageToNext(loyalty.pointsBalance, loyalty.nextTierPoints)"></mat-progress-bar>
         <div class="points-to">

@@ -2,19 +2,19 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { LayoutRoutingModule } from './layout-routing.module';
-import {
-  HistoryComponent,
-  VoucherDetailComponent,
-  RewardDetailsComponent,
-  ContentComponent,
-  LayoutComponent,
-  SignInComponent,
-  RewardsBookingComponent
-} from '@perxtech/blackcomb-pages';
 import { HomeModule } from '../home/home.module';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { VouchersModule, RewardsModule, GameModule, LocationModule } from '@perxtech/core';
+import {
+  VouchersModule,
+  RewardsModule,
+  GameModule,
+  LocationModule,
+  GameServiceModule,
+  CampaignServiceModule
+} from '@perxtech/core';
+import { PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
+
 import { WalletModule } from '../wallet/wallet.module';
 import { SharedModule } from '../shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
@@ -22,15 +22,6 @@ import { MatSelectModule, MatCheckboxModule, MatRadioModule } from '@angular/mat
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
-  declarations: [
-    LayoutComponent,
-    HistoryComponent,
-    VoucherDetailComponent,
-    RewardDetailsComponent,
-    ContentComponent,
-    SignInComponent,
-    RewardsBookingComponent
-  ],
   imports: [
     // LayoutRoutingModule must be listed first to use its '' routing paths
     LayoutRoutingModule,
@@ -48,7 +39,10 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     MatCheckboxModule,
     MatRadioModule,
     LocationModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    PerxBlackcombPagesModule,
+    GameServiceModule.forRoot(),
+    CampaignServiceModule.forRoot()
   ]
 })
 export class LayoutModule { }
