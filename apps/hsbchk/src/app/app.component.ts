@@ -76,20 +76,17 @@ export class AppComponent implements OnInit {
 
     this.notificationService.$popup
       .subscribe(
-        (data: IPopupConfig) => {
-          this.dialog.open(PopupComponent, { data }).afterClosed().subscribe(
-            () => {
-              if (data.title === 'Token Expired') {
-                this.router.navigate(['/login']);
-              }
-            }
-          );
-        },
+        (data: IPopupConfig) => this.dialog.open(PopupComponent, { data }),
         (err) => console.error(err)
       );
     this.notificationService.$snack
       .subscribe(
-        (msg: string) => this.snack.open(msg, 'x', { duration: 2000 }),
+        (msg: string) => {
+          if (msg === 'Token Expired') {
+            this.router.navigate(['/login']);
+          }
+          this.snack.open(msg, 'x', { duration: 2000 });
+        },
         (err) => console.error(err)
       );
 
