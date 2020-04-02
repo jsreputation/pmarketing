@@ -48,7 +48,13 @@ describe('AuthenticationModule', () => {
     ]
   }));
   it('should create AuthService', inject([HttpClient, TokenStorage, ProfileService, ConfigService, NotificationService],
-    (http: HttpClient, token: TokenStorage, profile: ProfileService, configService: ConfigService, notificationService: NotificationService) => {
+    (
+      http: HttpClient,
+      token: TokenStorage,
+      profile: ProfileService,
+      configService: ConfigService,
+      notificationService: NotificationService
+    ) => {
       let service = AuthServiceFactory(http, { isWhistler: true }, token, profile, configService, notificationService);
       expect(service instanceof WhistlerAuthenticationService);
       service = AuthServiceFactory(http, { isWhistler: false }, token, profile, configService, notificationService);
