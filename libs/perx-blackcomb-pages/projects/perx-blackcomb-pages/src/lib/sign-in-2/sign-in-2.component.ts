@@ -132,10 +132,9 @@ export class SignIn2Component implements OnInit, OnDestroy {
                   invalid: true
                 }));
               this.translate.get('INVALID_CREDENTIALS')
-                // tslint:disable-next-line: rxjs-no-nested-subscribe
                 .subscribe(t => this.errorMessage = t);
             } else {
-              this.errorMessage = err.error;
+              this.errorMessage = err.error || 'Invalid Credentials';
             }
           } else {
             this.errorMessage = err;
