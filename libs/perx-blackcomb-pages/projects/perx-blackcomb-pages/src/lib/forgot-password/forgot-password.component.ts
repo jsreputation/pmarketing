@@ -4,7 +4,8 @@ import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators, Valid
 import { ActivatedRoute, Router } from '@angular/router';
 import {AuthenticationService, GeneralStaticDataService, ICountryCode, NotificationService} from '@perxtech/core';
 import {Observable, Subject} from 'rxjs';
-import { filter, mergeMap, takeUntil, map } from 'rxjs/operators';
+import {filter, mergeMap, takeUntil, map, switchMap} from 'rxjs/operators';
+
 
 @Component({
   selector: 'perx-blackcomb-pages-password',
@@ -34,12 +35,6 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   private otp: string;
   public identifier: string;
   private destroy$: Subject<void> = new Subject<void>();
-  public countryCodesOptions: { value: string, label: string }[] = [
-    { value: '852', label: 'HongKong' },
-    { value: '853', label: 'Macau' },
-    { value: '86', label: 'China' },
-    { value: '65', label: 'Singapore' }
-  ];
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -59,23 +54,31 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
       'Philippines',
       'Singapore'
     ]);
-    this.route.queryParams
-      .pipe(
+
+    const matchRouteCountry$ = (countryList) => (() => {
+      return this.route.queryParams.pipe(
         filter((params) => !!params.identifier),
         map((params) => params.identifier),
+        map((identifier) => {
+          const countryCode: ICountryCode | null = countryList.find(
+            country => `+${identifier}`.startsWith(country.phone)
+          )  || null;
+          let phone: string | null = null;
+          if (countryCode !== null) {
+            phone = `+${identifier}`.slice(countryCode.phone.length);
+            return [phone, countryCode];
+          }
+          return [null, null];
+        }),
         takeUntil(this.destroy$)
       )
-      .subscribe((phone: string) => {
-        if (phone[0] === '+') {
-          phone = phone.slice(1);
-        }
-        const countryCodes = this.countryCodesOptions.map(op => op.value);
-        const countryCode = countryCodes.find(code => phone.startsWith(code)) || null;
-        if (countryCode !== null) {
-          phone = phone.slice(countryCode.length);
-        }
-        this.phoneStepForm.setValue({ phone, countryCode });
-      });
+    })();
+
+    this.countriesList$.pipe(
+      switchMap((countryList) => matchRouteCountry$(countryList))
+    ).subscribe(([phone, countryCode]) => {
+        this.phoneStepForm.setValue({ countryCode, phone });
+     });
   }
 
   public compareCtryFn(c1: ICountryCode, c2: ICountryCode): boolean {

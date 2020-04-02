@@ -87,6 +87,14 @@ export class SignIn2Component implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  public get identifier(): string {
+    const customerIdField = this.loginForm.get('customerID');
+    if (customerIdField && customerIdField.value) {
+      return `${this.countryCodePrefix ? this.countryCodePrefix : this.countryCode}${customerIdField.value}`.substring(1)
+    }
+    return '';
+  }
+
   public redirectAfterLogin(): void {
     this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl()
       : this.appConfig.custom && this.appConfig.custom.redirectAfterLogin as string || 'wallet');
@@ -100,9 +108,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
   }
 
   public onSubmit(): void {
-    const customerIdField = this.loginForm.get('customerID');
-    const username: string = customerIdField !== null &&
-      customerIdField.value ? `${this.countryCodePrefix ? this.countryCodePrefix : this.countryCode.substring(1)}${customerIdField.value}` : '';
+    const username: string = this.identifier;
     const pwdField = this.loginForm.get('password');
     const password: string = pwdField ? pwdField.value : '';
     this.errorMessage = null;
@@ -143,7 +149,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
       );
   }
 
-  public updateCoutryCode(value: string): void {
-    this.countryCode = value.substring(1);
+  public updateCountryCode(value: string): void {
+    this.countryCode = value;
   }
 }
