@@ -110,7 +110,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
     const userObj: ISignupAttributes = {};
     this.answers.forEach(answer => {
       if (answer.questionId !== undefined) {
-        userObj[answer.questionId] = answer.content;
+        userObj[answer.questionId] = answer.questionId == 'primary_primary_identifier' ? answer.content.slice(1) : userObj[answer.questionId] = answer.content;
       }
     });
     const pi = userObj.primary_identifier;
