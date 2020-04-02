@@ -1,18 +1,36 @@
-<div class="content-container">
-    <h2 translate>LUCKY_DRAW_DETAILS</h2> -->
-    <perx-core-survey
-    [data]="data$"
-    (surveyDone)="updateFormStatus($event)"
-    (totalLength)="setTotalLength($event)"
-    (currentPointer)="setCurrentPointer($event)"></perx-core-survey>
-
+<div class="luck-wrapper">
+  <div class="content-container">
+    <form [formGroup]="luckdrawForm" #luckEditForm="ngForm" (ngSubmit)="onSubmit()">
+      <div class="luck-inputs">
+        <h1>Opt-in Lucky Draw</h1>
+        <mat-list-item>
+          <p matLine class="label">{{ 'FULL_NAME' | translate }}</p>
+        </mat-list-item>
+        <mat-form-field appearance="standard" class="full-width__input">
+          <input matInput formControlName="fullName">
+        </mat-form-field>
+        <mat-list-item>
+          <p matLine class="label">{{ 'FOUR_DIGITS_HKID' | translate }}</p>
+        </mat-list-item>
+        <mat-form-field appearance="standard" class="full-width__input">
+          <input matInput formControlName="hkid">
+        </mat-form-field>
+        <div class="checkbox-container">
+          <mat-checkbox formControlName="accept_marketing"></mat-checkbox>
+          <span class="wrap-checkbox-text">{{ 'MARKETING_AGREE' | translate }} ({{ 'LUCKY_DRAW_REFER' | translate }}  ( <a href="#">PICS</a>)</span>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="actions-container mat-elevation-z2">
     <button
-    [disabled]="!formComplete"
-    mat-flat-button
-    color="primary"
-    (click)="onSubmit()"
-    translate>
-    SUBMIT_AND_VERIFY
+      (click)="luckEditForm.ngSubmit.emit()"
+      mat-flat-button
+      [disabled]="!luckdrawForm.valid"
+      type="submit"
+      class="full-width__button"
+      translate>
+      SUBMIT
     </button>
   </div>
-  
+</div>

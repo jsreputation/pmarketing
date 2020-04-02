@@ -17,7 +17,9 @@ export class ProfileComponent implements OnInit/*, ShowTitleInHeader*/ {
   ) { }
 
   public ngOnInit(): void {
-    this.profileService.whoAmI().subscribe(res => this.profile = res);
+    this.profileService.whoAmI().subscribe(res => {
+      this.profile = res;
+    });
   }
 
   public onEditPasswordClicked(): void {
