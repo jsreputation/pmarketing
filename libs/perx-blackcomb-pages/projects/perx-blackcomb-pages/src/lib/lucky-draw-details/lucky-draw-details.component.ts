@@ -1,44 +1,96 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ISurvey, IAnswer, IFormsService } from '@perxtech/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import {
+  ITheme,
+  AuthenticationService,
+  NotificationService,
+  ProfileService,
+  IProfile
+} from '@perxtech/core';
+import {FormBuilder, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
 
 @Component({
   selector: 'perx-blackcomb-pages-lucky-draw-details',
   templateUrl: './lucky-draw-details.component.html',
   styleUrls: ['./lucky-draw-details.component.scss']
 })
-export class LuckyDrawDetailsComponent implements OnInit {
-
-  public data$: Observable<ISurvey | undefined>;
-  public survey: ISurvey;
-  public answers: IAnswer[];
-  public totalLength: number;
-  public currentPointer: number;
+export class LuckyDrawDetailsComponent implements OnInit, OnDestroy {
+  public luckdrawForm: FormGroup;
+  public errorMessage: string | null;
+  public appAccessTokenFetched: boolean = false;
+  public profile: IProfile;
+  private destroy$: Subject<void> = new Subject();
+  public theme: Observable<ITheme>;
+  @ViewChild('luckEditForm', {static: false}) public documentEditForm: FormGroupDirective;
 
   constructor(
-    private formSvc: IFormsService,
-  ) { }
+    private fb: FormBuilder,
+    // private router: Router,
+    private authService: AuthenticationService,
+    private profileService: ProfileService,
+    private notificationService: NotificationService
+  ) {
+    this.initForm();
+    this.getAppToken();
+  }
 
   public ngOnInit(): void {
-    this.data$ = this.formSvc.getLuckyDrawDetailsForm();
+    this.profileService.whoAmI().subscribe(res => {
+      this.profile = res;
+      if (!res.customProperties) {
+        return;
+      }
+    });
   }
 
-  public get formComplete(): boolean {
-    return this.currentPointer === this.totalLength;
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
-  public setTotalLength(totalLength: number): void {
-    this.totalLength = totalLength;
+  private getAppToken(): void {
+    const token = this.authService.getAppAccessToken();
+    if (token) {
+      this.appAccessTokenFetched = true;
+    } else {
+      this.authService.getAppToken().subscribe(() => {
+        this.appAccessTokenFetched = true;
+      }, (err) => {
+        console.error(`Error${err}`);
+      });
+    }
   }
 
-  public setCurrentPointer(currentPointer: number): void {
-    this.currentPointer = currentPointer;
-  }
-
-  public updateFormStatus(answers: IAnswer[]): void {
-    this.answers = answers;
+  private initForm(): void {
+    this.luckdrawForm = this.fb.group({
+      fullName: ['', Validators.required],
+      hkid: ['', Validators.required],
+      accept_marketing: [false]
+    });
   }
 
   public onSubmit(): void {
+    // if you're in here, config file has checked
+    // also precondition when you sign up custom properties related to lucky draw is alrdy there
+    // therefore setCustomProperties can patch those keys
+    if (!this.appAccessTokenFetched) {
+      this.errorMessage = 'Unknown error occured.';
+      return;
+    }
+    const fullName = this.luckdrawForm.value.fullName;
+    const hkid = this.luckdrawForm.value.hkid;
+
+    // might include nickname too, figma design doesnt show
+    const luckyDrawData: any = {
+      fullName,
+      hkid
+    };
+
+    this.profileService.setCustomProperties(luckyDrawData).subscribe(
+      () => this.notificationService.addSnack('Information Updated.'),
+      err => {
+        console.error(`${err.error.message}`);
+        this.notificationService.addSnack('Error Updating Profile');
+      });
   }
 }

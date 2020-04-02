@@ -11,17 +11,19 @@
             <span>{{errorMessage}}</span>
         </div>
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-            <div *ngIf="countryCodePrefix; then thenBlock else elseBlock"></div>
-            <ng-template #thenBlock>
+            <div *ngIf="countryCodePrefix; then withPrefixBlock else elseBlock"></div>
+            <ng-template #withPrefixBlock>
                 <mat-form-field appearance="standard" class="full-width__input">
                     <span matPrefix>+{{countryCodePrefix}}&nbsp;<span class="prefix-spacer"></span></span>
-                    <input matInput [placeholder]="'ENTER_CUSTOM_ID' | translate" formControlName="customerID" [value]="">
+                    <input matInput [placeholder]="'ENTER_CUSTOM_ID' | translate" formControlName="customerID"
+                        [value]="">
                     <mat-error *ngIf="loginForm.hasError('customerID')">
                         This is <strong>required</strong>
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="standard" class="full-width__input">
-                    <input matInput [placeholder]="'ENTER_PASSWORD' | translate" formControlName="password" type="password">
+                    <input matInput [placeholder]="'ENTER_PASSWORD' | translate" formControlName="password"
+                        type="password">
                     <mat-error *ngIf="loginForm.hasError('password')">
                         This is <strong>required</strong>
                     </mat-error>
@@ -30,12 +32,13 @@
             <ng-template #elseBlock>
                 <div class="mobile-group">
                     <div class="country-code">
-                        <mat-form-field>
+                        <mat-form-field appearance="fill">
                             <mat-label>Country Code</mat-label>
-                            <mat-select (selectionChange)="updateCoutryCode($event.source.value)" [value]="countryCode">
-                                <mat-option *ngFor="let country of countriesList$ | async" [value]="country.phone">
-                                    <span>{{country.name}}&nbsp;</span>
-                                    <span>{{country.phone}}</span>
+                            <mat-select [(value)]="countryCode">
+                                <mat-option
+                                    (selectionChange)="updateCoutryCode(country.phone)"
+                                    *ngFor="let country of countriesList$ | async" [value]="country.phone">
+                                    <span>{{country.phone}} {{country.name}}</span>
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
@@ -43,7 +46,8 @@
                     <div class="mobile-number">
                         <mat-form-field appearance="fill">
                             <mat-label translate>ENTER_CUSTOM_ID</mat-label>
-                            <input matInput [placeholder]="'ENTER_CUSTOM_ID' | translate" formControlName="customerID" [value]="">
+                            <input matInput [placeholder]="'ENTER_CUSTOM_ID' | translate" formControlName="customerID"
+                                [value]="">
                             <mat-error *ngIf="loginForm.hasError('customerID')">
                                 This is <strong>required</strong>
                             </mat-error>
@@ -52,7 +56,8 @@
                 </div>
                 <mat-form-field appearance="fill" class="full-width__input">
                     <mat-label translate>ENTER_PASSWORD</mat-label>
-                    <input matInput [placeholder]="'ENTER_PASSWORD' | translate" formControlName="password" type="password">
+                    <input matInput [placeholder]="'ENTER_PASSWORD' | translate" formControlName="password"
+                        type="password">
                     <mat-error *ngIf="loginForm.hasError('password')">
                         This is <strong>required</strong>
                     </mat-error>

@@ -2,8 +2,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators, ValidationErrors } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthenticationService, NotificationService } from '@perxtech/core';
-import { Subject } from 'rxjs';
+import {AuthenticationService, GeneralStaticDataService, ICountryCode, NotificationService} from '@perxtech/core';
+import {Observable, Subject} from 'rxjs';
 import { filter, mergeMap, takeUntil, map } from 'rxjs/operators';
 
 @Component({
@@ -15,6 +15,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   public currentStep: number = 1;
   public usersPhone: string;
   private static PASSWORD_MIN_LENGTH: number = 3;
+  public countriesList$: Observable<ICountryCode[]>;
 
   public phoneStepForm: FormGroup = new FormGroup({
     phone: new FormControl(null, [
@@ -22,7 +23,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
       Validators.pattern('^[0-9]+$'),
       Validators.minLength(2),
       Validators.maxLength(10)]),
-    countryCode: new FormControl('852', [])
+    countryCode: new FormControl(null, [])
   });
 
   public newPasswordForm: FormGroup = new FormGroup({
@@ -44,7 +45,8 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     private authenticationService: AuthenticationService,
     private router: Router,
     private route: ActivatedRoute,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private generalStaticDataService: GeneralStaticDataService
   ) { }
 
   public get phone(): AbstractControl | null { return this.phoneStepForm.get('phone'); }
@@ -52,6 +54,11 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   public get passwordConfirmation(): AbstractControl | null { return this.newPasswordForm.get('passwordConfirmation'); }
 
   public ngOnInit(): void {
+    this.countriesList$ = this.generalStaticDataService.getCountriesList([
+      'Hong Kong',
+      'Philippines',
+      'Singapore'
+    ]);
     this.route.queryParams
       .pipe(
         filter((params) => !!params.identifier),
@@ -71,6 +78,10 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
       });
   }
 
+  public compareCtryFn(c1: ICountryCode, c2: ICountryCode): boolean {
+    return c1 && c2 ? c1.phone === c2.phone : c1 === c2;
+  }
+
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
@@ -80,7 +91,10 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     if (this.phoneStepForm.invalid) {
       return;
     }
-    const phone: string = `${this.phoneStepForm.value.countryCode}${this.phoneStepForm.value.phone}`.trim();
+    // we use select countryCode object ^ using the response from countryList$
+    const stepPhoneFormCountryCode: ICountryCode = this.phoneStepForm.value.countryCode;
+    const stepPhoneFormPhoneNumber = this.phoneStepForm.value.phone;
+    const phone: string = `${stepPhoneFormCountryCode.phone}${stepPhoneFormPhoneNumber}`.trim();
     this.identifier = `${phone.replace(/[^0-9]/g, '')}`;
     this.usersPhone = this.identifier.slice(-2);
 

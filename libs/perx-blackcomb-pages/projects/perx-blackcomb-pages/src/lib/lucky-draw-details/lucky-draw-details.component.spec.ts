@@ -10,16 +10,17 @@ import {
   ThemesService,
   ConfigService,
   IConfig,
-  IFormsService
+  ProfileService
 } from '@perxtech/core';
 import { LuckyDrawDetailsComponent } from './lucky-draw-details.component';
 import { of, Observable } from 'rxjs';
-import { MatSnackBar, MatInputModule } from '@angular/material';
+import {MatSnackBar, MatInputModule, MatFormFieldModule, MatCheckboxModule, MatListModule} from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Location } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { IWAppAccessTokenResponse } from '@perxtech/whistler';
+import {ReactiveFormsModule} from '@angular/forms';
 
 const configStub: Partial<Config> = {
   preAuth: false
@@ -34,10 +35,6 @@ const configServiceStub: Partial<ConfigService> = {
     baseHref: '',
     showSubtitleLogin: true
   })
-};
-
-const formsSvcStub: Partial<IFormsService> = {
-  getLuckyDrawDetailsForm: () => of()
 };
 
 const gameServiceStub: Partial<IGameService> = {
@@ -79,14 +76,11 @@ const themeServiceStub: Partial<ThemesService> = {
 describe('LuckyDrawDetailsComponent', () => {
   let component: LuckyDrawDetailsComponent;
   let fixture: ComponentFixture<LuckyDrawDetailsComponent>;
-  const formSvcStub: Partial<IFormsService> = {
-    getSignupForm: () => of({
-      title: '',
-      results: {},
-      questions: []
-    })
-  };
   const matSnackStub: Partial<MatSnackBar> = {};
+  const profileServiceStub: Partial<ProfileService> = {
+    setCardNumber: () => of(),
+    whoAmI: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -96,6 +90,11 @@ describe('LuckyDrawDetailsComponent', () => {
         MatInputModule,
         HttpClientModule,
         NoopAnimationsModule,
+        MatFormFieldModule,
+        MatCheckboxModule,
+        MatListModule,
+        ReactiveFormsModule,
+        MatInputModule,
         TranslateModule.forRoot(),
         RouterTestingModule.withRoutes([
           { path: 'wallet', redirectTo: '/' },
@@ -103,7 +102,6 @@ describe('LuckyDrawDetailsComponent', () => {
         ]),
       ],
       providers: [
-        { provide: IFormsService, useValue: formSvcStub },
         { provide: MatSnackBar, useValue: matSnackStub },
         { provide: Config, useValue: configStub },
         { provide: IGameService, useValue: gameServiceStub },
@@ -112,8 +110,8 @@ describe('LuckyDrawDetailsComponent', () => {
         { provide: Location, useValue: locationStub },
         { provide: SurveyService, useValue: surveyServiceStub },
         { provide: ThemesService, useValue: themeServiceStub },
-        { provide: IFormsService, useValue: formsSvcStub },
-        { provide: ConfigService, useValue: configServiceStub }
+        { provide: ConfigService, useValue: configServiceStub },
+        { provide: ProfileService, useValue: profileServiceStub },
       ]
     })
       .compileComponents();
