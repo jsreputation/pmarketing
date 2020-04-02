@@ -25,7 +25,6 @@ import {
   PopupComponent,
   NotificationService,
   IPopupConfig,
-  AuthenticationService,
   ConfigService,
   IConfig,
 } from '@perxtech/core';
@@ -60,7 +59,6 @@ export class AppComponent implements OnInit {
     private dialog: MatDialog,
     private location: Location,
     private router: Router,
-    private authService: AuthenticationService,
     private cd: ChangeDetectorRef,
     private snack: MatSnackBar,
     private config: ConfigService,
@@ -75,17 +73,18 @@ export class AppComponent implements OnInit {
         this.translationLoaded = true;
         this.preAuth = config.preAuth as boolean;
       });
-    this.authService.$failedAuth.subscribe(
-      res => {
-        if (res) {
-          this.router.navigate(['/login']);
-        }
-      }
-    );
 
     this.notificationService.$popup
       .subscribe(
-        (data: IPopupConfig) => this.dialog.open(PopupComponent, { data }),
+        (data: IPopupConfig) => {
+          this.dialog.open(PopupComponent, { data }).afterClosed().subscribe(
+            () => {
+              if (data.title === 'Token Expired') {
+                this.router.navigate(['/login']);
+              }
+            }
+          );
+        },
         (err) => console.error(err)
       );
     this.notificationService.$snack

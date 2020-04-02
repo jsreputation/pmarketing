@@ -19,6 +19,7 @@ import { IMessageResponse } from '../../perx-core.models';
 import { oc } from 'ts-optchain';
 import { ConfigService } from '../../config/config.service';
 import { IConfig } from '../../config/models/config.model';
+import { NotificationService } from '../../utils/notification/notification.service';
 
 interface IV4SignUpData {
   first_name?: string;
@@ -65,7 +66,8 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     private configService: ConfigService,
     private http: HttpClient,
     private tokenStorage: TokenStorage,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private notificationService: NotificationService
   ) {
     super();
     this.configService.readAppConfig().subscribe(
@@ -106,7 +108,11 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     }
     this.retries = 0;
     this.logout();
-    this.$failedAuthObservableSubject.next(true);
+    this.notificationService.addPopup({
+      title: 'Token Expired',
+      text: 'Your token is expired, please login again',
+      buttonTxt: 'CLOSE'
+    });
     return of(true);
   }
 
