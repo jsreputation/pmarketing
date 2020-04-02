@@ -19,7 +19,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   public countriesList$: Observable<ICountryCode[]>;
 
   public phoneStepForm: FormGroup = new FormGroup({
-    phone: new FormControl(null, [
+    phoneNumber: new FormControl(null, [
       Validators.required,
       Validators.pattern('^[0-9]+$'),
       Validators.minLength(2),
@@ -44,7 +44,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     private generalStaticDataService: GeneralStaticDataService
   ) { }
 
-  public get phone(): AbstractControl | null { return this.phoneStepForm.get('phone'); }
+  public get phoneNumber(): AbstractControl | null { return this.phoneStepForm.get('phoneNumber'); }
   public get password(): AbstractControl | null { return this.newPasswordForm.get('newPassword'); }
   public get passwordConfirmation(): AbstractControl | null { return this.newPasswordForm.get('passwordConfirmation'); }
 
@@ -62,10 +62,10 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
         const countryCode: ICountryCode | null = countryList.find(
           country => `+${identifier}`.startsWith(country.phone)
         )  || null;
-        let phone: string | null = null;
+        let phoneNumber: string | null = null;
         if (countryCode !== null) {
-          phone = `+${identifier}`.slice(countryCode.phone.length);
-          return [phone, countryCode];
+          phoneNumber = `+${identifier}`.slice(countryCode.phone.length);
+          return [phoneNumber, countryCode];
         }
         return [null, null];
       }),
@@ -75,9 +75,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 
     this.countriesList$.pipe(
       switchMap((countryList) => matchRouteCountry$(countryList))
-    ).subscribe(([phone, countryCode]) => {
-      this.phoneStepForm.setValue({ countryCode, phone });
-    });
+    ).subscribe(([phoneNumber, countryCode]) => this.phoneStepForm.setValue({ countryCode, phoneNumber }));
   }
 
   public compareCtryFn(c1: ICountryCode, c2: ICountryCode): boolean {
@@ -95,7 +93,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     }
     // we use select countryCode object ^ using the response from countryList$
     const stepPhoneFormCountryCode: ICountryCode = this.phoneStepForm.value.countryCode;
-    const stepPhoneFormPhoneNumber = this.phoneStepForm.value.phone;
+    const stepPhoneFormPhoneNumber = this.phoneStepForm.value.phoneNumber;
     const phone: string = `${stepPhoneFormCountryCode.phone}${stepPhoneFormPhoneNumber}`.trim();
     this.identifier = `${phone.replace(/[^0-9]/g, '')}`;
     this.usersPhone = this.identifier.slice(-2);
