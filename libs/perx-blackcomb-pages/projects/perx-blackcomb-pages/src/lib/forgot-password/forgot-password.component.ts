@@ -55,30 +55,29 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
       'Singapore'
     ]);
 
-    const matchRouteCountry$ = (countryList) => (() => {
-      return this.route.queryParams.pipe(
-        filter((params) => !!params.identifier),
-        map((params) => params.identifier),
-        map((identifier) => {
-          const countryCode: ICountryCode | null = countryList.find(
-            country => `+${identifier}`.startsWith(country.phone)
-          )  || null;
-          let phone: string | null = null;
-          if (countryCode !== null) {
-            phone = `+${identifier}`.slice(countryCode.phone.length);
-            return [phone, countryCode];
-          }
-          return [null, null];
-        }),
-        takeUntil(this.destroy$)
-      )
-    })();
+    const matchRouteCountry$ = (countryList) => (() => this.route.queryParams.pipe(
+      filter((params) => !!params.identifier),
+      map((params) => params.identifier),
+      map((identifier) => {
+        const countryCode: ICountryCode | null = countryList.find(
+          country => `+${identifier}`.startsWith(country.phone)
+        )  || null;
+        let phone: string | null = null;
+        if (countryCode !== null) {
+          phone = `+${identifier}`.slice(countryCode.phone.length);
+          return [phone, countryCode];
+        }
+        return [null, null];
+      }),
+      takeUntil(this.destroy$)
+    )
+    )();
 
     this.countriesList$.pipe(
       switchMap((countryList) => matchRouteCountry$(countryList))
     ).subscribe(([phone, countryCode]) => {
-        this.phoneStepForm.setValue({ countryCode, phone });
-     });
+      this.phoneStepForm.setValue({ countryCode, phone });
+    });
   }
 
   public compareCtryFn(c1: ICountryCode, c2: ICountryCode): boolean {
