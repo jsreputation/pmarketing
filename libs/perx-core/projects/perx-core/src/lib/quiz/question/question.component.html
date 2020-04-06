@@ -29,6 +29,11 @@
             *ngIf="question.payload.type === quizQuestionType.longText"
             [payload]="question.payload"
             (updateAnswers)="updateAnswer($event)"></perx-core-quiz-long-text>
+      <perx-core-swipe-select
+            *ngIf="question.payload.type === quizQuestionType.swipeSelect"
+            [payload]="question.payload"
+            (updateAnswers)="updateAnswer($event)"
+      ></perx-core-swipe-select>
       <perx-core-swipe-list
             *ngIf="question.payload.type === quizQuestionType.swipeDelete"
             [payload]="question.payload"
