@@ -1,5 +1,6 @@
-@import "../custom-theme.scss";
-@import "./mixins";
+@use "../mixins";
+
+@import "../custom-theme";
 
 :host {
   display: block;
@@ -8,10 +9,10 @@
 }
 
 .toolbar {
-  @include toolbar();
+  @include mixins.toolbar();
 
   .backArrow {
-    @include toolBarArrow();
+    @include mixins.toolBarArrow();
   }
 }
 
