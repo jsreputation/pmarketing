@@ -16,7 +16,7 @@
     "styleLint": "stylelint src/**/*.*css",
     "pree2e": "webdriver-manager update",
     "e2e-pro": "protractor",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --maxWorkers=50% --watch"
   },
   "private": true,
   "dependencies": {

@@ -12,7 +12,7 @@
     "lint": "stylelint \"projects/**/*.*css\" && eslint \"projects/**/*.ts\"",
     "lint:fix": "stylelint \"projects/**/*.*css\" --fix && eslint \"projects/**/*.ts\" --fix",
     "e2e~": "ng e2e",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --maxWorkers=50% --watch"
   },
   "private": true,
   "dependencies": {

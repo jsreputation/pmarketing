@@ -14,7 +14,7 @@
     "lint:fix": "stylelint \"src/**/*.*css\" --fix && eslint \"./src/**/*.ts\" --fix",
     "styleLint": "stylelint src/**/*.*css",
     "e2e~": "ng e2e",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --maxWorkers=50% --watch"
   },
   "private": true,
   "dependencies": {
