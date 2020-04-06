@@ -2,8 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { takeUntil, flatMap } from 'rxjs/operators';
-import { IVoucherService, VoucherState } from '@perxtech/core';
-import { IVoucher } from '@perxtech/core/projects/perx-core/src/lib/vouchers/models/voucher.model';
+import { IVoucherService, VoucherState, Voucher } from '@perxtech/core';
 import { NotificationWrapperService } from 'src/app/services/notification-wrapper.service';
 import { Location } from '@angular/common';
 
@@ -35,7 +34,7 @@ export class CodeRedemptionComponent implements OnInit, OnDestroy {
       .pipe(flatMap((params: ParamMap) => {
         this.voucherId = parseInt(params.get('id'), 10);
         return this.vouchersService.stateChangedForVoucher(this.voucherId);
-      })).subscribe((voucher: IVoucher) => {
+      })).subscribe((voucher: Voucher) => {
         if (voucher.state === VoucherState.issued) {
           this.previousStatus = VoucherState.issued;
         }

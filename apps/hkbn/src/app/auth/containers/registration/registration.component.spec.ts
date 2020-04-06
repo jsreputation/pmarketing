@@ -15,10 +15,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ErrorHandlerModule } from '../../../ui/error-handler/error-handler.module';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
-import { AuthenticationService, IProfile } from '@perxtech/core';
+import { AuthenticationService, IProfile, ISignUpData } from '@perxtech/core';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
-import { ISignUpData } from '@perxtech/core/dist/perx-core/lib/auth/authentication/models/authentication.model';
 
 const authenticationService = {
   signup: () => of(null),
