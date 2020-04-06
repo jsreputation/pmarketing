@@ -20,17 +20,20 @@ import {
   ConfigService,
   AuthenticationService,
   ThemesService,
-  IConfig
+  IConfig,
+  SettingsModule,
+  GameModule as PerxGameModule,
 } from '@perxtech/core';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 
-import { ServiceWorkerModule } from '@angular/service-worker';
+// import { ServiceWorkerModule } from '@angular/service-worker';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { MatDialogModule, MatSnackBarModule } from '@angular/material';
 import { tap, switchMap } from 'rxjs/operators';
+import { MatButtonModule } from '@angular/material/button';
+import { SignupModule } from './signup/signup.module';
 
 export const setLanguage = (
   translateService: TranslateService,
@@ -48,25 +51,29 @@ export const setLanguage = (
 @NgModule({
   declarations: [AppComponent],
   imports: [
-    InfiniteScrollModule,
     ConfigModule.forRoot({ ...environment }),
+    SettingsModule.forRoot({ ...environment }),
+    PerxGameModule,
     BrowserModule,
     AppRoutingModule,
     PerxCoreModule,
     VouchersModule,
     OutcomeModule,
     AuthenticationModule,
+    SignupModule,
+    ProfileModule,
     BrowserAnimationsModule,
     PerxMerchantsModule,
     PerxStampModule,
     ProfileModule,
     UtilsModule,
-    PerxCampaignModule,
     PerxCampaignServiceModule.forRoot(),
+    PerxCampaignModule,
     HttpClientModule,
-    RewardsModule,
     MatDialogModule,
+    MatButtonModule,
     MatSnackBarModule,
+    RewardsModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -74,7 +81,7 @@ export const setLanguage = (
         useClass: LanguageService
       }
     }),
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   bootstrap: [AppComponent],
   providers: [

@@ -33,6 +33,9 @@ export class LoyaltySummaryComponent implements OnInit {
   @Input()
   public summaryExpiringFn: (loyalty: ILoyalty) => string;
 
+  @Input()
+  public showLoyaltyProgress: boolean = true;
+
   public loyaltyProgramExists: boolean = true;
 
   constructor(
