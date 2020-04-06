@@ -1,12 +1,13 @@
-@import "../_mixins.scss";
-@import "../layout/mixins.scss";
-@import "../custom-theme.scss";
+@use "../_mixins" as globalMixins;
+@use "./_mixins" as luckyDrawMixins;
+
+@import "../custom-theme";
 
 $error-message-container-color: #ffc832;
 $heading-font-color: #1b1b25;
 
 .luck-wrapper {
-  @include loginContentContainer;
+  @include globalMixins.loginContentContainer;
 
   background-color: white; // set back to default
 
@@ -36,7 +37,7 @@ $heading-font-color: #1b1b25;
     }
 
     ::ng-deep {
-      @include deep-formfields;
+      @include luckyDrawMixins.deep-formfields;
     }
 
     h2 {

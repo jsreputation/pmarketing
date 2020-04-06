@@ -1,27 +1,42 @@
-@import "../custom-theme";
-@import "../quiz/_mixins";
-@import "../layout/mixins";
-@import "../content.scss";
+@use "../_mixins";
 
-.loading {
+@import "../custom-theme";
+
+:host {
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-  align-items: center;
 }
 
-.landing-container {
-  @include quizContainer();
+.game-container {
+  flex: 1;
+  overflow-y: auto;
 
-  background-color: transparent;
+  .content {
+    padding: 2.4rem;
+    font-size: 1.4rem;
+    line-height: 2.5rem;
+    height: 100%;
+    overflow-y: auto;
+
+    @include _mixins.typography();
+  }
+
+  .loading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+  }
 }
 
 .toolbar {
-  @include toolbar();
+  @include _mixins.toolbar();
 
   .backArrow {
-    @include toolBarArrow();
+    @include _mixins.toolBarArrow();
   }
 }
