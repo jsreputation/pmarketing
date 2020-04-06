@@ -8,11 +8,11 @@
     "build-mylib": "ng build && npm run build-styles && npm run cp-assets",
     "copy-assets": "cpx -u \"projects/perx-candyshop/src/assets\" \"dist/perx-candyshop/assets\"",
     "clean": "rm -rf ./dist ./node_modules",
-    "test": "jest",
+    "test": "jest --maxWorkers=50%",
     "lint": "stylelint \"projects/**/*.*css\" && eslint \"projects/**/*.ts\"",
     "lint:fix": "stylelint \"projects/**/*.*css\" --fix && eslint \"projects/**/*.ts\" --fix",
     "e2e~": "ng e2e",
-    "test:watch": "jest --maxWorkers=50% --watch"
+    "test:watch": "jest --watch"
   },
   "private": true,
   "dependencies": {

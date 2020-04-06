@@ -12,11 +12,11 @@
     "clean": "rm -rf ./dist ./node_modules",
     "lint": "stylelint src/**/*.*css && eslint \"./src/**/*.ts\"",
     "lint:fix": "stylelint \"src/**/*.*css\" --fix && eslint \"./src/**/*.ts\" --fix",
-    "test": "jest",
+    "test": "jest --maxWorkers=50%",
     "styleLint": "stylelint src/**/*.*css",
     "pree2e": "webdriver-manager update",
     "e2e-pro": "protractor",
-    "test:watch": "jest --maxWorkers=50% --watch"
+    "test:watch": "jest --watch"
   },
   "private": true,
   "dependencies": {

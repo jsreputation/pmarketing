@@ -9,11 +9,11 @@
     "build:digi:staging": "PRODUCTION=true npm run config && ng build --prod",
     "clean": "rm -rf ./dist ./node_modules",
     "config": "ts-node --project tsconfig.node.json set-env.ts",
-    "test": "jest",
+    "test": "jest --maxWorkers=50%",
     "lint": "stylelint \"src/**/*.*css\" && eslint \"./src/**/*.ts\"",
     "lint:fix": "stylelint \"src/**/*.*css\" --fix && eslint \"./src/**/*.ts\" --fix",
     "e2e~": "ng e2e",
-    "test:watch": "jest --maxWorkers=50% --watch"
+    "test:watch": "jest --watch"
   },
   "private": true,
   "dependencies": {
