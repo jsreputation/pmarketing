@@ -109,15 +109,18 @@ const routes: Routes = [
       { path: 'quiz/:cid',
         loadChildren: () => import('../quiz/quiz.module')
           .then(m => m.QuizModule),
-        canActivate: [ProtectedGuard]},
+        canActivate: [ProtectedGuard]
+      },
       { path: 'quiz-results',
         loadChildren: () => import('../quiz-result/quiz-result.module')
           .then(m => m.QuizResultModule),
-        canActivate: [ProtectedGuard]},
+        canActivate: [ProtectedGuard]
+      },
       { path: 'referral',
         loadChildren: () => import('../referral/referral.module')
           .then(m => m.ReferralModule),
-        canActivate: [ProtectedGuard]},
+        canActivate: [ProtectedGuard]
+      },
       { path: 'lucky-draw-details',
         loadChildren: () => import('../lucky-draw-detail/lucky-draw-detail.module')
           .then(m => m.LuckyDrawDetailModule),
