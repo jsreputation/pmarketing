@@ -12,7 +12,8 @@ import { HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { ProfileService } from '../../profile/profile.service';
 import { TokenStorage } from '../../utils/storage/token-storage.service';
 import { LocalTokenStorage } from '../../utils/storage/local-token-storage.service';
-import {ConfigService} from '../../config/config.service';
+import { ConfigService } from '../../config/config.service';
+import { NotificationService } from '../../utils/notification/notification.service';
 
 function fakeFactory(): TokenStorage {
   return new LocalTokenStorage({});
@@ -27,6 +28,10 @@ const configServiceStub: Partial<ConfigService> = {
     isWhistler: true,
     preAuth: false,
   })
+};
+
+const notificationServiceStub: Partial<NotificationService> = {
+  addSnack: () => { }
 };
 
 describe('V4AuthenticationService', () => {
@@ -52,7 +57,8 @@ describe('V4AuthenticationService', () => {
       ],
       providers: [
         { provide: TokenStorage, useFactory: fakeFactory },
-        { provide: ConfigService, useValue: configServiceStub }
+        { provide: ConfigService, useValue: configServiceStub },
+        { provide: NotificationService, useValue: notificationServiceStub }
       ]
     });
     httpTestingController = TestBed.get<HttpTestingController>(HttpTestingController as Type<HttpTestingController>);
@@ -123,7 +129,7 @@ describe('V4AuthenticationService', () => {
 
   it('should create service with config production', () => {
     // @ts-ignore
-    const serviceWithConfig = new V4AuthenticationService( configServiceStub, null, null, null);
+    const serviceWithConfig = new V4AuthenticationService(configServiceStub, null, null, null);
     expect(serviceWithConfig).toBeTruthy();
   });
 

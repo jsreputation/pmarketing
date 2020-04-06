@@ -19,6 +19,7 @@ export interface IConfig<T> {
   showNewsfeedOnHomepage?: boolean;
   showBarcodeOnHomeProfilePage?: boolean;
   showLoyaltyBlockOnHomePage?: boolean;
+  showLoyaltyProgress?: boolean;
   showCatalogOnHomePage?: boolean;
   showQuizOnHomePage?: boolean;
   showCampaignRewardsCounterOnHomepage?: boolean;
