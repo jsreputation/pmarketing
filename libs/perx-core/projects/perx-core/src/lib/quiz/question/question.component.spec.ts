@@ -14,6 +14,7 @@ import { QuizPictureSelectComponent } from './picture-select/picture-select.comp
 import { QuizQuestionComponent } from './question.component';
 import { QuizRatingComponent } from './rating/rating.component';
 import { QuizSelectComponent } from './select/select.component';
+import { QuizSwipeSelectComponent } from './swipe-select/swipe-select.component';
 import { QuizSwipeListComponent } from './swipe-list/swipe-list.component';
 import {
   MatListModule
@@ -31,6 +32,7 @@ describe('QuizQuestionComponent', () => {
         QuizRatingComponent,
         QuizPictureSelectComponent,
         QuizLongTextComponent,
+        QuizSwipeSelectComponent,
         QuizSwipeListComponent
       ],
       imports: [
@@ -45,6 +47,7 @@ describe('QuizQuestionComponent', () => {
         MatRadioModule,
         MatListModule,
         FormsModule,
+        MatListModule,
         ReactiveFormsModule,
       ]
     })
