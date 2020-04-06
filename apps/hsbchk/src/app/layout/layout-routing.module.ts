@@ -106,11 +106,22 @@ const routes: Routes = [
         loadChildren: () => import('../catalog/catalog.module')
           .then(mod => mod.CatalogModule)
       },
-      { path: 'quiz/:cid', loadChildren: () => import('../quiz/quiz.module').then(m => m.QuizModule) },
-      { path: 'quiz-results', loadChildren: () => import('../quiz-result/quiz-result.module').then(m => m.QuizResultModule) },
-      { path: 'referral', loadChildren: () => import('../referral/referral.module').then(m => m.ReferralModule) },
+      { path: 'quiz/:cid',
+        loadChildren: () => import('../quiz/quiz.module')
+          .then(m => m.QuizModule),
+        canActivate: [ProtectedGuard]},
+      { path: 'quiz-results',
+        loadChildren: () => import('../quiz-result/quiz-result.module')
+          .then(m => m.QuizResultModule),
+        canActivate: [ProtectedGuard]},
+      { path: 'referral',
+        loadChildren: () => import('../referral/referral.module')
+          .then(m => m.ReferralModule),
+        canActivate: [ProtectedGuard]},
       { path: 'lucky-draw-details',
-        loadChildren: () => import('../lucky-draw-detail/lucky-draw-detail.module').then(m => m.LuckyDrawDetailModule)
+        loadChildren: () => import('../lucky-draw-detail/lucky-draw-detail.module')
+          .then(m => m.LuckyDrawDetailModule),
+        canActivate: [ProtectedGuard]
       }
     ]
   },
