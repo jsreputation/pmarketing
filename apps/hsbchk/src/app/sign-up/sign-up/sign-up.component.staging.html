@@ -74,7 +74,7 @@
             </mat-form-field>
             <div class="checkbox-container">
                 <mat-checkbox formControlName="accept_terms"></mat-checkbox>
-                <span class="wrap-checkbox-text">{{'TERM_AGREE' | translate}} <a href="#" class="terms">Game T&#38;C and PICS.</a></span>
+                <span class="wrap-checkbox-text">{{'TERM_AGREE' | translate}} <a [routerLink]="['/c/tnc']" class="terms">Game T&#38;C and PICS.</a></span>
             </div>
             <h2 translate>UPDATE_DETAILS_FOR_LUCKY_DRAW</h2>
             <mat-form-field appearance="fill" class="full-width__input">
