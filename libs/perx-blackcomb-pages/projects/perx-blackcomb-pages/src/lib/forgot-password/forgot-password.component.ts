@@ -4,7 +4,8 @@ import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators, Valid
 import { ActivatedRoute, Router } from '@angular/router';
 import {AuthenticationService, GeneralStaticDataService, ICountryCode, NotificationService} from '@perxtech/core';
 import {Observable, Subject} from 'rxjs';
-import { filter, mergeMap, takeUntil, map } from 'rxjs/operators';
+import {filter, mergeMap, takeUntil, map, switchMap} from 'rxjs/operators';
+
 
 @Component({
   selector: 'perx-blackcomb-pages-password',
@@ -18,7 +19,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   public countriesList$: Observable<ICountryCode[]>;
 
   public phoneStepForm: FormGroup = new FormGroup({
-    phone: new FormControl(null, [
+    phoneNumber: new FormControl(null, [
       Validators.required,
       Validators.pattern('^[0-9]+$'),
       Validators.minLength(2),
@@ -34,12 +35,6 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   private otp: string;
   public identifier: string;
   private destroy$: Subject<void> = new Subject<void>();
-  public countryCodesOptions: { value: string, label: string }[] = [
-    { value: '852', label: 'HongKong' },
-    { value: '853', label: 'Macau' },
-    { value: '86', label: 'China' },
-    { value: '65', label: 'Singapore' }
-  ];
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -49,7 +44,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     private generalStaticDataService: GeneralStaticDataService
   ) { }
 
-  public get phone(): AbstractControl | null { return this.phoneStepForm.get('phone'); }
+  public get phoneNumber(): AbstractControl | null { return this.phoneStepForm.get('phoneNumber'); }
   public get password(): AbstractControl | null { return this.newPasswordForm.get('newPassword'); }
   public get passwordConfirmation(): AbstractControl | null { return this.newPasswordForm.get('passwordConfirmation'); }
 
@@ -59,23 +54,28 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
       'Philippines',
       'Singapore'
     ]);
-    this.route.queryParams
-      .pipe(
-        filter((params) => !!params.identifier),
-        map((params) => params.identifier),
-        takeUntil(this.destroy$)
-      )
-      .subscribe((phone: string) => {
-        if (phone[0] === '+') {
-          phone = phone.slice(1);
-        }
-        const countryCodes = this.countryCodesOptions.map(op => op.value);
-        const countryCode = countryCodes.find(code => phone.startsWith(code)) || null;
+
+    const matchRouteCountry$ = (countryList) => (() => this.route.queryParams.pipe(
+      filter((params) => !!params.identifier),
+      map((params) => params.identifier),
+      map((identifier) => {
+        const countryCode: ICountryCode | null = countryList.find(
+          country => `+${identifier}`.startsWith(country.phone)
+        )  || null;
+        let phoneNumber: string | null = null;
         if (countryCode !== null) {
-          phone = phone.slice(countryCode.length);
+          phoneNumber = `+${identifier}`.slice(countryCode.phone.length);
+          return [phoneNumber, countryCode];
         }
-        this.phoneStepForm.setValue({ phone, countryCode });
-      });
+        return [null, null];
+      }),
+      takeUntil(this.destroy$)
+    )
+    )();
+
+    this.countriesList$.pipe(
+      switchMap((countryList) => matchRouteCountry$(countryList))
+    ).subscribe(([phoneNumber, countryCode]) => this.phoneStepForm.setValue({ countryCode, phoneNumber }));
   }
 
   public compareCtryFn(c1: ICountryCode, c2: ICountryCode): boolean {
@@ -93,7 +93,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     }
     // we use select countryCode object ^ using the response from countryList$
     const stepPhoneFormCountryCode: ICountryCode = this.phoneStepForm.value.countryCode;
-    const stepPhoneFormPhoneNumber = this.phoneStepForm.value.phone;
+    const stepPhoneFormPhoneNumber = this.phoneStepForm.value.phoneNumber;
     const phone: string = `${stepPhoneFormCountryCode.phone}${stepPhoneFormPhoneNumber}`.trim();
     this.identifier = `${phone.replace(/[^0-9]/g, '')}`;
     this.usersPhone = this.identifier.slice(-2);

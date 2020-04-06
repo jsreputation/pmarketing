@@ -1,6 +1,5 @@
 import { Component, ViewEncapsulation, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IVoucher } from '@perxtech/core/projects/perx-core/src/lib/vouchers/models/voucher.model';
 import { Observable } from 'rxjs';
 import { Voucher, IVoucherService, VoucherState } from '@perxtech/core';
 import { map } from 'rxjs/operators';
@@ -32,11 +31,11 @@ export class WalletComponent implements OnInit {
       );
   }
 
-  public onRoute(voucher: IVoucher): void {
+  public onRoute(voucher: Voucher): void {
     this.router.navigate([`/wallet/${voucher.id}`]);
   }
 
-  public onRedeemedRoute(voucher: IVoucher): void {
+  public onRedeemedRoute(voucher: Voucher): void {
     this.router.navigate([`/reward/${voucher.id}`]);
   }
 }

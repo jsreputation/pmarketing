@@ -36,9 +36,10 @@
                             <mat-label>Country Code</mat-label>
                             <mat-select [(value)]="countryCode">
                                 <mat-option
-                                    (selectionChange)="updateCoutryCode(country.phone)"
-                                    *ngFor="let country of countriesList$ | async" [value]="country.phone">
-                                    <span>{{country.phone}} {{country.name}}</span>
+                                  (selectionChange)="updateCountryCode(country.phone)"
+                                  *ngFor="let country of countriesList$ | async" [value]="country.phone">
+                                    <span>{{country.name}} </span>
+                                    <span>{{country.phone}}</span>
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
@@ -64,7 +65,7 @@
                 </mat-form-field>
             </ng-template>
             <div class="subtitle forgot-password" *ngIf="appConfig.showForgetPasswordOnLogin">
-                <a [routerLink]="['/forgot-password']" class="link">Forgot
+                <a [routerLink]="['/forgot-password']" [queryParams]="{ identifier: identifier }" class="link">Forgot
                     Password?</a>
             </div>
             <button mat-flat-button type=" submit" color="primary"
