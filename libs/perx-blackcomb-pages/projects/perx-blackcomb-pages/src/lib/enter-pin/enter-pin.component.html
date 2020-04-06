@@ -11,7 +11,7 @@
         <perx-core-pin-input [length]="MAX_DIGITS_COUNT" (full)="onPinEntered($event)">
         </perx-core-pin-input>
       </div>
-      <div class="bottom-text" (click)="resendOtp()" translate>REDEND_OTP</div>
+      <button mat-stroked-button (click)="resendOtp()">{{ 'REDEND_OTP' | translate }}</button>
     </div>
   </div>
 </div>
