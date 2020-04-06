@@ -72,12 +72,17 @@ describe('ForgotPasswordComponent', () => {
     const activatedRoute = TestBed.get(ActivatedRoute);
     jest.spyOn(activatedRoute, 'queryParams', 'get').mockReturnValue(of({ identifier: '63987654' }));
     fixture.detectChanges();
-    expect(component.phoneStepForm.value).toEqual({ phone: '63987654', countryCode: null });
+    expect(component.phoneStepForm.value).toEqual({ phoneNumber: '987654', countryCode: {
+      id: 33,
+      name: 'Philippines',
+      phone: '+63'
+    }
+    });
   });
 
   it('phoneHandler should move to step 2', () => {
     fixture.detectChanges();
-    component.phoneStepForm.setValue({ phone: '63987654', countryCode: {
+    component.phoneStepForm.setValue({ phoneNumber: '63987654', countryCode: {
       id: 36,
       name: 'Singapore',
       phone: '+65'
@@ -122,7 +127,7 @@ describe('ForgotPasswordComponent', () => {
     const resetPasswordSpy = spyOn(authenticationService, 'resetPassword').and.returnValue(of({ message: 'password reset' }));
     const loginSpy = spyOn(authenticationService, 'login').and.returnValue(of({ bearer_token: 'SWWERW' }));
 
-    component.phoneStepForm.setValue({ phone: '63987654', countryCode: {
+    component.phoneStepForm.setValue({ phoneNumber: '63987654', countryCode: {
       id: 36,
       name: 'Singapore',
       phone: '+65'
