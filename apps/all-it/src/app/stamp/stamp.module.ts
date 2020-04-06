@@ -3,7 +3,10 @@ import { CommonModule } from '@angular/common';
 import { StampRoutingModule } from './stamp-routing.module';
 import { PuzzlesModule, StampModule as PerxStampsModule } from '@perxtech/core';
 import { MatButtonModule } from '@angular/material';
-import { StampCardComponent } from '@perxtech/blackcomb-pages';
+import {
+  PerxBlackcombPagesModule,
+  StampCardComponent
+} from '@perxtech/blackcomb-pages';
 
 @NgModule({
   declarations: [StampCardComponent],
@@ -12,7 +15,8 @@ import { StampCardComponent } from '@perxtech/blackcomb-pages';
     PuzzlesModule,
     MatButtonModule,
     StampRoutingModule,
-    PerxStampsModule
+    PerxStampsModule,
+    PerxBlackcombPagesModule
   ]
 })
 export class StampModule { }

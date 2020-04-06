@@ -3,7 +3,10 @@ import { CommonModule } from '@angular/common';
 import { InstantRewardRoutingModule } from './instant-reward-routing.module';
 import { RewardsModule, OutcomeModule } from '@perxtech/core';
 import { MatButtonModule } from '@angular/material';
-import { RewardComponent } from '@perxtech/blackcomb-pages';
+import {
+  PerxBlackcombPagesModule,
+  RewardComponent
+} from '@perxtech/blackcomb-pages';
 
 @NgModule({
   declarations: [RewardComponent],
@@ -12,7 +15,8 @@ import { RewardComponent } from '@perxtech/blackcomb-pages';
     RewardsModule,
     MatButtonModule,
     InstantRewardRoutingModule,
-    OutcomeModule
+    OutcomeModule,
+    PerxBlackcombPagesModule
   ]
 })
 export class InstantRewardModule { }

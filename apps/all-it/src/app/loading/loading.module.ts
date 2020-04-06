@@ -2,7 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { LoadingRoutingModule } from './loading-routing.module';
-import { LoadingComponent } from '@perxtech/blackcomb-pages';
+import {
+  LoadingComponent,
+  PerxBlackcombPagesModule
+} from '@perxtech/blackcomb-pages';
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
@@ -11,6 +14,7 @@ import { SharedModule } from '../shared/shared.module';
     CommonModule,
     LoadingRoutingModule,
     SharedModule,
+    PerxBlackcombPagesModule
   ]
 })
 export class LoadingModule { }
