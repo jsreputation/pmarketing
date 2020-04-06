@@ -116,9 +116,11 @@ $heading-font-color: #1b1b25;
         align-items: baseline;
         margin: 1rem 0;
 
+        /* stylelint-disable no-descending-specificity */
         ::ng-deep .mat-checkbox-checked .mat-checkbox-background, .mat-checkbox-indeterminate .mat-checkbox-background {
           background-color: var(--button_background_color) !important;
         }
+        /* stylelint-enable no-descending-specificity */
 
         .wrap-checkbox-text {
           margin-left: 0.8rem;
