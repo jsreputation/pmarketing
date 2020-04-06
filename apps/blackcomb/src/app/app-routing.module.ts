@@ -24,6 +24,12 @@ const routes: Routes = [
     loadChildren: () => import('./layout/layout.module').then((mod) => mod.LayoutModule),
     canActivate: [PreLoginGuard, ProtectedGuard]
   },
+  {
+    path: 'c/:key',
+    loadChildren: () => import('./content/content.module').then(mod => mod.ContentModule),
+    // content page can be accessed both logged-in and logged-out
+    // canActivate: [ProtectedGuard]
+  },
   { path: '**', redirectTo: '/home', canActivate: [ProtectedGuard] },
   { path: '**', redirectTo: '/loading', canActivate: [PublicGuard] },
 ];
