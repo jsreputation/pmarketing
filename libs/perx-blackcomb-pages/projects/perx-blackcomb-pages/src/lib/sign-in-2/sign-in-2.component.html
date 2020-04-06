@@ -38,7 +38,7 @@
                                 <mat-option
                                   (selectionChange)="updateCountryCode(country.phone)"
                                   *ngFor="let country of countriesList$ | async" [value]="country.phone">
-                                    <span>{{country.name}}&nbsp;</span>
+                                    <span>{{country.name}} </span>
                                     <span>{{country.phone}}</span>
                                 </mat-option>
                             </mat-select>
