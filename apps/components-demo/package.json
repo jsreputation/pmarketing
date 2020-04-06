@@ -8,7 +8,7 @@
     "build:components-demo:staging": "ng build --prod",
     "build:components-demo:production": "ng build --prod",
     "clean": "rm -rf ./dist ./node_modules",
-    "test": "jest --maxWorkers=50%",
+    "test": "jest",
     "lint": "stylelint \"src/**/*.*css\" && eslint \"./src/**/*.ts\"",
     "lint:fix": "stylelint \"src/**/*.*css\" --fix && eslint \"./src/**/*.ts\" --fix",
     "e2e": "ng e2e",

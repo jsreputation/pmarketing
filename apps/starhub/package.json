@@ -10,7 +10,7 @@
     "build:starhub:staging": "PRODUCTION=true npm run config && ng build --configuration staging",
     "config": "ts-node --project tsconfig.node.json set-env.ts",
     "clean": "rm -rf ./dist ./node_modules",
-    "test": "jest --maxWorkers=50%",
+    "test": "jest",
     "lint": "stylelint \"src/**/*.*css\" && eslint ./src/*/*.ts",
     "lint:fix": "stylelint \"src/**/*.*css\" --fix && eslint \"./src/**/*.ts\" --fix",
     "e2e~": "ng e2e",

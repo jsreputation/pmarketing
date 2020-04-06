@@ -9,7 +9,7 @@
     "build:oracle-pay:staging": "PRODUCTION=true npm run config && ng build --prod",
     "config": "ts-node --project tsconfig.node.json set-env.ts",
     "clean": "rm -rf ./dist ./node_modules",
-    "test": "jest --maxWorkers=50%",
+    "test": "jest",
     "lint": "stylelint src/**/*.*css && eslint \"./src/**/*.ts\"",
     "lint:fix": "stylelint \"src/**/*.*css\" --fix && eslint \"./src/**/*.ts\" --fix",
     "styleLint": "stylelint src/**/*.*css",

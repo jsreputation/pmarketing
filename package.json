@@ -61,7 +61,7 @@
     "lint-ci:fix": "lerna run lint:fix",
     "pree2e-ci": "lerna run pree2e",
     "test-ci": "lerna run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
-    "test-ci:local": "lerna run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI --concurrency=2"
+    "test-ci:local": "lerna run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI --concurrency=2 --maxWorkers=50%"
   },
   "private": true,
   "workspaces": [
