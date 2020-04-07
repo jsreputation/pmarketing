@@ -3,7 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MatToolbarModule, MatListModule, MatSidenavModule, MatIconModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { ProfileModule, ConfigService } from '@perxtech/core';
+import { ProfileModule, ConfigService, AuthenticationService } from '@perxtech/core';
 import { DebugElement, Type } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
@@ -22,6 +22,10 @@ describe('AppComponent', () => {
     readAppConfig: () => of()
   };
 
+  const authServiceStub: Partial<AuthenticationService> = {
+    logout: () => { }
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -38,6 +42,10 @@ describe('AppComponent', () => {
       ],
       providers: [
         { provide: Location, useValue: locationStub },
+        {
+          provide: AuthenticationService,
+          useValue: authServiceStub
+        },
         { provide: ConfigService, useValue: configServiceStub }
       ]
     }).compileComponents();
