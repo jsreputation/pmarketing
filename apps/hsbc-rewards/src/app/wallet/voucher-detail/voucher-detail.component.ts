@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { StatusLabelMapping, IVoucherService, Voucher } from '@perxtech/core';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap, catchError } from 'rxjs/operators';
-import { voucher } from 'src/assets/mock/vouchers';
+import { voucher } from '../../../assets/mock/vouchers';
 import { of, Observable } from 'rxjs';
 
 @Component({
@@ -30,6 +30,6 @@ export class VoucherDetailComponent implements OnInit {
     this.voucher = this.route.params.pipe(switchMap((param) => this.voucherService.get(param.id, undefined, {
       type: null,
       sourceType: 'hsbc-rewards'
-    }))).pipe(catchError(() => of(voucher[0])));
+    }))).pipe(catchError(() => of(voucher[0]))); // extremely odd!?!?
   }
 }
