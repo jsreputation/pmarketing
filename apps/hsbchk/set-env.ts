@@ -25,7 +25,12 @@ const displayProperties = `"displayProperties": {
       {
         "key": "tnc",
         "title": "Terms and Conditions",
-        "content_url": ""
+        "content_url": "https://cdn.perxtech.io/content/hsbc-hk/tnc.html"
+      },
+      {
+        "key": "privacy-policy",
+        "title": "Privacy Policy",
+        "content_url": "https://cdn.perxtech.io/content/hsbc-hk/ppolicy.html"
       }
     ]
   }
