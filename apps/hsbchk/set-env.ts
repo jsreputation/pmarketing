@@ -18,11 +18,6 @@ const displayProperties = `"displayProperties": {
         "content_url": "https://www.google.com/search?q=life+talk"
       },
       {
-        "key": "contact-us",
-        "title": "Contact Us",
-        "content_url": ""
-      },
-      {
         "key": "tnc",
         "title": "Terms and Conditions",
         "content_url": "https://cdn.perxtech.io/content/hsbc-hk/tnc.html"
