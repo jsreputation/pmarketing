@@ -6,7 +6,7 @@ import { Location } from '@angular/common';
 import { LayoutComponent } from './layout.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatToolbarModule, MatIconModule, MatDialogModule } from '@angular/material';
-import { ThemesService, AuthenticationService, ConfigModule, ConfigService, ITheme } from '@perxtech/core';
+import { ThemesService, ConfigModule, ConfigService, ITheme } from '@perxtech/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 
@@ -26,9 +26,6 @@ describe('LayoutComponent', () => {
 
   const themesServiceStub: Partial<ThemesService> = {
     getThemeSetting: () => of(mockTheme)
-  };
-  const authServiceStub: Partial<AuthenticationService> = {
-    $failedAuth: of(true)
   };
 
   const configServiceStub: Partial<ConfigService> = {
@@ -55,10 +52,6 @@ describe('LayoutComponent', () => {
         {
           provide: ThemesService,
           useValue: themesServiceStub
-        },
-        {
-          provide: AuthenticationService,
-          useValue: authServiceStub
         },
         {
           provide: ConfigService,

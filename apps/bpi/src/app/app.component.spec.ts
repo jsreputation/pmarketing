@@ -3,7 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MatDialogModule } from '@angular/material';
 import { MatDialog } from '@angular/material';
-import { AuthenticationService, NotificationService, ConfigService } from '@perxtech/core';
+import { NotificationService, ConfigService } from '@perxtech/core';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 
@@ -15,7 +15,6 @@ describe('AppComponent', () => {
   beforeEach(async(() => {
     const notificationServiceStub: Partial<NotificationService> = { $popup: of() };
     const matDialogStub = { open: () => ({}) };
-    const authenticationServiceStub: Partial<AuthenticationService> = { $failedAuth: of(true) };
     const routerStub: Partial<Router> = { navigateByUrl: () => Promise.resolve(true) };
     const configServiceStub: Partial<ConfigService> = {
       readAppConfig: () => of()
@@ -29,7 +28,6 @@ describe('AppComponent', () => {
       providers: [
         { provide: NotificationService, useValue: notificationServiceStub },
         { provide: MatDialog, useValue: matDialogStub },
-        { provide: AuthenticationService, useValue: authenticationServiceStub },
         { provide: Router, useValue: routerStub },
         {
           provide: NotificationService,

@@ -26,7 +26,6 @@ import {
   NotificationService,
   IPopupConfig,
   ITheme,
-  AuthenticationService,
   ConfigService,
   IConfig,
 } from '@perxtech/core';
@@ -63,7 +62,6 @@ export class AppComponent implements OnInit {
     private snackBar: MatSnackBar,
     private location: Location,
     private router: Router,
-    private authService: AuthenticationService,
     private cd: ChangeDetectorRef,
     private translate: TranslateService,
     private config: ConfigService
@@ -77,13 +75,6 @@ export class AppComponent implements OnInit {
         this.translationLoaded = true;
         this.preAuth = config.preAuth as boolean;
       });
-    this.authService.$failedAuth.subscribe(
-      res => {
-        if (res) {
-          this.router.navigate(['/login']);
-        }
-      }
-    );
 
     this.notificationService.$popup
       .subscribe((data: IPopupConfig) => this.dialog.open(PopupComponent, { data }));

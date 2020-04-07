@@ -53,7 +53,6 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
   private lastURL: string;
   private retries: number = 0;
   private maxRetries: number = 2;
-  private $failedAuthObservableSubject: Subject<boolean>;
 
   constructor(
     config: Config,
@@ -69,11 +68,6 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
       this.preAuthEndpoint = `${config.baseHref}cognito/login`;
       this.createUsersEndPoint = `${config.baseHref}cognito/users`;
     }
-    this.$failedAuthObservableSubject = new Subject();
-  }
-
-  public get $failedAuth(): Observable<boolean> {
-    return this.$failedAuthObservableSubject;
   }
 
   private static UsertoWUser(userObj: { [key: string]: any }, PI: string): IWProfileAttributes {
@@ -112,8 +106,6 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
      * login success, but Token expired, when API return 401, this function will be trigged.
      *  1 IAM user need to redirect to login page
      *  2 Cognito user we store PI at localStorage when user auto login, then help user to auto login.
-     *
-     * TODO: Andrew, failedAuthObservableSubject is not working, affect refresh page when token is not valid
      */
 
     let isRefreshTokenComplete = true;
@@ -126,7 +118,6 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
       isRefreshTokenComplete = false;
       this.logout();
     }
-    this.$failedAuthObservableSubject.next(!isRefreshTokenComplete);
     return of(isRefreshTokenComplete);
   }
 
@@ -180,8 +171,7 @@ export class WhistlerAuthenticationService extends AuthenticationService impleme
             throw new Error('Get authentication token failed!');
           }
           this.saveUserAccessToken(userBearer);
-        },
-        () => this.$failedAuthObservableSubject.next(true)
+        }
       )
     );
   }

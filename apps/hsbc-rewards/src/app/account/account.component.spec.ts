@@ -37,7 +37,6 @@ const profileServiceStub: Partial<ProfileService> = {
 };
 const dynamicCreateServiceStub: Partial<DynamicCreateService> = {
 };
-const authenticationServiceStub: Partial<AuthenticationService> = { $failedAuth: of(true), logout: () => { } };
 
 describe('AccountComponent', () => {
   let component: AccountComponent;
@@ -59,13 +58,12 @@ describe('AccountComponent', () => {
         MatListModule,
         NoopAnimationsModule
       ],
-      providers: [{
-        provide: AuthenticationService, useValue: authenticationServiceStub
-      }, {
-        provide: ProfileService, useValue: profileServiceStub
-      }, {
-        provide: DynamicCreateService, useValue: dynamicCreateServiceStub
-      }
+      providers: [
+        {
+          provide: ProfileService, useValue: profileServiceStub
+        }, {
+          provide: DynamicCreateService, useValue: dynamicCreateServiceStub
+        }
       ]
     })
       .compileComponents();

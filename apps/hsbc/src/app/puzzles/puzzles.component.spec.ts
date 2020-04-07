@@ -8,7 +8,6 @@ import {
   PuzzlesModule,
   StampModule,
   StampService,
-  AuthenticationService,
   ConfigService
 } from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -23,7 +22,6 @@ describe('PuzzlesComponent', () => {
   const stampsServiceStub: Partial<StampService> = {
     getCards: () => of([])
   };
-  const authenticationServiceStub: Partial<AuthenticationService> = { $failedAuth: of(true) };
 
   const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of()
@@ -55,7 +53,6 @@ describe('PuzzlesComponent', () => {
       ],
       providers: [
         { provide: StampService, useValue: stampsServiceStub },
-        { provide: AuthenticationService, useValue: authenticationServiceStub },
         { provide: ConfigService, useValue: configServiceStub },
         { provide: ActivatedRoute, useValue: activatedRouteStub },
       ]

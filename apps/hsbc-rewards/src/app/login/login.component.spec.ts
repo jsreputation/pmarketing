@@ -17,7 +17,6 @@ describe('LoginComponent', () => {
   const notificationServiceStub: Partial<NotificationService> = { $popup: of({}) };
   const routerSub: Partial<Router> = { navigateByUrl: () => Promise.resolve(true) };
   const authenticationServiceStub: Partial<AuthenticationService> = {
-    $failedAuth: of(true),
     getInterruptedUrl: () => 'url',
     login: () => of(),
     getAppToken: () => of(),

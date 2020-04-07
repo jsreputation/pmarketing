@@ -36,10 +36,6 @@ describe('WhistlerAuthenticationService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('failedAuth', inject([WhistlerAuthenticationService], (auth: WhistlerAuthenticationService) => {
-    expect(auth.$failedAuth instanceof Observable).toBeTruthy();
-  }));
-
   it('check isAuthorized', inject([WhistlerAuthenticationService, TokenStorage],
     (auth: WhistlerAuthenticationService, storage: TokenStorage) => {
       const spy = jest.spyOn(storage, 'getAppInfoProperty');
