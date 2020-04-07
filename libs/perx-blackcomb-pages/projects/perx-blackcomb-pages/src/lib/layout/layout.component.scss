@@ -1,5 +1,4 @@
-@use "../mixins";
-
+@import "../_mixins";
 @import "../custom-theme";
 
 :host {
@@ -9,10 +8,10 @@
 }
 
 .toolbar {
-  @include mixins.toolbar();
+  @include toolbar();
 
   .backArrow {
-    @include mixins.toolBarArrow();
+    @include toolBarArrow();
   }
 }
 
