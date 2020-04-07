@@ -1,7 +1,0 @@
-{
-"1" : {"abbr": "ADMIN_ABBR", "title": "ADMIN_TITLE", "class": "admin"},
-"2" : {"abbr": "CREATOR_ABBR", "title": "CREATOR_TITLE", "class": "creator"},
-"3" : {"abbr": "CUSTOMER_ABBR", "title": "CUSTOMER_TITLE", "class": "customer"},
-"4" : {"abbr": "MANAGER_ABBR", "title": "MANAGER_TITLE", "class": "manager"},
-"5" : {"abbr": "VIEWER_ABBR", "title": "VIEWER_TITLE", "class": "viewer"}
-}

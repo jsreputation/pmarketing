@@ -82,7 +82,7 @@ export class AppComponent implements OnInit {
     this.notificationService.$snack
       .subscribe(
         (msg: string) => {
-          if (msg === 'Token Expired') {
+          if (msg === 'Session Expired') {
             this.router.navigate(['/login']);
           }
           this.snack.open(msg, 'x', { duration: 2000 });
