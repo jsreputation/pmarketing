@@ -1,12 +1,11 @@
-import { async, TestBed, ComponentFixture, fakeAsync } from '@angular/core/testing';
+import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { Title } from '@angular/platform-browser';
-import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { LayoutComponent } from './layout.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatToolbarModule, MatIconModule, MatDialogModule } from '@angular/material';
-import { ThemesService, AuthenticationService, ConfigModule, ConfigService, ITheme } from '@perxtech/core';
+import { ThemesService, ConfigModule, ConfigService, ITheme } from '@perxtech/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 
@@ -21,14 +20,10 @@ describe('LayoutComponent', () => {
 
   let component: LayoutComponent;
   let fixture: ComponentFixture<LayoutComponent>;
-  let router: Router;
   let location: Location;
 
   const themesServiceStub: Partial<ThemesService> = {
     getThemeSetting: () => of(mockTheme)
-  };
-  const authServiceStub: Partial<AuthenticationService> = {
-    $failedAuth: of(true)
   };
 
   const configServiceStub: Partial<ConfigService> = {
@@ -39,8 +34,7 @@ describe('LayoutComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule.withRoutes([
-          { path: 'wallet', redirectTo: '/' },
-          { path: 'login', redirectTo: '/' }
+          { path: 'wallet', redirectTo: '/' }
         ]),
         MatToolbarModule,
         MatIconModule,
@@ -57,10 +51,6 @@ describe('LayoutComponent', () => {
           useValue: themesServiceStub
         },
         {
-          provide: AuthenticationService,
-          useValue: authServiceStub
-        },
-        {
           provide: ConfigService,
           useValue: configServiceStub
         },
@@ -71,7 +61,6 @@ describe('LayoutComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LayoutComponent);
-    router = TestBed.get(Router);
     location = TestBed.get(Location);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -80,13 +69,6 @@ describe('LayoutComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  it('should fetch theme', fakeAsync(() => {
-    const routerSpy = spyOn(router, 'navigate');
-    component.ngOnInit();
-    expect(component.theme).toBe(mockTheme);
-    expect(routerSpy).toHaveBeenCalledWith(['/login']);
-  }));
 
   it('should location back', () => {
     component.backArrowIcon = 'back';

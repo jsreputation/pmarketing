@@ -8,7 +8,6 @@ import {
   tap
 } from 'rxjs/operators';
 import {
-  BehaviorSubject,
   iif,
   Observable,
   of,
@@ -79,7 +78,6 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   private appAuthEndPoint: string;
   private userAuthEndPoint: string;
   private customersEndPoint: string;
-  public $failedAuthObservableSubject: BehaviorSubject<boolean>;
   private lastURL: string;
   private retries: number = 0;
   private maxRetries: number = 2;
@@ -108,11 +106,6 @@ export class V4AuthenticationService extends AuthenticationService implements Au
         }
         this.customersEndPoint = `${config.apiHost}/v4/customers`;
       });
-    this.$failedAuthObservableSubject = new BehaviorSubject(false);
-  }
-
-  public get $failedAuth(): Observable<boolean> {
-    return this.$failedAuthObservableSubject;
   }
 
   public isAuthorized(): Observable<boolean> {
@@ -152,11 +145,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
           if (!userBearer) {
             throw new Error('Get authentication token failed!');
           }
-          this.$failedAuthObservableSubject.next(false);
           this.saveUserAccessToken(userBearer);
-        },
-        () => {
-          this.$failedAuthObservableSubject.next(true);
         }
       ),
       map(() => void 0),
@@ -185,11 +174,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
           if (!userBearer) {
             throw new Error('Get authentication token failed!');
           }
-          this.$failedAuthObservableSubject.next(false);
           this.saveUserAccessToken(userBearer);
-        },
-        () => {
-          this.$failedAuthObservableSubject.next(true);
         }
       ),
       map(() => void 0),
