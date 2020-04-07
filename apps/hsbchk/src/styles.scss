@@ -101,7 +101,8 @@ button.mat-stroked-button {
 }
 
 .logoWrapper {
-  height: 100%;
+  height: 150%;
+  max-height: 50px; // putting here makes for more centered logo
 
   .logo {
     height: 100%;
