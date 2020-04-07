@@ -111,7 +111,7 @@ export class EnterPinComponent implements PopUpClosedCallBack {
         .subscribe(
           (response: IMessageResponse) => {
             this.notificationService.addSnack(response.message);
-            this.router.navigate(['login'], { state: { pi: this.userPhone } });
+            this.router.navigate(['login']); // , { state: { pi: this.userPhone } }
           },
           err => this.notificationService.addSnack(err.error.message)
         );

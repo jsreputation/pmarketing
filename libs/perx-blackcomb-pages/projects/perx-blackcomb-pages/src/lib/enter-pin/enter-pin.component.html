@@ -1,6 +1,8 @@
 <div class="main-container">
   <mat-toolbar class="toolbar mat-elevation-z3" *ngIf="theme">
-    <img class="logo" [attr.src]="theme.properties['--logo']" [attr.alt]="theme.properties['--title']" />
+    <span class="logoWrapper">
+      <img class="logo" [attr.src]="theme.properties['--logo']" [attr.alt]="theme.properties['--title']" />
+    </span>
   </mat-toolbar>
   <div class="page-container">
     <div class="content-container">
