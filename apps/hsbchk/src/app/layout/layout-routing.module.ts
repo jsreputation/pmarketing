@@ -84,27 +84,32 @@ const routes: Routes = [
       },
       {
         path: 'profile',
-        loadChildren: () => import('../profile/profile.module').then(mod => mod.ProfileModule)
+        loadChildren: () => import('../profile/profile.module').then(mod => mod.ProfileModule),
+        canActivate: [ProtectedGuard]
       },
       {
         path: 'transaction-history',
         loadChildren: () => import('../transaction-history/transaction-history.module')
-          .then(mod => mod.TransactionHistoryModule)
+          .then(mod => mod.TransactionHistoryModule),
+        canActivate: [ProtectedGuard]
       },
       {
         path: 'change-password',
         loadChildren: () => import('../change-password/change-password.module')
-          .then(mod => mod.ChangePasswordModule)
+          .then(mod => mod.ChangePasswordModule),
+        canActivate: [ProtectedGuard]
       },
       {
         path: 'edit-profile/:type',
         loadChildren: () => import('../edit-profile-field/edit-profile-field.module')
-          .then(mod => mod.EditProfileFieldModule)
+          .then(mod => mod.EditProfileFieldModule),
+        canActivate: [ProtectedGuard]
       },
       {
         path: 'catalogs',
         loadChildren: () => import('../catalog/catalog.module')
-          .then(mod => mod.CatalogModule)
+          .then(mod => mod.CatalogModule),
+        canActivate: [ProtectedGuard]
       },
       { path: 'quiz/:cid',
         loadChildren: () => import('../quiz/quiz.module')
