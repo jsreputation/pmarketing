@@ -217,12 +217,12 @@ describe('V4AuthenticationService', () => {
       expect(spy).toHaveBeenCalled();
     })));
 
-  it('should handle error response', fakeAsync(inject([V4AuthenticationService, HttpClient],
+  it('should handle error response', inject([V4AuthenticationService, HttpClient],
     (authService: V4AuthenticationService, http: HttpClient) => {
       // authService.$failedAuthObservable = null;
       jest.spyOn(http, 'post').mockReturnValue(throwError(null));
       authService.autoLogin().subscribe(() => { });
-    })));
+    }));
 
   it('sheck set and get InterruptedUrl', inject([V4AuthenticationService], (authService: V4AuthenticationService) => {
     const url = 'http://test';
