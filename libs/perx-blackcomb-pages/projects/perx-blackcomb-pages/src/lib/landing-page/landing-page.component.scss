@@ -1,5 +1,4 @@
-@use "../mixins";
-
+@import "../_mixins";
 @import "../custom-theme";
 @import "../quiz/_mixins";
 
@@ -10,7 +9,7 @@
 }
 
 .toolbar {
-  @include mixins.toolbar();
+  @include toolbar();
 }
 
 .landing-content {
