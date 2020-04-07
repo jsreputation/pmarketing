@@ -109,19 +109,18 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   private getTabbedList(): void {
     this.getTabs()
-      .pipe(mergeMap((tabs) => {
-        return forkJoin(tabs.map((tab) =>
-          this.rewardsService.getRewards(1, this.pageSize, undefined, tab.rewardsType ? [tab.rewardsType] : undefined)
-            .pipe(
-              map((reward) => {
-                tab.currentPage = 1;
-                tab.rewardsList = of(reward);
-                this.tabs$.next(this.staticTab);
-                return tab;
-              }),
-              takeUntil(this.destroy$)
-            )));
-      })).subscribe((tab) => {
+      .pipe(mergeMap((tabs) => forkJoin(tabs.map((tab) =>
+        this.rewardsService.getRewards(1, this.pageSize, undefined, tab.rewardsType ? [tab.rewardsType] : undefined)
+          .pipe(
+            map((reward) => {
+              tab.currentPage = 1;
+              tab.rewardsList = of(reward);
+              this.tabs$.next(this.staticTab);
+              return tab;
+            }),
+            takeUntil(this.destroy$)
+          )))
+      )).subscribe((tab) => {
         this.staticTab = tab;
         this.tabs$.next(this.staticTab);
       });
