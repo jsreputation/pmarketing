@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DOCUMENT, Location } from '@angular/common';
-import { AuthenticationService, PopupComponent, NotificationService, ConfigService, IConfig, ThemesService, ITheme } from '@perxtech/core';
+import { PopupComponent, NotificationService, ConfigService, IConfig, ThemesService, ITheme } from '@perxtech/core';
 import { Subscription } from 'rxjs';
 import { MatDialog, MatSidenav } from '@angular/material';
 import { PuzzleComponent } from './puzzle/puzzle.component';
@@ -39,7 +39,6 @@ export class AppComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private authService: AuthenticationService,
     private location: Location,
     private notificationService: NotificationService,
     private dialog: MatDialog,
@@ -58,14 +57,6 @@ export class AppComponent implements OnInit {
       bases[0].setAttribute('href', environment.baseHref);
 
     }
-
-    this.authService.$failedAuth.subscribe(
-      (didFailAuth) => {
-        if (didFailAuth) {
-          this.router.navigateByUrl('login');
-        }
-      }
-    );
 
     this.notificationService.$popup.subscribe(data => {
       this.dialog.open(PopupComponent, { data });

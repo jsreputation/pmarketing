@@ -3,7 +3,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { WhistlerAuthenticationService } from './whistler-authentication.service';
 import { ProfileModule } from '../../profile/profile.module';
 import { ConfigModule } from '../../config/config.module';
-import { Observable, of, throwError } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { TokenStorage } from '../../utils/storage/token-storage.service';
 
@@ -35,10 +35,6 @@ describe('WhistlerAuthenticationService', () => {
     const service: WhistlerAuthenticationService = new WhistlerAuthenticationService({ production: true }, null, null);
     expect(service).toBeTruthy();
   });
-
-  it('failedAuth', inject([WhistlerAuthenticationService], (auth: WhistlerAuthenticationService) => {
-    expect(auth.$failedAuth instanceof Observable).toBeTruthy();
-  }));
 
   it('check isAuthorized', inject([WhistlerAuthenticationService, TokenStorage],
     (auth: WhistlerAuthenticationService, storage: TokenStorage) => {

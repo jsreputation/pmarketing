@@ -19,7 +19,6 @@ import {
 import {
   ThemesService,
   ITheme,
-  AuthenticationService,
   Config,
   ConfigService,
   IConfig,
@@ -63,7 +62,6 @@ export class LayoutComponent implements OnInit {
     private location: Location,
     private router: Router,
     private themesService: ThemesService,
-    private authService: AuthenticationService,
     private titleService: Title,
     private cd: ChangeDetectorRef,
     private config: Config,
@@ -85,14 +83,6 @@ export class LayoutComponent implements OnInit {
 
     this.configService.readAppConfig().subscribe(
       (config: IConfig<void>) => this.appConfig = config
-    );
-
-    this.authService.$failedAuth.subscribe(
-      res => {
-        if (res) {
-          this.router.navigate(['/login']);
-        }
-      }
     );
 
     this.router.events
