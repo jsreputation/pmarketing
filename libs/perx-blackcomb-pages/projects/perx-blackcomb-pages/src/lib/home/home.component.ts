@@ -110,9 +110,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private getTabbedList(): void {
     this.getTabs()
       .pipe(mergeMap((tabs) => {
-        this.staticTab = tabs;
-        this.tabs$.next(this.staticTab);
-        return forkJoin(this.staticTab.map((tab) =>
+        return forkJoin(tabs.map((tab) =>
           this.rewardsService.getRewards(1, this.pageSize, undefined, tab.rewardsType ? [tab.rewardsType] : undefined)
             .pipe(
               map((reward) => {
