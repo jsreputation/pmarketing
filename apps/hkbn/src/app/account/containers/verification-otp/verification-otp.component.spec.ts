@@ -6,7 +6,7 @@ import { UtilsModule, ProfileService, AuthenticationService } from '@perxtech/co
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
-import { NotificationWrapperService } from 'src/app/services/notification-wrapper.service';
+import { NotificationWrapperService } from '../../../services/notification-wrapper.service';
 const mockProfile = {
   phone: '999'
 };
