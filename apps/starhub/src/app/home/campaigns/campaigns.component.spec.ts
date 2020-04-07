@@ -15,7 +15,7 @@ import {
 } from '@perxtech/core';
 import { Type } from '@angular/core';
 import { game } from '../../game.mock';
-import { IMacaron, MacaronService } from 'src/app/services/macaron.service';
+import { IMacaron, MacaronService } from '../../services/macaron.service';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 describe('CampaignsComponent', () => {

@@ -13,7 +13,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { ConfigService, RewardsService } from '@perxtech/core';
 
-import { catalogs } from 'src/app/catalogs.mock';
+import { catalogs } from '../../catalogs.mock';
 import { CatalogsComponent } from './catalogs.component';
 
 describe('CatalogsComponent', () => {
