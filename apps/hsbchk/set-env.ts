@@ -15,12 +15,12 @@ const displayProperties = `"displayProperties": {
     "pages": [
       {
         "title": "Life Talk",
-        "content_url": "https://www.google.com/search?q=life+talk"
+        "content_url": "https://retailbank.hsbc.com.hk/ins/en/lifetalk/blog/"
       },
       {
         "key": "contact-us",
         "title": "Contact Us",
-        "content_url": ""
+        "content_url": "https://www.hsbc.com.hk/help/contact/"
       },
       {
         "key": "tnc",
