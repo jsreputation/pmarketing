@@ -10,7 +10,6 @@ export class HomeComponent {
   public navLinks: INavLink[] = [
     { path: 'rewards', label: 'Rewards', icon: 'card_giftcard' },
     { path: 'utils', label: 'Utils', icon: 'build' },
-    { path: 'charts', label: 'Charts', icon: 'bar_chart' },
     { path: 'games', label: 'Games', icon: 'games' },
     { path: 'stamps', label: 'Stamps' },
     { path: 'login', label: 'Login' },
@@ -19,7 +18,6 @@ export class HomeComponent {
     { path: 'loyalty', label: 'Loyalty', icon: 'loyalty' },
     { path: 'survey', label: 'Survey' },
     { path: 'pages', label: 'Pages', icon: 'web' },
-    { path: 'candyshop', label: 'Candy Shop' },
     { path: 'quiz', label: 'Quiz', icon: 'touch_app' }
   ];
 }

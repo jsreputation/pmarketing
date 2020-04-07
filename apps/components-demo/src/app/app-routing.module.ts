@@ -18,9 +18,6 @@ const routes: Routes = [
     path: 'utils', loadChildren: () => import('./utils/utils.module').then(mod => mod.UtilsModule)
   },
   {
-    path: 'charts', loadChildren: () => import('./charts/charts.module').then(mod => mod.ChartsModule)
-  },
-  {
     path: 'games', loadChildren: () => import('./games/games.module').then(mod => mod.GamesModule)
   },
   {
@@ -41,9 +38,6 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   {
     path: 'pages', loadChildren: () => import('./pages/pages.module').then(mod => mod.PagesModule)
-  },
-  {
-    path: 'candyshop', loadChildren: () => import('./candyshop/candyshop.module').then(mod => mod.CandyshopModule)
   },
   { path: 'quiz', loadChildren: () => import('./quiz/quiz.module').then(m => m.QuizModule) }
 ];
