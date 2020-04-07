@@ -1,5 +1,4 @@
-@use "../_mixins";
-
+@import "../_mixins";
 @import "../custom-theme";
 
 :host {
@@ -20,7 +19,7 @@
     height: 100%;
     overflow-y: auto;
 
-    @include _mixins.typography();
+    @include typography();
   }
 
   .loading {
@@ -34,9 +33,9 @@
 }
 
 .toolbar {
-  @include _mixins.toolbar();
+  @include toolbar();
 
   .backArrow {
-    @include _mixins.toolBarArrow();
+    @include toolBarArrow();
   }
 }

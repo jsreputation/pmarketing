@@ -1,33 +1,28 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthenticationService, NotificationService, ISignUpData, ThemesService, ITheme, GeneralStaticDataService, ICountryCode } from '@perxtech/core';
-import { Subject, Observable } from 'rxjs';
+import { AuthenticationService, GeneralStaticDataService, ICountryCode, NotificationService, ThemesService } from '@perxtech/core';
+import { Observable } from 'rxjs';
+import { ISignUpComponent } from './i-sign-up.component';
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss']
 })
-
-export class SignUpComponent implements OnInit, OnDestroy {
-  public signupForm: FormGroup;
-  public errorMessage: string | null;
-  public appAccessTokenFetched: boolean = false;
-  public loadingSubmit: boolean = false;
-  private destroy$: Subject<any> = new Subject();
-  public theme: Observable<ITheme>;
+export class SignUpComponent extends ISignUpComponent implements OnInit, OnDestroy {
   public countryCode: string;
   public countriesList$: Observable<ICountryCode[]>;
 
   constructor(
-    private fb: FormBuilder,
-    private router: Router,
-    private themesService: ThemesService,
-    private authService: AuthenticationService,
-    private notificationService: NotificationService,
+    protected fb: FormBuilder,
+    protected router: Router,
+    protected themesService: ThemesService,
+    protected authService: AuthenticationService,
+    protected notificationService: NotificationService,
     private generalStaticDataService: GeneralStaticDataService
   ) {
+    super(fb, router, themesService, authService, notificationService);
     this.initForm();
     this.getAppToken();
   }
@@ -38,99 +33,11 @@ export class SignUpComponent implements OnInit, OnDestroy {
       'Singapore'
     ]);
     this.initForm();
-    const token = this.authService.getAppAccessToken();
-    if (token) {
-      this.appAccessTokenFetched = true;
-      this.theme = this.themesService.getThemeSetting();
-    } else {
-      this.authService.getAppToken().subscribe(() => {
-        this.appAccessTokenFetched = true;
-        this.theme = this.themesService.getThemeSetting();
-      }, (err) => {
-        console.error(`Error${err}`);
-      });
-    }
+    this.fetchTheme();
   }
 
-  public ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
-  private getAppToken(): void {
-    const token = this.authService.getAppAccessToken();
-    if (token) {
-      this.appAccessTokenFetched = true;
-    } else {
-      this.authService.getAppToken().subscribe(() => {
-        this.appAccessTokenFetched = true;
-      }, (err) => {
-        console.error(`Error${err}`);
-      });
-    }
-  }
-
-  private initForm(): void {
-    this.signupForm = this.fb.group({
-      nickname: ['', Validators.required],
-      referralCode: [''],
-      fullName: [''],
-      hkid: [''],
-      mobileNo: ['', Validators.required],
-      email: ['', Validators.email],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
-      accept_terms: [false, Validators.required],
-      accept_marketing: [false]
-    });
-  }
-
-  public onSubmit(): void {
-    if (!this.appAccessTokenFetched) {
-      this.errorMessage = 'Unknown error occurred.';
-      return;
-    }
-
-    const passwordString = this.signupForm.get('password').value;
-    const confirmPassword = this.signupForm.get('confirmPassword').value;
-    if (passwordString !== confirmPassword) {
-      this.errorMessage = 'Passwords do not match';
-      return;
-    }
-
-    const nickname = this.signupForm.value.nickname;
-    const referralCode = this.signupForm.value.referralCode;
-    const hkid = this.signupForm.value.hkid;
-    const mobileNumber = `${this.countryCode.substring(1)}${this.signupForm.value.mobileNo}`;
-    const emailValue = this.signupForm.value.email;
-    const lastName = this.signupForm.value.fullName ? this.signupForm.value.fullName : nickname;
-
-    const signUpData: ISignUpData = {
-      lastName,
-      email: emailValue,
-      phone: mobileNumber,
-      password: passwordString,
-      passwordConfirmation: confirmPassword,
-      customProperties: {
-        nickname,
-        referralCode,
-        hkid
-      }
-    };
-
-    this.loadingSubmit = true;
-
-    this.authService.signup(signUpData).subscribe(
-      () => {
-        this.router.navigateByUrl('otp/register', { state: { mobileNo: mobileNumber } });
-      },
-      err => {
-        this.notificationService.addSnack(err.error.message);
-      });
-  }
-
-  public goToLogin(): void {
-    this.router.navigateByUrl('/signin');
+  protected get mobileNumber(): string {
+    return `${this.countryCode.substring(1)}${this.signupForm.value.mobileNo}`;
   }
 
   public updateCoutryCode(value: string): void {
