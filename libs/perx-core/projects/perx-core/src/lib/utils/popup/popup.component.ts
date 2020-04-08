@@ -63,7 +63,7 @@ export class PopupComponent {
       this.showButton = false;
     }
 
-    if(data.ctaButtonClass) {
+    if (data.ctaButtonClass) {
       this.ctaButtonClass = data.ctaButtonClass;
     }
   }
