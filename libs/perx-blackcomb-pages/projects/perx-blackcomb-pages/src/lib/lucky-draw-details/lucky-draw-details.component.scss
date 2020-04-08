@@ -88,6 +88,12 @@ $heading-font-color: #1b1b25;
             text-decoration: underline;
           }
         }
+
+        /* stylelint-disable no-descending-specificity */
+        ::ng-deep .mat-checkbox-checked .mat-checkbox-background, .mat-checkbox-indeterminate .mat-checkbox-background {
+          background-color: var(--accent) !important;
+        }
+        /* stylelint-enable no-descending-specificity */
       }
     }
 
