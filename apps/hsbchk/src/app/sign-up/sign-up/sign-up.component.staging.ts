@@ -11,7 +11,7 @@ import { ISignUpComponent } from './i-sign-up.component';
   styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent extends ISignUpComponent implements OnInit, OnDestroy {
-  public countryCode: ICountryCode;
+  public countryCode: string = '';
   public countriesList$: Observable<ICountryCode[]>;
 
   constructor(
@@ -34,14 +34,9 @@ export class SignUpComponent extends ISignUpComponent implements OnInit, OnDestr
     ]);
     this.initForm();
     this.fetchTheme();
-    this.countryCode = {
-      id: null,
-      name: '',
-      code: ''
-    };
   }
 
   protected get mobileNumber(): string {
-    return `${this.countryCode.code}${this.signupForm.value.mobileNo}`;
+    return `${this.countryCode}${this.signupForm.value.mobileNo}`;
   }
 }

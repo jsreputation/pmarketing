@@ -38,7 +38,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
   public appAccessTokenFetched: boolean;
   private custId: string = '';
   public countryCodePrefix: string | undefined;
-  public countryCode: ICountryCode;
+  public countryCode: string;
   public countriesList$: Observable<ICountryCode[]>;
 
   constructor(
@@ -55,7 +55,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
     this.preAuth = this.config.preAuth ? this.config.preAuth : false;
     const nav: Navigation | null = this.router.getCurrentNavigation();
     this.custId = oc(nav).extras.state.phoneNumber('');
-    this.countryCode = oc(nav).extras.state.countryCode({});
+    this.countryCode = oc(nav).extras.state.countryCode('');
   }
 
   public ngOnInit(): void {
@@ -90,8 +90,8 @@ export class SignIn2Component implements OnInit, OnDestroy {
 
   public get identifier(): string {
     const customerIdField = this.loginForm.get('customerID');
-    if (customerIdField && customerIdField.value && this.countryCode.code) {
-      return `${this.countryCodePrefix ? this.countryCodePrefix : this.countryCode.code}${customerIdField.value}`;
+    if (customerIdField && customerIdField.value && this.countryCode) {
+      return `${this.countryCodePrefix ? this.countryCodePrefix : this.countryCode}${customerIdField.value}`;
     }
     return '';
   }
