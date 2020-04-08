@@ -13,10 +13,16 @@ $heading-font-color: #1b1b25;
   align-items: center;
   overflow: scroll;
 
-  img {
-    float: none;
-    margin-bottom: 0.8rem;
-    display: block;
+  .signup-image {
+    margin-bottom: 1rem;
+
+    .logo {
+      width: 100%;
+      max-width: 20rem;
+      max-height: 8rem;
+      height: 100%;
+      object-fit: contain;
+    }
   }
 
   .content-container {
@@ -112,12 +118,18 @@ $heading-font-color: #1b1b25;
 
       .checkbox-container {
         display: flex;
+        flex-direction: column;
+      }
+
+      .checkbox-row {
+        display: flex;
         flex-direction: row;
         align-items: baseline;
         margin: 1rem 0;
 
         /* stylelint-disable no-descending-specificity */
-        ::ng-deep .mat-checkbox-checked .mat-checkbox-background, .mat-checkbox-indeterminate .mat-checkbox-background {
+        ::ng-deep .mat-checkbox-checked .mat-checkbox-background,
+        .mat-checkbox-indeterminate .mat-checkbox-background {
           background-color: var(--button_background_color) !important;
         }
         /* stylelint-enable no-descending-specificity */
