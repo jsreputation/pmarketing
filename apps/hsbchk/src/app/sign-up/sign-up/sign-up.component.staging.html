@@ -37,7 +37,7 @@
                 <mat-label translate>EMAIL</mat-label>
                 <input matInput [placeholder]="'EMAIL' | translate" formControlName="email" required>
                 <mat-error *ngIf="signupForm.get('email').hasError('required')">
-                    <span>Email is</span><strong>required</strong>
+                    <span>Email is </span><strong>required</strong>
                 </mat-error>
                 <mat-error *ngIf="signupForm.get('email').hasError('email')">
                     <span>Incorrect email format</span>
