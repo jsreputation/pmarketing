@@ -149,8 +149,4 @@ export class SignIn2Component implements OnInit, OnDestroy {
         }
       );
   }
-
-  public updateCountryCode(value: ICountryCode): void {
-    this.countryCode = value;
-  }
 }

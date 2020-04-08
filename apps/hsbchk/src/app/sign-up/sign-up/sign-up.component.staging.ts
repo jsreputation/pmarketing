@@ -44,8 +44,4 @@ export class SignUpComponent extends ISignUpComponent implements OnInit, OnDestr
   protected get mobileNumber(): string {
     return `${this.countryCode.code}${this.signupForm.value.mobileNo}`;
   }
-
-  public updateCoutryCode(value: string): void {
-    this.countryCode = value;
-  }
 }
