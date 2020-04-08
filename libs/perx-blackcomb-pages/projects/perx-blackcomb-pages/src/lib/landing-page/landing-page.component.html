@@ -1,7 +1,9 @@
 <div class="landing-container">
   <mat-toolbar class="toolbar mat-elevation-z3">
     <span></span>
-    <img class="logo" [attr.src]="theme.properties['--logo']" [attr.alt]="theme.properties['--title']" *ngIf="theme" />
+    <span class="logoWrapper">
+      <img class="logo" [attr.src]="theme.properties['--logo']" [attr.alt]="theme.properties['--title']" *ngIf="theme" />
+    </span>
     <span></span>
   </mat-toolbar>
   <div class="landing-content">
