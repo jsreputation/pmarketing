@@ -55,7 +55,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
     this.preAuth = this.config.preAuth ? this.config.preAuth : false;
     const nav: Navigation | null = this.router.getCurrentNavigation();
     this.custId = oc(nav).extras.state.phoneNumber('');
-    this.countryCode = oc(nav).extras.state.countryCode(null);
+    this.countryCode = oc(nav).extras.state.countryCode({});
   }
 
   public ngOnInit(): void {
