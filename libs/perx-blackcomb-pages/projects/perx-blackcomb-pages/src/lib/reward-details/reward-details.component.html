@@ -9,7 +9,7 @@
     </perx-core-reward>
   </div>
   <div class="actions-container mat-elevation-z2" *ngIf="appConfig">
-    <button mat-raised-button color="primary" class="reward-buy ga_save_reward"
+    <button mat-raised-button color="primary" class="reward-buy ga_purchase_reward"
             [disabled]="!loyalty || !loyalty.pointsBalance || (loyalty.pointsBalance < (maxRewardCost || 0))"
             (click)="buyReward()">
       {{buttonLabel}}
