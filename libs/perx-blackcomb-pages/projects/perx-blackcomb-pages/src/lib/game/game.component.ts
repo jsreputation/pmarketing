@@ -39,6 +39,7 @@ export class GameComponent implements OnInit, OnDestroy {
     text: 'GAME_SUCCESS_TEXT',
     buttonTxt: 'VIEW_REWARD',
     imageUrl: 'assets/congrats_image.png',
+    ctaButtonClass: 'ga_game_completion'
   };
 
   public noRewardsPopUp: IPopupConfig = {

@@ -2,6 +2,7 @@
   <h1 *ngIf="rewardsSnapping.length > 0">Snapping Saturday</h1>
   <div *ngIf="rewardsSnapping.length > 0" class="cards">
     <mat-card
+      class="ga_reward"
       *ngFor="let rewardSnapping of rewardsSnapping"
       matRipple (click)="selected(rewardSnapping)">
       <div class="featured-image">
