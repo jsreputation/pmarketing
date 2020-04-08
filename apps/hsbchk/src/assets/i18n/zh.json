@@ -16,5 +16,161 @@
   "MARKETING_AGREE": "我同意匯豐人壽保存我的個人信息以用於幸運抽獎和未來的直接營銷目的",
   "REFERRAL_CODE_OPTIONAL": "推薦代碼（可選)",
   "LUCKY_DRAW_REFER": "有關詳細信息，請參閱",
-  "TERM_AGREE": "我同意"
+  "TERM_AGREE": "我同意",
+  "HOME": "",
+  "LANDING": {
+    "CAMPAIGN_TITLE": "",
+    "CAMPAIGN_INTRO": "",
+    "COUNTDOWN": {
+      "COUNTDOWN_TXT": "",
+      "DAYS": "",
+      "HOURS": "",
+      "MINUTES": "",
+      "SECONDS": ""
+    },
+    "LOGIN_TXT": "",
+    "HOW_TO_PLAY": "",
+    "TERMS_CONDITIONS": "",
+    "NEXT_WEEK_CHALLENGE": "",
+    "CTA_TXT": ""
+  },
+  "SIGN_UP_PAGE": {
+    "TITLE": "",
+    "ESCAPE_HATCH": "",
+    "MOBILE_FIELD": "",
+    "MOBILE_INVALID_TXT": "",
+    "MOBILE_REQUIRED_TXT": "",
+    "EMAIL_FIELD": "",
+    "EMAIL_INVALID_TXT": "",
+    "EMAIL_REQUIRED_TXT": "",
+    "PASSWORD_FIELD": "",
+    "PASSWORD_REQUIRED_TXT": "",
+    "CONFIRM_PASSWORD_FIELD": "",
+    "CONFIRM_PASSWORD_INVALID_TXT": "",
+    "NICKNAME_FIELD": "",
+    "NICKNAME_REQUIRED_TXT": "",
+    "REFERRAL_FIELD": "",
+    "CHECKBOX_TNC_TXT": "",
+    "CHECKBOX_TNC_POPUP_TXT": "",
+    "LUCKY_DRAW_DESCRIPTION": "",
+    "FULL_NAME_HKID_FIELD": "",
+    "FULL_NAME_HKID_REQUIRED_TXT": "",
+    "HKID_DIGITS_TXT": "",
+    "HKID_DIGITS_REQUIRED_TXT": "",
+    "CHECKBOX_LUCK_TXT": "",
+    "CHECKBOX_LUCK_POPUP_TXT": "",
+    "BUTTON_SUBMIT": ""
+  },
+  "OTP_PAGE": {
+    "TITLE": "",
+    "DESCRIPTION": "",
+    "ERROR_TXT": "",
+    "ERROR_LINK": "",
+    "CTA_TXT": ""
+  },
+  "LOGIN_PAGE": {
+    "TITLE": "",
+    "ESCAPE_HATCH": "",
+    "MOBILE_FIELD": "",
+    "MOBILE_NOTFOUND_TXT": "",
+    "MOBILE_INVALID_TXT": "",
+    "PASSWORD_FIELD": "",
+    "PASSWORD_INVALID_TXT": "",
+    "FORGET_PASSWORD_TXT": "",
+    "CTA_TXT": ""
+  },
+  "FORGET_PW_PAGE": {
+    "TITLE": "",
+    "DESCRIPTION": "",
+    "MOBILE_FIELD": "",
+    "MOBILE_NOTFOUND_TXT": "",
+    "MOBILE_INVALID_TXT": "",
+    "CTA_NEXT_TXT": "",
+    "NEW_PW_TXT": "",
+    "CONFIRM_PW_TXT": "",
+    "CTA_SAVE_TXT": "",
+    "CTA_SUCCESS_TXT": ""
+  },
+  "QUIZ_TITLE": "",
+  "NAVIGATION": {
+    "WALLET": "",
+    "HISTORY": "",
+    "LEADER_BOARD": "",
+    "ACCOUNT": ""
+  },
+  "QUIZ_TEMPLATE": {
+    "CTA_START_TXT": "",
+    "PROGRESS_BAR": "{{questionId}} {{total_questions}}",
+    "CTA_NEXT_TXT": "",
+    "SUMMARY_CORRECT": "",
+    "SUMMARY_TIME_TAKEN": "",
+    "POSITIVE_OUTCOME_TXT": "",
+    "POSITIVE_OUTCOME_SCORE": "",
+    "POSITIVE_OUTCOME_REWARD": "",
+    "POSITIVE_OUTCOME_CTA": "",
+    "NO_OUTCOME_SCORE": "",
+    "NO_OUTCOME_CTA": ""
+  },
+  "WALLET": {
+    "REWARDS_TITLE": "",
+    "HISTORY_TITLE": "",
+    "REWARD_STATUS_EXPIRY": "",
+    "REWARD_STATUS_REDEEMED": "",
+    "REWARD_STATUS_EXPIRED": "",
+    "CTA_TXT": ""
+  },
+  "REDEMPTION": {
+    "TITLE": "",
+    "DESCRIPTION": "",
+    "CTA_TXT": ""
+  },
+  "PROMO_CODE": {
+    "DESCRIPTION": "",
+    "CTA_TXT": ""
+  },
+  "LEADER_BOARD": {
+    "TITLE": "{nickname}",
+    "SCORE": "",
+    "LABEL_TXT": "",
+    "LABEL_RANK": "",
+    "LABEL_NICKNAME": "",
+    "LABEL_SCORE": ""
+  },
+  "ACCOUNT_PAGE": {
+    "PROFILE": "",
+    "REFER_FRIEND": "",
+    "LIFE_TALK": "",
+    "TNC": "",
+    "PRIVACY_POLICY": "",
+    "LOGOUT": ""
+  },
+  "PROFILE": {
+    "TITLE": "",
+    "ACCOUNT_LABEL": "",
+    "MOBILE_LABEL": "",
+    "EMAIL_LABEL": "",
+    "NICKNAME_LABEL": "",
+    "PASSWORD_LABEL": "",
+    "LUCKY_DRAW_LABEL": "",
+    "PASSWORD_TITLE": "",
+    "PASSWORD_ENTER_OLD": "",
+    "PASSWORD_ENTER_NEW": "",
+    "PASSWORD_CONFIRM_NEW": "",
+    "PASSWORD_CTA_TXT": "",
+    "LUCKY_DRAW_TITLE": "",
+    "LUCKY_DRAW_NAME_FIELD": "",
+    "LUCKY_DRAW_HKID_FIELD": "",
+    "CHECKBOX_LUCK_TXT": "",
+    "CTA_SAVE_TXT": ""
+  },
+  "REFERRAL": {
+    "TITLE": "",
+    "CONTENT": "",
+    "CTA_BUTTON": "",
+    "SHARE_COPY_TXT": ""
+  },
+  "WEEK1_CAMPAIGN": {
+    "TITLE": ""
+  }
+
 }
