@@ -1,6 +1,6 @@
 <div class="main-container" *ngIf="theme | async as th">
     <div class="signup-image">
-      <img class="logo" [attr.src]="th?.properties['--logo']" [attr.alt]="th?.properties['--title']" />
+        <img class="logo" [attr.src]="th?.properties['--logo']" [attr.alt]="th?.properties['--title']" />
     </div>
     <div class="content-container">
         <div class="main-heading" translate>SIGN_UP</div>
@@ -37,7 +37,8 @@
             </div>
             <mat-form-field appearance="fill" class="full-width__input">
                 <mat-label translate>EMAIL</mat-label>
-                <input matInput [placeholder]="'EMAIL' | translate" formControlName="email" required type="email">
+                <input matInput autocomplete="email" [placeholder]="'EMAIL' | translate" formControlName="email"
+                    type="email" required>
                 <mat-error *ngIf="signupForm.get('email').hasError('required')">
                     <span>Email is </span><strong>required</strong>
                 </mat-error>
@@ -47,7 +48,8 @@
             </mat-form-field>
             <mat-form-field appearance="fill" class="full-width__input">
                 <mat-label translate>PASSWORD</mat-label>
-                <input matInput [placeholder]="PASSWORD" formControlName="password" type="password" autocomplete="on"
+                <input matInput [placeholder]="'PASSWORD' | translate" formControlName="password" type="password"
+                    autocomplete="on"
                     required>
                 <mat-error *ngIf="signupForm.get('password').hasError('required')">
                     <span>Password is </span><strong>required</strong>
@@ -72,7 +74,8 @@
             </mat-form-field>
             <mat-form-field appearance="fill" class="full-width__input">
                 <mat-label translate>NICKNAME</mat-label>
-                <input matInput [placeholder]="'NICKNAME' | translate" formControlName="nickname" required>
+                <input matInput autocomplete="nickname" [placeholder]="'NICKNAME' | translate"
+                    formControlName="nickname" required>
                 <mat-error *ngIf="signupForm.get('nickname').hasError('required')">
                     <span>Nickname is </span><strong>required</strong>
                 </mat-error>
@@ -111,7 +114,7 @@
                 mat-flat-button
                 type="submit"
                 class="full-width__button"
-                [disabled]="!(signupForm.valid && signupForm.get('accept_marketing').value && signupForm.get('accept_terms').value)"
+                [disabled]="!(signupForm.valid && signupForm.get('accept_terms').value)"
                 translate>
                 <i *ngIf="loadingSubmit" class="loading-spin">
                     <mat-progress-spinner
