@@ -12,15 +12,17 @@
         <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
             <mat-form-field appearance="standard" class="full-width__input">
                 <span matPrefix>+852&nbsp;<span class="prefix-spacer"></span></span>
-                <input autocomplete="tel-local" matInput [placeholder]="'MOBILE' | translate" formControlName="mobileNo" type="number" required>
+                <input autocomplete="tel-local" matInput [placeholder]="'MOBILE' | translate" formControlName="mobileNo"
+                    type="number" required>
                 <mat-error *ngIf="signupForm.get('mobileNo').hasError('required')">
                     <span>Mobile is </span><strong>required</strong>
                 </mat-error>
             </mat-form-field>
             <mat-form-field appearance="standard" class="full-width__input">
-                <input matInput autocomplete="email" [placeholder]="'EMAIL' | translate" formControlName="email" required>
+                <input matInput autocomplete="email" [placeholder]="'EMAIL' | translate" formControlName="email"
+                    required>
                 <mat-error *ngIf="signupForm.get('email').hasError('required')">
-                    <span>Email is</span><strong>required</strong>
+                    <span>Email is </span><strong>required</strong>
                 </mat-error>
                 <mat-error *ngIf="signupForm.get('email').hasError('email')">
                     <span>Incorrect email format</span>
@@ -47,7 +49,8 @@
                 </mat-error>
             </mat-form-field>
             <mat-form-field appearance="standard" class="full-width__input">
-                <input matInput autocomplete="nickname" [placeholder]="'NICKNAME' | translate" formControlName="nickname" required>
+                <input matInput autocomplete="nickname" [placeholder]="'NICKNAME' | translate"
+                    formControlName="nickname" required>
                 <mat-error *ngIf="signupForm.get('nickname').hasError('required')">
                     <span>Nickname is </span><strong>required</strong>
                 </mat-error>
