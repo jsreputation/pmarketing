@@ -15,5 +15,6 @@ export const BACK_ARROW_URLS: string[] = [
   '/game',
   '/stamp',
   '/catalog',
-  '/campaign-welcome'
+  '/campaign-welcome',
+  '/lucky-draw-details'
 ];

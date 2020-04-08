@@ -10,13 +10,13 @@ import {
   ICountryCode
 } from '@perxtech/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import {Navigation, Router} from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
-// import { oc } from 'ts-optchain';
+import { oc } from 'ts-optchain';
 
 interface ISigninConfig {
   redirectAfterLogin: string;
@@ -53,8 +53,9 @@ export class SignIn2Component implements OnInit, OnDestroy {
     public generalStaticDataService: GeneralStaticDataService
   ) {
     this.preAuth = this.config.preAuth ? this.config.preAuth : false;
-    // const nav: Navigation | null = this.router.getCurrentNavigation();
-    // this.custId = oc(nav).extras.state.pi('');
+    const nav: Navigation | null = this.router.getCurrentNavigation();
+    this.custId = oc(nav).extras.state.phoneNumber('');
+    this.countryCode = oc(nav).extras.state.countryCode(null);
   }
 
   public ngOnInit(): void {

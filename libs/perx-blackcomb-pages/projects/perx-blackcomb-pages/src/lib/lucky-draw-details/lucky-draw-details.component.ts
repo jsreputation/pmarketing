@@ -8,6 +8,7 @@ import {
   IProfile
 } from '@perxtech/core';
 import {FormBuilder, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
+import { oc } from 'ts-optchain';
 
 @Component({
   selector: 'perx-blackcomb-pages-lucky-draw-details',
@@ -30,13 +31,16 @@ export class LuckyDrawDetailsComponent implements OnInit, OnDestroy {
     private profileService: ProfileService,
     private notificationService: NotificationService
   ) {
-    this.initForm();
     this.getAppToken();
+    this.initForm();
   }
 
   public ngOnInit(): void {
     this.profileService.whoAmI().subscribe(res => {
       this.profile = res;
+      this.luckdrawForm.patchValue({ fullName: oc(this.profile).customProperties.fullName('') });
+      this.luckdrawForm.patchValue({ hkid: oc(this.profile).customProperties.hkid('') });
+      this.luckdrawForm.patchValue({ accept_marketing: true });
       if (!res.customProperties) {
         return;
       }
@@ -65,7 +69,7 @@ export class LuckyDrawDetailsComponent implements OnInit, OnDestroy {
     this.luckdrawForm = this.fb.group({
       fullName: ['', Validators.required],
       hkid: ['', Validators.required],
-      accept_marketing: [false]
+      accept_marketing: [false, Validators.requiredTrue]
     });
   }
 

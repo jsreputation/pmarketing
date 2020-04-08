@@ -118,18 +118,12 @@ $heading-font-color: #1b1b25;
 
       .checkbox-container {
         display: flex;
-        flex-direction: column;
-      }
-
-      .checkbox-row {
-        display: flex;
         flex-direction: row;
         align-items: baseline;
         margin: 1rem 0;
 
         /* stylelint-disable no-descending-specificity */
-        ::ng-deep .mat-checkbox-checked .mat-checkbox-background,
-        .mat-checkbox-indeterminate .mat-checkbox-background {
+        ::ng-deep .mat-checkbox-checked .mat-checkbox-background, .mat-checkbox-indeterminate .mat-checkbox-background {
           background-color: var(--button_background_color) !important;
         }
         /* stylelint-enable no-descending-specificity */
