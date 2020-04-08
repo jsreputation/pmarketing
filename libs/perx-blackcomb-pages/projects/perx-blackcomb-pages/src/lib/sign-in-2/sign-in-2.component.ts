@@ -38,7 +38,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
   public appAccessTokenFetched: boolean;
   private custId: string = '';
   public countryCodePrefix: string | undefined;
-  public countryCode: string;
+  public countryCode: string = '';
   public countriesList$: Observable<ICountryCode[]>;
 
   constructor(
@@ -91,7 +91,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
   public get identifier(): string {
     const customerIdField = this.loginForm.get('customerID');
     if (customerIdField && customerIdField.value) {
-      return `${this.countryCodePrefix ? this.countryCodePrefix : this.countryCode.substring(1)}${customerIdField.value}`;
+      return `${this.countryCodePrefix ? this.countryCodePrefix : (this.countryCode || '').substring(1)}${customerIdField.value}`;
     }
     return '';
   }
