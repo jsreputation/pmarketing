@@ -60,6 +60,7 @@ export abstract class ISignUpComponent implements OnDestroy {
       accept_marketing: [false]
     }, { validators: [equalityValidator('password', 'confirmPassword')] });
 
+    // monitor fields related to lucky-draw in order to adjust the validators if any of the fields is being filled
     combineLatest([
       this.signupForm.controls.hkid.valueChanges.pipe(startWith('')),
       this.signupForm.controls.fullName.valueChanges.pipe(startWith('')),
