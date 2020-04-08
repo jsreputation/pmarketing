@@ -76,7 +76,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     this.countriesList$.pipe(
       switchMap((countryList) => matchRouteCountry$(countryList))
     ).subscribe(([phoneNumber, countryCode]) => {
-      if( phoneNumber && countryCode) {
+      if (phoneNumber && countryCode) {
         this.phoneStepForm.setValue({ countryCode, phoneNumber });
       }
     });
