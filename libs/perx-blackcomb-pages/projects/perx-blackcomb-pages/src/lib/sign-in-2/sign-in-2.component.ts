@@ -64,7 +64,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
       this.appConfig = conf;
       this.countryCodePrefix = conf.countryCodePrefix;
     });
-    //todo: make this a input
+    // todo: make this a input
     this.countriesList$ = this.generalStaticDataService.getCountriesList([
       'Hong Kong',
       'Singapore'
