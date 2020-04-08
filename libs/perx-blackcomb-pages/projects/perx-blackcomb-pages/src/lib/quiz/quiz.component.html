@@ -1,16 +1,18 @@
-<!--<img [src]="survey.backgroundImgUrl" alt="survey-bg" *ngIf="survey.backgroundImgUrl" class="background_img_url">-->
-<div *ngIf="quiz" class="survey-main-container"
+<div *ngIf="quiz" class="quiz-main-container"
   [ngStyle]="{'background-image': quiz.backgroundImgUrl ? 'url(' + quiz.backgroundImgUrl + ')' : '' }">
-  <div class="survey-page">
+  <div class="quiz-page">
     <div class="progress">
       <p class="progress-text">Question <strong>{{questionPointer + 1}}</strong> out of {{totalLength}}</p>
       <mat-progress-bar class="progress-bar" mode="determinate" color="warn" [value]="progressBarValue">
       </mat-progress-bar>
     </div>
-    <perx-core-timer class="timer" [timeToRun]="30000" (done)="timesUp()" [reset]="resetTimer$"></perx-core-timer>
+    <perx-core-timer class="timer" [timeToRun]="30000" (done)="nextWithoutValidation()" [reset]="resetTimer$">
+    </perx-core-timer>
     <div #overflowContainer>
-      <mat-card class="survey-card"
-        [ngStyle]="{'background-image': quiz.cardBackgroundImgUrl ? 'url(' + quiz.cardBackgroundImgUrl + ')' : '' }">
+      <mat-card
+        *ngIf="quiz.mode === mode.basic"
+        class="quiz-card"
+        [ngStyle]="{'background-image': quiz.cardBackgroundImgUrl ? 'url(' + quiz?.cardBackgroundImgUrl + ')' : '' }">
         <h1>{{quiz.title}}</h1>
         <h2 *ngIf="quiz.subTitle">{{quiz.subTitle}}</h2>
         <perx-core-quiz
@@ -30,20 +32,41 @@
           </svg>
         </div>
       </mat-card>
+      <div *ngIf="quiz.mode !== mode.basic" class="quiz-no-card">
+        <h1>{{quiz.title}}</h1>
+        <h2 *ngIf="quiz.subTitle">{{quiz.subTitle}}</h2>
+        <perx-core-quiz
+          [hideIndex]="true"
+          #coreComponent
+          [data]="data$"
+          [questionPointer]="questionPointer"
+          (done)="done()"
+          (totalLength)="totalLength = $event"
+          (answers)="updateQuizStatus($event)">
+        </perx-core-quiz>
+      </div>
     </div>
   </div>
-  <mat-toolbar class="bottom-nav-container mat-elevation-z2">
+  <mat-toolbar
+    *ngIf="quiz.mode === mode.basic"
+    class="bottom-nav-container mat-elevation-z2">
     <!-- <button color="primary" *ngIf="questionPointer >= 1" (click)="back()" mat-stroked-button>
       Previous
     </button> -->
-    <button color="primary" *ngIf="this.questionPointer !== this.totalLength - 1" (click)="next()" mat-flat-button>
+    <button
+      color="primary"
+      *ngIf="this.questionPointer !== this.totalLength - 1"
+      (click)="next()"
+      mat-flat-button>
       Next
     </button>
     <button
-      *ngIf="this.questionPointer === this.totalLength-1"
-      mat-flat-button
       color="primary"
+      *ngIf="this.questionPointer === this.totalLength-1"
       (click)="submit()"
-      [disabled]="!complete">Submit</button>
+      [disabled]="!complete"
+      mat-flat-button>
+      Submit
+    </button>
   </mat-toolbar>
 </div>

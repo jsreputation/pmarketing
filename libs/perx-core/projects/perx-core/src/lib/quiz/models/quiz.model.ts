@@ -28,6 +28,7 @@ export interface IQQuestion {
   required: boolean;
   payload: IPayload;
   answer?: any;
+  meta?: any;
 }
 
 export enum MaterialColor {
@@ -36,11 +37,17 @@ export enum MaterialColor {
   warn = 'warn'
 }
 
-export interface ISurveyOutcome {
+export interface IQuizOutcome {
   title: string;
   subTitle: string;
   image?: string;
   button: string;
+}
+
+export enum QuizMode {
+  basic,
+  swipe,
+  elimination
 }
 
 export interface IQuiz {
@@ -51,9 +58,10 @@ export interface IQuiz {
   cardBackgroundImgUrl?: string;
   backgroundImgUrl?: string;
   questions: IQQuestion[];
+  mode: QuizMode;
   results: {
-    outcome?: ISurveyOutcome;
-    noOutcome?: ISurveyOutcome;
+    outcome?: IQuizOutcome;
+    noOutcome?: IQuizOutcome;
   };
   displayProperties?: IWCampaignDisplayProperties;
 }
@@ -92,16 +100,15 @@ export enum SurveyRatingIcons {
 }
 
 // For SlideList Component
-export interface Configuration {
+export interface SwipeConfiguration {
   slideThreshold?: number;
-  listType?: string;
+  listType?: SwipeListType;
   classname?: string;
   disableWarnings?: boolean;
-  numberOfDeleteIcon?: number;
-  numberOfSelectIcon?: number;
+  numberOfIcons?: number;
 }
 
-export enum ListType {
+export enum SwipeListType {
   SINGLELINE = 'singleline',
   MULTILINE = 'multiline',
   LISTWITHICON = 'listwithicon',
@@ -118,7 +125,7 @@ export enum Warnings {
 }
 
 export const Constants = {
-  CONFIG_NOT_LOADED : 'You have not provided the configuration values, default will be loaded.',
+  CONFIG_NOT_LOADED: 'You have not provided the configuration values, default will be loaded.',
   ADDING_DEFAULT_SLIDE_THRESHOLD: 'Will keep it default i.e.',
   SLIDE_THRESHOLD_NOT_FOUND: 'You have not provided the slideThreshold.',
   ZERO_SLIDE_THRESHOLD_NOT_ALLOWED: 'slideThreshold value can not be 0 or less than 0.',
@@ -127,6 +134,6 @@ export const Constants = {
   MAX_SLIDE_THRESHOLD: 50,
   MIN_SLIDE_THRESHOLD: 0,
   DEFAULT_SLIDE_THRESHOLD: 50,
-  NUMBER_OF_DELETE_ICONS : 2,
+  NUMBER_OF_ICONS: 2,
   DEFAULT_CLASS_NAME: 'ngstd-main-canvas'
 };

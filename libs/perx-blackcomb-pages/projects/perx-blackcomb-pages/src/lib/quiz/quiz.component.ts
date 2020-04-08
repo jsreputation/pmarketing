@@ -1,18 +1,18 @@
-import {ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute, ParamMap, Router} from '@angular/router';
+import { ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import {
+  IAnswerResult, IPoints, IQAnswer,
   // IPrePlayStateData,
-  IQuiz,
+  IQuiz, ITracker, NotificationService,
   // NotificationService,
   QuizComponent as QuizCoreComponent,
+  QuizMode, QuizQuestionType,
   QuizService,
-  IQAnswer,
-  ITracker,
-  IPoints,
-  NotificationService, IAnswerResult
+  SwipeConfiguration,
+  SwipeListType
 } from '@perxtech/core';
-import {Observable, Subject, throwError} from 'rxjs';
-import {filter, map, switchMap, takeUntil, tap} from 'rxjs/operators';
+import { Observable, Subject, throwError } from 'rxjs';
+import { filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-blackcomb-quiz',
@@ -22,6 +22,7 @@ import {filter, map, switchMap, takeUntil, tap} from 'rxjs/operators';
 export class QuizComponent implements OnInit, OnDestroy {
   public data$: Observable<IQuiz>;
   public quiz: IQuiz;
+  public mode: typeof QuizMode = QuizMode;
   public totalLength: number;
   public questionPointer: number = 0;
   public complete: boolean = false;
@@ -30,13 +31,18 @@ export class QuizComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject();
   @ViewChild('overflowContainer', { static: false })
   private overflowContainer: ElementRef | undefined;
-  @ViewChild('overFarrow', { static: false }) private overFarrow: ElementRef;
+  @ViewChild('overFarrow', { static: false }) private overFarrow: ElementRef | undefined;
   @ViewChild('coreComponent', { static: false })
   private coreComponent: QuizCoreComponent;
   private answers: ITracker<IQAnswer> = {};
   private moveId: number | undefined;
   private points: ITracker<IPoints> = {};
   private timer: number;
+  private static swipeConfig: SwipeConfiguration = {
+    classname: 'swipe-blackcomb',
+    numberOfIcons: 1,
+    listType: SwipeListType.LISTWITHICON
+  };
 
   constructor(
     private router: Router,
@@ -56,6 +62,30 @@ export class QuizComponent implements OnInit, OnDestroy {
       map((cid: string) => Number.parseInt(cid, 10)),
       switchMap((cidN: number) => this.quizService.getQuizFromCampaign(cidN)),
       filter(quiz => !!quiz),
+      map(quiz => {
+        quiz.questions = quiz.questions
+          .map(question => {
+            if ([QuizQuestionType.swipeSelect, QuizQuestionType.swipeDelete].includes(question.payload.type)) {
+              // patch the swipe based questions payload to make sure they look as expected
+              question.meta = QuizComponent.swipeConfig;
+              question.payload.choices = question.payload.choices
+                .map((choice: string | Partial<{ title: string; icon: string; }> | undefined) => {
+                  let res: Partial<{ title: string; icon: string; }> = {};
+                  if (typeof choice === 'string') {
+                    res.title = choice;
+                  } else {
+                    res = { ...choice };
+                  }
+                  if (!res.icon) {
+                    res.icon = 'arrow_forward';
+                  }
+                  return res;
+                });
+            }
+            return question;
+          });
+        return quiz;
+      }),
       takeUntil(this.destroy$)
     );
 
@@ -118,6 +148,9 @@ export class QuizComponent implements OnInit, OnDestroy {
   public updateQuizStatus(answers: ITracker<IQAnswer>): void {
     // patch previous answer object
     this.answers = { ...this.answers, ...answers };
+    if (this.quiz.mode !== QuizMode.basic) {
+      this.nextWithoutValidation();
+    }
   }
 
   public done(): void {
@@ -160,7 +193,7 @@ export class QuizComponent implements OnInit, OnDestroy {
     this.questionPointer--;
   }
 
-  public timesUp(): void {
+  public nextWithoutValidation(): void {
     const questionPointer = this.questionPointer;
     if (this.quiz.questions.length - 1 === questionPointer) {
       this.submit();
@@ -177,7 +210,7 @@ export class QuizComponent implements OnInit, OnDestroy {
       return throwError('Cannot push answer without move id');
     }
 
-    const answer: any = Object.values(this.answers)[questionPointer];
+    const answer: IQAnswer = Object.values(this.answers)[questionPointer];
     const time = this.currentTime - this.timer;
     // current questionPointer, WARNING: not implemented yet, stub
     return this.quizService.postQuizAnswer(
@@ -211,7 +244,8 @@ export class QuizComponent implements OnInit, OnDestroy {
   private checkShowOverArrow(): void {
     let card: HTMLElement;
     let arrow: HTMLElement;
-    if (this.overflowContainer && this.overflowContainer.nativeElement) {
+    if (this.overflowContainer && this.overflowContainer.nativeElement &&
+      this.overFarrow && this.overFarrow.nativeElement) {
       card = this.overflowContainer.nativeElement;
       arrow = this.overFarrow.nativeElement;
       const isOverflowing = card.clientHeight < card.scrollHeight;
@@ -229,7 +263,9 @@ export class QuizComponent implements OnInit, OnDestroy {
   }
 
   private hideArrow(): void {
-    this.overFarrow.nativeElement.classList.add('hidden');
+    if (this.overFarrow && this.overFarrow.nativeElement) {
+      this.overFarrow.nativeElement.classList.add('hidden');
+    }
   }
 
   private get quizId(): number | null {
