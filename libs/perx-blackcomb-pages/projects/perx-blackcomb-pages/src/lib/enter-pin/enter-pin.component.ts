@@ -9,7 +9,7 @@ import {
   PopUpClosedCallBack,
   ThemesService,
   ITheme,
-  IMessageResponse
+  IMessageResponse, GeneralStaticDataService, ICountryCode
 } from '@perxtech/core';
 import { filter, map } from 'rxjs/operators';
 
@@ -30,6 +30,7 @@ export class EnterPinComponent implements PopUpClosedCallBack {
   public pinMode: PinMode = PinMode.password;
   public visibleNumber: string;
   public userPhone: string | undefined;
+  public countriesList: ICountryCode[];
 
   public theme: ITheme;
 
@@ -39,8 +40,16 @@ export class EnterPinComponent implements PopUpClosedCallBack {
     private route: ActivatedRoute,
     private authService: AuthenticationService,
     private notificationService: NotificationService,
-    private themeService: ThemesService
+    private themeService: ThemesService,
+    private generalStaticDataService: GeneralStaticDataService
   ) {
+    this.generalStaticDataService.getCountriesList([
+      'Hong Kong',
+      'Philippines',
+      'Singapore'
+    ]).subscribe(
+      (countriesList) => this.countriesList = countriesList
+    );
     this.route.paramMap
       .pipe(
         // filter((p: ParamMap) => p.has('type')),
@@ -111,7 +120,16 @@ export class EnterPinComponent implements PopUpClosedCallBack {
         .subscribe(
           (response: IMessageResponse) => {
             this.notificationService.addSnack(response.message);
-            this.router.navigate(['login']); // , { state: { pi: this.userPhone } }
+            const country = this.countriesList.find(
+              country => `+${this.userPhone}`.startsWith(country.phone)
+            )  || null;
+            let phoneNumber: string | null = null;
+            let countryCode: ICountryCode | null = null;
+            if (country !== null) {
+              phoneNumber = `+${this.userPhone}`.slice(country.phone.length); // country.phone contains + while userPhone doesn't
+              countryCode = country
+            }
+            this.router.navigate(['login'], { state: { phoneNumber, countryCode } });
           },
           err => this.notificationService.addSnack(err.error.message)
         );
