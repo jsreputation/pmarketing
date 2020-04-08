@@ -1,20 +1,20 @@
-import {QuizQuestionType} from '@perxtech/core';
-import {of} from 'rxjs';
+import { QuizQuestionType } from '@perxtech/core';
+import { of } from 'rxjs';
 
-export const mockQuiz = ({
-  id: '1',
-  title: 'mocked quiz',
-  subTitle: 'subtitle',
-  questions: [{
-    id: '0',
-    question: 'quiz question 1?',
-    required: true,
-    payload: {
-      type: QuizQuestionType.swipeDelete
-    }}
-  ],
-  results: {}
-});
+// export const mockQuiz = ({
+//   id: '1',
+//   title: 'mocked quiz',
+//   subTitle: 'subtitle',
+//   questions: [{
+//     id: '0',
+//     question: 'quiz question 1?',
+//     required: true,
+//     payload: {
+//       type: QuizQuestionType.swipeDelete
+//     }}
+//   ],
+//   results: {}
+// });
 
 export const mockData$ = of({
   id: '1',
@@ -112,7 +112,8 @@ export const mockData$ = of({
           }
         }
       ]
-    }}
+    }
+  }
   ],
   results: {}
 });

@@ -122,11 +122,6 @@ describe('V4AuthenticationService', () => {
     httpTestingController.verify();
   });
 
-  it('should return observable', () => {
-    const observable = service.$failedAuth;
-    expect(observable instanceof Observable).toBeTruthy();
-  });
-
   it('should create service with config production', () => {
     // @ts-ignore
     const serviceWithConfig = new V4AuthenticationService(configServiceStub, null, null, null);
@@ -198,8 +193,6 @@ describe('V4AuthenticationService', () => {
     expect(error).toBeTruthy();
     spyAuth.mockReturnValue(throwError(null));
     authService.login('user', 'pass').subscribe(() => { }, () => { });
-    tick();
-    authService.$failedAuth.subscribe((val => expect(val).toBeTruthy()));
   })));
 
   it('should throw err', fakeAsync(inject([V4AuthenticationService, HttpClient],
@@ -224,14 +217,12 @@ describe('V4AuthenticationService', () => {
       expect(spy).toHaveBeenCalled();
     })));
 
-  it('should handle error response', fakeAsync(inject([V4AuthenticationService, HttpClient],
+  it('should handle error response', inject([V4AuthenticationService, HttpClient],
     (authService: V4AuthenticationService, http: HttpClient) => {
       // authService.$failedAuthObservable = null;
       jest.spyOn(http, 'post').mockReturnValue(throwError(null));
       authService.autoLogin().subscribe(() => { });
-      tick();
-      authService.$failedAuth.subscribe((val => expect(val).toBeTruthy()));
-    })));
+    }));
 
   it('sheck set and get InterruptedUrl', inject([V4AuthenticationService], (authService: V4AuthenticationService) => {
     const url = 'http://test';

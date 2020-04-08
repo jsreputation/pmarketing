@@ -1,7 +1,7 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { GameOutcomeService } from './game-outcome.service';
-import { vouchers } from 'src/app/vouchers.mock';
+import { vouchers } from '../../vouchers.mock';
 
 describe('GameOutcomeService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

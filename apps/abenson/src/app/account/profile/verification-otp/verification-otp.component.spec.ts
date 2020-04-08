@@ -5,7 +5,7 @@ import { of, BehaviorSubject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Type } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { SharedDataService } from 'src/app/services/shared-data.service';
+import { SharedDataService } from '../../../services/shared-data.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { IWMessageResponse } from '@perxtech/whistler';
 import { MatDialogModule } from '@angular/material/dialog';

@@ -42,13 +42,5 @@ export class AppComponent implements OnInit {
     this.notificationService.$popup.subscribe(data => {
       this.dialog.open(PopupComponent, { data });
     });
-
-    this.authService.$failedAuth.subscribe(
-      (didFailAuth: boolean) => {
-        if (didFailAuth) {
-          this.router.navigateByUrl('login');
-        }
-      }
-    );
   }
 }

@@ -3,7 +3,7 @@ import { VouchersModule, IVoucherService } from '@perxtech/core';
 
 import { VoucherDetailComponent } from './voucher-detail.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { DetailHeaderModule } from 'src/app/details/detail-header/detail-header.module';
+import { DetailHeaderModule } from '../../details/detail-header/detail-header.module';
 
 describe('VoucherDetailComponent', () => {
   let component: VoucherDetailComponent;

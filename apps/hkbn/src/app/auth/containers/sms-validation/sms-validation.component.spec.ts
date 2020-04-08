@@ -7,7 +7,7 @@ import { of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { Type } from '@angular/core';
-import { DataTransferService } from 'src/app/services/data-transfer.service';
+import { DataTransferService } from '../../../services/data-transfer.service';
 import { MatIconModule } from '@angular/material';
 
 describe('SmsValidationComponent', () => {

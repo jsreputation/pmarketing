@@ -35,9 +35,11 @@ const userInfo: IProfile = {
 const profileServiceStub: Partial<ProfileService> = {
   whoAmI: () => of(userInfo)
 };
+
 const dynamicCreateServiceStub: Partial<DynamicCreateService> = {
 };
-const authenticationServiceStub: Partial<AuthenticationService> = { $failedAuth: of(true), logout: () => { } };
+
+const authenticationServiceStub: Partial<AuthenticationService> = { logout: () => { } };
 
 describe('AccountComponent', () => {
   let component: AccountComponent;
@@ -59,13 +61,15 @@ describe('AccountComponent', () => {
         MatListModule,
         NoopAnimationsModule
       ],
-      providers: [{
-        provide: AuthenticationService, useValue: authenticationServiceStub
-      }, {
-        provide: ProfileService, useValue: profileServiceStub
-      }, {
-        provide: DynamicCreateService, useValue: dynamicCreateServiceStub
-      }
+      providers: [
+        {
+          provide: AuthenticationService, useValue: authenticationServiceStub
+        },
+        {
+          provide: ProfileService, useValue: profileServiceStub
+        }, {
+          provide: DynamicCreateService, useValue: dynamicCreateServiceStub
+        }
       ]
     })
       .compileComponents();

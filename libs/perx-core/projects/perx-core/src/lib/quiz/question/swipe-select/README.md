@@ -1,0 +1,1 @@
+This component is unused as the swipe-list handles both cases with little overhead and much less duplicate code 

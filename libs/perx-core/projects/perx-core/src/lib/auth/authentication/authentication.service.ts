@@ -25,8 +25,6 @@ export class RequiresOtpError extends Error {
 }
 
 export abstract class AuthenticationService implements AuthService {
-  public abstract get $failedAuth(): Observable<boolean>;
-
   /**
    * Check, if user already authorized.
    * @description Should return Observable with true or false values

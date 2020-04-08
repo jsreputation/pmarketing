@@ -19,7 +19,7 @@ import {
 import { CardComponent } from './card.component';
 
 import { SharedModule } from '../../../shared/shared.module';
-import { loyalty } from 'src/app/mock/loyalty.mock';
+import { loyalty } from '../../../mock/loyalty.mock';
 import { MatTabChangeEvent } from '@angular/material';
 import { Type } from '@angular/core';
 

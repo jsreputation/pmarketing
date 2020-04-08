@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "perx-core": {
+    "core": {
       "projectType": "library",
       "root": "projects/perx-core",
       "sourceRoot": "projects/perx-core/src",
@@ -31,7 +31,7 @@
       }
     }
   },
-  "defaultProject": "perx-core",
+  "defaultProject": "core",
   "schematics": {
     "@schematics/angular:component": {
       "styleext": "scss"

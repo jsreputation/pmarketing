@@ -1,29 +1,23 @@
-import { Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter
-} from '@angular/core';
-import {
-  trigger,
-  style,
-  transition,
-  animate,
-  query,
-  stagger,
-  keyframes,
-  AnimationEvent
-} from '@angular/animations';
-import {
-  Configuration,
-  Constants,
-  ListType, QuizQuestionType,
-  Warnings
-} from '../../models/quiz.model';
+import { animate, AnimationEvent, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { oc } from 'ts-optchain';
+import { Constants, QuizQuestionType, SwipeConfiguration, SwipeListType, Warnings } from '../../models/quiz.model';
 
 interface IPayloadSwipe {
   type: string;
-  choices: any[]; // follow the format passed down actually
+  choices: (IChoice | string)[]; // follow the format passed down actually
+}
+
+interface IChoice {
+  title: string;
+  img?: string;
+  description?: string;
+  icon?: string;
+}
+
+const enum SwipeMode {
+  delete,
+  select
 }
 
 @Component({
@@ -35,55 +29,60 @@ interface IPayloadSwipe {
       transition('* => *', [
         query(':leave', [
           stagger(100, [
-            animate('0s', style({opacity: '0'})),
-            animate('0.2s', style({height: '0px', opacity: '0', display: 'none'}))
+            animate('0s', style({ opacity: '0' })),
+            animate('0.2s', style({ height: '0px', opacity: '0', display: 'none' }))
           ])
-        ], {optional: true})
+        ], { optional: true })
       ])
     ]), // snap animation ->
     trigger('slideLeft', [
       transition('* => *', animate(100, keyframes([ // update faster so more responsive snap if dont hit threshold
-        style({left: '*', offset: 0}),
-        style({left: '0', offset: 1}), // offset 1 : the snap occurs on timing 100 -> https://angular.io/guide/transition-and-triggers
+        style({ left: '*', offset: 0 }),
+        style({ left: '0', offset: 1 }), // offset 1 : the snap occurs on timing 100 -> https://angular.io/guide/transition-and-triggers
       ])
       ))
     ])
   ]
 })
 export class QuizSwipeListComponent implements OnInit {
-
-  @Input() public payload: IPayloadSwipe = {
-    type: QuizQuestionType.swipeDelete,
-    choices: []
-  };
-  @Input() public configuration: Configuration;
+  @Input()
+  public payload: IPayloadSwipe;
+  @Input()
+  public configuration: SwipeConfiguration;
   @Output()
-  public updateAnswers: EventEmitter<any[]> = new EventEmitter<any[]>();
-  public answerArr: any[];
+  public updateAnswers: EventEmitter<string[]> = new EventEmitter<string[]>();
+
   public ngstdIndexNumber?: number; // undefined so visual snapping at first dont occur
+  public listType: SwipeListType;
+  public numberOfIcons: number;
+  public choices: IChoice[];
+  public lt: typeof SwipeListType = SwipeListType;
+
+  private answerArr: { title: string }[] = [];
   private disableWarnings: boolean = false;
-  public listType: string = '';
   private slideThreshold: number;
-  public numberOfDeleteIcon: number;
   private isValidConfig: boolean = false;
   private elementLeftSign: boolean = true;
 
   public ngOnInit(): void {
+    this.choices = oc(this).payload.choices([]).map(choice =>
+      (typeof choice === 'string') ? { title: choice } : choice
+    );
     this.initializeSwipeList();
-    if (this.payload.choices.length) {
-      this.answerArr = [...this.payload.choices];
+    if (this.swipeMode === SwipeMode.delete) {
+      this.answerArr = [...this.choices];
     }
   }
 
-  public initializeSwipeList(): void {
+  private initializeSwipeList(): void {
     this.detectInvalidConfig();
     this.setDisableWarnings();
     this.setslideThreshold();
-    this.setNumberOfDeleteIcon();
+    this.setNumberOfIcons();
     this.setlistType();
   }
 
-  public detectInvalidConfig(): void {
+  private detectInvalidConfig(): void {
     if (this.configuration === null || this.configuration === undefined || this.configuration === '') {
       this.isValidConfig = false;
       this.logWarnings(Warnings.CONFIG_NOT_LOADED);
@@ -92,16 +91,16 @@ export class QuizSwipeListComponent implements OnInit {
     }
   }
 
-  public setNumberOfDeleteIcon(): void {
+  private setNumberOfIcons(): void {
     const config = this.configuration;
-    if (!this.isValidConfig || config.numberOfDeleteIcon === 2) {
-      this.numberOfDeleteIcon = Constants.NUMBER_OF_DELETE_ICONS;
+    if (!this.isValidConfig || config.numberOfIcons === 2) {
+      this.numberOfIcons = Constants.NUMBER_OF_ICONS;
     } else {
-      this.numberOfDeleteIcon = 0;
+      this.numberOfIcons = 0;
     }
   }
 
-  public setslideThreshold(): void {
+  private setslideThreshold(): void {
     if (!this.isValidConfig) {
       this.slideThreshold = Constants.DEFAULT_SLIDE_THRESHOLD;
       this.logWarnings(Warnings.SLIDE_THRESHOLD_NOT_FOUND, `${Constants.ADDING_DEFAULT_SLIDE_THRESHOLD} ${Constants.DEFAULT_SLIDE_THRESHOLD}%.`);
@@ -130,26 +129,26 @@ export class QuizSwipeListComponent implements OnInit {
     }
   }
 
-  public setlistType(): void {
+  private setlistType(): void {
     const config = this.configuration;
-    if (!this.isValidConfig || config.listType === '' || config.listType === undefined || config.listType === null) {
-      this.listType = ListType.SINGLELINE;
+    if (!this.isValidConfig || config.listType === undefined || config.listType === null) {
+      this.listType = SwipeListType.SINGLELINE;
     } else {
-      const listType = config.listType.trim();
+      const listType = config.listType;
       switch (listType) {
-        case ListType.SINGLELINE:
-        case ListType.MULTILINE:
-        case ListType.LISTWITHICON:
-        case ListType.LISTWITHIMAGE:
+        case SwipeListType.SINGLELINE:
+        case SwipeListType.MULTILINE:
+        case SwipeListType.LISTWITHICON:
+        case SwipeListType.LISTWITHIMAGE:
           this.listType = listType;
           break;
         default:
-          this.listType = ListType.SINGLELINE;
+          this.listType = SwipeListType.SINGLELINE;
       }
     }
   }
 
-  public setDisableWarnings(): void {
+  private setDisableWarnings(): void {
     if (!this.isValidConfig) {
       this.disableWarnings = false;
     } else {
@@ -171,8 +170,8 @@ export class QuizSwipeListComponent implements OnInit {
   public panend(_: WheelEvent, index: number, elementReference: HTMLDivElement): void {
     const currentMargin = this.getLeftPosition(elementReference);
     if (currentMargin > this.slideThreshold ||
-      (currentMargin < -this.slideThreshold && this.numberOfDeleteIcon === Constants.NUMBER_OF_DELETE_ICONS)) {
-      this.removeElement(index);
+      (currentMargin < -this.slideThreshold && this.numberOfIcons === Constants.NUMBER_OF_ICONS)) {
+      this.swipeElement(index);
     } else {
       this.ngstdIndexNumber = undefined; // make undefined so it snaps back when mouse release
     }
@@ -188,7 +187,7 @@ export class QuizSwipeListComponent implements OnInit {
       const currentMargin = this.getLeftPosition(elementReference);
       // snapping action when cross threshold
       if (currentMargin > this.slideThreshold ||
-        (currentMargin < -this.slideThreshold && this.numberOfDeleteIcon === Constants.NUMBER_OF_DELETE_ICONS)) {
+        (currentMargin < -this.slideThreshold && this.numberOfIcons === Constants.NUMBER_OF_ICONS)) {
         elementReference.style.display = 'none';
       }
     }
@@ -199,35 +198,36 @@ export class QuizSwipeListComponent implements OnInit {
     event.element.offsetLeft > 0 ? this.elementLeftSign = true : this.elementLeftSign = false;
   }
 
-  public getLeftSign(): boolean {
-    return this.elementLeftSign;
+  public showLeftSign(i: number): boolean {
+    return this.elementLeftSign && this.ngstdIndexNumber === i;
   }
 
-  public removeElement(index: number): void {
-    // console.log(this.payload.choices[index], 'supposed to delete this');
-    // cant splice cause index will change because of mutating, but index will always be the same from payload
-    this.answerArr =  this.answerArr.filter((answer) => answer.title !== this.payload.choices[index].title);
-    // console.log(this.answerArr, 'see if the filter works');
-    // emit back up our standing answers when there is only one answer left
-    if (this.answerArr.length === 1) { // we need to assume payload is > 1
-      this.updateAnswers.emit(this.answerArr);
+  private swipeElement(index: number): void {
+    if (this.swipeMode === SwipeMode.delete) {
+      // cant splice cause index will change because of mutating, but index will always be the same from payload
+      this.answerArr = this.answerArr.filter((answer) => answer.title !== this.choices[index].title);
+      // emit back up our standing answers when there is only one answer left
+      if (this.answerArr.length === 1) { // we need to assume payload is > 1
+        this.updateAnswers.emit(this.answerArr.map(answer => answer.title));
+      }
+    } else {
+      this.answerArr.push(this.choices[index]);
+      this.updateAnswers.emit(this.answerArr.map(answer => answer.title));
     }
   }
 
-  public getLeftPosition(elementReference: HTMLDivElement): number {
-    let currentleftPosition;
+  private getLeftPosition(elementReference: HTMLDivElement): number {
+    let currentleftPosition: string | null = null;
     if (elementReference && elementReference.style && elementReference.style.left) {
       currentleftPosition = elementReference.style.left.slice(0, -2);
     }
     if (currentleftPosition !== null) {
-      return (parseInt(
-        currentleftPosition, 10
-      ) * 100) / window.innerWidth;
+      return (parseInt(currentleftPosition, 10) * 100) / window.innerWidth;
     }
     return 0;
   }
 
-  public logWarnings(warningFor: string, extraMessage: any = null): void {
+  private logWarnings(warningFor: string, extraMessage: any = null): void {
     if (this.disableWarnings) {
       return;
     }
@@ -244,7 +244,15 @@ export class QuizSwipeListComponent implements OnInit {
     }
   }
 
-  public getConstValue(constantName: string): string {
+  private getConstValue(constantName: string): string {
     return Constants[constantName];
+  }
+
+  private get swipeMode(): SwipeMode {
+    return oc(this).payload.type() === QuizQuestionType.swipeDelete ? SwipeMode.delete : SwipeMode.select;
+  }
+
+  public get icon(): string {
+    return oc(this).payload.type() === QuizQuestionType.swipeDelete ? 'delete_sweep' : 'thumb_up';
   }
 }

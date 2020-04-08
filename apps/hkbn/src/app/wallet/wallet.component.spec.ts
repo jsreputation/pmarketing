@@ -8,7 +8,7 @@ import { VouchersModule, IVoucherService, Voucher } from '@perxtech/core';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable, of } from 'rxjs';
-import { vouchers } from 'src/assets/mock/vouchers.mock';
+import { vouchers } from '../../assets/mock/vouchers.mock';
 
 describe('WalletComponent', () => {
   let component: WalletComponent;

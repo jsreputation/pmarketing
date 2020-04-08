@@ -1,5 +1,5 @@
 {
-  "name": "perx-microsites",
+  "name": "perxtech",
   "scripts": {
     "build": "lerna run build:lib && lerna run build -- ",
     "build:abenson": "lerna run build:lib && lerna run build:abenson -- ",

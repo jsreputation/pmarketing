@@ -6,7 +6,7 @@ import { VouchersModule, IVoucherService, Voucher, VoucherState } from '@perxtec
 import { RouterTestingModule } from '@angular/router/testing';
 import { mockVoucher } from '../voucher.mock';
 import { Observable, of, BehaviorSubject } from 'rxjs';
-import { NotificationWrapperService } from 'src/app/services/notification-wrapper.service';
+import { NotificationWrapperService } from '../../services/notification-wrapper.service';
 import { Location } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 

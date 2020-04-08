@@ -4,7 +4,7 @@ import { SmsValidationComponent } from './sms-validation.component';
 import { UtilsModule, AuthenticationService, LoyaltyService, ProfileService } from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
-import { SharedDataService } from 'src/app/services/shared-data.service';
+import { SharedDataService } from '../../services/shared-data.service';
 
 describe('SmsValidationComponent', () => {
   let component: SmsValidationComponent;

@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "perx-blackcomb-pages": {
+    "blackcomb-pages": {
       "projectType": "library",
       "root": "projects/perx-blackcomb-pages",
       "sourceRoot": "projects/perx-blackcomb-pages/src",
@@ -19,7 +19,7 @@
       }
     }
   },
-  "defaultProject": "perx-blackcomb-pages",
+  "defaultProject": "blackcomb-pages",
   "schematics": {
     "@schematics/angular:component": {
       "styleext": "scss"

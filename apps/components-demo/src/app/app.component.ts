@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { Router } from '@angular/router';
 import { AuthenticationService, NotificationService, PopupComponent, ConfigService, IConfig } from '@perxtech/core';
 import { MatDialog } from '@angular/material';
 
@@ -14,7 +13,6 @@ export class AppComponent implements OnInit {
   public preAuth: boolean;
 
   constructor(
-    private router: Router,
     private authService: AuthenticationService,
     private notificationService: NotificationService,
     private dialog: MatDialog,
@@ -38,13 +36,6 @@ export class AppComponent implements OnInit {
       const param = location.search;
       (window as any).primaryIdentifier = new URLSearchParams(param).get('pi');
     }
-    this.authService.$failedAuth.subscribe(
-      (didFailAuth) => {
-        if (didFailAuth) {
-          this.router.navigateByUrl('login');
-        }
-      }
-    );
   }
 
   public get loggedIn(): boolean {
