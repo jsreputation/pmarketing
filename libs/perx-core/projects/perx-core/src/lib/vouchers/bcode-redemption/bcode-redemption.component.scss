@@ -26,44 +26,50 @@ h1 {
   text-align: center;
 }
 
-.bcode {
-  display: flex;
-  align-self: center;
-  background: #fff;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-  border-radius: 2px;
-  text-align: center;
-  margin: 16px;
-  font-size: 1.6rem;
-  min-height: 4.5rem;
-  justify-content: center;
-  padding: 1.5rem;
-}
-
-.instruction {
-  display: flex;
-  align-self: center;
-  font-weight: normal;
-  font-size: 1.4rem;
-  text-align: center;
-  color: #8f8f8f;
-  margin-top: 32px;
-}
-
-.tnc {
-  display: flex;
-  align-self: center;
-  font-weight: normal;
-  font-size: 1rem;
-  text-align: center;
-  color: #8f8f8f;
-  margin-top: 24px;
-}
-
 .reward-detail-container {
   display: flex;
   flex-direction: column;
+
+  .details {
+    display: flex;
+    flex-direction: column;
+    padding: 0 1.2rem;
+
+    .instruction {
+      display: flex;
+      align-self: center;
+      font-weight: normal;
+      font-size: 1.4rem;
+      text-align: center;
+      color: #8f8f8f;
+      margin-top: 32px;
+    }
+
+    .tnc {
+      display: flex;
+      align-self: center;
+      font-weight: normal;
+      font-size: 1rem;
+      text-align: center;
+      color: #8f8f8f;
+      margin-top: 24px;
+    }
+
+    .bcode {
+      display: flex;
+      align-self: center;
+      background: #fff;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      border-radius: 2px;
+      text-align: center;
+      margin: 16px;
+      font-size: 1.6rem;
+      min-height: 4.5rem;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+  }
 }
 
 .reward-image-container {
