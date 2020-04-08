@@ -90,7 +90,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
 
   public get identifier(): string {
     const customerIdField = this.loginForm.get('customerID');
-    if (customerIdField && customerIdField.value) {
+    if (customerIdField && customerIdField.value && this.countryCode.code) {
       return `${this.countryCodePrefix ? this.countryCodePrefix : this.countryCode.code}${customerIdField.value}`;
     }
     return '';
