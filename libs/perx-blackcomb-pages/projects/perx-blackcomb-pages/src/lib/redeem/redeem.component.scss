@@ -1,5 +1,17 @@
+$max-width: 60rem;
+
 .parent-container {
+  margin: 0 auto;
+  background: white;
+  display: flex;
+  flex-direction: column;
   height: 100%;
+  max-width: $max-width;
+  flex-grow: 1;
+  width: 100%;
+  //todo: refactor all the redemption components to not be scrollable. let this parent container handle it
+  //overflow-y: scroll;
+  padding-bottom: 2rem;
 }
 
 .redemption-result {
