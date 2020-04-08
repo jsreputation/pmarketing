@@ -66,7 +66,8 @@ export class QuizResultsComponent implements OnInit {
         title: `Congratulations! You scored ${points} points`,
         text: 'Here\'s a reward for you.',
         buttonTxt: 'View Reward',
-        imageUrl: 'assets/quiz/reward.png'
+        imageUrl: 'assets/quiz/reward.png',
+        ctaButtonClass: 'ga_game_completion'
       };
       nextRoute = '/wallet';
     }
