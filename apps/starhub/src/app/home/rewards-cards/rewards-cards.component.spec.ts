@@ -5,7 +5,7 @@ import { MatIconModule, MatCardModule } from '@angular/material';
 import { RewardsService, IReward, ConfigService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
-import { MacaronService } from 'src/app/services/macaron.service';
+import { MacaronService } from '../../services/macaron.service';
 
 describe('RewardsCardsComponent', () => {
   let component: RewardsCardsComponent;

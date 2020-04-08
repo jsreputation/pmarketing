@@ -28,8 +28,8 @@ import {
   ConfigService, SettingsService
 } from '@perxtech/core';
 
-import { rewards } from 'src/app/rewards.mock';
-import { catalogs } from 'src/app/catalogs.mock';
+import { rewards } from '../../rewards.mock';
+import { catalogs } from '../../catalogs.mock';
 import { DiscoverComponent } from './discover.component';
 
 import { NewsFeedComponent } from '../news-feed/news-feed.component';

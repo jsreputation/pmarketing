@@ -1,9 +1,0 @@
-@import "variables";
-
-.info-text {
-  @include typo-caption;
-
-  color: $white;
-  display: block;
-  min-width: 22rem;
-}

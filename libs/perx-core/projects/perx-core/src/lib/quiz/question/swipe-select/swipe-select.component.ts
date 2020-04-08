@@ -16,9 +16,9 @@ import {
   AnimationEvent
 } from '@angular/animations';
 import {
-  Configuration,
+  SwipeConfiguration,
   Constants,
-  ListType,
+  SwipeListType,
   QuizQuestionType,
   Warnings
 } from '../../models/quiz.model';
@@ -37,16 +37,16 @@ interface IPayloadSwipeOne {
       transition('* => *', [
         query(':leave', [
           stagger(100, [
-            animate('0s', style({opacity: '0'})),
-            animate('0.2s', style({height: '0px', opacity: '0', display: 'none'}))
+            animate('0s', style({ opacity: '0' })),
+            animate('0.2s', style({ height: '0px', opacity: '0', display: 'none' }))
           ])
-        ], {optional: true})
+        ], { optional: true })
       ])
     ]), // snap animation ->
     trigger('slideLeft', [
       transition('* => *', animate(100, keyframes([ // update faster so more responsive snap if dont hit threshold
-        style({left: '*', offset: 0}),
-        style({left: '0', offset: 1}), // offset 1 : the snap occurs on timing 100 -> https://angular.io/guide/transition-and-triggers
+        style({ left: '*', offset: 0 }),
+        style({ left: '0', offset: 1 }), // offset 1 : the snap occurs on timing 100 -> https://angular.io/guide/transition-and-triggers
       ])
       ))
     ])
@@ -58,7 +58,7 @@ export class QuizSwipeSelectComponent implements OnInit {
     type: QuizQuestionType.swipeSelect,
     choices: []
   };
-  @Input() public configuration: Configuration;
+  @Input() public configuration: SwipeConfiguration;
   @Output()
   public updateAnswers: EventEmitter<any[]> = new EventEmitter<any[]>();
   public answered: boolean = false;
@@ -93,8 +93,8 @@ export class QuizSwipeSelectComponent implements OnInit {
 
   public setNumberOfSelectIcon(): void {
     const config = this.configuration;
-    if (!this.isValidConfig || config.numberOfSelectIcon === 2) {
-      this.numberOfSelectIcon = Constants.NUMBER_OF_DELETE_ICONS;
+    if (!this.isValidConfig || config.numberOfIcons === 2) {
+      this.numberOfSelectIcon = Constants.NUMBER_OF_ICONS;
     } else {
       this.numberOfSelectIcon = 0;
     }
@@ -131,19 +131,19 @@ export class QuizSwipeSelectComponent implements OnInit {
 
   public setlistType(): void {
     const config = this.configuration;
-    if (!this.isValidConfig || config.listType === '' || config.listType === undefined || config.listType === null) {
-      this.listType = ListType.SINGLELINE;
+    if (!this.isValidConfig || config.listType === undefined || config.listType === null) {
+      this.listType = SwipeListType.SINGLELINE;
     } else {
       const listType = config.listType.trim();
       switch (listType) {
-        case ListType.SINGLELINE:
-        case ListType.MULTILINE:
-        case ListType.LISTWITHICON:
-        case ListType.LISTWITHIMAGE:
+        case SwipeListType.SINGLELINE:
+        case SwipeListType.MULTILINE:
+        case SwipeListType.LISTWITHICON:
+        case SwipeListType.LISTWITHIMAGE:
           this.listType = listType;
           break;
         default:
-          this.listType = ListType.SINGLELINE;
+          this.listType = SwipeListType.SINGLELINE;
       }
     }
   }
@@ -170,7 +170,7 @@ export class QuizSwipeSelectComponent implements OnInit {
   public panend(_: WheelEvent, index: number, elementReference: HTMLDivElement): void {
     const currentMargin = this.getLeftPosition(elementReference);
     if (currentMargin > this.slideThreshold ||
-      (currentMargin < -this.slideThreshold && this.numberOfSelectIcon === Constants.NUMBER_OF_DELETE_ICONS)) { // when swipe-list
+      (currentMargin < -this.slideThreshold && this.numberOfSelectIcon === Constants.NUMBER_OF_ICONS)) { // when swipe-list
       // merged rename to NUMBER_OF_ICONS
       this.selectElement(index);
     } else {
@@ -188,7 +188,7 @@ export class QuizSwipeSelectComponent implements OnInit {
       const currentMargin = this.getLeftPosition(elementReference);
       // snapping action when cross threshold
       if (currentMargin > this.slideThreshold ||
-        (currentMargin < -this.slideThreshold && this.numberOfSelectIcon === Constants.NUMBER_OF_DELETE_ICONS)) {
+        (currentMargin < -this.slideThreshold && this.numberOfSelectIcon === Constants.NUMBER_OF_ICONS)) {
         elementReference.style.display = 'none';
       }
     }

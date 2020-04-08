@@ -11,7 +11,7 @@ const routes: Routes = [
     path: '', component: QuizComponent, children: [
       { path: '', redirectTo: 'core', pathMatch: 'full' },
       { path: 'core', component: QuizCoreComponent },
-      { path: 'bc/:id', component: QuizBcComponent },
+      { path: 'bc/:cid', component: QuizBcComponent },
       { path: 'results', component: ResultsComponent },
       { path: 'results-bc', component: QuizResultsComponent, data: { results } },
     ]

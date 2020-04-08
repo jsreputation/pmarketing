@@ -8,7 +8,7 @@ import { of } from 'rxjs';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 import { Router } from '@angular/router';
 import { Type } from '@angular/core';
-import { vouchers } from 'src/app/vouchers.mock';
+import { vouchers } from '../../vouchers.mock';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 describe('VouchersComponent', () => {
@@ -56,7 +56,7 @@ describe('VouchersComponent', () => {
 
   it('should on ngOnInit', fakeAsync(() => {
     const voucherService: IVoucherService = fixture.debugElement.injector.get<IVoucherService>
-    (IVoucherService as Type<IVoucherService>);
+      (IVoucherService as Type<IVoucherService>);
 
     const voucherServiceSpy = spyOn(voucherService, 'getFromPage').and.returnValue(of(vouchers));
     component.ngOnInit();

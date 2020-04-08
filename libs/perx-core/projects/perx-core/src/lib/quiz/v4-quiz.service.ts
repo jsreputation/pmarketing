@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 import { Config } from '../config/config';
-import { IQAnswer, IQuiz } from './models/quiz.model';
+import { IQAnswer, IQuiz, QuizMode } from './models/quiz.model';
 import { QuizService, IAnswerResult } from './quiz.service';
 import { oc } from 'ts-optchain';
 
@@ -114,7 +114,8 @@ export class V4QuizService implements QuizService {
           id: game.id,
           title: game.display_properties.title,
           results: {},
-          questions: game.display_properties.questions
+          questions: game.display_properties.questions,
+          mode: QuizMode.basic
         }))
       );
   }

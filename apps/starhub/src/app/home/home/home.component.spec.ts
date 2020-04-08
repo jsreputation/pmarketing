@@ -16,7 +16,7 @@ import {
   ConfigService
 } from '@perxtech/core';
 import { of, throwError } from 'rxjs';
-import { loyalty } from 'src/app/loyalty.mock';
+import { loyalty } from '../../loyalty.mock';
 import { Type } from '@angular/core';
 import { campaigns } from '../../campaigns.mock';
 import { Router } from '@angular/router';

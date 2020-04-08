@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TranslateService } from '@ngx-translate/core';
 import { PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
-import { IQuiz, QuizModule as CoreQuizModule, QuizService } from '@perxtech/core';
-import { BehaviorSubject } from 'rxjs';
+import { QuizModule as CoreQuizModule, QuizService } from '@perxtech/core';
+import { of } from 'rxjs';
 import { quiz } from './mock';
 import { QuizCoreComponent } from './quiz-core/quiz-core.component';
 import { QuizRoutingModule } from './quiz-routing.module';
@@ -12,10 +12,10 @@ import { QuizComponent } from './quiz.component';
 import { ResultsComponent } from './results/results.component';
 
 const mockQuizService: Partial<QuizService> = {
-  getQuizFromCampaign: () => new BehaviorSubject<IQuiz>(quiz)
+  getQuizFromCampaign: () => of(quiz)
 };
 const mockTranslateService: Partial<TranslateService> = {
-  get: () => new BehaviorSubject<string>('TODO')
+  get: () => of('TODO')
 };
 
 @NgModule({

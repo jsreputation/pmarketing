@@ -7,10 +7,10 @@ import { RewardsService, LocationsService } from '@perxtech/core';
 import { LocationShortFormatComponent } from '../../location-short-format/location-short-format.component';
 import { of } from 'rxjs';
 import { ExpireTimerComponent } from '../expire-timer/expire-timer.component';
-import { rewards } from 'src/app/rewards.mock';
+import { rewards } from '../../rewards.mock';
 import { Location } from '@angular/common';
 import { Type } from '@angular/core';
-import { IMacaron } from 'src/app/services/macaron.service';
+import { IMacaron } from '../../services/macaron.service';
 
 const locationsServiceStub: Partial<LocationsService> = {
   getFromMerchant: () => of()

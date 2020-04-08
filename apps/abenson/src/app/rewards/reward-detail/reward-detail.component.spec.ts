@@ -5,8 +5,8 @@ import { MatDialogModule } from '@angular/material';
 import { RewardsModule, RewardsService, LoyaltyService, IVoucherService } from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
-import { rewards } from 'src/app/mock/rewards.mock';
-import { loyalty } from 'src/app/mock/loyalty.mock';
+import { rewards } from '../../mock/rewards.mock';
+import { loyalty } from '../../mock/loyalty.mock';
 import { VoucherState } from '@perxtech/core';
 import { RedemptionType } from '@perxtech/core';
 

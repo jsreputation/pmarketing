@@ -47,7 +47,7 @@
                     <div class="mobile-number">
                         <mat-form-field appearance="fill">
                             <mat-label translate>ENTER_CUSTOM_ID</mat-label>
-                            <input matInput [placeholder]="'ENTER_CUSTOM_ID' | translate" formControlName="customerID"
+                            <input autocomplete="tel-local" matInput [placeholder]="'ENTER_CUSTOM_ID' | translate" formControlName="customerID"
                                 [value]="">
                             <mat-error *ngIf="loginForm.hasError('customerID')">
                                 This is <strong>required</strong>
@@ -68,7 +68,7 @@
                 <a [routerLink]="['/forgot-password']" [queryParams]="{ identifier: identifier }" class="link">Forgot
                     Password?</a>
             </div>
-            <button mat-flat-button type=" submit" color="primary"
+            <button mat-flat-button type="submit" color="primary"
                 class="full-width__button">{{'LOGIN' | translate}}</button>
         </form>
     </div>

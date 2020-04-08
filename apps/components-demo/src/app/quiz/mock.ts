@@ -1,16 +1,34 @@
-import { IPoints, IQuiz, QuizQuestionType } from '@perxtech/core';
+import { IPoints, IQuiz, QuizQuestionType, QuizMode } from '@perxtech/core';
 
 export const quiz: IQuiz = {
   title: 'Question pour un champion',
   backgroundImgUrl: 'assets/quiz/background.png',
   cardBackgroundImgUrl: 'assets/quiz/card.png',
+  mode: QuizMode.swipe,
   questions: [
     {
       id: 'jo',
       question: 'Quel est le premier doigt de la main de l\'homme et de certains vertébrés?',
+      description: 'Swipe to select correct answer',
       required: true,
       payload: {
-        type: QuizQuestionType.multipleChoice,
+        type: QuizQuestionType.swipeSelect,
+        choices: [
+          'Pouce',
+          'Index',
+          'Majeur',
+          'Annulaire',
+          'Auriculaire'
+        ]
+      }
+    },
+    {
+      id: 'jo',
+      question: 'Quel est le premier doigt de la main de l\'homme et de certains vertébrés?',
+      description: 'Swipe to eliminate wrong answers',
+      required: false,
+      payload: {
+        type: QuizQuestionType.swipeDelete,
         choices: [
           'Pouce',
           'Index',

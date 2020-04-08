@@ -1,4 +1,6 @@
 .ngstd-main-canvas {
+  overflow: hidden;
+
   ::ng-deep {
     mat-list-item .mat-list-item-content {
       padding: 0 !important;
@@ -14,7 +16,7 @@
     position: absolute;
     align-items: center;
     flex-shrink: 0;
-    margin-left: 0.5%;
+    margin-left: 1%;
 
     .ngstd-delete-icon {
       margin-left: 16px;

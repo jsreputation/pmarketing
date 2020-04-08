@@ -1,4 +1,4 @@
-import { CampaignState, CampaignType, ICampaign, ICampaignService, IQuiz, QuizQuestionType } from '@perxtech/core';
+import { CampaignState, CampaignType, ICampaign, ICampaignService, IQuiz, QuizQuestionType, QuizMode } from '@perxtech/core';
 import { of } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 
@@ -20,6 +20,7 @@ export const quiz: IQuiz = {
   subTitle: 'Select one option from the choices below ',
   backgroundImgUrl: 'assets/quiz/background.png',
   cardBackgroundImgUrl: 'assets/quiz/card.png',
+  mode: QuizMode.swipe,
   questions: [
     {
       id: 'first',

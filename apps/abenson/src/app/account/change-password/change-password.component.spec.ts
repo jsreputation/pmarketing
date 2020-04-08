@@ -8,7 +8,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AuthenticationService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
-import { SharedDataService } from 'src/app/services/shared-data.service';
+import { SharedDataService } from '../../services/shared-data.service';
 import { Router } from '@angular/router';
 
 const authenticationServiceStub: Partial<AuthenticationService> = {

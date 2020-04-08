@@ -1,5 +1,5 @@
 {
-  "name": "perx-microsites",
+  "name": "perxtech",
   "scripts": {
     "build": "lerna run build:lib && lerna run build -- ",
     "build:abenson": "lerna run build:lib && lerna run build:abenson -- ",
@@ -13,8 +13,6 @@
     "build:blackcomb:staging": "lerna run build:lib && lerna run build:blackcomb:staging -- ",
     "build:bpi:production": "echo 'skipping bpi build'",
     "build:bpi:staging": "echo 'skipping bpi build'",
-    "build:candyland:production": "echo 'skipping candyland build'",
-    "build:candyland:staging": "echo 'skipping candyland build'",
     "build:components-demo": "lerna run build:lib && lerna run build:components-demo -- ",
     "build:components-demo:production": "lerna run build:lib && lerna run build:components-demo:production --",
     "build:components-demo:staging": "lerna run build:lib && lerna run build:components-demo:staging --",
@@ -22,8 +20,6 @@
     "build:daiichi-dlvn:staging": "lerna run build:lib && lerna run build:daiichi-dlvn:staging --",
     "build:digi:production": "echo 'skipping digi build'",
     "build:digi:staging": "echo 'skipping digi build'",
-    "build:essentials:production": "echo 'skipping essentials build'",
-    "build:essentials:staging": "echo 'skipping essentials build'",
     "build:feature-demo:staging": "echo 'skipping feature-demo build'",
     "build:hkbn:production": "echo 'skipping hkbn build'",
     "build:hkbn:staging": "echo 'skipping hkbn build'",
@@ -56,7 +52,6 @@
     "clean": "lerna clean --yes && lerna run clean && rm -rf ./dist ./node_modules",
     "e2e-ci": "lerna run e2e -- --protractor-config=e2e/protractor-ci.conf.js",
     "e2e-ci-pro": "lerna run e2e-pro -- e2e/protractor-circle-ci.conf.js --protractor-config=e2e/protractor-circle-ci.conf.js",
-    "e2e-ci-pro-candyland": "lerna run e2e-pro-candyland -- e2e/protractor-circle-ci.conf.js --protractor-config=e2e/protractor-circle-ci.conf.js",
     "lint-ci": "lerna run lint",
     "lint-ci:fix": "lerna run lint:fix",
     "pree2e-ci": "lerna run pree2e",
