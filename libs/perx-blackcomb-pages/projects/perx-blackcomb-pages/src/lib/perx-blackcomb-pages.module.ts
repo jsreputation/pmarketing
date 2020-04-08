@@ -22,7 +22,7 @@ import {
   MatListModule,
   MatDialogModule,
   MatMenuModule,
-  MatInputModule
+  MatInputModule, MatTableModule
 } from '@angular/material';
 import { GameModule } from './game/game.module';
 import { HistoryComponent } from './history/history.component';
@@ -77,6 +77,9 @@ import { CampaignLandingPageComponent } from './campaign-landing-page/campaign-l
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { ReferralComponent } from './referral/referral.component';
+import { MiniRankComponent } from './mini-rank/mini-rank.component';
+import { LeaderboardComponent } from './leaderboard/leaderboard.component';
+import { LeaderboardPageComponent } from './leaderboard-page/leaderboard-page.component';
 
 const comps: any[] = [
   AccountComponent,
@@ -117,6 +120,9 @@ const comps: any[] = [
   ForgotPasswordComponent,
   LandingPageComponent,
   ReferralComponent,
+  MiniRankComponent,
+  LeaderboardComponent,
+  LeaderboardPageComponent
 ];
 
 @NgModule({
@@ -152,6 +158,7 @@ const comps: any[] = [
     MatDatepickerModule,
     TranslateModule.forChild(),
     MatToolbarModule,
+    MatTableModule,
     MatListModule,
     InfiniteScrollModule,
     MatDialogModule,
@@ -161,7 +168,7 @@ const comps: any[] = [
     ...comps,
   ],
   declarations: [
-    ...comps,
+    ...comps
   ],
   providers: [
     SecondsToStringPipe
