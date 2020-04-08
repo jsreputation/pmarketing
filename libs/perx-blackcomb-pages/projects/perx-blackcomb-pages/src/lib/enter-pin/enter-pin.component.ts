@@ -121,13 +121,13 @@ export class EnterPinComponent implements PopUpClosedCallBack {
           (response: IMessageResponse) => {
             this.notificationService.addSnack(response.message);
             const country = this.countriesList.find(
-              country => `+${this.userPhone}`.startsWith(country.phone)
+              countryCodeO => `+${this.userPhone}`.startsWith(countryCodeO.phone)
             )  || null;
             let phoneNumber: string | null = null;
             let countryCode: ICountryCode | null = null;
             if (country !== null) {
               phoneNumber = `+${this.userPhone}`.slice(country.phone.length); // country.phone contains + while userPhone doesn't
-              countryCode = country
+              countryCode = country;
             }
             this.router.navigate(['login'], { state: { phoneNumber, countryCode } });
           },
