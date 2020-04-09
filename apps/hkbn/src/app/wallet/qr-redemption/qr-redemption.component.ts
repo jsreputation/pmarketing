@@ -3,7 +3,7 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { takeUntil, switchMap } from 'rxjs/operators';
 import { Subject, Subscription } from 'rxjs';
 import { IVoucherService, VoucherState, Voucher } from '@perxtech/core';
-import { NotificationWrapperService } from 'src/app/services/notification-wrapper.service';
+import { NotificationWrapperService } from '../../services/notification-wrapper.service';
 import { Location } from '@angular/common';
 
 @Component({

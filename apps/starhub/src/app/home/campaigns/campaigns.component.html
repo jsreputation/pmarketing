@@ -9,7 +9,7 @@
    [scrollWindow]="false"
    [horizontal]="true"
   >
-    <mat-card *ngFor="let campaign of campaigns" (click)="selected(campaign)" matRipple
+    <mat-card class="ga_campaign" *ngFor="let campaign of campaigns" (click)="selected(campaign)" matRipple
       [matRippleDisabled]="campaign?.macaron?.class === 'coming-soon'">
       <div class="featured-image">
         <img mat-card-image [src]="campaign.thumbnailUrl ? campaign.thumbnailUrl: ''" >

@@ -38,7 +38,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
   public appAccessTokenFetched: boolean;
   private custId: string = '';
   public countryCodePrefix: string | undefined;
-  public countryCode: string;
+  public countryCode: string = '';
   public countriesList$: Observable<ICountryCode[]>;
 
   constructor(

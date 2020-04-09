@@ -6,11 +6,11 @@
     "start": "ng serve",
     "build:lib": "ng build",
     "clean": "rm -rf ./dist ./node_modules",
-    "test": "jest",
+    "test": "jest --config=jest.config.json",
     "lint": "stylelint \"projects/**/*.*css\" && eslint \"projects/**/*.ts\"",
     "lint:fix": "stylelint \"projects/**/*.*css\" --fix && eslint \"projects/**/*.ts\" --fix",
     "e2e~": "ng e2e",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch --config=jest.config.json"
   },
   "private": true,
   "dependencies": {
@@ -66,31 +66,5 @@
   "fesm5": "dist/perx-blackcomb-pages/fesm5/perxtech-blackcomb-pages.js",
   "fesm2015": "dist/perx-blackcomb-pages/fesm2015/perxtech-blackcomb-pages.js",
   "typings": "dist/perx-blackcomb-pages/perxtech-blackcomb-pages.d.ts",
-  "metadata": "dist/perx-blackcomb-pages/perxtech-blackcomb-pages.metadata.json",
-  "jest": {
-    "preset": "jest-preset-angular",
-    "roots": [
-      "projects"
-    ],
-    "transformIgnorePatterns": [
-      "node_modules/(?!ngx-barcode)"
-    ],
-    "transform": {
-      "^.+\\.(ts|js|html)$": "ts-jest"
-    },
-    "setupFilesAfterEnv": [
-      "<rootDir>/projects/setup-jest.ts"
-    ],
-    "moduleNameMapper": {},
-    "globals": {
-      "ts-jest": {
-        "tsConfig": "<rootDir>/projects/perx-blackcomb-pages/tsconfig.spec.json",
-        "stringifyContentPathRegex": "\\.html$",
-        "astTransformers": [
-          "jest-preset-angular/build/InlineFilesTransformer",
-          "jest-preset-angular/build/StripStylesTransformer"
-        ]
-      }
-    }
-  }
+  "metadata": "dist/perx-blackcomb-pages/perxtech-blackcomb-pages.metadata.json"
 }

@@ -16,16 +16,13 @@
             "project": "projects/perx-core/ng-package.json"
           }
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+        "test": {
+          "builder": "@nrwl/jest:jest",
           "options": {
-            "tsConfig": [
-              "projects/perx-core/tsconfig.lib.json",
-              "projects/perx-core/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "jestConfig": "jest.config.json",
+            "tsConfig": "projects/perx-core/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "projects/setup-jest.ts"
           }
         }
       }

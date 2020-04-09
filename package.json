@@ -65,6 +65,7 @@
     "backend/*"
   ],
   "devDependencies": {
-    "lerna": "^3.14.1"
+    "lerna": "^3.14.1",
+    "@nrwl/jest": "^9.2.2"
   }
 }

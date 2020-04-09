@@ -88,6 +88,15 @@
               "devServerTarget": "merck-merchant:serve:production"
             }
           }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "jest.config.json",
+            "tsConfig": "tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "src/setup-jest.ts"
+          }
         }
       }
     }
