@@ -50,7 +50,10 @@
     "NICKNAME_FIELD": "",
     "NICKNAME_REQUIRED_TXT": "",
     "REFERRAL_FIELD": "",
-    "CHECKBOX_TNC_TXT": "",
+    "CHECKBOX_TNC_PIC_AGREE": "I agree with the ",
+    "CHECKBOX_TNC": "Game T&Cs",
+    "CHECKBOX_AND": "  and",
+    "CHECKBOX_PIC": " PICS.",
     "CHECKBOX_TNC_POPUP_TXT": "",
     "LUCKY_DRAW_DESCRIPTION": "",
     "FULL_NAME_HKID_FIELD": "",
@@ -66,7 +69,8 @@
     "DESCRIPTION": "",
     "ERROR_TXT": "",
     "ERROR_LINK": "",
-    "CTA_TXT": ""
+    "CTA_TXT": "",
+    "CTA_TXT_SUCCESS": ""
   },
   "LOGIN_PAGE": {
     "TITLE": "",
@@ -93,6 +97,7 @@
   },
   "QUIZ_TITLE": "",
   "NAVIGATION": {
+    "HOME": "",
     "WALLET": "",
     "HISTORY": "",
     "LEADER_BOARD": "",
@@ -122,6 +127,8 @@
   "REDEMPTION": {
     "TITLE": "",
     "DESCRIPTION": "",
+    "WRONG_PIN": "",
+    "SUCCESSFUL_REDEMPTION": "",
     "CTA_TXT": ""
   },
   "PROMO_CODE": {
@@ -169,8 +176,40 @@
     "CTA_BUTTON": "",
     "SHARE_COPY_TXT": ""
   },
-  "WEEK1_CAMPAIGN": {
-    "TITLE": ""
+  "WEEK1_CAMPAIGN_EASY": {
+    "TITLE": "",
+    "LANDING_CONTENT": "",
+    "QUESTION1": "",
+    "ANSWERS1": ""
+  },
+  "WEEK1_CAMPAIGN_MEDIUM": {
+    "TITLE": "",
+    "LANDING_CONTENT": "",
+    "QUESTION1": "",
+    "ANSWERS1": ""
+  },
+  "WEEK1_CAMPAIGN_HARD": {
+    "TITLE": "",
+    "LANDING_CONTENT": "",
+    "QUESTION1": "",
+    "ANSWERS1": ""
+  },
+  "WEEK2_CAMPAIGN_EASY": {
+    "TITLE": "",
+    "LANDING_CONTENT": "",
+    "QUESTION1": "",
+    "ANSWERS1": ""
+  },
+  "WEEK2_CAMPAIGN_MEDIUM": {
+    "TITLE": "",
+    "LANDING_CONTENT": "",
+    "QUESTION1": "",
+    "ANSWERS1": ""
+  },
+  "WEEK2_CAMPAIGN_HARD": {
+    "TITLE": "",
+    "LANDING_CONTENT": "",
+    "QUESTION1": "",
+    "ANSWERS1": ""
   }
-
 }
