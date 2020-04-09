@@ -15,10 +15,6 @@ import { filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
-interface IRewardConfig {
-  showVoucherBookingFromRewardsPage: boolean;
-}
-
 @Component({
   selector: 'perx-blackcomb-reward-details',
   templateUrl: './reward-details.component.html',
@@ -31,7 +27,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   public descriptionLabel: string = 'Description';
   public tncLabel: string = 'Terms and Conditions';
   public buttonLabel: string = 'Redeem';
-  public appConfig: IConfig<IRewardConfig>;
+  public appConfig: IConfig<void>;
   public rewardData: IReward;
   public loyalty: ILoyalty;
   public maxRewardCost?: number;
@@ -58,8 +54,8 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    this.configService.readAppConfig<IRewardConfig>()
-      .subscribe((config: IConfig<IRewardConfig>) => this.appConfig = config);
+    this.configService.readAppConfig<void>()
+      .subscribe((config: IConfig<void>) => this.appConfig = config);
 
     this.initTranslate();
     this.loyaltyService.getLoyalties().pipe(
@@ -86,7 +82,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   }
 
   public buyReward(): void {
-    if (this.appConfig.custom && this.appConfig.custom.showVoucherBookingFromRewardsPage) {
+    if (this.appConfig && this.appConfig.showVoucherBookingFromRewardsPage) {
       this.router.navigateByUrl(`booking/${this.rewardData.id}`);
     } else {
       this.vouchersService.issueReward(this.rewardData.id, undefined, undefined, this.loyalty.cardId)

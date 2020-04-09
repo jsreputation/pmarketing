@@ -59,11 +59,11 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
       map((params) => params.identifier),
       map((identifier) => {
         const countryCode: ICountryCode | null = countryList.find(
-          country => `+${identifier}`.startsWith(country.phone)
+          country => `${identifier}`.startsWith(country.code)
         ) || null;
         let phoneNumber: string | null = null;
         if (countryCode !== null) {
-          phoneNumber = `+${identifier}`.slice(countryCode.phone.length);
+          phoneNumber = `${identifier}`.slice(countryCode.code.length);
           return [phoneNumber, countryCode];
         }
         return [null, null];
@@ -78,7 +78,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   }
 
   public compareCtryFn(c1: ICountryCode, c2: ICountryCode): boolean {
-    return c1 && c2 ? c1.phone === c2.phone : c1 === c2;
+    return c1 && c2 ? c1.code === c2.code : c1 === c2;
   }
 
   public ngOnDestroy(): void {
@@ -93,7 +93,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     // we use select countryCode object ^ using the response from countryList$
     const stepPhoneFormCountryCode: ICountryCode = this.phoneStepForm.value.countryCode;
     const stepPhoneFormPhoneNumber = this.phoneStepForm.value.phoneNumber;
-    const phone: string = `${stepPhoneFormCountryCode.phone}${stepPhoneFormPhoneNumber}`.trim();
+    const phone: string = `${stepPhoneFormCountryCode.code}${stepPhoneFormPhoneNumber}`.trim();
     this.identifier = `${phone.replace(/[^0-9]/g, '')}`;
     this.usersPhone = this.identifier.slice(-2);
 
