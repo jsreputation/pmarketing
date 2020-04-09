@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { MatIconModule } from '@angular/material';
 import { ConfigModule, VouchersModule } from '@perxtech/core';
 
-import { SharedModule } from 'src/app/shared/shared.module';
+import { SharedModule } from '../../shared/shared.module';
 import { environment } from '../../../environments/environment';
 import { ListRoutingModule } from './list-routing.module';
 import { ListComponent } from './list.component';

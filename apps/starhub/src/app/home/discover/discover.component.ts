@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ICategory } from '../../category.model';
 import { Router } from '@angular/router';
 import { IReward, ICatalog } from '@perxtech/core';
-import { AnalyticsService, PageType } from 'src/app/analytics.service';
+import { AnalyticsService, PageType } from '../../analytics.service';
 
 @Component({
   selector: 'app-discover',
