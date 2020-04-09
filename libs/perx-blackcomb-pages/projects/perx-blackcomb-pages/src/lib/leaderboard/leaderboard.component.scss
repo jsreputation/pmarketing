@@ -2,4 +2,20 @@ table {
   background-color: white;
   width: 90%;
   margin: 0 auto;
+
+  img {
+    margin-left: -1rem;
+  }
+
+  mat-header-cell {
+    font-size: 1.5rem;
+  }
+
+  tr[mat-header-row] {
+    text-transform: uppercase;
+  }
+
+  th:first-child {
+    font-size: 2.3rem;
+  }
 }

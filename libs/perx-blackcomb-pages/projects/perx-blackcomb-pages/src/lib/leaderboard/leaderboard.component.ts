@@ -8,6 +8,12 @@ import { Component, OnInit } from '@angular/core';
 export class LeaderboardComponent implements OnInit {
   public columnsToDisplay = ['ranking', 'nickName', 'points'];
 
+  public rankingImages = [
+    'https://cdn.perxtech.io/content/hsbc-hk/images/firstplace.png',
+    'https://cdn.perxtech.io/content/hsbc-hk/images/secondplace.png',
+    'https://cdn.perxtech.io/content/hsbc-hk/images/thirdplace.png'
+  ];
+
   public myDataArray = [
     {ranking: 1, nickName: 'joker', points: 1},
     {ranking: 2, nickName: 'joker', points: 1},
