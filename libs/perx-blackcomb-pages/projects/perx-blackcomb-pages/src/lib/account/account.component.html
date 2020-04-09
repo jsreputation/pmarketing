@@ -3,15 +3,10 @@
     [ngStyle]="{'background-color': th?.properties['--account_background_color']}">
     <div *ngIf="appConfig | async as aConfig">
       <div *ngIf="aConfig.showUserInfoOnAccountsPage" class="section">
-        <mat-card class="basic-info mat-elevation-z0" (click)="onProfileClicked()">
-          <mat-card-header>
-            <div mat-card-avatar>
-              <img src="assets/avatar.png" alt="">
-            </div>
-            <mat-card-title *ngIf="profile">{{profile.firstName}} {{profile.lastName}}</mat-card-title>
-            <mat-card-subtitle *ngIf="loyalty">{{loyalty.membershipTierName}} TIER</mat-card-subtitle>
-          </mat-card-header>
-        </mat-card>
+        <perx-core-profile-summary
+          [profile]="profile"
+          [loyalty]="loyalty"
+        ></perx-core-profile-summary>
       </div>
       <div class="section">
         <mat-nav-list>
