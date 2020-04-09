@@ -56,7 +56,7 @@ export abstract class ISignUpComponent implements OnDestroy {
       email: ['', Validators.email],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
-      accept_terms: [false, Validators.required],
+      accept_terms: [false, Validators.requiredTrue],
       accept_marketing: [false]
     }, { validators: [equalityValidator('password', 'confirmPassword')] });
 
@@ -85,7 +85,7 @@ export abstract class ISignUpComponent implements OnDestroy {
           // as soon as one of the fields is not empty make the 3 fields mandatory
           this.signupForm.controls.hkid.setValidators([...hkidValidators, Validators.required]);
           this.signupForm.controls.fullName.setValidators([Validators.required]);
-          this.signupForm.controls.accept_marketing.setValidators([Validators.required]);
+          this.signupForm.controls.accept_marketing.setValidators([Validators.requiredTrue]);
         } else {
           // if the fields are empty make the 3 fields optional
           this.signupForm.controls.hkid.setValidators(hkidValidators);
@@ -135,12 +135,6 @@ export abstract class ISignUpComponent implements OnDestroy {
     const mobileNumber = this.mobileNumber;
     const emailValue = this.signupForm.value.email;
     const lastName = this.signupForm.value.fullName ? this.signupForm.value.fullName : nickname;
-    // for some strange reason, the automated addition of the validator on accept_marketing field does not seem to work.
-    // so we do it now
-    if ((name !== '' || hkid !== '') && this.signupForm.value.accept_marketing === false) {
-      this.signupForm.controls.accept_marketing.setErrors({ required: true });
-      return;
-    }
 
     const signUpData: ISignUpData = {
       lastName,
