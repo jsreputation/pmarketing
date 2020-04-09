@@ -60,11 +60,11 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
       map((params) => params.identifier),
       map((identifier) => {
         const countryCode: ICountryCode | null = countryList.find(
-          country => `+${identifier}`.startsWith(country.code)
+          country => `${identifier}`.startsWith(country.code)
         )  || null;
         let phoneNumber: string | null = null;
         if (countryCode !== null) {
-          phoneNumber = `+${identifier}`.slice(countryCode.code.length);
+          phoneNumber = `${identifier}`.slice(countryCode.code.length);
           return [phoneNumber, countryCode];
         }
         return [null, null];
