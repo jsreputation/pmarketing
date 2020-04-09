@@ -1,7 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import {
-  IFormsService,
   AuthenticationService,
   IGameService,
   InstantOutcomeService,
@@ -13,7 +12,9 @@ import {
   ThemesService,
   ITheme,
   ConfigService,
-  IConfig
+  IConfig,
+  GeneralStaticDataService,
+  ICountryCode
 } from '@perxtech/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subject, iif, of, throwError } from 'rxjs';
@@ -21,6 +22,7 @@ import { catchError, tap, switchMap, retryWhen, delay, mergeMap } from 'rxjs/ope
 import { TranslateService } from '@ngx-translate/core';
 import { Location } from '@angular/common';
 import { PinMode } from '../enter-pin/enter-pin.component';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 interface ISignupAttributes {
   [key: string]: any;
@@ -49,9 +51,17 @@ export class SignUpComponent implements OnInit, OnDestroy {
   public appAccessTokenFetched: boolean;
   public theme: Observable<ITheme>;
   public loadingSubmit: boolean = false;
+  public signupForm: FormGroup = this.fb.group({
+    firstName: ['', Validators.required],
+    lastName: ['', Validators.required],
+    countryCode: ['', Validators.required],
+    primary_identifier: ['', Validators.required],
+    password: ['', [Validators.required, Validators.minLength(6)]],
+  }) as FormGroup;
+  public countriesList$: Observable<ICountryCode[]>;
 
   constructor(
-    private formSvc: IFormsService,
+    protected fb: FormBuilder,
     private authService: AuthenticationService,
     private notificationService: NotificationService,
     private router: Router,
@@ -61,13 +71,17 @@ export class SignUpComponent implements OnInit, OnDestroy {
     private location: Location,
     private instantOutcomeService: InstantOutcomeService,
     private themesService: ThemesService,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private generalStaticDataService: GeneralStaticDataService
   ) { }
 
   public ngOnInit(): void {
+    this.countriesList$ = this.generalStaticDataService.getCountriesList([
+      'Hong Kong',
+      'Singapore'
+    ]);
     this.configService.readAppConfig<void>().subscribe((conf: IConfig<void>) => this.appConfig = conf);
     this.theme = this.themesService.getThemeSetting();
-    this.data$ = this.formSvc.getSignupForm();
     this.oldPI = this.authService.getPI();
     this.oldToken = this.authService.getUserAccessToken();
     this.oldAnonymousStatus = this.authService.getAnonymous();
@@ -90,30 +104,21 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  public get formComplete(): boolean {
-    return this.currentPointer === this.totalLength;
-  }
-
-  public setTotalLength(totalLength: number): void {
-    this.totalLength = totalLength;
-  }
-
-  public setCurrentPointer(currentPointer: number): void {
-    this.currentPointer = currentPointer;
-  }
-
-  public updateFormStatus(answers: IAnswer[]): void {
-    this.answers = answers;
-  }
-
   public onSubmit(): void {
     const userObj: ISignupAttributes = {};
-    this.answers.forEach(answer => {
-      if (answer.questionId !== undefined) {
-        userObj[answer.questionId] = answer.questionId === 'primary_identifier' ?
-          answer.content.slice(1) : userObj[answer.questionId] = answer.content;
+    Object.entries(this.signupForm.value).forEach(([key, value]) => {
+      if (key !== 'countryCode') {
+        userObj[key] = value;
       }
     });
+    if (userObj.primary_identifier) {
+      if (this.signupForm.value.countryCode) {
+        userObj.primary_identifier = this.signupForm.value.countryCode + userObj.primary_identifier;
+      } else {
+        // prepend with default countryCode
+        userObj.primary_identifier = `65${userObj.primary_identifier}`;
+      }
+    }
     const pi = userObj.primary_identifier;
     if (pi) {
       if (this.stateData && this.stateData.collectInfo) {
@@ -132,7 +137,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
                 ['/otp', PinMode.register],
                 { state: { mobileNo: pi } });
             } else if (err.error && err.error.message) {
-              console.log(err.error.message);
+              console.error(err.error.message);
               this.notificationService.addSnack(err.error.message);
             } else {
               this.notificationService.addSnack('Something unexpected happened');

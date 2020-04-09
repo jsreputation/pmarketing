@@ -3,16 +3,75 @@
     <div class="error_msg">
       <span>{{errorMessage}}</span>
     </div>
-    <perx-core-survey
-      [hideIndex]="true"
-      [data]="data$"
-      (surveyDone)="updateFormStatus($event)"
-      (totalLength)="setTotalLength($event)"
-      (currentPointer)="setCurrentPointer($event)"></perx-core-survey>
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+      <mat-label>First Name <span class="red-text">*</span></mat-label>
+      <mat-form-field appearance="standard" class="full-width__input">
+        <input matInput
+               [placeholder]="'First Name'"
+               formControlName="firstName"
+               required>
+        <mat-error *ngIf="signupForm.get('firstName')!.hasError('required')">
+          <span>First Name is </span><strong>required</strong>
+        </mat-error>
+      </mat-form-field>
+      <mat-label>Last Name <span class="red-text">*</span></mat-label>
+      <mat-form-field appearance="standard" class="full-width__input">
+        <input matInput
+               [placeholder]="'Last Name'"
+               formControlName="lastName"
+               required>
+        <mat-error *ngIf="signupForm.get('lastName')!.hasError('required')">
+          <span>Last Name is </span><strong>required</strong>
+        </mat-error>
+      </mat-form-field>
 
+      <mat-label>Phone Number <span class="red-text">*</span></mat-label>
+      <div class="mobile-group">
+        <div class="country-code">
+          <mat-form-field appearance="standard" class="full-width__input">
+            <mat-label>Country Code</mat-label>
+            <mat-select formControlName="countryCode">
+              <mat-option *ngFor="let country of countriesList$ | async" [value]="country.code">
+                <span>{{country.name}}&nbsp;</span>
+                <span>+{{country.code}}</span>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="mobile-number">
+          <mat-form-field appearance="standard" class="full-width__input">
+            <mat-label translate>MOBILE</mat-label>
+            <input matInput
+                   autocomplete="tel-local"
+                   [placeholder]="'MOBILE' | translate"
+                   formControlName="primary_identifier"
+                   type="tel"
+                   required>
+            <mat-error *ngIf="signupForm.get('primary_identifier')!.hasError('required')">
+              <span>Mobile is </span><strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <mat-label translate>PASSWORD <span class="red-text">*</span></mat-label>
+      <mat-form-field appearance="standard" class="full-width__input">
+        <input matInput
+               [placeholder]="'PASSWORD'| translate"
+               formControlName="password"
+               type="password"
+               autocomplete="on"
+               required>
+        <mat-error *ngIf="signupForm?.get('password')!.hasError('required')">
+          <span>Password is </span><strong>required</strong>
+        </mat-error>
+        <mat-error *ngIf="signupForm?.get('password')!.hasError('minlength')">
+          <span>Password should be at least six characters long</span>
+        </mat-error>
+      </mat-form-field>
+    </form>
     <button
-      [disabled]="!formComplete"
-      mat-flat-button
+    [disabled]="!signupForm.valid"
+    mat-flat-button
       color="primary"
       (click)="onSubmit()">
       <i *ngIf="loadingSubmit" class="loading-spin" >
