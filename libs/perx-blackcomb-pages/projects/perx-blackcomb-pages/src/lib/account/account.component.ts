@@ -79,10 +79,6 @@ export class AccountComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  public onProfileClicked(): void {
-    this.router.navigateByUrl('profile');
-  }
-
   public goToPage(page: AccountPageObject): void {
     if (page.key) {
       this.router.navigate(['/c', page.key]);
