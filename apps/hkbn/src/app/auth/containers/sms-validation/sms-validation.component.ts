@@ -3,7 +3,7 @@ import { AuthenticationService, NotificationService, ISignUpData } from '@perxte
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, Observable, of } from 'rxjs';
 import { takeUntil, switchMap } from 'rxjs/operators';
-import { DataTransferService } from 'src/app/services/data-transfer.service';
+import { DataTransferService } from '../../../services/data-transfer.service';
 
 @Component({
   selector: 'hkbn-sms-validation',

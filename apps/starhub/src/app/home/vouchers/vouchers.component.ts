@@ -2,7 +2,7 @@ import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { Voucher, IVoucherService } from '@perxtech/core';
 import { Observable, forkJoin, of } from 'rxjs';
 import { Router } from '@angular/router';
-import { PageType, AnalyticsService } from 'src/app/analytics.service';
+import { PageType, AnalyticsService } from '../../analytics.service';
 import { tap, map, switchMap } from 'rxjs/operators';
 
 const REQ_PAGE_SIZE: number = 10;

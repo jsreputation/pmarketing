@@ -16,7 +16,7 @@ import {
 import {
   AnalyticsService,
   PageType,
-} from 'src/app/analytics.service';
+} from '../../analytics.service';
 
 @Component({
   selector: 'app-news-feed',

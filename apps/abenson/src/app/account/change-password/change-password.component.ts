@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SharedDataService } from 'src/app/services/shared-data.service';
+import { SharedDataService } from '../../services/shared-data.service';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '@perxtech/core';
 

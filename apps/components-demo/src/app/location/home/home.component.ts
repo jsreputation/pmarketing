@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { INavLink } from 'src/app/navlink.model';
+import { INavLink } from '../../navlink.model';
 
 @Component({
   selector: 'app-home',

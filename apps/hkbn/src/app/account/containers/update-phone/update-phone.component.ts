@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { AuthenticationService, GeneralStaticDataService, ICountryCode } from '@perxtech/core';
 import { HkbnValidators } from '../../../helpers/hkbn-validators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DataTransferService } from 'src/app/services/data-transfer.service';
+import { DataTransferService } from '../../../services/data-transfer.service';
 
 const countries = ['China', 'Hong Kong', 'Macau'];
 

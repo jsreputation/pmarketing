@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { VoucherDetailRoutingModule } from './voucher-detail-routing.module';
 import { VoucherDetailComponent } from './voucher-detail.component';
 import { VouchersModule } from '@perxtech/core';
-import { DetailHeaderModule } from 'src/app/details/detail-header/detail-header.module';
+import { DetailHeaderModule } from '../../details/detail-header/detail-header.module';
 
 @NgModule({
   declarations: [VoucherDetailComponent],
