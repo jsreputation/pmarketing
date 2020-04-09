@@ -8,11 +8,11 @@
     "build:bpi:production": "APIHOST=https://api.perxtech.net PRODUCTION=true npm run config && ng build --prod",
     "build:bpi:staging": "PRODUCTION=true npm run config && ng build --prod",
     "config": "ts-node --project tsconfig.node.json set-env.ts",
-    "test": "jest",
+    "test": "jest --config=jest.config.json",
     "lint": "stylelint \"src/**/*.*css\" && eslint \"./src/**/*.ts\"",
     "lint:fix": "stylelint \"src/**/*.*css\" --fix && eslint \"./src/**/*.ts\" --fix",
     "e2e~": "ng e2e",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch --config=jest.config.json"
   },
   "private": true,
   "dependencies": {
@@ -52,31 +52,5 @@
     "@typescript-eslint/parser": "^2.3.0",
     "@typescript-eslint/eslint-plugin": "~2.3.0",
     "@typescript-eslint/eslint-plugin-tslint": "~2.3.0"
-  },
-  "jest": {
-    "preset": "jest-preset-angular",
-    "roots": [
-      "src"
-    ],
-    "transformIgnorePatterns": [
-      "node_modules/(?!ngx-barcode)"
-    ],
-    "transform": {
-      "^.+\\.(ts|js|html)$": "ts-jest"
-    },
-    "setupFilesAfterEnv": [
-      "<rootDir>/src/setup-jest.ts"
-    ],
-    "moduleNameMapper": {},
-    "globals": {
-      "ts-jest": {
-        "tsConfig": "<rootDir>/tsconfig.spec.json",
-        "stringifyContentPathRegex": "\\.html$",
-        "astTransformers": [
-          "jest-preset-angular/build/InlineFilesTransformer",
-          "jest-preset-angular/build/StripStylesTransformer"
-        ]
-      }
-    }
   }
 }

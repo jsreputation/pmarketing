@@ -10,7 +10,7 @@
     [scrollWindow]="false"
     [horizontal]="true"
   >
-    <mat-card *ngFor="let catalog of catalogs" (click)="selected(catalog)" matRipple>
+    <mat-card class="ga_catalog" *ngFor="let catalog of catalogs" (click)="selected(catalog)" matRipple>
       <img mat-card-image [src]="catalog.catalogBanner">
       <mat-card-content>
         <div>

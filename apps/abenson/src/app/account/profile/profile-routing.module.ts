@@ -7,7 +7,7 @@ import { ChangeStreetAddressComponent } from './change-street-address/change-str
 import { ChangeEmailComponent } from './change-email/change-email.component';
 import { ChangeCityComponent } from './change-city/change-city.component';
 import { VerificationOtpComponent } from './verification-otp/verification-otp.component';
-import { VoidSharedDataGuard } from 'src/app/guard/void-shared-data.guard';
+import { VoidSharedDataGuard } from '../../guard/void-shared-data.guard';
 
 const routes: Routes = [
   {

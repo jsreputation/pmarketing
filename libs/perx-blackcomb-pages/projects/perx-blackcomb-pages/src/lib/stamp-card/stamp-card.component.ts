@@ -189,6 +189,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
                 text: 'Here is a reward for you.',
                 imageUrl: 'assets/prize.png',
                 disableOverlayClose: true,
+                ctaButtonClass: 'ga_game_completion',
                 url: `/voucher/${voucherId}`,
                 afterClosedCallBackRedirect: this,
                 buttonTxt: 'View Reward',
