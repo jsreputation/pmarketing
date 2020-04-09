@@ -31,7 +31,6 @@ export class ProfileSummaryComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    console.log(this.profile, 'waht is my progile');
     if (!this.titleFn) {
       this.titleFn = (profile?: IProfile): string => {
         if (profile && profile.customProperties && profile.customProperties.nickName) {
