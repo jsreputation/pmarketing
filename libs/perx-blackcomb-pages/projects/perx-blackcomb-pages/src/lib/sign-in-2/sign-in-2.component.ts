@@ -55,7 +55,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
     this.preAuth = this.config.preAuth ? this.config.preAuth : false;
     const nav: Navigation | null = this.router.getCurrentNavigation();
     this.custId = oc(nav).extras.state.phoneNumber('');
-    this.countryCode = oc(nav).extras.state.countryCode(null);
+    this.countryCode = oc(nav).extras.state.countryCode.code('');
   }
 
   public ngOnInit(): void {
@@ -64,9 +64,9 @@ export class SignIn2Component implements OnInit, OnDestroy {
       this.appConfig = conf;
       this.countryCodePrefix = conf.countryCodePrefix;
     });
+    // todo: make this a input
     this.countriesList$ = this.generalStaticDataService.getCountriesList([
       'Hong Kong',
-      'Philippines',
       'Singapore'
     ]);
     const token = this.authService.getAppAccessToken();
@@ -90,8 +90,8 @@ export class SignIn2Component implements OnInit, OnDestroy {
 
   public get identifier(): string {
     const customerIdField = this.loginForm.get('customerID');
-    if (customerIdField && customerIdField.value) {
-      return `${this.countryCodePrefix ? this.countryCodePrefix : (this.countryCode || '').substring(1)}${customerIdField.value}`;
+    if (customerIdField && customerIdField.value && this.countryCode) {
+      return `${this.countryCodePrefix ? this.countryCodePrefix : this.countryCode}${customerIdField.value}`;
     }
     return '';
   }
@@ -148,9 +148,5 @@ export class SignIn2Component implements OnInit, OnDestroy {
           }
         }
       );
-  }
-
-  public updateCountryCode(value: string): void {
-    this.countryCode = value;
   }
 }
