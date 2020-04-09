@@ -75,7 +75,7 @@ describe('ForgotPasswordComponent', () => {
     expect(component.phoneStepForm.value).toEqual({ phoneNumber: '987654', countryCode: {
       id: 33,
       name: 'Philippines',
-      phone: '+63'
+      code: '63'
     }
     });
   });
@@ -85,7 +85,7 @@ describe('ForgotPasswordComponent', () => {
     component.phoneStepForm.setValue({ phoneNumber: '63987654', countryCode: {
       id: 36,
       name: 'Singapore',
-      phone: '+65'
+      code: '65'
     }});
     component.phoneHandler();
     fixture.detectChanges();
@@ -130,7 +130,7 @@ describe('ForgotPasswordComponent', () => {
     component.phoneStepForm.setValue({ phoneNumber: '63987654', countryCode: {
       id: 36,
       name: 'Singapore',
-      phone: '+65'
+      code: '65'
     }});
     component.phoneHandler();
     fixture.detectChanges();
