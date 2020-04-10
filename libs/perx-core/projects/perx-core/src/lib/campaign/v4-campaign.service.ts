@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import {EMPTY, Observable} from 'rxjs';
-import {catchError, map, shareReplay} from 'rxjs/operators';
+import { EMPTY, Observable } from 'rxjs';
+import { catchError, map, shareReplay } from 'rxjs/operators';
 import {
   ICampaign,
   CampaignType,
@@ -13,7 +13,7 @@ import { V4RewardsService, IV4Reward } from '../rewards/v4-rewards.service';
 import { oc } from 'ts-optchain';
 import { IConfig } from '../config/models/config.model';
 import { ConfigService } from '../config/config.service';
-import { TreeDisplayProperties, PinataDisplayProperties, ScratchDisplayProperties, SpinDisplayProperties } from '../game/v4-game.service';
+import { TreeDisplayProperties, PinataDisplayProperties, ScratchDisplayProperties, SpinDisplayProperties, GameProperties } from '../game/v4-game.service';
 import { QuizDisplayProperties } from '../quiz/v4-quiz.service';
 import { GameType } from '../game/game.model';
 
@@ -22,11 +22,13 @@ interface IV4Image {
   url: string;
 }
 
+/* eslint-disable @typescript-eslint/indent */
 type DisplayProperties = TreeDisplayProperties |
-PinataDisplayProperties |
-ScratchDisplayProperties |
-SpinDisplayProperties |
-QuizDisplayProperties;
+  PinataDisplayProperties |
+  ScratchDisplayProperties |
+  SpinDisplayProperties |
+  QuizDisplayProperties;
+/* eslint-enable @typescript-eslint/indent */
 
 interface IV4Campaign {
   id: number;
@@ -106,6 +108,15 @@ export class V4CampaignService implements ICampaignService {
         // @ts-ignore
         displayProperties.landingPage.media = { youtube: youtubeUrl };
       }
+    }
+    if (dp && (dp as GameProperties).background_image) {
+      if (displayProperties === undefined) {
+        displayProperties = {
+          landingPage: {}
+        };
+      }
+      // @ts-ignore
+      displayProperties.landingPage.backgroundUrl = oc(dp as GameProperties).background_image.value.image_url();
     }
 
     return {

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { EventEmitter, NgModule } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TranslateService } from '@ngx-translate/core';
 import { PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
@@ -15,7 +15,10 @@ const mockQuizService: Partial<QuizService> = {
   getQuizFromCampaign: () => of(quiz)
 };
 const mockTranslateService: Partial<TranslateService> = {
-  get: () => of('TODO')
+  get: () => of('TODO'),
+  onTranslationChange: new EventEmitter(),
+  onLangChange: new EventEmitter(),
+  onDefaultLangChange: new EventEmitter()
 };
 
 @NgModule({

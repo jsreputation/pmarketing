@@ -7,6 +7,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { QuizLongTextComponent } from './long-text/long-text.component';
@@ -14,11 +15,7 @@ import { QuizPictureSelectComponent } from './picture-select/picture-select.comp
 import { QuizQuestionComponent } from './question.component';
 import { QuizRatingComponent } from './rating/rating.component';
 import { QuizSelectComponent } from './select/select.component';
-import { QuizSwipeSelectComponent } from './swipe-select/swipe-select.component';
 import { QuizSwipeListComponent } from './swipe-list/swipe-list.component';
-import {
-  MatListModule
-} from '@angular/material';
 
 describe('QuizQuestionComponent', () => {
   let component: QuizQuestionComponent;
@@ -32,7 +29,6 @@ describe('QuizQuestionComponent', () => {
         QuizRatingComponent,
         QuizPictureSelectComponent,
         QuizLongTextComponent,
-        QuizSwipeSelectComponent,
         QuizSwipeListComponent
       ],
       imports: [

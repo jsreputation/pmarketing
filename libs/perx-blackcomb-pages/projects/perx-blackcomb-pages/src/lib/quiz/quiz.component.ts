@@ -1,18 +1,21 @@
 import { ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import {
-  IAnswerResult, IPoints, IQAnswer,
-  // IPrePlayStateData,
-  IQuiz, ITracker, NotificationService,
-  // NotificationService,
+  IAnswerResult,
+  IPoints,
+  IQAnswer,
+  IQuiz,
+  ITracker,
+  NotificationService,
   QuizComponent as QuizCoreComponent,
-  QuizMode, QuizQuestionType,
+  QuizMode,
+  QuizQuestionType,
   QuizService,
   SwipeConfiguration,
   SwipeListType
 } from '@perxtech/core';
 import { Observable, Subject, throwError } from 'rxjs';
-import { filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-blackcomb-quiz',
@@ -60,8 +63,16 @@ export class QuizComponent implements OnInit, OnDestroy {
       filter((params: ParamMap) => params.has('cid')),
       map((params: ParamMap) => params.get('cid')),
       map((cid: string) => Number.parseInt(cid, 10)),
-      switchMap((cidN: number) => this.quizService.getQuizFromCampaign(cidN)),
-      filter(quiz => !!quiz),
+      switchMap((cidN: number) => this.quizService.getQuizFromCampaign(cidN)), // todo pass the lang attribute
+      catchError((err: Error) => {
+        console.log(err.name, err.message);
+        this.notificationService.addPopup({
+          title: 'Sorry!',
+          text: 'This quiz is not available at the moment. Try again later.'
+        });
+        this.router.navigate(['/home']);
+        return throwError(err);
+      }),
       map(quiz => {
         quiz.questions = quiz.questions
           .map(question => {
@@ -225,6 +236,16 @@ export class QuizComponent implements OnInit, OnDestroy {
           time
         };
       }),
+      catchError(err => {
+        // save the fact the broken submission for next page
+        this.points[questionPointer] = {
+          questionId: answer.questionId,
+          question: this.quiz.questions[questionPointer].question,
+          points: undefined,
+          time
+        };
+        return throwError(err);
+      }),
       map(() => (void 0))
     );
   }
@@ -258,7 +279,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   }
 
   private redirectUrlAndPopUp(): void {
-    const resultsStr = JSON.stringify(Object.values(this.points));
+    const resultsStr = JSON.stringify({ points: Object.values(this.points), quiz: this.quiz });
     this.router.navigate(['/quiz-results', { results: resultsStr }], { skipLocationChange: true });
   }
 

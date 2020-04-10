@@ -8,9 +8,10 @@
 .landing-page {
   @include quizPage();
 
+  align-items: stretch;
+
   .header {
     z-index: 1;
-    width: 100%;
     background-color: black;
     padding: 3.2rem;
     display: flex;
@@ -35,6 +36,11 @@
 
   .video {
     padding: 2rem;
+    display: flex;
+
+    iframe {
+      flex: 1;
+    }
   }
 
   .tnc {
