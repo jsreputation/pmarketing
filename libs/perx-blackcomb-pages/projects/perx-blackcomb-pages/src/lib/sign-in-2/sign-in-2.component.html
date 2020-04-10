@@ -3,9 +3,9 @@
         <img class="logo" [attr.src]="th?.properties['--logo']" [attr.alt]="th?.properties['--title']" />
     </div>
     <div *ngIf="appConfig" class="login-form">
-        <h1 translate>LOGIN</h1>
+        <h1>{{'LOGIN_PAGE.TITLE' | translate}}</h1>
         <div class="subtitle" *ngIf="appConfig.showSubtitleLogin">
-            Not a member? <a class="link" [routerLink]="'/signup'">Sign up</a>
+            {{'LOGIN_PAGE.NO_ACCOUNT' | translate}} <a class="link" [routerLink]="'/signup'">{{'LOGIN_PAGE.SIGN_UP' | translate}}</a>
         </div>
         <div class="error_msg">
             <span>{{errorMessage}}</span>
@@ -15,17 +15,17 @@
             <ng-template #withPrefixBlock>
                 <mat-form-field appearance="standard" class="full-width__input">
                     <span matPrefix>+{{countryCodePrefix}}&nbsp;<span class="prefix-spacer"></span></span>
-                    <input matInput [placeholder]="'ENTER_CUSTOM_ID' | translate" formControlName="customerID"
+                    <input matInput [placeholder]="'LOGIN_PAGE.MOBILE_FIELD' | translate" formControlName="customerID"
                         [value]="">
                     <mat-error *ngIf="loginForm.hasError('customerID')">
-                        This is <strong>required</strong>
+                        {{'LOGIN_PAGE.MOBILE_INVALID_TXT' | translate}}
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="standard" class="full-width__input">
-                    <input matInput [placeholder]="'ENTER_PASSWORD' | translate" formControlName="password"
+                    <input matInput [placeholder]="'LOGIN_PAGE.PASSWORD_FIELD' | translate" formControlName="password"
                         type="password">
                     <mat-error *ngIf="loginForm.hasError('password')">
-                        This is <strong>required</strong>
+                        {{'LOGIN_PAGE.PASSWORD_INVALID_TXT' | translate}}
                     </mat-error>
                 </mat-form-field>
             </ng-template>
@@ -46,30 +46,31 @@
                     </div>
                     <div class="mobile-number">
                         <mat-form-field appearance="fill">
-                            <mat-label translate>ENTER_CUSTOM_ID</mat-label>
-                            <input autocomplete="tel-local" matInput [placeholder]="'ENTER_CUSTOM_ID' | translate" formControlName="customerID"
+                            <mat-label>{{'LOGIN_PAGE.MOBILE_FIELD' | translate}}</mat-label>
+                            <input autocomplete="tel-local" matInput [placeholder]="'LOGIN_PAGE.MOBILE_FIELD' | translate" formControlName="customerID"
                                 [value]="">
                             <mat-error *ngIf="loginForm.hasError('customerID')">
-                                This is <strong>required</strong>
+                                {{'LOGIN_PAGE.MOBILE_INVALID_TXT' | translate}}
                             </mat-error>
                         </mat-form-field>
                     </div>
                 </div>
                 <mat-form-field appearance="fill" class="full-width__input">
-                    <mat-label translate>ENTER_PASSWORD</mat-label>
-                    <input matInput [placeholder]="'ENTER_PASSWORD' | translate" formControlName="password"
+                    <mat-label translate>{{'LOGIN_PAGE.PASSWORD_FIELD' | translate}}</mat-label>
+                    <input matInput [placeholder]="'LOGIN_PAGE.PASSWORD_FIELD' | translate" formControlName="password"
                         type="password">
                     <mat-error *ngIf="loginForm.hasError('password')">
-                        This is <strong>required</strong>
+                        {{'LOGIN_PAGE.PASSWORD_INVALID_TXT' | translate}}
                     </mat-error>
                 </mat-form-field>
             </ng-template>
             <div class="subtitle forgot-password" *ngIf="appConfig.showForgetPasswordOnLogin">
-                <a [routerLink]="['/forgot-password']" [queryParams]="{ identifier: identifier }" class="link">Forgot
-                    Password?</a>
+                <a [routerLink]="['/forgot-password']" [queryParams]="{ identifier: identifier }" class="link">
+                    {{'LOGIN_PAGE.FORGET_PASSWORD_TXT' | translate}}
+                </a>
             </div>
             <button mat-flat-button type="submit" color="primary"
-                class="full-width__button">{{'LOGIN' | translate}}</button>
+                class="full-width__button">{{'LOGIN_PAGE.CTA_TXT' | translate}}</button>
         </form>
     </div>
 </div>
