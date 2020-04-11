@@ -17,7 +17,7 @@ import { MatToolbar, MatDialog } from '@angular/material';
 import { catchError, switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { of, combineLatest } from 'rxjs';
-import { IdataLayerSH } from 'src/app/app.component';
+import { IdataLayerSH } from '../../app.component';
 
 declare var dataLayerSH: IdataLayerSH; // eslint-disable-line
 @Component({

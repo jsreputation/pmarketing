@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Data, Params, Router } from '@angular/router';
-import { IPoints, SecondsToStringPipe, NotificationService, IPopupConfig } from '@perxtech/core';
+import { IPoints, SecondsToStringPipe, NotificationService, IPopupConfig, IQuiz } from '@perxtech/core';
 import { merge } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
@@ -13,7 +13,7 @@ import { oc } from 'ts-optchain';
 export class QuizResultsComponent implements OnInit {
   public results: IPoints[] = [];
 
-  public backgroundImgUrl: string = 'assets/quiz/background.png';
+  public backgroundImgUrl: string = '';
 
   constructor(
     private secondsToString: SecondsToStringPipe,
@@ -27,14 +27,17 @@ export class QuizResultsComponent implements OnInit {
       .pipe(
         filter((data: Data | Params) => data.results),
         map((data: Data | Params) => data.results),
-        map((res: IPoints[] | string) => {
+        map((res: { points: IPoints[], quiz?: IQuiz } | string) => {
           if (typeof res === 'string') {
             res = JSON.parse(res);
           }
           return res;
         }),
       )
-      .subscribe((res: IPoints[]) => this.results = res);
+      .subscribe((res: { points: IPoints[], quiz?: IQuiz }) => {
+        this.results = res.points;
+        this.backgroundImgUrl = oc(res).quiz.backgroundImgUrl('');
+      });
   }
 
   public get title(): string {
@@ -50,7 +53,7 @@ export class QuizResultsComponent implements OnInit {
   }
 
   public next(): void {
-    const points = this.results.reduce((sum, p) => sum + p.points, 0);
+    const points = this.results.reduce((sum, p) => sum + oc(p).points(0), 0);
 
     let popup: IPopupConfig;
     let nextRoute: string;
@@ -66,7 +69,8 @@ export class QuizResultsComponent implements OnInit {
         title: `Congratulations! You scored ${points} points`,
         text: 'Here\'s a reward for you.',
         buttonTxt: 'View Reward',
-        imageUrl: 'assets/quiz/reward.png'
+        imageUrl: 'assets/quiz/reward.png',
+        ctaButtonClass: 'ga_game_completion'
       };
       nextRoute = '/wallet';
     }
@@ -76,6 +80,6 @@ export class QuizResultsComponent implements OnInit {
   }
 
   private get correctAnswers(): number {
-    return this.results.reduce((sum, q) => sum + (q.points > 0 ? 1 : 0), 0);
+    return this.results.reduce((sum, q) => sum + (q.points && q.points > 0 ? 1 : 0), 0);
   }
 }

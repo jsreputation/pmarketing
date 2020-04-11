@@ -9,20 +9,11 @@ import {
   AbstractControl,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-//
-// import {
-//   of,
-//   throwError,
-// } from 'rxjs';
-// import {mergeMap} from 'rxjs/operators';
-
 import {
   AuthenticationService,
   NotificationService,
   ISignUpData,
 } from '@perxtech/core';
-
-// import {SharedDataService} from 'src/app/services/shared-data.service';
 
 @Component({
   selector: 'app-signup',

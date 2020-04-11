@@ -34,12 +34,11 @@
                     <div class="country-code">
                         <mat-form-field appearance="fill">
                             <mat-label>Country Code</mat-label>
-                            <mat-select [(value)]="countryCode">
+                          <mat-select [(value)]="countryCode">
                                 <mat-option
-                                  (selectionChange)="updateCountryCode(country.phone)"
-                                  *ngFor="let country of countriesList$ | async" [value]="country.phone">
+                                  *ngFor="let country of countriesList$ | async" [value]="country.code">
                                     <span>{{country.name}} </span>
-                                    <span>{{country.phone}}</span>
+                                    <span>+{{country.code}}</span>
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>

@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { of, Observable } from 'rxjs';
 import { switchMap, tap, flatMap } from 'rxjs/operators';
 import { AuthenticationService, NotificationService, IChangePasswordData, ProfileService, PopupComponent, IChangePhoneData } from '@perxtech/core';
-import { SharedDataService } from 'src/app/services/shared-data.service';
+import { SharedDataService } from '../../../services/shared-data.service';
 import { MatDialog } from '@angular/material';
 
 @Component({

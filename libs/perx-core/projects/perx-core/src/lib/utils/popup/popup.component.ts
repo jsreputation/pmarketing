@@ -11,6 +11,7 @@ export interface IPopupConfig {
   buttonTxt2?: string | null;
   hideButton?: boolean;
   panelClass?: string[] | string;
+  ctaButtonClass?: string;
 }
 
 export interface PopUpClosedCallBack {
@@ -32,6 +33,7 @@ export class PopupComponent {
   public showButton: boolean = true;
   public buttonTxt: string | null = 'close';
   public buttonTxt2: string | null = null;
+  public ctaButtonClass: string = '';
 
   constructor(
     public dialogRef: MatDialogRef<PopupComponent>,
@@ -59,6 +61,10 @@ export class PopupComponent {
     // can only be true if explicitly passed then we change the default showButton which is true
     if (data.hideButton) {
       this.showButton = false;
+    }
+
+    if (data.ctaButtonClass) {
+      this.ctaButtonClass = data.ctaButtonClass;
     }
   }
 

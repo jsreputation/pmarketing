@@ -62,7 +62,7 @@ export const results: IPoints[] = [
     questionId: '22',
     time: 25,
     question: 'Suite à la réforme territoriale, combien la France métropolitaine compte-t-elle de régions?',
-    points: 2
+    points: undefined // happens, when there is a backend error
   },
   {
     questionId: '23',

@@ -15,6 +15,14 @@
             "tsConfig": "projects/whistler/tsconfig.lib.json",
             "project": "projects/whistler/ng-package.json"
           }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "jest.config.js",
+            "tsConfig": "projects/whistler/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
         }
       }
     }

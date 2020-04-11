@@ -57,7 +57,7 @@
       color="primary"
       *ngIf="this.questionPointer !== this.totalLength - 1"
       (click)="next()"
-      mat-flat-button>
+      mat-flat-button translate>
       Next
     </button>
     <button
@@ -65,7 +65,7 @@
       *ngIf="this.questionPointer === this.totalLength-1"
       (click)="submit()"
       [disabled]="!complete"
-      mat-flat-button>
+      mat-flat-button translate>
       Submit
     </button>
   </mat-toolbar>

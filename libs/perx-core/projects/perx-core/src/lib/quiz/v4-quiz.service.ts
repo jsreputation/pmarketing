@@ -1,21 +1,43 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map, filter } from 'rxjs/operators';
-import { Config } from '../config/config';
-import { IQAnswer, IQuiz, QuizMode } from './models/quiz.model';
-import { QuizService, IAnswerResult } from './quiz.service';
+import { map } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
+import { Config } from '../config/config';
+import { Asset } from '../game/v4-game.service';
+import { IQAnswer, IQQuestion, IQuiz, QuizMode, QuizQuestionType } from './models/quiz.model';
+import { IAnswerResult, QuizService } from './quiz.service';
+
+const enum V4QuizMode {
+  basic = 'basic',
+  swipe = 'swipe',
+  elimination = 'elimination'
+}
 
 export interface QuizDisplayProperties {
   title: string;
-  questions: any[];
+  questions: {
+    question: { [k: string]: string };
+    description: { [k: string]: string };
+    id: string;
+    required: boolean;
+    payload: any;
+  }[];
   landing_page: {
     body: string;
     media?: { youtube?: string; };
     heading: string;
     button_text: string;
     sub_heading: string;
+  };
+  background_image?: Asset;
+  card_image?: Asset;
+  quiz_interaction: V4QuizMode;
+  header?: {
+    value?: {
+      title?: string;
+      description?: string;
+    };
   };
 }
 
@@ -104,19 +126,54 @@ export class V4QuizService implements QuizService {
     this.baseUrl = config.apiHost || '';
   }
 
-  public getQuizFromCampaign(campaignId: number): Observable<IQuiz> {
+  // @ts-ignore
+  public getQuizFromCampaign(campaignId: number, lang: string = 'en'): Observable<IQuiz> {
     return this.http.get<V4GamesResponse>(`${this.baseUrl}/v4/campaigns/${campaignId}/games`)
       .pipe(
         map((res) => res.data),
-        filter((games: V4Game[]) => games.length > 0),
-        map((games: V4Game[]) => games[0]),
-        map((game: V4Game): IQuiz => ({
-          id: game.id,
-          title: game.display_properties.title,
-          results: {},
-          questions: game.display_properties.questions,
-          mode: QuizMode.basic
-        }))
+        map((games: V4Game[]) => {
+          if (games.length === 0) {
+            throw new Error(`No available game for this campaign #${campaignId}`);
+          }
+          return games[0];
+        }),
+        map((game: V4Game): IQuiz => {
+          const mode = V4QuizService.v2Mode2Mode(game.display_properties.quiz_interaction);
+          const questions: IQQuestion[] = game.display_properties.questions.map(question => {
+            const payload = { ...question.payload };
+            if (payload.type === 'select') {
+              payload.choices = payload.choices.map(choice => ({
+                title: choice.answer[lang] || choice.answer.en,
+                id: choice.answer_id
+              }));
+              if (mode === QuizMode.swipe) {
+                payload.type = QuizQuestionType.swipeSelect;
+              }
+              if (mode === QuizMode.elimination) {
+                payload.type = QuizQuestionType.swipeDelete;
+              }
+            }
+
+            return {
+              id: question.id,
+              question: question.question[lang] || question.question.en,
+              description: question.description ? question.description[lang] : oc(question).description.en(),
+              required: question.required,
+              payload
+            };
+          });
+          return {
+            id: game.id,
+            title: oc(game).display_properties.header.value.title(''),
+            subTitle: oc(game).display_properties.header.value.description(),
+            results: {
+            },
+            questions,
+            mode,
+            backgroundImgUrl: oc(game).display_properties.background_image.value.image_url(),
+            cardBackgroundImgUrl: oc(game).display_properties.card_image.value.image_url()
+          };
+        })
       );
   }
 
@@ -143,5 +200,15 @@ export class V4QuizService implements QuizService {
           points: oc(result).score() || 0
         };
       }));
+  }
+
+  private static v2Mode2Mode(mode: V4QuizMode): QuizMode {
+    if (mode === V4QuizMode.swipe) {
+      return QuizMode.swipe;
+    }
+    if (mode === V4QuizMode.elimination) {
+      return QuizMode.elimination;
+    }
+    return QuizMode.basic;
   }
 }

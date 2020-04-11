@@ -13,6 +13,7 @@ interface IChoice {
   img?: string;
   description?: string;
   icon?: string;
+  id: string;
 }
 
 const enum SwipeMode {
@@ -52,13 +53,14 @@ export class QuizSwipeListComponent implements OnInit {
   @Output()
   public updateAnswers: EventEmitter<string[]> = new EventEmitter<string[]>();
 
+  // properties used in template
   public ngstdIndexNumber?: number; // undefined so visual snapping at first dont occur
   public listType: SwipeListType;
   public numberOfIcons: number;
   public choices: IChoice[];
   public lt: typeof SwipeListType = SwipeListType;
 
-  private answerArr: { title: string }[] = [];
+  private answerArr: { title: string; id: string }[] = [];
   private disableWarnings: boolean = false;
   private slideThreshold: number;
   private isValidConfig: boolean = false;
@@ -208,11 +210,11 @@ export class QuizSwipeListComponent implements OnInit {
       this.answerArr = this.answerArr.filter((answer) => answer.title !== this.choices[index].title);
       // emit back up our standing answers when there is only one answer left
       if (this.answerArr.length === 1) { // we need to assume payload is > 1
-        this.updateAnswers.emit(this.answerArr.map(answer => answer.title));
+        this.updateAnswers.emit(this.answerArr.map(answer => answer.id));
       }
     } else {
       this.answerArr.push(this.choices[index]);
-      this.updateAnswers.emit(this.answerArr.map(answer => answer.title));
+      this.updateAnswers.emit(this.answerArr.map(answer => answer.id));
     }
   }
 
