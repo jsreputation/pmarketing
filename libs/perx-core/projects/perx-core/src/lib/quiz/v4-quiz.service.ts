@@ -129,7 +129,6 @@ export class V4QuizService implements QuizService {
     this.baseUrl = config.apiHost || '';
   }
 
-  // @ts-ignore
   public getQuizFromCampaign(campaignId: number, lang: string = 'en'): Observable<IQuiz> {
     return this.http.get<V4GamesResponse>(`${this.baseUrl}/v4/campaigns/${campaignId}/games`)
       .pipe(
