@@ -124,6 +124,7 @@ export abstract class ISignUpComponent implements OnDestroy {
 
     const passwordString = this.signupForm.value.password;
     const confirmPassword = this.signupForm.value.confirmPassword;
+    // should not be necessary now that we use equalityValidator on the form
     if (passwordString !== confirmPassword) {
       this.errorMessage = 'Passwords do not match';
       return;
@@ -156,7 +157,9 @@ export abstract class ISignUpComponent implements OnDestroy {
         this.router.navigateByUrl('otp/register', { state: { mobileNo: mobileNumber } });
       },
       err => {
-        this.notificationService.addSnack(err.error.message);
-      });
+        this.notificationService.addSnack(err.error.message || 'Unexpected error');
+        this.loadingSubmit = false;
+      }
+    );
   }
 }
