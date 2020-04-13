@@ -15,7 +15,7 @@ export const language = () => (req: Request, res: Response, next: NextFunction) 
       langs = langsStr.split(',');
     }
     if (req.query.default) {
-      langs.push(<string>req.query.default);
+      langs.push(<string> req.query.default);
     }
     langs.push('en');
     langs = langs.map(l => l.split(';')[0])
