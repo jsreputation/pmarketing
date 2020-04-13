@@ -1,6 +1,6 @@
 <div class="referral-main-container">
   <div class="referral-page">
-    <h1 translate>Refer a friend</h1>
+    <h1 translate>REFERRAL.TITLE</h1>
     <p [innerHTML]="tnc"></p>
     <div class="code" (click)="copy()">
       <span>{{code}}</span>
@@ -12,6 +12,7 @@
     <button
       mat-flat-button
       color="primary"
-      (click)="share()">Share Referral Code</button>
+      (click)="share()"
+      translate>REFERRAL.CTA_BUTTON</button>
   </mat-toolbar>
 </div>
