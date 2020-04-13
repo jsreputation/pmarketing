@@ -12,7 +12,9 @@ import {
   QuizQuestionType,
   QuizService,
   SwipeConfiguration,
-  SwipeListType
+  SwipeListType,
+  LocaleIdFactory,
+  TokenStorage,
 } from '@perxtech/core';
 import { Observable, Subject, throwError } from 'rxjs';
 import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
@@ -53,17 +55,20 @@ export class QuizComponent implements OnInit, OnDestroy {
     private quizService: QuizService,
     private cd: ChangeDetectorRef,
     private ngZone: NgZone,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private tokenStorage: TokenStorage
   ) {
     this.hideArrow = this.hideArrow.bind(this);
   }
 
   public ngOnInit(): void {
+    // reuse the factory to resolve current language so that we make sure, we use the same logic
+    const lang = LocaleIdFactory(this.tokenStorage);
     this.data$ = this.route.paramMap.pipe(
       filter((params: ParamMap) => params.has('cid')),
       map((params: ParamMap) => params.get('cid')),
       map((cid: string) => Number.parseInt(cid, 10)),
-      switchMap((cidN: number) => this.quizService.getQuizFromCampaign(cidN)), // todo pass the lang attribute
+      switchMap((cidN: number) => this.quizService.getQuizFromCampaign(cidN, lang)), // todo pass the lang attribute
       catchError((err: Error) => {
         console.log(err.name, err.message);
         this.notificationService.addPopup({

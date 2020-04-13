@@ -102,7 +102,6 @@ export class V4CampaignService implements ICampaignService {
       };
       let youtubeUrl = oc(lp).media.youtube() || null;
       if (youtubeUrl) {
-        // youtubeUrl = 'https://www.youtube.com/watch?v=r6BqFtRCr_A';
         youtubeUrl = youtubeUrl.replace('/watch?v=', '/embed/');
 
         // @ts-ignore

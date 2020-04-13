@@ -14,6 +14,7 @@ export class QuizResultsComponent implements OnInit {
   public results: IPoints[] = [];
 
   public backgroundImgUrl: string = '';
+  private quiz: IQuiz | undefined;
 
   constructor(
     private secondsToString: SecondsToStringPipe,
@@ -37,6 +38,7 @@ export class QuizResultsComponent implements OnInit {
       .subscribe((res: { points: IPoints[], quiz?: IQuiz }) => {
         this.results = res.points;
         this.backgroundImgUrl = oc(res).quiz.backgroundImgUrl('');
+        this.quiz = res.quiz;
       });
   }
 
@@ -58,17 +60,20 @@ export class QuizResultsComponent implements OnInit {
     let popup: IPopupConfig;
     let nextRoute: string;
     if (this.correctAnswers !== this.results.length) {
+      const noOutcome = oc(this.quiz).results.noOutcome();
       popup = {
-        title: `You scored ${points} points for this round`,
-        text: '無禮物? 唔緊要, 快D去profile填寫個人資料參加lucky draw抽大獎',
-        buttonTxt: 'Try another quiz'
+        title: oc(noOutcome).title(`You scored ${points} points for this round`),
+        text: oc(noOutcome).subTitle('無禮物? 唔緊要, 快D去profile填寫個人資料參加lucky draw抽大獎'),
+        imageUrl: oc(noOutcome).image(),
+        buttonTxt: oc(noOutcome).button('Try another quiz')
       };
       nextRoute = '/home';
     } else {
+      const outcome = oc(this.quiz).results.outcome();
       popup = {
-        title: `Congratulations! You scored ${points} points`,
-        text: 'Here\'s a reward for you.',
-        buttonTxt: 'View Reward',
+        title: oc(outcome).title(`Congratulations! You scored ${points} points`),
+        text: oc(outcome).subTitle('Here\'s a reward for you.'),
+        buttonTxt: oc(outcome).button('View Reward'),
         imageUrl: 'assets/quiz/reward.png',
         ctaButtonClass: 'ga_game_completion'
       };
