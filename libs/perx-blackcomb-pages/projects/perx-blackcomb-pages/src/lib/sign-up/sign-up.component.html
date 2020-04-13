@@ -9,6 +9,7 @@
         <input matInput
                [placeholder]="'First Name'"
                formControlName="firstName"
+               autocomplete="given-name"
                required>
         <mat-error *ngIf="signupForm.get('firstName')!.hasError('required')">
           <span>First Name is </span><strong>required</strong>
@@ -19,6 +20,7 @@
         <input matInput
                [placeholder]="'Last Name'"
                formControlName="lastName"
+               autocomplete="family-name"
                required>
         <mat-error *ngIf="signupForm.get('lastName')!.hasError('required')">
           <span>Last Name is </span><strong>required</strong>
@@ -53,13 +55,15 @@
           </mat-form-field>
         </div>
       </div>
+
       <mat-label translate>PASSWORD <span class="red-text">*</span></mat-label>
-      <mat-form-field appearance="standard" class="full-width__input">
+      <mat-form-field appearance="standard" floatLabel="never" class="full-width__input">
+        <mat-label translate>PASSWORD</mat-label>
         <input matInput
                [placeholder]="'PASSWORD'| translate"
                formControlName="password"
                type="password"
-               autocomplete="on"
+               autocomplete="off"
                required>
         <mat-error *ngIf="signupForm?.get('password')!.hasError('required')">
           <span>Password is </span><strong>required</strong>
