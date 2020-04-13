@@ -4,6 +4,7 @@
     <mat-icon mat-list-icon *ngIf="result.points>0" class="correct">check</mat-icon>
     <mat-icon mat-list-icon *ngIf="result.points===0" class="wrong">close</mat-icon>
     <h3 mat-line>{{result.question}}</h3>
-    <p mat-line *ngIf="result.time !== undefined">{{'QUIZ_TEMPLATE.SUMMARY_TIME_TAKEN' | translate}} <strong>{{result.time | secondsToString}}</strong></p>
-  </mat-list-item>
+    <p mat-line *ngIf="result.time !== undefined">You took <strong>{{result.time | secondsToString}}</strong> to answer
+      this.</p>
+   </mat-list-item>
 </mat-list>

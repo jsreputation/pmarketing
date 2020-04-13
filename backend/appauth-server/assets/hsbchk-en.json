@@ -140,6 +140,8 @@
     "LABEL_SCORE": "Score"
   },
   "ACCOUNT_PAGE": {
+    "LUCKY_DRAW_INFO": "Lucky Draw Info",
+    "TRANSACTION_HISTORY": "Transaction History",
     "PROFILE": "My Profile",
     "REFER_FRIEND": "Refer a friend",
     "LIFE_TALK": "LIFE Talk",

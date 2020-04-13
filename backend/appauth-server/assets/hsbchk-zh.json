@@ -140,6 +140,8 @@
     "LABEL_SCORE": "得分"
   },
   "ACCOUNT_PAGE": {
+    "LUCKY_DRAW_INFO": "幸運抽獎信息",
+    "TRANSACTION_HISTORY": "交易記錄",
     "PROFILE": "我的資料",
     "REFER_FRIEND": "推薦朋友",
     "LIFE_TALK": "LIFE Talk",
