@@ -13,7 +13,7 @@
         </div>
         <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
             <mat-form-field appearance="fill" class="full-width__input">
-                <mat-label translate>MOBILE</mat-label>
+                <mat-label>{{'SIGN_UP_PAGE.MOBILE_FIELD' | translate}}</mat-label>
                 <span matPrefix>+852&nbsp;<span class="prefix-spacer"></span></span>
                 <input matInput
                     autocomplete="tel-local"
@@ -26,7 +26,7 @@
                 </mat-error>
             </mat-form-field>
             <mat-form-field appearance="fill" class="full-width__input">
-                <mat-label translate>EMAIL</mat-label>
+                <mat-label>{{'SIGN_UP_PAGE.EMAIL_FIELD' | translate}}</mat-label>
                 <input matInput
                     [placeholder]="'SIGN_UP_PAGE.EMAIL_FIELD' | translate"
                     formControlName="email"
@@ -41,7 +41,7 @@
                 </mat-error>
             </mat-form-field>
             <mat-form-field appearance="fill" class="full-width__input">
-                <mat-label translate>PASSWORD</mat-label>
+                <mat-label>{{'SIGN_UP_PAGE.PASSWORD_FIELD' | translate}}</mat-label>
                 <input matInput
                     [placeholder]="'SIGN_UP_PAGE.PASSWORD_FIELD'| translate"
                     formControlName="password"
@@ -56,7 +56,7 @@
                 </mat-error>
             </mat-form-field>
             <mat-form-field appearance="fill" class="full-width__input">
-                <mat-label translate>CONFIRM_PASSWORD</mat-label>
+                <mat-label>{{'SIGN_UP_PAGE.CONFIRM_PASSWORD_FIELD' | translate}}</mat-label>
                 <input matInput [placeholder]="'SIGN_UP_PAGE.CONFIRM_PASSWORD_FIELD' | translate" formControlName="confirmPassword"
                     type="password" autocomplete="on" required>
                 <mat-error *ngIf="signupForm.get('confirmPassword').hasError('required') 
@@ -68,18 +68,18 @@
                 </mat-error>
             </mat-form-field>
             <mat-form-field appearance="fill" class="full-width__input">
-                <mat-label translate>NICKNAME</mat-label>
+                <mat-label>{{'SIGN_UP_PAGE.NICKNAME_FIELD' | translate}}</mat-label>
                 <input matInput
                     autocomplete="nickname"
                     [placeholder]="'SIGN_UP_PAGE.NICKNAME_FIELD' | translate"
                     formControlName="nickname"
                     required>
                 <mat-error *ngIf="signupForm.get('nickname').hasError('required')">
-                    {{'SIGN_UP_PAGE.MOBILE_REQUIRED_TXT' | translate}}
+                    {{'SIGN_UP_PAGE.NICKNAME_REQUIRED_TXT' | translate}}
                 </mat-error>
             </mat-form-field>
             <mat-form-field appearance="fill" class="full-width__input">
-                <mat-label translate>{{'SIGN_UP_PAGE.REFERRAL_FIELD' | translate}}</mat-label>
+                <mat-label>{{'SIGN_UP_PAGE.REFERRAL_FIELD' | translate}}</mat-label>
                 <input matInput [placeholder]="'SIGN_UP_PAGE.REFERRAL_FIELD' | translate" formControlName="referralCode">
             </mat-form-field>
             <div class="checkbox-row">
@@ -98,7 +98,7 @@
                 </mat-error>
             </mat-form-field>
             <mat-form-field appearance="fill" class="full-width__input">
-                <mat-label translate>{{'SIGN_UP_PAGE.HKID_DIGITS_TXT' | translate}}</mat-label>
+                <mat-label>{{'SIGN_UP_PAGE.HKID_DIGITS_TXT' | translate}}</mat-label>
                 <input matInput [placeholder]="'SIGN_UP_PAGE.HKID_DIGITS_TXT' | translate" formControlName="hkid">
                 <mat-error>{{'SIGN_UP_PAGE.HKID_DIGITS_REQUIRED_TXT' | translate}}</mat-error>
             </mat-form-field>
