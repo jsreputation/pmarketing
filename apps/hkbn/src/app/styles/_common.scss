@@ -1,4 +1,4 @@
-@import "~src/assets/styles/variables";
+@import "./variables";
 
 * {
   box-sizing: border-box;
@@ -39,11 +39,11 @@ mat-sidenav-container.mat-drawer-container {
 }
 
 .warn {
-  background: #FFC832;
+  background: #ffc832;
 }
 
 .disclamair a {
-  color: #02B9A5;
+  color: #02b9a5;
 }
 
 .mat-raised-button {

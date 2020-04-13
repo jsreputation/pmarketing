@@ -24,6 +24,15 @@
             "passWithNoTests": true,
             "setupFile": "projects/setup-jest.ts"
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": ".eslintrc",
+            "files": [
+              "projects/**/*.ts"
+            ]
+          }
         }
       }
     }

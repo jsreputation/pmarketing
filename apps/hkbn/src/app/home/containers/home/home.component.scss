@@ -1,11 +1,11 @@
-@import "~src/assets/styles/variables";
+@import "../../../styles/variables";
 
 :host {
   background: $bg-color;
 
   ::ng-deep {
     .points {
-      color: #70A078;
+      color: #70a078;
     }
 
     .card-list-container {

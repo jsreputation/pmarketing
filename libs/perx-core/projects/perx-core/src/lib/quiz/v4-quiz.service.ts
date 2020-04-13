@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 import { Config } from '../config/config';
 import { Asset } from '../game/v4-game.service';
-import { IQAnswer, IQQuestion, IQuiz, QuizMode, QuizQuestionType } from './models/quiz.model';
+import { IQAnswer, IQQuestion, IQuiz, QuizMode, QuizQuestionType, IQuizOutcome } from './models/quiz.model';
 import { IAnswerResult, QuizService } from './quiz.service';
 
 const enum V4QuizMode {
@@ -39,6 +39,9 @@ export interface QuizDisplayProperties {
       description?: string;
     };
   };
+  headline_text?: string;
+  body_text?: string;
+  button_text?: string;
 }
 
 interface V4NextMoveResponse {
@@ -126,7 +129,6 @@ export class V4QuizService implements QuizService {
     this.baseUrl = config.apiHost || '';
   }
 
-  // @ts-ignore
   public getQuizFromCampaign(campaignId: number, lang: string = 'en'): Observable<IQuiz> {
     return this.http.get<V4GamesResponse>(`${this.baseUrl}/v4/campaigns/${campaignId}/games`)
       .pipe(
@@ -162,11 +164,22 @@ export class V4QuizService implements QuizService {
               payload
             };
           });
+          let outcome: IQuizOutcome | undefined;
+          if (oc(game).display_properties.headline_text() ||
+            oc(game).display_properties.body_text() ||
+            oc(game).display_properties.button_text()) {
+            outcome = {
+              title: oc(game).display_properties.headline_text(''),
+              subTitle: oc(game).display_properties.body_text(''),
+              button: oc(game).display_properties.button_text('')
+            };
+          }
           return {
             id: game.id,
             title: oc(game).display_properties.header.value.title(''),
             subTitle: oc(game).display_properties.header.value.description(),
             results: {
+              outcome
             },
             questions,
             mode,
