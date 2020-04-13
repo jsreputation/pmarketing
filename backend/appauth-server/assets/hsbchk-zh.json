@@ -15,9 +15,12 @@
     "NEXT_WEEK_CHALLENGE": "認識年金，「公」「 私」要分明！ 為退休早日買年金， 是近年熱話！但年金 有「公營」、「私營 」之分，部分年金更可扣稅。行動前，要先了解哪一款適合自 己。",
     "CTA_TXT": "了解更多"
   },
+  "WELCOME_PAGE": {
+    "LOG_IN": "登入"
+  },
   "SIGN_UP_PAGE": {
     "TITLE": "登記",
-    "HAVE_AN_ACCOUNT": "已經登記",
+    "HAVE_AN_ACCOUNT": "已經登記？",
     "LOG_IN": "登入",
     "MOBILE_FIELD": "手機號碼",
     "MOBILE_INVALID_TXT": "請輸入有效手機號碼",
@@ -56,7 +59,7 @@
   },
   "LOGIN_PAGE": {
     "TITLE": "登入",
-    "ESCAPE_HATCH": "沒有賬號",
+    "NO_ACCOUNT": "沒有賬號?",
     "SIGN_UP": "註冊",
     "MOBILE_FIELD": "手機號碼",
     "MOBILE_NOTFOUND_TXT": "並無登記用戶記錄",
@@ -72,6 +75,10 @@
     "MOBILE_FIELD": "手機號碼",
     "MOBILE_NOTFOUND_TXT": "並無登記用戶記錄",
     "MOBILE_INVALID_TXT": "請輸入有效手機號碼",
+    "MOBILE_REQURIED_TXT": "請輸入手機號碼",
+    "OTP_SEND_TO": "確認密碼已發送至",
+    "CHECK_YOUR_SMS": "查看你的短信",
+    "RESEND_OTP": "重新傳送確認密碼",
     "CTA_NEXT_TXT": "繼續",
     "NEW_PW_TXT": "請輸入新密碼",
     "CONFIRM_PW_TXT": "請重新輸入新密碼",

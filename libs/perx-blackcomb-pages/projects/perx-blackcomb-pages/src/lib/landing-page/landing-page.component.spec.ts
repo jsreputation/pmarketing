@@ -3,6 +3,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LandingPageComponent } from './landing-page.component';
 import { ThemesService } from '@perxtech/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 
 const themeServiceStub: Partial<ThemesService> = {
@@ -27,7 +28,7 @@ describe('LandingPageComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [LandingPageComponent],
-      imports: [MatToolbarModule, RouterTestingModule],
+      imports: [MatToolbarModule, RouterTestingModule, TranslateModule.forRoot()],
       providers: [
         { provide: ThemesService, useValue: themeServiceStub }
       ]
