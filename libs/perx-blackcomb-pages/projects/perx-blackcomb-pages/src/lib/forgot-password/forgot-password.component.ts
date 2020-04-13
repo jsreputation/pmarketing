@@ -23,7 +23,9 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
       Validators.pattern('^[0-9]+$'),
       Validators.minLength(2),
       Validators.maxLength(10)]),
-    countryCode: new FormControl(null, [])
+    countryCode: new FormControl(null, [
+      Validators.required
+    ])
   });
 
   public newPasswordForm: FormGroup = new FormGroup({
@@ -87,22 +89,22 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   }
 
   public phoneHandler(): void {
-    if (this.phoneStepForm.invalid) {
-      return;
-    }
-    // we use select countryCode object ^ using the response from countryList$
-    const stepPhoneFormCountryCode: ICountryCode = this.phoneStepForm.value.countryCode;
-    const stepPhoneFormPhoneNumber = this.phoneStepForm.value.phoneNumber;
-    const phone: string = `${stepPhoneFormCountryCode.code}${stepPhoneFormPhoneNumber}`.trim();
-    this.identifier = `${phone.replace(/[^0-9]/g, '')}`;
-    this.usersPhone = this.identifier.slice(-2);
+    if (this.phoneStepForm.valid) {
+      // we use select countryCode object ^ using the response from countryList$
+      const stepPhoneFormCountryCode: ICountryCode = this.phoneStepForm.value.countryCode;
+      const stepPhoneFormPhoneNumber = this.phoneStepForm.value.phoneNumber;
+      const phone: string = `${stepPhoneFormCountryCode.code}${stepPhoneFormPhoneNumber}`.trim();
+      this.identifier = `${phone.replace(/[^0-9]/g, '')}`;
+      this.usersPhone = this.identifier.slice(-2);
 
-    this.authenticationService.forgotPassword(this.identifier)
-      .subscribe(
-        () => this.currentStep = 2,
-        (err) => this.handleError(err)
-      );
+      this.authenticationService.forgotPassword(this.identifier)
+        .subscribe(
+          () => this.currentStep = 2,
+          (err) => this.handleError(err)
+        );
+    }
   }
+
 
   public resend(): void {
     if (this.identifier) {

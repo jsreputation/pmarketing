@@ -18,11 +18,6 @@ const displayProperties = `"displayProperties": {
         "content_url": "https://retailbank.hsbc.com.hk/ins/en/lifetalk/blog/"
       },
       {
-        "key": "contact-us",
-        "title": "Contact Us",
-        "content_url": "https://www.hsbc.com.hk/help/contact/"
-      },
-      {
         "key": "tnc",
         "title": "Terms and Conditions",
         "content_url": "https://cdn.perxtech.io/content/hsbc-hk/tnc.html"
@@ -80,6 +75,7 @@ const appConfigFile = `{
   "showUserInfoOnAccountsPage": ${process.env.SHOW_USERINFO_ACCOUNTS ? process.env.SHOW_USERINFO_ACCOUNTS : false},
   "showTransactionHistoryOnAccountsPage": ${process.env.SHOW_TRANSANCTION_HISTORY_ACCOUNTS ? process.env.SHOW_TRANSANCTION_HISTORY_ACCOUNTS : false},
   "showLuckyDrawDetailsOnAccountsPage": ${process.env.SHOW_LUCK_ON_ACCOUNTPAGE ? process.env.SHOW_LUCK_ON_ACCOUNTPAGE : false},
+  "showReferralOnAccountsPage": ${process.env.SHOW_REFER_ON_ACCOUNTPAGE ? process.env.SHOW_REFER_ON_ACCOUNTPAGE : false},
   "showVoucherBookingFromRewardsPage":  ${process.env.SHOW_VOUCHER_BOOKING_FROM_REWARDS ? process.env.SHOW_VOUCHER_BOOKING_FROM_REWARDS : false},
   "custom": {
     "stampsType": "${process.env.STAMPS_TYPE ? process.env.STAMPS_TYPE : 'stamp_card'}",

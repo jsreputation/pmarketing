@@ -4,7 +4,8 @@ import {
   MatInputModule,
   MatCheckboxModule,
   MatSelectModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatDialogModule
 } from '@angular/material';
 import { SignUpRoutingModule } from './sign-up-routing.module';
 import { NgModule } from '@angular/core';
@@ -28,6 +29,7 @@ import { TranslateModule } from '@ngx-translate/core';
     MatButtonModule,
     MatCheckboxModule,
     MatFormFieldModule,
+    MatDialogModule,
     MatProgressSpinnerModule,
     MatInputModule,
     MatSelectModule,
