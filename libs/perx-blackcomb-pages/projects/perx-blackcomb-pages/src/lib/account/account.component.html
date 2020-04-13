@@ -2,17 +2,28 @@
   <div class="page-container" *ngIf="theme | async as th"
     [ngStyle]="{'background-color': th?.properties['--account_background_color']}">
     <div *ngIf="appConfig | async as aConfig">
-      <div *ngIf="aConfig.showUserInfoOnAccountsPage" class="section">
+      <div *ngIf="aConfig.showUserInfoOnAccountsPage">
         <perx-core-profile-summary
           [profile]="profile"
           [loyalty]="loyalty"
         ></perx-core-profile-summary>
       </div>
-      <div class="section">
+      <div class="section profile">
         <mat-nav-list>
+          <mat-list-item routerLink="/profile">
+            My Profile
+          </mat-list-item>
+          <mat-list-item *ngIf="aConfig.showReferralOnAccountsPage" routerLink="/lucky-draw-details">
+            Refer A Friend
+          </mat-list-item>
           <mat-list-item *ngIf="aConfig.showLuckyDrawDetailsOnAccountsPage" routerLink="/lucky-draw-details">
             Lucky Draw Info
           </mat-list-item>
+        </mat-nav-list>
+      </div>
+
+      <div class="section">
+        <mat-nav-list>
           <mat-list-item *ngIf="aConfig.showTransactionHistoryOnAccountsPage" routerLink="/transaction-history">
             Transaction History
           </mat-list-item>

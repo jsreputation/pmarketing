@@ -1,5 +1,4 @@
-import {Component, HostListener, Input, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {Component, Input, OnInit} from '@angular/core';
 import {IProfile} from '../profile.model';
 import {ILoyalty} from '../../loyalty/models/loyalty.model';
 
@@ -21,14 +20,11 @@ export class ProfileSummaryComponent implements OnInit {
 
   @Input()
   public titleFn: (profile: IProfile) => string;
-
-  @HostListener('click', ['$event'])
-  public gotoProfile(_: Event): void {
-    this.router.navigateByUrl('profile');
-  }
-
-  public constructor(private router: Router) {
-  }
+  //
+  // @HostListener('click', ['$event'])
+  // public gotoProfile(_: Event): void {
+  //   this.router.navigateByUrl('profile');
+  // }
 
   public ngOnInit(): void {
     if (!this.titleFn) {
