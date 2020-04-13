@@ -1,7 +1,7 @@
 import {Component, HostListener, Input, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
 import {IProfile} from '../profile.model';
 import {ILoyalty} from '../../loyalty/models/loyalty.model';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -27,8 +27,7 @@ export class ProfileSummaryComponent implements OnInit {
     this.router.navigateByUrl('profile');
   }
 
-  public constructor(private router: Router) {
-  }
+  public constructor(private router: Router) {}
 
   public ngOnInit(): void {
     if (!this.titleFn) {
