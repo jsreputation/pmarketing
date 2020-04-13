@@ -6,7 +6,7 @@
         <div class="main-heading">{{'SIGN_UP_PAGE.TITLE' | translate}}</div>
         <div class="subtitle">
             <span>{{'SIGN_UP_PAGE.HAVE_AN_ACCOUNT' | translate}}</span>? <span class="link" (click)="goToLogin()">
-            {'SIGN_UP_PAGE.LOG_IN' | translate}}</span>
+            {{'SIGN_UP_PAGE.LOG_IN' | translate}}</span>
         </div>
         <div class="error_msg">
             <span>{{errorMessage}}</span>
@@ -22,7 +22,7 @@
                     type="tel"
                     required>
                 <mat-error *ngIf="signupForm.get('mobileNo').hasError('required')">
-                    {'SIGN_UP_PAGE.MOBILE_REQUIRED_TXT' | translate}}
+                    {{'SIGN_UP_PAGE.MOBILE_REQUIRED_TXT' | translate}}
                 </mat-error>
             </mat-form-field>
             <mat-form-field appearance="fill" class="full-width__input">
@@ -34,7 +34,7 @@
                     type="email"
                     required>
                 <mat-error *ngIf="signupForm.get('email').hasError('required')">
-                    {'SIGN_UP_PAGE.EMAIL_REQUIRED_TXT' | translate}}
+                    {{'SIGN_UP_PAGE.EMAIL_REQUIRED_TXT' | translate}}
                 </mat-error>
                 <mat-error *ngIf="signupForm.get('email').hasError('email')">
                     <span>Incorrect email format</span>
@@ -49,7 +49,7 @@
                     autocomplete="on"
                     required>
                 <mat-error *ngIf="signupForm.get('password').hasError('required')">
-                    {'SIGN_UP_PAGE.PASSWORD_REQUIRED_TXT' | translate}}
+                    {{'SIGN_UP_PAGE.PASSWORD_REQUIRED_TXT' | translate}}
                 </mat-error>
                 <mat-error *ngIf="signupForm.get('password').hasError('minlength')">
                     <span>Password should be at least six characters long</span>
@@ -61,7 +61,7 @@
                     type="password" autocomplete="on" required>
                 <mat-error *ngIf="signupForm.get('confirmPassword').hasError('required') 
                 || signupForm.get('confirmPassword').hasError('minlength')">
-                    {'SIGN_UP_PAGE.CONFIRM_PASSWORD_INVALID_TXT' | translate}}
+                    {{'SIGN_UP_PAGE.CONFIRM_PASSWORD_INVALID_TXT' | translate}}
                 </mat-error>
                 <mat-error *ngIf="signupForm.get('confirmPassword').hasError('notEqual')">
                     <span>Passwords do not match</span>
@@ -75,11 +75,11 @@
                     formControlName="nickname"
                     required>
                 <mat-error *ngIf="signupForm.get('nickname').hasError('required')">
-                    {'SIGN_UP_PAGE.MOBILE_REQUIRED_TXT' | translate}}
+                    {{'SIGN_UP_PAGE.MOBILE_REQUIRED_TXT' | translate}}
                 </mat-error>
             </mat-form-field>
             <mat-form-field appearance="fill" class="full-width__input">
-                <mat-label translate>{'SIGN_UP_PAGE.REFERRAL_FIELD' | translate}}</mat-label>
+                <mat-label translate>{{'SIGN_UP_PAGE.REFERRAL_FIELD' | translate}}</mat-label>
                 <input matInput [placeholder]="'SIGN_UP_PAGE.REFERRAL_FIELD' | translate" formControlName="referralCode">
             </mat-form-field>
             <div class="checkbox-row">
