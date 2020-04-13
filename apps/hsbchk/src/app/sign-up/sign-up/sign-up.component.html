@@ -59,7 +59,7 @@
                 <mat-label>{{'SIGN_UP_PAGE.CONFIRM_PASSWORD_FIELD' | translate}}</mat-label>
                 <input matInput [placeholder]="'SIGN_UP_PAGE.CONFIRM_PASSWORD_FIELD' | translate" formControlName="confirmPassword"
                     type="password" autocomplete="on" required>
-                <mat-error *ngIf="signupForm.get('confirmPassword').hasError('required') 
+                <mat-error *ngIf="signupForm.get('confirmPassword').hasError('required')
                 || signupForm.get('confirmPassword').hasError('minlength')">
                     {{'SIGN_UP_PAGE.CONFIRM_PASSWORD_INVALID_TXT' | translate}}
                 </mat-error>
@@ -84,10 +84,10 @@
             </mat-form-field>
             <div class="checkbox-row">
                 <mat-checkbox formControlName="accept_terms"></mat-checkbox>
-                <span class="wrap-checkbox-text">{{'SIGN_UP_PAGE.CHECKBOX_TNC_PIC_AGREE' | translate}} 
-                    <a [routerLink]="['/c/tnc']" class="terms">{{'SIGN_UP_PAGE.CHECKBOX_TNC_PIC_AGREE' | translate}}</a>
+                <span class="wrap-checkbox-text">{{'SIGN_UP_PAGE.CHECKBOX_TNC_PIC_AGREE' | translate}}
+                    <a [routerLink]="['/c/tnc']" class="terms">{{'SIGN_UP_PAGE.CHECKBOX_TNC' | translate}}</a>
                     {{'SIGN_UP_PAGE.CHECKBOX_AND' | translate}}<a [routerLink]="['/c/privacy-policy']">
-                        {{'SIGN_UP_PAGE.CHECKBOX_AND' | translate}}</a></span>
+                        {{'SIGN_UP_PAGE.CHECKBOX_PIC' | translate}}</a></span>
             </div>
             <h2>{{'SIGN_UP_PAGE.LUCKY_DRAW_DESCRIPTION' | translate}}</h2>
             <mat-form-field appearance="fill" class="full-width__input">
@@ -104,7 +104,7 @@
             </mat-form-field>
             <div class="checkbox-container">
                 <div class="checkbox-row">
-                    <mat-checkbox formControlName="accept_marketing"></mat-checkbox>
+                    <mat-checkbox [disabled]="!signupForm.get('hkid').value && !signupForm.get('fullName').value" formControlName="accept_marketing"></mat-checkbox>
                     <span class="wrap-checkbox-text">{{'SIGN_UP_PAGE.CHECKBOX_LUCK_TXT' | translate}} <a href="#">PICS</a>)</span>
                 </div>
                 <mat-error *ngIf="signupForm.get('accept_marketing').hasError('required')">

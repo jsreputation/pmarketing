@@ -60,6 +60,7 @@
   "LOGIN_PAGE": {
     "TITLE": "登入",
     "NO_ACCOUNT": "沒有賬號?",
+    "INVALID_CREDENTIALS": "身份信息錯誤",
     "SIGN_UP": "註冊",
     "MOBILE_FIELD": "手機號碼",
     "MOBILE_NOTFOUND_TXT": "並無登記用戶記錄",
