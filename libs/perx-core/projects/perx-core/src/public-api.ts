@@ -237,7 +237,7 @@ export { QuizRatingComponent } from './lib/quiz/question/rating/rating.component
 export { ResultsComponent } from './lib/quiz/results/results.component';
 export { SecondsToStringPipe } from './lib/quiz/seconds-to-string.pipe';
 export { QuizSwipeListComponent } from './lib/quiz/question/swipe-list/swipe-list.component';
-export { equalityValidator } from './lib/utils/validators';
+export { equalityValidator, emailValidator } from './lib/utils/validators';
 
 /**
  * Config
