@@ -2,7 +2,7 @@
   [ngStyle]="{'background-image': quiz.backgroundImgUrl ? 'url(' + quiz.backgroundImgUrl + ')' : '' }">
   <div class="quiz-page">
     <div class="progress">
-      <p class="progress-text">Question <strong>{{questionPointer + 1}}</strong> out of {{totalLength}}</p>
+      <p class="progress-text">{{'QUIZ_TEMPLATE.QUESTION' | translate}}<strong>{{questionPointer + 1}}</strong>{{'QUIZ_TEMPLATE.OUT_OF' | translate}}{{totalLength}}</p>
       <mat-progress-bar class="progress-bar" mode="determinate" color="warn" [value]="progressBarValue">
       </mat-progress-bar>
     </div>
@@ -58,7 +58,7 @@
       *ngIf="this.questionPointer !== this.totalLength - 1"
       (click)="next()"
       mat-flat-button translate>
-      Next
+      QUIZ_TEMPLATE.CTA_NEXT_TXT
     </button>
     <button
       color="primary"
@@ -66,7 +66,7 @@
       (click)="submit()"
       [disabled]="!complete"
       mat-flat-button translate>
-      Submit
+      QUIZ_TEMPLATE.CTA_SUBMIT_TXT
     </button>
   </mat-toolbar>
 </div>

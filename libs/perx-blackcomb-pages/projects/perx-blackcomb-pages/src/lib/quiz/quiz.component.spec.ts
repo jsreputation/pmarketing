@@ -8,6 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService, Config, ICampaignService, QuizModule, UtilsModule, NotificationService } from '@perxtech/core';
 import { BehaviorSubject } from 'rxjs';
 import { QuizComponent } from './quiz.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 const campaignServiceStub: Partial<ICampaignService> = {};
 const configStub: Partial<Config> = {};
@@ -34,7 +35,8 @@ describe('QuizComponent', () => {
         MatProgressBarModule,
         RouterTestingModule,
         HttpClientTestingModule,
-        UtilsModule
+        UtilsModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: ICampaignService, useValue: campaignServiceStub },

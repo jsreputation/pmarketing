@@ -43,11 +43,11 @@ export class WalletComponent implements OnInit, OnDestroy {
 
 
   public ngOnInit(): void {
-    this.translate.get('MY_WALLET').subscribe(text => this.rewardsHeadline = text);
+    this.translate.get('WALLET.MY_WALLET').subscribe(text => this.rewardsHeadline = text);
     this.vouchers$ = of([]);
     this.onScroll();
     this.filter = [VoucherState.issued, VoucherState.released];
-    this.translate.get('VOUCHER_EXPIRY')
+    this.translate.get('WALLET.REWARD_STATUS_EXPIRY')
       .subscribe((text: string) => {
         this.expiryLabelFn = (v: Voucher) => {
           const dateStr = this.datePipe.transform(v.expiry, 'shortDate');

@@ -17,7 +17,7 @@
             Refer A Friend
           </mat-list-item>
           <mat-list-item *ngIf="aConfig.showLuckyDrawDetailsOnAccountsPage" routerLink="/lucky-draw-details">
-            Lucky Draw Info
+            {{'ACCOUNT_PAGE.LUCKY_DRAW_INFO' | translate}}
           </mat-list-item>
         </mat-nav-list>
       </div>
@@ -25,7 +25,7 @@
       <div class="section">
         <mat-nav-list>
           <mat-list-item *ngIf="aConfig.showTransactionHistoryOnAccountsPage" routerLink="/transaction-history">
-            Transaction History
+            {{'ACCOUNT_PAGE.TRANSACTION_HISTORY' | translate}}
           </mat-list-item>
           <mat-list-item (click)="goToPage(page)" *ngFor="let page of pages">
             {{page.title}}
@@ -34,7 +34,7 @@
       </div>
       <div *ngIf="!preAuth" class="section">
         <mat-nav-list>
-          <mat-list-item (click)="logout()">Log Out</mat-list-item>
+          <mat-list-item (click)="logout()">{{'ACCOUNT_PAGE.LOGOUT' | translate}}</mat-list-item>
         </mat-nav-list>
       </div>
     </div>
