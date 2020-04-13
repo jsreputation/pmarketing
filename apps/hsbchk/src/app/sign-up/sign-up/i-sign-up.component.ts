@@ -1,7 +1,7 @@
 import { OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidatorFn } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthenticationService, ISignUpData, ITheme, NotificationService, ThemesService, equalityValidator } from '@perxtech/core';
+import { AuthenticationService, ISignUpData, ITheme, NotificationService, ThemesService, equalityValidator, emailValidator } from '@perxtech/core';
 import { Observable, Subject, combineLatest } from 'rxjs';
 import { distinctUntilChanged, takeUntil, startWith } from 'rxjs/operators';
 
@@ -53,7 +53,7 @@ export abstract class ISignUpComponent implements OnDestroy {
       fullName: [''],
       hkid: ['', hkidValidators],
       mobileNo: ['', Validators.required],
-      email: ['', Validators.email],
+      email: ['', emailValidator],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
       accept_terms: [false, Validators.requiredTrue],
