@@ -112,6 +112,7 @@
   "WALLET": {
     "REWARDS_TITLE": "My Rewards",
     "HISTORY_TITLE": "My History",
+    "REDEEMED": "Redeemed",
     "REWARD_STATUS_EXPIRY": "Expires on [date]",
     "REWARD_STATUS_REDEEMED": "Redeemed",
     "REWARD_STATUS_EXPIRED": "Expired",

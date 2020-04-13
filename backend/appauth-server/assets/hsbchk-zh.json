@@ -112,6 +112,7 @@
   "WALLET": {
     "REWARDS_TITLE": "我的獎品",
     "HISTORY_TITLE": "我的歷史",
+    "REDEEMED": "已換領",
     "REWARD_STATUS_EXPIRY": "將於[date]過期",
     "REWARD_STATUS_REDEEMED": "換領日期",
     "REWARD_STATUS_EXPIRED": "已失效",
