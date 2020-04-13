@@ -68,7 +68,7 @@ interface V4QuizAnswerRequest {
 
 interface V4AnswerRequest {
   question_id: string;
-  answer: (string | number)[];
+  answer_ids: (string | number)[];
   time_taken: number;
 }
 
@@ -201,7 +201,7 @@ export class V4QuizService implements QuizService {
     const payload: V4QuizAnswerRequest = {
       answer: {
         question_id: answer.questionId,
-        answer: answer.content,
+        answer_ids: answer.content,
         time_taken: answer.timeTaken || -1
       }
     };
