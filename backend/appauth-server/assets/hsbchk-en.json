@@ -101,7 +101,7 @@
     "CTA_NEXT_TXT": "Next",
     "CTA_SUBMIT_TXT": "Submit",
     "SUMMARY_CORRECT": "You got {{total_correct}} out of {{questions.length}} questions correct!",
-    "SUMMARY_TIME_TAKEN": "You took a total of {{time_taken}}",
+    "SUMMARY_TIME_TAKEN": "You took a total of",
     "POSITIVE_OUTCOME_TXT": "Congratulations!",
     "POSITIVE_OUTCOME_SCORE": "You scored [x] points",
     "POSITIVE_OUTCOME_REWARD": "Here’s a reward for you",
