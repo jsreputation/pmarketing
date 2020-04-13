@@ -2,7 +2,7 @@ import { Request } from 'express';
 
 export function getQueryHost(req: Request): string {
   if (req.query.url) {
-    return req.query.url;
+    return <string>req.query.url;
   }
 
   if (req.headers.origin) {
