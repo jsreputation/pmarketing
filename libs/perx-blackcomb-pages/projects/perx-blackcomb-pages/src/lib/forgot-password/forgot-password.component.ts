@@ -23,7 +23,9 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
       Validators.pattern('^[0-9]+$'),
       Validators.minLength(2),
       Validators.maxLength(10)]),
-    countryCode: new FormControl(null, [])
+    countryCode: new FormControl(null, [
+      Validators.required
+    ])
   });
 
   public newPasswordForm: FormGroup = new FormGroup({
