@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
-import { ConfigModule } from '../config/config.module';
+import { ConfigService } from '../config/config.service';
 import { IQuiz } from './models/quiz.model';
 import { V4QuizService } from './v4-quiz.service';
 
@@ -21,13 +21,16 @@ describe('V4QuizService', () => {
     number_of_tries: 100
   };
 
-  const environment = {
-    apiHost: 'https://blabla',
-    production: false,
-    isWhistler: false,
-    preAuth: false,
-    baseHref: '/'
+  const configServiceStub: Partial<ConfigService> = {
+    readAppConfig: () => of({
+      apiHost: 'https://blabla',
+      production: false,
+      isWhistler: false,
+      preAuth: false,
+      baseHref: '/'
+    })
   };
+
   let getFnSpy: jest.Mock;
   let putFnMock: jest.Mock;
 
@@ -36,15 +39,13 @@ describe('V4QuizService', () => {
     putFnMock = jest.fn();
     httpClientSpy = { get: getFnSpy, put: putFnMock };
     TestBed.configureTestingModule({
-      imports: [
-        ConfigModule.forRoot({ ...environment })
-      ],
+      imports: [],
       providers: [
-        { provide: HttpClient, useValue: httpClientSpy }
+        { provide: HttpClient, useValue: httpClientSpy },
+        { provide: ConfigService, useValue: configServiceStub }
       ]
     });
     service = TestBed.get(V4QuizService);
-
   });
 
   it('should be created', () => {

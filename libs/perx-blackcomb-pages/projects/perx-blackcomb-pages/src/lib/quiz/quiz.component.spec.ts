@@ -4,21 +4,30 @@ import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TranslateService } from '@ngx-translate/core';
-import { AuthenticationService, Config, ICampaignService, QuizModule, UtilsModule, NotificationService } from '@perxtech/core';
-import { BehaviorSubject } from 'rxjs';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { AuthenticationService, ConfigService, ICampaignService, NotificationService, QuizModule, UtilsModule, Config } from '@perxtech/core';
+import { BehaviorSubject, of } from 'rxjs';
 import { QuizComponent } from './quiz.component';
-import { TranslateModule } from '@ngx-translate/core';
 
 const campaignServiceStub: Partial<ICampaignService> = {};
-const configStub: Partial<Config> = {};
 const translateServiceStub: Partial<TranslateService> = {
   get: () => new BehaviorSubject('yo')
 };
+const configStub: Config = {};
 const authenticationServiceStub: Partial<AuthenticationService> = {
   getAnonymous: () => false
 };
 const notificationServiceStub: Partial<NotificationService> = {};
+const configServiceStub: Partial<ConfigService> = {
+  readAppConfig: () => of({
+    apiHost: '',
+    production: false,
+    preAuth: false,
+    isWhistler: false,
+    baseHref: ''
+  })
+};
+
 describe('QuizComponent', () => {
   let component: QuizComponent;
   let fixture: ComponentFixture<QuizComponent>;
@@ -41,6 +50,7 @@ describe('QuizComponent', () => {
       providers: [
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: Config, useValue: configStub },
+        { provide: ConfigService, useValue: configServiceStub },
         { provide: TranslateService, useValue: translateServiceStub },
         { provide: AuthenticationService, useValue: authenticationServiceStub },
         { provide: NotificationService, useValue: notificationServiceStub }
