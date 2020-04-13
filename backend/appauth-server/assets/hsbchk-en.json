@@ -95,8 +95,11 @@
   },
   "QUIZ_TEMPLATE": {
     "CTA_START_TXT": "Take the quiz",
+    "QUESTION": "Question ",
+    "OUT_OF": " out of ",
     "PROGRESS_BAR": "Question {{questionId + 1}} out of {{questions.length}}",
     "CTA_NEXT_TXT": "Next",
+    "CTA_SUBMIT_TXT": "Submit",
     "SUMMARY_CORRECT": "You got {{total_correct}} out of {{questions.length}} questions correct!",
     "SUMMARY_TIME_TAKEN": "You took a total of {{time_taken}}",
     "POSITIVE_OUTCOME_TXT": "Congratulations!",

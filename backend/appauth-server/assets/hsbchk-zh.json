@@ -95,8 +95,11 @@
   },
   "QUIZ_TEMPLATE": {
     "CTA_START_TXT": "參與問答遊戲",
+    "QUESTION": "問題",
+    "OUT_OF": "之",
     "PROGRESS_BAR": "問題{{questionId + 1}}之{{total_questions}}",
     "CTA_NEXT_TXT": "繼續",
+    "CTA_SUBMIT_TXT": "提交",
     "SUMMARY_CORRECT": "合共{{questions.length}}條問題，您答對{{total_correct}}題。",
     "SUMMARY_TIME_TAKEN": "您共用了",
     "POSITIVE_OUTCOME_TXT": "恭喜您！",
