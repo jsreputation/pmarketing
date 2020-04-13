@@ -5,7 +5,6 @@ import {
   WalletHistoryComponent,
   HistoryComponent,
   VoucherDetailComponent,
-  ContentComponent,
   RewardDetailsComponent,
   LayoutComponent,
   SignInComponent,
@@ -77,7 +76,6 @@ const routes: Routes = [
       },
       { path: 'reward-detail/:id', component: RewardDetailsComponent },
       { path: 'booking/:id', component: RewardsBookingComponent },
-      { path: 'c/:key', component: ContentComponent },
     ]
   }
 
