@@ -107,14 +107,14 @@
             <h2>{{'SIGN_UP_PAGE.LUCKY_DRAW_DESCRIPTION' | translate}}</h2>
             <mat-form-field appearance="fill" class="full-width__input">
                 <mat-label translate>{{'SIGN_UP_PAGE.FULL_NAME_HKID_FIELD' | translate}}</mat-label>
-                <input matInput [placeholder]="'FULL_NAME' | translate" formControlName="fullName">
+                <input matInput [placeholder]="'SIGN_UP_PAGE.FULL_NAME_HKID_FIELD' | translate" formControlName="fullName">
                 <mat-error>
                     {{'SIGN_UP_PAGE.FULL_NAME_HKID_REQUIRED_TXT' | translate}}
                 </mat-error>
             </mat-form-field>
             <mat-form-field appearance="fill" class="full-width__input">
                 <mat-label>{{'SIGN_UP_PAGE.HKID_DIGITS_TXT' | translate}}</mat-label>
-                <input matInput [placeholder]="'FOUR_DIGITS_HKID' | translate" formControlName="hkid">
+                <input matInput [placeholder]="'SIGN_UP_PAGE.HKID_DIGITS_TXT' | translate" formControlName="hkid">
                 <mat-error>{{'SIGN_UP_PAGE.HKID_DIGITS_REQUIRED_TXT' | translate}}</mat-error>
             </mat-form-field>
             <div class="checkbox-container">
