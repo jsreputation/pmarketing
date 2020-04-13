@@ -1,7 +1,7 @@
 import { OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidatorFn } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthenticationService, ISignUpData, ITheme, NotificationService, ThemesService, equalityValidator } from '@perxtech/core';
+import { AuthenticationService, ITheme, NotificationService, ThemesService, equalityValidator } from '@perxtech/core';
 import { Observable, Subject, combineLatest } from 'rxjs';
 import { distinctUntilChanged, takeUntil, startWith } from 'rxjs/operators';
 
@@ -111,55 +111,5 @@ export abstract class ISignUpComponent implements OnDestroy {
         console.error(`Error${err}`);
       });
     }
-  }
-
-  public onSubmit(): void {
-    if (!this.appAccessTokenFetched) {
-      this.errorMessage = 'Unknown error occured.';
-      return;
-    }
-    if (!this.signupForm.valid) {
-      return;
-    }
-
-    const passwordString = this.signupForm.value.password;
-    const confirmPassword = this.signupForm.value.confirmPassword;
-    // should not be necessary now that we use equalityValidator on the form
-    if (passwordString !== confirmPassword) {
-      this.errorMessage = 'Passwords do not match';
-      return;
-    }
-
-    const nickname = this.signupForm.value.nickname;
-    const referralCode = this.signupForm.value.referralCode;
-    const hkid = this.signupForm.value.hkid;
-    const mobileNumber = this.mobileNumber;
-    const emailValue = this.signupForm.value.email;
-    const lastName = this.signupForm.value.fullName ? this.signupForm.value.fullName : nickname;
-
-    const signUpData: ISignUpData = {
-      lastName,
-      email: emailValue,
-      phone: mobileNumber,
-      password: passwordString,
-      passwordConfirmation: confirmPassword,
-      customProperties: {
-        nickname,
-        referralCode,
-        hkid
-      }
-    };
-
-    this.loadingSubmit = true;
-
-    this.authService.signup(signUpData).subscribe(
-      () => {
-        this.router.navigateByUrl('otp/register', { state: { mobileNo: mobileNumber } });
-      },
-      err => {
-        this.notificationService.addSnack(err.error.message || 'Unexpected error');
-        this.loadingSubmit = false;
-      }
-    );
   }
 }
