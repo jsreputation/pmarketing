@@ -1,22 +1,28 @@
-mat-list {
-  p {
-    color: #1b1b25;
-    font-size: 1.4rem;
-    min-height: 1.6rem;
+.profile-wrapper {
+  margin: 0 auto;
+  width: 80%;
+
+  mat-list {
+    p {
+      color: #1b1b25;
+      font-size: 1.4rem;
+      min-height: 1.6rem;
+    }
+
+    p.label {
+      color: #7d7d89;
+      font-size: 1.2rem;
+      line-height: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    p.conditions {
+      text-transform: capitalize;
+    }
+
+    .mat-icon {
+      font-size: 1.8rem;
+    }
   }
 
-  p.label {
-    color: #7d7d89;
-    font-size: 1.2rem;
-    line-height: 2.5rem;
-    margin-bottom: 1rem;
-  }
-
-  p.conditions {
-    text-transform: capitalize;
-  }
-
-  .mat-icon {
-    font-size: 1.8rem;
-  }
 }

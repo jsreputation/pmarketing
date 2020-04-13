@@ -4,6 +4,7 @@ import { ProfileComponent } from './profile.component';
 import { of } from 'rxjs';
 import { MatListModule, MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 const profileServiceStub: Partial<ProfileService> = {
   whoAmI: () => of()
@@ -19,7 +20,8 @@ describe('ProfileComponent', () => {
       imports: [
         MatListModule,
         MatIconModule,
-        RouterTestingModule
+        RouterTestingModule,
+        TranslateModule
       ],
       providers: [
         { provide: ProfileService, useValue: profileServiceStub }
