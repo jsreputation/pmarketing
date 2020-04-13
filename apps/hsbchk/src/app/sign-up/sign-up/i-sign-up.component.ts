@@ -1,9 +1,19 @@
 import { OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidatorFn } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthenticationService, ISignUpData, ITheme, NotificationService, ThemesService, equalityValidator, emailValidator } from '@perxtech/core';
+import {
+  AuthenticationService,
+  ISignUpData,
+  ITheme,
+  NotificationService,
+  ThemesService,
+  equalityValidator,
+  emailValidator,
+  PopupComponent
+} from '@perxtech/core';
 import { Observable, Subject, combineLatest } from 'rxjs';
 import { distinctUntilChanged, takeUntil, startWith } from 'rxjs/operators';
+import {MatDialog} from '@angular/material';
 
 export abstract class ISignUpComponent implements OnDestroy {
   public signupForm: FormGroup;
@@ -20,7 +30,8 @@ export abstract class ISignUpComponent implements OnDestroy {
     protected router: Router,
     protected themesService: ThemesService,
     protected authService: AuthenticationService,
-    protected notificationService: NotificationService
+    protected notificationService: NotificationService,
+    protected dialog: MatDialog
   ) { }
 
   public ngOnDestroy(): void {
@@ -113,15 +124,7 @@ export abstract class ISignUpComponent implements OnDestroy {
     }
   }
 
-  public onSubmit(): void {
-    if (!this.appAccessTokenFetched) {
-      this.errorMessage = 'Unknown error occured.';
-      return;
-    }
-    if (!this.signupForm.valid) {
-      return;
-    }
-
+  protected fetchFromDataAndSend(): void {
     const passwordString = this.signupForm.value.password;
     const confirmPassword = this.signupForm.value.confirmPassword;
     // should not be necessary now that we use equalityValidator on the form
@@ -133,6 +136,7 @@ export abstract class ISignUpComponent implements OnDestroy {
     const nickname = this.signupForm.value.nickname;
     const referralCode = this.signupForm.value.referralCode;
     const hkid = this.signupForm.value.hkid;
+    const fullName = this.signupForm.value.fullName;
     const mobileNumber = this.mobileNumber;
     const emailValue = this.signupForm.value.email;
     const lastName = this.signupForm.value.fullName ? this.signupForm.value.fullName : nickname;
@@ -145,6 +149,7 @@ export abstract class ISignUpComponent implements OnDestroy {
       passwordConfirmation: confirmPassword,
       customProperties: {
         nickname,
+        fullName,
         referralCode,
         hkid
       }
@@ -161,5 +166,35 @@ export abstract class ISignUpComponent implements OnDestroy {
         this.loadingSubmit = false;
       }
     );
+  }
+
+  public onSubmit(): void {
+    if (!this.appAccessTokenFetched) {
+      this.errorMessage = 'Unknown error occured.';
+      return;
+    }
+    if (!this.signupForm.valid) {
+      return;
+    }
+
+    const dialogRef = this.dialog.open(PopupComponent, {
+      data: {
+        title: 'Reminder: If you do not agree with this term, you will not be eligible to join the LIFE Dojo lucky draw. ',
+        buttonTxt: 'Confirm',
+        buttonTxt2: 'Cancel'
+      }
+    });
+
+    if (this.signupForm.value.accept_marketing && this.signupForm.value.hkid && this.signupForm.value.fullName) {
+      this.fetchFromDataAndSend();
+    } else {
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          this.fetchFromDataAndSend();
+        } else {
+          return;
+        }
+      });
+    }
   }
 }
