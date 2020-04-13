@@ -170,6 +170,15 @@
     "CTA_BUTTON": "Share referral code",
     "SHARE_COPY_TXT": "Join me in the HSBC LIFE Dojo challenge. Watch a video and answer the quiz questions correctly and stand to win rewards each week, as well as a chance for the grand lucky draw.\n[URL]\nUse referral code [code] when signing up and earn 3x lucky draw chances.\n"
   },
+  "HOME": {
+    "MY_QR": "My QR",
+    "MY_BAR_CODE": "My Barcode",
+    "STAMP_CAMPAIGNS": "Stamp Card Campaigns",
+    "CATALOG": "Catalog",
+    "GAMES": "Games",
+    "QUIZ": "Quiz",
+    "FEATURED_REWARDS": "Featured Rewards"
+  },
   "WEEK1_CAMPAIGN_EASY": {
     "TITLE": "White Belt (Easy)",
     "LANDING_CONTENT": "",

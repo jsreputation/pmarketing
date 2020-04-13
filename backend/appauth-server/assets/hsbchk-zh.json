@@ -170,6 +170,15 @@
     "CTA_BUTTON": "分享推薦號碼",
     "SHARE_COPY_TXT": "跟我一起接受滙豐LIFE Dojo挑戰。只要觀看短片並正確回答問題就有機會贏取每週豐富的獎品 ，也有機會參加大抽獎。登記時使用推薦號碼就可享有額外3次參加抽獎的機會。"
   },
+  "HOME": {
+    "MY_QR": "我的二維碼",
+    "MY_BAR_CODE": "我的條形碼",
+    "STAMP_CAMPAIGNS": "郵票卡活動",
+    "CATALOG": "目錄",
+    "GAMES": "遊戲",
+    "QUIZ": "問答遊戲",
+    "FEATURED_REWARDS": "特色獎勵"
+  },
   "WEEK1_CAMPAIGN_EASY": {
     "TITLE": "",
     "LANDING_CONTENT": "",
