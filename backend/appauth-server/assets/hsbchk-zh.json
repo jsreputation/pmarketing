@@ -112,8 +112,9 @@
   "WALLET": {
     "REWARDS_TITLE": "我的獎品",
     "HISTORY_TITLE": "我的歷史",
+    "MY_WALLET": "我的錢包",
     "REDEEMED": "已換領",
-    "REWARD_STATUS_EXPIRY": "將於[date]過期",
+    "REWARD_STATUS_EXPIRY": "將於{{date}}過期",
     "REWARD_STATUS_REDEEMED": "換領日期",
     "REWARD_STATUS_EXPIRED": "已失效",
     "CTA_TXT": "換領"
@@ -177,7 +178,9 @@
     "CATALOG": "目錄",
     "GAMES": "遊戲",
     "QUIZ": "問答遊戲",
-    "FEATURED_REWARDS": "特色獎勵"
+    "FEATURED_REWARDS": "特色獎勵",
+    "SEE_MORE": "查看更多",
+    "SEE_LESS": "關閉查看"
   },
   "WEEK1_CAMPAIGN_EASY": {
     "TITLE": "",

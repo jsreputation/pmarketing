@@ -112,8 +112,9 @@
   "WALLET": {
     "REWARDS_TITLE": "My Rewards",
     "HISTORY_TITLE": "My History",
+    "MY_WALLET": "My Wallet",
     "REDEEMED": "Redeemed",
-    "REWARD_STATUS_EXPIRY": "Expires on [date]",
+    "REWARD_STATUS_EXPIRY": "Expires on {{date}}",
     "REWARD_STATUS_REDEEMED": "Redeemed",
     "REWARD_STATUS_EXPIRED": "Expired",
     "CTA_TXT": "Redeem"
@@ -177,7 +178,9 @@
     "CATALOG": "Catalog",
     "GAMES": "Games",
     "QUIZ": "Quiz",
-    "FEATURED_REWARDS": "Featured Rewards"
+    "FEATURED_REWARDS": "Featured Rewards",
+    "SEE_MORE": "See more",
+    "SEE_LESS": "See less"
   },
   "WEEK1_CAMPAIGN_EASY": {
     "TITLE": "White Belt (Easy)",
