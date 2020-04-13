@@ -13,7 +13,7 @@ const routes: Routes = [
       { path: 'core', component: QuizCoreComponent },
       { path: 'bc/:cid', component: QuizBcComponent },
       { path: 'results', component: ResultsComponent },
-      { path: 'results-bc', component: QuizResultsComponent, data: { results } },
+      { path: 'results-bc', component: QuizResultsComponent, data: { points: results } },
     ]
   }
 ];

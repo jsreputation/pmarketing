@@ -59,20 +59,23 @@
       color: white;
       width: 100%;
 
+      $horizontalPadding: 4rem;
+      $verticalPadding: 0;
+
       h1,
       h2 {
-        padding: 4rem;
+        padding: $verticalPadding $horizontalPadding;
       }
 
       ::ng-deep .question {
         color: white;
-        padding: 4rem;
+        padding: $verticalPadding $horizontalPadding;
       }
 
       ::ng-deep .description {
         color: white;
-        padding: 4rem;
-        text-align: center;
+        padding: $verticalPadding $horizontalPadding;
+        // text-align: center;
       }
 
       // customize look and feel of swipe component

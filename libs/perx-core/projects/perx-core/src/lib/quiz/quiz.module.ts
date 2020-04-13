@@ -12,6 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
+import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { Config } from '../config/config';
 import { QuizLongTextComponent } from './question/long-text/long-text.component';
 import { QuizPictureSelectComponent } from './question/picture-select/picture-select.component';
@@ -22,11 +23,8 @@ import { QuizSwipeListComponent } from './question/swipe-list/swipe-list.compone
 import { QuizService } from './quiz.service';
 import { QuizComponent } from './quiz/quiz.component';
 import { ResultsComponent } from './results/results.component';
-import { V4QuizService } from './v4-quiz.service';
 import { SecondsToStringPipe } from './seconds-to-string.pipe';
-
-import { HAMMER_GESTURE_CONFIG, HammerGestureConfig } from '@angular/platform-browser';
-import { QuizSwipeSelectComponent } from './question/swipe-select/swipe-select.component';
+import { V4QuizService } from './v4-quiz.service';
 
 export function quizServiceFactory(http: HttpClient, config: Config): QuizService {
   // Make decision on what to instantiate base on config
@@ -43,7 +41,6 @@ const componentsAndPipes = [
   QuizSwipeListComponent,
   ResultsComponent,
   SecondsToStringPipe,
-  QuizSwipeSelectComponent
 ];
 
 @Injectable()

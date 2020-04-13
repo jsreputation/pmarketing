@@ -1,5 +1,6 @@
 <mat-list>
   <mat-list-item *ngFor="let result of results">
+    <mat-icon mat-list-icon *ngIf="result.points===undefined" class="warn">priority_high</mat-icon>
     <mat-icon mat-list-icon *ngIf="result.points>0" class="correct">check</mat-icon>
     <mat-icon mat-list-icon *ngIf="result.points===0" class="wrong">close</mat-icon>
     <h3 mat-line>{{result.question}}</h3>

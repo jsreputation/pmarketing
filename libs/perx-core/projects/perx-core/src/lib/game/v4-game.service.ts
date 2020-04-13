@@ -37,7 +37,7 @@ const enum GameType {
   quiz = 'quiz'
 }
 
-interface Asset {
+export interface Asset {
   type: string;
   value: {
     file: string;
@@ -60,7 +60,7 @@ interface Outcome {
   };
 }
 
-interface GameProperties {
+export interface GameProperties {
   header?: {
     type: string;
     value: {

@@ -10,11 +10,12 @@ export interface CampaignDisplayProperties {
 }
 
 export interface CampaignLandingPage {
-  body: string;
+  body?: string;
   media?: { youtube?: string; };
-  heading: string;
-  buttonText: string;
-  subHeading: string;
+  heading?: string;
+  buttonText?: string;
+  subHeading?: string;
+  backgroundUrl?: string;
 }
 
 export enum CampaignType {

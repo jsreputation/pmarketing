@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Data, Params, Router } from '@angular/router';
-import { IPoints, SecondsToStringPipe, NotificationService, IPopupConfig } from '@perxtech/core';
+import { IPoints, SecondsToStringPipe, NotificationService, IPopupConfig, IQuiz } from '@perxtech/core';
 import { merge } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
@@ -13,7 +13,8 @@ import { oc } from 'ts-optchain';
 export class QuizResultsComponent implements OnInit {
   public results: IPoints[] = [];
 
-  public backgroundImgUrl: string = 'assets/quiz/background.png';
+  public backgroundImgUrl: string = '';
+  private quiz: IQuiz | undefined;
 
   constructor(
     private secondsToString: SecondsToStringPipe,
@@ -27,14 +28,18 @@ export class QuizResultsComponent implements OnInit {
       .pipe(
         filter((data: Data | Params) => data.results),
         map((data: Data | Params) => data.results),
-        map((res: IPoints[] | string) => {
+        map((res: { points: IPoints[], quiz?: IQuiz } | string) => {
           if (typeof res === 'string') {
             res = JSON.parse(res);
           }
           return res;
         }),
       )
-      .subscribe((res: IPoints[]) => this.results = res);
+      .subscribe((res: { points: IPoints[], quiz?: IQuiz }) => {
+        this.results = res.points;
+        this.backgroundImgUrl = oc(res).quiz.backgroundImgUrl('');
+        this.quiz = res.quiz;
+      });
   }
 
   public get title(): string {
@@ -50,22 +55,25 @@ export class QuizResultsComponent implements OnInit {
   }
 
   public next(): void {
-    const points = this.results.reduce((sum, p) => sum + p.points, 0);
+    const points = this.results.reduce((sum, p) => sum + oc(p).points(0), 0);
 
     let popup: IPopupConfig;
     let nextRoute: string;
     if (this.correctAnswers !== this.results.length) {
+      const noOutcome = oc(this.quiz).results.noOutcome();
       popup = {
-        title: `You scored ${points} points for this round`,
-        text: '無禮物? 唔緊要, 快D去profile填寫個人資料參加lucky draw抽大獎',
-        buttonTxt: 'Try another quiz'
+        title: oc(noOutcome).title(`You scored ${points} points for this round`),
+        text: oc(noOutcome).subTitle('無禮物? 唔緊要, 快D去profile填寫個人資料參加lucky draw抽大獎'),
+        imageUrl: oc(noOutcome).image(),
+        buttonTxt: oc(noOutcome).button('Try another quiz')
       };
       nextRoute = '/home';
     } else {
+      const outcome = oc(this.quiz).results.outcome();
       popup = {
-        title: `Congratulations! You scored ${points} points`,
-        text: 'Here\'s a reward for you.',
-        buttonTxt: 'View Reward',
+        title: oc(outcome).title(`Congratulations! You scored ${points} points`),
+        text: oc(outcome).subTitle('Here\'s a reward for you.'),
+        buttonTxt: oc(outcome).button('View Reward'),
         imageUrl: 'assets/quiz/reward.png',
         ctaButtonClass: 'ga_game_completion'
       };
@@ -77,6 +85,6 @@ export class QuizResultsComponent implements OnInit {
   }
 
   private get correctAnswers(): number {
-    return this.results.reduce((sum, q) => sum + (q.points > 0 ? 1 : 0), 0);
+    return this.results.reduce((sum, q) => sum + (q.points && q.points > 0 ? 1 : 0), 0);
   }
 }

@@ -7,7 +7,7 @@ export interface IAnswerResult {
 }
 
 export abstract class QuizService {
-  public abstract getQuizFromCampaign(id: number): Observable<IQuiz>;
+  public abstract getQuizFromCampaign(id: number, lang?: string): Observable<IQuiz>;
   public abstract getMove(gameId: number): Observable<{ moveId: number }>;
   public abstract postQuizAnswer(answers: IQAnswer, moveId: number): Observable<IAnswerResult>;
 }
