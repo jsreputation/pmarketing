@@ -20,11 +20,11 @@ export class ProfileSummaryComponent implements OnInit {
 
   @Input()
   public titleFn: (profile: IProfile) => string;
-  //
-  // @HostListener('click', ['$event'])
-  // public gotoProfile(_: Event): void {
-  //   this.router.navigateByUrl('profile');
-  // }
+
+  @HostListener('click', ['$event'])
+  public gotoProfile(_: Event): void {
+    this.router.navigateByUrl('profile');
+  }
 
   public ngOnInit(): void {
     if (!this.titleFn) {
