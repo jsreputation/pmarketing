@@ -10,7 +10,7 @@ export interface IPoints {
   questionId: string;
   time?: number;
   question: string;
-  points: number;
+  points?: number;
 }
 
 export interface IDateRange {

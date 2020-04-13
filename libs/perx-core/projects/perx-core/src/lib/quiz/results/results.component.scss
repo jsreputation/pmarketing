@@ -19,6 +19,12 @@
   @include icon;
 }
 
+.warn {
+  @include icon;
+
+  background-color: #f90;
+}
+
 h3 {
   white-space: nowrap;
   overflow: hidden;

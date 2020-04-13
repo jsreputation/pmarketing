@@ -1,10 +1,11 @@
 // Custom Theming for Angular Material
 @import "custom-theme";
-@import "assets/styles/variables";
-@import "assets/styles/common";
-@import "assets/styles/reset";
+@import "./app/styles/variables";
+@import "./app/styles/common";
+@import "./app/styles/reset";
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
