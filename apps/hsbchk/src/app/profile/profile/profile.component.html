@@ -1,0 +1,51 @@
+<div class="profile-wrapper">
+  <mat-list *ngIf="profile">
+    <h1 translate>PROFILE.TITLE</h1>
+    <mat-list-item>
+      <p matLine class="label" translate>PROFILE.ACCOUNT_LABEL</p>
+      <p matLine>{{profile.identifier}}</p>
+    </mat-list-item>
+
+    <mat-divider></mat-divider>
+    <mat-list-item>
+      <p matLine class="label" translate>PROFILE.MOBILE_LABEL</p>
+      <p matLine>+{{profile.phone}}</p>
+    </mat-list-item>
+
+    <mat-divider></mat-divider>
+
+    <mat-list-item>
+      <p matLine class="label" translate>PROFILE.EMAIL_LABEL</p>
+      <p matLine>{{profile.email}}</p>
+      <mat-icon (click)="onEditEmailClicked()">edit</mat-icon>
+    </mat-list-item>
+
+    <mat-divider></mat-divider>
+
+    <mat-list-item>
+      <p matLine class="label" translate>PROFILE.NICKNAME_LABEL</p>
+      <p matLine>{{profile.customProperties?.nickName}}</p>
+      <mat-icon (click)="onEditEmailClicked()">edit</mat-icon>
+    </mat-list-item>
+
+    <mat-divider></mat-divider>
+
+    <mat-list-item>
+      <p matLine class="label" translate>PROFILE.PASSWORD_LABEL</p>
+      <p matLine>••••••••••</p>
+      <mat-icon (click)="onEditPasswordClicked()">edit</mat-icon>
+    </mat-list-item>
+
+    <mat-divider></mat-divider>
+
+    <mat-list-item>
+      <p matLine class="label" translate>PROFILE.LUCKY_DRAW_TITLE</p>
+      <p matLine>{{getOptIn}}</p>
+      <mat-icon (click)="onEditOptInClicked()">edit</mat-icon>
+    </mat-list-item>
+
+    <mat-divider></mat-divider>
+  </mat-list>
+</div>
+
+
