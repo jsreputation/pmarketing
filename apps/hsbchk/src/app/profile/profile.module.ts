@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
 import { MatListModule, MatIconModule } from '@angular/material';
 import { ProfileRoutingModule } from './profile-routing.module';
+import { ProfileComponent } from './profile/profile.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -10,7 +12,9 @@ import { ProfileRoutingModule } from './profile-routing.module';
     MatListModule,
     MatIconModule,
     PerxBlackcombPagesModule,
-    ProfileRoutingModule
-  ]
+    ProfileRoutingModule,
+    TranslateModule
+  ],
+  declarations: [ProfileComponent]
 })
 export class ProfileModule { }
