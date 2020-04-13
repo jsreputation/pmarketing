@@ -13,7 +13,7 @@ import {
 } from '@perxtech/core';
 import { Observable, Subject, combineLatest } from 'rxjs';
 import { distinctUntilChanged, takeUntil, startWith } from 'rxjs/operators';
-import {MatDialog} from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 export abstract class ISignUpComponent implements OnDestroy {
   public signupForm: FormGroup;
@@ -124,7 +124,7 @@ export abstract class ISignUpComponent implements OnDestroy {
     }
   }
 
-  protected fetchFromDataAndSend(): void {
+  protected fetchFormDataAndSend(): void {
     const passwordString = this.signupForm.value.password;
     const confirmPassword = this.signupForm.value.confirmPassword;
     // should not be necessary now that we use equalityValidator on the form
@@ -177,24 +177,24 @@ export abstract class ISignUpComponent implements OnDestroy {
       return;
     }
 
-    const dialogRef = this.dialog.open(PopupComponent, {
-      data: {
-        title: 'Reminder: If you do not agree with this term, you will not be eligible to join the LIFE Dojo lucky draw. ',
-        buttonTxt: 'Confirm',
-        buttonTxt2: 'Cancel'
-      }
-    });
-
-    if (this.signupForm.value.accept_marketing && this.signupForm.value.hkid && this.signupForm.value.fullName) {
-      this.fetchFromDataAndSend();
+    if (this.signupForm.value.accept_marketing === true &&
+      this.signupForm.value.hkid !== '' &&
+      this.signupForm.value.fullName !== '') {
+      this.fetchFormDataAndSend();
     } else {
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result) {
-          this.fetchFromDataAndSend();
-        } else {
-          return;
+      this.dialog.open(PopupComponent, {
+        data: {
+          title: 'Reminder: If you do not agree with this term, you will not be eligible to join the LIFE Dojo lucky draw. ',
+          buttonTxt: 'Confirm',
+          buttonTxt2: 'Cancel'
         }
-      });
+      })
+        .afterClosed()
+        .subscribe((result) => {
+          if (result) {
+            this.fetchFormDataAndSend();
+          }
+        });
     }
   }
 }

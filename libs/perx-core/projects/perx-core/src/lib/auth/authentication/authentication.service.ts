@@ -84,7 +84,7 @@ export abstract class AuthenticationService implements AuthService {
 
   public abstract resendOTP(phone: string): Observable<IMessageResponse>;
 
-  public abstract signup(profile: ISignUpData): Observable<IProfile | null>;
+  public abstract signup(profile: ISignUpData): Observable<IProfile>;
 
   public abstract verifyOTP(phone: string, otp: string): Observable<IMessageResponse>;
 
