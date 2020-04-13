@@ -1,0 +1,48 @@
+<mat-list *ngIf="profile">
+
+  <mat-list-item>
+    <p matLine class="label">Account / Registration Number</p>
+    <p matLine>{{profile.identifier}}</p>
+  </mat-list-item>
+
+  <mat-divider></mat-divider>
+  <mat-list-item>
+    <p matLine class="label">Mobile Phone</p>
+    <p matLine>+{{profile.phone}}</p>
+  </mat-list-item>
+
+  <mat-divider></mat-divider>
+
+  <mat-list-item>
+    <p matLine class="label">Email Address</p>
+    <p matLine>{{profile.email}}</p>
+    <mat-icon (click)="onEditEmailClicked()">edit</mat-icon>
+  </mat-list-item>
+
+  <mat-divider></mat-divider>
+
+  <mat-list-item>
+    <p matLine class="label">Nickname (Displayed on Leaderboard)</p>
+    <p matLine>{{profile.customProperties?.nickName}}</p>
+    <mat-icon (click)="onEditEmailClicked()">edit</mat-icon>
+  </mat-list-item>
+
+  <mat-divider></mat-divider>
+
+  <mat-list-item>
+    <p matLine class="label">Password</p>
+    <p matLine>••••••••••</p>
+    <mat-icon (click)="onEditPasswordClicked()">edit</mat-icon>
+  </mat-list-item>
+
+  <mat-divider></mat-divider>
+
+  <mat-list-item>
+    <p matLine class="label">Opt-in Lucky Draw</p>
+    <p matLine>{{getOptIn}}</p>
+    <mat-icon (click)="onEditOptInClicked()">edit</mat-icon>
+  </mat-list-item>
+
+  <mat-divider></mat-divider>
+</mat-list>
+
