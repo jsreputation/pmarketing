@@ -1,0 +1,26 @@
+{
+  "extends": [
+    "../../.eslintrc"
+  ],
+  "rules": {},
+  "overrides": [
+    {
+      "files": [
+        "**/*.ts?(x)"
+      ],
+      "excludedFiles": [
+        "**/*.service.spec.ts",
+        "**/*.service.ts",
+        "**/*.component.ts"
+      ],
+      "rules": {
+        "camelcase": [
+          "error",
+          {
+            "ignoreDestructuring": true
+          }
+        ]
+      }
+    }
+  ]
+}

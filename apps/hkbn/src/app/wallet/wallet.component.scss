@@ -1,4 +1,4 @@
-@import "~src/assets/styles/variables";
+@import "../styles/variables";
 
 hkbn-wallet {
   .mat-tab-label {
@@ -11,12 +11,13 @@ hkbn-wallet {
     color: $text-green;
   }
 
-  .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  .mat-tab-group.mat-primary .mat-ink-bar,
+  .mat-tab-nav-bar.mat-primary .mat-ink-bar {
     background-color: $text-green;
   }
 
   .mat-tab-body-wrapper {
-    background: #F4EFDC;
+    background: #f4efdc;
     padding: 0 1.6rem;
   }
 }

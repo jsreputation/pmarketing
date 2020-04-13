@@ -17,7 +17,7 @@
         </mat-form-field>
         <div class="checkbox-container">
           <mat-checkbox formControlName="accept_marketing"></mat-checkbox>
-          <span class="wrap-checkbox-text">{{ 'MARKETING_AGREE' | translate }} ({{ 'LUCKY_DRAW_REFER' | translate }}  ( <a href="#">PICS</a>)</span>
+          <span class="wrap-checkbox-text">{{ 'MARKETING_AGREE' | translate }} ({{ 'LUCKY_DRAW_REFER' | translate }}  (<a [routerLink]="['/c/privacy-policy']">PICS</a>)</span>
         </div>
       </div>
     </form>

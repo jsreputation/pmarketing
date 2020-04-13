@@ -4,7 +4,8 @@ import { ProfileService } from './profile.service';
 import { V4ProfileService } from './v4-profile.service';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { MicroProfileComponent } from './micro-profile/micro-profile.component';
-import { MatIconModule } from '@angular/material';
+import { ProfileSummaryComponent } from './profile-summary/profile-summary.component';
+import {MatCardModule, MatIconModule} from '@angular/material';
 import { HttpClient } from '@angular/common/http';
 import { Config } from '../config/config';
 import { WhistlerProfileService } from './whistler-profile.service';
@@ -26,7 +27,8 @@ export function profileServiceFactory(
 @NgModule({
   imports: [
     CommonModule,
-    MatIconModule
+    MatIconModule,
+    MatCardModule
   ],
   providers: [
     {
@@ -35,8 +37,8 @@ export function profileServiceFactory(
       deps: [HttpClient, Config, ConfigService, TokenStorage]
     }
   ],
-  declarations: [UserProfileComponent, MicroProfileComponent],
-  exports: [UserProfileComponent, MicroProfileComponent]
+  declarations: [UserProfileComponent, MicroProfileComponent, ProfileSummaryComponent],
+  exports: [UserProfileComponent, MicroProfileComponent, ProfileSummaryComponent]
 })
 export class ProfileModule {
 }

@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { IPoints, IQAnswer, IQuiz, ITracker } from '../models/quiz.model';
+import { IQAnswer, IQuiz, ITracker } from '../models/quiz.model';
 import { QuizQuestionComponent } from '../question/question.component';
 
 @Component({
@@ -42,8 +42,6 @@ export class QuizComponent implements OnChanges, OnDestroy {
 
   private answersTracker: ITracker<IQAnswer> = {};
 
-  private pointsTracker: ITracker<number> = {};
-
   public data: IQuiz;
 
   private destroy$: Subject<void> = new Subject();
@@ -70,10 +68,6 @@ export class QuizComponent implements OnChanges, OnDestroy {
     if (done) {
       this.done.emit(this.answersTracker);
     }
-  }
-
-  public updatePoints(points: IPoints): void {
-    this.pointsTracker[points.questionId] = points.points;
   }
 
   // private get totalPoints(): number {

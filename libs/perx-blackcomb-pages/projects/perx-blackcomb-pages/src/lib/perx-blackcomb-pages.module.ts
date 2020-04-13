@@ -33,6 +33,7 @@ import {
   LoyaltyModule,
   RewardsModule,
   SurveyModule,
+  ProfileModule,
   QuizModule,
   SecondsToStringPipe
 } from '@perxtech/core';
@@ -163,6 +164,7 @@ const comps: any[] = [
     InfiniteScrollModule,
     MatDialogModule,
     QuizModule,
+    ProfileModule
   ],
   exports: [
     ...comps,

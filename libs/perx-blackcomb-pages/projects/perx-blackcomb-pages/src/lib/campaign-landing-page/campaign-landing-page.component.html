@@ -2,11 +2,11 @@
   [ngStyle]="{'background-image': 'url(' + backgroundUrl + ')' }">
   <div class="landing-page">
     <div class="header">
-      <h1 class="title">{{config?.heading}}</h1>
-      <h2 class="subtitle">{{config?.subHeading}}</h2>
+      <h1 class="title">{{config?.heading || campaign?.name}}</h1>
+      <h2 class="subtitle">{{config?.subHeading || campaign?.description}}</h2>
     </div>
     <div *ngIf="config?.media?.youtube" class="video">
-      <iframe width="320" [src]="config?.media?.youtube | safeUrl" frameborder="0"
+      <iframe height="185" width="80%" [src]="config?.media?.youtube | safeUrl" frameborder="0"
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen></iframe>
     </div>
@@ -16,6 +16,6 @@
     <button
       mat-flat-button
       color="primary"
-      (click)="next()">{{config?.buttonText}}</button>
+      (click)="next()">{{config?.buttonText || 'Play'}}</button>
   </mat-toolbar>
 </div>

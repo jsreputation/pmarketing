@@ -23,6 +23,15 @@
             "tsConfig": "projects/whistler/tsconfig.spec.json",
             "passWithNoTests": true
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": ".eslintrc",
+            "files": [
+              "projects/**/*.ts"
+            ]
+          }
         }
       }
     }
