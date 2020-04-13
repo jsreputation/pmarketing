@@ -18,6 +18,7 @@ export class LanguageService implements TranslateLoader {
   });
   // hostUrl is an observable to make sure we do not start fetching translation before finishing fetching the url
   private hostUrl: ReplaySubject<string> = new ReplaySubject();
+  private app: string;
 
   constructor(
     private httpClient: HttpClient,
@@ -25,14 +26,17 @@ export class LanguageService implements TranslateLoader {
     private tokenStorage: TokenStorage
   ) {
     this.configService.readAppConfig()
-      .subscribe((config) => this.hostUrl.next(config.production ? `${config.baseHref}` : 'http://localhost:4000/'));
+      .subscribe((config) => {
+        this.app = config.app ? config.app : '';
+        this.hostUrl.next(config.production ? `${config.baseHref}` : 'http://localhost:4000/');
+      });
   }
 
   public getTranslation(lang: string): Observable<IDictionary> {
     let host: string = '/';
     return this.hostUrl.pipe(
       tap((url) => host = url),
-      map((hostUrl: string) => `${hostUrl}lang?default=${lang}`),
+      map((hostUrl: string) => `${hostUrl}lang?default=${lang}&app=${this.app}`),
       switchMap((apiAddress: string) => this.httpClient.get<IDictionary>(apiAddress, { headers: this.contentHeader, observe: 'response' })),
       tap((res: HttpResponse<IDictionary>) => {
         const l: string | null = res.headers.get('content-language') || lang;

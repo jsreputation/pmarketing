@@ -29,7 +29,7 @@ export abstract class ISignUpComponent implements OnDestroy {
   }
 
   public goToLogin(): void {
-    this.router.navigateByUrl('/signin');
+    this.router.navigateByUrl('login');
   }
 
   protected getAppToken(): void {

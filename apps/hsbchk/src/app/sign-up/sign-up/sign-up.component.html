@@ -3,9 +3,11 @@
         <img class="logo" [attr.src]="th?.properties['--logo']" [attr.alt]="th?.properties['--title']" />
     </div>
     <div class="content-container">
-        <div class="main-heading" translate>SIGN_UP</div>
-        <div class="subtitle"><span translate>HAVE_AN_ACCOUNT</span>? <span class="link" (click)="goToLogin()"
-                translate>LOG_IN</span></div>
+        <div class="main-heading">{{'SIGN_UP_PAGE.TITLE' | translate}}</div>
+        <div class="subtitle">
+            <span>{{'SIGN_UP_PAGE.HAVE_AN_ACCOUNT' | translate}}</span>? <span class="link" (click)="goToLogin()">
+            {{'SIGN_UP_PAGE.LOG_IN' | translate}}</span>
+        </div>
         <div class="error_msg">
             <span>{{errorMessage}}</span>
         </div>
@@ -15,24 +17,24 @@
                 <span matPrefix>+852&nbsp;<span class="prefix-spacer"></span></span>
                 <input matInput
                     autocomplete="tel-local"
-                    [placeholder]="'MOBILE' | translate"
+                    [placeholder]="'SIGN_UP_PAGE.MOBILE_FIELD' | translate"
                     formControlName="mobileNo"
                     type="tel"
                     required>
                 <mat-error *ngIf="signupForm.get('mobileNo').hasError('required')">
-                    <span>Mobile is </span><strong>required</strong>
+                    {{'SIGN_UP_PAGE.MOBILE_REQUIRED_TXT' | translate}}
                 </mat-error>
             </mat-form-field>
             <mat-form-field appearance="fill" class="full-width__input">
                 <mat-label translate>EMAIL</mat-label>
                 <input matInput
-                    [placeholder]="'EMAIL' | translate"
+                    [placeholder]="'SIGN_UP_PAGE.EMAIL_FIELD' | translate"
                     formControlName="email"
                     autocomplete="email"
                     type="email"
                     required>
                 <mat-error *ngIf="signupForm.get('email').hasError('required')">
-                    <span>Email is </span><strong>required</strong>
+                    {{'SIGN_UP_PAGE.EMAIL_REQUIRED_TXT' | translate}}
                 </mat-error>
                 <mat-error *ngIf="signupForm.get('email').hasError('email')">
                     <span>Incorrect email format</span>
@@ -41,13 +43,13 @@
             <mat-form-field appearance="fill" class="full-width__input">
                 <mat-label translate>PASSWORD</mat-label>
                 <input matInput
-                    [placeholder]="'PASSWORD'| translate"
+                    [placeholder]="'SIGN_UP_PAGE.PASSWORD_FIELD'| translate"
                     formControlName="password"
                     type="password"
                     autocomplete="on"
                     required>
                 <mat-error *ngIf="signupForm.get('password').hasError('required')">
-                    <span>Password is </span><strong>required</strong>
+                    {{'SIGN_UP_PAGE.PASSWORD_REQUIRED_TXT' | translate}}
                 </mat-error>
                 <mat-error *ngIf="signupForm.get('password').hasError('minlength')">
                     <span>Password should be at least six characters long</span>
@@ -55,13 +57,11 @@
             </mat-form-field>
             <mat-form-field appearance="fill" class="full-width__input">
                 <mat-label translate>CONFIRM_PASSWORD</mat-label>
-                <input matInput [placeholder]="'CONFIRM_PASSWORD' | translate" formControlName="confirmPassword"
+                <input matInput [placeholder]="'SIGN_UP_PAGE.CONFIRM_PASSWORD_FIELD' | translate" formControlName="confirmPassword"
                     type="password" autocomplete="on" required>
-                <mat-error *ngIf="signupForm.get('confirmPassword').hasError('required')">
-                    <span>Confirm Password is </span><strong>required</strong>
-                </mat-error>
-                <mat-error *ngIf="signupForm.get('confirmPassword').hasError('minlength')">
-                    <span>Password should be at least six characters long</span>
+                <mat-error *ngIf="signupForm.get('confirmPassword').hasError('required') 
+                || signupForm.get('confirmPassword').hasError('minlength')">
+                    {{'SIGN_UP_PAGE.CONFIRM_PASSWORD_INVALID_TXT' | translate}}
                 </mat-error>
                 <mat-error *ngIf="signupForm.get('confirmPassword').hasError('notEqual')">
                     <span>Passwords do not match</span>
@@ -71,41 +71,44 @@
                 <mat-label translate>NICKNAME</mat-label>
                 <input matInput
                     autocomplete="nickname"
-                    [placeholder]="'NICKNAME' | translate"
+                    [placeholder]="'SIGN_UP_PAGE.NICKNAME_FIELD' | translate"
                     formControlName="nickname"
                     required>
                 <mat-error *ngIf="signupForm.get('nickname').hasError('required')">
-                    <span>Nickname is </span><strong>required</strong>
+                    {{'SIGN_UP_PAGE.MOBILE_REQUIRED_TXT' | translate}}
                 </mat-error>
             </mat-form-field>
             <mat-form-field appearance="fill" class="full-width__input">
-                <mat-label translate>REFERRAL_CODE_OPTIONAL</mat-label>
-                <input matInput [placeholder]="'REFERRAL_CODE_OPTIONAL' | translate" formControlName="referralCode">
+                <mat-label translate>{{'SIGN_UP_PAGE.REFERRAL_FIELD' | translate}}</mat-label>
+                <input matInput [placeholder]="'SIGN_UP_PAGE.REFERRAL_FIELD' | translate" formControlName="referralCode">
             </mat-form-field>
             <div class="checkbox-row">
                 <mat-checkbox formControlName="accept_terms"></mat-checkbox>
-                <span class="wrap-checkbox-text">{{'TERM_AGREE' | translate}} <a [routerLink]="['/c/tnc']"
-                 class="terms">Game T&#38;C</a> and <a [routerLink]="['/c/privacy-policy']">PICS</a>.</span>
+                <span class="wrap-checkbox-text">{{'SIGN_UP_PAGE.CHECKBOX_TNC_PIC_AGREE' | translate}} 
+                    <a [routerLink]="['/c/tnc']" class="terms">{{'SIGN_UP_PAGE.CHECKBOX_TNC_PIC_AGREE' | translate}}</a>
+                    {{'SIGN_UP_PAGE.CHECKBOX_AND' | translate}}<a [routerLink]="['/c/privacy-policy']">
+                        {{'SIGN_UP_PAGE.CHECKBOX_AND' | translate}}</a></span>
             </div>
-            <h2 translate>UPDATE_DETAILS_FOR_LUCKY_DRAW</h2>
+            <h2>{{'SIGN_UP_PAGE.LUCKY_DRAW_DESCRIPTION' | translate}}</h2>
             <mat-form-field appearance="fill" class="full-width__input">
-                <mat-label translate>FULL_NAME</mat-label>
-                <input matInput [placeholder]="'FULL_NAME' | translate" formControlName="fullName">
-                <mat-error><span>Full Name is </span><strong>required</strong></mat-error>
+                <mat-label>{{'SIGN_UP_PAGE.FULL_NAME_HKID_FIELD' | translate}}</mat-label>
+                <input matInput [placeholder]="'SIGN_UP_PAGE.FULL_NAME_HKID_FIELD' | translate" formControlName="fullName">
+                <mat-error>
+                    {{'SIGN_UP_PAGE.FULL_NAME_HKID_REQUIRED_TXT' | translate}}
+                </mat-error>
             </mat-form-field>
             <mat-form-field appearance="fill" class="full-width__input">
-                <mat-label translate>FOUR_DIGITS_HKID</mat-label>
-                <input matInput [placeholder]="'FOUR_DIGITS_HKID' | translate" formControlName="hkid">
-                <mat-error>Invalid format. It should be 4 alphanumeric characters.</mat-error>
+                <mat-label translate>{{'SIGN_UP_PAGE.HKID_DIGITS_TXT' | translate}}</mat-label>
+                <input matInput [placeholder]="'SIGN_UP_PAGE.HKID_DIGITS_TXT' | translate" formControlName="hkid">
+                <mat-error>{{'SIGN_UP_PAGE.HKID_DIGITS_REQUIRED_TXT' | translate}}</mat-error>
             </mat-form-field>
             <div class="checkbox-container">
                 <div class="checkbox-row">
                     <mat-checkbox formControlName="accept_marketing"></mat-checkbox>
-                    <span class="wrap-checkbox-text">{{ 'MARKETING_AGREE' | translate }}
-                        ({{ 'LUCKY_DRAW_REFER' | translate }} <a href="#">PICS</a>)</span>
+                    <span class="wrap-checkbox-text">{{'SIGN_UP_PAGE.CHECKBOX_LUCK_TXT' | translate}} <a href="#">PICS</a>)</span>
                 </div>
                 <mat-error *ngIf="signupForm.get('accept_marketing').hasError('required')">
-                    <span>Must be approved to participate</span>
+                    <span>{{'SIGN_UP_PAGE.CHECKBOX_LUCK_POPUP_TXT' | translate}}</span>
                 </mat-error>
             </div>
             <button
@@ -113,14 +116,14 @@
                 type="submit"
                 class="full-width__button"
                 [disabled]="!signupForm.valid"
-                translate>
+                >
                 <i *ngIf="loadingSubmit" class="loading-spin">
                     <mat-progress-spinner
                         [diameter]="30"
                         mode="indeterminate">
                     </mat-progress-spinner>
                 </i>
-                <span *ngIf="!loadingSubmit">SUBMIT</span>
+                <span *ngIf="!loadingSubmit">{{'SIGN_UP_PAGE.BUTTON_SUBMIT' | translate}}</span>
             </button>
         </form>
     </div>
