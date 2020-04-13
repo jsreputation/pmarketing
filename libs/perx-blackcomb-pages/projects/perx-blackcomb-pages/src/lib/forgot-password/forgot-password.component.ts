@@ -116,7 +116,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   public handlePin(otp: string): void {
     // need verify before go to currentStep 3
     this.authenticationService.verifyOTP(this.identifier, otp).subscribe(
-      (_) => {
+      () => {
         this.currentStep = 3;
         this.otp = otp;
       },
