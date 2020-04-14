@@ -115,7 +115,7 @@
                     <mat-checkbox [disabled]="!signupForm.get('hkid').value && !signupForm.get('fullName').value"
                         formControlName="accept_marketing"></mat-checkbox>
                     <span class="wrap-checkbox-text">{{'SIGN_UP_PAGE.CHECKBOX_LUCK_TXT' | translate}} <a
-                            href="#">PICS</a>)</span>
+                            href="#">{{'SIGN_UP_PAGE.CHECKBOX_PIC' | translate}}</a></span>
                 </div>
                 <mat-error *ngIf="signupForm.get('accept_marketing').hasError('required')">
                     <span>{{'SIGN_UP_PAGE.CHECKBOX_LUCK_POPUP_TXT' | translate}}</span>
