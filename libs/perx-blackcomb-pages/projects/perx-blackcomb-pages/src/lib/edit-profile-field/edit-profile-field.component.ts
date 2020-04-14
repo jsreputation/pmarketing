@@ -33,13 +33,6 @@ export class EditProfileFieldComponent implements OnInit, ShowTitleInHeader {
     private route: ActivatedRoute
   ) {
     this.initForms();
-    const currentNavigation = this.router.getCurrentNavigation();
-    if (!currentNavigation) {
-      return;
-    }
-    if (currentNavigation.extras.state && currentNavigation.extras.state.showHeaderBelow) {
-      this.showHeaderBelow = true;
-    }
   }
 
   private initForms(): void {

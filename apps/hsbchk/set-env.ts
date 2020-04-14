@@ -38,8 +38,7 @@ const envConfigFile = `export const environment = {
   preAuth: ${process.env.PREAUTH ? process.env.PREAUTH : true},
   isWhistler: ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : true},
   baseHref: '${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}',
-  defaultLang: '${process.env.DEFAULT_LANG ? process.env.DEFAULT_LANG : 'en'}',
-  overWriteHeaderShow: true
+  defaultLang: '${process.env.DEFAULT_LANG ? process.env.DEFAULT_LANG : 'en'}'
 };
 `;
 

@@ -70,7 +70,6 @@ export class LayoutComponent implements OnInit {
   ) {
     if (config) {
       this.preAuth = this.config.preAuth || false;
-      this.overWriteHeaderShow = this.config.overWriteHeaderShow || false;
     }
   }
 
@@ -107,7 +106,6 @@ export class LayoutComponent implements OnInit {
       ref instanceof CampaignStampsComponent ||
       ref instanceof TransactionHistoryComponent;
 
-    this.headerTitle = (ref.getTitle) ? ref.getTitle() : '';
     this.cd.detectChanges();
   }
 
