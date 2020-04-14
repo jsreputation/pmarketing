@@ -24,11 +24,7 @@ export class ProfileComponent implements OnInit {
   }
 
   public onEditPasswordClicked(): void {
-    this.router.navigateByUrl('change-password');
-  }
-
-  public onEditEmailClicked(): void {
-    this.router.navigateByUrl('edit-profile/email');
+    this.router.navigateByUrl('change-password', { state: { showHeaderBelow: true } });
   }
 
   public onEditPostcodeClicked(): void {
@@ -40,7 +36,7 @@ export class ProfileComponent implements OnInit {
   }
 
   public onEditProfileClicked(): void {
-    this.router.navigateByUrl('edit-profile/nickname');
+    this.router.navigateByUrl('edit-profile/nickname', { state: { showHeaderBelow: true } });
   }
 
   public get getOptIn(): string {

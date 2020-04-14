@@ -52,6 +52,7 @@ export class LayoutComponent implements OnInit {
   public backArrowIcon: string = '';
   public preAuth: boolean;
   public theme: ITheme;
+  public overWriteHeaderShow: boolean = false;
   public appConfig: IConfig<void>;
 
   private initBackArrow(url: string): void {
@@ -69,6 +70,7 @@ export class LayoutComponent implements OnInit {
   ) {
     if (config) {
       this.preAuth = this.config.preAuth || false;
+      this.overWriteHeaderShow = this.config.overWriteHeaderShow || false;
     }
   }
 

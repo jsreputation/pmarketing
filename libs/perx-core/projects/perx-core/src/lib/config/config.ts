@@ -7,5 +7,6 @@ export abstract class Config {
   public baseHref?: string;
   public production?: boolean;
   public defaultLang?: string;
+  public overWriteHeaderShow?: boolean;
   public storageType?: TokenType;
 }

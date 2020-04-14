@@ -5,10 +5,10 @@
       (click)="backArrowClick()">
       {{backArrowIcon}}
     </mat-icon>
-    <a class="logoWrapper" *ngIf="!headerTitle" [routerLink]="[ '/home' ]">
+    <a class="logoWrapper" *ngIf="overWriteHeaderShow || !headerTitle" [routerLink]="[ '/home' ]">
       <img class="logo" [attr.src]="theme.properties['--logo']" [attr.alt]="theme.properties['--title']" />
     </a>
-    <span *ngIf="headerTitle" class="header-title">{{headerTitle}}</span>
+    <span *ngIf="!overWriteHeaderShow && headerTitle" class="header-title">{{headerTitle}}</span>
     <!-- ghost stuff-->
     <span></span>
   </mat-toolbar>

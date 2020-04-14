@@ -24,6 +24,7 @@ export class EditProfileFieldComponent implements OnInit, ShowTitleInHeader {
   public changeEmailForm: FormGroup;
   public changePostcodeForm: FormGroup;
   public changeNicknameForm: FormGroup;
+  public showHeaderBelow: boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -32,6 +33,15 @@ export class EditProfileFieldComponent implements OnInit, ShowTitleInHeader {
     private route: ActivatedRoute
   ) {
     this.initForms();
+    const currentNavigation = this.router.getCurrentNavigation();
+    if (!currentNavigation) {
+      return;
+    }
+    if (currentNavigation.extras.state) {
+      if (currentNavigation.extras.state.showHeaderBelow) {
+        this.showHeaderBelow = true;
+      }
+    }
   }
 
   private initForms(): void {
@@ -70,6 +80,6 @@ export class EditProfileFieldComponent implements OnInit, ShowTitleInHeader {
   }
 
   public getTitle(): string {
-    return 'Edit Profile';
+    return `Edit Profile ${this.fieldType.charAt(0).toUpperCase() + this.fieldType.slice(1)}`;
   }
 }

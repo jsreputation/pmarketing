@@ -12,6 +12,7 @@ import { ShowTitleInHeader } from '../layout/layout.component';
 export class ChangePasswordComponent implements ShowTitleInHeader {
 
   public changePasswordForm: FormGroup;
+  public showHeaderBelow: boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -19,6 +20,15 @@ export class ChangePasswordComponent implements ShowTitleInHeader {
     private authService: AuthenticationService
   ) {
     this.initForm();
+    const currentNavigation = this.router.getCurrentNavigation();
+    if (!currentNavigation) {
+      return;
+    }
+    if (currentNavigation.extras.state) {
+      if (currentNavigation.extras.state.showHeaderBelow) {
+        this.showHeaderBelow = true;
+      }
+    }
   }
 
   private initForm(): void {
