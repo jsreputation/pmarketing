@@ -74,7 +74,15 @@ export class PopupComponent {
     this.dialogRef.close(false);
   }
 
-  public buttonPressed(): void {
+  public buttonPressed(btnTxt1?: string | null): void {
+    this.dialogRef.close(btnTxt1);
+    if (this.data.afterClosedCallBack) {
+      this.data.afterClosedCallBack.dialogClosed();
+    }
+  }
+
+  public buttonPressed2(): void {
+    this.dialogRef.close(false);
     if (this.data.afterClosedCallBack) {
       this.data.afterClosedCallBack.dialogClosed();
     }

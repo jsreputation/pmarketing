@@ -4,6 +4,6 @@
 </div>
 <mat-dialog-content *ngIf="text">{{text}}</mat-dialog-content>
 <div *ngIf="showButton" class="button-group">
-	<button *ngIf="buttonTxt2" mat-stroked-button class="button-secondary" mat-dialog-close tabindex="-1">{{buttonTxt2}}</button>
-	<button [ngClass]="ctaButtonClass" mat-flat-button color="primary" mat-dialog-close (click)="buttonPressed()" tabindex="-1">{{buttonTxt}}</button>
+	<button *ngIf="buttonTxt2" mat-stroked-button class="button-secondary" mat-dialog-close (click)="buttonPressed2()" tabindex="-1">{{buttonTxt2}}</button>
+	<button [ngClass]="ctaButtonClass" mat-flat-button color="primary" mat-dialog-close (click)="buttonPressed(buttonTxt)" tabindex="-1">{{buttonTxt}}</button>
 </div>

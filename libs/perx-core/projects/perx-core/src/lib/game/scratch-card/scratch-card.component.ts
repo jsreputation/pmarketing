@@ -8,6 +8,7 @@ import {
   EventEmitter,
   OnInit
 } from '@angular/core';
+import { patchUrl } from '../../utils/patch-url.function';
 
 interface Coords {
   x: number;
@@ -114,7 +115,7 @@ export class ScratchCardComponent implements AfterViewInit, OnInit {
     // the crossOrigin flag needs to be setup before src otherwise it is too late
     image.crossOrigin = 'Anonymous';
     if (this.coverImg) {
-      image.src = this.patchUrl(this.coverImg);
+      image.src = patchUrl(this.coverImg);
     }
     const canvas2dContext = this.canvas.getContext('2d');
     image.onload = () => {
@@ -136,15 +137,6 @@ export class ScratchCardComponent implements AfterViewInit, OnInit {
       this.canvas.addEventListener('mouseup', this.handleMouseUp.bind(this), false);
       this.canvas.addEventListener('touchend', this.handleMouseUp.bind(this), false);
     }
-  }
-
-  private patchUrl(url: string): string {
-    const mappings = [
-      { s3: 'perx-cdn-staging.s3.amazonaws.com', cdn: 'cdn.getperx.io' },
-      { s3: 'perx-cdn.s3.amazonaws.com', cdn: 'cdn.perxtech.net' }
-    ];
-    mappings.forEach(mapping => url = url.replace(mapping.s3, mapping.cdn));
-    return url;
   }
 
   private generateCanvas(): void {

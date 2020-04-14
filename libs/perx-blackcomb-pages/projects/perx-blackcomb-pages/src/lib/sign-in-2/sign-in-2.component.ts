@@ -10,7 +10,7 @@ import {
   ICountryCode
 } from '@perxtech/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import {Navigation, Router} from '@angular/router';
+import { Navigation, Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subject, Observable } from 'rxjs';

@@ -4,8 +4,10 @@
         (click)="goBack()">
         arrow_backward
     </mat-icon>
+  <a class="logoWrapper">
     <img class="logo" [attr.src]="theme.properties['--logo']" [attr.alt]="theme.properties['--title']"
-        *ngIf="theme && theme.properties" />
+         *ngIf="theme && theme.properties" />
+  </a>
     <!-- ghost stuff-->
     <span></span>
 </mat-toolbar>
