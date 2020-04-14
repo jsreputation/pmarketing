@@ -34,7 +34,7 @@
                     <div class="country-code">
                         <mat-form-field appearance="fill">
                             <mat-label>Country Code</mat-label>
-                          <mat-select [(value)]="countryCode">
+                          <mat-select [(value)]="countryCode" formControlName="countryCode">
                                 <mat-option
                                   *ngFor="let country of countriesList$ | async" [value]="country.code">
                                     <span>{{country.name}} </span>
@@ -48,7 +48,7 @@
                             <mat-label>{{'LOGIN_PAGE.MOBILE_FIELD' | translate}}</mat-label>
                             <input autocomplete="tel-local" matInput [placeholder]="'LOGIN_PAGE.MOBILE_FIELD' | translate" formControlName="customerID"
                                 [value]="">
-                            <mat-error *ngIf="loginForm.hasError('customerID')">
+                            <mat-error *ngIf="loginForm.hasError('required', ['customerID'])">
                                 {{'LOGIN_PAGE.MOBILE_INVALID_TXT' | translate}}
                             </mat-error>
                         </mat-form-field>
@@ -58,7 +58,7 @@
                     <mat-label translate>{{'LOGIN_PAGE.PASSWORD_FIELD' | translate}}</mat-label>
                     <input matInput [placeholder]="'LOGIN_PAGE.PASSWORD_FIELD' | translate" formControlName="password"
                         type="password">
-                    <mat-error *ngIf="loginForm.hasError('password')">
+                    <mat-error *ngIf="loginForm.hasError('required', ['password'])">
                         {{'LOGIN_PAGE.PASSWORD_INVALID_TXT' | translate}}
                     </mat-error>
                 </mat-form-field>
