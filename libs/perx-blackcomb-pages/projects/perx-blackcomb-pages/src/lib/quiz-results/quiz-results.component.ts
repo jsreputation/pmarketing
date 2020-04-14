@@ -61,7 +61,7 @@ export class QuizResultsComponent implements OnInit {
       this.subTitle = '';
     }
 
-    this.translate.get('SUMMARY_TIME_TAKEN').subscribe((text) => {
+    this.translate.get('QUIZ_TEMPLATE.SUMMARY_TIME_TAKEN').subscribe((text) => {
       this.subTitle = `${text}${this.secondsToString.transform(total)}`;
     });
   }

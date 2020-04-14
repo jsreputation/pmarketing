@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ICampaign } from '@perxtech/core';
 import { oc } from 'ts-optchain';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'perx-blackcomb-pages-campaigns-collection',
@@ -23,6 +24,19 @@ export class CampaignsCollectionComponent {
   @Output()
   public selected: EventEmitter<ICampaign> = new EventEmitter<ICampaign>();
 
+  public rewardsLeft: string;
+
+  constructor(
+    private translate: TranslateService,
+  ) { }
+
+
+  public ngOnInit(): void {
+    this.translate.get('HOME.REWARDS_LEFT').subscribe((text) => {
+      this.rewardsLeft = text;
+    });
+  }
+
   public selectCampaign(campaign: ICampaign): void {
     this.selected.emit(campaign);
   }
@@ -31,11 +45,11 @@ export class CampaignsCollectionComponent {
     return campaign.campaignBannerUrl ? campaign.campaignBannerUrl : 'https://perx-cdn-staging.s3.amazonaws.com/reward/item/images/35/580b585b2edbce24c47b2415-48075171-3595-4e55-b630-8a00b412dcc4.png';
   }
 
-  public getRewardsCount(campaign: ICampaign): number | undefined {
+  public getRewardsCount(campaign: ICampaign): string | undefined {
     if (!campaign.rewards) {
       return;
     }
-    return campaign.rewards.reduce((sum, reward) => {
+    const sumRewards = campaign.rewards.reduce((sum, reward) => {
       const balance = oc(reward).inventory.rewardTotalBalance();
       if (balance !== undefined && balance !== null) {
         if (sum !== undefined) {
@@ -46,5 +60,7 @@ export class CampaignsCollectionComponent {
       }
       return sum;
     }, undefined);
+
+    return this.rewardsLeft.replace('{{rewardsCount', sumRewards);
   }
 }

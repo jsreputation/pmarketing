@@ -188,7 +188,8 @@
     "QUIZ": "問答遊戲",
     "FEATURED_REWARDS": "特色獎勵",
     "SEE_MORE": "查看更多",
-    "SEE_LESS": "關閉查看"
+    "SEE_LESS": "關閉查看",
+    "REWARDS_LEFT": "剩餘{{rewardsCount}}獎勵"
   },
   "WEEK1_CAMPAIGN_EASY": {
     "TITLE": "",
