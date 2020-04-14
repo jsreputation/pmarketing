@@ -17,6 +17,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AuthenticationService, NotificationService, ThemesService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
+import { ConfigService } from '../../../../../../libs/perx-core/projects/perx-core/src/lib/config/config.service';
 
 describe('SignUpComponent', () => {
   let component: SignUpComponent;
@@ -32,6 +33,17 @@ describe('SignUpComponent', () => {
 
   const themesServiceStub: Partial<ThemesService> = {
     getThemeSetting: () => of()
+  };
+
+  const configServiceStub: Partial<ConfigService> = {
+    readAppConfig: () => of({
+      redirectAfterLogin: '/home',
+      apiHost: 'string',
+      production: true,
+      baseHref: '/',
+      isWhistler: true,
+      preAuth: false,
+    })
   };
 
   beforeEach(async(() => {
@@ -56,7 +68,8 @@ describe('SignUpComponent', () => {
       providers: [
         { provide: AuthenticationService, useValue: authServiceStub },
         { provide: NotificationService, useValue: notificationServiceStub },
-        { provide: ThemesService, useValue: themesServiceStub }
+        { provide: ThemesService, useValue: themesServiceStub },
+        { provide: ConfigService, useValue: configServiceStub }
       ]
     })
       .compileComponents();

@@ -3,6 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
   AuthenticationService,
+  ConfigService,
   GeneralStaticDataService,
   ICountryCode,
   NotificationService,
@@ -28,10 +29,10 @@ export class SignUpComponent extends ISignUpComponent implements OnInit, OnDestr
     protected authService: AuthenticationService,
     protected notificationService: NotificationService,
     private generalStaticDataService: GeneralStaticDataService,
+    private configService: ConfigService,
     protected dialog: MatDialog
   ) {
     super(fb, router, themesService, authService, notificationService, dialog);
-    this.initForm();
     this.getAppToken();
   }
 
@@ -40,8 +41,11 @@ export class SignUpComponent extends ISignUpComponent implements OnInit, OnDestr
       'Hong Kong',
       'Singapore'
     ]);
-    this.initForm();
-    this.fetchTheme();
+    this.configService.readAppConfig<void>().subscribe((conf) => {
+      this.countryCodePrefix = conf.countryCodePrefix;
+      this.initForm();
+      this.fetchTheme();
+    });
   }
 
   protected get mobileNumber(): string {

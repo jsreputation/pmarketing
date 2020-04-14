@@ -22,6 +22,7 @@ export abstract class ISignUpComponent implements OnDestroy {
   public loadingSubmit: boolean = false;
   protected destroy$: Subject<void> = new Subject();
   public theme: Observable<ITheme>;
+  public countryCodePrefix: string | undefined;
 
   protected abstract get mobileNumber(): string;
 
@@ -72,9 +73,12 @@ export abstract class ISignUpComponent implements OnDestroy {
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
       accept_terms: [false, Validators.requiredTrue],
-      accept_marketing: [false]
+      accept_marketing: [false],
+      countryCode: ['']
     }, { validators: [equalityValidator('password', 'confirmPassword')] });
-
+    if (!this.countryCodePrefix) {
+      this.signupForm.controls.countryCode.setValidators([Validators.required]);
+    }
     // monitor fields related to lucky-draw in order to adjust the validators if any of the fields is being filled
     combineLatest([
       this.signupForm.controls.hkid.valueChanges.pipe(startWith('')),
