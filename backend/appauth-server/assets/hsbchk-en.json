@@ -45,7 +45,7 @@
     "FULL_NAME_HKID_REQUIRED_TXT": "Please enter your full name",
     "HKID_DIGITS_TXT": "First 4 digits of HKID",
     "HKID_DIGITS_REQUIRED_TXT": "Please enter your HKID",
-    "CHECKBOX_LUCK_TXT": "I agree HSBC Life to save my personal information for the Lucky Draw and future direct marketing purpose (For details, please refer to the PICS.)",
+    "CHECKBOX_LUCK_TXT": "I agree HSBC Life to save my personal information for the Lucky Draw and future direct marketing purpose. For details, please refer to the",
     "CHECKBOX_LUCK_POPUP_TXT": "If you do not agree with this term, you will not be eligible to join the LIFE Dojo lucky draw. Do you want to confirm?",
     "BUTTON_SUBMIT": "Submit"
   },
