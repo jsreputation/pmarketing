@@ -39,6 +39,10 @@ export class ProfileComponent implements OnInit {
     this.router.navigateByUrl('lucky-draw-details');
   }
 
+  public onEditProfileClicked(): void {
+    this.router.navigateByUrl('edit-profile/nickname');
+  }
+
   public get getOptIn(): string {
     return Boolean(oc(this.profile).customProperties.fullName(''))
     && Boolean(oc(this.profile).customProperties.hkid('')) ?
