@@ -14,7 +14,8 @@
           <p matLine class="label">{{ 'SIGN_UP_PAGE.HKID_DIGITS_TXT' | translate }}</p>
         </mat-list-item>
         <mat-form-field appearance="standard" class="full-width__input">
-          <input matInput formControlName="hkid">
+          <!-- This is not a phone number, but using type="tel" shows a much more appropriate keyboard on cell-phone-->
+          <input matInput formControlName="hkid" type="tel" autocomplete="off">
           <mat-error>Invalid id. It should be 4 digits</mat-error>
         </mat-form-field>
         <div class="checkbox-container">
