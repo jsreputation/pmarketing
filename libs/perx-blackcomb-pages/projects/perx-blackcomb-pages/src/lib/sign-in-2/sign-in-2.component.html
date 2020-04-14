@@ -41,6 +41,9 @@
                                     <span>+{{country.code}}</span>
                                 </mat-option>
                             </mat-select>
+                          <mat-error *ngIf="loginForm.hasError('required', ['countryCode'])">
+                            {{'LOGIN_PAGE.COUNTRY_CODE_REQUIRED_TXT' | translate}}
+                          </mat-error>
                         </mat-form-field>
                     </div>
                     <div class="mobile-number">
