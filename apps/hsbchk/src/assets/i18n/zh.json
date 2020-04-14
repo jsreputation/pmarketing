@@ -19,6 +19,7 @@
     "TITLE": "登記",
     "HAVE_AN_ACCOUNT": "已經登記",
     "LOG_IN": "登入",
+    "COUNTRY_CODE_REQUIRED_TXT": "請選擇一個國家",
     "MOBILE_FIELD": "手機號碼",
     "MOBILE_INVALID_TXT": "請輸入有效手機號碼",
     "MOBILE_REQUIRED_TXT": "請輸入您的手機號碼",
@@ -58,6 +59,7 @@
     "TITLE": "登入",
     "ESCAPE_HATCH": "沒有賬號",
     "SIGN_UP": "註冊",
+    "COUNTRY_CODE_REQUIRED_TXT": "請選擇一個國家",
     "MOBILE_FIELD": "手機號碼",
     "MOBILE_NOTFOUND_TXT": "並無登記用戶記錄",
     "MOBILE_INVALID_TXT": "請輸入有效手機號碼",
@@ -71,6 +73,7 @@
   "FORGET_PW_PAGE": {
     "TITLE": "忘記密碼",
     "DESCRIPTION": "請輸入您已登記的手機號碼",
+    "COUNTRY_CODE_REQUIRED_TXT": "請選擇一個國家",
     "MOBILE_FIELD": "手機號碼",
     "MOBILE_NOTFOUND_TXT": "並無登記用戶記錄",
     "MOBILE_INVALID_TXT": "請輸入有效手機號碼",

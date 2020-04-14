@@ -59,10 +59,10 @@ export class SignIn2Component implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.initForm();
     this.configService.readAppConfig<ISigninConfig>().subscribe((conf) => {
       this.appConfig = conf;
       this.countryCodePrefix = conf.countryCodePrefix;
+      this.initForm();
     });
     // todo: make this a input
     this.countriesList$ = this.generalStaticDataService.getCountriesList([
@@ -104,8 +104,12 @@ export class SignIn2Component implements OnInit, OnDestroy {
   public initForm(): void {
     this.loginForm = this.fb.group({
       customerID: [this.custId, Validators.required],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
+      countryCode: ['', ]
     });
+    if (!this.countryCodePrefix) {
+      this.loginForm.controls.countryCode.setValidators([Validators.required]);
+    }
   }
 
   public onSubmit(): void {

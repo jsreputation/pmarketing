@@ -19,6 +19,7 @@
     "TITLE": "Sign Up",
     "HAVE_AN_ACCOUNT": "Have an account",
     "LOG_IN": "Log in",
+    "COUNTRY_CODE_REQUIRED_TXT": "Please select a country",
     "MOBILE_FIELD": "Mobile",
     "MOBILE_INVALID_TXT": "Please enter a valid mobile number",
     "MOBILE_REQUIRED_TXT": "Please enter your mobile number",
@@ -58,6 +59,7 @@
     "TITLE": "Log In",
     "ESCAPE_HATCH": "Don’t have an account?",
     "SIGN_UP": "Sign up",
+    "COUNTRY_CODE_REQUIRED_TXT": "Please select a country",
     "MOBILE_FIELD": "Mobile number",
     "MOBILE_NOTFOUND_TXT": "Account not found",
     "MOBILE_INVALID_TXT": "Please input a valid mobile number",
@@ -71,6 +73,7 @@
   "FORGET_PW_PAGE": {
     "TITLE": "Forgot Password",
     "DESCRIPTION": "Please enter your registered mobile number to proceed.",
+    "COUNTRY_CODE_REQUIRED_TXT": "Please select a country",
     "MOBILE_FIELD": "Mobile number",
     "MOBILE_NOTFOUND_TXT": "Account not found",
     "MOBILE_INVALID_TXT": "Please input a valid mobile number",
