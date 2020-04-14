@@ -72,37 +72,32 @@ export class QuizResultsComponent implements OnInit {
     let nextRoute: string;
     if (this.correctAnswers !== this.results.length) {
       const noOutcome = oc(this.quiz).results.noOutcome();
-      this.popup = {
-        title: oc(noOutcome).title('QUIZ_TEMPLATE.NO_OUTCOME_SCORE'),
-        text: oc(noOutcome).subTitle('QUIZ_TEMPLATE.NO_OUTCOME_TXT'),
-        imageUrl: oc(noOutcome).image(),
-        buttonTxt: oc(noOutcome).button('QUIZ_TEMPLATE.NO_OUTCOME_CTA')
-      };
+      this.translate.get(['QUIZ_TEMPLATE.NO_OUTCOME_SCORE', 'QUIZ_TEMPLATE.NO_OUTCOME_TXT', 'QUIZ_TEMPLATE.NO_OUTCOME_CTA']).subscribe((res: any) => {
+        const noOutcomeTitle = res['QUIZ_TEMPLATE.NO_OUTCOME_SCORE'].replace('{{points}}', points);
+        this.popup = {
+          title: oc(noOutcome).title(noOutcomeTitle),
+          text: oc(noOutcome).subTitle(res['QUIZ_TEMPLATE.NO_OUTCOME_TXT']),
+          imageUrl: oc(noOutcome).image(),
+          buttonTxt: oc(noOutcome).button(res['QUIZ_TEMPLATE.NO_OUTCOME_CTA'])
+        };
+        this.notificationService.addPopup(this.popup);
+      });
       nextRoute = '/home';
     } else {
       const outcome = oc(this.quiz).results.outcome();
-      this.popup = {
-        title: oc(outcome).title('QUIZ_TEMPLATE.POSITIVE_OUTCOME_TXT'),
-        text: oc(outcome).subTitle('QUIZ_TEMPLATE.POSITIVE_OUTCOME_REWARD'),
-        buttonTxt: oc(outcome).button('QUIZ_TEMPLATE.POSITIVE_OUTCOME_CTA'),
-        imageUrl: 'assets/quiz/reward.png',
-        ctaButtonClass: 'ga_game_completion'
-      };
+      this.translate.get(['QUIZ_TEMPLATE.POSITIVE_OUTCOME_TXT', 'QUIZ_TEMPLATE.POSITIVE_OUTCOME_REWARD', 'QUIZ_TEMPLATE.POSITIVE_OUTCOME_CTA']).subscribe((res: any) => {
+        const outcomeTitle = res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_TXT'].replace('{{points}}', points);
+        this.popup = {
+          title: oc(outcome).title(outcomeTitle),
+          text: oc(outcome).subTitle(res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_REWARD']),
+          buttonTxt: oc(outcome).button(res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_CTA']),
+          imageUrl: 'assets/quiz/reward.png',
+          ctaButtonClass: 'ga_game_completion'
+        };
+        this.notificationService.addPopup(this.popup);
+      });
       nextRoute = '/wallet';
     }
-
-    this.translate.get([this.popup.title || '', this.popup.text || '', this.popup.buttonTxt || '']).subscribe(
-      ([title, text, buttonTxt]) => {
-        this.popup = {
-          ...this.popup,
-          title: title.replace('{{points}}', points),
-          text,
-          buttonTxt
-        };
-
-        this.notificationService.addPopup(this.popup);
-      }
-    );
     this.router.navigate([nextRoute]);
   }
 
