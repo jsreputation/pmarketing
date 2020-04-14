@@ -213,10 +213,11 @@ export class V4QuizService implements QuizService {
     return this.baseUrl$.pipe(
       switchMap(baseUrl => this.http.put<V4QuizAnswerResponse>(`${baseUrl}/v4/game_transactions/${moveId}/answer_quiz`, payload)),
       map(res => {
-        const result = res.data.answers.find(ans => answer.questionId === ans.question_id);
+        const result: V4AnswerResponse | undefined = res.data.answers.find(ans => answer.questionId === ans.question_id);
+        const points: number = oc(result).score(oc(result).is_correct() ? 1 : 0) || 0;
         return {
           hasOutcomes: res.data.outcomes.length > 0,
-          points: oc(result).score() || 0
+          points
         };
       })
     );

@@ -57,7 +57,11 @@ export abstract class ISignUpComponent implements OnDestroy {
   }
 
   protected initForm(): void {
-    const hkidValidators: ValidatorFn[] = [Validators.minLength(4), Validators.maxLength(4), Validators.pattern('[a-zA-Z0-9]*')];
+    const hkidValidators: ValidatorFn[] = [
+      Validators.minLength(4),
+      Validators.maxLength(4),
+      Validators.pattern('[0-9]*')
+    ];
     this.signupForm = this.fb.group({
       nickname: ['', Validators.required],
       referralCode: [''],
