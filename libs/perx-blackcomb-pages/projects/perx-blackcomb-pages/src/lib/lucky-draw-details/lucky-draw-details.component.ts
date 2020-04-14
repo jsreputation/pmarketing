@@ -1,13 +1,14 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import {
   ITheme,
   AuthenticationService,
   NotificationService,
   ProfileService,
-  IProfile
+  IProfile,
+  ICustomProperties
 } from '@perxtech/core';
-import {FormBuilder, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { oc } from 'ts-optchain';
 
 @Component({
@@ -22,7 +23,6 @@ export class LuckyDrawDetailsComponent implements OnInit, OnDestroy {
   public profile: IProfile;
   private destroy$: Subject<void> = new Subject();
   public theme: Observable<ITheme>;
-  @ViewChild('luckEditForm', {static: false}) public documentEditForm: FormGroupDirective;
 
   constructor(
     private fb: FormBuilder,
@@ -38,12 +38,12 @@ export class LuckyDrawDetailsComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.profileService.whoAmI().subscribe(res => {
       this.profile = res;
-      this.luckdrawForm.patchValue({ fullName: oc(this.profile).customProperties.fullName('') });
-      this.luckdrawForm.patchValue({ hkid: oc(this.profile).customProperties.hkid('') });
-      this.luckdrawForm.patchValue({ accept_marketing: true });
       if (!res.customProperties) {
         return;
       }
+      this.luckdrawForm.patchValue({ fullName: oc(this.profile).customProperties.fullName('') });
+      this.luckdrawForm.patchValue({ hkid: oc(this.profile).customProperties.hkid('') });
+      // this.luckdrawForm.patchValue({ accept_marketing: true });
     });
   }
 
@@ -67,9 +67,9 @@ export class LuckyDrawDetailsComponent implements OnInit, OnDestroy {
 
   private initForm(): void {
     this.luckdrawForm = this.fb.group({
-      fullName: ['', Validators.required],
-      hkid: ['', Validators.required],
-      accept_marketing: [false, Validators.requiredTrue]
+      fullName: ['', [Validators.required]],
+      hkid: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4), Validators.pattern('[a-zA-Z0-9]*')]],
+      accept_marketing: [false, [Validators.requiredTrue]]
     });
   }
 
@@ -85,7 +85,7 @@ export class LuckyDrawDetailsComponent implements OnInit, OnDestroy {
     const hkid = this.luckdrawForm.value.hkid;
 
     // might include nickname too, figma design doesnt show
-    const luckyDrawData: any = {
+    const luckyDrawData: ICustomProperties = {
       fullName,
       hkid
     };

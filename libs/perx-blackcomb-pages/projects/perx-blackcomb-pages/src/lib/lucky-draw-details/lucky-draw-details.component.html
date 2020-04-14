@@ -1,32 +1,35 @@
 <div class="luck-wrapper">
   <div class="content-container">
-    <form [formGroup]="luckdrawForm" #luckEditForm="ngForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="luckdrawForm" (ngSubmit)="onSubmit()">
       <div class="luck-inputs">
         <h1>Opt-in Lucky Draw</h1>
         <mat-list-item>
-          <p matLine class="label">{{ 'FULL_NAME' | translate }}</p>
+          <p matLine class="label">{{ 'SIGN_UP_PAGE.FULL_NAME_HKID_FIELD' | translate }}</p>
         </mat-list-item>
         <mat-form-field appearance="standard" class="full-width__input">
           <input matInput formControlName="fullName">
+          <mat-error>Full name is required</mat-error>
         </mat-form-field>
         <mat-list-item>
-          <p matLine class="label">{{ 'FOUR_DIGITS_HKID' | translate }}</p>
+          <p matLine class="label">{{ 'SIGN_UP_PAGE.HKID_DIGITS_TXT' | translate }}</p>
         </mat-list-item>
         <mat-form-field appearance="standard" class="full-width__input">
           <input matInput formControlName="hkid">
+          <mat-error>Invalid id. It should be 4 digits</mat-error>
         </mat-form-field>
         <div class="checkbox-container">
           <mat-checkbox formControlName="accept_marketing"></mat-checkbox>
-          <span class="wrap-checkbox-text">{{ 'MARKETING_AGREE' | translate }} ({{ 'LUCKY_DRAW_REFER' | translate }}  (<a [routerLink]="['/c/privacy-policy']">PICS</a>)</span>
+          <span class="wrap-checkbox-text">{{'SIGN_UP_PAGE.CHECKBOX_LUCK_TXT' | translate}}</span>
+          <!-- <a [routerLink]="['/c/privacy-policy']">PICS</a> -->
         </div>
       </div>
     </form>
   </div>
   <div class="actions-container mat-elevation-z2">
     <button
-      (click)="luckEditForm.ngSubmit.emit()"
+      (click)="onSubmit()"
       mat-flat-button
-      [disabled]="!luckEditForm.valid"
+      [disabled]=" !luckdrawForm.valid"
       type="submit"
       class="full-width__button"
       translate>
