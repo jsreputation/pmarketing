@@ -16,7 +16,7 @@
                 <div class="country-code">
                     <mat-form-field appearance="fill">
                         <mat-label>Country Code</mat-label>
-                        <mat-select [(value)]="countryCode">
+                        <mat-select [(value)]="countryCode" formControlName="countryCode">
                             <mat-option
                                 *ngFor="let country of countriesList$ | async" [value]="country.code">
                                 <span>{{country.name}}&nbsp;</span>
