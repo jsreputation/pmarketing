@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { QuizModule } from '@perxtech/core';
+import { QuizModule, SecondsToStringPipe } from '@perxtech/core';
 import { ResultsComponent } from './results.component';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -10,7 +10,8 @@ describe('ResultsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ResultsComponent],
-      imports: [QuizModule, TranslateModule.forRoot()]
+      imports: [QuizModule, TranslateModule.forRoot()],
+      providers: [SecondsToStringPipe]
     })
       .compileComponents();
   }));
