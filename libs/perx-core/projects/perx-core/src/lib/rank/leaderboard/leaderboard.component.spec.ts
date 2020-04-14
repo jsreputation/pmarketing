@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LeaderboardComponent } from './leaderboard.component';
+import {MatTableModule} from '@angular/material';
 
 describe('LeaderboardComponent', () => {
   let component: LeaderboardComponent;
@@ -8,7 +9,8 @@ describe('LeaderboardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LeaderboardComponent ]
+      declarations: [ LeaderboardComponent ],
+      imports: [ MatTableModule ]
     })
     .compileComponents();
   }));

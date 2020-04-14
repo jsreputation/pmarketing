@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'perx-blackcomb-pages-leaderboard',
+  selector: 'perx-core-leaderboard',
   templateUrl: './leaderboard.component.html',
   styleUrls: ['./leaderboard.component.scss']
 })
-export class LeaderboardComponent implements OnInit {
+export class LeaderboardComponent {
   public columnsToDisplay = ['ranking', 'nickName', 'points'];
 
   public rankingImages = [
@@ -26,10 +26,5 @@ export class LeaderboardComponent implements OnInit {
     {ranking: 9, nickName: 'joker', points: 1},
     {ranking: 10, nickName: 'joker', points: 1},
   ];
-
-  constructor() { }
-
-  ngOnInit() {
-  }
 
 }

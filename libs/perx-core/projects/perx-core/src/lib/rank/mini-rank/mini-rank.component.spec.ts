@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MiniRankComponent } from './mini-rank.component';
+import {MatDividerModule} from '@angular/material';
 
 describe('MiniRankComponent', () => {
   let component: MiniRankComponent;
@@ -8,7 +9,8 @@ describe('MiniRankComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MiniRankComponent ]
+      declarations: [ MiniRankComponent ],
+      imports: [ MatDividerModule ]
     })
     .compileComponents();
   }));

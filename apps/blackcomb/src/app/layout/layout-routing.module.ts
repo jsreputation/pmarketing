@@ -9,10 +9,6 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'home' },
-      { path: 'rank',
-        loadChildren: () => import('../rank/rank.module').then((mod) => mod.RankModule),
-        canActivate: [ProtectedGuard]
-      },
       {
         path: 'home', loadChildren: () => import('../home/home.module').then(mod => mod.HomeModule),
         canActivate: [ProtectedGuard]
