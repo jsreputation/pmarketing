@@ -17,6 +17,8 @@ export class QuizResultsComponent implements OnInit {
   public backgroundImgUrl: string = '';
   private quiz: IQuiz | undefined;
   private popup: IPopupConfig;
+  public title: string;
+  public subTitle: string;
 
   constructor(
     private secondsToString: SecondsToStringPipe,
@@ -42,19 +44,26 @@ export class QuizResultsComponent implements OnInit {
         this.results = res.points;
         this.backgroundImgUrl = oc(res).quiz.backgroundImgUrl('');
         this.quiz = res.quiz;
+        this.getTitle();
+        this.getSubTitle();
       });
   }
 
-  public get title(): string {
-    return `You got ${this.correctAnswers} out of ${this.results.length} questions correct!`;
+  public getTitle(): void {
+    this.translate.get('QUIZ_TEMPLATE.SUMMARY_CORRECT').subscribe((text) => {
+      this.title = text.replace('{{total_length}}', this.results.length).replace('{{total_correct}}', this.correctAnswers);
+    });
   }
 
-  public get subTitle(): string | null {
+  public getSubTitle(): void {
     const total = this.results.reduce((sum, q) => sum + oc(q).time(0), 0);
     if (total === 0) {
-      return null;
+      this.subTitle = '';
     }
-    return `You took a total of ${this.secondsToString.transform(total)}`;
+
+    this.translate.get('SUMMARY_TIME_TAKEN').subscribe((text) => {
+      this.subTitle = `${text}${this.secondsToString.transform(total)}`;
+    });
   }
 
   public next(): void {
