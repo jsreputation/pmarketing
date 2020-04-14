@@ -8,7 +8,7 @@ import { SecondsToStringPipe } from '../seconds-to-string.pipe';
   templateUrl: './results.component.html',
   styleUrls: ['./results.component.scss']
 })
-export class ResultsComponent implements OnInit{
+export class ResultsComponent implements OnInit {
   @Input()
   public results: IPoints[];
 

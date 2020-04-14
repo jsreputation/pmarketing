@@ -12,15 +12,14 @@ describe('ResultsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        ResultsComponent,
-        SecondsToStringPipe
+        ResultsComponent
       ],
       imports: [
         MatListModule,
         MatIconModule,
         TranslateModule.forRoot()
       ],
-      providers: []
+      providers: [SecondsToStringPipe]
     })
       .compileComponents();
   }));
