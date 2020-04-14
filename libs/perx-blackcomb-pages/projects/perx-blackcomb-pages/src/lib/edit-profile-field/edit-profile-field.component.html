@@ -1,5 +1,7 @@
 <div class="main-container">
-  <h1 *ngIf="showHeaderBelow">{{getTitle()}}</h1>
+  <div class="title-wrapper">
+    <h1 *ngIf="showHeaderBelow">{{getTitle()}}</h1>
+  </div>
     <form *ngIf="fieldType === 'email'" [formGroup]="changeEmailForm" (ngSubmit)="onSubmit()">
         <mat-form-field appearance="fill" class="full-width__input">
             <mat-label translate>ENTER_EMAIL</mat-label>

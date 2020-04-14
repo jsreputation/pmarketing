@@ -80,6 +80,9 @@ export class EditProfileFieldComponent implements OnInit, ShowTitleInHeader {
   }
 
   public getTitle(): string {
-    return `Edit Profile ${this.fieldType.charAt(0).toUpperCase() + this.fieldType.slice(1)}`;
+    if (this.fieldType) {
+      return `Edit Profile ${this.fieldType.charAt(0).toUpperCase() + this.fieldType.slice(1)}`;
+    }
+    return 'Edit Profile';
   }
 }
