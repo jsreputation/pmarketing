@@ -16,6 +16,7 @@ import { ConfigService } from '../config/config.service';
 import { TreeDisplayProperties, PinataDisplayProperties, ScratchDisplayProperties, SpinDisplayProperties, GameProperties } from '../game/v4-game.service';
 import { QuizDisplayProperties } from '../quiz/v4-quiz.service';
 import { GameType } from '../game/game.model';
+import { patchUrl } from '../utils/patch-url.function';
 
 interface IV4Image {
   type: string;
@@ -82,7 +83,10 @@ export class V4CampaignService implements ICampaignService {
     const campaignBanner = campaign.images.find(i =>
       ['campaign_banner', 'header'].some(ty => ty === i.type)
     );
-    const campaignBannerUrl = oc(campaignBanner).url();
+    let campaignBannerUrl = oc(campaignBanner).url();
+    if (campaignBannerUrl) {
+      campaignBannerUrl = patchUrl(campaignBannerUrl);
+    }
     const rewards =
       campaign.rewards &&
       campaign.rewards.map((reward: IV4Reward) =>
@@ -115,7 +119,9 @@ export class V4CampaignService implements ICampaignService {
         };
       }
       // @ts-ignore
-      displayProperties.landingPage.backgroundUrl = oc(dp as GameProperties).background_image.value.image_url();
+      displayProperties.landingPage.backgroundUrl = patchUrl(
+        oc(dp as GameProperties).background_image.value.image_url('')
+      );
     }
 
     return {

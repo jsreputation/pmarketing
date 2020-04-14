@@ -5,7 +5,7 @@ import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NotificationService, AuthenticationService } from '@perxtech/core';
+import { AuthenticationService } from '@perxtech/core';
 import { Type } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
@@ -14,7 +14,6 @@ import { Router } from '@angular/router';
 describe('ChangePasswordComponent', () => {
   let component: ChangePasswordComponent;
   let fixture: ComponentFixture<ChangePasswordComponent>;
-  const notificationServiceStub: Partial<NotificationService> = { addSnack: () => { } };
 
   const authenticationServiceStub: Partial<AuthenticationService> = {
     requestVerificationToken: () => of()
@@ -33,7 +32,6 @@ describe('ChangePasswordComponent', () => {
         TranslateModule.forRoot()
       ],
       providers: [
-        { provide: NotificationService, useValue: notificationServiceStub },
         { provide: AuthenticationService, useValue: authenticationServiceStub }
       ]
     })
@@ -50,18 +48,16 @@ describe('ChangePasswordComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should fail password matching and call addSnack', () => {
+  it('should fail password matching', () => {
     component.changePasswordForm.controls.newPassword.setValue(1234);
     component.changePasswordForm.controls.confirmPassword.setValue(123);
-    const notificationService: NotificationService = fixture.debugElement.injector.get<NotificationService>
-    (NotificationService as Type<NotificationService>);
-    const notificationServiceSpy = spyOn(notificationService, 'addSnack');
+    const spy = spyOn(authenticationServiceStub, 'requestVerificationToken');
     component.onSubmit();
-    expect(notificationServiceSpy).toHaveBeenCalledWith('Passwords do not match.');
+    expect(component.changePasswordForm.valid).toBe(false);
+    expect(spy).not.toHaveBeenCalled();
   });
 
   it('should call requestVerificationToken when password matches', fakeAsync(() => {
-
     component.changePasswordForm.controls.oldPassword.setValue(1234);
     component.changePasswordForm.controls.newPassword.setValue(123);
     component.changePasswordForm.controls.confirmPassword.setValue(123);

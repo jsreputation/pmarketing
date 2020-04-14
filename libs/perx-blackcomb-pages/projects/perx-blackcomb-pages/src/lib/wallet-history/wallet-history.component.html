@@ -7,16 +7,16 @@
   <mat-tab-group mat-stretch-tabs (selectedTabChange)="changedTab($event)">
     <mat-tab label="My Wallet">
       <div class="voucher-list">
-        <div class="list-heading">My Rewards</div>
+        <div class="list-heading" translate>WALLET.REWARDS_TITLE</div>
         <perx-core-vouchers (tapped)="voucherSelected($event)"
                             [data]="issuedVoucher$"
                             [mapping]="mapping"
         ></perx-core-vouchers>
       </div>
     </mat-tab>
-    <mat-tab label="History">
+    <mat-tab label="'WALLET.HISTORY_TITLE' | translate">
       <div class="voucher-list">
-        <div class="list-heading">Redeemed</div>
+        <div class="list-heading" translate>WALLET.REDEEMED</div>
         <perx-core-vouchers (tapped)="voucherSelected($event)"
                             [data]="redeemedVouchers$"
                             [mapping]="mapping"
