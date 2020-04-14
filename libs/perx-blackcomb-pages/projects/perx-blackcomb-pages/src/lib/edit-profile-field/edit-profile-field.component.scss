@@ -16,6 +16,11 @@ $heading-font-color: #1B1B25;
   align-items: center;
   overflow: scroll;
 
+  .title-wrapper {
+    width: $app-max-width;
+    max-width: $app-max-width;
+  }
+
   .error-message-container {
     width: 80%;
     height: 2rem;
