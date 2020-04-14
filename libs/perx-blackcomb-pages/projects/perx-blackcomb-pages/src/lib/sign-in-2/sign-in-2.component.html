@@ -49,7 +49,7 @@
                             <input autocomplete="tel-local" matInput [placeholder]="'LOGIN_PAGE.MOBILE_FIELD' | translate" formControlName="customerID"
                                 [value]="">
                             <mat-error *ngIf="loginForm.hasError('required', ['customerID'])">
-                                {{'LOGIN_PAGE.MOBILE_INVALID_TXT' | translate}}
+                                {{'LOGIN_PAGE.MOBILE_REQUIRED_TXT' | translate}}
                             </mat-error>
                         </mat-form-field>
                     </div>
@@ -59,7 +59,7 @@
                     <input matInput [placeholder]="'LOGIN_PAGE.PASSWORD_FIELD' | translate" formControlName="password"
                         type="password">
                     <mat-error *ngIf="loginForm.hasError('required', ['password'])">
-                        {{'LOGIN_PAGE.PASSWORD_INVALID_TXT' | translate}}
+                        {{'LOGIN_PAGE.PASSWORD_REQUIRED_TXT' | translate}}
                     </mat-error>
                 </mat-form-field>
             </ng-template>
