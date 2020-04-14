@@ -142,6 +142,8 @@ export class SignUpComponent implements OnInit, OnDestroy {
             } else {
               this.notificationService.addSnack('Something unexpected happened');
             }
+            // reset loading state if submit fails
+            this.loadingSubmit = false;
           }
         );
     }

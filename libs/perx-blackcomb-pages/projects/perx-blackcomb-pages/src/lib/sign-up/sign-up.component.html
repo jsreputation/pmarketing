@@ -68,8 +68,8 @@
       </mat-form-field>
     </form>
     <button
-    [disabled]="!signupForm.valid"
-    mat-flat-button
+     [disabled]="!signupForm.valid || loadingSubmit"
+      mat-flat-button
       color="primary"
       (click)="onSubmit()">
       <i *ngIf="loadingSubmit" class="loading-spin" >
