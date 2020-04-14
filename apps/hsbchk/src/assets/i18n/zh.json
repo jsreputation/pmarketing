@@ -42,7 +42,7 @@
     "FULL_NAME_HKID_REQUIRED_TXT": "請輸入姓名",
     "HKID_DIGITS_TXT": "身份證號碼頭四位",
     "HKID_DIGITS_REQUIRED_TXT": "請輸入身份證號碼",
-    "CHECKBOX_LUCK_TXT": "本人同意滙豐保險儲存本人的個人資料作未來的直接巿場推廣用途（ 詳情請參閱個人資料收集聲明）",
+    "CHECKBOX_LUCK_TXT": "本人同意滙豐保險儲存本人的個人資料作未來的直接巿場推廣用途。詳情請參閱",
     "CHECKBOX_LUCK_POPUP_TXT": "如果您不同意這項條款，您將不會符合參加抽獎的資格。 您是否確認繼續？",
     "BUTTON_SUBMIT": "遞交"
   },
