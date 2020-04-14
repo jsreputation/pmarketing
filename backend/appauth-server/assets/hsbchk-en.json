@@ -15,6 +15,9 @@
     "NEXT_WEEK_CHALLENGE": "Buying an annuity early for retirement has been a hot topic recently. But there are public and private annuities, and some are even tax-deductible. Please figure out which plan is right for you before you buy!",
     "CTA_TXT": "Read more"
   },
+  "WELCOME_PAGE": {
+    "LOG_IN": "Log in"
+  },
   "SIGN_UP_PAGE": {
     "TITLE": "Sign Up",
     "HAVE_AN_ACCOUNT": "Have an account",
@@ -56,11 +59,15 @@
   },
   "LOGIN_PAGE": {
     "TITLE": "Log In",
-    "ESCAPE_HATCH": "Don’t have an account?",
+    "NO_ACCOUNT": "Don’t have an account?",
+    "INVALID_CREDENTIALS": "Invalid Credentials",
     "SIGN_UP": "Sign up",
     "MOBILE_FIELD": "Mobile number",
     "MOBILE_NOTFOUND_TXT": "Account not found",
     "MOBILE_INVALID_TXT": "Please input a valid mobile number",
+    "OTP_SEND_TO": "OTP send to ",
+    "CHECK_YOUR_SMS": "Check your sms",
+    "RESEND_OTP": "Resend OTP",
     "PASSWORD_FIELD": "Password",
     "PASSWORD_INVALID_TXT": "Password incorrect",
     "FORGET_PASSWORD_TXT": "Forgot password?",
@@ -72,6 +79,7 @@
     "MOBILE_FIELD": "Mobile number",
     "MOBILE_NOTFOUND_TXT": "Account not found",
     "MOBILE_INVALID_TXT": "Please input a valid mobile number",
+    "MOBILE_REQURIED_TXT": "Please enter your registered mobile number",
     "CTA_NEXT_TXT": "Next",
     "NEW_PW_TXT": "Enter new password",
     "CONFIRM_PW_TXT": "Confirm new password",
@@ -88,10 +96,13 @@
   },
   "QUIZ_TEMPLATE": {
     "CTA_START_TXT": "Take the quiz",
+    "QUESTION": "Question ",
+    "OUT_OF": " out of ",
     "PROGRESS_BAR": "Question {{questionId + 1}} out of {{questions.length}}",
     "CTA_NEXT_TXT": "Next",
+    "CTA_SUBMIT_TXT": "Submit",
     "SUMMARY_CORRECT": "You got {{total_correct}} out of {{questions.length}} questions correct!",
-    "SUMMARY_TIME_TAKEN": "You took a total of {{time_taken}}",
+    "SUMMARY_TIME_TAKEN": "You took a total of",
     "POSITIVE_OUTCOME_TXT": "Congratulations!",
     "POSITIVE_OUTCOME_SCORE": "You scored [x] points",
     "POSITIVE_OUTCOME_REWARD": "Here’s a reward for you",
@@ -102,7 +113,9 @@
   "WALLET": {
     "REWARDS_TITLE": "My Rewards",
     "HISTORY_TITLE": "My History",
-    "REWARD_STATUS_EXPIRY": "Expires on [date]",
+    "MY_WALLET": "My Wallet",
+    "REDEEMED": "Redeemed",
+    "REWARD_STATUS_EXPIRY": "Expires on {{date}}",
     "REWARD_STATUS_REDEEMED": "Redeemed",
     "REWARD_STATUS_EXPIRED": "Expired",
     "CTA_TXT": "Redeem"
@@ -127,6 +140,8 @@
     "LABEL_SCORE": "Score"
   },
   "ACCOUNT_PAGE": {
+    "LUCKY_DRAW_INFO": "Lucky Draw Info",
+    "TRANSACTION_HISTORY": "Transaction History",
     "PROFILE": "My Profile",
     "REFER_FRIEND": "Refer a friend",
     "LIFE_TALK": "LIFE Talk",
@@ -158,6 +173,17 @@
     "CONTENT": "For each successful sign up* using your referral code, you earn extra 5X lucky draw chance. Your referee will earn 3X lucky draw chances.\nShare your referral code with a friend today!\n*Both you and your referee will have to complete at least 1 quiz to earn your lucky draw chances.",
     "CTA_BUTTON": "Share referral code",
     "SHARE_COPY_TXT": "Join me in the HSBC LIFE Dojo challenge. Watch a video and answer the quiz questions correctly and stand to win rewards each week, as well as a chance for the grand lucky draw.\n[URL]\nUse referral code [code] when signing up and earn 3x lucky draw chances.\n"
+  },
+  "HOME": {
+    "MY_QR": "My QR",
+    "MY_BAR_CODE": "My Barcode",
+    "STAMP_CAMPAIGNS": "Stamp Card Campaigns",
+    "CATALOG": "Catalog",
+    "GAMES": "Games",
+    "QUIZ": "Quiz",
+    "FEATURED_REWARDS": "Featured Rewards",
+    "SEE_MORE": "See more",
+    "SEE_LESS": "See less"
   },
   "WEEK1_CAMPAIGN_EASY": {
     "TITLE": "White Belt (Easy)",

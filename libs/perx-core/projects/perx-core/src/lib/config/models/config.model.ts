@@ -1,6 +1,7 @@
 import { IWSetting } from '@perxtech/whistler';
 
 export interface IConfig<T> {
+  app?: string;
   apiHost: string;
   production: boolean;
   preAuth: boolean;
@@ -42,6 +43,7 @@ export interface IConfig<T> {
   showUserInfoOnAccountsPage?: boolean;
   showLuckyDrawDetailsOnAccountsPage?: boolean;
   showTransactionHistoryOnAccountsPage?: boolean;
+  showReferralOnAccountsPage?: boolean;
 
   /* Reward page */
   showVoucherBookingFromRewardsPage?: boolean;

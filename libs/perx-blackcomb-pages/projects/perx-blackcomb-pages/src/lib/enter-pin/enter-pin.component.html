@@ -6,14 +6,13 @@
   </mat-toolbar>
   <div class="page-container">
     <div class="content-container">
-      <h2 *ngIf="pinMode === 'password'" translate>STATIC_RESET_PASSWORD</h2>
-      <h2 *ngIf="pinMode === 'register'" translate>STATIC_NEW_REGISTER</h2>
-      <div class="subheading"><span translate>STATIC_RESET_PASSWORD_SUBHEADING</span>{{visibleNumber}}</div>
+      <h2>{{'OTP_PAGE.TITLE' | translate}}</h2>
+      <div class="subheading"><span>{{'OTP_PAGE.DESCRIPTION' | translate}}</span>{{visibleNumber}}</div>
       <div class="pin-input-container">
         <perx-core-pin-input [length]="MAX_DIGITS_COUNT" (full)="onPinEntered($event)">
         </perx-core-pin-input>
       </div>
-      <button mat-stroked-button (click)="resendOtp()">{{ 'REDEND_OTP' | translate }}</button>
+      <button mat-stroked-button (click)="resendOtp()">{{ 'OTP_PAGE.ERROR_LINK' | translate }}</button>
     </div>
   </div>
 </div>

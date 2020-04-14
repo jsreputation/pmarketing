@@ -19,25 +19,25 @@
     <a matRipple [routerLink]="[ '/home' ]" routerLinkActive="active" *ngIf="appConfig.showHomePage">
       <div class="nav-item">
         <mat-icon aria-hidden="false">home</mat-icon>
-        <span translate>HOME</span>
+        <span translate>NAVIGATION.HOME</span>
       </div>
     </a>
     <a matRipple [routerLink]="[ '/wallet' ]" routerLinkActive="active">
       <div class="nav-item">
         <mat-icon aria-hidden="false">account_balance_wallet</mat-icon>
-        <span translate>WALLET</span>
+        <span translate>NAVIGATION.WALLET</span>
       </div>
     </a>
     <a matRipple [routerLink]="[ '/history' ]" routerLinkActive="active" *ngIf="appConfig.showHistoryPage">
       <div class="nav-item">
         <mat-icon aria-hidden="false">list</mat-icon>
-        <span translate>HISTORY</span>
+        <span translate>NAVIGATION.HISTORY</span>
       </div>
     </a>
     <a matRipple [routerLink]="[ '/account' ]" routerLinkActive="active" *ngIf="appConfig.showAccountsPage">
       <div class="nav-item">
         <mat-icon aria-hidden="false">account_circle</mat-icon>
-        <span translate>ACCOUNT</span>
+        <span translate>NAVIGATION.ACCOUNT</span>
       </div>
     </a>
   </mat-toolbar>

@@ -31,7 +31,7 @@
     }
 
     .timer {
-      color: white;
+      color: var(--font_color, white);
       font-size: 2.4rem;
       margin-top: 2.4rem;
     }
@@ -56,7 +56,7 @@
     }
 
     .quiz-no-card {
-      color: white;
+      color: var(--font_color, white);
       width: 100%;
 
       $horizontalPadding: 4rem;
@@ -68,14 +68,13 @@
       }
 
       ::ng-deep .question {
-        color: white;
+        color: var(--font_color, white);
         padding: $verticalPadding $horizontalPadding;
       }
 
       ::ng-deep .description {
-        color: white;
+        color: var(--font_color, white);
         padding: $verticalPadding $horizontalPadding;
-        // text-align: center;
       }
 
       // customize look and feel of swipe component

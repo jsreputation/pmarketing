@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { NotificationService, IChangePasswordData, AuthenticationService } from '@perxtech/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthenticationService, equalityValidator, IChangePasswordData, inequalityValidator } from '@perxtech/core';
 import { ShowTitleInHeader } from '../layout/layout.component';
 
 @Component({
@@ -15,7 +15,6 @@ export class ChangePasswordComponent implements ShowTitleInHeader {
 
   constructor(
     private fb: FormBuilder,
-    private notificationService: NotificationService,
     private router: Router,
     private authService: AuthenticationService
   ) {
@@ -27,20 +26,24 @@ export class ChangePasswordComponent implements ShowTitleInHeader {
       oldPassword: ['', Validators.required],
       newPassword: ['', Validators.required],
       confirmPassword: ['', Validators.required]
+    }, {
+      validators: [
+        equalityValidator('newPassword', 'confirmPassword'),
+        inequalityValidator('oldPassword', 'newPassword'),
+      ]
     });
   }
 
   public onSubmit(): void {
+    if (!this.changePasswordForm.valid) {
+      return;
+    }
+
     const passwordField = this.changePasswordForm.get('newPassword');
     const passwordString = passwordField ? passwordField.value : '';
 
     const confirmPasswordField = this.changePasswordForm.get('confirmPassword');
     const confirmPassword = confirmPasswordField ? confirmPasswordField.value : '';
-
-    if (passwordString !== confirmPassword) {
-      this.notificationService.addSnack('Passwords do not match.');
-      return;
-    }
 
     const oldPasswordField = this.changePasswordForm.get('oldPassword');
     const oldPasswordString = oldPasswordField ? oldPasswordField.value : '';
@@ -52,9 +55,8 @@ export class ChangePasswordComponent implements ShowTitleInHeader {
       otp: ''
     };
 
-    this.authService.requestVerificationToken().subscribe(() => {
-      this.router.navigateByUrl('enter-pin/password', { state: changePasswordData });
-    });
+    this.authService.requestVerificationToken()
+      .subscribe(() => this.router.navigateByUrl('/otp/password', { state: changePasswordData }));
   }
 
   public getTitle(): string {

@@ -324,9 +324,9 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       );
   }
 
-  public signup(profile: ISignUpData): Observable<IProfile | null> {
+  public signup(profile: ISignUpData): Observable<IProfile> {
     if (!this.isSignUpEnded) {
-      return of(null);
+      return throwError('OnGoingSignup');
     }
 
     this.isSignUpEnded = false;
@@ -340,6 +340,10 @@ export class V4AuthenticationService extends AuthenticationService implements Au
         map((resp: IV4ProfileResponse) => {
           this.isSignUpEnded = true;
           return V4ProfileService.v4ProfileToProfile(resp.data);
+        }),
+        catchError(err => {
+          this.isSignUpEnded = true;
+          return throwError(err);
         })
       );
   }
