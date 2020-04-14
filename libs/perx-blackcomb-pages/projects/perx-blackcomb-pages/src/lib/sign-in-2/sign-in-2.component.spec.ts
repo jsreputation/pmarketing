@@ -1,15 +1,16 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { SignIn2Component } from './sign-in-2.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule, MatInputModule, MatSelectModule } from '@angular/material';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthenticationService, Config, ConfigService, ThemesService } from '@perxtech/core';
-import { TranslateModule } from '@ngx-translate/core';
-import { of } from 'rxjs';
-import { IWAppAccessTokenResponse } from '@perxtech/whistler';
 import { Type } from '@angular/core';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule, MatInputModule, MatProgressSpinnerModule, MatSelectModule } from '@angular/material';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule } from '@ngx-translate/core';
+import { AuthenticationService, Config, ConfigService, ThemesService } from '@perxtech/core';
+import { IWAppAccessTokenResponse } from '@perxtech/whistler';
+import { of } from 'rxjs';
+import * as uuid from 'uuid';
+import { SignIn2Component } from './sign-in-2.component';
 
 const configStub: Partial<Config> = {
   preAuth: false
@@ -62,6 +63,7 @@ describe('SignIn2Component', () => {
         MatSelectModule,
         ReactiveFormsModule,
         NoopAnimationsModule,
+        MatProgressSpinnerModule,
         TranslateModule.forRoot()
       ],
       providers: [
@@ -116,18 +118,16 @@ describe('SignIn2Component', () => {
     }));
   });
 
-  it('should call navigateByUrl on redirectAfterLogin', () => {
-    const router: Router = fixture.debugElement.injector.get(Router);
-    spyOn(router, 'navigateByUrl').and.callThrough();
-    component.redirectAfterLogin();
-    expect(router.navigateByUrl).toHaveBeenCalled();
-  });
-
   it('should call login onSubmit', fakeAsync(() => {
     const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
       AuthenticationService as Type<AuthenticationService>
     );
     const loginSpy = spyOn(authenticationService, 'login').and.returnValue(of());
+    component.loginForm.patchValue({
+      customerID: uuid.v4(),
+      password: uuid.v4(),
+      countryCode: '65'
+    });
     component.onSubmit();
     tick();
     expect(loginSpy).toHaveBeenCalled();

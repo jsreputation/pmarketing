@@ -5,7 +5,8 @@
     <div *ngIf="appConfig" class="login-form">
         <h1>{{'LOGIN_PAGE.TITLE' | translate}}</h1>
         <div class="subtitle" *ngIf="appConfig.showSubtitleLogin">
-            {{'LOGIN_PAGE.NO_ACCOUNT' | translate}} <a class="link" [routerLink]="'/signup'">{{'LOGIN_PAGE.SIGN_UP' | translate}}</a>
+            {{'LOGIN_PAGE.NO_ACCOUNT' | translate}} <a class="link"
+                [routerLink]="'/signup'">{{'LOGIN_PAGE.SIGN_UP' | translate}}</a>
         </div>
         <div class="error_msg">
             <span>{{errorMessage}}</span>
@@ -34,22 +35,25 @@
                     <div class="country-code">
                         <mat-form-field appearance="fill">
                             <mat-label>Country Code</mat-label>
-                          <mat-select [(value)]="countryCode" formControlName="countryCode">
+                            <mat-select formControlName="countryCode">
                                 <mat-option
-                                  *ngFor="let country of countriesList$ | async" [value]="country.code">
+                                    *ngFor="let country of countriesList$ | async" [value]="country.code">
                                     <span>{{country.name}} </span>
                                     <span>+{{country.code}}</span>
                                 </mat-option>
                             </mat-select>
-                          <mat-error *ngIf="loginForm.hasError('required', ['countryCode'])">
-                            {{'LOGIN_PAGE.COUNTRY_CODE_REQUIRED_TXT' | translate}}
-                          </mat-error>
+                            <mat-error *ngIf="loginForm.hasError('required', ['countryCode'])">
+                                {{'LOGIN_PAGE.COUNTRY_CODE_REQUIRED_TXT' | translate}}
+                            </mat-error>
                         </mat-form-field>
                     </div>
                     <div class="mobile-number">
                         <mat-form-field appearance="fill">
                             <mat-label>{{'LOGIN_PAGE.MOBILE_FIELD' | translate}}</mat-label>
-                            <input autocomplete="tel-local" matInput [placeholder]="'LOGIN_PAGE.MOBILE_FIELD' | translate" formControlName="customerID"
+                            <input autocomplete="tel-local"
+                                matInput
+                                [placeholder]="'LOGIN_PAGE.MOBILE_FIELD' | translate"
+                                formControlName="customerID"
                                 [value]="">
                             <mat-error *ngIf="loginForm.hasError('required', ['customerID'])">
                                 {{'LOGIN_PAGE.MOBILE_REQUIRED_TXT' | translate}}
@@ -59,7 +63,9 @@
                 </div>
                 <mat-form-field appearance="fill" class="full-width__input">
                     <mat-label translate>{{'LOGIN_PAGE.PASSWORD_FIELD' | translate}}</mat-label>
-                    <input matInput [placeholder]="'LOGIN_PAGE.PASSWORD_FIELD' | translate" formControlName="password"
+                    <input matInput
+                        [placeholder]="'LOGIN_PAGE.PASSWORD_FIELD' | translate"
+                        formControlName="password"
                         type="password">
                     <mat-error *ngIf="loginForm.hasError('required', ['password'])">
                         {{'LOGIN_PAGE.PASSWORD_REQUIRED_TXT' | translate}}
@@ -71,8 +77,20 @@
                     {{'LOGIN_PAGE.FORGET_PASSWORD_TXT' | translate}}
                 </a>
             </div>
-            <button mat-flat-button type="submit" color="primary"
-                class="full-width__button">{{'LOGIN_PAGE.CTA_TXT' | translate}}</button>
+            <button mat-flat-button
+                type="submit"
+                color="primary"
+                class="full-width__button"
+                [disabled]="!loginForm.valid || loading">
+                <span *ngIf="!loading">{{'LOGIN_PAGE.CTA_TXT' | translate}}</span>
+                <div *ngIf="loading" class="loading-spin">
+                    <mat-progress-spinner
+                        [diameter]="30"
+                        color="primary"
+                        mode="indeterminate">
+                    </mat-progress-spinner>
+                </div>
+            </button>
         </form>
     </div>
 </div>
