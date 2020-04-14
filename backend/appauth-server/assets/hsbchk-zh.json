@@ -106,7 +106,7 @@
     "POSITIVE_OUTCOME_TXT": "恭喜您！您獲得{{points}}分",
     "POSITIVE_OUTCOME_REWARD": "這是您的獎品",
     "POSITIVE_OUTCOME_CTA": "查閱獎品",
-    "NO_OUTCOME_SCORE": "您在這回合共取得{{x}}分",
+    "NO_OUTCOME_SCORE": "您在這回合共取得{{points}}分",
     "NO_OUTCOME_TXT": "",
     "NO_OUTCOME_CTA": "嘗試另一個問答遊戲",
     "NOT_AVAILABLE_TITLE": "很抱歉!",
