@@ -32,8 +32,8 @@ export class ProfileSummaryComponent implements OnInit {
   public ngOnInit(): void {
     if (!this.titleFn) {
       this.titleFn = (profile?: IProfile): string => {
-        if (profile && profile.customProperties && profile.customProperties.nickName) {
-          return `${profile.customProperties.nickName}`;
+        if (profile && profile.customProperties && profile.customProperties.nickname) {
+          return `${profile.customProperties.nickname}`;
         }
         if (profile && profile.firstName) {
           return `${profile.firstName}`;

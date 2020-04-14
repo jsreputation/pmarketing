@@ -9,7 +9,8 @@ import { ShowTitleInHeader } from '../layout/layout.component';
 
 export enum FieldType {
   email = 'email',
-  postcode = 'postcode'
+  postcode = 'postcode',
+  nickname = 'nickname'
 }
 
 @Component({
@@ -22,6 +23,7 @@ export class EditProfileFieldComponent implements OnInit, ShowTitleInHeader {
   public fieldType: FieldType;
   public changeEmailForm: FormGroup;
   public changePostcodeForm: FormGroup;
+  public changeNicknameForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -40,6 +42,10 @@ export class EditProfileFieldComponent implements OnInit, ShowTitleInHeader {
     this.changePostcodeForm = this.fb.group({
       postcode: ['', Validators.required]
     });
+
+    this.changeNicknameForm = this.fb.group({
+      nickname: ['', Validators.required]
+    });
   }
 
   public ngOnInit(): void {
@@ -56,6 +62,9 @@ export class EditProfileFieldComponent implements OnInit, ShowTitleInHeader {
         .subscribe(() => this.router.navigate(['profile']));
     } else if (this.fieldType === FieldType.postcode) {
       this.profileService.setCustomProperties(this.changePostcodeForm.value)
+        .subscribe(() => this.router.navigate(['profile']));
+    } else if (this.fieldType === FieldType.nickname) {
+      this.profileService.setCustomProperties(this.changeNicknameForm.value)
         .subscribe(() => this.router.navigate(['profile']));
     }
   }

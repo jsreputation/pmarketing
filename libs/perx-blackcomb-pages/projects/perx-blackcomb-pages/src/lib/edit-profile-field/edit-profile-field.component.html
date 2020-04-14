@@ -19,4 +19,14 @@
         </mat-form-field>
         <button mat-flat-button [disabled]="!changePostcodeForm.valid" type="submit" color="primary" class="half-width__button">{{'SAVE' | translate}}</button>
     </form>
+    <form *ngIf="fieldType === 'nickname'" [formGroup]="changeNicknameForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="fill" class="full-width__input">
+        <mat-label translate>ENTER_NICKNAME</mat-label>
+        <input matInput formControlName="nickname" required>
+        <mat-error *ngIf="changeNicknameForm.get('nickname')">
+          <span>Nickname is required</span>
+        </mat-error>
+      </mat-form-field>
+      <button mat-flat-button [disabled]="!changeNicknameForm.valid" type="submit" color="primary" class="half-width__button">{{'SAVE' | translate}}</button>
+    </form>
 </div>
