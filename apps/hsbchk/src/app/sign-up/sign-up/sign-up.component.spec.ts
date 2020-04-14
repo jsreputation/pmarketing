@@ -14,10 +14,14 @@ import {
 } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthenticationService, NotificationService, ThemesService } from '@perxtech/core';
+import {
+  AuthenticationService,
+  ConfigService,
+  NotificationService,
+  ThemesService
+} from '@perxtech/core';
 import { of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
-import { ConfigService } from '../../../../../../libs/perx-core/projects/perx-core/src/lib/config/config.service';
 
 describe('SignUpComponent', () => {
   let component: SignUpComponent;
