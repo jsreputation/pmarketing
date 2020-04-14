@@ -57,7 +57,6 @@ export class EditProfileFieldComponent implements OnInit, ShowTitleInHeader {
   }
 
   public onSubmit(): void {
-    console.log(this.changeNicknameForm.value, 'change nickname form value');
     if (this.fieldType === FieldType.email) {
       this.profileService.updateUserInfo(this.changeEmailForm.value)
         .subscribe(() => this.router.navigate(['profile']));
