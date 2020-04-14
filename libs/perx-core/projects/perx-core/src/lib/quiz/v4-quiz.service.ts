@@ -8,6 +8,7 @@ import { IQAnswer, IQQuestion, IQuiz, QuizMode, QuizQuestionType, IQuizOutcome }
 import { IAnswerResult, QuizService } from './quiz.service';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
+import { patchUrl } from '../utils/patch-url.function';
 
 const enum V4QuizMode {
   basic = 'basic',
@@ -187,8 +188,8 @@ export class V4QuizService implements QuizService {
           },
           questions,
           mode,
-          backgroundImgUrl: oc(game).display_properties.background_image.value.image_url(),
-          cardBackgroundImgUrl: oc(game).display_properties.card_image.value.image_url()
+          backgroundImgUrl: patchUrl(oc(game).display_properties.background_image.value.image_url('')),
+          cardBackgroundImgUrl: patchUrl(oc(game).display_properties.card_image.value.image_url(''))
         };
       })
     );
