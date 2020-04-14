@@ -147,6 +147,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   public onScroll(): void {
+    if (!this.staticTab) {
+      return;
+    }
     const stTab = this.staticTab[this.currentTabIndex];
     if (!stTab || !stTab.rewardsList || stTab.completePagination) {
       return;
