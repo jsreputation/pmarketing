@@ -68,7 +68,12 @@ export class LuckyDrawDetailsComponent implements OnInit, OnDestroy {
   private initForm(): void {
     this.luckdrawForm = this.fb.group({
       fullName: ['', [Validators.required]],
-      hkid: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4), Validators.pattern('[a-zA-Z0-9]*')]],
+      hkid: ['', [
+        Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(4),
+        Validators.pattern('[0-9]*')
+      ]],
       accept_marketing: [false, [Validators.requiredTrue]]
     });
   }
