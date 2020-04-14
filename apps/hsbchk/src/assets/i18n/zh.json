@@ -61,8 +61,10 @@
     "MOBILE_FIELD": "手機號碼",
     "MOBILE_NOTFOUND_TXT": "並無登記用戶記錄",
     "MOBILE_INVALID_TXT": "請輸入有效手機號碼",
+    "MOBILE_REQUIRED_TXT": "請輸入您的手機號碼",
     "PASSWORD_FIELD": "密碼",
     "PASSWORD_INVALID_TXT": "密碼錯誤",
+    "PASSWORD_REQUIRED_TXT": "請輸入密碼",
     "FORGET_PASSWORD_TXT": "忘記密碼？",
     "CTA_TXT": "登入"
   },
