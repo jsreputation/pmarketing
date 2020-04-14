@@ -65,7 +65,7 @@ export class QuizResultsComponent implements OnInit {
       const noOutcome = oc(this.quiz).results.noOutcome();
       this.popup = {
         title: oc(noOutcome).title('QUIZ_TEMPLATE.NO_OUTCOME_SCORE'),
-        text: oc(noOutcome).subTitle(),
+        text: oc(noOutcome).subTitle('QUIZ_TEMPLATE.NO_OUTCOME_TXT'),
         imageUrl: oc(noOutcome).image(),
         buttonTxt: oc(noOutcome).button('QUIZ_TEMPLATE.NO_OUTCOME_CTA')
       };
@@ -82,24 +82,22 @@ export class QuizResultsComponent implements OnInit {
       nextRoute = '/wallet';
     }
 
-    this.initTranslate(points);
-    this.notificationService.addPopup(this.popup);
+    this.translate.get([this.popup.title || '', this.popup.text || '', this.popup.buttonTxt || '']).subscribe(
+      ([title, text, buttonTxt]) => {
+        this.popup = {
+          ...this.popup,
+          title: title.replace('{{points}}', points),
+          text,
+          buttonTxt
+        };
+
+        this.notificationService.addPopup(this.popup);
+      }
+    );
     this.router.navigate([nextRoute]);
   }
 
   private get correctAnswers(): number {
     return this.results.reduce((sum, q) => sum + (q.points && q.points > 0 ? 1 : 0), 0);
-  }
-
-  private initTranslate(points: number): void {
-    if (this.popup.title) {
-      this.translate.get(this.popup.title).subscribe((text) => this.popup.title = text.replace('{{points}}', points));
-    }
-    if (this.popup.text) {
-      this.translate.get(this.popup.text).subscribe((text) => this.popup.text = text);
-    }
-    if (this.popup.buttonTxt) {
-      this.translate.get(this.popup.buttonTxt).subscribe((text) => this.popup.buttonTxt = text);
-    }
   }
 }

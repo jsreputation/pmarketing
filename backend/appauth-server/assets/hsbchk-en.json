@@ -107,6 +107,7 @@
     "POSITIVE_OUTCOME_REWARD": "Here’s a reward for you",
     "POSITIVE_OUTCOME_CTA": "View Reward",
     "NO_OUTCOME_SCORE": "You scored {{points}} points for this round",
+    "NO_OUTCOME_TXT": "",
     "NO_OUTCOME_CTA": "Try another quiz",
     "NOT_AVAILABLE_TITLE": "Sorry!",
     "NOT_AVAILABLE_CTA": "Close",
