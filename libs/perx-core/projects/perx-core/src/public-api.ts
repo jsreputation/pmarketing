@@ -182,6 +182,7 @@ export { StripHtmlPipe } from './lib/utils/directives/striphtml-pipe';
 export { TimerComponent } from './lib/utils/timer/timer.component';
 export { SafeHtmlPipe } from './lib/utils/safe-html.pipe';
 export { SafeUrlPipe } from './lib/utils/safe-url.pipe';
+export { equalityValidator, emailValidator, inequalityValidator } from './lib/utils/validators';
 
 /**
  * Puzzles
@@ -237,7 +238,6 @@ export { QuizRatingComponent } from './lib/quiz/question/rating/rating.component
 export { ResultsComponent } from './lib/quiz/results/results.component';
 export { SecondsToStringPipe } from './lib/quiz/seconds-to-string.pipe';
 export { QuizSwipeListComponent } from './lib/quiz/question/swipe-list/swipe-list.component';
-export { equalityValidator, emailValidator } from './lib/utils/validators';
 
 /**
  * Config
