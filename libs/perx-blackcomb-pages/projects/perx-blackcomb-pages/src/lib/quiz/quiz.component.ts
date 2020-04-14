@@ -15,9 +15,11 @@ import {
   SwipeListType,
   LocaleIdFactory,
   TokenStorage,
+  IPopupConfig,
 } from '@perxtech/core';
 import { Observable, Subject, throwError } from 'rxjs';
 import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'perx-blackcomb-quiz',
@@ -32,6 +34,11 @@ export class QuizComponent implements OnInit, OnDestroy {
   public questionPointer: number = 0;
   public complete: boolean = false;
   public resetTimer$: Subject<void> = new Subject<void>();
+  public notAvailablePopUp: IPopupConfig = {
+    title: 'QUIZ_TEMPLATE.NOT_AVAILABLE_TITLE',
+    text: 'QUIZ_TEMPLATE.NOT_AVAILABLE_TXT',
+    buttonTxt: 'QUIZ_TEMPLATE.NOT_AVAILABLE_CTA'
+  };
 
   private destroy$: Subject<void> = new Subject();
   @ViewChild('overflowContainer', { static: false })
@@ -56,13 +63,16 @@ export class QuizComponent implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     private ngZone: NgZone,
     private notificationService: NotificationService,
-    private tokenStorage: TokenStorage
+    private tokenStorage: TokenStorage,
+    private translate: TranslateService
   ) {
     this.hideArrow = this.hideArrow.bind(this);
   }
 
   public ngOnInit(): void {
     // reuse the factory to resolve current language so that we make sure, we use the same logic
+    this.initTranslate();
+
     const lang = LocaleIdFactory(this.tokenStorage);
     this.data$ = this.route.paramMap.pipe(
       filter((params: ParamMap) => params.has('cid')),
@@ -305,5 +315,17 @@ export class QuizComponent implements OnInit, OnDestroy {
 
   private get currentTime(): number {
     return (new Date()).getTime() / 1000;
+  }
+
+  private initTranslate(): void {
+    if (this.notAvailablePopUp.title) {
+      this.translate.get(this.notAvailablePopUp.title).subscribe((text) => this.notAvailablePopUp.title = text);
+    }
+    if (this.notAvailablePopUp.text) {
+      this.translate.get(this.notAvailablePopUp.text).subscribe((text) => this.notAvailablePopUp.text = text);
+    }
+    if (this.notAvailablePopUp.text) {
+      this.translate.get(this.notAvailablePopUp.text).subscribe((text) => this.notAvailablePopUp.text = text);
+    }
   }
 }
