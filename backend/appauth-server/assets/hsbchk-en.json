@@ -65,11 +65,13 @@
     "MOBILE_FIELD": "Mobile number",
     "MOBILE_NOTFOUND_TXT": "Account not found",
     "MOBILE_INVALID_TXT": "Please input a valid mobile number",
+    "MOBILE_REQUIRED_TXT": "Please enter your mobile number",
     "OTP_SEND_TO": "OTP send to ",
     "CHECK_YOUR_SMS": "Check your sms",
     "RESEND_OTP": "Resend OTP",
     "PASSWORD_FIELD": "Password",
     "PASSWORD_INVALID_TXT": "Password incorrect",
+    "PASSWORD_REQUIRED_TXT": "Please input a password",
     "FORGET_PASSWORD_TXT": "Forgot password?",
     "CTA_TXT": "Log in"
   },
