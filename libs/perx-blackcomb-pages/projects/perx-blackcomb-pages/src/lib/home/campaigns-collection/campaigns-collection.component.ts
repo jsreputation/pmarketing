@@ -1,5 +1,5 @@
 import { listAnimation } from '../games-collection/games-collection.animation';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ICampaign } from '@perxtech/core';
 import { oc } from 'ts-optchain';
@@ -11,7 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./campaigns-collection.component.scss'],
   animations: [listAnimation]
 })
-export class CampaignsCollectionComponent {
+export class CampaignsCollectionComponent implements OnInit {
   @Input('campaigns')
   public campaigns$: Observable<ICampaign[]>;
   @Input()

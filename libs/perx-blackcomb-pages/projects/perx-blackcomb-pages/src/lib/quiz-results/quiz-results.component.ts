@@ -72,7 +72,11 @@ export class QuizResultsComponent implements OnInit {
     let nextRoute: string;
     if (this.correctAnswers !== this.results.length) {
       const noOutcome = oc(this.quiz).results.noOutcome();
-      this.translate.get(['QUIZ_TEMPLATE.NO_OUTCOME_SCORE', 'QUIZ_TEMPLATE.NO_OUTCOME_TXT', 'QUIZ_TEMPLATE.NO_OUTCOME_CTA']).subscribe((res: any) => {
+      this.translate.get([
+        'QUIZ_TEMPLATE.NO_OUTCOME_SCORE',
+        'QUIZ_TEMPLATE.NO_OUTCOME_TXT',
+        'QUIZ_TEMPLATE.NO_OUTCOME_CTA'
+      ]).subscribe((res: any) => {
         const noOutcomeTitle = res['QUIZ_TEMPLATE.NO_OUTCOME_SCORE'].replace('{{points}}', points);
         this.popup = {
           title: oc(noOutcome).title(noOutcomeTitle),
@@ -85,7 +89,11 @@ export class QuizResultsComponent implements OnInit {
       nextRoute = '/home';
     } else {
       const outcome = oc(this.quiz).results.outcome();
-      this.translate.get(['QUIZ_TEMPLATE.POSITIVE_OUTCOME_TXT', 'QUIZ_TEMPLATE.POSITIVE_OUTCOME_REWARD', 'QUIZ_TEMPLATE.POSITIVE_OUTCOME_CTA']).subscribe((res: any) => {
+      this.translate.get([
+        'QUIZ_TEMPLATE.POSITIVE_OUTCOME_TXT',
+        'QUIZ_TEMPLATE.POSITIVE_OUTCOME_REWARD',
+        'QUIZ_TEMPLATE.POSITIVE_OUTCOME_CTA'
+      ]).subscribe((res: any) => {
         const outcomeTitle = res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_TXT'].replace('{{points}}', points);
         this.popup = {
           title: oc(outcome).title(outcomeTitle),
