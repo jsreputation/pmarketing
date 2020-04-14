@@ -52,7 +52,6 @@ export class LayoutComponent implements OnInit {
   public backArrowIcon: string = '';
   public preAuth: boolean;
   public theme: ITheme;
-  public overWriteHeaderShow: boolean = false;
   public appConfig: IConfig<void>;
 
   private initBackArrow(url: string): void {

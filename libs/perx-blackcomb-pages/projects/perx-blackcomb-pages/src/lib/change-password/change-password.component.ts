@@ -12,7 +12,6 @@ import { ShowTitleInHeader } from '../layout/layout.component';
 export class ChangePasswordComponent implements ShowTitleInHeader {
 
   public changePasswordForm: FormGroup;
-  public showHeaderBelow: boolean;
 
   constructor(
     private fb: FormBuilder,

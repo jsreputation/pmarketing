@@ -24,7 +24,6 @@ export class EditProfileFieldComponent implements OnInit, ShowTitleInHeader {
   public changeEmailForm: FormGroup;
   public changePostcodeForm: FormGroup;
   public changeNicknameForm: FormGroup;
-  public showHeaderBelow: boolean;
 
   constructor(
     private fb: FormBuilder,
