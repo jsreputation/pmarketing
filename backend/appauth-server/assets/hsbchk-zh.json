@@ -103,12 +103,15 @@
     "CTA_SUBMIT_TXT": "提交",
     "SUMMARY_CORRECT": "合共{{questions.length}}條問題，您答對{{total_correct}}題。",
     "SUMMARY_TIME_TAKEN": "您共用了",
-    "POSITIVE_OUTCOME_TXT": "恭喜您！",
-    "POSITIVE_OUTCOME_SCORE": "您獲得[x]分",
+    "POSITIVE_OUTCOME_TXT": "恭喜您！您獲得{{points}}分",
     "POSITIVE_OUTCOME_REWARD": "這是您的獎品",
     "POSITIVE_OUTCOME_CTA": "查閱獎品",
-    "NO_OUTCOME_SCORE": "您在這回合共取得[x]分",
-    "NO_OUTCOME_CTA": "嘗試另一個問答遊戲"
+    "NO_OUTCOME_SCORE": "您在這回合共取得{{x}}分",
+    "NO_OUTCOME_CTA": "嘗試另一個問答遊戲",
+    "NOT_AVAILABLE_TITLE": "很抱歉!",
+    "NOT_AVAILABLE_CTA": "關閉",
+    "NOT_AVAILABLE_TXT": "目前無法進行此測驗。稍後再試。",
+    "SUBMIT_ERROR_TXT": "嘗試提交您的最後答案時出現問題。"
   },
   "WALLET": {
     "REWARDS_TITLE": "我的獎品",

@@ -4,6 +4,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterTestingModule } from '@angular/router/testing';
 import { QuizModule, SecondsToStringPipe } from '@perxtech/core';
 import { QuizResultsComponent } from './quiz-results.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('QuizResultsComponent', () => {
   let component: QuizResultsComponent;
@@ -16,7 +17,8 @@ describe('QuizResultsComponent', () => {
         QuizModule,
         MatCardModule,
         MatToolbarModule,
-        RouterTestingModule
+        RouterTestingModule,
+        TranslateModule.forRoot()
       ],
       providers: [SecondsToStringPipe]
     })

@@ -34,11 +34,6 @@ export class QuizComponent implements OnInit, OnDestroy {
   public questionPointer: number = 0;
   public complete: boolean = false;
   public resetTimer$: Subject<void> = new Subject<void>();
-  public notAvailablePopUp: IPopupConfig = {
-    title: 'QUIZ_TEMPLATE.NOT_AVAILABLE_TITLE',
-    text: 'QUIZ_TEMPLATE.NOT_AVAILABLE_TXT',
-    buttonTxt: 'QUIZ_TEMPLATE.NOT_AVAILABLE_CTA'
-  };
 
   private destroy$: Subject<void> = new Subject();
   @ViewChild('overflowContainer', { static: false })
@@ -55,6 +50,12 @@ export class QuizComponent implements OnInit, OnDestroy {
     numberOfIcons: 1,
     listType: SwipeListType.LISTWITHICON
   };
+  private notAvailablePopUp: IPopupConfig = {
+    title: 'QUIZ_TEMPLATE.NOT_AVAILABLE_TITLE',
+    text: 'QUIZ_TEMPLATE.NOT_AVAILABLE_TXT',
+    buttonTxt: 'QUIZ_TEMPLATE.NOT_AVAILABLE_CTA'
+  };
+  private submitErrorTxt: string;
 
   constructor(
     private router: Router,
@@ -81,10 +82,7 @@ export class QuizComponent implements OnInit, OnDestroy {
       switchMap((cidN: number) => this.quizService.getQuizFromCampaign(cidN, lang)), // todo pass the lang attribute
       catchError((err: Error) => {
         console.log(err.name, err.message);
-        this.notificationService.addPopup({
-          title: 'Sorry!',
-          text: 'This quiz is not available at the moment. Try again later.'
-        });
+        this.notificationService.addPopup(this.notAvailablePopUp);
         this.router.navigate(['/home']);
         return throwError(err);
       }),
@@ -189,7 +187,7 @@ export class QuizComponent implements OnInit, OnDestroy {
         () => this.redirectUrlAndPopUp(),
         (err) => {
           console.log(err);
-          this.notificationService.addSnack('There was an issue when trying to submit your last answer.');
+          this.notificationService.addSnack(this.submitErrorTxt);
           this.redirectUrlAndPopUp();
         }
       );
@@ -206,7 +204,7 @@ export class QuizComponent implements OnInit, OnDestroy {
           () => { },
           (err) => {
             console.log(err);
-            this.notificationService.addSnack('There was an issue when trying to submit your last answer.');
+            this.notificationService.addSnack(this.submitErrorTxt);
           }
         );
       this.resetTimer();
@@ -318,14 +316,15 @@ export class QuizComponent implements OnInit, OnDestroy {
   }
 
   private initTranslate(): void {
+    this.translate.get('QUIZ_TEMPLATE.SUBMIT_ERROR_TXT').subscribe((text) => this.submitErrorTxt = text);
     if (this.notAvailablePopUp.title) {
       this.translate.get(this.notAvailablePopUp.title).subscribe((text) => this.notAvailablePopUp.title = text);
     }
     if (this.notAvailablePopUp.text) {
       this.translate.get(this.notAvailablePopUp.text).subscribe((text) => this.notAvailablePopUp.text = text);
     }
-    if (this.notAvailablePopUp.text) {
-      this.translate.get(this.notAvailablePopUp.text).subscribe((text) => this.notAvailablePopUp.text = text);
+    if (this.notAvailablePopUp.buttonTxt) {
+      this.translate.get(this.notAvailablePopUp.buttonTxt).subscribe((text) => this.notAvailablePopUp.buttonTxt = text);
     }
   }
 }
