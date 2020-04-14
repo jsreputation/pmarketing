@@ -83,7 +83,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 
     this.configService.readAppConfig<void>().subscribe((conf) => {
       if (!conf.countryCodePrefix) {
-        this.phoneStepForm.controls.countryCode.setValidators([Validators.required])
+        this.phoneStepForm.controls.countryCode.setValidators([Validators.required]);
       }
     });
 
