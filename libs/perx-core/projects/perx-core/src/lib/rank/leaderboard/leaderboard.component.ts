@@ -6,15 +6,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./leaderboard.component.scss']
 })
 export class LeaderboardComponent {
-  public columnsToDisplay = ['ranking', 'nickName', 'points'];
+  public columnsToDisplay: ['ranking', 'nickName', 'points'] = ['ranking', 'nickName', 'points'];
 
-  public rankingImages = [
+  public rankingImages: string[] = [
     'https://cdn.perxtech.io/content/hsbc-hk/images/firstplace.png',
     'https://cdn.perxtech.io/content/hsbc-hk/images/secondplace.png',
     'https://cdn.perxtech.io/content/hsbc-hk/images/thirdplace.png'
   ];
 
-  public myDataArray = [
+  public myDataArray: any[] = [
     {ranking: 1, nickName: 'joker', points: 1},
     {ranking: 2, nickName: 'joker', points: 1},
     {ranking: 3, nickName: 'joker', points: 1},

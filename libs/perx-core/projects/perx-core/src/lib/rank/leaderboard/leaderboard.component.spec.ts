@@ -12,7 +12,7 @@ describe('LeaderboardComponent', () => {
       declarations: [ LeaderboardComponent ],
       imports: [ MatTableModule ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

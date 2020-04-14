@@ -9,13 +9,13 @@ export class MiniRankComponent {
 
   @Input()
   public userGameInfo: {
-    id;
+    id: number;
 
-    nickName;
+    nickName: string;
 
-    points;
+    points: number;
 
-    ranking;
+    ranking: number;
   } = {
     id: 0,
     nickName: 'test-user',

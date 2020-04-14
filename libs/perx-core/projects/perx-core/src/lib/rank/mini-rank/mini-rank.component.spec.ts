@@ -12,7 +12,7 @@ describe('MiniRankComponent', () => {
       declarations: [ MiniRankComponent ],
       imports: [ MatDividerModule ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

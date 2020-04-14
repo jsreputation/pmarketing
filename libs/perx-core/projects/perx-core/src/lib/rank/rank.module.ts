@@ -11,6 +11,7 @@ import {
   MatDividerModule,
   MatTableModule
 } from '@angular/material';
+import {CommonModule} from '@angular/common';
 
 const componentsAndPipes = [
   LeaderboardComponent,
@@ -21,6 +22,7 @@ const componentsAndPipes = [
   declarations: [...componentsAndPipes],
   exports: [...componentsAndPipes],
   imports: [
+    CommonModule,
     MatTableModule,
     MatDividerModule
   ]
