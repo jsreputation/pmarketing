@@ -24,10 +24,8 @@ export class ChangePasswordComponent implements ShowTitleInHeader {
     if (!currentNavigation) {
       return;
     }
-    if (currentNavigation.extras.state) {
-      if (currentNavigation.extras.state.showHeaderBelow) {
-        this.showHeaderBelow = true;
-      }
+    if (currentNavigation.extras.state && currentNavigation.extras.state.showHeaderBelow) {
+      this.showHeaderBelow = true;
     }
   }
 
