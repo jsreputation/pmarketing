@@ -73,6 +73,20 @@ button.mat-stroked-button {
   background-color: var(--header_color) !important;
 }
 
+.mat-progress-spinner {
+  &.mat-primary {
+    circle {
+      stroke: var(--primary, red);
+    }
+  }
+
+  &.mat-accent {
+    circle {
+      stroke: var(--accent);
+    }
+  }
+}
+
 .actions-container {
   background-color: transparent;
   bottom: 0;

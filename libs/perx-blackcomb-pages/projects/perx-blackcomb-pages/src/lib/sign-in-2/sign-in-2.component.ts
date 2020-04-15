@@ -1,7 +1,6 @@
 import {
   AuthenticationService,
   NotificationService,
-  Config,
   ITheme,
   ThemesService,
   ConfigService,
@@ -30,16 +29,16 @@ interface ISigninConfig {
 export class SignIn2Component implements OnInit, OnDestroy {
   public loginForm: FormGroup;
   public errorMessage: string | null;
-  public preAuth: boolean;
   public failedAuth: boolean;
-  private destroy$: Subject<void> = new Subject();
   public theme: Observable<ITheme>;
   public appConfig: IConfig<ISigninConfig>;
   public appAccessTokenFetched: boolean;
-  private custId: string = '';
-  public countryCodePrefix: string | undefined;
-  public countryCode: string = '';
+  public countryCodePrefix: string;
   public countriesList$: Observable<ICountryCode[]>;
+  public loading: boolean = false;
+
+  private custId: string = '';
+  private destroy$: Subject<void> = new Subject();
 
   constructor(
     private router: Router,
@@ -47,39 +46,44 @@ export class SignIn2Component implements OnInit, OnDestroy {
     private authService: AuthenticationService,
     private notificationService: NotificationService,
     private themesService: ThemesService,
-    private config: Config,
     private configService: ConfigService,
     public translate: TranslateService,
     public generalStaticDataService: GeneralStaticDataService
   ) {
-    this.preAuth = this.config.preAuth ? this.config.preAuth : false;
     const nav: Navigation | null = this.router.getCurrentNavigation();
     this.custId = oc(nav).extras.state.phoneNumber('');
-    this.countryCode = oc(nav).extras.state.countryCode.code('');
+    this.countryCodePrefix = oc(nav).extras.state.countryCode.code('');
   }
 
   public ngOnInit(): void {
-    this.initForm();
-    this.configService.readAppConfig<ISigninConfig>().subscribe((conf) => {
-      this.appConfig = conf;
-      this.countryCodePrefix = conf.countryCodePrefix;
-    });
+    this.configService.readAppConfig<ISigninConfig>()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((conf) => {
+        this.appConfig = conf;
+        if (conf.countryCodePrefix) {
+          this.countryCodePrefix = conf.countryCodePrefix;
+        }
+        this.initForm();
+      });
     // todo: make this a input
     this.countriesList$ = this.generalStaticDataService.getCountriesList([
       'Hong Kong',
       'Singapore'
-    ]);
+    ]).pipe(takeUntil(this.destroy$));
     const token = this.authService.getAppAccessToken();
     if (token) {
       this.appAccessTokenFetched = true;
       this.theme = this.themesService.getThemeSetting();
     } else {
-      this.authService.getAppToken().subscribe(() => {
-        this.appAccessTokenFetched = true;
-        this.theme = this.themesService.getThemeSetting();
-      }, (err) => {
-        console.error(`Error${err}`);
-      });
+      this.authService.getAppToken()
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(
+          () => {
+            this.appAccessTokenFetched = true;
+            this.theme = this.themesService.getThemeSetting();
+          },
+          (err) => console.error(`Error${err}`)
+        );
     }
   }
 
@@ -90,33 +94,25 @@ export class SignIn2Component implements OnInit, OnDestroy {
 
   public get identifier(): string {
     const customerIdField = this.loginForm.get('customerID');
-    if (customerIdField && customerIdField.value && this.countryCode) {
-      return `${this.countryCodePrefix ? this.countryCodePrefix : this.countryCode}${customerIdField.value}`;
+    const countryCode = this.loginForm.get('countryCode');
+    if (customerIdField && customerIdField.value && countryCode && countryCode.value) {
+      return `${countryCode.value}${customerIdField.value}`;
     }
     return '';
   }
 
-  public redirectAfterLogin(): void {
-    this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl()
-      : this.appConfig.custom && this.appConfig.custom.redirectAfterLogin as string || 'wallet');
-  }
-
-  public initForm(): void {
-    this.loginForm = this.fb.group({
-      customerID: [this.custId, Validators.required],
-      password: ['', Validators.required]
-    });
-  }
-
   public onSubmit(): void {
+    if (!this.loginForm.valid) {
+      return;
+    }
+
     const username: string = this.identifier;
     const pwdField = this.loginForm.get('password');
     const password: string = pwdField ? pwdField.value : '';
     this.errorMessage = null;
+    this.loading = true;
     this.authService.login(username, password)
-      .pipe(
-        takeUntil(this.destroy$)
-      )
+      .pipe(takeUntil(this.destroy$))
       .subscribe(
         () => {
           // set global userID var for GA tracking
@@ -127,6 +123,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
           this.redirectAfterLogin();
         },
         (err) => {
+          this.loading = false;
           if (err instanceof HttpErrorResponse) {
             if (err.status === 0) {
               this.notificationService.addPopup({
@@ -148,5 +145,24 @@ export class SignIn2Component implements OnInit, OnDestroy {
           }
         }
       );
+  }
+
+  private redirectAfterLogin(): void {
+    this.router.navigateByUrl(
+      this.authService.getInterruptedUrl() ?
+        this.authService.getInterruptedUrl() :
+        this.appConfig.custom && this.appConfig.custom.redirectAfterLogin as string || 'wallet'
+    );
+  }
+
+  private initForm(): void {
+    this.loginForm = this.fb.group({
+      customerID: [this.custId, Validators.required],
+      password: ['', Validators.required],
+      countryCode: [this.countryCodePrefix]
+    });
+    if (!this.countryCodePrefix) {
+      this.loginForm.controls.countryCode.setValidators([Validators.required]);
+    }
   }
 }

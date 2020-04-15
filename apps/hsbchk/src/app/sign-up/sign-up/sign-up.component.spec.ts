@@ -14,7 +14,12 @@ import {
 } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthenticationService, NotificationService, ThemesService } from '@perxtech/core';
+import {
+  AuthenticationService,
+  ConfigService,
+  NotificationService,
+  ThemesService
+} from '@perxtech/core';
 import { of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -32,6 +37,17 @@ describe('SignUpComponent', () => {
 
   const themesServiceStub: Partial<ThemesService> = {
     getThemeSetting: () => of()
+  };
+
+  const configServiceStub: Partial<ConfigService> = {
+    readAppConfig: () => of({
+      redirectAfterLogin: '/home',
+      apiHost: 'string',
+      production: true,
+      baseHref: '/',
+      isWhistler: true,
+      preAuth: false,
+    })
   };
 
   beforeEach(async(() => {
@@ -56,7 +72,8 @@ describe('SignUpComponent', () => {
       providers: [
         { provide: AuthenticationService, useValue: authServiceStub },
         { provide: NotificationService, useValue: notificationServiceStub },
-        { provide: ThemesService, useValue: themesServiceStub }
+        { provide: ThemesService, useValue: themesServiceStub },
+        { provide: ConfigService, useValue: configServiceStub }
       ]
     })
       .compileComponents();

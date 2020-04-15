@@ -105,7 +105,6 @@ export class LayoutComponent implements OnInit {
       ref instanceof CampaignStampsComponent ||
       ref instanceof TransactionHistoryComponent;
 
-    this.headerTitle = (ref.getTitle) ? ref.getTitle() : '';
     this.cd.detectChanges();
   }
 
