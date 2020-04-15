@@ -80,6 +80,7 @@ interface IV4Loyalty {
   aging_points?: IV4AgingPoints[];
   tiers: any[];
   points_history?: IV4PointHistory[];
+  membership_expiry: Date;
 }
 
 interface IV4Meta {
@@ -229,7 +230,8 @@ const loyaltyRaw: IV4Loyalty = {
       tags: [],
       custom_fields: null
     }
-  ]
+  ],
+  membership_expiry: new Date(2020, 2, 20)
 };
 describe('LoyaltyService', () => {
   beforeEach(() => TestBed.configureTestingModule({
