@@ -52,7 +52,7 @@
   },
   "OTP_PAGE": {
     "TITLE": "輸入確認密碼",
-    "DESCRIPTION": "一個附有確認密碼的短信已經傳送至手機號碼。請在下面輸入該確認密碼",
+    "DESCRIPTION": "一個附有確認密碼的短信已經傳送至手機號碼{{mobileNumber}}。請在下面輸入該確認密碼",
     "ERROR_TXT": "確認密碼錯誤",
     "ERROR_LINK": "重新傳送確認密碼",
     "CTA_TXT": "繼續",
@@ -106,14 +106,19 @@
     "PROGRESS_BAR": "問題{{questionId + 1}}之{{total_questions}}",
     "CTA_NEXT_TXT": "繼續",
     "CTA_SUBMIT_TXT": "提交",
-    "SUMMARY_CORRECT": "合共{{questions.length}}條問題，您答對{{total_correct}}題。",
+    "SUMMARY_CORRECT": "合共{{total_length}}條問題，您答對{{total_correct}}題。",
     "SUMMARY_TIME_TAKEN": "您共用了",
-    "POSITIVE_OUTCOME_TXT": "恭喜您！",
-    "POSITIVE_OUTCOME_SCORE": "您獲得[x]分",
+    "QUESTION_TIME_TAKEN": "您在這個問題花費了{{time}}",
+    "POSITIVE_OUTCOME_TXT": "恭喜您！您獲得{{points}}分",
     "POSITIVE_OUTCOME_REWARD": "這是您的獎品",
     "POSITIVE_OUTCOME_CTA": "查閱獎品",
-    "NO_OUTCOME_SCORE": "您在這回合共取得[x]分",
-    "NO_OUTCOME_CTA": "嘗試另一個問答遊戲"
+    "NO_OUTCOME_SCORE": "您在這回合共取得{{points}}分",
+    "NO_OUTCOME_TXT": "",
+    "NO_OUTCOME_CTA": "嘗試另一個問答遊戲",
+    "NOT_AVAILABLE_TITLE": "很抱歉!",
+    "NOT_AVAILABLE_CTA": "關閉",
+    "NOT_AVAILABLE_TXT": "目前無法進行此測驗。稍後再試。",
+    "SUBMIT_ERROR_TXT": "嘗試提交您的最後答案時出現問題。"
   },
   "WALLET": {
     "REWARDS_TITLE": "我的獎品",
@@ -175,9 +180,12 @@
   },
   "REFERRAL": {
     "TITLE": "推薦朋友",
-    "CONTENT": "每位利用您的推薦 號碼成功登記*的用戶都會令您額外獲得5次參加抽獎機會。而被您推薦的用戶也會令您額外獲得3次參加抽獎機會。推薦朋友，立即行動！*您和被您推薦的用 戶必須完成最少一次問答遊戲，才可參加抽獎。",
+    "CONTENT": "每位利用您的推薦號碼成功登記的用戶都會令您額外獲得5次參加抽獎機會。而被您推薦的用戶也會令您額外獲得3次參加抽獎機會。<br/><br/>推薦朋友，立即行動！<br/>*您和被您推薦的用戶必須完成最少一次問答遊戲，才可參加抽獎。",
     "CTA_BUTTON": "分享推薦號碼",
-    "SHARE_COPY_TXT": "跟我一起接受滙豐LIFE Dojo挑戰。只要觀看短片並正確回答問題就有機會贏取每週豐富的獎品 ，也有機會參加大抽獎。登記時使用推薦號碼就可享有額外3次參加抽獎的機會。"
+    "SHARE_COPY_TITLE": "跟我一起接受挑戰",
+    "SHARE_COPY_TXT": "跟我一起接受滙豐LIFE Dojo挑戰。只要觀看短片並正確回答問題就有機會贏取每週豐富的獎品，也有機會參加大抽獎。登記時使用推薦號碼就可享有額外3次參加抽獎的機會。",
+    "COPY_TO_CLIPBOARD": "複製到剪貼板!",
+    "CLIPBOARD_ERROR_TXT": "無法訪問剪貼板"
   },
   "HOME": {
     "MY_QR": "我的二維碼",
@@ -188,7 +196,8 @@
     "QUIZ": "問答遊戲",
     "FEATURED_REWARDS": "特色獎勵",
     "SEE_MORE": "查看更多",
-    "SEE_LESS": "關閉查看"
+    "SEE_LESS": "關閉查看",
+    "REWARDS_LEFT": "剩餘{{rewardsCount}}獎勵"
   },
   "WEEK1_CAMPAIGN_EASY": {
     "TITLE": "",

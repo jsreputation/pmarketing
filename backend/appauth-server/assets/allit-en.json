@@ -151,7 +151,7 @@
   },
   "OTP_PAGE": {
     "TITLE": "Input OTP",
-    "DESCRIPTION": "An SMS with an OTP has been sent to mobile number [mobile number]. Please input the OTP below:",
+    "DESCRIPTION": "An SMS with an OTP has been sent to mobile number {{mobileNumber}}. Please input the OTP below:",
     "ERROR_TXT": "Incorrect OTP",
     "ERROR_LINK": "Resend OTP",
     "CTA_TXT": "Next",

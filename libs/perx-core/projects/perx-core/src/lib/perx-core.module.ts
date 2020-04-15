@@ -7,6 +7,7 @@ import { PuzzlesModule } from './puzzles/puzzles.module';
 import { AuthenticationModule } from './auth/authentication/authentication.module';
 import { MerchantAdminModule } from './merchant-admin/merchant-admin.module';
 import { UtilsModule } from './utils/utils.module';
+import { TranslateModule } from '@ngx-translate/core';
 // import { FeedItemPopupComponent } from './utils/feed-item-popup/feed-item-popup.component';
 
 const modules = [
@@ -25,7 +26,8 @@ const comps = [
 
 @NgModule({
   imports: [
-    ...modules
+    ...modules,
+    TranslateModule.forChild()
   ],
   exports: [
     ...modules,
