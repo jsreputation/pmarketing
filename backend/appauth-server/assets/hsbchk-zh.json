@@ -52,7 +52,7 @@
   },
   "OTP_PAGE": {
     "TITLE": "輸入確認密碼",
-    "DESCRIPTION": "一個附有確認密碼的短信已經傳送至手機號碼。請在下面輸入該確認密碼",
+    "DESCRIPTION": "一個附有確認密碼的短信已經傳送至手機號碼{{mobileNumber}}。請在下面輸入該確認密碼",
     "ERROR_TXT": "確認密碼錯誤",
     "ERROR_LINK": "重新傳送確認密碼",
     "CTA_TXT": "繼續",
