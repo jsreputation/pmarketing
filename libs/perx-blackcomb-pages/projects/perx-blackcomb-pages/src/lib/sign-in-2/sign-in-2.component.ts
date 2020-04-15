@@ -131,10 +131,6 @@ export class SignIn2Component implements OnInit, OnDestroy {
                 text: 'Please try again soon'
               });
             } else if (err.status === 401) {
-              [this.loginForm.controls.customerID, this.loginForm.controls.password]
-                .forEach(c => c.setErrors({
-                  invalid: true
-                }));
               this.translate.get('INVALID_CREDENTIALS')
                 .subscribe(t => this.errorMessage = t);
             } else {
