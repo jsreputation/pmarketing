@@ -44,18 +44,18 @@ export class QuizResultsComponent implements OnInit {
         this.results = res.points;
         this.backgroundImgUrl = oc(res).quiz.backgroundImgUrl('');
         this.quiz = res.quiz;
-        this.getTitle();
-        this.getSubTitle();
+        this.fetchTitle();
+        this.fetchSubTitle();
       });
   }
 
-  public getTitle(): void {
+  public fetchTitle(): void {
     this.translate.get('QUIZ_TEMPLATE.SUMMARY_CORRECT').subscribe((text) => {
       this.title = text.replace('{{total_length}}', this.results.length).replace('{{total_correct}}', this.correctAnswers);
     });
   }
 
-  public getSubTitle(): void {
+  public fetchSubTitle(): void {
     const total = this.results.reduce((sum, q) => sum + oc(q).time(0), 0);
     if (total === 0) {
       this.subTitle = '';
