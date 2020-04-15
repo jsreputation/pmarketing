@@ -21,7 +21,10 @@ export class ReferralComponent {
   public copyToClipboardTxt: string;
   public clipboardErrorTxt: string;
 
-  constructor(private notificationService: NotificationService, private translate: TranslateService) { 
+  constructor(
+    private notificationService: NotificationService,
+    private translate: TranslateService
+  ) {
     this.initTranslate();
   }
 
