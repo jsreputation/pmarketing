@@ -70,7 +70,6 @@
     "MOBILE_REQUIRED_TXT": "Please enter your mobile number",
     "OTP_SEND_TO": "OTP send to ",
     "CHECK_YOUR_SMS": "Check your sms",
-    "RESEND_OTP": "Resend OTP",
     "PASSWORD_FIELD": "Password",
     "PASSWORD_INVALID_TXT": "Password incorrect",
     "PASSWORD_REQUIRED_TXT": "Please input a password",
@@ -89,7 +88,13 @@
     "NEW_PW_TXT": "Enter new password",
     "CONFIRM_PW_TXT": "Confirm new password",
     "CTA_SAVE_TXT": "Save",
-    "CTA_SUCCESS_TXT": "Password successfully updated"
+    "CTA_SUCCESS_TXT": "Password successfully updated",
+    "RESEND_OTP": "Resend OTP",
+    "OTP_SEND_TO": "OTP send to ",
+    "CHECK_YOUR_SMS": "Check your sms",
+    "PASSWORD_REQUIRED_TXT": "Please input a password",
+    "CONFIRM_PASSWORD_INVALID_TXT": "Passwords do not match",
+    "PASSWORD_TOO_SHORT_TXT": "Password is too short"
   },
   "QUIZ_TITLE": "Quiz",
   "NAVIGATION": {

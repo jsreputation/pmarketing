@@ -88,6 +88,8 @@
     "CTA_NEXT_TXT": "繼續",
     "NEW_PW_TXT": "請輸入新密碼",
     "CONFIRM_PW_TXT": "請重新輸入新密碼",
+    "PASSWORD_REQUIRED_TXT": "請輸入密碼",
+    "CONFIRM_PASSWORD_INVALID_TXT": "密碼不符",
     "CTA_SAVE_TXT": "儲存",
     "CTA_SUCCESS_TXT": "成功更新密碼"
   },
