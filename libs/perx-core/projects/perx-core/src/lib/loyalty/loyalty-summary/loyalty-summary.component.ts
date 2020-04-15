@@ -34,6 +34,9 @@ export class LoyaltySummaryComponent implements OnInit {
   public summaryExpiringFn: (loyalty: ILoyalty) => string;
 
   @Input()
+  public membershipExpiryFn: (loyalty: ILoyalty) => string;
+
+  @Input()
   public showLoyaltyProgress: boolean = true;
 
   public loyaltyProgramExists: boolean = true;
@@ -69,6 +72,13 @@ export class LoyaltySummaryComponent implements OnInit {
           `${expiringPoints.points} points will expire on ${this.datePipe.transform(expiringPoints.expireDate, 'mediumDate')}` : '';
       };
     }
+
+    if (!this.membershipExpiryFn) {
+      this.membershipExpiryFn = (loyalty: ILoyalty): string => loyalty && loyalty.membershipExpiry ?
+        `Account Expiry: ${this.datePipe.transform(loyalty.membershipExpiry, 'mediumDate')}` :
+        '';
+    }
+
     if (!this.profile$) {
       this.profile$ = this.profileService.whoAmI();
     }
