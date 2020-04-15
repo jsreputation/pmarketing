@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfileService, IProfile } from '@perxtech/core';
+import {
+  ProfileService,
+  IProfile,
+  ILoyalty,
+  LoyaltyService
+} from '@perxtech/core';
 import { Router } from '@angular/router';
+import { map } from 'rxjs/operators';
 // import { ShowTitleInHeader } from '../layout/layout.component';
 
 @Component({
@@ -10,15 +16,23 @@ import { Router } from '@angular/router';
 })
 export class ProfileComponent implements OnInit/*, ShowTitleInHeader*/ {
   public profile: IProfile;
+  public loyalty: ILoyalty;
 
   constructor(
     private profileService: ProfileService,
+    private loyaltyService: LoyaltyService,
     private router: Router
   ) { }
 
   public ngOnInit(): void {
     this.profileService.whoAmI().subscribe(res => {
       this.profile = res;
+    });
+
+    this.loyaltyService.getLoyalties().pipe(
+      map((loyalties: ILoyalty[]) => loyalties && loyalties.length && loyalties[0])
+    ).subscribe((loyalty: ILoyalty) => {
+      this.loyalty = loyalty;
     });
   }
 
