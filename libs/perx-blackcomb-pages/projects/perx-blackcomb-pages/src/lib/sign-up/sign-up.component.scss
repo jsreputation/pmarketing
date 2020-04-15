@@ -7,6 +7,10 @@
 .sign-up {
   @include loginCard;
 
+  .red-text {
+    color: red;
+  }
+
   .error_msg {
     padding-bottom: 1rem;
 
@@ -20,6 +24,35 @@
     width: 100%;
     box-sizing: border-box;
     background: var(--button_background_color);
+  }
+
+  form {
+    .full-width__input {
+      width: 100%;
+      margin-top: 0;
+    }
+
+    .mobile-group {
+      display: flex;
+      flex-direction: row;
+
+      .country-code {
+        width: 10rem;
+        margin-right: 1rem;
+
+        .mat-form-field {
+          width: 100%;
+        }
+      }
+
+      .mobile-number {
+        width: 100%;
+
+        .mat-form-field {
+          width: 100%;
+        }
+      }
+    }
   }
 
   .subtitle {

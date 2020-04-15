@@ -2,7 +2,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import {
   SurveyModule as PerxSurveyModule,
-  IFormsService,
   AuthenticationService,
   Config,
   IGameService,
@@ -10,25 +9,18 @@ import {
   SurveyService,
   ThemesService,
   ConfigService,
-  IConfig,
-  IAnswer
+  IConfig
 } from '@perxtech/core';
 import { SignUpComponent } from './sign-up.component';
 import { of, Observable, throwError } from 'rxjs';
-import {MatSnackBar, MatInputModule, MatProgressSpinnerModule} from '@angular/material';
+import {MatSnackBar, MatInputModule, MatProgressSpinnerModule, MatSelectModule} from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Location } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { IWAppAccessTokenResponse } from '@perxtech/whistler';
 import { Type } from '@angular/core';
-
-const answers: IAnswer[] = [
-  {
-    questionId: '1',
-    content: 'test'
-  }
-];
+import { ReactiveFormsModule } from '@angular/forms';
 
 const configStub: Partial<Config> = {
   preAuth: false
@@ -84,13 +76,6 @@ const themeServiceStub: Partial<ThemesService> = {
 describe('SignUpComponent', () => {
   let component: SignUpComponent;
   let fixture: ComponentFixture<SignUpComponent>;
-  const formSvcStub: Partial<IFormsService> = {
-    getSignupForm: () => of({
-      title: '',
-      results: {},
-      questions: []
-    })
-  };
   const matSnackStub: Partial<MatSnackBar> = {};
 
   beforeEach(async(() => {
@@ -100,6 +85,8 @@ describe('SignUpComponent', () => {
         PerxSurveyModule,
         MatInputModule,
         HttpClientModule,
+        ReactiveFormsModule,
+        MatSelectModule,
         NoopAnimationsModule,
         TranslateModule.forRoot(),
         RouterTestingModule.withRoutes([
@@ -109,7 +96,6 @@ describe('SignUpComponent', () => {
         MatProgressSpinnerModule
       ],
       providers: [
-        { provide: IFormsService, useValue: formSvcStub },
         { provide: MatSnackBar, useValue: matSnackStub },
         { provide: Config, useValue: configStub },
         { provide: IGameService, useValue: gameServiceStub },
@@ -141,11 +127,6 @@ describe('SignUpComponent', () => {
       );
       const themesServiceSpy = spyOn(themesService, 'getThemeSetting');
 
-      const formsService: IFormsService = fixture.debugElement.injector.get<IFormsService>(
-        IFormsService as Type<IFormsService>
-      );
-      const formsServiceSpy = spyOn(formsService, 'getSignupForm');
-
       const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
         AuthenticationService as Type<AuthenticationService>
       );
@@ -163,7 +144,6 @@ describe('SignUpComponent', () => {
       tick();
       fixture.detectChanges();
       expect(themesServiceSpy).toHaveBeenCalled();
-      expect(formsServiceSpy).toHaveBeenCalled();
       expect(getPISpy).toHaveBeenCalled();
       expect(getUserAccessTokenSpy).toHaveBeenCalled();
       expect(getAnonymousSpy).toHaveBeenCalled();
@@ -193,27 +173,14 @@ describe('SignUpComponent', () => {
     }));
   });
 
-  it('it should update answers base on the param passed', () => {
-    component.updateFormStatus(answers);
-    expect(component.answers.length).toBe(1);
-    expect(component.answers[0].content).toBe('test');
-  });
-
   it('should call createUserAndAutoLogin onSubmit', fakeAsync(() => {
-    const answerPi: IAnswer[] = [
-      {
-        questionId: 'primary_identifier',
-        content: 'test'
-      }
-    ];
-
     const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
       AuthenticationService as Type<AuthenticationService>
     );
 
     const authSpy = spyOn(authenticationService, 'createUserAndAutoLogin').and.returnValue(of(void 0));
 
-    component.answers = answerPi;
+    component.signupForm.patchValue({primary_identifier: '8989892'});
     component.onSubmit();
     tick();
     expect(authSpy).toHaveBeenCalled();
@@ -225,13 +192,6 @@ describe('SignUpComponent', () => {
   }));
 
   it('should call createUserAndAutoLogin onSubmit and throwError', fakeAsync(() => {
-    const answerPi: IAnswer[] = [
-      {
-        questionId: 'primary_identifier',
-        content: 'test'
-      }
-    ];
-
     const location: Location = fixture.debugElement.injector.get<Location>(Location as Type<Location>);
     const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
       AuthenticationService as Type<AuthenticationService>
@@ -244,8 +204,7 @@ describe('SignUpComponent', () => {
     };
 
     const authSpy = spyOn(authenticationService, 'createUserAndAutoLogin').and.returnValue(throwError(error));
-
-    component.answers = answerPi;
+    component.signupForm.patchValue({primary_identifier: '8989892'});
     component.onSubmit();
     tick();
     expect(authSpy).toHaveBeenCalled();
@@ -260,12 +219,7 @@ describe('SignUpComponent', () => {
     const location: Location = fixture.debugElement.injector.get<Location>(Location as Type<Location>);
     spyOn(location, 'getState').and.returnValue(stateData);
 
-    component.answers = [
-      {
-        questionId: 'primary_identifier',
-        content: 'test'
-      }
-    ];
+    component.signupForm.patchValue({primary_identifier: '8989892'});
 
     const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
       AuthenticationService as Type<AuthenticationService>
