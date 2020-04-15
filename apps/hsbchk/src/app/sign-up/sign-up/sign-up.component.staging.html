@@ -16,13 +16,16 @@
                 <div class="country-code">
                     <mat-form-field appearance="fill">
                         <mat-label>Country Code</mat-label>
-                        <mat-select [(value)]="countryCode">
+                        <mat-select [(value)]="countryCode" formControlName="countryCode">
                             <mat-option
                                 *ngFor="let country of countriesList$ | async" [value]="country.code">
                                 <span>{{country.name}}&nbsp;</span>
                                 <span>+{{country.code}}</span>
                             </mat-option>
                         </mat-select>
+                      <mat-error *ngIf="signupForm.hasError('required', ['countryCode'])">
+                        {{'SIGN_UP_PAGE.COUNTRY_CODE_REQUIRED_TXT' | translate}}
+                      </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="mobile-number">
@@ -130,7 +133,8 @@
                     <mat-checkbox [disabled]="!signupForm.get('hkid').value && !signupForm.get('fullName').value"
                         formControlName="accept_marketing"></mat-checkbox>
                     <span class="wrap-checkbox-text">{{'SIGN_UP_PAGE.CHECKBOX_LUCK_TXT' | translate}} <a
-                            href="#">PICS</a>)</span>
+                      [routerLink]="['/c/privacy-policy']">{{'SIGN_UP_PAGE.CHECKBOX_PIC' | translate}}</a>
+                    </span>
                 </div>
                 <mat-error *ngIf="signupForm.get('accept_marketing').hasError('required')">
                     <span>{{'SIGN_UP_PAGE.CHECKBOX_LUCK_POPUP_TXT' | translate}}</span>

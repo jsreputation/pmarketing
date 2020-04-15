@@ -10,7 +10,11 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { AuthenticationService, UtilsModule } from '@perxtech/core';
+import {
+  AuthenticationService,
+  ConfigService,
+  UtilsModule
+} from '@perxtech/core';
 import { Observable, of } from 'rxjs';
 import { ForgotPasswordComponent } from './forgot-password.component';
 
@@ -19,6 +23,17 @@ class ActivatedRouteMock {
     return of(true);
   }
 }
+
+const configServiceStub: Partial<ConfigService> = {
+  readAppConfig: () => of({
+    redirectAfterLogin: '/home',
+    apiHost: 'string',
+    production: true,
+    preAuth: true,
+    isWhistler: true,
+    baseHref: ''
+  })
+};
 
 describe('ForgotPasswordComponent', () => {
   let component: ForgotPasswordComponent;
@@ -52,7 +67,8 @@ describe('ForgotPasswordComponent', () => {
             resetPassword: () => of(true),
             login: () => of(true)
           }
-        }
+        },
+        { provide: ConfigService, useValue: configServiceStub }
       ]
     })
       .compileComponents();

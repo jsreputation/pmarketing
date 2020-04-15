@@ -2,7 +2,14 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthenticationService, equalityValidator, GeneralStaticDataService, ICountryCode, NotificationService } from '@perxtech/core';
+import {
+  AuthenticationService,
+  ConfigService,
+  equalityValidator,
+  GeneralStaticDataService,
+  ICountryCode,
+  NotificationService
+} from '@perxtech/core';
 import { Observable, Subject } from 'rxjs';
 import { filter, map, mergeMap, switchMap, takeUntil } from 'rxjs/operators';
 
@@ -23,9 +30,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
       Validators.pattern('^[0-9]+$'),
       Validators.minLength(2),
       Validators.maxLength(10)]),
-    countryCode: new FormControl(null, [
-      Validators.required
-    ])
+    countryCode: new FormControl(null)
   });
 
   public newPasswordForm: FormGroup = new FormGroup({
@@ -42,10 +47,12 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private notificationService: NotificationService,
-    private generalStaticDataService: GeneralStaticDataService
+    private generalStaticDataService: GeneralStaticDataService,
+    private configService: ConfigService
   ) { }
 
   public get phoneNumber(): AbstractControl | null { return this.phoneStepForm.get('phoneNumber'); }
+  public get countryCode(): AbstractControl | null { return this.phoneStepForm.get('countryCode'); }
   public get password(): AbstractControl | null { return this.newPasswordForm.get('newPassword'); }
   public get passwordConfirmation(): AbstractControl | null { return this.newPasswordForm.get('passwordConfirmation'); }
 
@@ -73,6 +80,12 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$)
     )
     )();
+
+    this.configService.readAppConfig<void>().subscribe((conf) => {
+      if (!conf.countryCodePrefix) {
+        this.phoneStepForm.controls.countryCode.setValidators([Validators.required]);
+      }
+    });
 
     this.countriesList$.pipe(
       switchMap((countryList) => matchRouteCountry$(countryList))
