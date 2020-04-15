@@ -1,12 +1,17 @@
-import { Component, OnInit } from '@angular/core';
 import {
-  ProfileService,
-  IProfile,
+  Component,
+  OnInit
+} from '@angular/core';
+import {
   ILoyalty,
-  LoyaltyService
+  IProfile,
+  LoyaltyService,
+  ProfileService
 } from '@perxtech/core';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
+import { DatePipe } from '@angular/common';
+
 // import { ShowTitleInHeader } from '../layout/layout.component';
 
 @Component({
@@ -17,11 +22,14 @@ import { map } from 'rxjs/operators';
 export class ProfileComponent implements OnInit/*, ShowTitleInHeader*/ {
   public profile: IProfile;
   public loyalty: ILoyalty;
+  public loyaltyMembershipExpiry: string | null;
 
   constructor(
     private profileService: ProfileService,
     private loyaltyService: LoyaltyService,
-    private router: Router
+    private router: Router,
+    private datePipe: DatePipe
+
   ) { }
 
   public ngOnInit(): void {
@@ -33,6 +41,9 @@ export class ProfileComponent implements OnInit/*, ShowTitleInHeader*/ {
       map((loyalties: ILoyalty[]) => loyalties && loyalties.length && loyalties[0])
     ).subscribe((loyalty: ILoyalty) => {
       this.loyalty = loyalty;
+      if (this.loyalty && this.loyalty.membershipExpiry) {
+        this.loyaltyMembershipExpiry = this.datePipe.transform(loyalty.membershipExpiry, 'mediumDate');
+      }
     });
   }
 
