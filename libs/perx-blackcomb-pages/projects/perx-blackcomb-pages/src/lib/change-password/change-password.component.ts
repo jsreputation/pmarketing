@@ -36,7 +36,7 @@ export class ChangePasswordComponent implements ShowTitleInHeader {
     private profileService: ProfileService
   ) {
     this.profileService.whoAmI().subscribe((res) => {
-      this.profile = res
+      this.profile = res;
     });
     this.initTranslate();
     this.initForm();
@@ -81,7 +81,7 @@ export class ChangePasswordComponent implements ShowTitleInHeader {
           .subscribe(() => this.router.navigateByUrl('/otp/password', { state: changePasswordData }));
       } ,
       () =>  this.notificationService.addSnack(this.invalidPWText)
-  );
+    );
   }
 
   public getTitle(): string {

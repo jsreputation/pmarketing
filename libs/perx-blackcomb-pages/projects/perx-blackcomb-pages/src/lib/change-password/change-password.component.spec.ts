@@ -71,7 +71,7 @@ describe('ChangePasswordComponent', () => {
     const router: Router = TestBed.get<Router>(Router as Type<Router>);
     const authenticationService = TestBed.get<AuthenticationService>(AuthenticationService as Type<AuthenticationService>);
     const authenticationServiceSpy = spyOn(authenticationService, 'login').and.returnValue({
-     subscribe: () => (router.navigateByUrl('/otp/password'))
+      subscribe: () => (router.navigateByUrl('/otp/password'))
     });
     spyOn(router, 'navigateByUrl').and.stub();
     component.onSubmit();
