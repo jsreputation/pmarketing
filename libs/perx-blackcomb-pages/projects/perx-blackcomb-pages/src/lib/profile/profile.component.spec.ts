@@ -1,4 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  TestBed
+} from '@angular/core/testing';
 import {
   ILoyalty,
   LoyaltyService,
@@ -9,8 +13,12 @@ import {
   Observable,
   of
 } from 'rxjs';
-import { MatListModule, MatIconModule } from '@angular/material';
+import {
+  MatIconModule,
+  MatListModule
+} from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
+import { DatePipe } from '@angular/common';
 
 const profileServiceStub: Partial<ProfileService> = {
   whoAmI: () => of()
@@ -34,6 +42,7 @@ describe('ProfileComponent', () => {
         RouterTestingModule
       ],
       providers: [
+        DatePipe,
         { provide: ProfileService, useValue: profileServiceStub },
         { provide: LoyaltyService, useValue: loyaltyServiceStub }
       ]
