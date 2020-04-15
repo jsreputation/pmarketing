@@ -118,6 +118,10 @@
   "WELCOME_PAGE": {
     "LOG_IN": "Log in"
   },
+  "HOME": {
+    "GAMES": "Games",
+    "MY_BAR_CODE": "My Barcode"
+  },
   "SIGN_UP_PAGE": {
     "TITLE": "Sign Up",
     "HAVE_AN_ACCOUNT": "Have an account",
@@ -236,10 +240,11 @@
   },
   "ACCOUNT_PAGE": {
     "PROFILE": "My Profile",
+    "TRANSACTION_HISTORY": "Transaction History",
     "REFER_FRIEND": "Refer a friend",
     "LIFE_TALK": "LIFE Talk",
     "TNC": "Terms and Conditions",
-    "PRIVACY_POLICY": "Terms and Conditions",
+    "PRIVACY_POLICY": "Privacy Policy",
     "LOGOUT": "Log Out"
   },
   "PROFILE": {
