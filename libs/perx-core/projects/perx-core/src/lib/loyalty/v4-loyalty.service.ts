@@ -62,6 +62,7 @@ interface IV4Loyalty {
   aging_points?: IV4AgingPoints[];
   tiers: any[]; // will do proper mapping later on
   points_history?: IV4PointHistory[];
+  membership_expiry: Date;
 }
 
 interface IV4GetLoyaltiesResponse {
@@ -189,7 +190,8 @@ export class V4LoyaltyService extends LoyaltyService {
       expiringPoints: loyalty.aging_points && loyalty.aging_points.map(aging => ({
         expireDate: aging.expiring_on_date,
         points: aging.points_expiring
-      }))
+      })),
+      membershipExpiry: loyalty.membership_expiry
     };
   }
 

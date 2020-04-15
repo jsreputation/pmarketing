@@ -16,7 +16,7 @@
   line-height: 4.8rem;
 }
 
-.expiring-points {
+.expiring-points, .member-expiry-date {
   color: rgba(0, 0, 0, 0.5);
 }
 
@@ -45,9 +45,13 @@
   }
 }
 
-.tier-description {
+.tier-description, .member-expiry-date {
   margin-top: 4px;
   margin-bottom: 4px;
+}
+
+.member-expiry-date {
+  font-size: 1.4rem;
 }
 
 .points-to {
