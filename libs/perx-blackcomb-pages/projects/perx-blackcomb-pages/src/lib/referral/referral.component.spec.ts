@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ReferralComponent } from './referral.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ReferralComponent', () => {
   let component: ReferralComponent;
@@ -10,7 +11,8 @@ describe('ReferralComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ReferralComponent],
       imports: [
-        MatToolbarModule
+        MatToolbarModule,
+        TranslateModule.forRoot()
       ]
     })
       .compileComponents();
