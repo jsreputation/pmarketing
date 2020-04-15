@@ -11,7 +11,7 @@ import {
   NotificationService
 } from '@perxtech/core';
 import { Observable, Subject } from 'rxjs';
-import { filter, map, mergeMap, switchMap, takeUntil } from 'rxjs/operators';
+import { filter, map, mergeMap, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-blackcomb-pages-password',
@@ -23,6 +23,8 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   public usersPhone: string;
   private static PASSWORD_MIN_LENGTH: number = 3;
   public countriesList$: Observable<ICountryCode[]>;
+  public countryCodePrefix: string | undefined;
+  public loading: boolean = false;
 
   public phoneStepForm: FormGroup = new FormGroup({
     phoneNumber: new FormControl(null, [
@@ -30,7 +32,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
       Validators.pattern('^[0-9]+$'),
       Validators.minLength(2),
       Validators.maxLength(10)]),
-    countryCode: new FormControl(null)
+    countryCode: new FormControl(null, [Validators.required])
   });
 
   public newPasswordForm: FormGroup = new FormGroup({
@@ -63,7 +65,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
       'Singapore'
     ]);
 
-    const matchRouteCountry$ = (countryList) => (() => this.route.queryParams.pipe(
+    const matchRouteCountry$ = (countryList: ICountryCode[]) => (() => this.route.queryParams.pipe(
       filter((params) => !!params.identifier),
       map((params) => params.identifier),
       map((identifier) => {
@@ -73,23 +75,24 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
         let phoneNumber: string | null = null;
         if (countryCode !== null) {
           phoneNumber = `${identifier}`.slice(countryCode.code.length);
-          return [phoneNumber, countryCode];
+          return [phoneNumber, countryCode.code];
         }
-        return [null, null];
+        return [undefined, undefined];
       }),
       takeUntil(this.destroy$)
     )
     )();
 
     this.configService.readAppConfig<void>().subscribe((conf) => {
-      if (!conf.countryCodePrefix) {
-        this.phoneStepForm.controls.countryCode.setValidators([Validators.required]);
+      if (conf.countryCodePrefix) {
+        this.countryCodePrefix = conf.countryCodePrefix;
+        this.phoneStepForm.controls.countryCode.patchValue(conf.countryCodePrefix);
       }
     });
 
     this.countriesList$.pipe(
       switchMap((countryList) => matchRouteCountry$(countryList))
-    ).subscribe(([phoneNumber, countryCode]) => this.phoneStepForm.setValue({ countryCode, phoneNumber }));
+    ).subscribe(([phoneNumber, countryCode]) => this.phoneStepForm.patchValue({ countryCode, phoneNumber }));
   }
 
   public compareCtryFn(c1: ICountryCode, c2: ICountryCode): boolean {
@@ -104,13 +107,15 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   public phoneHandler(): void {
     if (this.phoneStepForm.valid) {
       // we use select countryCode object ^ using the response from countryList$
-      const stepPhoneFormCountryCode: ICountryCode = this.phoneStepForm.value.countryCode;
+      const stepPhoneFormCountryCode: string = this.phoneStepForm.value.countryCode;
       const stepPhoneFormPhoneNumber = this.phoneStepForm.value.phoneNumber;
-      const phone: string = `${stepPhoneFormCountryCode.code}${stepPhoneFormPhoneNumber}`.trim();
+      const phone: string = `${stepPhoneFormCountryCode}${stepPhoneFormPhoneNumber}`.trim();
       this.identifier = `${phone.replace(/[^0-9]/g, '')}`;
       this.usersPhone = this.identifier.slice(-2);
 
+      this.loading = true;
       this.authenticationService.forgotPassword(this.identifier)
+        .pipe(tap(() => this.loading = false, () => this.loading = false))
         .subscribe(
           () => this.currentStep = 2,
           (err) => this.handleError(err)
@@ -118,13 +123,15 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     }
   }
 
-
   public resend(): void {
     if (this.identifier) {
-      this.authenticationService.resendOTP(this.identifier).subscribe(
-        (res) => this.notificationService.addSnack(res.message),
-        (err) => this.handleError(err)
-      );
+      this.loading = true;
+      this.authenticationService.resendOTP(this.identifier)
+        .pipe(tap(() => this.loading = false, () => this.loading = false))
+        .subscribe(
+          (res) => this.notificationService.addSnack(res.message),
+          (err) => this.handleError(err)
+        );
     }
   }
 
@@ -146,8 +153,12 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
       return;
     }
     const value = this.newPasswordForm.value;
+    this.loading = true;
     this.authenticationService.resetPassword({ phone: this.identifier, otp: this.otp, ...value })
-      .pipe(mergeMap(() => this.authenticationService.login(this.identifier, value.newPassword)))
+      .pipe(
+        mergeMap(() => this.authenticationService.login(this.identifier, value.newPassword)),
+        tap(() => this.loading = false, () => this.loading = false)
+      )
       .subscribe(() => this.router.navigate(['/']));
   }
 

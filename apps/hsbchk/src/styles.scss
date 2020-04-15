@@ -45,7 +45,7 @@ button:disabled {
   color: white !important;
 }
 
-button.mat-primary {
+button.mat-primary:not([disabled]) {
   background-color: var(--button_background_color) !important;
   color: var(--button_text_color) !important;
 }
