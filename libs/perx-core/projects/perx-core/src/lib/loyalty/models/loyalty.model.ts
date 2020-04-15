@@ -27,6 +27,7 @@ export interface ILoyalty {
   highestTier?: string;
   expiringPoints?: IExpiringPoints[];
   cardId?: number;
+  membershipExpiry?: Date;
 }
 
 export interface ITransaction {
