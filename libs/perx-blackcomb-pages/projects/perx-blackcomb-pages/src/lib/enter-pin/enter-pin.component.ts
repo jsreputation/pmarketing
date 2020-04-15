@@ -114,10 +114,6 @@ export class EnterPinComponent implements PopUpClosedCallBack {
         },
         err => {
           this.notificationService.addSnack(err.error.message);
-          // wrong old password / not-matching new pw
-          if (err.error.code === 54 || err.error.code === 55) {
-            this.router.navigate(['change-password']);
-          }
         });
     } else if (this.pinMode === PinMode.register && this.userPhone) {
       this.authService.verifyOTP(this.userPhone, enteredPin)
