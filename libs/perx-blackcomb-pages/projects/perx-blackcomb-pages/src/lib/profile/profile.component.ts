@@ -29,7 +29,6 @@ export class ProfileComponent implements OnInit/*, ShowTitleInHeader*/ {
     private loyaltyService: LoyaltyService,
     private router: Router,
     private datePipe: DatePipe
-
   ) { }
 
   public ngOnInit(): void {
