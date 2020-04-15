@@ -21,9 +21,9 @@
 
     <mat-divider></mat-divider>
 
-    <mat-list-item>
+    <mat-list-item *ngIf="loyalty">
         <p matLine class="label">Membership Expiry Date</p>
-        <p matLine>{{(profile.customProperties && profile.customProperties.membershipExpiryDate) ? profile.customProperties.membershipExpiryDate : ''}}</p>
+        <p matLine>{{loyalty.membershipExpiry ? loyalty.membershipExpiry : ''}}</p>
     </mat-list-item>
 
     <mat-divider></mat-divider>
