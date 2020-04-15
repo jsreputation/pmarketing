@@ -8,6 +8,7 @@
   </ng-container>
   <ng-container *ngIf="loyalty; else elseBlockLoyalty">
     <p *ngIf="showLoyaltyProgress && loyalty.membershipTierName" class="tier-description">{{loyalty.membershipTierName}} member</p>
+    <p *ngIf="loyalty.membershipExpiry">{{membershipExpiryFn(loyalty)}}</p>
 
     <div class="points">
       {{loyalty.pointsBalance | number}}
