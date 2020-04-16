@@ -228,7 +228,7 @@ export { PasswordComponent } from './lib/survey/question/password/password.compo
  */
 export { QuizModule } from './lib/quiz/quiz.module';
 export { QuizService, IAnswerResult } from './lib/quiz/quiz.service';
-export { IQuiz, QuizQuestionType, IQQuestion, IQAnswer, ITracker, IPoints, QuizMode, SwipeConfiguration, SwipeListType } from './lib/quiz/models/quiz.model';
+export { IQuiz, QuizQuestionType, IQQuestion, IQAnswer, ITracker, IPoints, QuizMode } from './lib/quiz/models/quiz.model';
 export { QuizComponent } from './lib/quiz/quiz/quiz.component';
 export { QuizQuestionComponent } from './lib/quiz/question/question.component';
 export { QuizSelectComponent } from './lib/quiz/question/select/select.component';
@@ -237,7 +237,7 @@ export { QuizLongTextComponent } from './lib/quiz/question/long-text/long-text.c
 export { QuizRatingComponent } from './lib/quiz/question/rating/rating.component';
 export { ResultsComponent } from './lib/quiz/results/results.component';
 export { SecondsToStringPipe } from './lib/quiz/seconds-to-string.pipe';
-export { QuizSwipeListComponent } from './lib/quiz/question/swipe-list/swipe-list.component';
+export { QuizSwipeListComponent, SwipeConfiguration, SwipeListType, ISwipePayload } from './lib/quiz/question/swipe-list/swipe-list.component';
 
 /**
  * Config

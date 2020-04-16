@@ -6,7 +6,7 @@
     class="campaigns-card"
     (click)="selectCampaign(campaign)">
     <span class="remaining-rewards" *ngIf="withRewardsCounter && getRewardsCount(campaign)">
-      <strong>{{getRewardsCount(campaign)}}</strong> Rewards Left
+      {{getRewardsCount(campaign)}}
     </span>
     <div class="img-wrapper">
       <img class="puzzle-img" src="{{getCampaignImage(campaign)}}" alt="Campaign image">
@@ -22,7 +22,7 @@
       mat-flat-button
       class="see-button"
       (click)="showAllCampaigns = !showAllCampaigns">
-      {{ (showAllCampaigns ? "See Less" : "SEE_MORE" ) | translate}}
+      {{ (showAllCampaigns ? "HOME.SEE_LESS" : "HOME.SEE_MORE" ) | translate}}
     </button>
   </div>
 </div>

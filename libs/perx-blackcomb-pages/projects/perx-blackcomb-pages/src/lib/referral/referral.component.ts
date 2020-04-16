@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NotificationService } from '@perxtech/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'perx-blackcomb-pages-referral',
@@ -8,20 +9,24 @@ import { NotificationService } from '@perxtech/core';
 })
 export class ReferralComponent {
   // todo to be replaced with the proper content when api is available
-  public tnc: string = `For each successful sign up* using your referral code, you earn extra 5X lucky draw chance. Your referee will earn 3X lucky draw chances.
-  <br/>  <br/>
-  Share your referral code with a friend today!<br/>
-  *Both you and your referee will have to complete at least 1 quiz to earn your lucky draw chances.<br/>`;
+  public tnc: string;
   // todo to be replaced with the proper content when api is available
   public code: string = 'LASTNAME1234';
   // todo to be replaced with the proper content when api is available
-  public shareText: string = 'Join me in this game by signing up using my referral code “LASTNAME1234” so that you and I can earn extra lucky draw chances! http://www.linktothiscampaign.com';
+  public shareText: string;
   // todo to be replaced with the proper content when api is available
-  public shareTitle: string = 'Join me in this game';
+  public shareTitle: string;
   // todo to be replaced with the proper content when api is available
   public shareUrl: string = 'http://www.linktothiscampaign.com';
+  public copyToClipboardTxt: string;
+  public clipboardErrorTxt: string;
 
-  constructor(private notificationService: NotificationService) { }
+  constructor(
+    private notificationService: NotificationService,
+    private translate: TranslateService
+  ) {
+    this.initTranslate();
+  }
 
   public share(): void {
     // @ts-ignore
@@ -46,7 +51,23 @@ export class ReferralComponent {
 
   public copy(): void {
     navigator.clipboard.writeText(this.shareText)
-      .then(() => this.notificationService.addSnack('Copied to your clipboard!'))
-      .catch(() => this.notificationService.addSnack('Could not access your clipboard'));
+      .then(() => this.notificationService.addSnack(this.copyToClipboardTxt))
+      .catch(() => this.notificationService.addSnack(this.clipboardErrorTxt));
+  }
+
+  private initTranslate(): void {
+    this.translate.get([
+      'REFERRAL.SHARE_COPY_TITLE',
+      'REFERRAL.CONTENT',
+      'REFERRAL.SHARE_COPY_TXT',
+      'REFERRAL.COPY_TO_CLIPBOARD',
+      'REFERRAL.CLIPBOARD_ERROR_TXT'
+    ]).subscribe((res: any) => {
+      this.tnc = res['REFERRAL.CONTENT'];
+      this.shareTitle = res['REFERRAL.SHARE_COPY_TITLE'];
+      this.shareText = res['REFERRAL.SHARE_COPY_TXT'];
+      this.copyToClipboardTxt = res['REFERRAL.COPY_TO_CLIPBOARD'];
+      this.clipboardErrorTxt = res['REFERRAL.CLIPBOARD_ERROR_TXT'];
+    });
   }
 }

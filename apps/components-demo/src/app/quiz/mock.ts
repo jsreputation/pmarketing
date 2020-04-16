@@ -1,5 +1,12 @@
 import { IPoints, IQuiz, QuizQuestionType, QuizMode } from '@perxtech/core';
 
+const choices = [
+  { title: 'Pouce', id: '' },
+  { title: 'Index', id: '' },
+  { title: 'Majeur', id: '' },
+  { title: 'Annulaire', id: '' },
+  { title: 'Auriculaire', id: '' }
+];
 export const quiz: IQuiz = {
   title: 'Question pour un champion',
   backgroundImgUrl: 'assets/quiz/background.png',
@@ -13,13 +20,7 @@ export const quiz: IQuiz = {
       required: true,
       payload: {
         type: QuizQuestionType.swipeSelect,
-        choices: [
-          'Pouce',
-          'Index',
-          'Majeur',
-          'Annulaire',
-          'Auriculaire'
-        ]
+        choices
       }
     },
     {
@@ -29,13 +30,7 @@ export const quiz: IQuiz = {
       required: false,
       payload: {
         type: QuizQuestionType.swipeDelete,
-        choices: [
-          'Pouce',
-          'Index',
-          'Majeur',
-          'Annulaire',
-          'Auriculaire'
-        ]
+        choices
       }
     },
     {

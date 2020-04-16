@@ -33,6 +33,10 @@
 
 button {
   height: 44px;
+
+  &:disabled {
+    opacity: 45%;
+  }
 }
 
 .login-image {

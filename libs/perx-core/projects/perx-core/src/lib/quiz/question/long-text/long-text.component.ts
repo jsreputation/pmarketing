@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { QuizQuestionType } from '../../models/quiz.model';
 
-interface IPayloadLongText {
-  type: string;
+export interface ILongTextPayload {
+  type: QuizQuestionType.longText;
   'max-length': number;
 }
 
@@ -14,7 +15,7 @@ interface IPayloadLongText {
 })
 export class QuizLongTextComponent implements OnChanges, OnInit {
   @Input()
-  public payload: IPayloadLongText;
+  public payload: ILongTextPayload;
 
   @Input()
   public flush: boolean;

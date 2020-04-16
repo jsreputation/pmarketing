@@ -4,6 +4,7 @@ import { IPoints, SecondsToStringPipe, NotificationService, IPopupConfig, IQuiz 
 import { merge } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'perx-blackcomb-pages-quiz-results',
@@ -15,12 +16,16 @@ export class QuizResultsComponent implements OnInit {
 
   public backgroundImgUrl: string = '';
   private quiz: IQuiz | undefined;
+  private popup: IPopupConfig;
+  public title: string;
+  public subTitle: string;
 
   constructor(
     private secondsToString: SecondsToStringPipe,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private translate: TranslateService
   ) { }
 
   public ngOnInit(): void {
@@ -39,48 +44,68 @@ export class QuizResultsComponent implements OnInit {
         this.results = res.points;
         this.backgroundImgUrl = oc(res).quiz.backgroundImgUrl('');
         this.quiz = res.quiz;
+        this.fetchTitle();
+        this.fetchSubTitle();
       });
   }
 
-  public get title(): string {
-    return `You got ${this.correctAnswers} out of ${this.results.length} questions correct!`;
+  public fetchTitle(): void {
+    this.translate.get('QUIZ_TEMPLATE.SUMMARY_CORRECT').subscribe((text) => {
+      this.title = text.replace('{{total_length}}', this.results.length).replace('{{total_correct}}', this.correctAnswers);
+    });
   }
 
-  public get subTitle(): string | null {
+  public fetchSubTitle(): void {
     const total = this.results.reduce((sum, q) => sum + oc(q).time(0), 0);
     if (total === 0) {
-      return null;
+      this.subTitle = '';
     }
-    return `You took a total of ${this.secondsToString.transform(total)}`;
+
+    this.translate.get('QUIZ_TEMPLATE.SUMMARY_TIME_TAKEN').subscribe((text) => {
+      this.subTitle = `${text}${this.secondsToString.transform(total)}`;
+    });
   }
 
   public next(): void {
     const points = this.results.reduce((sum, p) => sum + oc(p).points(0), 0);
 
-    let popup: IPopupConfig;
     let nextRoute: string;
     if (this.correctAnswers !== this.results.length) {
       const noOutcome = oc(this.quiz).results.noOutcome();
-      popup = {
-        title: oc(noOutcome).title(`You scored ${points} points for this round`),
-        text: oc(noOutcome).subTitle('無禮物? 唔緊要, 快D去profile填寫個人資料參加lucky draw抽大獎'),
-        imageUrl: oc(noOutcome).image(),
-        buttonTxt: oc(noOutcome).button('Try another quiz')
-      };
+      this.translate.get([
+        'QUIZ_TEMPLATE.NO_OUTCOME_SCORE',
+        'QUIZ_TEMPLATE.NO_OUTCOME_TXT',
+        'QUIZ_TEMPLATE.NO_OUTCOME_CTA'
+      ]).subscribe((res: any) => {
+        const noOutcomeTitle = res['QUIZ_TEMPLATE.NO_OUTCOME_SCORE'].replace('{{points}}', points);
+        this.popup = {
+          title: oc(noOutcome).title(noOutcomeTitle),
+          text: oc(noOutcome).subTitle(res['QUIZ_TEMPLATE.NO_OUTCOME_TXT']),
+          imageUrl: oc(noOutcome).image(),
+          buttonTxt: oc(noOutcome).button(res['QUIZ_TEMPLATE.NO_OUTCOME_CTA'])
+        };
+        this.notificationService.addPopup(this.popup);
+      });
       nextRoute = '/home';
     } else {
       const outcome = oc(this.quiz).results.outcome();
-      popup = {
-        title: oc(outcome).title(`Congratulations! You scored ${points} points`),
-        text: oc(outcome).subTitle('Here\'s a reward for you.'),
-        buttonTxt: oc(outcome).button('View Reward'),
-        imageUrl: 'assets/quiz/reward.png',
-        ctaButtonClass: 'ga_game_completion'
-      };
+      this.translate.get([
+        'QUIZ_TEMPLATE.POSITIVE_OUTCOME_TXT',
+        'QUIZ_TEMPLATE.POSITIVE_OUTCOME_REWARD',
+        'QUIZ_TEMPLATE.POSITIVE_OUTCOME_CTA'
+      ]).subscribe((res: any) => {
+        const outcomeTitle = res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_TXT'].replace('{{points}}', points);
+        this.popup = {
+          title: oc(outcome).title(outcomeTitle),
+          text: oc(outcome).subTitle(res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_REWARD']),
+          buttonTxt: oc(outcome).button(res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_CTA']),
+          imageUrl: 'assets/quiz/reward.png',
+          ctaButtonClass: 'ga_game_completion'
+        };
+        this.notificationService.addPopup(this.popup);
+      });
       nextRoute = '/wallet';
     }
-
-    this.notificationService.addPopup(popup);
     this.router.navigate([nextRoute]);
   }
 

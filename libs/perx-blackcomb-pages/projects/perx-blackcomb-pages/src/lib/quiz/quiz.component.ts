@@ -5,6 +5,7 @@ import {
   IPoints,
   IQAnswer,
   IQuiz,
+  ISwipePayload,
   ITracker,
   NotificationService,
   QuizComponent as QuizCoreComponent,
@@ -15,9 +16,11 @@ import {
   SwipeListType,
   LocaleIdFactory,
   TokenStorage,
+  IPopupConfig,
 } from '@perxtech/core';
 import { Observable, Subject, throwError } from 'rxjs';
 import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'perx-blackcomb-quiz',
@@ -48,6 +51,12 @@ export class QuizComponent implements OnInit, OnDestroy {
     numberOfIcons: 1,
     listType: SwipeListType.LISTWITHICON
   };
+  private notAvailablePopUp: IPopupConfig = {
+    title: 'QUIZ_TEMPLATE.NOT_AVAILABLE_TITLE',
+    text: 'QUIZ_TEMPLATE.NOT_AVAILABLE_TXT',
+    buttonTxt: 'QUIZ_TEMPLATE.NOT_AVAILABLE_CTA'
+  };
+  private submitErrorTxt: string;
 
   constructor(
     private router: Router,
@@ -56,13 +65,16 @@ export class QuizComponent implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     private ngZone: NgZone,
     private notificationService: NotificationService,
-    private tokenStorage: TokenStorage
+    private tokenStorage: TokenStorage,
+    private translate: TranslateService
   ) {
     this.hideArrow = this.hideArrow.bind(this);
   }
 
   public ngOnInit(): void {
     // reuse the factory to resolve current language so that we make sure, we use the same logic
+    this.initTranslate();
+
     const lang = LocaleIdFactory(this.tokenStorage);
     this.data$ = this.route.paramMap.pipe(
       filter((params: ParamMap) => params.has('cid')),
@@ -71,10 +83,7 @@ export class QuizComponent implements OnInit, OnDestroy {
       switchMap((cidN: number) => this.quizService.getQuizFromCampaign(cidN, lang)), // todo pass the lang attribute
       catchError((err: Error) => {
         console.log(err.name, err.message);
-        this.notificationService.addPopup({
-          title: 'Sorry!',
-          text: 'This quiz is not available at the moment. Try again later.'
-        });
+        this.notificationService.addPopup(this.notAvailablePopUp);
         this.router.navigate(['/home']);
         return throwError(err);
       }),
@@ -84,19 +93,10 @@ export class QuizComponent implements OnInit, OnDestroy {
             if ([QuizQuestionType.swipeSelect, QuizQuestionType.swipeDelete].includes(question.payload.type)) {
               // patch the swipe based questions payload to make sure they look as expected
               question.meta = QuizComponent.swipeConfig;
-              question.payload.choices = question.payload.choices
-                .map((choice: string | Partial<{ title: string; icon: string; }> | undefined) => {
-                  let res: Partial<{ title: string; icon: string; }> = {};
-                  if (typeof choice === 'string') {
-                    res.title = choice;
-                  } else {
-                    res = { ...choice };
-                  }
-                  if (!res.icon) {
-                    res.icon = 'arrow_forward';
-                  }
-                  return res;
-                });
+              // add potentially missing icons
+              (question.payload as ISwipePayload).choices
+                .filter((choice) => !choice.icon)
+                .forEach((choice) => choice.icon = 'arrow_forward');
             }
             return question;
           });
@@ -179,7 +179,7 @@ export class QuizComponent implements OnInit, OnDestroy {
         () => this.redirectUrlAndPopUp(),
         (err) => {
           console.log(err);
-          this.notificationService.addSnack('There was an issue when trying to submit your last answer.');
+          this.notificationService.addSnack(this.submitErrorTxt);
           this.redirectUrlAndPopUp();
         }
       );
@@ -196,7 +196,7 @@ export class QuizComponent implements OnInit, OnDestroy {
           () => { },
           (err) => {
             console.log(err);
-            this.notificationService.addSnack('There was an issue when trying to submit your last answer.');
+            this.notificationService.addSnack(this.submitErrorTxt);
           }
         );
       this.resetTimer();
@@ -305,5 +305,18 @@ export class QuizComponent implements OnInit, OnDestroy {
 
   private get currentTime(): number {
     return (new Date()).getTime() / 1000;
+  }
+
+  private initTranslate(): void {
+    this.translate.get('QUIZ_TEMPLATE.SUBMIT_ERROR_TXT').subscribe((text) => this.submitErrorTxt = text);
+    if (this.notAvailablePopUp.title) {
+      this.translate.get(this.notAvailablePopUp.title).subscribe((text) => this.notAvailablePopUp.title = text);
+    }
+    if (this.notAvailablePopUp.text) {
+      this.translate.get(this.notAvailablePopUp.text).subscribe((text) => this.notAvailablePopUp.text = text);
+    }
+    if (this.notAvailablePopUp.buttonTxt) {
+      this.translate.get(this.notAvailablePopUp.buttonTxt).subscribe((text) => this.notAvailablePopUp.buttonTxt = text);
+    }
   }
 }

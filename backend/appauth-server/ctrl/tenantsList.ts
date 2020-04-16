@@ -1,4 +1,4 @@
-import { IJsonApiListPayload } from '../../../libs/perx-whistler/dist/whistler/lib/jsonapi.payload.d';
+import { IJsonApiListPayload } from '@perxtech/whistler';
 import { fetchTheme } from '../utils/theme';
 import { ICredentials } from '../types/apiConfig';
 import { IJsonApiItem, IWTenant } from '@perxtech/whistler';

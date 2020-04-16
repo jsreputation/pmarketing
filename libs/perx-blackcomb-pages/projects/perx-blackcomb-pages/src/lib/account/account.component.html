@@ -11,13 +11,10 @@
       <div class="section profile">
         <mat-nav-list>
           <mat-list-item routerLink="/profile">
-            My Profile
+            {{'ACCOUNT_PAGE.PROFILE' | translate}}
           </mat-list-item>
           <mat-list-item *ngIf="aConfig.showReferralOnAccountsPage" routerLink="/referral">
-            Refer A Friend
-          </mat-list-item>
-          <mat-list-item *ngIf="aConfig.showLuckyDrawDetailsOnAccountsPage" routerLink="/referral">
-            {{'ACCOUNT_PAGE.LUCKY_DRAW_INFO' | translate}}
+            {{'ACCOUNT_PAGE.REFER_FRIEND' | translate}}
           </mat-list-item>
         </mat-nav-list>
       </div>
@@ -28,7 +25,7 @@
             {{'ACCOUNT_PAGE.TRANSACTION_HISTORY' | translate}}
           </mat-list-item>
           <mat-list-item (click)="goToPage(page)" *ngFor="let page of pages">
-            {{page.title}}
+            {{page.title | translate}}
           </mat-list-item>
         </mat-nav-list>
       </div>

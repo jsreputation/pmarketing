@@ -1,12 +1,32 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ProfileService } from '@perxtech/core';
+import {
+  async,
+  ComponentFixture,
+  TestBed
+} from '@angular/core/testing';
+import {
+  ILoyalty,
+  LoyaltyService,
+  ProfileService
+} from '@perxtech/core';
 import { ProfileComponent } from './profile.component';
-import { of } from 'rxjs';
-import { MatListModule, MatIconModule } from '@angular/material';
+import {
+  Observable,
+  of
+} from 'rxjs';
+import {
+  MatIconModule,
+  MatListModule
+} from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
+import { DatePipe } from '@angular/common';
 
 const profileServiceStub: Partial<ProfileService> = {
   whoAmI: () => of()
+};
+
+const loyaltyServiceStub: Partial<LoyaltyService> = {
+  getLoyalties: (): Observable<ILoyalty[]> => of([]),
+  getLoyalty: (): Observable<ILoyalty> => of()
 };
 
 describe('ProfileComponent', () => {
@@ -22,7 +42,9 @@ describe('ProfileComponent', () => {
         RouterTestingModule
       ],
       providers: [
-        { provide: ProfileService, useValue: profileServiceStub }
+        DatePipe,
+        { provide: ProfileService, useValue: profileServiceStub },
+        { provide: LoyaltyService, useValue: loyaltyServiceStub }
       ]
     })
       .compileComponents();
