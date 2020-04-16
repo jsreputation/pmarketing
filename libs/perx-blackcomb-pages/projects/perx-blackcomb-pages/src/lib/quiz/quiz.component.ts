@@ -5,6 +5,7 @@ import {
   IPoints,
   IQAnswer,
   IQuiz,
+  ISwipePayload,
   ITracker,
   NotificationService,
   QuizComponent as QuizCoreComponent,
@@ -92,19 +93,10 @@ export class QuizComponent implements OnInit, OnDestroy {
             if ([QuizQuestionType.swipeSelect, QuizQuestionType.swipeDelete].includes(question.payload.type)) {
               // patch the swipe based questions payload to make sure they look as expected
               question.meta = QuizComponent.swipeConfig;
-              question.payload.choices = question.payload.choices
-                .map((choice: string | Partial<{ title: string; icon: string; }> | undefined) => {
-                  let res: Partial<{ title: string; icon: string; }> = {};
-                  if (typeof choice === 'string') {
-                    res.title = choice;
-                  } else {
-                    res = { ...choice };
-                  }
-                  if (!res.icon) {
-                    res.icon = 'arrow_forward';
-                  }
-                  return res;
-                });
+              // add potentially missing icons
+              (question.payload as ISwipePayload).choices
+                .filter((choice) => !choice.icon)
+                .forEach((choice) => choice.icon = 'arrow_forward');
             }
             return question;
           });

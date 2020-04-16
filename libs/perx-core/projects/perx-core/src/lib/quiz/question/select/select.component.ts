@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ITracker } from '../../models/quiz.model';
+import { ITracker, QuizQuestionType } from '../../models/quiz.model';
 
-interface IPayloadSelect {
-  type: string;
+export interface ISelectPayload {
+  type: QuizQuestionType.multipleChoice;
   multiple: boolean;
   choices: string[];
 }
@@ -12,10 +12,9 @@ interface IPayloadSelect {
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss']
 })
-
 export class QuizSelectComponent implements OnChanges {
   @Input()
-  public payload: IPayloadSelect;
+  public payload: ISelectPayload;
 
   @Input()
   public flush: boolean;
