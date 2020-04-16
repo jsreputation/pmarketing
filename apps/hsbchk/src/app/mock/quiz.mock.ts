@@ -28,6 +28,7 @@ export const quiz: IQuiz = {
       required: true,
       payload: {
         type: QuizQuestionType.multipleChoice,
+        multiple: false,
         choices: [
           'Pouce',
           'Index',

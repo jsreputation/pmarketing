@@ -1,25 +1,64 @@
 import { animate, AnimationEvent, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { oc } from 'ts-optchain';
-import { Constants, QuizQuestionType, SwipeConfiguration, SwipeListType, Warnings } from '../../models/quiz.model';
+import { QuizQuestionType } from '../../models/quiz.model';
 
-interface IPayloadSwipe {
-  type: string;
-  choices: (IChoice | string)[]; // follow the format passed down actually
+export interface ISwipePayload {
+  type: QuizQuestionType.swipeDelete | QuizQuestionType.swipeSelect;
+  choices: IChoice[]; // follow the format passed down actually
+}
+
+// For SlideList Component
+export interface SwipeConfiguration {
+  slideThreshold?: number;
+  listType?: SwipeListType;
+  classname?: string;
+  disableWarnings?: boolean;
+  numberOfIcons?: number;
+}
+
+export enum SwipeListType {
+  SINGLELINE = 'singleline',
+  MULTILINE = 'multiline',
+  LISTWITHICON = 'listwithicon',
+  LISTWITHIMAGE = 'listwithimage',
 }
 
 interface IChoice {
+  id: string;
   title: string;
   img?: string;
   description?: string;
   icon?: string;
-  id: string;
 }
 
 const enum SwipeMode {
   delete,
   select
 }
+
+const enum Warnings {
+  CONFIG_NOT_LOADED = 'CONFIG_NOT_LOADED',
+  ADDING_DEFAULT_SLIDE_THRESHOLD = 'ADDING_DEFAULT_SLIDE_THRESHOLD',
+  ZERO_SLIDE_THRESHOLD_NOT_ALLOWED = 'ZERO_SLIDE_THRESHOLD_NOT_ALLOWED',
+  SLIDE_THRESHOLD_NOT_FOUND = 'SLIDE_THRESHOLD_NOT_FOUND',
+  MAX_SLIDE_THRESHOLD_NOT_ALLOWED = 'MAX_SLIDE_THRESHOLD_NOT_ALLOWED',
+  INVALID_SLIDE_THRESHOLD_NOT_ALLOWED = 'INVALID_SLIDE_THRESHOLD_NOT_ALLOWED'
+}
+
+const Constants = {
+  CONFIG_NOT_LOADED: 'You have not provided the configuration values, default will be loaded.',
+  ADDING_DEFAULT_SLIDE_THRESHOLD: 'Will keep it default i.e.',
+  SLIDE_THRESHOLD_NOT_FOUND: 'You have not provided the slideThreshold.',
+  ZERO_SLIDE_THRESHOLD_NOT_ALLOWED: 'slideThreshold value can not be 0 or less than 0.',
+  MAX_SLIDE_THRESHOLD_NOT_ALLOWED: 'slideThreshold value should be less than 50.',
+  INVALID_SLIDE_THRESHOLD_NOT_ALLOWED: 'slideThreshold value is invalid, Expecting number between 0 to 50.',
+  MAX_SLIDE_THRESHOLD: 50,
+  MIN_SLIDE_THRESHOLD: 0,
+  DEFAULT_SLIDE_THRESHOLD: 50,
+  NUMBER_OF_ICONS: 2,
+  DEFAULT_CLASS_NAME: 'ngstd-main-canvas'
+};
 
 @Component({
   selector: 'perx-core-swipe-list',
@@ -47,9 +86,9 @@ const enum SwipeMode {
 })
 export class QuizSwipeListComponent implements OnInit {
   @Input()
-  public payload: IPayloadSwipe;
+  public payload: ISwipePayload | undefined;
   @Input()
-  public configuration: SwipeConfiguration;
+  public configuration: SwipeConfiguration = {};
   @Output()
   public updateAnswers: EventEmitter<string[]> = new EventEmitter<string[]>();
 
@@ -57,8 +96,10 @@ export class QuizSwipeListComponent implements OnInit {
   public ngstdIndexNumber?: number; // undefined so visual snapping at first dont occur
   public listType: SwipeListType;
   public numberOfIcons: number;
-  public choices: IChoice[];
   public lt: typeof SwipeListType = SwipeListType;
+  public get choices(): IChoice[] {
+    return oc(this).payload.choices([]);
+  }
 
   private answerArr: { title: string; id: string }[] = [];
   private disableWarnings: boolean = false;
@@ -67,9 +108,6 @@ export class QuizSwipeListComponent implements OnInit {
   private elementLeftSign: boolean = true;
 
   public ngOnInit(): void {
-    this.choices = oc(this).payload.choices([]).map(choice =>
-      (typeof choice === 'string') ? { title: choice } : choice
-    );
     this.initializeSwipeList();
     if (this.swipeMode === SwipeMode.delete) {
       this.answerArr = [...this.choices];

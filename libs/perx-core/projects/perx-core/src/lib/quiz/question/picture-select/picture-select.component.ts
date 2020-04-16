@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { ITracker } from '../../models/quiz.model';
+import { ITracker, QuizQuestionType } from '../../models/quiz.model';
 
-interface IPayloadPictureSelect {
-  type: string;
+export interface IPictureSelectPayload {
+  type: QuizQuestionType.pictureChoice;
   multiple: boolean;
   choices: IPictureChoice[];
 }
@@ -11,15 +11,15 @@ interface IPictureChoice {
   'img_url': string;
   text: string;
 }
+
 @Component({
   selector: 'perx-core-quiz-picture-select',
   templateUrl: './picture-select.component.html',
   styleUrls: ['./picture-select.component.scss']
 })
 export class QuizPictureSelectComponent implements OnChanges {
-
   @Input()
-  public payload: IPayloadPictureSelect;
+  public payload: IPictureSelectPayload;
 
   @Input()
   public flush: boolean;
@@ -56,6 +56,7 @@ export class QuizPictureSelectComponent implements OnChanges {
     }
     this.updateAnswers.emit(result);
   }
+
   public isSelected(index: number): boolean {
     return this.payload.multiple ? this.selectedChoices && this.selectedChoices[index] : this.selectedChoice === index;
   }
