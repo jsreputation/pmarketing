@@ -1,4 +1,9 @@
 import { IWCampaignDisplayProperties } from '@perxtech/whistler';
+import { ILongTextPayload } from '../question/long-text/long-text.component';
+import { IPictureSelectPayload } from '../question/picture-select/picture-select.component';
+import { IRatingPayload } from '../question/rating/rating.component';
+import { ISelectPayload } from '../question/select/select.component';
+import { ISwipePayload } from '../question/swipe-list/swipe-list.component';
 
 export interface IQAnswer {
   questionId: string;
@@ -17,18 +22,19 @@ export interface IDateRange {
   from: string;
   to: string;
 }
+
 export interface ITracker<T = any> {
   [key: string]: T;
 }
 
-export interface IQQuestion {
+export interface IQQuestion<T = any> {
   id: string;
   question: string;
   description?: string;
   required: boolean;
   payload: IPayload;
   answer?: any;
-  meta?: any;
+  meta?: T;
 }
 
 export enum MaterialColor {
@@ -85,55 +91,4 @@ export interface IErrors {
   isInvalidEmail?: boolean;
 }
 
-export interface IPayload {
-  type: QuizQuestionType;
-  [key: string]: any;
-}
-
-export enum SurveyRatingIcons {
-  star = 'star_border',
-  starSelected = 'star',
-  heart = 'favorite_border',
-  heartSelected = 'favorite',
-  circle = 'panorama_fish_eye',
-  circleSelected = 'brightness_1',
-}
-
-// For SlideList Component
-export interface SwipeConfiguration {
-  slideThreshold?: number;
-  listType?: SwipeListType;
-  classname?: string;
-  disableWarnings?: boolean;
-  numberOfIcons?: number;
-}
-
-export enum SwipeListType {
-  SINGLELINE = 'singleline',
-  MULTILINE = 'multiline',
-  LISTWITHICON = 'listwithicon',
-  LISTWITHIMAGE = 'listwithimage',
-}
-
-export enum Warnings {
-  CONFIG_NOT_LOADED = 'CONFIG_NOT_LOADED',
-  ADDING_DEFAULT_SLIDE_THRESHOLD = 'ADDING_DEFAULT_SLIDE_THRESHOLD',
-  ZERO_SLIDE_THRESHOLD_NOT_ALLOWED = 'ZERO_SLIDE_THRESHOLD_NOT_ALLOWED',
-  SLIDE_THRESHOLD_NOT_FOUND = 'SLIDE_THRESHOLD_NOT_FOUND',
-  MAX_SLIDE_THRESHOLD_NOT_ALLOWED = 'MAX_SLIDE_THRESHOLD_NOT_ALLOWED',
-  INVALID_SLIDE_THRESHOLD_NOT_ALLOWED = 'INVALID_SLIDE_THRESHOLD_NOT_ALLOWED'
-}
-
-export const Constants = {
-  CONFIG_NOT_LOADED: 'You have not provided the configuration values, default will be loaded.',
-  ADDING_DEFAULT_SLIDE_THRESHOLD: 'Will keep it default i.e.',
-  SLIDE_THRESHOLD_NOT_FOUND: 'You have not provided the slideThreshold.',
-  ZERO_SLIDE_THRESHOLD_NOT_ALLOWED: 'slideThreshold value can not be 0 or less than 0.',
-  MAX_SLIDE_THRESHOLD_NOT_ALLOWED: 'slideThreshold value should be less than 50.',
-  INVALID_SLIDE_THRESHOLD_NOT_ALLOWED: 'slideThreshold value is invalid, Expecting number between 0 to 50.',
-  MAX_SLIDE_THRESHOLD: 50,
-  MIN_SLIDE_THRESHOLD: 0,
-  DEFAULT_SLIDE_THRESHOLD: 50,
-  NUMBER_OF_ICONS: 2,
-  DEFAULT_CLASS_NAME: 'ngstd-main-canvas'
-};
+export type IPayload = IRatingPayload | ISelectPayload | IPictureSelectPayload | ILongTextPayload | ISwipePayload;

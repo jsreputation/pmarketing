@@ -28,9 +28,6 @@ export class QuizQuestionComponent {
   @Output()
   public updatePoints: EventEmitter<IPoints> = new EventEmitter<IPoints>();
 
-  // @Output()
-  // public updateQuestionPointer: EventEmitter<string> = new EventEmitter<string>();
-
   public errorState: IErrors = {};
 
   public point: number;

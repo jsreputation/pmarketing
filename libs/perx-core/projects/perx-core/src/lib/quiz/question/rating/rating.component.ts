@@ -1,14 +1,24 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { SurveyRatingIcons } from '../../models/quiz.model';
+import { QuizQuestionType } from '../../models/quiz.model';
 
-interface IPayloadRating {
-  type: string;
+export enum SurveyRatingIcons {
+  star = 'star_border',
+  starSelected = 'star',
+  heart = 'favorite_border',
+  heartSelected = 'favorite',
+  circle = 'panorama_fish_eye',
+  circleSelected = 'brightness_1',
+}
+
+export interface IRatingPayload {
+  type: QuizQuestionType.rating;
   color?: string;
   left_label?: string;
   right_label?: string;
   scale?: number;
   shape?: string;
 }
+
 @Component({
   selector: 'perx-core-quiz-rating',
   templateUrl: './rating.component.html',
@@ -16,7 +26,7 @@ interface IPayloadRating {
 })
 export class QuizRatingComponent implements OnChanges {
   @Input()
-  public payload: IPayloadRating;
+  public payload: IRatingPayload;
 
   @Input()
   public flush: boolean;
