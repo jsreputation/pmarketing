@@ -74,19 +74,19 @@ export class ChangePasswordComponent implements ShowTitleInHeader {
         switchMap(() => this.authService.requestVerificationToken())
       )
       .subscribe(
-      () => {
-        const changePasswordData: IChangePasswordData = {
-          newPassword: passwordString,
-          passwordConfirmation: confirmPassword,
-          oldPassword: oldPasswordString,
-          otp: ''
-        };
-        this.router.navigateByUrl('/otp/password', { state: changePasswordData });
-      },
-      () => {
-        this.invalidOldPW = true;
-      }
-    );
+        () => {
+          const changePasswordData: IChangePasswordData = {
+            newPassword: passwordString,
+            passwordConfirmation: confirmPassword,
+            oldPassword: oldPasswordString,
+            otp: ''
+          };
+          this.router.navigateByUrl('/otp/password', { state: changePasswordData });
+        },
+        () => {
+          this.invalidOldPW = true;
+        }
+      );
   }
 
   public getTitle(): string {
