@@ -222,7 +222,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
   }
 
-  private async initCampaign(): Promise<void> {
+  private initCampaign(): void {
     // https://iamturns.com/continue-rxjs-streams-when-errors-occur/ also look at CatchError, exactly for this purpose
     this.games$ = this.gamesService.getActiveGames()
       .pipe(
