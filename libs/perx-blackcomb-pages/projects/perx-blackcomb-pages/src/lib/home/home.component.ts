@@ -7,8 +7,6 @@ import {
   AuthenticationService,
   CampaignType,
   ConfigService,
-  FeedItem,
-  FeedReaderService,
   ICampaign,
   ICatalog,
   ICampaignService,
@@ -18,13 +16,10 @@ import {
   IGameService,
   IProfile,
   IReward,
-  IRssFeeds,
-  IRssFeedsData,
   ITabConfigExtended,
   ITheme,
   RewardPopupComponent,
   RewardsService,
-  SettingsService,
   ThemesService,
   GameType
 } from '@perxtech/core';
@@ -43,7 +38,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject();
   public theme: ITheme;
   public appConfig: IConfig<void>;
-  public newsFeedItems: Observable<FeedItem[]>;
   public rewards$: Observable<IReward[]>;
   public games$: Observable<IGame[]>;
   public stampCampaigns$: Observable<ICampaign[]>;
@@ -61,14 +55,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     private router: Router,
     private titleService: Title,
     private translate: TranslateService,
-    private feedService: FeedReaderService,
     private themesService: ThemesService,
     private configService: ConfigService,
     private authService: AuthenticationService,
     private campaignService: ICampaignService,
     private instantOutcomeService: InstantOutcomeService,
     private dialog: MatDialog,
-    private settingsService: SettingsService,
   ) {
   }
 
@@ -243,21 +235,5 @@ export class HomeComponent implements OnInit, OnDestroy {
       );
 
     this.quizCampaigns$ = this.campaignService.getCampaigns({ gameType: GameType.quiz });
-    if (this.appConfig.showNewsfeedOnHomepage) {
-      const rssFeeds: IRssFeeds = await this.settingsService.readRssFeeds().toPromise();
-      if (!(rssFeeds && rssFeeds.data.length > 0)) {
-        return;
-      }
-      const rssFeedsHome: IRssFeedsData | undefined = rssFeeds.data.find(feed => feed.page === 'home');
-      if (!rssFeedsHome) {
-        return;
-      }
-      const rssFeedsUrl: string = rssFeedsHome.url;
-
-      if (rssFeedsUrl === '') {
-        return;
-      }
-      this.newsFeedItems = this.feedService.getFromUrl(rssFeedsUrl);
-    }
   }
 }

@@ -5,6 +5,7 @@
   (scrolled)="onScroll()"
   [scrollWindow]="false">
   <h1>{{rewardsHeadline}}</h1>
+  <perx-core-newsfeed [page]="RssFeedsPages.WALLET"></perx-core-newsfeed>
   <perx-core-vouchers (tapped)="voucherSelected($event)" [data]="vouchers$" [filter]="filter" [showRedeemedIcon]="false"
     [expiryLabelFn]="expiryLabelFn">
   </perx-core-vouchers>

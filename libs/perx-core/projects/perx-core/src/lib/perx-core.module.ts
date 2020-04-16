@@ -8,6 +8,7 @@ import { AuthenticationModule } from './auth/authentication/authentication.modul
 import { MerchantAdminModule } from './merchant-admin/merchant-admin.module';
 import { UtilsModule } from './utils/utils.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 // import { FeedItemPopupComponent } from './utils/feed-item-popup/feed-item-popup.component';
 
 const modules = [
@@ -17,7 +18,8 @@ const modules = [
   MerchantAdminModule,
   CommonModule,
   MatIconModule,
-  UtilsModule
+  UtilsModule,
+  ScrollingModule
 ];
 
 const comps = [

@@ -26,7 +26,7 @@
 
     </div>
   </div>
-  <perx-core-newsfeed [items$]="newsFeedItems" *ngIf="appConfig.showNewsfeedOnHomepage"></perx-core-newsfeed>
+  <perx-core-newsfeed [page]="RssFeedsPages.HOME"></perx-core-newsfeed>
   <!-- Stamp card campaigns-->
   <div class="campaigns">
     <div *ngIf="showCampaigns" class="title" translate>HOME.STAMP_CAMPAIGNS</div>

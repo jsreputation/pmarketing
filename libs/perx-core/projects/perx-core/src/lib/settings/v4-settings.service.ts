@@ -23,6 +23,22 @@ import { SettingsService } from './settings.service';
 import { IMicrositeSettings, IRssFeeds, PagesObject } from './models/settings.model';
 import { ConfigService } from '../config/config.service';
 
+interface IV4WordPressRssResponse {
+  data: IV4WordPressRss;
+}
+
+interface IV4WordPressRss {
+  id: number,
+  key: string;
+  string_value: string;
+  json_value: {
+    blog_section: {
+      url: string;
+      section: string;
+    }[]
+  }
+}
+
 interface IV4MicrositeSettingsResponse {
   data: IV4MicrositeSettings;
 }
@@ -39,6 +55,7 @@ interface IV4MicrositeSettings {
 })
 export class V4SettingsService extends SettingsService {
   private settings: any;
+  private hostName: string;
 
   constructor(
     private http: HttpClient,
@@ -46,6 +63,10 @@ export class V4SettingsService extends SettingsService {
     private authenticationService: AuthenticationService
   ) {
     super();
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig<void>) => {
+        this.hostName = config.apiHost as string;
+      });
   }
 
   public static v4MicrositeSettingsToMicrositeSettings(v4Settings: IV4MicrositeSettings): IMicrositeSettings {
@@ -57,8 +78,26 @@ export class V4SettingsService extends SettingsService {
     };
   }
 
+  public static v4WordPressRssToRss(data: IV4WordPressRss): IRssFeeds {
+    const newIRssFeeds: IRssFeeds = {data: []};
+    data.json_value.blog_section.forEach(rssSection => {
+      newIRssFeeds.data.push({
+        url: rssSection.url,
+        page: rssSection.section
+      })
+    });
+    return newIRssFeeds;
+  }
+
   public readRssFeeds(): Observable<IRssFeeds> {
     return this.http.get<IRssFeeds>('assets/config/RSS_FEEDS.json');
+  }
+
+  public readRssFeedsFromAPI(): Observable<IRssFeeds> {
+    return this.http.get<IV4WordPressRssResponse>(`${this.hostName}/v4/settings/wordpress`).pipe(
+      map((res: IV4WordPressRssResponse) => res.data),
+      map((data: IV4WordPressRss) => V4SettingsService.v4WordPressRssToRss(data))
+    );
   }
 
   public getTenantAppSettings(key: string): Observable<IMicrositeSettings> {
@@ -68,8 +107,7 @@ export class V4SettingsService extends SettingsService {
     }
 
     return this.authenticationService.getAppToken().pipe(
-      switchMap(() => this.configService.readAppConfig()),
-      switchMap((config: IConfig<void>) => this.http.get(`${config.apiHost}/v4/settings/${key}`)),
+      switchMap(() => this.http.get(`${this.hostName}/v4/settings/${key}`)),
       map((res: IV4MicrositeSettingsResponse) => res.data),
       map((data: IV4MicrositeSettings) => V4SettingsService.v4MicrositeSettingsToMicrositeSettings(data)),
       share()

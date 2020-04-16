@@ -7,7 +7,8 @@ import { MatDialog } from '@angular/material';
 
 import {
   SettingsService,
-  FeedItem, FeedItemPopupComponent,
+  FeedItem,
+  FeedItemPopupComponent,
   FeedReaderService,
   IRssFeeds,
   IRssFeedsData,
