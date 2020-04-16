@@ -11,7 +11,8 @@ import {
   AuthenticationService,
   NotificationService,
   IPrePlayStateData,
-  IPrice
+  IPrice,
+  RssFeedsPages
 } from '@perxtech/core';
 import { map, switchMap, catchError, tap, takeUntil, mergeMap, } from 'rxjs/operators';
 
@@ -36,6 +37,7 @@ export class RewardComponent implements OnInit, OnDestroy {
   private informationCollectionSetting: string;
   private popupData: IPopupConfig;
   public displayPriceFn: (price: IPrice) => string;
+  public rssFeedsPages: typeof RssFeedsPages = RssFeedsPages;
   public noRewardsPopUp: IPopupConfig = {
     title: 'INSTANT_OUTCOME_NO_REWARDS_TITLE',
     text: 'INSTANT_OUTCOME_NO_REWARDS_TEXT',

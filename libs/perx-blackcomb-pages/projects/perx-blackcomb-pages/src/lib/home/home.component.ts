@@ -21,7 +21,8 @@ import {
   RewardPopupComponent,
   RewardsService,
   ThemesService,
-  GameType
+  GameType,
+  RssFeedsPages
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
@@ -48,6 +49,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public showCampaigns: boolean = false;
   private firstComefirstServeCampaign: ICampaign;
   public quizCampaigns$: Observable<ICampaign[]>;
+  public rssFeedsPages: typeof RssFeedsPages = RssFeedsPages;
 
   public constructor(
     private rewardsService: RewardsService,

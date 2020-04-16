@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ICatalog, IReward, RewardsService, SortingMode } from '@perxtech/core';
+import { ICatalog, IReward, RewardsService, SortingMode, RssFeedsPages } from '@perxtech/core';
 import { map, scan } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -22,6 +22,7 @@ export class CatalogComponent implements OnInit {
   public rewardsLoaded: boolean = false;
   public rewardsEnded: boolean = false;
   public rewardsPageId: number = 1;
+  public rssFeedsPages: typeof RssFeedsPages = RssFeedsPages;
 
   public sortOptions: ISortMenuOption[] = [
     { action: 'Latest', label: 'Most Recent' },

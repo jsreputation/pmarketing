@@ -36,7 +36,6 @@ import {
   ProfileModule,
   QuizModule,
   SecondsToStringPipe,
-  NewsfeedComponent as PerxNewsfeedComponent
 } from '@perxtech/core';
 
 import { RewardComponent } from './reward/reward.component';
@@ -118,8 +117,7 @@ const comps: any[] = [
   CampaignLandingPageComponent,
   ForgotPasswordComponent,
   LandingPageComponent,
-  ReferralComponent,
-  PerxNewsfeedComponent
+  ReferralComponent
 ];
 
 @NgModule({

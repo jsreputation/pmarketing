@@ -1,5 +1,5 @@
 import { Component, Input, HostListener } from '@angular/core';
-import { FeedItem, FeedReaderService} from '../feed-reader.service';
+import { FeedItem, FeedReaderService } from '../feed-reader.service';
 import { MatDialog } from '@angular/material';
 import { IRssFeeds, IRssFeedsData } from '../../settings/models/settings.model';
 import { SettingsService } from '../../settings/settings.service';
@@ -14,6 +14,7 @@ export class NewsfeedComponent {
   // will be passed down to the dialog from readMoreClicked
   @Input()
   public page: string;
+
   public items: FeedItem[];
   public itemSize: number;
   public newsBeforeScroll: number[];
@@ -21,17 +22,17 @@ export class NewsfeedComponent {
   public showButton: boolean = true;
 
   private async initNewsFeedItems(): Promise<void> {
-    const rssFeeds: IRssFeeds = await this.settingsService.readRssFeeds().toPromise();
+    const rssFeeds: IRssFeeds = await this.settingsService.readRssFeedsFromAPI().toPromise();
     if (!(rssFeeds && rssFeeds.data.length > 0)) {
       return;
     }
 
-    const rssFeedsHome: IRssFeedsData | undefined = rssFeeds.data.find(feed => feed.page === this.page);
-    if (!rssFeedsHome) {
+    const rssFeedsSection: IRssFeedsData | undefined = rssFeeds.data.find(feed => feed.page === this.page);
+    if (!rssFeedsSection) {
       return;
     }
 
-    const rssFeedsUrl: string = rssFeedsHome.url;
+    const rssFeedsUrl: string = rssFeedsSection.url;
     this.reader.getFromUrl(rssFeedsUrl, true)
       .subscribe(items => {
         this.items = items;
@@ -59,7 +60,7 @@ export class NewsfeedComponent {
     }
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize')
   public onResize(): void {
     this.itemSize = window.innerWidth;
   }
@@ -76,7 +77,8 @@ export class NewsfeedComponent {
 
   public getFirstLine(text: string): string {
     const lines = text.match(/[^\r\n]+/g) || [];
-    return lines && lines.length > 0 ? lines[0] : '';
+    const firstLineContent = lines && lines.length > 0 ? lines[0] : '';
+    return firstLineContent.length > 120 ? firstLineContent.slice(0, 120) + '...' : firstLineContent;
   }
 
 }

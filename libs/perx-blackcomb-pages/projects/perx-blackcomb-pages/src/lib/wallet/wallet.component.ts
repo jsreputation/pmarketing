@@ -13,6 +13,7 @@ import {
   IVoucherService,
   VoucherState,
   Voucher,
+  RssFeedsPages,
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
@@ -33,6 +34,7 @@ export class WalletComponent implements OnInit, OnDestroy {
 
   public currentPage: number = 0;
   public completed: boolean = false;
+  public rssFeedsPages: typeof RssFeedsPages = RssFeedsPages;
 
   constructor(
     private router: Router,
