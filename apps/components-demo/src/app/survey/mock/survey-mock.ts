@@ -11,6 +11,7 @@ export const mock: ISurvey = {
       required: false,
       payload: {
         type: SurveyQuestionType.pictureChoice,
+        multiple: false,
         choices: [
           {
             img_url: 'https://picsum.photos/600/900',
@@ -88,6 +89,7 @@ export const mock: ISurvey = {
             required: false,
             payload: {
               type: SurveyQuestionType.multipleChoice,
+              multiple: false,
               choices: [
                 'blue',
                 'white',
@@ -102,6 +104,7 @@ export const mock: ISurvey = {
             required: true,
             payload: {
               type: SurveyQuestionType.multipleChoice,
+              multiple: true,
               choices: [
                 'blue',
                 'white',
@@ -124,6 +127,7 @@ export const mock: ISurvey = {
                   required: false,
                   payload: {
                     type: SurveyQuestionType.multipleChoice,
+                    multiple: false,
                     choices: [
                       'blue',
                       'white',
@@ -138,6 +142,7 @@ export const mock: ISurvey = {
                   required: true,
                   payload: {
                     type: SurveyQuestionType.multipleChoice,
+                    multiple: false,
                     choices: [
                       'blue',
                       'white',
@@ -157,7 +162,8 @@ export const mock: ISurvey = {
       id: '2',
       required: true,
       payload: {
-        type: SurveyQuestionType.date
+        type: SurveyQuestionType.date,
+        duration: false
       }
     },
     {
@@ -167,7 +173,7 @@ export const mock: ISurvey = {
       required: false,
       payload: {
         type: SurveyQuestionType.date,
-        period: true
+        duration: true
       }
     },
     {
@@ -177,7 +183,7 @@ export const mock: ISurvey = {
       required: false,
       payload: {
         type: SurveyQuestionType.date,
-        period: true
+        duration: true
       }
     },
     {

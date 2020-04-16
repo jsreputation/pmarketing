@@ -57,8 +57,8 @@
       color="primary"
       *ngIf="this.questionPointer !== this.totalLength - 1"
       (click)="next()"
-      mat-flat-button translate>
-      QUIZ_TEMPLATE.CTA_NEXT_TXT
+      mat-flat-button>
+      {{'QUIZ_TEMPLATE.CTA_NEXT_TXT' | translate}}
     </button>
     <button
       color="primary"
@@ -66,7 +66,7 @@
       (click)="submit()"
       [disabled]="!complete"
       mat-flat-button translate>
-      QUIZ_TEMPLATE.CTA_SUBMIT_TXT
+      {{'QUIZ_TEMPLATE.CTA_SUBMIT_TXT' | translate}}
     </button>
   </mat-toolbar>
 </div>

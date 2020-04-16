@@ -1,7 +1,7 @@
 import { ICampaign } from '../campaign/models/campaign.model';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ISurvey, IQuestion, MaterialColor, IAnswer, SurveyQuestionType, ISurveyOutcome } from './models/survey.model';
+import { ISurvey, IQuestion, MaterialColor, IAnswer, SurveyQuestionType, ISurveyOutcome, IPayload } from './models/survey.model';
 import { Config } from '../config/config';
 import { HttpClient } from '@angular/common/http';
 import { ICampaignService } from '../campaign/icampaign.service';
@@ -40,7 +40,8 @@ export class SurveyService {
     const dp = survey.data.attributes.display_properties;
     if (dp) {
       const questions: IQuestion[] = dp.questions.map(q => {
-        const payload = { ...q.payload, type: SurveyService.WQTypeToQType(q.payload.type) };
+        // @ts-ignore
+        const payload: IPayload = { ...q.payload, type: SurveyService.WQTypeToQType(q.payload.type) };
         return { ...q, payload };
       });
       return {

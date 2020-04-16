@@ -1,8 +1,8 @@
-import { Component, Input, EventEmitter, Output, OnChanges, SimpleChanges } from '@angular/core';
-import { IAnswer, ITracker } from '../../models/survey.model';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { IAnswer, ITracker, SurveyQuestionType } from '../../models/survey.model';
 
-interface IPayloadSelect {
-  type: string;
+export interface ISelectPayload {
+  type: SurveyQuestionType.multipleChoice;
   multiple: boolean;
   choices: string[];
 }
@@ -12,11 +12,9 @@ interface IPayloadSelect {
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss']
 })
-
 export class SelectComponent implements OnChanges {
-
   @Input()
-  public payload: IPayloadSelect;
+  public payload: ISelectPayload;
 
   @Input()
   public flush: boolean;

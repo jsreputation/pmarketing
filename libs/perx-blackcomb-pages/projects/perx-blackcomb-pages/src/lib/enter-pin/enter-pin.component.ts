@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import {
@@ -9,7 +10,9 @@ import {
   PopUpClosedCallBack,
   ThemesService,
   ITheme,
-  IMessageResponse, GeneralStaticDataService, ICountryCode
+  IMessageResponse,
+  GeneralStaticDataService,
+  ICountryCode
 } from '@perxtech/core';
 import { filter, map } from 'rxjs/operators';
 
@@ -29,6 +32,7 @@ export class EnterPinComponent implements PopUpClosedCallBack {
   public changePasswordData: IChangePasswordData;
   public pinMode: PinMode = PinMode.password;
   public visibleNumber: string;
+  public subHeading: string;
   public userPhone: string | undefined;
   public countriesList: ICountryCode[];
 
@@ -41,7 +45,8 @@ export class EnterPinComponent implements PopUpClosedCallBack {
     private authService: AuthenticationService,
     private notificationService: NotificationService,
     private themeService: ThemesService,
-    private generalStaticDataService: GeneralStaticDataService
+    private generalStaticDataService: GeneralStaticDataService,
+    private translate: TranslateService
   ) {
     this.generalStaticDataService.getCountriesList([
       'Hong Kong',
@@ -63,6 +68,9 @@ export class EnterPinComponent implements PopUpClosedCallBack {
         } else if (this.pinMode === PinMode.register) {
           this.getMobileNumberFromNavigation();
         }
+        this.translate.get('OTP_PAGE.DESCRIPTION').subscribe((text) => {
+          this.subHeading = text;
+        });
       });
 
     this.themeService.getThemeSetting()
@@ -83,6 +91,7 @@ export class EnterPinComponent implements PopUpClosedCallBack {
       (profile: IProfile) => {
         this.userPhone = profile.phone;
         this.visibleNumber = this.userPhone ? this.encodeMobileNo(this.userPhone) : '';
+        this.subHeading = this.subHeading.replace('{{mobileNumber}}', this.visibleNumber);
       }
     );
   }
@@ -96,6 +105,7 @@ export class EnterPinComponent implements PopUpClosedCallBack {
     if (currentNavigation.extras.state) {
       this.userPhone = currentNavigation.extras.state.mobileNo;
       this.visibleNumber = this.userPhone ? this.encodeMobileNo(this.userPhone) : '';
+      this.subHeading = this.subHeading.replace('{{mobileNumber}}', this.visibleNumber);
     }
   }
 
@@ -122,7 +132,7 @@ export class EnterPinComponent implements PopUpClosedCallBack {
             this.notificationService.addSnack(response.message);
             const country = this.countriesList.find(
               countryCodeO => `+${this.userPhone}`.startsWith(countryCodeO.code)
-            )  || null;
+            ) || null;
             let phoneNumber: string | null = null;
             let countryCode: ICountryCode | null = null;
             if (country !== null) {

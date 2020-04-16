@@ -52,7 +52,7 @@
   },
   "OTP_PAGE": {
     "TITLE": "Input OTP",
-    "DESCRIPTION": "An SMS with an OTP has been sent to mobile number [mobile number]. Please input the OTP below:",
+    "DESCRIPTION": "An SMS with an OTP has been sent to mobile number {{mobileNumber}}. Please input the OTP below:",
     "ERROR_TXT": "Incorrect OTP",
     "ERROR_LINK": "Resend OTP",
     "CTA_TXT": "Next",
@@ -70,7 +70,6 @@
     "MOBILE_REQUIRED_TXT": "Please enter your mobile number",
     "OTP_SEND_TO": "OTP send to ",
     "CHECK_YOUR_SMS": "Check your sms",
-    "RESEND_OTP": "Resend OTP",
     "PASSWORD_FIELD": "Password",
     "PASSWORD_INVALID_TXT": "Password incorrect",
     "PASSWORD_REQUIRED_TXT": "Please input a password",
@@ -89,7 +88,13 @@
     "NEW_PW_TXT": "Enter new password",
     "CONFIRM_PW_TXT": "Confirm new password",
     "CTA_SAVE_TXT": "Save",
-    "CTA_SUCCESS_TXT": "Password successfully updated"
+    "CTA_SUCCESS_TXT": "Password successfully updated",
+    "RESEND_OTP": "Resend OTP",
+    "OTP_SEND_TO": "OTP send to ",
+    "CHECK_YOUR_SMS": "Check your sms",
+    "PASSWORD_REQUIRED_TXT": "Please input a password",
+    "CONFIRM_PASSWORD_INVALID_TXT": "Passwords do not match",
+    "PASSWORD_TOO_SHORT_TXT": "Password is too short"
   },
   "QUIZ_TITLE": "Quiz",
   "NAVIGATION": {
@@ -106,14 +111,19 @@
     "PROGRESS_BAR": "Question {{questionId + 1}} out of {{questions.length}}",
     "CTA_NEXT_TXT": "Next",
     "CTA_SUBMIT_TXT": "Submit",
-    "SUMMARY_CORRECT": "You got {{total_correct}} out of {{questions.length}} questions correct!",
-    "SUMMARY_TIME_TAKEN": "You took a total of",
-    "POSITIVE_OUTCOME_TXT": "Congratulations!",
-    "POSITIVE_OUTCOME_SCORE": "You scored [x] points",
+    "SUMMARY_CORRECT": "You got {{total_correct}} out of {{total_length}} questions correct!",
+    "SUMMARY_TIME_TAKEN": "You took a total of ",
+    "QUESTION_TIME_TAKEN": "You took {{time}} to anser this.",
+    "POSITIVE_OUTCOME_TXT": "Congratulations! You scored {{points}} points",
     "POSITIVE_OUTCOME_REWARD": "Here’s a reward for you",
     "POSITIVE_OUTCOME_CTA": "View Reward",
-    "NO_OUTCOME_SCORE": "You scored xx points for this round",
-    "NO_OUTCOME_CTA": "Try another quiz"
+    "NO_OUTCOME_SCORE": "You scored {{points}} points for this round",
+    "NO_OUTCOME_TXT": "",
+    "NO_OUTCOME_CTA": "Try another quiz",
+    "NOT_AVAILABLE_TITLE": "Sorry!",
+    "NOT_AVAILABLE_CTA": "Close",
+    "NOT_AVAILABLE_TXT": "This quiz is not available at the moment. Try again later.",
+    "SUBMIT_ERROR_TXT": "There was an issue when trying to submit your last answer."
   },
   "WALLET": {
     "REWARDS_TITLE": "My Rewards",
@@ -151,7 +161,7 @@
     "REFER_FRIEND": "Refer a friend",
     "LIFE_TALK": "LIFE Talk",
     "TNC": "Terms and Conditions",
-    "PRIVACY_POLICY": "Terms and Conditions",
+    "PRIVACY_POLICY": "Privacy Policy",
     "LOGOUT": "Log Out"
   },
   "PROFILE": {
@@ -175,9 +185,12 @@
   },
   "REFERRAL": {
     "TITLE": "Refer a friend",
-    "CONTENT": "For each successful sign up* using your referral code, you earn extra 5X lucky draw chance. Your referee will earn 3X lucky draw chances.\nShare your referral code with a friend today!\n*Both you and your referee will have to complete at least 1 quiz to earn your lucky draw chances.",
+    "CONTENT": "For each successful sign up* using your referral code, you earn extra 5X lucky draw chance. Your referee will earn 3X lucky draw chances.<br/><br/>Share your referral code with a friend today!<br/>*Both you and your referee will have to complete at least 1 quiz to earn your lucky draw chances.",
     "CTA_BUTTON": "Share referral code",
-    "SHARE_COPY_TXT": "Join me in the HSBC LIFE Dojo challenge. Watch a video and answer the quiz questions correctly and stand to win rewards each week, as well as a chance for the grand lucky draw.\n[URL]\nUse referral code [code] when signing up and earn 3x lucky draw chances.\n"
+    "SHARE_COPY_TITLE": "Join me in this game",
+    "SHARE_COPY_TXT": "Join me in the HSBC LIFE Dojo challenge. Watch a video and answer the quiz questions correctly and stand to win rewards each week, as well as a chance for the grand lucky draw.\n[URL]\nUse referral code [code] when signing up and earn 3x lucky draw chances.\n",
+    "COPY_TO_CLIPBOARD": "Copied to your clipboard!",
+    "CLIPBOARD_ERROR_TXT": "Could not access your clipboard"
   },
   "HOME": {
     "MY_QR": "My QR",
@@ -188,7 +201,8 @@
     "QUIZ": "Quiz",
     "FEATURED_REWARDS": "Featured Rewards",
     "SEE_MORE": "See more",
-    "SEE_LESS": "See less"
+    "SEE_LESS": "See less",
+    "REWARDS_LEFT": "{{rewardsCount}} Rewards Left"
   },
   "WEEK1_CAMPAIGN_EASY": {
     "TITLE": "White Belt (Easy)",

@@ -14,17 +14,17 @@ const displayProperties = `"displayProperties": {
   "account": {
     "pages": [
       {
-        "title": "Life Talk",
+        "title": "ACCOUNT_PAGE.LIFE_TALK",
         "content_url": "https://retailbank.hsbc.com.hk/ins/en/lifetalk/blog/"
       },
       {
         "key": "tnc",
-        "title": "Terms and Conditions",
+        "title": "ACCOUNT_PAGE.TNC",
         "content_url": "https://cdn.perxtech.io/content/hsbc-hk/tnc.html"
       },
       {
         "key": "privacy-policy",
-        "title": "Privacy Policy",
+        "title": "ACCOUNT_PAGE.PRIVACY_POLICY",
         "content_url": "https://cdn.perxtech.io/content/hsbc-hk/ppolicy.html"
       }
     ]

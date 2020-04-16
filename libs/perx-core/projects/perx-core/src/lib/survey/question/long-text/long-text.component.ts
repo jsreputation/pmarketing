@@ -1,11 +1,11 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, OnInit } from '@angular/core';
-import { IAnswer } from '../../models/survey.model';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { IAnswer, SurveyQuestionType } from '../../models/survey.model';
 
-interface IPayloadLongText {
-  type: string;
-  'max-length': number;
+export interface ILongTextPayload {
+  type: SurveyQuestionType.longText;
+  'max-length'?: number;
 }
 
 @Component({
@@ -14,10 +14,8 @@ interface IPayloadLongText {
   styleUrls: ['./long-text.component.scss']
 })
 export class LongTextComponent implements OnChanges, OnInit {
-
   @Input()
-  public payload: IPayloadLongText;
-
+  public payload: ILongTextPayload;
   @Input()
   public flush: boolean;
 
@@ -25,6 +23,7 @@ export class LongTextComponent implements OnChanges, OnInit {
   public updateAnswers: EventEmitter<IAnswer> = new EventEmitter<IAnswer>();
 
   public answer: string;
+
   private subject: Subject<string> = new Subject();
 
   public ngOnInit(): void {
