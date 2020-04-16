@@ -78,9 +78,6 @@ import { CampaignLandingPageComponent } from './campaign-landing-page/campaign-l
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { ReferralComponent } from './referral/referral.component';
-import { MiniRankComponent } from './mini-rank/mini-rank.component';
-import { LeaderboardComponent } from './leaderboard/leaderboard.component';
-import { LeaderboardPageComponent } from './leaderboard-page/leaderboard-page.component';
 
 const comps: any[] = [
   AccountComponent,
@@ -120,10 +117,7 @@ const comps: any[] = [
   CampaignLandingPageComponent,
   ForgotPasswordComponent,
   LandingPageComponent,
-  ReferralComponent,
-  MiniRankComponent,
-  LeaderboardComponent,
-  LeaderboardPageComponent
+  ReferralComponent
 ];
 
 @NgModule({
