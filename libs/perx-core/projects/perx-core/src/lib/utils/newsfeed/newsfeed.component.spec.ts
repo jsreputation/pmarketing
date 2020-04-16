@@ -6,6 +6,7 @@ import { SettingsService } from '../../settings/settings.service';
 import { of } from 'rxjs';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('NewsfeedComponent', () => {
   let component: NewsfeedComponent;
@@ -16,7 +17,7 @@ describe('NewsfeedComponent', () => {
   };
 
   const settingsServiceStub: Partial<SettingsService> = {
-    readRssFeeds: () => of()
+    readRssFeedsFromAPI: () => of()
   };
 
   const items = [
@@ -47,7 +48,8 @@ describe('NewsfeedComponent', () => {
         MatButtonModule,
         NgxMultiLineEllipsisModule,
         MatDialogModule,
-        ScrollingModule
+        ScrollingModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: FeedReaderService, useValue: feedReaderServiceStub },
