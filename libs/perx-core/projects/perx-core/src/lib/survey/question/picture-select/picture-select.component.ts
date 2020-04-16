@@ -1,8 +1,8 @@
-import { IAnswer, ITracker } from '../../models/survey.model';
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { IAnswer, ITracker, SurveyQuestionType } from '../../models/survey.model';
 
-interface IPayloadPictureSelect {
-  type: string;
+export interface IPictureSelectPayload {
+  type: SurveyQuestionType.pictureChoice;
   multiple: boolean;
   choices: IPictureChoice[];
 }
@@ -17,9 +17,8 @@ interface IPictureChoice {
   styleUrls: ['./picture-select.component.scss']
 })
 export class PictureSelectComponent implements OnChanges {
-
   @Input()
-  public payload: IPayloadPictureSelect;
+  public payload: IPictureSelectPayload;
 
   @Input()
   public flush: boolean;

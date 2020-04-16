@@ -1,16 +1,16 @@
-import { Component, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
-import { IQuestion, IAnswer, ITracker, IPoints } from '../../models/survey.model';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { IAnswer, IPoints, IQuestion, ITracker, SurveyQuestionType } from '../../models/survey.model';
 
-interface IPayloadGroup {
-  type: string;
+export interface IGroupPayload {
+  type: SurveyQuestionType.questionGroup;
   questions: IQuestion[];
 }
+
 @Component({
   selector: 'perx-core-group',
   templateUrl: './group.component.html',
   styleUrls: ['./group.component.scss']
 })
-
 export class GroupComponent implements OnChanges {
   @Input()
   public hideIndex: boolean = false;
@@ -22,7 +22,7 @@ export class GroupComponent implements OnChanges {
   public questionPointer: number;
 
   @Input()
-  public payload: IPayloadGroup;
+  public payload: IGroupPayload;
 
   @Input()
   public flush: boolean;

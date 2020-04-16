@@ -1,11 +1,11 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {IAnswer} from '../../models/survey.model';
-import {Subject} from 'rxjs';
-import {debounceTime} from 'rxjs/operators';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
+import { IAnswer, SurveyQuestionType } from '../../models/survey.model';
 
-interface IPayloadPassword {
-  type: string;
-  'max-length': number;
+export interface IPasswordPayload {
+  type: SurveyQuestionType.password;
+  'max-length'?: number;
 }
 
 @Component({
@@ -15,7 +15,7 @@ interface IPayloadPassword {
 })
 export class PasswordComponent implements OnInit, OnChanges {
   @Input()
-  public payload: IPayloadPassword;
+  public payload: IPasswordPayload;
 
   @Input()
   public flush: boolean;

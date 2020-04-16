@@ -1,4 +1,12 @@
 import { IWCampaignDisplayProperties } from '@perxtech/whistler';
+import { IDatePayload } from '../question/date/date.component';
+import { IGroupPayload } from '../question/group/group.component';
+import { ILongTextPayload } from '../question/long-text/long-text.component';
+import { IPasswordPayload } from '../question/password/password.component';
+import { IPhonePayload } from '../question/phone/phone.component';
+import { IPictureSelectPayload } from '../question/picture-select/picture-select.component';
+import { IRatingPayload } from '../question/rating/rating.component';
+import { ISelectPayload } from '../question/select/select.component';
 
 export interface IAnswer {
   questionId?: string;
@@ -75,17 +83,12 @@ export interface IErrors {
   inValidEmail?: boolean;
 }
 
-export interface IPayload {
-  type: SurveyQuestionType;
-  [key: string]: any;
-}
-/* eslint-disable */
-export enum SurveyRatingIcons {
-  star = 'star_border',
-  star_selected = 'star',
-  heart = 'favorite_border',
-  heart_selected = 'favorite',
-  circle = 'panorama_fish_eye',
-  circle_selected = 'brightness_1',
-}
-/* eslint-enable */
+export type IPayload =
+  ISelectPayload |
+  IRatingPayload |
+  IGroupPayload |
+  IDatePayload |
+  ILongTextPayload |
+  IPasswordPayload |
+  IPhonePayload |
+  IPictureSelectPayload;

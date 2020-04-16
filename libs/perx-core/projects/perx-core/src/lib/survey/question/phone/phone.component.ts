@@ -1,12 +1,12 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, OnInit } from '@angular/core';
-import { IAnswer } from '../../models/survey.model';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { GeneralStaticDataService } from '../../../utils/general-static-data/general-static-data.service';
 import { debounceTime } from 'rxjs/operators';
 import { ICountryCode } from '../../../utils/general-static-data/country-code';
+import { GeneralStaticDataService } from '../../../utils/general-static-data/general-static-data.service';
+import { IAnswer, SurveyQuestionType } from '../../models/survey.model';
 
-interface IPayloadPhone {
-  type: string;
+export interface IPhonePayload {
+  type: SurveyQuestionType.phone;
   'default_country_code': string;
 }
 
@@ -17,7 +17,7 @@ interface IPayloadPhone {
 })
 export class PhoneComponent implements OnChanges, OnInit {
   @Input()
-  public payload: IPayloadPhone;
+  public payload: IPhonePayload;
 
   @Input()
   public flush: boolean;

@@ -1,11 +1,10 @@
-import { Component, Input, Output, EventEmitter, SimpleChanges, OnChanges, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatDatepicker } from '@angular/material/datepicker';
-import { IAnswer, IDateRange } from '../../models/survey.model';
+import { IAnswer, IDateRange, SurveyQuestionType } from '../../models/survey.model';
 
-interface IPayloadDate {
-  type: string;
+export interface IDatePayload {
+  type: SurveyQuestionType.date;
   duration: boolean;
-  period?: boolean;
 }
 
 @Component({
@@ -14,15 +13,14 @@ interface IPayloadDate {
   styleUrls: ['./date.component.scss']
 })
 export class DateComponent implements OnChanges, OnInit {
-  @ViewChild('picker', { static: false }) public picker: MatDatepicker<Date>;
-  @ViewChild('pickerFrom', { static: false }) public pickerFrom: MatDatepicker<Date>;
-  @ViewChild('pickerTo', { static: false }) public pickerTo: MatDatepicker<Date>;
-  @ViewChild('pickerInput', { static: false }) public pickerInput: ElementRef;
-  @ViewChild('pickerToInput', { static: false }) public pickerToInput: ElementRef;
-  @ViewChild('pickerFromInput', { static: false }) public pickerFromInput: ElementRef;
+  @ViewChild('picker', { static: false }) private picker: MatDatepicker<Date>;
+  @ViewChild('pickerTo', { static: false }) private pickerTo: MatDatepicker<Date>;
+  @ViewChild('pickerInput', { static: false }) private pickerInput: ElementRef;
+  @ViewChild('pickerToInput', { static: false }) private pickerToInput: ElementRef;
+  @ViewChild('pickerFromInput', { static: false }) private pickerFromInput: ElementRef;
 
   @Input()
-  public payload: IPayloadDate;
+  public payload: IDatePayload;
 
   @Input()
   public flush: boolean;

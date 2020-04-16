@@ -1,15 +1,26 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { IAnswer } from '../../models/survey.model';
-import { SurveyRatingIcons } from '../../models/survey.model';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { IAnswer, SurveyQuestionType } from '../../models/survey.model';
 
-interface IPayloadRating {
-  type: string;
+/* eslint-disable */
+export enum SurveyRatingIcons {
+  star = 'star_border',
+  star_selected = 'star',
+  heart = 'favorite_border',
+  heart_selected = 'favorite',
+  circle = 'panorama_fish_eye',
+  circle_selected = 'brightness_1',
+}
+/* eslint-enable */
+
+export interface IRatingPayload {
+  type: SurveyQuestionType.rating;
   color?: string;
   'left_label'?: string;
   'right_label'?: string;
   scale?: number;
   shape?: string;
 }
+
 @Component({
   selector: 'perx-core-rating',
   templateUrl: './rating.component.html',
@@ -17,7 +28,7 @@ interface IPayloadRating {
 })
 export class RatingComponent implements OnChanges {
   @Input()
-  public payload: IPayloadRating;
+  public payload: IRatingPayload;
 
   @Input()
   public flush: boolean;

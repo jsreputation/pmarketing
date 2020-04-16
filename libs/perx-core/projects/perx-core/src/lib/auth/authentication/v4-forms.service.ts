@@ -93,6 +93,7 @@ export class V4FormsService implements IFormsService {
                 required: true,
                 payload: {
                   type: SurveyQuestionType.multipleChoice,
+                  multiple: true,
                   choices: [
                     'I agree HSBC Life to save my personal information for lucky draw and future direct marketing purpose (For details, please refer to the PICS)',
                   ]

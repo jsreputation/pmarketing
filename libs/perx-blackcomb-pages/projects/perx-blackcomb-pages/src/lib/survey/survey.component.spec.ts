@@ -1,24 +1,23 @@
-import {
-  SurveyModule as PerxSurveyModule,
-  ConfigModule,
-  ICampaignService,
-  SurveyService,
-  AuthenticationService,
-  SurveyQuestionType,
-  ISurvey,
-  IPopupConfig
-} from '@perxtech/core';
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-
-import { SurveyComponent } from './survey.component';
-import { MatCardModule, MatButtonModule, MatProgressBarModule, MatToolbarModule } from '@angular/material';
+import { Type } from '@angular/core';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { MatButtonModule, MatCardModule, MatProgressBarModule, MatToolbarModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { of } from 'rxjs';
-import { convertToParamMap, ActivatedRoute, Router } from '@angular/router';
-import { Type } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  AuthenticationService,
+  ConfigModule,
+  ICampaignService,
+  IPopupConfig,
+  ISurvey,
+  SurveyModule as PerxSurveyModule,
+  SurveyQuestionType,
+  SurveyService
+} from '@perxtech/core';
 import { WInformationCollectionSettingType } from '@perxtech/whistler';
+import { of } from 'rxjs';
+import { SurveyComponent } from './survey.component';
 
 interface IAnswer {
   questionId: string;
@@ -41,7 +40,7 @@ describe('SurveyComponent', () => {
         required: false,
         payload: {
           type: SurveyQuestionType.password,
-          test: 'test'
+          // test: 'test'
         }
       }
     ],
