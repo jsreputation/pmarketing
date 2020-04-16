@@ -28,7 +28,7 @@ interface IV4WordPressRssResponse {
 }
 
 interface IV4WordPressRss {
-  id: number,
+  id: number;
   key: string;
   string_value: string;
   json_value: {
@@ -36,7 +36,7 @@ interface IV4WordPressRss {
       url: string;
       section: string;
     }[]
-  }
+  };
 }
 
 interface IV4MicrositeSettingsResponse {
@@ -84,7 +84,7 @@ export class V4SettingsService extends SettingsService {
       newIRssFeeds.data.push({
         url: rssSection.url,
         page: rssSection.section
-      })
+      });
     });
     return newIRssFeeds;
   }
