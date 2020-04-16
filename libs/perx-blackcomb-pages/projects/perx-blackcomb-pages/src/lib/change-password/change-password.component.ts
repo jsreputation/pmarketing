@@ -7,11 +7,11 @@ import {
   IChangePasswordData,
   inequalityValidator,
   IProfile,
-  NotificationService,
   ProfileService
 } from '@perxtech/core';
 import { ShowTitleInHeader } from '../layout/layout.component';
 import {TranslateService} from '@ngx-translate/core';
+import {switchMap} from 'rxjs/operators';
 
 @Component({
   selector: 'perx-blackcomb-pages-change-password',
@@ -23,6 +23,7 @@ export class ChangePasswordComponent implements ShowTitleInHeader {
   public changePasswordForm: FormGroup;
   public profile: IProfile;
   public invalidPWText: string;
+  public invalidOldPW: boolean;
   private initTranslate(): void {
     this.translate.get('LOGIN_PAGE.PASSWORD_INVALID_TXT').subscribe((text) => this.invalidPWText = text);
   }
@@ -31,9 +32,8 @@ export class ChangePasswordComponent implements ShowTitleInHeader {
     private fb: FormBuilder,
     private router: Router,
     private authService: AuthenticationService,
-    private notificationService: NotificationService,
     private translate: TranslateService,
-    private profileService: ProfileService
+    private profileService: ProfileService,
   ) {
     this.profileService.whoAmI().subscribe((res) => {
       this.profile = res;
@@ -69,7 +69,11 @@ export class ChangePasswordComponent implements ShowTitleInHeader {
     const oldPasswordField = this.changePasswordForm.get('oldPassword');
     const oldPasswordString = oldPasswordField ? oldPasswordField.value : '';
 
-    this.authService.login(this.profile.phone as string, oldPasswordString).subscribe(
+    this.authService.login(this.profile.phone as string, oldPasswordString)
+      .pipe(
+        switchMap(() => this.authService.requestVerificationToken())
+      )
+      .subscribe(
       () => {
         const changePasswordData: IChangePasswordData = {
           newPassword: passwordString,
@@ -77,10 +81,11 @@ export class ChangePasswordComponent implements ShowTitleInHeader {
           oldPassword: oldPasswordString,
           otp: ''
         };
-        this.authService.requestVerificationToken()
-          .subscribe(() => this.router.navigateByUrl('/otp/password', { state: changePasswordData }));
-      } ,
-      () =>  this.notificationService.addSnack(this.invalidPWText)
+        this.router.navigateByUrl('/otp/password', { state: changePasswordData });
+      },
+      () => {
+        this.invalidOldPW = true;
+      }
     );
   }
 

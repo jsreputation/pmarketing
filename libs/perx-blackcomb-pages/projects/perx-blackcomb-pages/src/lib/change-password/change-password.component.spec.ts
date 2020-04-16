@@ -5,7 +5,7 @@ import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import {AuthenticationService, NotificationService, ProfileService} from '@perxtech/core';
+import {AuthenticationService, ProfileService} from '@perxtech/core';
 import { Type } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
@@ -18,10 +18,6 @@ describe('ChangePasswordComponent', () => {
   const authenticationServiceStub: Partial<AuthenticationService> = {
     requestVerificationToken: () => of(),
     login: () => of()
-  };
-
-  const notificationServiceStub: Partial<NotificationService> = {
-    addSnack: () => void 0
   };
 
   beforeEach(async(() => {
@@ -37,7 +33,6 @@ describe('ChangePasswordComponent', () => {
         TranslateModule.forRoot()
       ],
       providers: [
-        { provide: NotificationService, useValue: notificationServiceStub},
         { provide: ProfileService, useValue: { whoAmI: () => of(true) }},
         { provide: AuthenticationService, useValue: authenticationServiceStub }
       ]
