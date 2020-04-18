@@ -1,4 +1,4 @@
-import { Component, Input, HostListener } from '@angular/core';
+import { Component, Input, HostListener, OnInit } from '@angular/core';
 import { FeedItem, FeedReaderService } from '../feed-reader.service';
 import { MatDialog } from '@angular/material';
 import { IRssFeeds, IRssFeedsData } from '../../settings/models/settings.model';
@@ -10,7 +10,7 @@ import { FeedItemPopupComponent } from '../feed-item-popup/feed-item-popup.compo
   templateUrl: './newsfeed.component.html',
   styleUrls: ['./newsfeed.component.scss']
 })
-export class NewsfeedComponent {
+export class NewsfeedComponent implements OnInit {
   // will be passed down to the dialog from readMoreClicked
   @Input()
   public page: string;
@@ -78,7 +78,7 @@ export class NewsfeedComponent {
   public getFirstLine(text: string): string {
     const lines = text.match(/[^\r\n]+/g) || [];
     const firstLineContent = lines && lines.length > 0 ? lines[0] : '';
-    return firstLineContent.length > 120 ? firstLineContent.slice(0, 120) + '...' : firstLineContent;
+    return firstLineContent.length > 120 ? `${firstLineContent.slice(0, 120)}...` : firstLineContent;
   }
 
 }
