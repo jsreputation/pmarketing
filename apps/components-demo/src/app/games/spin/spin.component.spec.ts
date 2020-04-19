@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SpinComponent } from './spin.component';
 import { GameModule } from '@perxtech/core';
+import { MatButtonToggleModule } from '@angular/material';
 
 describe('SpinComponent', () => {
   let component: SpinComponent;
@@ -10,7 +11,7 @@ describe('SpinComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SpinComponent],
-      imports: [GameModule]
+      imports: [GameModule, MatButtonToggleModule]
     })
       .compileComponents();
   }));

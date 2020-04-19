@@ -1,3 +1,17 @@
 <div class="wrapper">
-  <perx-core-spin-the-wheel [slices]="mockSlices" [spinDuration]="2"></perx-core-spin-the-wheel>
+  <perx-core-spin-the-wheel
+    [slices]="mockSlices"
+    [spinDuration]="2"
+    [wheelImg]="wheel"
+    [pointerImg]="pointer"></perx-core-spin-the-wheel>
 </div>
+<mat-button-toggle-group (change)="pointerIndex = $event.value">
+  <mat-button-toggle value="1">Pointer 1</mat-button-toggle>
+  <mat-button-toggle value="2">Pointer 2</mat-button-toggle>
+  <mat-button-toggle value="3">Pointer 3</mat-button-toggle>
+</mat-button-toggle-group>
+<mat-button-toggle-group (change)="wheelIndex = $event.value">
+  <mat-button-toggle value="1">Wheel 1</mat-button-toggle>
+  <mat-button-toggle value="2">Wheel 2</mat-button-toggle>
+  <mat-button-toggle value="3">Wheel 3</mat-button-toggle>
+</mat-button-toggle-group>
