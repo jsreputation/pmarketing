@@ -64,7 +64,7 @@ const configServiceStub: Partial<ConfigService> = {
 };
 
 const settingsServiceStub: Partial<SettingsService> = {
-  readRssFeedsFromAPI: () => of()
+  getRssFeeds: () => of()
 };
 
 const reward: IReward = {

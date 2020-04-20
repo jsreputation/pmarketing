@@ -9,6 +9,7 @@ import {
   map,
   share,
   switchMap,
+  tap,
 } from 'rxjs/operators';
 
 import { IWSetting } from '@perxtech/whistler';
@@ -56,6 +57,7 @@ interface IV4MicrositeSettings {
 export class V4SettingsService extends SettingsService {
   private settings: any;
   private hostName: string;
+  private rssFeeds: IRssFeeds;
 
   constructor(
     private http: HttpClient,
@@ -79,7 +81,7 @@ export class V4SettingsService extends SettingsService {
   }
 
   public static v4WordPressRssToRss(data: IV4WordPressRss): IRssFeeds {
-    const newIRssFeeds: IRssFeeds = {data: []};
+    const newIRssFeeds: IRssFeeds = { data: [] };
     data.json_value.blog_section.forEach(rssSection => {
       newIRssFeeds.data.push({
         url: rssSection.url,
@@ -93,10 +95,14 @@ export class V4SettingsService extends SettingsService {
     return this.http.get<IRssFeeds>('assets/config/RSS_FEEDS.json');
   }
 
-  public readRssFeedsFromAPI(): Observable<IRssFeeds> {
+  public getRssFeeds(): Observable<IRssFeeds> {
+    if (this.rssFeeds) {
+      return of(this.rssFeeds);
+    }
     return this.http.get<IV4WordPressRssResponse>(`${this.hostName}/v4/settings/wordpress`).pipe(
       map((res: IV4WordPressRssResponse) => res.data),
-      map((data: IV4WordPressRss) => V4SettingsService.v4WordPressRssToRss(data))
+      map((data: IV4WordPressRss) => V4SettingsService.v4WordPressRssToRss(data)),
+      tap((data: IRssFeeds) => this.rssFeeds = data)
     );
   }
 

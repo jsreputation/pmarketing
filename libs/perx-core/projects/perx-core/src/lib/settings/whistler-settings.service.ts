@@ -45,7 +45,7 @@ export class WhistlerSettingsService extends SettingsService {
     return this.http.get<IRssFeeds>('assets/config/RSS_FEEDS.json');
   }
 
-  public readRssFeedsFromAPI(): Observable<IRssFeeds> {
+  public getRssFeeds(): Observable<IRssFeeds> {
     return this.http.get<IRssFeeds>('assets/config/RSS_FEEDS.json');
   }
 

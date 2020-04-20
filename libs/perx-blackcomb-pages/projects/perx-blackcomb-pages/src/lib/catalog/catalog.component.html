@@ -18,7 +18,7 @@
       <mat-icon>sort</mat-icon>
     </div>
   </span>
-  <perx-core-newsfeed [page]="rssFeedsPages.CATALOGS"></perx-core-newsfeed>
+  <perx-core-newsfeed [items$]="newsFeedItems"></perx-core-newsfeed>
   <div
     *ngIf="rewards.length > 0"
     class="scroll-content">

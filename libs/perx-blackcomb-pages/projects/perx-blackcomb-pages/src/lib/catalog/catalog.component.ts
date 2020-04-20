@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { ICatalog, IReward, RewardsService, SortingMode, RssFeedsPages } from '@perxtech/core';
-import { map, scan } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { ICatalog, IReward, RewardsService, SortingMode, RssFeedsPages, FeedItem, FeedReaderService, SettingsService, IRssFeeds, IRssFeedsData } from '@perxtech/core';
+import { map, scan, switchMap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 
 interface ISortMenuOption {
@@ -22,7 +22,7 @@ export class CatalogComponent implements OnInit {
   public rewardsLoaded: boolean = false;
   public rewardsEnded: boolean = false;
   public rewardsPageId: number = 1;
-  public rssFeedsPages: typeof RssFeedsPages = RssFeedsPages;
+  public newsFeedItems: Observable<FeedItem[] | undefined>;
 
   public sortOptions: ISortMenuOption[] = [
     { action: 'Latest', label: 'Most Recent' },
@@ -64,12 +64,15 @@ export class CatalogComponent implements OnInit {
     private router: Router,
     private rewardsService: RewardsService,
     private activeRoute: ActivatedRoute,
+    private feedService: FeedReaderService,
+    private settingsService: SettingsService
   ) {
     this.initRewardsScan();
   }
 
   public ngOnInit(): void {
     const categoryName = this.activeRoute.snapshot.queryParamMap.get('catalogs');
+    this.initRssItems();
     if (categoryName) {
       this.selectedCategory = categoryName;
       this.fetchRewards();
@@ -105,6 +108,18 @@ export class CatalogComponent implements OnInit {
 
   public sortChoice({ action }: ISortMenuOption): void {
     this.selectedSortingCriteria = action as SortingMode;
+  }
+
+  private initRssItems(): void {
+    this.newsFeedItems = this.settingsService.getRssFeeds().pipe(
+      map((res: IRssFeeds) => res.data ? res.data.find(feed => feed.page === RssFeedsPages.CATALOGS) : undefined),
+      switchMap((feedData: IRssFeedsData | undefined) => {
+        if (!feedData || !feedData.url) {
+          return of([] as FeedItem[]);
+        }
+        return this.feedService.getFromUrl(feedData.url);
+      })
+    );
   }
 
 }

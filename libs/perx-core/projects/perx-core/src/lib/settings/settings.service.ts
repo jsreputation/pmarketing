@@ -4,7 +4,7 @@ import {IMicrositeSettings, IRssFeeds, PagesObject} from './models/settings.mode
 
 export abstract class SettingsService {
   public abstract readRssFeeds(): Observable<IRssFeeds>;
-  public abstract readRssFeedsFromAPI(): Observable<IRssFeeds>;
+  public abstract getRssFeeds(): Observable<IRssFeeds>;
   public abstract getTenantAppSettings(key: string): Observable<IMicrositeSettings>;
   public abstract getAccountSettings(): Observable<PagesObject>;
 }

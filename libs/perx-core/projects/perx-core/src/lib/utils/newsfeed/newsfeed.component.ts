@@ -1,9 +1,8 @@
 import { Component, Input, HostListener, OnInit } from '@angular/core';
-import { FeedItem, FeedReaderService } from '../feed-reader.service';
+import { FeedItem } from '../feed-reader.service';
 import { MatDialog } from '@angular/material';
-import { IRssFeeds, IRssFeedsData } from '../../settings/models/settings.model';
-import { SettingsService } from '../../settings/settings.service';
 import { FeedItemPopupComponent } from '../feed-item-popup/feed-item-popup.component';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'perx-core-newsfeed',
@@ -13,42 +12,25 @@ import { FeedItemPopupComponent } from '../feed-item-popup/feed-item-popup.compo
 export class NewsfeedComponent implements OnInit {
   // will be passed down to the dialog from readMoreClicked
   @Input()
-  public page: string;
+  public items$: Observable<FeedItem[] | undefined>;
 
-  public items: FeedItem[];
+  public items: FeedItem[] = [] as FeedItem[];
   public itemSize: number;
   public newsBeforeScroll: number[];
   public newsAfterScroll: number[];
   public showButton: boolean = true;
 
-  private async initNewsFeedItems(): Promise<void> {
-    const rssFeeds: IRssFeeds = await this.settingsService.readRssFeedsFromAPI().toPromise();
-    if (!(rssFeeds && rssFeeds.data.length > 0)) {
-      return;
-    }
-
-    const rssFeedsSection: IRssFeedsData | undefined = rssFeeds.data.find(feed => feed.page === this.page);
-    if (!rssFeedsSection) {
-      return;
-    }
-
-    const rssFeedsUrl: string = rssFeedsSection.url;
-    this.reader.getFromUrl(rssFeedsUrl, true)
-      .subscribe(items => {
-        this.items = items;
-        this.newsAfterScroll = Array.from(Array(items.length > 0 ? items.length - 1 : 1).keys());
-      });
-  }
-
   constructor(
-    private reader: FeedReaderService,
     private dialog: MatDialog,
-    private settingsService: SettingsService,
   ) { }
 
   public ngOnInit(): void {
-    this.initNewsFeedItems();
     this.itemSize = window.innerWidth;
+    if (this.items$) {
+      this.items$.subscribe((res: FeedItem[]) => {
+        this.items = res;
+      });
+    }
   }
 
   public updateScrollIndex(index: number): void {

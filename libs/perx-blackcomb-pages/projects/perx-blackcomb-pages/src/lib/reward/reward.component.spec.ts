@@ -76,7 +76,7 @@ describe('RewardComponent', () => {
   };
 
   const settingsServiceStub: Partial<SettingsService> = {
-    readRssFeedsFromAPI: () => of()
+    getRssFeeds: () => of()
   };
 
   beforeEach(async(() => {

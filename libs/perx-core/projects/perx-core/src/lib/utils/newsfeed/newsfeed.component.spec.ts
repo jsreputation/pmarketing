@@ -1,9 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule, MatCardModule, MatDialogModule, MatDialog } from '@angular/material';
 import { NewsfeedComponent } from './newsfeed.component';
-import { FeedReaderService } from '../feed-reader.service';
-import { SettingsService } from '../../settings/settings.service';
-import { of } from 'rxjs';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { TranslateModule } from '@ngx-translate/core';
@@ -11,14 +8,6 @@ import { TranslateModule } from '@ngx-translate/core';
 describe('NewsfeedComponent', () => {
   let component: NewsfeedComponent;
   let fixture: ComponentFixture<NewsfeedComponent>;
-
-  const feedReaderServiceStub: Partial<FeedReaderService> = {
-    getFromUrl: () => of([])
-  };
-
-  const settingsServiceStub: Partial<SettingsService> = {
-    readRssFeedsFromAPI: () => of()
-  };
 
   const items = [
     {
@@ -50,10 +39,6 @@ describe('NewsfeedComponent', () => {
         MatDialogModule,
         ScrollingModule,
         TranslateModule.forRoot()
-      ],
-      providers: [
-        { provide: FeedReaderService, useValue: feedReaderServiceStub },
-        { provide: SettingsService, useValue: settingsServiceStub },
       ]
     })
       .compileComponents();

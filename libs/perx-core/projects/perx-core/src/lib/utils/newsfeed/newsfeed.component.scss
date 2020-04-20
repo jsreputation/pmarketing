@@ -1,30 +1,3 @@
-.dots {
-  text-align: center;
-  margin-bottom: 2rem;
-
-  .container {
-    margin: 0 auto;
-    position: relative;
-
-    span {
-      height: 1rem;
-      border-radius: 5rem;
-      display: inline-block;
-      margin: 0 0.4rem;
-
-      &.gray-dot {
-        width: 1rem;
-        background-color: #d2d8e2;
-      }
-
-      &.green-bar {
-        width: 2.8rem;
-        background-color: #6dc00e;
-      }
-    }
-  }
-}
-
 .description {
   font-size: 1.6rem;
 }
@@ -36,6 +9,14 @@ cdk-virtual-scroll-viewport {
 
 .cdk-virtual-scroll-data-source .mat-item {
   height: 100%;
+  width: calc(100% - 2rem) !important;
+  box-sizing: border-box;
+}
+
+::ng-deep {
+  .cdk-virtual-scroll-spacer {
+    width: 1px !important;
+  }
 }
 
 .card {

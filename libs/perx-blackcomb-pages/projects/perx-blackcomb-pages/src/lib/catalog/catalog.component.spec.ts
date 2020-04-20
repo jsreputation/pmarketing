@@ -17,7 +17,7 @@ describe('CatalogComponent', () => {
     getRewards: () => of()
   };
   const settingsServiceStub: Partial<SettingsService> = {
-    readRssFeedsFromAPI: () => of()
+    getRssFeeds: () => of()
   };
   const activatedRouteStub = {
     snapshot: {

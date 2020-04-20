@@ -1,6 +1,6 @@
 <div class="main-puzzle-container" [ngStyle]="{'background-image': background? 'url(' + background + ')': '' }">
   <div class="instantReward-wrapper" [ngStyle]="{'background-image': background? 'url(' + cardBackground + ')': '' }">
-    <perx-core-newsfeed [page]="rssFeedsPages.REWARDS"></perx-core-newsfeed>
+    <perx-core-newsfeed [items$]="newsFeedItems"></perx-core-newsfeed>
     <div class="textContents">
       <h1>{{this.title}}</h1>
       <h3>{{this.subTitle}}</h3>

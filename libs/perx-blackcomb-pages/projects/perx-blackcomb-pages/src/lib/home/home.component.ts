@@ -22,7 +22,12 @@ import {
   RewardsService,
   ThemesService,
   GameType,
-  RssFeedsPages
+  RssFeedsPages,
+  FeedReaderService,
+  SettingsService,
+  IRssFeeds,
+  IRssFeedsData,
+  FeedItem
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
@@ -39,6 +44,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject();
   public theme: ITheme;
   public appConfig: IConfig<void>;
+  public newsFeedItems: Observable<FeedItem[] | undefined>;
   public rewards$: Observable<IReward[]>;
   public games$: Observable<IGame[]>;
   public stampCampaigns$: Observable<ICampaign[]>;
@@ -49,7 +55,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   public showCampaigns: boolean = false;
   private firstComefirstServeCampaign: ICampaign;
   public quizCampaigns$: Observable<ICampaign[]>;
-  public rssFeedsPages: typeof RssFeedsPages = RssFeedsPages;
 
   public constructor(
     private rewardsService: RewardsService,
@@ -63,6 +68,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     private campaignService: ICampaignService,
     private instantOutcomeService: InstantOutcomeService,
     private dialog: MatDialog,
+    private feedService: FeedReaderService,
+    private settingsService: SettingsService,
   ) {
   }
 
@@ -237,5 +244,15 @@ export class HomeComponent implements OnInit, OnDestroy {
       );
 
     this.quizCampaigns$ = this.campaignService.getCampaigns({ gameType: GameType.quiz });
+
+    this.newsFeedItems = this.settingsService.getRssFeeds().pipe(
+      map((res: IRssFeeds) => res.data ? res.data.find(feed => feed.page === RssFeedsPages.HOME) : undefined),
+      switchMap((feedData: IRssFeedsData | undefined) => {
+        if (!feedData || !feedData.url) {
+          return of([] as FeedItem[]);
+        }
+        return this.feedService.getFromUrl(feedData && feedData.url);
+      })
+    );
   }
 }
