@@ -1,4 +1,4 @@
-<div *ngIf="(campaigns$ | async) as campaigns" [@listAnimation]="!showAllCampaigns || campaigns.length">
+<div *ngIf="campaigns && gamesLoaded" [@listAnimation]="!showAllCampaigns || campaigns.length">
   <mat-card
     *ngFor="let campaign of ((showAllCampaigns || (campaigns.length <= defaultNbCampaigns))
   ? campaigns : (campaigns | slice:0:defaultNbCampaigns))"

@@ -1,9 +1,29 @@
 import { listAnimation } from '../games-collection/games-collection.animation';
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ICampaign } from '@perxtech/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output
+} from '@angular/core';
+import {
+  combineLatest,
+  Observable,
+} from 'rxjs';
+import {
+  GameType,
+  ICampaign,
+  IGame,
+  IGameService,
+  IQuiz,
+  QuizService
+} from '@perxtech/core';
 import { oc } from 'ts-optchain';
 import { TranslateService } from '@ngx-translate/core';
+import {
+  switchMap,
+  tap,
+} from 'rxjs/operators';
 
 @Component({
   selector: 'perx-blackcomb-pages-campaigns-collection',
@@ -26,9 +46,15 @@ export class CampaignsCollectionComponent implements OnInit {
 
   public showAllCampaigns: boolean = false;
   public rewardsLeft: string;
+  public campaigns: ICampaign[];
+  private games: IGame[];
+  private quizzes: IQuiz[] = [];
+  public gamesLoaded: boolean = false;
 
   constructor(
     private translate: TranslateService,
+    private gamesService: IGameService,
+    private quizService: QuizService
   ) { }
 
 
@@ -36,6 +62,37 @@ export class CampaignsCollectionComponent implements OnInit {
     this.translate.get('HOME.REWARDS_LEFT').subscribe((text) => {
       this.rewardsLeft = text;
     });
+
+    this.campaigns$.pipe(
+      tap((campaigns: ICampaign[]) => this.campaigns = campaigns),
+      // for each campaign, fetch associated games
+      switchMap((campaigns: ICampaign[]) => combineLatest([
+        ...campaigns.map((campaign: ICampaign) =>{
+          if (this.gameType === GameType.quiz) {
+            return this.quizService.getQuizFromCampaign(campaign.id);
+          }
+          return this.gamesService.getGamesFromCampaign(campaign.id);
+        })
+      ]))
+    ).subscribe(
+      (res: (IQuiz | IGame[])[]) => {
+        if (this.gameType === GameType.quiz) {
+          this.quizzes = res as IQuiz[];
+        } else {
+          // UNTESTED
+          // todo: test games input.
+          this.games = (res as IGame[][])[0];
+          console.log(this.games);
+        }
+        this.gamesLoaded = true;
+      },
+      () => {
+        // at this point this should be a stamp campaign
+        console.log('no game, is a stamp campaign');
+        this.gamesLoaded = true;
+
+      }
+    );
   }
 
   public selectCampaign(campaign: ICampaign): void {
