@@ -24,6 +24,7 @@ export class CampaignsCollectionComponent implements OnInit {
   @Output()
   public selected: EventEmitter<ICampaign> = new EventEmitter<ICampaign>();
 
+  public showAllCampaigns: boolean = false;
   public rewardsLeft: string;
 
   constructor(
