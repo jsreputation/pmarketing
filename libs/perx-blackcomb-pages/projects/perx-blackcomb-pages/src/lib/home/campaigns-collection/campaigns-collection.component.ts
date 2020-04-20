@@ -96,7 +96,9 @@ export class CampaignsCollectionComponent implements OnInit {
   }
 
   public selectCampaign(campaign: ICampaign): void {
-    this.selected.emit(campaign);
+    if (!this.isCampaignComplete(campaign.id)) {
+      this.selected.emit(campaign);
+    }
   }
 
   public getCampaignImage(campaign: ICampaign): string {
