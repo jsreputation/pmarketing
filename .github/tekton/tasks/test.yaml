@@ -1,18 +1,18 @@
-apiVersion: tekton.dev/v1alpha1
+apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
   name: microsite-apps-ng-test
   namespace: build
 spec:
-  inputs:
-    resources:
+  resources:
+    inputs:
       - name: workspace
         type: git
         targetPath: project
-    params:
-      - name: folder
-        type: string
-        description: The folder to run the test command
+  params:
+    - name: folder
+      type: string
+      description: The folder to run the test command
   stepTemplate:
     image: circleci/node:10-browsers
     resources: &resources

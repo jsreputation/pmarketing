@@ -20,7 +20,7 @@ jobs:
           fi
       - name: Download tekton cli and install parallel
         run: |
-          curl -L https://github.com/tektoncd/cli/releases/download/v0.6.0/tkn_0.6.0_Linux_x86_64.tar.gz \
+          curl -L https://github.com/tektoncd/cli/releases/download/v0.8.0/tkn_0.8.0_Linux_x86_64.tar.gz \
           | sudo tar xzv -C /usr/local/bin tkn
           # sudo apt-get --allow-releaseinfo-change update &&
           sudo apt-get install -y parallel
@@ -41,19 +41,21 @@ jobs:
       - name: Create tekton task
         run: |
           TEKTON_TASK=$(cat <<EOT | kubectl -n build create -f - --output=jsonpath={.metadata.name}
-          apiVersion: tekton.dev/v1alpha1
+          apiVersion: tekton.dev/v1beta1
           kind: TaskRun
           metadata:
             generateName: microsite-apps-ng-lint-
             labels:
               github.ref: ${TEKTON_LABEL}
               task: lint
+            annotations:
+              cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
           spec:
             serviceAccountName: tekton
             taskRef:
               name: microsite-apps-ng-lint
-            inputs:
-              resources:
+            resources:
+              inputs:
                 - name: workspace
                   resourceSpec:
                     type: git
@@ -112,6 +114,9 @@ jobs:
       - name: Taskruns cleanup
         if: always()
         run: |
-          if [ "$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')" == "Succeeded" ]; then
-              tkn -n build taskrun delete ${TASKRUN_NAME}
+          TASKRUN_STATUS=$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')
+          echo ">>>> Taskrun ${TASKRUN_NAME} status is ${TASKRUN_STATUS} <<<<"
+          if [ "${TASKRUN_STATUS}" = "Succeeded" ]; then
+            echo ">>>> Deleting succeeded taskrun ${TASKRUN_NAME} <<<<"
+            tkn -n build taskrun delete ${TASKRUN_NAME}
           fi
