@@ -9,6 +9,7 @@ import {
   ConfigService,
   FeedItem,
   FeedReaderService,
+  GameType,
   ICampaign,
   ICatalog,
   ICampaignService,
@@ -25,8 +26,7 @@ import {
   RewardPopupComponent,
   RewardsService,
   SettingsService,
-  ThemesService,
-  GameType
+  ThemesService
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
@@ -54,6 +54,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public showCampaigns: boolean = false;
   private firstComefirstServeCampaign: ICampaign;
   public quizCampaigns$: Observable<ICampaign[]>;
+  public gameType = GameType;
 
   public constructor(
     private rewardsService: RewardsService,

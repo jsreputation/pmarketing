@@ -48,6 +48,7 @@
     <perx-blackcomb-pages-campaigns-collection
       [defaultNbCampaigns]="3"
       [campaigns]="quizCampaigns$"
+      [gameType]="gameType.quiz"
       [withRewardsCounter]="appConfig.showCampaignRewardsCounterOnHomepage"
       (selected)="goToCampaignPage($event)">
     </perx-blackcomb-pages-campaigns-collection>

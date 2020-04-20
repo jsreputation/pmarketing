@@ -18,8 +18,8 @@ export class CampaignsCollectionComponent implements OnInit {
   public defaultNbCampaigns: number = 2;
   @Input()
   public withRewardsCounter: boolean = false;
-
-  public showAllCampaigns: boolean = false;
+  @Input()
+  public gameType: string;
 
   @Output()
   public selected: EventEmitter<ICampaign> = new EventEmitter<ICampaign>();
