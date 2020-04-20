@@ -35,7 +35,8 @@ import {
   SurveyModule,
   ProfileModule,
   QuizModule,
-  SecondsToStringPipe
+  SecondsToStringPipe,
+  RankModule
 } from '@perxtech/core';
 
 import { RewardComponent } from './reward/reward.component';
@@ -78,6 +79,7 @@ import { CampaignLandingPageComponent } from './campaign-landing-page/campaign-l
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { ReferralComponent } from './referral/referral.component';
+import { LeaderboardPageComponent } from './leaderboard-page/leaderboard-page.component';
 
 const comps: any[] = [
   AccountComponent,
@@ -117,7 +119,8 @@ const comps: any[] = [
   CampaignLandingPageComponent,
   ForgotPasswordComponent,
   LandingPageComponent,
-  ReferralComponent
+  ReferralComponent,
+  LeaderboardPageComponent
 ];
 
 @NgModule({
@@ -158,7 +161,8 @@ const comps: any[] = [
     InfiniteScrollModule,
     MatDialogModule,
     QuizModule,
-    ProfileModule
+    ProfileModule,
+    RankModule
   ],
   exports: [
     ...comps,
