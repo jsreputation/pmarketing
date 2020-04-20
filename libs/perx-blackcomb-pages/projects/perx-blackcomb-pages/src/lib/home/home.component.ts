@@ -78,7 +78,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public showCampaigns: boolean = false;
   private firstComefirstServeCampaign: ICampaign;
   public quizCampaigns$: Observable<ICampaign[]>;
-  public gameType = GameType;
+  public gameType: typeof GameType = GameType;
 
   public constructor(
     private rewardsService: RewardsService,
