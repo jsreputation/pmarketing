@@ -17,7 +17,6 @@ import {
   MatToolbarModule,
   MatCheckboxModule
 } from '@angular/material';
-import { environment } from 'src/environments/environment';
 import { PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
 import { QuizRoutingModule } from './quiz-routing.module';
 // import { of } from 'rxjs';
@@ -29,7 +28,7 @@ import { QuizRoutingModule } from './quiz-routing.module';
 
 @NgModule({
   imports: [
-    ConfigModule.forRoot({ ...environment }),
+    ConfigModule.forChild(),
     PerxBlackcombPagesModule,
     CommonModule,
     MatCardModule,

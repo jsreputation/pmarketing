@@ -1,11 +1,11 @@
-apiVersion: tekton.dev/v1alpha1
+apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
   name: microsite-apps-ng-lint
   namespace: build
 spec:
-  inputs:
-    resources:
+  resources:
+    inputs:
       - name: workspace
         type: git
         targetPath: project

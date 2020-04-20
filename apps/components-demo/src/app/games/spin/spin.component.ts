@@ -7,56 +7,81 @@ import { ISlice } from '@perxtech/core';
   styleUrls: ['./spin.component.scss']
 })
 export class SpinComponent {
+  public pointers: string[] = [
+    'http://perx-cdn.s3.amazonaws.com/content/dashboard/pointer1.png',
+    'http://perx-cdn.s3.amazonaws.com/content/dashboard/pointer2.png',
+    'http://perx-cdn.s3.amazonaws.com/content/dashboard/pointer3.png'
+  ];
+  public wheels: string[] = [
+    'http://perx-cdn.s3.amazonaws.com/content/dashboard/wheel1.png',
+    'http://perx-cdn.s3.amazonaws.com/content/dashboard/wheel2.png',
+    'http://perx-cdn.s3.amazonaws.com/content/dashboard/wheel3.png',
+  ];
+  public pointerIndex: any = 0;
+  public wheelIndex: any = 0;
+
+  public get pointer(): string {
+    return this.pointers[this.pointerIndex] || this.pointers[0];
+  }
+
+  public get wheel(): string {
+    return this.wheels[this.wheelIndex] || this.wheels[0];
+  }
+
   public mockSlices: ISlice[] = [
     {
       id: '1',
-      backgroundColor: 'red',
-      label: 'red',
-      backgroundImage: 'https://cdn.uat.whistler.perxtech.io/dev1/global/assets/stamps/post-stamp-2.png'
+      backgroundColor: '#C2185B',
+      label: 'France',
+      labelColor: 'white',
     },
     {
       id: '2',
-      backgroundColor: 'green',
-      label: 'green'
+      backgroundColor: '#8BC34A',
+      label: 'Belgium',
+      labelColor: 'white'
     },
     {
       id: '3',
-      backgroundColor: 'blue',
-      label: 'blue',
-      backgroundImage: 'https://cdn.uat.whistler.perxtech.io/dev1/global/assets/stamps/post-stamp-2.png'
+      backgroundColor: '#F8BBD0',
+      // label: 'Netherlands',
+      labelColor: '#212121',
+      backgroundImage: 'http://perx-cdn.s3.amazonaws.com/content/dashboard/post-stamp-2.png'
     },
     {
       id: '4',
-      backgroundColor: 'yellow',
-      label: 'yellow'
+      backgroundColor: '#C2185B',
+      label: 'Germany',
+      labelColor: 'white'
     },
     {
       id: '1',
-      backgroundColor: 'purple',
-      label: 'purple',
-      backgroundImage: 'https://cdn.uat.whistler.perxtech.io/dev1/global/assets/stamps/post-stamp-2.png'
+      backgroundColor: '#8BC34A',
+      label: 'Italy',
+      labelColor: 'white'
     },
-    {
-      id: '2',
-      backgroundColor: 'pink',
-      label: 'pink'
-    },
-    {
-      id: '3',
-      backgroundColor: 'blue',
-      label: 'blue',
-      backgroundImage: 'https://cdn.uat.whistler.perxtech.io/dev1/global/assets/stamps/post-stamp-2.png'
-    },
-    {
-      id: '4',
-      backgroundColor: 'white',
-      label: 'white'
-    },
-    { id: '5', label: 'efg', backgroundColor: 'lightgreen', labelColor: 'lightgreen' },
-    { id: '6', label: 'abc', backgroundColor: 'black', labelColor: 'black' }
-    // {id: '7', label: 'bcd', backgroundColor: '#8c383e', labelColor: '#ffffff'},
-    // {id: '8', label: 'cde', backgroundColor: '#fca562', labelColor: '#000000'},
-    // {id: '9', label: 'def', backgroundColor: '#4ab5b0', labelColor: '#000000'},
-    // {id: '10', label: 'efg', backgroundColor: '#fc58b8', labelColor: 'black'},
+    // {
+    //   id: '2',
+    //   backgroundColor: '#F8BBD0',
+    //   label: 'Austria',
+    //   labelColor: '#212121'
+    // },
+    // {
+    //   id: '3',
+    //   backgroundColor: '#C2185B',
+    //   label: 'Spain',
+    //   labelColor: 'white'
+    // },
+    // {
+    //   id: '4',
+    //   backgroundColor: '#8BC34A',
+    //   label: 'Portugal',
+    //   labelColor: 'white'
+    // },
+    // {
+    //   id: '5', label: 'Denmark',
+    //   backgroundColor: '#F8BBD0',
+    //   labelColor: '#212121'
+    // }
   ];
 }
