@@ -22,7 +22,7 @@ import {
   MatListModule,
   MatDialogModule,
   MatMenuModule,
-  MatInputModule
+  MatInputModule, MatTableModule
 } from '@angular/material';
 import { GameModule } from './game/game.module';
 import { HistoryComponent } from './history/history.component';
@@ -117,7 +117,7 @@ const comps: any[] = [
   CampaignLandingPageComponent,
   ForgotPasswordComponent,
   LandingPageComponent,
-  ReferralComponent,
+  ReferralComponent
 ];
 
 @NgModule({
@@ -153,6 +153,7 @@ const comps: any[] = [
     MatDatepickerModule,
     TranslateModule.forChild(),
     MatToolbarModule,
+    MatTableModule,
     MatListModule,
     InfiniteScrollModule,
     MatDialogModule,
@@ -163,7 +164,7 @@ const comps: any[] = [
     ...comps,
   ],
   declarations: [
-    ...comps,
+    ...comps
   ],
   providers: [
     SecondsToStringPipe

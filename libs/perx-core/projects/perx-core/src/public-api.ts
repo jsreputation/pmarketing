@@ -280,5 +280,11 @@ export { InstantOutcomeService } from './lib/outcome/instant-outcome.service';
 export { IOutcome } from './lib/outcome/models/outcome.model';
 export { OutcomeModule } from './lib/outcome/outcome.module';
 /**
+ * Rank / Leaderboard
+ */
+export { RankModule } from './lib/rank/rank.module';
+export { MiniRankComponent } from './lib/rank/mini-rank/mini-rank.component';
+export { LeaderboardComponent } from './lib/rank/leaderboard/leaderboard.component';
+/**
  * Tenants
  */
