@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LeaderboardPageComponent } from './leaderboard-page.component';
+import { RankModule } from '@perxtech/core';
 
 describe('LeaderboardPageComponent', () => {
   let component: LeaderboardPageComponent;
@@ -8,9 +9,10 @@ describe('LeaderboardPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LeaderboardPageComponent ]
+      declarations: [ LeaderboardPageComponent ],
+      imports: [ RankModule ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
