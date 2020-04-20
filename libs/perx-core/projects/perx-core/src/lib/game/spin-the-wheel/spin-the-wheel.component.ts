@@ -10,6 +10,8 @@ interface ImageForPattern {
 
 interface Pattern {
   id: string;
+  width: number;
+  height: number;
   pattern: CanvasPattern;
 }
 
@@ -50,7 +52,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   private ctx_: CanvasRenderingContext2D | undefined;
   private arcDeg: number = 360;
   private startAngle: number = 0;
-  private patternImg: Pattern[] = [];
+  private patterns: Pattern[] = [];
   private spinTime: number;
   private dragging: boolean = false;
   private spinTimeTotal: number = 0;
@@ -69,9 +71,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   private get wheel(): HTMLDivElement { return this.wheelEl.nativeElement; }
   private get arc(): number { return this.arcDeg * Math.PI / 180; }
   private get size(): number {
-    // TODO get rid of magical number
-    return this.wheel.offsetWidth * 1.2;
-    // return this.wheel.offsetWidth;
+    return this.wheel.offsetWidth;
   }
   private get ctx(): CanvasRenderingContext2D {
     if (!this.ctx_ && this.canvas.getContext) {
@@ -91,15 +91,14 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   }
 
   public ngAfterViewInit(): void {
-    this.generateCanvas();
+    this.initCanvas();
     this.attachListeners();
     this.drawWheel();
   }
 
-  private generateCanvas(): void {
-    // TODO get rid of magical number
-    this.canvas.width = this.wheel.offsetWidth * 1.2;
-    this.canvas.height = this.wheel.offsetWidth * 1.2;
+  private initCanvas(): void {
+    this.canvas.width = this.size;
+    this.canvas.height = this.size;
   }
 
   private attachListeners(): void {
@@ -161,10 +160,12 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   }
 
   private createPatterns(arr: ImageForPattern[]): void {
-    this.patternImg = arr
+    this.patterns = arr
       .filter(({ id, image }) => id && image)
       .map(item => ({
         id: item.id,
+        width: item.image.width,
+        height: item.image.height,
         pattern: this.ctx && this.ctx.createPattern(item.image, 'no-repeat')
       }))
       .filter((imagePattern) => imagePattern.pattern !== null) as Pattern[];
@@ -191,35 +192,37 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
     }
 
     // TODO get rid of magical number
-    const outsideRadius = (this.size / 1.1) / 2 - 5;
+    const sliceRadius = (this.size / 2.2) - 5;
+
     // render slices
     this.slices.forEach((slice: ISlice, i: number) => {
       const angle = i * this.arc;
       // render background color
       this.ctx.fillStyle = slice.backgroundColor || 'white';
       this.ctx.beginPath();
-      this.ctx.arc(0, 0, outsideRadius, angle, angle + this.arc, false);
+      this.ctx.arc(0, 0, sliceRadius, angle, angle + this.arc, false);
       this.ctx.arc(0, 0, 0, angle + this.arc, angle, true);
 
       this.ctx.stroke();
       this.ctx.fill();
       // render background images
       if (slice.backgroundImage) {
-        const currentPattern: Pattern | undefined = this.patternImg.find(item => item.id === slice.id);
+        const currentPattern: Pattern | undefined = this.patterns.find(item => item.id === slice.id);
         if (currentPattern) {
           this.ctx.save();
           this.ctx.rotate(angle + this.arc / 2);
 
-          // TODO stop magic number
-          const stampSize: number = 500 / this.slices.length; // *** dynamic rectangle
-          // TODO stop magic number
-          this.ctx.translate(outsideRadius / 1.8, - (Math.floor(outsideRadius / 5))); // 25 looks okay
+          // this is the maximal size to fit the stamp into the slice
+          const stampSize: number = sliceRadius / Math.sqrt((1 / (2 * Math.tan(this.arc / 2)) + 1) ** 2 + 1 / 4);
+          const ratio = stampSize / Math.max(currentPattern.width, currentPattern.height);
 
-          this.ctx.globalCompositeOperation = 'source-atop';
+          const patternInnerRadius = stampSize * .5 / Math.tan(this.arc / 2);
+          this.ctx.translate(patternInnerRadius, -stampSize / 2);
 
           this.ctx.fillStyle = currentPattern.pattern;
           this.ctx.beginPath();
-          this.ctx.rect(0, 0, stampSize, stampSize);
+          this.ctx.scale(ratio, ratio);
+          this.ctx.rect(0, 0, currentPattern.width, currentPattern.height);
           this.ctx.fill();
           this.ctx.restore();
         }
@@ -296,7 +299,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
     this.spinAngleStart = this.angleToBeSpun / 32.807503994186335;
     this.spinTime = 0;
     // TODO stop magic number
-    this.spinTimeTotal = this.spinDuration * 3 + 4 * 1000;
+    this.spinTimeTotal = this.spinDuration * 3 + 4000;
     this.rotateWheel();
   }
 
@@ -316,13 +319,10 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
     const that = this;
     this.spinTimeout = window.setTimeout(() => {
       that.rotateWheel();
-      // this.completed.emit();
-      // TODO stop magic number
-    }, 15); // change from 30 // was 10
+    }, 15); // TODO stop magic number
   }
 
   private stopRotateWheel(): void {
-    if (!this.ctx) { return; }
     clearTimeout(this.spinTimeout);
     this.ctx.save();
     this.ctx.font = 'bold 20px Helvetica, Arial';

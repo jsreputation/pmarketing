@@ -44,7 +44,7 @@ export class SpinComponent {
     {
       id: '3',
       backgroundColor: '#F8BBD0',
-      label: 'Netherlands',
+      // label: 'Netherlands',
       labelColor: '#212121',
       backgroundImage: 'http://perx-cdn.s3.amazonaws.com/content/dashboard/post-stamp-2.png'
     },
@@ -60,33 +60,28 @@ export class SpinComponent {
       label: 'Italy',
       labelColor: 'white'
     },
-    {
-      id: '2',
-      backgroundColor: '#F8BBD0',
-      label: 'Austria',
-      labelColor: '#212121'
-    },
-    {
-      id: '3',
-      backgroundColor: '#C2185B',
-      label: 'Spain',
-      labelColor: 'white'
-    },
-    {
-      id: '4',
-      backgroundColor: '#8BC34A',
-      label: 'Portugal',
-      labelColor: 'white'
-    },
-    {
-      id: '5', label: 'Denmark',
-      backgroundColor: '#F8BBD0',
-      labelColor: '#212121'
-    },
-    // { id: '6', label: 'abc', backgroundColor: 'black', labelColor: 'black' }
-    // {id: '7', label: 'bcd', backgroundColor: '#8c383e', labelColor: '#ffffff'},
-    // {id: '8', label: 'cde', backgroundColor: '#fca562', labelColor: '#000000'},
-    // {id: '9', label: 'def', backgroundColor: '#4ab5b0', labelColor: '#000000'},
-    // {id: '10', label: 'efg', backgroundColor: '#fc58b8', labelColor: 'black'},
+    // {
+    //   id: '2',
+    //   backgroundColor: '#F8BBD0',
+    //   label: 'Austria',
+    //   labelColor: '#212121'
+    // },
+    // {
+    //   id: '3',
+    //   backgroundColor: '#C2185B',
+    //   label: 'Spain',
+    //   labelColor: 'white'
+    // },
+    // {
+    //   id: '4',
+    //   backgroundColor: '#8BC34A',
+    //   label: 'Portugal',
+    //   labelColor: 'white'
+    // },
+    // {
+    //   id: '5', label: 'Denmark',
+    //   backgroundColor: '#F8BBD0',
+    //   labelColor: '#212121'
+    // }
   ];
 }
