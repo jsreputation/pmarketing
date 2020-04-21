@@ -1,8 +1,9 @@
 <div class="wrapper">
   <perx-core-spin-the-wheel
     [slices]="mockSlices"
-    [spinDuration]="2"
+    [willWin]="true"
     [wheelImg]="wheel"
+    [rewardSlots]="[2,5]"
     [pointerImg]="pointer"></perx-core-spin-the-wheel>
 </div>
 <mat-button-toggle-group (change)="pointerIndex = $event.value">
