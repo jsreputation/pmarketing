@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output, Pipe, PipeTransform} from '@angular/core';
+import { Component, EventEmitter, Input, Output, Pipe, PipeTransform } from '@angular/core';
 import { IGame, ISpin, ISlice } from '@perxtech/core';
 
 @Pipe({
