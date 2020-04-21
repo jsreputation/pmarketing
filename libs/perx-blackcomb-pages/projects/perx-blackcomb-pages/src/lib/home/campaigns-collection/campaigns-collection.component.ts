@@ -80,17 +80,13 @@ export class CampaignsCollectionComponent implements OnInit {
           this.quizzes = res as IQuiz[];
         } else {
           // UNTESTED
-          // todo: test games input.
+          // todo: test games input when games get refactored in.
           this.games = (res as IGame[][])[0];
-          console.log(this.games);
         }
         this.gamesLoaded = true;
       },
       () => {
-        // at this point this should be a stamp campaign
-        console.log('no game, is a stamp campaign');
         this.gamesLoaded = true;
-
       }
     );
   }
