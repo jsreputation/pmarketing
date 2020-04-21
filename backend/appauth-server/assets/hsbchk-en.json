@@ -202,7 +202,8 @@
     "FEATURED_REWARDS": "Featured Rewards",
     "SEE_MORE": "See more",
     "SEE_LESS": "See less",
-    "REWARDS_LEFT": "{{rewardsCount}} Rewards Left"
+    "REWARDS_LEFT": "{{rewardsCount}} Rewards Left",
+    "READ_MORE": "Read More"
   },
   "WEEK1_CAMPAIGN_EASY": {
     "TITLE": "White Belt (Easy)",

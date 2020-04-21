@@ -25,3 +25,10 @@ export interface AccountPageObject {
 export interface PagesObject {
   pages: AccountPageObject[];
 }
+
+export enum RssFeedsPages {
+  HOME = 'home',
+  WALLET = 'wallet',
+  CATALOGS = 'catalogs',
+  REWARDS = 'rewards'
+}
