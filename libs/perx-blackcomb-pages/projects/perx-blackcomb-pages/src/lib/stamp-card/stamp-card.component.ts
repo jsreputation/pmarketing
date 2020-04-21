@@ -95,7 +95,9 @@ export class StampCardComponent implements OnInit, OnDestroy {
             this.stamps = stampCard.stamps;
             this.title = stampCard.title || '';
             this.subTitle = stampCard.subTitle;
-            this.background = oc(stampCard).displayProperties.backgroundImg.value.imageUrl('');
+            this.background = oc(stampCard).displayProperties.backgroundImg.value.imageUrl(
+              oc(stampCard).displayProperties.cardImage.value.imageUrl('')
+            );
             this.cardBackground = stampCard.displayProperties.cardBgImage || '';
             const successOutcome = stampCard.results.outcome;
             const noOutcome = stampCard.results.noOutcome;
