@@ -29,7 +29,7 @@ export class LeaderboardComponent implements OnInit {
 
   public ngOnInit(): void {
     if (this.dataArray.length > this.dataNumberToDisplay) {
-      this.dataArray = this.dataArray.slice(0, this.dataNumberToDisplay);......
+      this.dataArray = this.dataArray.slice(0, this.dataNumberToDisplay);
     }
   }
 }
