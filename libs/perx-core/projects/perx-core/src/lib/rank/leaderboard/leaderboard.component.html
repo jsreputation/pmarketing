@@ -1,5 +1,5 @@
 <table mat-table [dataSource]="dataArray">
-  <ng-container matColumnDef="ranking">
+  <ng-container matColumnDef="rank">
     <th mat-header-cell *matHeaderCellDef> # </th>
     <td mat-cell *matCellDef="let user">
       <img *ngIf="user.rank <= 3"
@@ -7,11 +7,11 @@
       <span *ngIf="user.rank > 3">{{user.rank}}</span>
     </td>
   </ng-container>3
-  <ng-container matColumnDef="nickName">
+  <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef> NICKNAME </th>
     <td mat-cell *matCellDef="let user"> {{user.name}} </td>
   </ng-container>
-  <ng-container matColumnDef="points">
+  <ng-container matColumnDef="value">
     <th mat-header-cell *matHeaderCellDef> {{metric | uppercase}} </th>
     <td mat-cell *matCellDef="let user"> {{user.value}} </td>
   </ng-container>
