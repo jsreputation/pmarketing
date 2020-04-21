@@ -130,8 +130,12 @@ const routes: Routes = [
         loadChildren: () => import('../lucky-draw-detail/lucky-draw-detail.module')
           .then(m => m.LuckyDrawDetailModule),
         canActivate: [ProtectedGuard]
-      }
-    ]
+      },
+      { path: 'leaderboard',
+        loadChildren: () => import('../leaderboard/leaderboard.module')
+          .then(m => m.LeaderboardModule),
+        canActivate: [ProtectedGuard]
+      }]
   },
 
 ];

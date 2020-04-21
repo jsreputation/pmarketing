@@ -11,7 +11,13 @@ import {
   AuthenticationService,
   NotificationService,
   IPrePlayStateData,
-  IPrice
+  IPrice,
+  RssFeedsPages,
+  FeedReaderService,
+  SettingsService,
+  IRssFeeds,
+  IRssFeedsData,
+  FeedItem
 } from '@perxtech/core';
 import { map, switchMap, catchError, tap, takeUntil, mergeMap, } from 'rxjs/operators';
 
@@ -29,6 +35,7 @@ export class RewardComponent implements OnInit, OnDestroy {
   public button: string;
   public background: string;
   public cardBackground: string;
+  public newsFeedItems: Observable<FeedItem[] | undefined>;
   public rewards$: Observable<IReward[]>;
   public transaction$: Observable<IEngagementTransaction>;
   private transactionId: number | null = null;
@@ -36,6 +43,7 @@ export class RewardComponent implements OnInit, OnDestroy {
   private informationCollectionSetting: string;
   private popupData: IPopupConfig;
   public displayPriceFn: (price: IPrice) => string;
+  public rssFeedsPages: typeof RssFeedsPages = RssFeedsPages;
   public noRewardsPopUp: IPopupConfig = {
     title: 'INSTANT_OUTCOME_NO_REWARDS_TITLE',
     text: 'INSTANT_OUTCOME_NO_REWARDS_TEXT',
@@ -59,7 +67,9 @@ export class RewardComponent implements OnInit, OnDestroy {
     private notificationService: NotificationService,
     private auth: AuthenticationService,
     private translate: TranslateService,
-    private rewardService: RewardsService
+    private rewardService: RewardsService,
+    private feedService: FeedReaderService,
+    private settingsService: SettingsService
   ) {
     this.displayPriceFn = () => '';
   }
@@ -90,6 +100,7 @@ export class RewardComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.initTranslate();
+    this.initRssItems();
     this.isAnonymousUser = this.auth.getAnonymous();
     // tslint:disable-next-line: one-variable-per-declaration
     const getInstantOutcome = (campaignId: string) => this.outcomeService.getFromCampaign(parseInt(campaignId, 10)).pipe(
@@ -205,5 +216,17 @@ export class RewardComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  private initRssItems(): void {
+    this.newsFeedItems = this.settingsService.getRssFeeds().pipe(
+      map((res: IRssFeeds) => res.data ? res.data.find(feed => feed.page === RssFeedsPages.REWARDS) : undefined),
+      switchMap((feedData: IRssFeedsData | undefined) => {
+        if (!feedData || !feedData.url) {
+          return of([] as FeedItem[]);
+        }
+        return this.feedService.getFromUrl(feedData.url);
+      })
+    );
   }
 }

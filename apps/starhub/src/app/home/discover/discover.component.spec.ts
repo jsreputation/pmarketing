@@ -47,7 +47,7 @@ describe('DiscoverComponent', () => {
     getCatalogs: () => of(catalogs),
   };
   const settingsServiceStub: Partial<SettingsService> = {
-    readRssFeeds: () => of()
+    getRssFeeds: () => of()
   };
   const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of({

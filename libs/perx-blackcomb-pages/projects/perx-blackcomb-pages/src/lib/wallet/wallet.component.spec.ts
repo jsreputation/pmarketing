@@ -10,6 +10,8 @@ import {
   VoucherState,
   PuzzlesModule,
   ConfigService,
+  UtilsModule,
+  SettingsService
 } from '@perxtech/core';
 import { of } from 'rxjs';
 import { MatCardModule, MatRippleModule, MatIconModule } from '@angular/material';
@@ -20,6 +22,7 @@ import { Type } from '@angular/core';
 import { VoucherDetailComponent } from '../voucher-detail/voucher-detail.component';
 import { Router } from '@angular/router';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('WalletComponent', () => {
   let component: WalletComponent;
@@ -37,6 +40,10 @@ describe('WalletComponent', () => {
   const vouchersServiceStub: Partial<IVoucherService> = {
     getFromPage: () => of([]),
     getAll: () => of([])
+  };
+
+  const settingsServiceStub: Partial<SettingsService> = {
+    getRssFeeds: () => of()
   };
 
   const campaignServiceStub: Partial<ICampaignService> = {
@@ -65,7 +72,9 @@ describe('WalletComponent', () => {
         MatRippleModule,
         MatIconModule,
         PuzzlesModule,
-        InfiniteScrollModule
+        InfiniteScrollModule,
+        UtilsModule,
+        HttpClientModule
       ],
       providers: [
         DatePipe,
@@ -73,6 +82,7 @@ describe('WalletComponent', () => {
         { provide: IVoucherService, useValue: vouchersServiceStub },
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: NotificationService, useValue: notificationServiceStub },
+        { provide: SettingsService, useValue: settingsServiceStub },
         {
           provide: ConfigService, useValue: {
             readAppConfig: () => of({}),

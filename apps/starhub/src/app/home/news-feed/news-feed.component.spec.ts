@@ -16,7 +16,7 @@ describe('NewsFeedComponent', () => {
   };
 
   const settingsServiceStub: Partial<SettingsService> = {
-    readRssFeeds: () => of()
+    getRssFeeds: () => of()
   };
 
   const items = [

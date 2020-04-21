@@ -26,6 +26,8 @@ import { ConfigService } from '../config/config.service';
 import { TimerComponent, ForceLengthPipe } from './timer/timer.component';
 import { SafeHtmlPipe } from './safe-html.pipe';
 import { SafeUrlPipe } from './safe-url.pipe';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { TranslateModule } from '@ngx-translate/core';
 
 export function themesServiceFactory(http: HttpClient, config: Config, configService: ConfigService): ThemesService {
   if (config.isWhistler) {
@@ -84,7 +86,9 @@ export function notificationServiceFactory(): NotificationService {
     ReactiveFormsModule,
     MatCardModule,
     StorageModule,
-    MatIconModule
+    MatIconModule,
+    ScrollingModule,
+    TranslateModule.forChild()
   ],
   exports: [
     ...directives,

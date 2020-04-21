@@ -91,7 +91,8 @@
     "PASSWORD_REQUIRED_TXT": "請輸入密碼",
     "CONFIRM_PASSWORD_INVALID_TXT": "密碼不符",
     "CTA_SAVE_TXT": "儲存",
-    "CTA_SUCCESS_TXT": "成功更新密碼"
+    "CTA_SUCCESS_TXT": "成功更新密碼",
+    "PASSWORD_TOO_SHORT_TXT": "密碼太短"
   },
   "QUIZ_TITLE": "問答遊戲",
   "NAVIGATION": {
@@ -199,7 +200,8 @@
     "FEATURED_REWARDS": "特色獎勵",
     "SEE_MORE": "查看更多",
     "SEE_LESS": "關閉查看",
-    "REWARDS_LEFT": "剩餘{{rewardsCount}}獎勵"
+    "REWARDS_LEFT": "剩餘{{rewardsCount}}獎勵",
+    "READ_MORE": "查看更多"
   },
   "WEEK1_CAMPAIGN_EASY": {
     "TITLE": "",

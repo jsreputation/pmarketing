@@ -18,7 +18,8 @@ import {
   ConfigService,
   IReward,
   AuthenticationService,
-  TokenStorage, SettingsService
+  TokenStorage,
+  SettingsService
 } from '@perxtech/core';
 import { of } from 'rxjs';
 import { MatCardModule, MatDialogModule } from '@angular/material';
@@ -63,7 +64,7 @@ const configServiceStub: Partial<ConfigService> = {
 };
 
 const settingsServiceStub: Partial<SettingsService> = {
-  readRssFeeds: () => of()
+  getRssFeeds: () => of()
 };
 
 const reward: IReward = {
