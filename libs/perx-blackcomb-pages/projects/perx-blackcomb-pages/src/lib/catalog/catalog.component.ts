@@ -1,6 +1,17 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { ICatalog, IReward, RewardsService, SortingMode, RssFeedsPages, FeedItem, FeedReaderService, SettingsService, IRssFeeds, IRssFeedsData } from '@perxtech/core';
+import {
+  ICatalog,
+  IReward,
+  RewardsService,
+  SortingMode,
+  RssFeedsPages,
+  FeedItem,
+  FeedReaderService,
+  SettingsService,
+  IRssFeeds,
+  IRssFeedsData
+} from '@perxtech/core';
 import { map, scan, switchMap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 
