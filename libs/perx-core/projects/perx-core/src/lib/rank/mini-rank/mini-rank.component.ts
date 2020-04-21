@@ -9,9 +9,9 @@ export class MiniRankComponent {
 
   @Input()
   public userGameInfo: {
-    rank;
-    name;
-    value;
+    rank: number;
+    name: string;
+    value: number;
   } = {
     rank: 12,
     name: 'test',

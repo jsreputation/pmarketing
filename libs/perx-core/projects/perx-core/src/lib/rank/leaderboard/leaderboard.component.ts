@@ -11,7 +11,7 @@ export class LeaderboardComponent implements OnInit {
     'https://cdn.perxtech.io/content/hsbc-hk/images/secondplace.png',
     'https://cdn.perxtech.io/content/hsbc-hk/images/thirdplace.png'
   ];
-  @Input() public metric = 'score';
+  @Input() public metric: string = 'score';
   public columnsToDisplay: ['rank', 'name', 'value'] = ['rank', 'name', 'value'];
   @Input() public dataArray: any[] = [
     {rank: 1, name: 'john', value: 1},
@@ -25,11 +25,11 @@ export class LeaderboardComponent implements OnInit {
     {rank: 9, name: 'norton', value: 1},
     {rank: 10, name: 'ellen', value: 1},
   ];
-  @Input() dataNumberToDisplay: number = 10;
+  @Input() public dataNumberToDisplay: number = 10;
 
   public ngOnInit(): void {
     if (this.dataArray.length > this.dataNumberToDisplay) {
-      this.dataArray = this.dataArray.slice(0, this.dataNumberToDisplay)
+      this.dataArray = this.dataArray.slice(0, this.dataNumberToDisplay);......
     }
   }
 }
