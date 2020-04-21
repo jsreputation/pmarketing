@@ -9,17 +9,12 @@ export class MiniRankComponent {
 
   @Input()
   public userGameInfo: {
-    id: number;
-
-    nickName: string;
-
-    points: number;
-
-    ranking: number;
+    rank;
+    name;
+    value;
   } = {
-    id: 0,
-    nickName: 'test-user',
-    points: 2020,
-    ranking: 1
+    rank: 12,
+    name: 'test',
+    value: 1000
   };
 }
