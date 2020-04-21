@@ -28,7 +28,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   public slices: ISlice[] = [];
 
   @Input()
-  public spinDuration: number = 2;
+  public spinDuration: number = 5000;
 
   @Input()
   public wheelImg: string | undefined;
@@ -50,17 +50,17 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
 
   // tslint:disable-next-line:variable-name
   private ctx_: CanvasRenderingContext2D | undefined;
-  private arcDeg: number = 360;
-  private startAngle: number = 0;
   private patterns: Pattern[] = [];
-  private spinTime: number;
+  private arcDeg: number = 360; // degrees
+  private currentRotationAngleRad: number = 0; // radian
+  private spinTime: number = 0; // ms
+  private targetAngleDeg: number; // degrees
+  private lastTimeStamp: number = 0;
   private dragging: boolean = false;
-  private spinTimeTotal: number = 0;
-  private spinAngleStart: number = 0;
-  private spinTimeout: number;
+  private spinTimeoutId: number;
   private wheelImgElt: HTMLImageElement | null = null;
-  private angleToBeSpun: number;
   private slotToLand: number; // moved in, since it needs to be changed dynamically instd of pipe
+  private REFRESH_PERIOD: number = 20; // target 50FPS
 
   @ViewChild('canvas', { static: true })
   private canvasEl: ElementRef<HTMLCanvasElement>;
@@ -69,7 +69,8 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
 
   private get canvas(): HTMLCanvasElement { return this.canvasEl.nativeElement; }
   private get wheel(): HTMLDivElement { return this.wheelEl.nativeElement; }
-  private get arc(): number { return this.arcDeg * Math.PI / 180; }
+  private get arcRad(): number { return this.arcDeg * Math.PI / 180; }
+  private get currentRotationAngleDeg(): number { return this.currentRotationAngleRad * 180 / Math.PI; }
   private get size(): number {
     return this.wheel.offsetWidth;
   }
@@ -116,23 +117,33 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   }
 
   private determineSlot(): number {
-    if (this.willWin) {
-      const landedSlot = Math.floor(Math.random() * this.rewardSlots.length);
-      return this.rewardSlots[landedSlot]; // w // get a random number out of the reward slots
+    let slots: number[];
+    // if there are winning slots and we will win or all slots are winning
+    if (this.rewardSlots.length > 0 && (this.willWin || this.rewardSlots.length === this.slices.length)) {
+      slots = this.rewardSlots;
+    } else {
+      slots = [];
+      for (let i = 0; i < this.slices.length; i++) {
+        if (!this.rewardSlots.includes(i)) {
+          slots.push(i);
+        }
+      }
     }
-    // RESERVE 0 as non-winning slot ***
-    return 0;
+    const landedSlot = Math.floor(Math.random() * slots.length);
+    return slots[landedSlot]; // get a random number out of the reward slots
   }
 
   private init(): void {
     this.arcDeg = 360 / this.slices.length;
-    this.startAngle = this.arc / 2;
+    // randomize initial wheel position
+    this.currentRotationAngleRad = Math.random() * 2 * Math.PI;
     this.slotToLand = this.determineSlot();
-    const angleNeeded = this.getAngleNeeded(this.slotToLand);
+    const angleNeeded = this.getTargetAngle(this.slotToLand);
 
-    this.spinTimeout = 0;
+    this.spinTimeoutId = 0;
+    const nbRounds = Math.floor(Math.random() * 5) + 5;
     // the latter part after angleToBeSpun makes it spin for x amt more rounds;
-    this.angleToBeSpun = angleNeeded + (Math.floor(Math.random() * 5) + 1) * 360;
+    this.targetAngleDeg = angleNeeded + nbRounds * 360;
     this.loadImg();
   }
 
@@ -172,9 +183,12 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   }
 
   private drawWheel(): void {
+    if (this.size === 0) {
+      return;
+    }
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.translate(this.size / 2, this.size / 2);
-    this.ctx.rotate(this.startAngle);
+    this.ctx.rotate(this.currentRotationAngleRad);
 
     // draw the wheel
     if (this.wheelImgElt) {
@@ -196,12 +210,12 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
 
     // render slices
     this.slices.forEach((slice: ISlice, i: number) => {
-      const angle = i * this.arc;
+      const angle = i * this.arcRad;
       // render background color
       this.ctx.fillStyle = slice.backgroundColor || 'white';
       this.ctx.beginPath();
-      this.ctx.arc(0, 0, sliceRadius, angle, angle + this.arc, false);
-      this.ctx.arc(0, 0, 0, angle + this.arc, angle, true);
+      this.ctx.arc(0, 0, sliceRadius, angle, angle + this.arcRad, false);
+      this.ctx.arc(0, 0, 0, angle + this.arcRad, angle, true);
 
       this.ctx.stroke();
       this.ctx.fill();
@@ -210,14 +224,14 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
         const currentPattern: Pattern | undefined = this.patterns.find(item => item.id === slice.id);
         if (currentPattern) {
           this.ctx.save();
-          this.ctx.rotate(angle + this.arc / 2);
+          this.ctx.rotate(angle + this.arcRad / 2);
 
           // this is the maximal size to fit the stamp into the slice
-          const stampSize: number = sliceRadius / Math.sqrt((1 / (2 * Math.tan(this.arc / 2)) + 1) ** 2 + 1 / 4);
+          const stampSize: number = sliceRadius / Math.sqrt((1 / (2 * Math.tan(this.arcRad / 2)) + 1) ** 2 + 1 / 4);
           const ratio = stampSize / Math.max(currentPattern.width, currentPattern.height);
+          const stampInnerRadius = stampSize * .5 / Math.tan(this.arcRad / 2);
 
-          const patternInnerRadius = stampSize * .5 / Math.tan(this.arc / 2);
-          this.ctx.translate(patternInnerRadius, -stampSize / 2);
+          this.ctx.translate(stampInnerRadius, -stampSize / 2);
 
           this.ctx.fillStyle = currentPattern.pattern;
           this.ctx.beginPath();
@@ -236,7 +250,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
         this.ctx.shadowBlur = 0;
         this.ctx.fillStyle = slice.labelColor || 'black';
 
-        this.ctx.rotate(angle + this.arc / 2);
+        this.ctx.rotate(angle + this.arcRad / 2);
         this.ctx.translate(this.size / 4, 0);
         this.ctx.font = 'bold 15px Helvetica, Arial';
 
@@ -270,60 +284,38 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
     };
   }
 
-  private getAngleNeeded(neededIndex: number): number {
-    const degrees = this.startAngle * 180 / Math.PI + 90;
-    let arcd = this.arcDeg;
-    const currentIndex = Math.floor((360 - degrees % 360) / arcd);
-    if (this.slices.length === 6) {
-      arcd -= 10;
-    }
-
-    if (this.slices.length === 9) {
-      arcd -= 4;
-    }
-
-    if (this.slices.length === 10) {
-      arcd -= 4;
-    }
-    if (currentIndex === neededIndex) {
-      return 0;
-    }
-    if (currentIndex > neededIndex) {
-      return arcd * (currentIndex - neededIndex);
-    }
-    return arcd * (currentIndex + this.slices.length - neededIndex);
+  private getTargetAngle(neededIndex: number): number {
+    // randomize the resul within the target slice
+    const v = (neededIndex + Math.random()) * this.arcDeg;
+    // pointer is at the top, not at 0, therefore we add 270
+    return - v + 270;
   }
 
   private spin(): void {
-    // TODO stop magic number
-    this.spinAngleStart = this.angleToBeSpun / 32.807503994186335;
     this.spinTime = 0;
-    // TODO stop magic number
-    this.spinTimeTotal = this.spinDuration * 3 + 4000;
+    this.lastTimeStamp = (new Date()).getTime();
     this.rotateWheel();
   }
 
   private rotateWheel(): void {
-    // TODO stop magic number
-    this.spinTime += 30;
-    if (this.spinTime >= this.spinTimeTotal) {
+    const time = (new Date()).getTime();
+    const deltaT = time - this.lastTimeStamp;
+    this.spinTime += deltaT;
+    this.lastTimeStamp = time;
+    if (this.spinTime >= this.spinDuration) {
       this.stopRotateWheel();
       this.completed.emit();
       return;
     }
     const spinAngle: number =
-      this.spinAngleStart -
-      SpinTheWheelComponent.easeOut(this.spinTime, 0, this.spinAngleStart, this.spinTimeTotal);
-    this.startAngle += spinAngle * Math.PI / 180;
+      SpinTheWheelComponent.easeOut(this.spinTime, this.currentRotationAngleDeg, this.targetAngleDeg, this.spinDuration);
+    this.currentRotationAngleRad = spinAngle * Math.PI / 180;
     this.drawWheel();
-    const that = this;
-    this.spinTimeout = window.setTimeout(() => {
-      that.rotateWheel();
-    }, 15); // TODO stop magic number
+    this.spinTimeoutId = window.setTimeout(() => this.rotateWheel(), this.REFRESH_PERIOD);
   }
 
   private stopRotateWheel(): void {
-    clearTimeout(this.spinTimeout);
+    clearTimeout(this.spinTimeoutId);
     this.ctx.save();
     this.ctx.font = 'bold 20px Helvetica, Arial';
     this.ctx.fillStyle = 'black';
@@ -404,11 +396,15 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
     return rec.left + window.scrollX;
   }
 
-  // TODO what are those parameters
+  /**
+   * @param t current time
+   * @param b start value
+   * @param c target value
+   * @param d total time
+   */
   private static easeOut(t: number, b: number, c: number, d: number): number {
-    const ts = (t /= d) * t;
-    const tc = ts * t;
-    // TODO stop magic number
-    return b + c * (tc + -3 * ts + 3 * t);
+    // todo improve this updateFactor and avoid magic number
+    const updateFactor = (t / d) * .2;
+    return b + (c - b) * updateFactor;
   }
 }
