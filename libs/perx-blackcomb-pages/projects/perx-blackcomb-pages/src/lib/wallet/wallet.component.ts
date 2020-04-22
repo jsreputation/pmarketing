@@ -13,9 +13,16 @@ import {
   IVoucherService,
   VoucherState,
   Voucher,
+  RssFeedsPages,
+  FeedItem,
+  FeedReaderService,
+  SettingsService,
+  IRssFeeds,
+  IRssFeedsData,
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
+import { map, switchMap } from 'rxjs/operators';
 
 const REQ_PAGE_SIZE: number = 10;
 @Component({
@@ -30,6 +37,7 @@ export class WalletComponent implements OnInit, OnDestroy {
   public filter: string[];
   public rewardsHeadline: string;
   public expiryLabelFn: ((v: Voucher) => string) | undefined;
+  public newsFeedItems: Observable<FeedItem[] | undefined>;
 
   public currentPage: number = 0;
   public completed: boolean = false;
@@ -39,6 +47,8 @@ export class WalletComponent implements OnInit, OnDestroy {
     private vouchersService: IVoucherService,
     private datePipe: DatePipe,
     private translate: TranslateService,
+    private feedService: FeedReaderService,
+    private settingsService: SettingsService
   ) { }
 
 
@@ -47,6 +57,7 @@ export class WalletComponent implements OnInit, OnDestroy {
     this.vouchers$ = of([]);
     this.onScroll();
     this.filter = [VoucherState.issued, VoucherState.released];
+    this.initRssItems();
     this.translate.get('WALLET.REWARD_STATUS_EXPIRY')
       .subscribe((text: string) => {
         this.expiryLabelFn = (v: Voucher) => {
@@ -79,5 +90,17 @@ export class WalletComponent implements OnInit, OnDestroy {
       }
       this.vouchers$ = of([...val[0], ...val[1]]);
     });
+  }
+
+  private initRssItems(): void {
+    this.newsFeedItems = this.settingsService.getRssFeeds().pipe(
+      map((res: IRssFeeds) => res.data ? res.data.find(feed => feed.page === RssFeedsPages.WALLET) : undefined),
+      switchMap((feedData: IRssFeedsData | undefined) => {
+        if (!feedData || !feedData.url) {
+          return of([] as FeedItem[]);
+        }
+        return this.feedService.getFromUrl(feedData.url);
+      })
+    );
   }
 }

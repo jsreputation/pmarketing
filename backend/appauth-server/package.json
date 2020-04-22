@@ -8,7 +8,8 @@
     "watch": "webpack --config webpack.config.js --watch",
     "lint": "eslint \"./**/*.ts\"",
     "lint:fix": "eslint \"./*/*.ts\" --fix",
-    "test": "echo \"no test!\""
+    "test": "echo \"no test!\"",
+    "ts-node": "ts-node"
   },
   "dependencies": {
     "@perxtech/whistler": "^0.0.0",

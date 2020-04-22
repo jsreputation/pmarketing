@@ -7,16 +7,20 @@ import { MatDialog } from '@angular/material';
 
 import {
   SettingsService,
-  FeedItem, FeedItemPopupComponent,
+  FeedItem,
+  FeedItemPopupComponent,
   FeedReaderService,
   IRssFeeds,
   IRssFeedsData,
+  RssFeedsPages,
 } from '@perxtech/core';
 
 import {
   AnalyticsService,
   PageType,
 } from '../../analytics.service';
+import { map, switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-news-feed',
@@ -30,23 +34,19 @@ export class NewsFeedComponent implements OnInit {
   public newsAfterScroll: number[];
   public showButton: boolean = true;
 
-  private async initNewsFeedItems(): Promise<void> {
-    const rssFeeds: IRssFeeds = await this.settingsService.readRssFeeds().toPromise();
-    if (!(rssFeeds && rssFeeds.data.length > 0)) {
-      return;
-    }
-
-    const rssFeedsHome: IRssFeedsData | undefined = rssFeeds.data.find(feed => feed.page === 'home');
-    if (!rssFeedsHome) {
-      return;
-    }
-
-    const rssFeedsUrl: string = rssFeedsHome.url;
-    this.reader.getFromUrl(rssFeedsUrl, true)
-      .subscribe(items => {
-        this.items = items;
-        this.newsAfterScroll = Array.from(Array(items.length > 0 ? items.length - 1 : 1).keys());
-      });
+  private initNewsFeedItems(): void {
+    this.settingsService.getRssFeeds().pipe(
+      map((res: IRssFeeds) => res.data ? res.data.find(feed => feed.page === RssFeedsPages.HOME) : undefined),
+      switchMap((feedData: IRssFeedsData | undefined) => {
+        if (!feedData || !feedData.url) {
+          return of([] as FeedItem[]);
+        }
+        return this.reader.getFromUrl(feedData && feedData.url);
+      })
+    ).subscribe(items => {
+      this.items = items;
+      this.newsAfterScroll = Array.from(Array(items.length > 0 ? items.length - 1 : 1).keys());
+    });
   }
 
   constructor(

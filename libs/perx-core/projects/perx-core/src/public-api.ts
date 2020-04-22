@@ -260,6 +260,7 @@ export {
   IMicrositeSettings,
   PagesObject,
   AccountPageObject,
+  RssFeedsPages
 } from './lib/settings/models/settings.model';
 
 /**
