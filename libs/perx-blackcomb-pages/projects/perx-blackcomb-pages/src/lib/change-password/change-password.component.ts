@@ -9,7 +9,6 @@ import {
   IProfile,
   ProfileService
 } from '@perxtech/core';
-import { ShowTitleInHeader } from '../layout/layout.component';
 import {TranslateService} from '@ngx-translate/core';
 import {switchMap} from 'rxjs/operators';
 
