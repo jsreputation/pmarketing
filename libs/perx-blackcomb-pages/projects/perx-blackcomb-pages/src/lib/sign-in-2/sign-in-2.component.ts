@@ -131,7 +131,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
                 text: 'Please try again soon'
               });
             } else if (err.status === 401) {
-              this.translate.get('INVALID_CREDENTIALS')
+              this.translate.get('LOGIN_PAGE.INVALID_CREDENTIALS')
                 .subscribe(t => this.errorMessage = t);
             } else {
               this.errorMessage = err.error || 'Invalid Credentials';

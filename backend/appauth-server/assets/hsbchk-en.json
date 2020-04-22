@@ -96,7 +96,6 @@
     "CONFIRM_PASSWORD_INVALID_TXT": "Passwords do not match",
     "PASSWORD_TOO_SHORT_TXT": "Password is too short"
   },
-  "QUIZ_TITLE": "Quiz",
   "NAVIGATION": {
     "HOME": "Home",
     "WALLET": "Wallet",
