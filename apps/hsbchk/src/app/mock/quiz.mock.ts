@@ -1,6 +1,17 @@
-import { CampaignState, CampaignType, ICampaign, ICampaignService, IQuiz, QuizQuestionType, QuizMode } from '@perxtech/core';
+import {
+  CampaignState,
+  CampaignType,
+  ICampaign,
+  ICampaignService,
+  IQuiz,
+  QuizMode,
+  QuizQuestionType
+} from '@perxtech/core';
 import { of } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import {
+  filter,
+  map
+} from 'rxjs/operators';
 
 const getReward = () => ({
   id: 42,
@@ -16,11 +27,13 @@ const getReward = () => ({
   }
 });
 export const quiz: IQuiz = {
+  campaignId: 101,
   title: 'Question pour un champion',
   subTitle: 'Select one option from the choices below ',
   backgroundImgUrl: 'assets/quiz/background.png',
   cardBackgroundImgUrl: 'assets/quiz/card.png',
   mode: QuizMode.swipe,
+  remainingNumberOfTries: 1,
   questions: [
     {
       id: 'first',

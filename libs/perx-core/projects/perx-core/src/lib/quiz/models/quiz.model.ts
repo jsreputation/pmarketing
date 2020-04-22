@@ -58,6 +58,7 @@ export enum QuizMode {
 
 export interface IQuiz {
   id?: number;
+  campaignId?: number;
   title: string;
   subTitle?: string;
   progressBarColor?: MaterialColor;
@@ -69,6 +70,7 @@ export interface IQuiz {
     outcome?: IQuizOutcome;
     noOutcome?: IQuizOutcome;
   };
+  remainingNumberOfTries?: number;
   displayProperties?: IWCampaignDisplayProperties;
 }
 
