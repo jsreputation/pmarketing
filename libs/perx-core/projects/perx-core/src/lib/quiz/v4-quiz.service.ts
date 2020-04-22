@@ -1,11 +1,28 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject, ReplaySubject } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import {
+  Observable,
+  ReplaySubject,
+  Subject
+} from 'rxjs';
+import {
+  map,
+  switchMap
+} from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 import { Asset } from '../game/v4-game.service';
-import { IQAnswer, IQQuestion, IQuiz, QuizMode, QuizQuestionType, IQuizOutcome } from './models/quiz.model';
-import { IAnswerResult, QuizService } from './quiz.service';
+import {
+  IQAnswer,
+  IQQuestion,
+  IQuiz,
+  IQuizOutcome,
+  QuizMode,
+  QuizQuestionType
+} from './models/quiz.model';
+import {
+  IAnswerResult,
+  QuizService
+} from './quiz.service';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
 import { patchUrl } from '../utils/patch-url.function';
@@ -181,6 +198,7 @@ export class V4QuizService implements QuizService {
         }
         return {
           id: game.id,
+          campaignId: game.campaign_id,
           title: oc(game).display_properties.header.value.title(''),
           subTitle: oc(game).display_properties.header.value.description(),
           results: {
@@ -189,7 +207,8 @@ export class V4QuizService implements QuizService {
           questions,
           mode,
           backgroundImgUrl: patchUrl(oc(game).display_properties.background_image.value.image_url('')),
-          cardBackgroundImgUrl: patchUrl(oc(game).display_properties.card_image.value.image_url(''))
+          cardBackgroundImgUrl: patchUrl(oc(game).display_properties.card_image.value.image_url('')),
+          remainingNumberOfTries: game.number_of_tries
         };
       })
     );
