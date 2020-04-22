@@ -1,19 +1,40 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, combineLatest, forkJoin, Observable, of, Subject } from 'rxjs';
-import { catchError, filter, map, mergeMap, switchMap, take, takeLast, takeUntil, tap } from 'rxjs/operators';
+import {
+  BehaviorSubject,
+  combineLatest,
+  forkJoin,
+  Observable,
+  of,
+  Subject
+} from 'rxjs';
+import {
+  catchError,
+  filter,
+  map,
+  mergeMap,
+  switchMap,
+  take,
+  takeLast,
+  takeUntil,
+  tap
+} from 'rxjs/operators';
 
 import {
   AuthenticationService,
   CampaignType,
   ConfigService,
   ICampaign,
-  ICatalog,
   ICampaignService,
-  InstantOutcomeService,
+  ICatalog,
   IConfig,
   IGame,
   IGameService,
+  InstantOutcomeService,
   IProfile,
   IReward,
   ITabConfigExtended,
@@ -31,7 +52,10 @@ import {
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
-import { MatDialog, MatTabChangeEvent } from '@angular/material';
+import {
+  MatDialog,
+  MatTabChangeEvent
+} from '@angular/material';
 
 @Component({
   selector: 'perx-blackcomb-home',
@@ -55,6 +79,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public showCampaigns: boolean = false;
   private firstComefirstServeCampaign: ICampaign;
   public quizCampaigns$: Observable<ICampaign[]>;
+  public gameType: typeof GameType = GameType;
 
   public constructor(
     private rewardsService: RewardsService,
