@@ -282,7 +282,12 @@ describe('LoyaltyService', () => {
   it('getLoyalty', fakeAsync(inject([V4LoyaltyService, HttpClient],
     (loyaltyService: V4LoyaltyService, http: HttpClient) => {
       const spy = jest.spyOn(V4LoyaltyService, 'v4LoyaltyToLoyalty');
-      jest.spyOn(http, 'get').mockReturnValue(of({ data: loyaltyRaw }));
+      jest.spyOn(http, 'get').mockReturnValue(of({
+        data: [{
+          id: 1
+        }]
+      } as IV4GetLoyaltiesResponse));
+      // called without args
       loyaltyService.getLoyalty().subscribe(() => { });
       tick();
       expect(spy).toHaveBeenCalled();

@@ -280,7 +280,7 @@ export class V4LoyaltyService extends LoyaltyService {
     );
   }
 
-  public getLoyalty(id: number, locale: string = 'en'): Observable<ILoyalty> {
+  public getLoyalty(id?: number, locale: string = 'en'): Observable<ILoyalty> {
     const headers = new HttpHeaders().set('Accept-Language', locale);
     if (id !== undefined) {
       return this.http.get<IV4GetLoyaltyResponse>(
