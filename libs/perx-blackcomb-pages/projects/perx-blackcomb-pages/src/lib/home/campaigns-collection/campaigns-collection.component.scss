@@ -7,6 +7,10 @@ mat-card {
 .campaigns-card {
   margin: 0.8rem 1.6rem;
 
+  &.disabled {
+    filter: grayscale(50%) opacity(40%);
+  }
+
   .remaining-rewards {
     font-size: 1.2rem;
     color: #ffffff;
