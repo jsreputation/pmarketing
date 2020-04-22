@@ -17,11 +17,14 @@ import {
   AuthenticationService,
   NotificationService,
   ThemesService,
-  IOutcome
+  IOutcome,
+  UtilsModule,
+  SettingsService
 } from '@perxtech/core';
 import { WInformationCollectionSettingType } from '@perxtech/whistler';
 import { RewardComponent } from './reward.component';
 import { Type } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 const mockOutcome: IOutcome = {
   title: 'title',
@@ -72,6 +75,10 @@ describe('RewardComponent', () => {
     addPopup: () => { }
   };
 
+  const settingsServiceStub: Partial<SettingsService> = {
+    getRssFeeds: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RewardComponent],
@@ -81,7 +88,9 @@ describe('RewardComponent', () => {
           { path: 'pi', redirectTo: '/' },
         ]),
         GameModule,
+        UtilsModule,
         RewardsModule,
+        HttpClientModule,
         NoopAnimationsModule,
         TranslateModule.forRoot(),
       ],
@@ -106,6 +115,7 @@ describe('RewardComponent', () => {
           provide: ThemesService,
           useValue: themesServiceStub,
         },
+        { provide: SettingsService, useValue: settingsServiceStub }
       ]
     })
       .compileComponents();

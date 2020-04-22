@@ -9,22 +9,22 @@ import { IConfig } from '../config/models/config.model';
 import { ITheme } from '../utils/themes/themes.model';
 import { ConfigService } from '../config/config.service';
 
-const authenticationServiceStub: Partial<AuthenticationService> = {
-  getAppToken: () => of()
-};
-
-const configServiceStub: Partial<ConfigService> = {
-  readAppConfig: () => of({
-    redirectAfterLogin: '/home',
-    apiHost: 'string',
-    production: true,
-    baseHref: '/',
-    isWhistler: true,
-    preAuth: false,
-  })
-};
-
 describe('V4SettingsService', () => {
+  const authenticationServiceStub: Partial<AuthenticationService> = {
+    getAppToken: () => of()
+  };
+
+  const configServiceStub: Partial<ConfigService> = {
+    readAppConfig: () => of({
+      redirectAfterLogin: '/home',
+      apiHost: 'string',
+      production: true,
+      baseHref: '/',
+      isWhistler: true,
+      preAuth: false,
+    })
+  };
+
   // let httpTestingController: HttpTestingController;
   let service: V4SettingsService;
 
@@ -86,13 +86,9 @@ describe('V4SettingsService', () => {
       expect(spy).toHaveBeenCalled();
     })));
 
-  it('getAccountSettings', fakeAsync(inject([V4SettingsService, HttpClient],
-    (settings: V4SettingsService, http: HttpClient) => {
-      const spy = jest.spyOn(http, 'get').mockReturnValue(of({
-        displayProperties: {
-          account: null
-        }
-      }));
+  it('getAccountSettings', fakeAsync(inject([V4SettingsService, ConfigService],
+    (settings: V4SettingsService, configService: ConfigService) => {
+      const spy = jest.spyOn(configService, 'readAppConfig');
       settings.getAccountSettings().subscribe(() => { });
       tick();
       expect(spy).toHaveBeenCalled();

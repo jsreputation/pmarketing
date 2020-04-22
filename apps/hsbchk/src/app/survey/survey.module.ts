@@ -17,7 +17,6 @@ import {
   MatRadioModule,
   MatCheckboxModule
 } from '@angular/material';
-import { environment } from 'src/environments/environment';
 import { PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
 // import { of } from 'rxjs';
 // import { survey } from '../mock/survey.mock';
@@ -28,7 +27,7 @@ import { PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
 
 @NgModule({
   imports: [
-    ConfigModule.forRoot({ ...environment }),
+    ConfigModule.forChild(),
     PerxBlackcombPagesModule,
     CommonModule,
     MatCardModule,

@@ -84,7 +84,7 @@ export function defaultSnake(): ISnake {
 export function defaultSpin(): ISpin {
   return {
     numberOfWedges: 5,
-    rewardSlots: [1], // until db can set rewards, temp hardcore so reward icon appears at least for a slot
+    rewardSlots: [],
     colorCtrls: {
       0: 'red',
       1: 'yellow',

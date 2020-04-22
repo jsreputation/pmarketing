@@ -1,27 +1,27 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 import {
   of,
   Observable,
 } from 'rxjs';
 import {
-  share,
   tap,
+  shareReplay,
 } from 'rxjs/operators';
 
 import {
   IConfig,
 } from './models/config.model';
-import {ConfigService} from './config.service';
+import { ConfigService } from './config.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class V4ConfigService extends ConfigService {
-  private appConfig: IConfig<any>;
+  private appConfig: IConfig<any> | undefined;
 
-  private appConfig$: Observable<IConfig<any>>;
+  private appConfig$: Observable<IConfig<any>> | undefined;
 
   constructor(
     private http: HttpClient
@@ -36,7 +36,7 @@ export class V4ConfigService extends ConfigService {
     if (!this.appConfig$) {
       this.appConfig$ = this.http.get<IConfig<T>>('assets/config/app-config.json').pipe(
         tap((appConfig: IConfig<T>) => this.appConfig = appConfig),
-        share()
+        shareReplay(1)
       );
     }
     return this.appConfig$;

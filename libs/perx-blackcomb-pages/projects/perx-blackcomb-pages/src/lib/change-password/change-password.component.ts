@@ -18,8 +18,7 @@ import {switchMap} from 'rxjs/operators';
   templateUrl: './change-password.component.html',
   styleUrls: ['./change-password.component.scss']
 })
-export class ChangePasswordComponent implements ShowTitleInHeader {
-
+export class ChangePasswordComponent {
   public changePasswordForm: FormGroup;
   public profile: IProfile;
   public invalidPWText: string;
@@ -87,9 +86,5 @@ export class ChangePasswordComponent implements ShowTitleInHeader {
           this.invalidOldPW = true;
         }
       );
-  }
-
-  public getTitle(): string {
-    return 'Change password';
   }
 }

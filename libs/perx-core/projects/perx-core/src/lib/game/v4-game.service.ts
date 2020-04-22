@@ -217,6 +217,8 @@ export class V4GameService implements IGameService {
         pointerImg: oc(dpps).pointer_image.value.image_url(''),
         background: oc(dpps).background_image.value.image_url('')
       };
+      // Display the reward Slot on the last wedge
+      config.rewardSlots = [dpps.number_of_wedges - 1];
     } else {
       throw new Error(`${game.game_type} is not mapped yet`);
     }

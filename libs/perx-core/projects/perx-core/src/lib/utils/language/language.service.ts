@@ -36,7 +36,13 @@ export class LanguageService implements TranslateLoader {
     let host: string = '/';
     return this.hostUrl.pipe(
       tap((url) => host = url),
-      map((hostUrl: string) => `${hostUrl}lang?default=${lang}&app=${this.app}`),
+      map((hostUrl: string) => {
+        let url = `${hostUrl}lang?default=${lang}`;
+        if (this.app) {
+          url += `&app=${this.app}`;
+        }
+        return url;
+      }),
       switchMap((apiAddress: string) => this.httpClient.get<IDictionary>(apiAddress, { headers: this.contentHeader, observe: 'response' })),
       tap((res: HttpResponse<IDictionary>) => {
         const l: string | null = res.headers.get('content-language') || lang;
@@ -44,7 +50,7 @@ export class LanguageService implements TranslateLoader {
         document.documentElement.lang = l;
       }),
       map((res: HttpResponse<IDictionary>) => res.body),
-      catchError(() => this.httpClient.get<IDictionary>(`${host}assets/en-json.json`)),
+      catchError(() => this.httpClient.get<IDictionary>(`${host}assets/en.json`)),
       map((res: IDictionary | null) => res !== null ? res : {})
     );
   }

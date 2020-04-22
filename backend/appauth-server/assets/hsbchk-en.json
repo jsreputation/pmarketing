@@ -96,7 +96,6 @@
     "CONFIRM_PASSWORD_INVALID_TXT": "Passwords do not match",
     "PASSWORD_TOO_SHORT_TXT": "Password is too short"
   },
-  "QUIZ_TITLE": "Quiz",
   "NAVIGATION": {
     "HOME": "Home",
     "WALLET": "Wallet",
@@ -202,7 +201,8 @@
     "FEATURED_REWARDS": "Featured Rewards",
     "SEE_MORE": "See more",
     "SEE_LESS": "See less",
-    "REWARDS_LEFT": "{{rewardsCount}} Rewards Left"
+    "REWARDS_LEFT": "{{rewardsCount}} Rewards Left",
+    "READ_MORE": "Read More"
   },
   "WEEK1_CAMPAIGN_EASY": {
     "TITLE": "White Belt (Easy)",

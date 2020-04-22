@@ -25,7 +25,6 @@ import {
   UtilsModule,
 } from '@perxtech/core';
 
-import { environment } from 'src/environments/environment';
 import { HomeRoutingModule } from './home-routing.module';
 import { DiscoverComponent } from './discover/discover.component';
 import { VouchersComponent } from './vouchers/vouchers.component';
@@ -50,7 +49,7 @@ import { NoRenewaleInNamePipe } from './no-renewale-in-name.pipe';
     NoRenewaleInNamePipe
   ],
   imports: [
-    ConfigModule.forRoot({...environment}),
+    ConfigModule.forChild(),
     CommonModule,
     MatToolbarModule,
     MatTabsModule,
