@@ -280,16 +280,22 @@ export class V4LoyaltyService extends LoyaltyService {
     );
   }
 
-  public getLoyalty(id: number = 1, locale: string = 'en'): Observable<ILoyalty> {
+  public getLoyalty(id: number, locale: string = 'en'): Observable<ILoyalty> {
     const headers = new HttpHeaders().set('Accept-Language', locale);
-    return this.http.get<IV4GetLoyaltyResponse>(
-      `${this.apiHost}/v4/loyalty/${id}`,
-      {
-        headers
-      }
-    ).pipe(
-      map((res: IV4GetLoyaltyResponse) => V4LoyaltyService.v4LoyaltyToLoyalty(res.data))
-    );
+    if (id !== undefined) {
+      return this.http.get<IV4GetLoyaltyResponse>(
+        `${this.apiHost}/v4/loyalty/${id}`,
+        {
+          headers
+        }
+      ).pipe(
+        map((res: IV4GetLoyaltyResponse) => V4LoyaltyService.v4LoyaltyToLoyalty(res.data))
+      );
+    }
+    return this.getLoyalties()
+      .pipe(
+        map((loyalties: ILoyalty[]) => loyalties[0])
+      );
   }
 
   public getAllTransactions(loyaltyId: number = 1, locale: string = 'en'): Observable<ITransaction[]> {
