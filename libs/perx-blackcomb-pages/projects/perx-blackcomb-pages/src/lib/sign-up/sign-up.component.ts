@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {
   AuthenticationService,
   IGameService,
@@ -59,12 +59,14 @@ export class SignUpComponent implements OnInit, OnDestroy {
     password: ['', [Validators.required, Validators.minLength(6)]],
   }) as FormGroup;
   public countriesList$: Observable<ICountryCode[]>;
+  private countriesList: string[];
 
   constructor(
     protected fb: FormBuilder,
     private authService: AuthenticationService,
     private notificationService: NotificationService,
     private router: Router,
+    private route: ActivatedRoute,
     private translate: TranslateService,
     private gameService: IGameService,
     private surveyService: SurveyService,
@@ -73,13 +75,12 @@ export class SignUpComponent implements OnInit, OnDestroy {
     private themesService: ThemesService,
     private configService: ConfigService,
     private generalStaticDataService: GeneralStaticDataService
-  ) { }
+  ) {
+    this.route.data.subscribe((dataObj) => this.countriesList = dataObj.countryList);
+  }
 
   public ngOnInit(): void {
-    this.countriesList$ = this.generalStaticDataService.getCountriesList([
-      'Hong Kong',
-      'Singapore'
-    ]);
+    this.countriesList$ = this.generalStaticDataService.getCountriesList(this.countriesList);
     this.configService.readAppConfig<void>().subscribe((conf: IConfig<void>) => this.appConfig = conf);
     this.theme = this.themesService.getThemeSetting();
     this.oldPI = this.authService.getPI();

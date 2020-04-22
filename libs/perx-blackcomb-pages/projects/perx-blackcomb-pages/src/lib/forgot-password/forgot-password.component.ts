@@ -25,6 +25,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   public countriesList$: Observable<ICountryCode[]>;
   public countryCodePrefix: string | undefined;
   public loading: boolean = false;
+  private countriesList: string[];
 
   public phoneStepForm: FormGroup = new FormGroup({
     phoneNumber: new FormControl(null, [
@@ -51,7 +52,9 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     private notificationService: NotificationService,
     private generalStaticDataService: GeneralStaticDataService,
     private configService: ConfigService
-  ) { }
+  ) {
+    this.route.data.subscribe((dataObj) => this.countriesList = dataObj.countryList);
+  }
 
   public get phoneNumber(): AbstractControl | null { return this.phoneStepForm.get('phoneNumber'); }
   public get countryCode(): AbstractControl | null { return this.phoneStepForm.get('countryCode'); }
@@ -59,11 +62,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   public get passwordConfirmation(): AbstractControl | null { return this.newPasswordForm.get('passwordConfirmation'); }
 
   public ngOnInit(): void {
-    this.countriesList$ = this.generalStaticDataService.getCountriesList([
-      'Hong Kong',
-      'Philippines',
-      'Singapore'
-    ]);
+    this.countriesList$ = this.generalStaticDataService.getCountriesList(this.countriesList);
 
     const matchRouteCountry$ = (countryList: ICountryCode[]) => (() => this.route.queryParams.pipe(
       filter((params) => !!params.identifier),

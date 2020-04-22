@@ -6,7 +6,8 @@ import { ForgotPasswordComponent, PerxBlackcombPagesModule } from '@perxtech/bla
 
 const routes: Routes = [{
   path: '',
-  component: ForgotPasswordComponent
+  component: ForgotPasswordComponent,
+  data: { countryList: ['Hong Kong', 'Singapore']}
 }];
 
 @NgModule({

@@ -21,6 +21,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { IWAppAccessTokenResponse } from '@perxtech/whistler';
 import { Type } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 const configStub: Partial<Config> = {
   preAuth: false
@@ -73,6 +74,10 @@ const themeServiceStub: Partial<ThemesService> = {
   getThemeSetting: () => of()
 };
 
+const activatedRouteStub: Partial<ActivatedRoute> = {
+  data: of()
+};
+
 describe('SignUpComponent', () => {
   let component: SignUpComponent;
   let fixture: ComponentFixture<SignUpComponent>;
@@ -104,7 +109,8 @@ describe('SignUpComponent', () => {
         { provide: Location, useValue: locationStub },
         { provide: SurveyService, useValue: surveyServiceStub },
         { provide: ThemesService, useValue: themeServiceStub },
-        { provide: ConfigService, useValue: configServiceStub }
+        { provide: ConfigService, useValue: configServiceStub },
+        { provide: ActivatedRoute, useValue: activatedRouteStub }
       ]
     })
       .compileComponents();

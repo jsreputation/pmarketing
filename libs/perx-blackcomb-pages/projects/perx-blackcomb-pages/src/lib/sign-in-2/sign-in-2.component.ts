@@ -9,7 +9,7 @@ import {
   ICountryCode
 } from '@perxtech/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Navigation, Router } from '@angular/router';
+import { ActivatedRoute, Navigation, Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subject, Observable } from 'rxjs';
@@ -35,6 +35,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
   public appAccessTokenFetched: boolean;
   public countryCodePrefix: string;
   public countriesList$: Observable<ICountryCode[]>;
+  private countriesList: string[];
   public loading: boolean = false;
 
   private custId: string = '';
@@ -42,6 +43,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private fb: FormBuilder,
     private authService: AuthenticationService,
     private notificationService: NotificationService,
@@ -51,6 +53,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
     public generalStaticDataService: GeneralStaticDataService
   ) {
     const nav: Navigation | null = this.router.getCurrentNavigation();
+    this.route.data.subscribe((dataObj) => this.countriesList = dataObj.countryList);
     this.custId = oc(nav).extras.state.phoneNumber('');
     this.countryCodePrefix = oc(nav).extras.state.countryCode.code('');
   }
@@ -66,10 +69,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
         this.initForm();
       });
     // todo: make this a input
-    this.countriesList$ = this.generalStaticDataService.getCountriesList([
-      'Hong Kong',
-      'Singapore'
-    ]).pipe(takeUntil(this.destroy$));
+    this.countriesList$ = this.generalStaticDataService.getCountriesList(this.countriesList).pipe(takeUntil(this.destroy$));
     const token = this.authService.getAppAccessToken();
     if (token) {
       this.appAccessTokenFetched = true;
