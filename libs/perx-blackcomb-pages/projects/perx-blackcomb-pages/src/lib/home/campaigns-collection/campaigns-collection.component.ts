@@ -65,7 +65,7 @@ export class CampaignsCollectionComponent implements OnInit {
 
     this.campaigns$.pipe(
       tap((campaigns: ICampaign[]) => this.campaigns = campaigns),
-      // for each campaign, fetch associated games
+      // for each campaign, fetch associated games to figure out completion
       switchMap((campaigns: ICampaign[]) => combineLatest([
         ...campaigns.map((campaign: ICampaign) => {
           if (this.gameType === GameType.quiz) {
