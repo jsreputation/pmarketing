@@ -41,6 +41,7 @@ describe('CampaignsCollectionComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CampaignsCollectionComponent);
     component = fixture.componentInstance;
+    component.campaigns$ = of();
     fixture.detectChanges();
   });
 
