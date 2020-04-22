@@ -123,7 +123,10 @@ export class CampaignsCollectionComponent implements OnInit {
   public isCampaignComplete(campaignId: number): boolean {
     // we currently only intend for this to be triggered by quiz campaigns. Can be enhanced to support all types.
     if (this.quizzes && this.quizzes.length > 0 && this.gameType === GameType.quiz) {
-      return this.quizzes.filter(game => (game.campaignId === campaignId) && game.remainingNumberOfTries === 0).length > 0;
+      return this.quizzes.filter((quiz: IQuiz) =>
+        (quiz.campaignId === campaignId) &&
+        (quiz.remainingNumberOfTries && quiz.remainingNumberOfTries === 0)
+      ).length > 0;
     }
     return false;
   }
