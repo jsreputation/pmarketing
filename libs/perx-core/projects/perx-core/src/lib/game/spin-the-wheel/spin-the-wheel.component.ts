@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { ISlice } from '../game.model';
-import { loadImage } from '../../utils/load-Image.function';
+import { loadImage } from '../../utils/load-image.function';
 
 interface ImageForPattern {
   id: string;

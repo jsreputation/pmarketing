@@ -8,7 +8,7 @@ import {
   EventEmitter,
   OnInit
 } from '@angular/core';
-import { loadImage } from '../../utils/load-Image.function';
+import { loadImage } from '../../utils/load-image.function';
 
 interface Coords {
   x: number;
