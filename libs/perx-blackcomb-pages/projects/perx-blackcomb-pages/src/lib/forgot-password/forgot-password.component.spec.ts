@@ -22,7 +22,7 @@ class ActivatedRouteMock {
   public get queryParams(): Observable<any> {
     return of(true);
   }
-  public data: Observable<any> = of()
+  public data: Observable<any> = of();
 }
 
 const configServiceStub: Partial<ConfigService> = {
