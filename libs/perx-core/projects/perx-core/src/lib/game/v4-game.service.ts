@@ -202,8 +202,8 @@ export class V4GameService implements IGameService {
       config = {
         ...defaultScratch(),
         coverImg: oc(dpps).prescratch_image.value.image_url() || oc(dpps).prescratch_image.value.file(),
-        underlyingSuccessImg: oc(dpps).post_success_image.value.image_url() || oc(dpps).post_success_image.value.file(''),
-        underlyingFailImg: oc(dpps).post_fail_image.value.image_url() || oc(dpps).post_success_image.value.file('')
+        underlyingSuccessImg: oc(dpps).post_success_image.value.image_url() || oc(dpps).post_success_image.value.file(),
+        underlyingFailImg: oc(dpps).post_fail_image.value.image_url() || oc(dpps).post_success_image.value.file()
       };
       ['coverImg', 'underlyingSuccessImg', 'underlyingFailImg']
         .filter(attribute => config[attribute] !== undefined)
