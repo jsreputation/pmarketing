@@ -47,7 +47,7 @@ export class CampaignsCollectionComponent implements OnInit {
   public showAllCampaigns: boolean = false;
   public rewardsLeft: string;
   public campaigns: ICampaign[];
-  private games: IGame[];
+  // private games: IGame[];
   private quizzes: IQuiz[] = [];
   public gamesLoaded: boolean = false;
 
@@ -78,10 +78,10 @@ export class CampaignsCollectionComponent implements OnInit {
       (res: (IQuiz | IGame[])[]) => {
         if (this.gameType === GameType.quiz) {
           this.quizzes = res as IQuiz[];
-        } else {
+        // } else {
           // todo: test games input when games get refactored in.
           // expected stamp cards to hit this but since we don't actually have games in stamp campaigns it will be empty array
-          this.games = (res as IGame[][])[0];
+          // this.games = (res as IGame[][])[0];
         }
         this.gamesLoaded = true;
       },
