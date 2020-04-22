@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { getImageCors } from '../../utils/getImageCors';
-import { patchUrl } from '../../utils/patch-url.function';
 import { ISlice } from '../game.model';
+import { loadImage } from '../../utils/load-Image.function';
 
 interface ImageForPattern {
   id: string;
@@ -148,26 +147,16 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   }
 
   private loadImg(): void {
-    const slicesWithImg: ISlice[] = this.slices.filter(item => item.backgroundImage);
-    let count: number = 0;
-    const images: ImageForPattern[] = [];
-
     this.fillWheelWrapStyle();
-
-    slicesWithImg.forEach((item) => {
-      const image: HTMLImageElement = getImageCors(patchUrl(item.backgroundImage as string));
-      images.push({ id: item.id, image });
-      image.onload = () => {
-        count++;
-        if (count === slicesWithImg.length) {
-          this.createPatterns(images);
-          this.drawWheel();
-        }
-      };
-    });
-    if (slicesWithImg.length === 0) {
+    const promises: Promise<ImageForPattern>[] = this.slices
+      .filter(item => item.backgroundImage)
+      .map((item) => loadImage(item.backgroundImage as string)
+        .then((image: HTMLImageElement) => ({ id: item.id, image }))
+      );
+    Promise.all(promises).then((images: ImageForPattern[]) => {
+      this.createPatterns(images);
       this.drawWheel();
-    }
+    });
   }
 
   private createPatterns(arr: ImageForPattern[]): void {
@@ -275,17 +264,17 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
     if (this.wheelImg === undefined) {
       return;
     }
-    const wheelImg: HTMLImageElement = getImageCors(patchUrl(this.wheelImg));
-    wheelImg.onload = () => {
-      if (this.wheelImgElt !== wheelImg) {
-        this.wheelImgElt = wheelImg;
-        this.drawWheel();
-      }
-    };
+    loadImage(this.wheelImg)
+      .then((wheelImg: HTMLImageElement) => {
+        if (this.wheelImgElt !== wheelImg) {
+          this.wheelImgElt = wheelImg;
+          this.drawWheel();
+        }
+      });
   }
 
   private getTargetAngle(neededIndex: number): number {
-    // randomize the resul within the target slice
+    // randomize the result within the target slice
     const v = (neededIndex + Math.random()) * this.arcDeg;
     // pointer is at the top, not at 0, therefore we add 270
     return - v + 270;

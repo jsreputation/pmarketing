@@ -28,6 +28,7 @@ import { oc } from 'ts-optchain';
 import { IV4Voucher, V4VouchersService } from '../vouchers/v4-vouchers.service';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
+import { patchUrl } from '../utils/patch-url.function';
 
 const enum GameType {
   shakeTheTree = 'shake_the_tree',
@@ -201,9 +202,13 @@ export class V4GameService implements IGameService {
       config = {
         ...defaultScratch(),
         coverImg: oc(dpps).prescratch_image.value.image_url() || oc(dpps).prescratch_image.value.file(),
-        underlyingSuccessImg: oc(dpps).post_success_image.value.image_url() || oc(dpps).post_success_image.value.file(),
-        underlyingFailImg: oc(dpps).post_fail_image.value.image_url() || oc(dpps).post_success_image.value.file()
+        underlyingSuccessImg: oc(dpps).post_success_image.value.image_url() || oc(dpps).post_success_image.value.file(''),
+        underlyingFailImg: oc(dpps).post_fail_image.value.image_url() || oc(dpps).post_success_image.value.file('')
       };
+      ['coverImg', 'underlyingSuccessImg', 'underlyingFailImg']
+        .filter(attribute => config[attribute] !== undefined)
+        .forEach(attribute => config[attribute] = patchUrl(config[attribute]));
+
     } else if (game.game_type === GameType.spin) {
       type = TYPE.spin;
       const dpps: SpinDisplayProperties = game.display_properties as SpinDisplayProperties;
@@ -217,6 +222,9 @@ export class V4GameService implements IGameService {
         pointerImg: oc(dpps).pointer_image.value.image_url(''),
         background: oc(dpps).background_image.value.image_url('')
       };
+      ['rewardIcon', 'wheelImg', 'pointerImg', 'background']
+        .filter(attribute => config[attribute] !== undefined)
+        .forEach(attribute => config[attribute] = patchUrl(config[attribute]));
       // Display the reward Slot on the last wedge
       config.rewardSlots = [dpps.number_of_wedges - 1];
     } else {
@@ -241,12 +249,17 @@ export class V4GameService implements IGameService {
       results.noOutcome = V4GameService.outcomeToGameOutcome(game.display_properties.nooutcome);
     }
 
+    let backgroundImg = oc(game).display_properties.background_image.value.image_url() ||
+      oc(game).display_properties.background_image.value.file('');
+    if (backgroundImg.startsWith('http')) {
+      backgroundImg = patchUrl(backgroundImg);
+    }
+
     return {
       id: game.id,
       campaignId: game.campaign_id,
       type,
-      backgroundImg: oc(game).display_properties.background_image.value.image_url() ||
-        oc(game).display_properties.background_image.value.file(),
+      backgroundImg,
       remainingNumberOfTries: game.number_of_tries,
       config,
       texts,
