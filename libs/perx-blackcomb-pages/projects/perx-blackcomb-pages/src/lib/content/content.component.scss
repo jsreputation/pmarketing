@@ -19,7 +19,14 @@
     height: 100%;
     overflow-y: auto;
 
-    @include typography();
+    ::ng-deep {
+      @include typography();
+
+      table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+    }
   }
 
   .loading {
