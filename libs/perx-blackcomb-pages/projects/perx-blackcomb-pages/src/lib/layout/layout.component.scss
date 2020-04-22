@@ -40,6 +40,12 @@
   font-size: 1rem;
   line-height: 1.6rem;
 
+  .a-container {
+    display: flex;
+    width: 40rem;
+    max-width: 40rem;
+  }
+
   a {
     text-decoration: none;
     color: #666666;
