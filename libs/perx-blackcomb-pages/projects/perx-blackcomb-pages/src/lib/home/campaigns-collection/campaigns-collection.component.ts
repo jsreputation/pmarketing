@@ -79,8 +79,8 @@ export class CampaignsCollectionComponent implements OnInit {
         if (this.gameType === GameType.quiz) {
           this.quizzes = res as IQuiz[];
         } else {
-          // UNTESTED
           // todo: test games input when games get refactored in.
+          // expected stamp cards to hit this but since we don't actually have games in stamp campaigns it will be empty array
           this.games = (res as IGame[][])[0];
         }
         this.gamesLoaded = true;
