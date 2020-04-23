@@ -68,6 +68,8 @@
     "MOBILE_NOTFOUND_TXT": "並無登記用戶記錄",
     "MOBILE_INVALID_TXT": "請輸入有效手機號碼",
     "MOBILE_REQUIRED_TXT": "請輸入您的手機號碼",
+    "OTP_SEND_TO": "確認密碼已發送至",
+    "CHECK_YOUR_SMS": "查看你的短信",
     "PASSWORD_FIELD": "密碼",
     "PASSWORD_INVALID_TXT": "密碼錯誤",
     "PASSWORD_REQUIRED_TXT": "請輸入密碼",
@@ -179,7 +181,10 @@
     "LUCKY_DRAW_NAME_FIELD": "姓名（如身份證所示）",
     "LUCKY_DRAW_HKID_FIELD": "身份證號碼頭四位",
     "CHECKBOX_LUCK_TXT": "本人同意滙豐保險儲存本人的個人資料作未來的直接巿場推廣用途（詳情請參閱個人資料收集聲明）",
-    "CTA_SAVE_TXT": "儲存"
+    "CTA_SAVE_TXT": "儲存",
+    "ENTER_EMAIL": "輸入電郵",
+    "ENTER_POSTCODE": "輸入郵政編碼",
+    "ENTER_NICKNAME": "輸入用戶名稱"
   },
   "REFERRAL": {
     "TITLE": "推薦朋友",
