@@ -201,5 +201,14 @@
     "BARCODE_TO_MERCHANT": "",
     "CTA":""
   },
-  "CONTENT_PAGE": ""
+  "CONTENT_PAGE": "",
+  "VOUCHER": {
+    "REDEEM": "Utiliser",
+    "EXPIRY": "Expire le {{date}}"
+  },
+  "REWARD": {
+    "GET_VOUCHER": "Obtenir",
+    "DESCRIPTION": "Description",
+    "TNC": "Conditions d'utilisation"
+  }
 }
