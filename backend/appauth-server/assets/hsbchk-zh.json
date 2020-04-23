@@ -238,5 +238,20 @@
     "LANDING_CONTENT": "",
     "QUESTION1": "",
     "ANSWERS1": ""
-  }
+  },
+  "VOUCHER": {
+    "REDEEM": "換領",
+    "EXPIRY": "將於{{date}}過期"
+  },
+  "REWARD": {
+    "GET_VOUCHER": "",
+    "DESCRIPTION": "",
+    "TNC": "條款與細則"
+  },
+  "QR": {
+    "QR_TO_MERCHANT": "",
+    "BARCODE_TO_MERCHANT": "",
+    "CTA": "取消"
+  },
+  "CONTENT_PAGE": ""
 }
