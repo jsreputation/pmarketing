@@ -17,7 +17,7 @@ const routes: Routes = [
     loadChildren: () => import('./loading/loading.module').then((mod) => mod.LoadingModule)
   },
   {
-    path: 'enter-pin/:type',
+    path: 'otp/:type',
     loadChildren: (): any => import('./enter-pin/enter-pin.module')
       .then((mod: any) => mod.EnterPinModule)
   },
