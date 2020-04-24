@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { NgModule } from "@angular/core";
+import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule, MatProgressSpinnerModule, MatSelectModule, MatInputModule, MatButtonModule } from '@angular/material';
+import { MatButtonModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule, MatSelectModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { AuthenticationModule, ConfigModule, UtilsModule } from '@perxtech/core';
 import { SignIn2Component } from './sign-in-2.component';
 
 @NgModule({
@@ -13,13 +14,16 @@ import { SignIn2Component } from './sign-in-2.component';
   imports: [
     CommonModule,
     TranslateModule.forChild(),
+    ConfigModule.forChild(),
     RouterModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatSelectModule,
     MatProgressSpinnerModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    AuthenticationModule,
+    UtilsModule,
   ],
   exports: [
     SignIn2Component
