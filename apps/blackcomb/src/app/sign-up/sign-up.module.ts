@@ -1,10 +1,15 @@
-import { MatSnackBarModule } from '@angular/material';
-import { SignUpRoutingModule } from './sign-up-routing.module';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthenticationModule, SurveyModule, GameModule } from '@perxtech/core';
-import { PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
+import { NgModule } from '@angular/core';
+import { MatSnackBarModule } from '@angular/material';
 import { MatButtonModule } from '@angular/material/button';
+import { RouterModule, Routes } from '@angular/router';
+import { PerxBlackcombPagesModule, SignUpComponent } from '@perxtech/blackcomb-pages';
+import { AuthenticationModule, GameModule, SurveyModule } from '@perxtech/core';
+
+const routes: Routes = [
+  { path: '', pathMatch: 'full', component: SignUpComponent },
+  { path: '*', redirectTo: '' }
+];
 
 @NgModule({
   imports: [
@@ -12,7 +17,7 @@ import { MatButtonModule } from '@angular/material/button';
     PerxBlackcombPagesModule,
     CommonModule,
     SurveyModule,
-    SignUpRoutingModule,
+    RouterModule.forChild(routes),
     MatSnackBarModule,
     MatButtonModule,
     GameModule
