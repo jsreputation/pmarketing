@@ -27,7 +27,6 @@ const routes: Routes = [{
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule,
     MatCardModule,
     LoyaltyModule,
     UtilsModule,

@@ -4,13 +4,9 @@ import {
   MatCardModule, MatIconModule,
   MatListModule, MatMenuModule,
 } from '@angular/material';
-import {
-  RouterModule,
-  Routes,
-} from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { RewardsModule, UtilsModule } from '@perxtech/core';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-
 
 import { CatalogComponent, PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
 

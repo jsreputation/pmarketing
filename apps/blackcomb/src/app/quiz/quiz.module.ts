@@ -5,7 +5,7 @@ import {
   CampaignModule as PerxCampaignModule,
   ConfigModule,
   AuthenticationModule,
-  // SurveyService
+  QuizComponent
 } from '@perxtech/core';
 
 import {
@@ -18,13 +18,12 @@ import {
   MatCheckboxModule
 } from '@angular/material';
 import { PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
-import { QuizRoutingModule } from './quiz-routing.module';
-// import { of } from 'rxjs';
-// import { survey } from '../mock/survey.mock';
+import { Routes, RouterModule } from '@angular/router';
 
-// const surveyServiceStub = {
-//   getSurveyFromCampaign: () => of(survey)
-// };
+const routes: Routes = [
+  { path: '', pathMatch: 'full', component: QuizComponent },
+  { path: '*', redirectTo: '' }
+];
 
 @NgModule({
   imports: [
@@ -38,13 +37,12 @@ import { QuizRoutingModule } from './quiz-routing.module';
     MatDatepickerModule,
     MatRadioModule,
     MatCheckboxModule,
-    QuizRoutingModule,
+    RouterModule.forChild(routes),
     PerxCampaignModule,
     PerxQuizModule,
     AuthenticationModule
   ],
   providers: [
-    // { provide: SurveyService, useValue: surveyServiceStub }
   ]
 })
 export class QuizModule { }

@@ -14,7 +14,6 @@ const routes: Routes = [{
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule,
     SharedModule,
     PerxBlackcombPagesModule,
     TranslateModule.forChild(),
