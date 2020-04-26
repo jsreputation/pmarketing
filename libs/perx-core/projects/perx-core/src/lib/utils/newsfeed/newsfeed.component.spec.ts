@@ -81,16 +81,16 @@ describe('NewsfeedComponent', () => {
     expect(openSpy).toHaveBeenCalled();
   });
 
-  describe('getFirstLine', () => {
+  describe('getFirstLineShortTxt', () => {
     it('should return empty if string is empty', () => {
       const text: string = '';
-      const firstLine = component.getFirstLine(text);
+      const firstLine = component.getFirstLineShortTxt(text);
       expect(firstLine).toBe('');
     });
 
     it('should return the first line if there is a new line', () => {
       const text: string = 'Lorem ipsum dolor sit amet \n consectetur adipiscing elit';
-      const firstLine = component.getFirstLine(text);
+      const firstLine = component.getFirstLineShortTxt(text);
       expect(firstLine).toBe('Lorem ipsum dolor sit amet ');
     });
   });
