@@ -82,16 +82,22 @@ describe('NewsfeedComponent', () => {
   });
 
   describe('getFirstLineShortTxt', () => {
-    it('should return empty if string is empty', () => {
+    it('should return empty if string is empty', done => {
       const text: string = '';
       const firstLine = component.getFirstLineShortTxt(text);
-      expect(firstLine).toBe('');
+      firstLine.subscribe(text => {
+        expect(text).toBe('');
+        done();
+      });
     });
 
-    it('should return the first line if there is a new line', () => {
+    it('should return the first line if there is a new line', done => {
       const text: string = 'Lorem ipsum dolor sit amet \n consectetur adipiscing elit';
       const firstLine = component.getFirstLineShortTxt(text);
-      expect(firstLine).toBe('Lorem ipsum dolor sit amet ');
+      firstLine.subscribe(text => {
+        expect(text).toBe('Lorem ipsum dolor sit amet ');
+        done();
+      });
     });
   });
 });

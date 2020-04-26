@@ -2,7 +2,7 @@ import { Component, Input, HostListener, OnInit } from '@angular/core';
 import { FeedItem } from '../feed-reader.service';
 import { MatDialog } from '@angular/material';
 import { FeedItemPopupComponent } from '../feed-item-popup/feed-item-popup.component';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { map } from 'rxjs/operators';
 
@@ -68,6 +68,9 @@ export class NewsfeedComponent implements OnInit {
   }
 
   public getFirstLineShortTxt(text: string): Observable<string> {
+    if (!text) {
+      return of('');
+    }
     return this.translate.get(text).pipe(
       map(txt => {
         const lines = txt.match(/[^\r\n]+/g) || [];
