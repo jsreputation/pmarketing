@@ -39,7 +39,7 @@ export abstract class ISignUpComponent implements OnDestroy {
     protected notificationService: NotificationService,
     protected dialog: MatDialog,
     protected translate: TranslateService
-  ) { 
+  ) {
     this.initTranslate();
   }
 
@@ -211,12 +211,12 @@ export abstract class ISignUpComponent implements OnDestroy {
   }
 
   private initTranslate(): void {
-    this.translate.get('SIGN_UP_PAGE.CONFIRM_PASSWORD_INVALID_TXT').subscribe(text => 
+    this.translate.get('SIGN_UP_PAGE.CONFIRM_PASSWORD_INVALID_TXT').subscribe(text =>
       this.passwordNotMatch = text);
-    this.translate.get('SIGN_UP_PAGE.UNKNOWN_ERROR_TXT').subscribe(text => 
+    this.translate.get('SIGN_UP_PAGE.UNKNOWN_ERROR_TXT').subscribe(text =>
       this.unknownErrorTxt = text);
     this.translate.get([
-      'SIGN_UP_PAGE.ALERT_TITLE', 
+      'SIGN_UP_PAGE.ALERT_TITLE',
       'SIGN_UP_PAGE.ALERT_BTN_TXT',
       'SIGN_UP_PAGE.ALERT_BTN_TXT2'
     ]).subscribe(res => {
@@ -224,7 +224,7 @@ export abstract class ISignUpComponent implements OnDestroy {
         title: res['SIGN_UP_PAGE.ALERT_TITLE'],
         buttonTxt: res['SIGN_UP_PAGE.ALERT_BTN_TXT'],
         buttonTxt2: res['SIGN_UP_PAGE.ALERT_BTN_TXT2'],
-      }
+      };
     });
   }
 }

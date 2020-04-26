@@ -127,12 +127,12 @@ export class SignIn2Component implements OnInit, OnDestroy {
           if (err instanceof HttpErrorResponse) {
             if (err.status === 0) {
               this.translate.get(['LOGIN_PAGE.POPUP_TITLE', 'LOGIN_PAGE.POPUP.TXT'])
-              .subscribe(res => {
-                this.notificationService.addPopup({
-                  title: res['LOGIN_PAGE.POPUP_TITLE'],
-                  text: res['LOGIN_PAGE.POPUP_TXT']
+                .subscribe(res => {
+                  this.notificationService.addPopup({
+                    title: res['LOGIN_PAGE.POPUP_TITLE'],
+                    text: res['LOGIN_PAGE.POPUP_TXT']
+                  });
                 });
-              });
             } else if (err.status === 401 || err.status === 403) {
               this.translate.get('LOGIN_PAGE.INVALID_CREDENTIALS')
                 .subscribe(t => this.errorMessage = t);
