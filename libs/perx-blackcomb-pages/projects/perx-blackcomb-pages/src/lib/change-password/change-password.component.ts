@@ -82,7 +82,11 @@ export class ChangePasswordComponent {
           this.router.navigateByUrl('/otp/password', { state: changePasswordData });
         },
         () => {
-          this.invalidOldPW = true;
+          const oldPWControl = this.changePasswordForm.get('oldPassword');
+          if (oldPWControl) {
+            oldPWControl.setErrors({incorrect: true});
+            this.changePasswordForm.updateValueAndValidity();
+          }
         }
       );
   }
