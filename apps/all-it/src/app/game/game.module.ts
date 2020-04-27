@@ -1,21 +1,19 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { MatProgressBarModule } from '@angular/material';
-// BCGameModule already importing GamesModule
+import { RouterModule, Routes } from '@angular/router';
+import { GameComponent, GameModule as BCGameModule } from '@perxtech/blackcomb-pages';
+import { AuthenticationModule } from '@perxtech/core';
 
-import {
-  AuthenticationModule,
-} from '@perxtech/core';
-import {
-  GameModule as BCGameModule
-} from '@perxtech/blackcomb-pages';
-
-import { GameRoutingModule } from './game-routing.module';
+const routes: Routes = [{
+  path: '',
+  component: GameComponent
+}];
 
 @NgModule({
   imports: [
     CommonModule,
-    GameRoutingModule,
+    RouterModule.forChild(routes),
     BCGameModule,
     AuthenticationModule,
     MatProgressBarModule,

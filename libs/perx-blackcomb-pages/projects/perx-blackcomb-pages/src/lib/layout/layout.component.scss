@@ -24,8 +24,10 @@
 .game-container {
   flex: 1;
   width: 100%;
+  max-width: 40rem;
   height: 100%;
   display: block;
+  margin: 0 auto;
   overflow-y: hidden;
 }
 
@@ -37,6 +39,12 @@
   background: var(--surface_colour) !important;
   font-size: 1rem;
   line-height: 1.6rem;
+
+  .a-container {
+    display: flex;
+    width: 40rem;
+    max-width: 40rem;
+  }
 
   a {
     text-decoration: none;

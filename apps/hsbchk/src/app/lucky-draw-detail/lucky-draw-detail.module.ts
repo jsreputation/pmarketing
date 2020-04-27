@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LuckyDrawDetailsComponent } from '@perxtech/blackcomb-pages';
-import { PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
+import { LuckyDrawDetailsComponent, PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
 
 const routes: Routes = [{ path: '', component: LuckyDrawDetailsComponent }];
 

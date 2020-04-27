@@ -1,10 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UtilsModule } from '@perxtech/core';
-import {
-  RouterModule,
-  Routes
-} from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 
 import { QRCodeModule } from 'angularx-qrcode';

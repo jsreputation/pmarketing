@@ -7,7 +7,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { ActivatedRoute } from '@angular/router';
+import {
+  ActivatedRoute,
+  Data,
+  Params } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import {
@@ -18,11 +21,11 @@ import {
 import { Observable, of } from 'rxjs';
 import { ForgotPasswordComponent } from './forgot-password.component';
 
-class ActivatedRouteMock {
-  public get queryParams(): Observable<any> {
-    return of(true);
+class ActivatedRouteMock implements Partial<ActivatedRoute>{
+  public get queryParams(): Observable<Params> {
+    return of();
   }
-  public data: Observable<any> = of();
+  public data: Observable<Data> = of();
 }
 
 const configServiceStub: Partial<ConfigService> = {

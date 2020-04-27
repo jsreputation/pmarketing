@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { IRanker } from '../models/rank.model';
 
 @Component({
   selector: 'perx-core-mini-rank',
@@ -8,18 +9,9 @@ import { Component, Input } from '@angular/core';
 export class MiniRankComponent {
 
   @Input()
-  public userGameInfo: {
-    id: number;
-
-    nickName: string;
-
-    points: number;
-
-    ranking: number;
-  } = {
-    id: 0,
-    nickName: 'test-user',
-    points: 2020,
-    ranking: 1
+  public userGameInfo: IRanker = {
+    rank: 12,
+    nickname: 'test',
+    value: 1000
   };
 }
