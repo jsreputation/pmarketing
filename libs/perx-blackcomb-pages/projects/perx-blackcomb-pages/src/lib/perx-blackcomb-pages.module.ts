@@ -48,7 +48,7 @@ import { NgxBarcodeModule } from 'ngx-barcode';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { QRComponent } from './qr/qr.component';
 import { RedeemComponent } from './redeem/redeem.component';
-import { RewardDetailsComponent } from './reward-details/reward-details.component';
+import { RewardDetailsModule } from './reward-details/reward-details.module';
 import { StampCardComponent } from './stamp-card/stamp-card.component';
 import { SurveyComponent } from './survey/survey.component';
 import { VoucherDetailComponent } from './voucher-detail/voucher-detail.component';
@@ -91,7 +91,6 @@ const comps: any[] = [
   RedeemComponent,
   SignInComponent,
   QRComponent,
-  RewardDetailsComponent,
   StampCardComponent,
   SurveyComponent,
   VoucherDetailComponent,
@@ -160,6 +159,7 @@ const comps: any[] = [
     QuizModule,
     ProfileModule,
     RankModule,
+    RewardDetailsModule,
     EnterPinModule,
     ForgotPasswordModule,
     SignIn2Module,

@@ -19,6 +19,7 @@ export { SignInComponent } from './lib/sign-in/sign-in.component';
 export { QRComponent } from './lib/qr/qr.component';
 export { RedeemComponent } from './lib/redeem/redeem.component';
 export { RewardDetailsComponent } from './lib/reward-details/reward-details.component';
+export { RewardDetailsModule } from './lib/reward-details/reward-details.module';
 export { VoucherDetailComponent } from './lib/voucher-detail/voucher-detail.component';
 export { SurveyComponent } from './lib/survey/survey.component';
 export { StampCardComponent } from './lib/stamp-card/stamp-card.component';
