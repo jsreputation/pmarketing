@@ -1,16 +1,20 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { OtpRoutingModule } from './otp-routing.module';
-import { SharedModule } from '../shared/shared.module';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
+import { EnterPinComponent, PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
 import { UtilsModule } from '@perxtech/core';
+import { SharedModule } from '../shared/shared.module';
+
+const routes: Routes = [{
+  path: '',
+  component: EnterPinComponent
+}];
 
 @NgModule({
   imports: [
     CommonModule,
-    OtpRoutingModule,
+    RouterModule.forChild(routes),
     UtilsModule,
     SharedModule,
     PerxBlackcombPagesModule,
