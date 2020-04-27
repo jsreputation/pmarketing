@@ -16,8 +16,6 @@
   "SHOPPING": "Shopping",
   "MERCHANT_SELF": "Merchant Self",
   "OTHERS": "Others",
-  "HOME": "Home",
-  "WALLET": "Wallet",
   "HISTORY": "History",
   "ACCOUNT": "Account",
   "Contact Us": "Contact Us",
@@ -119,7 +117,16 @@
   },
   "HOME": {
     "GAMES": "Games",
-    "MY_BAR_CODE": "My Barcode"
+    "MY_BAR_CODE": "My Barcode",
+    "MY_QR": "My QR",
+    "STAMP_CAMPAIGNS": "Stamp Card Campaigns",
+    "CATALOG": "Catalog",
+    "QUIZ": "Quiz",
+    "FEATURED_REWARDS": "Featured Rewards",
+    "SEE_MORE": "See more",
+    "SEE_LESS": "See less",
+    "REWARDS_LEFT": "{{rewardsCount}} Rewards Left",
+    "READ_MORE": "Read More"
   },
   "SIGN_UP_PAGE": {
     "TITLE": "Sign Up",
@@ -150,7 +157,8 @@
     "HKID_DIGITS_REQUIRED_TXT": "Please enter your HKID",
     "CHECKBOX_LUCK_TXT": "I agree HSBC Life to save my personal information for the Lucky Draw and future direct marketing purpose (For details, please refer to the PICS.)",
     "CHECKBOX_LUCK_POPUP_TXT": "If you do not agree with this term, you will not be eligible to join the LIFE Dojo lucky draw. Do you want to confirm?",
-    "BUTTON_SUBMIT": "Submit"
+    "BUTTON_SUBMIT": "Submit",
+    "COUNTRY_CODE_REQUIRED_TXT": "Please select a country"
   },
   "OTP_PAGE": {
     "TITLE": "Input OTP",
@@ -173,7 +181,10 @@
     "PASSWORD_FIELD": "Password",
     "PASSWORD_INVALID_TXT": "Password incorrect",
     "FORGET_PASSWORD_TXT": "Forgot password?",
-    "CTA_TXT": "Log in"
+    "CTA_TXT": "Log in",
+    "COUNTRY_CODE_REQUIRED_TXT": "Please select a country",
+    "MOBILE_REQUIRED_TXT": "Please enter your mobile number",
+    "PASSWORD_REQUIRED_TXT": "Please input a password"
   },
   "FORGET_PW_PAGE": {
     "TITLE": "Forgot Password",
@@ -192,9 +203,9 @@
     "CHECK_YOUR_SMS": "Check your sms",
     "PASSWORD_REQUIRED_TXT": "Please input a password",
     "CONFIRM_PASSWORD_INVALID_TXT": "Passwords do not match",
-    "PASSWORD_TOO_SHORT_TXT": "Password is too short"
+    "PASSWORD_TOO_SHORT_TXT": "Password is too short",
+    "COUNTRY_CODE_REQUIRED_TXT": "Please select a country"
   },
-  "QUIZ_TITLE": "Quiz",
   "NAVIGATION": {
     "HOME": "Home",
     "WALLET": "Wallet",
@@ -213,7 +224,16 @@
     "POSITIVE_OUTCOME_REWARD": "Here’s a reward for you",
     "POSITIVE_OUTCOME_CTA": "View Reward",
     "NO_OUTCOME_SCORE": "You scored xx points for this round",
-    "NO_OUTCOME_CTA": "Try another quiz"
+    "NO_OUTCOME_CTA": "Try another quiz",
+    "QUESTION": "Question ",
+    "OUT_OF": " out of ",
+    "CTA_SUBMIT_TXT": "Submit",
+    "QUESTION_TIME_TAKEN": "You took {{time}} to answer this.",
+    "NO_OUTCOME_TXT": "",
+    "NOT_AVAILABLE_TITLE": "Sorry!",
+    "NOT_AVAILABLE_CTA": "Close",
+    "NOT_AVAILABLE_TXT": "This quiz is not available at the moment. Try again later.",
+    "SUBMIT_ERROR_TXT": "There was an issue when trying to submit your last answer."
   },
   "WALLET": {
     "REWARDS_TITLE": "My Rewards",
@@ -222,7 +242,9 @@
     "REWARD_STATUS_EXPIRY": "Expires on [date]",
     "REWARD_STATUS_REDEEMED": "Redeemed",
     "REWARD_STATUS_EXPIRED": "Expired",
-    "CTA_TXT": "Redeem"
+    "CTA_TXT": "Redeem",
+    "MY_WALLET": "My Wallet",
+    "REDEEMED": "Redeemed"
   },
   "REDEMPTION": {
     "TITLE": "Input PIN",
@@ -250,7 +272,8 @@
     "LIFE_TALK": "LIFE Talk",
     "TNC": "Terms and Conditions",
     "PRIVACY_POLICY": "Privacy Policy",
-    "LOGOUT": "Log Out"
+    "LOGOUT": "Log Out",
+    "LUCKY_DRAW_INFO": "Lucky Draw Info"
   },
   "PROFILE": {
     "TITLE": "Profile",
@@ -269,13 +292,19 @@
     "LUCKY_DRAW_NAME_FIELD": "Name (as per HKID)",
     "LUCKY_DRAW_HKID_FIELD": "HKID (first 4 digits)",
     "CHECKBOX_LUCK_TXT": "I agree HSBC Life to save my personal information for lucky draw and future direct marketing purpose (For details, please refer to the PICS)",
-    "CTA_SAVE_TXT": "Save"
+    "CTA_SAVE_TXT": "Save",
+    "ENTER_EMAIL": "Enter Email",
+    "ENTER_POSTCODE": "Enter Postcode",
+    "ENTER_NICKNAME": "Enter Nickname"
   },
   "REFERRAL": {
     "TITLE": "Refer a friend",
     "CONTENT": "For each successful sign up* using your referral code, you earn extra 5X lucky draw chance. Your referee will earn 3X lucky draw chances.\nShare your referral code with a friend today!\n*Both you and your referee will have to complete at least 1 quiz to earn your lucky draw chances.",
     "CTA_BUTTON": "Share referral code",
-    "SHARE_COPY_TXT": "Join me in the HSBC LIFE Dojo challenge. Watch a video and answer the quiz questions correctly and stand to win rewards each week, as well as a chance for the grand lucky draw.\n[URL]\nUse referral code [code] when signing up and earn 3x lucky draw chances.\n"
+    "SHARE_COPY_TXT": "Join me in. Stand to win rewards each week, as well as a chance for the grand lucky draw.\n[URL]\nUse referral code [code] when signing up and earn 3x lucky draw chances.\n",
+    "SHARE_COPY_TITLE": "Join me in this game",
+    "COPY_TO_CLIPBOARD": "Copied to your clipboard!",
+    "CLIPBOARD_ERROR_TXT": "Could not access your clipboard"
   },
   "WEEK1_CAMPAIGN_EASY": {
     "TITLE": "White Belt (Easy)",
@@ -312,5 +341,19 @@
     "LANDING_CONTENT": "",
     "QUESTION1": "",
     "ANSWERS1": ""
+  },
+  "QR": {
+    "QR_TO_MERCHANT": "Present this QR code to the merchant",
+    "BARCODE_TO_MERCHANT": "Present this Barcode to the merchant",
+    "CTA": "Cancel"
+  },
+  "VOUCHER": {
+    "REDEEM": "Redeem",
+    "EXPIRY": "Expires on: {{date}}"
+  },
+  "REWARD": {
+    "GET_VOUCHER": "Get Voucher",
+    "DESCRIPTION": "Description",
+    "TNC": "Terms and Conditions"
   }
 }

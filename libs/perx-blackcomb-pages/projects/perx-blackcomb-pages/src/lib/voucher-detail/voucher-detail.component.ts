@@ -40,7 +40,7 @@ export class VoucherDetailComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       );
 
-    this.translate.get('VOUCHER_EXPIRY')
+    this.translate.get('VOUCHER.EXPIRY')
       .subscribe((text: string) => {
         this.expiryLabelFn = (v: Voucher) => {
           const dateStr = this.datePipe.transform(v.expiry, 'shortDate');

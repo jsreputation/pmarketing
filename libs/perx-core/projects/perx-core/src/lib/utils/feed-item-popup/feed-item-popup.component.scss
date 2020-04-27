@@ -1,3 +1,11 @@
+::ng-deep {
+  .app-full-bleed-dialog .mat-dialog-container {
+    padding: 0;
+    position: relative;
+    border-radius: 1rem;
+  }
+}
+
 .main-container {
   height: 95%;
   display: flex;

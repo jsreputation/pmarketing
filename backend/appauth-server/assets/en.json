@@ -201,5 +201,14 @@
     "BARCODE_TO_MERCHANT": "Present this Barcode to the merchant",
     "CTA": "Cancel"
   },
+  "VOUCHER": {
+    "REDEEM": "Redeem",
+    "EXPIRY": "Expires on: {{date}}"
+  },
+  "REWARD": {
+    "GET_VOUCHER": "Get Voucher",
+    "DESCRIPTION": "Description",
+    "TNC": "Terms and Conditions"
+  },
   "CONTENT_PAGE": "Content Not Found"
 }

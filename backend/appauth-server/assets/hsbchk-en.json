@@ -180,7 +180,10 @@
     "LUCKY_DRAW_NAME_FIELD": "Name (as per HKID)",
     "LUCKY_DRAW_HKID_FIELD": "HKID (first 4 digits)",
     "CHECKBOX_LUCK_TXT": "I agree HSBC Life to save my personal information for lucky draw and future direct marketing purpose (For details, please refer to the PICS)",
-    "CTA_SAVE_TXT": "Save"
+    "CTA_SAVE_TXT": "Save",
+    "ENTER_EMAIL": "Enter Email",
+    "ENTER_POSTCODE": "Enter Postcode",
+    "ENTER_NICKNAME": "Enter Nickname"
   },
   "REFERRAL": {
     "TITLE": "Refer a friend",
@@ -239,5 +242,20 @@
     "LANDING_CONTENT": "",
     "QUESTION1": "",
     "ANSWERS1": ""
-  }
+  },
+  "QR": {
+    "QR_TO_MERCHANT": "Present this QR code to the merchant",
+    "BARCODE_TO_MERCHANT": "Present this Barcode to the merchant",
+    "CTA": "Cancel"
+  },
+  "VOUCHER": {
+    "REDEEM": "Redeem",
+    "EXPIRY": "Expires on: {{date}}"
+  },
+  "REWARD": {
+    "GET_VOUCHER": "Get Voucher",
+    "DESCRIPTION": "Description",
+    "TNC": "Terms and Conditions"
+  },
+  "CONTENT_PAGE": "Content Not Found"
 }

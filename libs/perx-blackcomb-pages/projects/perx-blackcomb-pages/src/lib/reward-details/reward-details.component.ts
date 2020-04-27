@@ -32,15 +32,11 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   public loyalty: ILoyalty;
   public maxRewardCost?: number;
   private initTranslate(): void {
-    this.translate.get('GET_VOUCHER').subscribe((text) => this.buttonLabel = text);
-    this.translate.get('DESCRIPTION')
-      .subscribe((desc: string) => {
-        this.descriptionLabel = desc;
-      });
-    this.translate.get('Terms and Conditions')
-      .subscribe((tnc: string) => {
-        this.tncLabel = tnc;
-      });
+    this.translate.get('REWARD.GET_VOUCHER').subscribe((text) => this.buttonLabel = text);
+    this.translate.get('REWARD.DESCRIPTION')
+      .subscribe((desc: string) => this.descriptionLabel = desc);
+    this.translate.get('REWARD.TNC')
+      .subscribe((tnc: string) => this.tncLabel = tnc);
   }
 
   constructor(
