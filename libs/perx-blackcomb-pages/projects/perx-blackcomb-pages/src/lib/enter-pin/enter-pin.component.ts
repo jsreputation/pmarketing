@@ -123,7 +123,7 @@ export class EnterPinComponent implements PopUpClosedCallBack {
           });
         },
         err => {
-          this.notificationService.addSnack(err.statusText);
+          this.notificationService.addSnack(err.error.message);
         });
     } else if (this.pinMode === PinMode.register && this.userPhone) {
       this.authService.verifyOTP(this.userPhone, enteredPin)
