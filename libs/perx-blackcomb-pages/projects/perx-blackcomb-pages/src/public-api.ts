@@ -44,6 +44,7 @@ export { QuizResultsComponent } from './lib/quiz-results/quiz-results.component'
 export { LuckyDrawDetailsComponent } from './lib/lucky-draw-details/lucky-draw-details.component';
 export { CampaignLandingPageComponent } from './lib/campaign-landing-page/campaign-landing-page.component';
 export { ForgotPasswordComponent } from './lib/forgot-password/forgot-password.component';
+export { ForgotPasswordModule } from './lib/forgot-password/forgot-password.module';
 export { LandingPageComponent } from './lib/landing-page/landing-page.component';
 export { ReferralComponent } from './lib/referral/referral.component';
 export { LeaderboardPageComponent } from './lib/leaderboard-page/leaderboard-page.component';

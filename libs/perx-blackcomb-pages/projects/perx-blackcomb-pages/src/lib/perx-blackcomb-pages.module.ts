@@ -75,10 +75,10 @@ import { QuizComponent } from './quiz/quiz.component';
 import { QuizResultsComponent } from './quiz-results/quiz-results.component';
 import { LuckyDrawDetailsComponent } from './lucky-draw-details/lucky-draw-details.component';
 import { CampaignLandingPageComponent } from './campaign-landing-page/campaign-landing-page.component';
-import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { ReferralComponent } from './referral/referral.component';
 import { LeaderboardPageComponent } from './leaderboard-page/leaderboard-page.component';
+import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
 import { SignIn2Module } from './sign-in-2/sign-in-2.module';
 
 const comps: any[] = [
@@ -116,7 +116,6 @@ const comps: any[] = [
   QuizResultsComponent,
   LuckyDrawDetailsComponent,
   CampaignLandingPageComponent,
-  ForgotPasswordComponent,
   LandingPageComponent,
   ReferralComponent,
   LeaderboardPageComponent
@@ -162,7 +161,8 @@ const comps: any[] = [
     QuizModule,
     ProfileModule,
     RankModule,
-    SignIn2Module
+    ForgotPasswordModule,
+    SignIn2Module,
   ],
   exports: [
     ...comps,
