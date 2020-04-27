@@ -18,7 +18,7 @@ import {
 } from '@perxtech/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subject, iif, of, throwError } from 'rxjs';
-import { catchError, tap, switchMap, retryWhen, delay, mergeMap } from 'rxjs/operators';
+import { catchError, tap, switchMap, retryWhen, delay, mergeMap, filter, map, takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { Location } from '@angular/common';
 import { PinMode } from '../enter-pin/enter-pin.component';
@@ -59,7 +59,6 @@ export class SignUpComponent implements OnInit, OnDestroy {
     password: ['', [Validators.required, Validators.minLength(6)]],
   }) as FormGroup;
   public countriesList$: Observable<ICountryCode[]>;
-  private countriesList: string[];
 
   constructor(
     protected fb: FormBuilder,
@@ -76,11 +75,15 @@ export class SignUpComponent implements OnInit, OnDestroy {
     private configService: ConfigService,
     private generalStaticDataService: GeneralStaticDataService
   ) {
-    this.route.data.subscribe((dataObj) => this.countriesList = dataObj.countryList);
   }
 
   public ngOnInit(): void {
-    this.countriesList$ = this.generalStaticDataService.getCountriesList(this.countriesList);
+    this.countriesList$ = this.route.data.pipe(
+      filter((dataObj)=>dataObj.countryList),
+      map((dataObj)=>dataObj.countryList),
+      switchMap((countriesList)=>this.generalStaticDataService.getCountriesList(countriesList)),
+      takeUntil(this.destroy$)
+    );
     this.configService.readAppConfig<void>().subscribe((conf: IConfig<void>) => this.appConfig = conf);
     this.theme = this.themesService.getThemeSetting();
     this.oldPI = this.authService.getPI();

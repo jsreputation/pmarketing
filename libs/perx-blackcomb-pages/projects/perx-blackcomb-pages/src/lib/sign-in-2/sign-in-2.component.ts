@@ -13,7 +13,7 @@ import { ActivatedRoute, Navigation, Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subject, Observable } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import {filter, map, switchMap, takeUntil} from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { oc } from 'ts-optchain';
 
@@ -35,7 +35,6 @@ export class SignIn2Component implements OnInit, OnDestroy {
   public appAccessTokenFetched: boolean;
   public countryCodePrefix: string;
   public countriesList$: Observable<ICountryCode[]>;
-  private countriesList: string[];
   public loading: boolean = false;
 
   private custId: string = '';
@@ -53,12 +52,17 @@ export class SignIn2Component implements OnInit, OnDestroy {
     public generalStaticDataService: GeneralStaticDataService
   ) {
     const nav: Navigation | null = this.router.getCurrentNavigation();
-    this.route.data.subscribe((dataObj) => this.countriesList = dataObj.countryList);
     this.custId = oc(nav).extras.state.phoneNumber('');
     this.countryCodePrefix = oc(nav).extras.state.countryCode.code('');
   }
 
   public ngOnInit(): void {
+    this.countriesList$ = this.route.data.pipe(
+      filter((dataObj)=>dataObj.countryList),
+      map((dataObj)=>dataObj.countryList),
+      switchMap((countriesList)=>this.generalStaticDataService.getCountriesList(countriesList)),
+      takeUntil(this.destroy$)
+    );
     this.configService.readAppConfig<ISigninConfig>()
       .pipe(takeUntil(this.destroy$))
       .subscribe((conf) => {
@@ -69,7 +73,6 @@ export class SignIn2Component implements OnInit, OnDestroy {
         this.initForm();
       });
     // todo: make this a input
-    this.countriesList$ = this.generalStaticDataService.getCountriesList(this.countriesList).pipe(takeUntil(this.destroy$));
     const token = this.authService.getAppAccessToken();
     if (token) {
       this.appAccessTokenFetched = true;
