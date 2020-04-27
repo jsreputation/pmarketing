@@ -5,7 +5,7 @@ import { MatFormFieldModule, MatInputModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthenticationService } from '@perxtech/core';
+import {AuthenticationService, ProfileService} from '@perxtech/core';
 import { Type } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
@@ -16,7 +16,8 @@ describe('ChangePasswordComponent', () => {
   let fixture: ComponentFixture<ChangePasswordComponent>;
 
   const authenticationServiceStub: Partial<AuthenticationService> = {
-    requestVerificationToken: () => of()
+    requestVerificationToken: () => of(),
+    login: () => of()
   };
 
   beforeEach(async(() => {
@@ -32,6 +33,7 @@ describe('ChangePasswordComponent', () => {
         TranslateModule.forRoot()
       ],
       providers: [
+        { provide: ProfileService, useValue: { whoAmI: () => of(true) }},
         { provide: AuthenticationService, useValue: authenticationServiceStub }
       ]
     })
@@ -57,22 +59,20 @@ describe('ChangePasswordComponent', () => {
     expect(spy).not.toHaveBeenCalled();
   });
 
-  it('should call requestVerificationToken when password matches', fakeAsync(() => {
+  it('should call login when password old is correct and password matches', fakeAsync(() => {
     component.changePasswordForm.controls.oldPassword.setValue(1234);
     component.changePasswordForm.controls.newPassword.setValue(123);
     component.changePasswordForm.controls.confirmPassword.setValue(123);
-    const authenticationService = TestBed.get<AuthenticationService>(AuthenticationService as Type<AuthenticationService>);
-    const authenticationServiceSpy = spyOn(authenticationService, 'requestVerificationToken').and.returnValue(
-      of({
-        message: 'success'
-      })
-    );
-
     const router: Router = TestBed.get<Router>(Router as Type<Router>);
-    const routerSpy = spyOn(router, 'navigateByUrl');
+    const authenticationService = TestBed.get<AuthenticationService>(AuthenticationService as Type<AuthenticationService>);
+    const authenticationServiceSpy = spyOn(authenticationService, 'login').and.returnValue({
+      pipe: () => of(router.navigateByUrl('/otp/password')
+      )
+    });
+    spyOn(router, 'navigateByUrl').and.stub();
     component.onSubmit();
     tick();
     expect(authenticationServiceSpy).toHaveBeenCalled();
-    expect(routerSpy).toHaveBeenCalled();
+    expect(router.navigateByUrl).toHaveBeenCalled();
   }));
 });
