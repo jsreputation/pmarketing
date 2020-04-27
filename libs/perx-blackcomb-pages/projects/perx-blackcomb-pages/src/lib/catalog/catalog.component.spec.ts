@@ -8,6 +8,7 @@ import { of } from 'rxjs';
 import { CatalogComponent } from './catalog.component';
 import { CatalogRewardCardComponent } from '../catalog-reward-card/catalog-reward-card.component';
 import { HttpClientModule } from '@angular/common/http';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('CatalogComponent', () => {
   let component: CatalogComponent;
@@ -48,7 +49,8 @@ describe('CatalogComponent', () => {
         MatMenuModule,
         MatCardModule,
         UtilsModule,
-        HttpClientModule
+        HttpClientModule,
+        TranslateModule.forRoot()
       ]
     })
       .compileComponents();

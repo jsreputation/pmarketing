@@ -33,6 +33,12 @@
     "PASSWORD_REQUIRED_TXT": "請輸入密碼",
     "CONFIRM_PASSWORD_FIELD": "再次輸入密碼",
     "CONFIRM_PASSWORD_INVALID_TXT": "密碼不符",
+    "UNKNOWN_ERROR_TXT": "發生未知錯誤。",
+    "INFORMATION_UPDATE": "用戶信息更新成功。",
+    "INFORMATION_UPDATE_FAIL": "用戶信息更新失敗，請再試一次。",
+    "ALERT_TITLE": "提醒：如果您不同意此條款，則您將沒有資格參加LIFE Dojo幸運抽獎。",
+    "ALERT_BTN_TXT": "確認",
+    "ALERT_BTN_TXT2": "取消",
     "NICKNAME_FIELD": "用戶名稱",
     "NICKNAME_REQUIRED_TXT": "請輸入用戶名稱",
     "REFERRAL_FIELD": "推薦號碼（如適用）",
@@ -46,6 +52,7 @@
     "FULL_NAME_HKID_REQUIRED_TXT": "請輸入姓名",
     "HKID_DIGITS_TXT": "身份證號碼頭四位",
     "HKID_DIGITS_REQUIRED_TXT": "請輸入身份證號碼",
+    "HKID_DIGITS_INVALID_TXT": "無效的身份證號碼。應該是4位數字",
     "CHECKBOX_LUCK_TXT": "本人同意滙豐保險儲存本人的個人資料作未來的直接巿場推廣用途。詳情請參閱",
     "CHECKBOX_LUCK_POPUP_TXT": "如果您不同意這項條款，您將不會符合參加抽獎的資格。 您是否確認繼續？",
     "BUTTON_SUBMIT": "遞交"
@@ -56,6 +63,10 @@
     "ERROR_TXT": "確認密碼錯誤",
     "ERROR_LINK": "重新傳送確認密碼",
     "CTA_TXT": "繼續",
+    "RESEND_TXT": "確認密碼已重新發送",
+    "POPUP_TITLE": "密碼已更改！",
+    "POPUP_TXT": "您可以使用新密碼登錄",
+    "POPUP_BTN_TXT": "返回主頁",
     "CTA_TXT_SUCCESS": "成功登記用戶"
   },
   "LOGIN_PAGE": {
@@ -74,6 +85,8 @@
     "PASSWORD_INVALID_TXT": "密碼錯誤",
     "PASSWORD_REQUIRED_TXT": "請輸入密碼",
     "FORGET_PASSWORD_TXT": "忘記密碼？",
+    "POPUP_TITLE": "無法連接服務器",
+    "POPUP_TXT": "請稍後再試",
     "CTA_TXT": "登入"
   },
   "FORGET_PW_PAGE": {
@@ -94,6 +107,7 @@
     "CONFIRM_PASSWORD_INVALID_TXT": "密碼不符",
     "CTA_SAVE_TXT": "儲存",
     "CTA_SUCCESS_TXT": "成功更新密碼",
+    "SERVER_ERROR_TXT": "無法連接服務器",
     "PASSWORD_TOO_SHORT_TXT": "密碼太短"
   },
   "QUIZ_TITLE": "問答遊戲",
@@ -139,7 +153,12 @@
     "TITLE": "輸入密碼",
     "DESCRIPTION": "請將這個屏幕交給員工以便輸入密碼並換領您的獎品",
     "WRONG_PIN": "密碼錯誤",
-    "SUCCESSFUL_REDEMPTION": "成功換領獎品",
+    "CODE_INSTRUCTION_TXT": "在商家兌換獎勵時，請輸入此代碼",
+    "SUCCESSFUL_REDEMPTION_TITLE": "成功換領獎品",
+    "SUCCESSFUL_REDEMPTION_TXT": "您已兌換{{reward}}",
+    "UNKNOWN_ERROR_TXT": "發生未知錯誤，請稍後重試",
+    "FAIL_REDEMPTION_TXT": "抱歉!憑證兌換失敗。",
+    "BACK_TO_WALLET": "回到錢包頁面",
     "CTA_TXT": "取消"
   },
   "PROMO_CODE": {
@@ -207,6 +226,10 @@
     "SEE_LESS": "關閉查看",
     "REWARDS_LEFT": "剩餘{{rewardsCount}}獎勵",
     "READ_MORE": "查看更多"
+  },
+  "NEWS_FEED": {
+    "BTN_1": "開始遊戲",
+    "CONTENT_1": "卡片的簡短文字說明，然後是號召性用語按鈕。"
   },
   "WEEK1_CAMPAIGN_EASY": {
     "TITLE": "",

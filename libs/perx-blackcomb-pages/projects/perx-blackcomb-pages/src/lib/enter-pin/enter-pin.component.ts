@@ -10,9 +10,9 @@ import {
   PopUpClosedCallBack,
   ThemesService,
   ITheme,
-  IMessageResponse,
   GeneralStaticDataService,
-  ICountryCode
+  ICountryCode,
+  IPopupConfig
 } from '@perxtech/core';
 import { filter, map } from 'rxjs/operators';
 
@@ -35,6 +35,11 @@ export class EnterPinComponent implements PopUpClosedCallBack {
   public subHeading: string;
   public userPhone: string | undefined;
   public countriesList: ICountryCode[];
+  private popupTxt: IPopupConfig;
+  private resendOTPTxt: string;
+  private wrongOTP: string;
+  private successRegister: string;
+
 
   public theme: ITheme;
 
@@ -68,10 +73,9 @@ export class EnterPinComponent implements PopUpClosedCallBack {
         } else if (this.pinMode === PinMode.register) {
           this.getMobileNumberFromNavigation();
         }
-        this.translate.get('OTP_PAGE.DESCRIPTION').subscribe((text) => {
-          this.subHeading = text;
-        });
       });
+
+    this.initTranslate();
 
     this.themeService.getThemeSetting()
       .subscribe((th: ITheme) => this.theme = th);
@@ -115,21 +119,21 @@ export class EnterPinComponent implements PopUpClosedCallBack {
       this.authService.changePassword(this.changePasswordData).subscribe(
         () => {
           this.notificationService.addPopup({
-            text: 'You can log in with new password',
-            title: 'Password Changed!',
-            buttonTxt: 'Back to Home',
+            text: this.popupTxt.text,
+            title: this.popupTxt.title,
+            buttonTxt: this.popupTxt.buttonTxt,
             imageUrl: 'assets/congrats_image.png',
             afterClosedCallBack: this
           });
         },
-        err => {
-          this.notificationService.addSnack(err.statusText);
+        () => {
+          this.notificationService.addSnack(this.wrongOTP);
         });
     } else if (this.pinMode === PinMode.register && this.userPhone) {
       this.authService.verifyOTP(this.userPhone, enteredPin)
         .subscribe(
-          (response: IMessageResponse) => {
-            this.notificationService.addSnack(response.message);
+          () => {
+            this.notificationService.addSnack(this.successRegister);
             const country = this.countriesList.find(
               countryCodeO => `+${this.userPhone}`.startsWith(countryCodeO.code)
             ) || null;
@@ -141,7 +145,7 @@ export class EnterPinComponent implements PopUpClosedCallBack {
             }
             this.router.navigate(['login'], { state: { phoneNumber, countryCode } });
           },
-          err => this.notificationService.addSnack(err.error.message)
+          () => this.notificationService.addSnack(this.wrongOTP)
         );
     }
   }
@@ -150,19 +154,9 @@ export class EnterPinComponent implements PopUpClosedCallBack {
     if (!this.userPhone) {
       return;
     }
-    switch (this.pinMode) {
-      case PinMode.register:
-        this.authService.resendOTP(this.userPhone).subscribe(
-          (res) => this.notificationService.addSnack(res.message)
-        );
-        break;
-      case PinMode.password:
-        this.authService.resendOTP(this.userPhone)
-          .subscribe(
-            (res) => this.notificationService.addSnack(res.message)
-          );
-        break;
-    }
+    this.authService.resendOTP(this.userPhone).subscribe(
+      () => this.notificationService.addSnack(this.resendOTPTxt)
+    );
   }
 
   public dialogClosed(): void {
@@ -179,5 +173,28 @@ export class EnterPinComponent implements PopUpClosedCallBack {
       }
     }
     return encodedString;
+  }
+
+  private initTranslate(): void {
+    this.translate.get('OTP_PAGE.DESCRIPTION').subscribe((text) => {
+      this.subHeading = text;
+    });
+    this.translate.get('OTP_PAGE.RESEND_TXT').subscribe((text) => {
+      this.resendOTPTxt = text;
+    });
+    this.translate.get('OTP_PAGE.ERROR_TXT').subscribe((text) => {
+      this.wrongOTP = text;
+    });
+    this.translate.get('OTP_PAGE.CTA_TXT_SUCCESS').subscribe((text) => {
+      this.successRegister = text;
+    });
+    this.translate.get(['OTP_PAGE.POPUP_TITLE', 'OTP_PAGE.POPUP_TXT', 'OTP_PAGE.POPUP_BTN_TXT']).subscribe((res) => {
+      this.popupTxt = {
+        title: res['OTP_PAGE.POPUP_TITLE'],
+        text: res['OTP_PAGE.POPUP_TXT'],
+        buttonTxt: res['OTP_PAGE.POPUP_BTN_TXT'],
+      };
+    });
+
   }
 }

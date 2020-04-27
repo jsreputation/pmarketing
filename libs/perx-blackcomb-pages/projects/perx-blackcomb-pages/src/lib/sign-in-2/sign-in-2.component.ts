@@ -126,15 +126,19 @@ export class SignIn2Component implements OnInit, OnDestroy {
           this.loading = false;
           if (err instanceof HttpErrorResponse) {
             if (err.status === 0) {
-              this.notificationService.addPopup({
-                title: 'We could not reach the server',
-                text: 'Please try again soon'
-              });
-            } else if (err.status === 401) {
+              this.translate.get(['LOGIN_PAGE.POPUP_TITLE', 'LOGIN_PAGE.POPUP.TXT'])
+                .subscribe(res => {
+                  this.notificationService.addPopup({
+                    title: res['LOGIN_PAGE.POPUP_TITLE'],
+                    text: res['LOGIN_PAGE.POPUP_TXT']
+                  });
+                });
+            } else if (err.status === 401 || err.status === 403) {
               this.translate.get('LOGIN_PAGE.INVALID_CREDENTIALS')
                 .subscribe(t => this.errorMessage = t);
             } else {
-              this.errorMessage = err.error || 'Invalid Credentials';
+              this.translate.get('LOGIN_PAGE.INVALID_CREDENTIALS')
+                .subscribe(t => this.errorMessage = err.error || t);
             }
           } else {
             this.errorMessage = err;

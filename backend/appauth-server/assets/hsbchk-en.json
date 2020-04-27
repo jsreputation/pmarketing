@@ -33,6 +33,12 @@
     "PASSWORD_REQUIRED_TXT": "Please input a password",
     "CONFIRM_PASSWORD_FIELD": "Confirm password",
     "CONFIRM_PASSWORD_INVALID_TXT": "Passwords do not match",
+    "UNKNOWN_ERROR_TXT": "Unknown error occured.",
+    "INFORMATION_UPDATE": "Information Updated.",
+    "INFORMATION_UPDATE_FAIL": "Information Update failed. Please try again.",
+    "ALERT_TITLE": "Reminder: If you do not agree with this term, you will not be eligible to join the LIFE Dojo lucky draw.",
+    "ALERT_BTN_TXT": "Confirm",
+    "ALERT_BTN_TXT2": "Cancel",
     "NICKNAME_FIELD": "Nickname",
     "NICKNAME_REQUIRED_TXT": "Please input a nickname",
     "REFERRAL_FIELD": "Referral code (optional)",
@@ -46,6 +52,7 @@
     "FULL_NAME_HKID_REQUIRED_TXT": "Please enter your full name",
     "HKID_DIGITS_TXT": "HKID (first 4 digits)",
     "HKID_DIGITS_REQUIRED_TXT": "Please enter your HKID",
+    "HKID_DIGITS_INVALID_TXT": "Invalid id. It should be 4 digits",
     "CHECKBOX_LUCK_TXT": "I agree HSBC Life to save my personal information for the Lucky Draw and future direct marketing purpose. For details, please refer to the",
     "CHECKBOX_LUCK_POPUP_TXT": "If you do not agree with this term, you will not be eligible to join the LIFE Dojo lucky draw. Do you want to confirm?",
     "BUTTON_SUBMIT": "Submit"
@@ -56,6 +63,10 @@
     "ERROR_TXT": "Incorrect OTP",
     "ERROR_LINK": "Resend OTP",
     "CTA_TXT": "Next",
+    "RESEND_TXT": "Verification code has been resent",
+    "POPUP_TITLE": "Password Changed!",
+    "POPUP_TXT": "You can log in with new password",
+    "POPUP_BTN_TXT": "Back to Home",
     "CTA_TXT_SUCCESS": "Account successfully created"
   },
   "LOGIN_PAGE": {
@@ -74,6 +85,8 @@
     "PASSWORD_INVALID_TXT": "Password incorrect",
     "PASSWORD_REQUIRED_TXT": "Please input a password",
     "FORGET_PASSWORD_TXT": "Forgot password?",
+    "POPUP_TITLE": "We could not reach the server",
+    "POPUP_TXT": "Please try again soon",
     "CTA_TXT": "Log in"
   },
   "FORGET_PW_PAGE": {
@@ -94,6 +107,7 @@
     "CHECK_YOUR_SMS": "Check your sms",
     "PASSWORD_REQUIRED_TXT": "Please input a password",
     "CONFIRM_PASSWORD_INVALID_TXT": "Passwords do not match",
+    "SERVER_ERROR_TXT": "We could not reach the server",
     "PASSWORD_TOO_SHORT_TXT": "Password is too short"
   },
   "NAVIGATION": {
@@ -138,7 +152,12 @@
     "TITLE": "Input PIN",
     "DESCRIPTION": "Please present this screen to the cashier to enter the PIN code and redeem your reward.",
     "WRONG_PIN": "Incorrect PIN",
-    "SUCCESSFUL_REDEMPTION": "Reward successfully redeemed",
+    "CODE_INSTRUCTION_TXT": "Please input this code when redeeming your reward at the Merchant",
+    "SUCCESSFUL_REDEMPTION_TITLE": "Reward successfully redeemed",
+    "SUCCESSFUL_REDEMPTION_TXT": "You have redeemed {{reward}}",
+    "UNKNOWN_ERROR_TXT": "Unknown error occur, please try again later",
+    "FAIL_REDEMPTION_TXT": "Sorry! Voucher redemption failed.",
+    "BACK_TO_WALLET": "Back to wallet",
     "CTA_TXT": "Cancel"
   },
   "PROMO_CODE": {
@@ -206,6 +225,10 @@
     "SEE_LESS": "See less",
     "REWARDS_LEFT": "{{rewardsCount}} Rewards Left",
     "READ_MORE": "Read More"
+  },
+  "NEWS_FEED": {
+    "BTN_1": "Play now",
+    "CONTENT_1": "A small text description for the card followed by a call to action button."
   },
   "WEEK1_CAMPAIGN_EASY": {
     "TITLE": "White Belt (Easy)",

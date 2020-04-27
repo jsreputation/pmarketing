@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -30,9 +31,10 @@ export class SignUpComponent extends ISignUpComponent implements OnInit, OnDestr
     protected notificationService: NotificationService,
     private generalStaticDataService: GeneralStaticDataService,
     private configService: ConfigService,
-    protected dialog: MatDialog
+    protected dialog: MatDialog,
+    protected translate: TranslateService
   ) {
-    super(fb, router, themesService, authService, notificationService, dialog);
+    super(fb, router, themesService, authService, notificationService, dialog, translate);
     this.getAppToken();
   }
 
