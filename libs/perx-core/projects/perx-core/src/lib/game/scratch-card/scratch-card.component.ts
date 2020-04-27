@@ -8,7 +8,7 @@ import {
   EventEmitter,
   OnInit
 } from '@angular/core';
-import { patchUrl } from '../../utils/patch-url.function';
+import { loadImage } from '../../utils/load-image.function';
 
 interface Coords {
   x: number;
@@ -24,7 +24,7 @@ const RADIUS: number = 10;
 })
 export class ScratchCardComponent implements AfterViewInit, OnInit {
   @Input()
-  public coverImg: string;
+  public coverImg: string | undefined;
 
   @Input()
   public underlyingImg: string;
@@ -108,27 +108,22 @@ export class ScratchCardComponent implements AfterViewInit, OnInit {
   public ngAfterViewInit(): void {
     this.generateCanvas();
 
-    const image: HTMLImageElement = new Image();
-    this.brush = new Image();
-    const container = this.scContainer.nativeElement;
-
-    // the crossOrigin flag needs to be setup before src otherwise it is too late
-    image.crossOrigin = 'Anonymous';
-    if (this.coverImg) {
-      image.src = patchUrl(this.coverImg);
-    }
     const canvas2dContext = this.canvas.getContext('2d');
-    image.onload = () => {
-      if (this.canvas && canvas2dContext) {
-        canvas2dContext.imageSmoothingEnabled = false;
+    if (this.canvas && canvas2dContext && this.coverImg) {
+      canvas2dContext.imageSmoothingEnabled = false;
+      loadImage(this.coverImg).then(image => {
+        const container = this.scContainer.nativeElement;
+        // @ts-ignore
         canvas2dContext.drawImage(image, 0, 0, container.offsetWidth, container.offsetHeight);
-      }
-      // Show the form when Image is loaded.
-      this.underImg.nativeElement.style.visibility = 'visible';
-    };
+        // Show the below image when cover is loaded.
+        this.underImg.nativeElement.style.visibility = 'visible';
+      });
+    }
 
+    this.brush = new Image();
     this.brush.crossOrigin = 'anonymous';
     this.brush.src = ScratchCardComponent.brush;
+
     if (this.canvas) {
       this.canvas.addEventListener('mousedown', this.handleMouseDown.bind(this), false);
       this.canvas.addEventListener('touchstart', this.handleMouseDown.bind(this), false);
