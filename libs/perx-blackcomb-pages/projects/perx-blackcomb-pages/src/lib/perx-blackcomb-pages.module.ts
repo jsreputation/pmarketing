@@ -63,7 +63,7 @@ import { WalletHistoryComponent } from './wallet-history/wallet-history.componen
 import { ProfileComponent } from './profile/profile.component';
 import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
-import { EnterPinComponent } from './enter-pin/enter-pin.component';
+import { EnterPinModule } from './enter-pin/enter-pin.module';
 import { RewardsBookingComponent } from './rewards-booking/rewards-booking.component';
 import { ProfileBarcodeComponent } from './profile-barcode/profile-barcode.component';
 import { EditProfileFieldComponent } from './edit-profile-field/edit-profile-field.component';
@@ -104,7 +104,6 @@ const comps: any[] = [
   TransactionHistoryComponent,
   ProfileComponent,
   ChangePasswordComponent,
-  EnterPinComponent,
   RewardsBookingComponent,
   ProfileBarcodeComponent,
   EditProfileFieldComponent,
@@ -161,6 +160,7 @@ const comps: any[] = [
     QuizModule,
     ProfileModule,
     RankModule,
+    EnterPinModule,
     ForgotPasswordModule,
     SignIn2Module,
   ],

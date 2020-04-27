@@ -32,6 +32,7 @@ export { ProfileComponent } from './lib/profile/profile.component';
 export { TransactionHistoryComponent } from './lib/transaction-history/transaction-history.component';
 export { ChangePasswordComponent } from './lib/change-password/change-password.component';
 export { EnterPinComponent } from './lib/enter-pin/enter-pin.component';
+export { EnterPinModule } from './lib/enter-pin/enter-pin.module';
 export { RewardsBookingComponent } from './lib/rewards-booking/rewards-booking.component';
 export { ProfileBarcodeComponent } from './lib/profile-barcode/profile-barcode.component';
 export { EditProfileFieldComponent } from './lib/edit-profile-field/edit-profile-field.component';
