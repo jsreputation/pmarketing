@@ -9,6 +9,7 @@ import {
 import {
   combineLatest,
   Observable,
+  zip,
 } from 'rxjs';
 import {
   GameType,
@@ -54,7 +55,7 @@ export class CampaignsCollectionComponent implements OnInit {
   constructor(
     private translate: TranslateService,
     private gamesService: IGameService,
-    private quizService: QuizService
+    private quizService: QuizService,
   ) { }
 
 
@@ -65,9 +66,21 @@ export class CampaignsCollectionComponent implements OnInit {
 
     this.campaigns$.pipe(
       tap((campaigns: ICampaign[]) => this.campaigns = campaigns),
+      switchMap(
+        (campaigns: ICampaign[]) => zip(...campaigns.map(campaign => this.quizService.getRewardFromCampaign(campaign.id)
+        ))
+      ),
+      tap((rewardsArr: { count: number; campaignId: number }[]) => {
+        if (this.gameType === GameType.quiz) {
+          const rewardsCampaignIndexedObj = rewardsArr.reduce((acc, curr) => ({
+            ...acc, [curr.campaignId]: curr.count
+          }), {});
+          this.campaigns = this.campaigns.map(campaign => ({...campaign, rewardsCount: rewardsCampaignIndexedObj[campaign.id]}));
+        }
+      }),
       // for each campaign, fetch associated games to figure out completion
-      switchMap((campaigns: ICampaign[]) => combineLatest([
-        ...campaigns.map((campaign: ICampaign) => {
+      switchMap(() => combineLatest([
+        ...this.campaigns.map((campaign: ICampaign) => {
           if (this.gameType === GameType.quiz) {
             return this.quizService.getQuizFromCampaign(campaign.id);
           }

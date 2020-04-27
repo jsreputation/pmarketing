@@ -135,6 +135,10 @@ interface V4GamesResponse {
   };
 }
 
+export type countObject = {
+  count: number;
+};
+
 @Injectable({
   providedIn: 'root'
 })
@@ -149,6 +153,14 @@ export class V4QuizService implements QuizService {
       (config: IConfig<void>) => {
         this.baseUrl$.next(config.apiHost);
       });
+  }
+
+  public getRewardFromCampaign(campaignId: number): Observable<{ count: number; campaignId: number }> {
+    return this.baseUrl$.pipe(
+      switchMap(baseUrl => this.http.get(`${baseUrl}/v4/campaigns/${campaignId}/voucher_count`)),
+      map((res: {data: countObject}) => res.data),
+      map((countObj: countObject) => ({...countObj, campaignId})),
+    );
   }
 
   public getQuizFromCampaign(campaignId: number, lang: string = 'en'): Observable<IQuiz> {
