@@ -1,11 +1,6 @@
 import { NgModule } from '@angular/core';
-import { WalletComponent, PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
-import { SharedModule } from '../shared/shared.module';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { VouchersModule, PuzzlesModule } from '@perxtech/core';
-import { TranslateModule } from '@ngx-translate/core';
-import {InfiniteScrollModule} from 'ngx-infinite-scroll';
+import { WalletComponent, WalletModule as BCPWalletModule } from '@perxtech/blackcomb-pages';
 
 const routes: Routes = [{
   path: '',
@@ -14,14 +9,8 @@ const routes: Routes = [{
 
 @NgModule({
   imports: [
-    SharedModule,
-    CommonModule,
-    PerxBlackcombPagesModule,
-    RouterModule.forChild(routes),
-    VouchersModule,
-    TranslateModule,
-    InfiniteScrollModule,
-    PuzzlesModule
+    BCPWalletModule,
+    RouterModule.forChild(routes)
   ]
 })
 export class WalletModule { }

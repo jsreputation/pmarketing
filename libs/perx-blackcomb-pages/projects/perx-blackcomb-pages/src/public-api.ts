@@ -24,6 +24,7 @@ export { VoucherDetailComponent } from './lib/voucher-detail/voucher-detail.comp
 export { SurveyComponent } from './lib/survey/survey.component';
 export { StampCardComponent } from './lib/stamp-card/stamp-card.component';
 export { WalletComponent } from './lib/wallet/wallet.component';
+export { WalletModule } from './lib/wallet/wallet.module';
 export { GamesCollectionComponent } from './lib/home/games-collection/games-collection.component';
 export { CampaignsCollectionComponent } from './lib/home/campaigns-collection/campaigns-collection.component';
 export { SignUpComponent } from './lib/sign-up/sign-up.component';
