@@ -2,7 +2,9 @@ import { Component, Input, HostListener, OnInit } from '@angular/core';
 import { FeedItem } from '../feed-reader.service';
 import { MatDialog } from '@angular/material';
 import { FeedItemPopupComponent } from '../feed-item-popup/feed-item-popup.component';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-core-newsfeed',
@@ -22,6 +24,7 @@ export class NewsfeedComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
+    private translate: TranslateService
   ) { }
 
   public ngOnInit(): void {
@@ -48,19 +51,33 @@ export class NewsfeedComponent implements OnInit {
   }
 
   public readMore(item: FeedItem): void {
-    this.dialog.open(FeedItemPopupComponent, {
-      panelClass: 'app-full-bleed-dialog',
-      data: { ...item, ...(this.showButton ? {} : { hideButton: true }) },
-      height: '85vh',
-      minWidth: '35.5rem',
-      maxWidth: '94vw'
+    this.translate.get([item.title || '', item.description || '']).subscribe(res => {
+      this.dialog.open(FeedItemPopupComponent, {
+        panelClass: 'app-full-bleed-dialog',
+        data: {
+          ...item,
+          ...(this.showButton ? {} : { hideButton: true }),
+          title: item.title ? res[item.title] : '',
+          description: item.description ? res[item.description] : ''
+        },
+        height: '85vh',
+        minWidth: '35.5rem',
+        maxWidth: '94vw'
+      });
     });
   }
 
-  public getFirstLine(text: string): string {
-    const lines = text.match(/[^\r\n]+/g) || [];
-    const firstLineContent = lines && lines.length > 0 ? lines[0] : '';
-    return firstLineContent.length > 120 ? `${firstLineContent.slice(0, 120)}...` : firstLineContent;
+  public getFirstLineShortTxt(text: string): Observable<string> {
+    if (!text) {
+      return of('');
+    }
+    return this.translate.get(text).pipe(
+      map(txt => {
+        const lines = txt.match(/[^\r\n]+/g) || [];
+        const firstLine = lines && lines.length > 0 ? lines[0] : '';
+        return firstLine.length > 120 ? `${firstLine.slice(0, 120)}...` : firstLine;
+      })
+    );
   }
 
 }
