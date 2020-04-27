@@ -21,7 +21,7 @@ import {
 import { Observable, of } from 'rxjs';
 import { ForgotPasswordComponent } from './forgot-password.component';
 
-class ActivatedRouteMock implements Partial<ActivatedRoute>{
+class ActivatedRouteMock implements Partial<ActivatedRoute> {
   public get queryParams(): Observable<Params> {
     return of();
   }

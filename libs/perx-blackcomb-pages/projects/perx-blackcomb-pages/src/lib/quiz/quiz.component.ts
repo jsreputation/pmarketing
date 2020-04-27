@@ -259,7 +259,9 @@ export class QuizComponent implements OnInit, OnDestroy {
     const quizId = this.quizId;
     if (quizId === null) {
       console.error('cannot fetch move without quiz id', this.quiz);
-      this.notificationService.addSnack('This quiz is currently unavailable. Sorry for the inconvenience');
+      this.translate.get('QUIZ_TEMPLATE.NOT_AVAILABLE_TXT').subscribe(text =>
+        this.notificationService.addSnack(text)
+      );
       this.router.navigate(['/home']);
       return;
     }

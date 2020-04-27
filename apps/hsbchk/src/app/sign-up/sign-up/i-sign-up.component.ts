@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidatorFn } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -9,7 +10,8 @@ import {
   ThemesService,
   equalityValidator,
   emailValidator,
-  PopupComponent
+  PopupComponent,
+  IPopupConfig
 } from '@perxtech/core';
 import { Observable, Subject, combineLatest } from 'rxjs';
 import { distinctUntilChanged, takeUntil, startWith } from 'rxjs/operators';
@@ -23,6 +25,9 @@ export abstract class ISignUpComponent implements OnDestroy {
   protected destroy$: Subject<void> = new Subject();
   public theme: Observable<ITheme>;
   public countryCodePrefix: string | undefined;
+  private passwordNotMatch: string;
+  private unknownErrorTxt: string;
+  private agreeTNCAlertData: IPopupConfig;
 
   protected abstract get mobileNumber(): string;
 
@@ -32,8 +37,11 @@ export abstract class ISignUpComponent implements OnDestroy {
     protected themesService: ThemesService,
     protected authService: AuthenticationService,
     protected notificationService: NotificationService,
-    protected dialog: MatDialog
-  ) { }
+    protected dialog: MatDialog,
+    protected translate: TranslateService
+  ) {
+    this.initTranslate();
+  }
 
   public ngOnDestroy(): void {
     this.destroy$.next();
@@ -137,7 +145,7 @@ export abstract class ISignUpComponent implements OnDestroy {
     const confirmPassword = this.signupForm.value.confirmPassword;
     // should not be necessary now that we use equalityValidator on the form
     if (passwordString !== confirmPassword) {
-      this.errorMessage = 'Passwords do not match';
+      this.errorMessage = this.passwordNotMatch;
       return;
     }
 
@@ -170,7 +178,7 @@ export abstract class ISignUpComponent implements OnDestroy {
         this.router.navigateByUrl('otp/register', { state: { mobileNo: mobileNumber } });
       },
       err => {
-        this.notificationService.addSnack(err.error.message || 'Unexpected error');
+        this.notificationService.addSnack(err.error.message || this.unknownErrorTxt);
         this.loadingSubmit = false;
       }
     );
@@ -178,7 +186,7 @@ export abstract class ISignUpComponent implements OnDestroy {
 
   public onSubmit(): void {
     if (!this.appAccessTokenFetched) {
-      this.errorMessage = 'Unknown error occured.';
+      this.errorMessage = this.unknownErrorTxt;
       return;
     }
     if (!this.signupForm.valid) {
@@ -191,11 +199,7 @@ export abstract class ISignUpComponent implements OnDestroy {
       this.fetchFormDataAndSend();
     } else {
       this.dialog.open(PopupComponent, {
-        data: {
-          title: 'Reminder: If you do not agree with this term, you will not be eligible to join the LIFE Dojo lucky draw. ',
-          buttonTxt: 'Confirm',
-          buttonTxt2: 'Cancel'
-        }
+        data: this.agreeTNCAlertData
       })
         .afterClosed()
         .subscribe((result) => {
@@ -204,5 +208,23 @@ export abstract class ISignUpComponent implements OnDestroy {
           }
         });
     }
+  }
+
+  private initTranslate(): void {
+    this.translate.get('SIGN_UP_PAGE.CONFIRM_PASSWORD_INVALID_TXT').subscribe(text =>
+      this.passwordNotMatch = text);
+    this.translate.get('SIGN_UP_PAGE.UNKNOWN_ERROR_TXT').subscribe(text =>
+      this.unknownErrorTxt = text);
+    this.translate.get([
+      'SIGN_UP_PAGE.ALERT_TITLE',
+      'SIGN_UP_PAGE.ALERT_BTN_TXT',
+      'SIGN_UP_PAGE.ALERT_BTN_TXT2'
+    ]).subscribe(res => {
+      this.agreeTNCAlertData = {
+        title: res['SIGN_UP_PAGE.ALERT_TITLE'],
+        buttonTxt: res['SIGN_UP_PAGE.ALERT_BTN_TXT'],
+        buttonTxt2: res['SIGN_UP_PAGE.ALERT_BTN_TXT2'],
+      };
+    });
   }
 }

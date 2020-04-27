@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import {
@@ -29,7 +30,8 @@ export class LuckyDrawDetailsComponent implements OnInit, OnDestroy {
     // private router: Router,
     private authService: AuthenticationService,
     private profileService: ProfileService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private translate: TranslateService
   ) {
     this.getAppToken();
     this.initForm();
@@ -83,7 +85,9 @@ export class LuckyDrawDetailsComponent implements OnInit, OnDestroy {
     // also precondition when you sign up custom properties related to lucky draw is alrdy there
     // therefore setCustomProperties can patch those keys
     if (!this.appAccessTokenFetched) {
-      this.errorMessage = 'Unknown error occured.';
+      this.translate.get('SIGN_UP_PAGE.UNKNOWN_ERROR_TXT').subscribe(text =>
+        this.errorMessage = text
+      );
       return;
     }
     const fullName = this.luckdrawForm.value.fullName;
@@ -96,10 +100,16 @@ export class LuckyDrawDetailsComponent implements OnInit, OnDestroy {
     };
 
     this.profileService.setCustomProperties(luckyDrawData).subscribe(
-      () => this.notificationService.addSnack('Information Updated.'),
+      () => {
+        this.translate.get('SIGN_UP_PAGE.INFORMATION_UPDATE').subscribe(text =>
+          this.notificationService.addSnack(text)
+        );
+      },
       err => {
         console.error(`${err.error.message}`);
-        this.notificationService.addSnack('Error Updating Profile');
+        this.translate.get('SIGN_UP_PAGE.INFORMATION_UPDATE_FAIL').subscribe(text =>
+          this.notificationService.addSnack(text)
+        );
       });
   }
 }
