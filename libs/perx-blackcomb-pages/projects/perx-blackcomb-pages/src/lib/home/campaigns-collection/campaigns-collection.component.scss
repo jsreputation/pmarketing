@@ -49,6 +49,23 @@ mat-card {
       margin: 0;
     }
   }
+
+  .quiz {
+    display: flex;
+    justify-content: space-between;
+    background-color: #e7e7e7;
+
+    .main-reward-title {
+      font-weight: 500;
+      font-size: 1.8rem;
+    }
+
+    .bold-red {
+      font-weight: 500;
+      font-size: 2.3rem;
+      color: #d90a1e;
+    }
+  }
 }
 
 .flex-for-button {
