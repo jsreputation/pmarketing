@@ -45,7 +45,6 @@ import { LoadingComponent } from './loading/loading.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { QRCodeModule } from 'angularx-qrcode';
 import { NgxBarcodeModule } from 'ngx-barcode';
-import { SignIn2Component } from './sign-in-2/sign-in-2.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { QRComponent } from './qr/qr.component';
 import { RedeemComponent } from './redeem/redeem.component';
@@ -80,6 +79,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { ReferralComponent } from './referral/referral.component';
 import { LeaderboardPageComponent } from './leaderboard-page/leaderboard-page.component';
+import { SignIn2Module } from './sign-in-2/sign-in-2.module';
 
 const comps: any[] = [
   AccountComponent,
@@ -89,7 +89,6 @@ const comps: any[] = [
   RewardComponent,
   LoadingComponent,
   RedeemComponent,
-  SignIn2Component,
   SignInComponent,
   QRComponent,
   RewardDetailsComponent,
@@ -162,7 +161,8 @@ const comps: any[] = [
     MatDialogModule,
     QuizModule,
     ProfileModule,
-    RankModule
+    RankModule,
+    SignIn2Module
   ],
   exports: [
     ...comps,

@@ -14,6 +14,7 @@ export { HistoryComponent } from './lib/history/history.component';
 export { HomeComponent } from './lib/home/home.component';
 export { RewardComponent } from './lib/reward/reward.component';
 export { SignIn2Component } from './lib/sign-in-2/sign-in-2.component';
+export { SignIn2Module } from './lib/sign-in-2/sign-in-2.module';
 export { SignInComponent } from './lib/sign-in/sign-in.component';
 export { QRComponent } from './lib/qr/qr.component';
 export { RedeemComponent } from './lib/redeem/redeem.component';
