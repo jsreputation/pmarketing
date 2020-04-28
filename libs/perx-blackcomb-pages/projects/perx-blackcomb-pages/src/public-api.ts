@@ -1,6 +1,7 @@
 export { LoadingComponent } from './lib/loading/loading.component';
 export { PerxBlackcombPagesModule } from './lib/perx-blackcomb-pages.module';
 export { AccountComponent } from './lib/account/account.component';
+export { AccountModule } from './lib/account/account.module';
 export { ContentComponent } from './lib/content/content.component';
 export { GameComponent } from './lib/game/game.component';
 export { GameModule } from './lib/game/game.module';
