@@ -60,7 +60,6 @@ import { HomeComponent } from './home/home.component';
 import { GamesCollectionComponent } from './home/games-collection/games-collection.component';
 import { CampaignsCollectionComponent } from './home/campaigns-collection/campaigns-collection.component';
 import { WalletHistoryComponent } from './wallet-history/wallet-history.component';
-import { ProfileComponent } from './profile/profile.component';
 import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { EnterPinModule } from './enter-pin/enter-pin.module';
@@ -80,6 +79,7 @@ import { ReferralComponent } from './referral/referral.component';
 import { LeaderboardPageComponent } from './leaderboard-page/leaderboard-page.component';
 import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
 import { SignIn2Module } from './sign-in-2/sign-in-2.module';
+import { ProfileModule as BCPProfileModule } from './profile/profile.module';
 
 const comps: any[] = [
   AccountComponent,
@@ -99,7 +99,6 @@ const comps: any[] = [
   CampaignsCollectionComponent,
   WalletHistoryComponent,
   TransactionHistoryComponent,
-  ProfileComponent,
   ChangePasswordComponent,
   RewardsBookingComponent,
   CampaignStampsComponent,
@@ -163,6 +162,7 @@ const comps: any[] = [
     EditProfileFieldModule,
     ProfileBarcodeModule,
     QRModule,
+    BCPProfileModule,
   ],
   exports: [
     ...comps,

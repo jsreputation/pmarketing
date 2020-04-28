@@ -32,6 +32,7 @@ export { SignUpComponent } from './lib/sign-up/sign-up.component';
 export { LayoutComponent } from './lib/layout/layout.component';
 export { WalletHistoryComponent } from './lib/wallet-history/wallet-history.component';
 export { ProfileComponent } from './lib/profile/profile.component';
+export { ProfileModule } from './lib/profile/profile.module';
 export { TransactionHistoryComponent } from './lib/transaction-history/transaction-history.component';
 export { ChangePasswordComponent } from './lib/change-password/change-password.component';
 export { EnterPinComponent } from './lib/enter-pin/enter-pin.component';
