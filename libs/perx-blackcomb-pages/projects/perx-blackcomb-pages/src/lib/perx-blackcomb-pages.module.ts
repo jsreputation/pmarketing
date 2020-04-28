@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AccountModule } from './account/account.module';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { ContentComponent } from './content/content.component';
+import { ContentModule } from './content/content.module';
 import {
   MatProgressBarModule,
   MatCardModule,
@@ -81,7 +81,6 @@ import { SignIn2Module } from './sign-in-2/sign-in-2.module';
 import { ProfileModule as BCPProfileModule } from './profile/profile.module';
 
 const comps: any[] = [
-  ContentComponent,
   PerxSignUpComponent,
   RewardComponent,
   LoadingComponent,
@@ -159,6 +158,7 @@ const comps: any[] = [
     QRModule,
     CatalogModule,
     BCPProfileModule,
+    ContentModule,
     WalletHistoryModule,
     HistoryModule,
   ],

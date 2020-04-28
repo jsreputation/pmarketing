@@ -3,6 +3,7 @@ export { PerxBlackcombPagesModule } from './lib/perx-blackcomb-pages.module';
 export { AccountComponent } from './lib/account/account.component';
 export { AccountModule } from './lib/account/account.module';
 export { ContentComponent } from './lib/content/content.component';
+export { ContentModule } from './lib/content/content.module';
 export { GameComponent } from './lib/game/game.component';
 export { GameModule } from './lib/game/game.module';
 export { TapComponent } from './lib/game/tap/tap.component';
