@@ -135,10 +135,6 @@ interface V4GamesResponse {
   };
 }
 
-export type countObject = {
-  count: number;
-};
-
 @Injectable({
   providedIn: 'root'
 })
