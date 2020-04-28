@@ -1,6 +1,12 @@
 import { Component } from '@angular/core';
-import { NotificationService } from '@perxtech/core';
+import {
+  CampaignType,
+  ICampaign,
+  ICampaignService,
+  NotificationService
+} from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
+import {takeLast, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'perx-blackcomb-pages-referral',
@@ -22,10 +28,25 @@ export class ReferralComponent {
   public clipboardErrorTxt: string;
 
   constructor(
+    private campaignService: ICampaignService,
     private notificationService: NotificationService,
     private translate: TranslateService
   ) {
     this.initTranslate();
+    this.campaignService.getCampaigns({ type: CampaignType.invite })
+      .pipe(
+        tap((campaigns: ICampaign[]) => {
+          if (campaigns) {
+            const checkedCampaigns = campaigns.find(referCampaign => referCampaign.referralCodes
+              ? referCampaign.referralCodes.length > 0 : false);
+            if (checkedCampaigns) {
+              this.code = checkedCampaigns.referralCodes ? checkedCampaigns.referralCodes[0] : this.code;
+            }
+            this.shareText = this.shareText.replace('{{code}}', this.code);
+          }
+        }),
+        takeLast(1)
+      ).subscribe();
   }
 
   public share(): void {

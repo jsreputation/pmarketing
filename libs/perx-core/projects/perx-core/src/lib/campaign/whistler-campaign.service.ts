@@ -151,4 +151,8 @@ export class WhistlerCampaignService implements ICampaignService {
         map((campaign: IJsonApiItem<IWCampaignAttributes>) => WhistlerCampaignService.WhistlerCampaignToCampaign(campaign)),
       );
   }
+
+  public applyReferral(referralCode: string): Observable<any> {
+    return of(Error(`${referralCode} provided but feature not implemented`));
+  }
 }

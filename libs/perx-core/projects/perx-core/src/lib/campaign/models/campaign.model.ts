@@ -23,7 +23,8 @@ export enum CampaignType {
   give_reward = 'give_reward', // instant_outcome
   stamp = 'stamp', // loyalty
   game = 'game',
-  survey = 'survey'
+  survey = 'survey',
+  invite = 'invite'
 }
 
 export enum CampaignState {
@@ -47,6 +48,7 @@ export interface ICampaign {
   engagementId?: number;
   rawPayload?: any;
   displayProperties?: CampaignDisplayProperties;
+  referralCodes?: string[];
 }
 
 export enum CommChannel {
