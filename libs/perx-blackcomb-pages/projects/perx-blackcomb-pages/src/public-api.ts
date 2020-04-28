@@ -38,6 +38,7 @@ export { EnterPinComponent } from './lib/enter-pin/enter-pin.component';
 export { EnterPinModule } from './lib/enter-pin/enter-pin.module';
 export { RewardsBookingComponent } from './lib/rewards-booking/rewards-booking.component';
 export { ProfileBarcodeComponent } from './lib/profile-barcode/profile-barcode.component';
+export { ProfileBarcodeModule } from './lib/profile-barcode/profile-barcode.module';
 export { EditProfileFieldComponent } from './lib/edit-profile-field/edit-profile-field.component';
 export { CampaignStampsComponent } from './lib/campaign-stamps/campaign-stamps.component';
 export { CatalogsComponent } from './lib/catalogs/catalogs.component';

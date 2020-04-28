@@ -65,7 +65,7 @@ import { TransactionHistoryComponent } from './transaction-history/transaction-h
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { EnterPinModule } from './enter-pin/enter-pin.module';
 import { RewardsBookingComponent } from './rewards-booking/rewards-booking.component';
-import { ProfileBarcodeComponent } from './profile-barcode/profile-barcode.component';
+import { ProfileBarcodeModule } from './profile-barcode/profile-barcode.module';
 import { EditProfileFieldComponent } from './edit-profile-field/edit-profile-field.component';
 import { CampaignStampsComponent } from './campaign-stamps/campaign-stamps.component';
 import { CatalogsComponent } from './catalogs/catalogs.component';
@@ -102,7 +102,6 @@ const comps: any[] = [
   ProfileComponent,
   ChangePasswordComponent,
   RewardsBookingComponent,
-  ProfileBarcodeComponent,
   EditProfileFieldComponent,
   CampaignStampsComponent,
   CatalogComponent,
@@ -162,7 +161,8 @@ const comps: any[] = [
     EnterPinModule,
     ForgotPasswordModule,
     SignIn2Module,
-    QRModule
+    ProfileBarcodeModule,
+    QRModule,
   ],
   exports: [
     ...comps,
