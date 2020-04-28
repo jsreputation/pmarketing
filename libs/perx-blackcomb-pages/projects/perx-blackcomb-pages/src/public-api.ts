@@ -23,6 +23,7 @@ export { RedeemComponent } from './lib/redeem/redeem.component';
 export { RewardDetailsComponent } from './lib/reward-details/reward-details.component';
 export { RewardDetailsModule } from './lib/reward-details/reward-details.module';
 export { VoucherDetailComponent } from './lib/voucher-detail/voucher-detail.component';
+export { VoucherDetailModule } from './lib/voucher-detail/voucher-detail.module';
 export { SurveyComponent } from './lib/survey/survey.component';
 export { StampCardComponent } from './lib/stamp-card/stamp-card.component';
 export { WalletComponent } from './lib/wallet/wallet.component';
