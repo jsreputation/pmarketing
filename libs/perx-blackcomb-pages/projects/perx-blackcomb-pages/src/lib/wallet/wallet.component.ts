@@ -51,7 +51,6 @@ export class WalletComponent implements OnInit, OnDestroy {
     private settingsService: SettingsService
   ) { }
 
-
   public ngOnInit(): void {
     this.translate.get('WALLET.MY_WALLET').subscribe(text => this.rewardsHeadline = text);
     this.vouchers$ = of([]);
