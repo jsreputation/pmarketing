@@ -58,5 +58,6 @@ export { CampaignLandingPageComponent } from './lib/campaign-landing-page/campai
 export { ForgotPasswordComponent } from './lib/forgot-password/forgot-password.component';
 export { ForgotPasswordModule } from './lib/forgot-password/forgot-password.module';
 export { LandingPageComponent } from './lib/landing-page/landing-page.component';
+export { LandingPageModule } from './lib/landing-page/landing-page.module';
 export { ReferralComponent } from './lib/referral/referral.component';
 export { LeaderboardPageComponent } from './lib/leaderboard-page/leaderboard-page.component';

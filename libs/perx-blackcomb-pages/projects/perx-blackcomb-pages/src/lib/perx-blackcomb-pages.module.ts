@@ -73,7 +73,7 @@ import { QuizComponent } from './quiz/quiz.component';
 import { QuizResultsComponent } from './quiz-results/quiz-results.component';
 import { LuckyDrawDetailsComponent } from './lucky-draw-details/lucky-draw-details.component';
 import { CampaignLandingPageComponent } from './campaign-landing-page/campaign-landing-page.component';
-import { LandingPageComponent } from './landing-page/landing-page.component';
+import { LandingPageModule } from './landing-page/landing-page.module';
 import { ReferralComponent } from './referral/referral.component';
 import { LeaderboardPageComponent } from './leaderboard-page/leaderboard-page.component';
 import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
@@ -102,7 +102,6 @@ const comps: any[] = [
   QuizResultsComponent,
   LuckyDrawDetailsComponent,
   CampaignLandingPageComponent,
-  LandingPageComponent,
   ReferralComponent,
   LeaderboardPageComponent
 ];
@@ -152,6 +151,7 @@ const comps: any[] = [
     EnterPinModule,
     ForgotPasswordModule,
     SignIn2Module,
+    LandingPageModule,
     VoucherDetailModule,
     AccountModule,
     EditProfileFieldModule,
