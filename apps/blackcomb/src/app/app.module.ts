@@ -69,13 +69,13 @@ import {
 
 import * as Hammer from 'hammerjs';
 import * as Sentry from '@sentry/browser';
+import { switchMap, tap } from 'rxjs/operators';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SignUpModule } from './sign-up/sign-up.module';
-
 import { environment } from '../environments/environment';
-import { switchMap, tap } from 'rxjs/operators';
+import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
 
 // https://medium.com/angular-in-depth/gestures-in-an-angular-application-dde71804c0d0
 // to override default settings
@@ -164,6 +164,7 @@ export const setLanguage = (
       }
     }),
     // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    ForgotPasswordModule
   ],
   bootstrap: [AppComponent],
   providers: [

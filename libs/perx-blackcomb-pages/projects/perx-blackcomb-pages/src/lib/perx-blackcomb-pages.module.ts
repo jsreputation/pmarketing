@@ -45,15 +45,14 @@ import { LoadingComponent } from './loading/loading.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { QRCodeModule } from 'angularx-qrcode';
 import { NgxBarcodeModule } from 'ngx-barcode';
-import { SignIn2Component } from './sign-in-2/sign-in-2.component';
 import { SignInComponent } from './sign-in/sign-in.component';
-import { QRComponent } from './qr/qr.component';
+import { QRModule } from './qr/qr.module';
 import { RedeemComponent } from './redeem/redeem.component';
-import { RewardDetailsComponent } from './reward-details/reward-details.component';
+import { RewardDetailsModule } from './reward-details/reward-details.module';
 import { StampCardComponent } from './stamp-card/stamp-card.component';
 import { SurveyComponent } from './survey/survey.component';
 import { VoucherDetailComponent } from './voucher-detail/voucher-detail.component';
-import { WalletComponent } from './wallet/wallet.component';
+import { WalletModule } from './wallet/wallet.module';
 import { SignUpComponent as PerxSignUpComponent } from './sign-up/sign-up.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { LayoutComponent } from './layout/layout.component';
@@ -61,13 +60,12 @@ import { HomeComponent } from './home/home.component';
 import { GamesCollectionComponent } from './home/games-collection/games-collection.component';
 import { CampaignsCollectionComponent } from './home/campaigns-collection/campaigns-collection.component';
 import { WalletHistoryComponent } from './wallet-history/wallet-history.component';
-import { ProfileComponent } from './profile/profile.component';
 import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
-import { EnterPinComponent } from './enter-pin/enter-pin.component';
+import { EnterPinModule } from './enter-pin/enter-pin.module';
 import { RewardsBookingComponent } from './rewards-booking/rewards-booking.component';
-import { ProfileBarcodeComponent } from './profile-barcode/profile-barcode.component';
-import { EditProfileFieldComponent } from './edit-profile-field/edit-profile-field.component';
+import { EditProfileFieldModule } from './edit-profile-field/edit-profile-field.module';
+import { ProfileBarcodeModule } from './profile-barcode/profile-barcode.module';
 import { CampaignStampsComponent } from './campaign-stamps/campaign-stamps.component';
 import { CatalogsComponent } from './catalogs/catalogs.component';
 import { CatalogRewardCardComponent } from './catalog-reward-card/catalog-reward-card.component';
@@ -76,10 +74,12 @@ import { QuizComponent } from './quiz/quiz.component';
 import { QuizResultsComponent } from './quiz-results/quiz-results.component';
 import { LuckyDrawDetailsComponent } from './lucky-draw-details/lucky-draw-details.component';
 import { CampaignLandingPageComponent } from './campaign-landing-page/campaign-landing-page.component';
-import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { ReferralComponent } from './referral/referral.component';
 import { LeaderboardPageComponent } from './leaderboard-page/leaderboard-page.component';
+import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
+import { SignIn2Module } from './sign-in-2/sign-in-2.module';
+import { ProfileModule as BCPProfileModule } from './profile/profile.module';
 
 const comps: any[] = [
   AccountComponent,
@@ -89,26 +89,18 @@ const comps: any[] = [
   RewardComponent,
   LoadingComponent,
   RedeemComponent,
-  SignIn2Component,
   SignInComponent,
-  QRComponent,
-  RewardDetailsComponent,
   StampCardComponent,
   SurveyComponent,
   VoucherDetailComponent,
-  WalletComponent,
   LayoutComponent,
   HomeComponent,
   GamesCollectionComponent,
   CampaignsCollectionComponent,
   WalletHistoryComponent,
   TransactionHistoryComponent,
-  ProfileComponent,
   ChangePasswordComponent,
-  EnterPinComponent,
   RewardsBookingComponent,
-  ProfileBarcodeComponent,
-  EditProfileFieldComponent,
   CampaignStampsComponent,
   CatalogComponent,
   CatalogsComponent,
@@ -117,7 +109,6 @@ const comps: any[] = [
   QuizResultsComponent,
   LuckyDrawDetailsComponent,
   CampaignLandingPageComponent,
-  ForgotPasswordComponent,
   LandingPageComponent,
   ReferralComponent,
   LeaderboardPageComponent
@@ -162,7 +153,16 @@ const comps: any[] = [
     MatDialogModule,
     QuizModule,
     ProfileModule,
-    RankModule
+    RankModule,
+    WalletModule,
+    RewardDetailsModule,
+    EnterPinModule,
+    ForgotPasswordModule,
+    SignIn2Module,
+    EditProfileFieldModule,
+    ProfileBarcodeModule,
+    QRModule,
+    BCPProfileModule,
   ],
   exports: [
     ...comps,
