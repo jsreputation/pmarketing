@@ -46,7 +46,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { QRCodeModule } from 'angularx-qrcode';
 import { NgxBarcodeModule } from 'ngx-barcode';
 import { SignInComponent } from './sign-in/sign-in.component';
-import { QRComponent } from './qr/qr.component';
+import { QRModule } from './qr/qr.module';
 import { RedeemComponent } from './redeem/redeem.component';
 import { RewardDetailsModule } from './reward-details/reward-details.module';
 import { StampCardComponent } from './stamp-card/stamp-card.component';
@@ -90,7 +90,6 @@ const comps: any[] = [
   LoadingComponent,
   RedeemComponent,
   SignInComponent,
-  QRComponent,
   StampCardComponent,
   SurveyComponent,
   VoucherDetailComponent,
@@ -163,6 +162,7 @@ const comps: any[] = [
     EnterPinModule,
     ForgotPasswordModule,
     SignIn2Module,
+    QRModule
   ],
   exports: [
     ...comps,

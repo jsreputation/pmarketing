@@ -17,6 +17,7 @@ export { SignIn2Component } from './lib/sign-in-2/sign-in-2.component';
 export { SignIn2Module } from './lib/sign-in-2/sign-in-2.module';
 export { SignInComponent } from './lib/sign-in/sign-in.component';
 export { QRComponent } from './lib/qr/qr.component';
+export { QRModule } from './lib/qr/qr.module';
 export { RedeemComponent } from './lib/redeem/redeem.component';
 export { RewardDetailsComponent } from './lib/reward-details/reward-details.component';
 export { RewardDetailsModule } from './lib/reward-details/reward-details.module';
