@@ -67,9 +67,8 @@ import { RewardsBookingComponent } from './rewards-booking/rewards-booking.compo
 import { EditProfileFieldModule } from './edit-profile-field/edit-profile-field.module';
 import { ProfileBarcodeModule } from './profile-barcode/profile-barcode.module';
 import { CampaignStampsComponent } from './campaign-stamps/campaign-stamps.component';
-import { CatalogsComponent } from './catalogs/catalogs.component';
-import { CatalogRewardCardComponent } from './catalog-reward-card/catalog-reward-card.component';
-import { CatalogComponent } from './catalog/catalog.component';
+import { CatalogsComponent } from './home/catalogs/catalogs.component';
+import { CatalogModule } from './catalog/catalog.module';
 import { QuizComponent } from './quiz/quiz.component';
 import { QuizResultsComponent } from './quiz-results/quiz-results.component';
 import { LuckyDrawDetailsComponent } from './lucky-draw-details/lucky-draw-details.component';
@@ -101,9 +100,7 @@ const comps: any[] = [
   ChangePasswordComponent,
   RewardsBookingComponent,
   CampaignStampsComponent,
-  CatalogComponent,
   CatalogsComponent,
-  CatalogRewardCardComponent,
   QuizComponent,
   QuizResultsComponent,
   LuckyDrawDetailsComponent,
@@ -162,6 +159,7 @@ const comps: any[] = [
     EditProfileFieldModule,
     ProfileBarcodeModule,
     QRModule,
+    CatalogModule,
     BCPProfileModule,
   ],
   exports: [
