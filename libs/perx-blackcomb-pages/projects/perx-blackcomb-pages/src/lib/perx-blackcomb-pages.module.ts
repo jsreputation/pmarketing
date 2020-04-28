@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { AccountComponent } from './account/account.component';
+import { AccountModule } from './account/account.module';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ContentComponent } from './content/content.component';
 import {
@@ -82,7 +82,6 @@ import { SignIn2Module } from './sign-in-2/sign-in-2.module';
 import { ProfileModule as BCPProfileModule } from './profile/profile.module';
 
 const comps: any[] = [
-  AccountComponent,
   ContentComponent,
   HistoryComponent,
   PerxSignUpComponent,
@@ -159,6 +158,7 @@ const comps: any[] = [
     EnterPinModule,
     ForgotPasswordModule,
     SignIn2Module,
+    AccountModule,
     EditProfileFieldModule,
     ProfileBarcodeModule,
     QRModule,
