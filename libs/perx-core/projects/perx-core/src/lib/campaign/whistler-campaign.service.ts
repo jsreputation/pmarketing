@@ -153,6 +153,6 @@ export class WhistlerCampaignService implements ICampaignService {
   }
 
   public getReward(id: number): Observable<{ count: number; campaignId: number }> {
-    throw new Error(`not implemented ${id}`);
+    return of({ count: 1333, campaignId: id })
   }
 }
