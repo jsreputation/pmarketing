@@ -44,9 +44,10 @@ export { ProfileBarcodeModule } from './lib/profile-barcode/profile-barcode.modu
 export { EditProfileFieldComponent } from './lib/edit-profile-field/edit-profile-field.component';
 export { EditProfileFieldModule } from './lib/edit-profile-field/edit-profile-field.module';
 export { CampaignStampsComponent } from './lib/campaign-stamps/campaign-stamps.component';
-export { CatalogsComponent } from './lib/catalogs/catalogs.component';
+export { CatalogsComponent } from './lib/home/catalogs/catalogs.component';
 export { CatalogComponent } from './lib/catalog/catalog.component';
-export { CatalogRewardCardComponent } from './lib/catalog-reward-card/catalog-reward-card.component';
+export { CatalogModule } from './lib/catalog/catalog.module';
+// export { CatalogRewardCardComponent } from './lib/catalog/catalog-reward-card/catalog-reward-card.component';
 export { QuizComponent } from './lib/quiz/quiz.component';
 export { QuizResultsComponent } from './lib/quiz-results/quiz-results.component';
 export { LuckyDrawDetailsComponent } from './lib/lucky-draw-details/lucky-draw-details.component';

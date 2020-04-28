@@ -1,14 +1,6 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import {
-  MatCardModule, MatIconModule,
-  MatListModule, MatMenuModule,
-} from '@angular/material';
 import { RouterModule, Routes } from '@angular/router';
-import { RewardsModule, UtilsModule } from '@perxtech/core';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-
-import { CatalogComponent, PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
+import { CatalogComponent, CatalogModule as BCPCatalogModule } from '@perxtech/blackcomb-pages';
 
 const routes: Routes = [{
   path: '',
@@ -17,15 +9,7 @@ const routes: Routes = [{
 
 @NgModule({
   imports: [
-    CommonModule,
-    UtilsModule,
-    RewardsModule,
-    MatCardModule,
-    MatListModule,
-    MatIconModule,
-    MatMenuModule,
-    InfiniteScrollModule,
-    PerxBlackcombPagesModule,
+    BCPCatalogModule,
     RouterModule.forChild(routes)
   ]
 })
