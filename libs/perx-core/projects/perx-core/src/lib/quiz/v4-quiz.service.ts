@@ -155,14 +155,6 @@ export class V4QuizService implements QuizService {
       });
   }
 
-  public getRewardFromCampaign(campaignId: number): Observable<{ count: number; campaignId: number }> {
-    return this.baseUrl$.pipe(
-      switchMap(baseUrl => this.http.get(`${baseUrl}/v4/campaigns/${campaignId}/voucher_count`)),
-      map((res: {data: countObject}) => res.data),
-      map((countObj: countObject) => ({...countObj, campaignId})),
-    );
-  }
-
   public getQuizFromCampaign(campaignId: number, lang: string = 'en'): Observable<IQuiz> {
     return this.baseUrl$.pipe(
       switchMap(baseUrl => this.http.get<V4GamesResponse>(`${baseUrl}/v4/campaigns/${campaignId}/games`)),

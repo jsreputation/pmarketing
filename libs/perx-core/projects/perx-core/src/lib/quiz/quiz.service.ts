@@ -10,5 +10,4 @@ export abstract class QuizService {
   public abstract getQuizFromCampaign(id: number, lang?: string): Observable<IQuiz>;
   public abstract getMove(gameId: number): Observable<{ moveId: number }>;
   public abstract postQuizAnswer(answers: IQAnswer, moveId: number): Observable<IAnswerResult>;
-  public abstract getRewardFromCampaign(id: number): Observable<{ [cid: number]: {count: number}}>;
 }

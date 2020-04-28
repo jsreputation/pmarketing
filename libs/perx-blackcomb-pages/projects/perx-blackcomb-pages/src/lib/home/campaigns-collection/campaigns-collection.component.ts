@@ -13,13 +13,12 @@ import {
 } from 'rxjs';
 import {
   GameType,
-  ICampaign,
+  ICampaign, ICampaignService,
   IGame,
   IGameService,
   IQuiz,
   QuizService
 } from '@perxtech/core';
-import { oc } from 'ts-optchain';
 import { TranslateService } from '@ngx-translate/core';
 import {
   switchMap,
@@ -55,6 +54,7 @@ export class CampaignsCollectionComponent implements OnInit {
   constructor(
     private translate: TranslateService,
     private gamesService: IGameService,
+    private campaignService: ICampaignService,
     private quizService: QuizService,
   ) { }
 
@@ -67,16 +67,14 @@ export class CampaignsCollectionComponent implements OnInit {
     this.campaigns$.pipe(
       tap((campaigns: ICampaign[]) => this.campaigns = campaigns),
       switchMap(
-        (campaigns: ICampaign[]) => zip(...campaigns.map(campaign => this.quizService.getRewardFromCampaign(campaign.id)
+        (campaigns: ICampaign[]) => zip(...campaigns.map(campaign => this.campaignService.getReward(campaign.id)
         ))
       ),
       tap((rewardsArr: { count: number; campaignId: number }[]) => {
-        if (this.gameType === GameType.quiz) {
-          const rewardsCampaignIndexedObj = rewardsArr.reduce((acc, curr) => ({
-            ...acc, [curr.campaignId]: curr.count
-          }), {});
-          this.campaigns = this.campaigns.map(campaign => ({...campaign, rewardsCount: rewardsCampaignIndexedObj[campaign.id]}));
-        }
+        const rewardsCampaignIndexedObj = rewardsArr.reduce((acc, curr) => ({
+          ...acc, [curr.campaignId]: curr.count
+        }), {});
+        this.campaigns = this.campaigns.map(campaign => ({...campaign, rewardsCount: rewardsCampaignIndexedObj[campaign.id]}));
       }),
       // for each campaign, fetch associated games to figure out completion
       switchMap(() => combineLatest([
@@ -112,25 +110,6 @@ export class CampaignsCollectionComponent implements OnInit {
 
   public getCampaignImage(campaign: ICampaign): string {
     return campaign.campaignBannerUrl ? campaign.campaignBannerUrl : 'https://perx-cdn-staging.s3.amazonaws.com/reward/item/images/35/580b585b2edbce24c47b2415-48075171-3595-4e55-b630-8a00b412dcc4.png';
-  }
-
-  public getRewardsCount(campaign: ICampaign): string | undefined {
-    if (!campaign.rewards) {
-      return;
-    }
-    const sumRewards = campaign.rewards.reduce((sum, reward) => {
-      const balance = oc(reward).inventory.rewardTotalBalance();
-      if (balance !== undefined && balance !== null) {
-        if (sum !== undefined) {
-          // @ts-ignore
-          return sum + balance;
-        }
-        return balance;
-      }
-      return sum;
-    }, undefined);
-
-    return this.rewardsLeft.replace('{{rewardsCount', sumRewards);
   }
 
   public isCampaignComplete(campaignId: number): boolean {
