@@ -46,8 +46,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { QRCodeModule } from 'angularx-qrcode';
 import { NgxBarcodeModule } from 'ngx-barcode';
 import { SignInComponent } from './sign-in/sign-in.component';
+import { RedeemModule } from './redeem/redeem.module';
 import { QRModule } from './qr/qr.module';
-import { RedeemComponent } from './redeem/redeem.component';
 import { RewardDetailsModule } from './reward-details/reward-details.module';
 import { StampCardComponent } from './stamp-card/stamp-card.component';
 import { SurveyComponent } from './survey/survey.component';
@@ -84,7 +84,6 @@ const comps: any[] = [
   PerxSignUpComponent,
   RewardComponent,
   LoadingComponent,
-  RedeemComponent,
   SignInComponent,
   StampCardComponent,
   SurveyComponent,
@@ -158,6 +157,7 @@ const comps: any[] = [
     QRModule,
     CatalogModule,
     BCPProfileModule,
+    RedeemModule,
     ContentModule,
     WalletHistoryModule,
     HistoryModule,

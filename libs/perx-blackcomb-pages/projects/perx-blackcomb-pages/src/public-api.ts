@@ -22,6 +22,7 @@ export { SignInComponent } from './lib/sign-in/sign-in.component';
 export { QRComponent } from './lib/qr/qr.component';
 export { QRModule } from './lib/qr/qr.module';
 export { RedeemComponent } from './lib/redeem/redeem.component';
+export { RedeemModule } from './lib/redeem/redeem.module';
 export { RewardDetailsComponent } from './lib/reward-details/reward-details.component';
 export { RewardDetailsModule } from './lib/reward-details/reward-details.module';
 export { VoucherDetailComponent } from './lib/voucher-detail/voucher-detail.component';
