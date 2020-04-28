@@ -14,7 +14,7 @@ ARG iswhistler='false'
 # sourcetype is for HSBC PH only; ignonored by all other app values
 ARG sourcetype
 ARG app
-ARG env='prod'
+ARG env='production'
 # redirectdest is used only for blackcomb
 ARG redirectdest
 
