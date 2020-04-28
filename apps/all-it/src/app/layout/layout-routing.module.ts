@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import {
   HomeComponent,
   WalletHistoryComponent,
-  HistoryComponent,
   VoucherDetailComponent,
   RewardDetailsComponent,
   LayoutComponent,
@@ -20,7 +19,7 @@ const routes: Routes = [
       { path: '', pathMatch: 'full', redirectTo: 'home' },
       { path: 'home', component: HomeComponent },
       { path: 'wallet', component: WalletHistoryComponent, canActivate: [WalletGuard] },
-      { path: 'history', component: HistoryComponent },
+      { path: 'history', loadChildren: (): any => import('../history/history.module').then((mod: any) => mod.HistoryModule) },
       { path: 'voucher-detail/:id', component: VoucherDetailComponent },
       { path: 'pi', component: SignInComponent },
       {

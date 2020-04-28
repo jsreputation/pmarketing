@@ -25,7 +25,7 @@ import {
   MatInputModule, MatTableModule
 } from '@angular/material';
 import { GameModule } from './game/game.module';
-import { HistoryComponent } from './history/history.component';
+import { HistoryModule } from './history/history.module';
 import {
   UtilsModule,
   VouchersModule,
@@ -82,7 +82,6 @@ import { ProfileModule as BCPProfileModule } from './profile/profile.module';
 
 const comps: any[] = [
   ContentComponent,
-  HistoryComponent,
   PerxSignUpComponent,
   RewardComponent,
   LoadingComponent,
@@ -161,6 +160,7 @@ const comps: any[] = [
     QRModule,
     CatalogModule,
     BCPProfileModule,
+    HistoryModule
   ],
   exports: [
     ...comps,

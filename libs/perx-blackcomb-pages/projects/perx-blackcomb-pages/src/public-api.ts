@@ -12,6 +12,7 @@ export { SpinComponent } from './lib/game/spin/spin.component';
 export { SnakeComponent } from './lib/game/snake/snake.component';
 export { ConfigToSlicesPipe } from './lib/game/spin/spin.component';
 export { HistoryComponent } from './lib/history/history.component';
+export { HistoryModule } from './lib/history/history.module';
 export { HomeComponent } from './lib/home/home.component';
 export { RewardComponent } from './lib/reward/reward.component';
 export { SignIn2Component } from './lib/sign-in-2/sign-in-2.component';
