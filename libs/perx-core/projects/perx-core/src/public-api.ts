@@ -286,6 +286,7 @@ export { OutcomeModule } from './lib/outcome/outcome.module';
 export { RankModule } from './lib/rank/rank.module';
 export { MiniRankComponent } from './lib/rank/mini-rank/mini-rank.component';
 export { LeaderboardComponent } from './lib/rank/leaderboard/leaderboard.component';
+export { RankService } from './lib/rank/rank.service';
 /**
  * Tenants
  */
