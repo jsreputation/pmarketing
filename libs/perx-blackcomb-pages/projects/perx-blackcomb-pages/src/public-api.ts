@@ -35,6 +35,7 @@ export { GamesCollectionComponent } from './lib/home/games-collection/games-coll
 export { CampaignsCollectionComponent } from './lib/home/campaigns-collection/campaigns-collection.component';
 export { SignUpComponent } from './lib/sign-up/sign-up.component';
 export { LayoutComponent } from './lib/layout/layout.component';
+export { LayoutModule } from './lib/layout/layout.module';
 export { WalletHistoryComponent } from './lib/wallet-history/wallet-history.component';
 export { WalletHistoryModule } from './lib/wallet-history/wallet-history.module';
 export { ProfileComponent } from './lib/profile/profile.component';

@@ -10,7 +10,8 @@ import {
   CampaignModule,
   OutcomeModule,
   CampaignServiceModule,
-  SettingsModule
+  SettingsModule,
+  GameServiceModule
 } from '@perxtech/core';
 import {
   HomeComponent,
@@ -43,7 +44,8 @@ const routes: Routes = [{
     CampaignModule,
     CampaignServiceModule.forChild(),
     OutcomeModule,
-    SettingsModule
+    SettingsModule,
+    GameServiceModule.forChild()
   ],
   exports: [
     HomeComponent,

@@ -55,7 +55,7 @@ import { VoucherDetailModule } from './voucher-detail/voucher-detail.module';
 import { WalletModule } from './wallet/wallet.module';
 import { SignUpComponent as PerxSignUpComponent } from './sign-up/sign-up.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { LayoutComponent } from './layout/layout.component';
+import { LayoutModule } from './layout/layout.module';
 import { HomeComponent } from './home/home.component';
 import { GamesCollectionComponent } from './home/games-collection/games-collection.component';
 import { CampaignsCollectionComponent } from './home/campaigns-collection/campaigns-collection.component';
@@ -87,7 +87,6 @@ const comps: any[] = [
   SignInComponent,
   StampCardComponent,
   SurveyComponent,
-  LayoutComponent,
   HomeComponent,
   GamesCollectionComponent,
   CampaignsCollectionComponent,
@@ -157,6 +156,7 @@ const comps: any[] = [
     QRModule,
     CatalogModule,
     BCPProfileModule,
+    LayoutModule,
     RedeemModule,
     ContentModule,
     WalletHistoryModule,
