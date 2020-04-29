@@ -56,9 +56,7 @@ import { WalletModule } from './wallet/wallet.module';
 import { SignUpComponent as PerxSignUpComponent } from './sign-up/sign-up.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { LayoutModule } from './layout/layout.module';
-import { HomeComponent } from './home/home.component';
-import { GamesCollectionComponent } from './home/games-collection/games-collection.component';
-import { CampaignsCollectionComponent } from './home/campaigns-collection/campaigns-collection.component';
+import { HomeModule } from './home/home.module';
 import { WalletHistoryModule } from './wallet-history/wallet-history.module';
 import { TransactionHistoryComponent } from './transaction-history/transaction-history.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
@@ -67,7 +65,6 @@ import { RewardsBookingComponent } from './rewards-booking/rewards-booking.compo
 import { EditProfileFieldModule } from './edit-profile-field/edit-profile-field.module';
 import { ProfileBarcodeModule } from './profile-barcode/profile-barcode.module';
 import { CampaignStampsComponent } from './campaign-stamps/campaign-stamps.component';
-import { CatalogsComponent } from './home/catalogs/catalogs.component';
 import { CatalogModule } from './catalog/catalog.module';
 import { QuizComponent } from './quiz/quiz.component';
 import { QuizResultsComponent } from './quiz-results/quiz-results.component';
@@ -87,14 +84,10 @@ const comps: any[] = [
   SignInComponent,
   StampCardComponent,
   SurveyComponent,
-  HomeComponent,
-  GamesCollectionComponent,
-  CampaignsCollectionComponent,
   TransactionHistoryComponent,
   ChangePasswordComponent,
   RewardsBookingComponent,
   CampaignStampsComponent,
-  CatalogsComponent,
   QuizComponent,
   QuizResultsComponent,
   LuckyDrawDetailsComponent,
@@ -161,6 +154,7 @@ const comps: any[] = [
     ContentModule,
     WalletHistoryModule,
     HistoryModule,
+    HomeModule
   ],
   exports: [
     ...comps,
