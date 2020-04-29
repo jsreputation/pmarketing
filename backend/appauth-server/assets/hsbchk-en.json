@@ -52,7 +52,7 @@
     "FULL_NAME_HKID_REQUIRED_TXT": "Please enter your full name",
     "HKID_DIGITS_TXT": "HKID (first 4 digits)",
     "HKID_DIGITS_REQUIRED_TXT": "Please enter your HKID",
-    "HKID_DIGITS_INVALID_TXT": "Invalid id. It should be 4 digits",
+    "HKID_DIGITS_INVALID_TXT": "Invalid id. It should be 4 alphanumeric digits",
     "CHECKBOX_LUCK_TXT": "I agree HSBC Life to save my personal information for the Lucky Draw and future direct marketing purpose. For details, please refer to the",
     "CHECKBOX_LUCK_POPUP_TXT": "If you do not agree with this term, you will not be eligible to join the LIFE Dojo lucky draw. Do you want to confirm?",
     "BUTTON_SUBMIT": "Submit"
