@@ -1,14 +1,13 @@
 import { HttpClient } from '@angular/common/http';
+import { ModuleWithProviders, NgModule, Optional } from '@angular/core';
 import { Config } from '../config/config';
-import { ConfigService} from '../config/config.service';
+import { ConfigService } from '../config/config.service';
 import { IVoucherService } from '../vouchers/ivoucher.service';
 import { ICampaignService } from '../campaign/icampaign.service';
 import { AuthenticationService } from '../auth/authentication/authentication.service';
 import { IGameService } from './igame.service';
 import { WhistlerGameService } from './whist-game.service';
 import { V4GameService } from './v4-game.service';
-import { ModuleWithProviders, NgModule, Optional } from '@angular/core';
-import { GameModule } from './game.module';
 
 export function gameServiceFactory(
   http: HttpClient,
@@ -32,7 +31,7 @@ export function gameServiceFactory(
 @NgModule({
 })
 export class GameServiceModule {
-  public static forRoot(): ModuleWithProviders<GameModule> {
+  public static forRoot(): ModuleWithProviders<GameServiceModule> {
     return {
       ngModule: GameServiceModule,
       providers: [
