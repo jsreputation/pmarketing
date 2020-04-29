@@ -203,7 +203,7 @@ export class V4CampaignService implements ICampaignService {
       );
   }
   // api 404 and WIP response. type any for the moment
-  public applyReferral(referralCode: string): Observable<any> {
+  public applyReferral(referralCode: string): Observable<{}> {
     const referralBody = {
       referral_code: referralCode
     };

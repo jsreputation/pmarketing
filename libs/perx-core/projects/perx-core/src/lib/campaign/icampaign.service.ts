@@ -11,5 +11,5 @@ export interface ICampaignFilterOptions {
 export abstract class ICampaignService {
   public abstract getCampaigns(options?: ICampaignFilterOptions): Observable<ICampaign[]>;
   public abstract getCampaign(id: number): Observable<ICampaign>;
-  public abstract applyReferral(referralCode: string): Observable<any>; // response WIP
+  public abstract applyReferral(referralCode: string): Observable<{}>; // response WIP
 }
