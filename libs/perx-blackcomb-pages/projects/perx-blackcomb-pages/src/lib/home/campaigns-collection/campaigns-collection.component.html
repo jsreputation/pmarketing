@@ -11,9 +11,13 @@
     <div class="img-wrapper">
       <img class="puzzle-img" src="{{getCampaignImage(campaign)}}" alt="Campaign image">
     </div>
-    <mat-card-content class="card-content">
+    <mat-card-content *ngIf="!withRewardsCounter" class="card-content">
       <p class="main-reward-title">{{campaign.name}}</p>
       <p class="reward-subtitle">{{campaign.description}}</p>
+    </mat-card-content>
+    <mat-card-content *ngIf="withRewardsCounter" class="card-content reward">
+      <p class="main-reward-title">{{campaign.name}}</p>
+      <p class="reward-subtitle"><span class="bold-points">100</span> left</p>
     </mat-card-content>
   </mat-card>
   <div class="flex-for-button">
