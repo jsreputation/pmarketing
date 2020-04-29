@@ -108,7 +108,8 @@
                     [placeholder]="'SIGN_UP_PAGE.HKID_DIGITS_TXT' | translate"
                     formControlName="hkid"
                     type="tel">
-                <mat-error>{{'SIGN_UP_PAGE.HKID_DIGITS_REQUIRED_TXT' | translate}}</mat-error>
+              <mat-error *ngIf="signupForm.get('hkid').hasError('required')">{{'SIGN_UP_PAGE.HKID_DIGITS_REQUIRED_TXT' | translate}}</mat-error>
+              <mat-error *ngIf="!signupForm.get('hkid').hasError('required') && signupForm.get('hkid').errors">{{'SIGN_UP_PAGE.HKID_DIGITS_INVALID_TXT' | translate}}</mat-error>
             </mat-form-field>
             <div class="checkbox-container">
                 <div class="checkbox-row">
