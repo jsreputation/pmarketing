@@ -16,7 +16,20 @@ import { APP_INITIALIZER, ErrorHandler, Injectable, LOCALE_ID, NgModule } from '
 import { HammerGestureConfig, HAMMER_GESTURE_CONFIG, BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
-import { AuthenticationService, CampaignServiceModule as PerxSvcCampaignModule, ConfigModule, ConfigService, GameServiceModule as PerxSvcGameModule, IConfig, LanguageService, LocaleIdFactory, SettingsModule, ThemesService, TokenStorage, UtilsModule, AuthenticationModule, ProfileModule } from '@perxtech/core';
+import {
+  AuthenticationService,
+  CampaignServiceModule as PerxSvcCampaignModule,
+  ConfigModule, ConfigService,
+  GameServiceModule as PerxSvcGameModule,
+  IConfig, LanguageService,
+  LocaleIdFactory,
+  SettingsModule,
+  ThemesService,
+  TokenStorage,
+  UtilsModule,
+  AuthenticationModule,
+  ProfileModule
+} from '@perxtech/core';
 import * as Sentry from '@sentry/browser';
 import * as Hammer from 'hammerjs';
 import { switchMap, tap } from 'rxjs/operators';
