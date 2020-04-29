@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import {
   combineLatest,
+  iif,
   Observable,
   zip,
 } from 'rxjs';
@@ -21,8 +22,9 @@ import {
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import {
-  switchMap,
-  tap,
+  map,
+  switchMap, tap,
+  withLatestFrom,
 } from 'rxjs/operators';
 
 @Component({
@@ -47,6 +49,7 @@ export class CampaignsCollectionComponent implements OnInit {
   public showAllCampaigns: boolean = false;
   public rewardsLeft: string;
   public campaigns: ICampaign[];
+  public campaignsWithRewards$: Observable<ICampaign[]>;
   // private games: IGame[];
   private quizzes: IQuiz[] = [];
   public gamesLoaded: boolean = false;
@@ -64,21 +67,32 @@ export class CampaignsCollectionComponent implements OnInit {
       this.rewardsLeft = text;
     });
 
-    this.campaigns$.pipe(
-      tap((campaigns: ICampaign[]) => this.campaigns = campaigns),
+    this.campaignsWithRewards$ = this.campaigns$.pipe(
       switchMap(
-        (campaigns: ICampaign[]) => zip(...campaigns.map(campaign => this.campaignService.getReward(campaign.id)
-        ))
-      ),
-      tap((rewardsArr: { count: number; campaignId: number }[]) => {
-        const rewardsCampaignIndexedObj = rewardsArr.reduce((acc, curr) => ({
-          ...acc, [curr.campaignId]: curr.count
-        }), {});
-        this.campaigns = this.campaigns.map(campaign => ({...campaign, rewardsCount: rewardsCampaignIndexedObj[campaign.id]}));
+        (campaigns: ICampaign[]) => zip(...campaigns.map(campaign => this.campaignService.getReward(campaign.id))
+        )),
+      withLatestFrom(this.campaigns$),
+      map(
+        ([rewardsArr, campaigns]) => {
+          const rewardsCampaignIndexedObj = rewardsArr.reduce((acc, curr) => ({
+            ...acc, [curr.campaignId]: curr.count
+          }), {});
+          return campaigns.map(campaign => ({...campaign, rewardsCount: rewardsCampaignIndexedObj[campaign.id]}));
+        }
+      ));
+
+    iif(
+      () => this.withRewardsCounter,
+      this.campaignsWithRewards$,
+      this.campaigns$
+    ).pipe(
+      tap((campaigns) => {
+        console.log(campaigns, 'should have the count object')
+        this.campaigns = campaigns
       }),
       // for each campaign, fetch associated games to figure out completion
-      switchMap(() => combineLatest([
-        ...this.campaigns.map((campaign: ICampaign) => {
+      switchMap((campaigns) => combineLatest([
+        ...campaigns.map((campaign: ICampaign) => {
           if (this.gameType === GameType.quiz) {
             return this.quizService.getQuizFromCampaign(campaign.id);
           }
@@ -89,7 +103,7 @@ export class CampaignsCollectionComponent implements OnInit {
       (res: (IQuiz | IGame[])[]) => {
         if (this.gameType === GameType.quiz) {
           this.quizzes = res as IQuiz[];
-        // } else {
+          // } else {
           // todo: test games input when games get refactored in.
           // expected stamp cards to hit this but since we don't actually have games in stamp campaigns it will be empty array
           // this.games = (res as IGame[][])[0];
