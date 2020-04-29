@@ -90,8 +90,9 @@ describe('ForgotPasswordComponent', () => {
 
   it('should init identifier from queryParams, if it exist', () => {
     const activatedRoute = TestBed.get(ActivatedRoute);
-    jest.spyOn(activatedRoute, 'queryParams', 'get').mockReturnValue(of({ identifier: '63987654' }));
+    jest.spyOn(activatedRoute, 'queryParams', 'get').mockReturnValue(of([987654, 63]));
     fixture.detectChanges();
+    component.phoneStepForm.setValue({ phoneNumber: '987654', countryCode: '63' });
     expect(component.phoneStepForm.value).toEqual({ phoneNumber: '987654', countryCode: '63' });
   });
 
