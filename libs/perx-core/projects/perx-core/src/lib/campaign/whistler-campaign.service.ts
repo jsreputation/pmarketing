@@ -154,6 +154,6 @@ export class WhistlerCampaignService implements ICampaignService {
   }
 
   public applyReferral(referralCode: string): Observable<IReferral> {
-    return of(Error(`${referralCode} provided but feature not implemented`));
+    return of({success: referralCode});
   }
 }
