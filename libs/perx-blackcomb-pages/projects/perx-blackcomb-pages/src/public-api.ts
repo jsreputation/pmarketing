@@ -30,6 +30,7 @@ export { VoucherDetailComponent } from './lib/voucher-detail/voucher-detail.comp
 export { VoucherDetailModule } from './lib/voucher-detail/voucher-detail.module';
 export { SurveyComponent } from './lib/survey/survey.component';
 export { StampCardComponent } from './lib/stamp-card/stamp-card.component';
+export { StampCardModule } from './lib/stamp-card/stamp-card.module';
 export { WalletComponent } from './lib/wallet/wallet.component';
 export { WalletModule } from './lib/wallet/wallet.module';
 export { SignUpComponent } from './lib/sign-up/sign-up.component';
@@ -49,6 +50,7 @@ export { ProfileBarcodeModule } from './lib/profile-barcode/profile-barcode.modu
 export { EditProfileFieldComponent } from './lib/edit-profile-field/edit-profile-field.component';
 export { EditProfileFieldModule } from './lib/edit-profile-field/edit-profile-field.module';
 export { CampaignStampsComponent } from './lib/campaign-stamps/campaign-stamps.component';
+export { CampaignStampsModule } from './lib/campaign-stamps/campaign-stamps.module';
 export { CatalogComponent } from './lib/catalog/catalog.component';
 export { CatalogModule } from './lib/catalog/catalog.module';
 export { QuizComponent } from './lib/quiz/quiz.component';
