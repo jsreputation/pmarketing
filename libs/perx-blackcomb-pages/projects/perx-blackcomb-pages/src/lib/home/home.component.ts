@@ -108,7 +108,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             if (res.referralCode) {
               return this.campaignService.applyReferral(res.referralCode as string);
             }
-            return EMPTY
+            return EMPTY;
           })
       ).subscribe();
     this.translate.get(['YOU_HAVE', 'HELLO', 'POINTS_EXPITING'])
