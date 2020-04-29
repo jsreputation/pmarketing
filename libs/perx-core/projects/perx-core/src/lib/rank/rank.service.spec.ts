@@ -1,6 +1,6 @@
 import {TestBed} from '@angular/core/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {RankService} from './rank.service';
+import {V4RankService} from './v4-rank.service';
 import {ConfigModule} from '../config/config.module';
 import {ConfigService} from '../config/config.service';
 import {of} from 'rxjs';
@@ -27,7 +27,7 @@ describe('RankService', () => {
 
   // const baseUrl = 'https://api.perxtech.io/';
   // const baseUrlForAppAccessToken = 'http://localhost:4000/';
-  let service: RankService;
+  let service: V4RankService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -39,7 +39,7 @@ describe('RankService', () => {
         {provide: ConfigService, useValue: configServiceStub},
       ]
     });
-    service = TestBed.get(RankService);
+    service = TestBed.get(V4RankService);
   });
 
   it('should be created', () => {

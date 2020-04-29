@@ -23,7 +23,7 @@ type UserRanking = {
 @Injectable({
   providedIn: 'root'
 })
-export class RankService {
+export class V4RankService {
   private baseUrl: string;
 
   constructor(

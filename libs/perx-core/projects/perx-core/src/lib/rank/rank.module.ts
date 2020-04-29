@@ -13,12 +13,12 @@ import {
 } from '@angular/material';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { RankService } from './rank.service';
+import { V4RankService } from './v4-rank.service';
 import { ConfigService } from '../config/config.service';
 
-export function rankServiceFactory(http: HttpClient, configService: ConfigService): RankService {
+export function rankServiceFactory(http: HttpClient, configService: ConfigService): V4RankService {
   // Make decision on what to instantiate base on config
-  return new RankService(http, configService);
+  return new V4RankService(http, configService);
 }
 
 const componentsAndPipes = [
@@ -36,7 +36,7 @@ const componentsAndPipes = [
   ],
   providers: [
     {
-      provide: RankService,
+      provide: V4RankService,
       useFactory: rankServiceFactory,
       deps: [HttpClient, ConfigService]
     }
