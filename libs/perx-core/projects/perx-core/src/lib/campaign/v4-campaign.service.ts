@@ -51,7 +51,7 @@ interface IV4Campaign {
 
 type CountObject = {
   count: number;
-}
+};
 
 interface IV4CampaignResponse {
   data: IV4Campaign;
