@@ -57,5 +57,6 @@ export enum CommChannel {
 }
 
 export interface IReferral {
+  // no empty interface rule
 
 }

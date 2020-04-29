@@ -28,4 +28,5 @@ const componentsAndPipes = [
   ]
 })
 export class RankModule {
+  success: string;
 }
