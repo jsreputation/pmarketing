@@ -14,7 +14,7 @@ import { oc } from 'ts-optchain';
 import { IConfig } from '../config/models/config.model';
 import { ConfigService } from '../config/config.service';
 import { TreeDisplayProperties, PinataDisplayProperties, ScratchDisplayProperties, SpinDisplayProperties, GameProperties } from '../game/v4-game.service';
-import {countObject, QuizDisplayProperties} from '../quiz/v4-quiz.service';
+import { QuizDisplayProperties } from '../quiz/v4-quiz.service';
 import { GameType } from '../game/game.model';
 import { patchUrl } from '../utils/patch-url.function';
 
@@ -47,6 +47,10 @@ interface IV4Campaign {
   state: CampaignState;
   rewards?: IV4Reward[];
   display_properties?: DisplayProperties | null;
+}
+
+type CountObject = {
+  count: number;
 }
 
 interface IV4CampaignResponse {
@@ -191,8 +195,8 @@ export class V4CampaignService implements ICampaignService {
 
   public getReward(campaignId: number): Observable<{ count: number; campaignId: number }> {
     return this.http.get(`${this.baseUrl}/v4/campaigns/${campaignId}/voucher_count`).pipe(
-      map((res: {data: countObject}) => res.data),
-      map((countObj: countObject) => ({...countObj, campaignId})),
+      map((res: {data: CountObject}) => res.data),
+      map((countObj: CountObject) => ({...countObj, campaignId})),
     );
   }
 }
