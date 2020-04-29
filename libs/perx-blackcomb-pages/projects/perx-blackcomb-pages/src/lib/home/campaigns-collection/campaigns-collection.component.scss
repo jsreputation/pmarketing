@@ -1,3 +1,5 @@
+@import "../../custom-theme";
+
 mat-card {
   display: flex;
   flex-direction: column;
@@ -47,6 +49,23 @@ mat-card {
       font-size: 1rem;
       line-height: 1.6rem;
       margin: 0;
+    }
+  }
+
+  .reward {
+    display: flex;
+    justify-content: space-between;
+    background-color: #e7e7e7;
+
+    .main-reward-title {
+      font-weight: 500;
+      font-size: 1.8rem;
+    }
+
+    .bold-points {
+      font-weight: 500;
+      font-size: 2.3rem;
+      color: var(--primary);
     }
   }
 }

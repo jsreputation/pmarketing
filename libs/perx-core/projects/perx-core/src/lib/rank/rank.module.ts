@@ -11,7 +11,16 @@ import {
   MatDividerModule,
   MatTableModule
 } from '@angular/material';
-import {CommonModule} from '@angular/common';
+import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { V4RankService } from './v4-rank.service';
+import { ConfigService } from '../config/config.service';
+import { IRankService } from './irank.service';
+
+export function rankServiceFactory(http: HttpClient, configService: ConfigService): V4RankService {
+  // Make decision on what to instantiate base on config
+  return new V4RankService(http, configService);
+}
 
 const componentsAndPipes = [
   LeaderboardComponent,
@@ -25,7 +34,14 @@ const componentsAndPipes = [
     CommonModule,
     MatTableModule,
     MatDividerModule
-  ]
+  ],
+  providers: [
+    {
+      provide: IRankService,
+      useFactory: rankServiceFactory,
+      deps: [HttpClient, ConfigService]
+    }
+  ],
 })
 export class RankModule {
 }
