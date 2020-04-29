@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { MatCardModule, MatListModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { ProfileModule, UtilsModule } from '@perxtech/core';
+import { LoyaltyModule, ProfileModule, UtilsModule } from '@perxtech/core';
 import { AccountComponent } from './account.component';
 
 @NgModule({
@@ -16,6 +16,7 @@ import { AccountComponent } from './account.component';
     MatCardModule,
     ProfileModule,
     TranslateModule.forChild(),
+    LoyaltyModule,
     RouterModule
   ]
 })
