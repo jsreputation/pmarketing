@@ -49,7 +49,7 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { RedeemModule } from './redeem/redeem.module';
 import { QRModule } from './qr/qr.module';
 import { RewardDetailsModule } from './reward-details/reward-details.module';
-import { StampCardComponent } from './stamp-card/stamp-card.component';
+import { StampCardModule } from './stamp-card/stamp-card.module';
 import { SurveyComponent } from './survey/survey.component';
 import { VoucherDetailModule } from './voucher-detail/voucher-detail.module';
 import { WalletModule } from './wallet/wallet.module';
@@ -64,7 +64,7 @@ import { EnterPinModule } from './enter-pin/enter-pin.module';
 import { RewardsBookingComponent } from './rewards-booking/rewards-booking.component';
 import { EditProfileFieldModule } from './edit-profile-field/edit-profile-field.module';
 import { ProfileBarcodeModule } from './profile-barcode/profile-barcode.module';
-import { CampaignStampsComponent } from './campaign-stamps/campaign-stamps.component';
+import { CampaignStampsModule } from './campaign-stamps/campaign-stamps.module';
 import { CatalogModule } from './catalog/catalog.module';
 import { QuizComponent } from './quiz/quiz.component';
 import { QuizResultsComponent } from './quiz-results/quiz-results.component';
@@ -82,12 +82,10 @@ const comps: any[] = [
   RewardComponent,
   LoadingComponent,
   SignInComponent,
-  StampCardComponent,
   SurveyComponent,
   TransactionHistoryComponent,
   ChangePasswordComponent,
   RewardsBookingComponent,
-  CampaignStampsComponent,
   QuizComponent,
   QuizResultsComponent,
   LuckyDrawDetailsComponent,
@@ -154,7 +152,9 @@ const comps: any[] = [
     ContentModule,
     WalletHistoryModule,
     HistoryModule,
-    HomeModule
+    HomeModule,
+    CampaignStampsModule,
+    StampCardModule,
   ],
   exports: [
     ...comps,
