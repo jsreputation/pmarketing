@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HistoryComponent, HistoryModule as BCPHistoryModule } from '@perxtech/blackcomb-pages';
+import { RewardDetailsComponent, RewardDetailsModule } from '@perxtech/blackcomb-pages';
 
 const routes: Routes = [{
   path: '',
-  component: HistoryComponent
+  component: RewardDetailsComponent
 }];
 
 @NgModule({
   imports: [
-    BCPHistoryModule,
+    RewardDetailsModule,
     RouterModule.forChild(routes)
   ]
 })
-export class HistoryModule { }
+export class RewardsDetailModule { }
