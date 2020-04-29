@@ -1,12 +1,6 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { UtilsModule } from '@perxtech/core';
 import { RouterModule, Routes } from '@angular/router';
-import {
-  AccountComponent,
-  PerxBlackcombPagesModule
-} from '@perxtech/blackcomb-pages';
-import { MatCardModule, MatListModule } from '@angular/material';
+import { AccountComponent, AccountModule as BCPAccountModule } from '@perxtech/blackcomb-pages';
 
 const routes: Routes = [{
   path: '',
@@ -15,11 +9,7 @@ const routes: Routes = [{
 
 @NgModule({
   imports: [
-    CommonModule,
-    UtilsModule,
-    MatListModule,
-    MatCardModule,
-    PerxBlackcombPagesModule,
+    BCPAccountModule,
     RouterModule.forChild(routes)
   ]
 })
