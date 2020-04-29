@@ -1,10 +1,6 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { VoucherDetailComponent, PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
 import { RouterModule, Routes } from '@angular/router';
-import { VouchersModule } from '@perxtech/core';
-import { TranslateModule } from '@ngx-translate/core';
-import { MatButtonModule } from '@angular/material';
+import { VoucherDetailComponent, VoucherDetailModule as BCPVoucherDetailModule } from '@perxtech/blackcomb-pages';
 
 const routes: Routes = [{
   path: '',
@@ -13,12 +9,8 @@ const routes: Routes = [{
 
 @NgModule({
   imports: [
-    CommonModule,
-    PerxBlackcombPagesModule,
-    RouterModule.forChild(routes),
-    VouchersModule,
-    TranslateModule,
-    MatButtonModule
+    BCPVoucherDetailModule,
+    RouterModule.forChild(routes)
   ]
 })
-export class VoucherDetailModule {}
+export class VoucherDetailModule { }

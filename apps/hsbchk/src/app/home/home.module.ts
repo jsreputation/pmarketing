@@ -1,26 +1,7 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatButtonModule, MatCardModule, MatDialogModule } from '@angular/material';
 import { RouterModule, Routes } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
-import {
-  CampaignsCollectionComponent,
-  CatalogsComponent,
-  GamesCollectionComponent,
-  HomeComponent,
-  PerxBlackcombPagesModule
-} from '@perxtech/blackcomb-pages';
-import {
-  CampaignModule,
-  GameServiceModule as PerxGameServiceModule,
-  LoyaltyModule,
-  OutcomeModule,
-  RewardPopupComponent,
-  RewardsModule,
-  UtilsModule
-} from '@perxtech/core';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-
+import { HomeComponent, HomeModule as BCPHomeModule } from '@perxtech/blackcomb-pages';
+import { RewardPopupComponent } from '@perxtech/core';
 const routes: Routes = [{
   path: '',
   component: HomeComponent
@@ -28,32 +9,11 @@ const routes: Routes = [{
 
 @NgModule({
   imports: [
-    CommonModule,
-    MatCardModule,
-    LoyaltyModule,
-    UtilsModule,
-    RewardsModule,
-    MatCardModule,
-    MatButtonModule,
-    PerxBlackcombPagesModule,
-    TranslateModule.forChild(),
-    RouterModule.forChild(routes),
-    InfiniteScrollModule,
-    MatDialogModule,
-    CampaignModule,
-    OutcomeModule,
-    PerxGameServiceModule.forChild()
-  ],
-  exports: [
-    HomeComponent,
-    GamesCollectionComponent,
-    CampaignsCollectionComponent,
-    CatalogsComponent
+    BCPHomeModule,
+    RouterModule.forChild(routes)
   ],
   entryComponents: [
     RewardPopupComponent
-  ],
-  providers: [
   ]
 })
 export class HomeModule { }

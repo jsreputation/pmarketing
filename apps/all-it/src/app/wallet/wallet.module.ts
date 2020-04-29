@@ -1,30 +1,16 @@
 import { NgModule } from '@angular/core';
-import {
-  PerxBlackcombPagesModule,
-  WalletComponent
-} from '@perxtech/blackcomb-pages';
-import { SharedModule } from '../shared/shared.module';
-import { CommonModule } from '@angular/common';
-import {
-  RouterModule,
-  Routes
-} from '@angular/router';
-import { VouchersModule } from '@perxtech/core';
-import { TranslateModule } from '@ngx-translate/core';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { RouterModule, Routes } from '@angular/router';
+import { WalletHistoryComponent, WalletHistoryModule } from '@perxtech/blackcomb-pages';
+
 const routes: Routes = [{
   path: '',
-  component: WalletComponent
+  component: WalletHistoryComponent
 }];
+
 @NgModule({
   imports: [
-    SharedModule,
-    CommonModule,
-    PerxBlackcombPagesModule,
-    RouterModule.forChild(routes),
-    VouchersModule,
-    TranslateModule,
-    InfiniteScrollModule
+    WalletHistoryModule,
+    RouterModule.forChild(routes)
   ]
 })
 export class WalletModule { }

@@ -1,9 +1,6 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ContentComponent, PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
 import { RouterModule, Routes } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
-import { MatProgressSpinnerModule } from '@angular/material';
+import { ContentComponent, ContentModule as BCPContentModule } from '@perxtech/blackcomb-pages';
 
 const routes: Routes = [{
   path: '',
@@ -12,11 +9,8 @@ const routes: Routes = [{
 
 @NgModule({
   imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    PerxBlackcombPagesModule,
-    TranslateModule,
-    MatProgressSpinnerModule
+    BCPContentModule,
+    RouterModule.forChild(routes)
   ]
 })
 export class ContentModule { }

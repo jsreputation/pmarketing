@@ -1,10 +1,6 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { HistoryComponent, PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
 import { RouterModule, Routes } from '@angular/router';
-import { VouchersModule } from '@perxtech/core';
-import { TranslateModule } from '@ngx-translate/core';
-import {InfiniteScrollModule} from 'ngx-infinite-scroll';
+import { HistoryComponent, HistoryModule as BCPHistoryModule } from '@perxtech/blackcomb-pages';
 
 const routes: Routes = [{
   path: '',
@@ -13,12 +9,8 @@ const routes: Routes = [{
 
 @NgModule({
   imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    VouchersModule,
-    InfiniteScrollModule,
-    TranslateModule,
-    PerxBlackcombPagesModule
+    BCPHistoryModule,
+    RouterModule.forChild(routes)
   ]
 })
-export class HistoryModule {}
+export class HistoryModule { }

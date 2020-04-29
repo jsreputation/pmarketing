@@ -1,9 +1,6 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { PuzzlesModule, StampModule as PerxStampsModule } from '@perxtech/core';
-import { MatButtonModule } from '@angular/material';
-import { PerxBlackcombPagesModule, StampCardComponent } from '@perxtech/blackcomb-pages';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+import { StampCardComponent, StampCardModule } from '@perxtech/blackcomb-pages';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: StampCardComponent },
@@ -12,12 +9,8 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    CommonModule,
-    PuzzlesModule,
-    MatButtonModule,
-    RouterModule.forChild(routes),
-    PerxStampsModule,
-    PerxBlackcombPagesModule
+    StampCardModule,
+    RouterModule.forChild(routes)
   ]
 })
 export class StampModule { }

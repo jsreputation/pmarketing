@@ -132,5 +132,4 @@ export class CatalogComponent implements OnInit {
       })
     );
   }
-
 }

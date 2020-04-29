@@ -23,6 +23,7 @@ import {
   IConfig,
   SettingsModule,
   GameModule as PerxGameModule,
+  GameServiceModule,
 } from '@perxtech/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -53,6 +54,7 @@ export const setLanguage = (
   imports: [
     ConfigModule.forRoot({ ...environment }),
     SettingsModule.forRoot({ ...environment }),
+    GameServiceModule.forRoot(),
     PerxGameModule,
     BrowserModule,
     AppRoutingModule,
