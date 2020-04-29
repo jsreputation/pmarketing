@@ -28,7 +28,9 @@ import {
   TokenStorage,
   UtilsModule,
   AuthenticationModule,
-  ProfileModule
+  ProfileModule,
+  VouchersModule,
+  RewardsModule
 } from '@perxtech/core';
 import * as Sentry from '@sentry/browser';
 import * as Hammer from 'hammerjs';
@@ -108,7 +110,9 @@ export const setLanguage = (
     AuthenticationModule,
     ProfileModule,
     AppRoutingModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    VouchersModule,
+    RewardsModule
   ],
   bootstrap: [AppComponent],
   providers: [
