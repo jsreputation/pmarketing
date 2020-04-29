@@ -60,6 +60,10 @@ interface IV4Campaign {
   campaign_config?: CampaignConfig;
 }
 
+type CountObject = {
+  count: number;
+};
+
 interface IV4CampaignResponse {
   data: IV4Campaign;
   meta: {
@@ -202,6 +206,13 @@ export class V4CampaignService implements ICampaignService {
           return EMPTY;
         })
       );
+  }
+
+  public getVoucherLeftCount(campaignId: number): Observable<{ count: number; campaignId: number }> {
+    return this.http.get(`${this.baseUrl}/v4/campaigns/${campaignId}/voucher_count`).pipe(
+      map((res: {data: CountObject}) => res.data),
+      map((countObj: CountObject) => ({...countObj, campaignId}))
+    );
   }
   // api 404 and WIP response. type any for the moment
   public applyReferral(referralCode: string): Observable<IReferral> {

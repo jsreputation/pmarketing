@@ -43,6 +43,7 @@ export interface ICampaign {
   endsAt: Date | null;
   beginsAt?: Date | null;
   rewards?: IReward[];
+  rewardsCount?: number;
   thumbnailUrl?: string;
   campaignBannerUrl?: string;
   engagementId?: number;
