@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { ConfigService } from '../config/config.service';
 
-type LeaderBoard = {
+export type LeaderBoard = {
   display_properties: {
     [key: string]: any;
   };
@@ -13,7 +13,7 @@ type LeaderBoard = {
   title: string;
 };
 
-type UserRanking = {
+export type UserRanking = {
   display_name: string;
   id: number;
   rank: number;
@@ -56,5 +56,4 @@ export class V4RankService {
         map((res: any) => res.data)
       );
   }
-
 }

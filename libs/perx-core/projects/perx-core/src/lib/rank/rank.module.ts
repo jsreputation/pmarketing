@@ -15,6 +15,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { V4RankService } from './v4-rank.service';
 import { ConfigService } from '../config/config.service';
+import { IRankService } from './irank.service';
 
 export function rankServiceFactory(http: HttpClient, configService: ConfigService): V4RankService {
   // Make decision on what to instantiate base on config
@@ -36,7 +37,7 @@ const componentsAndPipes = [
   ],
   providers: [
     {
-      provide: V4RankService,
+      provide: IRankService,
       useFactory: rankServiceFactory,
       deps: [HttpClient, ConfigService]
     }
