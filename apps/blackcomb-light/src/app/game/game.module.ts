@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, Router } from '@angular/router';
 import { GameComponent, GameModule as BCGameModule } from '@perxtech/blackcomb-pages';
+import { AppRouter } from '../router';
 
 const routes: Routes = [{
   path: '',
@@ -11,6 +12,9 @@ const routes: Routes = [{
   imports: [
     BCGameModule,
     RouterModule.forChild(routes)
+  ],
+  providers: [
+    { provide: Router, useClass: AppRouter }
   ]
 })
 export class GameModule { }
