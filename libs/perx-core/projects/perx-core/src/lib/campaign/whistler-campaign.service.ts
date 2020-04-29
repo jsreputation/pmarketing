@@ -23,6 +23,7 @@ import {
   ICampaign,
   CampaignType,
   CampaignState,
+  IReferral,
 } from './models/campaign.model';
 import { ICampaignService, ICampaignFilterOptions } from './icampaign.service';
 
@@ -153,6 +154,10 @@ export class WhistlerCampaignService implements ICampaignService {
   }
 
   public getVoucherLeftCount(id: number): Observable<{ count: number; campaignId: number }> {
-    return of({ count: 1333, campaignId: id });
+    return of({count: 1333, campaignId: id});
+  }
+
+  public applyReferral(referralCode: string): Observable<IReferral> {
+    return of({success: referralCode});
   }
 }

@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { EMPTY, Observable } from 'rxjs';
-import { catchError, map, shareReplay } from 'rxjs/operators';
+import {EMPTY, Observable, of} from 'rxjs';
+import {catchError, map, shareReplay} from 'rxjs/operators';
 import {
   ICampaign,
   CampaignType,
   CampaignState,
-  CampaignDisplayProperties
+  CampaignDisplayProperties,
+  IReferral
 } from './models/campaign.model';
 import { ICampaignFilterOptions, ICampaignService } from './icampaign.service';
 import { V4RewardsService, IV4Reward } from '../rewards/v4-rewards.service';
@@ -31,6 +32,14 @@ type DisplayProperties = TreeDisplayProperties |
   QuizDisplayProperties;
 /* eslint-enable @typescript-eslint/indent */
 
+type CampaignConfig = {
+  campaign_results: {count: number, first_result_id: number};
+  referral_type: string;
+  referral_codes: string[];
+  referees_attained: number;
+  referral_rewards?: IV4Reward[];
+};
+
 interface IV4Campaign {
   id: number;
   name: string;
@@ -47,6 +56,8 @@ interface IV4Campaign {
   state: CampaignState;
   rewards?: IV4Reward[];
   display_properties?: DisplayProperties | null;
+  campaign_referral_type?: string;
+  campaign_config?: CampaignConfig;
 }
 
 type CountObject = {
@@ -127,7 +138,10 @@ export class V4CampaignService implements ICampaignService {
         oc(dp as GameProperties).background_image.value.image_url('')
       );
     }
-
+    let referralCodes;
+    if (campaign.campaign_config && campaign.campaign_config.referral_codes) {
+      referralCodes = [...campaign.campaign_config.referral_codes];
+    }
     return {
       id: campaign.id,
       name: campaign.name,
@@ -136,6 +150,7 @@ export class V4CampaignService implements ICampaignService {
       state: campaign.state,
       endsAt: campaign.ends_at ? new Date(campaign.ends_at) : null,
       beginsAt: campaign.begins_at ? new Date(campaign.begins_at) : null,
+      referralCodes,
       rewards,
       thumbnailUrl,
       campaignBannerUrl,
@@ -196,7 +211,16 @@ export class V4CampaignService implements ICampaignService {
   public getVoucherLeftCount(campaignId: number): Observable<{ count: number; campaignId: number }> {
     return this.http.get(`${this.baseUrl}/v4/campaigns/${campaignId}/voucher_count`).pipe(
       map((res: {data: CountObject}) => res.data),
-      map((countObj: CountObject) => ({...countObj, campaignId})),
+      map((countObj: CountObject) => ({...countObj, campaignId}))
+    );
+  }
+  // api 404 and WIP response. type any for the moment
+  public applyReferral(referralCode: string): Observable<IReferral> {
+    const referralBody = {
+      referral_code: referralCode
+    };
+    return this.http.post(`${this.baseUrl}/v4/campaigns/referral`, referralBody).pipe(
+      catchError(e => of(e))
     );
   }
 }

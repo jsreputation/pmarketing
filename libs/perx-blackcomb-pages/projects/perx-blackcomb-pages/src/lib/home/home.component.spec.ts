@@ -44,7 +44,8 @@ const tokenStorageStub: Partial<TokenStorage> = {
 };
 
 const profileService: Partial<ProfileService> = {
-  whoAmI: () => of(profile)
+  whoAmI: () => of(profile),
+  getCustomProperties: () => of ()
 };
 const authServiceStub: Partial<AuthenticationService> = {
   isAuthorized: () => of(true)
@@ -88,7 +89,8 @@ describe('HomeComponent', () => {
   let router: Router;
 
   const campaignServiceStub: Partial<ICampaignService> = {
-    getCampaigns: () => of([])
+    getCampaigns: () => of([]),
+    applyReferral: () => of()
   };
 
   const instantOutcomeServiceStub: Partial<InstantOutcomeService> = {
