@@ -24,7 +24,7 @@ describe('CampaignsCollectionComponent', () => {
   };
 
   const campaignServiceStub: Partial<ICampaignService> = {
-    getReward: () => of()
+    getVoucherLeftCount: () => of()
   };
 
   beforeEach(async(() => {
