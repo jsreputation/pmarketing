@@ -19,6 +19,7 @@ $heading-font-color: #1b1b25;
     flex: 1;
     border-radius: 0.8rem;
     margin: 0 auto;
+    overflow-y: scroll;
 
     p.label {
       color: #7d7d89;
@@ -75,8 +76,6 @@ $heading-font-color: #1b1b25;
     }
 
     form {
-      height: 100%;
-
       .checkbox-container {
         display: flex;
         flex-direction: row;
