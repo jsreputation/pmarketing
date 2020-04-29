@@ -7,9 +7,9 @@
       <span *ngIf="user.rank > 3">{{user.rank}}</span>
     </td>
   </ng-container>3
-  <ng-container matColumnDef="nickname">
+  <ng-container matColumnDef="displayName">
     <th mat-header-cell *matHeaderCellDef> NICKNAME </th>
-    <td mat-cell *matCellDef="let user"> {{user.nickname}} </td>
+    <td mat-cell *matCellDef="let user"> {{user.displayName}} </td>
   </ng-container>
   <ng-container matColumnDef="value">
     <th mat-header-cell *matHeaderCellDef> {{metric | uppercase}} </th>
