@@ -6,7 +6,7 @@ import {
 import { Router } from '@angular/router';
 import {
   BehaviorSubject,
-  combineLatest,
+  combineLatest, EMPTY,
   forkJoin,
   Observable,
   of,
@@ -48,7 +48,8 @@ import {
   SettingsService,
   IRssFeeds,
   IRssFeedsData,
-  FeedItem
+  FeedItem,
+  ProfileService
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
@@ -95,10 +96,21 @@ export class HomeComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private feedService: FeedReaderService,
     private settingsService: SettingsService,
+    private profileService: ProfileService
   ) {
   }
 
   public ngOnInit(): void {
+    this.profileService.getCustomProperties()
+      .pipe(
+        switchMap(
+          res => {
+            if (res.referralCode) {
+              return this.campaignService.applyReferral(res.referralCode as string);
+            }
+            return EMPTY;
+          })
+      ).subscribe();
     this.translate.get(['YOU_HAVE', 'HELLO', 'POINTS_EXPITING'])
       .subscribe((res: any) => {
         this.titleFn = (profile: IProfile) => `${res.HELLO} ${profile && profile.lastName ? profile.lastName : ''},`;
