@@ -6,7 +6,7 @@ import {
 import { Router } from '@angular/router';
 import {
   BehaviorSubject,
-  combineLatest,
+  combineLatest, EMPTY,
   forkJoin,
   Observable,
   of,
@@ -101,11 +101,16 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.profileService.getCustomProperties().subscribe(res => {
-      if (res.referralCode) {
-        this.campaignService.applyReferral(res.referralCode as string).subscribe();
-      }
-    });
+    this.profileService.getCustomProperties()
+      .pipe(
+        switchMap(
+          res => {
+            if (res.referralCode) {
+              return this.campaignService.applyReferral(res.referralCode as string);
+            }
+            return EMPTY
+          })
+      ).subscribe();
     this.translate.get(['YOU_HAVE', 'HELLO', 'POINTS_EXPITING'])
       .subscribe((res: any) => {
         this.titleFn = (profile: IProfile) => `${res.HELLO} ${profile && profile.lastName ? profile.lastName : ''},`;
