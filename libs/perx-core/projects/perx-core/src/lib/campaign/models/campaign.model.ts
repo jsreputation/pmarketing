@@ -55,3 +55,7 @@ export enum CommChannel {
   sms = 'sms',
   email = 'email'
 }
+
+export interface IReferral {
+
+}

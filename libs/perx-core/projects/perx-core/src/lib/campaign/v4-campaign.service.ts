@@ -6,7 +6,8 @@ import {
   ICampaign,
   CampaignType,
   CampaignState,
-  CampaignDisplayProperties
+  CampaignDisplayProperties,
+  IReferral
 } from './models/campaign.model';
 import { ICampaignFilterOptions, ICampaignService } from './icampaign.service';
 import { V4RewardsService, IV4Reward } from '../rewards/v4-rewards.service';
@@ -203,7 +204,7 @@ export class V4CampaignService implements ICampaignService {
       );
   }
   // api 404 and WIP response. type any for the moment
-  public applyReferral(referralCode: string): Observable<{}> {
+  public applyReferral(referralCode: string): Observable<IReferral> {
     const referralBody = {
       referral_code: referralCode
     };

@@ -23,6 +23,7 @@ import {
   ICampaign,
   CampaignType,
   CampaignState,
+  IReferral,
 } from './models/campaign.model';
 import { ICampaignService, ICampaignFilterOptions } from './icampaign.service';
 
@@ -152,7 +153,7 @@ export class WhistlerCampaignService implements ICampaignService {
       );
   }
 
-  public applyReferral(referralCode: string): Observable<{}> {
+  public applyReferral(referralCode: string): Observable<IReferral> {
     return of(Error(`${referralCode} provided but feature not implemented`));
   }
 }
