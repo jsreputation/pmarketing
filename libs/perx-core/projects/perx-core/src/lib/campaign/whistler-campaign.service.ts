@@ -23,6 +23,7 @@ import {
   ICampaign,
   CampaignType,
   CampaignState,
+  IReferral,
 } from './models/campaign.model';
 import { ICampaignService, ICampaignFilterOptions } from './icampaign.service';
 
@@ -150,5 +151,9 @@ export class WhistlerCampaignService implements ICampaignService {
         map((campaigns: IJsonApiItemPayload<IWCampaignAttributes>) => campaigns.data),
         map((campaign: IJsonApiItem<IWCampaignAttributes>) => WhistlerCampaignService.WhistlerCampaignToCampaign(campaign)),
       );
+  }
+
+  public applyReferral(referralCode: string): Observable<IReferral> {
+    return of({success: referralCode});
   }
 }

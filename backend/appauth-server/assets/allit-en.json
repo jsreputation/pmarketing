@@ -301,7 +301,7 @@
     "TITLE": "Refer a friend",
     "CONTENT": "For each successful sign up* using your referral code, you earn extra 5X lucky draw chance. Your referee will earn 3X lucky draw chances.\nShare your referral code with a friend today!\n*Both you and your referee will have to complete at least 1 quiz to earn your lucky draw chances.",
     "CTA_BUTTON": "Share referral code",
-    "SHARE_COPY_TXT": "Join me in. Stand to win rewards each week, as well as a chance for the grand lucky draw.\n[URL]\nUse referral code [code] when signing up and earn 3x lucky draw chances.\n",
+    "SHARE_COPY_TXT": "Join me in. Stand to win rewards each week, as well as a chance for the grand lucky draw.\n[URL]\nUse referral code {{code}} when signing up and earn 3x lucky draw chances.\n",
     "SHARE_COPY_TITLE": "Join me in this game",
     "COPY_TO_CLIPBOARD": "Copied to your clipboard!",
     "CLIPBOARD_ERROR_TXT": "Could not access your clipboard"
