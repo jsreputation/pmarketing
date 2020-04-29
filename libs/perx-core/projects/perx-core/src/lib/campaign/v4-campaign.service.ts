@@ -193,7 +193,7 @@ export class V4CampaignService implements ICampaignService {
       );
   }
 
-  public getReward(campaignId: number): Observable<{ count: number; campaignId: number }> {
+  public getVoucherLeftCount(campaignId: number): Observable<{ count: number; campaignId: number }> {
     return this.http.get(`${this.baseUrl}/v4/campaigns/${campaignId}/voucher_count`).pipe(
       map((res: {data: CountObject}) => res.data),
       map((countObj: CountObject) => ({...countObj, campaignId})),

@@ -152,7 +152,7 @@ export class WhistlerCampaignService implements ICampaignService {
       );
   }
 
-  public getReward(id: number): Observable<{ count: number; campaignId: number }> {
+  public getVoucherLeftCount(id: number): Observable<{ count: number; campaignId: number }> {
     return of({ count: 1333, campaignId: id });
   }
 }
