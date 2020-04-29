@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -50,7 +51,8 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private notificationService: NotificationService,
     private generalStaticDataService: GeneralStaticDataService,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private translate: TranslateService
   ) { }
 
   public get phoneNumber(): AbstractControl | null { return this.phoneStepForm.get('phoneNumber'); }
@@ -91,7 +93,8 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     });
 
     this.countriesList$.pipe(
-      switchMap((countryList) => matchRouteCountry$(countryList))
+      switchMap((countryList) => matchRouteCountry$(countryList)),
+      filter(([phoneNumber, countryCode]) => phoneNumber !== undefined && countryCode !== undefined)
     ).subscribe(([phoneNumber, countryCode]) => this.phoneStepForm.patchValue({ countryCode, phoneNumber }));
   }
 
@@ -165,9 +168,14 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   private handleError(err: any): void {
     if (err instanceof HttpErrorResponse) {
       if (err.status === 0) {
-        this.notificationService.addSnack('We could not reach the server');
+        this.translate.get('FORGET_PW_PAGE.SERVER_ERROR_TXT').subscribe(text =>
+          this.notificationService.addSnack(text));
       } else if (err.status === 401) {
-        this.notificationService.addSnack('Invalid mobile number.');
+        this.translate.get('FORGET_PW_PAGE.MOBILE_INVALID_TXT').subscribe(text =>
+          this.notificationService.addSnack(text));
+      } else if (err.status === 404) {
+        this.translate.get('FORGET_PW_PAGE.MOBILE_NOTFOUND_TXT').subscribe(text =>
+          this.notificationService.addSnack(text));
       } else {
         this.notificationService.addSnack(err.error.message);
       }

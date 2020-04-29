@@ -96,7 +96,7 @@ export class SignupComponent {
             return;
           }
 
-          this.router.navigateByUrl('enter-pin/register', { state: { mobileNo: codeAndMobile } });
+          this.router.navigateByUrl('otp/register', { state: { mobileNo: codeAndMobile } });
         },
         err => {
           this.notificationService.addSnack(err.error.message);

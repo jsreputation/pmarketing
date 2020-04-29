@@ -67,7 +67,7 @@ describe('SignUpComponent', () => {
         FormsModule,
         RouterTestingModule,
         BrowserAnimationsModule,
-        TranslateModule
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: AuthenticationService, useValue: authServiceStub },

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ProtectedGuard, PublicGuard } from 'ngx-auth';
+
 const routes: Routes = [
   {
     path: 'login',
@@ -18,8 +19,8 @@ const routes: Routes = [
   },
   {
     path: 'otp/:type',
-    loadChildren: (): any => import('./enter-pin/enter-pin.module')
-      .then((mod: any) => mod.EnterPinModule)
+    loadChildren: (): any => import('./otp/otp.module')
+      .then((mod: any) => mod.OtpModule)
   },
   {
     path: '',

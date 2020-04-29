@@ -1,9 +1,6 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
-import { PerxBlackcombPagesModule, SignIn2Component } from '@perxtech/blackcomb-pages';
-import { SharedModule } from '../shared/shared.module';
+import { SignIn2Module, SignIn2Component } from '@perxtech/blackcomb-pages';
 
 const routes: Routes = [{
   path: '',
@@ -12,11 +9,8 @@ const routes: Routes = [{
 
 @NgModule({
   imports: [
-    CommonModule,
-    PerxBlackcombPagesModule,
+    SignIn2Module,
     RouterModule.forChild(routes),
-    SharedModule,
-    TranslateModule.forChild()
   ]
 })
 export class LoginModule { }

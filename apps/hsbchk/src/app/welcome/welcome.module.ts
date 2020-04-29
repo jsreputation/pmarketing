@@ -1,7 +1,6 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LandingPageComponent, PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
+import { LandingPageComponent, LandingPageModule } from '@perxtech/blackcomb-pages';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent }
@@ -9,9 +8,8 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    PerxBlackcombPagesModule
+    LandingPageModule,
+    RouterModule.forChild(routes)
   ]
 })
 export class WelcomeModule { }

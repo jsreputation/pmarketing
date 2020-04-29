@@ -33,23 +33,24 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
   public rt: typeof RedemptionType = RedemptionType;
   public headLine: string;
   public subHeadLine: string;
-  public codeInstructionsText: string = 'This reward will automatically be redeemed for you by the merchant.';
+  public codeInstructionsText: string;
   public rewardSuccessPopUp: IPopupConfig = {
-    title: 'REDEEM_SUCCESSFULLY',
-    text: 'REDEEM_SUCCESS_TEXT',
-    buttonTxt: 'BACK_TO_WALLET',
+    title: 'REDEMPTION.SUCCESSFUL_REDEMPTION_TITLE',
+    text: 'REDEMPTION.SUCCESSFUL_REDEMPTION_TXT',
+    buttonTxt: 'REDEMPTION.BACK_TO_WALLET',
     imageUrl: '',
   };
   public errorPopUp: IPopupConfig = {
-    title: 'TRY_AGAIN_LATER',
+    title: 'REDEMPTION.UNKNOWN_ERROR_TXT',
     text: '',
-    buttonTxt: 'BACK_TO_WALLET',
+    buttonTxt: 'REDEMPTION.BACK_TO_WALLET',
     imageUrl: '',
   };
 
   private initTranslate(): void {
-    this.translate.get('ENTER_CODE').subscribe((text) => this.headLine = text);
-    this.translate.get('REDEMPTION_CODE').subscribe((text) => this.subHeadLine = text);
+    this.translate.get('REDEMPTION.TITLE').subscribe((text) => this.headLine = text);
+    this.translate.get('REDEMPTION.DESCRIPTION').subscribe((text) => this.subHeadLine = text);
+    this.translate.get('REDEMPTION.CODE_INSTRUCTION_TXT').subscribe((text) => this.codeInstructionsText = text);
     if (this.rewardSuccessPopUp.title) {
       this.translate.get(this.rewardSuccessPopUp.title).subscribe((text) => this.rewardSuccessPopUp.title = text);
     }
@@ -116,7 +117,7 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
 
             if (voucher.reward.displayProperties && voucher.reward.displayProperties.codeInstructionsText) {
               this.codeInstructionsText = voucher.reward.displayProperties.codeInstructionsText.headLine ||
-                'Please input this code when redeeming your reward at the Merchant';
+                this.codeInstructionsText;
             }
 
             if (voucher.reward.displayProperties && voucher.reward.displayProperties.errorPopUp) {
@@ -142,10 +143,11 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
             this.status = voucher.state;
           }
           if (this.status === VoucherState.issued && voucher.state === VoucherState.redeemed) {
+            const rewardName = this.voucher.reward ? this.voucher.reward.name : '';
             this.notificationService.addPopup({
-              title: 'Successfully Redeemed!',
-              text: `You have redeemed ${voucher.reward ? voucher.reward.name : ''}.`,
-              buttonTxt: 'Close',
+              title: this.rewardSuccessPopUp.title,
+              text: this.rewardSuccessPopUp.text ? this.rewardSuccessPopUp.text.replace('{{reward}}', rewardName) : '',
+              buttonTxt: this.rewardSuccessPopUp.buttonTxt,
               imageUrl: 'assets/redeem_success.png',
             });
             this.router.navigate(['wallet']);
@@ -202,17 +204,20 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
     this.vouchersService.redeemVoucher(this.voucher.id, { pin })
       .subscribe(
         () => {
+          const rewardName = this.voucher.reward ? this.voucher.reward.name : '';
           this.notificationService.addPopup({
-            title: 'Successfully Redeemed!',
-            text: `You have redeemed ${this.voucher.reward ? this.voucher.reward.name : ''}.`,
-            buttonTxt: 'Close',
+            title: this.rewardSuccessPopUp.title,
+            text: this.rewardSuccessPopUp.text ? this.rewardSuccessPopUp.text.replace('{{reward}}', rewardName) : '',
+            buttonTxt: this.rewardSuccessPopUp.buttonTxt,
             imageUrl: 'assets/redeem_success.png',
           });
           this.router.navigate(['wallet']);
         },
         () => {
           this.pinInputError = true;
-          this.notificationService.addSnack('Sorry! Voucher redemption failed.');
+          this.translate.get('REDEMPTION.FAIL_REDEMPTION_TXT').subscribe(text =>
+            this.notificationService.addSnack(text)
+          );
         }
       );
   }
