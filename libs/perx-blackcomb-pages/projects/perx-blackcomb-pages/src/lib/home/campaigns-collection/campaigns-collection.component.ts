@@ -54,7 +54,7 @@ export class CampaignsCollectionComponent implements OnInit {
   // private games: IGame[];
   private quizzes: IQuiz[] = [];
   public gamesLoaded: boolean = false;
-  public rewardsCountBvrSubjects: {[campaignId: string] :BehaviorSubject<number>} = {};
+  public rewardsCountBvrSubjects: { [campaignId: string]: BehaviorSubject<number> } = {};
 
   constructor(
     private translate: TranslateService,
@@ -76,8 +76,8 @@ export class CampaignsCollectionComponent implements OnInit {
       tap(rewardsArr => {
         rewardsArr.forEach((reward) => {
           this.rewardsCountBvrSubjects[reward.campaignId] = new BehaviorSubject(0);
-          this.rewardsCountBvrSubjects[reward.campaignId].next(reward.count)
-        })
+          this.rewardsCountBvrSubjects[reward.campaignId].next(reward.count);
+        });
       }),
       withLatestFrom(this.campaigns$),
       map(
