@@ -13,8 +13,9 @@
       <p class="reward-subtitle">{{campaign.description}}</p>
     </mat-card-content>
     <mat-card-content *ngIf="withRewardsCounter" class="card-content reward">
+<!--      campaign name will be filled with reward name instead when api ready-->
       <p class="main-reward-title">{{campaign.name}}</p>
-      <p class="reward-subtitle"><span class="bold-points">100</span> left</p>
+      <p *ngIf="campaign.rewardsCount > 0" class="reward-subtitle"><span class="bold-points">{{campaign.rewardsCount}}</span> left</p>
     </mat-card-content>
   </mat-card>
   <div class="flex-for-button">

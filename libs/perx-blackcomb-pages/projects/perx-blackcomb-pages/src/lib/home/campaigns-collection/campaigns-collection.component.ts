@@ -86,7 +86,10 @@ export class CampaignsCollectionComponent implements OnInit {
       this.campaignsWithRewards$,
       this.campaigns$
     ).pipe(
-      tap((campaigns) => this.campaigns = campaigns),
+      tap((campaigns) => {
+        console.log(campaigns, 'these are my campaigns')
+        this.campaigns = campaigns
+      }),
       // for each campaign, fetch associated games to figure out completion
       switchMap((campaigns) => combineLatest([
         ...campaigns.map((campaign: ICampaign) => {
