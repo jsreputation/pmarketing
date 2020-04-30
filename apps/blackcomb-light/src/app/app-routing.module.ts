@@ -1,17 +1,21 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { ProtectedGuard } from 'ngx-auth';
+import { RouterModule, Routes } from '@angular/router';
+import { AppComponent } from './app.component';
 
 const routes: Routes = [
   {
-    path: 'game/:id',
-    loadChildren: () => import('./game/game.module').then((mod) => mod.GameModule),
-    canActivate: [ProtectedGuard]
-  },
-  {
-    path: 'stamp/:id',
-    loadChildren: () => import('./stamp/stamp.module').then((mod) => mod.StampModule),
-    canActivate: [ProtectedGuard]
+    path: '',
+    component: AppComponent,
+    children: [
+      {
+        path: 'game/:id',
+        loadChildren: () => import('./game/game.module').then((mod) => mod.GameModule),
+      },
+      {
+        path: 'stamp/:id',
+        loadChildren: () => import('./stamp/stamp.module').then((mod) => mod.StampModule),
+      }
+    ]
   }
 ];
 
