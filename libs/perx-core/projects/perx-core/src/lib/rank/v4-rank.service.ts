@@ -80,4 +80,12 @@ export class V4RankService {
         map((dataArr: V4UserRanking[]) => dataArr.map(data => objectKeysPascalize(camelToPascalCase, data) as UserRanking))
       );
   }
+
+  public getLeaderBoardUserRank(id: number, userId: number): Observable<UserRanking> {
+    return this.http.get(`${this.baseUrl}/v4/leaderboards/${id}/users/${userId}`)
+      .pipe(
+        map((res: ApiWrap<V4UserRanking>) => res.data),
+        map((data: V4UserRanking) => objectKeysPascalize(camelToPascalCase, data) as UserRanking)
+      );
+  }
 }
