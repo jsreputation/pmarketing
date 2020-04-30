@@ -7,6 +7,7 @@ import {
   Output
 } from '@angular/core';
 import {
+  BehaviorSubject,
   combineLatest,
   iif,
   Observable,
@@ -53,6 +54,7 @@ export class CampaignsCollectionComponent implements OnInit {
   // private games: IGame[];
   private quizzes: IQuiz[] = [];
   public gamesLoaded: boolean = false;
+  public rewardsCountBvrSubjects: { [campaignId: string]: BehaviorSubject<number> } = {};
 
   constructor(
     private translate: TranslateService,
@@ -71,6 +73,12 @@ export class CampaignsCollectionComponent implements OnInit {
       switchMap(
         (campaigns: ICampaign[]) => zip(...campaigns.map(campaign => this.campaignService.getVoucherLeftCount(campaign.id))
         )),
+      tap(rewardsArr => {
+        rewardsArr.forEach((reward) => {
+          this.rewardsCountBvrSubjects[reward.campaignId] = new BehaviorSubject(0);
+          this.rewardsCountBvrSubjects[reward.campaignId].next(reward.count);
+        });
+      }),
       withLatestFrom(this.campaigns$),
       map(
         ([rewardsArr, campaigns]) => {
