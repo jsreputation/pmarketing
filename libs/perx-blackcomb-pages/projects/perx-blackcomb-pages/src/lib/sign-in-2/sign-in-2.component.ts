@@ -13,7 +13,7 @@ import { ActivatedRoute, Navigation, Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subject, Observable } from 'rxjs';
-import {filter, map, switchMap, takeUntil} from 'rxjs/operators';
+import { map, switchMap, takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { oc } from 'ts-optchain';
 
@@ -58,7 +58,6 @@ export class SignIn2Component implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.countriesList$ = this.route.data.pipe(
-      filter((dataObj) => dataObj.countryList),
       map((dataObj) => dataObj.countryList),
       switchMap((countriesList) => this.generalStaticDataService.getCountriesList(countriesList)),
       takeUntil(this.destroy$)

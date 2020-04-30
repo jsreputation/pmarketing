@@ -18,7 +18,7 @@ import {
 } from '@perxtech/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subject, iif, of, throwError } from 'rxjs';
-import { catchError, tap, switchMap, retryWhen, delay, mergeMap, filter, map, takeUntil } from 'rxjs/operators';
+import { catchError, tap, switchMap, retryWhen, delay, mergeMap, map, takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { Location } from '@angular/common';
 import { PinMode } from '../enter-pin/enter-pin.component';
@@ -79,7 +79,6 @@ export class SignUpComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.countriesList$ = this.route.data.pipe(
-      filter((dataObj) => dataObj.countryList),
       map((dataObj) => dataObj.countryList),
       switchMap((countriesList) => this.generalStaticDataService.getCountriesList(countriesList)),
       takeUntil(this.destroy$)
