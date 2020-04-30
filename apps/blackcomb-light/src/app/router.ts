@@ -1,8 +1,6 @@
-import { NavigationExtras, UrlTree } from "@angular/router";
+import { NavigationExtras, UrlTree, UrlSegment, UrlSegmentGroup, Router } from '@angular/router';
 
-export class AppRouter
-// extends Router 
-{
+export class AppRouter implements Partial<Router> {
   public navigate(commands: any[], extras?: NavigationExtras): Promise<boolean> {
     const tree = this.createUrlTree(commands, extras);
     return this.navigateByUrl(tree, extras);
@@ -11,6 +9,17 @@ export class AppRouter
   // @ts-ignore
   public createUrlTree(commands: any[], navigationExtras?: NavigationExtras): UrlTree {
     const res = new UrlTree();
+    const segments: UrlSegment[] = [];
+    commands.forEach((c: string) => {
+      // do not handle subgroups for now
+      if (!c.startsWith('(')) {
+        const segs: string[] = c.split('/').filter(seg => seg !== '');
+        segs.forEach(seg => segments.push(new UrlSegment(seg, {})));
+      }
+    });
+    res.root = new UrlSegmentGroup(segments, {});
+    res.queryParams = navigationExtras.queryParams;
+    res.fragment = navigationExtras.fragment;
     return res;
   }
 
