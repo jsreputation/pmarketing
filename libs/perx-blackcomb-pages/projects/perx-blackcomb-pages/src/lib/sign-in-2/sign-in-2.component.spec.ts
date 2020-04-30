@@ -3,7 +3,7 @@ import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatInputModule, MatProgressSpinnerModule, MatSelectModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthenticationService, Config, ConfigService, ThemesService } from '@perxtech/core';
@@ -44,6 +44,10 @@ describe('SignIn2Component', () => {
     })
   };
 
+  const activatedRouteStub: Partial<ActivatedRoute> = {
+    data: of()
+  };
+
   const routerStub: Partial<Router> = {
     navigateByUrl: () => Promise.resolve(true),
     getCurrentNavigation: () => null
@@ -71,7 +75,8 @@ describe('SignIn2Component', () => {
         { provide: ThemesService, useValue: themeServiceStub },
         { provide: Config, useValue: configStub },
         { provide: ConfigService, useValue: configServiceStub },
-        { provide: Router, useValue: routerStub }
+        { provide: Router, useValue: routerStub },
+        { provide: ActivatedRoute, useValue: activatedRouteStub }
       ]
     })
       .compileComponents();

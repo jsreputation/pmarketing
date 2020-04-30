@@ -53,7 +53,8 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     private generalStaticDataService: GeneralStaticDataService,
     private configService: ConfigService,
     private translate: TranslateService
-  ) { }
+  ) {
+  }
 
   public get phoneNumber(): AbstractControl | null { return this.phoneStepForm.get('phoneNumber'); }
   public get countryCode(): AbstractControl | null { return this.phoneStepForm.get('countryCode'); }
@@ -61,11 +62,12 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   public get passwordConfirmation(): AbstractControl | null { return this.newPasswordForm.get('passwordConfirmation'); }
 
   public ngOnInit(): void {
-    this.countriesList$ = this.generalStaticDataService.getCountriesList([
-      'Hong Kong',
-      'Philippines',
-      'Singapore'
-    ]);
+    this.countriesList$ = this.route.data.pipe(
+      filter((dataObj) => dataObj.countryList),
+      map((dataObj) => dataObj.countryList),
+      switchMap((countriesList) => this.generalStaticDataService.getCountriesList(countriesList)),
+      takeUntil(this.destroy$)
+    );
 
     const matchRouteCountry$ = (countryList: ICountryCode[]) => (() => this.route.queryParams.pipe(
       filter((params) => !!params.identifier),
