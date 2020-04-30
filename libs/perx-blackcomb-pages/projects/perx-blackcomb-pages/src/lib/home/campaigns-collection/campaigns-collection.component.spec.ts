@@ -6,6 +6,7 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {TranslateModule} from '@ngx-translate/core';
 import { of } from 'rxjs';
 import {
+  ICampaignService,
   IGameService,
   QuizService
 } from '@perxtech/core';
@@ -22,6 +23,10 @@ describe('CampaignsCollectionComponent', () => {
     getQuizFromCampaign: () => of()
   };
 
+  const campaignServiceStub: Partial<ICampaignService> = {
+    getVoucherLeftCount: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ CampaignsCollectionComponent ],
@@ -33,6 +38,7 @@ describe('CampaignsCollectionComponent', () => {
       providers: [
         { provide: IGameService, useValue: gameServiceStub },
         { provide: QuizService, useValue: quizServiceStub },
+        { provide: ICampaignService, useValue: campaignServiceStub }
       ]
     })
       .compileComponents();

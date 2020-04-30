@@ -8,21 +8,23 @@ import {
 } from '@angular/core';
 import {
   combineLatest,
+  iif,
   Observable,
+  zip,
 } from 'rxjs';
 import {
   GameType,
-  ICampaign,
+  ICampaign, ICampaignService,
   IGame,
   IGameService,
   IQuiz,
   QuizService
 } from '@perxtech/core';
-import { oc } from 'ts-optchain';
 import { TranslateService } from '@ngx-translate/core';
 import {
-  switchMap,
-  tap,
+  map,
+  switchMap, tap,
+  withLatestFrom,
 } from 'rxjs/operators';
 
 @Component({
@@ -47,6 +49,7 @@ export class CampaignsCollectionComponent implements OnInit {
   public showAllCampaigns: boolean = false;
   public rewardsLeft: string;
   public campaigns: ICampaign[];
+  public campaignsWithRewards$: Observable<ICampaign[]>;
   // private games: IGame[];
   private quizzes: IQuiz[] = [];
   public gamesLoaded: boolean = false;
@@ -54,7 +57,8 @@ export class CampaignsCollectionComponent implements OnInit {
   constructor(
     private translate: TranslateService,
     private gamesService: IGameService,
-    private quizService: QuizService
+    private campaignService: ICampaignService,
+    private quizService: QuizService,
   ) { }
 
 
@@ -63,10 +67,28 @@ export class CampaignsCollectionComponent implements OnInit {
       this.rewardsLeft = text;
     });
 
-    this.campaigns$.pipe(
-      tap((campaigns: ICampaign[]) => this.campaigns = campaigns),
+    this.campaignsWithRewards$ = this.campaigns$.pipe(
+      switchMap(
+        (campaigns: ICampaign[]) => zip(...campaigns.map(campaign => this.campaignService.getVoucherLeftCount(campaign.id))
+        )),
+      withLatestFrom(this.campaigns$),
+      map(
+        ([rewardsArr, campaigns]) => {
+          const rewardsCampaignIndexedObj = rewardsArr.reduce((acc, curr) => ({
+            ...acc, [curr.campaignId]: curr.count
+          }), {});
+          return campaigns.map(campaign => ({...campaign, rewardsCount: rewardsCampaignIndexedObj[campaign.id]}));
+        }
+      ));
+
+    iif(
+      () => this.withRewardsCounter,
+      this.campaignsWithRewards$,
+      this.campaigns$
+    ).pipe(
+      tap((campaigns) => this.campaigns = campaigns),
       // for each campaign, fetch associated games to figure out completion
-      switchMap((campaigns: ICampaign[]) => combineLatest([
+      switchMap((campaigns) => combineLatest([
         ...campaigns.map((campaign: ICampaign) => {
           if (this.gameType === GameType.quiz) {
             return this.quizService.getQuizFromCampaign(campaign.id);
@@ -78,7 +100,7 @@ export class CampaignsCollectionComponent implements OnInit {
       (res: (IQuiz | IGame[])[]) => {
         if (this.gameType === GameType.quiz) {
           this.quizzes = res as IQuiz[];
-        // } else {
+          // } else {
           // todo: test games input when games get refactored in.
           // expected stamp cards to hit this but since we don't actually have games in stamp campaigns it will be empty array
           // this.games = (res as IGame[][])[0];
@@ -99,25 +121,6 @@ export class CampaignsCollectionComponent implements OnInit {
 
   public getCampaignImage(campaign: ICampaign): string {
     return campaign.campaignBannerUrl ? campaign.campaignBannerUrl : 'https://perx-cdn-staging.s3.amazonaws.com/reward/item/images/35/580b585b2edbce24c47b2415-48075171-3595-4e55-b630-8a00b412dcc4.png';
-  }
-
-  public getRewardsCount(campaign: ICampaign): string | undefined {
-    if (!campaign.rewards) {
-      return;
-    }
-    const sumRewards = campaign.rewards.reduce((sum, reward) => {
-      const balance = oc(reward).inventory.rewardTotalBalance();
-      if (balance !== undefined && balance !== null) {
-        if (sum !== undefined) {
-          // @ts-ignore
-          return sum + balance;
-        }
-        return balance;
-      }
-      return sum;
-    }, undefined);
-
-    return this.rewardsLeft.replace('{{rewardsCount', sumRewards);
   }
 
   public isCampaignComplete(campaignId: number): boolean {

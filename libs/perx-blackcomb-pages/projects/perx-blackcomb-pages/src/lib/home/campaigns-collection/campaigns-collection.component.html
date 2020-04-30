@@ -5,9 +5,6 @@
     matRipple
     [ngClass]="isCampaignComplete(campaign.id) ? 'campaigns-card disabled' : 'campaigns-card'"
     (click)="selectCampaign(campaign)">
-    <span class="remaining-rewards" *ngIf="withRewardsCounter && getRewardsCount(campaign)">
-      {{getRewardsCount(campaign)}}
-    </span>
     <div class="img-wrapper">
       <img class="puzzle-img" src="{{getCampaignImage(campaign)}}" alt="Campaign image">
     </div>
