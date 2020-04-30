@@ -7,12 +7,8 @@ import { UserRanking } from '../models/rank.model';
   styleUrls: ['./mini-rank.component.scss']
 })
 export class MiniRankComponent {
-
   @Input()
-  public userGameInfo: UserRanking = {
-    id: 1,
-    rank: 12,
-    displayName: 'test',
-    value: 1000
-  };
+  public metric: string = 'score';
+  @Input()
+  public userGameInfo: UserRanking;
 }
