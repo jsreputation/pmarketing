@@ -34,6 +34,12 @@
           <span translate>NAVIGATION.HISTORY</span>
         </div>
       </a>
+      <a matRipple [routerLink]="[ '/leaderboard' ]" routerLinkActive="active" *ngIf="appConfig.showLeaderboardPage">
+        <div class="nav-item">
+          <mat-icon aria-hidden="false">star_border</mat-icon>
+          <span translate>NAVIGATION.LEADER_BOARD</span>
+        </div>
+      </a>
       <a matRipple [routerLink]="[ '/account' ]" routerLinkActive="active" *ngIf="appConfig.showAccountsPage">
         <div class="nav-item">
           <mat-icon aria-hidden="false">account_circle</mat-icon>
