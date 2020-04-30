@@ -15,7 +15,9 @@
     <mat-card-content *ngIf="withRewardsCounter" class="card-content reward">
 <!--      campaign name will be filled with reward name instead when api ready-->
       <p class="main-reward-title">{{campaign.name}}</p>
-      <p *ngIf="campaign.rewardsCount > 0" class="reward-subtitle"><span class="bold-points">{{campaign.rewardsCount}}</span> left</p>
+      <ng-container *ngIf="rewardsCountBvrSubjects[campaign.id] | async as rwdBvrSbj">
+        <p class="reward-subtitle" *ngIf="rwdBvrSbj > 0"><span class="bold-points">{{rwdBvrSbj}}</span> left</p>
+      </ng-container>
     </mat-card-content>
   </mat-card>
   <div class="flex-for-button">
