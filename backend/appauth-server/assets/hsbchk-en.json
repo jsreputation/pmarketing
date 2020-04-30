@@ -223,7 +223,7 @@
     "FEATURED_REWARDS": "Featured Rewards",
     "SEE_MORE": "See more",
     "SEE_LESS": "See less",
-    "REWARDS_LEFT": "{{rewardsCount}} Rewards Left",
+    "REWARDS_LEFT": " Rewards Left",
     "READ_MORE": "Read More"
   },
   "NEWS_FEED": {
