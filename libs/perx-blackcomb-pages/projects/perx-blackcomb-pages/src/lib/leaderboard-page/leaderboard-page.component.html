@@ -3,7 +3,10 @@
     <img src="https://cdn.perxtech.io/content/hsbc-hk/quiz-banner.png" alt="">
   </div>
   <div class="info-container">
-    <perx-core-mini-rank></perx-core-mini-rank>
+    <perx-core-mini-rank
+      [metric]="leaderBoardSettings?.metric" [userGameInfo]="userMiniRankData"></perx-core-mini-rank>
   </div>
-  <perx-core-leaderboard></perx-core-leaderboard>
+  <perx-core-leaderboard
+    [dataArray]="leaderboardRanks"
+    [metric]="leaderBoardSettings?.metric"></perx-core-leaderboard>
 </div>

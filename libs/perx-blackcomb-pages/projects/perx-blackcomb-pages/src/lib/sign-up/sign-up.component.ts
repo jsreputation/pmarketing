@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {
   AuthenticationService,
   IGameService,
@@ -18,7 +18,7 @@ import {
 } from '@perxtech/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subject, iif, of, throwError } from 'rxjs';
-import { catchError, tap, switchMap, retryWhen, delay, mergeMap } from 'rxjs/operators';
+import { catchError, tap, switchMap, retryWhen, delay, mergeMap, map, takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { Location } from '@angular/common';
 import { PinMode } from '../enter-pin/enter-pin.component';
@@ -65,6 +65,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
     private authService: AuthenticationService,
     private notificationService: NotificationService,
     private router: Router,
+    private route: ActivatedRoute,
     private translate: TranslateService,
     private gameService: IGameService,
     private surveyService: SurveyService,
@@ -73,13 +74,15 @@ export class SignUpComponent implements OnInit, OnDestroy {
     private themesService: ThemesService,
     private configService: ConfigService,
     private generalStaticDataService: GeneralStaticDataService
-  ) { }
+  ) {
+  }
 
   public ngOnInit(): void {
-    this.countriesList$ = this.generalStaticDataService.getCountriesList([
-      'Hong Kong',
-      'Singapore'
-    ]);
+    this.countriesList$ = this.route.data.pipe(
+      map((dataObj) => dataObj.countryList),
+      switchMap((countriesList) => this.generalStaticDataService.getCountriesList(countriesList)),
+      takeUntil(this.destroy$)
+    );
     this.configService.readAppConfig<void>().subscribe((conf: IConfig<void>) => this.appConfig = conf);
     this.theme = this.themesService.getThemeSetting();
     this.oldPI = this.authService.getPI();
