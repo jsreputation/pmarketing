@@ -25,6 +25,6 @@ export class FeedItemPopupComponent {
   }
 
   public goToItemLink(): void {
-    this.router.navigate([this.item.link])
+    this.router.navigate([this.item.link]);
   }
 }
