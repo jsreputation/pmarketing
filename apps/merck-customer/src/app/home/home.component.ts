@@ -3,36 +3,9 @@ import { PageAppearence, PageProperties, BarSelectedItem } from '../page-propert
 import { IReward, RewardsService, IProfile, ILoyalty, ITabConfigExtended } from '@perxtech/core';
 import { Observable, of, Subject, forkJoin } from 'rxjs';
 import { Router } from '@angular/router';
-import { flatMap, map } from 'rxjs/operators';
+import { flatMap, map, tap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { MatTabChangeEvent } from '@angular/material';
-
-const tabs: ITabConfigExtended[] = [
-  {
-    filterKey: null,
-    filterValue: null,
-    tabName: 'Healthcare',
-    rewardsType: 'Healthcare',
-    rewardsList: undefined,
-    currentPage: 1
-  },
-  {
-    filterKey: null,
-    filterValue: null,
-    tabName: 'Diabetes',
-    rewardsType: 'Diabetes',
-    rewardsList: undefined,
-    currentPage: 1
-  },
-  {
-    filterKey: null,
-    filterValue: null,
-    tabName: 'Category 3',
-    rewardsType: 'Category 3',
-    rewardsList: undefined,
-    currentPage: 1
-  }
-];
 
 @Component({
   selector: 'mc-home',
@@ -94,10 +67,13 @@ export class HomeComponent implements OnInit, PageAppearence {
   private getTags(): Observable<ITabConfigExtended[]> {
     // todo: service not implemented yet
     // this.rewardsService.getTags();
-    this.staticTab = tabs;
-    this.tabs.next(this.staticTab);
-    this.cd.detectChanges();
-    return of(tabs);
+    return this.rewardsService.getCategories().pipe(
+      tap((tabs: ITabConfigExtended[]) => {
+        this.staticTab = tabs;
+        this.tabs.next(this.staticTab);
+        this.cd.detectChanges();
+      })
+    );
   }
 
   public myQrClicked(): void {
