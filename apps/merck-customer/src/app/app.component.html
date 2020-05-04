@@ -4,7 +4,7 @@
 			{{leftIconToShow}}
 		</mat-icon>
 	</button>
-  <a *ngIf="pageProperties.pageTitle === ''"  routerLink="/">
+  <a *ngIf="pageProperties.pageTitle === ''"  routerLink="/home">
     <img src="assets/header_logo.png">
   </a>
 	<ng-container *ngIf="pageProperties.pageTitle !== ''" translate>{{pageProperties.pageTitle | translate}}</ng-container>
