@@ -8,8 +8,8 @@ export type LeaderBoard = {
 };
 
 export type UserRanking = {
-  displayName: string;
+  displayName?: string | number | boolean | null; // based on custom props
   id: number;
-  rank: number;
+  rank: number | string;
   value: number;
 };

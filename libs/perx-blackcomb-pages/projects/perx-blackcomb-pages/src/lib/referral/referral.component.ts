@@ -6,7 +6,12 @@ import {
   NotificationService
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
-import {takeLast, tap} from 'rxjs/operators';
+import {
+  map,
+  switchMap,
+  takeLast,
+  tap
+} from 'rxjs/operators';
 
 @Component({
   selector: 'perx-blackcomb-pages-referral',
@@ -35,13 +40,11 @@ export class ReferralComponent {
     this.initTranslate();
     this.campaignService.getCampaigns({ type: CampaignType.invite })
       .pipe(
-        tap((campaigns: ICampaign[]) => {
-          if (campaigns) {
-            const checkedCampaigns = campaigns.find(referCampaign => referCampaign.referralCodes
-              ? referCampaign.referralCodes.length > 0 : false);
-            if (checkedCampaigns) {
-              this.code = checkedCampaigns.referralCodes ? checkedCampaigns.referralCodes[0] : this.code;
-            }
+        map((campaigns: ICampaign[]) => campaigns[0].id),
+        switchMap((cid: number) => this.campaignService.getCampaign(cid)),
+        tap((campaign: ICampaign) => {
+          if (campaign) {
+            this.code = campaign.referralCodes ? campaign.referralCodes[0] : this.code;
             this.shareText = this.shareText.replace('{{code}}', this.code);
           }
         }),
