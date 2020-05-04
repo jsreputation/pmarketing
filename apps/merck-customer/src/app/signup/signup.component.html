@@ -1,11 +1,11 @@
 <div class="main-container">
   <img src="assets/logo.png">
 	<div class="logo-title">
-		<ng-container i18n="@@login-subtitle">Diabetes Loyality Program</ng-container>
+		<ng-container i18n="@@login-subtitle">{{'DLP' | translate}}</ng-container>
 	</div>
 	<div class="content-container">
 		<div translate class="main-heading">SIGN_UP</div>
-		<div class="subtitle"><ng-container>{{"STATIC_HAVE_ACCOUNT" | translate}}? </ng-container><span translate class="link" (click)="goToLogin()">STATIC_LOGIN</span></div>
+		<div class="subtitle"><ng-container>{{'STATIC_HAVE_ACCOUNT' | translate}}? </ng-container><span translate class="link" (click)="goToLogin()">STATIC_LOGIN</span></div>
 		<form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
 			<mat-form-field color="primary" class="full-width__input">
 				<mat-label translate>STATIC_NAME</mat-label>
@@ -17,9 +17,9 @@
 			<mat-form-field class="full-width__input">
 				<mat-select formControlName="countryCode">
 					<mat-option default value="852"><ng-container>{{'COUNTRY_HONGKONG' | translate}}</ng-container>(+852)</mat-option>
-					<mat-option value="853"><ng-container>{{ "COUNTRY_MACAU" | translate}}</ng-container> (+853)</mat-option>
-					<mat-option value="86"><ng-container>{{ "COUNTRY_CHINA" | translate}}</ng-container> (+86)</mat-option>
-					<mat-option value="65"><ng-container>{{ "COUNTRY_SINGAPORE" | translate}}</ng-container> (+65)</mat-option>
+					<mat-option value="853"><ng-container>{{'COUNTRY_MACAU' | translate}}</ng-container> (+853)</mat-option>
+					<mat-option value="86"><ng-container>{{'COUNTRY_CHINA' | translate}}</ng-container> (+86)</mat-option>
+					<mat-option value="65"><ng-container>{{'COUNTRY_SINGAPORE' | translate}}</ng-container> (+65)</mat-option>
 				</mat-select>
 			</mat-form-field>
 			<mat-form-field color="primary" class="full-width__input">
@@ -50,13 +50,13 @@
 				</mat-error>
 			</mat-form-field>
 			<div class="accept-terms">
-				<mat-checkbox color="primary" formControlName="accept_terms">{{ "STATIC_ACCEPT_TERMS" | translate }}</mat-checkbox>
+				<mat-checkbox color="primary" formControlName="accept_terms">{{ 'STATIC_ACCEPT_TERMS' | translate }}</mat-checkbox>
 			</div>
 			<div class="checkbox-container">
 				<mat-checkbox color="primary" formControlName="accept_marketing"></mat-checkbox>
 			 	<span translate class="wrap-checkbox-text">STATIC_AGREE_MARKETING</span>
 			</div>
-			<button mat-flat-button type="submit" class="full-width__button">{{ "STATIC_REGISTER_BTN" | translate }}</button>
+			<button mat-flat-button type="submit" class="full-width__button">{{'STATIC_REGISTER_BTN' | translate }}</button>
 		</form>
 	</div>
 </div>

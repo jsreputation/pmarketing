@@ -9,7 +9,7 @@
   </ng-container>3
   <ng-container matColumnDef="displayName">
     <th mat-header-cell *matHeaderCellDef> NICKNAME </th>
-    <td mat-cell *matCellDef="let user"> {{user.displayName}} </td>
+    <td mat-cell *matCellDef="let user"> {{user.displayName || user.id}} </td>
   </ng-container>
   <ng-container matColumnDef="value">
     <th mat-header-cell *matHeaderCellDef> {{metric | uppercase}} </th>

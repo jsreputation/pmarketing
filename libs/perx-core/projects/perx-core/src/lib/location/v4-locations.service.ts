@@ -58,6 +58,14 @@ export class V4LocationsService extends LocationsService {
       }),
       mergeAll(5),
       scan((acc: ILocation[], curr: ILocation[]) => acc.concat(curr), []),
+      map((locations: ILocation[]) => locations
+        .sort((locationA, locationB) => {
+          if (locationA.merchantName && locationB.merchantName) {
+            return locationA.merchantName < locationB.merchantName ? -1 : 1;
+          }
+          return 0;
+        })
+      ),
       share()
     );
   }

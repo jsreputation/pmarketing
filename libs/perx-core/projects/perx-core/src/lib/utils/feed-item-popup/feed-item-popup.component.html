@@ -10,8 +10,10 @@
   </p>
   <div class="spacer"></div>
   <div mat-dialog-actions>
-    <a mat-flat-button *ngIf="showButton" color="primary" [href]="item.link">
+    <button class="dialog-button"
+    (click)="goToItemLink()"
+    *ngIf="showButton" mat-button color="primary">
       {{item.title}}
-    </a>
+    </button>
   </div>
 </div>
