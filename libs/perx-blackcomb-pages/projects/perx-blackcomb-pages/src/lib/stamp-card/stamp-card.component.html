@@ -1,6 +1,5 @@
-<div class="main-puzzle-container" *ngIf="stampCard"
-  [ngStyle]="{'background-image': 'url(' + background + ')'}"
->
+<div class="main-puzzle-container" *ngIf="stampCard">
+    <img class="background" *ngIf="background" [src]="background">
     <div class="stamp-form">
       <perx-core-puzzle-collect-stamps
         [nbSlots]="stampCard.campaignConfig?.totalSlots || stampCard.displayProperties.totalSlots"
