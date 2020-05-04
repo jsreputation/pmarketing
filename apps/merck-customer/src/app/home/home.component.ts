@@ -11,16 +11,16 @@ const tabs: ITabConfigExtended[] = [
   {
     filterKey: null,
     filterValue: null,
-    tabName: 'Diabetes',
-    rewardsType: 'Diabetes',
+    tabName: 'Healthcare',
+    rewardsType: 'Healthcare',
     rewardsList: undefined,
     currentPage: 1
   },
   {
     filterKey: null,
     filterValue: null,
-    tabName: 'Category 2',
-    rewardsType: 'Category 2',
+    tabName: 'Diabetes',
+    rewardsType: 'Diabetes',
     rewardsList: undefined,
     currentPage: 1
   },
