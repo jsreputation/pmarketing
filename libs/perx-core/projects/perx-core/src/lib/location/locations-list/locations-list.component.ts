@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { ILocation } from '../ilocation';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-core-locations-list',
@@ -21,17 +20,5 @@ export class LocationsListComponent implements OnInit {
     if (!this.headerFn) {
       this.headerFn = (location) => of(location.merchantName ? location.merchantName : location.name);
     }
-    if (this.locations) {
-      this.locations.pipe(
-        map((locations: ILocation[]) => locations
-          .sort((locationA, locationB) => {
-            if (locationA.merchantName && locationB.merchantName) {
-              return locationA.merchantName < locationB.merchantName ? -1 : 1;
-            }
-            return 0;
-          })
-        )).subscribe();
-    }
-
   }
 }
