@@ -70,9 +70,9 @@ export class LeaderboardPageComponent {
         }
         return of(undefined);
       })
-    ).subscribe(res => {
-      if (res) {
-        this.userMiniRankData = res;
+    ).subscribe((miniRank: UserRanking | undefined) => {
+      if (miniRank) {
+        this.userMiniRankData = miniRank;
       }
     });
   }
