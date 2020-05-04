@@ -11,6 +11,7 @@ import {
   combineLatest,
   iif,
   Observable,
+  of,
   zip,
 } from 'rxjs';
 import {
@@ -23,8 +24,10 @@ import {
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import {
+  catchError,
   map,
-  switchMap, tap,
+  switchMap,
+  tap,
   withLatestFrom,
 } from 'rxjs/operators';
 
