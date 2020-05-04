@@ -6,8 +6,8 @@ import {
   UserRanking
 } from '@perxtech/core';
 import {
+  catchError, concatMap,
   map,
-  switchMap,
   withLatestFrom
 } from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
@@ -19,12 +19,12 @@ import {Observable, of} from 'rxjs';
 })
 export class LeaderboardPageComponent {
   public leaderboardRanks: UserRanking[];
-  public userMiniRankData: UserRanking = {
-    id: 1,
-    rank: 12,
-    displayName: 'test',
-    value: 1000
-  };
+  public userMiniRankData: UserRanking =  ({
+    displayName: '[No Name]',
+    id: 0,
+    rank: 0 || 'NA',
+    value: 0
+  });
 
   public leaderboard$: Observable<LeaderBoard>;
   public leaderBoardSettings: LeaderBoard;
@@ -39,30 +39,41 @@ export class LeaderboardPageComponent {
       );
 
     this.leaderboard$.pipe(
-      switchMap((leaderboard) => this.rankService.getLeaderBoardRanks(leaderboard.id))
+      concatMap((leaderboard) => this.rankService.getLeaderBoardRanks(leaderboard.id))
     ).subscribe((ranksArr) => {
       if (ranksArr) {
-        this.leaderboardRanks = ranksArr;
+        this.leaderboardRanks = ranksArr as UserRanking[];
       }
     });
 
     this.profileService.whoAmI().pipe(
       withLatestFrom(this.leaderboard$),
-      switchMap(([profile, leaderboard]) => {
+      concatMap(([profile, leaderboard]) => {
         if (leaderboard) {
           this.leaderBoardSettings = leaderboard;
         }
         if (leaderboard && profile && profile.id) {
-          return this.rankService.getLeaderBoardUserRank(leaderboard.id, profile.id);
+          const defaultMiniRank = {
+            displayName: (profile.customProperties
+              && profile.customProperties.nickname
+              && profile.customProperties.fullName
+              && profile.identifier
+            ),
+            id: 0,
+            rank: 0 || 'NA',
+            value: 0
+          };
+          return this.rankService.getLeaderBoardUserRank(leaderboard.id, profile.id)
+            .pipe(
+              catchError(_ => of(defaultMiniRank))
+            );
         }
         return of(undefined);
       })
-    ).subscribe(
-      (userMiniRank: UserRanking) => {
-        if (userMiniRank) {
-          this.userMiniRankData = userMiniRank;
-        }
+    ).subscribe(res => {
+      if (res) {
+        this.userMiniRankData = res;
       }
-    );
+    });
   }
 }
