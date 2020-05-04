@@ -266,7 +266,13 @@ export class QuizComponent implements OnInit, OnDestroy {
       return;
     }
     this.quizService.getMove(quizId)
-      .subscribe((move) => this.moveId = move.moveId);
+      .subscribe(
+        (move) => this.moveId = move.moveId,
+        (_) => {
+          this.notificationService.addPopup(this.notAvailablePopUp);
+          this.router.navigate(['/home']);
+        }
+      );
   }
 
   private checkShowOverArrow(): void {
