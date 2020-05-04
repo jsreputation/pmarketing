@@ -11,10 +11,15 @@ import {
 import { FeedItemPopupComponent } from './feed-item-popup.component';
 
 import { FeedItem } from '../feed-reader.service';
+import {Router} from '@angular/router';
 
 describe('FeedItemPopupComponent', () => {
   let component: FeedItemPopupComponent;
   let fixture: ComponentFixture<FeedItemPopupComponent>;
+  const router = {
+    navigate: jest.fn()
+  };
+
   const dataMock: FeedItem = {
     title: '',
     description: '',
@@ -31,6 +36,7 @@ describe('FeedItemPopupComponent', () => {
         MatIconModule
       ],
       providers: [
+        { provide: Router, useValue: router },
         { provide: MAT_DIALOG_DATA, useValue: dataMock }
       ]
     })
