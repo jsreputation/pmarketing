@@ -138,7 +138,7 @@ export class CampaignsCollectionComponent implements OnInit {
     if (this.quizzes && this.quizzes.length > 0 && this.gameType === GameType.quiz) {
       return this.quizzes.filter((quiz: IQuiz) =>
         (quiz.campaignId === campaignId) &&
-        (quiz.remainingNumberOfTries && quiz.remainingNumberOfTries <= 0)
+        (quiz.remainingNumberOfTries != null && quiz.remainingNumberOfTries <= 0)
       ).length > 0;
     }
     return false;
