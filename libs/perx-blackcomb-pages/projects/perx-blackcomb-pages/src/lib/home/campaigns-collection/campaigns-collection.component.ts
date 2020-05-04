@@ -99,7 +99,9 @@ export class CampaignsCollectionComponent implements OnInit {
       switchMap((campaigns) => combineLatest([
         ...campaigns.map((campaign: ICampaign) => {
           if (this.gameType === GameType.quiz) {
-            return this.quizService.getQuizFromCampaign(campaign.id);
+            return this.quizService.getQuizFromCampaign(campaign.id).pipe(
+              catchError(( () => of([])))
+            );
           }
           return this.gamesService.getGamesFromCampaign(campaign.id);
         })
