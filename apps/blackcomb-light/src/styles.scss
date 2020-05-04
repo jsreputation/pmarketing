@@ -1,0 +1,109 @@
+/* You can add global styles to this file, and also import other style files */
+// @import ~@angular/material/theming;
+@import "./custom-theme.scss";
+
+:root {
+  --font: Roboto;
+  --logo: "";
+  --title: "";
+  --accent: #96289a;
+  --primary: #147dd3;
+  --button_text_color: #fff;
+  --button_background_color: #147dd3;
+  --header_color: #147dd3;
+  --background: #fafafa;
+  --font_color: #333;
+  --disabled_text_color: #aaaaaa;
+}
+
+html {
+  font-size: 62.5%;
+  font-family: var(--font);
+  font-style: normal;
+  background-color: #fafafa;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  background-color: var(--background);
+  color: var(--font_color);
+}
+
+.mat-dialog-container {
+  background-color: var(--popup_background_colour) !important;
+}
+
+button {
+  background-color: var(--button_background_color) !important;
+  color: var(--button_text_color) !important;
+}
+
+button:disabled {
+  background-color: var(--disabled_text_color) !important;
+  color: white !important;
+}
+
+button.mat-primary {
+  background-color: var(--button_background_color) !important;
+  color: var(--button_text_color) !important;
+}
+
+.mat-accent {
+  color: var(--accent) !important;
+}
+
+button.mat-accent {
+  background-color: var(--accent) !important;
+  color: var(--button_text_color) !important;
+}
+
+button.mat-default {
+  background-color: var(--background) !important;
+  color: var(--font_color) !important;
+}
+
+button.mat-stroked-button {
+  background-color: white !important;
+  color: var(--accent) !important;
+}
+
+.mat-toolbar {
+  background-color: var(--header_color) !important;
+}
+
+.actions-container {
+  background-color: transparent;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  min-height: 6rem;
+  padding: 1rem 1.2rem;
+  box-sizing: border-box;
+  text-align: center;
+
+  button {
+    width: 100%;
+    margin: auto;
+    height: 100%;
+    padding: 0;
+    text-transform: uppercase;
+  }
+}
+
+.backArrow {
+  color: var(--accent);
+}
+
+.toolbar {
+  padding: 1.6rem calc(1.3rem + 24px) 1.6rem 1.3rem !important;
+}
+
+.logoWrapper {
+  height: 100%;
+
+  .logo {
+    height: 100%;
+  }
+}
