@@ -146,4 +146,15 @@ export class CampaignsCollectionComponent implements OnInit {
     }
     return false;
   }
+
+  public isQuizRewardsEmpty(campaignId: number): boolean {
+    if (this.quizzes && this.quizzes.length > 0 && this.gameType === GameType.quiz) {
+      const matchingCampaign = this.campaigns.find((campaign: ICampaign) =>
+        campaign.id === campaignId
+      );
+      console.log(matchingCampaign && matchingCampaign.rewardsCount ?  matchingCampaign.rewardsCount <=0 : true);
+      return matchingCampaign && matchingCampaign.rewardsCount ?  matchingCampaign.rewardsCount <=0 : true;
+    }
+    return true;
+  }
 }

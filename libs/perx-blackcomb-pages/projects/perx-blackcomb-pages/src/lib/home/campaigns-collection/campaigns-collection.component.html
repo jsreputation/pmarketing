@@ -3,7 +3,7 @@
     *ngFor="let campaign of ((showAllCampaigns || (campaigns.length <= defaultNbCampaigns))
   ? campaigns : (campaigns | slice:0:defaultNbCampaigns))"
     matRipple
-    [ngClass]="isCampaignComplete(campaign.id) ? 'campaigns-card disabled' : 'campaigns-card'"
+    [ngClass]="(isCampaignComplete(campaign.id)  || isQuizRewardsEmpty(campaign.id))? 'campaigns-card disabled' : 'campaigns-card'"
     (click)="selectCampaign(campaign)">
     <div class="img-wrapper">
       <img class="puzzle-img" src="{{getCampaignImage(campaign)}}" alt="Campaign image">
