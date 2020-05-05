@@ -19,7 +19,7 @@ export class V4MicrositeSettingInterceptor implements HttpInterceptor {
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (req.url.includes('/v4/settings/microsite_settings')) {
       const appToken = this.tokenStorage.getAppInfoProperty('appAccessToken') as string;
-      req = req.clone({ headers: req.headers.set('Authorization', 'Bearer ' + appToken) });
+      req = req.clone({ headers: req.headers.set('Authorization', `Bearer ${appToken}`) });
     }
     return next.handle(req);
   }
