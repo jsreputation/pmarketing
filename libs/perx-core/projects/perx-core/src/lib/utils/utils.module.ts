@@ -2,7 +2,10 @@ import { NgModule } from '@angular/core';
 import { PopupComponent } from './popup/popup.component';
 import { MatButtonModule, MatDialogModule, MatCardModule } from '@angular/material';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  HttpClient
+} from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NotificationService } from './notification/notification.service';
 import { NumericCharacterDirective } from './directives/numeric-character.directive';
@@ -28,6 +31,7 @@ import { SafeHtmlPipe } from './safe-html.pipe';
 import { SafeUrlPipe } from './safe-url.pipe';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { TranslateModule } from '@ngx-translate/core';
+import { V4MicrositeSettingInterceptor } from './themes/v4publicSettings.interceptor';
 
 export function themesServiceFactory(http: HttpClient, config: Config, configService: ConfigService): ThemesService {
   if (config.isWhistler) {
@@ -96,6 +100,7 @@ export function notificationServiceFactory(): NotificationService {
     ...pipes
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: V4MicrositeSettingInterceptor, multi: true },
     { provide: NotificationService, useFactory: notificationServiceFactory },
     FeedReaderService,
     GeneralStaticDataService,

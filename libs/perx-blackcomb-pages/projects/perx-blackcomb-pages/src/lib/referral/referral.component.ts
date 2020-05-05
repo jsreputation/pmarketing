@@ -22,13 +22,13 @@ export class ReferralComponent {
   // todo to be replaced with the proper content when api is available
   public tnc: string;
   // todo to be replaced with the proper content when api is available
-  public code: string = 'LASTNAME1234';
+  public code: string = '';
   // todo to be replaced with the proper content when api is available
   public shareText: string;
   // todo to be replaced with the proper content when api is available
   public shareTitle: string;
   // todo to be replaced with the proper content when api is available
-  public shareUrl: string = 'http://www.linktothiscampaign.com';
+  public shareUrl: string = 'https://retailbank.hsbc.com.hk/ins/';
   public copyToClipboardTxt: string;
   public clipboardErrorTxt: string;
 
@@ -89,7 +89,7 @@ export class ReferralComponent {
     ]).subscribe((res: any) => {
       this.tnc = res['REFERRAL.CONTENT'];
       this.shareTitle = res['REFERRAL.SHARE_COPY_TITLE'];
-      this.shareText = res['REFERRAL.SHARE_COPY_TXT'];
+      this.shareText = res['REFERRAL.SHARE_COPY_TXT'].replace('[URL]', this.shareUrl);
       this.copyToClipboardTxt = res['REFERRAL.COPY_TO_CLIPBOARD'];
       this.clipboardErrorTxt = res['REFERRAL.CLIPBOARD_ERROR_TXT'];
     });
