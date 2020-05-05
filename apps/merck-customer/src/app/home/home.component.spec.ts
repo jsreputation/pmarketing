@@ -118,7 +118,8 @@ describe('HomeComponent', () => {
         {
           provide: RewardsService,
           useValue: {
-            getAllRewards: () => of()
+            getAllRewards: () => of(),
+            getCategories: () => of()
           }
         },
         {
