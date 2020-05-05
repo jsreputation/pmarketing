@@ -57,6 +57,7 @@ export class CampaignsCollectionComponent implements OnInit {
   // private games: IGame[];
   private quizzes: IQuiz[] = [];
   public gamesLoaded: boolean = false;
+  public isCampaignDisabled: boolean[] = [];
   public rewardsCountBvrSubjects: { [campaignId: string]: BehaviorSubject<number> } = {};
 
   constructor(
@@ -113,10 +114,23 @@ export class CampaignsCollectionComponent implements OnInit {
       (res: (IQuiz | IGame[])[]) => {
         if (this.gameType === GameType.quiz) {
           this.quizzes = res as IQuiz[];
+          this.quizzes.forEach((quiz: IQuiz) => {
+            if (quiz.campaignId && ! this.isCampaignDisabled[quiz.campaignId]) {
+              this.isCampaignDisabled[quiz.campaignId] =
+                this.isCampaignComplete(quiz.campaignId) ||
+                this.isQuizRewardsEmpty(quiz.campaignId);
+            }
+          });
           // } else {
           // todo: test games input when games get refactored in.
           // expected stamp cards to hit this but since we don't actually have games in stamp campaigns it will be empty array
           // this.games = (res as IGame[][])[0];
+          // this.games.forEach((game: IGame) => {
+          //   if (game.campaignId && !this.isCampaignDisabled[game.campaignId]) {
+          //     this.isCampaignDisabled[game.campaignId] = this.isCampaignComplete(game.campaignId);
+          //   }
+          // });
+          // }
         }
         this.gamesLoaded = true;
       },
@@ -145,5 +159,15 @@ export class CampaignsCollectionComponent implements OnInit {
       ).length > 0;
     }
     return false;
+  }
+
+  public isQuizRewardsEmpty(campaignId: number): boolean {
+    if (this.quizzes && this.quizzes.length > 0 && this.gameType === GameType.quiz) {
+      const matchingCampaign = this.campaigns.find((campaign: ICampaign) =>
+        campaign.id === campaignId
+      );
+      return matchingCampaign && matchingCampaign.rewardsCount ?  matchingCampaign.rewardsCount <= 0 : true;
+    }
+    return true;
   }
 }
