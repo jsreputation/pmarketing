@@ -11,6 +11,7 @@ import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 import { RewardsListComponent } from './rewards-list.component';
 import { UtilsModule } from '../../utils/utils.module';
 import { ThemesService } from '../../utils/themes/themes.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('RewardsListComponent', () => {
   let component: RewardsListComponent;
@@ -26,7 +27,8 @@ describe('RewardsListComponent', () => {
       imports: [
         MatCardModule,
         UtilsModule,
-        NgxMultiLineEllipsisModule
+        NgxMultiLineEllipsisModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: ThemesService, useValue: themesServiceStub },

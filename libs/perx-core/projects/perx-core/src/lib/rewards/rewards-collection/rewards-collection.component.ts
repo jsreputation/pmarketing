@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import {
   Component,
   EventEmitter,
@@ -53,22 +54,25 @@ export class RewardsCollectionComponent implements OnInit {
 
   constructor(
     private themesService: ThemesService,
+    private translate: TranslateService
   ) { }
 
   public ngOnInit(): void {
     this.initTheme();
 
     if (!this.displayPriceFn) {
-      this.displayPriceFn = (rewardPrice: IPrice) => {
-        if (rewardPrice.price && rewardPrice.price > 0) {
-          return `${rewardPrice.currencyCode} ${rewardPrice.price}`;
-        }
-
-        if (rewardPrice.points && rewardPrice.points > 0) {
-          return `${rewardPrice.points} points`;
-        }
-        return '0 points'; // is actually 0 or invalid value default
-      };
+      this.translate.get('REWARD.POINT').subscribe(text => {
+        this.displayPriceFn = (rewardPrice: IPrice) => {
+          if (rewardPrice.price && rewardPrice.price > 0) {
+            return `${rewardPrice.currencyCode} ${rewardPrice.price}`;
+          }
+  
+          if (rewardPrice.points && rewardPrice.points > 0) {
+            return `${rewardPrice.points}${text}`;
+          }
+          return `0${text}`; // is actually 0 or invalid value default
+        };
+      });
     }
   }
 

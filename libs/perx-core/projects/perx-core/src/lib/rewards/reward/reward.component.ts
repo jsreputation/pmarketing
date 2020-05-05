@@ -31,19 +31,19 @@ export class RewardComponent implements OnInit {
 
   public ngOnInit(): void {
     if (!this.displayPriceFn) {
-      this.translate.get(['REWARD_DETAIL.AND', 'REWARD_DETAIL.POINT']).subscribe((res: any) => {
+      this.translate.get(['REWARD.AND', 'REWARD.POINT']).subscribe((res: any) => {
         this.displayPriceFn = (rewardPrice: IPrice) => {
           if (rewardPrice.price && rewardPrice.price > 0) {
             if (rewardPrice.points && rewardPrice.points > 0) {
-              return `${rewardPrice.currencyCode} ${rewardPrice.price}${res['REWARD_DETAIL.AND']}${rewardPrice.points}${res['REWARD_DETAIL.POINT']}`;
+              return `${rewardPrice.currencyCode} ${rewardPrice.price}${res['REWARD.AND']}${rewardPrice.points}${res['REWARD.POINT']}`;
             }
             return `${rewardPrice.currencyCode} ${rewardPrice.price}`;
           }
 
           if (rewardPrice.points && rewardPrice.points > 0) {
-            return `${rewardPrice.points}${res['REWARD_DETAIL.POINT']}`;
+            return `${rewardPrice.points}${res['REWARD.POINT']}`;
           }
-          return `0${res['REWARD_DETAIL.POINT']}`; // is actually 0 or invalid value default
+          return `0${res['REWARD.POINT']}`; // is actually 0 or invalid value default
         };
       });
     }

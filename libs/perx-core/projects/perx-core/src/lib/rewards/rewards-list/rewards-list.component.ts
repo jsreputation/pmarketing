@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import {
   Component,
   EventEmitter,
@@ -53,26 +54,30 @@ export class RewardsListComponent implements OnInit {
 
   constructor(
     private themesService: ThemesService,
+    private translate: TranslateService
   ) { }
 
   public ngOnInit(): void {
     this.initTheme();
 
     if (!this.displayPriceFn) {
-      this.displayPriceFn = (rewardPrice: IPrice) => {
-        if (rewardPrice.price && rewardPrice.price > 0) {
-          if (rewardPrice.points && rewardPrice.points > 0) {
-            return `${rewardPrice.currencyCode} ${rewardPrice.price} and ${rewardPrice.points} points`;
+      this.translate.get(['REWARD.AND', 'REWARD.POINT']).subscribe((res: any) => {
+        this.displayPriceFn = (rewardPrice: IPrice) => {
+          if (rewardPrice.price && rewardPrice.price > 0) {
+            if (rewardPrice.points && rewardPrice.points > 0) {
+              return `${rewardPrice.currencyCode} ${rewardPrice.price}${res['REWARD.AND']}${rewardPrice.points}${res['REWARD.POINT']}`;
+            }
+            return `${rewardPrice.currencyCode} ${rewardPrice.price}`;
           }
-          return `${rewardPrice.currencyCode} ${rewardPrice.price}`;
-        }
 
-        if (rewardPrice.points && rewardPrice.points > 0) {
-          return `${rewardPrice.points} points`;
-        }
-        return '0 points'; // is actually 0 or invalid value default
-      };
+          if (rewardPrice.points && rewardPrice.points > 0) {
+            return `${rewardPrice.points}${res['REWARD.POINT']}`;
+          }
+          return `0${res['REWARD.POINT']}`; // is actually 0 or invalid value default
+        };
+      });
     }
+
     of(true).pipe(delay(2000)).subscribe(
       () => this.ghostTimeOut = true
     );

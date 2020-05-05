@@ -3,6 +3,7 @@ import { Observable, of } from 'rxjs';
 import { IPrice, IReward } from '../models/reward.model';
 import { map } from 'rxjs/operators';
 import { MatTabChangeEvent } from '@angular/material';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface ITabConfig {
   filterKey: string | null;
@@ -46,25 +47,29 @@ export class RewardsListTabbedComponent implements OnInit {
 
   public selectedIndex: number = 0;
 
+  constructor(private translate: TranslateService) { }
+
   public ngOnInit(): void {
     /**
      * todo: check if list exists in this.tabs, and if this.rewards also has an input,
      * throw warning that this.rewards is ignored
      */
     if (!this.displayPriceFn) {
-      this.displayPriceFn = (rewardPrice: IPrice) => {
-        if (rewardPrice.price && rewardPrice.price > 0) {
-          if (rewardPrice.points && rewardPrice.points > 0) {
-            return `${rewardPrice.currencyCode} ${rewardPrice.price} and ${rewardPrice.points} points`;
+      this.translate.get(['REWARD.AND', 'REWARD.POINT']).subscribe((res: any) => {
+        this.displayPriceFn = (rewardPrice: IPrice) => {
+          if (rewardPrice.price && rewardPrice.price > 0) {
+            if (rewardPrice.points && rewardPrice.points > 0) {
+              return `${rewardPrice.currencyCode} ${rewardPrice.price}${res['REWARD.AND']}${rewardPrice.points}${res['REWARD.POINT']}`;
+            }
+            return `${rewardPrice.currencyCode} ${rewardPrice.price}`;
           }
-          return `${rewardPrice.currencyCode} ${rewardPrice.price}`;
-        }
 
-        if (rewardPrice.points && rewardPrice.points > 0) {
-          return `${rewardPrice.points} points`;
-        }
-        return '0 points'; // is actually 0 or invalid value default
-      };
+          if (rewardPrice.points && rewardPrice.points > 0) {
+            return `${rewardPrice.points}${res['REWARD.POINT']}`;
+          }
+          return `0${res['REWARD.POINT']}`; // is actually 0 or invalid value default
+        };
+      });
     }
   }
 
