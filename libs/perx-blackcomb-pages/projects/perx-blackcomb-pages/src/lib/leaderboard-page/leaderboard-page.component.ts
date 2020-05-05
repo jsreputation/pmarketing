@@ -6,11 +6,11 @@ import {
   UserRanking
 } from '@perxtech/core';
 import {
-  catchError, concatMap,
+  catchError,
+  concatMap,
   map,
-  withLatestFrom
 } from 'rxjs/operators';
-import {Observable, of} from 'rxjs';
+import {combineLatest, Observable, of} from 'rxjs';
 
 @Component({
   selector: 'perx-blackcomb-pages-leaderboard-page',
@@ -46,8 +46,7 @@ export class LeaderboardPageComponent {
       }
     });
 
-    this.profileService.whoAmI().pipe(
-      withLatestFrom(this.leaderboard$),
+    combineLatest(this.profileService.whoAmI(), this.leaderboard$).pipe(
       concatMap(([profile, leaderboard]) => {
         if (leaderboard) {
           this.leaderBoardSettings = leaderboard;
