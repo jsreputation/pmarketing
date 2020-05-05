@@ -39,7 +39,7 @@
         <input matInput placeholder="{{'STATIC_MOBILE_NO' | translate}}" placeholder="Mobile No"
           formControlName="mobileNo" required>
         <mat-error *ngIf="mobileNo && mobileNo.hasError('required')">
-          {{'STATIC_MOBILE_NO_IS' | translate}}</strong>
+          {{'STATIC_MOBILE_NO_IS' | translate}}
         </mat-error>
       </mat-form-field>
       <mat-form-field color="primary" class="full-width__input">
@@ -47,7 +47,7 @@
         <input matInput placeholder="{{'STATIC_PASSWORD' | translate }}" placeholder="Password"
           formControlName="password" type="password" required>
         <mat-error *ngIf="password && password.hasError('required')">
-          {{'PASSWORD_IS' | translate }}</strong>
+          {{'PASSWORD_IS' | translate }}
         </mat-error>
       </mat-form-field>
       <div class="forgot-text" (click)="goToForgotPassword()" translate>STATIC_FORGOT_PASSWORD</div>

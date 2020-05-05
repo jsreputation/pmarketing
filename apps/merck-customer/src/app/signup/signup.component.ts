@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import {
@@ -62,7 +63,8 @@ export class SignupComponent implements PageAppearence {
     private fb: FormBuilder,
     private router: Router,
     private authService: AuthenticationService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private translate: TranslateService
   ) {
     this.initForm();
     this.getAppToken();
@@ -105,18 +107,24 @@ export class SignupComponent implements PageAppearence {
       const passwordString = this.signupForm.value.password as string;
       const confirmPassword = this.signupForm.value.confirmPassword as string;
       if (passwordString !== confirmPassword) {
-        this.notificationService.addSnack('Passwords do not match.');
+        this.translate.get('PASSWORD_NOT_MATCH').subscribe(text =>
+          this.notificationService.addSnack(text)
+        );
         return;
       }
       const termsConditions = this.signupForm.value.accept_terms as boolean;
       if (!termsConditions) {
-        this.notificationService.addSnack('Please accept terms & conditions.');
+        this.translate.get('ACCEPT_TNC').subscribe(text =>
+          this.notificationService.addSnack(text)
+        );
         return;
       }
 
       const marketingCommunication = this.signupForm.value.accept_marketing as boolean;
       if (!marketingCommunication) {
-        this.notificationService.addSnack('Please agree to receive marketing communications from Merck Group hk.');
+        this.translate.get('ACCEPT_MARKETING').subscribe(text =>
+          this.notificationService.addSnack(text)
+        );
         return;
       }
 

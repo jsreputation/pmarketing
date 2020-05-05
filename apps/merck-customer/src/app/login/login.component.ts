@@ -134,9 +134,13 @@ export class LoginComponent implements OnInit, PageAppearence {
       (err) => {
         if (err instanceof HttpErrorResponse) {
           if (err.status === 0) {
-            this.notificationService.addSnack('We could not reach the server');
+            this.translateService.get('SERVER_NOT_AVAILABLE').subscribe(text =>
+              this.notificationService.addSnack(text)
+            );
           } else if (err.status === 401) {
-            this.notificationService.addSnack('Invalid credentials');
+            this.translateService.get('INVALID_CREDENTIALS').subscribe(text =>
+              this.notificationService.addSnack(text)
+            );
           }
         }
       }

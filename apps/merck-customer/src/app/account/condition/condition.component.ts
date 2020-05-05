@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Component, OnInit } from '@angular/core';
 import { PageAppearence, PageProperties, BarSelectedItem } from '../../page-properties';
 import { ProfileService, IProfile, NotificationService } from '@perxtech/core';
@@ -15,7 +16,8 @@ export class ConditionComponent implements OnInit, PageAppearence {
 
   constructor(
     private profileService: ProfileService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private translate: TranslateService
   ) { }
 
   public ngOnInit(): void {
@@ -73,9 +75,9 @@ export class ConditionComponent implements OnInit, PageAppearence {
       return;
     }
     this.profileService.setCustomProperties(this.profile.customProperties).subscribe(
-      () => this.notificationService.addSnack('Condition Updated.'),
+      () => this.translate.get('CONDITION_UPDATED').subscribe(text => this.notificationService.addSnack(text)),
       err => {
-        this.notificationService.addSnack(`ProfileService::SetCustomProperties : ${err.error.message}`);
+        this.notificationService.addSnack(err.error.message);
       });
   }
 

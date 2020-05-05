@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
@@ -24,7 +25,8 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
     private fb: FormBuilder,
     private authService: AuthenticationService,
     private profileService: ProfileService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private translate: TranslateService
   ) {
     const currentNavigation = this.router.getCurrentNavigation();
     if (!currentNavigation) {
@@ -64,7 +66,9 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
     const password = this.resetPasswordForm.value.password as string;
     const confirmPassword = this.resetPasswordForm.value.confirmPassword as string;
     if (password !== confirmPassword) {
-      this.notificationService.addSnack('Passwords do not match.');
+      this.translate.get('PASSWORD_NOT_MATCH').subscribe(text =>
+        this.notificationService.addSnack(text)
+      );
       return;
     }
     let resetPaswordCall;
@@ -91,7 +95,7 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
         passwordConfirmation: confirmPassword
       });
     } else {
-      resetPaswordCall = throwError('Unknown error occurred, please try again!');
+      resetPaswordCall = this.translate.get('UNKNOWN_ERROR').pipe(mergeMap(text => throwError(text)));
     }
 
     resetPaswordCall.subscribe(
@@ -117,14 +121,20 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
           (window as any).primaryIdentifier = this.mobileNumber;
         }
         this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'account');
-        this.notificationService.addSnack('Password successfully updated.');
+        this.translate.get('PASSWORD_UPDATE_SUCCESSFULLY').subscribe(text =>
+          this.notificationService.addSnack(text)
+        );
       },
       (err) => {
         if (err instanceof HttpErrorResponse) {
           if (err.status === 0) {
-            this.notificationService.addSnack('We could not reach the server');
+            this.translate.get('SERVER_NOT_AVAILABLE').subscribe(text =>
+              this.notificationService.addSnack(text)
+            );
           } else if (err.status === 401) {
-            this.notificationService.addSnack('Invalid credentials');
+            this.translate.get('INVALID_CREDENTIALS').subscribe(text =>
+              this.notificationService.addSnack(text)
+            );
           }
         }
       }
