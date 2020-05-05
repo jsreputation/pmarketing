@@ -69,5 +69,14 @@
     "Hong Kong Island": "香港島",
     "New Territories": "新界",
     "Kowloon": "九龍區",
-    "VIEW_LOCATION": "查看位置"
+    "LOCATION_PAGE": {
+        "VIEW_LOCATION": "查看位置"
+    },
+    "REWARD_DETAIL": {
+        "EXPIRY": "過期",
+        "AND": "和",
+        "POINT": "分",
+        "HOW_TO_REDEEM": "如何兌換",
+        "CODE": "代碼"
+    }
 }

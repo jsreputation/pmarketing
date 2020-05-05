@@ -20,11 +20,11 @@
         <div class="points-cost" *ngFor="let rewardPrice of reward.rewardPrice; let i = index">
           <div *ngIf="i > 0" class="or-label">or</div>
           <span>{{displayPriceFn(rewardPrice)}}</span><span class="points-code"
-            *ngIf="showRewardIdentifier && rewardPrice.identifier"> (code: {{rewardPrice.identifier}})</span>
+            *ngIf="showRewardIdentifier && rewardPrice.identifier"> ({{'REWARD_DETAIL.CODE' | translate}}: {{rewardPrice.identifier}})</span>
         </div>
       </div>
       <div class="reward-expiry" *ngIf="showExpiry && reward.validTo !== null">
-        Expiry: {{reward.validTo | date: 'dd/MM/yyyy'}}
+        {{'REWARD_DETAIL.EXPIRY' | translate}}: {{reward.validTo | date: 'dd/MM/yyyy'}}
       </div>
       <div class="section-heading" *ngIf="reward.description">
         {{descriptionLabel}}
@@ -39,7 +39,7 @@
         <div [innerHtml]="reward.termsAndConditions"></div>
       </div>
       <div class="section-heading" *ngIf="reward.howToRedeem">
-        How to redeem
+        {{'REWARD_DETAIL.HOW_TO_REDEEM' | translate}}
       </div>
       <div class="section-content" *ngIf="reward.howToRedeem">
         <div [innerHtml]="reward.howToRedeem"></div>

@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IPrice, IReward } from '../models/reward.model';
@@ -26,21 +27,25 @@ export class RewardComponent implements OnInit {
   @Input()
   public tncLabel: string = 'Terms and Conditions';
 
+  constructor(private translate: TranslateService) { }
+
   public ngOnInit(): void {
     if (!this.displayPriceFn) {
-      this.displayPriceFn = (rewardPrice: IPrice) => {
-        if (rewardPrice.price && rewardPrice.price > 0) {
-          if (rewardPrice.points && rewardPrice.points > 0) {
-            return `${rewardPrice.currencyCode} ${rewardPrice.price} and ${rewardPrice.points} points`;
+      this.translate.get(['REWARD_DETAIL.AND', 'REWARD_DETAIL.POINT']).subscribe((res: any) => {
+        this.displayPriceFn = (rewardPrice: IPrice) => {
+          if (rewardPrice.price && rewardPrice.price > 0) {
+            if (rewardPrice.points && rewardPrice.points > 0) {
+              return `${rewardPrice.currencyCode} ${rewardPrice.price}${res['REWARD_DETAIL.AND']}${rewardPrice.points}${res['REWARD_DETAIL.POINT']}`;
+            }
+            return `${rewardPrice.currencyCode} ${rewardPrice.price}`;
           }
-          return `${rewardPrice.currencyCode} ${rewardPrice.price}`;
-        }
 
-        if (rewardPrice.points && rewardPrice.points > 0) {
-          return `${rewardPrice.points} points`;
-        }
-        return '0 points'; // is actually 0 or invalid value default
-      };
+          if (rewardPrice.points && rewardPrice.points > 0) {
+            return `${rewardPrice.points}${res['REWARD_DETAIL.POINT']}`;
+          }
+          return `0${res['REWARD_DETAIL.POINT']}`; // is actually 0 or invalid value default
+        };
+      });
     }
   }
 }

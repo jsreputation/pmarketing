@@ -68,5 +68,15 @@
   "FILTER": "Filter",
   "Hong Kong Island": "Hong Kong Island",
   "New Territories": "New Territories",
-  "Kowloon": "Kowloon"
+  "Kowloon": "Kowloon",
+  "LOCATION_PAGE": {
+    "VIEW_LOCATION": "View location"
+  },
+  "REWARD_DETAIL": {
+    "EXPIRY": "Expiry",
+    "AND": " and ",
+    "POINT": " points",
+    "HOW_TO_REDEEM": "How to redeem",
+    "CODE": "Code"
+}
 }
