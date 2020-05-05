@@ -116,7 +116,9 @@ export class CampaignsCollectionComponent implements OnInit {
           this.quizzes = res as IQuiz[];
           this.quizzes.forEach((quiz: IQuiz) => {
             if (quiz.campaignId && ! this.isCampaignDisabled[quiz.campaignId]) {
-              this.isCampaignDisabled[quiz.campaignId] = (this.isCampaignComplete(quiz.campaignId) || this.isQuizRewardsEmpty(quiz.campaignId));
+              this.isCampaignDisabled[quiz.campaignId] =
+                this.isCampaignComplete(quiz.campaignId) ||
+                this.isQuizRewardsEmpty(quiz.campaignId);
             }
           });
           // } else {
