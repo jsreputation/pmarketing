@@ -1,4 +1,5 @@
 @import "~@angular/material/theming";
+@import "../../mixins/mixins.scss";
 
 .reward-content {
   display: flex;
@@ -62,6 +63,10 @@
     .description {
       width: 70%;
       font-size: 1.2rem;
+    }
+
+    .ellipse-2-lines {
+      @include ellipse-lines(2);
     }
 
     .reward-price-details {

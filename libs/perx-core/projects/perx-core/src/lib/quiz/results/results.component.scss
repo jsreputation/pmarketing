@@ -1,11 +1,4 @@
-@mixin icon {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  height: 1.6rem;
-  width: 1.6rem;
-  color: white;
-}
+@import "../../mixins/minins.scss";
 
 .correct {
   background-color: #27c400;
