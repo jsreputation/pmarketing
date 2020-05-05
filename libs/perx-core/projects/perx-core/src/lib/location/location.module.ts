@@ -6,6 +6,7 @@ import { MatDividerModule, MatListModule, MatCardModule, MatIconModule } from '@
 import { V4LocationsService } from './v4-locations.service';
 import { LocationsService } from './locations.service';
 import { IMerchantsService } from '../merchants/imerchants.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 const comps: any[] = [LocationsListComponent, LocationsMapComponent];
 
@@ -22,6 +23,7 @@ export function locationsServiceFactory(merchantsService: IMerchantsService): Lo
     MatListModule,
     MatIconModule,
     MatCardModule,
+    TranslateModule.forChild()
   ],
   providers: [
     {
