@@ -9,7 +9,7 @@ import {
 import { Observable } from 'rxjs';
 import { TokenStorage } from '../storage/token-storage.service';
 
-/** Add userId in the header of outgoing requests. */
+/** override the interceptor that ngx-auth provides with our custom auth implementation */
 @Injectable()
 export class V4MicrositeSettingInterceptor implements HttpInterceptor {
 
