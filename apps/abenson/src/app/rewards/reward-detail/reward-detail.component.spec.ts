@@ -9,6 +9,7 @@ import { rewards } from '../../mock/rewards.mock';
 import { loyalty } from '../../mock/loyalty.mock';
 import { VoucherState } from '@perxtech/core';
 import { RedemptionType } from '@perxtech/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 const rewardsServiceStub: Partial<RewardsService> = {
   getReward: () => of(rewards[0])
@@ -56,7 +57,8 @@ describe('RewardDetailComponent', () => {
       imports: [
         MatDialogModule,
         RewardsModule,
-        RouterTestingModule
+        RouterTestingModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub },

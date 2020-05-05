@@ -16,6 +16,7 @@ import {
 } from '@perxtech/core';
 import { of, Observable } from 'rxjs';
 import { MatCardModule } from '@angular/material';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -58,6 +59,7 @@ describe('HomeComponent', () => {
         VouchersModule,
         LoyaltyModule,
         ProfileModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: Router, useValue: router },

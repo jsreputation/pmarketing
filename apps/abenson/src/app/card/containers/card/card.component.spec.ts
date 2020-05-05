@@ -17,7 +17,7 @@ import {
 } from '@perxtech/core';
 
 import { CardComponent } from './card.component';
-
+import { TranslateModule } from '@ngx-translate/core';
 import { SharedModule } from '../../../shared/shared.module';
 import { loyalty } from '../../../mock/loyalty.mock';
 import { MatTabChangeEvent } from '@angular/material';
@@ -63,6 +63,7 @@ describe('CardComponent', () => {
         NoopAnimationsModule,
         NgxBarcodeModule,
         InfiniteScrollModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
