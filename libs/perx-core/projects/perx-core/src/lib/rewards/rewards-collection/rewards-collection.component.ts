@@ -66,7 +66,7 @@ export class RewardsCollectionComponent implements OnInit {
           if (rewardPrice.price && rewardPrice.price > 0) {
             return `${rewardPrice.currencyCode} ${rewardPrice.price}`;
           }
-  
+
           if (rewardPrice.points && rewardPrice.points > 0) {
             return `${rewardPrice.points}${text}`;
           }
