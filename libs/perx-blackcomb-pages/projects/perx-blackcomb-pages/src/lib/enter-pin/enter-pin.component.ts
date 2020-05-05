@@ -14,7 +14,15 @@ import {
   ICountryCode,
   IPopupConfig
 } from '@perxtech/core';
-import { filter, map } from 'rxjs/operators';
+import {
+  concatAll,
+  filter,
+  map,
+  tap} from 'rxjs/operators';
+import {
+  Observable,
+  of
+} from 'rxjs';
 
 export enum PinMode {
   password = 'password',
@@ -53,6 +61,8 @@ export class EnterPinComponent implements PopUpClosedCallBack {
     private generalStaticDataService: GeneralStaticDataService,
     private translate: TranslateService
   ) {
+    this.themeService.getThemeSetting()
+      .subscribe((th: ITheme) => this.theme = th);
     this.generalStaticDataService.getCountriesList([
       'Hong Kong',
       'Philippines',
@@ -69,16 +79,15 @@ export class EnterPinComponent implements PopUpClosedCallBack {
       .subscribe((typ: string) => {
         this.pinMode = typ as PinMode;
         if (this.pinMode === PinMode.password) {
-          this.getChangedPasswordDataFromNavigation();
+          this.initTranslate().subscribe(
+            () => this.getChangedPasswordDataFromNavigation()
+          );
         } else if (this.pinMode === PinMode.register) {
-          this.getMobileNumberFromNavigation();
+          this.initTranslate().subscribe(() =>
+            this.getMobileNumberFromNavigation()
+          );
         }
       });
-
-    this.initTranslate();
-
-    this.themeService.getThemeSetting()
-      .subscribe((th: ITheme) => this.theme = th);
   }
 
   private getChangedPasswordDataFromNavigation(): void {
@@ -175,26 +184,40 @@ export class EnterPinComponent implements PopUpClosedCallBack {
     return encodedString;
   }
 
-  private initTranslate(): void {
-    this.translate.get('OTP_PAGE.DESCRIPTION').subscribe((text) => {
-      this.subHeading = text;
-    });
-    this.translate.get('OTP_PAGE.RESEND_TXT').subscribe((text) => {
-      this.resendOTPTxt = text;
-    });
-    this.translate.get('OTP_PAGE.ERROR_TXT').subscribe((text) => {
-      this.wrongOTP = text;
-    });
-    this.translate.get('OTP_PAGE.CTA_TXT_SUCCESS').subscribe((text) => {
-      this.successRegister = text;
-    });
-    this.translate.get(['OTP_PAGE.POPUP_TITLE', 'OTP_PAGE.POPUP_TXT', 'OTP_PAGE.POPUP_BTN_TXT']).subscribe((res) => {
-      this.popupTxt = {
-        title: res['OTP_PAGE.POPUP_TITLE'],
-        text: res['OTP_PAGE.POPUP_TXT'],
-        buttonTxt: res['OTP_PAGE.POPUP_BTN_TXT'],
-      };
-    });
-
+  private initTranslate(): Observable<void> {
+    const subheadingTrans = this.translate.get('OTP_PAGE.DESCRIPTION')
+      .pipe(
+        tap((text) => {
+          this.subHeading = text;
+        })
+      );
+    const otpResendTrans = this.translate.get('OTP_PAGE.RESEND_TXT').pipe(
+      tap((text) => {
+        this.resendOTPTxt = text;
+      })
+    );
+    const otpErrorTrans = this.translate.get('OTP_PAGE.ERROR_TXT').pipe(
+      tap((text) => {
+        this.wrongOTP = text;
+      })
+    );
+    const otpSuccessTrans = this.translate.get('OTP_PAGE.CTA_TXT_SUCCESS')
+      .pipe(
+        tap((text) => {
+          this.successRegister = text;
+        })
+      );
+    const otpPopUpTrans = this.translate.get(['OTP_PAGE.POPUP_TITLE', 'OTP_PAGE.POPUP_TXT', 'OTP_PAGE.POPUP_BTN_TXT']).pipe(
+      tap((res) => {
+        this.popupTxt = {
+          title: res['OTP_PAGE.POPUP_TITLE'],
+          text: res['OTP_PAGE.POPUP_TXT'],
+          buttonTxt: res['OTP_PAGE.POPUP_BTN_TXT'],
+        };
+      }));
+    const sourceTrans = of(subheadingTrans, otpErrorTrans, otpPopUpTrans, otpSuccessTrans, otpResendTrans);
+    return sourceTrans.pipe(
+      concatAll()
+    );
   }
 }
