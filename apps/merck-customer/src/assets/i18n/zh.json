@@ -29,13 +29,13 @@
     "STATIC_FEATURED_REWARDS": "精選獎賞",
     "STATIC_HAVE_ACCOUNT": "已登記帳戶",
     "STATIC_NAME": "姓名",
-    "STATIC_NAME_IS": "姓名",
+    "STATIC_NAME_IS": "請輸入姓名",
     "REQUIRED": "required",
-    "STATIC_MOBILE_NO_IS": "手機號碼",
-    "PASSWORD_IS": "密碼",
+    "STATIC_MOBILE_NO_IS": "請輸入手機號碼",
+    "PASSWORD_IS": "請輸入密碼",
     "PASSWORD_SIX_CHARS": "密碼至少含6個字符",
     "STATIC_CONFIRM_PASSWORD": "確認密碼",
-    "CONFIRM_PASSWORD_IS": "確認密碼",
+    "CONFIRM_PASSWORD_IS": "請輸入確認密碼",
     "STATIC_ACCEPT_TERMS": "我接受這些條款及細則",
     "STATIC_AGREE_MARKETING": "我同意及接收默克集團(香港)的市場資訊",
     "STATIC_RESET_PASSWORD": "重設你的密碼",
@@ -78,5 +78,13 @@
         "POINT": "分",
         "HOW_TO_REDEEM": "如何兌換",
         "CODE": "代碼"
+    },
+    "HOME": {
+        "MEMBER": "會員",
+        "WELCOME": "歡迎",
+        "SUBTITLE": "您的總積分為",
+        "POINT_EXPIRE": "{points}將於{date}過期",
+        "ACCOUNT_EXPIRE": "賬戶過期於",
+        "POINT_TO": "升級到{nextTierName}會員所需積分"
     }
 }

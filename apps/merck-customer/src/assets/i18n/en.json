@@ -29,13 +29,13 @@
   "STATIC_FEATURED_REWARDS": "Featured Rewards",
   "STATIC_HAVE_ACCOUNT": "Have an account",
   "STATIC_NAME": "Name",
-  "STATIC_NAME_IS": "Name is",
+  "STATIC_NAME_IS": "Name is required",
   "REQUIRED": "required",
-  "STATIC_MOBILE_NO_IS": "Mobile No.",
-  "PASSWORD_IS": "Password",
+  "STATIC_MOBILE_NO_IS": "Mobile No. is required",
+  "PASSWORD_IS": "Password is required",
   "PASSWORD_SIX_CHARS": "Password should be at least 6 characters",
   "STATIC_CONFIRM_PASSWORD": "Confirm password",
-  "CONFIRM_PASSWORD_IS": "Confirm Password is",
+  "CONFIRM_PASSWORD_IS": "Confirm Password is required",
   "STATIC_ACCEPT_TERMS": "I accept the terms and conditions",
   "STATIC_AGREE_MARKETING": "I agree to receive marketing communications from Merck Group HK",
   "STATIC_RESET_PASSWORD": "Reset your password",
@@ -60,7 +60,7 @@
   "CONDITION_SAVED": "Thank you! Here’s 500 points from us",
   "WELCOME": "Welcome",
   "TOTAL_POINTS": "Your total points",
-  "TIER" : "Tier",
+  "TIER": "Tier",
   "DLP": "Diabetes Loyality Program",
   "APPLY": "Apply",
   "CATEGORIES": "Categories",
@@ -78,5 +78,13 @@
     "POINT": " points",
     "HOW_TO_REDEEM": "How to redeem",
     "CODE": "Code"
-}
+  },
+  "HOME": {
+    "MEMBER": " member",
+    "WELCOME": "Welcome ",
+    "SUBTITLE": "Your total points as of ",
+    "POINT_EXPIRE": "{points} points will expire on {date}",
+    "ACCOUNT_EXPIRE": "Account Expiry",
+    "POINT_TO": "Points to {nextTierName}"
+  }
 }

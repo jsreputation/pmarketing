@@ -10,6 +10,7 @@ import { of } from 'rxjs';
 import { ProfileService } from '../../profile/profile.service';
 import {MatProgressBarModule, MatProgressSpinnerModule} from '@angular/material';
 import { ILoyalty } from '../models/loyalty.model';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('LoyaltySummaryComponent', () => {
   let component: LoyaltySummaryComponent;
@@ -37,7 +38,8 @@ describe('LoyaltySummaryComponent', () => {
         ProfileModule,
         LoyaltyModule,
         MatProgressSpinnerModule,
-        MatProgressBarModule
+        MatProgressBarModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: LoyaltyService, useValue: loyaltyServiceStub },

@@ -12,6 +12,7 @@ import { WhistlerLoyaltyService } from './whistler-loyalty.service';
 import { AuthenticationService } from '../auth/authentication/authentication.service';
 import {MatProgressBarModule, MatProgressSpinnerModule} from '@angular/material';
 import { ConfigService } from '../config/config.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 export function loyaltyServiceFactory(http: HttpClient, config: Config, configService: ConfigService): LoyaltyService {
   // Make decision on what to instantiate base on config
@@ -30,7 +31,8 @@ export function loyaltyServiceFactory(http: HttpClient, config: Config, configSe
   imports: [
     CommonModule,
     MatProgressSpinnerModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    TranslateModule.forChild()
   ],
   exports: [
     LoyaltySummaryComponent,
