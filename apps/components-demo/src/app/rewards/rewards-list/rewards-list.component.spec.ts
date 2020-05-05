@@ -3,7 +3,7 @@ import {
   ComponentFixture,
   TestBed,
 } from '@angular/core/testing';
-
+import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 
 import {
@@ -27,7 +27,7 @@ describe('RewardsListComponent', () => {
       getAllRewards: () => (of([]))
     };
     TestBed.configureTestingModule({
-      imports: [RewardsModule],
+      imports: [RewardsModule, TranslateModule.forRoot()],
       declarations: [RewardsListComponent],
       providers: [
         {
