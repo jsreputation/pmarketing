@@ -12,15 +12,12 @@
         </svg>
       </div>
       <mat-card-content>
-        <div class="subtitle-1" ngxEllipsis [lines]="1">{{reward.name}}</div>
+        <div class="subtitle-1 ellipse-1-line">{{reward.name}}</div>
         <!--
         have to repeat div declaration because the directive reads the
         dom to insert ellipsis and will otherwise render angular logic code
         -->
-        <div class="description mat-caption"
-          ngxEllipsis
-          [lines]="2"
-          *ngIf="reward.merchantName; else showDescription">
+        <div class="description mat-caption ellipse-2-lines" *ngIf="reward.merchantName; else showDescription">
           {{reward.merchantName}}
         </div>
         <ng-template #showDescription>

@@ -5,6 +5,8 @@ import { MatCardModule, MatIconModule } from '@angular/material';
 import { Subject, of } from 'rxjs';
 import { GeoLocationService } from '../geolocation.service';
 import { Type } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
+
 
 const coords: Position = {
   timestamp: 113,
@@ -30,7 +32,7 @@ describe('LocationsMapComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [LocationsMapComponent],
-      imports: [MatCardModule, MatIconModule],
+      imports: [MatCardModule, MatIconModule, TranslateModule.forRoot()],
       providers: [
         { provide: GeoLocationService, useValue: geoLocationService }
       ]

@@ -94,6 +94,10 @@ $card-actual-height: 200px;
     }
   }
 
+  .ellipse-1-line {
+    @include ellipse-lines(1);
+  }
+
   .ellipse-2-lines {
     @include ellipse-lines(2);
   }
