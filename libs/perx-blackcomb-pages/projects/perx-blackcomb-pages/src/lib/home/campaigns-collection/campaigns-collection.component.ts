@@ -152,7 +152,7 @@ export class CampaignsCollectionComponent implements OnInit {
       const matchingCampaign = this.campaigns.find((campaign: ICampaign) =>
         campaign.id === campaignId
       );
-      return matchingCampaign && matchingCampaign.rewardsCount ?  matchingCampaign.rewardsCount <=0 : true;
+      return matchingCampaign && matchingCampaign.rewardsCount ?  matchingCampaign.rewardsCount <= 0 : true;
     }
     return true;
   }
