@@ -4,7 +4,6 @@ import {
   HttpInterceptor,
   HttpHandler,
   HttpRequest,
-  HTTP_INTERCEPTORS
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TokenStorage } from '../storage/token-storage.service';
@@ -24,7 +23,3 @@ export class V4MicrositeSettingInterceptor implements HttpInterceptor {
     return next.handle(req);
   }
 }
-
-export const httpInterceptorProviders = [
-  { provide: HTTP_INTERCEPTORS, useClass: V4MicrositeSettingInterceptor, multi: true },
-];
