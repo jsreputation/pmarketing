@@ -22,7 +22,7 @@ export class ReferralComponent {
   // todo to be replaced with the proper content when api is available
   public tnc: string;
   // todo to be replaced with the proper content when api is available
-  public code: string = 'LASTNAME1234';
+  public code: string = '';
   // todo to be replaced with the proper content when api is available
   public shareText: string;
   // todo to be replaced with the proper content when api is available
