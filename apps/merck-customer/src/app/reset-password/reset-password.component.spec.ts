@@ -86,7 +86,7 @@ describe('ResetPasswordComponent', () => {
       (NotificationService as Type<NotificationService>);
       const notificationServiceSpy = spyOn(notificationService, 'addSnack');
       component.onUpdatePassword();
-      expect(notificationServiceSpy).toHaveBeenCalledWith('Passwords do not match.');
+      expect(notificationServiceSpy).toHaveBeenCalledWith('PASSWORD_NOT_MATCH');
     });
 
     it('should reset password and call login', (done: jest.DoneCallback) => {

@@ -6,6 +6,7 @@ import { EnterPinComponent } from './enter-pin.component';
 import { Router, ActivatedRoute, convertToParamMap } from '@angular/router';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('EnterPinComponent', () => {
   let component: EnterPinComponent;
@@ -16,6 +17,7 @@ describe('EnterPinComponent', () => {
       declarations: [EnterPinComponent],
       imports: [
         UtilsModule,
+        TranslateModule.forRoot(),
         RouterTestingModule.withRoutes([{
           path: 'login',
           component: EnterPinComponent

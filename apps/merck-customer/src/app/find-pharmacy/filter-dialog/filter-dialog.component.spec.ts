@@ -10,6 +10,8 @@ import {
   MatDialogRef
 } from '@angular/material';
 
+import { TranslateModule } from '@ngx-translate/core';
+
 describe('FilterDialogComponent', () => {
   let component: FilterDialogComponent;
   let fixture: ComponentFixture<FilterDialogComponent>;
@@ -17,7 +19,7 @@ describe('FilterDialogComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ FilterDialogComponent ],
-      imports: [ MatDialogModule, MatIconModule, MatToolbarModule, MatCheckboxModule ],
+      imports: [ MatDialogModule, MatIconModule, MatToolbarModule, MatCheckboxModule, TranslateModule.forRoot() ],
       providers: [
         {provide: MAT_DIALOG_DATA, useValue: ['a', 'b']},
         {provide: MatDialogRef, useValue: FilterDialogComponent}

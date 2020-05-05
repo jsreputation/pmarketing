@@ -78,7 +78,7 @@ describe('SignupComponent', () => {
       (NotificationService as Type<NotificationService>);
       const notificationServiceSpy = spyOn(notificationService, 'addSnack');
       component.onSubmit();
-      expect(notificationServiceSpy).toHaveBeenCalledWith('Passwords do not match.');
+      expect(notificationServiceSpy).toHaveBeenCalledWith('PASSWORD_NOT_MATCH');
     });
 
     it('should call addSnack if terms and conditions not accepted', () => {
@@ -87,7 +87,7 @@ describe('SignupComponent', () => {
       (NotificationService as Type<NotificationService>);
       const notificationServiceSpy = spyOn(notificationService, 'addSnack');
       component.onSubmit();
-      expect(notificationServiceSpy).toHaveBeenCalledWith('Please accept terms & conditions.');
+      expect(notificationServiceSpy).toHaveBeenCalledWith('ACCEPT_TNC');
     });
 
     it('should call addSnack if terms and conditions is accepted and receive marketing communications NOT accepted', () => {
@@ -97,7 +97,7 @@ describe('SignupComponent', () => {
       (NotificationService as Type<NotificationService>);
       const notificationServiceSpy = spyOn(notificationService, 'addSnack');
       component.onSubmit();
-      expect(notificationServiceSpy).toHaveBeenCalledWith('Please agree to receive marketing communications from Merck Group hk.');
+      expect(notificationServiceSpy).toHaveBeenCalledWith('ACCEPT_MARKETING');
     });
 
     it('should able to signup', fakeAsync(() => {
