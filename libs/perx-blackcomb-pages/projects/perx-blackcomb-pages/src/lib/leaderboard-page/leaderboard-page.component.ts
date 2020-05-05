@@ -54,9 +54,9 @@ export class LeaderboardPageComponent {
         if (leaderboard && profile && profile.id) {
           const defaultMiniRank = {
             displayName: (profile.customProperties
-              && profile.customProperties.nickname
-              && profile.customProperties.fullName
-              && profile.identifier
+              && (profile.customProperties.nickname
+              || profile.customProperties.fullName
+              || profile.identifier)
             ),
             id: 0,
             rank: 0 || 'NA',
