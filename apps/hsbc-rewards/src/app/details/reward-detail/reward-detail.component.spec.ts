@@ -5,6 +5,7 @@ import { RewardsModule, RewardsService, IReward } from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Component } from '@angular/core';
 import { of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-detail-header',
@@ -36,7 +37,8 @@ describe('RewardDetailComponent', () => {
       declarations: [RewardDetailComponent, MockDetailHeaderComponent],
       imports: [
         RewardsModule,
-        RouterTestingModule
+        RouterTestingModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub },
