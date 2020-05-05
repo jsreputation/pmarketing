@@ -11,6 +11,7 @@ import {
   combineLatest,
   iif,
   Observable,
+  of,
   zip,
 } from 'rxjs';
 import {
@@ -23,8 +24,10 @@ import {
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import {
+  catchError,
   map,
-  switchMap, tap,
+  switchMap,
+  tap,
   withLatestFrom,
 } from 'rxjs/operators';
 
@@ -99,7 +102,9 @@ export class CampaignsCollectionComponent implements OnInit {
       switchMap((campaigns) => combineLatest([
         ...campaigns.map((campaign: ICampaign) => {
           if (this.gameType === GameType.quiz) {
-            return this.quizService.getQuizFromCampaign(campaign.id);
+            return this.quizService.getQuizFromCampaign(campaign.id).pipe(
+              catchError(( () => of([])))
+            );
           }
           return this.gamesService.getGamesFromCampaign(campaign.id);
         })
@@ -136,7 +141,7 @@ export class CampaignsCollectionComponent implements OnInit {
     if (this.quizzes && this.quizzes.length > 0 && this.gameType === GameType.quiz) {
       return this.quizzes.filter((quiz: IQuiz) =>
         (quiz.campaignId === campaignId) &&
-        (quiz.remainingNumberOfTries && quiz.remainingNumberOfTries <= 0)
+        (quiz.remainingNumberOfTries != null && quiz.remainingNumberOfTries <= 0)
       ).length > 0;
     }
     return false;
