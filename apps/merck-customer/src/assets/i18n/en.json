@@ -61,5 +61,13 @@
   "WELCOME": "Welcome",
   "TOTAL_POINTS": "Your total points",
   "TIER" : "Tier",
-  "DLP": "Diabetes Loyality Program"
+  "DLP": "Diabetes Loyality Program",
+  "APPLY": "Apply",
+  "CATEGORIES": "Categories",
+  "CLEAR_ALL": "Clear all",
+  "FILTER": "Filter",
+  "CLOSE": "close",
+  "Hong Kong Island": "Hong Kong Island",
+  "New Territories": "New Territories",
+  "Kowloon": "Kowloon"
 }

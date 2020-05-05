@@ -31,7 +31,7 @@
     "STATIC_NAME": "姓名",
     "STATIC_NAME_IS": "姓名",
     "REQUIRED": "required",
-    "STATIC_MOBILE_NO_IS" : "手機號碼",
+    "STATIC_MOBILE_NO_IS": "手機號碼",
     "PASSWORD_IS": "密碼",
     "PASSWORD_SIX_CHARS": "密碼至少含6個字符",
     "STATIC_CONFIRM_PASSWORD": "確認密碼",
@@ -60,6 +60,14 @@
     "CONDITION_SAVED": "感謝！這是我們送贈的500分",
     "WELCOME": "歡迎",
     "TOTAL_POINTS": "你的總積分",
-    "TIER" : "层级",
-    "DLP": "糖尿病忠誠度計劃"
+    "TIER": "层级",
+    "DLP": "糖尿病忠誠度計劃",
+    "APPLY": "應用",
+    "CATEGORIES": "分類",
+    "CLEAR_ALL": "清除所有選項",
+    "FILTER": "過濾",
+    "CLOSE": "關閉",
+    "Hong Kong Island": "香港島",
+    "New Territories": "新界",
+    "Kowloon": "九龍區"
 }

@@ -1,25 +1,25 @@
 <mat-toolbar>
   <div>
     <button mat-icon-button class="left-icon" [mat-dialog-close]="true">
-      <mat-icon>close</mat-icon>
+      <mat-icon>{{'CLOSE' | translate}}</mat-icon>
     </button>
   </div>
-  <div class="title">Filter</div>
-  <div class="clear" (click)="onClearFilter()">Clear all</div>
+  <div class="title">{{'FILTER' | translate}}</div>
+  <div class="clear" (click)="onClearFilter()">{{'CLEAR_ALL' | translate}}</div>
 </mat-toolbar>
 
 <mat-dialog-content>
-  <p class="label">Categories</p>
+  <p class="label">{{'CATEGORIES' | translate}}</p>
   <mat-checkbox
     *ngFor="let tag of tags; let i = index;"
     value="{{tag.name}}"
     (change)="onRadioSelect($event, i)"
     [checked]="tag.isSelected"
   >
-  {{tag.name}}
+  {{tag.name | translate}}
   </mat-checkbox>
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button mat-button (click)="onApplyFilter()">Apply</button>
+  <button mat-button (click)="onApplyFilter()">{{'APPLY' | translate}}</button>
 </mat-dialog-actions>
