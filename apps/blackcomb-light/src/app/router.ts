@@ -1,4 +1,5 @@
-import { NavigationExtras, UrlTree, UrlSegment, UrlSegmentGroup, Router } from '@angular/router';
+import { NavigationExtras, Router, UrlSegment, UrlSegmentGroup, UrlTree } from '@angular/router';
+import { oc } from 'ts-optchain';
 
 export class AppRouter implements Partial<Router> {
   public navigate(commands: any[], extras?: NavigationExtras): Promise<boolean> {
@@ -18,8 +19,8 @@ export class AppRouter implements Partial<Router> {
       }
     });
     res.root = new UrlSegmentGroup(segments, {});
-    res.queryParams = navigationExtras.queryParams;
-    res.fragment = navigationExtras.fragment;
+    res.queryParams = oc(navigationExtras).queryParams({});
+    res.fragment = oc(navigationExtras).fragment() || null;
     return res;
   }
 
