@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Component, OnInit } from '@angular/core';
 import { Location, DatePipe } from '@angular/common';
 import { Observable, of, forkJoin } from 'rxjs';
@@ -32,15 +33,18 @@ export class TransactionHistoryComponent implements OnInit {
   private pageNumberReward: number = 1;
   private pageSizeReward: number = 10;
   private complitePaginationReward: boolean = false;
+  private currentSelectedLanguage: string = 'en';
 
   constructor(
     private location: Location,
     private datePipe: DatePipe,
     private transactionPipe: TransactionPipe,
+    private translate: TranslateService,
     private merchantAdminService: IMerchantAdminService
   ) { }
 
   public ngOnInit(): void {
+    this.currentSelectedLanguage = this.translate.currentLang || this.translate.defaultLang;
     this.salesTitleFn = (tr: IMerchantPurchaseTransactionHistory) =>
       `${tr.pharmacyName}`;
     this.salesDescFn = (tr: IMerchantPurchaseTransactionHistory) =>
@@ -86,12 +90,11 @@ export class TransactionHistoryComponent implements OnInit {
     if (this.complitePaginationPurchase) {
       return;
     }
-    forkJoin(this.purchaseTransactions, this.merchantAdminService.getTransactionHistory(this.pageNumberPurchase, this.pageSizePurchase))
+    forkJoin(this.purchaseTransactions, this.merchantAdminService.getTransactionHistory(this.pageNumberPurchase, this.pageSizePurchase, this.currentSelectedLanguage))
       .subscribe((val) => {
         if (val[1].length < this.pageSizePurchase) {
           this.complitePaginationPurchase = true;
         }
-        console.log(val);
         this.purchaseTransactions = of([...val[0], ...(val[1] as IMerchantPurchaseTransactionHistory[])]);
       });
     this.pageNumberPurchase++;
@@ -101,7 +104,7 @@ export class TransactionHistoryComponent implements OnInit {
     if (this.complitePaginationReward) {
       return;
     }
-    forkJoin(this.rewardTransactions, this.merchantAdminService.getRewardTransactionHistory(this.pageNumberReward, this.pageSizeReward))
+    forkJoin(this.rewardTransactions, this.merchantAdminService.getRewardTransactionHistory(this.pageNumberReward, this.pageSizeReward, this.currentSelectedLanguage))
       .subscribe((val) => {
         if (val[1].length < this.pageSizeReward) {
           this.complitePaginationReward = true;

@@ -36,7 +36,7 @@ export abstract class IMerchantAdminService {
   public abstract getTransactionHistory(page?: number, pageSize?: number, locale?: string): Observable<IMerchantTransactionHistory[]>;
 
   public abstract getRewardTransactionHistory(
-    age?: number,
+    page?: number,
     pageSize?: number,
     locale?: string
   ): Observable<IMerchantRewardTransactionHistory[]>;
