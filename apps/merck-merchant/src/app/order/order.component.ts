@@ -56,6 +56,7 @@ export class OrderComponent implements OnInit {
 
   public newQuantity(newData: Product): void {
     this.rewards[newData.index].quantity = newData.qty;
+    this.checkUpdatedRewards();
   }
 
   private checkUpdatedRewards(): void {
@@ -65,7 +66,6 @@ export class OrderComponent implements OnInit {
   }
 
   public toggleSummary(): void {
-    this.checkUpdatedRewards();
     this.isSummaryActivated = !this.isSummaryActivated;
   }
 
