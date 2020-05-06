@@ -55,7 +55,7 @@ const Constants = {
   INVALID_SLIDE_THRESHOLD_NOT_ALLOWED: 'slideThreshold value is invalid, Expecting number between 0 to 50.',
   MAX_SLIDE_THRESHOLD: 50,
   MIN_SLIDE_THRESHOLD: 0,
-  DEFAULT_SLIDE_THRESHOLD: 50,
+  DEFAULT_SLIDE_THRESHOLD: 30,
   NUMBER_OF_ICONS: 2,
   DEFAULT_CLASS_NAME: 'ngstd-main-canvas'
 };
@@ -207,12 +207,10 @@ export class QuizSwipeListComponent implements OnInit {
     return `${Constants.DEFAULT_CLASS_NAME}`;
   }
 
-  public panend(_: WheelEvent, index: number, elementReference: HTMLDivElement): void {
+  public panend(_: WheelEvent, __: number, elementReference: HTMLDivElement): void {
     const currentMargin = this.getLeftPosition(elementReference);
-    if (currentMargin > this.slideThreshold ||
-      (currentMargin < -this.slideThreshold && this.numberOfIcons === Constants.NUMBER_OF_ICONS)) {
-      this.swipeElement(index);
-    } else {
+    if (currentMargin < this.slideThreshold ||
+      !(currentMargin < -this.slideThreshold && this.numberOfIcons === Constants.NUMBER_OF_ICONS)) {
       this.ngstdIndexNumber = undefined; // make undefined so it snaps back when mouse release
     }
   }
@@ -229,6 +227,7 @@ export class QuizSwipeListComponent implements OnInit {
       if (currentMargin > this.slideThreshold ||
         (currentMargin < -this.slideThreshold && this.numberOfIcons === Constants.NUMBER_OF_ICONS)) {
         elementReference.style.display = 'none';
+        this.swipeElement(index);
       }
     }
   }
