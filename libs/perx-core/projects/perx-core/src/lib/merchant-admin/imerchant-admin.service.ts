@@ -35,8 +35,11 @@ export abstract class IMerchantAdminService {
 
   public abstract getTransactionHistory(page?: number, pageSize?: number, locale?: string): Observable<IMerchantTransactionHistory[]>;
 
-  public abstract getRewardTransactionHistory(page?: number, pageSize?: number, locale?: string):
-    Observable<IMerchantRewardTransactionHistory[]>;
+  public abstract getRewardTransactionHistory(
+    age?: number,
+    pageSize?: number,
+    locale?: string
+  ): Observable<IMerchantRewardTransactionHistory[]>;
 
   public abstract forgotPassword(email: string): Observable<IMessageResponse>;
 
