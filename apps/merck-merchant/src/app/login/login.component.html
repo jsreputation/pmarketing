@@ -1,19 +1,22 @@
 <div class="main-container">
-  <a routerLink="/">
-    <img class="logo" src="assets/logo.png">
-  </a>
-  <div class="translate-switch">
-    <mat-form-field>
-      <mat-select [(value)]="currentSelectedLanguage" (selectionChange)="switchLanguage()">
-        <mat-option value="en" >En</mat-option>
-        <mat-option value="zh" >Zh</mat-option>
-      </mat-select>
-    </mat-form-field>
+  <div class="floating-container">
+    <div class="translate-switch">
+      <mat-form-field>
+        <mat-select [(value)]="currentSelectedLanguage" (selectionChange)="switchLanguage()">
+          <mat-option value="en">En</mat-option>
+          <mat-option value="zh">Zh</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="logo-container">
+      <a routerLink="/">
+        <img class="logo" src="assets/logo.png">
+      </a>
+    </div>
+    <div class="logo-title">
+      Diabetes Loyalty Program
+    </div>
   </div>
-  <div class="logo-title">
-    Diabetes Loyalty Program
-  </div>
-
   <div class="container">
     <div class="content">
       <div class="main-heading">{{"WELCOME"|translate}}!</div>
