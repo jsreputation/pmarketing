@@ -46,9 +46,14 @@
 
 .translate-switch {
   color: white;
-  position: absolute;
-  top: 3rem;
-  right: 2rem;
+  //position: absolute;
+  //top: 3rem;
+  //right: 2rem;
+  position: relative;
+  top: -6rem;
+  left: calc(100% - 7rem);
+  height: 0;
+  overflow: visible;
 
   ::ng-deep {
     mat-form-field {
