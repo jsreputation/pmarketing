@@ -75,8 +75,10 @@ export class TransactionHistoryComponent implements OnInit {
     switch (page) {
       case 'purchase':
         this.getNextPurchasePage();
+        break;
       case 'rewards':
         this.getNextRewardPage();
+        break;
     }
   }
 
