@@ -6,10 +6,6 @@
 .main-container {
   background-color: #0f69af;
 
-  .logo {
-    padding-top: 7rem;
-  }
-
   .container {
     padding: 0 1.5rem 1.5rem;
     display: flex;
@@ -44,33 +40,38 @@
   }
 }
 
-.translate-switch {
-  color: white;
-  //position: absolute;
-  //top: 3rem;
-  //right: 2rem;
-  position: relative;
-  top: -6rem;
-  left: calc(100% - 7rem);
-  height: 0;
-  overflow: visible;
+.floating-container {
+  display: flex;
+  flex-direction: column;
+  padding: 3rem 1.5rem 1.5rem;
 
-  ::ng-deep {
-    mat-form-field {
-      width: 4rem;
-    }
+  .translate-switch {
+    color: white;
+    flex: 0;
+    text-align: right;
 
-    .mat-select-value {
-      font-size: 1.5rem;
-      color: white;
-    }
+    ::ng-deep {
+      mat-form-field {
+        width: 4rem;
+      }
 
-    .mat-select-arrow {
-      color: white;
-    }
+      .mat-select-value {
+        font-size: 1.5rem;
+        color: white;
+      }
 
-    .mat-form-field-underline {
-      display: none;
+      .mat-select-arrow {
+        color: white;
+      }
+
+      .mat-form-field-underline {
+        display: none;
+      }
     }
+  }
+
+  > .logo-container {
+    text-align: center;
+    flex: 0;
   }
 }
