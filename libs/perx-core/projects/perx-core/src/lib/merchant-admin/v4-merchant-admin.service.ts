@@ -34,8 +34,8 @@ import {
   IMessageResponse,
   RedemptionType,
 } from '../perx-core.models';
-import {ConfigService} from '../config/config.service';
-import {IConfig} from '../config/models/config.model';
+import { ConfigService } from '../config/config.service';
+import { IConfig } from '../config/models/config.model';
 
 interface IV4MerchantAdminTransaction {
   id: number;
@@ -384,9 +384,23 @@ export class V4MerchantAdminService implements IMerchantAdminService {
     );
   }
 
-  public getRewardTransactionHistory(): Observable<IMerchantRewardTransactionHistory[]> {
+  public getRewardTransactionHistory(
+    page: number = 1,
+    pageSize: number = 10,
+    locale: string = 'en'
+  ): Observable<IMerchantRewardTransactionHistory[]> {
+    const headers = new HttpHeaders().set('Accept-Language', locale);
     const url = `${this.apiHost}/v4/merchant_admin/reward_transactions?state=redeemed`;
-    return this.http.get<IV4MerchantRewardHistoryResponse>(url).pipe(
+    return this.http.get<IV4MerchantRewardHistoryResponse>(
+      url,
+      {
+        headers,
+        params: {
+          page: `${page}`,
+          size: `${pageSize}`
+        }
+      }
+    ).pipe(
       map((res: IV4MerchantRewardHistoryResponse) => res.data),
       map((transactionHistories: IV4MerchantRewardTransactionHistory[]) => transactionHistories.map(
         (transactionHistory: IV4MerchantRewardTransactionHistory) =>

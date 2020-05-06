@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location, DatePipe } from '@angular/common';
-import { Observable, of } from 'rxjs';
+import { Observable, of, forkJoin } from 'rxjs';
 import {
   TransactionPipe,
   IMerchantAdminService,
@@ -24,6 +24,14 @@ export class TransactionHistoryComponent implements OnInit {
   public redemptionsTitleFn: (tr: IMerchantRewardTransactionHistory) => string;
   public redemptionsSubTitleFn: (tr: IMerchantRewardTransactionHistory) => string;
   public redemptionsPriceLabelFn: (tr: IMerchantRewardTransactionHistory) => string;
+
+  private pageNumberPurchase: number = 1;
+  private pageSizePurchase: number = 10;
+  private complitePaginationPurchase: boolean = false;
+
+  private pageNumberReward: number = 1;
+  private pageSizeReward: number = 10;
+  private complitePaginationReward: boolean = false;
 
   constructor(
     private location: Location,
@@ -49,11 +57,11 @@ export class TransactionHistoryComponent implements OnInit {
     this.redemptionsPriceLabelFn = (tr: IMerchantRewardTransactionHistory) =>
       `${tr.customerName}`;
 
-    this.merchantAdminService.getTransactionHistory().subscribe(
+    this.merchantAdminService.getTransactionHistory(this.pageNumberPurchase, this.pageSizePurchase).subscribe(
       (transactions: IMerchantPurchaseTransactionHistory[]) => this.purchaseTransactions = of(transactions),
       (err) => console.log(err)
     );
-    this.merchantAdminService.getRewardTransactionHistory().subscribe(
+    this.merchantAdminService.getRewardTransactionHistory(this.pageNumberReward, this.pageSizeReward).subscribe(
       (transactions: IMerchantRewardTransactionHistory[]) => this.rewardTransactions = of(transactions),
       (err) => console.log(err)
     );
@@ -62,4 +70,43 @@ export class TransactionHistoryComponent implements OnInit {
   public onLeftActionClick(): void {
     this.location.back();
   }
+
+  public onScroll(page: string): void {
+    switch (page) {
+      case 'purchase':
+        this.getNextPurchasePage();
+      case 'rewards':
+        this.getNextRewardPage();
+    }
+  }
+
+  private getNextPurchasePage(): void {
+    if (this.complitePaginationPurchase) {
+      return;
+    }
+    forkJoin(this.purchaseTransactions, this.merchantAdminService.getTransactionHistory(this.pageNumberPurchase, this.pageSizePurchase))
+      .subscribe((val) => {
+        if (val[1].length < this.pageSizePurchase) {
+          this.complitePaginationPurchase = true;
+        }
+        console.log(val);
+        this.purchaseTransactions = of([...val[0], ...(val[1] as IMerchantPurchaseTransactionHistory[])]);
+      });
+    this.pageNumberPurchase++;
+  }
+
+  private getNextRewardPage(): void {
+    if (this.complitePaginationReward) {
+      return;
+    }
+    forkJoin(this.rewardTransactions, this.merchantAdminService.getRewardTransactionHistory(this.pageNumberReward, this.pageSizeReward))
+      .subscribe((val) => {
+        if (val[1].length < this.pageSizeReward) {
+          this.complitePaginationReward = true;
+        }
+        this.rewardTransactions = of([...val[0], ...val[1]]);
+      });
+    this.pageNumberReward++;
+  }
+
 }

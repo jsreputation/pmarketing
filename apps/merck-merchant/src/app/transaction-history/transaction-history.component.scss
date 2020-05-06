@@ -12,9 +12,14 @@ mat-toolbar {
 }
 
 .main-container {
-  overflow: scroll;
+  overflow: hidden;
   height: calc(100% - 6rem);
   padding-top: 6rem;
+}
+
+.tab-container {
+  overflow: scroll;
+  height: calc(100vh - 10.8rem);
 }
 
 perx-core-loyalty-transactions-list ::ng-deep {

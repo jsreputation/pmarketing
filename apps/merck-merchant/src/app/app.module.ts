@@ -55,6 +55,7 @@ import { TransactionHistoryComponent } from './transaction-history/transaction-h
 import { TransactionPipe } from './transaction-history/transaction.pipe';
 import { TransactionHistoryPipe } from './transaction-history/transaction-history.pipe';
 import { tap, switchMap } from 'rxjs/operators';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 export const setLanguage = (
   translateService: TranslateService,
@@ -115,6 +116,7 @@ export const setLanguage = (
     LoyaltyModule,
     VouchersModule,
     HttpClientModule,
+    InfiniteScrollModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
