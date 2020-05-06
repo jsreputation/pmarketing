@@ -98,5 +98,7 @@
   "RESEND_OTP": "Resend OTP",
   "Gold": "Gold",
   "Silver": "Silver",
-  "Green": "Green"
+  "Green": "Green",
+  "POINT_EARNED": "{points} Points earned",
+  "POINT_SPENT": "{points} Points spent"
 }

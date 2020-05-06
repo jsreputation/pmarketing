@@ -24,5 +24,7 @@
   "STATIC_PASSWORD": "密碼",
   "STATIC_NEW_PASSWORD": "新密碼",
   "STATIC_CONFIRM_PASSWORD": "確認密碼",
-  "SUBMIT_BUTTON": "更新密碼"
+  "SUBMIT_BUTTON": "更新密碼",
+  "POINT_EARNED": "獲得積分{points}",
+  "POINT_SPENT": "使用積分{points}"
 }
