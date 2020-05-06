@@ -4,12 +4,12 @@ import { Observable, of, forkJoin } from 'rxjs';
 import {
   LoyaltyService,
   ITransactionHistory,
-  TransactionPipe,
   IRewardTransactionHistory,
   IPurchaseTransactionHistory
 } from '@perxtech/core';
 import { DatePipe } from '@angular/common';
 import { MatTabChangeEvent } from '@angular/material';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'mc-transaction-history',
@@ -28,12 +28,19 @@ export class TransactionHistoryComponent implements OnInit, PageAppearence {
   private pageNumber: number = 1;
   private pageSize: number = 10;
   private complitePagination: boolean = false;
+  private pointsEarnedTxt: string;
+  private pointsSpentTxt: string;
   // @ts-ignore
   private labelIndex: number = 0;
   constructor(
     private loyaltyService: LoyaltyService,
     private datePipe: DatePipe,
-    private transactionPipe: TransactionPipe) {
+    private translate: TranslateService
+  ) {
+    this.translate.get(['POINT_EARNED', 'POINT_SPENT']).subscribe((res: any) => {
+      this.pointsEarnedTxt = res.POINT_EARNED;
+      this.pointsSpentTxt = res.POINT_SPENT;
+    });
   }
 
   public ngOnInit(): void {
@@ -47,7 +54,11 @@ export class TransactionHistoryComponent implements OnInit, PageAppearence {
       `${tr.transactionDetails && tr.transactionDetails.data ? (tr.transactionDetails.data as IPurchaseTransactionHistory).productName : ''}`;
 
     this.subTitleFn = (tr: ITransactionHistory) => `${this.datePipe.transform(tr.transactedAt, 'dd/MM/yyyy')}`;
-    this.priceLabelFn = (tr: ITransactionHistory) => `${this.transactionPipe.transform(tr.pointsAmount || 0)}`;
+    this.priceLabelFn = (tr: ITransactionHistory) => {
+      const value = tr.pointsAmount || 0;
+      const absVal = String(Math.abs(value));
+      return value < 0 ? this.pointsSpentTxt.replace('{points}', absVal) : this.pointsEarnedTxt.replace('{points}', absVal);
+    };
 
     this.loyaltyService.getTransactionHistory(this.pageNumber, this.pageSize).subscribe(
       (transactions: ITransactionHistory[]) => this.transactions = of(transactions),

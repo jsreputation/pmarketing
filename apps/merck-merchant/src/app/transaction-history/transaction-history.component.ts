@@ -1,8 +1,8 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Component, OnInit } from '@angular/core';
 import { Location, DatePipe } from '@angular/common';
 import { Observable, of } from 'rxjs';
 import {
-  TransactionPipe,
   IMerchantAdminService,
   IMerchantTransactionHistory,
   IMerchantPurchaseTransactionHistory,
@@ -24,13 +24,20 @@ export class TransactionHistoryComponent implements OnInit {
   public redemptionsTitleFn: (tr: IMerchantRewardTransactionHistory) => string;
   public redemptionsSubTitleFn: (tr: IMerchantRewardTransactionHistory) => string;
   public redemptionsPriceLabelFn: (tr: IMerchantRewardTransactionHistory) => string;
+  private pointsEarnedTxt: string;
+  private pointsSpentTxt: string;
 
   constructor(
     private location: Location,
     private datePipe: DatePipe,
-    private transactionPipe: TransactionPipe,
-    private merchantAdminService: IMerchantAdminService
-  ) { }
+    private merchantAdminService: IMerchantAdminService,
+    private translate: TranslateService
+  ) {
+    this.translate.get(['POINT_EARNED', 'POINT_SPENT']).subscribe((res: any) => {
+      this.pointsEarnedTxt = res.POINT_EARNED;
+      this.pointsSpentTxt = res.POINT_SPENT;
+    });
+  }
 
   public ngOnInit(): void {
     this.salesTitleFn = (tr: IMerchantPurchaseTransactionHistory) =>
@@ -39,8 +46,11 @@ export class TransactionHistoryComponent implements OnInit {
       `${tr.productName}`;
     this.salesSubTitleFn = (tr: IMerchantPurchaseTransactionHistory) =>
       `${this.datePipe.transform(tr.transactionDate, 'dd/MM/yyyy')}`;
-    this.salespriceLabelFn = (tr: IMerchantPurchaseTransactionHistory) =>
-      `${this.transactionPipe.transform(tr.pointsIssued || 0)}`;
+    this.salespriceLabelFn = (tr: IMerchantPurchaseTransactionHistory) => {
+      const value = tr.pointsIssued || 0;
+      const absVal = String(Math.abs(value));
+      return value < 0 ? this.pointsSpentTxt.replace('{points}', absVal) : this.pointsEarnedTxt.replace('{points}', absVal);
+    };
 
     this.redemptionsTitleFn = (tr: IMerchantRewardTransactionHistory) =>
       `${tr.rewardName}`;

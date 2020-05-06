@@ -24,5 +24,7 @@
   "STATIC_PASSWORD": "Password",
   "STATIC_NEW_PASSWORD": "New password",
   "STATIC_CONFIRM_PASSWORD": "Confirm password",
-  "SUBMIT_BUTTON": "Update password"
+  "SUBMIT_BUTTON": "Update password",
+  "POINT_EARNED": "{points} Points earned",
+  "POINT_SPENT": "{points} Points spent"
 }
