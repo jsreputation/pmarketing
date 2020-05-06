@@ -90,13 +90,15 @@ export class TransactionHistoryComponent implements OnInit {
     if (this.complitePaginationPurchase) {
       return;
     }
-    forkJoin(this.purchaseTransactions, this.merchantAdminService.getTransactionHistory(this.pageNumberPurchase, this.pageSizePurchase, this.currentSelectedLanguage))
-      .subscribe((val) => {
-        if (val[1].length < this.pageSizePurchase) {
-          this.complitePaginationPurchase = true;
-        }
-        this.purchaseTransactions = of([...val[0], ...(val[1] as IMerchantPurchaseTransactionHistory[])]);
-      });
+    forkJoin(
+      this.purchaseTransactions,
+      this.merchantAdminService.getTransactionHistory(this.pageNumberPurchase, this.pageSizePurchase, this.currentSelectedLanguage)
+    ).subscribe((val) => {
+      if (val[1].length < this.pageSizePurchase) {
+        this.complitePaginationPurchase = true;
+      }
+      this.purchaseTransactions = of([...val[0], ...(val[1] as IMerchantPurchaseTransactionHistory[])]);
+    });
     this.pageNumberPurchase++;
   }
 
@@ -104,13 +106,15 @@ export class TransactionHistoryComponent implements OnInit {
     if (this.complitePaginationReward) {
       return;
     }
-    forkJoin(this.rewardTransactions, this.merchantAdminService.getRewardTransactionHistory(this.pageNumberReward, this.pageSizeReward, this.currentSelectedLanguage))
-      .subscribe((val) => {
-        if (val[1].length < this.pageSizeReward) {
-          this.complitePaginationReward = true;
-        }
-        this.rewardTransactions = of([...val[0], ...val[1]]);
-      });
+    forkJoin(
+      this.rewardTransactions,
+      this.merchantAdminService.getRewardTransactionHistory(this.pageNumberReward, this.pageSizeReward, this.currentSelectedLanguage)
+    ).subscribe((val) => {
+      if (val[1].length < this.pageSizeReward) {
+        this.complitePaginationReward = true;
+      }
+      this.rewardTransactions = of([...val[0], ...val[1]]);
+    });
     this.pageNumberReward++;
   }
 
