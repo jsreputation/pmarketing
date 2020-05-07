@@ -37,6 +37,8 @@ import {
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, PageAppearence {
+  private serverErrorTxt: string;
+  private invalidCredentials: string;
 
   public selectedCountry: string = '852';
 
@@ -70,6 +72,7 @@ export class LoginComponent implements OnInit, PageAppearence {
     private cd: ChangeDetectorRef
   ) {
     this.initForm();
+    this.initTranslate();
   }
 
   private initForm(): void {
@@ -134,13 +137,9 @@ export class LoginComponent implements OnInit, PageAppearence {
       (err) => {
         if (err instanceof HttpErrorResponse) {
           if (err.status === 0) {
-            this.translateService.get('SERVER_NOT_AVAILABLE').subscribe(text =>
-              this.notificationService.addSnack(text)
-            );
+            this.notificationService.addSnack(this.serverErrorTxt);
           } else if (err.status === 401) {
-            this.translateService.get('INVALID_CREDENTIALS').subscribe(text =>
-              this.notificationService.addSnack(text)
-            );
+            this.notificationService.addSnack(this.invalidCredentials);
           }
         }
       }
@@ -171,5 +170,10 @@ export class LoginComponent implements OnInit, PageAppearence {
   public switchLanguage(): void {
     this.translateService.use(this.currentSelectedLanguage);
     this.cd.detectChanges();
+  }
+
+  private initTranslate(): void {
+    this.translateService.get('SERVER_NOT_AVAILABLE').subscribe(text => this.serverErrorTxt = text);
+    this.translateService.get('SERVER_NOT_AVAILABLE').subscribe(text => this.invalidCredentials = text);
   }
 }

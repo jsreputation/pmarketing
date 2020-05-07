@@ -13,12 +13,15 @@ export class ConditionComponent implements OnInit, PageAppearence {
   public showDiabetesCondition: boolean = false;
   public profile: IProfile;
   public conditions: string[];
+  private conditionUpdateTxt: string;
 
   constructor(
     private profileService: ProfileService,
     private notificationService: NotificationService,
     private translate: TranslateService
-  ) { }
+  ) {
+    this.translate.get('CONDITION_UPDATED').subscribe(text => this.conditionUpdateTxt = text);
+  }
 
   public ngOnInit(): void {
     this.profileService.whoAmI().subscribe(res => {
@@ -75,10 +78,8 @@ export class ConditionComponent implements OnInit, PageAppearence {
       return;
     }
     this.profileService.setCustomProperties(this.profile.customProperties).subscribe(
-      () => this.translate.get('CONDITION_UPDATED').subscribe(text => this.notificationService.addSnack(text)),
-      err => {
-        this.notificationService.addSnack(err.error.message);
-      });
+      () => this.notificationService.addSnack(this.conditionUpdateTxt),
+      err => this.notificationService.addSnack(err.error.message)
   }
 
   public getPageProperties(): PageProperties {
