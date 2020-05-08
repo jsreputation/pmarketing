@@ -117,11 +117,11 @@ export class HomeComponent implements OnInit, OnDestroy {
         if (profile &&
           profile.firstName && profile.firstName !== '' &&
           profile.lastName && profile.lastName !== '') {
-          returnString =  returnString + ', ' + profile.firstName + ' ' + profile.lastName;
+          returnString = `${returnString}, ${profile.firstName} ${profile.lastName}`;
         } else if (profile && profile.firstName && profile.firstName !== '') {
-          returnString =  returnString + ', ' + profile.firstName;
+          returnString = `${returnString}, ${profile.firstName}`;
         } else if (profile && profile.lastName && profile.lastName !== '') {
-          returnString =  returnString + ', ' + profile.lastName;
+          returnString = `${returnString}, ${profile.lastName}`;
         }
         return returnString;
       }
