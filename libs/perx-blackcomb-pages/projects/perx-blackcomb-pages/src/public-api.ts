@@ -34,6 +34,7 @@ export { StampCardModule } from './lib/stamp-card/stamp-card.module';
 export { WalletComponent } from './lib/wallet/wallet.component';
 export { WalletModule } from './lib/wallet/wallet.module';
 export { SignUpComponent } from './lib/sign-up/sign-up.component';
+export { SignUpModule } from './lib/sign-up/sign-up.module';
 export { LayoutComponent } from './lib/layout/layout.component';
 export { LayoutModule } from './lib/layout/layout.module';
 export { WalletHistoryComponent } from './lib/wallet-history/wallet-history.component';

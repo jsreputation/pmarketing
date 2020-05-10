@@ -53,7 +53,7 @@ import { StampCardModule } from './stamp-card/stamp-card.module';
 import { SurveyComponent } from './survey/survey.component';
 import { VoucherDetailModule } from './voucher-detail/voucher-detail.module';
 import { WalletModule } from './wallet/wallet.module';
-import { SignUpComponent as PerxSignUpComponent } from './sign-up/sign-up.component';
+import { SignUpModule } from './sign-up/sign-up.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { LayoutModule } from './layout/layout.module';
 import { HomeModule } from './home/home.module';
@@ -78,7 +78,6 @@ import { SignIn2Module } from './sign-in-2/sign-in-2.module';
 import { ProfileModule as BCPProfileModule } from './profile/profile.module';
 
 const comps: any[] = [
-  PerxSignUpComponent,
   RewardComponent,
   LoadingComponent,
   SignInComponent,
@@ -152,6 +151,7 @@ const comps: any[] = [
     HomeModule,
     CampaignStampsModule,
     StampCardModule,
+    SignUpModule,
     BCPQuizModule,
     QuizResultsModule,
     CampaignLandingPageModule,
