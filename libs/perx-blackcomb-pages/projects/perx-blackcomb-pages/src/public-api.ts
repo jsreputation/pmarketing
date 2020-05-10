@@ -54,9 +54,12 @@ export { CampaignStampsModule } from './lib/campaign-stamps/campaign-stamps.modu
 export { CatalogComponent } from './lib/catalog/catalog.component';
 export { CatalogModule } from './lib/catalog/catalog.module';
 export { QuizComponent } from './lib/quiz/quiz.component';
+export { QuizModule } from './lib/quiz/quiz.module';
 export { QuizResultsComponent } from './lib/quiz-results/quiz-results.component';
+export { QuizResultsModule } from './lib/quiz-results/quiz-results.module';
 export { LuckyDrawDetailsComponent } from './lib/lucky-draw-details/lucky-draw-details.component';
 export { CampaignLandingPageComponent } from './lib/campaign-landing-page/campaign-landing-page.component';
+export { CampaignLandingPageModule } from './lib/campaign-landing-page/campaign-landing-page.module';
 export { ForgotPasswordComponent } from './lib/forgot-password/forgot-password.component';
 export { ForgotPasswordModule } from './lib/forgot-password/forgot-password.module';
 export { LandingPageComponent } from './lib/landing-page/landing-page.component';

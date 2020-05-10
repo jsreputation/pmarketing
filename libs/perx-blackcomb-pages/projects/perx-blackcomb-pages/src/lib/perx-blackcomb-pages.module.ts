@@ -66,10 +66,10 @@ import { EditProfileFieldModule } from './edit-profile-field/edit-profile-field.
 import { ProfileBarcodeModule } from './profile-barcode/profile-barcode.module';
 import { CampaignStampsModule } from './campaign-stamps/campaign-stamps.module';
 import { CatalogModule } from './catalog/catalog.module';
-import { QuizComponent } from './quiz/quiz.component';
-import { QuizResultsComponent } from './quiz-results/quiz-results.component';
+import { QuizModule as BCPQuizModule } from './quiz/quiz.module';
+import { QuizResultsModule } from './quiz-results/quiz-results.module';
 import { LuckyDrawDetailsComponent } from './lucky-draw-details/lucky-draw-details.component';
-import { CampaignLandingPageComponent } from './campaign-landing-page/campaign-landing-page.component';
+import { CampaignLandingPageModule } from './campaign-landing-page/campaign-landing-page.module';
 import { LandingPageModule } from './landing-page/landing-page.module';
 import { ReferralComponent } from './referral/referral.component';
 import { LeaderboardPageComponent } from './leaderboard-page/leaderboard-page.component';
@@ -86,10 +86,7 @@ const comps: any[] = [
   TransactionHistoryComponent,
   ChangePasswordComponent,
   RewardsBookingComponent,
-  QuizComponent,
-  QuizResultsComponent,
   LuckyDrawDetailsComponent,
-  CampaignLandingPageComponent,
   ReferralComponent,
   LeaderboardPageComponent
 ];
@@ -155,6 +152,9 @@ const comps: any[] = [
     HomeModule,
     CampaignStampsModule,
     StampCardModule,
+    BCPQuizModule,
+    QuizResultsModule,
+    CampaignLandingPageModule,
   ],
   exports: [
     ...comps,

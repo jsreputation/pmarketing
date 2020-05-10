@@ -1,48 +1,13 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import {
-  QuizModule as PerxQuizModule,
-  CampaignModule as PerxCampaignModule,
-  ConfigModule,
-  AuthenticationModule,
-  QuizComponent
-} from '@perxtech/core';
+import { RouterModule, Routes } from '@angular/router';
+import { QuizComponent, QuizModule as BCPQuizModule } from '@perxtech/blackcomb-pages';
 
-import {
-  MatCardModule,
-  MatButtonModule,
-  MatProgressBarModule,
-  MatDatepickerModule,
-  MatRadioModule,
-  MatToolbarModule,
-  MatCheckboxModule
-} from '@angular/material';
-import { PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
-import { Routes, RouterModule } from '@angular/router';
-
-const routes: Routes = [
-  { path: '', pathMatch: 'full', component: QuizComponent },
-  { path: '*', redirectTo: '' }
-];
+const routes: Routes = [{ path: '', component: QuizComponent }];
 
 @NgModule({
   imports: [
-    ConfigModule.forChild(),
-    PerxBlackcombPagesModule,
-    CommonModule,
-    MatCardModule,
-    MatButtonModule,
-    MatProgressBarModule,
-    MatToolbarModule,
-    MatDatepickerModule,
-    MatRadioModule,
-    MatCheckboxModule,
-    RouterModule.forChild(routes),
-    PerxCampaignModule,
-    PerxQuizModule,
-    AuthenticationModule
-  ],
-  providers: [
+    BCPQuizModule,
+    RouterModule.forChild(routes)
   ]
 })
 export class QuizModule { }
