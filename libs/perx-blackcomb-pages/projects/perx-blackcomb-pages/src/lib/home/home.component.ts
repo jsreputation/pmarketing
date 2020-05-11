@@ -172,6 +172,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (this.appConfig.showCampaignLandingPage) {
       this.router.navigate([`campaign-welcome/${campaign.id}`]);
     } else {
+      // todo do something special based on campaign sub-type (e.g quiz, ...)
       this.router.navigate([`${campaign.type}/${campaign.id}`]);
     }
   }

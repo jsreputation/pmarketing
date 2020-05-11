@@ -8,25 +8,41 @@
 <div class="main-container">
   <mat-tab-group mat-stretch-tabs class="tabs">
     <mat-tab label="Sales">
-      <perx-core-loyalty-transactions-list
-        *ngIf="purchaseTransactions"
-        [transactions]="purchaseTransactions"
-        [titleFn]="salesTitleFn"
-        [subTitleFn]="salesSubTitleFn"
-        [descFn]="salesDescFn"
-        [priceLabelFn]="salespriceLabelFn"
-      >
-      </perx-core-loyalty-transactions-list>
+      <div
+        class="tab-container"
+        infiniteScroll 
+        [infiniteScrollDistance]="2" 
+        [infiniteScrollThrottle]="50"
+        (scrolled)="onScroll('purchase')" 
+        [scrollWindow]="false">
+        <perx-core-loyalty-transactions-list
+          *ngIf="purchaseTransactions"
+          [transactions]="purchaseTransactions"
+          [titleFn]="salesTitleFn"
+          [subTitleFn]="salesSubTitleFn"
+          [descFn]="salesDescFn"
+          [priceLabelFn]="salespriceLabelFn"
+        >
+        </perx-core-loyalty-transactions-list>
+      </div>
     </mat-tab>
     <mat-tab label="Redemption">
-      <perx-core-loyalty-transactions-list
-        *ngIf="rewardTransactions"
-        [transactions]="rewardTransactions"
-        [titleFn]="redemptionsTitleFn"
-        [subTitleFn]="redemptionsSubTitleFn"
-        [priceLabelFn]="redemptionsPriceLabelFn"
-      >
-      </perx-core-loyalty-transactions-list>
+      <div
+        class="tab-container"
+        infiniteScroll 
+        [infiniteScrollDistance]="2" 
+        [infiniteScrollThrottle]="50"
+        (scrolled)="onScroll('rewards')" 
+        [scrollWindow]="false">
+        <perx-core-loyalty-transactions-list
+          *ngIf="rewardTransactions"
+          [transactions]="rewardTransactions"
+          [titleFn]="redemptionsTitleFn"
+          [subTitleFn]="redemptionsSubTitleFn"
+          [priceLabelFn]="redemptionsPriceLabelFn"
+        >
+        </perx-core-loyalty-transactions-list>
+      </div>
     </mat-tab>
   </mat-tab-group>
 </div>

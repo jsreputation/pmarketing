@@ -9,6 +9,7 @@ import { TransactionHistoryPipe } from './transaction-history.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { IMerchantAdminService } from '@perxtech/core';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 describe('TransactionHistoryComponent', () => {
   let component: TransactionHistoryComponent;
@@ -34,7 +35,8 @@ describe('TransactionHistoryComponent', () => {
         MatToolbarModule,
         MatTabsModule,
         LoyaltyModule,
-        LoyaltyModule
+        LoyaltyModule,
+        InfiniteScrollModule
       ],
       providers: [
         { provide: Location, useValue: locationStub },

@@ -71,7 +71,7 @@ export class WhistlerMerchantAdminService implements IMerchantAdminService {
   }
 
   // @ts-ignore
-  public getRewardTransactionHistory(): Observable<IMerchantRewardTransactionHistory[]> {
+  public getRewardTransactionHistory(page?: number, pageSize?: number, locale?: string): Observable<IMerchantRewardTransactionHistory[]> {
     throw new Error('getRewardTransactionHistory Method not implemented.');
   }
 
