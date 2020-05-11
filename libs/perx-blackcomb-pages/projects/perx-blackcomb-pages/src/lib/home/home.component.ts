@@ -111,10 +111,21 @@ export class HomeComponent implements OnInit, OnDestroy {
             return EMPTY;
           })
       ).subscribe();
-    this.translate.get(['YOU_HAVE', 'HELLO', 'POINTS_EXPITING'])
-      .subscribe((res: any) => {
-        this.titleFn = (profile: IProfile) => `${res.HELLO} ${profile && profile.lastName ? profile.lastName : ''},`;
-      });
+    this.translate.get(['YOU_HAVE', 'HELLO', 'POINTS_EXPITING']).subscribe(
+      (msg: any) => this.titleFn = (profile) => {
+        let returnString = msg.HELLO;
+        if (profile &&
+          profile.firstName && profile.firstName !== '' &&
+          profile.lastName && profile.lastName !== '') {
+          returnString = `${returnString}, ${profile.firstName} ${profile.lastName}`;
+        } else if (profile && profile.firstName && profile.firstName !== '') {
+          returnString = `${returnString}, ${profile.firstName}`;
+        } else if (profile && profile.lastName && profile.lastName !== '') {
+          returnString = `${returnString}, ${profile.lastName}`;
+        }
+        return returnString;
+      }
+    );
     this.rewards$ = this.rewardsService.getAllRewards(['featured']);
     this.getTabbedList();
 
