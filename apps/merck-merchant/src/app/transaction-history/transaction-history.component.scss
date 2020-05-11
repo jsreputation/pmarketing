@@ -22,9 +22,11 @@ mat-toolbar {
   height: 100%;
 }
 
-perx-core-loyalty-transactions-list ::ng-deep {
-  .transaction-point {
-    color: #ddac27;
+perx-core-loyalty-transactions-list {
+  ::ng-deep {
+    .transaction-point {
+      color: #ddac27;
+    }
   }
 }
 
