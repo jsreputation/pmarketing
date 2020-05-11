@@ -16,7 +16,7 @@ mat-toolbar {
   height: calc(100% - 6rem);
   padding-top: 6rem;
 
-  ::ng-deep {
+  &::ng-deep {
     .mat-tab-group {
       height: 100%;
     }
