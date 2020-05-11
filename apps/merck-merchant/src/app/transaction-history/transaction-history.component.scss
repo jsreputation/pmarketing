@@ -6,7 +6,7 @@ mat-toolbar {
   z-index: 4;
   -webkit-box-pack: justify;
   justify-content: space-between;
-  background-color: #0F69AF;
+  background-color: #0f69af;
   position: fixed;
   color: white;
 }
@@ -15,12 +15,6 @@ mat-toolbar {
   overflow: hidden;
   height: calc(100% - 6rem);
   padding-top: 6rem;
-
-  &::ng-deep {
-    .mat-tab-group {
-      height: 100%;
-    }
-  }
 }
 
 .tab-container {
@@ -31,6 +25,12 @@ mat-toolbar {
 perx-core-loyalty-transactions-list ::ng-deep {
   .transaction-point {
     color: #ddac27;
+  }
+}
+
+::ng-deep {
+  .mat-tab-group {
+    height: 100%;
   }
 }
 
