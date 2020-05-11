@@ -180,12 +180,19 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   public goToCampaignPage(campaign: ICampaign): void {
-    if (this.appConfig.showCampaignLandingPage) {
-      this.router.navigate([`campaign-welcome/${campaign.id}`]);
-    } else {
-      // todo do something special based on campaign sub-type (e.g quiz, ...)
-      this.router.navigate([`${campaign.type}/${campaign.id}`]);
+    if (campaign.type === CampaignType.game && campaign.subType === 'quiz') {
+      // currently only the quiz have proper data for landing page, once other campaign 
+      // type have proper data, move this block out
+      if (this.appConfig.showCampaignLandingPage) {
+        this.router.navigate([`campaign-welcome/${campaign.id}`]);
+        return;
+      }
+
+      this.router.navigate([`quiz/${campaign.id}`]);
+      return;
     }
+
+    this.router.navigate([`${campaign.type}/${campaign.id}`]);
   }
 
   public goToReward(reward: IReward): void {
