@@ -16,6 +16,7 @@ import { CategorySelectComponent } from './category-select/category-select.compo
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { CategorySortComponent } from './category-sort/category-sort.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { GhostCardComponent } from '../ghosts/card-ghost.component';
 
 describe('CategoryComponent', () => {
   let component: CategoryComponent;
@@ -47,6 +48,7 @@ describe('CategoryComponent', () => {
         RewardsSortPipe,
         CategorySelectComponent,
         CategorySortComponent,
+        GhostCardComponent
       ],
       imports: [
         RouterTestingModule,
@@ -55,7 +57,7 @@ describe('CategoryComponent', () => {
         MatBottomSheetModule,
         MatCardModule,
         BrowserAnimationsModule,
-        InfiniteScrollModule,
+        InfiniteScrollModule
       ],
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub },

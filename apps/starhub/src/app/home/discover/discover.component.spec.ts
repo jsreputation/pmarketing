@@ -37,6 +37,8 @@ import { CategoriesComponent } from '../categories/categories.component';
 import { RewardsCardsComponent } from '../rewards-cards/rewards-cards.component';
 import { CatalogsComponent } from '../catalogs/catalogs.component';
 import { CampaignsComponent } from '../campaigns/campaigns.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { GhostCardComponent } from '../../ghosts/card-ghost.component';
 
 describe('DiscoverComponent', () => {
   let component: DiscoverComponent;
@@ -81,7 +83,8 @@ describe('DiscoverComponent', () => {
         CategoriesComponent,
         RewardsCardsComponent,
         CatalogsComponent,
-        CampaignsComponent
+        CampaignsComponent,
+        GhostCardComponent
       ],
       imports: [
         MatCardModule,
@@ -92,7 +95,8 @@ describe('DiscoverComponent', () => {
         ScrollingModule,
         GameModule,
         InfiniteScrollModule,
-        MatRippleModule
+        MatRippleModule,
+        NoopAnimationsModule
       ],
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub },

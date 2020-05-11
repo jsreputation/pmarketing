@@ -17,6 +17,8 @@ import { Type } from '@angular/core';
 import { game } from '../../game.mock';
 import { IMacaron, MacaronService } from '../../services/macaron.service';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { GhostCardComponent } from '../../ghosts/card-ghost.component';
 
 describe('CampaignsComponent', () => {
   let component: CampaignsComponent;
@@ -44,12 +46,13 @@ describe('CampaignsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CampaignsComponent],
+      declarations: [CampaignsComponent, GhostCardComponent],
       imports: [
         MatCardModule,
         MatIconModule,
         MatRippleModule,
-        InfiniteScrollModule
+        InfiniteScrollModule,
+        NoopAnimationsModule
       ],
       providers: [
         { provide: ICampaignService, useValue: campaignServiceStub },
