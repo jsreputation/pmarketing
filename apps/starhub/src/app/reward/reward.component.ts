@@ -18,7 +18,8 @@ import {
 import {
   filter,
   map,
-  switchMap
+  switchMap,
+  debounceTime
 } from 'rxjs/operators';
 import {
   AnalyticsService,
@@ -95,6 +96,9 @@ export class RewardComponent implements OnInit {
 
   public save(): void {
     this.vouchersService.issueReward(this.reward.id)
+      .pipe(
+        debounceTime(500)
+      )
       .subscribe(
         () => this.router.navigate(['/home/vouchers']),
         () => this.notificationService.addSnack('Sorry! Could not save reward.')
