@@ -24,16 +24,14 @@ mat-toolbar {
 
 ::ng-deep {
   .transaction-point {
-    color: #ddac27!important;
+    color: #ddac27 !important;
   }
-}
 
-::ng-deep {
   .mat-tab-group {
     height: 100%;
   }
-}
 
-::ng-deep .mat-tab-label-active {
-  color: #0f69af;
+  .mat-tab-label-active {
+    color: #0f69af;
+  }
 }
