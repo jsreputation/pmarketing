@@ -155,9 +155,6 @@ const comps: any[] = [
     BCPQuizModule,
     QuizResultsModule,
     CampaignLandingPageModule,
-    BCPQuizModule,
-    QuizResultsModule,
-    CampaignLandingPageModule,
   ],
   exports: [
     ...comps,
