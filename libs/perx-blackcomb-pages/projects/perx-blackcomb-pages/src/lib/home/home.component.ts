@@ -111,9 +111,9 @@ export class HomeComponent implements OnInit, OnDestroy {
             return EMPTY;
           })
       ).subscribe();
-    this.translate.get(['YOU_HAVE', 'HELLO', 'POINTS_EXPITING']).subscribe(
-      (msg: any) => this.titleFn = (profile) => {
-        let returnString = msg.HELLO;
+    this.translate.get('HOME.HELLO').subscribe(
+      (msg: string) => this.titleFn = (profile) => {
+        let returnString = msg;
         if (profile &&
           profile.firstName && profile.firstName !== '' &&
           profile.lastName && profile.lastName !== '') {
