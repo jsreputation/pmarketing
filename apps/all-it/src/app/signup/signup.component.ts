@@ -1,25 +1,60 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthenticationService, NotificationService, ISignUpData, IProfile } from '@perxtech/core';
+import {
+  ActivatedRoute,
+  Router
+} from '@angular/router';
+import {
+  AuthenticationService,
+  NotificationService,
+  ISignUpData,
+  IProfile,
+  ICountryCode,
+  GeneralStaticDataService
+} from '@perxtech/core';
+import {
+  map,
+  switchMap,
+  takeUntil
+} from 'rxjs/operators';
+import {
+  Observable,
+  Subject
+} from 'rxjs';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss']
 })
-export class SignupComponent {
+export class SignupComponent implements OnInit{
 
   public signupForm: FormGroup;
   public errorMessage: string | null;
   public appAccessTokenFetched: boolean = false;
 
+  public countriesList$: Observable<ICountryCode[]>;
+  private destroy$: Subject<void> = new Subject();
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
+    private route: ActivatedRoute,
     private authService: AuthenticationService,
-    private notificationService: NotificationService
-  ) {
+    private notificationService: NotificationService,
+    public generalStaticDataService: GeneralStaticDataService
+  ) {}
+
+  public ngOnInit(): void {
+    this.countriesList$ = this.route.data.pipe(
+      map((dataObj) => dataObj.countryList),
+      switchMap((countriesList) => this.generalStaticDataService.getCountriesList(countriesList)),
+      takeUntil(this.destroy$)
+    );
+
     this.initForm();
     this.getAppToken();
   }
