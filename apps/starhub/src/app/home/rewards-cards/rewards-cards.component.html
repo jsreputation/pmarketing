@@ -1,6 +1,6 @@
 <div *ngIf="(rewardsSnapping$ | async) as rewardsSnapping" class="main-container">
-  <h1 *ngIf="rewardsSnapping.length > 0">Snapping Saturday</h1>
-  <div *ngIf="rewardsSnapping.length > 0" class="cards">
+  <h1 *ngIf="rewardsSnapping.length">Snapping Saturday</h1>
+  <div [@fadeIn]="rewardsSnapping.length" *ngIf="rewardsSnapping.length > 0" class="cards">
     <mat-card
       class="ga_reward"
       *ngFor="let rewardSnapping of rewardsSnapping"
@@ -23,10 +23,11 @@
       <mat-card-footer></mat-card-footer>
     </mat-card>
   </div>
+  <ghost-cards class="cards" [@fadeOut]="!ghostRewardsSnapping.length" [ghosts]="ghostRewardsSnapping"></ghost-cards>
 </div>
 <div *ngIf="(rewardsFeatured$ | async) as rewardsFeatured" class="main-container">
-  <h1 *ngIf="rewardsFeatured.length > 0">More to enjoy</h1>
-  <div *ngIf="rewardsFeatured.length > 0" class="cards">
+  <h1 *ngIf="rewardsFeatured.length">More to enjoy</h1>
+  <div [@fadeIn]="rewardsFeatured.length" *ngIf="rewardsFeatured.length > 0" class="cards">
     <mat-card
       *ngFor="let rewardFeatured of rewardsFeatured"
       matRipple (click)="selected(rewardFeatured)">
@@ -48,4 +49,5 @@
       <mat-card-footer></mat-card-footer>
     </mat-card>
   </div>
+  <ghost-cards class="cards" [@fadeOut]=!ghostRewardsFeatured.length" [ghosts]="ghostRewardsFeatured"></ghost-cards>
 </div>

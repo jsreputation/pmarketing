@@ -1,5 +1,5 @@
 <div *ngIf="(campaigns$ | async) as campaigns " class="main-container">
-  <h1>Play and win</h1>
+  <h1 *ngIf="campaigns.length > 0">Play and win</h1>
   <div
    infiniteScroll
    [infiniteScrollDistance]="2"
