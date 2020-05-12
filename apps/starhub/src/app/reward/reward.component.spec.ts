@@ -14,7 +14,8 @@ import {
   IVoucherService,
   NotificationService,
   RewardsService,
-  VoucherState
+  VoucherState,
+  UtilsModule
 } from '@perxtech/core';
 import { LocationShortFormatComponent } from '../location-short-format/location-short-format.component';
 import { RewardDetailComponent } from './reward-detail/reward-detail.component';
@@ -95,6 +96,7 @@ describe('RewardComponent', () => {
       declarations: [ RewardComponent, LocationShortFormatComponent, RewardDetailComponent, ExpireTimerComponent ],
       imports: [
         MatIconModule,
+        UtilsModule,
         RouterTestingModule
       ],
       providers: [

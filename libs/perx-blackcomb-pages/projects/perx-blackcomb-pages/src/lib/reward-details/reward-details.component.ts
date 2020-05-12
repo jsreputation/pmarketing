@@ -11,7 +11,7 @@ import {
   IConfig
 } from '@perxtech/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import {debounceTime, filter, map, switchMap, takeUntil, tap} from 'rxjs/operators';
+import { filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -30,6 +30,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   public appConfig: IConfig<void>;
   public rewardData: IReward;
   public loyalty: ILoyalty;
+  public waitForSubmission: boolean = false;
   public maxRewardCost?: number;
   private initTranslate(): void {
     this.translate.get('REWARD.GET_VOUCHER').subscribe((text) => this.buttonLabel = text);
@@ -78,15 +79,14 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   }
 
   public buyReward(): void {
+    this.waitForSubmission = true;
     if (this.appConfig && this.appConfig.showVoucherBookingFromRewardsPage) {
       this.router.navigateByUrl(`booking/${this.rewardData.id}`);
     } else {
       this.vouchersService.issueReward(this.rewardData.id, undefined, undefined, this.loyalty.cardId)
-        .pipe(
-          debounceTime(500)
-        )
         .subscribe(
-          (res: Voucher) => this.router.navigate([`/voucher-detail/${res.id}`])
+          (res: Voucher) => this.router.navigate([`/voucher-detail/${res.id}`]),
+          (_) => this.waitForSubmission = false // allow user to retry again, re-enable button
         );
     }
   }
