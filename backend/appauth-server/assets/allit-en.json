@@ -116,6 +116,7 @@
     "LOG_IN": "Log in"
   },
   "HOME": {
+    "HELLO": "Welcome",
     "GAMES": "Games",
     "MY_BAR_CODE": "My Barcode",
     "MY_QR": "My QR",
