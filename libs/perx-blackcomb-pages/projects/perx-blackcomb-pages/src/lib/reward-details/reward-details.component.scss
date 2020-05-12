@@ -11,7 +11,7 @@
     background-color: var(--background);
   }
 
-  .action-container {
+  .actions-container {
     width: 100%;
     box-sizing: border-box;
     padding: 1.2rem 1.5rem;
@@ -20,6 +20,11 @@
 
     button {
       width: 100%;
+
+      .loading-spin {
+        display: inline-block;
+        margin: auto;
+      }
     }
 
     button:disabled {

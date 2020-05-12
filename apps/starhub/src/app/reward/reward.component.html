@@ -4,6 +4,16 @@
     [macaron]="macaron"
   ></app-reward-detail>
   <div *ngIf="isRewardsDetailsFetched" class="button-area">
-    <button [disabled]="!isButtonEnable" class="full-width" mat-flat-button color="primary" (click)="save()">Save to My Rewards</button>
+    <button [disabled]="!isButtonEnable" class="full-width" mat-flat-button color="primary"
+            perxCoreAppDebounceClick
+            [debounceTime]="400"
+            (debounceClick)="save()"
+    ><i *ngIf="loadingSubmit" class="loading-spin">
+      <mat-progress-spinner
+        [diameter]="30"
+        mode="indeterminate">
+      </mat-progress-spinner>
+    </i>
+      <span *ngIf="!loadingSubmit">Save to My Rewards</span></button>
   </div>
 </div>
