@@ -30,7 +30,7 @@ import {
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss']
 })
-export class SignupComponent implements OnInit{
+export class SignupComponent implements OnInit {
 
   public signupForm: FormGroup;
   public errorMessage: string | null;
