@@ -80,7 +80,7 @@ export class QuizComponent implements OnInit, OnDestroy {
       filter((params: ParamMap) => params.has('cid')),
       map((params: ParamMap) => params.get('cid')),
       map((cid: string) => Number.parseInt(cid, 10)),
-      switchMap((cidN: number) => this.quizService.getQuizFromCampaign(cidN, lang)), // todo pass the lang attribute
+      switchMap((cidN: number) => this.quizService.getQuizFromCampaign(cidN, lang)),
       catchError((err: Error) => {
         console.log(err.name, err.message);
         this.notificationService.addPopup(this.notAvailablePopUp);

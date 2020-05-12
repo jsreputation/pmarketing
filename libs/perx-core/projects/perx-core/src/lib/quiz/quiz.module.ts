@@ -88,9 +88,9 @@ export class MyHammerConfig extends HammerGestureConfig {
     {
       provide: HAMMER_GESTURE_CONFIG,
       useClass: MyHammerConfig,
-    }
-  ],
-
+    },
+    SecondsToStringPipe
+  ]
 })
 export class QuizModule {
 }
