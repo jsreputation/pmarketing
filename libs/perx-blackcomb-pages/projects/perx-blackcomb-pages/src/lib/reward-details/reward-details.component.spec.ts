@@ -10,7 +10,8 @@ import {
   LoyaltyService,
   ILoyalty,
   ThemesService,
-  IReward
+  IReward,
+  UtilsModule
 } from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
@@ -74,6 +75,7 @@ describe('RewardComponent', () => {
         MatButtonModule,
         NoopAnimationsModule,
         RouterTestingModule,
+        UtilsModule,
         TranslateModule.forRoot(),
       ],
       providers: [

@@ -18,8 +18,7 @@ import {
 import {
   filter,
   map,
-  switchMap,
-  debounceTime
+  switchMap
 } from 'rxjs/operators';
 import {
   AnalyticsService,
@@ -95,13 +94,14 @@ export class RewardComponent implements OnInit {
   }
 
   public save(): void {
+    this.isButtonEnable = false;
     this.vouchersService.issueReward(this.reward.id)
-      .pipe(
-        debounceTime(500)
-      )
       .subscribe(
         () => this.router.navigate(['/home/vouchers']),
-        () => this.notificationService.addSnack('Sorry! Could not save reward.')
+        () => {
+          this.isButtonEnable = true; // change button back to enable which it originally is, before save is triggered
+          this.notificationService.addSnack('Sorry! Could not save reward.');
+        }
       );
   }
 }
