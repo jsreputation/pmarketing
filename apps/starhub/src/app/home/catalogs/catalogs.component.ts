@@ -61,7 +61,8 @@ export class CatalogsComponent implements OnInit {
         if (catalogs.length < REQ_PAGE_SIZE) {
           this.catalogsEnded = true;
         }
-      });
+      },
+      () => this.ghostCatalogs = []);
   }
 
   private initCatalogsScan(): void {

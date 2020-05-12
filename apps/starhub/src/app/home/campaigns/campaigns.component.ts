@@ -85,7 +85,8 @@ export class CampaignsComponent implements OnInit {
         });
         this.campaignsSubj.next(filteredAndMacoronedCampaigns);
         this.ghostCampaigns = [];
-      });
+      },
+      () => this.ghostCampaigns = []);
   }
 
   private initCampaignsScan(): void {

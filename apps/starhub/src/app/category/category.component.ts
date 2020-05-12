@@ -90,7 +90,9 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
         if (rewards.length < REQ_PAGE_SIZE) {
           this.rewardsEnded = true;
           this.ghostRewards = [];
-        }
+        }},
+      (_) => {
+        this.ghostRewards = [];
       });
   }
 
