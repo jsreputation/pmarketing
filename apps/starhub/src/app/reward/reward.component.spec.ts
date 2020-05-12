@@ -7,7 +7,7 @@ import {
 } from '@angular/core/testing';
 
 import { RewardComponent } from './reward.component';
-import { MatIconModule } from '@angular/material';
+import {MatIconModule, MatProgressSpinnerModule} from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
   ConfigService,
@@ -97,6 +97,7 @@ describe('RewardComponent', () => {
       imports: [
         MatIconModule,
         UtilsModule,
+        MatProgressSpinnerModule,
         RouterTestingModule
       ],
       providers: [

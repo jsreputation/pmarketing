@@ -16,7 +16,7 @@ import {
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable, of } from 'rxjs';
-import { MatDialogModule, MatButtonModule } from '@angular/material';
+import {MatDialogModule, MatButtonModule, MatProgressSpinnerModule} from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
 
@@ -76,6 +76,7 @@ describe('RewardComponent', () => {
         NoopAnimationsModule,
         RouterTestingModule,
         UtilsModule,
+        MatProgressSpinnerModule,
         TranslateModule.forRoot(),
       ],
       providers: [

@@ -31,6 +31,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   public rewardData: IReward;
   public loyalty: ILoyalty;
   public waitForSubmission: boolean = false;
+
   public maxRewardCost?: number;
   private initTranslate(): void {
     this.translate.get('REWARD.GET_VOUCHER').subscribe((text) => this.buttonLabel = text);
