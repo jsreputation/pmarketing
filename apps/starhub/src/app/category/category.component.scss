@@ -35,6 +35,16 @@ mat-toolbar {
     height: 100%;
   }
 
+  ghost-cards {
+    ::ng-deep {
+      mat-card {
+        max-width: none;
+        margin: 0 auto;
+        margin-bottom: 3rem;
+      }
+    }
+  }
+
   h1.catergory-title {
     color: #666666;
     font-size: 3rem;

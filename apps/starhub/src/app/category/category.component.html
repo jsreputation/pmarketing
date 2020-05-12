@@ -19,10 +19,8 @@
   [scrollWindow]="false"
 >
   <h1 class="catergory-title">{{selectedCategory}}</h1>
-  <div
-    *ngIf="rewards.length > 0"
-    class="scroll-content">
-    <mat-card *ngFor="let reward of rewards" (click)="selected(reward)" matRipple>
+  <div class="scroll-content">
+    <mat-card [@fadeIn]="rewards.length > 0" *ngFor="let reward of rewards" (click)="selected(reward)" matRipple>
       <div class="featured-image">
         <img mat-card-image [src]="reward.rewardBanner">
           <div *ngIf="reward.merchantImg" class="badge">
@@ -43,5 +41,6 @@
       </mat-card-content>
       <mat-card-footer></mat-card-footer>
     </mat-card>
+    <ghost-cards [@fadeOut]="!ghostRewards.length" [ghosts]="ghostRewards"></ghost-cards>
   </div>
 </div>

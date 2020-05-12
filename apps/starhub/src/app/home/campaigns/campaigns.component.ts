@@ -3,6 +3,8 @@ import { ICampaign, CampaignType, ICampaignService, IGameService, IGame, ConfigS
 import { catchError, map, scan, switchMap, tap } from 'rxjs/operators';
 import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
 import { IMacaron, MacaronService } from '../../services/macaron.service';
+import {trigger} from '@angular/animations';
+import {fadeIn, fadeOut} from '../../utils/fade-animations';
 
 const REQ_PAGE_SIZE: number = 10;
 
@@ -11,12 +13,17 @@ interface ICampaignWithMacaron extends ICampaign {
 }
 @Component({
   selector: 'app-campaigns',
+  animations: [
+    trigger('fadeOut', fadeOut()),
+    trigger('fadeIn', fadeIn())
+  ],
   templateUrl: './campaigns.component.html',
   styleUrls: ['./campaigns.component.scss']
 })
 
 export class CampaignsComponent implements OnInit {
   public campaigns$: Observable<ICampaignWithMacaron[]>;
+  public ghostCampaigns: any[] = new Array(3);
   public campaignsSubj: BehaviorSubject<ICampaignWithMacaron[]> = new BehaviorSubject<ICampaignWithMacaron[]>([]);
   public games: IGame[];
   public campaignsPageId: number = 1;
@@ -58,7 +65,7 @@ export class CampaignsComponent implements OnInit {
             return combineLatest(...campaigns.map(campaign => {
               return this.gameService.getGamesFromCampaign(campaign.id).pipe(
                 catchError(() => of([]))
-              )
+              );
             }));
           }
         ),
@@ -77,7 +84,9 @@ export class CampaignsComponent implements OnInit {
           return campaign;
         });
         this.campaignsSubj.next(filteredAndMacoronedCampaigns);
-      });
+        this.ghostCampaigns = [];
+      },
+      () => this.ghostCampaigns = []);
   }
 
   private initCampaignsScan(): void {

@@ -35,6 +35,7 @@ import { RewardsCardsComponent } from './rewards-cards/rewards-cards.component';
 import { CatalogsComponent } from './catalogs/catalogs.component';
 import { CampaignsComponent } from './campaigns/campaigns.component';
 import { NoRenewaleInNamePipe } from './no-renewale-in-name.pipe';
+import { GhostsModule } from '../ghosts/ghosts.module';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { NoRenewaleInNamePipe } from './no-renewale-in-name.pipe';
     CampaignModule,
     CampaignServiceModule.forChild(),
     PerxGameServiceModule.forChild(),
-    OutcomeModule
+    OutcomeModule,
+    GhostsModule
   ],
   bootstrap: [],
   providers: [
