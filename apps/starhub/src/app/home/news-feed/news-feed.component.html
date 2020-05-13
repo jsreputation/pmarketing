@@ -4,8 +4,8 @@
     <div *cdkVirtualFor="let item of items"
          class="hero-card">
       <img class="hero-img" [src]="item.image" *ngIf="item.image">
-      <div class="gradient-cta-block">
-        <p color="primary" (click)="readMore(item)" class="description">
+      <div (click)="readMore(item)" class="gradient-cta-block">
+        <p color="primary" class="description">
           {{ getFirstLine((item.description)).length > 120 ? getFirstLine((item.description | slice:0:120)) + '...' : getFirstLine((item.description)) }}
         </p>
       </div>

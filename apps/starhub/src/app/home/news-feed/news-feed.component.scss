@@ -1,10 +1,5 @@
-// default font-size is 10 instead from styles.scss font-size 62.5%;
-@function rem($px, $base: 10) {
-  @return $px / $base;
-}
-
-$hero-height: #{rem(225)}rem;
-$gradient-text-height: #{rem(45)}rem;
+$hero-height: 22.5rem;
+$gradient-text-height: 4.5rem;
 
 .cdk-virtual-scroll-data-source {
   margin-bottom: 1rem;
@@ -28,12 +23,12 @@ $gradient-text-height: #{rem(45)}rem;
         position: absolute;
         width: 100%;
         top: calc(#{$hero-height} - #{$gradient-text-height});
-        background: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0.65) 0%, rgba(0,0,0,0) 100%);
+        background: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
         background: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
         background: linear-gradient(to top, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
 
         .description {
-          padding-inline-start: #{rem(16)}rem;
+          padding-inline-start: 1.6rem;
           font-size: 1.6rem;
           font-weight: bold;
           color: #FFFFFF;
