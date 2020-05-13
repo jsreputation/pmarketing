@@ -15,6 +15,8 @@ import { ConfigService, RewardsService } from '@perxtech/core';
 
 import { catalogs } from '../../catalogs.mock';
 import { CatalogsComponent } from './catalogs.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { GhostCardComponent } from '../../ghosts/card-ghost.component';
 
 describe('CatalogsComponent', () => {
   let component: CatalogsComponent;
@@ -34,11 +36,12 @@ describe('CatalogsComponent', () => {
   };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CatalogsComponent],
+      declarations: [CatalogsComponent, GhostCardComponent],
       imports: [
         MatIconModule,
         MatCardModule,
         InfiniteScrollModule,
+        NoopAnimationsModule
       ],
       providers: [
         { provide: ConfigService, useValue: configServiceStub },

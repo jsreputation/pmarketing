@@ -1,8 +1,6 @@
 <div *ngIf="(catalogs$ | async) as catalogs" class="main-container">
-  <h1 *ngIf="catalogs.length > 0">More to explore</h1>
+  <h1>More to explore</h1>
   <div
-    *ngIf="catalogs.length > 0"
-    class="cards"
     infiniteScroll
     [infiniteScrollDistance]="2"
     [infiniteScrollThrottle]="500"
@@ -10,19 +8,24 @@
     [scrollWindow]="false"
     [horizontal]="true"
   >
-    <mat-card class="ga_catalog" *ngFor="let catalog of catalogs" (click)="selected(catalog)" matRipple>
-      <img mat-card-image [src]="catalog.catalogBanner">
-      <mat-card-content>
-        <div>
-          <h1>{{catalog.name}}</h1>
-          <h2>{{catalog.description}}</h2>
-          <!-- <h3>{{catalog.rewardCount}} Rewards</h3> -->
-        </div>
-        <div class="icon">
-          <img src="assets/forward-arrow.svg" alt="">
-        </div>
-      </mat-card-content>
-      <mat-card-footer></mat-card-footer>
-    </mat-card>
+    <div class="cards" [@fadeIn]="catalogs.length" *ngIf="catalogs.length > 0" >
+      <mat-card class="ga_catalog" *ngFor="let catalog of catalogs" (click)="selected(catalog)" matRipple>
+        <img mat-card-image [src]="catalog.catalogBanner">
+        <mat-card-content>
+          <div>
+            <h1>{{catalog.name}}</h1>
+            <h2>{{catalog.description}}</h2>
+            <!-- <h3>{{catalog.rewardCount}} Rewards</h3> -->
+          </div>
+          <div class="icon">
+            <img src="assets/forward-arrow.svg" alt="">
+          </div>
+        </mat-card-content>
+        <mat-card-footer></mat-card-footer>
+      </mat-card>
+    </div>
+
+    <ghost-cards class="cards" [@fadeOut]="!ghostCatalogs.length" [ghosts]="ghostCatalogs"></ghost-cards>
+
   </div>
 </div>

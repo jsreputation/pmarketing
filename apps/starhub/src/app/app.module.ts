@@ -20,7 +20,8 @@ import {
   MatIconModule,
   MatRippleModule,
   MatSnackBarModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 
 import { QRCodeModule } from 'angularx-qrcode';
@@ -86,6 +87,7 @@ import {
   ShakeComponent,
   TapComponent
 } from '@perxtech/blackcomb-pages';
+import {GhostsModule} from './ghosts/ghosts.module';
 
 Sentry.init({
   dsn: 'https://b7939e78d33d483685b1c82e9c076384@sentry.io/1873560'
@@ -148,7 +150,7 @@ export const appInit =
     ErrorComponent,
     ShakeComponent,
     TapComponent,
-    ScratchComponent,
+    ScratchComponent
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
@@ -184,6 +186,8 @@ export const appInit =
     NgxBarcodeModule,
     InfiniteScrollModule,
     LoyaltyModule,
+    GhostsModule,
+    MatProgressSpinnerModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
