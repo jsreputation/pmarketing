@@ -184,6 +184,7 @@
     "CLIPBOARD_ERROR_TXT": "Could not access your clipboard"
   },
   "HOME": {
+    "HELLO": "Welcome",
     "MY_QR": "My QR",
     "MY_BAR_CODE": "My Barcode",
     "STAMP_CAMPAIGNS": "Stamp Card Campaigns",

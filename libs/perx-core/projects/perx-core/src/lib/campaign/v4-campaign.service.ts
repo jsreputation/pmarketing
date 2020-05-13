@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import {EMPTY, Observable, of} from 'rxjs';
-import {catchError, map, shareReplay} from 'rxjs/operators';
+import { EMPTY, Observable, of } from 'rxjs';
+import { catchError, map, shareReplay } from 'rxjs/operators';
 import {
   ICampaign,
   CampaignType,
@@ -33,7 +33,7 @@ type DisplayProperties = TreeDisplayProperties |
 /* eslint-enable @typescript-eslint/indent */
 
 type CampaignConfig = {
-  campaign_results: {count: number, first_result_id: number};
+  campaign_results: { count: number, first_result_id: number };
   referral_type: string;
   referral_codes: string[];
   referees_attained: number;
@@ -48,6 +48,7 @@ interface IV4Campaign {
   ends_at?: string;
   enrolled: boolean;
   campaign_type: CampaignType;
+  game_type?: string;
   images: IV4Image[];
   favourite: boolean;
   custom_fields: any;
@@ -147,6 +148,7 @@ export class V4CampaignService implements ICampaignService {
       name: campaign.name,
       description: campaign.description,
       type: campaign.campaign_type,
+      subType: oc(campaign).game_type(),
       state: campaign.state,
       endsAt: campaign.ends_at ? new Date(campaign.ends_at) : null,
       beginsAt: campaign.begins_at ? new Date(campaign.begins_at) : null,
@@ -210,10 +212,11 @@ export class V4CampaignService implements ICampaignService {
 
   public getVoucherLeftCount(campaignId: number): Observable<{ count: number; campaignId: number }> {
     return this.http.get(`${this.baseUrl}/v4/campaigns/${campaignId}/voucher_count`).pipe(
-      map((res: {data: CountObject}) => res.data),
-      map((countObj: CountObject) => ({...countObj, campaignId}))
+      map((res: { data: CountObject }) => res.data),
+      map((countObj: CountObject) => ({ ...countObj, campaignId }))
     );
   }
+
   // api 404 and WIP response. type any for the moment
   public applyReferral(referralCode: string): Observable<IReferral> {
     const referralBody = {

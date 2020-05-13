@@ -111,10 +111,21 @@ export class HomeComponent implements OnInit, OnDestroy {
             return EMPTY;
           })
       ).subscribe();
-    this.translate.get(['YOU_HAVE', 'HELLO', 'POINTS_EXPITING'])
-      .subscribe((res: any) => {
-        this.titleFn = (profile: IProfile) => `${res.HELLO} ${profile && profile.lastName ? profile.lastName : ''},`;
-      });
+    this.translate.get('HOME.HELLO').subscribe(
+      (msg: string) => this.titleFn = (profile) => {
+        let returnString = msg;
+        if (profile &&
+          profile.firstName && profile.firstName !== '' &&
+          profile.lastName && profile.lastName !== '') {
+          returnString = `${returnString}, ${profile.firstName} ${profile.lastName}`;
+        } else if (profile && profile.firstName && profile.firstName !== '') {
+          returnString = `${returnString}, ${profile.firstName}`;
+        } else if (profile && profile.lastName && profile.lastName !== '') {
+          returnString = `${returnString}, ${profile.lastName}`;
+        }
+        return returnString;
+      }
+    );
     this.rewards$ = this.rewardsService.getAllRewards(['featured']);
     this.getTabbedList();
 
@@ -169,12 +180,19 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   public goToCampaignPage(campaign: ICampaign): void {
-    if (this.appConfig.showCampaignLandingPage) {
-      this.router.navigate([`campaign-welcome/${campaign.id}`]);
-    } else {
-      // todo do something special based on campaign sub-type (e.g quiz, ...)
-      this.router.navigate([`${campaign.type}/${campaign.id}`]);
+    if (campaign.type === CampaignType.game && campaign.subType === 'quiz') {
+      // currently only the quiz have proper data for landing page, once other campaign
+      // type have proper data, move this block out
+      if (this.appConfig.showCampaignLandingPage) {
+        this.router.navigate([`campaign-welcome/${campaign.id}`]);
+        return;
+      }
+
+      this.router.navigate([`quiz/${campaign.id}`]);
+      return;
     }
+
+    this.router.navigate([`${campaign.type}/${campaign.id}`]);
   }
 
   public goToReward(reward: IReward): void {

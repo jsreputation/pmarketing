@@ -39,6 +39,7 @@ export interface ICampaign {
   description: string | null;
   tnc?: string;
   type: CampaignType;
+  subType?: string;
   state: CampaignState;
   endsAt: Date | null;
   beginsAt?: Date | null;

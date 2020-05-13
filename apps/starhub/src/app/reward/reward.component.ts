@@ -37,6 +37,7 @@ import {
 export class RewardComponent implements OnInit {
   public reward: IReward;
   public isButtonEnable: boolean = true;
+  public loadingSubmit: boolean = false;
   public isRewardsDetailsFetched: boolean = false;
   public macaron: IMacaron | null;
   constructor(
@@ -94,10 +95,16 @@ export class RewardComponent implements OnInit {
   }
 
   public save(): void {
+    this.isButtonEnable = false;
+    this.loadingSubmit = true;
     this.vouchersService.issueReward(this.reward.id)
       .subscribe(
         () => this.router.navigate(['/home/vouchers']),
-        () => this.notificationService.addSnack('Sorry! Could not save reward.')
+        () => {
+          this.isButtonEnable = true; // change button back to enable which it originally is, before save is triggered
+          this.loadingSubmit = false;
+          this.notificationService.addSnack('Sorry! Could not save reward.');
+        }
       );
   }
 }

@@ -5,7 +5,7 @@ import {
   ViewChild,
   ElementRef,
   AfterViewInit,
-  Renderer2,
+  Renderer2
 } from '@angular/core';
 
 import {
@@ -47,13 +47,19 @@ import {
   AnalyticsService,
   PageType,
 } from '../analytics.service';
+import {trigger} from '@angular/animations';
+import {fadeIn, fadeOut} from '../utils/fade-animations';
 
 const REQ_PAGE_SIZE: number = 10;
 
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
-  styleUrls: ['./category.component.scss']
+  styleUrls: ['./category.component.scss'],
+  animations: [
+    trigger('fadeOut', fadeOut()),
+    trigger('fadeIn', fadeIn())
+  ]
 })
 export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallBack, SortBottomSheetClosedCallBack, AfterViewInit {
   @ViewChild('contentScroll', { static: false })
@@ -63,6 +69,7 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
   public rewardsEnded: boolean = false;
   public rewardsPageId: number = 1;
   private rewards: BehaviorSubject<IReward[]> = new BehaviorSubject<IReward[]>([]);
+  public ghostRewards: any[] = new Array(3); // 3 is also enough for above the fold height
 
   public selectedCategory: string;
   public selectedSortingCraeteria: SortingMode = SortingMode.ending_soon;
@@ -82,7 +89,10 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
         this.rewardsLoaded = true;
         if (rewards.length < REQ_PAGE_SIZE) {
           this.rewardsEnded = true;
-        }
+          this.ghostRewards = [];
+        }},
+      (_) => {
+        this.ghostRewards = [];
       });
   }
 
