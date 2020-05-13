@@ -13,6 +13,7 @@ import {
   IRssFeeds,
   IRssFeedsData,
   RssFeedsPages,
+  ConfigService,
 } from '@perxtech/core';
 
 import {
@@ -35,7 +36,8 @@ export class NewsFeedComponent implements OnInit {
   public showButton: boolean = true;
 
   private initNewsFeedItems(): void {
-    this.settingsService.getRssFeeds().pipe(
+    this.configService.readAppConfig().pipe(
+      switchMap(() => this.settingsService.getRssFeeds()),
       map((res: IRssFeeds) => res.data ? res.data.find(feed => feed.page === RssFeedsPages.HOME) : undefined),
       switchMap((feedData: IRssFeedsData | undefined) => {
         if (!feedData || !feedData.url) {
@@ -54,6 +56,7 @@ export class NewsFeedComponent implements OnInit {
     private dialog: MatDialog,
     private analytics: AnalyticsService,
     private settingsService: SettingsService,
+    private configService: ConfigService
   ) { }
 
   public ngOnInit(): void {
