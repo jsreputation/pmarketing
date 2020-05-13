@@ -1,3 +1,48 @@
+// default font-size is 10 instead from styles.scss font-size 62.5%;
+@function rem($px, $base: 10) {
+  @return $px / $base;
+}
+
+$hero-height: #{rem(225)}rem;
+$gradient-text-height: #{rem(45)}rem;
+
+.cdk-virtual-scroll-data-source {
+  margin-bottom: 1rem;
+  height: $hero-height;
+  width: 100%;
+
+  cdk-virtual-scroll-viewport {
+    height: 100%;
+
+    .hero-card {
+      position: relative;
+      width: 100%;
+
+      .hero-img {
+        height: $hero-height;
+        width: 100%;
+        object-fit: cover;
+      }
+
+      .gradient-cta-block {
+        position: absolute;
+        width: 100%;
+        top: calc(#{$hero-height} - #{$gradient-text-height});
+        background: -moz-linear-gradient(bottom, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 100%);
+        background: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
+
+        .description {
+          padding-inline-start: #{rem(16)}rem;
+          font-size: 1.6rem;
+          font-weight: bold;
+          color: #FFFFFF;
+        }
+      }
+    }
+  }
+}
+
 .dots {
   text-align: center;
   margin-bottom: 2rem;
@@ -22,45 +67,5 @@
         background-color: #6dc00e;
       }
     }
-  }
-}
-
-.description {
-  font-size: 1.6rem;
-}
-
-cdk-virtual-scroll-viewport {
-  height: 30rem;
-  margin-top: 3rem;
-}
-
-.cdk-virtual-scroll-data-source .mat-item {
-  height: 100%;
-}
-
-.card {
-  border: 2rem;
-}
-
-.mat-card {
-  margin: 0 1rem;
-
-  .mat-card-content {
-    padding: 1rem;
-    min-height: 5rem;
-    margin-bottom: 0;
-
-    p {
-      white-space: pre-line;
-    }
-  }
-
-  .mat-card-image {
-    height: 15rem;
-    object-fit: cover;
-  }
-
-  mat-card-actions {
-    padding-top: 0;
   }
 }
