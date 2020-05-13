@@ -80,6 +80,7 @@ export class ConditionComponent implements OnInit, PageAppearence {
     this.profileService.setCustomProperties(this.profile.customProperties).subscribe(
       () => this.notificationService.addSnack(this.conditionUpdateTxt),
       err => this.notificationService.addSnack(err.error.message)
+    );
   }
 
   public getPageProperties(): PageProperties {
