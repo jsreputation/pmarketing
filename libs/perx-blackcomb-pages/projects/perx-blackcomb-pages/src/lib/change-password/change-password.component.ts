@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
@@ -15,6 +15,7 @@ import {switchMap} from 'rxjs/operators';
 @Component({
   selector: 'perx-blackcomb-pages-change-password',
   templateUrl: './change-password.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./change-password.component.scss']
 })
 export class ChangePasswordComponent {

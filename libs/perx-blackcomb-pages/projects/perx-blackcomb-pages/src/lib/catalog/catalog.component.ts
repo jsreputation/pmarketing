@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import {
   ICatalog,
@@ -24,6 +24,7 @@ const REQ_PAGE_SIZE: number = 10;
 @Component({
   selector: 'perx-blackcomb-pages-catalog',
   templateUrl: './catalog.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./catalog.component.scss']
 })
 export class CatalogComponent implements OnInit {
