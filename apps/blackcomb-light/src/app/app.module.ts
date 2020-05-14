@@ -29,6 +29,7 @@ import {
   UtilsModule,
   AuthenticationModule,
   ProfileModule,
+  ProfileServiceModule,
   VouchersModule,
   RewardsModule
 } from '@perxtech/core';
@@ -99,6 +100,7 @@ export const setLanguage = (
     SettingsModule.forRoot({ ...environment }),
     PerxSvcGameModule.forRoot(),
     PerxSvcCampaignModule.forRoot(),
+    ProfileServiceModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
