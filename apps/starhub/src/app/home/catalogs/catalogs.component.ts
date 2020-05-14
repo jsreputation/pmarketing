@@ -9,7 +9,7 @@ import {
   BehaviorSubject,
   Observable,
 } from 'rxjs';
-import {scan} from 'rxjs/operators';
+import {finalize, scan} from 'rxjs/operators';
 
 import {
   ICatalog,
@@ -52,6 +52,7 @@ export class CatalogsComponent implements OnInit {
     this.rewardsService.getCatalogs(this.catalogsPageId, REQ_PAGE_SIZE)
       .subscribe((catalogs: ICatalog[]) => {
         if (!catalogs) {
+          this.ghostCatalogs = [];
           return;
         }
 
@@ -67,7 +68,8 @@ export class CatalogsComponent implements OnInit {
 
   private initCatalogsScan(): void {
     this.catalogs$ = this.catalogs.asObservable().pipe(
-      scan((acc, curr) => [...acc, ...curr ? curr : []], [])
+      scan((acc, curr) => [...acc, ...curr ? curr : []], []),
+      finalize(() => this.ghostCatalogs = [])
     );
   }
 
