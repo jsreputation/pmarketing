@@ -19,6 +19,7 @@ import {
   Observable,
 } from 'rxjs';
 import {
+  finalize,
   map,
   scan,
 } from 'rxjs/operators';
@@ -98,7 +99,8 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
 
   private initRewardsScan(): void {
     this.rewards$ = this.rewards.asObservable().pipe(
-      scan((acc, curr) => [...acc, ...curr ? curr : []], [])
+      scan((acc, curr) => [...acc, ...curr ? curr : []], []),
+      finalize(() => this.ghostRewards = [])
     );
   }
 
@@ -142,7 +144,8 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
             siteSectionLevel3: `rewards:discover:${catalog.name}`
           });
           return catalog.rewards || [];
-        })
+        }),
+        finalize(() => this.ghostRewards = [])
       );
     }
   }
