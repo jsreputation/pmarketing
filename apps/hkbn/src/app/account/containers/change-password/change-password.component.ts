@@ -27,9 +27,9 @@ export class ChangePasswordComponent implements OnInit {
   public ngOnInit(): void {
     this.dataTransferService.updateData$.subscribe((data: IChangePasswordData) => this.cache = data);
     this.profileService.whoAmI().pipe(take(1)).subscribe((prof) => this.profile = prof);
-    this.translate.get(['PASSWORD_SUCCESS_UPDATE', 'INCORRECT_PASSWORD']).subscribe((dictionary) => {
-      this.messageSuccess = dictionary.PASSWORD_SUCCESS_UPDATE;
-      this.messageError = dictionary.INCORRECT_PASSWORD;
+    this.translate.get(['CHANGE_PW_PAGE.PASSWORD_SUCCESS_UPDATE', 'CHANGE_PW_PAGE.INCORRECT_PASSWORD']).subscribe((dictionary) => {
+      this.messageSuccess = dictionary['CHANGE_PW_PAGE.PASSWORD_SUCCESS_UPDATE'];
+      this.messageError = dictionary['CHANGE_PW_PAGE.INCORRECT_PASSWORD'];
     });
   }
 

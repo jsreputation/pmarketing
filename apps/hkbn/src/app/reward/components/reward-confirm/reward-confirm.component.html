@@ -1,10 +1,10 @@
 <h2 mat-dialog-title class="reward-confirm-title">{{data.title}}</h2>
 <div mat-dialog-content class="reward-confirm-content">
-  <p>{{"YOU_CURRENTLY_HAVE" | translate}} {{(data.existingPoints)}} {{"POINTS" | translate}}</p>
-  <p>{{"USE_POINTS" | translate}} {{data.requiredPoints}} {{"POINTS" | translate}}</p>
-  <p>{{"PROCEED" | translate}}</p>
+  <p>{{"REWARD.YOU_CURRENTLY_HAVE" | translate}} {{(data.existingPoints)}} {{"REWARD.POINTS" | translate}}</p>
+  <p>{{"REWARD.USE_POINTS" | translate}} {{data.requiredPoints}} {{"REWARD.POINTS" | translate}}</p>
+  <p>{{"REWARD.PROCEED" | translate}}</p>
 </div>
 <div mat-dialog-actions class="reward-confirm-actions">
-  <button mat-raised-button color="primary" class="confirm-btn" (click)="confirm()" [disabled]="data.existingPoints < data.requiredPoints">{{"CONFIRM" | translate}}</button>
-  <button mat-button class="back-btn" (click)="back()">{{"CANCEL" | translate}}</button>
+  <button mat-raised-button color="primary" class="confirm-btn" (click)="confirm()" [disabled]="data.existingPoints < data.requiredPoints">{{"REWARD.CONFIRM" | translate}}</button>
+  <button mat-button class="back-btn" (click)="back()">{{"REWARD.CANCEL" | translate}}</button>
 </div>

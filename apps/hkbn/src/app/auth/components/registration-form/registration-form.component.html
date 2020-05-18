@@ -1,87 +1,87 @@
 <form #form='ngForm' [formGroup]="registrationForm" (submit)="submit()" class="registration-form">
   <mat-form-field appearance="fill">
-    <mat-label>{{"SURNAME" | translate}}</mat-label>
+    <mat-label>{{"SIGN_UP_PAGE.SURNAME" | translate}}</mat-label>
     <input type="text" matInput formControlName="lastName">
     <mat-error *hkbnErrorHandler="'required'">
-      {{"REQUIRED" | translate}}
+      {{"SIGN_UP_PAGE.REQUIRED" | translate}}
     </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
-    <mat-label>{{"FIRST_NAME" | translate}}</mat-label>
+    <mat-label>{{"SIGN_UP_PAGE.FIRST_NAME" | translate}}</mat-label>
     <input type="text" matInput formControlName="firstName">
     <mat-error *hkbnErrorHandler="'required'">
-      {{"REQUIRED" | translate}}
+      {{"SIGN_UP_PAGE.REQUIRED" | translate}}
     </mat-error>
   </mat-form-field>
   <div class="flex">
     <mat-form-field class="grow1" appearance="fill">
-      <mat-label>{{"MOBILE_CODE" | translate}}</mat-label>
+      <mat-label>{{"SIGN_UP_PAGE.MOBILE_CODE" | translate}}</mat-label>
       <mat-select  formControlName="code">
         <mat-option *ngFor="let code of countryCodes" [value]="code.phone">{{code.phone}}</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field appearance="fill" class="grow4">
-      <mat-label>{{"MOBILE_NUMBER" | translate}}</mat-label>
+      <mat-label>{{"SIGN_UP_PAGE.MOBILE_NUMBER" | translate}}</mat-label>
       <div></div>
       <input type="tel" matInput formControlName="phone">
       <mat-error *hkbnErrorHandler="'required'">
-        {{"REQUIRED" | translate}}
+        {{"SIGN_UP_PAGE.REQUIRED" | translate}}
       </mat-error>
       <mat-error *hkbnErrorHandler="['minlength', 'maxlength', 'pattern']">
-        {{"PLEASE_ENTER_VALID_NUMBER" | translate}}
+        {{"SIGN_UP_PAGE.PLEASE_ENTER_VALID_NUMBER" | translate}}
       </mat-error>
     </mat-form-field>
   </div>
 
 
   <mat-form-field appearance="fill">
-    <mat-label>{{"EMAIL" | translate}}</mat-label>
+    <mat-label>{{"SIGN_UP_PAGE.EMAIL" | translate}}</mat-label>
     <input type="text" matInput formControlName="email">
     <mat-error *hkbnErrorHandler="'required'">
-      {{"REQUIRED" | translate}}
+      {{"SIGN_UP_PAGE.REQUIRED" | translate}}
     </mat-error>
     <mat-error *hkbnErrorHandler="'email'">
-      {{"ENTER_VALID_EMAIL" | translate}}
+      {{"SIGN_UP_PAGE.ENTER_VALID_EMAIL" | translate}}
     </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
-    <mat-label>{{"PASSWORD" | translate}}</mat-label>
+    <mat-label>{{"SIGN_UP_PAGE.PASSWORD" | translate}}</mat-label>
     <input type="password" matInput formControlName="password">
     <mat-error *hkbnErrorHandler="'required'">
-      {{"REQUIRED" | translate}}
+      {{"SIGN_UP_PAGE.REQUIRED" | translate}}
     </mat-error>
     <mat-error *hkbnErrorHandler="'minlength'">
-      {{"PASSWORD_6_CHAR" | translate}}
+      {{"SIGN_UP_PAGE.PASSWORD_6_CHAR" | translate}}
     </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
-    <mat-label>{{"CONFIRM_PASSWORD" | translate}}</mat-label>
+    <mat-label>{{"SIGN_UP_PAGE.CONFIRM_PASSWORD" | translate}}</mat-label>
     <input type="password" matInput formControlName="passwordConfirmation">
     <mat-error *hkbnErrorHandler="'required'">
-      {{"REQUIRED" | translate}}
+      {{"SIGN_UP_PAGE.REQUIRED" | translate}}
     </mat-error>
     <mat-error *hkbnErrorHandler="'minlength'">
-      {{"PASSWORD_6_CHAR" | translate}}
+      {{"SIGN_UP_PAGE.PASSWORD_6_CHAR" | translate}}
     </mat-error>
     <mat-error *hkbnErrorHandler="'notEqual'">
-      {{"PASSWORD_NOT_MATCH" | translate}}
+      {{"SIGN_UP_PAGE.PASSWORD_NOT_MATCH" | translate}}
     </mat-error>
   </mat-form-field>
 
   <mat-checkbox formControlName="terms">
-    {{"I_ACCEPT_TERMS" | translate}}
+    {{"SIGN_UP_PAGE.I_ACCEPT_TERMS" | translate}}
   </mat-checkbox>
   <mat-error class="terms-error"
     *ngIf="registrationForm.get('terms').invalid && (registrationForm.get('terms').touched || form.submitted)">
-    {{"PLEASE_ACCEPT_TERMS" | translate}}
+    {{"SIGN_UP_PAGE.PLEASE_ACCEPT_TERMS" | translate}}
   </mat-error>
 
   <mat-checkbox formControlName="promo">
-    {{"AGREE_MARKETING" | translate}}
+    {{"SIGN_UP_PAGE.AGREE_MARKETING" | translate}}
   </mat-checkbox>
 
-  <button mat-raised-button color="primary" class="submit-button">{{"SUBMIT_AND_VERIFY" | translate}}</button>
+  <button mat-raised-button color="primary" class="submit-button">{{"SIGN_UP_PAGE.SUBMIT_AND_VERIFY" | translate}}</button>
 </form>

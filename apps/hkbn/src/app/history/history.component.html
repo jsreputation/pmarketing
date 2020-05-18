@@ -1,6 +1,6 @@
 <div class="container">
   <mat-tab-group mat-stretch-tabs>
-    <mat-tab label="{{'YOU_CURRENTLY_HAVE' | translate }}">
+    <mat-tab label="{{'HISTORY.YOU_CURRENTLY_HAVE' | translate }}">
       <div
         class="accrued-container"
         infiniteScroll
@@ -16,7 +16,7 @@
         ></perx-core-loyalty-transactions-list>
       </div>
     </mat-tab>
-    <mat-tab label="{{ 'TRANSATION_HISTORY'| translate }}">
+    <mat-tab label="{{ 'HISTORY.TRANSATION_HISTORY'| translate }}">
       <perx-core-loyalty-transactions-list
         *ngIf="redeemed"
         [priceLabelFn]="priceLabelFn"

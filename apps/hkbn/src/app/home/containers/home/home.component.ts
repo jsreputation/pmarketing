@@ -10,32 +10,32 @@ const stubTabs: ITabConfigExtended[] = [
   {
     filterKey: null,
     filterValue: null,
-    tabName: 'ALL',
+    tabName: 'HOME.ALL',
     rewardsList: null,
     rewardsType: null
   }
   , {
     filterKey: null,
     filterValue: null,
-    tabName: 'HOME+',
+    tabName: 'HOME.HOME+',
     rewardsList: null,
     rewardsType: 'Home+'
   }, {
     filterKey: null,
     filterValue: null,
-    tabName: 'HKBN',
+    tabName: 'HOME.HKBN',
     rewardsList: null,
     rewardsType: 'HKBN'
   }, {
     filterKey: null,
     filterValue: null,
-    tabName: 'HUNG_FOOK_TONG',
+    tabName: 'HOME.HUNG_FOOK_TONG',
     rewardsList: null,
     rewardsType: 'Hung Fook Tong'
   }, {
     filterKey: null,
     filterValue: null,
-    tabName: 'BIG_BIG_SHOP',
+    tabName: 'HOME.BIG_BIG_SHOP',
     rewardsList: null,
     rewardsType: 'big big shop'
   }
@@ -76,7 +76,7 @@ export class HomeComponent implements OnInit {
         (loyalty: ILoyalty) => {
           this.loyalty = loyalty;
         });
-    this.translate.get(['YOU_HAVE', 'HELLO', 'POINTS_EXPITING'])
+    this.translate.get(['HOME.YOU_HAVE', 'HOME.HELLO', 'HOME.POINTS_EXPITING'])
       .subscribe((res: any) => {
         this.subTitleFn = () => res.YOU_HAVE;
         this.titleFn = (profile: IProfile) => `${res.HELLO} ${profile.lastName},`;

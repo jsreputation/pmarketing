@@ -1,0 +1,285 @@
+{
+  "LANDING": {
+    "CAMPAIGN_TITLE": "LIFE之道場每星期等您來挑戰！",
+    "CAMPAIGN_INTRO": "LIFE之道場強勢回歸, 每星期為您呈獻問答遊戲, 贏取參加大抽獎的機會。接受挑戰，就可得分參加大抽獎。先選擇難度，選擇最佳答案 ，在15秒內回答每條問題。開始！",
+    "COUNTDOWN": {
+      "COUNTDOWN_TXT": "倒數",
+      "DAYS": "天",
+      "HOURS": "小時",
+      "MINUTES": "分",
+      "SECONDS": "秒"
+    },
+    "LOGIN_TXT": "立即登入",
+    "HOW_TO_PLAY": "遊戲玩法",
+    "TERMS_CONDITIONS": "條款與細則",
+    "NEXT_WEEK_CHALLENGE": "認識年金，「公」「 私」要分明！ 為退休早日買年金， 是近年熱話！但年金 有「公營」、「私營 」之分，部分年金更可扣稅。行動前，要先了解哪一款適合自 己。",
+    "CTA_TXT": "了解更多"
+  },
+  "WELCOME_PAGE": {
+    "LOG_IN": "登入"
+  },
+  "SIGN_UP_PAGE": {
+    "TITLE": "登記",
+    "HAVE_AN_ACCOUNT": "已經登記？",
+    "LOG_IN": "登入",
+    "COUNTRY_CODE_REQUIRED_TXT": "請選擇一個國家",
+    "MOBILE_FIELD": "手機號碼",
+    "MOBILE_INVALID_TXT": "請輸入有效手機號碼",
+    "MOBILE_REQUIRED_TXT": "請輸入您的手機號碼",
+    "EMAIL_FIELD": "電郵",
+    "EMAIL_INVALID_TXT": "請輸入有效電郵",
+    "EMAIL_REQUIRED_TXT": "請輸入您的電郵",
+    "PASSWORD_FIELD": "密碼",
+    "PASSWORD_REQUIRED_TXT": "請輸入密碼",
+    "CONFIRM_PASSWORD_FIELD": "再次輸入密碼",
+    "CONFIRM_PASSWORD_INVALID_TXT": "密碼不符",
+    "UNKNOWN_ERROR_TXT": "發生未知錯誤。",
+    "INFORMATION_UPDATE": "用戶信息更新成功。",
+    "INFORMATION_UPDATE_FAIL": "用戶信息更新失敗，請再試一次。",
+    "ALERT_TITLE": "提醒：如果您不同意此條款，則您將沒有資格參加LIFE Dojo幸運抽獎。",
+    "ALERT_BTN_TXT": "確認",
+    "ALERT_BTN_TXT2": "取消",
+    "NICKNAME_FIELD": "用戶名稱",
+    "NICKNAME_REQUIRED_TXT": "請輸入用戶名稱",
+    "REFERRAL_FIELD": "推薦號碼（如適用）",
+    "CHECKBOX_TNC_PIC_AGREE": "本人同意遊戲的",
+    "CHECKBOX_TNC": "條款及細則",
+    "CHECKBOX_AND": "以及",
+    "CHECKBOX_PIC": "個人資料收集聲明。",
+    "CHECKBOX_TNC_POPUP_TXT": "參與遊戲前，您必須同意以上各項。",
+    "LUCKY_DRAW_DESCRIPTION": "請輸入您的個人資料，以參加抽獎",
+    "FULL_NAME_HKID_FIELD": "姓名（如身份證所示）",
+    "FULL_NAME_HKID_REQUIRED_TXT": "請輸入姓名",
+    "HKID_DIGITS_TXT": "身份證號碼頭四位",
+    "HKID_DIGITS_REQUIRED_TXT": "請輸入身份證號碼",
+    "HKID_DIGITS_INVALID_TXT": "無效的身份證號碼。應該是4位字母数字",
+    "CHECKBOX_LUCK_TXT": "本人同意滙豐保險儲存本人的個人資料作未來的直接巿場推廣用途。詳情請參閱",
+    "CHECKBOX_LUCK_POPUP_TXT": "如果您不同意這項條款，您將不會符合參加抽獎的資格。 您是否確認繼續？",
+    "BUTTON_SUBMIT": "遞交"
+  },
+  "OTP_PAGE": {
+    "TITLE": "輸入確認密碼",
+    "DESCRIPTION": "一個附有確認密碼的短信已經傳送至手機號碼{{mobileNumber}}。請在下面輸入該確認密碼",
+    "ERROR_TXT": "確認密碼錯誤",
+    "ERROR_LINK": "重新傳送確認密碼",
+    "CTA_TXT": "繼續",
+    "RESEND_TXT": "確認密碼已重新發送",
+    "POPUP_TITLE": "密碼已更改！",
+    "POPUP_TXT": "您可以使用新密碼登錄",
+    "POPUP_BTN_TXT": "返回主頁",
+    "CTA_TXT_SUCCESS": "成功登記用戶"
+  },
+  "LOGIN_PAGE": {
+    "TITLE": "登入",
+    "NO_ACCOUNT": "沒有賬號?",
+    "INVALID_CREDENTIALS": "身份信息錯誤",
+    "SIGN_UP": "註冊",
+    "COUNTRY_CODE_REQUIRED_TXT": "請選擇一個國家",
+    "MOBILE_FIELD": "手機號碼",
+    "MOBILE_NOTFOUND_TXT": "並無登記用戶記錄",
+    "MOBILE_INVALID_TXT": "請輸入有效手機號碼",
+    "MOBILE_REQUIRED_TXT": "請輸入您的手機號碼",
+    "OTP_SEND_TO": "確認密碼已發送至",
+    "CHECK_YOUR_SMS": "查看你的短信",
+    "PASSWORD_FIELD": "密碼",
+    "PASSWORD_INVALID_TXT": "密碼錯誤",
+    "PASSWORD_REQUIRED_TXT": "請輸入密碼",
+    "FORGET_PASSWORD_TXT": "忘記密碼？",
+    "POPUP_TITLE": "無法連接服務器",
+    "POPUP_TXT": "請稍後再試",
+    "CTA_TXT": "登入"
+  },
+  "FORGET_PW_PAGE": {
+    "TITLE": "忘記密碼",
+    "DESCRIPTION": "請輸入您已登記的手機號碼",
+    "COUNTRY_CODE_REQUIRED_TXT": "請選擇一個國家",
+    "MOBILE_FIELD": "手機號碼",
+    "MOBILE_NOTFOUND_TXT": "並無登記用戶記錄",
+    "MOBILE_INVALID_TXT": "請輸入有效手機號碼",
+    "MOBILE_REQURIED_TXT": "請輸入手機號碼",
+    "OTP_SEND_TO": "確認密碼已發送至",
+    "CHECK_YOUR_SMS": "查看你的短信",
+    "RESEND_OTP": "重新傳送確認密碼",
+    "CTA_NEXT_TXT": "繼續",
+    "NEW_PW_TXT": "請輸入新密碼",
+    "CONFIRM_PW_TXT": "請重新輸入新密碼",
+    "PASSWORD_REQUIRED_TXT": "請輸入密碼",
+    "CONFIRM_PASSWORD_INVALID_TXT": "密碼不符",
+    "CTA_SAVE_TXT": "儲存",
+    "CTA_SUCCESS_TXT": "成功更新密碼",
+    "SERVER_ERROR_TXT": "無法連接服務器",
+    "PASSWORD_TOO_SHORT_TXT": "密碼太短"
+  },
+  "QUIZ_TITLE": "問答遊戲",
+  "NAVIGATION": {
+    "HOME": "主頁",
+    "WALLET": "錢包",
+    "HISTORY": "歷史",
+    "LEADER_BOARD": "排行榜",
+    "ACCOUNT": "用戶"
+  },
+  "QUIZ_TEMPLATE": {
+    "CTA_START_TXT": "參與問答遊戲",
+    "QUESTION": "問題",
+    "OUT_OF": "之",
+    "PROGRESS_BAR": "問題{{questionId + 1}}之{{total_questions}}",
+    "CTA_NEXT_TXT": "繼續",
+    "CTA_SUBMIT_TXT": "提交",
+    "SUMMARY_CORRECT": "合共{{total_length}}條問題，您答對{{total_correct}}題。",
+    "SUMMARY_TIME_TAKEN": "您共用了",
+    "QUESTION_TIME_TAKEN": "您在這個問題花費了{{time}}",
+    "POSITIVE_OUTCOME_TXT": "恭喜您！您獲得{{points}}分",
+    "POSITIVE_OUTCOME_REWARD": "這是您的獎品",
+    "POSITIVE_OUTCOME_CTA": "查閱獎品",
+    "NO_OUTCOME_SCORE": "您在這回合共取得{{points}}分",
+    "NO_OUTCOME_TXT": "",
+    "NO_OUTCOME_CTA": "嘗試另一個問答遊戲",
+    "NOT_AVAILABLE_TITLE": "很抱歉!",
+    "NOT_AVAILABLE_CTA": "關閉",
+    "NOT_AVAILABLE_TXT": "目前無法進行此測驗。稍後再試。",
+    "SUBMIT_ERROR_TXT": "嘗試提交您的最後答案時出現問題。"
+  },
+  "WALLET": {
+    "REWARDS_TITLE": "我的獎品",
+    "HISTORY_TITLE": "我的歷史",
+    "MY_WALLET": "我的錢包",
+    "REDEEMED": "已換領",
+    "REWARD_STATUS_EXPIRY": "將於{{date}}過期",
+    "REWARD_STATUS_REDEEMED": "換領日期",
+    "REWARD_STATUS_EXPIRED": "已失效",
+    "CTA_TXT": "換領"
+  },
+  "REDEMPTION": {
+    "TITLE": "輸入密碼",
+    "DESCRIPTION": "請將這個屏幕交給員工以便輸入密碼並換領您的獎品",
+    "WRONG_PIN": "密碼錯誤",
+    "CODE_INSTRUCTION_TXT": "在商家兌換獎勵時，請輸入此代碼",
+    "SUCCESSFUL_REDEMPTION_TITLE": "成功換領獎品",
+    "SUCCESSFUL_REDEMPTION_TXT": "您已兌換{{reward}}",
+    "UNKNOWN_ERROR_TXT": "發生未知錯誤，請稍後重試",
+    "FAIL_REDEMPTION_TXT": "抱歉!憑證兌換失敗。",
+    "BACK_TO_WALLET": "回到錢包頁面",
+    "CTA_TXT": "取消"
+  },
+  "PROMO_CODE": {
+    "DESCRIPTION": "請在付款前輸入此代碼",
+    "CTA_TXT": "取消"
+  },
+  "LEADER_BOARD": {
+    "TITLE": "歡迎{nickname}",
+    "SCORE": "您的總分",
+    "LABEL_TXT": "排行榜",
+    "LABEL_RANK": "排名",
+    "LABEL_NICKNAME": "用戶",
+    "LABEL_SCORE": "得分"
+  },
+  "ACCOUNT_PAGE": {
+    "LUCKY_DRAW_INFO": "幸運抽獎信息",
+    "TRANSACTION_HISTORY": "交易記錄",
+    "PROFILE": "我的資料",
+    "REFER_FRIEND": "推薦朋友",
+    "LIFE_TALK": "LIFE Talk",
+    "TNC": "條款與細則",
+    "PRIVACY_POLICY": "私隱政策",
+    "LOGOUT": "登出"
+  },
+  "PROFILE": {
+    "TITLE": "個人資料",
+    "ACCOUNT_LABEL": "用戶／登記編號",
+    "MOBILE_LABEL": "手機號碼",
+    "EMAIL_LABEL": "電郵",
+    "NICKNAME_LABEL": "用戶名稱（在排行榜上顯示）",
+    "PASSWORD_LABEL": "密碼",
+    "LUCKY_DRAW_LABEL": "參與抽獎",
+    "PASSWORD_TITLE": "更改密碼",
+    "PASSWORD_ENTER_OLD": "輸入原有密碼",
+    "PASSWORD_ENTER_NEW": "輸入新密碼",
+    "PASSWORD_CONFIRM_NEW": "重新輸入新密碼",
+    "PASSWORD_CTA_TXT": "儲存",
+    "LUCKY_DRAW_TITLE": "參與抽獎",
+    "LUCKY_DRAW_NAME_FIELD": "姓名（如身份證所示）",
+    "LUCKY_DRAW_HKID_FIELD": "身份證號碼頭四位",
+    "CHECKBOX_LUCK_TXT": "本人同意滙豐保險儲存本人的個人資料作未來的直接巿場推廣用途（詳情請參閱個人資料收集聲明）",
+    "CTA_SAVE_TXT": "儲存",
+    "ENTER_EMAIL": "輸入電郵",
+    "ENTER_POSTCODE": "輸入郵政編碼",
+    "ENTER_NICKNAME": "輸入用戶名稱"
+  },
+  "REFERRAL": {
+    "TITLE": "推薦朋友",
+    "CONTENT": "每位利用您的推薦號碼成功登記的用戶都會令您額外獲得5次參加抽獎機會。而被您推薦的用戶也會令您額外獲得3次參加抽獎機會。<br/><br/>推薦朋友，立即行動！<br/>*您和被您推薦的用戶必須完成最少一次問答遊戲，才可參加抽獎。",
+    "CTA_BUTTON": "分享推薦號碼",
+    "SHARE_COPY_TITLE": "跟我一起接受挑戰",
+    "SHARE_COPY_TXT": "跟我一起接受滙豐LIFE Dojo挑戰。只要觀看短片並正確回答問題就有機會贏取每週豐富的獎品，也有機會參加大抽獎。登記時使用推薦號碼{{code}}就可享有額外3次參加抽獎的機會。",
+    "COPY_TO_CLIPBOARD": "複製到剪貼板!",
+    "CLIPBOARD_ERROR_TXT": "無法訪問剪貼板"
+  },
+  "HOME": {
+    "MY_QR": "我的二維碼",
+    "MY_BAR_CODE": "我的條形碼",
+    "STAMP_CAMPAIGNS": "郵票卡活動",
+    "CATALOG": "目錄",
+    "GAMES": "遊戲",
+    "QUIZ": "問答遊戲",
+    "FEATURED_REWARDS": "特色獎勵",
+    "SEE_MORE": "查看更多",
+    "SEE_LESS": "關閉查看",
+    "REWARDS_LEFT": "獎勵剩餘",
+    "READ_MORE": "查看更多"
+  },
+  "NEWS_FEED": {
+    "BTN_1": "開始遊戲",
+    "CONTENT_1": "卡片的簡短文字說明，然後是號召性用語按鈕。"
+  },
+  "WEEK1_CAMPAIGN_EASY": {
+    "TITLE": "",
+    "LANDING_CONTENT": "",
+    "QUESTION1": "",
+    "ANSWERS1": ""
+  },
+  "WEEK1_CAMPAIGN_MEDIUM": {
+    "TITLE": "",
+    "LANDING_CONTENT": "",
+    "QUESTION1": "",
+    "ANSWERS1": ""
+  },
+  "WEEK1_CAMPAIGN_HARD": {
+    "TITLE": "",
+    "LANDING_CONTENT": "",
+    "QUESTION1": "",
+    "ANSWERS1": ""
+  },
+  "WEEK2_CAMPAIGN_EASY": {
+    "TITLE": "",
+    "LANDING_CONTENT": "",
+    "QUESTION1": "",
+    "ANSWERS1": ""
+  },
+  "WEEK2_CAMPAIGN_MEDIUM": {
+    "TITLE": "",
+    "LANDING_CONTENT": "",
+    "QUESTION1": "",
+    "ANSWERS1": ""
+  },
+  "WEEK2_CAMPAIGN_HARD": {
+    "TITLE": "",
+    "LANDING_CONTENT": "",
+    "QUESTION1": "",
+    "ANSWERS1": ""
+  },
+  "VOUCHER": {
+    "REDEEM": "換領",
+    "EXPIRY": "將於{{date}}過期"
+  },
+  "REWARD": {
+    "GET_VOUCHER": "獲得優惠券",
+    "DESCRIPTION": "獎勵詳情",
+    "TNC": "條款與細則"
+  },
+  "QR": {
+    "QR_TO_MERCHANT": "向商家出示此二維碼",
+    "BARCODE_TO_MERCHANT": "向商家出示此條形碼",
+    "CTA": "取消"
+  },
+  "CONTENT_PAGE": "找不到內容"
+}

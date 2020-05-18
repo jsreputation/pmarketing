@@ -1,26 +1,26 @@
 <form [formGroup]="loginForm" class="login-form" (submit)="submit()">
   <mat-form-field appearance="fill">
-    <mat-label>{{"MOBILE_NUMBER_OR_EMAIL" | translate}}</mat-label>
+    <mat-label>{{"LOGIN_PAGE.MOBILE_NUMBER_OR_EMAIL" | translate}}</mat-label>
     <input type="text" matInput formControlName="user">
     <mat-error *hkbnErrorHandler="'required'">
-      {{"REQUIRED" | translate}}
+      {{"LOGIN_PAGE.REQUIRED" | translate}}
     </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
-    <mat-label>{{"PASSWORD" | translate}}</mat-label>
+    <mat-label>{{"LOGIN_PAGE.PASSWORD" | translate}}</mat-label>
     <input type="password" matInput formControlName="pass">
     <mat-error *hkbnErrorHandler="'required'">
-      {{"REQUIRED" | translate}}
+      {{"LOGIN_PAGE.REQUIRED" | translate}}
     </mat-error>
     <mat-error *hkbnErrorHandler="'minlength'">
-      {{"PASSWORD_6_CHAR" | translate}}
+      {{"LOGIN_PAGE.PASSWORD_6_CHAR" | translate}}
     </mat-error>
   </mat-form-field>
 
-  <a class="forget-password" (click)="forgot()">{{"FORGOT_PASSWORD" | translate}}</a>
-  <mat-checkbox formControlName="stayLoggedIn">{{"KEEP_LOGGED_IN" | translate}}</mat-checkbox>
+  <a class="forget-password" (click)="forgot()">{{"LOGIN_PAGE.FORGOT_PASSWORD" | translate}}</a>
+  <mat-checkbox formControlName="stayLoggedIn">{{"LOGIN_PAGE.KEEP_LOGGED_IN" | translate}}</mat-checkbox>
 
-  <button mat-raised-button color="primary" class="submit-button">{{"LOGIN" | translate}}</button>
-  <button mat-button type="button" class="additional-button">{{"FIND_OUT_MORE" | translate}}</button>
+  <button mat-raised-button color="primary" class="submit-button">{{"LOGIN_PAGE.LOGIN" | translate}}</button>
+  <button mat-button type="button" class="additional-button">{{"LOGIN_PAGE.FIND_OUT_MORE" | translate}}</button>
 </form>
