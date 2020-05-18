@@ -28,6 +28,7 @@ import {
 import {
   AuthenticationModule,
   ProfileModule,
+  ProfileServiceModule,
   UtilsModule,
   LoyaltyModule,
   RewardsModule,
@@ -132,6 +133,7 @@ export const setLanguage = (
     BrowserAnimationsModule,
     AuthenticationModule,
     ProfileModule,
+    ProfileServiceModule.forRoot(),
     UtilsModule,
     LoyaltyModule,
     RewardsModule,
