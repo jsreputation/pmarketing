@@ -14,6 +14,7 @@ import { TokenStorage } from '../../utils/storage/token-storage.service';
 import { LocalTokenStorage } from '../../utils/storage/local-token-storage.service';
 import { ConfigService } from '../../config/config.service';
 import { NotificationService } from '../../utils/notification/notification.service';
+import { ProfileServiceModule } from '../../profile/profile.service.module';
 
 function fakeFactory(): TokenStorage {
   return new LocalTokenStorage({});
@@ -53,6 +54,7 @@ describe('V4AuthenticationService', () => {
       imports: [
         HttpClientTestingModule,
         ProfileModule,
+        ProfileServiceModule.forRoot(),
         ConfigModule.forRoot({ ...environment })
       ],
       providers: [

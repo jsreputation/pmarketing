@@ -116,6 +116,7 @@ export { MineSweeperComponent } from './lib/game/mine-sweeper/mine-sweeper.compo
  * Profile
  */
 export { ProfileModule } from './lib/profile/profile.module';
+export { ProfileServiceModule } from './lib/profile/profile.service.module';
 export { ProfileService } from './lib/profile/profile.service';
 export {
   IProfile,
