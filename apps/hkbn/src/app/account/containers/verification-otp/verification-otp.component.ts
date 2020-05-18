@@ -64,7 +64,9 @@ export class VerificationOtpComponent implements OnInit {
         return this.authService.changePassword(data as IChangePasswordData)
           .pipe(flatMap(() => this.translate.get('OTP_PAGE.PASSWORD_SUCCESS_UPDATE')));
       case 'phone':
-        return this.authService.changePhone(data as IChangePhoneData).pipe(flatMap(() => this.translate.get('OTP_PAGE.MOBILE_SUCCESS_UPDATE')));
+        return this.authService.changePhone(data as IChangePhoneData).pipe(
+          flatMap(() => this.translate.get('OTP_PAGE.MOBILE_SUCCESS_UPDATE'))
+        );
     }
   }
   public resendSms(): void {
