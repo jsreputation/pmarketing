@@ -39,7 +39,7 @@ import {
 })
 export class AccountComponent implements OnInit {
   public profile$: Observable<IProfile> | null = null;
-  public loyalty$: Observable<ILoyalty>
+  public loyalty$: Observable<ILoyalty>;
   public pages!: AccountPageObject[];
   public preAuth: boolean = false;
   public theme: Observable<ITheme>;
