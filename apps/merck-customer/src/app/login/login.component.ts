@@ -136,6 +136,7 @@ export class LoginComponent implements OnInit, PageAppearence {
       },
       (err) => {
         if (err instanceof HttpErrorResponse) {
+          console.log(err);
           if (err.status === 0) {
             this.notificationService.addSnack(this.serverErrorTxt);
           } else if (err.status === 401) {
@@ -174,6 +175,6 @@ export class LoginComponent implements OnInit, PageAppearence {
 
   private initTranslate(): void {
     this.translateService.get('SERVER_NOT_AVAILABLE').subscribe(text => this.serverErrorTxt = text);
-    this.translateService.get('SERVER_NOT_AVAILABLE').subscribe(text => this.invalidCredentials = text);
+    this.translateService.get('INVALID_CREDENTIALS').subscribe(text => this.invalidCredentials = text);
   }
 }
