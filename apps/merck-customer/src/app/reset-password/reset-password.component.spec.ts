@@ -11,13 +11,11 @@ import {
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
-import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('ResetPasswordComponent', () => {
   let component: ResetPasswordComponent;
   let fixture: ComponentFixture<ResetPasswordComponent>;
-  let router: Router;
 
   const mockProfile: IProfile = {
     id: 1,
@@ -70,7 +68,6 @@ describe('ResetPasswordComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ResetPasswordComponent);
     component = fixture.componentInstance;
-    router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
     fixture.detectChanges();
   });
 
