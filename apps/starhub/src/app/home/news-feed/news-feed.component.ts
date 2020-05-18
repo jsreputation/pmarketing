@@ -34,6 +34,7 @@ export class NewsFeedComponent implements OnInit {
   public newsBeforeScroll: number[];
   public newsAfterScroll: number[];
   public showButton: boolean = true;
+  public ghostFeed?: any[] = new Array(1); // 3 to cover screen width while loading
 
   private initNewsFeedItems(): void {
     this.configService.readAppConfig().pipe(
@@ -47,7 +48,10 @@ export class NewsFeedComponent implements OnInit {
       })
     ).subscribe(items => {
       this.items = items;
+      this.ghostFeed = undefined;
       this.newsAfterScroll = Array.from(Array(items.length > 0 ? items.length - 1 : 1).keys());
+    }, () => {
+      this.ghostFeed = undefined;
     });
   }
 
