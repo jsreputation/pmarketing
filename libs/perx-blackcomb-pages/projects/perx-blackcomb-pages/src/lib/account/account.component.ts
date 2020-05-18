@@ -1,6 +1,7 @@
 import {
   Component,
   OnInit,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -9,7 +10,7 @@ import {
   tap,
   flatMap,
   map,
-  filter,
+  filter
 } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
@@ -33,11 +34,12 @@ import {
 @Component({
   selector: 'perx-blackcomb-pages-account',
   templateUrl: './account.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./account.component.scss']
 })
 export class AccountComponent implements OnInit {
-  public profile: IProfile | null = null;
-  public loyalty: ILoyalty;
+  public profile$: Observable<IProfile> | null = null;
+  public loyalty$: Observable<ILoyalty>;
   public pages!: AccountPageObject[];
   public preAuth: boolean = false;
   public theme: Observable<ITheme>;
@@ -68,10 +70,11 @@ export class AccountComponent implements OnInit {
       )
       .subscribe((translations) => this.pages.forEach((page) => page.title = translations[page.title]));
     this.appConfig = this.configService.readAppConfig();
-    this.profileService.whoAmI()
-      .pipe(take(1))
-      .subscribe(profile => this.profile = profile);
-    this.loyaltyService.getLoyalty().subscribe((loyalty: ILoyalty) => this.loyalty = loyalty);
+    this.profile$ = this.profileService.whoAmI()
+      .pipe(
+        take(1)
+      );
+    this.loyalty$ = this.loyaltyService.getLoyalty();
   }
 
   public logout(): void {
