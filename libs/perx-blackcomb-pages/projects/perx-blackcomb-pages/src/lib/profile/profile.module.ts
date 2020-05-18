@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { MatIconModule, MatListModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { ProfileComponent } from './profile.component';
-import { LoyaltyModule, ProfileModule as PerxCoreProfileModule } from '@perxtech/core';
+import { LoyaltyModule, ProfileModule as PerxCoreProfileModule, ProfileServiceModule  } from '@perxtech/core';
 
 @NgModule({
   declarations: [ProfileComponent],
@@ -14,6 +14,7 @@ import { LoyaltyModule, ProfileModule as PerxCoreProfileModule } from '@perxtech
     MatIconModule,
     RouterModule,
     PerxCoreProfileModule,
+    ProfileServiceModule.forChild(),
     LoyaltyModule
   ]
 })

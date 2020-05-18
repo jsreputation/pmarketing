@@ -101,6 +101,12 @@ interface IV4StampCard {
   display_properties: {
     number_of_cols?: number;
     number_of_rows?: number;
+    header?: {
+      value: {
+        title: string;
+        description: string;
+      }
+    }
     card_image?: {
       value?: {
         image_url?: string;
@@ -238,6 +244,8 @@ export class V4StampService implements StampService {
     const backgroundImg = backgroundImgUrl ? { value: { imageUrl: backgroundImgUrl } } : undefined;
     return {
       id: stampCard.id,
+      title: oc(stampCard).display_properties.header.value.title(),
+      subTitle: oc(stampCard).display_properties.header.value.description(),
       userAccountId: stampCard.user_account_id,
       state: stampCard.state,
       campaignId: stampCard.campaign_id,

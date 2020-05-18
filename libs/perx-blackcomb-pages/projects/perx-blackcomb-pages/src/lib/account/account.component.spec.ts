@@ -2,7 +2,7 @@ import {
   async,
   fakeAsync,
   ComponentFixture,
-  TestBed,
+  TestBed, tick,
 } from '@angular/core/testing';
 import { Type } from '@angular/core';
 import { Router } from '@angular/router';
@@ -110,8 +110,13 @@ describe('AccountComponent', () => {
   });
 
   it('should fetch profile', fakeAsync(() => {
+    const profileService: ProfileService = fixture.debugElement.injector.get<ProfileService>(ProfileService as Type<ProfileService>);
+    const profileServiceSpy = spyOn(profileService, 'whoAmI').and.returnValue(
+      of(profile)
+    );
+    tick();
     component.ngOnInit();
-    expect(component.profile).toBe(profile);
+    expect(profileServiceSpy).toHaveBeenCalled();
   }));
 
   it('should fetch pages', fakeAsync(() => {

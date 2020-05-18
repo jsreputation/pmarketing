@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CampaignLandingPage, ICampaign, ICampaignService } from '@perxtech/core';
 import { Subject } from 'rxjs';
@@ -8,6 +8,7 @@ import { oc } from 'ts-optchain';
 @Component({
   selector: 'perx-blackcomb-pages-campaign-landing-page',
   templateUrl: './campaign-landing-page.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./campaign-landing-page.component.scss']
 })
 export class CampaignLandingPageComponent implements OnInit, OnDestroy {

@@ -112,6 +112,15 @@ export class GameComponent implements OnInit, OnDestroy {
             this.successPopUp.imageUrl = successOutcome.image || this.successPopUp.imageUrl;
             this.successPopUp.buttonTxt = successOutcome.button || this.successPopUp.buttonTxt;
           }
+          if (game.remainingNumberOfTries <= 0) {
+            this.notificationService.addPopup({
+              title: 'No more tries',
+              text: 'Come back when you\'ve earned more tries!',
+              buttonTxt: 'Close',
+              afterClosedCallBack: this,
+              disableOverlayClose: true
+            });
+          }
         }
       })
     );
@@ -325,5 +334,9 @@ export class GameComponent implements OnInit, OnDestroy {
     if (this.noRewardsPopUp.buttonTxt) {
       this.translate.get(this.noRewardsPopUp.buttonTxt).subscribe((text) => this.noRewardsPopUp.buttonTxt = text);
     }
+  }
+
+  public dialogClosed(): void {
+    this.router.navigate(['/home']);
   }
 }

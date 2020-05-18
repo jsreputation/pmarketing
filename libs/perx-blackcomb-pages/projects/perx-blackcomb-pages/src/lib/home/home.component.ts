@@ -16,7 +16,7 @@ import {
   catchError,
   filter,
   map,
-  mergeMap,
+  mergeMap, scan,
   switchMap,
   take,
   takeLast,
@@ -81,6 +81,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   private firstComefirstServeCampaign: ICampaign;
   public quizCampaigns$: Observable<ICampaign[]>;
   public gameType: typeof GameType = GameType;
+
+  public catalogsBvrSbjt: BehaviorSubject<ICatalog[]> = new BehaviorSubject<ICatalog[]>([]);
+  public catalogs$: Observable<ICatalog[]>;
+  public catalogsEnded: boolean = false;
 
   public constructor(
     private rewardsService: RewardsService,
@@ -149,6 +153,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.fetchPopupCampaigns();
       }
     });
+
+    this.initCatalogsScan();
   }
 
   public ngOnDestroy(): void {
@@ -311,4 +317,26 @@ export class HomeComponent implements OnInit, OnDestroy {
       })
     );
   }
+
+  // ** catalogs component section **
+  // for paging through and accumulating pages
+  private initCatalogsScan(): void {
+    this.catalogs$ = this.catalogsBvrSbjt.asObservable().pipe(
+      scan((acc, curr) => [...acc, ...curr ? curr : []], [])
+    );
+  }
+
+  public loadCatalogs(pageNumber: number): void {
+    this.rewardsService.getCatalogs(pageNumber, this.pageSize)
+      .subscribe((catalogs: ICatalog[]) => {
+        if (!catalogs) {
+          return;
+        }
+        this.catalogsBvrSbjt.next(catalogs);
+        if (catalogs.length < this.pageSize) {
+          this.catalogsEnded = true;
+        }
+      });
+  }
+
 }

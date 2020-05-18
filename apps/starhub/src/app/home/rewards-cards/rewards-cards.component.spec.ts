@@ -6,6 +6,7 @@ import { RewardsService, IReward, ConfigService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
 import { MacaronService } from '../../services/macaron.service';
+import {GhostsModule} from '../../ghosts/ghosts.module';
 
 describe('RewardsCardsComponent', () => {
   let component: RewardsCardsComponent;
@@ -72,7 +73,8 @@ describe('RewardsCardsComponent', () => {
       declarations: [RewardsCardsComponent],
       imports: [
         MatIconModule,
-        MatCardModule
+        MatCardModule,
+        GhostsModule
       ],
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub },
