@@ -41,7 +41,7 @@ import {
   LanguageInterceptor,
   AuthenticationService,
   ThemesService,
-  IConfig, ProfileServiceModule
+  IConfig
 } from '@perxtech/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
