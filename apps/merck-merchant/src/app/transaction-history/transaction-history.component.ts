@@ -42,9 +42,12 @@ export class TransactionHistoryComponent implements OnInit {
     private merchantAdminService: IMerchantAdminService,
     private translate: TranslateService
   ) {
-    this.translate.get(['POINT_EARNED', 'POINT_SPENT']).subscribe((res: any) => {
-      this.pointsEarnedTxt = res.POINT_EARNED;
-      this.pointsSpentTxt = res.POINT_SPENT;
+    this.translate.get([
+      'TRANSACTION_HISTORY.POINT_EARNED',
+      'TRANSACTION_HISTORY.POINT_SPENT'
+    ]).subscribe((res: any) => {
+      this.pointsEarnedTxt = res.TRANSACTION_HISTORY && res.TRANSACTION_HISTORY.POINT_EARNED;
+      this.pointsSpentTxt = res.TRANSACTION_HISTORY && res.TRANSACTION_HISTORY.POINT_SPENT;
     });
   }
 

@@ -35,13 +35,13 @@ export class RewardComponent implements OnInit {
         this.displayPriceFn = (rewardPrice: IPrice) => {
           if (rewardPrice.price && rewardPrice.price > 0) {
             if (rewardPrice.points && rewardPrice.points > 0) {
-              return `${rewardPrice.currencyCode} ${rewardPrice.price}${res['REWARD.AND']}${rewardPrice.points}${res['REWARD.POINT']}`;
+              return `${rewardPrice.currencyCode} ${rewardPrice.price}${res.REWARD && res.REWARD.AND}${rewardPrice.points}${res['REWARD.POINT']}`;
             }
             return `${rewardPrice.currencyCode} ${rewardPrice.price}`;
           }
 
           if (rewardPrice.points && rewardPrice.points > 0) {
-            return `${rewardPrice.points}${res['REWARD.POINT']}`;
+            return `${rewardPrice.points}${res.REWARD && res.REWARD.POINT}`;
           }
           return `0${res['REWARD.POINT']}`; // is actually 0 or invalid value default
         };

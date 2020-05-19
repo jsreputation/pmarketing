@@ -43,8 +43,8 @@
         </mat-error>
       </mat-form-field>
       <mat-form-field color="primary" class="full-width__input">
-        <mat-label translate>STATIC_PASSWORD</mat-label>
-        <input matInput placeholder="{{'STATIC_PASSWORD' | translate }}" placeholder="Password"
+        <mat-label translate>PASSWORD</mat-label>
+        <input matInput placeholder="{{'PASSWORD' | translate }}" placeholder="Password"
           formControlName="password" type="password" required>
         <mat-error *ngIf="password && password.hasError('required')">
           {{'PASSWORD_IS' | translate }}
