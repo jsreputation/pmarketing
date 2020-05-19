@@ -7,7 +7,6 @@ import {
   IGameService,
   IGame,
   TokenStorage,
-  ThemesService,
   ITheme,
   RewardPopupComponent, IProfile, LoyaltyService, ProfileService, ConfigService
 } from '@perxtech/core';
@@ -52,7 +51,6 @@ export class AppComponent implements OnInit {
     private gameService: IGameService,
     private tokenStorage: TokenStorage,
     private analytics: AnalyticsService,
-    private themeService: ThemesService,
     private loyaltyService: LoyaltyService,
     private profileService: ProfileService,
     private configService: ConfigService
@@ -76,7 +74,6 @@ export class AppComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.themeService.getThemeSetting().subscribe((theme) => this.theme = theme);
     this.notificationService.$popup
       .subscribe((data: IPopupConfig) =>
         this.dialog.open(PopupComponent, {

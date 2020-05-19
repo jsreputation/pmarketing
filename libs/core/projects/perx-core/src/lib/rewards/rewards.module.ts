@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {ModuleWithProviders, NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RewardsService } from './rewards.service';
 import { V4RewardsService } from './v4-rewards.service';
@@ -45,14 +45,28 @@ export function rewardsServiceFactory(http: HttpClient, config: Config, configSe
   ],
   exports: [
     ...components,
-  ],
-  providers: [
-    {
-      provide: RewardsService,
-      useFactory: rewardsServiceFactory,
-      deps: [HttpClient, Config, ConfigService]
-    }
   ]
 })
 export class RewardsModule {
+  public static forRoot(): ModuleWithProviders<RewardsModule> {
+    return {
+      ngModule: RewardsModule,
+      providers: [
+        {
+          provide: RewardsService,
+          useFactory: rewardsServiceFactory,
+          deps: [
+            HttpClient,
+            Config,
+            ConfigService
+          ]
+        }
+      ]
+    };
+  }
+  public static forChild(): ModuleWithProviders<RewardsModule> {
+    return {
+      ngModule: RewardsModule
+    };
+  }
 }
