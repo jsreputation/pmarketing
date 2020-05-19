@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {ModuleWithProviders, NgModule} from '@angular/core';
 import { CommonModule, DatePipe, CurrencyPipe } from '@angular/common';
 
 import { V4LoyaltyService } from './v4-loyalty.service';
@@ -9,7 +9,6 @@ import { TransactionPipe } from './loyalty-transactions-list/transaction.pipe';
 import { Config } from '../config/config';
 import { HttpClient } from '@angular/common/http';
 import { WhistlerLoyaltyService } from './whistler-loyalty.service';
-import { AuthenticationService } from '../auth/authentication/authentication.service';
 import {MatProgressBarModule, MatProgressSpinnerModule} from '@angular/material';
 import { ConfigService } from '../config/config.service';
 import { TranslateModule } from '@ngx-translate/core';
@@ -41,13 +40,29 @@ export function loyaltyServiceFactory(http: HttpClient, config: Config, configSe
   providers: [
     DatePipe,
     TransactionPipe,
-    CurrencyPipe,
-    {
-      provide: LoyaltyService,
-      useFactory: loyaltyServiceFactory,
-      deps: [HttpClient, Config, ConfigService, AuthenticationService]
-    }
+    CurrencyPipe
   ]
 })
 export class LoyaltyModule {
+  public static forRoot(): ModuleWithProviders<LoyaltyModule> {
+    return {
+      ngModule: LoyaltyModule,
+      providers: [
+        {
+          provide: LoyaltyService,
+          useFactory: loyaltyServiceFactory,
+          deps: [
+            HttpClient,
+            Config,
+            ConfigService
+          ]
+        }
+      ]
+    };
+  }
+  public static forChild(): ModuleWithProviders<LoyaltyModule> {
+    return {
+      ngModule: LoyaltyModule
+    };
+  }
 }

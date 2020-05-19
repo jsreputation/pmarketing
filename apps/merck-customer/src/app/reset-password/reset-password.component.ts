@@ -100,8 +100,13 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
 
     resetPaswordCall.subscribe(
       () => {
-        // Send Login Call on successfull password reset
-        this.sendLoginCall(password);
+        if (!this.otp && !this.mobileNumber && userToken) {
+          // Send Login Call on successfull password reset
+          this.sendLoginCall(password);
+        } else {
+          // Let user use new password to login if reset the password through forget password
+          this.router.navigateByUrl('login');
+        }
       },
       err => {
         console.error(`ResetPassword: ${err}`);

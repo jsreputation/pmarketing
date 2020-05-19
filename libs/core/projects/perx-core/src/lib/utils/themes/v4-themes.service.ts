@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {
   map,
-  catchError
+  catchError, shareReplay
 } from 'rxjs/operators';
 import {
   Observable,
@@ -50,6 +50,7 @@ export class V4ThemesService extends ThemesService {
     const response = this.http.get<ThemeJsonApiItemPayLoad<IThemeV4ApiProperties>>(this.themeSettingEndpoint)
       .pipe(
         map((res) => V4ThemesService.VThemeToTheme(res.data)),
+        shareReplay(1),
         catchError(() => {
           if (responseFallback) {
             return responseFallback;

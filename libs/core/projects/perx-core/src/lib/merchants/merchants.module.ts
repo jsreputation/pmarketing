@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Config } from '../config/config';
@@ -19,13 +19,24 @@ export function merchantsServiceFactory(http: HttpClient, config: Config, config
   declarations: [],
   imports: [
     CommonModule
-  ],
-  providers: [
-    {
-      provide: IMerchantsService,
-      useFactory: merchantsServiceFactory,
-      deps: [HttpClient, Config, ConfigService]
-    }
   ]
 })
-export class MerchantsModule { }
+export class MerchantsModule {
+  public static forRoot(): ModuleWithProviders<MerchantsModule> {
+    return {
+      ngModule: MerchantsModule,
+      providers: [
+        {
+          provide: IMerchantsService,
+          useFactory: merchantsServiceFactory,
+          deps: [HttpClient, Config, ConfigService]
+        }
+      ]
+    };
+  }
+  public static forChild(): ModuleWithProviders<MerchantsModule> {
+    return {
+      ngModule: MerchantsModule
+    };
+  }
+}

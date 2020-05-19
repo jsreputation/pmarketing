@@ -100,7 +100,7 @@ export class V4LocationsService extends LocationsService {
   }
 
   public getFromMerchant(merchantId: number, page?: number): Observable<ILocation[]> {
-    return this.merchantsService.getMerchant(merchantId, true, page).pipe(
+    return this.merchantsService.getMerchant(merchantId, page).pipe(
       filter((merchant: IMerchant) => (merchant.outlets !== undefined && (merchant.outlets ? merchant.outlets.length > 0 : false))),
       // @ts-ignore
       map((merchant: IMerchant) => merchant.outlets.map((outlet: IOutlet) => ({

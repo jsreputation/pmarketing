@@ -118,7 +118,7 @@ export class HomeComponent implements OnInit {
   }
 
   private fetchPopupCampaigns(): void {
-    this.campaignService.getCampaigns()
+    this.campaignService.getCampaigns({ type: CampaignType.give_reward })
       .pipe(
         catchError(() => {
           return of([]);

@@ -14,7 +14,7 @@ import {
   map,
   mergeMap,
   concatAll,
-  reduce,
+  reduce
 } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 
@@ -31,6 +31,7 @@ import { IV4Reward, IV4Tag } from '../rewards/v4-rewards.service';
 import { ICustomProperties } from '../profile/profile.model';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
+import { Cacheable } from 'ngx-cacheable';
 
 const DEFAULT_PAGE_COUNT: number = 10;
 
@@ -263,6 +264,9 @@ export class V4LoyaltyService extends LoyaltyService {
     };
   }
 
+  @Cacheable({
+    maxAge: 300000 // 5 minutes
+  })
   public getLoyalties(page: number = 1, pageSize: number = DEFAULT_PAGE_COUNT, locale: string = 'en'): Observable<ILoyalty[]> {
     const headers = new HttpHeaders().set('Accept-Language', locale);
     return this.http.get<IV4GetLoyaltiesResponse>(

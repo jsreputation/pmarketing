@@ -31,7 +31,7 @@ import {
   TokenStorage,
   AuthenticationService,
   ThemesService,
-  IConfig
+  IConfig, ProfileServiceModule
 } from '@perxtech/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -112,10 +112,10 @@ export const setLanguage = (
     AuthenticationModule,
     ZXingScannerModule,
     MatSnackBarModule,
-    RewardsModule,
-    MerchantsModule,
+    RewardsModule.forRoot(),
+    MerchantsModule.forRoot(),
     MerchantAdminModule,
-    LoyaltyModule,
+    LoyaltyModule.forRoot(),
     VouchersModule,
     HttpClientModule,
     InfiniteScrollModule,

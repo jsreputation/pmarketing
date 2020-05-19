@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { IMerchantsService } from './imerchants.service';
 import { IImage, IMerchant, IOutlet, ITag } from './models/merchants.model';
 import { oc } from 'ts-optchain';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
+import { Cacheable } from 'ngx-cacheable';
 
 interface IV4GetMerchantsResponse {
   data: IV4Merchant[];
@@ -46,7 +47,6 @@ interface IV4Outlet {
   providedIn: 'root'
 })
 export class V4MerchantsService implements IMerchantsService {
-  private merchants: { [id: number]: { [page: number]: IMerchant } } = {};
   private merchantsWithoutId: IV4Merchant[] = [];
   private apiHost: string;
 
@@ -131,31 +131,16 @@ export class V4MerchantsService implements IMerchantsService {
     );
   }
 
-  public getMerchant(merchantId: number, useCache?: boolean, page?: number): Observable<IMerchant> {
-    if (useCache === undefined) {
-      useCache = true;
-    }
+  @Cacheable({})
+  public getMerchant(merchantId: number, page?: number): Observable<IMerchant> {
     page = page || 1;
-
-    if (useCache && this.merchants[merchantId] && this.merchants[merchantId][page]) {
-      return of(this.merchants[merchantId][page]);
-    }
-
     return this.http.get<IV4GetMerchantResponse>(`${this.apiHost}/v4/merchants/${merchantId}?page=${page}`)
       .pipe(
         map(res => res.data),
         map((merchant: IV4Merchant) => ({
           ...merchant,
           outlets: V4MerchantsService.v4OutletsToOutlets(merchant.outlets)
-        })),
-        tap((merchant: IMerchant) => {
-          if (!this.merchants[merchantId]) {
-            this.merchants[merchantId] = {};
-          }
-          //  make sure that page is a number
-          page = page || 1;
-          this.merchants[merchant.id][page] = merchant;
-        })
+        }))
       );
   }
 }
