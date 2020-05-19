@@ -78,11 +78,11 @@ export class HomeComponent implements OnInit {
         });
     this.translate.get(['HOME.YOU_HAVE', 'HOME.HELLO', 'HOME.POINTS_EXPITING'])
       .subscribe((res: any) => {
-        this.subTitleFn = () => res.HOME.YOU_HAVE;
-        this.titleFn = (profile: IProfile) => `${res.HOME.HELLO} ${profile.lastName},`;
+        this.subTitleFn = () => res.HOME && res.HOME.YOU_HAVE;
+        this.titleFn = (profile: IProfile) => `${res.HOME && res.HOME.HELLO} ${profile.lastName},`;
         this.summaryExpiringFn = (loyalty: ILoyalty) =>
           loyalty && loyalty.expiringPoints && loyalty.expiringPoints.length && loyalty.expiringPoints[0].points &&
-            loyalty.expiringPoints[0].points !== 0 ? res.HOME.POINTS_EXPITING
+            loyalty.expiringPoints[0].points !== 0 ? res.HOME && res.HOME.POINTS_EXPITING
               .replace('{{points}}', (loyalty.expiringPoints[0].points ? loyalty.expiringPoints[0].points : 0)
                 .toString())
               .replace('{{date}}', loyalty.expiringPoints[0].expireDate ?
