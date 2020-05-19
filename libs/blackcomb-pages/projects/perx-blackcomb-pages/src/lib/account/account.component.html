@@ -1,0 +1,51 @@
+<ng-container *ngIf="profile$ | async; else ghostBlock">
+  <div class="page-container" *ngIf="theme | async as th"
+    [ngStyle]="{'background-color': th?.properties['--account_background_color']}">
+    <div *ngIf="appConfig | async as aConfig">
+      <div *ngIf="aConfig.showUserInfoOnAccountsPage">
+        <perx-core-profile-summary
+          [profile$]="profile$"
+          [loyalty$]="loyalty$"
+        ></perx-core-profile-summary>
+      </div>
+      <div class="section profile">
+        <mat-nav-list>
+          <mat-list-item routerLink="/profile">
+            {{'ACCOUNT_PAGE.PROFILE' | translate}}
+          </mat-list-item>
+          <mat-list-item *ngIf="aConfig.showReferralOnAccountsPage" routerLink="/referral">
+            {{'ACCOUNT_PAGE.REFER_FRIEND' | translate}}
+          </mat-list-item>
+        </mat-nav-list>
+      </div>
+
+      <div class="section">
+        <mat-nav-list>
+          <mat-list-item *ngIf="aConfig.showTransactionHistoryOnAccountsPage" routerLink="/transaction-history">
+            {{'ACCOUNT_PAGE.TRANSACTION_HISTORY' | translate}}
+          </mat-list-item>
+          <mat-list-item (click)="goToPage(page)" *ngFor="let page of pages">
+            {{page.title | translate}}
+          </mat-list-item>
+        </mat-nav-list>
+      </div>
+      <div *ngIf="!preAuth" class="section">
+        <mat-nav-list>
+          <mat-list-item (click)="logout()">{{'ACCOUNT_PAGE.LOGOUT' | translate}}</mat-list-item>
+        </mat-nav-list>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #ghostBlock>
+  <div class="section">
+    <mat-card class="basic-info mat-elevation-z0">
+      <mat-card-header>
+        <div mat-card-avatar>
+          <img src="assets/avatar.png" alt="">
+        </div>
+      </mat-card-header>
+    </mat-card>
+  </div>
+</ng-template>

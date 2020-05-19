@@ -2,16 +2,24 @@ import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { ConfigService, IReward, RewardsService } from '@perxtech/core';
 import { Observable } from 'rxjs';
 import { MacaronService, IMacaron } from '../../services/macaron.service';
-import { map } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
+import { trigger } from '@angular/animations';
+import { fadeIn, fadeOut } from '../../utils/fade-animations';
 
 @Component({
   selector: 'app-rewards-cards',
+  animations: [
+    trigger('fadeOut', fadeOut()),
+    trigger('fadeIn', fadeIn())
+  ],
   templateUrl: './rewards-cards.component.html',
   styleUrls: ['./rewards-cards.component.scss']
 })
 export class RewardsCardsComponent implements OnInit {
   public rewardsSnapping$: Observable<IReward[]>;
   public rewardsFeatured$: Observable<IReward[]>;
+  public ghostRewardsSnapping: any[] = new Array(3); // 3 to cover screen width while loading
+  public ghostRewardsFeatured: any[] = new Array(3); // 3 to cover screen width while loading
 
   @Output()
   public tapped: EventEmitter<IReward> = new EventEmitter<IReward>();
@@ -27,11 +35,13 @@ export class RewardsCardsComponent implements OnInit {
     this.configService.readAppConfig().subscribe(() => {
       this.rewardsSnapping$ = this.rewardsService.getAllRewards(['snapping'])
         .pipe(
-          map((rewards: IReward[]) => this.sortRewards(rewards))
+          map((rewards: IReward[]) => this.sortRewards(rewards)),
+          finalize(() => this.ghostRewardsSnapping = [])
         );
       this.rewardsFeatured$ = this.rewardsService.getAllRewards(['featured'])
         .pipe(
-          map((rewards: IReward[]) => this.sortRewards(rewards))
+          map((rewards: IReward[]) => this.sortRewards(rewards)),
+          finalize(() => this.ghostRewardsFeatured = [])
         );
     });
   }

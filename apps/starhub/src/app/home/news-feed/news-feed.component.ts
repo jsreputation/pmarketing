@@ -13,6 +13,7 @@ import {
   IRssFeeds,
   IRssFeedsData,
   RssFeedsPages,
+  ConfigService,
 } from '@perxtech/core';
 
 import {
@@ -33,9 +34,11 @@ export class NewsFeedComponent implements OnInit {
   public newsBeforeScroll: number[];
   public newsAfterScroll: number[];
   public showButton: boolean = true;
+  public ghostFeed?: any[] = new Array(1);
 
   private initNewsFeedItems(): void {
-    this.settingsService.getRssFeeds().pipe(
+    this.configService.readAppConfig().pipe(
+      switchMap(() => this.settingsService.getRssFeeds()),
       map((res: IRssFeeds) => res.data ? res.data.find(feed => feed.page === RssFeedsPages.HOME) : undefined),
       switchMap((feedData: IRssFeedsData | undefined) => {
         if (!feedData || !feedData.url) {
@@ -45,7 +48,10 @@ export class NewsFeedComponent implements OnInit {
       })
     ).subscribe(items => {
       this.items = items;
+      this.ghostFeed = undefined;
       this.newsAfterScroll = Array.from(Array(items.length > 0 ? items.length - 1 : 1).keys());
+    }, () => {
+      this.ghostFeed = undefined;
     });
   }
 
@@ -54,6 +60,7 @@ export class NewsFeedComponent implements OnInit {
     private dialog: MatDialog,
     private analytics: AnalyticsService,
     private settingsService: SettingsService,
+    private configService: ConfigService
   ) { }
 
   public ngOnInit(): void {

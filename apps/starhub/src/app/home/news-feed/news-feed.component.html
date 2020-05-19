@@ -1,19 +1,27 @@
 <div class="cdk-virtual-scroll-data-source" (window:resize)="onResize()">
   <cdk-virtual-scroll-viewport (scrolledIndexChange)="updateScrollIndex($event)" [itemSize]="itemSize"
     orientation="horizontal">
-    <mat-card *cdkVirtualFor="let item of items" class="mat-item mat-elevation-z2"
-      [ngStyle]="{'width': ((itemSize-48) / 10)+'rem'}">
-      <img mat-card-image [src]="item.image" *ngIf="item.image">
-      <mat-card-content>
-        <p class="description">{{ getFirstLine((item.description)).length > 120 ? getFirstLine((item.description | slice:0:120)) + '...' : getFirstLine((item.description)) }}</p>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-button color="primary" (click)="readMore(item)">Read More</button>
-      </mat-card-actions>
-    </mat-card>
+    <ng-container *ngIf="!ghostFeed && items">
+      <div *cdkVirtualFor="let item of items"
+           class="hero-card">
+        <img class="hero-img" [src]="item.image" *ngIf="item.image">
+        <div (click)="readMore(item)" class="gradient-cta-block">
+          <p color="primary" class="description">
+            {{ getFirstLine((item.description)).length > 120 ? getFirstLine((item.description | slice:0:120)) + '...' : getFirstLine((item.description)) }}
+          </p>
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="ghostFeed">
+      <div class="hero-card">
+        <img class="img-ghost">
+        <div class="gradient-cta-block">
+          <p class="description-ghost"></p>
+        </div>
+      </div>
+    </ng-container>
   </cdk-virtual-scroll-viewport>
 </div>
-
 <div class="dots">
   <div class="container">
     <span class="gray-dot" *ngFor="let i of newsBeforeScroll"></span>
