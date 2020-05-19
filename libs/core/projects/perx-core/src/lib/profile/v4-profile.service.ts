@@ -43,7 +43,6 @@ export interface IV4ProfileResponse {
 })
 export class V4ProfileService extends ProfileService {
   private apiHost: string;
-  public profileCache: Observable<IProfile[]>[] = [];
 
   constructor(
     private http: HttpClient,
@@ -76,11 +75,8 @@ export class V4ProfileService extends ProfileService {
 
   // calling this a lot to pipe to different places throughout this service and apps, helps to cache it
   public whoAmI(): Observable<IProfile> {
-    if (this.profileCache['id']) {
-      return this.profileCache['id'];
-    }
     const url = `${this.apiHost}/v4/customers/me`;
-    return this.profileCache['id'] = this.http.get<IV4ProfileResponse>(url)
+    return this.http.get<IV4ProfileResponse>(url)
       .pipe(
         map((resp: IV4ProfileResponse) => V4ProfileService.v4ProfileToProfile(resp.data)),
         shareReplay(1)
