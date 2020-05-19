@@ -7,17 +7,17 @@
         </mat-select>
       </mat-form-field>
       <mat-form-field class="grow4">
-        <mat-label>{{"MOBILE_NUMBER" | translate}}</mat-label>
+        <mat-label>{{"ACCOUNT_PAGE.MOBILE_NUMBER" | translate}}</mat-label>
 
         <input matInput type="text" matInput formControlName="phone">
         <mat-error *hkbnErrorHandler="'required'">
-          {{"REQUIRED" | translate}}
+          {{"ACCOUNT_PAGE.REQUIRED" | translate}}
         </mat-error>
         <mat-error *hkbnErrorHandler="['minlength', 'maxlength', 'pattern']">
-          {{"PLEASE_ENTER_VALID_NUMBER" | translate}}
+          {{"ACCOUNT_PAGE.PLEASE_ENTER_VALID_NUMBER" | translate}}
         </mat-error>
       </mat-form-field>
     </div>
-    <button mat-raised-button color="primary">{{"UPDATE" | translate}}</button>
+    <button mat-raised-button color="primary">{{"ACCOUNT_PAGE.UPDATE" | translate}}</button>
   </form>
 </div>

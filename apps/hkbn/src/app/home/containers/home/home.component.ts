@@ -10,32 +10,32 @@ const stubTabs: ITabConfigExtended[] = [
   {
     filterKey: null,
     filterValue: null,
-    tabName: 'ALL',
+    tabName: 'HOME.ALL',
     rewardsList: null,
     rewardsType: null
   }
   , {
     filterKey: null,
     filterValue: null,
-    tabName: 'HOME+',
+    tabName: 'HOME.HOME+',
     rewardsList: null,
     rewardsType: 'Home+'
   }, {
     filterKey: null,
     filterValue: null,
-    tabName: 'HKBN',
+    tabName: 'HOME.HKBN',
     rewardsList: null,
     rewardsType: 'HKBN'
   }, {
     filterKey: null,
     filterValue: null,
-    tabName: 'HUNG_FOOK_TONG',
+    tabName: 'HOME.HUNG_FOOK_TONG',
     rewardsList: null,
     rewardsType: 'Hung Fook Tong'
   }, {
     filterKey: null,
     filterValue: null,
-    tabName: 'BIG_BIG_SHOP',
+    tabName: 'HOME.BIG_BIG_SHOP',
     rewardsList: null,
     rewardsType: 'big big shop'
   }
@@ -76,13 +76,13 @@ export class HomeComponent implements OnInit {
         (loyalty: ILoyalty) => {
           this.loyalty = loyalty;
         });
-    this.translate.get(['YOU_HAVE', 'HELLO', 'POINTS_EXPITING'])
+    this.translate.get(['HOME.YOU_HAVE', 'HOME.HELLO', 'HOME.POINTS_EXPITING'])
       .subscribe((res: any) => {
-        this.subTitleFn = () => res.YOU_HAVE;
-        this.titleFn = (profile: IProfile) => `${res.HELLO} ${profile.lastName},`;
+        this.subTitleFn = () => res.HOME && res.HOME.YOU_HAVE;
+        this.titleFn = (profile: IProfile) => `${res.HOME && res.HOME.HELLO} ${profile.lastName},`;
         this.summaryExpiringFn = (loyalty: ILoyalty) =>
           loyalty && loyalty.expiringPoints && loyalty.expiringPoints.length && loyalty.expiringPoints[0].points &&
-            loyalty.expiringPoints[0].points !== 0 ? res.POINTS_EXPITING
+            loyalty.expiringPoints[0].points !== 0 ? res.HOME && res.HOME.POINTS_EXPITING
               .replace('{{points}}', (loyalty.expiringPoints[0].points ? loyalty.expiringPoints[0].points : 0)
                 .toString())
               .replace('{{date}}', loyalty.expiringPoints[0].expireDate ?

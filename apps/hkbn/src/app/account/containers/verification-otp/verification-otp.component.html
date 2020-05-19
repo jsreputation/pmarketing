@@ -2,11 +2,11 @@
   <div class="validation-description">
     <h2 class="title">Please, verify your number</h2>
     <p class="subheading">
-      <ng-container>{{"OTP_SENT" | translate}}</ng-container>
+      <ng-container>{{"OTP_PAGE.OTP_SENT" | translate}}</ng-container>
       ({{numberDisplay}})
-      <ng-container>{{"CHECK_SMS" | translate}}</ng-container>
+      <ng-container>{{"OTP_PAGE.CHECK_SMS" | translate}}</ng-container>
     </p>
   </div>
   <perx-core-pin-input [length]="6" (full)="update($event)"></perx-core-pin-input>
-  <p class="resend-sms" (click)="resendSms()">{{"RESEND_SMS" | translate}}</p>
+  <p class="resend-sms" (click)="resendSms()">{{"OTP_PAGE.RESEND_SMS" | translate}}</p>
 </div>

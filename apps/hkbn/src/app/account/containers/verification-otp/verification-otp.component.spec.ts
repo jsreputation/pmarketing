@@ -90,7 +90,7 @@ describe('VerificationOtpComponent', () => {
     const translateSpy = spyOn(translateService, 'get');
     component.update(otp);
     tick();
-    expect(translateSpy).toHaveBeenCalledWith('PASSWORD_SUCCESS_UPDATE');
+    expect(translateSpy).toHaveBeenCalledWith('OTP_PAGE.PASSWORD_SUCCESS_UPDATE');
   }));
 
   it('should do all workflow with mobile', fakeAsync(() => {

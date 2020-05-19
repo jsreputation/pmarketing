@@ -1,18 +1,18 @@
-<p class="member-ship">{{"MY_ID" | translate}}: {{accountData ? accountData.id: ''}}</p>
+<p class="member-ship">{{"ACCOUNT_PAGE.MY_ID" | translate}}: {{accountData ? accountData.id: ''}}</p>
 
 <form [formGroup]="accountSummary" class="account-summary">
   <mat-form-field>
-    <mat-label>{{"SURNAME" | translate}}</mat-label>
+    <mat-label>{{"ACCOUNT_PAGE.SURNAME" | translate}}</mat-label>
     <input type="text" matInput readonly formControlName="firstName">
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>{{"FIRST_NAME" | translate}}</mat-label>
+    <mat-label>{{"ACCOUNT_PAGE.FIRST_NAME" | translate}}</mat-label>
     <input type="text" matInput readonly formControlName="lastName">
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>{{"MOBILE_NUMBER" | translate}}</mat-label>
+    <mat-label>{{"ACCOUNT_PAGE.MOBILE_NUMBER" | translate}}</mat-label>
     <input type="text" matInput readonly formControlName="phone">
     <a routerLink="phone" matSuffix>
       <mat-icon>edit</mat-icon>
@@ -20,7 +20,7 @@
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>{{"EMAIL" | translate}}</mat-label>
+    <mat-label>{{"ACCOUNT_PAGE.EMAIL" | translate}}</mat-label>
     <input type="text" matInput readonly formControlName="email">
     <a routerLink="email" matSuffix>
       <mat-icon>edit</mat-icon>
@@ -28,7 +28,7 @@
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>{{"CURRENT_PASSWORD" | translate}}</mat-label>
+    <mat-label>{{"ACCOUNT_PAGE.CURRENT_PASSWORD" | translate}}</mat-label>
     <input type="password" matInput readonly formControlName="pass">
     <a routerLink="password" matSuffix>
       <mat-icon>edit</mat-icon>
@@ -36,7 +36,7 @@
   </mat-form-field>
   <form formGroupName="customProperties">
     <mat-slide-toggle (change)="agreement($event)" formControlName="subscribe_notification" labelPosition="before">
-      {{"AGREE_MARKETING" | translate}}
+      {{"ACCOUNT_PAGE.AGREE_MARKETING" | translate}}
     </mat-slide-toggle>
   </form>
   <div class="form-field-border"></div>
