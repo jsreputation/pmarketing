@@ -37,9 +37,9 @@ export class TransactionHistoryComponent implements OnInit, PageAppearence {
     private datePipe: DatePipe,
     private translate: TranslateService
   ) {
-    this.translate.get(['POINT_EARNED', 'POINT_SPENT']).subscribe((res: any) => {
-      this.pointsEarnedTxt = res.POINT_EARNED;
-      this.pointsSpentTxt = res.POINT_SPENT;
+    this.translate.get(['TRANSACTION_HISTORY.POINT_EARNED', 'TRANSACTION_HISTORY.POINT_SPENT']).subscribe((res: any) => {
+      this.pointsEarnedTxt = res.TRANSACTION_HISTORY && res.TRANSACTION_HISTORY.POINT_EARNED;
+      this.pointsSpentTxt = res.TRANSACTION_HISTORY && res.TRANSACTION_HISTORY.POINT_SPENT;
     });
   }
 
@@ -72,7 +72,7 @@ export class TransactionHistoryComponent implements OnInit, PageAppearence {
       header: true,
       backButtonEnabled: true,
       bottomSelectedItem: BarSelectedItem.ACCOUNT,
-      pageTitle: 'STATIC_TRANSACTION_HISTORY'
+      pageTitle: 'TRANSACTION_HISTORY'
     };
   }
 

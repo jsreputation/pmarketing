@@ -1,6 +1,6 @@
 <div class="main-container">
-	<h2 *ngIf="pinMode === 'password'" translate>RESET_PASSWORD</h2>
-	<h2 *ngIf="pinMode === 'register'" translate>{{STATIC_NEW_REGISTER}}</h2>	
+	<h2 *ngIf="pinMode === 'password'" translate>RESET_PW_PAGE.RESET_PASSWORD</h2>
+	<h2 *ngIf="pinMode === 'register'" translate>SIGN_UP_PAGE.NEW_REGISTER</h2>	
 	<div class="subheading"><span>{{subHeading}}</span></div>
 	<div class="pin-input-container">
 		<perx-core-pin-input 
@@ -8,5 +8,5 @@
 		(full)="onPinEntered($event)">
 		</perx-core-pin-input>
 	</div>
-	<div i18n="@@static-resend-otp" class="bottom-text" (click)="resendOtp()">{{'RESEND_OTP' | translate}}</div>
+	<div i18n="@@static-resend-otp" class="bottom-text" (click)="resendOtp()">{{'OTP_PAGE.RESEND_OTP' | translate}}</div>
 </div>

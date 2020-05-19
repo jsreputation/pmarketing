@@ -1,62 +1,62 @@
 <div class="main-container">
   <img src="assets/logo.png">
 	<div class="logo-title">
-		<ng-container i18n="@@login-subtitle">{{'DLP' | translate}}</ng-container>
+		<ng-container i18n="@@login-subtitle">{{'SIGN_UP_PAGE.DLP' | translate}}</ng-container>
 	</div>
 	<div class="content-container">
-		<div translate class="main-heading">SIGN_UP</div>
-		<div class="subtitle"><ng-container>{{'STATIC_HAVE_ACCOUNT' | translate}}? </ng-container><span translate class="link" (click)="goToLogin()">STATIC_LOGIN</span></div>
+		<div translate class="main-heading">SIGN_UP_PAGE.SIGN_UP</div>
+		<div class="subtitle"><ng-container>{{'SIGN_UP_PAGE.HAVE_ACCOUNT' | translate}}? </ng-container><span translate class="link" (click)="goToLogin()">SIGN_UP_PAGE.LOGIN</span></div>
 		<form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
 			<mat-form-field color="primary" class="full-width__input">
-				<mat-label translate>STATIC_NAME</mat-label>
-				<input matInput placeholder="{{'STATIC_NAME' | translate}}" placeholder="Name" formControlName="name" required>
+				<mat-label translate>SIGN_UP_PAGE.NAME</mat-label>
+				<input matInput placeholder="{{'SIGN_UP_PAGE.NAME' | translate}}" placeholder="Name" formControlName="name" required>
 				<mat-error *ngIf="name && name.hasError('required')">
-					<span translate>STATIC_NAME_IS </span>
+					<span translate>SIGN_UP_PAGE.NAME_IS </span>
 				</mat-error>
 			</mat-form-field>
 			<mat-form-field class="full-width__input">
 				<mat-select formControlName="countryCode">
-					<mat-option default value="852"><ng-container>{{'COUNTRY_HONGKONG' | translate}}</ng-container>(+852)</mat-option>
-					<mat-option value="853"><ng-container>{{'COUNTRY_MACAU' | translate}}</ng-container> (+853)</mat-option>
-					<mat-option value="86"><ng-container>{{'COUNTRY_CHINA' | translate}}</ng-container> (+86)</mat-option>
-					<mat-option value="65"><ng-container>{{'COUNTRY_SINGAPORE' | translate}}</ng-container> (+65)</mat-option>
+					<mat-option default value="852"><ng-container>{{'SIGN_UP_PAGE.COUNTRY_HONGKONG' | translate}}</ng-container>(+852)</mat-option>
+					<mat-option value="853"><ng-container>{{'SIGN_UP_PAGE.COUNTRY_MACAU' | translate}}</ng-container> (+853)</mat-option>
+					<mat-option value="86"><ng-container>{{'SIGN_UP_PAGE.COUNTRY_CHINA' | translate}}</ng-container> (+86)</mat-option>
+					<mat-option value="65"><ng-container>{{'SIGN_UP_PAGE.COUNTRY_SINGAPORE' | translate}}</ng-container> (+65)</mat-option>
 				</mat-select>
 			</mat-form-field>
 			<mat-form-field color="primary" class="full-width__input">
-				<mat-label translate>STATIC_MOBILE_NO</mat-label>
-				<input matInput placeholder="{{'STATIC_MOBILE_NO' | translate}}" placeholder="Mobile No" formControlName="mobileNo" type="number" required>
+				<mat-label translate>SIGN_UP_PAGE.MOBILE_NO</mat-label>
+				<input matInput placeholder="{{'SIGN_UP_PAGE.MOBILE_NO' | translate}}" placeholder="Mobile No" formControlName="mobileNo" type="number" required>
 				<mat-error *ngIf="mobileNo && mobileNo.hasError('required')">
-					<span translate>STATIC_MOBILE_NO_IS </span>
+					<span translate>SIGN_UP_PAGE.MOBILE_NO_IS </span>
 				</mat-error>
 			</mat-form-field>
 			<mat-form-field color="primary" class="full-width__input">
-				<mat-label translate>PASSWORD</mat-label>
-				<input matInput placeholder="{{'PASSWORD' | translate}}" placeholder="Password" formControlName="password" type="password" required>
+				<mat-label translate>SIGN_UP_PAGE.PASSWORD</mat-label>
+				<input matInput placeholder="{{'SIGN_UP_PAGE.PASSWORD' | translate}}" placeholder="Password" formControlName="password" type="password" required>
 				<mat-error *ngIf="password && password.hasError('required')">
-					<span translate="">PASSWORD_IS </span>
+					<span translate="">SIGN_UP_PAGE.PASSWORD_IS </span>
 				</mat-error>
 				<mat-error *ngIf="password && password.hasError('minlength')">
-					<span translate>PASSWORD_SIX_CHARS</span>
+					<span translate>SIGN_UP_PAGE.PASSWORD_SIX_CHARS</span>
 				</mat-error>
 			</mat-form-field>
 			<mat-form-field color="primary" class="full-width__input">
-				<mat-label translate>CONFIRM_PASSWORD</mat-label>
-				<input matInput placeholder="{{'CONFIRM_PASSWORD' | translate}}" placeholder="Confirm Password" formControlName="confirmPassword" type="password" required>
+				<mat-label translate>SIGN_UP_PAGE.CONFIRM_PASSWORD</mat-label>
+				<input matInput placeholder="{{'SIGN_UP_PAGE.CONFIRM_PASSWORD' | translate}}" placeholder="Confirm Password" formControlName="confirmPassword" type="password" required>
 				<mat-error *ngIf="confirmPassword && confirmPassword.hasError('required')">
-					<span translate>CONFIRM_PASSWORD_IS </span>
+					<span translate>SIGN_UP_PAGE.CONFIRM_PASSWORD_IS </span>
 				</mat-error>
 				<mat-error *ngIf="confirmPassword && confirmPassword.hasError('minlength')">
-					<span translate>PASSWORD_SIX_CHARS</span>
+					<span translate>SIGN_UP_PAGE.PASSWORD_SIX_CHARS</span>
 				</mat-error>
 			</mat-form-field>
 			<div class="accept-terms">
-				<mat-checkbox color="primary" formControlName="accept_terms">{{ 'STATIC_ACCEPT_TERMS' | translate }}</mat-checkbox>
+				<mat-checkbox color="primary" formControlName="accept_terms">{{ 'SIGN_UP_PAGE.ACCEPT_TERMS' | translate }}</mat-checkbox>
 			</div>
 			<div class="checkbox-container">
 				<mat-checkbox color="primary" formControlName="accept_marketing"></mat-checkbox>
-			 	<span translate class="wrap-checkbox-text">STATIC_AGREE_MARKETING</span>
+			 	<span translate class="wrap-checkbox-text">SIGN_UP_PAGE.AGREE_MARKETING</span>
 			</div>
-			<button mat-flat-button type="submit" class="full-width__button">{{'STATIC_REGISTER_BTN' | translate }}</button>
+			<button mat-flat-button type="submit" class="full-width__button">{{'SIGN_UP_PAGE.REGISTER_BTN' | translate }}</button>
 		</form>
 	</div>
 </div>

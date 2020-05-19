@@ -8,10 +8,10 @@
   <div class="loyalty-section">
     <perx-core-loyalty-summary [titleFn]="titleFn" class="loyalty-item" [subTitleFn]="subTitleFn">
     </perx-core-loyalty-summary>
-    <button mat-flat-button (click)="myQrClicked()">{{"STATIC_MY_QR" | translate}}</button>
+    <button mat-flat-button (click)="myQrClicked()">{{"HOME.MY_QR" | translate}}</button>
   </div>
   <div class="section-heading">
-    <h4 translate>STATIC_FEATURED_REWARDS</h4>
+    <h4 translate>HOME.FEATURED_REWARDS</h4>
   </div>
   <div class="rewards-carousel">
     <perx-core-rewards-collection [rewardsList]="rewards" (tapped)="rewardClicked($event)">
