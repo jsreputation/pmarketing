@@ -38,6 +38,7 @@ import {
   IConfig,
   TokenStorage,
   LanguageService,
+  ProfileServiceModule,
 } from '@perxtech/core';
 
 import { environment } from '../environments/environment';
@@ -93,10 +94,11 @@ const PROVIDERS = [
     AuthModule,
     AuthenticationModule,
     ProfileModule,
-    LoyaltyModule,
+    ProfileServiceModule.forRoot(),
+    LoyaltyModule.forRoot(),
     VouchersModule,
-    RewardsModule,
-    MerchantsModule,
+    RewardsModule.forRoot(),
+    MerchantsModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

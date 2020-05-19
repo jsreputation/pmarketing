@@ -67,7 +67,7 @@ export const setLanguage = (
     ProfileModule,
     ProfileServiceModule.forRoot(),
     BrowserAnimationsModule,
-    PerxMerchantsModule,
+    PerxMerchantsModule.forRoot(),
     PerxStampModule,
     ProfileModule,
     UtilsModule,
@@ -77,7 +77,7 @@ export const setLanguage = (
     MatDialogModule,
     MatButtonModule,
     MatSnackBarModule,
-    RewardsModule,
+    RewardsModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

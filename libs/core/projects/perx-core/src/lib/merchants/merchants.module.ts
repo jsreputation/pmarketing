@@ -26,12 +26,12 @@ export class MerchantsModule {
     return {
       ngModule: MerchantsModule,
       providers: [
-      {
-        provide: IMerchantsService,
-        useFactory: merchantsServiceFactory,
-        deps: [HttpClient, Config, ConfigService]
-      }
-    ]
+        {
+          provide: IMerchantsService,
+          useFactory: merchantsServiceFactory,
+          deps: [HttpClient, Config, ConfigService]
+        }
+      ]
     };
   }
   public static forChild(): ModuleWithProviders<MerchantsModule> {

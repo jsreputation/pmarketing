@@ -40,7 +40,7 @@ import {
   LanguageInterceptor,
   AuthenticationService,
   ThemesService,
-  IConfig
+  IConfig, ProfileServiceModule
 } from '@perxtech/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -132,10 +132,11 @@ export const setLanguage = (
     BrowserAnimationsModule,
     AuthenticationModule,
     ProfileModule,
+    ProfileServiceModule.forRoot(),
     UtilsModule,
-    LoyaltyModule,
-    RewardsModule,
-    MerchantsModule,
+    LoyaltyModule.forRoot(),
+    RewardsModule.forRoot(),
+    MerchantsModule.forRoot(),
     VouchersModule,
     QRCodeModule,
     LocationModule,

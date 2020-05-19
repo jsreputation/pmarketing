@@ -114,7 +114,7 @@ export const setLanguage = (
     AppRoutingModule,
     MatSnackBarModule,
     VouchersModule,
-    RewardsModule
+    RewardsModule.forRoot()
   ],
   bootstrap: [AppComponent],
   providers: [

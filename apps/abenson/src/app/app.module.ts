@@ -115,7 +115,7 @@ export const setLanguage = (
     AppRoutingModule,
     PerxCoreModule,
     VouchersModule,
-    MerchantsModule,
+    MerchantsModule.forRoot(),
     AuthenticationModule,
     GameModule,
     ProfileModule,
@@ -134,12 +134,12 @@ export const setLanguage = (
     ReactiveFormsModule,
     FormsModule,
     UtilsModule,
-    LoyaltyModule,
+    LoyaltyModule.forRoot(),
     MatCheckboxModule,
     HttpClientModule,
     CampaignModule,
     CampaignServiceModule.forRoot(),
-    RewardsModule,
+    RewardsModule.forRoot(),
     NgxBarcodeModule,
     TranslateModule.forRoot({
       loader: {
