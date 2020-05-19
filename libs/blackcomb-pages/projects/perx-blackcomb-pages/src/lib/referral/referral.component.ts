@@ -87,11 +87,11 @@ export class ReferralComponent {
       'REFERRAL.COPY_TO_CLIPBOARD',
       'REFERRAL.CLIPBOARD_ERROR_TXT'
     ]).subscribe((res: any) => {
-      this.tnc = res['REFERRAL.CONTENT'];
-      this.shareTitle = res['REFERRAL.SHARE_COPY_TITLE'];
-      this.shareText = res['REFERRAL.SHARE_COPY_TXT'].replace('[URL]', this.shareUrl);
-      this.copyToClipboardTxt = res['REFERRAL.COPY_TO_CLIPBOARD'];
-      this.clipboardErrorTxt = res['REFERRAL.CLIPBOARD_ERROR_TXT'];
+      this.tnc = res.REFERRAL && res.REFERRAL.CONTENT;
+      this.shareTitle = res.REFERRAL && res.REFERRAL.SHARE_COPY_TITLE;
+      this.shareText = (res.REFERRAL && res.REFERRAL.SHARE_COPY_TXT).replace('[URL]', this.shareUrl);
+      this.copyToClipboardTxt = res.REFERRAL && res.REFERRAL.COPY_TO_CLIPBOARD;
+      this.clipboardErrorTxt = res.REFERRAL && res.REFERRAL.CLIPBOARD_ERROR_TXT;
     });
   }
 }

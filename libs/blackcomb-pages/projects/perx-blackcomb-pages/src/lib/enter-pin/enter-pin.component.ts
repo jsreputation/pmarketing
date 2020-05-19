@@ -210,9 +210,9 @@ export class EnterPinComponent implements PopUpClosedCallBack {
     const otpPopUpTrans = this.translate.get(['OTP_PAGE.POPUP_TITLE', 'OTP_PAGE.POPUP_TXT', 'OTP_PAGE.POPUP_BTN_TXT']).pipe(
       tap((res) => {
         this.popupTxt = {
-          title: res['OTP_PAGE.POPUP_TITLE'],
-          text: res['OTP_PAGE.POPUP_TXT'],
-          buttonTxt: res['OTP_PAGE.POPUP_BTN_TXT'],
+          title: res.OTP_PAGE && res.OTP_PAGE.POPUP_TITLE,
+          text: res.OTP_PAGE && res.OTP_PAGE.POPUP_TXT,
+          buttonTxt: res.OTP_PAGE && res.OTP_PAGE.POPUP_BTN_TXT,
         };
       }));
     const sourceTrans = of(subheadingTrans, otpErrorTrans, otpPopUpTrans, otpSuccessTrans, otpResendTrans);
