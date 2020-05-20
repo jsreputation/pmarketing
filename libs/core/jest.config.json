@@ -16,7 +16,7 @@
   "moduleNameMapper": {},
   "globals": {
     "ts-jest": {
-      "tsConfig": "<rootDir>/projects/perx-core/tsconfig.spec.json",
+      "tsConfig": "<rootDir>/tsconfig.spec.json",
       "stringifyContentPathRegex": "\\.html$",
       "astTransformers": [
         "jest-preset-angular/build/InlineFilesTransformer",

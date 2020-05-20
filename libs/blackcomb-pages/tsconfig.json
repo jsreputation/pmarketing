@@ -15,19 +15,12 @@
     "strictNullChecks": true,
     "target": "es2015",
     "typeRoots": [
-      "node_modules/@types"
+      "node_modules/@types",
+      "../../node_modules/@types"
     ],
     "lib": [
       "es2018",
       "dom"
-    ],
-    "paths": {
-      "perx-blackcomb-pages": [
-        "dist/perx-blackcomb-pages"
-      ],
-      "perx-blackcomb-pages/*": [
-        "dist/perx-blackcomb-pages/*"
-      ]
-    }
+    ]
   }
 }
