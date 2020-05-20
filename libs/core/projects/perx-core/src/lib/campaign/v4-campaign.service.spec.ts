@@ -12,16 +12,15 @@ import { IV4Reward } from '../rewards/v4-rewards.service';
 import { ConfigService } from '../config/config.service';
 
 jest.mock('ngx-cacheable', () => ({
-  Cacheable: () => {
-    return (_target, _propertyKey, descriptor) => {
-      // save a reference to the original method
-      const originalMethod = descriptor.value as () => Observable<any>;
-      descriptor.value = function(...args) {
-        return (originalMethod.apply(this, args));
-      };
-      return descriptor;
-    }}
-}))
+  Cacheable: () => (_, _, descriptor) => {
+    // save a reference to the original method
+    const originalMethod = descriptor.value as () => Observable<any>;
+    descriptor.value = function(...args: any): any {
+      return (originalMethod.apply(this, args));
+    };
+    return descriptor;
+  }
+}));
 
 describe('V4CampaignService', () => {
   let httpTestingController: HttpTestingController;
