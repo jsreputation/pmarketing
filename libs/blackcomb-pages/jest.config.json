@@ -13,6 +13,7 @@
     "<rootDir>/projects/setup-jest.ts"
   ],
   "moduleNameMapper": {},
+  "resolver": "@nrwl/jest/plugins/resolver",
   "globals": {
     "ts-jest": {
       "tsConfig": "<rootDir>/tsconfig.spec.json",
