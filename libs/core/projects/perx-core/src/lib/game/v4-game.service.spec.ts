@@ -11,10 +11,22 @@ import {
 import { V4GameService } from './v4-game.service';
 import { Type } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ConfigModule } from '../config/config.module';
 import { RedemptionType } from '../perx-core.models';
 import { ConfigService } from '../../public-api';
+
+jest.mock('ngx-cacheable', () => ({
+  Cacheable: () => {
+    return (_target, _propertyKey, descriptor) => {
+      // save a reference to the original method
+      const originalMethod = descriptor.value as () => Observable<any>;
+      descriptor.value = function(...args) {
+        return (originalMethod.apply(this, args));
+      };
+      return descriptor;
+    }}
+}))
 
 describe('V4GameService', () => {
   let httpTestingController: HttpTestingController;

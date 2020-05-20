@@ -7,9 +7,21 @@ import { ICampaign, CampaignType, CampaignState } from './models/campaign.model'
 import { IVoucherService } from '../vouchers/ivoucher.service';
 import { ConfigModule } from '../config/config.module';
 import { HttpClient } from '@angular/common/http';
-import { of } from 'rxjs';
+import {Observable, of} from 'rxjs';
 import { IV4Reward } from '../rewards/v4-rewards.service';
 import { ConfigService } from '../config/config.service';
+
+jest.mock('ngx-cacheable', () => ({
+  Cacheable: () => {
+    return (_target, _propertyKey, descriptor) => {
+      // save a reference to the original method
+      const originalMethod = descriptor.value as () => Observable<any>;
+      descriptor.value = function(...args) {
+        return (originalMethod.apply(this, args));
+      };
+      return descriptor;
+    }}
+}))
 
 describe('V4CampaignService', () => {
   let httpTestingController: HttpTestingController;
