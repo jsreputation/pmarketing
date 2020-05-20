@@ -328,9 +328,7 @@ export class V4GameService implements IGameService {
         // due to home comp's nested campaigns calling this mtd too (check home component)
         // && home call of this method completing before nested campaigns subcription, causing a fresh instance
         take(1), // to ensure completion
-        catchError(_ => {
-          return EMPTY;
-        })
+        catchError(_ => EMPTY)
       );
   }
 
