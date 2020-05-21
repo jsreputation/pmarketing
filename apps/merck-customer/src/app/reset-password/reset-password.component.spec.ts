@@ -3,7 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { ResetPasswordComponent } from './reset-password.component';
-import { AuthenticationService, IProfile, NotificationService, ProfileService } from '@perxtech/core';
+import { AuthenticationService, NotificationService } from '@perxtech/core';
 import {
   MatFormFieldModule,
   MatInputModule
@@ -17,17 +17,6 @@ describe('ResetPasswordComponent', () => {
   let component: ResetPasswordComponent;
   let fixture: ComponentFixture<ResetPasswordComponent>;
 
-  const mockProfile: IProfile = {
-    id: 1,
-    state: 'active',
-    firstName: '',
-    lastName: '',
-    phone: '6512345678',
-  };
-
-  const profileServiceStub: Partial<ProfileService> = {
-    whoAmI: () => of(mockProfile)
-  };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ResetPasswordComponent],
@@ -52,7 +41,6 @@ describe('ResetPasswordComponent', () => {
             getInterruptedUrl: () => ''
           }
         },
-        { provide: ProfileService, useValue: profileServiceStub },
         {
           provide: NotificationService,
           useValue: {
