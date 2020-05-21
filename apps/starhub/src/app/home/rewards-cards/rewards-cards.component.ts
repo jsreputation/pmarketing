@@ -18,7 +18,7 @@ import {
 import { trigger } from '@angular/animations';
 import { fadeIn, fadeOut } from '../../utils/fade-animations';
 
-const REQ_PAGE_SIZE: number = 10;
+const REQ_PAGE_SIZE: number = 20;
 
 @Component({
   selector: 'app-rewards-cards',
