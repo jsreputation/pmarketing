@@ -17,7 +17,7 @@
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="full-width__input">
-                    <mat-label>Full Name</mat-label>
+                    <mat-label>Full Name (as per IC)</mat-label>
                     <input matInput placeholder="Name" formControlName="name" required>
                     <mat-error *ngIf="signupForm.get('name').hasError('required')">
                         <span>Name is </span><strong>REQUIRED</strong>
