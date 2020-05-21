@@ -16,7 +16,7 @@ import { AccountComponent } from './account.component';
     MatCardModule,
     ProfileModule,
     TranslateModule.forChild(),
-    LoyaltyModule,
+    LoyaltyModule.forChild(),
     RouterModule
   ]
 })

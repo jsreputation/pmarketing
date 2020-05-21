@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { EMPTY, Observable, of } from 'rxjs';
-import { catchError, map, shareReplay } from 'rxjs/operators';
+import { EMPTY, Observable, of, Subject } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import {
   ICampaign,
   CampaignType,
@@ -18,6 +18,7 @@ import { TreeDisplayProperties, PinataDisplayProperties, ScratchDisplayPropertie
 import { QuizDisplayProperties } from '../quiz/v4-quiz.service';
 import { GameType } from '../game/game.model';
 import { patchUrl } from '../utils/patch-url.function';
+import { Cacheable } from 'ngx-cacheable';
 
 interface IV4Image {
   type: string;
@@ -78,6 +79,8 @@ interface IV4CampaignsResponse {
     count: number;
   };
 }
+
+const campaignsCacheBuster: Subject<boolean> = new Subject();
 
 @Injectable({ providedIn: 'root' })
 export class V4CampaignService implements ICampaignService {
@@ -160,6 +163,11 @@ export class V4CampaignService implements ICampaignService {
     };
   }
 
+  @Cacheable({
+    cacheBusterObserver: campaignsCacheBuster,
+    maxCacheCount: 50,
+    maxAge: 300000 // 5 minutes
+  })
   public getCampaigns(
     filterOptions?: ICampaignFilterOptions
   ): Observable<ICampaign[]> {
@@ -191,6 +199,16 @@ export class V4CampaignService implements ICampaignService {
       );
   }
 
+  // if need be call method here to clear campaignsCache
+  public static clearCampaignCache(): void {
+    campaignsCacheBuster.next(true);
+  }
+
+  @Cacheable({
+    cacheBusterObserver: campaignsCacheBuster,
+    maxCacheCount: 100,
+    maxAge: 300000
+  })
   public getCampaign(id: number): Observable<ICampaign> {
     if (this.campaignsCache[id]) {
       return this.campaignsCache[id];
@@ -202,7 +220,6 @@ export class V4CampaignService implements ICampaignService {
         map((campaign: IV4Campaign) =>
           V4CampaignService.v4CampaignToCampaign(campaign)
         ),
-        shareReplay(1),
         catchError(_ => {
           delete this.campaignsCache[id];
           return EMPTY;

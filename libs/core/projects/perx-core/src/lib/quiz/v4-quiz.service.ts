@@ -26,6 +26,7 @@ import {
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
 import { patchUrl } from '../utils/patch-url.function';
+import { Cacheable } from 'ngx-cacheable';
 
 const enum V4QuizMode {
   basic = 'basic',
@@ -151,6 +152,7 @@ export class V4QuizService implements QuizService {
       });
   }
 
+  @Cacheable({})
   public getQuizFromCampaign(campaignId: number, lang: string = 'en'): Observable<IQuiz> {
     return this.baseUrl$.pipe(
       switchMap(baseUrl => this.http.get<V4GamesResponse>(`${baseUrl}/v4/campaigns/${campaignId}/games`)),

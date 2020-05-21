@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, of, combineLatest, throwError, EMPTY } from 'rxjs';
+import {Observable, of, combineLatest, throwError, EMPTY, Subject} from 'rxjs';
 import { IGameService } from './igame.service';
 import {
   IGame,
@@ -21,14 +21,17 @@ import {
 import {
   catchError,
   map,
-  shareReplay,
+  publishReplay,
+  refCount,
   switchMap,
+  tap
 } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 import { IV4Voucher, V4VouchersService } from '../vouchers/v4-vouchers.service';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
 import { patchUrl } from '../utils/patch-url.function';
+import { Cacheable } from 'ngx-cacheable';
 
 const enum GameType {
   shakeTheTree = 'shake_the_tree',
@@ -151,13 +154,16 @@ interface IV4LightGameCampaign {
 interface IV4GameCampaigns {
   data: IV4LightGameCampaign[];
 }
-
+const gamesCacheBuster: Subject<boolean> = new Subject();
+const gamesCacheDecider: (response: any) => boolean = res => res && !(res instanceof HttpErrorResponse); // don't cache if empty/error
+// cache
+// dynamic to allow imprinting of cacheDecider into decorator
+// @dynamic
 @Injectable({
   providedIn: 'root'
 })
 export class V4GameService implements IGameService {
   private hostName: string;
-  public gamesCache: Observable<IGame[]>[] = [];
 
   constructor(
     private httpClient: HttpClient,
@@ -283,6 +289,7 @@ export class V4GameService implements IGameService {
   public play(gameId: number): Observable<IPlayOutcome> {
     return this.httpClient.put<IV4PlayResponse>(`${this.hostName}/v4/games/${gameId}/play`, null)
       .pipe(
+        tap(() => gamesCacheBuster.next(true)), // bust the cache if games has been updated
         map((res: IV4PlayResponse) => {
           // @ts-ignore
           const vs: IV4Voucher[] = res.data.outcomes.filter((out) => out.outcome_type === 'reward');
@@ -294,6 +301,11 @@ export class V4GameService implements IGameService {
       );
   }
 
+  @Cacheable({
+    cacheBusterObserver: gamesCacheBuster,
+    shouldCacheDecider: gamesCacheDecider,
+    maxCacheCount: 50
+  })
   public get(gameId: number): Observable<IGame> {
     return this.httpClient.get<GameResponse>(`${this.hostName}/v4/games/${gameId}`)
       .pipe(
@@ -302,22 +314,22 @@ export class V4GameService implements IGameService {
       );
   }
 
+  @Cacheable({
+    cacheBusterObserver: gamesCacheBuster,
+    shouldCacheDecider: gamesCacheDecider,
+    maxCacheCount: 50
+  })
   public getGamesFromCampaign(campaignId: number): Observable<IGame[]> {
-    if (this.gamesCache[campaignId]) {
-      // retrieving from game store
-      return this.gamesCache[campaignId];
-    }
-    // getting games for the first time
-    return this.gamesCache[campaignId] = this.httpClient.get<GamesResponse>(`${this.hostName}/v4/campaigns/${campaignId}/games`)
+    return this.httpClient.get<GamesResponse>(`${this.hostName}/v4/campaigns/${campaignId}/games`)
       .pipe(
         map(res => res.data),
         map((games: Game[]) => games.filter((game: Game) => game.game_type !== GameType.quiz)),
         map((games: Game[]) => games.map((game: Game): IGame => V4GameService.v4GameToGame(game))),
-        shareReplay(1),
-        catchError(_ => {
-          delete this.gamesCache[campaignId];
-          return EMPTY;
-        })
+        publishReplay(1), // note: observe that changing to shareReplay causes http call to be doubled
+        // due to home comp's nested campaigns calling this mtd too (check home component)
+        // && home call of this method completing before nested campaigns subcription, causing a fresh instance
+        refCount(), // add refCount for now for tests to pass but still double call
+        catchError(_ => EMPTY)
       );
   }
 
@@ -326,6 +338,7 @@ export class V4GameService implements IGameService {
     return this.httpClient
       .put<IV4PlayResponse>(`${this.hostName}/v4/games/${gameId}/reserve`, null)
       .pipe(
+        tap(() => gamesCacheBuster.next(true)),
         map(res => ({
           id: res.data.id,
           voucherIds: res.data.outcomes.map(
@@ -359,6 +372,7 @@ export class V4GameService implements IGameService {
     return this.httpClient
       .put<IV4PlayResponse>(`${this.hostName}/v4/game_transactions/${gameId}/confirm`, null)
       .pipe(
+        tap(() => gamesCacheBuster.next(true)), // bust the cache if games has been updated
         map((res: IV4PlayResponse) => {
           // @ts-ignore
           const vs: IV4Voucher[] = res.data.outcomes.filter((out) => out.outcome_type === 'reward');

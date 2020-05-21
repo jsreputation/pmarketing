@@ -248,8 +248,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         mergeMap((campaigns: ICampaign[]) => combineLatest(
           ...campaigns.map(campaign => this.campaignService.getCampaign(campaign.id).pipe(catchError(() => of(void 0))))
         )),
-        // just keep campaigns of type give_reward
-        map((campaigns: ICampaign[]) => campaigns.filter(campaign => campaign !== undefined && campaign.type === CampaignType.give_reward)),
         // don't go further if it is an empty array
         filter((campaigns: ICampaign[]) => campaigns.length > 0),
         // get the first element

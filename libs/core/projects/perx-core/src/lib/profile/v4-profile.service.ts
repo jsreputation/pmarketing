@@ -4,9 +4,10 @@ import { HttpClient, HttpResponse, HttpErrorResponse, HttpParams } from '@angula
 import {
   map,
   mergeMap,
-  catchError, shareReplay,
+  catchError,
+  tap,
 } from 'rxjs/operators';
-import { Observable, of, throwError } from 'rxjs';
+import {Observable, of, Subject, throwError} from 'rxjs';
 
 import {
   IProfile,
@@ -17,6 +18,7 @@ import { ProfileService } from './profile.service';
 
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
+import { Cacheable } from 'ngx-cacheable';
 
 interface IV4Profile {
   id: number;
@@ -37,6 +39,8 @@ interface IV4Profile {
 export interface IV4ProfileResponse {
   data: IV4Profile;
 }
+
+const profileCacheBuster: Subject<boolean> = new Subject();
 
 @Injectable({
   providedIn: 'root'
@@ -74,12 +78,14 @@ export class V4ProfileService extends ProfileService {
   }
 
   // calling this a lot to pipe to different places throughout this service and apps, helps to cache it
+  @Cacheable({
+    cacheBusterObserver: profileCacheBuster
+  })
   public whoAmI(): Observable<IProfile> {
     const url = `${this.apiHost}/v4/customers/me`;
     return this.http.get<IV4ProfileResponse>(url)
       .pipe(
-        map((resp: IV4ProfileResponse) => V4ProfileService.v4ProfileToProfile(resp.data)),
-        shareReplay(1)
+        map((resp: IV4ProfileResponse) => V4ProfileService.v4ProfileToProfile(resp.data))
       );
   }
 
@@ -93,11 +99,16 @@ export class V4ProfileService extends ProfileService {
               ...profile.customProperties,
               ...data
             }
-          })
+          }).pipe(
+          tap(() => profileCacheBuster.next(true)),
+        )
       )
     );
   }
 
+  @Cacheable({
+    cacheBusterObserver: profileCacheBuster
+  })
   public getCustomProperties(): Observable<ICustomProperties> {
     return this.whoAmI()
       .pipe(
@@ -113,7 +124,9 @@ export class V4ProfileService extends ProfileService {
           {
             ...profile,
             ...data
-          })
+          }).pipe(
+          tap(() => profileCacheBuster.next(true))
+        )
       )
     );
   }
@@ -127,10 +140,14 @@ export class V4ProfileService extends ProfileService {
             card_number: data.cardNumber.toString(),
             loyalty_program_id: data.loyaltyProgramId
           })
-      )
+      ),
+      tap(() => profileCacheBuster.next(true))
     );
   }
 
+  @Cacheable({
+    cacheBusterObserver: profileCacheBuster
+  })
   public verifyCardNumber(cardNumber: string, userName: string, loyaltyId: string = '1'): Observable<boolean> {
     const url = `${this.apiHost}/v4/customers/verify_cardnumber`;
     const params = new HttpParams()
