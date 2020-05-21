@@ -12,6 +12,7 @@ import { IV4Reward } from '../rewards/v4-rewards.service';
 import { ConfigService } from '../config/config.service';
 
 jest.mock('ngx-cacheable', () => ({
+  // tslint:disable-next-line:variable-name
   Cacheable: () => (_target, _, descriptor) => {
     // save a reference to the original method
     const originalMethod = descriptor.value as () => Observable<any>;

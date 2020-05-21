@@ -17,7 +17,7 @@ import { RedemptionType } from '../perx-core.models';
 import { ConfigService } from '../../public-api';
 
 jest.mock('ngx-cacheable', () => ({
-  // @ts-ignore
+  // tslint:disable-next-line:variable-name
   Cacheable: () => (_target, _, descriptor) => {
     // save a reference to the original method
     const originalMethod = descriptor.value as () => Observable<any>;
