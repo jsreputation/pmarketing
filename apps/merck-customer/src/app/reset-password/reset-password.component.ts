@@ -70,12 +70,11 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
     const password = this.resetPasswordForm.value.password as string;
     const confirmPassword = this.resetPasswordForm.value.confirmPassword as string;
     if (password !== confirmPassword) {
-      this.notificationService.addSnack(this.passwordNotMatch)
+      this.notificationService.addSnack(this.passwordNotMatch);
       return;
     }
-    let resetPaswordCall;
 
-    resetPaswordCall = this.authService.resetPassword({
+    const resetPaswordCall = this.authService.resetPassword({
       phone: this.mobileNumber,
       newPassword: password,
       otp: this.otp,
