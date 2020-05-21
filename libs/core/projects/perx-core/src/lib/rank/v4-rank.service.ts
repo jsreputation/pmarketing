@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import {map, shareReplay} from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { ConfigService } from '../config/config.service';
 import {
   LeaderBoard,
   UserRanking
 } from './models/rank.model';
+// import { Cacheable } from 'ngx-cacheable';
 
 const camelToPascalCase = (str: string) => str.replace(/\B_[a-z]/g, m => (
   m.charAt(1).toUpperCase()
@@ -61,7 +62,8 @@ export class V4RankService {
     return this.http.get(`${this.baseUrl}/v4/leaderboards`)
       .pipe(
         map((res: ApiWrap<V4LeaderBoard[]>) => res.data),
-        map((dataArr: V4LeaderBoard[]) => dataArr.map(data => objectKeysPascalize(camelToPascalCase, data) as LeaderBoard))
+        map((dataArr: V4LeaderBoard[]) => dataArr.map(data => objectKeysPascalize(camelToPascalCase, data) as LeaderBoard)),
+        shareReplay(1)
       );
   }
 
