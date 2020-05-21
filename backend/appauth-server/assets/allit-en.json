@@ -345,7 +345,7 @@
   },
   "QR": {
     "QR_TO_MERCHANT": "Present this QR code to the merchant",
-    "BARCODE_TO_MERCHANT": "Present this Barcode to the merchant",
+    "BARCODE_TO_MERCHANT": "Present this barcode at the cashier to earn your points.",
     "CTA": "Cancel"
   },
   "VOUCHER": {
