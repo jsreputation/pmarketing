@@ -1,4 +1,9 @@
-import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import {
+  Component,
+  Output,
+  EventEmitter,
+  OnInit
+} from '@angular/core';
 import {
   ConfigService,
   IReward,
@@ -9,14 +14,20 @@ import {
   Observable,
   of
 } from 'rxjs';
-import { MacaronService, IMacaron } from '../../services/macaron.service';
+import {
+  MacaronService,
+  IMacaron
+} from '../../services/macaron.service';
 import {
   finalize,
   map,
   tap
 } from 'rxjs/operators';
 import { trigger } from '@angular/animations';
-import { fadeIn, fadeOut } from '../../utils/fade-animations';
+import {
+  fadeIn,
+  fadeOut
+} from '../../utils/fade-animations';
 
 const REQ_PAGE_SIZE: number = 20;
 
@@ -27,7 +38,7 @@ const REQ_PAGE_SIZE: number = 20;
     trigger('fadeIn', fadeIn())
   ],
   templateUrl: './rewards-cards.component.html',
-  styleUrls: ['./rewards-cards.component.scss']
+  styleUrls: [ './rewards-cards.component.scss' ]
 })
 export class RewardsCardsComponent implements OnInit {
   private currentRewardsSnappingPage: number = 0;
@@ -66,10 +77,10 @@ export class RewardsCardsComponent implements OnInit {
 
   private sortRewards(rewards: IReward[]): IReward[] {
     return rewards.sort((a: IReward, b: IReward) => {
-      if (!a.sellingFrom) {
+      if (! a.sellingFrom) {
         return 1;
       }
-      if (!b.sellingFrom) {
+      if (! b.sellingFrom) {
         return -1;
       }
       return a.sellingFrom.getTime() - b.sellingFrom.getTime();
@@ -89,7 +100,7 @@ export class RewardsCardsComponent implements OnInit {
       return of([]);
     }
     this.currentRewardsSnappingPage++;
-    return this.rewardsService.getRewards(this.currentRewardsSnappingPage, REQ_PAGE_SIZE, ['snapping'], undefined)
+    return this.rewardsService.getRewards(this.currentRewardsSnappingPage, REQ_PAGE_SIZE, [ 'snapping' ], undefined)
       .pipe(
         tap((rewards: IReward[]) => this.rewardsSnappingCompleted = rewards.length < REQ_PAGE_SIZE),
         map((rewards: IReward[]) => this.sortRewards(rewards)),
@@ -102,7 +113,7 @@ export class RewardsCardsComponent implements OnInit {
       return of([]);
     }
     this.currentRewardsFeaturedPage++;
-    return this.rewardsService.getRewards(this.currentRewardsFeaturedPage, REQ_PAGE_SIZE, ['featured'], undefined)
+    return this.rewardsService.getRewards(this.currentRewardsFeaturedPage, REQ_PAGE_SIZE, [ 'featured' ], undefined)
       .pipe(
         tap((rewards: IReward[]) => this.rewardsFeaturedCompleted = rewards.length < REQ_PAGE_SIZE),
         map((rewards: IReward[]) => this.sortRewards(rewards)),
@@ -112,12 +123,12 @@ export class RewardsCardsComponent implements OnInit {
   }
 
   public onRewardsSnappingScroll(): void {
-    if (!this.rewardsSnappingCompleted) {
+    if (! this.rewardsSnappingCompleted) {
       forkJoin(this.rewardsSnapping$, this.getRewardsSnapping()).subscribe(val => {
-        if (!val[1].length && val[1].length < REQ_PAGE_SIZE) {
+        if (! val[1].length && val[1].length < REQ_PAGE_SIZE) {
           this.rewardsSnappingCompleted = true;
         }
-        this.rewardsSnapping$ = of([...val[0], ...val[1]]);
+        this.rewardsSnapping$ = of([ ...val[0], ...val[1] ]);
       });
       return;
     }
@@ -125,12 +136,12 @@ export class RewardsCardsComponent implements OnInit {
   }
 
   public onRewardsFeaturedScroll(): void {
-    if (!this.rewardsFeaturedCompleted) {
+    if (! this.rewardsFeaturedCompleted) {
       forkJoin(this.rewardsFeatured$, this.getRewardsFeatured()).subscribe(val => {
-        if (!val[1].length && val[1].length < REQ_PAGE_SIZE) {
+        if (! val[1].length && val[1].length < REQ_PAGE_SIZE) {
           this.rewardsFeaturedCompleted = true;
         }
-        this.rewardsFeatured$ = of([...val[0], ...val[1]]);
+        this.rewardsFeatured$ = of([ ...val[0], ...val[1] ]);
       });
       return;
     }
