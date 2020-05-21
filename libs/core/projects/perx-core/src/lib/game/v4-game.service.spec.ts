@@ -18,7 +18,7 @@ import { ConfigService } from '../../public-api';
 
 jest.mock('ngx-cacheable', () => ({
   // @ts-ignore
-  Cacheable: () => (_, _, descriptor) => {
+  Cacheable: () => (_target, _, descriptor) => {
     // save a reference to the original method
     const originalMethod = descriptor.value as () => Observable<any>;
     descriptor.value = function(...args: any): any {
