@@ -5,6 +5,7 @@ import {
   RewardsService,
 } from '@perxtech/core';
 import {
+  forkJoin,
   Observable,
   of
 } from 'rxjs';
@@ -108,5 +109,31 @@ export class RewardsCardsComponent implements OnInit {
         tap((rewards: IReward[]) => this.sortRewards(rewards)),
         finalize(() => this.ghostRewardsFeatured = [])
       );
+  }
+
+  public onRewardsSnappingScroll(): void {
+    if (!this.rewardsSnappingCompleted) {
+      forkJoin(this.rewardsSnapping$, this.getRewardsSnapping()).subscribe(val => {
+        if (!val[1].length && val[1].length < REQ_PAGE_SIZE) {
+          this.rewardsSnappingCompleted = true;
+        }
+        this.rewardsSnapping$ = of([...val[0], ...val[1]]);
+      });
+      return;
+    }
+    ++this.currentRewardsSnappingPage;
+  }
+
+  public onRewardsFeaturedScroll(): void {
+    if (!this.rewardsFeaturedCompleted) {
+      forkJoin(this.rewardsFeatured$, this.getRewardsFeatured()).subscribe(val => {
+        if (!val[1].length && val[1].length < REQ_PAGE_SIZE) {
+          this.rewardsFeaturedCompleted = true;
+        }
+        this.rewardsFeatured$ = of([...val[0], ...val[1]]);
+      });
+      return;
+    }
+    ++this.currentRewardsFeaturedPage;
   }
 }
