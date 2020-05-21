@@ -291,12 +291,14 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   private initCampaign(): void {
     // https://iamturns.com/continue-rxjs-streams-when-errors-occur/ also look at CatchError, exactly for this purpose
-    this.games$ = this.gamesService.getActiveGames()
-      .pipe(
-        tap((games: IGame[]) => this.showGames = games.length > 0),
-        switchMap((games: IGame[]) => of(games).pipe(catchError(err => of(err)))),
-        takeLast(1)
-      );
+    if (this.showGames) { // prevent calling unnecessarily (i.e. duped when perx-blackcomb-pages-campaigns-collection quiz present)
+      this.games$ = this.gamesService.getActiveGames()
+        .pipe(
+          tap((games: IGame[]) => this.showGames = games.length > 0),
+          switchMap((games: IGame[]) => of(games).pipe(catchError(err => of(err)))),
+          takeLast(1)
+        );
+    }
     this.stampCampaigns$ = this.campaignService.getCampaigns({ type: CampaignType.stamp })
       .pipe(
         tap((campaigns: ICampaign[]) => this.showCampaigns = campaigns.length > 0),
