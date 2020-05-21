@@ -112,7 +112,7 @@ export class GameComponent implements OnInit, OnDestroy {
             this.successPopUp.imageUrl = successOutcome.image || this.successPopUp.imageUrl;
             this.successPopUp.buttonTxt = successOutcome.button || this.successPopUp.buttonTxt;
           }
-          if (game.remainingNumberOfTries <= 0) {
+          if (game.remainingNumberOfTries <= 0 && game.remainingNumberOfTries !== null) { // null is recognised as infinite from dashboard
             this.notificationService.addPopup({
               title: 'No more tries',
               text: 'Come back when you\'ve earned more tries!',
