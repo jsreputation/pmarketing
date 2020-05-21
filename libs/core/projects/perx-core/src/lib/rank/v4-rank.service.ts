@@ -7,7 +7,6 @@ import {
   LeaderBoard,
   UserRanking
 } from './models/rank.model';
-// import { Cacheable } from 'ngx-cacheable';
 
 const camelToPascalCase = (str: string) => str.replace(/\B_[a-z]/g, m => (
   m.charAt(1).toUpperCase()
