@@ -149,7 +149,7 @@ export class V4SettingsService extends SettingsService {
         // false signals that the app should continue holding.
         return false;
       }),
-      //expecting a HTTP 429 error
+      // expecting a HTTP 429 error
       catchError(() => EMPTY) // catch and do nothing to allow polling to continue
     );
   }
