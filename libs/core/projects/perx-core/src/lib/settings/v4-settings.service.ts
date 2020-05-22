@@ -5,10 +5,12 @@ import {
 } from '@angular/common/http';
 
 import {
+  EMPTY,
   Observable,
-  of,
+  of
 } from 'rxjs';
 import {
+  catchError,
   map,
   share,
   switchMap,
@@ -143,13 +145,12 @@ export class V4SettingsService extends SettingsService {
       map((res: HttpResponse<any>) => {
         if (res.status === 200) {
           return true;
-        } else if (res.status === 429) {
-          return false;
         }
         // false signals that the app should continue holding.
         return false;
-      })
+      }),
+      //expecting a HTTP 429 error
+      catchError(() => EMPTY) // catch and do nothing to allow polling to continue
     );
   }
-
 }
