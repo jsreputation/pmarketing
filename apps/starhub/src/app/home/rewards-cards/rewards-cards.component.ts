@@ -43,8 +43,8 @@ const REQ_PAGE_SIZE: number = 20;
 export class RewardsCardsComponent implements OnInit {
   private currentRewardsSnappingPage: number = 0;
   private currentRewardsFeaturedPage: number = 0;
-  private rewardsSnappingCompleted: boolean = false;
-  private rewardsFeaturedCompleted: boolean = false;
+  public rewardsSnappingCompleted: boolean = false;
+  public rewardsFeaturedCompleted: boolean = false;
   public rewardsSnapping$: Observable<IReward[]>;
   public rewardsFeatured$: Observable<IReward[]>;
   public ghostRewardsSnapping: any[] = new Array(3); // 3 to cover screen width while loading

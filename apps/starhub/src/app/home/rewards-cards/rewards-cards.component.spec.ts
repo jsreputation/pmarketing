@@ -91,4 +91,19 @@ describe('RewardsCardsComponent', () => {
     expect(component.tapped.emit).toHaveBeenCalledWith(reward);
   });
 
+  describe('initRewards', () => {
+    it('should call rewardsService.getRewards', fakeAsync(() => {
+      component.rewardsSnappingCompleted = false;
+      component.rewardsFeaturedCompleted = false;
+      const rewardsService = TestBed.get<RewardsService>(RewardsService as Type<RewardsService>);
+      const rewardsServiceSpy = spyOn(rewardsService, 'getRewards').and.returnValue(of(rewards));
+      component.getRewardsSnapping().subscribe( () => {
+        expect(rewardsServiceSpy).toHaveBeenCalled();
+      })
+      component.getRewardsFeatured().subscribe( () => {
+        expect(rewardsServiceSpy).toHaveBeenCalled();
+      })
+      tick();
+    }));
+  });
 });
