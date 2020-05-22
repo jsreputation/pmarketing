@@ -49,4 +49,5 @@ Thumbs.db
 # deploy stuff
 /secret
 skaffold-v-star-microsite.yaml
+*/src/assets/config/RSS_FEEDS.json
 
