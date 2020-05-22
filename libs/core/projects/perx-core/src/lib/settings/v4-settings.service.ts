@@ -142,12 +142,12 @@ export class V4SettingsService extends SettingsService {
     }).pipe(
       map((res: HttpResponse<any>) => {
         if (res.status === 200) {
-          return false;
-        } else if (res.status === 429) {
           return true;
+        } else if (res.status === 429) {
+          return false;
         }
-        // true signals that the app should continue holding.
-        return true;
+        // false signals that the app should continue holding.
+        return false;
       })
     );
   }
