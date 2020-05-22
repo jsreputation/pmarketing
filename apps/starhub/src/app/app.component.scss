@@ -13,16 +13,30 @@
 
   .content {
     align-self: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
-    h1 {
-      font-size: 1.6rem;
-      text-align: center;
-      color: #6DC00E;
+    .text-block {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-bottom: 2rem;
+
+      h1 {
+        font-size: 1.6rem;
+        text-align: center;
+        color: #6DC00E;
+      }
+
+      h2 {
+        font-size: 1.4rem;
+        text-align: center;
+      }
     }
 
-    h2 {
-      font-size: 1.4rem;
-      text-align: center;
+    .mat-progress-spinner {
+      align-self: center;
     }
   }
 }
