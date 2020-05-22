@@ -2,12 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import {
-  EMPTY,
   Observable,
   of
 } from 'rxjs';
 import {
-  catchError,
   map,
   share,
   switchMap,
@@ -145,8 +143,7 @@ export class V4SettingsService extends SettingsService {
         // false signals that the app should continue holding.
         return false;
       }),
-      // expecting a HTTP 429 error
-      catchError(() => EMPTY) // catch and do nothing to allow polling to continue
+      // expecting a HTTP 429 error to be handled by caller
     );
   }
 }

@@ -23,18 +23,21 @@ import {
   MatSnackBar
 } from '@angular/material';
 import {
+  catchError,
   filter,
   first,
   map,
   switchMap,
-  tap,
 } from 'rxjs/operators';
 import {
   AnalyticsService,
   IEvent,
   PageType
 } from './analytics.service';
-import { timer } from 'rxjs';
+import {
+  EMPTY,
+  timer
+} from 'rxjs';
 
 export interface IdataLayerSH {
   pageName: string;
@@ -64,7 +67,8 @@ export class AppComponent implements OnInit {
   // public selectedCampaign: ICampaign;
   public game?: IGame;
   public theme: ITheme;
-  public holdingGateOpened: boolean = false;
+  public holdingGateOpened: boolean = true;
+  public loading: boolean = true;
 
   constructor(
     // private authenticationService: AuthenticationService,
@@ -134,16 +138,20 @@ export class AppComponent implements OnInit {
 
     // init holding
     this.configService.readAppConfig().pipe(
-      tap(() => this.holdingGateOpened = false),
       switchMap(() => timer(0, 2000)
         .pipe(
-          switchMap(() => this.settingsService.isGatekeeperOpen()),
+          switchMap(() => this.settingsService.isGatekeeperOpen().pipe(
+            catchError(() => {
+              this.holdingGateOpened = false;
+              return EMPTY;
+            })
+          )),
         )
       ),
       first(res => res === true)
-    ).subscribe((shouldHold: boolean) => {
-      this.holdingGateOpened = shouldHold;
+    ).subscribe(() => {
       this.loadApp();
+      this.loading = false;
     });
   }
 
