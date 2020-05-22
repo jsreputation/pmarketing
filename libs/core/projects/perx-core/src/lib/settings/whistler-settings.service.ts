@@ -66,4 +66,8 @@ export class WhistlerSettingsService extends SettingsService {
       map((account) => this.settings = account)
     );
   }
+
+  public isHoldingState(): Observable<boolean> {
+    throw new Error('isHoldingState Method not implemented.');
+  }
 }

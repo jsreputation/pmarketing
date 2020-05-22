@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpResponse
+} from '@angular/common/http';
 
 import {
-  of,
   Observable,
+  of,
 } from 'rxjs';
 import {
   map,
@@ -14,14 +17,16 @@ import {
 
 import { IWSetting } from '@perxtech/whistler';
 
-import {
-  IConfig
-} from '../config/models/config.model';
+import { IConfig } from '../config/models/config.model';
 
 import { AuthenticationService } from '../auth/authentication/authentication.service';
 import { ICustomProperties } from '../profile/profile.model';
 import { SettingsService } from './settings.service';
-import { IMicrositeSettings, IRssFeeds, PagesObject } from './models/settings.model';
+import {
+  IMicrositeSettings,
+  IRssFeeds,
+  PagesObject
+} from './models/settings.model';
 import { ConfigService } from '../config/config.service';
 
 interface IV4WordPressRssResponse {
@@ -127,4 +132,19 @@ export class V4SettingsService extends SettingsService {
       map((account) => this.settings = account)
     );
   }
+
+  public isHoldingState(): Observable<boolean> {
+    return this.http.post(`${this.hostName}/v4/gatekeep_token`, null).pipe(
+      map((res: HttpResponse<any>) => {
+        if (res.status === 200) {
+          return false;
+        } else if (res.status === 429) {
+          return true;
+        }
+        // true signals that the app should continue holding.
+        return true;
+      })
+    )
+  }
+
 }
