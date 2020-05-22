@@ -29,6 +29,7 @@ export class PinInputComponent implements OnInit, OnDestroy {
 
   public controls: FormControl[] = [];
   private destroy$: Subject<void> = new Subject();
+
   constructor(
     private element: ElementRef,
   ) {
@@ -75,11 +76,12 @@ export class PinInputComponent implements OnInit, OnDestroy {
   }
 
   public onKey(event: KeyboardEvent): void {
-    // remove last letter
     if (event.key === 'Backspace') {
-      const v = this.value;
-      if (v.length > 0 && v.length < this.length) {
-        this.controls[v.length - 1].setValue('');
+      const target = event.target as HTMLInputElement;
+      const changeInputIndex = parseInt(target.id.split('_')[1], 10);
+      const changeInputValue = target.value;
+      if (!changeInputValue && changeInputIndex > 0) {
+        this.controls[changeInputIndex - 1].setValue('');
       }
       event.stopPropagation();
     }
