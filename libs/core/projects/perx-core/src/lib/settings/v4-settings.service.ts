@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-  HttpResponse
-} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import {
   EMPTY,
@@ -56,6 +53,9 @@ interface IV4MicrositeSettings {
   key: string;
   string_value: string;
   json_value: ICustomProperties;
+}
+interface IV4GatekeeperResponse {
+  message: string;
 }
 
 @Injectable({
@@ -137,13 +137,9 @@ export class V4SettingsService extends SettingsService {
 
   public isHoldingState(): Observable<boolean> {
     // this will return a empty body and angular does not like it.
-    return this.http.post(`${this.hostName}/v4/gatekeep_token`, null, {
-      headers: { 'Content-Type': 'text/plain' },
-      observe: 'body',
-      responseType: 'text' as 'json' // @see https://github.com/angular/angular/issues/18586
-    }).pipe(
-      map((res: HttpResponse<any>) => {
-        if (res.status === 200) {
+    return this.http.post<IV4GatekeeperResponse>(`${this.hostName}/v4/gatekeep_token`, null).pipe(
+      map((res: IV4GatekeeperResponse) => {
+        if (res.message === 'go ahead') {
           return true;
         }
         // false signals that the app should continue holding.
