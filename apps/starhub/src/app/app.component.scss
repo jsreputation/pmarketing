@@ -3,3 +3,40 @@
   height: 100%;
   display: block;
 }
+
+.holding-container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+
+  .content {
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .text-block {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-bottom: 2rem;
+
+      h1 {
+        font-size: 1.8rem;
+        text-align: center;
+        color: #6DC00E;
+      }
+
+      h2 {
+        font-size: 1.6rem;
+        text-align: center;
+      }
+    }
+
+    .mat-progress-spinner {
+      align-self: center;
+    }
+  }
+}
