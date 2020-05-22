@@ -64,7 +64,7 @@ export class AppComponent implements OnInit {
   // public selectedCampaign: ICampaign;
   public game?: IGame;
   public theme: ITheme;
-  public holdingGateOpened: boolean = false;
+  public holdingGateOpened: boolean = true;
 
   constructor(
     // private authenticationService: AuthenticationService,
