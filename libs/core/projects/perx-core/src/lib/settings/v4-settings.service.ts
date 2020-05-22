@@ -134,7 +134,12 @@ export class V4SettingsService extends SettingsService {
   }
 
   public isHoldingState(): Observable<boolean> {
-    return this.http.post(`${this.hostName}/v4/gatekeep_token`, null).pipe(
+    // this will return a empty body and angular does not like it.
+    return this.http.post(`${this.hostName}/v4/gatekeep_token`, null, {
+      headers: { 'Content-Type': 'text/plain' },
+      observe: 'body',
+      responseType: 'text' as 'json' // @see https://github.com/angular/angular/issues/18586
+    }).pipe(
       map((res: HttpResponse<any>) => {
         if (res.status === 200) {
           return false;
@@ -144,7 +149,7 @@ export class V4SettingsService extends SettingsService {
         // true signals that the app should continue holding.
         return true;
       })
-    )
+    );
   }
 
 }
