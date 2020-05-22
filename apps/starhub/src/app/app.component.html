@@ -1,4 +1,15 @@
 <div class="app" *ngIf="holdingGateOpened; else holdingGateClosed">
-    <router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </div>
-<ng-template #holdingGateClosed>Alternate text while primary text is hidden</ng-template>
+<ng-template #holdingGateClosed>
+  <div class="holding-container">
+    <div class="content">
+      <h1>
+        Sorry!
+        <br>
+        We are experiencing high traffic.
+      </h1>
+      <h2>Please wait while we load you in</h2>
+    </div>
+  </div>
+</ng-template>
