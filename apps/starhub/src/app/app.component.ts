@@ -1,18 +1,41 @@
-import { Component, OnInit } from '@angular/core';
 import {
+  Component,
+  OnInit
+} from '@angular/core';
+import {
+  ConfigService,
+  ICampaign,
+  IGame,
+  IGameService,
+  IPopupConfig,
+  IProfile,
+  ITheme,
+  LoyaltyService,
   NotificationService,
   PopupComponent,
-  IPopupConfig,
-  ICampaign,
-  IGameService,
-  IGame,
-  TokenStorage,
-  ITheme,
-  RewardPopupComponent, IProfile, LoyaltyService, ProfileService, ConfigService
+  ProfileService,
+  RewardPopupComponent,
+  SettingsService,
+  TokenStorage
 } from '@perxtech/core';
-import { MatDialog, MatSnackBar } from '@angular/material';
-import { filter, map, switchMap } from 'rxjs/operators';
-import { AnalyticsService, IEvent, PageType } from './analytics.service';
+import {
+  MatDialog,
+  MatSnackBar
+} from '@angular/material';
+import {
+  filter,
+  first,
+  map,
+  switchMap,
+  tap,
+} from 'rxjs/operators';
+import {
+  AnalyticsService,
+  IEvent,
+  PageType
+} from './analytics.service';
+import { timer } from 'rxjs';
+
 export interface IdataLayerSH {
   pageName: string;
   channel: string;
@@ -41,6 +64,7 @@ export class AppComponent implements OnInit {
   // public selectedCampaign: ICampaign;
   public game?: IGame;
   public theme: ITheme;
+  public holdingGateOpened: boolean = false;
 
   constructor(
     // private authenticationService: AuthenticationService,
@@ -53,7 +77,8 @@ export class AppComponent implements OnInit {
     private analytics: AnalyticsService,
     private loyaltyService: LoyaltyService,
     private profileService: ProfileService,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private settingsService: SettingsService
   ) {
     this.data.pageName = '';
     this.data.channel = 'msa';
@@ -107,8 +132,23 @@ export class AppComponent implements OnInit {
       }
     );
 
+    //init holding
     this.configService.readAppConfig().pipe(
-      switchMap(() => this.loyaltyService.getLoyalty()),
+      tap(() => this.holdingGateOpened = false),
+      switchMap(() => timer(0, 2000)
+        .pipe(
+          switchMap(() => this.settingsService.isHoldingState()),
+        )
+      ),
+      first(res => res === true)
+    ).subscribe((shouldHold: boolean) => {
+      this.holdingGateOpened = shouldHold;
+      this.loadApp();
+    });
+  }
+
+  private loadApp(): void {
+    this.loyaltyService.getLoyalty().pipe(
       switchMap(() => this.profileService.whoAmI())
     ).subscribe((profile: IProfile) => {
       (window as any).dataLayer.push({user_properties: {identifier: profile.identifier}});
