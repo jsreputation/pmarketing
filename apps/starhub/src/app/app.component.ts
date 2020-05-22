@@ -132,7 +132,7 @@ export class AppComponent implements OnInit {
       }
     );
 
-    //init holding
+    // init holding
     this.configService.readAppConfig().pipe(
       tap(() => this.holdingGateOpened = false),
       switchMap(() => timer(0, 2000)
