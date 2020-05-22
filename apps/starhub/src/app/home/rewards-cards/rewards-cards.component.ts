@@ -43,6 +43,8 @@ const REQ_PAGE_SIZE: number = 20;
 export class RewardsCardsComponent implements OnInit {
   private currentRewardsSnappingPage: number = 0;
   private currentRewardsFeaturedPage: number = 0;
+
+  // bools set to public so that unit tests can manipulate them
   public rewardsSnappingCompleted: boolean = false;
   public rewardsFeaturedCompleted: boolean = false;
   public rewardsSnapping$: Observable<IReward[]>;
