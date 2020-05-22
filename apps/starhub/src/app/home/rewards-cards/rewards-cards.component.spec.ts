@@ -5,6 +5,8 @@ import { MatIconModule, MatCardModule } from '@angular/material';
 import { RewardsService, IReward, ConfigService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
+import { rewards } from '../../rewards.mock';
+
 import { MacaronService } from '../../services/macaron.service';
 import {GhostsModule} from '../../ghosts/ghosts.module';
 
@@ -52,7 +54,7 @@ describe('RewardsCardsComponent', () => {
     }
   ];
   const rewardsServiceStub: Partial<RewardsService> = {
-    getAllRewards: () => of()
+    getRewards: () => of(rewards)
   };
   const macaronServiceStub: Partial<MacaronService> = {
     getMacaron: () => null
