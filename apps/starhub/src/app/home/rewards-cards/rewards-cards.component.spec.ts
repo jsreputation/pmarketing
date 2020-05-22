@@ -9,6 +9,8 @@ import { rewards } from '../../rewards.mock';
 
 import { MacaronService } from '../../services/macaron.service';
 import {GhostsModule} from '../../ghosts/ghosts.module';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('RewardsCardsComponent', () => {
   let component: RewardsCardsComponent;
@@ -76,6 +78,8 @@ describe('RewardsCardsComponent', () => {
       imports: [
         MatIconModule,
         MatCardModule,
+        InfiniteScrollModule,
+        NoopAnimationsModule,
         GhostsModule
       ],
       providers: [
