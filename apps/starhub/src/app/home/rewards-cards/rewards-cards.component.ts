@@ -1,8 +1,8 @@
 import {
   Component,
-  Output,
   EventEmitter,
-  OnInit
+  OnInit,
+  Output
 } from '@angular/core';
 import {
   ConfigService,
@@ -15,8 +15,8 @@ import {
   of
 } from 'rxjs';
 import {
-  MacaronService,
-  IMacaron
+  IMacaron,
+  MacaronService
 } from '../../services/macaron.service';
 import {
   finalize,
@@ -124,7 +124,7 @@ export class RewardsCardsComponent implements OnInit {
   }
 
   public onRewardsSnappingScroll(): void {
-    if (! this.rewardsSnappingCompleted) {
+    if (!this.rewardsSnappingCompleted) {
       forkJoin(this.rewardsSnapping$, this.getRewardsSnapping()).subscribe(val => {
         if (! val[1].length && val[1].length < REQ_PAGE_SIZE) {
           this.rewardsSnappingCompleted = true;
@@ -137,7 +137,7 @@ export class RewardsCardsComponent implements OnInit {
   }
 
   public onRewardsFeaturedScroll(): void {
-    if (! this.rewardsFeaturedCompleted) {
+    if (!this.rewardsFeaturedCompleted) {
       forkJoin(this.rewardsFeatured$, this.getRewardsFeatured()).subscribe(val => {
         if (! val[1].length && val[1].length < REQ_PAGE_SIZE) {
           this.rewardsFeaturedCompleted = true;
