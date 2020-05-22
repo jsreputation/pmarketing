@@ -117,7 +117,6 @@ export class RewardsCardsComponent implements OnInit {
       .pipe(
         tap((rewards: IReward[]) => this.rewardsFeaturedCompleted = rewards.length < REQ_PAGE_SIZE),
         map((rewards: IReward[]) => this.sortRewards(rewards)),
-        tap((rewards: IReward[]) => this.sortRewards(rewards)),
         finalize(() => this.ghostRewardsFeatured = [])
       );
   }
