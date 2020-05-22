@@ -135,7 +135,7 @@ export class V4SettingsService extends SettingsService {
     );
   }
 
-  public isHoldingState(): Observable<boolean> {
+  public isGatekeeperOpen(): Observable<boolean> {
     // this will return a empty body and angular does not like it.
     return this.http.post<IV4GatekeeperResponse>(`${this.hostName}/v4/gatekeep_token`, null).pipe(
       map((res: IV4GatekeeperResponse) => {

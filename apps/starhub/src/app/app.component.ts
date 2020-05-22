@@ -64,7 +64,7 @@ export class AppComponent implements OnInit {
   // public selectedCampaign: ICampaign;
   public game?: IGame;
   public theme: ITheme;
-  public holdingGateOpened: boolean = true;
+  public holdingGateOpened: boolean = false;
 
   constructor(
     // private authenticationService: AuthenticationService,
@@ -137,7 +137,7 @@ export class AppComponent implements OnInit {
       tap(() => this.holdingGateOpened = false),
       switchMap(() => timer(0, 2000)
         .pipe(
-          switchMap(() => this.settingsService.isHoldingState()),
+          switchMap(() => this.settingsService.isGatekeeperOpen()),
         )
       ),
       first(res => res === true)

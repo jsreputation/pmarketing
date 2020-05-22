@@ -11,5 +11,5 @@ export abstract class SettingsService {
   public abstract getRssFeeds(): Observable<IRssFeeds>;
   public abstract getTenantAppSettings(key: string): Observable<IMicrositeSettings>;
   public abstract getAccountSettings(): Observable<PagesObject>;
-  public abstract isHoldingState(): Observable<boolean>;
+  public abstract isGatekeeperOpen(): Observable<boolean>;
 }

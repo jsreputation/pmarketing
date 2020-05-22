@@ -67,7 +67,7 @@ export class WhistlerSettingsService extends SettingsService {
     );
   }
 
-  public isHoldingState(): Observable<boolean> {
-    throw new Error('isHoldingState Method not implemented.');
+  public isGatekeeperOpen(): Observable<boolean> {
+    throw new Error('isGatekeeperOpen Method not implemented.');
   }
 }
