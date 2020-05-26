@@ -99,6 +99,7 @@ export {
   IScratch,
   ISpin,
   ISnake,
+  defaultTree,
   IPlayOutcome,
   ISlice,
   IEngagementTransaction
