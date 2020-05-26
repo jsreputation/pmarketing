@@ -4,7 +4,7 @@ import { ITracker, QuizQuestionType } from '../../models/quiz.model';
 export interface ISelectPayload {
   type: QuizQuestionType.multipleChoice;
   multiple: boolean;
-  choices: string[];
+  choices: { title: string; id: string; }[];
 }
 
 @Component({
@@ -22,8 +22,8 @@ export class QuizSelectComponent implements OnChanges {
   @Output()
   public updateAnswers: EventEmitter<string[]> = new EventEmitter<string[]>();
 
-  public selectedChoices: ITracker = {};
-  public selectedChoice: number;
+  public selectedChoices: ITracker<boolean> = {};
+  public selectedChoice: string;
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.flush && changes.flush.currentValue !== undefined) {
@@ -41,9 +41,5 @@ export class QuizSelectComponent implements OnChanges {
       result[0] = this.selectedChoice.toString();
     }
     this.updateAnswers.emit(result);
-  }
-
-  public isSelected(index: number): boolean {
-    return this.payload.multiple ? this.selectedChoices && this.selectedChoices[index] : this.selectedChoice === index;
   }
 }
