@@ -43,8 +43,8 @@
     ></perx-blackcomb-pages-catalogs>
   </div>
   <!-- Game campaigns-->
-  <div class="campaigns" *ngIf="showGames">
-    <div *ngIf="(games$ | async)?.length > 0" class="title" translate>HOME.GAMES</div>
+  <div class="campaigns">
+    <div *ngIf="showGames" class="title" translate>HOME.GAMES</div>
     <perx-blackcomb-games-collection [games]="games$"></perx-blackcomb-games-collection>
   </div>
   <!-- Quiz campaigns -->
