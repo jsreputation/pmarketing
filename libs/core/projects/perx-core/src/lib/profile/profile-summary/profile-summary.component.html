@@ -4,7 +4,7 @@
       <img *ngIf="profileImg" src="profileImg" alt=""/>
       <img *ngIf="!profileImg" src="assets/avatar.png" alt="">
     </div>
-    <mat-card-title *ngIf="profile$ | async as profile">{{titleFn(profile)}}</mat-card-title>
-    <mat-card-subtitle *ngIf="loyalty$ | async as loyalty">{{loyalty.membershipTierName}} TIER</mat-card-subtitle>
+    <mat-card-title *ngIf="profile$ | async as profile">{{titleFn(profile) | async}}</mat-card-title>
+    <mat-card-subtitle *ngIf="loyalty$ | async as loyalty">{{memberFn(loyalty.membershipTierName) | async}}</mat-card-subtitle>
   </mat-card-header>
 </mat-card>

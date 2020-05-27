@@ -221,6 +221,7 @@
     "MY_BAR_CODE": "我的條形碼",
     "STAMP_CAMPAIGNS": "郵票卡活動",
     "CATALOG": "目錄",
+    "MEMBER": "會員",
     "GAMES": "遊戲",
     "QUIZ": "問答遊戲",
     "FEATURED_REWARDS": "特色獎勵",
@@ -283,5 +284,8 @@
     "BARCODE_TO_MERCHANT": "向商家出示此條形碼",
     "CTA": "取消"
   },
-  "CONTENT_PAGE": "找不到內容"
+  "CONTENT_PAGE": "找不到內容",
+  "Gold": "黃金",
+  "Silver": "銀卡",
+  "Green": "綠色"
 }

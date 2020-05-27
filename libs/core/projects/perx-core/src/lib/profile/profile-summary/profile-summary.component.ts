@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, HostListener, Input, OnInit } from 
 import { IProfile } from '../profile.model';
 import { ILoyalty } from '../../loyalty/models/loyalty.model';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 
 @Component({
@@ -22,29 +22,35 @@ export class ProfileSummaryComponent implements OnInit {
   public loyalty$: Observable<ILoyalty>;
 
   @Input()
-  public titleFn: (profile: IProfile) => string;
+  public titleFn: (profile: IProfile) => Observable<string>;
+
+  @Input()
+  public memberFn: (membershipTierName: string) => Observable<string>;
 
   @HostListener('click', ['$event'])
   public gotoProfile(_: Event): void {
     this.router.navigateByUrl('profile');
   }
 
-  public constructor(private router: Router) {}
+  public constructor(private router: Router) { }
 
   public ngOnInit(): void {
     if (!this.titleFn) {
-      this.titleFn = (profile?: IProfile): string => {
+      this.titleFn = (profile?: IProfile): Observable<string> => {
         if (profile && profile.customProperties && profile.customProperties.nickname) {
-          return `${profile.customProperties.nickname}`;
+          return of(`${profile.customProperties.nickname}`);
         }
         if (profile && profile.firstName) {
-          return `${profile.firstName}`;
+          return of(`${profile.firstName}`);
         }
         if (profile && profile.lastName) {
-          return `${profile.lastName}`;
+          return of(`${profile.lastName}`);
         }
-        return '';
+        return of('');
       };
+    }
+    if (!this.memberFn) {
+      this.memberFn = (membershipTierName: string) => of(`${membershipTierName} member`);
     }
   }
 

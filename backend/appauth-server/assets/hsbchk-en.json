@@ -282,5 +282,8 @@
     "DESCRIPTION": "Description",
     "TNC": "Terms and Conditions"
   },
-  "CONTENT_PAGE": "Content Not Found"
+  "CONTENT_PAGE": "Content Not Found",
+  "Gold": "Gold",
+  "Silver": "Silver",
+  "Green": "Green"
 }

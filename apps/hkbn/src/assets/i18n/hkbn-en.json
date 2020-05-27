@@ -150,5 +150,8 @@
   },
   "REDEEM": {
     "OK": "OK"
-  }
+  },
+  "Gold": "Gold",
+  "Silver": "Silver",
+  "Green": "Green"
 }

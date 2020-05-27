@@ -220,6 +220,7 @@
     "MY_BAR_CODE": "My Barcode",
     "STAMP_CAMPAIGNS": "Stamp Card Campaigns",
     "CATALOG": "Catalog",
+    "MEMBER": " member",
     "GAMES": "Games",
     "QUIZ": "Quiz",
     "FEATURED_REWARDS": "Featured Rewards",
@@ -282,5 +283,8 @@
     "DESCRIPTION": "Description",
     "TNC": "Terms and Conditions"
   },
-  "CONTENT_PAGE": "Content Not Found"
+  "CONTENT_PAGE": "Content Not Found",
+  "Gold": "Gold",
+  "Silver": "Silver",
+  "Green": "Green"
 }
