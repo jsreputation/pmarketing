@@ -48,7 +48,7 @@
     <perx-blackcomb-games-collection [games]="games$"></perx-blackcomb-games-collection>
   </div>
   <!-- Quiz campaigns -->
-  <div *ngIf="appConfig.showQuizOnHomePage">
+  <div *ngIf="appConfig.showQuizOnHomePage && (quizCampaigns$ | async)?.length > 0">
     <div class="title" translate>HOME.QUIZ</div>
     <perx-blackcomb-pages-campaigns-collection
       [defaultNbCampaigns]="3"
