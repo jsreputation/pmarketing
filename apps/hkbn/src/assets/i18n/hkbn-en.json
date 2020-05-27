@@ -116,13 +116,15 @@
     "LOGOUT": "Logout",
     "MY_REWARDS": "My Rewards"
   },
-  "HISTORY": {
+  "TRANSACTION_HISTORY": {
     "YOU_CURRENTLY_HAVE": "You currently have:",
     "TRANSATION_HISTORY": "Transaction History",
     "SORT_BY": "Sort by",
     "HIGH_TO_LOW": "Highest to Lowest points",
     "LOW_TO_HIGH": "Lowest to Highest points",
-    "RECENTLY_ADDED": "Recently added"
+    "RECENTLY_ADDED": "Recently added",
+    "POINT_EARNED": "{points} Points earned",
+    "POINT_SPENT": "{points} Points spent"
   },
   "REWARD": {
     "YOU_CURRENTLY_HAVE": "You currently have:",

@@ -46,7 +46,7 @@ export class LoyaltySummaryComponent implements OnInit {
   public showLoyaltyProgress: boolean = true;
 
   public loyaltyProgramExists: boolean = true;
-  private pointTo: string;
+  public pointTo: string;
 
   constructor(
     private profileService: ProfileService,

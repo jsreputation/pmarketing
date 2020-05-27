@@ -116,13 +116,15 @@
     "LOGOUT": "登出",
     "MY_REWARDS": "我的獎勵"
   },
-  "HISTORY": {
+  "TRANSACTION_HISTORY": {
     "YOU_CURRENTLY_HAVE": "現有積分",
     "TRANSATION_HISTORY": "積分紀錄",
     "SORT_BY": "排序",
     "HIGH_TO_LOW": "積分(高至低)",
     "LOW_TO_HIGH": "積分(低至高)",
-    "RECENTLY_ADDED": "最新獎勵"
+    "RECENTLY_ADDED": "最新獎勵",
+    "POINT_EARNED": "獲得積分{points}",
+    "POINT_SPENT": "使用積分{points}"
   },
   "REWARD": {
     "YOU_CURRENTLY_HAVE": "現有積分",

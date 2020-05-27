@@ -10,6 +10,7 @@ import {
 import { DatePipe } from '@angular/common';
 import { MatTabChangeEvent } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'mc-transaction-history',
@@ -19,17 +20,15 @@ import { TranslateService } from '@ngx-translate/core';
 export class TransactionHistoryComponent implements OnInit, PageAppearence {
 
   public transactions: Observable<ITransactionHistory[]>;
-  public purchasesTitleFn: (tr: ITransactionHistory) => string;
-  public redemptionsTitleFn: (tr: ITransactionHistory) => string;
-  public descFn: (tr: ITransactionHistory) => string;
-  public subTitleFn: (tr: ITransactionHistory) => string;
-  public priceLabelFn: (tr: ITransactionHistory) => string;
+  public purchasesTitleFn: (tr: ITransactionHistory) => Observable<string>;
+  public redemptionsTitleFn: (tr: ITransactionHistory) => Observable<string>;
+  public descFn: (tr: ITransactionHistory) => Observable<string>;
+  public subTitleFn: (tr: ITransactionHistory) => Observable<string>;
+  public priceLabelFn: (tr: ITransactionHistory) => Observable<string>;
 
   private pageNumber: number = 1;
   private pageSize: number = 10;
   private complitePagination: boolean = false;
-  private pointsEarnedTxt: string;
-  private pointsSpentTxt: string;
   // @ts-ignore
   private labelIndex: number = 0;
   constructor(
@@ -37,28 +36,20 @@ export class TransactionHistoryComponent implements OnInit, PageAppearence {
     private datePipe: DatePipe,
     private translate: TranslateService
   ) {
-    this.translate.get(['TRANSACTION_HISTORY.POINT_EARNED', 'TRANSACTION_HISTORY.POINT_SPENT']).subscribe((res: any) => {
-      this.pointsEarnedTxt = res.TRANSACTION_HISTORY && res.TRANSACTION_HISTORY.POINT_EARNED;
-      this.pointsSpentTxt = res.TRANSACTION_HISTORY && res.TRANSACTION_HISTORY.POINT_SPENT;
-    });
   }
 
   public ngOnInit(): void {
+    this.initTranslate();
+    this.descFn = (tr: ITransactionHistory) =>
+      of(`${tr.transactionDetails && tr.transactionDetails.data ? (tr.transactionDetails.data as IPurchaseTransactionHistory).productName : ''}`);
+
     this.purchasesTitleFn = (tr: ITransactionHistory) =>
-      `${tr.transactionDetails && tr.transactionDetails.data ? (tr.transactionDetails.data as IPurchaseTransactionHistory).pharmacyName : 'no-name'}`;
+      of(`${tr.transactionDetails && tr.transactionDetails.data ? (tr.transactionDetails.data as IPurchaseTransactionHistory).pharmacyName : ''}`);
 
     this.redemptionsTitleFn = (tr: ITransactionHistory) =>
-      `${tr.transactionDetails && (tr.transactionDetails.data as IRewardTransactionHistory).rewardName}`;
+      of(`${tr.transactionDetails && (tr.transactionDetails.data as IRewardTransactionHistory).rewardName}`);
 
-    this.descFn = (tr: ITransactionHistory) =>
-      `${tr.transactionDetails && tr.transactionDetails.data ? (tr.transactionDetails.data as IPurchaseTransactionHistory).productName : ''}`;
-
-    this.subTitleFn = (tr: ITransactionHistory) => `${this.datePipe.transform(tr.transactedAt, 'dd/MM/yyyy')}`;
-    this.priceLabelFn = (tr: ITransactionHistory) => {
-      const value = tr.pointsAmount || 0;
-      const absVal = String(Math.abs(value));
-      return value < 0 ? this.pointsSpentTxt.replace('{points}', absVal) : this.pointsEarnedTxt.replace('{points}', absVal);
-    };
+    this.subTitleFn = (tr: ITransactionHistory) => of(`${this.datePipe.transform(tr.transactedAt, 'dd/MM/yyyy')}`);
 
     this.loyaltyService.getTransactionHistory(this.pageNumber, this.pageSize).subscribe(
       (transactions: ITransactionHistory[]) => this.transactions = of(transactions),
@@ -92,5 +83,17 @@ export class TransactionHistoryComponent implements OnInit, PageAppearence {
 
   public tabChanged(event: MatTabChangeEvent): void {
     this.labelIndex = event.index;
+  }
+
+  private initTranslate(): void {
+    this.priceLabelFn = (tr: ITransactionHistory) => this.translate.get(['TRANSACTION_HISTORY.POINT_EARNED', 'TRANSACTION_HISTORY.POINT_SPENT']).pipe(
+      map(res => {
+        let pointsSpentTxt = res.TRANSACTION_HISTORY && res.TRANSACTION_HISTORY.POINT_EARNED;
+        let pointsEarnedTxt = res.TRANSACTION_HISTORY && res.TRANSACTION_HISTORY.POINT_SPENT;
+        const value = tr.pointsAmount || 0;
+        const absVal = String(Math.abs(value));
+        return value < 0 ? pointsSpentTxt.replace('{points}', absVal) : pointsEarnedTxt.replace('{points}', absVal);
+      })
+    );
   }
 }

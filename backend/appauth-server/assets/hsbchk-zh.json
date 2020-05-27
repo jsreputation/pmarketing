@@ -147,7 +147,9 @@
     "REWARD_STATUS_EXPIRY": "將於{{date}}過期",
     "REWARD_STATUS_REDEEMED": "換領日期",
     "REWARD_STATUS_EXPIRED": "已失效",
-    "CTA_TXT": "換領"
+    "CTA_TXT": "換領",
+    "POINT_EARNED": "獲得積分{points}",
+    "POINT_SPENT": "使用積分{points}"
   },
   "REDEMPTION": {
     "TITLE": "輸入密碼",
