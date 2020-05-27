@@ -1,0 +1,6 @@
+<div class="tab-group__content">
+  <h1>Rebates wallet</h1>
+  <perx-core-rebates-list (tapped)="merchantSelected($event)" [data]="merchants$">
+  </perx-core-rebates-list>
+  <button (click)="openScannerDialog()">Open Qr Scanner</button>
+</div>
