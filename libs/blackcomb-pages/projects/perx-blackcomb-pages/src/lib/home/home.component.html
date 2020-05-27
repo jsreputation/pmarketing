@@ -33,7 +33,7 @@
     <perx-blackcomb-pages-campaigns-collection [campaigns]="stampCampaigns$" (selected)="goToCampaignPage($event)">
     </perx-blackcomb-pages-campaigns-collection>
   </div>
-  <div class="catalogs" *ngIf="appConfig.showCatalogOnHomePage">
+  <div class="catalogs" *ngIf="appConfig.showCatalogOnHomePage && (catalogs$ | async)?.length > 0">
     <div class="title" translate>HOME.CATALOG</div>
     <perx-blackcomb-pages-catalogs
       [catalogs]="catalogs$"
