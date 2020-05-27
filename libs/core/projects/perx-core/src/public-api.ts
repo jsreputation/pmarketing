@@ -291,5 +291,11 @@ export { LeaderboardComponent } from './lib/rank/leaderboard/leaderboard.compone
 export { IRankService } from './lib/rank/irank.service';
 export { LeaderBoard, UserRanking } from './lib/rank/models/rank.model';
 /**
+ * Rebates
+ */
+export { RebatesModule } from './lib/rebates/rebates.module';
+export { RebatesListComponent } from './lib/rebates/rebates-list/rebates-list.component';
+export { QrScannerComponent } from './lib/rebates/rebates-qr-scanner/qrscanner.component';
+/**
  * Tenants
  */

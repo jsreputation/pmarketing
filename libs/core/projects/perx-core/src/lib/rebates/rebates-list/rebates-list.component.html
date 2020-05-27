@@ -1,0 +1,32 @@
+<ng-container>
+  <div class="card-list-container" *ngIf="merchants$ | async as merchants">
+    <div *ngIf="merchants.length > 0; then hasMerchantsBlock else noMerchantsBlock"></div>
+    <ng-template #hasMerchantsBlock>
+      <ng-container *ngFor="let merchant of merchants$ | async">
+        <mat-card mat-ripple (click)="onClick(merchant)">
+          <h1>{{merchant?.name}}</h1>
+          <div [ngClass]="'merchant-content'">
+            <div class="merchant-img__wrapper">
+              <img class="merchant-thumbnail" src="{{merchant?.imgUrl}}" [alt]="merchant?.name">
+            </div>
+            <div class="merchant-details">
+              <!--  qr scanner here-->
+              <p>Avail rebates: {{merchant?.rebateAmount}}</p>
+            </div>
+          </div>
+        </mat-card>
+      </ng-container>
+    </ng-template>
+    <ng-template #noMerchantsBlock>
+      <div class="merchants-content">
+        <div class="no-merchants">
+          <h3>No merchants here yet!</h3>
+          <div class="img-container">
+            <img src="assets/empty_list.svg" />
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</ng-container>
+
