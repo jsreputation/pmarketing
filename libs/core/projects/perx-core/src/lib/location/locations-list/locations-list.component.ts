@@ -12,6 +12,8 @@ export class LocationsListComponent implements OnInit {
   public locations: Observable<ILocation[]>;
   @Input()
   public headerFn: (location: ILocation) => Observable<string>;
+  @Input()
+  public viewLocationFn: () => Observable<string>;
   public gMapUrl(loc: ILocation): string {
     return `https://www.google.com/maps/search/?api=1&query=${loc.latitude},${loc.longitude}`;
   }
@@ -19,6 +21,9 @@ export class LocationsListComponent implements OnInit {
   public ngOnInit(): void {
     if (!this.headerFn) {
       this.headerFn = (location) => of(location.merchantName ? location.merchantName : location.name);
+    }
+    if (!this.viewLocationFn) {
+      this.viewLocationFn = () => of('View location');
     }
   }
 }

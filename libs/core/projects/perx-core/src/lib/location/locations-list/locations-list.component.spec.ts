@@ -2,7 +2,6 @@ import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core
 
 import { LocationsListComponent } from './locations-list.component';
 import { MatListModule, MatDividerModule } from '@angular/material';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('LocationsListComponent', () => {
   let component: LocationsListComponent;
@@ -11,7 +10,7 @@ describe('LocationsListComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [LocationsListComponent],
-      imports: [MatListModule, MatDividerModule, TranslateModule.forRoot()]
+      imports: [MatListModule, MatDividerModule]
     })
       .compileComponents();
   }));
