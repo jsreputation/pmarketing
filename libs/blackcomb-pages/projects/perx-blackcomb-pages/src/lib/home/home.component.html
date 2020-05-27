@@ -44,7 +44,7 @@
   </div>
   <!-- Game campaigns-->
   <div class="campaigns">
-    <div *ngIf="showGames" class="title" translate>HOME.GAMES</div>
+    <div *ngIf="showGames && (games$ | async)?.length > 0" class="title" translate>HOME.GAMES</div>
     <perx-blackcomb-games-collection [games]="games$"></perx-blackcomb-games-collection>
   </div>
   <!-- Quiz campaigns -->
