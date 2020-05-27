@@ -1,22 +1,37 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import {
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild
+} from '@angular/core';
+import {
+  AuthenticationService,
+  CampaignType,
+  ConfigService,
+  ICampaign,
+  ICampaignService,
+  IGame,
   ILoyalty,
+  InstantOutcomeService,
+  IProfile,
   LoyaltyService,
   ProfileService,
-  IProfile,
-  AuthenticationService,
-  ICampaignService,
-  ICampaign,
-  InstantOutcomeService,
-  CampaignType,
-  IGame,
-  RewardPopupComponent, ConfigService
+  RewardPopupComponent
 } from '@perxtech/core';
 import { NoRenewaleInNamePipe } from '../no-renewale-in-name.pipe';
-import { MatToolbar, MatDialog } from '@angular/material';
-import { catchError, switchMap } from 'rxjs/operators';
+import {
+  MatDialog,
+  MatToolbar
+} from '@angular/material';
+import {
+  catchError,
+  switchMap
+} from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { of, combineLatest } from 'rxjs';
+import {
+  combineLatest,
+  of
+} from 'rxjs';
 import { IdataLayerSH } from '../../app.component';
 
 declare var dataLayerSH: IdataLayerSH; // eslint-disable-line
@@ -136,7 +151,7 @@ export class HomeComponent implements OnInit {
           if (firstComeFirstServed.length > 0) {
             this.firstComefirstServeCampaign = firstComeFirstServed[0];
             const popupImageURL = this.firstComefirstServeCampaign.campaignBannerUrl ?
-              this.firstComefirstServeCampaign.campaignBannerUrl : 'assets/bd-campaign.svg';
+              this.firstComefirstServeCampaign.campaignBannerUrl : 'assets/reward.png';
             const data = {
               text: this.firstComefirstServeCampaign.description,
               imageUrl: popupImageURL,
