@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TransactionCompleteComponent implements OnInit {
 
-  public constructor(): void { }
+  constructor() { }
 
   public ngOnInit(): void {
   }
