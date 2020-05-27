@@ -36,6 +36,10 @@ const routes: Routes = [
     // content page can be accessed both logged-in and logged-out
     // canActivate: [ProtectedGuard]
   },
+  {
+    path: 'rebates',
+    loadChildren: () => import('./rebates/rebates.module').then(mod => mod.RebatesModule)
+  },
   { path: '**', redirectTo: '/home', canActivate: [ProtectedGuard] },
   { path: '**', redirectTo: '/loading', canActivate: [PublicGuard] },
 ];
