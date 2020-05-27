@@ -51,6 +51,9 @@ export class HomeComponent implements OnInit {
   public subTitleFn: (loyalty: ILoyalty) => Observable<string>;
   public titleFn: (profile: IProfile) => Observable<string>;
   public summaryExpiringFn: (loyalty: ILoyalty) => Observable<string>;
+  public pointToFn: () => Observable<string>;
+  public memberFn: (membershipTierName: string) => Observable<string>;
+  public membershipExpiryFn: (loyalty: ILoyalty) => Observable<string>;
   public rewards$: Observable<IReward[]>;
 
   public tabs$: BehaviorSubject<ITabConfigExtended[]> = new BehaviorSubject<ITabConfigExtended[]>([]);
@@ -76,18 +79,7 @@ export class HomeComponent implements OnInit {
         (loyalty: ILoyalty) => {
           this.loyalty = loyalty;
         });
-    this.translate.get(['HOME.YOU_HAVE', 'HOME.HELLO', 'HOME.POINTS_EXPITING'])
-      .subscribe((res: any) => {
-        this.subTitleFn = () => res.HOME && res.HOME.YOU_HAVE;
-        this.titleFn = (profile: IProfile) => `${res.HOME && res.HOME.HELLO} ${profile.lastName},`;
-        this.summaryExpiringFn = (loyalty: ILoyalty) =>
-          loyalty && loyalty.expiringPoints && loyalty.expiringPoints.length && loyalty.expiringPoints[0].points &&
-            loyalty.expiringPoints[0].points !== 0 ? res.HOME && res.HOME.POINTS_EXPITING
-              .replace('{{points}}', (loyalty.expiringPoints[0].points ? loyalty.expiringPoints[0].points : 0)
-                .toString())
-              .replace('{{date}}', loyalty.expiringPoints[0].expireDate ?
-                this.datePipe.transform(loyalty.expiringPoints[0].expireDate, 'd MMM y') : '') : '';
-      });
+    this.initTranslate();
 
   }
 
@@ -116,5 +108,30 @@ export class HomeComponent implements OnInit {
         )
       )
     ).subscribe(() => this.tabs$.next(this.staticTab));
+  }
+
+  private initTranslate(): void {
+    this.subTitleFn = () => this.translate.get('HOME.YOU_HAVE');
+    this.titleFn = (profile: IProfile) => this.translate.get('HOME.HELLO').pipe(
+      map(res => `${res}${profile.lastName},`)
+    );
+    this.summaryExpiringFn = (loyalty: ILoyalty) =>
+      this.translate.get('HOME.POINTS_EXPITING').pipe(
+        map(res => loyalty && loyalty.expiringPoints && loyalty.expiringPoints.length && loyalty.expiringPoints[0].points &&
+          loyalty.expiringPoints[0].points !== 0 ?
+          res
+            .replace('{{points}}', (loyalty.expiringPoints[0].points ? loyalty.expiringPoints[0].points : 0).toString())
+            .replace('{{date}}', loyalty.expiringPoints[0].expireDate ?
+              this.datePipe.transform(loyalty.expiringPoints[0].expireDate, 'd MMM y') : '')
+          : '')
+      );
+    this.pointToFn = () => this.translate.get('HOME.POINT_TO');
+    this.memberFn = (membershipTierName: string) => this.translate.get('HOME.MEMBER').pipe(
+      map(res => `${membershipTierName}${res}`)
+    );
+    this.membershipExpiryFn = (loyalty: ILoyalty) => loyalty && loyalty.membershipExpiry ?
+      this.translate.get('HOME.ACCOUNT_EXPIRE').pipe(
+        map(res => `${res}: ${this.datePipe.transform(loyalty.membershipExpiry, 'mediumDate')}`)
+      ) : of('');
   }
 }

@@ -5,7 +5,16 @@
   (scrolled)="onScroll()"
   [scrollWindow]="false">
   <div class="loyalty-block" *ngIf="appConfig.showLoyaltyBlockOnHomePage">
-    <perx-core-loyalty-summary [titleFn]="titleFn" [showLoyaltyProgress]="appConfig.showLoyaltyProgress"></perx-core-loyalty-summary>
+    <perx-core-loyalty-summary 
+      [showLoyaltyProgress]="appConfig.showLoyaltyProgress"
+      class="loyalty-item" 
+      [subTitleFn]="subTitleFn" 
+      [titleFn]="titleFn" 
+      [summaryExpiringFn]="summaryExpiringFn"
+      [pointToFn]="pointToFn"
+      [memberFn]="memberFn"
+      [membershipExpiryFn]="membershipExpiryFn"
+     ></perx-core-loyalty-summary>
     <div class="loyalty-item loyalty-item-qr" *ngIf="appConfig.showUserQR">
       <a
         mat-raised-button

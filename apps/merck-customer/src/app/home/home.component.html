@@ -6,8 +6,15 @@
   (scrolled)="onScroll()" 
   [scrollWindow]="false">
   <div class="loyalty-section">
-    <perx-core-loyalty-summary [titleFn]="titleFn" class="loyalty-item" [subTitleFn]="subTitleFn">
-    </perx-core-loyalty-summary>
+    <perx-core-loyalty-summary 
+        class="loyalty-item" 
+        [subTitleFn]="subTitleFn" 
+        [titleFn]="titleFn" 
+        [summaryExpiringFn]="summaryExpiringFn"
+        [pointToFn]="pointToFn"
+        [memberFn]="memberFn"
+        [membershipExpiryFn]="membershipExpiryFn"
+      ></perx-core-loyalty-summary>
     <button mat-flat-button (click)="myQrClicked()">{{"HOME.MY_QR" | translate}}</button>
   </div>
   <div class="section-heading">

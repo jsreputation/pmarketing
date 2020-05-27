@@ -58,9 +58,9 @@ export class HomeComponent implements OnInit {
   public staticTab: ITabConfig[] = tabs;
   public rewardsCollection: Observable<IReward[]>;
   public displayPriceFn: (price: IPrice) => string;
-  public titleFn: (profile: IProfile) => string;
-  public subTitleFn: (loyalty: ILoyalty) => string;
-  public summaryExpiringFn: (loyalty: ILoyalty) => string;
+  public titleFn: (profile: IProfile) => Observable<string>;
+  public subTitleFn: (loyalty: ILoyalty) => Observable<string>;
+  public summaryExpiringFn: (loyalty: ILoyalty) => Observable<string>;
   public currentTab: string;
   private rewardMultiPageMetaTracker: PageTracker = {};
   private requestPageSize: number = 10;
@@ -93,12 +93,12 @@ export class HomeComponent implements OnInit {
     };
     this.titleFn = (profile: IProfile) => {
       if (profile && profile.lastName) {
-        return `Welcome ${profile.lastName},`;
+        return of(`Welcome ${profile.lastName},`);
       }
-      return 'Welcome';
+      return of('Welcome');
     };
-    this.subTitleFn = () => `Your total points as of ${this.datePipe.transform(new Date(), 'ddMMMyy')}`;
-    this.summaryExpiringFn = (): string => '';
+    this.subTitleFn = () => of(`Your total points as of ${this.datePipe.transform(new Date(), 'ddMMMyy')}`);
+    this.summaryExpiringFn = (): Observable<string> => of('');
     this.loadCurrentTabRewards(this.staticTab[0].tabName);
   }
 

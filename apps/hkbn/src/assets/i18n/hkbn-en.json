@@ -90,6 +90,7 @@
     "POINT_EXPIRE": "{points} points will expire on {date}",
     "ACCOUNT_EXPIRE": "Account Expiry",
     "POINT_TO": "Points to {nextTierName}",
+    "MEMBER": " member",
     "ALL": "All",
     "HUNG_FOOK_TONG": "Hung Fook Tong",
     "BIG_BIG_SHOP": "big big shop",
