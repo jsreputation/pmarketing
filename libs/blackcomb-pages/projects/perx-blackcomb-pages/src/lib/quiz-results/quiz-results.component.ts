@@ -77,12 +77,12 @@ export class QuizResultsComponent implements OnInit {
         'QUIZ_TEMPLATE.NO_OUTCOME_TXT',
         'QUIZ_TEMPLATE.NO_OUTCOME_CTA'
       ]).subscribe((res: any) => {
-        const noOutcomeTitle = (res.QUIZ_TEMPLATE && res.QUIZ_TEMPLATE.NO_OUTCOME_SCORE).replace('{{points}}', points);
+        const noOutcomeTitle = (res['QUIZ_TEMPLATE.NO_OUTCOME_SCORE']).replace('{{points}}', points);
         this.popup = {
           title: oc(noOutcome).title(noOutcomeTitle),
-          text: oc(noOutcome).subTitle(res.QUIZ_TEMPLATE && res.QUIZ_TEMPLATE.NO_OUTCOME_TXT),
+          text: oc(noOutcome).subTitle(res['QUIZ_TEMPLATE.NO_OUTCOME_TXT']),
           imageUrl: oc(noOutcome).image(),
-          buttonTxt: oc(noOutcome).button(res.QUIZ_TEMPLATE && res.QUIZ_TEMPLATE.NO_OUTCOME_CTA)
+          buttonTxt: oc(noOutcome).button(res['QUIZ_TEMPLATE.NO_OUTCOME_CTA'])
         };
         this.notificationService.addPopup(this.popup);
       });
@@ -94,11 +94,11 @@ export class QuizResultsComponent implements OnInit {
         'QUIZ_TEMPLATE.POSITIVE_OUTCOME_REWARD',
         'QUIZ_TEMPLATE.POSITIVE_OUTCOME_CTA'
       ]).subscribe((res: any) => {
-        const outcomeTitle = (res.QUIZ_TEMPLATE && res.QUIZ_TEMPLATE.POSITIVE_OUTCOME_TXT).replace('{{points}}', points);
+        const outcomeTitle = (res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_TXT']).replace('{{points}}', points);
         this.popup = {
           title: oc(outcome).title(outcomeTitle),
-          text: oc(outcome).subTitle(res.QUIZ_TEMPLATE && res.QUIZ_TEMPLATE.POSITIVE_OUTCOME_REWARD),
-          buttonTxt: oc(outcome).button(res.QUIZ_TEMPLATE && res.QUIZ_TEMPLATE.POSITIVE_OUTCOME_CTA),
+          text: oc(outcome).subTitle(res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_REWARD']),
+          buttonTxt: oc(outcome).button(res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_CTA']),
           imageUrl: 'assets/quiz/reward.png',
           ctaButtonClass: 'ga_game_completion'
         };

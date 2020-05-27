@@ -28,8 +28,8 @@ export class ChangePasswordComponent implements OnInit {
     this.dataTransferService.updateData$.subscribe((data: IChangePasswordData) => this.cache = data);
     this.profileService.whoAmI().pipe(take(1)).subscribe((prof) => this.profile = prof);
     this.translate.get(['CHANGE_PW_PAGE.PASSWORD_SUCCESS_UPDATE', 'CHANGE_PW_PAGE.INCORRECT_PASSWORD']).subscribe((dictionary) => {
-      this.messageSuccess = dictionary.CHANGE_PW_PAGE && dictionary.CHANGE_PW_PAGE.PASSWORD_SUCCESS_UPDATE;
-      this.messageError = dictionary.CHANGE_PW_PAGE && dictionary.CHANGE_PW_PAGE.INCORRECT_PASSWORD;
+      this.messageSuccess = dictionary['CHANGE_PW_PAGE.PASSWORD_SUCCESS_UPDATE'];
+      this.messageError = dictionary['CHANGE_PW_PAGE.INCORRECT_PASSWOR'];
     });
   }
 

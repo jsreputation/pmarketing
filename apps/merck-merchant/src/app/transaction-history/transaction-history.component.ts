@@ -120,15 +120,16 @@ export class TransactionHistoryComponent implements OnInit {
   }
 
   private initTranslate(): void {
-    this.salespriceLabelFn = (tr: IMerchantPurchaseTransactionHistory) => this.translate.get(['TRANSACTION_HISTORY.POINT_EARNED', 'TRANSACTION_HISTORY.POINT_SPENT']).pipe(
-      map(res => {
-        let pointsSpentTxt = res.TRANSACTION_HISTORY && res.TRANSACTION_HISTORY.POINT_EARNED;
-        let pointsEarnedTxt = res.TRANSACTION_HISTORY && res.TRANSACTION_HISTORY.POINT_SPENT;
-        const value = tr.pointsIssued || 0;
-        const absVal = String(Math.abs(value));
-        return value < 0 ? pointsSpentTxt.replace('{points}', absVal) : pointsEarnedTxt.replace('{points}', absVal);
-      })
-    );
+    this.salespriceLabelFn = (tr: IMerchantPurchaseTransactionHistory) =>
+      this.translate.get(['TRANSACTION_HISTORY.POINT_EARNED', 'TRANSACTION_HISTORY.POINT_SPENT']).pipe(
+        map(res => {
+          let pointsSpentTxt = res['TRANSACTION_HISTORY.POINT_EARNED'];
+          let pointsEarnedTxt = res['TRANSACTION_HISTORY.POINT_SPENT'];
+          const value = tr.pointsIssued || 0;
+          const absVal = String(Math.abs(value));
+          return value < 0 ? pointsSpentTxt.replace('{points}', absVal) : pointsEarnedTxt.replace('{points}', absVal);
+        })
+      );
 
   }
 

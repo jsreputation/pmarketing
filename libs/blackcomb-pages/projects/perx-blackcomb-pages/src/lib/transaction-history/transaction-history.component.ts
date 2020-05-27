@@ -72,8 +72,8 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
   private initTranslate(): void {
     this.priceLabelFn = (tr: ITransactionHistory) => this.translate.get(['WALLET.POINT_EARNED', 'WALLET.POINT_SPENT']).pipe(
       map(res => {
-        let pointsSpentTxt = res.WALLET && res.WALLET.POINT_EARNED;
-        let pointsEarnedTxt = res.WALLET && res.WALLET.POINT_SPENT;
+        let pointsSpentTxt = res['WALLET.POINT_EARNED'];
+        let pointsEarnedTxt = res['WALLET.POINT_SPENT'];
         const value = tr.pointsAmount || 0;
         const absVal = String(Math.abs(value));
         return value < 0 ? pointsSpentTxt.replace('{points}', absVal) : pointsEarnedTxt.replace('{points}', absVal);

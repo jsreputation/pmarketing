@@ -88,8 +88,8 @@ export class TransactionHistoryComponent implements OnInit, PageAppearence {
   private initTranslate(): void {
     this.priceLabelFn = (tr: ITransactionHistory) => this.translate.get(['TRANSACTION_HISTORY.POINT_EARNED', 'TRANSACTION_HISTORY.POINT_SPENT']).pipe(
       map(res => {
-        let pointsSpentTxt = res.TRANSACTION_HISTORY && res.TRANSACTION_HISTORY.POINT_EARNED;
-        let pointsEarnedTxt = res.TRANSACTION_HISTORY && res.TRANSACTION_HISTORY.POINT_SPENT;
+        let pointsSpentTxt = res['TRANSACTION_HISTORY.POINT_EARNED'];
+        let pointsEarnedTxt = res['TRANSACTION_HISTORY.POINT_SPENT'];
         const value = tr.pointsAmount || 0;
         const absVal = String(Math.abs(value));
         return value < 0 ? pointsSpentTxt.replace('{points}', absVal) : pointsEarnedTxt.replace('{points}', absVal);

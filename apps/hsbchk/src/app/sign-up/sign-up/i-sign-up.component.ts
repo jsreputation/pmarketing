@@ -219,9 +219,9 @@ export abstract class ISignUpComponent implements OnDestroy {
       'SIGN_UP_PAGE.ALERT_BTN_TXT2'
     ]).subscribe(res => {
       this.agreeTNCAlertData = {
-        title: res.SIGN_UP_PAGE && res.SIGN_UP_PAGE.ALERT_TITLE,
-        buttonTxt: res.SIGN_UP_PAGE && res.SIGN_UP_PAGE.ALERT_BTN_TXT,
-        buttonTxt2: res.SIGN_UP_PAGE && res.SIGN_UP_PAGE.ALERT_BTN_TXT2,
+        title: res['SIGN_UP_PAGE.ALERT_TITLE'],
+        buttonTxt: res['SIGN_UP_PAGE.ALERT_BTN_TXT'],
+        buttonTxt2: res['SIGN_UP_PAGE.ALERT_BTN_TXT2'],
       };
     });
   }

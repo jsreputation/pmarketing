@@ -131,8 +131,8 @@ export class SignIn2Component implements OnInit, OnDestroy {
               this.translate.get(['LOGIN_PAGE.POPUP_TITLE', 'LOGIN_PAGE.POPUP.TXT'])
                 .subscribe(res => {
                   this.notificationService.addPopup({
-                    title: res.LOGIN_PAGE && res.LOGIN_PAGE.POPUP_TITLE,
-                    text: res.LOGIN_PAGE && res.LOGIN_PAGE.POPUP_TXT
+                    title: res['LOGIN_PAGE.POPUP_TITLE'],
+                    text: res['LOGIN_PAGE.POPUP.TXT']
                   });
                 });
             } else if (err.status === 401 || err.status === 403) {
