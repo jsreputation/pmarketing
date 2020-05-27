@@ -20,7 +20,7 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "jest.config.json",
-            "tsConfig": "projects/perx-blackcomb-pages/tsconfig.spec.json",
+            "tsConfig": "tsconfig.spec.json",
             "passWithNoTests": true,
             "setupFile": "projects/setup-jest.ts"
           }

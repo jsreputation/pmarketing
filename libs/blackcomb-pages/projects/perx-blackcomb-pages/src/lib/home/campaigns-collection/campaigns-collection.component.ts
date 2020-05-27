@@ -16,7 +16,8 @@ import {
 } from 'rxjs';
 import {
   GameType,
-  ICampaign, ICampaignService,
+  ICampaign,
+  ICampaignService,
   IGame,
   IGameService,
   IQuiz,

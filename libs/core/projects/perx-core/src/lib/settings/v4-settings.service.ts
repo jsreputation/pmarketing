@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import {
-  of,
   Observable,
+  of
 } from 'rxjs';
 import {
   map,
@@ -14,14 +14,16 @@ import {
 
 import { IWSetting } from '@perxtech/whistler';
 
-import {
-  IConfig
-} from '../config/models/config.model';
+import { IConfig } from '../config/models/config.model';
 
 import { AuthenticationService } from '../auth/authentication/authentication.service';
 import { ICustomProperties } from '../profile/profile.model';
 import { SettingsService } from './settings.service';
-import { IMicrositeSettings, IRssFeeds, PagesObject } from './models/settings.model';
+import {
+  IMicrositeSettings,
+  IRssFeeds,
+  PagesObject
+} from './models/settings.model';
 import { ConfigService } from '../config/config.service';
 
 interface IV4WordPressRssResponse {
@@ -49,6 +51,9 @@ interface IV4MicrositeSettings {
   key: string;
   string_value: string;
   json_value: ICustomProperties;
+}
+interface IV4GatekeeperResponse {
+  message: string;
 }
 
 @Injectable({
@@ -125,6 +130,20 @@ export class V4SettingsService extends SettingsService {
       map(res => res.displayProperties),
       map((displayProps: IWSetting) => displayProps && displayProps.account ? displayProps.account : { pages: [] }),
       map((account) => this.settings = account)
+    );
+  }
+
+  public isGatekeeperOpen(): Observable<boolean> {
+    // this will return a empty body and angular does not like it.
+    return this.http.post<IV4GatekeeperResponse>(`${this.hostName}/v4/gatekeep_token`, null).pipe(
+      map((res: IV4GatekeeperResponse) => {
+        if (res.message === 'go ahead') {
+          return true;
+        }
+        // false signals that the app should continue holding.
+        return false;
+      }),
+      // expecting a HTTP 429 error to be handled by caller
     );
   }
 }

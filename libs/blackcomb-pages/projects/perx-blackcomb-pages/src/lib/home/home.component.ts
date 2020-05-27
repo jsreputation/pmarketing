@@ -6,7 +6,8 @@ import {
 import { Router } from '@angular/router';
 import {
   BehaviorSubject,
-  combineLatest, EMPTY,
+  combineLatest,
+  EMPTY,
   forkJoin,
   Observable,
   of,
@@ -16,7 +17,8 @@ import {
   catchError,
   filter,
   map,
-  mergeMap, scan,
+  mergeMap,
+  scan,
   switchMap,
   take,
   takeLast,
@@ -28,6 +30,9 @@ import {
   AuthenticationService,
   CampaignType,
   ConfigService,
+  FeedItem,
+  FeedReaderService,
+  GameType,
   ICampaign,
   ICampaignService,
   ICatalog,
@@ -37,19 +42,16 @@ import {
   InstantOutcomeService,
   IProfile,
   IReward,
-  ITabConfigExtended,
-  ITheme,
-  RewardPopupComponent,
-  RewardsService,
-  ThemesService,
-  GameType,
-  RssFeedsPages,
-  FeedReaderService,
-  SettingsService,
   IRssFeeds,
   IRssFeedsData,
-  FeedItem,
-  ProfileService
+  ITabConfigExtended,
+  ITheme,
+  ProfileService,
+  RewardPopupComponent,
+  RewardsService,
+  RssFeedsPages,
+  SettingsService,
+  ThemesService
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
@@ -248,8 +250,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         mergeMap((campaigns: ICampaign[]) => combineLatest(
           ...campaigns.map(campaign => this.campaignService.getCampaign(campaign.id).pipe(catchError(() => of(void 0))))
         )),
-        // just keep campaigns of type give_reward
-        map((campaigns: ICampaign[]) => campaigns.filter(campaign => campaign !== undefined && campaign.type === CampaignType.give_reward)),
         // don't go further if it is an empty array
         filter((campaigns: ICampaign[]) => campaigns.length > 0),
         // get the first element
@@ -293,12 +293,14 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   private initCampaign(): void {
     // https://iamturns.com/continue-rxjs-streams-when-errors-occur/ also look at CatchError, exactly for this purpose
-    this.games$ = this.gamesService.getActiveGames()
-      .pipe(
-        tap((games: IGame[]) => this.showGames = games.length > 0),
-        switchMap((games: IGame[]) => of(games).pipe(catchError(err => of(err)))),
-        takeLast(1)
-      );
+    if (!this.showGames) { // prevent calling unnecessarily (i.e. duped when perx-blackcomb-pages-campaigns-collection quiz present)
+      this.games$ = this.gamesService.getActiveGames()
+        .pipe(
+          tap((games: IGame[]) => this.showGames = games.length > 0),
+          switchMap((games: IGame[]) => of(games).pipe(catchError(err => of(err)))),
+          takeLast(1)
+        );
+    }
     this.stampCampaigns$ = this.campaignService.getCampaigns({ type: CampaignType.stamp })
       .pipe(
         tap((campaigns: ICampaign[]) => this.showCampaigns = campaigns.length > 0),
