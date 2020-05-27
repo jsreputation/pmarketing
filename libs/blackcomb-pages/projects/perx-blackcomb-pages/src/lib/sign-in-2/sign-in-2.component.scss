@@ -1,0 +1,104 @@
+@import "../mixins";
+
+.content-container {
+  @include loginContentContainer;
+  @include multiLineFormFieldError;
+
+  ::ng-deep {
+    &[appearance="standard"],
+    &[appearance="legacy"] {
+      .mat-form-field-flex {
+        border-radius: 0 !important;
+        padding: 0.55em 0.75em 0 0.75em !important;
+        background-color: #e8e8e8 !important;
+      }
+
+      .mat-form-field-flex > div {
+        padding-bottom: 0.75em;
+        top: -0.5em;
+
+        span.prefix-spacer {
+          width: 0.3em;
+          display: inline-block;
+        }
+      }
+    }
+  }
+}
+
+.full-width__input,
+.full-width__button {
+  width: 100%;
+}
+
+button {
+  height: 44px;
+
+  &:disabled {
+    opacity: 45%;
+  }
+}
+
+.login-image {
+  margin-bottom: 1rem;
+
+  .logo {
+    width: 100%;
+    max-width: 20rem;
+    max-height: 8rem;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+.login-form {
+  @include loginCard;
+
+  .mobile-group {
+    display: flex;
+    flex-direction: row;
+
+    .country-code {
+      width: 10rem;
+      margin-right: 1rem;
+
+      .mat-form-field {
+        width: 100%;
+      }
+    }
+
+    .mobile-number {
+      width: 100%;
+
+      .mat-form-field {
+        width: 100%;
+      }
+    }
+  }
+
+  .subtitle {
+    @include form-subtitle;
+  }
+
+  span {
+    border-top: 1rem;
+  }
+
+  .error_msg {
+    padding-bottom: 1rem;
+
+    span {
+      color: #eb202f;
+      font-size: 1.5rem;
+    }
+  }
+
+  .forgot-password {
+    margin-bottom: 4.4rem;
+  }
+
+  .loading-spin {
+    display: inline-block;
+    margin: auto;
+  }
+}

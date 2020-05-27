@@ -1,0 +1,14 @@
+<div class="tab-group__content"
+     infiniteScroll
+     [infiniteScrollDistance]="2"
+     [infiniteScrollThrottle]="500"
+     (scrolled)="onScroll()"
+     [scrollWindow]="false">
+  <h1 translate>WALLET.HISTORY_TITLE</h1>
+  <perx-core-vouchers
+        [filter]="filter"
+        [showRedeemedIcon]="true"
+        [mapping]="mapping"
+        [data]="vouchers$">
+    </perx-core-vouchers>
+</div>

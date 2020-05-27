@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { INavLink } from '../navlink.model';
+import { MatDialog } from '@angular/material/dialog';
 import { NotificationService, PopupComponent } from '@perxtech/core';
-import { MatDialog } from '@angular/material';
 import { SubscriptionLike } from 'rxjs';
+import { INavLink } from '../navlink.model';
 
 @Component({
   selector: 'app-utils',
@@ -12,7 +12,8 @@ import { SubscriptionLike } from 'rxjs';
 export class UtilsComponent implements OnInit, OnDestroy {
   public navLinks: INavLink[] = [
     { path: 'pin-input', label: 'Pin Input' },
-    { path: 'popup', label: 'Popup' }
+    { path: 'popup', label: 'Popup' },
+    { path: 'timer', label: 'Timer' }
   ];
   private popupSubscription: SubscriptionLike;
 

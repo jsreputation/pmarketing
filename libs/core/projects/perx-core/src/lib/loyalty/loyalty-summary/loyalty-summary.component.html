@@ -1,0 +1,43 @@
+<div class="container">
+  <ng-container *ngIf="profile$ | async as profile; else elseBlockProfile">
+    <div class="welcome-text">
+      <ng-container>
+        {{titleFn(profile)}}
+      </ng-container>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="loyalty; else elseBlockLoyalty">
+    <div *ngIf="loyalty.membershipExpiry" class="member-expiry-date">{{membershipExpiryFn(loyalty)}}</div>
+    <p *ngIf="showLoyaltyProgress && loyalty.membershipTierName" class="tier-description">{{loyalty.membershipTierName}} member</p>
+
+    <div class="points">
+      {{loyalty.pointsBalance | number}}
+    </div>
+
+    <ng-container *ngIf="showLoyaltyProgress && loyalty.membershipTierName && loyalty.highestTier">
+      <div *ngIf="loyalty.membershipTierName !== loyalty.highestTier" class="progress-bar">
+        <mat-progress-bar mode="determinate" [value]="getPercentageToNext(loyalty.pointsBalance, loyalty.nextTierPoints)"></mat-progress-bar>
+        <div class="points-to">
+          Points to {{loyalty.nextTierName}}: {{loyalty.nextTierPointsDiff}}
+        </div>
+      </div>
+    </ng-container>
+    <div>
+      {{subTitleFn(loyalty)}}
+    </div>
+    <div class="expiring-points">
+      {{summaryExpiringFn(loyalty)}}
+    </div>
+  </ng-container>
+
+  <ng-template #elseBlockProfile>
+    <div class="welcome-text ghost"></div>
+  </ng-template>
+
+  <ng-template #elseBlockLoyalty>
+    <div class="points ghost">
+      <mat-spinner *ngIf="!loyaltyProgramExists"  diameter="50" color="primary"></mat-spinner>
+    </div>
+    <div class="expiring-points ghost"></div>
+  </ng-template>
+</div>

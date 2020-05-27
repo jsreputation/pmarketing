@@ -6,15 +6,16 @@
     "start": "DEFAULT_LANG=en npm run config && ng serve",
     "start-zh": "DEFAULT_LANG=zh npm run config && ng serve",
     "build": "npm run config && ng build",
-    "build:hkbn:prod": "DEFAULT_LANG=zh PRODUCTION=true npm run config && ng build --prod",
+    "build:hkbn:production": "APIHOST=https://api.perxtech.net DEFAULT_LANG=zh PRODUCTION=true npm run config && ng build --prod",
+    "build:hkbn:staging": "DEFAULT_LANG=zh PRODUCTION=true npm run config && ng build --prod",
     "clean": "rm -rf ./dist ./node_modules",
     "build-zh": "DEFAULT_LANG=zh npm run config && ng build",
-    "test": "jest",
+    "test": "jest --config=jest.config.json",
     "config": "ts-node --project tsconfig.node.json set-env.ts",
     "lint": "stylelint \"src/**/*.*css\" && eslint \"./src/**/*.ts\"",
     "lint:fix": "stylelint \"src/**/*.*css\" --fix && eslint \"./src/**/*.ts\" --fix",
     "e2e": "ng e2e",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch --config=jest.config.json"
   },
   "private": true,
   "dependencies": {
@@ -59,31 +60,5 @@
     "tslint-consistent-codestyle": "^1.15.1",
     "tslint-no-focused-test": "^0.5.0",
     "typescript": "~3.4.3"
-  },
-  "jest": {
-    "preset": "jest-preset-angular",
-    "roots": [
-      "src"
-    ],
-    "transformIgnorePatterns": [
-      "node_modules/(?!ngx-barcode)"
-    ],
-    "transform": {
-      "^.+\\.(ts|js|html)$": "ts-jest"
-    },
-    "setupFilesAfterEnv": [
-      "<rootDir>/src/setup-jest.ts"
-    ],
-    "moduleNameMapper": {},
-    "globals": {
-      "ts-jest": {
-        "tsConfig": "<rootDir>/tsconfig.spec.json",
-        "stringifyContentPathRegex": "\\.html$",
-        "astTransformers": [
-          "jest-preset-angular/build/InlineFilesTransformer",
-          "jest-preset-angular/build/StripStylesTransformer"
-        ]
-      }
-    }
   }
 }

@@ -1,11 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
 import { Location } from '@angular/common';
-import { Router, ActivatedRoute, Params } from '@angular/router';
-import { RewardsService, NotificationService, IVoucherService } from '@perxtech/core';
-import { filter, map, switchMap } from 'rxjs/operators';
-import { IReward } from '@perxtech/core';
-import { AnalyticsService, PageType } from '../analytics.service';
-import { IMacaron, MacaronService } from '../services/macaron.service';
+import {
+  ActivatedRoute,
+  Params,
+  Router
+} from '@angular/router';
+import {
+  ConfigService,
+  IReward,
+  IVoucherService,
+  NotificationService,
+  RewardsService
+} from '@perxtech/core';
+import {
+  filter,
+  map,
+  switchMap
+} from 'rxjs/operators';
+import {
+  AnalyticsService,
+  PageType
+} from '../analytics.service';
+import {
+  IMacaron,
+  MacaronService
+} from '../services/macaron.service';
 
 @Component({
   selector: 'app-reward',
@@ -15,6 +37,7 @@ import { IMacaron, MacaronService } from '../services/macaron.service';
 export class RewardComponent implements OnInit {
   public reward: IReward;
   public isButtonEnable: boolean = true;
+  public loadingSubmit: boolean = false;
   public isRewardsDetailsFetched: boolean = false;
   public macaron: IMacaron | null;
   constructor(
@@ -25,18 +48,26 @@ export class RewardComponent implements OnInit {
     private vouchersService: IVoucherService,
     private notificationService: NotificationService,
     private analyticsService: AnalyticsService,
-    private macaronService: MacaronService
+    private macaronService: MacaronService,
+    private configService: ConfigService
   ) { }
 
   public ngOnInit(): void {
-    this.activeRoute.queryParams
+    this.configService.readAppConfig()
       .pipe(
+        switchMap(() => this.activeRoute.queryParams),
         filter((params: Params) => params.id), // ignore anything not related to reward id
         map((params: Params) => params.id), // get reward id
         switchMap((id: number) => this.rewardsService.getReward(id)) // get the full reward information
       )
       .subscribe((reward: IReward) => {
         this.reward = reward;
+        if ((window as any).appboy) {
+          (window as any).appboy.logCustomEvent(
+            'user_view_reward',
+            {'reward_id': reward.id, 'reward_name': reward.name}
+          );
+        }
         if (reward.categoryTags && reward.categoryTags.length > 0) {
           const category = reward.categoryTags[0].title;
           this.analyticsService.addEvent({
@@ -64,10 +95,16 @@ export class RewardComponent implements OnInit {
   }
 
   public save(): void {
+    this.isButtonEnable = false;
+    this.loadingSubmit = true;
     this.vouchersService.issueReward(this.reward.id)
       .subscribe(
         () => this.router.navigate(['/home/vouchers']),
-        () => this.notificationService.addSnack('Sorry! Could not save reward.')
+        () => {
+          this.isButtonEnable = true; // change button back to enable which it originally is, before save is triggered
+          this.loadingSubmit = false;
+          this.notificationService.addSnack('Sorry! Could not save reward.');
+        }
       );
   }
 }

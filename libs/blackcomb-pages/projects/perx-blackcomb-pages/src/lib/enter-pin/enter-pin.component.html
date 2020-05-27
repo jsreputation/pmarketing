@@ -1,0 +1,18 @@
+<div class="main-container">
+  <mat-toolbar class="toolbar mat-elevation-z3" *ngIf="theme">
+    <span class="logoWrapper">
+      <img class="logo" [attr.src]="theme.properties['--logo']" [attr.alt]="theme.properties['--title']" />
+    </span>
+  </mat-toolbar>
+  <div class="page-container">
+    <div class="content-container">
+      <h2>{{'OTP_PAGE.TITLE' | translate}}</h2>
+      <div class="subheading"><span>{{subHeading}}</span></div>
+      <div class="pin-input-container">
+        <perx-core-pin-input [length]="MAX_DIGITS_COUNT" (full)="onPinEntered($event)">
+        </perx-core-pin-input>
+      </div>
+      <button mat-stroked-button (click)="resendOtp()">{{ 'OTP_PAGE.ERROR_LINK' | translate }}</button>
+    </div>
+  </div>
+</div>

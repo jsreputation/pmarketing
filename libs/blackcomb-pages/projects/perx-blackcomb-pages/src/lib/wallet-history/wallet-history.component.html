@@ -1,0 +1,27 @@
+<div class="page"
+  infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="500"
+  (scrolled)="onScroll()"
+  [scrollWindow]="false">
+  <mat-tab-group mat-stretch-tabs (selectedTabChange)="changedTab($event)">
+    <mat-tab [label]="'WALLET.WALLET_TITLE' | translate">
+      <div class="voucher-list">
+        <div class="list-heading" translate>WALLET.REWARDS_TITLE</div>
+        <perx-core-vouchers (tapped)="voucherSelected($event)"
+                            [data]="issuedVoucher$"
+                            [mapping]="mapping"
+        ></perx-core-vouchers>
+      </div>
+    </mat-tab>
+    <mat-tab [label]="'WALLET.HISTORY_TITLE' | translate">
+      <div class="voucher-list">
+        <div class="list-heading" translate>WALLET.REWARD_STATUS_REDEEMED</div>
+        <perx-core-vouchers (tapped)="voucherSelected($event)"
+                            [data]="redeemedVouchers$"
+                            [mapping]="mapping"
+        ></perx-core-vouchers>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

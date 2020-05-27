@@ -1,0 +1,27 @@
+<div class="main-puzzle-container">
+  <div class="game-header">
+    <h1>{{game.texts.title}}</h1>
+    <h3>{{game.texts.subTitle}}</h3>
+  </div>
+  <div class="game-wrapper">
+    <div class="snake-wrapper">
+      <perx-core-snake-game
+        (completed)="gameCompleted($event)"
+        [enabled]="isEnabled"
+        [targetUrl]="config.targetIcon"
+        [snakeHeadUrl]="config.snakeHead"
+        [snakeBodyUrl]="config.snakeBody"
+        [gameAreaUrl]="config.gameArea">
+      </perx-core-snake-game>
+    </div>
+  </div>
+  <div class="game-footer">
+      <button class="js-play ga_start_game"
+              mat-flat-button
+              color="primary"
+              [ngStyle]="{ 'visibility': isEnabled ? 'hidden': 'visible'}"
+              (click)="isEnabled = true">
+        {{ game.texts.button }}
+      </button>
+  </div>
+</div>

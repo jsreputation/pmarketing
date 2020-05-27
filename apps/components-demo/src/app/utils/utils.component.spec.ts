@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { UtilsComponent } from './utils.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTabsModule } from '@angular/material/tabs';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatTabsModule, MatDialogModule } from '@angular/material';
+import { UtilsComponent } from './utils.component';
 
 describe('UtilsComponent', () => {
   let component: UtilsComponent;

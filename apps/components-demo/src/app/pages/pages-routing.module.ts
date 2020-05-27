@@ -28,7 +28,7 @@ const routes: Routes = [{
     { path: 'home', component: HomeComponent },
     { path: 'reward', component: RewardComponent },
     { path: 'loading', component: LoadingComponent },
-    { path: 'login', component: SignIn2Component },
+    { path: 'login', component: SignIn2Component, data: { countryList: ['Hong Kong', 'Singapore']} },
     { path: 'redeem', component: RedeemComponent },
     { path: 'reward-detail', component: RewardDetailsComponent },
     { path: 'stamp', component: StampCardComponent },

@@ -1,0 +1,51 @@
+<div class="main-app-container" *ngIf="theme && theme.properties && appConfig">
+  <mat-toolbar class="toolbar mat-elevation-z3" *ngIf="showHeader">
+    <mat-icon
+      class="backArrow"
+      (click)="backArrowClick()">
+      {{backArrowIcon}}
+    </mat-icon>
+    <a class="logoWrapper" [routerLink]="[ '/home' ]">
+      <img class="logo" [attr.src]="theme.properties['--logo']" [attr.alt]="theme.properties['--title']" />
+    </a>
+    <!-- ghost stuff-->
+    <span></span>
+  </mat-toolbar>
+  <div class="game-container">
+    <router-outlet (activate)="onActivate($event)"></router-outlet>
+  </div>
+  <mat-toolbar class="navbar mat-elevation-z2" *ngIf="showToolbar">
+    <div class="a-container">
+      <a matRipple [routerLink]="[ '/home' ]" routerLinkActive="active" *ngIf="appConfig.showHomePage">
+        <div class="nav-item">
+          <mat-icon aria-hidden="false">home</mat-icon>
+          <span translate>NAVIGATION.HOME</span>
+        </div>
+      </a>
+      <a matRipple [routerLink]="[ '/wallet' ]" routerLinkActive="active">
+        <div class="nav-item">
+          <mat-icon aria-hidden="false">account_balance_wallet</mat-icon>
+          <span translate>NAVIGATION.WALLET</span>
+        </div>
+      </a>
+      <a matRipple [routerLink]="[ '/history' ]" routerLinkActive="active" *ngIf="appConfig.showHistoryPage">
+        <div class="nav-item">
+          <mat-icon aria-hidden="false">list</mat-icon>
+          <span translate>NAVIGATION.HISTORY</span>
+        </div>
+      </a>
+      <a matRipple [routerLink]="[ '/leaderboard' ]" routerLinkActive="active" *ngIf="appConfig.showLeaderboardPage">
+        <div class="nav-item">
+          <mat-icon aria-hidden="false">star_border</mat-icon>
+          <span translate>NAVIGATION.LEADER_BOARD</span>
+        </div>
+      </a>
+      <a matRipple [routerLink]="[ '/account' ]" routerLinkActive="active" *ngIf="appConfig.showAccountsPage">
+        <div class="nav-item">
+          <mat-icon aria-hidden="false">account_circle</mat-icon>
+          <span translate>NAVIGATION.ACCOUNT</span>
+        </div>
+      </a>
+    </div>
+  </mat-toolbar>
+</div>

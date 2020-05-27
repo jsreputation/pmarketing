@@ -5,13 +5,12 @@ import { RewardDetailRoutingModule } from './reward-detail-routing.module';
 import { RewardDetailComponent } from './reward-detail.component';
 import { RewardsModule, VouchersModule, ConfigModule, MerchantsModule } from '@perxtech/core';
 import { DetailHeaderModule } from '../detail-header/detail-header.module';
-import { SharedModule } from 'src/app/shared/shared.module';
-import { environment } from 'src/environments/environment';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   declarations: [RewardDetailComponent],
   imports: [
-    ConfigModule.forRoot({ ...environment }),
+    ConfigModule.forChild(),
     CommonModule,
     RewardDetailRoutingModule,
     MerchantsModule,

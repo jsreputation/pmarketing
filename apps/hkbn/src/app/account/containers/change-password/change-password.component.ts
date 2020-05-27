@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService, IProfile, IChangePasswordData, ProfileService } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
-import { DataTransferService } from 'src/app/services/data-transfer.service';
+import { DataTransferService } from '../../../services/data-transfer.service';
 import { take } from 'rxjs/operators';
 
 @Component({

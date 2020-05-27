@@ -1,18 +1,16 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { StampRoutingModule } from './stamp-routing.module';
-import { PuzzlesModule, StampModule as PerxStampsModule } from '@perxtech/core';
-import { MatButtonModule } from '@angular/material';
-import { PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
+import { RouterModule, Routes } from '@angular/router';
+import { StampCardComponent, StampCardModule } from '@perxtech/blackcomb-pages';
+
+const routes: Routes = [
+  { path: '', pathMatch: 'full', component: StampCardComponent },
+  { path: '*', redirectTo: '' }
+];
 
 @NgModule({
   imports: [
-    CommonModule,
-    PuzzlesModule,
-    MatButtonModule,
-    StampRoutingModule,
-    PerxStampsModule,
-    PerxBlackcombPagesModule
+    StampCardModule,
+    RouterModule.forChild(routes)
   ]
 })
 export class StampModule { }

@@ -1,0 +1,38 @@
+<div class="main-container">
+  <div class="title-wrapper">
+    <h1>{{getTitle()}}</h1>
+  </div>
+  <form *ngIf="fieldType === 'email'" [formGroup]="changeEmailForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill" class="full-width__input">
+      <mat-label translate>PROFILE.ENTER_EMAIL</mat-label>
+      <input matInput formControlName="email" type="email" required autocomplete="email">
+      <mat-error *ngIf="changeEmailForm.get('email')">
+        <span>Incorrect email format</span>
+      </mat-error>
+    </mat-form-field>
+    <button mat-flat-button [disabled]="!changeEmailForm.valid" type="submit" color="primary"
+      class="half-width__button">{{'PROFILE.CTA_SAVE_TXT' | translate}}</button>
+  </form>
+  <form *ngIf="fieldType === 'postcode'" [formGroup]="changePostcodeForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill" class="full-width__input">
+      <mat-label translate>PROFILE.ENTER_POSTCODE</mat-label>
+      <input matInput formControlName="postcode" required>
+      <mat-error *ngIf="changePostcodeForm.get('postcode')">
+        <span>Postcode is required</span>
+      </mat-error>
+    </mat-form-field>
+    <button mat-flat-button [disabled]="!changePostcodeForm.valid" type="submit" color="primary"
+      class="half-width__button">{{'PROFILE.CTA_SAVE_TXT' | translate}}</button>
+  </form>
+  <form *ngIf="fieldType === 'nickname'" [formGroup]="changeNicknameForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill" class="full-width__input">
+      <mat-label translate>PROFILE.ENTER_NICKNAME</mat-label>
+      <input matInput formControlName="nickname" required>
+      <mat-error *ngIf="changeNicknameForm.get('nickname')">
+        <span>Nickname is required</span>
+      </mat-error>
+    </mat-form-field>
+    <button mat-flat-button [disabled]="!changeNicknameForm.valid" type="submit" color="primary"
+      class="half-width__button">{{'PROFILE.CTA_SAVE_TXT' | translate}}</button>
+  </form>
+</div>

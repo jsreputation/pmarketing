@@ -11,10 +11,12 @@ import {
 import { of } from 'rxjs';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
-import { RewardsService } from '@perxtech/core';
+import { ConfigService, RewardsService } from '@perxtech/core';
 
-import { catalogs } from 'src/app/catalogs.mock';
+import { catalogs } from '../../catalogs.mock';
 import { CatalogsComponent } from './catalogs.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { GhostCardComponent } from '../../ghosts/card-ghost.component';
 
 describe('CatalogsComponent', () => {
   let component: CatalogsComponent;
@@ -22,16 +24,27 @@ describe('CatalogsComponent', () => {
   const catalogsServiceStub: Partial<RewardsService> = {
     getCatalogs: () => of(catalogs),
   };
-
+  const configServiceStub: Partial<ConfigService> = {
+    readAppConfig: () => of({
+      apiHost: '',
+      production: false,
+      preAuth: false,
+      isWhistler: false,
+      baseHref: '',
+      rssFeeds: '',
+    })
+  };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CatalogsComponent],
+      declarations: [CatalogsComponent, GhostCardComponent],
       imports: [
         MatIconModule,
         MatCardModule,
         InfiniteScrollModule,
+        NoopAnimationsModule
       ],
       providers: [
+        { provide: ConfigService, useValue: configServiceStub },
         { provide: RewardsService, useValue: catalogsServiceStub }
       ]
     })

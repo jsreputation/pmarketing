@@ -6,15 +6,15 @@
     "start": "PREAUTH=true npm run config && ng serve --host 0.0.0.0",
     "start:prod": "APIHOST=https://api-starhub.perxtech.net RSS_FEEDS=https://cdn.perxtech.net/content/starhub/rss.xml PREAUTH=true npm run config && ng serve --host 0.0.0.0",
     "build": "npm run config && ng build",
-    "build:starhub:prod": "RSS_FEEDS=https://cdn.perxtech.net/content/starhub/rss.xml PRODUCTION=true APIHOST=https://api-starhub.perxtech.net npm run config && ng build --prod",
+    "build:starhub:production": "RSS_FEEDS=https://cdn.perxtech.net/content/starhub/rss.xml PRODUCTION=true APIHOST=https://api-starhub.perxtech.net npm run config && ng build --prod",
     "build:starhub:staging": "PRODUCTION=true npm run config && ng build --configuration staging",
     "config": "ts-node --project tsconfig.node.json set-env.ts",
     "clean": "rm -rf ./dist ./node_modules",
-    "test": "jest",
+    "test": "jest --config=jest.config.json",
     "lint": "stylelint \"src/**/*.*css\" && eslint ./src/*/*.ts",
     "lint:fix": "stylelint \"src/**/*.*css\" --fix && eslint \"./src/**/*.ts\" --fix",
     "e2e~": "ng e2e",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch --config=jest.config.json"
   },
   "private": true,
   "dependencies": {
@@ -35,7 +35,8 @@
     "ngx-multi-line-ellipsis": "^1.0.4",
     "rxjs": "~6.4.0",
     "tslib": "^1.9.0",
-    "zone.js": "~0.9.1"
+    "zone.js": "~0.9.1",
+    "colors": "~1.0.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.800.6",
@@ -57,31 +58,5 @@
     "tslint-consistent-codestyle": "^1.15.1",
     "tslint-no-focused-test": "^0.5.0",
     "typescript": "~3.4.3"
-  },
-  "jest": {
-    "preset": "jest-preset-angular",
-    "roots": [
-      "src"
-    ],
-    "transformIgnorePatterns": [
-      "node_modules/(?!ngx-barcode)"
-    ],
-    "transform": {
-      "^.+\\.(ts|js|html)$": "ts-jest"
-    },
-    "setupFilesAfterEnv": [
-      "<rootDir>/src/setup-jest.ts"
-    ],
-    "moduleNameMapper": {},
-    "globals": {
-      "ts-jest": {
-        "tsConfig": "<rootDir>/tsconfig.spec.json",
-        "stringifyContentPathRegex": "\\.html$",
-        "astTransformers": [
-          "jest-preset-angular/build/InlineFilesTransformer",
-          "jest-preset-angular/build/StripStylesTransformer"
-        ]
-      }
-    }
   }
 }

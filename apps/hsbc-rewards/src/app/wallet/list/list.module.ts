@@ -1,25 +1,16 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { MatIconModule } from '@angular/material';
-import { of, Observable } from 'rxjs';
-import { VouchersModule, Voucher, ConfigModule } from '@perxtech/core';
+import { ConfigModule, VouchersModule } from '@perxtech/core';
 
+import { SharedModule } from '../../shared/shared.module';
 import { ListRoutingModule } from './list-routing.module';
 import { ListComponent } from './list.component';
-import { SharedModule } from 'src/app/shared/shared.module';
-import { voucher } from 'src/assets/mock/vouchers';
-import { environment } from '../../../environments/environment';
-
-export class VoucherStubService {
-  public getAll(): Observable<Voucher[]> {
-    return of(voucher);
-  }
-}
 
 @NgModule({
   declarations: [ListComponent],
   imports: [
-    ConfigModule.forRoot({ ...environment }),
+    ConfigModule.forChild(),
     CommonModule,
     ListRoutingModule,
     VouchersModule,

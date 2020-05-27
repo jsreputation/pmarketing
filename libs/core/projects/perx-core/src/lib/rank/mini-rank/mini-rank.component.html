@@ -1,0 +1,18 @@
+<div class="rank-wrapper">
+  <div>
+    <div class="rank-title">
+      <h1>{{userGameInfo?.displayName}}</h1>
+    </div>
+    <div class="point-and-rank-box">
+      <div class="rank-box">
+        <h3>Your Rank</h3>
+        <h1>{{userGameInfo?.rank}}</h1>
+      </div>
+      <mat-divider vertical="true"></mat-divider>
+      <div class="point-box">
+        <h3>{{metric | titlecase}} </h3>
+        <span><h1>{{userGameInfo?.value}} </h1> points</span>
+      </div>
+    </div>
+  </div>
+</div>

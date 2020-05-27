@@ -1,0 +1,54 @@
+<ng-container *ngIf="voucher$ | async as voucher">
+  <div class="voucher-container">
+    <div class="reward-image-container" *ngIf="voucher?.reward?.rewardBanner">
+      <img class="reward-image" src="{{voucher?.reward?.rewardBanner}}" [alt]="voucher?.reward?.name">
+    </div>
+    <div class="merchant-image-container" *ngIf="!hideMerchantImg && voucher?.reward?.merchantImg">
+      <img class="merchant-image" src="{{voucher?.reward?.merchantImg}}" [alt]="voucher?.reward?.merchantName">
+    </div>
+    <div class="details">
+      <div class="reward-name">
+        {{voucher?.reward?.name}}
+      </div>
+      <div class="merchant-name" *ngIf="!hideMerchantName">
+        {{voucher?.reward?.merchantName}}
+      </div>
+      <div class="voucher-expiry" *ngIf="!hideExpiry && voucher.expiry!==null">
+        {{expiryFn(voucher)}}
+      </div>
+      <div [ngClass]="'ribbon ' + voucher.state" *ngIf="mapping && showRedeemedIcon && mapping[voucher.state]">
+        {{mapping[voucher.state]}}</div>
+      <!--      <div *ngFor="let description of voucher.description">-->
+      <!--        <div class="section-heading">-->
+      <!--          {{description.title}}-->
+      <!--        </div>-->
+      <!--        <div [ngClass]="description.title == 'Description' ? 'section-content description' : ' section-content'">-->
+      <!--          <div [innerHtml]="description.content"></div>-->
+      <!--        </div>-->
+      <!--      </div>-->
+      <div class="section-heading" *ngIf="voucher.reward.description">
+        {{descriptionLabel}}
+      </div>
+      <div class="section-content" *ngIf="voucher.reward.description">
+        <div id="rewardDescription" [innerHtml]="voucher.reward.description"></div>
+      </div>
+      <div class="section-heading" *ngIf="voucher.reward.termsAndConditions">
+        {{tncLabel}}
+      </div>
+      <div class="section-content" *ngIf="voucher.reward.termsAndConditions">
+        <div [innerHtml]="voucher.reward.termsAndConditions"></div>
+      </div>
+<!--      <div class="section-heading" *ngIf="voucher.reward.howToRedeem">-->
+<!--        How to redeem-->
+<!--      </div>-->
+<!--      <div class="section-content" *ngIf="voucher.reward.howToRedeem">-->
+<!--        <div [innerHtml]="voucher.reward.howToRedeem"></div>-->
+<!--      </div>-->
+    </div>
+  </div>
+  <div class="actions-container" *ngIf="!hideActions">
+    <button mat-raised-button color="primary" class="redeem-btn" (click)="onClick()">
+      {{ redeemLabelFn() }}
+    </button>
+  </div>
+</ng-container>

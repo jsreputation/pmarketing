@@ -6,23 +6,32 @@ mat-toolbar {
   z-index: 4;
   -webkit-box-pack: justify;
   justify-content: space-between;
-  background-color: #0F69AF;
+  background-color: #0f69af;
   position: fixed;
   color: white;
 }
 
 .main-container {
-  overflow: scroll;
+  overflow: hidden;
   height: calc(100% - 6rem);
   padding-top: 6rem;
 }
 
-perx-core-loyalty-transactions-list ::ng-deep {
-  .transaction-point {
-    color: #ddac27;
-  }
+.tab-container {
+  overflow-y: scroll;
+  height: 100%;
 }
 
-::ng-deep .mat-tab-label-active {
-  color: #0f69af;
+::ng-deep {
+  .transaction-point {
+    color: #ddac27 !important;
+  }
+
+  .mat-tab-group {
+    height: 100%;
+  }
+
+  .mat-tab-label-active {
+    color: #0f69af;
+  }
 }

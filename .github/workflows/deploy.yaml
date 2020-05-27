@@ -2,7 +2,7 @@ name: deploy
 on:
   push:
     tags:
-      - '*[0-9]+.[0-9]+.[0-9]+-?[0-9]*'
+      - '*[0-9]+.[0-9]+.[0-9]+*'
 jobs:
   docker_build:
     name: Docker Build
@@ -132,12 +132,7 @@ jobs:
           echo ::set-env name=APP_BASE::${APP_BASE}
       - name: Set env APP_ENV
         run: |
-          if [[ ( $APP == 'starhub' || $APP == 'perx-demo' || $APP == 'abenson' || $APP == 'daiichi-dlvn') && $TARGET_ENV != 'production' ]]
-          then
-            APP_ENV="staging"
-          else
-            APP_ENV="prod"
-          fi
+          APP_ENV=$TARGET_ENV
           echo APP_ENV is ${APP_ENV}
           echo ::set-env name=APP_ENV::${APP_ENV}
       - name: Install skaffold

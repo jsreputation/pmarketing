@@ -1,0 +1,31 @@
+@import "../../mixins/mixins.scss";
+
+.correct {
+  background-color: #27c400;
+
+  @include icon;
+}
+
+.wrong {
+  background-color: #d90a1e;
+
+  @include icon;
+}
+
+.warn {
+  @include icon;
+
+  background-color: #f90;
+}
+
+h3 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 1.6rem;
+  color: #212121;
+}
+
+p {
+  color: #212121;
+}

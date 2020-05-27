@@ -1,0 +1,68 @@
+@import "../mixins";
+
+.content-container {
+  @include loginContentContainer;
+}
+
+.sign-up {
+  @include loginCard;
+
+  .red-text {
+    color: red;
+  }
+
+  .error_msg {
+    padding-bottom: 1rem;
+
+    span {
+      //color: #eb202f;
+      font-size: 1.5rem;
+    }
+  }
+
+  button {
+    width: 100%;
+    box-sizing: border-box;
+    background: var(--button_background_color);
+  }
+
+  form {
+    .full-width__input {
+      width: 100%;
+      margin-top: 0;
+    }
+
+    .mobile-group {
+      display: flex;
+      flex-direction: row;
+
+      .country-code {
+        width: 10rem;
+        margin-right: 1rem;
+
+        .mat-form-field {
+          width: 100%;
+        }
+      }
+
+      .mobile-number {
+        width: 100%;
+
+        .mat-form-field {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .subtitle {
+    margin-top: 1rem;
+
+    @include form-subtitle;
+  }
+
+  .loading-spin {
+    display: inline-block;
+    margin: auto;
+  }
+}

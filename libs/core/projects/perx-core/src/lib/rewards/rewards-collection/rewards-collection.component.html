@@ -1,0 +1,53 @@
+<div [class]=" rewards$ ? 'card-collection-container' : 'card-collection-container loading'">
+  <ng-container *ngIf="rewards$ | async as rewards; else elseBlock">
+    <mat-card matRipple *ngFor="let reward of rewards" (click)="rewardClickedHandler(reward)">
+      <img mat-card-image *ngIf="reward.rewardThumbnail || defaultImg" [class.no-image]="!reward.rewardThumbnail"
+        [src]="reward.rewardThumbnail || defaultImg" [alt]="reward.name" />
+      <div class="no-default-img" mat-card-image *ngIf="!reward.rewardThumbnail && !defaultImg">
+        <svg width="375" height="200" viewBox="0 0 375 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0H375V200H0V0Z" fill="#4E4E4E" />
+          <path
+            d="M190.4 90.1401L184.5 98.0001L189 104C189.66 104.88 189.48 106.14 188.6 106.8C187.72 107.46 186.46 107.3 185.8 106.4C183.7 103.6 181.18 100.26 179.6 98.1201C178.8 97.0601 177.2 97.0601 176.4 98.1201L168.4 108.78C167.42 110.12 168.36 112 170 112H206C207.64 112 208.58 110.12 207.6 108.8L193.6 90.1401C192.8 89.0601 191.2 89.0601 190.4 90.1401Z"
+            fill="white" />
+        </svg>
+      </div>
+      <mat-card-content>
+        <div class="subtitle-1" ngxEllipsis [lines]="1">{{reward.name}}</div>
+        <!--
+        have to repeat div declaration because the directive reads the
+        dom to insert ellipsis and will otherwise render angular logic code
+        -->
+        <div class="description mat-caption"
+          ngxEllipsis
+          [lines]="2"
+          *ngIf="reward.merchantName; else showDescription">
+          {{reward.merchantName}}
+        </div>
+        <ng-template #showDescription>
+          <div *ngIf="reward.description">
+            <div class="description mat-caption ellipse-2-lines">
+              {{ reward.description }}
+            </div>
+          </div>
+        </ng-template>
+        <div
+          *ngIf="reward.rewardPrice && reward.rewardPrice.length > 0"
+          class="points overline"
+          [ngStyle]="{'color': themeFontColor ? themeFontColor : colorPrimary}">
+          <div *ngFor="let rewardPrice of reward.rewardPrice">
+            {{displayPriceFn(rewardPrice)}}</div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+  <ng-template #elseBlock>
+    <mat-card *perxCoreRepeatTimes="repeatGhostCount">
+      <div class="img-placeholder ghost"></div>
+      <mat-card-content>
+        <div class="subtitle-1 ghost"></div>
+        <div class="description mat-caption ghost"></div>
+        <div class="points overline ghost"></div>
+      </mat-card-content>
+    </mat-card>
+  </ng-template>
+</div>

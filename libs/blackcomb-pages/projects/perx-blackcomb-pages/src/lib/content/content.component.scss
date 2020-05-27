@@ -1,0 +1,48 @@
+@import "../_mixins";
+@import "../custom-theme";
+
+:host {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.game-container {
+  flex: 1;
+  overflow-y: auto;
+
+  .content {
+    padding: 2.4rem;
+    font-size: 1.4rem;
+    line-height: 2.5rem;
+    height: 100%;
+    overflow-y: auto;
+
+    ::ng-deep {
+      @include typography();
+
+      table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+    }
+  }
+
+  .loading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+  }
+}
+
+.toolbar {
+  @include toolbar();
+
+  .backArrow {
+    @include toolBarArrow();
+  }
+}

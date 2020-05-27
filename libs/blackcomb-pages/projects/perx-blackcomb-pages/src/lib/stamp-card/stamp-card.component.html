@@ -1,0 +1,26 @@
+<div class="main-puzzle-container" *ngIf="stampCard">
+    <img class="background" *ngIf="background" [src]="background">
+    <div class="stamp-form">
+      <perx-core-puzzle-collect-stamps
+        [nbSlots]="stampCard.campaignConfig?.totalSlots || stampCard.displayProperties.totalSlots"
+        [stamps]="stampCard.stamps"
+        [rewards]="stampCard.campaignConfig?.collectionRewards || v4Rewards(stampCard)"
+        [preStampImg]="stampCard.displayProperties.preStampImg"
+        [postStampImg]="stampCard.displayProperties.postStampImg"
+        [availableStampImg]="stampCard.displayProperties.preStampImg"
+        [availableRewardImg]="stampCard.displayProperties.rewardPreStamp"
+        [rewardPreStamp]="stampCard.displayProperties.rewardPreStamp"
+        [rewardPostStamp]="stampCard.displayProperties.rewardPostStamp"
+        [cardBgImage]="stampCard.displayProperties.cardBackgroundImage?.value.imageUrl"
+        [showStampsCounter]="true"
+        [title]="stampCard.title || 'Stamp Card'"
+        [subTitle]="stampCard.subTitle || 'Tap the stamps to earn your reward!'"
+        (availableStampClicked)="handleStamp($event)">
+      </perx-core-puzzle-collect-stamps>
+    </div>
+  <div class="game-footer">
+    <button mat-raised-button [routerLink]="['/wallet']">
+      {{stampCard.buttonText || "View Wallet" }}
+    </button>
+  </div>
+</div>

@@ -1,0 +1,96 @@
+<div class="content-container" *ngIf="theme | async as th">
+    <div class="login-image">
+        <img class="logo" [attr.src]="th?.properties['--logo']" [attr.alt]="th?.properties['--title']" />
+    </div>
+    <div *ngIf="appConfig" class="login-form">
+        <h1>{{'LOGIN_PAGE.TITLE' | translate}}</h1>
+        <div class="subtitle" *ngIf="appConfig.showSubtitleLogin">
+            {{'LOGIN_PAGE.NO_ACCOUNT' | translate}} <a class="link"
+                [routerLink]="'/signup'">{{'LOGIN_PAGE.SIGN_UP' | translate}}</a>
+        </div>
+        <div class="error_msg">
+            <span>{{errorMessage}}</span>
+        </div>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div *ngIf="countryCodePrefix; then withPrefixBlock else elseBlock"></div>
+            <ng-template #withPrefixBlock>
+                <mat-form-field appearance="standard" class="full-width__input">
+                    <span matPrefix>+{{countryCodePrefix}}&nbsp;<span class="prefix-spacer"></span></span>
+                    <input matInput [placeholder]="'LOGIN_PAGE.MOBILE_FIELD' | translate" formControlName="customerID"
+                        [value]="">
+                    <mat-error *ngIf="loginForm.hasError('customerID')">
+                        {{'LOGIN_PAGE.MOBILE_INVALID_TXT' | translate}}
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="standard" class="full-width__input">
+                    <input matInput [placeholder]="'LOGIN_PAGE.PASSWORD_FIELD' | translate" formControlName="password"
+                        type="password">
+                    <mat-error *ngIf="loginForm.hasError('password')">
+                        {{'LOGIN_PAGE.PASSWORD_INVALID_TXT' | translate}}
+                    </mat-error>
+                </mat-form-field>
+            </ng-template>
+            <ng-template #elseBlock>
+                <div class="mobile-group">
+                    <div class="country-code">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Country Code</mat-label>
+                            <mat-select formControlName="countryCode">
+                                <mat-option
+                                    *ngFor="let country of countriesList$ | async" [value]="country.code">
+                                    <span>{{country.name}} </span>
+                                    <span>+{{country.code}}</span>
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="loginForm.hasError('required', ['countryCode'])">
+                                {{'LOGIN_PAGE.COUNTRY_CODE_REQUIRED_TXT' | translate}}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="mobile-number">
+                        <mat-form-field appearance="fill">
+                            <mat-label>{{'LOGIN_PAGE.MOBILE_FIELD' | translate}}</mat-label>
+                            <input autocomplete="tel-local"
+                                matInput
+                                [placeholder]="'LOGIN_PAGE.MOBILE_FIELD' | translate"
+                                formControlName="customerID"
+                                [value]="">
+                            <mat-error *ngIf="loginForm.hasError('required', ['customerID'])">
+                                {{'LOGIN_PAGE.MOBILE_REQUIRED_TXT' | translate}}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <mat-form-field appearance="fill" class="full-width__input">
+                    <mat-label translate>{{'LOGIN_PAGE.PASSWORD_FIELD' | translate}}</mat-label>
+                    <input matInput
+                        [placeholder]="'LOGIN_PAGE.PASSWORD_FIELD' | translate"
+                        formControlName="password"
+                        type="password">
+                    <mat-error *ngIf="loginForm.hasError('required', ['password'])">
+                        {{'LOGIN_PAGE.PASSWORD_REQUIRED_TXT' | translate}}
+                    </mat-error>
+                </mat-form-field>
+            </ng-template>
+            <div class="subtitle forgot-password" *ngIf="appConfig.showForgetPasswordOnLogin">
+                <a [routerLink]="['/forgot-password']" [queryParams]="{ identifier: identifier }" class="link">
+                    {{'LOGIN_PAGE.FORGET_PASSWORD_TXT' | translate}}
+                </a>
+            </div>
+            <button mat-flat-button
+                type="submit"
+                color="primary"
+                class="full-width__button"
+                [disabled]="!loginForm.valid || loading">
+                <span *ngIf="!loading">{{'LOGIN_PAGE.CTA_TXT' | translate}}</span>
+                <div *ngIf="loading" class="loading-spin">
+                    <mat-progress-spinner
+                        [diameter]="30"
+                        color="primary"
+                        mode="indeterminate">
+                    </mat-progress-spinner>
+                </div>
+            </button>
+        </form>
+    </div>
+</div>

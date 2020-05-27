@@ -1,23 +1,7 @@
-import {
-  NgModule,
-  APP_INITIALIZER,
-  LOCALE_ID,
-  Injectable,
-  ErrorHandler,
-} from '@angular/core';
-import {
-  BrowserModule,
-  HammerGestureConfig,
-  HAMMER_GESTURE_CONFIG,
-} from '@angular/platform-browser';
-import {
-  HttpClientModule,
-  HttpClient,
-} from '@angular/common/http';
-import {
-  MatDialogModule,
-  MatSnackBarModule,
-} from '@angular/material';
+import { APP_INITIALIZER, ErrorHandler, Injectable, LOCALE_ID, NgModule, } from '@angular/core';
+import { BrowserModule, HAMMER_GESTURE_CONFIG, HammerGestureConfig, } from '@angular/platform-browser';
+import { HttpClient, HttpClientModule, } from '@angular/common/http';
+import { MatDialogModule, MatSnackBarModule, } from '@angular/material';
 import { MatButtonModule } from '@angular/material/button';
 // import { ServiceWorkerModule } from '@angular/service-worker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -36,32 +20,31 @@ import localesKoExtra from '@angular/common/locales/extra/ko';
 import fr from '@angular/common/locales/fr';
 import localesFrExtra from '@angular/common/locales/extra/fr';
 
-import {
-  TranslateModule,
-  TranslateLoader,
-  TranslateService,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule, TranslateService, } from '@ngx-translate/core';
 
 import {
-  PerxCoreModule,
   AuthenticationModule,
-  UtilsModule,
-  ConfigModule,
-  MerchantsModule as PerxMerchantsModule,
-  CampaignModule as PerxCampaignModule,
-  StampModule as PerxStampModule,
-  VouchersModule,
-  OutcomeModule,
-  ProfileModule,
-  RewardsModule,
-  LanguageService,
-  TokenStorage,
-  ConfigService,
-  LocaleIdFactory,
-  SettingsModule,
   AuthenticationService,
+  CampaignModule as PerxCampaignModule,
+  ConfigModule,
+  ConfigService,
+  GameServiceModule as PerxGameServiceModule,
+  IConfig,
+  LanguageService,
+  LocaleIdFactory,
+  MerchantsModule as PerxMerchantsModule,
+  CampaignServiceModule as PerxCampaignServiceModule,
+  OutcomeModule,
+  PerxCoreModule,
+  ProfileModule,
+  ProfileServiceModule as PerxProfileServiceModule,
+  RewardsModule,
+  SettingsModule,
+  StampModule as PerxStampModule,
   ThemesService,
-  IConfig
+  TokenStorage,
+  UtilsModule,
+  VouchersModule, LoyaltyModule
 } from '@perxtech/core';
 
 import * as Hammer from 'hammerjs';
@@ -130,6 +113,7 @@ export const setLanguage = (
   imports: [
     ConfigModule.forRoot({ ...environment }),
     SettingsModule.forRoot({ ...environment }),
+    PerxGameServiceModule.forRoot(),
     BrowserModule,
     AppRoutingModule,
     PerxCoreModule,
@@ -138,17 +122,18 @@ export const setLanguage = (
     AuthenticationModule,
     SignUpModule,
     ProfileModule,
+    PerxProfileServiceModule.forRoot(),
     BrowserAnimationsModule,
-    PerxMerchantsModule,
+    PerxMerchantsModule.forRoot(),
     PerxStampModule,
-    ProfileModule,
     UtilsModule,
     PerxCampaignModule,
     HttpClientModule,
     MatDialogModule,
     MatButtonModule,
     MatSnackBarModule,
-    RewardsModule,
+    LoyaltyModule.forRoot(),
+    RewardsModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -156,6 +141,8 @@ export const setLanguage = (
         useClass: LanguageService
       }
     }),
+    PerxCampaignServiceModule.forRoot(),
+    PerxGameServiceModule.forRoot()
     // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   bootstrap: [AppComponent],

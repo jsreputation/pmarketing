@@ -1,0 +1,30 @@
+<div
+  *ngIf="(rewards$ | RewardsSort: selectedSortingCriteria | async) as rewards"
+  class="content"
+  #contentScroll
+  infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="500"
+  (scrolled)="onScroll()"
+  [scrollWindow]="false"
+>
+  <span id="subhead-category">
+    <h1 class="catergory-title">{{selectedCategory}}</h1>
+    <mat-menu #sortMenu>
+      <div *ngFor="let option of sortOptions" mat-menu-item (click)="sortChoice(option)">{{option.label}}</div>
+    </mat-menu>
+
+    <div id="icon" [matMenuTriggerFor]="sortMenu" aria-label="sort menu">
+      <mat-icon>sort</mat-icon>
+    </div>
+  </span>
+  <perx-core-newsfeed [items$]="newsFeedItems"></perx-core-newsfeed>
+  <div
+    *ngIf="rewards.length > 0"
+    class="scroll-content">
+    <ng-container *ngFor="let reward of rewards">
+      <perx-blackcomb-pages-catalog-reward-card [reward]="reward" (click)="goToReward(reward)">
+      </perx-blackcomb-pages-catalog-reward-card>
+    </ng-container>
+  </div>
+</div>

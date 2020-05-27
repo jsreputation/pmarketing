@@ -1,7 +1,8 @@
 import { ProtectedGuard } from 'ngx-auth';
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from '@perxtech/blackcomb-pages';
+
 const routes: Routes = [
   {
     path: '',
@@ -22,6 +23,11 @@ const routes: Routes = [
       },
       {
         path: 'redeem/:id', loadChildren: () => import('../redeem/redeem.module').then(mod => mod.RedeemModule),
+        canActivate: [ProtectedGuard]
+      },
+      {
+        path: 'campaign-welcome/:cid',
+        loadChildren: () => import('../campaign-landing/campaign-landing.module').then(mod => mod.CampaignLandingModule),
         canActivate: [ProtectedGuard]
       },
       {
@@ -52,6 +58,11 @@ const routes: Routes = [
         canActivate: [ProtectedGuard]
       },
       {
+        path: 'lucky-draw',
+        loadChildren: () => import('../lucky-draw-details/lucky-draw-details.module').then((mod) => mod.LuckyDrawDetailsModule),
+        canActivate: [ProtectedGuard]
+      },
+      {
         path: 'stamp-card/:id',
         loadChildren: () => import('../stamp/stamp.module').then(mod => mod.StampModule),
         canActivate: [ProtectedGuard]
@@ -59,6 +70,17 @@ const routes: Routes = [
       {
         path: 'survey/:id',
         loadChildren: () => import('../survey/survey.module').then(mod => mod.SurveyModule),
+        canActivate: [ProtectedGuard]
+      },
+      {
+        path: 'quiz/:cid',
+        loadChildren: () => import('../quiz/quiz.module').then(mod => mod.QuizModule),
+        canActivate: [ProtectedGuard]
+      },
+      {
+        path: 'quiz-results',
+        loadChildren: () => import('../quiz-result/quiz-result.module')
+          .then(m => m.QuizResultModule),
         canActivate: [ProtectedGuard]
       },
       {
@@ -74,11 +96,6 @@ const routes: Routes = [
       {
         path: 'reward-detail/:id',
         loadChildren: () => import('../rewards-detail/rewards-detail.module').then(mod => mod.RewardsDetailModule),
-        canActivate: [ProtectedGuard]
-      },
-      {
-        path: 'c/:key',
-        loadChildren: () => import('../content/content.module').then(mod => mod.ContentModule),
         canActivate: [ProtectedGuard]
       },
       {
@@ -98,7 +115,7 @@ const routes: Routes = [
       {
         path: 'edit-profile/:type',
         loadChildren: () => import('../edit-profile-field/edit-profile-field.module')
-          .then((mod: any) => mod.EditProfileFieldModule)
+          .then(mod => mod.EditProfileFieldModule)
       },
       {
         path: 'catalogs',

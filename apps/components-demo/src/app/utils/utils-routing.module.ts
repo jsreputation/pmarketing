@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { PinInputComponent } from './pin-input/pin-input.component';
-import { UtilsComponent } from './utils.component';
 import { PopupComponent } from './popup/popup.component';
+import { TimerComponent } from './timer/timer.component';
+import { UtilsComponent } from './utils.component';
 
 const routes: Routes = [
   {
@@ -11,6 +12,7 @@ const routes: Routes = [
       { path: '', pathMatch: 'full', redirectTo: 'pin-input' },
       { path: 'pin-input', component: PinInputComponent },
       { path: 'popup', component: PopupComponent },
+      { path: 'timer', component: TimerComponent },
     ],
   },
 ];

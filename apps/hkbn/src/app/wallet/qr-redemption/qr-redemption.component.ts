@@ -2,9 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { takeUntil, switchMap } from 'rxjs/operators';
 import { Subject, Subscription } from 'rxjs';
-import { IVoucherService, VoucherState } from '@perxtech/core';
-import { NotificationWrapperService } from 'src/app/services/notification-wrapper.service';
-import { IVoucher } from '@perxtech/core/projects/perx-core/src/lib/vouchers/models/voucher.model';
+import { IVoucherService, VoucherState, Voucher } from '@perxtech/core';
+import { NotificationWrapperService } from '../../services/notification-wrapper.service';
 import { Location } from '@angular/common';
 
 @Component({
@@ -36,7 +35,7 @@ export class QrRedemptionComponent implements OnInit, OnDestroy {
         }),
         takeUntil(this.destroy$),
       )
-      .subscribe((voucher: IVoucher) => {
+      .subscribe((voucher: Voucher) => {
         if (voucher.state === VoucherState.issued) {
           this.status = voucher.state;
         }

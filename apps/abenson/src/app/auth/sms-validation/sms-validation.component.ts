@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, Observable, of } from 'rxjs';
 import { takeUntil, map, filter, catchError, mergeMap } from 'rxjs/operators';
 import { AuthenticationService, LoyaltyService, isEmptyArray, ILoyalty, ProfileService, NotificationService } from '@perxtech/core';
-import { SharedDataService } from 'src/app/services/shared-data.service';
+import { SharedDataService } from '../../services/shared-data.service';
 
 @Component({
   selector: 'app-sms-validation',

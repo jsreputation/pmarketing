@@ -8,15 +8,12 @@
     "watch": "webpack --config webpack.config.js --watch",
     "lint": "eslint \"./**/*.ts\"",
     "lint:fix": "eslint \"./*/*.ts\" --fix",
-    "test": "echo \"no test!\""
+    "test": "echo \"no test!\"",
+    "ts-node": "ts-node"
   },
   "dependencies": {
     "@perxtech/whistler": "^0.0.0",
     "@sentry/node": "5.10.2",
-    "@types/cache-manager": "^2.10.0",
-    "@types/compression": "^1.0.1",
-    "@types/express": "^4.17.0",
-    "@types/node": "^12.12.5",
     "axios": "^0.18.0",
     "cache-manager": "^2.10.0",
     "compression": "^1.7.4",
@@ -32,8 +29,12 @@
     "tslint": "~5.19.0",
     "tslint-consistent-codestyle": "^1.15.1",
     "tslint-no-focused-test": "^0.5.0",
-    "typescript": "^3.5.1",
+    "typescript": "~3.4.3",
     "webpack": "^4.35.0",
-    "webpack-cli": "^3.3.4"
+    "webpack-cli": "^3.3.4",
+    "@types/cache-manager": "^2.10.0",
+    "@types/compression": "^1.0.1",
+    "@types/express": "^4.17.0",
+    "@types/node": "^12.12.5"
   }
 }

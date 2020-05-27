@@ -1,7 +1,6 @@
 <div *ngIf="(campaigns$ | async) as campaigns " class="main-container">
-  <h1>Play and win</h1>
-  <div class="cards"
-   *ngIf="campaigns.length > 0"
+  <h1 *ngIf="ghostCampaigns || campaigns.length">Play and win</h1>
+  <div
    infiniteScroll
    [infiniteScrollDistance]="2"
    [infiniteScrollThrottle]="500"
@@ -9,23 +8,26 @@
    [scrollWindow]="false"
    [horizontal]="true"
   >
-    <mat-card *ngFor="let campaign of campaigns" (click)="selected(campaign)" matRipple
-      [matRippleDisabled]="campaign?.macaron?.class === 'coming-soon'">
-      <div class="featured-image">
-        <img mat-card-image [src]="campaign.thumbnailUrl">
-        <div *ngIf="campaign?.macaron as macaron" class="macaron-container">
-          <span [ngClass]="macaron.class">{{macaron.label}}</span>
+    <div class="ga_campaign cards" *ngIf="campaigns.length > 0">
+      <mat-card [@fadeIn]="campaigns.length" *ngFor="let campaign of campaigns" (click)="selected(campaign)" matRipple
+                [matRippleDisabled]="campaign?.macaron?.class === 'coming-soon'">
+        <div class="featured-image">
+          <img mat-card-image [src]="campaign.thumbnailUrl ? campaign.thumbnailUrl: ''" >
+          <div *ngIf="campaign?.macaron as macaron" class="macaron-container">
+            <span [ngClass]="macaron.class">{{macaron.label}}</span>
+          </div>
         </div>
-      </div>
-      <mat-card-content>
-        <div>
-          <h1>{{campaign.name}}</h1>
-        </div>
-        <div class="icon">
-          <img src="assets/forward-arrow.svg" alt="">
-        </div>
-      </mat-card-content>
-      <mat-card-footer></mat-card-footer>
-    </mat-card>
+        <mat-card-content>
+          <div>
+            <h1>{{campaign.name}}</h1>
+          </div>
+          <div class="icon">
+            <img src="assets/forward-arrow.svg" alt="">
+          </div>
+        </mat-card-content>
+        <mat-card-footer></mat-card-footer>
+      </mat-card>
+    </div>
+    <ghost-cards class="cards" [@fadeOut]="!ghostCampaigns.length" [ghosts]="ghostCampaigns"></ghost-cards>
   </div>
 </div>

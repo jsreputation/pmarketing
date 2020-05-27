@@ -1,16 +1,21 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { LoadingRoutingModule } from './loading-routing.module';
-import { LoadingComponent } from '@perxtech/blackcomb-pages';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { LoadingComponent, PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
 import { SharedModule } from '../shared/shared.module';
+
+const routes: Routes = [{
+  path: '',
+  component: LoadingComponent
+}];
 
 @NgModule({
   declarations: [LoadingComponent],
   imports: [
     CommonModule,
-    LoadingRoutingModule,
+    RouterModule.forChild(routes),
     SharedModule,
+    PerxBlackcombPagesModule
   ]
 })
 export class LoadingModule { }

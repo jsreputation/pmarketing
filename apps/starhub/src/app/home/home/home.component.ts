@@ -1,23 +1,38 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import {
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild
+} from '@angular/core';
+import {
+  AuthenticationService,
+  CampaignType,
+  ConfigService,
+  ICampaign,
+  ICampaignService,
+  IGame,
   ILoyalty,
+  InstantOutcomeService,
+  IProfile,
   LoyaltyService,
   ProfileService,
-  IProfile,
-  AuthenticationService,
-  ICampaignService,
-  ICampaign,
-  InstantOutcomeService,
-  CampaignType,
-  IGame,
-  RewardPopupComponent, ConfigService
+  RewardPopupComponent
 } from '@perxtech/core';
 import { NoRenewaleInNamePipe } from '../no-renewale-in-name.pipe';
-import { MatToolbar, MatDialog } from '@angular/material';
-import { catchError, switchMap } from 'rxjs/operators';
+import {
+  MatDialog,
+  MatToolbar
+} from '@angular/material';
+import {
+  catchError,
+  switchMap
+} from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { of, combineLatest } from 'rxjs';
-import { IdataLayerSH } from 'src/app/app.component';
+import {
+  combineLatest,
+  of
+} from 'rxjs';
+import { IdataLayerSH } from '../../app.component';
 
 declare var dataLayerSH: IdataLayerSH; // eslint-disable-line
 @Component({
@@ -118,10 +133,9 @@ export class HomeComponent implements OnInit {
   }
 
   private fetchPopupCampaigns(): void {
-    this.campaignService.getCampaigns()
+    this.campaignService.getCampaigns({ type: CampaignType.give_reward })
       .pipe(
         catchError(() => {
-          this.router.navigateByUrl('error');
           return of([]);
         })
       )
@@ -136,9 +150,11 @@ export class HomeComponent implements OnInit {
           // if there is a 1st come 1st served campaign, display the popup
           if (firstComeFirstServed.length > 0) {
             this.firstComefirstServeCampaign = firstComeFirstServed[0];
+            const popupImageURL = this.firstComefirstServeCampaign.campaignBannerUrl ?
+              this.firstComefirstServeCampaign.campaignBannerUrl : 'assets/reward.png';
             const data = {
               text: this.firstComefirstServeCampaign.description,
-              imageUrl: 'assets/bd-campaign.svg',
+              imageUrl: popupImageURL,
               buttonTxt: 'Check it out',
               afterClosedCallBack: this,
               // @ts-ignore

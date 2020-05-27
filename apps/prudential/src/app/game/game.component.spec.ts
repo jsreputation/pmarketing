@@ -21,7 +21,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { PopupType } from '../vouchers/vouchers.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
 
 describe('GameComponent', () => {
   let component: GameComponent;

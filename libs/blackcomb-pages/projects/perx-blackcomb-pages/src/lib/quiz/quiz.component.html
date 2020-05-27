@@ -1,0 +1,72 @@
+<div *ngIf="quiz" class="quiz-main-container"
+  [ngStyle]="{'background-image': quiz.backgroundImgUrl ? 'url(' + quiz.backgroundImgUrl + ')' : '' }">
+  <div class="quiz-page">
+    <div class="progress">
+      <p class="progress-text">{{'QUIZ_TEMPLATE.QUESTION' | translate}}<strong>{{questionPointer + 1}}</strong>{{'QUIZ_TEMPLATE.OUT_OF' | translate}}{{totalLength}}</p>
+      <mat-progress-bar class="progress-bar" mode="determinate" color="warn" [value]="progressBarValue">
+      </mat-progress-bar>
+    </div>
+    <perx-core-timer class="timer" [timeToRun]="30000" (done)="nextWithoutValidation()" [reset]="resetTimer$">
+    </perx-core-timer>
+    <div #overflowContainer>
+      <mat-card
+        *ngIf="quiz.mode === mode.basic"
+        class="quiz-card"
+        [ngStyle]="{'background-image': quiz.cardBackgroundImgUrl ? 'url(' + quiz?.cardBackgroundImgUrl + ')' : '' }">
+        <h1>{{quiz.title}}</h1>
+        <h2 *ngIf="quiz.subTitle">{{quiz.subTitle}}</h2>
+        <perx-core-quiz
+          [hideIndex]="true"
+          #coreComponent
+          [data]="data$"
+          [questionPointer]="questionPointer"
+          (done)="done()"
+          (totalLength)="totalLength = $event"
+          (answers)="updateQuizStatus($event)">
+        </perx-core-quiz>
+        <div #overFarrow class="arrow hidden">
+          <svg width="35" height="35" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M35 17.5C35 7.85019 27.1498 -3.43143e-07 17.5 -7.64949e-07C7.85019 -1.18676e-06 -3.43143e-07 7.85018 -7.64949e-07 17.5C-1.18676e-06 27.1498 7.85018 35 17.5 35C27.1498 35 35 27.1498 35 17.5ZM16.4689 22.9061L9.17731 15.6144C8.89294 15.33 8.75 14.9567 8.75 14.5833C8.75 14.21 8.89294 13.8366 9.17731 13.5522C9.7475 12.9821 10.6692 12.9821 11.2394 13.5522L17.5 19.8129L23.7606 13.5523C24.3308 12.9821 25.2525 12.9821 25.8227 13.5523C26.3929 14.1225 26.3929 15.0442 25.8227 15.6144L18.531 22.9061C17.9608 23.4762 17.0392 23.4762 16.4689 22.9061Z"
+              fill="#186DE1" />
+          </svg>
+        </div>
+      </mat-card>
+      <div *ngIf="quiz.mode !== mode.basic" class="quiz-no-card">
+        <h1>{{quiz.title}}</h1>
+        <h2 *ngIf="quiz.subTitle">{{quiz.subTitle}}</h2>
+        <perx-core-quiz
+          [hideIndex]="true"
+          #coreComponent
+          [data]="data$"
+          [questionPointer]="questionPointer"
+          (done)="done()"
+          (totalLength)="totalLength = $event"
+          (answers)="updateQuizStatus($event)">
+        </perx-core-quiz>
+      </div>
+    </div>
+  </div>
+  <mat-toolbar
+    *ngIf="quiz.mode === mode.basic"
+    class="bottom-nav-container mat-elevation-z2">
+    <!-- <button color="primary" *ngIf="questionPointer >= 1" (click)="back()" mat-stroked-button>
+      Previous
+    </button> -->
+    <button
+      color="primary"
+      *ngIf="this.questionPointer !== this.totalLength - 1"
+      (click)="next()"
+      mat-flat-button>
+      {{'QUIZ_TEMPLATE.CTA_NEXT_TXT' | translate}}
+    </button>
+    <button
+      color="primary"
+      *ngIf="this.questionPointer === this.totalLength-1"
+      (click)="submit()"
+      [disabled]="!complete"
+      mat-flat-button translate>
+      {{'QUIZ_TEMPLATE.CTA_SUBMIT_TXT' | translate}}
+    </button>
+  </mat-toolbar>
+</div>

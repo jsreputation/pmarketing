@@ -25,7 +25,7 @@ jobs:
           echo ::set-env name=APPS::${APPS[@]}
       - name: Download tekton cli and install parallel
         run: |
-          curl -L https://github.com/tektoncd/cli/releases/download/v0.6.0/tkn_0.6.0_Linux_x86_64.tar.gz \
+          curl -L https://github.com/tektoncd/cli/releases/download/v0.8.0/tkn_0.8.0_Linux_x86_64.tar.gz \
           | sudo tar xzv -C /usr/local/bin tkn
           # sudo apt-get --allow-releaseinfo-change update &&
           sudo apt-get install -y parallel
@@ -48,19 +48,21 @@ jobs:
           declare -a TEKTON_TASKS
           for app in ${APPS[@]}; do
           TEKTON_TASK=$(cat <<EOT | kubectl -n build create -f - --output=jsonpath={.metadata.name}
-          apiVersion: tekton.dev/v1alpha1
+          apiVersion: tekton.dev/v1beta1
           kind: TaskRun
           metadata:
             generateName: microsite-apps-ng-build-prod-${app}-
             labels:
               github.ref: ${TEKTON_LABEL}
               task: build
+            annotations:
+              cluster-autoscaler.kubernetes.io/safe-to-evict: "false"
           spec:
             serviceAccountName: tekton
             taskRef:
               name: microsite-apps-ng-build-prod
-            inputs:
-              resources:
+            resources:
+              inputs:
                 - name: workspace
                   resourceSpec:
                     type: git
@@ -69,9 +71,9 @@ jobs:
                         value: git@github.com:PerxTech/microsite-apps-ng.git
                       - name: revision
                         value: ${{ github.ref }}
-              params:
-                - name: app-name
-                  value: ${app}
+            params:
+              - name: app-name
+                value: ${app}
             podTemplate:
               securityContext:
                 runAsUser: 0
@@ -141,7 +143,10 @@ jobs:
         if: always()
         run: |
           for TASKRUN_NAME in ${TEKTON_TASKS[@]}; do
-            if [ "$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')" == "Succeeded" ]; then
+            TASKRUN_STATUS=$(kubectl -n build get taskrun ${TASKRUN_NAME} --output=jsonpath='{.status.conditions[0].reason}')
+            echo ">>>> Taskrun ${TASKRUN_NAME} status is ${TASKRUN_STATUS} <<<<"
+            if [ "${TASKRUN_STATUS}" = "Succeeded" ]; then
+              echo ">>>> Deleting succeeded taskrun ${TASKRUN_NAME} <<<<"
               tkn -n build taskrun delete ${TASKRUN_NAME}
             fi
           done

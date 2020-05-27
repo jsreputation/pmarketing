@@ -28,8 +28,8 @@ import {
   ConfigService, SettingsService
 } from '@perxtech/core';
 
-import { rewards } from 'src/app/rewards.mock';
-import { catalogs } from 'src/app/catalogs.mock';
+import { rewards } from '../../rewards.mock';
+import { catalogs } from '../../catalogs.mock';
 import { DiscoverComponent } from './discover.component';
 
 import { NewsFeedComponent } from '../news-feed/news-feed.component';
@@ -37,17 +37,19 @@ import { CategoriesComponent } from '../categories/categories.component';
 import { RewardsCardsComponent } from '../rewards-cards/rewards-cards.component';
 import { CatalogsComponent } from '../catalogs/catalogs.component';
 import { CampaignsComponent } from '../campaigns/campaigns.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { GhostCardComponent } from '../../ghosts/card-ghost.component';
 
 describe('DiscoverComponent', () => {
   let component: DiscoverComponent;
   let fixture: ComponentFixture<DiscoverComponent>;
 
   const rewardsServiceStub: Partial<RewardsService> = {
-    getAllRewards: () => of(rewards),
+    getRewards: () => of(rewards),
     getCatalogs: () => of(catalogs),
   };
   const settingsServiceStub: Partial<SettingsService> = {
-    readRssFeeds: () => of()
+    getRssFeeds: () => of()
   };
   const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of({
@@ -81,7 +83,8 @@ describe('DiscoverComponent', () => {
         CategoriesComponent,
         RewardsCardsComponent,
         CatalogsComponent,
-        CampaignsComponent
+        CampaignsComponent,
+        GhostCardComponent
       ],
       imports: [
         MatCardModule,
@@ -92,7 +95,8 @@ describe('DiscoverComponent', () => {
         ScrollingModule,
         GameModule,
         InfiniteScrollModule,
-        MatRippleModule
+        MatRippleModule,
+        NoopAnimationsModule
       ],
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub },

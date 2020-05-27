@@ -60,6 +60,34 @@
                   "maximumError": "5mb"
                 }
               ]
+            },
+            "staging": {
+              "optimization": false,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": false,
+              "fileReplacements": [
+                {
+                  "replace": "src/app/sign-up/sign-up/sign-up.component.html",
+                  "with": "src/app/sign-up/sign-up/sign-up.component.staging.html"
+                },
+                {
+                  "replace": "src/app/sign-up/sign-up/sign-up.component.ts",
+                  "with": "src/app/sign-up/sign-up/sign-up.component.staging.ts"
+                }
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
             }
           }
         },
@@ -72,6 +100,9 @@
           "configurations": {
             "production": {
               "browserTarget": "hsbchk:build:production"
+            },
+            "staging": {
+              "browserTarget": "hsbchk:build:staging"
             }
           }
         },
@@ -91,6 +122,24 @@
             "production": {
               "devServerTarget": "hsbchk:serve:production"
             }
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "jest.config.json",
+            "tsConfig": "tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "src/setup-jest.ts"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": ".eslintrc",
+            "files": [
+              "src/**/*.ts"
+            ]
           }
         }
       }

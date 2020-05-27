@@ -9,17 +9,15 @@ import { INavLink } from '../navlink.model';
 export class HomeComponent {
   public navLinks: INavLink[] = [
     { path: 'rewards', label: 'Rewards', icon: 'card_giftcard' },
-    { path: 'utils', label: 'Utils' },
-    { path: 'charts', label: 'Charts', icon: 'bar_chart' },
+    { path: 'utils', label: 'Utils', icon: 'build' },
     { path: 'games', label: 'Games', icon: 'games' },
     { path: 'stamps', label: 'Stamps' },
     { path: 'login', label: 'Login' },
     { path: 'voucher', label: 'Vouchers' },
     { path: 'location', label: 'Locations', icon: 'map' },
-    { path: 'loyalty', label: 'Loyalty' },
+    { path: 'loyalty', label: 'Loyalty', icon: 'loyalty' },
     { path: 'survey', label: 'Survey' },
-    { path: 'pages', label: 'Pages' },
-    { path: 'candyshop', label: 'Candy Shop' },
+    { path: 'pages', label: 'Pages', icon: 'web' },
     { path: 'quiz', label: 'Quiz', icon: 'touch_app' }
   ];
 }

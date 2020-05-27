@@ -1,18 +1,17 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { RouterModule, Routes } from '@angular/router';
+import { SignIn2Component, SignIn2Module } from '@perxtech/blackcomb-pages';
 
-import { LoginRoutingModule } from './login-routing.module';
-import { SignIn2Component } from '@perxtech/blackcomb-pages';
-import { SharedModule } from '../shared/shared.module';
-import { TranslateModule } from '@ngx-translate/core';
+const routes: Routes = [{
+  path: '',
+  component: SignIn2Component,
+  data: { countryList: ['Malaysia', 'Singapore']}
+}];
 
 @NgModule({
-  declarations: [SignIn2Component],
   imports: [
-    CommonModule,
-    LoginRoutingModule,
-    SharedModule,
-    TranslateModule.forChild()
+    SignIn2Module,
+    RouterModule.forChild(routes)
   ]
 })
 export class LoginModule { }

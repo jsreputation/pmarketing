@@ -5,8 +5,8 @@ import { VouchersModule, IVoucherService, RewardsService, IMerchantsService } fr
 import { MatDialog } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ActivatedRouteStub } from 'src/testing/activated-route-stub';
-import { MatDialogStub } from 'src/testing/mat-dialog-stub';
+import { ActivatedRouteStub } from '../../testing/activated-route-stub';
+import { MatDialogStub } from '../../testing/mat-dialog-stub';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 

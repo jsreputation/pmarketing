@@ -47,12 +47,16 @@ import {
   AuthenticationModule,
   UtilsModule,
   ConfigModule,
+  GameModule as PerxGameModule,
+  GameServiceModule as PerxSvcGameModule,
   MerchantsModule as PerxMerchantsModule,
   CampaignModule as PerxCampaignModule,
+  CampaignServiceModule as PerxSvcCampaignModule,
   StampModule as PerxStampModule,
   VouchersModule,
   OutcomeModule,
   ProfileModule,
+  ProfileServiceModule as PerxProfileServiceModule,
   RewardsModule,
   LanguageService,
   TokenStorage,
@@ -61,18 +65,19 @@ import {
   SettingsModule,
   AuthenticationService,
   ThemesService,
-  IConfig
+  IConfig,
+  LoyaltyModule
 } from '@perxtech/core';
 
 import * as Hammer from 'hammerjs';
 import * as Sentry from '@sentry/browser';
+import { switchMap, tap } from 'rxjs/operators';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SignUpModule } from './sign-up/sign-up.module';
-
 import { environment } from '../environments/environment';
-import { switchMap, tap } from 'rxjs/operators';
+import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
 
 // https://medium.com/angular-in-depth/gestures-in-an-angular-application-dde71804c0d0
 // to override default settings
@@ -131,6 +136,8 @@ export const setLanguage = (
   imports: [
     ConfigModule.forRoot({ ...environment }),
     SettingsModule.forRoot({ ...environment }),
+    PerxSvcGameModule.forRoot(),
+    PerxGameModule,
     BrowserModule,
     AppRoutingModule,
     PerxCoreModule,
@@ -138,18 +145,20 @@ export const setLanguage = (
     OutcomeModule,
     AuthenticationModule,
     SignUpModule,
-    ProfileModule,
     BrowserAnimationsModule,
-    PerxMerchantsModule,
+    PerxMerchantsModule.forRoot(),
     PerxStampModule,
     ProfileModule,
+    PerxProfileServiceModule.forRoot(),
     UtilsModule,
+    PerxSvcCampaignModule.forRoot(),
     PerxCampaignModule,
     HttpClientModule,
     MatDialogModule,
     MatButtonModule,
     MatSnackBarModule,
-    RewardsModule,
+    LoyaltyModule.forRoot(),
+    RewardsModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -158,6 +167,7 @@ export const setLanguage = (
       }
     }),
     // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    ForgotPasswordModule
   ],
   bootstrap: [AppComponent],
   providers: [

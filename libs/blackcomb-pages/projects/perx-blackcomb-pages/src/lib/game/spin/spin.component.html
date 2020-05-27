@@ -1,0 +1,34 @@
+<div class="main-puzzle-container">
+    <div class="game-header">
+      <h1>{{game.texts.title}}</h1>
+      <h3>{{game.texts.subTitle}}</h3>
+    </div>
+    <div class="game-wrapper">
+      <div class="spin-wrapper">
+        <perx-core-spin-the-wheel
+          [enabled]="isEnabled"
+          [willWin]="willWin"
+          [rewardSlots]="config.rewardSlots"
+          [classPosition]="spinPosition"
+          [pointerImg]="config.pointerImg"
+          [wheelImg]="config.wheelImg"
+          (completed)="gameCompleted()"
+          [slices]="config| slicesPipe">
+        </perx-core-spin-the-wheel>
+
+        <div class="game-footer">
+            <button class="js-play ga_start_game"
+                mat-flat-button
+                color="primary"
+                [ngStyle]="{ 'visibility': isEnabled ? 'hidden': 'visible'}"
+                (click)="startLoad()">
+              {{ game.texts.button }}
+            </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+

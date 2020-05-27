@@ -1,0 +1,192 @@
+$app-max-width: 30rem;
+$app-margin: 2.4rem;
+$app-padding: 1.6rem;
+$card-border-radius: 0.8rem;
+$button-height-min: 4.8rem;
+
+@mixin main-wrap {
+  box-sizing: border-box;
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  min-height: 100%;
+  padding: $app-margin;
+  background-size: cover;
+  background-position: center;
+}
+
+@mixin game-wrap {
+  box-sizing: border-box;
+  max-width: $app-max-width;
+  margin-top: auto;
+  margin-bottom: $app-margin;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+@mixin game-wrap-card {
+  padding: $app-padding;
+  border-radius: $card-border-radius;
+  background-color: var(--surface_colour);
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+@mixin game-cta {
+  margin-top: auto;
+  width: 100%;
+  max-width: $app-max-width;
+  padding: 1rem 0;
+
+  button {
+    font-family: Roboto, sans-serif;
+    font-weight: 500;
+    font-size: 1.4rem;
+    padding-left: $app-padding;
+    padding-right: $app-padding;
+    letter-spacing: 0.075rem;
+    width: 100%;
+    line-height: $button-height-min;
+    outline: none;
+    border: none;
+    border-radius: 0.4rem;
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  }
+}
+
+@mixin game-headline {
+  font-family: Roboto, sans-serif;
+  font-weight: 500;
+  font-size: 2.4rem;
+  line-height: 2.4rem;
+  letter-spacing: 0.015rem;
+  text-align: center;
+  color: #666666;
+}
+
+@mixin game-subheadline {
+  font-family: Roboto, sans-serif;
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 2rem;
+  letter-spacing: 0.025rem;
+  text-align: center;
+  margin: 0;
+  color: #666666;
+}
+
+@mixin form-subtitle {
+  font-weight: normal;
+  font-size: 1.4rem;
+  margin-bottom: 2.4rem;
+
+  .link {
+    color: var(--accent);
+    text-decoration: none;
+  }
+}
+
+//used in sign-in, signup, forgot-password
+@mixin loginContentContainer {
+  width: 100%;
+  height: 100%;
+  background-color: var(--login_background_colour);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+//used in sign-in, signup, forgot-password
+@mixin loginCard {
+  background-color: var(--surface_colour);
+  max-width: 35.4rem;
+  padding: 1.5rem;
+  margin: 1.5rem;
+  font-size: 1.6rem;
+  border-radius: 0.8rem;
+
+  h1 {
+    font-weight: 500;
+    font-size: 3.4rem;
+    margin-bottom: 1rem;
+  }
+}
+
+// for multi line error messages
+@mixin multiLineFormFieldError {
+  ::ng-deep .mat-form-field {
+    .mat-form-field-wrapper {
+      padding-bottom: 0;
+
+      .mat-form-field-underline {
+        position: initial !important;
+        display: block;
+        margin-top: -1px;
+      }
+
+      .mat-form-field-subscript-wrapper,
+      .mat-form-field-ripple {
+        position: initial !important;
+        display: table;
+      }
+
+      .mat-form-field-subscript-wrapper {
+        min-height: calc(1em + 1px);
+      }
+    }
+  }
+}
+
+//should be used for content pages
+@mixin typography {
+  h1 {
+    font-weight: 500;
+    font-size: 2rem;
+    line-height: 2.4rem;
+    letter-spacing: 0.015rem;
+  }
+
+  p {
+    font-size: 1.4rem;
+    line-height: 2.5rem;
+    letter-spacing: 0.025rem;
+    white-space: pre-line;
+    color: #666666;
+  }
+
+  li {
+    font-size: 1.4rem;
+    line-height: 2.5rem;
+    letter-spacing: 0.025rem;
+    margin-bottom: 1.6rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+@mixin toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  height: 6rem;
+  z-index: 800;
+  font-size: 2rem;
+  line-height: 1.9rem;
+
+  .logo {
+    height: 100%;
+  }
+}
+
+@mixin toolBarArrow {
+  cursor: pointer;
+  color: var(--button_text_color, white);
+}

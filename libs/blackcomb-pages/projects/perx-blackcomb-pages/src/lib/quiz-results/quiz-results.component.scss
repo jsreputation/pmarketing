@@ -1,0 +1,39 @@
+@import "../custom-theme.scss";
+@import "../quiz/_mixins";
+
+.survey-main-container {
+  @include quizContainer();
+}
+
+.survey-page {
+  @include quizPage();
+
+  .survey-card {
+    @include quizCard();
+
+    padding: 0;
+
+    perx-core-results {
+      width: 100%;
+    }
+  }
+
+  h1 {
+    font-size: 2rem;
+    color: var(--font_color, white);
+    font-style: normal;
+    font-weight: 500;
+    margin-top: 2.2rem;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+    color: var(--font_color, white);
+    font-style: normal;
+    font-weight: normal;
+  }
+}
+
+.bottom-nav-container {
+  @include quizBottomBar();
+}

@@ -1,0 +1,47 @@
+.description {
+  font-size: 1.6rem;
+}
+
+cdk-virtual-scroll-viewport {
+  height: 30rem;
+  margin-top: 3rem;
+}
+
+.cdk-virtual-scroll-data-source .mat-item {
+  height: 100%;
+  width: calc(100% - 2rem) !important;
+  box-sizing: border-box;
+}
+
+::ng-deep {
+  .cdk-virtual-scroll-spacer {
+    width: 1px !important;
+  }
+}
+
+.card {
+  border: 2rem;
+}
+
+.mat-card {
+  margin: 0 1rem;
+
+  .mat-card-content {
+    padding: 1rem;
+    min-height: 5rem;
+    margin-bottom: 0;
+
+    p {
+      white-space: pre-line;
+    }
+  }
+
+  .mat-card-image {
+    height: 15rem;
+    object-fit: cover;
+  }
+
+  mat-card-actions {
+    padding-top: 0;
+  }
+}

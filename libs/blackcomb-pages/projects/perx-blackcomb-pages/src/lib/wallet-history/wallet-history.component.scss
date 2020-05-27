@@ -1,0 +1,32 @@
+
+.page {
+  height: 100%;
+  overflow: auto;
+
+  mat-tab-group {
+    ::ng-deep {
+      width: 100%;
+
+      mat-tab {
+        flex-grow: 1;
+      }
+
+      .mat-ink-bar {
+        background-color: var(--accent) !important;
+      }
+
+      .mat-tab-label-active {
+        color: var(--accent) !important;
+      }
+    }
+  }
+}
+
+.voucher-list {
+  padding: 1rem 2rem;
+}
+
+.list-heading {
+  font-weight: 500;
+  font-size: 2rem;
+}

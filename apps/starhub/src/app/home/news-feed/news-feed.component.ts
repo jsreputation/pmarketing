@@ -7,16 +7,21 @@ import { MatDialog } from '@angular/material';
 
 import {
   SettingsService,
-  FeedItem, FeedItemPopupComponent,
+  FeedItem,
+  FeedItemPopupComponent,
   FeedReaderService,
   IRssFeeds,
   IRssFeedsData,
+  RssFeedsPages,
+  ConfigService,
 } from '@perxtech/core';
 
 import {
   AnalyticsService,
   PageType,
-} from 'src/app/analytics.service';
+} from '../../analytics.service';
+import { map, switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-news-feed',
@@ -29,24 +34,25 @@ export class NewsFeedComponent implements OnInit {
   public newsBeforeScroll: number[];
   public newsAfterScroll: number[];
   public showButton: boolean = true;
+  public ghostFeed?: any[] = new Array(1);
 
-  private async initNewsFeedItems(): Promise<void> {
-    const rssFeeds: IRssFeeds = await this.settingsService.readRssFeeds().toPromise();
-    if (!(rssFeeds && rssFeeds.data.length > 0)) {
-      return;
-    }
-
-    const rssFeedsHome: IRssFeedsData | undefined = rssFeeds.data.find(feed => feed.page === 'home');
-    if (!rssFeedsHome) {
-      return;
-    }
-
-    const rssFeedsUrl: string = rssFeedsHome.url;
-    this.reader.getFromUrl(rssFeedsUrl, false)
-      .subscribe(items => {
-        this.items = items;
-        this.newsAfterScroll = Array.from(Array(items.length > 0 ? items.length - 1 : 1).keys());
-      });
+  private initNewsFeedItems(): void {
+    this.configService.readAppConfig().pipe(
+      switchMap(() => this.settingsService.getRssFeeds()),
+      map((res: IRssFeeds) => res.data ? res.data.find(feed => feed.page === RssFeedsPages.HOME) : undefined),
+      switchMap((feedData: IRssFeedsData | undefined) => {
+        if (!feedData || !feedData.url) {
+          return of([] as FeedItem[]);
+        }
+        return this.reader.getFromUrl(feedData && feedData.url);
+      })
+    ).subscribe(items => {
+      this.items = items;
+      this.ghostFeed = undefined;
+      this.newsAfterScroll = Array.from(Array(items.length > 0 ? items.length - 1 : 1).keys());
+    }, () => {
+      this.ghostFeed = undefined;
+    });
   }
 
   constructor(
@@ -54,6 +60,7 @@ export class NewsFeedComponent implements OnInit {
     private dialog: MatDialog,
     private analytics: AnalyticsService,
     private settingsService: SettingsService,
+    private configService: ConfigService
   ) { }
 
   public ngOnInit(): void {

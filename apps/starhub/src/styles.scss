@@ -49,6 +49,7 @@ cdk-virtual-scroll-viewport {
 .cdk-virtual-scroll-orientation-horizontal .cdk-virtual-scroll-content-wrapper {
   display: flex;
   flex-direction: row;
+  width: 100%;
 }
 
 .app-full-bleed-dialog .mat-dialog-container {

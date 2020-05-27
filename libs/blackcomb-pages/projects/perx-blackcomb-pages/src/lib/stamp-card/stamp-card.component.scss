@@ -1,0 +1,42 @@
+@import "../mixins";
+
+.main-puzzle-container {
+  @include main-wrap;
+
+  padding: unset;
+  background-repeat: no-repeat;
+
+  perx-core-puzzle-collect-stamps {
+    flex: 1;
+  }
+
+  .background {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.game-wrapper {
+  @include game-wrap;
+  @include game-wrap-card;
+}
+
+.game-footer {
+  @include game-cta;
+}
+
+.stamp {
+  &-form {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex: 1;
+    align-items: center;
+    z-index: 1;
+
+    .contain-child {
+      display: block;
+    }
+  }
+}

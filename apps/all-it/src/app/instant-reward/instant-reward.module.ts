@@ -1,9 +1,14 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { InstantRewardRoutingModule } from './instant-reward-routing.module';
-import { RewardsModule, OutcomeModule } from '@perxtech/core';
+import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material';
-import { RewardComponent } from '@perxtech/blackcomb-pages';
+import { RouterModule, Routes } from '@angular/router';
+import { PerxBlackcombPagesModule, RewardComponent } from '@perxtech/blackcomb-pages';
+import { OutcomeModule, RewardsModule } from '@perxtech/core';
+
+const routes: Routes = [
+  { path: '', pathMatch: 'full', component: RewardComponent },
+  { path: '*', redirectTo: '' }
+];
 
 @NgModule({
   declarations: [RewardComponent],
@@ -11,8 +16,9 @@ import { RewardComponent } from '@perxtech/blackcomb-pages';
     CommonModule,
     RewardsModule,
     MatButtonModule,
-    InstantRewardRoutingModule,
-    OutcomeModule
+    RouterModule.forChild(routes),
+    OutcomeModule,
+    PerxBlackcombPagesModule
   ]
 })
 export class InstantRewardModule { }

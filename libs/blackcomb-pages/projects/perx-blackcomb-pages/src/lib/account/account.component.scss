@@ -1,0 +1,20 @@
+.page-container {
+  width: 100%;
+  height: 100%;
+
+  .section {
+    background-color: var(--surface_colour);
+    margin-bottom: 1.6rem;
+    font-size: 1.4rem;
+    line-height: 3.6rem;
+    display: flex;
+    flex-direction: column;
+    font-weight: normal;
+    cursor: pointer;
+
+    a {
+      text-decoration: none;
+      color: black;
+    }
+  }
+}

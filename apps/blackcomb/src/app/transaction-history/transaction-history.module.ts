@@ -16,7 +16,7 @@ const routes: Routes = [{
     MatButtonModule,
     PerxBlackcombPagesModule,
     CommonModule,
-    LoyaltyModule,
+    LoyaltyModule.forChild(),
     RouterModule.forChild(routes),
     InfiniteScrollModule
   ]

@@ -1,0 +1,214 @@
+{
+  "LANDING":{
+    "CAMPAIGN_TITLE": "Recherche gagnants",
+    "CAMPAIGN_INTRO": "C'est l'heure de jouer",
+    "COUNTDOWN": {
+      "COUNTDOWN_TXT": "Décompte",
+      "DAYS": "Jours",
+      "HOURS": "Heures",
+      "MINUTES": "Minutes",
+      "SECONDS": "Secondes"
+    },
+    "LOGIN_TXT": "Connexion",
+    "HOW_TO_PLAY": "Comment jouer",
+    "TERMS_CONDITIONS": "Conditions d'utilisation",
+    "NEXT_WEEK_CHALLENGE": "",
+    "CTA_TXT": "Lire plus"
+  },
+  "WELCOME_PAGE":{
+    "LOG_IN": "Connexion"
+  },
+  "SIGN_UP_PAGE":{
+    "TITLE":"Inscription",
+    "HAVE_AN_ACCOUNT":"Déjà membre",
+    "LOG_IN":"Connexion",
+    "COUNTRY_CODE_REQUIRED_TXT":"L'indicatif pays est obligatoire",
+    "MOBILE_FIELD":"Téléphone",
+    "MOBILE_INVALID_TXT":"",
+    "MOBILE_REQUIRED_TXT":"Le numéro de téléphone",
+    "EMAIL_FIELD":"Email",
+    "EMAIL_INVALID_TXT":"L'email est obligatoire",
+    "EMAIL_REQUIRED_TXT":"L'email est obligatoire",
+    "PASSWORD_FIELD":"",
+    "PASSWORD_REQUIRED_TXT":"",
+    "CONFIRM_PASSWORD_FIELD":"",
+    "CONFIRM_PASSWORD_INVALID_TXT":"",
+    "NICKNAME_FIELD":"",
+    "NICKNAME_REQUIRED_TXT":"",
+    "REFERRAL_FIELD":"",
+    "CHECKBOX_TNC_PIC_AGREE":"",
+    "CHECKBOX_TNC":"",
+    "CHECKBOX_AND":"",
+    "CHECKBOX_PIC":"",
+    "CHECKBOX_TNC_POPUP_TXT":"",
+    "BUTTON_SUBMIT":""
+  },
+  "OTP_PAGE":{
+    "TITLE": "",
+    "DESCRIPTION": "",
+    "ERROR_TXT": "",
+    "ERROR_LINK": "",
+    "CTA_TXT": "",
+    "CTA_TXT_SUCCESS": ""
+  },
+  "LOGIN_PAGE": {
+    "TITLE": "Connexion",
+    "NO_ACCOUNT": "",
+    "SIGN_UP": "",
+    "MOBILE_FIELD": "",
+    "PASSWORD_FIELD": "",
+    "INVALID_CREDENTIALS": "",
+    "COUNTRY_CODE_REQUIRED_TXT": "",
+    "MOBILE_NOTFOUND_TXT": "",
+    "MOBILE_INVALID_TXT": "",
+    "MOBILE_REQUIRED_TXT": "",
+    "OTP_SEND_TO": "",
+    "CHECK_YOUR_SMS": "",
+    "PASSWORD_INVALID_TXT": "",
+    "PASSWORD_REQUIRED_TXT": "",
+    "FORGET_PASSWORD_TXT": "",
+    "CTA_TXT": "Connexione"
+  },
+  "HOME": {
+    "MY_QR": "",
+    "MY_BAR_CODE": "",
+    "STAMP_CAMPAIGNS": "",
+    "CATALOG": "",
+    "GAMES": "",
+    "QUIZ": "",
+    "FEATURED_REWARDS": "",
+    "SEE_MORE": "",
+    "SEE_LESS": "",
+    "REWARDS_LEFT": "",
+    "READ_MORE": ""
+  },
+  "WALLET": {
+    "REWARDS_TITLE": "",
+    "HISTORY_TITLE": "",
+    "MY_WALLET": "",
+    "REDEEMED": "",
+    "REWARD_STATUS_EXPIRY": "",
+    "REWARD_STATUS_REDEEMED": "",
+    "REWARD_STATUS_EXPIRED": "",
+    "CTA_TXT": ""
+  },
+  "FORGET_PW_PAGE": {
+    "TITLE": "",
+    "DESCRIPTION": "",
+    "COUNTRY_CODE_REQUIRED_TXT": "",
+    "MOBILE_FIELD": "",
+    "MOBILE_NOTFOUND_TXT": "",
+    "MOBILE_INVALID_TXT": "",
+    "MOBILE_REQURIED_TXT": "",
+    "CTA_NEXT_TXT": "",
+    "NEW_PW_TXT": "",
+    "CONFIRM_PW_TXT": "",
+    "CTA_SAVE_TXT": "",
+    "CTA_SUCCESS_TXT": "",
+    "RESEND_OTP": "",
+    "OTP_SEND_TO": "",
+    "CHECK_YOUR_SMS": "",
+    "PASSWORD_REQUIRED_TXT": "",
+    "CONFIRM_PASSWORD_INVALID_TXT": "",
+    "PASSWORD_TOO_SHORT_TXT": ""
+  },
+  "NAVIGATION": {
+    "HOME": "",
+    "WALLET": "",
+    "HISTORY": "",
+    "LEADER_BOARD": "",
+    "ACCOUNT": ""
+  },
+  "QUIZ_TEMPLATE":{
+    "CTA_START_TXT": "",
+    "QUESTION": "",
+    "OUT_OF": "",
+    "PROGRESS_BAR": "",
+    "CTA_NEXT_TXT": "",
+    "CTA_SUBMIT_TXT": "",
+    "SUMMARY_CORRECT": "",
+    "SUMMARY_TIME_TAKEN": "",
+    "QUESTION_TIME_TAKEN": "",
+    "POSITIVE_OUTCOME_TXT": "",
+    "POSITIVE_OUTCOME_REWARD": "",
+    "POSITIVE_OUTCOME_CTA": "",
+    "NO_OUTCOME_SCORE": "",
+    "NO_OUTCOME_TXT": "",
+    "NO_OUTCOME_CTA": "",
+    "NOT_AVAILABLE_TITLE": "",
+    "NOT_AVAILABLE_CTA": "",
+    "NOT_AVAILABLE_TXT": "",
+    "SUBMIT_ERROR_TXT": ""
+  },
+  "REDEMPTION":{
+    "TITLE": "",
+    "DESCRIPTION": "",
+    "WRONG_PIN": "",
+    "SUCCESSFUL_REDEMPTION": "",
+    "CTA_TXT": ""
+  },
+  "PROMO_CODE": {
+    "DESCRIPTION": "",
+    "CTA_TXT": ""
+  },
+  "LEADER_BOARD":{
+    "TITLE": "",
+    "SCORE": "",
+    "LABEL_TXT": "",
+    "LABEL_RANK": "",
+    "LABEL_NICKNAME": "",
+    "LABEL_SCORE": ""
+  },
+  "ACCOUNT_PAGE": {
+    "LUCKY_DRAW_INFO": "",
+    "TRANSACTION_HISTORY": "",
+    "PROFILE": "",
+    "REFER_FRIEND": "",
+    "TNC": "",
+    "PRIVACY_POLICY": "",
+    "LOGOUT": ""
+  },
+  "PROFILE": {
+    "TITLE": "",
+    "ACCOUNT_LABEL": "",
+    "MOBILE_LABEL": "",
+    "EMAIL_LABEL": "",
+    "NICKNAME_LABEL": "",
+    "PASSWORD_LABEL": "",
+    "LUCKY_DRAW_LABEL": "",
+    "PASSWORD_TITLE": "",
+    "PASSWORD_ENTER_OLD": "",
+    "PASSWORD_ENTER_NEW": "",
+    "PASSWORD_CONFIRM_NEW": "",
+    "PASSWORD_CTA_TXT": "",
+    "LUCKY_DRAW_TITLE": "",
+    "CTA_SAVE_TXT": "",
+    "ENTER_EMAIL": "",
+    "ENTER_POSTCODE": "",
+    "ENTER_NICKNAME": ""
+  },
+  "REFERRAL": {
+    "TITLE": "",
+    "CONTENT": "",
+    "CTA_BUTTON": "",
+    "SHARE_COPY_TITLE": "",
+    "SHARE_COPY_TXT": "",
+    "COPY_TO_CLIPBOARD": "",
+    "CLIPBOARD_ERROR_TXT": ""
+  },
+  "QR":{
+    "QR_TO_MERCHANT": "",
+    "BARCODE_TO_MERCHANT": "",
+    "CTA":""
+  },
+  "CONTENT_PAGE": "",
+  "VOUCHER": {
+    "REDEEM": "Utiliser",
+    "EXPIRY": "Expire le {{date}}"
+  },
+  "REWARD": {
+    "GET_VOUCHER": "Obtenir",
+    "DESCRIPTION": "Description",
+    "TNC": "Conditions d'utilisation"
+  }
+}

@@ -9,7 +9,6 @@ import {
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
-import { MerchantService } from '@perxtech/hsbc-rewards/src/app/shared/service/merchant.service';
 
 describe('RedemptionComponent', () => {
   let component: RedemptionComponent;
@@ -28,7 +27,7 @@ describe('RedemptionComponent', () => {
     getReward: () => of()
   };
 
-  const merchantsServiceStub: Partial<MerchantService> = {
+  const merchantsServiceStub: Partial<IMerchantsService> = {
     getMerchants: () => of()
   };
 

@@ -1,0 +1,49 @@
+<div [ngClass]="getClassName()">
+  <mat-list [@listAnimation]="choices.length">
+    <mat-list-item class="ngstd-list-item" *ngFor="let item of choices;let i = index">
+
+      <div class="ngstd-delete-indicator">
+        <i class="material-icons ngstd-delete-icon" *ngIf="showLeftSign(i)">{{icon}}</i>
+        <span>&nbsp;</span>
+        <i class="material-icons ngstd-delete-icon"
+          *ngIf="numberOfIcons === 2 && !showLeftSign(i)">{{icon}}</i>
+      </div>
+
+      <div #elementReference class="ngstd-item-container "
+        (panend)="panend($event, i, elementReference)"
+        (panmove)="panmove($event, i, elementReference)"
+        [@slideLeft]="ngstdIndexNumber === i"
+        (@slideLeft.done)=alignComplete($event)>
+        <ng-container *ngIf="listType === lt.LISTWITHIMAGE">
+          <img matListAvatar src="{{item.img}}" alt="{{item.title}}">
+          <div class="mat-list-text ngstd-details">
+            <h3 matLine class="title"> {{item.title}}</h3>
+            <p matLine *ngIf="item.description">
+              <span>{{item.description}}</span>
+            </p>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="listType === lt.LISTWITHICON">
+          <mat-icon class="ngstd-icon" mat-list-icon>{{item.icon}}</mat-icon>
+          <div class="mat-list-text ngstd-details">
+            <h4 mat-line class="title">{{item.title}}</h4>
+            <p mat-line *ngIf="item.description">{{item.description}}</p>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="listType === lt.SINGLELINE">
+          <mat-list-item class="title"> {{item.title}} </mat-list-item>
+        </ng-container>
+        <ng-container *ngIf="listType === lt.MULTILINE">
+          <div class="mat-list-text ngstd-details">
+            <h3 matLine class="title"> {{item.title}} </h3>
+            <p matLine>
+              <span> {{item.description}} </span>
+              <span class="demo-2"> -- {{item.description}} </span>
+            </p>
+          </div>
+        </ng-container>
+      </div>
+      <mat-divider class="ngstd-divider"></mat-divider>
+    </mat-list-item>
+  </mat-list>
+</div>

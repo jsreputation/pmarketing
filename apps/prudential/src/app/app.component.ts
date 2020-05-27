@@ -40,13 +40,6 @@ export class AppComponent implements OnInit {
         this.router.navigate(['login']);
       }
     }
-    this.authService.$failedAuth.subscribe(
-      (didFailAuth) => {
-        if (didFailAuth) {
-          this.router.navigateByUrl('login');
-        }
-      }
-    );
   }
 
   public goBack(): void {

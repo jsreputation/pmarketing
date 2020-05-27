@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FaqComponent } from './faq.component';
-import { DynamicCreateService } from 'src/app/shared/service/dynamic-create.service';
+import { DynamicCreateService } from '../../shared/service/dynamic-create.service';
 import { FaqRoutingModule } from './faq-routing.module';
 
 @NgModule({

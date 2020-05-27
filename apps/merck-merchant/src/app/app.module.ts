@@ -30,7 +30,7 @@ import {
   TokenStorage,
   AuthenticationService,
   ThemesService,
-  IConfig
+  IConfig, ProfileServiceModule
 } from '@perxtech/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -55,6 +55,7 @@ import { TransactionHistoryComponent } from './transaction-history/transaction-h
 import { TransactionPipe } from './transaction-history/transaction.pipe';
 import { TransactionHistoryPipe } from './transaction-history/transaction-history.pipe';
 import { tap, switchMap } from 'rxjs/operators';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 export const setLanguage = (
   translateService: TranslateService,
@@ -92,6 +93,7 @@ export const setLanguage = (
     ConfigModule.forRoot({ ...environment }),
     BrowserModule,
     ProfileModule,
+    ProfileServiceModule.forRoot(),
     AppRoutingModule,
     MatButtonModule,
     MatToolbarModule,
@@ -109,12 +111,13 @@ export const setLanguage = (
     AuthenticationModule,
     ZXingScannerModule,
     MatSnackBarModule,
-    RewardsModule,
-    MerchantsModule,
+    RewardsModule.forRoot(),
+    MerchantsModule.forRoot(),
     MerchantAdminModule,
-    LoyaltyModule,
+    LoyaltyModule.forRoot(),
     VouchersModule,
     HttpClientModule,
+    InfiniteScrollModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

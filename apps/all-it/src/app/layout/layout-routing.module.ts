@@ -1,16 +1,6 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import {
-  HomeComponent,
-  WalletHistoryComponent,
-  HistoryComponent,
-  VoucherDetailComponent,
-  ContentComponent,
-  RewardDetailsComponent,
-  LayoutComponent,
-  SignInComponent,
-  RewardsBookingComponent
-} from '@perxtech/blackcomb-pages';
+import { RouterModule, Routes } from '@angular/router';
+import { LayoutComponent } from '@perxtech/blackcomb-pages';
 import { WalletGuard } from '../wallet.guard';
 
 const routes: Routes = [
@@ -19,68 +9,72 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'home' },
-      { path: 'home', component: HomeComponent },
-      { path: 'wallet', component: WalletHistoryComponent, canActivate: [WalletGuard] },
-      { path: 'history', component: HistoryComponent },
-      { path: 'voucher-detail/:id', component: VoucherDetailComponent },
-      { path: 'pi', component: SignInComponent },
+      { path: 'home', loadChildren: () => import('../home/home.module').then((mod) => mod.HomeModule) },
+      { path: 'wallet', loadChildren: () => import('../wallet/wallet.module').then((mod) => mod.WalletModule), canActivate: [WalletGuard] },
       {
-        path: 'redeem/:id', loadChildren: (): any => import('../redeem/redeem.module').then((mod: any) => mod.RedeemModule),
+        path: 'voucher-detail/:id',
+        loadChildren: () => import('../voucher-detail/voucher-detail.module').then((mod) => mod.VoucherDetailModule)
+      },
+      { path: 'history', loadChildren: () => import('../history/history.module').then((mod) => mod.HistoryModule) },
+      { path: 'pi', loadChildren: () => import('../pi/pi.module').then((mod) => mod.PiModule) },
+      {
+        path: 'redeem/:id', loadChildren: () => import('../redeem/redeem.module').then((mod) => mod.RedeemModule),
       },
       {
-        path: 'qr', loadChildren: (): any => import('../qr/qr.module').then((mod: any) => mod.QRModule)
-
+        path: 'qr',
+        loadChildren: () => import('../qr/qr.module').then((mod) => mod.QRModule)
       },
       {
-        path: 'account', loadChildren: (): any => import('../account/account.module').then((mod: any) => mod.AccountModule)
-
+        path: 'account',
+        loadChildren: () => import('../account/account.module').then((mod) => mod.AccountModule)
       },
       {
         path: 'stamp/:id',
-        loadChildren: (): any => import('../stamp/stamp.module').then((mod: any) => mod.StampModule),
+        loadChildren: () => import('../stamp/stamp.module').then((mod) => mod.StampModule),
       },
       {
         path: 'survey/:id',
-        loadChildren: (): any => import('../survey/survey.module').then((mod: any) => mod.SurveyModule),
+        loadChildren: () => import('../survey/survey.module').then((mod) => mod.SurveyModule),
       },
       {
         path: 'game/:id',
-        loadChildren: (): any => import('../game/game.module').then((mod: any) => mod.GameModule),
+        loadChildren: () => import('../game/game.module').then((mod) => mod.GameModule),
       },
       {
         path: 'give_reward/:id',
-        loadChildren: (): any => import('../instant-reward/instant-reward.module').then((mod: any) => mod.InstantRewardModule)
+        loadChildren: () => import('../instant-reward/instant-reward.module').then((mod) => mod.InstantRewardModule)
       },
       {
         path: 'profile',
-        loadChildren: (): any => import('../profile/profile.module').then((mod: any) => mod.ProfileModule)
+        loadChildren: () => import('../profile/profile.module').then((mod) => mod.ProfileModule)
       },
       {
         path: 'transaction-history',
-        loadChildren: (): any => import('../transaction-history/transaction-history.module')
-          .then((mod: any) => mod.TransactionHistoryModule)
+        loadChildren: () => import('../transaction-history/transaction-history.module').then((mod) => mod.TransactionHistoryModule)
       },
       {
         path: 'change-password',
-        loadChildren: (): any => import('../change-password/change-password.module')
-          .then((mod: any) => mod.ChangePasswordModule)
+        loadChildren: () => import('../change-password/change-password.module')
+          .then((mod) => mod.ChangePasswordModule)
       },
       {
         path: 'barcode',
-        loadChildren: (): any => import('../barcode/barcode.module')
-          .then((mod: any) => mod.BarcodeModule)
+        loadChildren: () => import('../barcode/barcode.module').then((mod) => mod.BarcodeModule)
       },
       {
         path: 'edit-profile/:type',
-        loadChildren: (): any => import('../edit-profile-field/edit-profile-field.module')
-          .then((mod: any) => mod.EditProfileFieldModule)
+        loadChildren: () => import('../edit-profile-field/edit-profile-field.module').then((mod) => mod.EditProfileFieldModule)
       },
-      { path: 'reward-detail/:id', component: RewardDetailsComponent },
-      { path: 'booking/:id', component: RewardsBookingComponent },
-      { path: 'c/:key', component: ContentComponent },
+      {
+        path: 'reward-detail/:id',
+        loadChildren: () => import('../rewards-detail/rewards-detail.module').then((mod) => mod.RewardsDetailModule)
+      },
+      {
+        path: 'booking/:id',
+        loadChildren: () => import('../rewards-booking/rewards-booking.module').then((mod) => mod.RewardsBookingModule)
+      },
     ]
   }
-
 ];
 
 @NgModule({

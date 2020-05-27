@@ -1,7 +1,8 @@
 import { ProtectedGuard } from 'ngx-auth';
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from '@perxtech/blackcomb-pages';
+
 const routes: Routes = [
   {
     path: '',
@@ -22,6 +23,11 @@ const routes: Routes = [
       },
       {
         path: 'redeem/:id', loadChildren: () => import('../redeem/redeem.module').then(mod => mod.RedeemModule),
+        canActivate: [ProtectedGuard]
+      },
+      {
+        path: 'campaign-welcome/:cid',
+        loadChildren: () => import('../campaign-landing/campaign-landing.module').then(mod => mod.CampaignLandingModule),
         canActivate: [ProtectedGuard]
       },
       {
@@ -77,36 +83,59 @@ const routes: Routes = [
         canActivate: [ProtectedGuard]
       },
       {
-        path: 'c/:key',
-        loadChildren: () => import('../content/content.module').then(mod => mod.ContentModule),
-        canActivate: [ProtectedGuard]
-      },
-      {
         path: 'profile',
-        loadChildren: () => import('../profile/profile.module').then(mod => mod.ProfileModule)
+        loadChildren: () => import('../profile/profile.module').then(mod => mod.ProfileModule),
+        canActivate: [ProtectedGuard]
       },
       {
         path: 'transaction-history',
         loadChildren: () => import('../transaction-history/transaction-history.module')
-          .then(mod => mod.TransactionHistoryModule)
+          .then(mod => mod.TransactionHistoryModule),
+        canActivate: [ProtectedGuard]
       },
       {
         path: 'change-password',
         loadChildren: () => import('../change-password/change-password.module')
-          .then(mod => mod.ChangePasswordModule)
+          .then(mod => mod.ChangePasswordModule),
+        canActivate: [ProtectedGuard]
       },
       {
         path: 'edit-profile/:type',
         loadChildren: () => import('../edit-profile-field/edit-profile-field.module')
-          .then((mod: any) => mod.EditProfileFieldModule)
+          .then(mod => mod.EditProfileFieldModule),
+        canActivate: [ProtectedGuard]
       },
       {
         path: 'catalogs',
         loadChildren: () => import('../catalog/catalog.module')
-          .then(mod => mod.CatalogModule)
+          .then(mod => mod.CatalogModule),
+        canActivate: [ProtectedGuard]
       },
-      { path: 'quiz/:id', loadChildren: () => import('../quiz/quiz.module').then(m => m.QuizModule) }
-    ]
+      { path: 'quiz/:cid',
+        loadChildren: () => import('../quiz/quiz.module')
+          .then(m => m.QuizModule),
+        canActivate: [ProtectedGuard]
+      },
+      { path: 'quiz-results',
+        loadChildren: () => import('../quiz-result/quiz-result.module')
+          .then(m => m.QuizResultModule),
+        canActivate: [ProtectedGuard]
+      },
+      { path: 'referral',
+        loadChildren: () => import('../referral/referral.module')
+          .then(m => m.ReferralModule),
+        canActivate: [ProtectedGuard]
+      },
+      { path: 'lucky-draw-details',
+        loadChildren: () => import('../lucky-draw-detail/lucky-draw-detail.module')
+          .then(m => m.LuckyDrawDetailModule),
+        canActivate: [ProtectedGuard]
+      },
+      { path: 'leaderboard',
+        loadChildren: () => import('../leaderboard/leaderboard.module')
+          .then(m => m.LeaderboardModule),
+        canActivate: [ProtectedGuard]
+      }]
   },
 
 ];

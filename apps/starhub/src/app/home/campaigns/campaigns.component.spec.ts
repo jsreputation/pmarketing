@@ -3,11 +3,22 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { CampaignsComponent } from './campaigns.component';
 import { MatCardModule, MatIconModule, MatRippleModule } from '@angular/material';
 import { of } from 'rxjs';
-import { ICampaignService, CampaignType, CampaignState, IGameService, ICampaign, IGame, GameType } from '@perxtech/core';
+import {
+  ICampaignService,
+  CampaignType,
+  CampaignState,
+  IGameService,
+  ICampaign,
+  IGame,
+  GameType,
+  ConfigService
+} from '@perxtech/core';
 import { Type } from '@angular/core';
 import { game } from '../../game.mock';
-import { IMacaron, MacaronService } from 'src/app/services/macaron.service';
+import { IMacaron, MacaronService } from '../../services/macaron.service';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { GhostCardComponent } from '../../ghosts/card-ghost.component';
 
 describe('CampaignsComponent', () => {
   let component: CampaignsComponent;
@@ -22,18 +33,30 @@ describe('CampaignsComponent', () => {
   const gameServiceStub: Partial<IGameService> = {
     getGamesFromCampaign: () => of(game)
   };
+  const configServiceStub: Partial<ConfigService> = {
+    readAppConfig: () => of({
+      apiHost: '',
+      production: false,
+      preAuth: false,
+      isWhistler: false,
+      baseHref: '',
+      rssFeeds: '',
+    })
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CampaignsComponent],
+      declarations: [CampaignsComponent, GhostCardComponent],
       imports: [
         MatCardModule,
         MatIconModule,
         MatRippleModule,
-        InfiniteScrollModule
+        InfiniteScrollModule,
+        NoopAnimationsModule
       ],
       providers: [
         { provide: ICampaignService, useValue: campaignServiceStub },
+        { provide: ConfigService, useValue: configServiceStub },
         { provide: IGameService, useValue: gameServiceStub }
       ]
     })

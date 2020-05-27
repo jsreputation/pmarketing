@@ -1,0 +1,29 @@
+* {
+  line-height: 0;
+  background-color: white;
+}
+
+.rank-wrapper {
+  border-radius: 15px;
+  border: 1px solid #D3D3D3;
+  padding: 15px;
+}
+
+.rank-title {
+  text-align: center;
+}
+
+.point-and-rank-box {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: space-evenly;
+  text-align: center;
+
+  p, h1 {
+    display: inline-block;
+  }
+}
+
+mat-divider {
+  border: 1px solid #D3D3D3;
+}

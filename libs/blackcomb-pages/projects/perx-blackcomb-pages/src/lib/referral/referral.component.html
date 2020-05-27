@@ -1,0 +1,19 @@
+<div class="referral-main-container">
+  <div class="referral-page">
+    <h1 translate>REFERRAL.TITLE</h1>
+    <p [innerHTML]="tnc"></p>
+    <div class="code" (click)="copy()">
+      <span>{{code}}</span>
+      <span class="material-icons">share</span>
+    </div>
+    <img src="assets/referral/referral.png">
+  </div>
+  <mat-toolbar class="bottom-nav-container mat-elevation-z2">
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="share()"
+      >
+      {{'REFERRAL.CTA_BUTTON' | translate}}</button>
+  </mat-toolbar>
+</div>

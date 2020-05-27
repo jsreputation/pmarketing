@@ -1,0 +1,25 @@
+<mat-toolbar class="toolbar mat-elevation-z3">
+    <mat-icon
+        class="backArrow"
+        (click)="goBack()">
+        arrow_backward
+    </mat-icon>
+  <a class="logoWrapper">
+    <img class="logo" [attr.src]="theme.properties['--logo']" [attr.alt]="theme.properties['--title']"
+         *ngIf="theme && theme.properties" />
+  </a>
+    <!-- ghost stuff-->
+    <span></span>
+</mat-toolbar>
+<div class="game-container">
+    <div *ngIf="content$ | async as content; else loadingOrError" class="content" [innerHtml]="content">
+    </div>
+    <ng-template #loadingOrError>
+        <div class="loading">
+            <div class="error" *ngIf="error$ | async; else loading" translate>CONTENT_PAGE</div>
+            <ng-template #loading class="spinner">
+                <mat-spinner></mat-spinner>
+            </ng-template>
+        </div>
+    </ng-template>
+</div>

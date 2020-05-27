@@ -1,8 +1,10 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
-import { ICampaign, CampaignType, ICampaignService, IGameService, IGame } from '@perxtech/core';
-import { map, scan, switchMap, tap } from 'rxjs/operators';
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { ICampaign, CampaignType, ICampaignService, IGameService, IGame, ConfigService } from '@perxtech/core';
+import { catchError, map, scan, switchMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
 import { IMacaron, MacaronService } from '../../services/macaron.service';
+import {trigger} from '@angular/animations';
+import {fadeIn, fadeOut} from '../../utils/fade-animations';
 
 const REQ_PAGE_SIZE: number = 10;
 
@@ -11,12 +13,17 @@ interface ICampaignWithMacaron extends ICampaign {
 }
 @Component({
   selector: 'app-campaigns',
+  animations: [
+    trigger('fadeOut', fadeOut()),
+    trigger('fadeIn', fadeIn())
+  ],
   templateUrl: './campaigns.component.html',
   styleUrls: ['./campaigns.component.scss']
 })
 
 export class CampaignsComponent implements OnInit {
   public campaigns$: Observable<ICampaignWithMacaron[]>;
+  public ghostCampaigns: any[] = new Array(3);
   public campaignsSubj: BehaviorSubject<ICampaignWithMacaron[]> = new BehaviorSubject<ICampaignWithMacaron[]>([]);
   public games: IGame[];
   public campaignsPageId: number = 1;
@@ -29,12 +36,15 @@ export class CampaignsComponent implements OnInit {
     private campaignService: ICampaignService,
     private gameService: IGameService,
     private macaronService: MacaronService,
+    private configService: ConfigService,
   ) {
     this.initCampaignsScan();
   }
 
   public ngOnInit(): void {
-    this.loadCampaigns();
+    this.configService.readAppConfig().subscribe(() => {
+      this.loadCampaigns();
+    });
   }
 
   public loadCampaigns(): void {
@@ -51,9 +61,15 @@ export class CampaignsComponent implements OnInit {
           tempCampaigns = campaigns;
         }),
         switchMap(
-          (campaigns: ICampaign[]) => combineLatest(...campaigns.map(campaign => this.gameService.getGamesFromCampaign(campaign.id)))
+          (campaigns: ICampaign[]) => {
+            return combineLatest(...campaigns.map(campaign => {
+              return this.gameService.getGamesFromCampaign(campaign.id).pipe(
+                catchError(() => of([]))
+              );
+            }));
+          }
         ),
-        map((games: IGame[][]) => [].concat(...games as []) as IGame[])
+        map((games: IGame[][]) => [].concat(...games as []) as IGame[]),
       )
       .subscribe((games: IGame[]) => {
         this.games = games;
@@ -68,7 +84,9 @@ export class CampaignsComponent implements OnInit {
           return campaign;
         });
         this.campaignsSubj.next(filteredAndMacoronedCampaigns);
-      });
+        this.ghostCampaigns = [];
+      },
+      () => this.ghostCampaigns = []);
   }
 
   private initCampaignsScan(): void {

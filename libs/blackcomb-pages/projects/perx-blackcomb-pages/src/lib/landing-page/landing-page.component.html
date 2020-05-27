@@ -1,0 +1,19 @@
+<div class="landing-container">
+  <mat-toolbar class="toolbar mat-elevation-z3">
+    <span></span>
+    <span class="logoWrapper">
+      <img class="logo" [attr.src]="theme.properties['--logo']" [attr.alt]="theme.properties['--title']" *ngIf="theme" />
+    </span>
+    <span></span>
+  </mat-toolbar>
+  <div class="landing-content">
+    <img class="banner" [attr.src]="banner">
+    <div [innerHTML]="content" class="content"></div>
+  </div>
+  <mat-toolbar class="bottom-nav-container mat-elevation-z2">
+    <a
+      [routerLink]="['/login']"
+      mat-flat-button
+      color="primary">{{ 'WELCOME_PAGE.LOG_IN' | translate }}</a>
+  </mat-toolbar>
+</div>

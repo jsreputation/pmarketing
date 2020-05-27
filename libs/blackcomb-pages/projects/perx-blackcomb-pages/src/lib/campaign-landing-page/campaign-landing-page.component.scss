@@ -1,0 +1,59 @@
+@import "../custom-theme.scss";
+@import "../quiz/_mixins";
+
+.main-container {
+  @include quizContainer();
+}
+
+.landing-page {
+  @include quizPage();
+
+  align-items: stretch;
+
+  .header {
+    z-index: 1;
+    background-color: black;
+    padding: 3.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+
+    h1 {
+      font-weight: 500;
+      font-size: 2rem;
+      margin-bottom: 0.2rem;
+      margin-top: 0;
+    }
+
+    h2 {
+      font-weight: normal;
+      font-size: 1.6rem;
+      margin-top: 0.2rem;
+      margin-bottom: 0;
+    }
+  }
+
+  .video {
+    padding: 2rem;
+    display: flex;
+
+    iframe {
+      flex: 1;
+    }
+  }
+
+  .tnc {
+    flex: 1;
+    overflow-y: auto;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.6rem;
+    color: var(--font_color, white);
+  }
+}
+
+.bottom-nav-container {
+  @include quizBottomBar();
+}

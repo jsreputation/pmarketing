@@ -20,14 +20,6 @@
     "lib": [
       "es2018",
       "dom"
-    ],
-    "paths": {
-      "perx-core": [
-        "dist/perx-core"
-      ],
-      "perx-core/*": [
-        "dist/perx-core/*"
-      ]
-    }
+    ]
   }
 }

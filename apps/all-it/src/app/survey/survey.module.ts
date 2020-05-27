@@ -1,49 +1,48 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import {
-  SurveyModule as PerxSurveyModule,
-  CampaignModule as PerxCampaignModule,
-  ConfigModule,
-  AuthenticationModule,
-  // SurveyService
-} from '@perxtech/core';
-
-import { SurveyRoutingModule } from './survey-routing.module';
-import {
-  MatCardModule,
   MatButtonModule,
-  MatProgressBarModule,
+  MatCardModule,
+  MatCheckboxModule,
   MatDatepickerModule,
+  MatProgressBarModule,
   MatRadioModule,
-  MatCheckboxModule
+  MatToolbarModule
 } from '@angular/material';
-import { environment } from 'src/environments/environment';
-import { SurveyComponent } from '@perxtech/blackcomb-pages';
-// import { of } from 'rxjs';
-// import { survey } from '../mock/survey.mock';
+import { PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
+import {
+  AuthenticationModule,
+  CampaignModule as PerxCampaignModule,
+  CampaignServiceModule as PerxSvcCampaignModule,
+  ConfigModule, SurveyModule as PerxSurveyModule,
+  SurveyComponent
+} from '@perxtech/core';
+import { Routes, RouterModule } from '@angular/router';
 
-// const surveyServiceStub = {
-//   getSurveyFromCampaign: () => of(survey)
-// };
+const routes: Routes = [
+  { path: '', pathMatch: 'full', component: SurveyComponent },
+  { path: '*', redirectTo: '' }
+];
 
 @NgModule({
-  declarations: [SurveyComponent],
   imports: [
-    ConfigModule.forRoot({ ...environment }),
+    ConfigModule.forChild(),
+    PerxBlackcombPagesModule,
     CommonModule,
     MatCardModule,
     MatButtonModule,
     MatProgressBarModule,
+    MatToolbarModule,
     MatDatepickerModule,
     MatRadioModule,
     MatCheckboxModule,
-    SurveyRoutingModule,
+    RouterModule.forChild(routes),
     PerxCampaignModule,
+    PerxSvcCampaignModule.forChild(),
     PerxSurveyModule,
     AuthenticationModule
   ],
   providers: [
-    // { provide: SurveyService, useValue: surveyServiceStub }
   ]
 })
 export class SurveyModule { }

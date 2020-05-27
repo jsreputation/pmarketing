@@ -7,14 +7,14 @@
     "start:csenable": "COMING_SOON=true npm run config && ng serve --host 0.0.0.0",
     "start:staging": "npm run config && ng serve --host 0.0.0.0 --configuration staging",
     "build": "npm run config && ng build",
-    "build:abenson:prod": "PRODUCTION=true COMING_SOON=true npm run config && ng build --prod",
+    "build:abenson:production": "PRODUCTION=true COMING_SOON=true npm run config && ng build --prod",
     "build:abenson:staging": "PRODUCTION=true COMING_SOON=true npm run config && ng build --configuration staging",
     "config": "ts-node --project tsconfig.node.json set-env.ts",
-    "test": "jest",
+    "test": "jest --config=jest.config.json",
     "lint": "stylelint \"src/**/*.*css\" && eslint \"./src/**/*.ts\"",
     "lint:fix": "stylelint \"src/**/*.*css\" --fix && eslint \"./src/**/*.ts\" --fix",
     "e2e": "ng e2e",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch --config=jest.config.json"
   },
   "private": true,
   "dependencies": {
@@ -55,31 +55,5 @@
     "tslint-consistent-codestyle": "^1.15.1",
     "tslint-no-focused-test": "^0.5.0",
     "typescript": "~3.4.3"
-  },
-  "jest": {
-    "preset": "jest-preset-angular",
-    "roots": [
-      "src"
-    ],
-    "transformIgnorePatterns": [
-      "node_modules/(?!ngx-barcode)"
-    ],
-    "transform": {
-      "^.+\\.(ts|js|html)$": "ts-jest"
-    },
-    "setupFilesAfterEnv": [
-      "<rootDir>/src/setup-jest.ts"
-    ],
-    "moduleNameMapper": {},
-    "globals": {
-      "ts-jest": {
-        "tsConfig": "<rootDir>/tsconfig.spec.json",
-        "stringifyContentPathRegex": "\\.html$",
-        "astTransformers": [
-          "jest-preset-angular/build/InlineFilesTransformer",
-          "jest-preset-angular/build/StripStylesTransformer"
-        ]
-      }
-    }
   }
 }

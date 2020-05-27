@@ -1,8 +1,203 @@
 {
-  "STAMP_CAMPAIGNS": "Stamp Card Campaigns",
-  "APP": "app",
-  "Games": "GAMES 2",
-  "HELLO": "hi, all ok",
-  "hoo": "client hoo",
-  "MY_QR": "My QR"
+  "LANDING": {
+    "CAMPAIGN_TITLE": "Weekly LIFE Dojo Winners Wanted! ",
+    "CAMPAIGN_INTRO": "LIFE Dojo returns with weekly quizzes and a grand lucky draw. \nTest your knowledge and earn points to enter the lucky draw. Choose from three difficulty levels, and answer each question within 15 seconds by choosing the best answer. It’s time to play!",
+    "COUNTDOWN": {
+      "COUNTDOWN_TXT": "Countdown",
+      "DAYS": "Days",
+      "HOURS": "Hours",
+      "MINUTES": "Minutes",
+      "SECONDS": "Seconds"
+    },
+    "LOGIN_TXT": "Log in now!",
+    "HOW_TO_PLAY": "How to play",
+    "TERMS_CONDITIONS": "Terms and Conditions",
+    "NEXT_WEEK_CHALLENGE": "Buying an annuity early for retirement has been a hot topic recently. But there are public and private annuities, and some are even tax-deductible. Please figure out which plan is right for you before you buy!",
+    "CTA_TXT": "Read more"
+  },
+  "SIGN_UP_PAGE": {
+    "TITLE": "Sign Up",
+    "HAVE_AN_ACCOUNT": "Have an account",
+    "LOG_IN": "Log in",
+    "COUNTRY_CODE_REQUIRED_TXT": "Please select a country",
+    "MOBILE_FIELD": "Mobile",
+    "MOBILE_INVALID_TXT": "Please enter a valid mobile number",
+    "MOBILE_REQUIRED_TXT": "Please enter your mobile number",
+    "EMAIL_FIELD": "Email",
+    "EMAIL_INVALID_TXT": "Please enter a valid email address",
+    "EMAIL_REQUIRED_TXT": "Please enter your email address",
+    "PASSWORD_FIELD": "Password",
+    "PASSWORD_REQUIRED_TXT": "Please input a password",
+    "CONFIRM_PASSWORD_FIELD": "Confirm password",
+    "CONFIRM_PASSWORD_INVALID_TXT": "Passwords do not match",
+    "NICKNAME_FIELD": "Nickname",
+    "NICKNAME_REQUIRED_TXT": "Please input a nickname",
+    "REFERRAL_FIELD": "Referral code (optional)",
+    "CHECKBOX_TNC_PIC_AGREE": "I agree with the ",
+    "CHECKBOX_TNC": "Game T&Cs",
+    "CHECKBOX_AND": " and",
+    "CHECKBOX_PIC": " PICS.",
+    "CHECKBOX_TNC_POPUP_TXT": "You must agree with this term in order to enter LIFE Dojo.",
+    "LUCKY_DRAW_DESCRIPTION": "To participate in the Lucky Draw, please input your details below",
+    "FULL_NAME_HKID_FIELD": "Full name (as per HKID)",
+    "FULL_NAME_HKID_REQUIRED_TXT": "Please enter your full name",
+    "HKID_DIGITS_TXT": "HKID (first 4 digits)",
+    "HKID_DIGITS_REQUIRED_TXT": "Please enter your HKID",
+    "CHECKBOX_LUCK_TXT": "I agree HSBC Life to save my personal information for the Lucky Draw and future direct marketing purpose (For details, please refer to the PICS.)",
+    "CHECKBOX_LUCK_POPUP_TXT": "If you do not agree with this term, you will not be eligible to join the LIFE Dojo lucky draw. Do you want to confirm?",
+    "BUTTON_SUBMIT": "Submit"
+  },
+  "OTP_PAGE": {
+    "TITLE": "Input OTP",
+    "DESCRIPTION": "An SMS with an OTP has been sent to mobile number [mobile number]. Please input the OTP below:",
+    "ERROR_TXT": "Incorrect OTP",
+    "ERROR_LINK": "Resend OTP",
+    "CTA_TXT": "Next",
+    "CTA_TXT_SUCCESS": "Account successfully created"
+  },
+  "LOGIN_PAGE": {
+    "TITLE": "Log In",
+    "ESCAPE_HATCH": "Don’t have an account?",
+    "SIGN_UP": "Sign up",
+    "COUNTRY_CODE_REQUIRED_TXT": "Please select a country",
+    "MOBILE_FIELD": "Mobile number",
+    "MOBILE_NOTFOUND_TXT": "Account not found",
+    "MOBILE_INVALID_TXT": "Please input a valid mobile number",
+    "MOBILE_REQUIRED_TXT": "Please enter your mobile number",
+    "PASSWORD_FIELD": "Password",
+    "PASSWORD_INVALID_TXT": "Password incorrect",
+    "PASSWORD_REQUIRED_TXT": "Please input a password",
+    "FORGET_PASSWORD_TXT": "Forgot password?",
+    "CTA_TXT": "Log in"
+  },
+  "FORGET_PW_PAGE": {
+    "TITLE": "Forgot Password",
+    "DESCRIPTION": "Please enter your registered mobile number to proceed.",
+    "COUNTRY_CODE_REQUIRED_TXT": "Please select a country",
+    "MOBILE_FIELD": "Mobile number",
+    "MOBILE_NOTFOUND_TXT": "Account not found",
+    "MOBILE_INVALID_TXT": "Please input a valid mobile number",
+    "CTA_NEXT_TXT": "Next",
+    "NEW_PW_TXT": "Enter new password",
+    "CONFIRM_PW_TXT": "Confirm new password",
+    "CTA_SAVE_TXT": "Save",
+    "CTA_SUCCESS_TXT": "Password successfully updated"
+  },
+  "QUIZ_TITLE": "Quiz",
+  "NAVIGATION": {
+    "HOME": "Home",
+    "WALLET": "Wallet",
+    "HISTORY": "History",
+    "LEADER_BOARD": "Leaderboard",
+    "ACCOUNT": "Account"
+  },
+  "QUIZ_TEMPLATE": {
+    "CTA_START_TXT": "Take the quiz",
+    "PROGRESS_BAR": "Question {{questionId + 1}} out of {{questions.length}}",
+    "CTA_NEXT_TXT": "Next",
+    "SUMMARY_CORRECT": "You got {{total_correct}} out of {{questions.length}} questions correct!",
+    "SUMMARY_TIME_TAKEN": "You took a total of {{time_taken}}",
+    "POSITIVE_OUTCOME_TXT": "Congratulations!",
+    "POSITIVE_OUTCOME_SCORE": "You scored [x] points",
+    "POSITIVE_OUTCOME_REWARD": "Here’s a reward for you",
+    "POSITIVE_OUTCOME_CTA": "View Reward",
+    "NO_OUTCOME_SCORE": "You scored xx points for this round",
+    "NO_OUTCOME_CTA": "Try another quiz"
+  },
+  "WALLET": {
+    "REWARDS_TITLE": "My Rewards",
+    "HISTORY_TITLE": "My History",
+    "REWARD_STATUS_EXPIRY": "Expires on [date]",
+    "REWARD_STATUS_REDEEMED": "Redeemed",
+    "REWARD_STATUS_EXPIRED": "Expired",
+    "CTA_TXT": "Redeem"
+  },
+  "REDEMPTION": {
+    "TITLE": "Input PIN",
+    "DESCRIPTION": "Please present this screen to the cashier to enter the PIN code and redeem your reward.",
+    "WRONG_PIN": "Incorrect PIN",
+    "SUCCESSFUL_REDEMPTION": "Reward successfully redeemed",
+    "CTA_TXT": "Cancel"
+  },
+  "PROMO_CODE": {
+    "DESCRIPTION": "Please input this code during the checkout process",
+    "CTA_TXT": "Cancel"
+  },
+  "LEADER_BOARD": {
+    "TITLE": "Welcome {{profile.customProperties.nickname}}",
+    "SCORE": "Your total score",
+    "LABEL_TXT": "Leaderboard",
+    "LABEL_RANK": "Rank",
+    "LABEL_NICKNAME": "Nickname",
+    "LABEL_SCORE": "Score"
+  },
+  "ACCOUNT_PAGE": {
+    "PROFILE": "My Profile",
+    "REFER_FRIEND": "Refer a friend",
+    "LIFE_TALK": "LIFE Talk",
+    "TNC": "Terms and Conditions",
+    "PRIVACY_POLICY": "Terms and Conditions",
+    "LOGOUT": "Log Out"
+  },
+  "PROFILE": {
+    "TITLE": "Profile",
+    "ACCOUNT_LABEL": "Account / Registration Number",
+    "MOBILE_LABEL": "Mobile",
+    "EMAIL_LABEL": "Email",
+    "NICKNAME_LABEL": "Nickname (displayed on leaderboard)",
+    "PASSWORD_LABEL": "Password",
+    "LUCKY_DRAW_LABEL": "Opt-in Lucky Draw",
+    "PASSWORD_TITLE": "Change password",
+    "PASSWORD_ENTER_OLD": "Enter old password",
+    "PASSWORD_ENTER_NEW": "Enter new password",
+    "PASSWORD_CONFIRM_NEW": "Confirm new password",
+    "PASSWORD_CTA_TXT": "Save",
+    "LUCKY_DRAW_TITLE": "Opt-in Lucky Draw",
+    "LUCKY_DRAW_NAME_FIELD": "Name (as per HKID)",
+    "LUCKY_DRAW_HKID_FIELD": "HKID (first 4 digits)",
+    "CHECKBOX_LUCK_TXT": "I agree HSBC Life to save my personal information for the Lucky Draw and future direct marketing purpose. For details, please refer to the",
+    "CTA_SAVE_TXT": "Save"
+  },
+  "REFERRAL": {
+    "TITLE": "Refer a friend",
+    "CONTENT": "For each successful sign up* using your referral code, you earn extra 5X lucky draw chance. Your referee will earn 3X lucky draw chances.\nShare your referral code with a friend today!\n*Both you and your referee will have to complete at least 1 quiz to earn your lucky draw chances.",
+    "CTA_BUTTON": "Share referral code",
+    "SHARE_COPY_TXT": "Join me in the HSBC LIFE Dojo challenge. Watch a video and answer the quiz questions correctly and stand to win rewards each week, as well as a chance for the grand lucky draw.\n[URL]\nUse referral code [code] when signing up and earn 3x lucky draw chances.\n"
+  },
+  "WEEK1_CAMPAIGN_EASY": {
+    "TITLE": "White Belt (Easy)",
+    "LANDING_CONTENT": "",
+    "QUESTION1": "",
+    "ANSWERS1": ""
+  },
+  "WEEK1_CAMPAIGN_MEDIUM": {
+    "TITLE": "",
+    "LANDING_CONTENT": "",
+    "QUESTION1": "",
+    "ANSWERS1": ""
+  },
+  "WEEK1_CAMPAIGN_HARD": {
+    "TITLE": "",
+    "LANDING_CONTENT": "",
+    "QUESTION1": "",
+    "ANSWERS1": ""
+  },
+  "WEEK2_CAMPAIGN_EASY": {
+    "TITLE": "",
+    "LANDING_CONTENT": "",
+    "QUESTION1": "",
+    "ANSWERS1": ""
+  },
+  "WEEK2_CAMPAIGN_MEDIUM": {
+    "TITLE": "",
+    "LANDING_CONTENT": "",
+    "QUESTION1": "",
+    "ANSWERS1": ""
+  },
+  "WEEK2_CAMPAIGN_HARD": {
+    "TITLE": "",
+    "LANDING_CONTENT": "",
+    "QUESTION1": "",
+    "ANSWERS1": ""
+  }
 }
