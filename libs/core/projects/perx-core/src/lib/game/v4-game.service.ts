@@ -5,24 +5,13 @@ import { IGameService } from './igame.service';
 import {
   IGame,
   GameType as TYPE,
-  defaultTree,
-  ITree,
-  IPinata,
-  IScratch,
-  defaultPinata,
-  IGameOutcome,
   IPlayOutcome,
   IEngagementTransaction,
-  defaultScratch,
   Error400States,
-  defaultSpin,
-  ISpin
 } from './game.model';
 import {
   catchError,
   map,
-  publishReplay,
-  refCount,
   switchMap,
   tap
 } from 'rxjs/operators';
@@ -30,8 +19,13 @@ import { oc } from 'ts-optchain';
 import { IV4Voucher, V4VouchersService } from '../vouchers/v4-vouchers.service';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
-import { patchUrl } from '../utils/patch-url.function';
 import { Cacheable } from 'ngx-cacheable';
+import {
+  ScratchV4ToV4Mapper,
+  ShakeV4ToV4Mapper,
+  SpinV4ToV4Mapper,
+  TapV4ToV4Mapper
+} from './v4-game.mapper';
 
 const enum GameType {
   shakeTheTree = 'shake_the_tree',
@@ -51,7 +45,7 @@ export interface Asset {
   };
 }
 
-interface Outcome {
+export interface Outcome {
   button_text: string;
   description: string;
   title: string;
@@ -112,7 +106,7 @@ export interface SpinDisplayProperties extends GameProperties {
   pointer_image: Asset;
 }
 
-interface Game {
+export interface Game {
   campaign_id?: number;
   display_properties: TreeDisplayProperties | PinataDisplayProperties | ScratchDisplayProperties | SpinDisplayProperties;
   game_type: GameType;
@@ -154,9 +148,9 @@ interface IV4LightGameCampaign {
 interface IV4GameCampaigns {
   data: IV4LightGameCampaign[];
 }
+
 const gamesCacheBuster: Subject<boolean> = new Subject();
 const gamesCacheDecider: (response: any) => boolean = res => res && !(res instanceof HttpErrorResponse); // don't cache if empty/error
-// cache
 // dynamic to allow imprinting of cacheDecider into decorator
 // @dynamic
 @Injectable({
@@ -176,114 +170,18 @@ export class V4GameService implements IGameService {
   }
 
   private static v4GameToGame(game: Game): IGame {
-    let type = TYPE.unknown;
-    let config: ITree | IPinata | IScratch | ISpin;
-    if (game.game_type === GameType.shakeTheTree) {
-      type = TYPE.shakeTheTree;
-      const dpts: TreeDisplayProperties = game.display_properties as TreeDisplayProperties;
-      const defaultTr = defaultTree();
-      config = {
-        ...defaultTr,
-        treeImg: dpts.tree_image.value.image_url || dpts.tree_image.value.file,
-        giftImg: dpts.gift_image.value.image_url || dpts.gift_image.value.file,
-        nbHangedGift: oc(dpts).number_of_gifts_shown(defaultTr.nbHangedGift),
-        nbGiftsToDrop: dpts.number_of_gifts_to_drop,
-        nbTaps: dpts.number_of_taps || 5,
-        waitingAccessoryImg: oc(dpts).waiting_image.value.image_url() || oc(dpts).waiting_image.value.file(),
-        celebratingAccessoryImg: oc(dpts).celebrating_image.value.image_url() || oc(dpts).celebrating_image.value.file()
-      };
-    } else if (game.game_type === GameType.pinata) {
-      type = TYPE.pinata;
-      const dpps: PinataDisplayProperties = game.display_properties as PinataDisplayProperties;
-      config = {
-        ...defaultPinata(),
-        stillImg: dpps.still_image.value.image_url || dpps.still_image.value.file,
-        brokenImg: dpps.opened_image.value.image_url || dpps.opened_image.value.file,
-        breakingImg: oc(dpps).cracking_image.value.image_url() || oc(dpps).cracking_image.value.file(),
-        nbTaps: dpps.number_of_taps || 5
-      };
-    } else if (game.game_type === GameType.scratch) {
-      type = TYPE.scratch;
-      const dpps: ScratchDisplayProperties = game.display_properties as ScratchDisplayProperties;
-      config = {
-        ...defaultScratch(),
-        coverImg: oc(dpps).prescratch_image.value.image_url() || oc(dpps).prescratch_image.value.file(),
-        underlyingSuccessImg: oc(dpps).post_success_image.value.image_url() || oc(dpps).post_success_image.value.file(),
-        underlyingFailImg: oc(dpps).post_fail_image.value.image_url() || oc(dpps).post_success_image.value.file()
-      };
-      ['coverImg', 'underlyingSuccessImg', 'underlyingFailImg']
-        .filter(attribute => config[attribute] !== undefined)
-        .forEach(attribute => config[attribute] = patchUrl(config[attribute]));
-
-    } else if (game.game_type === GameType.spin) {
-      type = TYPE.spin;
-      const dpps: SpinDisplayProperties = game.display_properties as SpinDisplayProperties;
-      config = {
-        ...defaultSpin(),
-        numberOfWedges: dpps.number_of_wedges,
-        colorCtrls: Object.assign(dpps.wedge_colors),
-        rewardIcon: oc(dpps).reward_image.value.image_url(''),
-        wheelImg: oc(dpps).rim_image.value.image_url(''),
-        wheelPosition: oc(dpps).wheel_position('center'),
-        pointerImg: oc(dpps).pointer_image.value.image_url(''),
-        background: oc(dpps).background_image.value.image_url('')
-      };
-      ['rewardIcon', 'wheelImg', 'pointerImg', 'background']
-        .filter(attribute => config[attribute] !== undefined)
-        .forEach(attribute => config[attribute] = patchUrl(config[attribute]));
-      // Display the reward Slot on the last wedge
-      config.rewardSlots = [dpps.number_of_wedges - 1];
-    } else {
+    const gameMapperFetcher = {
+      shake_the_tree: new ShakeV4ToV4Mapper(),
+      hit_the_pinata: new TapV4ToV4Mapper(),
+      scratch_card: new ScratchV4ToV4Mapper(),
+      spin_the_wheel: new SpinV4ToV4Mapper(),
+    };
+    // get the correct mapper and apply it
+    const gameMapper = gameMapperFetcher[game.game_type];
+    if (!gameMapper) {
       throw new Error(`${game.game_type} is not mapped yet`);
     }
-    const texts: { [key: string]: string } = {};
-    if (game.display_properties.header) {
-      texts.title = game.display_properties.header.value.title;
-      texts.subTitle = game.display_properties.header.value.description;
-    }
-
-    if (game.display_properties.play_button_text) {
-      texts.button = game.display_properties.play_button_text;
-    }
-
-    const results: { [key: string]: IGameOutcome } = {};
-
-    if (game.display_properties.outcome) {
-      results.outcome = V4GameService.outcomeToGameOutcome(game.display_properties.outcome);
-    }
-    if (game.display_properties.nooutcome) {
-      results.noOutcome = V4GameService.outcomeToGameOutcome(game.display_properties.nooutcome);
-    }
-
-    let backgroundImg = oc(game).display_properties.background_image.value.image_url() ||
-      oc(game).display_properties.background_image.value.file('');
-    if (backgroundImg.startsWith('http')) {
-      backgroundImg = patchUrl(backgroundImg);
-    }
-
-    return {
-      id: game.id,
-      campaignId: game.campaign_id,
-      type,
-      backgroundImg,
-      remainingNumberOfTries: game.number_of_tries,
-      config,
-      texts,
-      results
-    };
-  }
-
-  private static outcomeToGameOutcome(outcome: Outcome): IGameOutcome {
-    const res: IGameOutcome = {
-      title: outcome.title,
-      subTitle: outcome.description,
-      button: outcome.button_text
-    };
-    if (outcome.type === 'image') {
-      res.image = oc(outcome).value.image_url() || oc(outcome).value.file();
-    }
-
-    return res;
+    return gameMapper.v4MapToMap(game);
   }
 
   public play(gameId: number): Observable<IPlayOutcome> {
@@ -325,10 +223,6 @@ export class V4GameService implements IGameService {
         map(res => res.data),
         map((games: Game[]) => games.filter((game: Game) => game.game_type !== GameType.quiz)),
         map((games: Game[]) => games.map((game: Game): IGame => V4GameService.v4GameToGame(game))),
-        publishReplay(1), // note: observe that changing to shareReplay causes http call to be doubled
-        // due to home comp's nested campaigns calling this mtd too (check home component)
-        // && home call of this method completing before nested campaigns subcription, causing a fresh instance
-        refCount(), // add refCount for now for tests to pass but still double call
         catchError(_ => EMPTY)
       );
   }

@@ -66,4 +66,8 @@ export class WhistlerSettingsService extends SettingsService {
       map((account) => this.settings = account)
     );
   }
+
+  public isGatekeeperOpen(): Observable<boolean> {
+    throw new Error('isGatekeeperOpen Method not implemented.');
+  }
 }

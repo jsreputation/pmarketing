@@ -2,8 +2,8 @@
     <ng-container *ngIf="payload.multiple; else elseBlock">
         <div class="choice-container">
             <div class="choice-content" *ngFor="let choice of payload?.choices; let i = index">
-                <mat-checkbox [(ngModel)]="selectedChoices[i]" (change)="emitValue()">
-                    {{choice}}
+                <mat-checkbox [(ngModel)]="selectedChoices[choice.id]" (change)="emitValue()">
+                    {{choice.title}}
                 </mat-checkbox>
             </div>
         </div>
@@ -19,8 +19,8 @@
                 <mat-radio-button
                     class="selection-radio-button"
                     *ngFor="let choice of payload?.choices"
-                    [value]="choice">
-                    {{choice}}
+                    [value]="choice.id">
+                    {{choice.title}}
                 </mat-radio-button>
             </mat-radio-group>
         </div>

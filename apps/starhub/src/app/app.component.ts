@@ -15,6 +15,7 @@ import {
   PopupComponent,
   ProfileService,
   RewardPopupComponent,
+  SettingsService,
   TokenStorage
 } from '@perxtech/core';
 import {
@@ -22,15 +23,21 @@ import {
   MatSnackBar
 } from '@angular/material';
 import {
+  catchError,
   filter,
+  first,
   map,
-  switchMap
+  switchMap,
 } from 'rxjs/operators';
 import {
   AnalyticsService,
   IEvent,
   PageType
 } from './analytics.service';
+import {
+  EMPTY,
+  timer
+} from 'rxjs';
 
 export interface IdataLayerSH {
   pageName: string;
@@ -60,6 +67,8 @@ export class AppComponent implements OnInit {
   // public selectedCampaign: ICampaign;
   public game?: IGame;
   public theme: ITheme;
+  public holdingGateOpened: boolean = true;
+  public loading: boolean = true;
 
   constructor(
     // private authenticationService: AuthenticationService,
@@ -72,7 +81,8 @@ export class AppComponent implements OnInit {
     private analytics: AnalyticsService,
     private loyaltyService: LoyaltyService,
     private profileService: ProfileService,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private settingsService: SettingsService
   ) {
     this.data.pageName = '';
     this.data.channel = 'msa';
@@ -126,8 +136,27 @@ export class AppComponent implements OnInit {
       }
     );
 
+    // init holding
     this.configService.readAppConfig().pipe(
-      switchMap(() => this.loyaltyService.getLoyalty()),
+      switchMap(() => timer(0, 2000)
+        .pipe(
+          switchMap(() => this.settingsService.isGatekeeperOpen().pipe(
+            catchError(() => {
+              this.holdingGateOpened = false;
+              return EMPTY;
+            })
+          )),
+        )
+      ),
+      first(res => res === true)
+    ).subscribe(() => {
+      this.loadApp();
+      this.loading = false;
+    });
+  }
+
+  private loadApp(): void {
+    this.loyaltyService.getLoyalty().pipe(
       switchMap(() => this.profileService.whoAmI())
     ).subscribe((profile: IProfile) => {
       (window as any).dataLayer.push({user_properties: {identifier: profile.identifier}});
