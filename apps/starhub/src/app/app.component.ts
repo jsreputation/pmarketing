@@ -61,7 +61,7 @@ declare const _satellite: {
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: [ './app.component.scss' ]
 })
 export class AppComponent implements OnInit {
   // public selectedCampaign: ICampaign;
@@ -159,7 +159,7 @@ export class AppComponent implements OnInit {
     this.loyaltyService.getLoyalty().pipe(
       switchMap(() => this.profileService.whoAmI())
     ).subscribe((profile: IProfile) => {
-      (window as any).dataLayer.push({user_properties: {identifier: profile.identifier}});
+      (window as any).dataLayer.push({ user_properties: { identifier: profile.identifier } });
       if ((window as any).newrelic) {
         (window as any).newrelic.interaction().end();
       }
@@ -191,7 +191,8 @@ export class AppComponent implements OnInit {
           this.putIdInStorage(campaign.id);
           this.dialog.open(RewardPopupComponent, { data });
         },
-        () => { /* nothing to do here, just fail silently */ }
+        () => { /* nothing to do here, just fail silently */
+        }
       );
   }
 
