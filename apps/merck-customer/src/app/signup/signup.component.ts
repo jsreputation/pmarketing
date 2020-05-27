@@ -107,14 +107,14 @@ export class SignupComponent implements PageAppearence {
       const passwordString = this.signupForm.value.password as string;
       const confirmPassword = this.signupForm.value.confirmPassword as string;
       if (passwordString !== confirmPassword) {
-        this.translate.get('PASSWORD_NOT_MATCH').subscribe(text =>
+        this.translate.get('SIGN_UP_PAGE.PASSWORD_NOT_MATCH').subscribe(text =>
           this.notificationService.addSnack(text)
         );
         return;
       }
       const termsConditions = this.signupForm.value.accept_terms as boolean;
       if (!termsConditions) {
-        this.translate.get('ACCEPT_TNC').subscribe(text =>
+        this.translate.get('SIGN_UP_PAGE.ACCEPT_TNC').subscribe(text =>
           this.notificationService.addSnack(text)
         );
         return;
@@ -122,7 +122,7 @@ export class SignupComponent implements PageAppearence {
 
       const marketingCommunication = this.signupForm.value.accept_marketing as boolean;
       if (!marketingCommunication) {
-        this.translate.get('ACCEPT_MARKETING').subscribe(text =>
+        this.translate.get('SIGN_UP_PAGE.ACCEPT_MARKETING').subscribe(text =>
           this.notificationService.addSnack(text)
         );
         return;

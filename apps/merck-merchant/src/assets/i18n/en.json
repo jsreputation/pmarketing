@@ -1,30 +1,49 @@
 {
-  "LOGIN_SUBTITLE": "Diabetes Loyalty Program",
-  "WELCOME": "Welcome",
-  "NAME": "Name",
-  "NAME_IS": "Name is",
-  "EMAIL_ADDRESS": "Email Address",
-  "EMAIL_ADDRESS_IS": "Email Address is",
-  "PASSWORD": "Password",
-  "PASSWORD_IS": "Password is",
-  "FORGOT_PASSWORD": "Forgot password",
-  "LOGIN": "Login",
-  "SALES_CONTACT": "Sales Contact",
-  "SALES_SCAN": "Sales Scan",
-  "REDEMPTION": "Redemption",
-  "LOGOUT": "Log Out",
-  "NEXT": "Next",
-  "CANCEL": "Cancel",
-  "CONFIRM": "Confirm",
-  "BACK": "Back",
-  "PROCEED": "Proceed",
-  "CLOSE": "Close",
-  "TRANSACTION_HISTORY": "Transaction History",
-  "STATIC_RESET_PASSWORD": "Reset your password",
-  "STATIC_PASSWORD": "Password",
-  "STATIC_NEW_PASSWORD": "New password",
-  "STATIC_CONFIRM_PASSWORD": "Confirm password",
-  "SUBMIT_BUTTON": "Update password",
-  "POINT_EARNED": "{points} Points earned",
-  "POINT_SPENT": "{points} Points spent"
+  "LOGIN_PAGE": {
+    "LOGIN_SUBTITLE": "Diabetes Loyalty Program",
+    "WELCOME": "Welcome",
+    "NAME": "Name",
+    "NAME_IS": "Name is",
+    "EMAIL_ADDRESS": "Email Address",
+    "EMAIL_ADDRESS_IS": "Email Address is",
+    "PASSWORD": "Password",
+    "PASSWORD_IS": "Password is",
+    "FORGOT_PASSWORD": "Forgot password",
+    "LOGIN": "Login"
+  },
+  "SALES_CONTACT": {
+    "SALES_CONTACT": "Sales Contact"
+  },
+  "HOME": {
+    "SALES_SCAN": "Sales Scan",
+    "REDEMPTION": "Redemption",
+    "TRANSACTION_HISTORY": "Transaction History",
+    "LOGOUT": "Log Out"
+  },
+  "FORGET_PW_PAGE": {
+    "EMAIL_ADDRESS": "Email Address",
+    "EMAIL_ADDRESS_IS": "Email Address is",
+    "NEXT": "Next"
+  },
+  "ORDER": {
+    "CANCEL": "Cancel",
+    "CONFIRM": "Confirm",
+    "BACK": "Back"
+  },
+  "REDEEM": {
+    "CANCEL": "Cancel",
+    "PROCEED": "Proceed",
+    "CLOSE": "Close"
+  },
+  "RESET_PW_PAGE": {
+    "RESET_PASSWORD": "Reset your password",
+    "PASSWORD": "Password",
+    "NEW_PASSWORD": "New password",
+    "CONFIRM_PASSWORD": "Confirm password",
+    "SUBMIT_BUTTON": "Update password"
+  },
+  "TRANSACTION_HISTORY": {
+    "POINT_EARNED": "{points} Points earned",
+    "POINT_SPENT": "{points} Points spent"
+  }
 }

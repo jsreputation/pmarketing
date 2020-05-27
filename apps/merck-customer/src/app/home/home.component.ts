@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit, PageAppearence {
   }
 
   public ngOnInit(): void {
-    this.translate.get('WELCOME').subscribe(
+    this.translate.get('HOME.WELCOME').subscribe(
       (msg) => this.titleFn = (profile) => {
         let returnString = msg;
         if (profile && profile.firstName && profile.firstName !== '') {
@@ -44,7 +44,7 @@ export class HomeComponent implements OnInit, PageAppearence {
       .getAllRewards()
       .subscribe((rewards) => this.rewards = of(rewards));
     this.getRewards();
-    this.translate.get('TOTAL_POINTS').subscribe((msg) => this.subTitleFn = () => msg);
+    this.translate.get('HOME.TOTAL_POINTS').subscribe((msg) => this.subTitleFn = () => msg);
   }
 
   private getRewards(): void {

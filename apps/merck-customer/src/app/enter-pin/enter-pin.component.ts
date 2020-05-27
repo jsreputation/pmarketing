@@ -37,7 +37,7 @@ export class EnterPinComponent implements OnInit, PageAppearence {
     if (currentNavigation.extras.state) {
       this.mobileNo = currentNavigation.extras.state.mobileNo;
       this.visibleNo = this.mobileNo ? this.encodeMobileNo(this.mobileNo) : '';
-      this.translate.get('STATIC_ENTER_NUMBER_LONG')
+      this.translate.get('OTP_PAGE.ENTER_NUMBER_LONG')
         .subscribe(text =>
           this.subHeading = text.replace('{phoneNumber}', this.visibleNo)
         );
@@ -106,7 +106,7 @@ export class EnterPinComponent implements OnInit, PageAppearence {
       this.authService.resendOTP(this.mobileNo).subscribe(
         () => {
           console.log('Resend Otp request sent');
-          this.translate.get('RESEND_OTP').subscribe(text =>
+          this.translate.get('OTP_PAGE.RESEND_OTP').subscribe(text =>
             this.notificationService.addSnack(text)
           );
         },

@@ -9,50 +9,50 @@
     </mat-form-field>
   </div>
   <div class="logo-title">
-    <ng-container>{{"LOGIN_SUBTITLE"|translate}}</ng-container>
+    <ng-container>{{"LOGIN_PAGE.LOGIN_SUBTITLE"|translate}}</ng-container>
   </div>
   <div class="content-container">
-    <div class="main-heading" translate>STATIC_LOGIN</div>
+    <div class="main-heading" translate>LOGIN_PAGE.LOGIN</div>
     <div class="subtitle">
-      <ng-container>{{"STATIC_NOT_MEMBER" | translate }}? </ng-container><span translate class="link"
-        (click)="goToSignup()" translate>SIGN_UP_NOT_MEMBER</span>
+      <ng-container>{{"LOGIN_PAGE.NOT_MEMBER" | translate }}? </ng-container><span translate class="link"
+        (click)="goToSignup()" translate>LOGIN_PAGE.SIGN_UP_NOT_MEMBER</span>
     </div>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <mat-form-field class="full-width__input">
         <mat-select formControlName="countryCode">
           <mat-option default value="852">
-            <ng-container>{{"COUNTRY_HONGKONG" | translate}}</ng-container>(+852)
+            <ng-container>{{"LOGIN_PAGE.COUNTRY_HONGKONG" | translate}}</ng-container>(+852)
           </mat-option>
           <mat-option value="853">
-            <ng-container>{{ "COUNTRY_MACAU" | translate}}</ng-container> (+853)
+            <ng-container>{{"LOGIN_PAGE.COUNTRY_MACAU" | translate}}</ng-container> (+853)
           </mat-option>
           <mat-option value="86">
-            <ng-container>{{ "COUNTRY_CHINA" | translate}}</ng-container> (+86)
+            <ng-container>{{"LOGIN_PAGE.COUNTRY_CHINA" | translate}}</ng-container> (+86)
           </mat-option>
           <mat-option value="65">
-            <ng-container>{{ "COUNTRY_SINGAPORE" | translate}}</ng-container> (+65)
+            <ng-container>{{"LOGIN_PAGE.COUNTRY_SINGAPORE" | translate}}</ng-container> (+65)
           </mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field color="primary" class="full-width__input">
-        <mat-label translate>STATIC_MOBILE_NO</mat-label>
-        <input matInput placeholder="{{'STATIC_MOBILE_NO' | translate}}" placeholder="Mobile No"
+        <mat-label translate>LOGIN_PAGE.MOBILE_NO</mat-label>
+        <input matInput placeholder="{{'MOBILE_NO' | translate}}" placeholder="Mobile No"
           formControlName="mobileNo" required>
         <mat-error *ngIf="mobileNo && mobileNo.hasError('required')">
-          {{'STATIC_MOBILE_NO_IS' | translate}}
+          {{'LOGIN_PAGE.MOBILE_NO_IS' | translate}}
         </mat-error>
       </mat-form-field>
       <mat-form-field color="primary" class="full-width__input">
-        <mat-label translate>STATIC_PASSWORD</mat-label>
-        <input matInput placeholder="{{'STATIC_PASSWORD' | translate }}" placeholder="Password"
+        <mat-label translate>PASSWORD</mat-label>
+        <input matInput placeholder="{{'PASSWORD' | translate }}" placeholder="Password"
           formControlName="password" type="password" required>
         <mat-error *ngIf="password && password.hasError('required')">
-          {{'PASSWORD_IS' | translate }}
+          {{'LOGIN_PAGE.PASSWORD_IS' | translate }}
         </mat-error>
       </mat-form-field>
-      <div class="forgot-text" (click)="goToForgotPassword()" translate>STATIC_FORGOT_PASSWORD</div>
-      <button mat-flat-button type="submit" class="full-width__button">{{"STATIC_LOGIN" | translate}}</button>
-      <div class="bottom-text" translate>STATIC_LEARN_MORE</div>
+      <div class="forgot-text" (click)="goToForgotPassword()" translate>LOGIN_PAGE.FORGOT_PASSWORD</div>
+      <button mat-flat-button type="submit" class="full-width__button">{{"LOGIN_PAGE.LOGIN_PAGE.LOGIN" | translate}}</button>
+      <div class="bottom-text" translate>LOGIN_PAGE.LEARN_MORE</div>
     </form>
   </div>
 </div>

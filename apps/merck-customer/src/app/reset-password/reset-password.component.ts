@@ -66,7 +66,7 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
     const password = this.resetPasswordForm.value.password as string;
     const confirmPassword = this.resetPasswordForm.value.confirmPassword as string;
     if (password !== confirmPassword) {
-      this.translate.get('PASSWORD_NOT_MATCH').subscribe(text =>
+      this.translate.get('RESET_PW_PAGE.PASSWORD_NOT_MATCH').subscribe(text =>
         this.notificationService.addSnack(text)
       );
       return;
@@ -95,7 +95,7 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
         passwordConfirmation: confirmPassword
       });
     } else {
-      resetPaswordCall = this.translate.get('UNKNOWN_ERROR').pipe(mergeMap(text => throwError(text)));
+      resetPaswordCall = this.translate.get('RESET_PW_PAGE.UNKNOWN_ERROR').pipe(mergeMap(text => throwError(text)));
     }
 
     resetPaswordCall.subscribe(
@@ -126,18 +126,18 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
           (window as any).primaryIdentifier = this.mobileNumber;
         }
         this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'account');
-        this.translate.get('PASSWORD_UPDATE_SUCCESSFULLY').subscribe(text =>
+        this.translate.get('RESET_PW_PAGE.PASSWORD_UPDATE_SUCCESSFULLY').subscribe(text =>
           this.notificationService.addSnack(text)
         );
       },
       (err) => {
         if (err instanceof HttpErrorResponse) {
           if (err.status === 0) {
-            this.translate.get('SERVER_NOT_AVAILABLE').subscribe(text =>
+            this.translate.get('RESET_PW_PAGE.SERVER_NOT_AVAILABLE').subscribe(text =>
               this.notificationService.addSnack(text)
             );
           } else if (err.status === 401) {
-            this.translate.get('INVALID_CREDENTIALS').subscribe(text =>
+            this.translate.get('RESET_PW_PAGE.INVALID_CREDENTIALS').subscribe(text =>
               this.notificationService.addSnack(text)
             );
           }

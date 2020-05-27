@@ -6,7 +6,7 @@
         <img src="assets/avatar.png" alt="">
       </div>
       <mat-card-title *ngIf="profile">{{profile.firstName}} {{profile.lastName}}</mat-card-title>
-      <mat-card-subtitle *ngIf="loyalty">{{loyalty.membershipTierName}} {{"TIER" | translate}}</mat-card-subtitle>
+      <mat-card-subtitle *ngIf="loyalty">{{loyalty.membershipTierName}} {{"ACCOUNT.TIER" | translate}}</mat-card-subtitle>
     </mat-card-header>
   </mat-card>
 
@@ -16,19 +16,19 @@
       mat-flat-button
       class="full-width__button btn-transparent"
       (click)="onAccountScreenNavigate('account/profile')"
-    >{{"STATIC_PROFILE" | translate }}</button>
+    >{{"ACCOUNT.PROFILE" | translate }}</button>
 
     <button
       mat-flat-button
       class="full-width__button btn-transparent"
       (click)="onAccountScreenNavigate('account/transaction-history')"
-    >{{"STATIC_TRANSACTION_HISTORY" | translate}}</button>
+    >{{"ACCOUNT.TRANSACTION_HISTORY" | translate}}</button>
 
     <button
       mat-flat-button
       class="full-width__button btn-transparent"
       (click)="onAccountScreenNavigate('account/privacy-policy')"
-    >{{"STATIC_PRIVACY_POLICY" | translate }}</button>
+    >{{"ACCOUNT.PRIVACY_POLICY" | translate }}</button>
 
   </mat-action-list>
 
@@ -37,7 +37,7 @@
       mat-flat-button
       class="full-width__button btn-transparent"
       (click)="onLogout()"
-    >{{"STATIC_LOGOUT" | translate }}</button>
+    >{{"ACCOUNT.LOGOUT" | translate }}</button>
   </mat-action-list>
 
 </div>

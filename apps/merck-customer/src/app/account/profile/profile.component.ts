@@ -42,14 +42,14 @@ export class ProfileComponent implements OnInit, PageAppearence {
         const diabetesState = customProperties[property];
         if (diabetesState && typeof diabetesState === 'string') {
           if (diabetesState === 'pre_diabetes') {
-            this.translate.get('STATIC_PRE_DIABETES').subscribe((text) => filteredConditions.push(text));
+            this.translate.get('ACCOUNT_PAGE.PRE_DIABETES').subscribe((text) => filteredConditions.push(text));
           } else if (diabetesState === 'diabetes') {
-            this.translate.get('STATIC_DIABETES').subscribe((text) => filteredConditions.push(text));
+            this.translate.get('ACCOUNT_PAGE.DIABETES').subscribe((text) => filteredConditions.push(text));
           }
         }
       }
       if (property === 'hypertension' && customProperties[property] === 'true') {
-        this.translate.get('STATIC_HYPERTENSION').subscribe((text) => filteredConditions.push(text));
+        this.translate.get('ACCOUNT_PAGE.HYPERTENSION').subscribe((text) => filteredConditions.push(text));
       }
     });
     return filteredConditions.filter(condition => condition !== '');
@@ -60,7 +60,7 @@ export class ProfileComponent implements OnInit, PageAppearence {
       header: true,
       backButtonEnabled: true,
       bottomSelectedItem: BarSelectedItem.ACCOUNT,
-      pageTitle: 'STATIC_PROFILE'
+      pageTitle: 'PROFILE'
     };
   }
 

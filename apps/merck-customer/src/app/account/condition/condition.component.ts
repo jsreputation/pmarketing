@@ -20,7 +20,7 @@ export class ConditionComponent implements OnInit, PageAppearence {
     private notificationService: NotificationService,
     private translate: TranslateService
   ) {
-    this.translate.get('CONDITION_UPDATED').subscribe(text => this.conditionUpdateTxt = text);
+    this.translate.get('ACCOUNT.CONDITION_UPDATED').subscribe(text => this.conditionUpdateTxt = text);
   }
 
   public ngOnInit(): void {
@@ -88,7 +88,7 @@ export class ConditionComponent implements OnInit, PageAppearence {
       header: true,
       backButtonEnabled: true,
       bottomSelectedItem: BarSelectedItem.ACCOUNT,
-      pageTitle: 'STATIC_CONDITION'
+      pageTitle: 'CONDITION'
     };
   }
 
