@@ -2,13 +2,13 @@
   <ng-container *ngIf="profile$ | async as profile; else elseBlockProfile">
     <div class="welcome-text">
       <ng-container>
-        {{titleFn(profile)}}
+        {{titleFn(profile) | async}}
       </ng-container>
     </div>
   </ng-container>
   <ng-container *ngIf="loyalty; else elseBlockLoyalty">
-    <div *ngIf="loyalty.membershipExpiry" class="member-expiry-date">{{membershipExpiryFn(loyalty)}}</div>
-    <p *ngIf="showLoyaltyProgress && loyalty.membershipTierName" class="tier-description">{{loyalty.membershipTierName | translate}}{{'HOME.MEMBER' | translate}}</p>
+    <div *ngIf="loyalty.membershipExpiry" class="member-expiry-date">{{membershipExpiryFn(loyalty) | async}}</div>
+    <p *ngIf="showLoyaltyProgress && loyalty.membershipTierName" class="tier-description">{{'memberFn(loyalty.membershipTierName)' | async}}</p>
 
     <div class="points">
       {{loyalty.pointsBalance | number}}
@@ -23,10 +23,10 @@
       </div>
     </ng-container>
     <div>
-      {{subTitleFn(loyalty)}}
+      {{subTitleFn(loyalty) | async}}
     </div>
     <div class="expiring-points">
-      {{summaryExpiringFn(loyalty)}}
+      {{summaryExpiringFn(loyalty) | async}}
     </div>
   </ng-container>
 

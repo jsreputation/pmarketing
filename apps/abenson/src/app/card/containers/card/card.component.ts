@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material';
 
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import {
   map,
   scan,
@@ -37,8 +37,8 @@ export class CardComponent implements OnInit {
     History: 1,
   };
   public brandingImg: string;
-  public subTitleFn: (loyalty: ILoyalty) => string;
-  public summaryExpiringFn: (loyalty: ILoyalty) => string;
+  public subTitleFn: (loyalty: ILoyalty) => Observable<string>;
+  public summaryExpiringFn: (loyalty: ILoyalty) => Observable<string>;
   public skuFn: (tr: ITransaction) => ({
     sku: string | undefined;
     qty: string | undefined,
@@ -53,8 +53,8 @@ export class CardComponent implements OnInit {
     this.transactions$ = this.transactions.asObservable().pipe(
       scan((acc, curr) => [...acc, ...curr ? curr : []], [])
     );
-    this.subTitleFn = (loyalty: ILoyalty) => `Equivalent to ${this.currencyPipe.transform(loyalty.currencyBalance, loyalty.currency, 'symbol-narrow', '1.0-0', 'en-PH')} e-Cash`;
-    this.summaryExpiringFn = () => `Your total points as of ${this.datePipe.transform(new Date(), 'mediumDate')}`;
+    this.subTitleFn = (loyalty: ILoyalty) => of(`Equivalent to ${this.currencyPipe.transform(loyalty.currencyBalance, loyalty.currency, 'symbol-narrow', '1.0-0', 'en-PH')} e-Cash`);
+    this.summaryExpiringFn = () => of(`Your total points as of ${this.datePipe.transform(new Date(), 'mediumDate')}`);
   }
 
   public ngOnInit(): void {

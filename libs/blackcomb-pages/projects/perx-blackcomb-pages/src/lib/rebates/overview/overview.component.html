@@ -1,0 +1,7 @@
+<h1>Rebates Overview</h1>
+<ng-container *ngIf="matchingMerchant">
+<!--  <img [src]="merchantRebateData.imgUrl" alt="">-->
+  <p>You have {{matchingMerchant.rebateAmount}} amount of rebates with {{matchingMerchant.name}}</p>
+  <button (click)="transaction()">Transact (use up rebate points)</button>
+</ng-container>
+

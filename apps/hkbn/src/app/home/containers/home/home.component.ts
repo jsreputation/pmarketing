@@ -48,9 +48,9 @@ const stubTabs: ITabConfigExtended[] = [
 })
 export class HomeComponent implements OnInit {
   public loyalty: ILoyalty;
-  public subTitleFn: (loyalty: ILoyalty) => string;
-  public titleFn: (profile: IProfile) => string;
-  public summaryExpiringFn: (loyalty: ILoyalty) => string;
+  public subTitleFn: (loyalty: ILoyalty) => Observable<string>;
+  public titleFn: (profile: IProfile) => Observable<string>;
+  public summaryExpiringFn: (loyalty: ILoyalty) => Observable<string>;
   public rewards$: Observable<IReward[]>;
 
   public tabs$: BehaviorSubject<ITabConfigExtended[]> = new BehaviorSubject<ITabConfigExtended[]>([]);

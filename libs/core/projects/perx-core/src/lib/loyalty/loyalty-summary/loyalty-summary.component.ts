@@ -1,4 +1,3 @@
-import { TranslateService } from '@ngx-translate/core';
 import { Component, OnInit, Input } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
@@ -26,69 +25,75 @@ export class LoyaltySummaryComponent implements OnInit {
   public loyalty: ILoyalty;
 
   @Input()
-  public subTitleFn: (loyalty: ILoyalty) => string;
+  public subTitleFn: (loyalty: ILoyalty) => Observable<string>;
 
   @Input()
-  public titleFn: (profile: IProfile) => string;
+  public pointToFn: () => Observable<string>;
 
   @Input()
-  public summaryExpiringFn: (loyalty: ILoyalty) => string;
+  public memberFn: (membershipTierName: string) => Observable<string>;
 
   @Input()
-  public membershipExpiryFn: (loyalty: ILoyalty) => string;
+  public titleFn: (profile: IProfile) => Observable<string>;
+
+  @Input()
+  public summaryExpiringFn: (loyalty: ILoyalty) => Observable<string>;
+
+  @Input()
+  public membershipExpiryFn: (loyalty: ILoyalty) => Observable<string>;
 
   @Input()
   public showLoyaltyProgress: boolean = true;
 
   public loyaltyProgramExists: boolean = true;
-
-  private subTitle: string;
-  private welcomeTxt: string;
-  public pointTo: string;
-  private pointExpire: string;
-  private accountExpire: string;
+  private pointTo: string;
 
   constructor(
     private profileService: ProfileService,
     private loyaltyService: LoyaltyService,
-    private datePipe: DatePipe,
-    private translate: TranslateService
+    private datePipe: DatePipe
   ) {
-    this.initTranslate();
   }
 
   public ngOnInit(): void {
     if (!this.subTitleFn) {
-      this.subTitleFn = () => `${this.subTitle}${this.datePipe.transform(new Date(), 'mediumDate')}`;
+      this.subTitleFn = () => of(`Your total points as of ${this.datePipe.transform(new Date(), 'mediumDate')}`);
+    }
+
+    if (!this.pointToFn) {
+      this.pointToFn = () => of('Points to {nextTierName}');
+    }
+    this.pointToFn().subscribe(text => this.pointTo = text);
+
+    if (!this.memberFn) {
+      this.memberFn = (membershipTierName: string) => of(`${membershipTierName} member`);
     }
 
     if (!this.titleFn) {
-      this.titleFn = (profile?: IProfile): string => {
+      this.titleFn = (profile?: IProfile): Observable<string> => {
         if (profile && profile.firstName) {
-          return `${this.welcomeTxt}${profile.firstName}`;
+          return of(`Welcome ${profile.firstName}`);
         }
         if (profile && profile.lastName) {
-          return `${this.welcomeTxt}${profile.lastName}`;
+          return of(`Welcome ${profile.lastName}`);
         }
-        return `${this.welcomeTxt}`;
+        return of(`Welcome`);
       };
     }
 
     if (!this.summaryExpiringFn) {
-      this.summaryExpiringFn = (loyalty: ILoyalty): string => {
+      this.summaryExpiringFn = (loyalty: ILoyalty): Observable<string> => {
         const expiringPoints = loyalty && loyalty.expiringPoints && loyalty.expiringPoints.length ? loyalty.expiringPoints[0] : null;
         return expiringPoints && expiringPoints.expireDate && expiringPoints.points && expiringPoints.points !== 0 ?
-          this.pointExpire
-            .replace('{points}', String(expiringPoints.points))
-            .replace('{date}', this.datePipe.transform(expiringPoints.expireDate, 'mediumDate') || '')
-          : '';
+          of(`${String(expiringPoints.points)} points will expire on ${this.datePipe.transform(expiringPoints.expireDate, 'mediumDate') || ''}`)
+          : of('');
       };
     }
 
     if (!this.membershipExpiryFn) {
-      this.membershipExpiryFn = (loyalty: ILoyalty): string => loyalty && loyalty.membershipExpiry ?
-        `${this.accountExpire}: ${this.datePipe.transform(loyalty.membershipExpiry, 'mediumDate')}` :
-        '';
+      this.membershipExpiryFn = (loyalty: ILoyalty): Observable<string> => loyalty && loyalty.membershipExpiry ?
+        of(`Account Expiry: ${this.datePipe.transform(loyalty.membershipExpiry, 'mediumDate')}`) :
+        of('');
     }
 
     if (!this.profile$) {
@@ -127,13 +132,5 @@ export class LoyaltySummaryComponent implements OnInit {
       return Math.round((currentPoints / nextPoints) * 100);
     }
     return 0;
-  }
-
-  private initTranslate(): void {
-    this.translate.get('HOME.POINT_TO').subscribe((text) => this.pointTo = text);
-    this.translate.get('HOME.WELCOME').subscribe((text) => this.welcomeTxt = text);
-    this.translate.get('HOME.SUBTITLE').subscribe((text) => this.subTitle = text);
-    this.translate.get('HOME.POINT_EXPIRE').subscribe((text) => this.pointExpire = text);
-    this.translate.get('HOME.ACCOUNT_EXPIRE').subscribe((text) => this.accountExpire = text);
   }
 }

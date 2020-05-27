@@ -1,0 +1,10 @@
+<p>rebateAmount to be used: {{matchingMerchant?.rebateAmount}}</p>
+<!--input to enter amount-->
+<p>Enter amount to pay the merchant (owe)</p>
+<div style="margin: 2rem;" class="input-field">
+  <input [formControl]="costControl" type="number" class="form-control" placeholder="Enter Amount">
+</div>
+<!--maybe final amount to be charged to user’s card pipe-->
+<!--rebate amount to be issued observable pipe input-->
+<p>rebate gained from this transaction: {{rebateGained}}</p>
+<button (click)="confirmTransaction()">Confirm Transaction</button>

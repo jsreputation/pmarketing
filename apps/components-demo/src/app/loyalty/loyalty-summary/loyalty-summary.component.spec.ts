@@ -11,7 +11,6 @@ import {
   IProfile
 } from '@perxtech/core';
 import { of } from 'rxjs';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('SummaryComponent', () => {
   let component: LoyaltySummaryComponent;
@@ -37,8 +36,7 @@ describe('SummaryComponent', () => {
         MatButtonModule,
         MatTabsModule,
         PerxProfileModule,
-        PerxLoyaltyModule,
-        TranslateModule.forRoot()
+        PerxLoyaltyModule
       ],
       providers: [
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
