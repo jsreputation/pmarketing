@@ -1,18 +1,44 @@
-import { Component, OnInit } from '@angular/core';
 import {
+  Component,
+  OnInit
+} from '@angular/core';
+import {
+  ConfigService,
+  ICampaign,
+  IGame,
+  IGameService,
+  IPopupConfig,
+  IProfile,
+  ITheme,
+  LoyaltyService,
   NotificationService,
   PopupComponent,
-  IPopupConfig,
-  ICampaign,
-  IGameService,
-  IGame,
-  TokenStorage,
-  ITheme,
-  RewardPopupComponent, IProfile, LoyaltyService, ProfileService, ConfigService
+  ProfileService,
+  RewardPopupComponent,
+  SettingsService,
+  TokenStorage
 } from '@perxtech/core';
-import { MatDialog, MatSnackBar } from '@angular/material';
-import { filter, map, switchMap } from 'rxjs/operators';
-import { AnalyticsService, IEvent, PageType } from './analytics.service';
+import {
+  MatDialog,
+  MatSnackBar
+} from '@angular/material';
+import {
+  catchError,
+  filter,
+  first,
+  map,
+  switchMap,
+} from 'rxjs/operators';
+import {
+  AnalyticsService,
+  IEvent,
+  PageType
+} from './analytics.service';
+import {
+  EMPTY,
+  timer
+} from 'rxjs';
+
 export interface IdataLayerSH {
   pageName: string;
   channel: string;
@@ -35,12 +61,14 @@ declare const _satellite: {
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: [ './app.component.scss' ]
 })
 export class AppComponent implements OnInit {
   // public selectedCampaign: ICampaign;
   public game?: IGame;
   public theme: ITheme;
+  public holdingGateOpened: boolean = true;
+  public loading: boolean = true;
 
   constructor(
     // private authenticationService: AuthenticationService,
@@ -53,7 +81,8 @@ export class AppComponent implements OnInit {
     private analytics: AnalyticsService,
     private loyaltyService: LoyaltyService,
     private profileService: ProfileService,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private settingsService: SettingsService
   ) {
     this.data.pageName = '';
     this.data.channel = 'msa';
@@ -107,11 +136,33 @@ export class AppComponent implements OnInit {
       }
     );
 
+    // init holding
     this.configService.readAppConfig().pipe(
-      switchMap(() => this.loyaltyService.getLoyalty()),
+      switchMap(() => timer(0, 2000)
+        .pipe(
+          switchMap(() => this.settingsService.isGatekeeperOpen().pipe(
+            catchError(() => {
+              this.holdingGateOpened = false;
+              return EMPTY;
+            })
+          )),
+        )
+      ),
+      first(res => res === true)
+    ).subscribe(() => {
+      this.loadApp();
+      this.loading = false;
+    });
+  }
+
+  private loadApp(): void {
+    this.loyaltyService.getLoyalty().pipe(
       switchMap(() => this.profileService.whoAmI())
     ).subscribe((profile: IProfile) => {
-      (window as any).dataLayer.push({user_properties: {identifier: profile.identifier}});
+      (window as any).dataLayer.push({ user_properties: { identifier: profile.identifier } });
+      if ((window as any).newrelic) {
+        (window as any).newrelic.interaction().end();
+      }
       if ((window as any).appboy) {
         (window as any).appboy.changeUser(profile.identifier);
       }
@@ -140,7 +191,8 @@ export class AppComponent implements OnInit {
           this.putIdInStorage(campaign.id);
           this.dialog.open(RewardPopupComponent, { data });
         },
-        () => { /* nothing to do here, just fail silently */ }
+        () => { /* nothing to do here, just fail silently */
+        }
       );
   }
 

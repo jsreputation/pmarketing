@@ -45,7 +45,7 @@ describe('DiscoverComponent', () => {
   let fixture: ComponentFixture<DiscoverComponent>;
 
   const rewardsServiceStub: Partial<RewardsService> = {
-    getAllRewards: () => of(rewards),
+    getRewards: () => of(rewards),
     getCatalogs: () => of(catalogs),
   };
   const settingsServiceStub: Partial<SettingsService> = {
