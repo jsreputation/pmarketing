@@ -71,3 +71,4 @@ export { RebatesModule } from './lib/rebates/rebates.module';
 export { RebatesWalletComponent } from './lib/rebates/rebates-wallet/rebates-wallet.component';
 export { OverviewComponent } from './lib/rebates/overview/overview.component';
 export { TransactionComponent } from './lib/rebates/transaction/transaction.component';
+export { TransactionCompleteComponent } from './lib/rebates/transaction-complete/transaction-complete.component';
