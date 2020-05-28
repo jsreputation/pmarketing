@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import {MerchantData} from '../rebates.types';
 
 @Component({
   selector: 'perx-blackcomb-pages-overview',
@@ -7,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./overview.component.scss']
 })
 export class OverviewComponent implements OnInit {
-  public matchingMerchant: any;
+  public matchingMerchant: MerchantData;
   public constructor(
     private router: Router
   ) {}
@@ -22,5 +23,9 @@ export class OverviewComponent implements OnInit {
   public transaction(): void {
     // navigate to transaction page will do reduction full amt of rebate avail
     this.router.navigate(['rebates/transaction', this.matchingMerchant.merchantId]);
+  }
+
+  public doNothing(): void {
+    console.info('Feature not implemented');
   }
 }
