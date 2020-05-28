@@ -351,6 +351,10 @@ export class V4LoyaltyService extends LoyaltyService {
     );
   }
 
+  /**
+   * @param {string} sortBy - ['transacted_at' | 'id']
+   * @param {string} orderBy - [ 'asc' | 'desc' ]
+   */
   public getTransactionHistory(page: number = 1, pageSize: number = 10, locale: string = 'en', sortBy: string = 'transacted_at', orderBy: string = 'desc'): Observable<ITransactionHistory[]> {
     const headers = new HttpHeaders().set('Accept-Language', locale);
     return this.http.get<IV4TransactionHistoryResponse>(
