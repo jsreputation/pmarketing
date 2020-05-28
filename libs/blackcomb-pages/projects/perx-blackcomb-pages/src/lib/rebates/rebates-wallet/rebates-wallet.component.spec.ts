@@ -3,11 +3,13 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {
   RebatesListComponent,
   UtilsModule,
+  LoyaltyModule,
 } from '@perxtech/core';
 import {MatCardModule, MatDialogModule} from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
 import { RebatesWalletComponent } from './rebates-wallet.component';
 import {Router} from '@angular/router';
+import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 
 describe('RebatesWalletComponent', () => {
   let component: RebatesWalletComponent;
@@ -22,6 +24,8 @@ describe('RebatesWalletComponent', () => {
       imports: [
         NoopAnimationsModule,
         MatCardModule,
+        InfiniteScrollModule,
+        LoyaltyModule,
         TranslateModule.forRoot(),
         MatDialogModule,
         UtilsModule,
