@@ -1,12 +1,12 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, Input } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, forkJoin } from 'rxjs';
 
 import { LoyaltyService } from '../loyalty.service';
 import { ProfileService } from '../../profile/profile.service';
 import { IProfile } from '../../profile/profile.model';
 import { ILoyalty } from '../models/loyalty.model';
 import { DatePipe } from '@angular/common';
-import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-core-loyalty-summary',
@@ -63,7 +63,6 @@ export class LoyaltySummaryComponent implements OnInit {
     if (!this.pointToFn) {
       this.pointToFn = () => of('Points to {nextTierName}');
     }
-    this.pointToFn().subscribe(text => this.pointTo = text);
 
     if (!this.memberFn) {
       this.memberFn = (membershipTierName: string) => of(`${membershipTierName} member`);
@@ -101,30 +100,21 @@ export class LoyaltySummaryComponent implements OnInit {
     }
 
     if (!this.loyalty$) {
-      this.loyaltyService.getLoyalty(this.loyaltyId)
-        .pipe(
-          catchError(val => {
-            if (val.status === 401) {
-              this.loyaltyProgramExists = true;
-            }
-            return of();
-          })
-        )
-        .subscribe(
-          (loyalty: ILoyalty) => {
-            this.loyalty = loyalty;
-            if (loyalty && loyalty.nextTierName) {
-              this.pointTo.replace('{nextTierName}', loyalty.nextTierName);
-            }
-          }
-        );
-    } else {
-      this.loyalty$.subscribe(
-        (loyalty: ILoyalty) => {
-          this.loyalty = loyalty;
-        }
-      );
+      this.loyalty$ = this.loyaltyService.getLoyalty(this.loyaltyId);
     }
+    forkJoin(this.loyalty$, this.pointToFn()).subscribe(
+      ([loyalty, txt]: [ILoyalty, string]) => {
+        this.loyalty = loyalty;
+        if (loyalty && loyalty.nextTierName) {
+          this.pointTo = txt.replace('{nextTierName}', loyalty.nextTierName);
+        }
+      },
+      ([err, _]) => {
+        if (err instanceof HttpErrorResponse && err.status === 401) {
+          this.loyaltyProgramExists = true;
+        }
+      }
+    );
   }
 
   public getPercentageToNext(currentPoints: number, nextPoints: number | undefined): number {

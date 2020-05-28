@@ -217,6 +217,7 @@
     "CLIPBOARD_ERROR_TXT": "無法訪問剪貼板"
   },
   "HOME": {
+    "HELLO": "歡迎",
     "MY_QR": "我的二維碼",
     "MY_BAR_CODE": "我的條形碼",
     "STAMP_CAMPAIGNS": "郵票卡活動",
@@ -228,7 +229,14 @@
     "SEE_MORE": "查看更多",
     "SEE_LESS": "關閉查看",
     "REWARDS_LEFT": "獎勵剩餘",
-    "READ_MORE": "查看更多"
+    "READ_MORE": "查看更多",
+    "YOU_HAVE": "積分餘額",
+    "POINTS_EXPITING": "積分餘額為 {{points}}，有效日期至 {{date}}",
+    "POINT_EXPIRE": "{points}將於{date}過期",
+    "ACCOUNT_EXPIRE": "賬戶過期於",
+    "POINT_TO": "升級到{nextTierName}會員所需積分",
+    "ALL": "所有",
+    "CLOSE": "完成"
   },
   "NEWS_FEED": {
     "BTN_1": "開始遊戲",
@@ -287,5 +295,6 @@
   "CONTENT_PAGE": "找不到內容",
   "Gold": "黃金",
   "Silver": "銀卡",
-  "Green": "綠色"
+  "Green": "綠色",
+  "Basic": "基礎"
 }

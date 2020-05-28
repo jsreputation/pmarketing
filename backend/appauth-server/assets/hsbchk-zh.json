@@ -217,6 +217,7 @@
     "CLIPBOARD_ERROR_TXT": "無法訪問剪貼板"
   },
   "HOME": {
+    "HELLO": "歡迎",
     "MY_QR": "我的二維碼",
     "MY_BAR_CODE": "我的條形碼",
     "STAMP_CAMPAIGNS": "郵票卡活動",

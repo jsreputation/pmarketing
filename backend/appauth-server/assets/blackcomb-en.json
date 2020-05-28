@@ -216,6 +216,7 @@
     "CLIPBOARD_ERROR_TXT": "Could not access your clipboard"
   },
   "HOME": {
+    "HELLO": "Welcome",
     "MY_QR": "My QR",
     "MY_BAR_CODE": "My Barcode",
     "STAMP_CAMPAIGNS": "Stamp Card Campaigns",
@@ -227,7 +228,18 @@
     "SEE_MORE": "See more",
     "SEE_LESS": "See less",
     "REWARDS_LEFT": " Rewards Left",
-    "READ_MORE": "Read More"
+    "READ_MORE": "Read More",
+    "YOU_HAVE": "You have points",
+    "POINTS_EXPITING": "{{points}} points will expire on {{date}}",
+    "POINT_EXPIRE": "{points} points will expire on {date}",
+    "ACCOUNT_EXPIRE": "Account Expiry",
+    "POINT_TO": "Points to {nextTierName}",
+    "ALL": "All",
+    "HUNG_FOOK_TONG": "Hung Fook Tong",
+    "BIG_BIG_SHOP": "big big shop",
+    "HOME+": "Home+",
+    "HKBN": "HKBN",
+    "CLOSE": "Close"
   },
   "NEWS_FEED": {
     "BTN_1": "Play now",
@@ -286,5 +298,6 @@
   "CONTENT_PAGE": "Content Not Found",
   "Gold": "Gold",
   "Silver": "Silver",
-  "Green": "Green"
+  "Green": "Green",
+  "Basic": "Basic"
 }
