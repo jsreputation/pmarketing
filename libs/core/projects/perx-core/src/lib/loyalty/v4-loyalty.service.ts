@@ -1,6 +1,4 @@
-import {
-  Injectable,
-} from '@angular/core';
+import { Injectable, } from '@angular/core';
 import {
   HttpClient,
   HttpHeaders,
@@ -11,9 +9,9 @@ import {
   of,
 } from 'rxjs';
 import {
+  concatAll,
   map,
   mergeMap,
-  concatAll,
   reduce
 } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
@@ -21,13 +19,17 @@ import { oc } from 'ts-optchain';
 import { LoyaltyService } from './loyalty.service';
 import {
   ILoyalty,
-  IPurchaseTransactionHistory, IRewardTransactionHistory,
+  IPurchaseTransactionHistory,
+  IRewardTransactionHistory,
   ITransaction,
-  TransactionDetailType,
-  ITransactionHistory
+  ITransactionHistory,
+  TransactionDetailType
 } from './models/loyalty.model';
 
-import { IV4Reward, IV4Tag } from '../rewards/v4-rewards.service';
+import {
+  IV4Reward,
+  IV4Tag
+} from '../rewards/v4-rewards.service';
 import { ICustomProperties } from '../profile/profile.model';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
@@ -349,7 +351,17 @@ export class V4LoyaltyService extends LoyaltyService {
     );
   }
 
-  public getTransactionHistory(page: number = 1, pageSize: number = 10, locale: string = 'en'): Observable<ITransactionHistory[]> {
+  /**
+   * @param sortBy - ['transacted_at' | 'id']
+   * @param orderBy - [ 'asc' | 'desc' ]
+   */
+  public getTransactionHistory(
+    page: number = 1,
+    pageSize: number = 10,
+    locale: string = 'en',
+    sortBy: string = 'transacted_at',
+    orderBy: string = 'desc'
+  ): Observable<ITransactionHistory[]> {
     const headers = new HttpHeaders().set('Accept-Language', locale);
     return this.http.get<IV4TransactionHistoryResponse>(
       `${this.apiHost}/v4/loyalty/transactions_history`,
@@ -357,7 +369,9 @@ export class V4LoyaltyService extends LoyaltyService {
         headers,
         params: {
           page: `${page}`,
-          size: `${pageSize}`
+          size: `${pageSize}`,
+          sort_by: `${sortBy}`,
+          order_by: `${orderBy}`
         }
       }
     ).pipe(
