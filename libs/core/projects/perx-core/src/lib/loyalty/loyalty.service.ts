@@ -1,5 +1,9 @@
 import { Observable } from 'rxjs';
-import {ILoyalty, ITransaction, ITransactionHistory} from './models/loyalty.model';
+import {
+  ILoyalty,
+  ITransaction,
+  ITransactionHistory
+} from './models/loyalty.model';
 
 export abstract class LoyaltyService {
   public abstract getLoyalties(page?: number, pageSize?: number, locale?: string): Observable<ILoyalty[]>;
@@ -10,5 +14,5 @@ export abstract class LoyaltyService {
 
   public abstract getTransactions(loyaltyId: number, page?: number, pageSize?: number, locale?: string): Observable<ITransaction[]>;
 
-  public abstract getTransactionHistory(page?: number, pageSize?: number, locale?: string): Observable<ITransactionHistory[]>;
+  public abstract getTransactionHistory(page?: number, pageSize?: number, locale?: string, sortBy?: string, orderBy?: string): Observable<ITransactionHistory[]>;
 }
