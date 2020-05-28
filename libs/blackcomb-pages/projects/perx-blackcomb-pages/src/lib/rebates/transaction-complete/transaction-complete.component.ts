@@ -25,7 +25,7 @@ export class TransactionCompleteComponent implements OnInit {
   }
 
   public backHome(): void {
-    this.router.navigate(['home']);
+    this.router.navigate(['rebates']);
   }
 
 }
