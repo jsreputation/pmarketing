@@ -1,10 +1,16 @@
 .container {
-  max-width: 80rem;
-  margin: 0 auto;
-  padding: 1.5rem;
+  width: 100%;
+
+  .merchant-text {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
 
   .scanner {
     position: relative;
+    height: 40rem;
+    width: 90%;
+    margin: 0 auto;
 
     &::before, &::after, > em::after, > em::before {
       border-color: #000;
