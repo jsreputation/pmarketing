@@ -234,6 +234,7 @@ export class V4LoyaltyService extends LoyaltyService {
           break;
         case TransactionDetailType.transaction:
           const pthDetails = transactionDetails as IV4PurchaseTransactionHistory;
+          // todo: microsites will handling mapping tenant specific properties temporarily
           const pthProps = oc(pthDetails).properties() as {
             merchant_username: string;
             pharmacy: string;
