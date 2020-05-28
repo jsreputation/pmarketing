@@ -1,5 +1,6 @@
 <mat-list>
   <div *ngFor="let location of locations | async">
+    {{location | json}}
     <mat-list-item>
       <h3 matLine>{{ headerFn(location) | async }}</h3>
       <small matLine>{{location.address}}</small>

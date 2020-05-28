@@ -1,3 +1,5 @@
+export { FindLocationModule } from './lib/find-location/find-location.module';
+export { FindLocationComponent } from './lib/find-location/find-location.component';
 export { LoadingComponent } from './lib/loading/loading.component';
 export { PerxBlackcombPagesModule } from './lib/perx-blackcomb-pages.module';
 export { AccountComponent } from './lib/account/account.component';
@@ -67,3 +69,7 @@ export { LandingPageComponent } from './lib/landing-page/landing-page.component'
 export { LandingPageModule } from './lib/landing-page/landing-page.module';
 export { ReferralComponent } from './lib/referral/referral.component';
 export { LeaderboardPageComponent } from './lib/leaderboard-page/leaderboard-page.component';
+export { RebatesModule } from './lib/rebates/rebates.module';
+export { RebatesWalletComponent } from './lib/rebates/rebates-wallet/rebates-wallet.component';
+export { OverviewComponent } from './lib/rebates/overview/overview.component';
+export { TransactionComponent } from './lib/rebates/transaction/transaction.component';

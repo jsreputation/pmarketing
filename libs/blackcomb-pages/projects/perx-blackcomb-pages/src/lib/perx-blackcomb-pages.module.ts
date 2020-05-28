@@ -22,7 +22,8 @@ import {
   MatListModule,
   MatDialogModule,
   MatMenuModule,
-  MatInputModule, MatTableModule
+  MatInputModule,
+  MatTableModule
 } from '@angular/material';
 import { GameModule } from './game/game.module';
 import { HistoryModule } from './history/history.module';
@@ -76,6 +77,7 @@ import { LeaderboardPageComponent } from './leaderboard-page/leaderboard-page.co
 import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
 import { SignIn2Module } from './sign-in-2/sign-in-2.module';
 import { ProfileModule as BCPProfileModule } from './profile/profile.module';
+import { FindLocationModule } from './find-location/find-location.module';
 
 const comps: any[] = [
   RewardComponent,
@@ -155,6 +157,7 @@ const comps: any[] = [
     BCPQuizModule,
     QuizResultsModule,
     CampaignLandingPageModule,
+    FindLocationModule,
   ],
   exports: [
     ...comps,

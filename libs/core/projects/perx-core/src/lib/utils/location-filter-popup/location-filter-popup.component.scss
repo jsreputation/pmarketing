@@ -1,0 +1,47 @@
+mat-toolbar {
+    background-color: transparent;
+    padding: 0;
+  
+    button {
+      background-color: transparent;
+      color: #0f69af;
+    }
+  
+    div {
+      flex-grow: 1;
+      flex-basis: 0;
+    }
+  
+    .title {
+      text-align: center;
+      font-size: 2.6rem;
+      font-weight: 900;
+    }
+  
+    .clear {
+      text-align: right;
+      font-size: 1.4rem;
+      color: #0f69af;
+    }
+  }
+  
+  mat-dialog-content {
+    p.label {
+      font-size: 1.6rem;
+      font-weight: 900;
+    }
+  
+    mat-checkbox {
+      display: block;
+      padding: 0.5rem 0;
+    }
+  }
+  
+  mat-dialog-actions {
+    button {
+      width: 100%;
+      background-color: #0f69af;
+      color: #ffffff;
+    }
+  }
+  
