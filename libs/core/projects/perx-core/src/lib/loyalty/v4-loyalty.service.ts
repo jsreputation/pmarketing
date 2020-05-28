@@ -23,7 +23,8 @@ import {
   IRewardTransactionHistory,
   ITransaction,
   ITransactionHistory,
-  TransactionDetailType
+  TransactionDetailType,
+  TransactionProperties
 } from './models/loyalty.model';
 
 import {
@@ -36,6 +37,7 @@ import { IConfig } from '../config/models/config.model';
 import { Cacheable } from 'ngx-cacheable';
 
 const DEFAULT_PAGE_COUNT: number = 10;
+type TenantTransactionProperties = IV4TransactionPropertiesAbenson | IV4TransactionPropertiesMerck | IV4TransactionPropertiesAllit;
 
 interface IV4Meta {
   count?: number;
@@ -119,7 +121,7 @@ interface IV4PurchaseTransactionHistory {
   currency: string;
   workflow_id?: number;
   created_at: Date;
-  properties?: ICustomProperties;
+  properties?: ICustomProperties | TenantTransactionProperties;
   transaction_reference: string;
 }
 
@@ -139,6 +141,58 @@ interface IV4TransactionHistory {
 
 interface IV4TransactionHistoryResponse {
   data: IV4TransactionHistory[];
+}
+
+interface IV4TransactionPropertiesAbenson {
+  tenant: "abenson",
+  qty: number,
+  reg: number,
+  sku: number,
+  store: number,
+  trxno: number,
+  untprc: number,
+  cashier: number,
+  company: number,
+  trxdate: number,
+  trxtime: number,
+  mobileno: string,
+  store_name: string
+}
+
+interface IV4TransactionPropertiesMerck {
+  tenant: "merck",
+  product: string,
+  pharmacy: string,
+  merchant_username: string,
+  merchant_account_id: number
+}
+
+interface IV4TransactionPropertiesAllit {
+  tenant: "allit",
+  amount: number,
+  quantity: number,
+  item_code: number,
+  item_name: string,
+  amount_net: number,
+  amount_std: number,
+  amount_txn: number,
+  guid_store: string,
+  amount_json: {},
+  branch_code: string,
+  guid_branch: string,
+  amount_signum: number,
+  reference_doc: string,
+  amount_tax_gst: number,
+  amount_tax_wht: number,
+  invoice_number: number,
+  amount_discount: number,
+  category_level_0: string,
+  category_level_1: string,
+  amount_gst_balance: number,
+  amount_wht_balance: number,
+  amount_open_balance: number,
+  transaction_item_guid: string,
+  transaction_line_guid: string
 }
 
 @Injectable({
