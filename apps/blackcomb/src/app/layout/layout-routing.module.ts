@@ -121,7 +121,11 @@ const routes: Routes = [
         path: 'catalogs',
         loadChildren: () => import('../catalog/catalog.module')
           .then(mod => mod.CatalogModule)
-      }
+      },
+      {
+        path: 'rebates',
+        loadChildren: () => import('../rebates/rebates.module').then(mod => mod.RebatesModule)
+      },
     ]
   }
 
