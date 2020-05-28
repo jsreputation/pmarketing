@@ -14,5 +14,11 @@ export abstract class LoyaltyService {
 
   public abstract getTransactions(loyaltyId: number, page?: number, pageSize?: number, locale?: string): Observable<ITransaction[]>;
 
-  public abstract getTransactionHistory(page?: number, pageSize?: number, locale?: string, sortBy?: string, orderBy?: string): Observable<ITransactionHistory[]>;
+  public abstract getTransactionHistory(
+    page?: number,
+    pageSize?: number,
+    locale?: string,
+    sortBy?: string,
+    orderBy?: string
+  ): Observable<ITransactionHistory[]>;
 }
