@@ -18,11 +18,11 @@ describe('LocationFilterPopupComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LocationFilterPopupComponent ],
-      imports: [ MatDialogModule, MatIconModule, MatToolbarModule, MatCheckboxModule, TranslateModule.forRoot() ],
+      declarations: [LocationFilterPopupComponent],
+      imports: [MatDialogModule, MatIconModule, MatToolbarModule, MatCheckboxModule, TranslateModule.forRoot()],
       providers: [
-        {provide: MAT_DIALOG_DATA, useValue: ['a', 'b']},
-        {provide: MatDialogRef, useValue: LocationFilterPopupComponent}
+        { provide: MAT_DIALOG_DATA, useValue: ['a', 'b'] },
+        { provide: MatDialogRef, useValue: LocationFilterPopupComponent }
       ]
     })
       .compileComponents();

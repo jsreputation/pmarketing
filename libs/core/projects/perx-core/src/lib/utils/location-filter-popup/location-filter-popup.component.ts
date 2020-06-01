@@ -15,7 +15,7 @@ interface ILabels {
 
 interface IData {
   tags: ITag[];
-  labels: ILabels
+  labels: ILabels;
 }
 
 @Component({
@@ -32,8 +32,13 @@ export class LocationFilterPopupComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) private data: IData) { }
 
   public ngOnInit(): void {
-    this.tags = this.data.tags;
-    this.labels = this.data.labels;
+    this.tags = this.data.tags || [];
+    this.labels = this.data.labels || {
+      filter: 'Filter',
+      clearAll: 'Clear all',
+      categories: 'Categories',
+      apply: 'Apply'
+    };
   }
 
   public onRadioSelect(event: MatCheckboxChange, index: number): void {
