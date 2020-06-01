@@ -51,7 +51,8 @@ import {
   RewardsService,
   RssFeedsPages,
   SettingsService,
-  ThemesService
+  ThemesService,
+  IFlags
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
@@ -71,6 +72,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject();
   public theme: ITheme;
   public appConfig: IConfig<void>;
+  public appRemoteFlags: IFlags;
   public newsFeedItems: Observable<FeedItem[] | undefined>;
   public rewards$: Observable<IReward[]>;
   public games$: Observable<IGame[]>;
@@ -149,7 +151,11 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.initCampaign();
       }
     );
-
+    this.settingsService.getRemoteFlagsSettings().subscribe(
+      (flags: IFlags) => {
+        this.appRemoteFlags = flags;
+      }
+    );
     this.authService.isAuthorized().subscribe((isAuth: boolean) => {
       if (isAuth) {
         this.fetchPopupCampaigns();

@@ -1,0 +1,27 @@
+::ng-deep {
+  .mat-tab-body-wrapper {
+    height: 100%;
+  }
+
+  mat-tab-group {
+    height: 100%;
+  }
+}
+
+.filter-area {
+  background-color: #e9e9ed;
+  padding: 1rem;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+
+  button {
+    background-color: #ffffff;
+    font-size: 1.4rem;
+    color: #494953;
+  }
+}
+
+perx-core-locations-list {
+  padding-top: 3rem;
+}

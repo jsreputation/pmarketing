@@ -1,3 +1,5 @@
+export { FindLocationModule } from './lib/find-location/find-location.module';
+export { FindLocationComponent } from './lib/find-location/find-location.component';
 export { LoadingComponent } from './lib/loading/loading.component';
 export { PerxBlackcombPagesModule } from './lib/perx-blackcomb-pages.module';
 export { AccountComponent } from './lib/account/account.component';
