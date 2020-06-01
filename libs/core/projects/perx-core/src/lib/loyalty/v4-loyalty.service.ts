@@ -304,6 +304,7 @@ export class V4LoyaltyService extends LoyaltyService {
             price: pthDetails.amount,
             currency: pthDetails.currency,
           };
+          data.properties = this.v4TransactionPropertiesToTransactionProperties(pthProps as TenantTransactionProperties);
           break;
       }
     }
@@ -319,6 +320,42 @@ export class V4LoyaltyService extends LoyaltyService {
         data
       }
     };
+  }
+
+  private static v4TransactionPropertiesToTransactionProperties(pthProps: TenantTransactionProperties): TransactionProperties {
+    let data: TransactionProperties = {};
+
+    if((pthProps as IV4TransactionPropertiesAbenson).sku) {
+      let props = (pthProps as IV4TransactionPropertiesAbenson);
+      data = {
+        productCode: props.sku.toString(),
+        // productName: undefined,
+        quantity: props.qty,
+        storeCode: props.store.toString(),
+        storeName: props.store_name
+      };
+    }
+    if((pthProps as IV4TransactionPropertiesAllit).quantity) {
+      let props = (pthProps as IV4TransactionPropertiesAllit);
+      data = {
+        productCode: props.item_code.toString(),
+        productName: props.item_name,
+        quantity: props.quantity,
+        storeCode: props.guid_store,
+        // storeName: undefined
+      };
+    }
+    if((pthProps as IV4TransactionPropertiesMerck).product) {
+      let props = (pthProps as IV4TransactionPropertiesMerck);
+      data = {
+        // productCode: undefined,
+        productName: props.product,
+        // quantity: undefined,
+        // storeCode: undefined,
+        // storeName: undefined
+      };
+    }
+    return data;
   }
 
   @Cacheable({
