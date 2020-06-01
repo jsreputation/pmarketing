@@ -57,7 +57,7 @@ export class LayoutComponent implements OnInit {
   public preAuth: boolean;
   public theme: ITheme;
   public appConfig: IConfig<void>;
-  public appRemoteFlags: IFlags
+  public appRemoteFlags: IFlags;
 
   private initBackArrow(url: string): void {
     this.backArrowIcon = BACK_ARROW_URLS.some(test => url.startsWith(test)) ? 'arrow_backward' : '';

@@ -79,8 +79,8 @@ export class FindLocationComponent implements OnInit, OnDestroy {
   }
 
   public openDialog(): void {
-    this.translate.get(this.tags.map(item => item.name)).subscribe((res: any) => {
-      this.tags = this.tags.map(tag => tag.name = res[tag.name]);
+    this.translate.get(this.tags.map(item => item.name)).subscribe((transTxt: any) => {
+      this.tags = this.tags.map(tag => tag.name = transTxt[tag.name]);
       const dialogRef = this.dialog.open(LocationFilterPopupComponent, {
         width: '35rem',
         data: { tags: this.tags }

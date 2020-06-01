@@ -32,7 +32,7 @@ describe('LayoutComponent', () => {
 
   const settingsServiceStub: Partial<SettingsService> = {
     getRemoteFlagsSettings: () => of()
-  }
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
