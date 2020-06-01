@@ -10,6 +10,7 @@ import {
   Router
 } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
+import { CurrencyPipe } from '@angular/common';
 
 const activatedRouteStub: Partial<ActivatedRoute> = {
   params: new BehaviorSubject({ id: 0 })
@@ -24,7 +25,8 @@ describe('TransactionComponent', () => {
       imports: [ ReactiveFormsModule ],
       providers: [
         { provide: ActivatedRoute, useValue: activatedRouteStub },
-        { provide: Router, useValue: jest.fn()}
+        { provide: Router, useValue: jest.fn()},
+        CurrencyPipe
       ]
     })
       .compileComponents();
