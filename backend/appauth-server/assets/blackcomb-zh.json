@@ -210,5 +210,15 @@
     "BARCODE_TO_MERCHANT": "向商家出示此條形碼",
     "CTA": "取消"
   },
+  "LOCATION_PAGE": {
+    "FILTER_BY": "篩選",
+    "MAP": "地圖",
+    "LIST": "名單",
+    "APPLY": "應用",
+    "CATEGORIES": "分類",
+    "CLEAR_ALL": "清除所有選項",
+    "FILTER": "過濾",
+    "VIEW_LOCATION": "查看位置"
+  },
   "CONTENT_PAGE": "找不到內容"
 }

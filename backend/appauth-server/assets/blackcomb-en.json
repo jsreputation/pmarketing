@@ -211,5 +211,15 @@
     "DESCRIPTION": "Description",
     "TNC": "Terms and Conditions"
   },
+  "LOCATION_OPAGE": {
+    "FILTER_BY": "Filter by",
+    "MAP": "Map",
+    "LIST": "List",
+    "APPLY": "Apply",
+    "CATEGORIES": "Categories",
+    "CLEAR_ALL": "Clear all",
+    "FILTER": "Filter",
+    "VIEW_LOCATION": "View location"
+  },
   "CONTENT_PAGE": "Content Not Found"
 }
