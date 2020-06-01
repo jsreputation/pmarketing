@@ -10,7 +10,7 @@
   </div>
   <div class="actions-container mat-elevation-z2" *ngIf="appConfig">
     <button mat-raised-button color="primary" class="reward-buy ga_purchase_reward"
-            [disabled]="maxRewardCost > 0 && (!loyalty || !loyalty.pointsBalance || (loyalty.pointsBalance < (maxRewardCost || 0))) || waitForSubmission"
+            [disabled]="maxRewardCost && maxRewardCost > 0 && (!loyalty || !loyalty.pointsBalance || (loyalty.pointsBalance < (maxRewardCost || 0))) || waitForSubmission"
             perxCoreAppDebounceClick
             [debounceTime]="400"
             (debounceClick)="buyReward()">
