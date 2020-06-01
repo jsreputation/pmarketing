@@ -1,20 +1,32 @@
 import {
   Component,
-  OnInit,
-  OnDestroy
+  OnDestroy,
+  OnInit
 } from '@angular/core';
 import {
-  Observable, of, Subject
+  Observable,
+  of,
+  Subject
 } from 'rxjs';
-import {MatDialog} from '@angular/material';
-import {IProfile, QrScannerComponent, ProfileService} from '@perxtech/core';
-import { NavigationExtras, Router} from '@angular/router';
-import {MerchantData} from '../rebates.types';
+import { MatDialog } from '@angular/material';
+import {
+  IProfile,
+  ProfileService,
+  QrScannerComponent
+} from '@perxtech/core';
+import {
+  NavigationExtras,
+  Router
+} from '@angular/router';
+import { MerchantData } from '../rebates.types';
 
 const unformatMoney = (moneyString: string): number => {
-  if (!moneyString) return 0.00;
+  if (!moneyString) {
+    return 0.00;
+  }
+
   return parseFloat(moneyString.replace('$', ''));
-}
+};
 
 const merchantsData: MerchantData[] = [
   {
@@ -61,7 +73,7 @@ export class RebatesWalletComponent implements OnInit, OnDestroy {
     }
     const merchantCards = JSON.parse(localStorage.getItem('merchantsRebates') as string) as any[];
     this.merchants$ = of(merchantCards);
-    this.subTitleFn = (merchantsData: MerchantData[]) => `Your total rebate funds across ${merchantsData.length} merchants`;
+    this.subTitleFn = (data: MerchantData[]) => `Your total rebate funds across ${data.length} merchants`;
     this.titleFn = (profile) => {
       let returnString = 'Welcome';
       if (profile && profile.firstName && profile.firstName !== '') {

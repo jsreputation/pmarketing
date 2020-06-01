@@ -5,4 +5,4 @@ export type MerchantData = {
   description: string;
   imgUrl: string;
   rebateAmount: string;
-}
+};

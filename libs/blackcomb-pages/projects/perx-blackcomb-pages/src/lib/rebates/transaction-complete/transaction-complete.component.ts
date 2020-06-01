@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
+import { Router } from '@angular/router';
 
 type TransactionReceipt = {
   rebateGained: string,
@@ -7,7 +10,7 @@ type TransactionReceipt = {
   rebateBurned: string,
   name: string,
   logo: string
-}
+};
 
 @Component({
   selector: 'perx-blackcomb-pages-transaction-complete',

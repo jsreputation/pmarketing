@@ -1,9 +1,18 @@
-import { Component, EventEmitter, Output, Input } from '@angular/core';
-import {Observable} from 'rxjs';
-import {ITheme} from '../../utils/themes/themes.model';
-import {Colors} from '../../perx-core.constants';
-import {IPrice, IReward} from '../../rewards/models/reward.model';
-import {ThemesService} from '../../utils/themes/themes.service';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output
+} from '@angular/core';
+import { Observable } from 'rxjs';
+import { ITheme } from '../../utils/themes/themes.model';
+import { Colors } from '../../perx-core.constants';
+import {
+  IPrice,
+  IReward
+} from '../../rewards/models/reward.model';
+import { ThemesService } from '../../utils/themes/themes.service';
 
 export type MerchantData = {
   merchantId: number;
@@ -11,7 +20,7 @@ export type MerchantData = {
   description: string;
   imgUrl: string;
   rebateAmount: string;
-}
+};
 
 // part of rebates-wallet page
 @Component({
@@ -19,7 +28,7 @@ export type MerchantData = {
   templateUrl: './rebates-list.component.html',
   styleUrls: ['./rebates-list.component.scss']
 })
-export class RebatesListComponent {
+export class RebatesListComponent implements OnInit {
   @Input('data') public merchants$: Observable<MerchantData[]>;
 
   public theme: ITheme | null = null;
