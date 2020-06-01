@@ -58,7 +58,7 @@
       (selected)="goToCampaignPage($event)">
     </perx-blackcomb-pages-campaigns-collection>
   </div>
-  <div class="rewards-collection" *ngIf="appConfig.showRewardsOnHomepage || appRemoteFlags?.rewardsCarousel">
+  <div class="rewards-collection" *ngIf="appRemoteFlags?.rewardsCarousel || appConfig.showRewardsOnHomepage">
     <div *ngIf="(rewards$ | async)?.length > 0" class="title" translate>HOME.FEATURED_REWARDS</div>
     <perx-core-rewards-collection [rewardsList]="rewards$" (tapped)="goToReward($event)"></perx-core-rewards-collection>
   </div>

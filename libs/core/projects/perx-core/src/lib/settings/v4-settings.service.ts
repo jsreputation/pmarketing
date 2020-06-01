@@ -41,7 +41,7 @@ interface IV4Flags {
   string_value: string;
   json_value: {
     merchant_map: boolean;
-    rewaerds_carousel: boolean;
+    rewards_carousel: boolean;
   }
 }
 
