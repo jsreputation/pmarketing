@@ -28,8 +28,8 @@
   </div>
   <perx-core-newsfeed [items$]="newsFeedItems"></perx-core-newsfeed>
   <!-- Stamp card campaigns-->
-  <div class="campaigns" *ngIf="(stampCampaigns$ | async)?.length > 0">
-    <div class="title" translate>HOME.STAMP_CAMPAIGNS</div>
+  <div class="campaigns">
+    <div *ngIf="showCampaigns" class="title" translate>HOME.STAMP_CAMPAIGNS</div>
     <perx-blackcomb-pages-campaigns-collection [campaigns]="stampCampaigns$" (selected)="goToCampaignPage($event)">
     </perx-blackcomb-pages-campaigns-collection>
   </div>
@@ -43,8 +43,8 @@
     ></perx-blackcomb-pages-catalogs>
   </div>
   <!-- Game campaigns-->
-  <div *ngIf="(games$ | async)?.length > 0" class="campaigns">
-    <div class="title" translate>HOME.GAMES</div>
+  <div class="campaigns">
+    <div *ngIf="showGames" class="title" translate>HOME.GAMES</div>
     <perx-blackcomb-games-collection [games]="games$"></perx-blackcomb-games-collection>
   </div>
   <!-- Quiz campaigns -->
