@@ -1,13 +1,12 @@
 <mat-list>
   <div *ngFor="let location of locations | async">
-    {{location | json}}
     <mat-list-item>
       <h3 matLine>{{ headerFn(location) | async }}</h3>
       <small matLine>{{location.address}}</small>
       <div matLine>
         <div class="links">
           <a class="links-phone" href="tel:{{location.phone}}">{{location.phone}}</a>
-          <a class="links-location" target="_blank" [href]="gMapUrl(location)">View location</a>
+          <a class="links-location" target="_blank" [href]="gMapUrl(location)">{{viewLocationFn() | async}}</a>
         </div>
       </div>
     </mat-list-item>
