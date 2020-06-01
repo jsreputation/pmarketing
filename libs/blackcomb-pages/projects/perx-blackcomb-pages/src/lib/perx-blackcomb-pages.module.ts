@@ -158,8 +158,8 @@ const comps: any[] = [
     BCPQuizModule,
     QuizResultsModule,
     CampaignLandingPageModule,
+    LocationModule,
     FindLocationModule,
-    LocationModule
   ],
   exports: [
     ...comps,
