@@ -8,7 +8,7 @@
       <a class="phone" href="tel:{{current.phone}}">
         <mat-icon>phone</mat-icon>{{current.phone}}
       </a>
-      <a class="location" target="_blank" [href]="gMapUrl(current)">View location</a>
+      <a class="location" target="_blank" [href]="gMapUrl(current)">{{viewLocationFn() | async}}</a>
     </mat-card-content>
   </mat-card>
 </div>

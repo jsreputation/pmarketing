@@ -7,6 +7,11 @@ export interface IMicrositeSettings {
   jsonValue: { [key: string]: string | number | boolean | TokenType };
 }
 
+export interface IFlags {
+  merchantMap: boolean;
+  rewardsCarousel: boolean;
+}
+
 export interface IRssFeeds {
   data: IRssFeedsData[];
 }

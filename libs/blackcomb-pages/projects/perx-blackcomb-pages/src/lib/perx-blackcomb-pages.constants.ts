@@ -18,5 +18,6 @@ export const BACK_ARROW_URLS: string[] = [
   '/campaign-welcome',
   '/lucky-draw-details',
   '/referral',
-  '/quiz'
+  '/quiz',
+  '/locations'
 ];

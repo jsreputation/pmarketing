@@ -15,6 +15,7 @@ import {
   Subject,
   Observable,
   forkJoin,
+  of,
 } from 'rxjs';
 
 import { ILocation } from '../ilocation';
@@ -29,6 +30,8 @@ import { takeUntil } from 'rxjs/operators';
 export class LocationsMapComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   public locations: Observable<ILocation[]>;
+  @Input()
+  public viewLocationFn: () => Observable<string>;
 
   public current: ILocation | null;
 
@@ -50,6 +53,9 @@ export class LocationsMapComponent implements OnInit, OnChanges, OnDestroy {
       .subscribe(() => {
         this.updateLocations();
       });
+    if (!this.viewLocationFn) {
+      this.viewLocationFn = () => of('View location');
+    }
     // load google map script
     this.loadScript()
       .then(() => {
