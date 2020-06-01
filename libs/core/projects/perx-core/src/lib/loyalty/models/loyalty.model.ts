@@ -50,7 +50,7 @@ export interface IRewardTransactionHistory {
   userAccount: string;
   rewardName: string;
   redemptionLocation?: string;
-  properties?: TransactionProperties;
+  properties?: ITransactionProperties;
 }
 
 export interface IPurchaseTransactionHistory {
@@ -62,7 +62,7 @@ export interface IPurchaseTransactionHistory {
   transactionRef?: string;
   price?: number;
   currency?: string;
-  properties?: TransactionProperties;
+  properties?: ITransactionProperties;
 }
 
 export interface ITransactionHistory {
@@ -78,7 +78,7 @@ export interface ITransactionHistory {
   };
 }
 
-export interface TransactionProperties {
+export interface ITransactionProperties {
   productCode?: string;
   productName?: string;
   quantity?: number;
