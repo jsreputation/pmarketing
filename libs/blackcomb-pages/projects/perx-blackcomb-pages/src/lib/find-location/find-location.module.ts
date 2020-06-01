@@ -7,14 +7,14 @@ import { MatToolbarModule, MatCheckboxModule, MatTabsModule } from '@angular/mat
 
 @NgModule({
   declarations: [FindLocationComponent],
+  exports: [FindLocationComponent],
   imports: [
     CommonModule,
-    TranslateModule.forChild(),
     MatToolbarModule,
     MatCheckboxModule,
     MatTabsModule,
     LocationModule,
-    
+    TranslateModule.forChild(),
   ]
 })
 export class FindLocationModule { }

@@ -1,3 +1,4 @@
+import { LocationModule } from '@perxtech/core';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
@@ -12,6 +13,7 @@ const routes: Routes = [{
   declarations: [],
   imports: [
     CommonModule,
+    LocationModule,
     FindLocationModule,
     RouterModule.forChild(routes)
   ]
