@@ -22,12 +22,27 @@ import { SettingsService } from './settings.service';
 import {
   IMicrositeSettings,
   IRssFeeds,
-  PagesObject
+  PagesObject,
+  IFlags
 } from './models/settings.model';
 import { ConfigService } from '../config/config.service';
 
+interface IV4FlagsResponse {
+  data: IV4Flags;
+}
+
 interface IV4WordPressRssResponse {
   data: IV4WordPressRss;
+}
+
+interface IV4Flags {
+  id: number;
+  key: string;
+  string_value: string;
+  json_value: {
+    merchant_map: boolean;
+    rewaerds_carousel: boolean;
+  }
 }
 
 interface IV4WordPressRss {
@@ -63,6 +78,7 @@ export class V4SettingsService extends SettingsService {
   private settings: any;
   private hostName: string;
   private rssFeeds: IRssFeeds;
+  private flags: IFlags;
 
   constructor(
     private http: HttpClient,
@@ -84,6 +100,14 @@ export class V4SettingsService extends SettingsService {
       jsonValue: v4Settings.json_value,
     };
   }
+
+  public static v4FlagsToFlags(data: IV4Flags): IFlags {
+    return {
+      merchantMap: data.json_value.merchant_map,
+      rewardsCarousel: data.json_value.rewaerds_carousel
+    };
+  }
+
 
   public static v4WordPressRssToRss(data: IV4WordPressRss): IRssFeeds {
     const newIRssFeeds: IRssFeeds = { data: [] };
@@ -108,6 +132,17 @@ export class V4SettingsService extends SettingsService {
       map((res: IV4WordPressRssResponse) => res.data),
       map((data: IV4WordPressRss) => V4SettingsService.v4WordPressRssToRss(data)),
       tap((data: IRssFeeds) => this.rssFeeds = data)
+    );
+  }
+
+  public getRemoteFlagsSettings(): Observable<IFlags> {
+    if (this.flags) {
+      return of(this.flags);
+    }
+    return this.http.get<IV4FlagsResponse>(`${this.hostName}/v4/settings/microsite_feature_flags`).pipe(
+      map((res: IV4FlagsResponse) => res.data),
+      map((data: IV4Flags) => V4SettingsService.v4FlagsToFlags(data)),
+      tap((data: IFlags) => this.flags = data)
     );
   }
 

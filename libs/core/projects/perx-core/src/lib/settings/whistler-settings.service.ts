@@ -16,6 +16,7 @@ import {
   IMicrositeSettings,
   IRssFeeds,
   PagesObject,
+  IFlags,
 } from './models/settings.model';
 import { SettingsService } from './settings.service';
 import { ConfigService } from '../config/config.service';
@@ -47,6 +48,13 @@ export class WhistlerSettingsService extends SettingsService {
 
   public getRssFeeds(): Observable<IRssFeeds> {
     return this.http.get<IRssFeeds>('assets/config/RSS_FEEDS.json');
+  }
+
+  public getRemoteFlagsSettings(): Observable<IFlags> {
+    return of({
+      merchantMap: false,
+      rewardsCarousel: false
+    })
   }
 
   public getTenantAppSettings(): Observable<IMicrositeSettings> {
