@@ -22,6 +22,8 @@ import {
   Config,
   ConfigService,
   IConfig,
+  SettingsService,
+  IFlags
 } from '@perxtech/core';
 
 import { SignIn2Component } from '../sign-in-2/sign-in-2.component';
@@ -35,6 +37,7 @@ import { BACK_ARROW_URLS } from '../perx-blackcomb-pages.constants';
 import { TransactionHistoryComponent } from '../transaction-history/transaction-history.component';
 import { CampaignStampsComponent } from '../campaign-stamps/campaign-stamps.component';
 import { LeaderboardPageComponent } from '../leaderboard-page/leaderboard-page.component';
+import { FindLocationComponent } from '../find-location/find-location.component';
 
 export interface ShowTitleInHeader {
   getTitle(): string;
@@ -54,6 +57,7 @@ export class LayoutComponent implements OnInit {
   public preAuth: boolean;
   public theme: ITheme;
   public appConfig: IConfig<void>;
+  public appRemoteFlags: IFlags;
 
   private initBackArrow(url: string): void {
     this.backArrowIcon = BACK_ARROW_URLS.some(test => url.startsWith(test)) ? 'arrow_backward' : '';
@@ -67,6 +71,7 @@ export class LayoutComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private config: Config,
     private configService: ConfigService,
+    private settingsService: SettingsService
   ) {
     if (config) {
       this.preAuth = this.config.preAuth || false;
@@ -84,6 +89,10 @@ export class LayoutComponent implements OnInit {
 
     this.configService.readAppConfig().subscribe(
       (config: IConfig<void>) => this.appConfig = config
+    );
+
+    this.settingsService.getRemoteFlagsSettings().subscribe(
+      (flags: IFlags) => this.appRemoteFlags = flags
     );
 
     this.router.events
@@ -105,8 +114,8 @@ export class LayoutComponent implements OnInit {
       ref instanceof ProfileComponent ||
       ref instanceof CampaignStampsComponent ||
       ref instanceof LeaderboardPageComponent ||
+      ref instanceof FindLocationComponent ||
       ref instanceof TransactionHistoryComponent;
-
     this.cd.detectChanges();
   }
 

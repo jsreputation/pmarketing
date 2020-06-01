@@ -126,6 +126,12 @@ const routes: Routes = [
         path: 'rebates',
         loadChildren: () => import('../rebates/rebates.module').then(mod => mod.RebatesModule)
       },
+      {
+        path: 'locations',
+        loadChildren: () => import('../locations/locations.module')
+          .then(mod => mod.LocationsModule),
+        canActivate: [ProtectedGuard]
+      }
     ]
   }
 

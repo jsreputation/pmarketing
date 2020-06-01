@@ -65,7 +65,8 @@ const configServiceStub: Partial<ConfigService> = {
 };
 
 const settingsServiceStub: Partial<SettingsService> = {
-  getRssFeeds: () => of()
+  getRssFeeds: () => of(),
+  getRemoteFlagsSettings: () => of()
 };
 
 const reward: IReward = {
