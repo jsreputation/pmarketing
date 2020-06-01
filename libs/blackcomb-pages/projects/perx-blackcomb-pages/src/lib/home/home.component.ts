@@ -6,7 +6,8 @@ import {
 import { Router } from '@angular/router';
 import {
   BehaviorSubject,
-  combineLatest, EMPTY,
+  combineLatest,
+  EMPTY,
   forkJoin,
   Observable,
   of,
@@ -16,7 +17,8 @@ import {
   catchError,
   filter,
   map,
-  mergeMap, scan,
+  mergeMap,
+  scan,
   switchMap,
   take,
   takeLast,
@@ -28,6 +30,9 @@ import {
   AuthenticationService,
   CampaignType,
   ConfigService,
+  FeedItem,
+  FeedReaderService,
+  GameType,
   ICampaign,
   ICampaignService,
   ICatalog,
@@ -37,19 +42,16 @@ import {
   InstantOutcomeService,
   IProfile,
   IReward,
-  ITabConfigExtended,
-  ITheme,
-  RewardPopupComponent,
-  RewardsService,
-  ThemesService,
-  GameType,
-  RssFeedsPages,
-  FeedReaderService,
-  SettingsService,
   IRssFeeds,
   IRssFeedsData,
-  FeedItem,
-  ProfileService
+  ITabConfigExtended,
+  ITheme,
+  ProfileService,
+  RewardPopupComponent,
+  RewardsService,
+  RssFeedsPages,
+  SettingsService,
+  ThemesService
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
@@ -291,7 +293,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   private initCampaign(): void {
     // https://iamturns.com/continue-rxjs-streams-when-errors-occur/ also look at CatchError, exactly for this purpose
-    if (this.showGames) { // prevent calling unnecessarily (i.e. duped when perx-blackcomb-pages-campaigns-collection quiz present)
+    if (!this.showGames) { // prevent calling unnecessarily (i.e. duped when perx-blackcomb-pages-campaigns-collection quiz present)
       this.games$ = this.gamesService.getActiveGames()
         .pipe(
           tap((games: IGame[]) => this.showGames = games.length > 0),
