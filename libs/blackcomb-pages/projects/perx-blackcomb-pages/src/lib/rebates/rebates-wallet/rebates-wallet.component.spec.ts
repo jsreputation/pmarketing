@@ -1,19 +1,30 @@
-import { async, ComponentFixture, TestBed  } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  TestBed
+} from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {
+  LoyaltyModule,
+  ProfileService,
   RebatesListComponent,
   UtilsModule,
-  LoyaltyModule,
 } from '@perxtech/core';
-import {MatCardModule, MatDialogModule} from '@angular/material';
+import {
+  MatCardModule,
+  MatDialogModule
+} from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
 import { RebatesWalletComponent } from './rebates-wallet.component';
-import {Router} from '@angular/router';
-import {InfiniteScrollModule} from 'ngx-infinite-scroll';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('RebatesWalletComponent', () => {
   let component: RebatesWalletComponent;
   let fixture: ComponentFixture<RebatesWalletComponent>;
+  const profileServiceStub: Partial<ProfileService> = { verifyCardNumber: () => of(true) };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -29,9 +40,11 @@ describe('RebatesWalletComponent', () => {
         TranslateModule.forRoot(),
         MatDialogModule,
         UtilsModule,
+        RouterTestingModule,
+        HttpClientTestingModule
       ],
       providers: [
-        { provide: Router, useValue: jest.fn()}
+        { provide: ProfileService, useValue: profileServiceStub },
       ]
     })
       .compileComponents();
