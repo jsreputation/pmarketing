@@ -8,6 +8,7 @@ import {
   LoyaltyModule,
   ProfileService,
   RebatesListComponent,
+  ThemesService,
   UtilsModule,
 } from '@perxtech/core';
 import {
@@ -24,7 +25,8 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 describe('RebatesWalletComponent', () => {
   let component: RebatesWalletComponent;
   let fixture: ComponentFixture<RebatesWalletComponent>;
-  const profileServiceStub: Partial<ProfileService> = { verifyCardNumber: () => of(true) };
+  const profileServiceStub: Partial<ProfileService> = { whoAmI: () => of() };
+  const themesServiceStub: Partial<ThemesService> = { getThemeSetting: () => of() };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -41,10 +43,11 @@ describe('RebatesWalletComponent', () => {
         MatDialogModule,
         UtilsModule,
         RouterTestingModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
       ],
       providers: [
         { provide: ProfileService, useValue: profileServiceStub },
+        { provide: ThemesService, useValue: themesServiceStub },
       ]
     })
       .compileComponents();
