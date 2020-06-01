@@ -1,11 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  TestBed
+} from '@angular/core/testing';
 
-import { MatCardModule, MatRippleModule } from '@angular/material';
+import {
+  MatCardModule,
+  MatRippleModule
+} from '@angular/material';
 import { RebatesListComponent } from './rebates-list.component';
+import { of } from 'rxjs';
+import { ThemesService } from '../../utils/themes/themes.service';
 
 describe('RebatesListComponent', () => {
   let component: RebatesListComponent;
   let fixture: ComponentFixture<RebatesListComponent>;
+
+  const themesServiceStub: Partial<ThemesService> = {
+    getThemeSetting: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -15,6 +28,7 @@ describe('RebatesListComponent', () => {
         MatRippleModule
       ],
       providers: [
+        { provide: ThemesService, useValue: themesServiceStub },
       ]
     })
       .compileComponents();
