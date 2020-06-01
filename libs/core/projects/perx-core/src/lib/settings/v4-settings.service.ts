@@ -104,7 +104,7 @@ export class V4SettingsService extends SettingsService {
   public static v4FlagsToFlags(data: IV4Flags): IFlags {
     return {
       merchantMap: data.json_value.merchant_map,
-      rewardsCarousel: data.json_value.rewaerds_carousel
+      rewardsCarousel: data.json_value.rewards_carousel
     };
   }
 
