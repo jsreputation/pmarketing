@@ -80,8 +80,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   public tabs$: BehaviorSubject<ITabConfigExtended[]> = new BehaviorSubject<ITabConfigExtended[]>([]);
   public staticTab: ITabConfigExtended[];
   public titleFn: (profile: IProfile) => string;
-  public showGames: boolean = false;
-  public showCampaigns: boolean = false;
   private firstComefirstServeCampaign: ICampaign;
   public quizCampaigns$: Observable<ICampaign[]>;
   public gameType: typeof GameType = GameType;
@@ -299,17 +297,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   private initCampaign(): void {
     // https://iamturns.com/continue-rxjs-streams-when-errors-occur/ also look at CatchError, exactly for this purpose
-    if (!this.showGames) { // prevent calling unnecessarily (i.e. duped when perx-blackcomb-pages-campaigns-collection quiz present)
-      this.games$ = this.gamesService.getActiveGames()
-        .pipe(
-          tap((games: IGame[]) => this.showGames = games.length > 0),
-          switchMap((games: IGame[]) => of(games).pipe(catchError(err => of(err)))),
-          takeLast(1)
-        );
-    }
+    this.games$ = this.gamesService.getActiveGames()
+      .pipe(
+        switchMap((games: IGame[]) => of(games).pipe(catchError(err => of(err)))),
+        takeLast(1)
+      );
     this.stampCampaigns$ = this.campaignService.getCampaigns({ type: CampaignType.stamp })
       .pipe(
-        tap((campaigns: ICampaign[]) => this.showCampaigns = campaigns.length > 0),
         takeLast(1)
       );
 
