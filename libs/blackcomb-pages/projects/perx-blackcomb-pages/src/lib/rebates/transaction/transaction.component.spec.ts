@@ -1,8 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  TestBed
+} from '@angular/core/testing';
 import { TransactionComponent } from './transaction.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import {BehaviorSubject} from 'rxjs';
+import {
+  ActivatedRoute,
+  Router
+} from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 
 const activatedRouteStub: Partial<ActivatedRoute> = {
   params: new BehaviorSubject({ id: 0 })
@@ -26,7 +33,7 @@ describe('TransactionComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TransactionComponent);
     component = fixture.componentInstance;
-    component.matchingMerchant = [];
+    component.matchingMerchant = { description: '', imgUrl: '', logo: '', merchantId: 0, name: '', rebateAmount: '' };
     fixture.detectChanges();
   });
 
