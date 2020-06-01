@@ -54,7 +54,7 @@ export class WhistlerSettingsService extends SettingsService {
     return of({
       merchantMap: false,
       rewardsCarousel: false
-    })
+    });
   }
 
   public getTenantAppSettings(): Observable<IMicrositeSettings> {

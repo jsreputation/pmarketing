@@ -42,7 +42,7 @@ interface IV4Flags {
   json_value: {
     merchant_map: boolean;
     rewards_carousel: boolean;
-  }
+  };
 }
 
 interface IV4WordPressRss {
