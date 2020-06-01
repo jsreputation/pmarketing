@@ -1,6 +1,6 @@
 <div class="container">
   <div class="top-banner">
-    <div class="logo-container">
+    <div class="logo-container" *ngIf="transactionObject.logo">
       <img [src]="transactionObject.logo" [alt]="transactionObject.name">
     </div>
     <div class="merchant-details">

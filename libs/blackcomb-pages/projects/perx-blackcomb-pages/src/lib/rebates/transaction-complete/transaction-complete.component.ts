@@ -9,7 +9,7 @@ type TransactionReceipt = {
   transactionAmount: string,
   rebateBurned: string,
   name: string,
-  logo: string
+  logo?: string
 };
 
 @Component({
