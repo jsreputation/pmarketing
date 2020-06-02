@@ -359,7 +359,7 @@ export class V4LoyaltyService extends LoyaltyService {
         productName: props.product,
         // quantity: undefined,
         // storeCode: undefined,
-        // storeName: undefined
+        storeName: props.pharmacy
       };
     }
     return data;
