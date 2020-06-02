@@ -95,7 +95,8 @@
     "HISTORY": "History",
     "LEADER_BOARD": "Leaderboard",
     "DEALS": "Deals",
-    "ACCOUNT": "Account"
+    "ACCOUNT": "Account",
+    "PAY": "Pay"
   },
   "QUIZ_TEMPLATE": {
     "CTA_START_TXT": "Take the quiz",
