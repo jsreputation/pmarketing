@@ -1,0 +1,26 @@
+<div class="overview-wrap" *ngIf="matchingMerchant">
+  <div class="banner-group">
+    <div class="logo-container">
+      <img [src]="matchingMerchant.logo" [alt]="matchingMerchant.name">
+    </div>
+    <div class="merchant-content">
+      <p>You have <span class="dark-blue">{{matchingMerchant?.rebateAmount}}</span> in rebate funds with</p>
+      <h1>{{matchingMerchant.name}}</h1>
+    </div>
+  </div>
+
+  <div class="input-group">
+    <h1 class="amt-trans">Transaction amount</h1>
+    <div class="input-field">
+      <input matInput textAlign="left" [formControl]="costControl" [placeholder]="0.00" currencyMask [(ngModel)]="transactionAmount"
+             class="form-control" placeholder="Enter Amount">
+    </div>
+    <p>You will be rebated <span id="red">{{matchingMerchant?.rebateAmount}}</span> on your next billing cycle</p>
+    <p>You will earn <span class="dark-blue">{{rebateGained | currency:'$'}}</span> cashback with this transaction</p>
+  </div>
+  <div class="button-group">
+    <button [disabled]="transactionAmount <= 0" mat-button (click)="confirmTransaction()">Confirm Transaction</button>
+    <button (click)="cancelTransaction()" mat-stroked-button>Cancel</button>
+  </div>
+</div>
+

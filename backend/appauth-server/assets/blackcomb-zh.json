@@ -95,7 +95,8 @@
     "HISTORY": "歷史",
     "LEADER_BOARD": "排行榜",
     "DEALS": "交易",
-    "ACCOUNT": "用戶"
+    "ACCOUNT": "用戶",
+    "PAY": "付款"
   },
   "QUIZ_TEMPLATE": {
     "CTA_START_TXT": "參與問答遊戲",
