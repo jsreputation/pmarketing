@@ -132,7 +132,7 @@ interface IV4TransactionHistory {
   transacted_at: Date;
   amount: number;
   transacted_cents?: number; // property will probably be removed
-  properties: ICustomProperties;
+  properties: ICustomProperties | TenantTransactionProperties;
   transaction_details: {
     type: TransactionDetailType;
     data: IV4PurchaseTransactionHistory | IV4RewardTransactionHistory;
@@ -269,7 +269,6 @@ export class V4LoyaltyService extends LoyaltyService {
   }
 
   public static v4TransactionHistoryToTransactionHistory(transactionHistory: IV4TransactionHistory): ITransactionHistory {
-
     const transactionDetails = oc(transactionHistory).transaction_details.data();
     let data: IPurchaseTransactionHistory | IRewardTransactionHistory | undefined;
 
@@ -307,6 +306,14 @@ export class V4LoyaltyService extends LoyaltyService {
           data.properties = this.v4TransactionPropertiesToTransactionProperties(pthProps as TenantTransactionProperties);
           break;
       }
+    } else {
+      // all-it transaction currently have no data in transaction_details assume it is a purchase.
+      const thProps = oc(transactionHistory).properties();
+      data = {
+        id: transactionHistory.id
+      };
+
+      data.properties = this.v4TransactionPropertiesToTransactionProperties(thProps as TenantTransactionProperties);
     }
     return {
       id: transactionHistory.id,
@@ -314,7 +321,7 @@ export class V4LoyaltyService extends LoyaltyService {
       identifier: transactionHistory.identifier,
       transactedAt: transactionHistory.transacted_at,
       pointsAmount: transactionHistory.amount,
-      properties: transactionHistory.properties,
+      properties: transactionHistory.properties as ICustomProperties,
       transactionDetails: {
         type: oc(transactionHistory).transaction_details.type(),
         data
@@ -335,13 +342,13 @@ export class V4LoyaltyService extends LoyaltyService {
         storeName: props.store_name
       };
     }
-    if((pthProps as IV4TransactionPropertiesAllit).quantity) {
+    if((pthProps as IV4TransactionPropertiesAllit).guid_branch) {
       let props = (pthProps as IV4TransactionPropertiesAllit);
       data = {
         productCode: props.item_code.toString(),
         productName: props.item_name,
         quantity: props.quantity,
-        storeCode: props.guid_store,
+        storeCode: props.branch_code,
         // storeName: undefined
       };
     }
