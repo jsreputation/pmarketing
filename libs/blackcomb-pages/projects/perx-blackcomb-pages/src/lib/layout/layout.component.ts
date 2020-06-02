@@ -38,6 +38,7 @@ import { TransactionHistoryComponent } from '../transaction-history/transaction-
 import { CampaignStampsComponent } from '../campaign-stamps/campaign-stamps.component';
 import { LeaderboardPageComponent } from '../leaderboard-page/leaderboard-page.component';
 import { FindLocationComponent } from '../find-location/find-location.component';
+import { RebatesWalletComponent } from '../rebates/rebates-wallet/rebates-wallet.component';
 
 export interface ShowTitleInHeader {
   getTitle(): string;
@@ -115,7 +116,8 @@ export class LayoutComponent implements OnInit {
       ref instanceof CampaignStampsComponent ||
       ref instanceof LeaderboardPageComponent ||
       ref instanceof FindLocationComponent ||
-      ref instanceof TransactionHistoryComponent;
+      ref instanceof TransactionHistoryComponent ||
+      ref instanceof RebatesWalletComponent;
     this.cd.detectChanges();
   }
 

@@ -34,6 +34,12 @@
           <span translate>NAVIGATION.HISTORY</span>
         </div>
       </a>
+      <a matRipple [routerLink]="[ '/rebates' ]" routerLinkActive="active" *ngIf="appRemoteFlags?.rebateDemoFlow">
+        <div class="nav-item">
+          <mat-icon aria-hidden="false">shopping_basket</mat-icon>
+          <span translate>NAVIGATION.PAY</span>
+        </div>
+      </a>
       <a matRipple [routerLink]="[ '/locations' ]" routerLinkActive="active" *ngIf="appRemoteFlags?.merchantMap">
         <div class="nav-item">
           <mat-icon aria-hidden="false">location_on</mat-icon>
