@@ -132,7 +132,12 @@
     "TITLE": "Input PIN",
     "DESCRIPTION": "Please present this screen to the cashier to enter the PIN code and redeem your reward.",
     "WRONG_PIN": "Incorrect PIN",
-    "SUCCESSFUL_REDEMPTION": "Reward successfully redeemed",
+    "CODE_INSTRUCTION_TXT": "Please input this code when redeeming your reward at the Merchant",
+    "SUCCESSFUL_REDEMPTION_TITLE": "Reward successfully redeemed",
+    "SUCCESSFUL_REDEMPTION_TXT": "You have redeemed {{reward}}",
+    "UNKNOWN_ERROR_TXT": "Unknown error occur, please try again later",
+    "FAIL_REDEMPTION_TXT": "Sorry! Voucher redemption failed.",
+    "BACK_TO_WALLET": "Back to wallet",
     "CTA_TXT": "Cancel"
   },
   "PROMO_CODE": {

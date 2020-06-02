@@ -132,7 +132,12 @@
     "TITLE": "輸入密碼",
     "DESCRIPTION": "請將這個屏幕交給員工以便輸入密碼並換領您的獎品",
     "WRONG_PIN": "密碼錯誤",
-    "SUCCESSFUL_REDEMPTION": "成功換領獎品",
+    "CODE_INSTRUCTION_TXT": "在商家兌換獎勵時，請輸入此代碼",
+    "SUCCESSFUL_REDEMPTION_TITLE": "成功換領獎品",
+    "SUCCESSFUL_REDEMPTION_TXT": "您已兌換{{reward}}",
+    "UNKNOWN_ERROR_TXT": "發生未知錯誤，請稍後重試",
+    "FAIL_REDEMPTION_TXT": "抱歉!憑證兌換失敗。",
+    "BACK_TO_WALLET": "回到錢包頁面",
     "CTA_TXT": "取消"
   },
   "PROMO_CODE": {
