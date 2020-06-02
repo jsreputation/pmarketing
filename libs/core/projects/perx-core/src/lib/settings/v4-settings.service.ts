@@ -42,6 +42,7 @@ interface IV4Flags {
   json_value: {
     merchant_map: boolean;
     rewards_carousel: boolean;
+    rebate_demo_flow: boolean;
   };
 }
 
@@ -104,7 +105,8 @@ export class V4SettingsService extends SettingsService {
   public static v4FlagsToFlags(data: IV4Flags): IFlags {
     return {
       merchantMap: data.json_value.merchant_map,
-      rewardsCarousel: data.json_value.rewards_carousel
+      rewardsCarousel: data.json_value.rewards_carousel,
+      rebateDemoFlow: data.json_value.rebate_demo_flow
     };
   }
 
