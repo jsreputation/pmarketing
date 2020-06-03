@@ -47,7 +47,7 @@ export class AppComponent implements OnInit {
         (err) => console.error(err)
       );
 
-      this.notificationService.$snack
+    this.notificationService.$snack
       .subscribe(
         (msg: string) => {
           if (msg === 'LOGIN_SESSION_EXPIRED') {
