@@ -5,6 +5,9 @@
     </div>
     <div class="details">
       <h1 *ngIf="showVoucherName">{{voucher.reward.name}}</h1>
+      <div class="reward-subtitle" *ngIf="voucher.reward.subtitle">
+        {{voucher.reward.subtitle}}
+      </div>
       <div *ngIf="!showAfterInstruction">
         <pre class="bcode" *ngIf="voucher?.code">{{voucher.code}}</pre>
       </div>
