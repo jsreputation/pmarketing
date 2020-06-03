@@ -43,6 +43,7 @@ interface IV4Flags {
     merchant_map: boolean;
     rewards_carousel: boolean;
     rebate_demo_flow: boolean;
+    gatekeeper_polling_interval: boolean;
   };
 }
 
@@ -106,7 +107,8 @@ export class V4SettingsService extends SettingsService {
     return {
       merchantMap: data.json_value.merchant_map,
       rewardsCarousel: data.json_value.rewards_carousel,
-      rebateDemoFlow: data.json_value.rebate_demo_flow
+      rebateDemoFlow: data.json_value.rebate_demo_flow,
+      gatekeeperPollingInterval: data.json_value.gatekeeper_polling_interval
     };
   }
 
