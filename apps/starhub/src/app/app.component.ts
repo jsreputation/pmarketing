@@ -38,6 +38,7 @@ import {
   EMPTY,
   timer
 } from 'rxjs';
+import { Router } from '@angular/router';
 
 export interface IdataLayerSH {
   pageName: string;
@@ -61,7 +62,7 @@ declare const _satellite: {
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: [ './app.component.scss' ]
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
   // public selectedCampaign: ICampaign;
@@ -76,6 +77,7 @@ export class AppComponent implements OnInit {
     // private activeRoute: ActivatedRoute,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
+    private router: Router,
     private gameService: IGameService,
     private tokenStorage: TokenStorage,
     private analytics: AnalyticsService,
@@ -109,7 +111,16 @@ export class AppComponent implements OnInit {
           data, ...data.panelClass && { panelClass: data.panelClass }
         }));
 
-    this.notificationService.$snack.subscribe((msg: string) => this.snackBar.open(msg, 'x', { duration: 2000 }));
+    this.notificationService.$snack
+      .subscribe(
+        (msg: string) => {
+          if (msg.includes('Session Expired')) {
+            this.router.navigate(['/login']);
+          }
+          this.snackBar.open(msg, 'x', { duration: 2000 });
+        },
+        (err) => console.error(err)
+      );
 
     this.analytics.events$.subscribe(
       (event: IEvent) => {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NotificationService, PopupComponent } from '@perxtech/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { SnackbarComponent } from './ui/snackbar/snackbar.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,12 @@ import { SnackbarComponent } from './ui/snackbar/snackbar.component';
 export class AppComponent implements OnInit {
   public title: string = 'hkbn';
 
-  constructor(private notificationService: NotificationService, private dialog: MatDialog, private snackbar: MatSnackBar) {
+  constructor(
+    private notificationService: NotificationService,
+    private dialog: MatDialog,
+    private snackbar: MatSnackBar,
+    private router: Router
+  ) {
   }
 
   public ngOnInit(): void {
@@ -20,6 +26,9 @@ export class AppComponent implements OnInit {
     });
 
     this.notificationService.$snack.subscribe((data) => {
+      if (data.includes('Session Expired')) {
+        this.router.navigate(['/login']);
+      }
       this.snackbar.openFromComponent(SnackbarComponent, {
         data: {
           message: data

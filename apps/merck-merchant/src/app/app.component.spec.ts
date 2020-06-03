@@ -7,7 +7,10 @@ describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([
+          { path: 'wallet', redirectTo: '/' },
+          { path: 'login', redirectTo: '/' }
+        ]),
         MatSnackBarModule
       ],
       declarations: [

@@ -14,7 +14,8 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule.withRoutes([
-          { path: 'wallet', redirectTo: '/' }
+          { path: 'wallet', redirectTo: '/' },
+          { path: 'login', redirectTo: '/' }
         ]),
         MatDialogModule,
         MatToolbarModule,

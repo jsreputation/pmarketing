@@ -42,6 +42,9 @@ export class AppComponent implements OnInit {
     private store: TokenStorage
   ) {
     this.notificationService.$snack.subscribe((message: string) => {
+      if (message.includes('Session Expired')) {
+        this.router.navigate(['/login']);
+      }
       this.snackBar.openFromComponent(CustomSnackbarComponent, {
         data: {
           message,

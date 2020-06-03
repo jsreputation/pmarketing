@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService, ConfigService, IConfig, IPopupConfig, NotificationService, PopupComponent } from '@perxtech/core';
 import { filter, map, switchMap } from 'rxjs/operators';
@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
     private notificationService: NotificationService,
     private dialog: MatDialog,
     private snack: MatSnackBar,
+    private router: Router,
     private config: ConfigService,
     private translate: TranslateService,
     private activeRoute: ActivatedRoute,
@@ -46,9 +47,14 @@ export class AppComponent implements OnInit {
         (err) => console.error(err)
       );
 
-    this.notificationService.$snack
+      this.notificationService.$snack
       .subscribe(
-        (msg: string) => this.snack.open(msg, 'x', { duration: 2000 }),
+        (msg: string) => {
+          if (msg.includes('Session Expired')) {
+            this.router.navigate(['/login']);
+          }
+          this.snack.open(msg, 'x', { duration: 2000 });
+        },
         (err) => console.error(err)
       );
   }

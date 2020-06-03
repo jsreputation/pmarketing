@@ -30,7 +30,9 @@ describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([
+          { path: 'login', redirectTo: '/' }
+        ]),
         MatDialogModule,
         SnackbarModule,
         UtilsModule,
