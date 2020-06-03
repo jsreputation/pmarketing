@@ -7,6 +7,7 @@ import { setLanguage } from './app.module';
 import { environment } from '../environments/environment';
 import { ConfigService, AuthenticationService, ThemesService } from '@perxtech/core';
 import { of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
 
 const translateServiceStub: Partial<TranslateService> = {
   defaultLang: null,
@@ -19,7 +20,8 @@ const configServiceStub: Partial<ConfigService> = {
     production: false,
     preAuth: false,
     isWhistler: false,
-    baseHref: ''
+    baseHref: '',
+    defaultLang: 'en'
   })
 };
 
@@ -57,7 +59,10 @@ describe('AppModule', () => {
       ],
       imports: [
         MatDialogModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        RouterTestingModule.withRoutes([
+          { path: 'login', redirectTo: '/' }
+        ])
       ]
     });
   }));
