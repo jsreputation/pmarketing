@@ -21,6 +21,7 @@ import { UtilsModule } from '../utils/utils.module';
 import { Config } from '../config/config';
 import { RewardsService } from '../rewards/rewards.service';
 import { ConfigService } from '../config/config.service';
+import { SafeHtmlPipe } from '../utils/safe-html.pipe';
 
 export function vouchersServiceFactory(
   http: HttpClient,
@@ -61,6 +62,7 @@ const components = [
   ],
   providers: [
     DatePipe,
+    SafeHtmlPipe,
     {
       provide: IVoucherService,
       useFactory: vouchersServiceFactory,
