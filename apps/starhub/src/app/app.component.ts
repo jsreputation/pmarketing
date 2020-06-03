@@ -114,8 +114,9 @@ export class AppComponent implements OnInit {
     this.notificationService.$snack
       .subscribe(
         (msg: string) => {
-          if (msg.includes('Session Expired')) {
+          if (msg === 'LOGIN_SESSION_EXPIRED') {
             this.router.navigate(['/login']);
+            msg = "Login Session Expired";
           }
           this.snackBar.open(msg, 'x', { duration: 2000 });
         },

@@ -227,5 +227,6 @@
     "FILTER": "過濾",
     "VIEW_LOCATION": "查看位置"
   },
-  "CONTENT_PAGE": "找不到內容"
+  "CONTENT_PAGE": "找不到內容",
+  "LOGIN_SESSION_EXPIRED": "登錄時間超時"
 }

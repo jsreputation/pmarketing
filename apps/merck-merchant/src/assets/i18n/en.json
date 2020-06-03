@@ -24,5 +24,6 @@
   "STATIC_PASSWORD": "Password",
   "STATIC_NEW_PASSWORD": "New password",
   "STATIC_CONFIRM_PASSWORD": "Confirm password",
-  "SUBMIT_BUTTON": "Update password"
+  "SUBMIT_BUTTON": "Update password",
+  "LOGIN_SESSION_EXPIRED": "Login Session Expired"
 }

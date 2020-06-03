@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Component, OnInit } from '@angular/core';
 import { NotificationService, PopupComponent } from '@perxtech/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
@@ -16,7 +17,8 @@ export class AppComponent implements OnInit {
     private notificationService: NotificationService,
     private dialog: MatDialog,
     private snackbar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) {
   }
 
@@ -26,14 +28,23 @@ export class AppComponent implements OnInit {
     });
 
     this.notificationService.$snack.subscribe((data) => {
-      if (data.includes('Session Expired')) {
+      if (data === 'LOGIN_SESSION_EXPIRED') {
         this.router.navigate(['/login']);
+        this.translate.get('LOGIN_SESSION_EXPIRED').subscribe(
+          txt =>
+            this.snackbar.openFromComponent(SnackbarComponent, {
+              data: {
+                message: txt
+              }
+            })
+        );
+      } else {
+        this.snackbar.openFromComponent(SnackbarComponent, {
+          data: {
+            message: data
+          }
+        });
       }
-      this.snackbar.openFromComponent(SnackbarComponent, {
-        data: {
-          message: data
-        }
-      });
     });
   }
 }

@@ -24,5 +24,6 @@
   "STATIC_PASSWORD": "密碼",
   "STATIC_NEW_PASSWORD": "新密碼",
   "STATIC_CONFIRM_PASSWORD": "確認密碼",
-  "SUBMIT_BUTTON": "更新密碼"
+  "SUBMIT_BUTTON": "更新密碼",
+  "LOGIN_SESSION_EXPIRED": "登錄時間超時"
 }
