@@ -63,7 +63,7 @@ export class RewardsListTabbedComponent implements OnInit {
         if (rewardPrice.points && rewardPrice.points > 0) {
           return `${rewardPrice.points} points`;
         }
-        return '0 points'; // is actually 0 or invalid value default
+        return ''; // is actually 0 or invalid value default
       };
     }
   }

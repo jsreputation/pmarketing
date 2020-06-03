@@ -198,7 +198,7 @@
     "CATALOG": "Catalog",
     "GAMES": "Games",
     "QUIZ": "Quiz",
-    "FEATURED_REWARDS": "Featured Rewards",
+    "FEATURED_REWARDS": "Promos",
     "SEE_MORE": "See more",
     "SEE_LESS": "See less",
     "REWARDS_LEFT": "{{rewardsCount}} Rewards Left",
@@ -218,7 +218,7 @@
     "DESCRIPTION": "Description",
     "TNC": "Terms and Conditions"
   },
-  "LOCATION_OPAGE": {
+  "LOCATION_PAGE": {
     "FILTER_BY": "Filter by",
     "MAP": "Map",
     "LIST": "List",
@@ -228,5 +228,6 @@
     "FILTER": "Filter",
     "VIEW_LOCATION": "View location"
   },
-  "CONTENT_PAGE": "Content Not Found"
+  "CONTENT_PAGE": "Content Not Found",
+  "LOGIN_SESSION_EXPIRED": "Login Session Expired"
 }

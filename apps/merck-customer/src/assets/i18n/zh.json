@@ -61,5 +61,6 @@
     "WELCOME": "歡迎",
     "TOTAL_POINTS": "你的總積分",
     "TIER" : "层级",
-    "DLP": "糖尿病忠誠度計劃"
+    "DLP": "糖尿病忠誠度計劃",
+    "LOGIN_SESSION_EXPIRED": "登錄時間超時"
 }
