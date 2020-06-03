@@ -8,8 +8,9 @@ export interface IMicrositeSettings {
 }
 
 export interface IFlags {
-  merchantMap: boolean;
-  rewardsCarousel: boolean;
+  merchantMap?: boolean;
+  rewardsCarousel?: boolean;
+  rebateDemoFlow?: boolean;
 }
 
 export interface IRssFeeds {
