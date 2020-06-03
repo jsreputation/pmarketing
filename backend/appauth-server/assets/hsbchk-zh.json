@@ -281,5 +281,6 @@
     "BARCODE_TO_MERCHANT": "向商家出示此條形碼",
     "CTA": "取消"
   },
-  "CONTENT_PAGE": "找不到內容"
+  "CONTENT_PAGE": "找不到內容",
+  "LOGIN_SESSION_EXPIRED": "登錄時間超時"
 }

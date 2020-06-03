@@ -4,9 +4,9 @@ import { MatDialogModule, MatSnackBarModule } from '@angular/material';
 import { ApplicationInitStatus, APP_INITIALIZER } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { setLanguage } from './app.module';
-import { environment } from '../environments/environment';
 import { ConfigService, AuthenticationService, ThemesService } from '@perxtech/core';
 import { of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
 
 const translateServiceStub: Partial<TranslateService> = {
   defaultLang: null,
@@ -19,7 +19,8 @@ const configServiceStub: Partial<ConfigService> = {
     production: false,
     preAuth: false,
     isWhistler: false,
-    baseHref: ''
+    baseHref: '',
+    defaultLang: 'zh'
   })
 };
 
@@ -57,7 +58,10 @@ describe('AppModule', () => {
       ],
       imports: [
         MatDialogModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        RouterTestingModule.withRoutes([
+          { path: 'login', redirectTo: '/' }
+        ])
       ]
     });
   }));
@@ -69,7 +73,6 @@ describe('AppModule', () => {
   }));
 
   it('should set default laguage', inject([TranslateService], (translateService: TranslateService) => {
-    const defLang = environment.defaultLang || 'en';
-    expect(translateService.defaultLang).toBe(defLang);
+    expect(translateService.defaultLang).toBe('zh');
   }));
 });

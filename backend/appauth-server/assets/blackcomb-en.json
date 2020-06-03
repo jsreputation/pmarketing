@@ -228,5 +228,6 @@
     "FILTER": "Filter",
     "VIEW_LOCATION": "View location"
   },
-  "CONTENT_PAGE": "Content Not Found"
+  "CONTENT_PAGE": "Content Not Found",
+  "LOGIN_SESSION_EXPIRED": "Login Session Expired"
 }

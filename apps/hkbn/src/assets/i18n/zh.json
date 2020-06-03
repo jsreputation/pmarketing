@@ -89,5 +89,6 @@
   "BIG_BIG_SHOP": "big big shop",
   "DISCLAMAIR_ACCOUNT": "<div>如需取消Home+會籍，請於電郵至 <a style='color: #02B9A5;' href='mailto:contact@home-plus.hk'>contact@home-plus.hk</a>向Home+作出申請</div>",
   "REDEEM_NOW": "兌換獎勵",
-  "MOBILE_CODE": "移动代码"
+  "MOBILE_CODE": "移动代码",
+  "LOGIN_SESSION_EXPIRED": "登錄時間超時"
 }
