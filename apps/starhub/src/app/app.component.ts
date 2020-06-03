@@ -116,7 +116,7 @@ export class AppComponent implements OnInit {
         (msg: string) => {
           if (msg === 'LOGIN_SESSION_EXPIRED') {
             this.router.navigate(['/login']);
-            msg = "Login Session Expired";
+            msg = 'Login Session Expired';
           }
           this.snackBar.open(msg, 'x', { duration: 2000 });
         },
