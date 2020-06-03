@@ -37,6 +37,7 @@ h1 {
 
     .instruction {
       display: flex;
+      flex-direction: column;
       align-self: center;
       font-weight: normal;
       font-size: 1.4rem;
