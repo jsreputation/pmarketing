@@ -27,6 +27,10 @@
     </div>
   </div>
   <perx-core-newsfeed [items$]="newsFeedItems"></perx-core-newsfeed>
+  <div class="rewards-collection" *ngIf="appRemoteFlags?.rewardsCarousel || appConfig.showRewardsOnHomepage">
+    <div *ngIf="(rewards$ | async)?.length > 0" class="title" translate>HOME.FEATURED_REWARDS</div>
+    <perx-core-rewards-collection [rewardsList]="rewards$" (tapped)="goToReward($event)"></perx-core-rewards-collection>
+  </div>
   <!-- Stamp card campaigns-->
   <div class="campaigns">
     <div *ngIf="showCampaigns" class="title" translate>HOME.STAMP_CAMPAIGNS</div>
@@ -57,10 +61,6 @@
       [withRewardsCounter]="appConfig.showCampaignRewardsCounterOnHomepage"
       (selected)="goToCampaignPage($event)">
     </perx-blackcomb-pages-campaigns-collection>
-  </div>
-  <div class="rewards-collection" *ngIf="appRemoteFlags?.rewardsCarousel || appConfig.showRewardsOnHomepage">
-    <div *ngIf="(rewards$ | async)?.length > 0" class="title" translate>HOME.FEATURED_REWARDS</div>
-    <perx-core-rewards-collection [rewardsList]="rewards$" (tapped)="goToReward($event)"></perx-core-rewards-collection>
   </div>
   <div class="rewards-collection" *ngIf="appConfig.showRewardsOnHomepage">
     <perx-core-rewards-list-tabbed [tabs$]="tabs$" (tapped)="goToReward($event)" (tabChanged)="tabChanged($event)">
