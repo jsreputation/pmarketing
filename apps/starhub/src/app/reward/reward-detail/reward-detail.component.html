@@ -22,7 +22,7 @@
             (isExpiring)="onExpiring()">
           </app-expire-timer>
         </div>
-        <span *ngIf="macaron && macaron.class === 'running-out'" class="reward-balance">{{macaron.rewardBalance}}
+        <span *ngIf="showBalance && macaron && macaron.class === 'running-out'" class="reward-balance">{{macaron.rewardBalance}}
           left</span>
       </div>
 
