@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 type TransactionReceipt = {
   rebateGained: string,
   transactionAmount: string,
+  actualCharged: string,
   rebateBurned: string,
   name: string,
   logo: string
