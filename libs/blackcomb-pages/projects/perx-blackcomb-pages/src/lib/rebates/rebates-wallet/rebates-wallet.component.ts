@@ -38,7 +38,7 @@ const merchantsData: MerchantData[] = [
     rebateAmount: '$5.00'
   },
   {
-    logo: 'http://assets.stickpng.com/images/58428cc1a6515b1e0ad75ab1.png',
+    logo: 'https://cdn.freebiesupply.com/images/large/2x/starbucks-logo-png-transparent.png',
     merchantId: 1,
     name: 'Starbucks Coffee',
     description: 'Any participating branch',

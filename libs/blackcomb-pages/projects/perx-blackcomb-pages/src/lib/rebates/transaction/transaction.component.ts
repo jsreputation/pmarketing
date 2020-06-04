@@ -12,7 +12,8 @@ import {CurrencyPipe} from '@angular/common';
 export class TransactionComponent implements OnInit {
   private rebatesData?: MerchantData[];
   public matchingMerchant: MerchantData | undefined;
-  public rebateGained: number;
+  public rebateGained: number = 0;
+  public consumedRebates: number = 0;
   public transactionAmount: number = 0;
   public costControl: FormControl = new FormControl(null);
   constructor(
@@ -22,9 +23,23 @@ export class TransactionComponent implements OnInit {
   ) {
     this.costControl.valueChanges.subscribe(
       (currValue) => {
-        this.rebateGained = Math.round(currValue * 0.1);
+        if (this.matchingMerchant) {
+          const parsedRebateAmount = TransactionComponent.convertStringCurrencyToFloat(this.matchingMerchant.rebateAmount);
+          if (parsedRebateAmount >= currValue) {
+            this.consumedRebates = currValue;
+          } else if (parsedRebateAmount > 0) {
+            this.consumedRebates = parsedRebateAmount;
+          } else {
+            this.consumedRebates = 0.00;
+          }
+          this.rebateGained = Math.floor((currValue - this.consumedRebates) * 0.1); // get rebate base on actual charge
+        }
       }
     );
+  }
+
+  public static convertStringCurrencyToFloat(currencyFormattedAmount: string): number {
+    return parseFloat(currencyFormattedAmount.slice(1)) ;
   }
 
   public ngOnInit(): void {
@@ -35,7 +50,6 @@ export class TransactionComponent implements OnInit {
     this.rebatesData = JSON.parse(localStorage.getItem('merchantsRebates') as string);
     this.matchingMerchant = this.rebatesData ?
       this.rebatesData.find(data => data.merchantId === parseInt(merchantRebateId, 10)) : undefined;
-    // console.log(this.matchingMerchant, 'matched merchant');
   }
 
   public validateMatchingMerchant(obj: any): obj is MerchantData {
@@ -47,15 +61,20 @@ export class TransactionComponent implements OnInit {
   }
 
   public confirmTransaction(): void {
-    let rebateBurned;
-    // deduct rebate and credit rebate, for now just use up all
+    // deduct rebate and credit rebate
     if (this.rebatesData && this.matchingMerchant) {
       this.rebatesData = this.rebatesData.map(merchant => {
         if (this.validateMatchingMerchant(this.matchingMerchant) && merchant.merchantId === this.matchingMerchant.merchantId) {
-          rebateBurned = merchant.rebateAmount;
+          let rebateAmount = TransactionComponent.convertStringCurrencyToFloat(merchant.rebateAmount);
+          if (this.consumedRebates) {
+            rebateAmount -= this.consumedRebates; // consume rebate
+          }
+          rebateAmount += this.rebateGained;
           return {
             ...merchant,
-            rebateAmount: `${this.currencyPipe.transform(this.rebateGained, '$')}`
+            rebateAmount: `${this.currencyPipe.transform(
+              rebateAmount,
+              '$')}`
           };
         }
         return merchant;
@@ -66,9 +85,13 @@ export class TransactionComponent implements OnInit {
     // wont have failure cause not api, just go to success page, pass down info required
     const navigationExtras: NavigationExtras = {
       state: {
-        rebateGained: `${this.currencyPipe.transform(this.rebateGained, '$')}`,
-        transactionAmount: `$${this.transactionAmount}`,
-        rebateBurned: rebateBurned ? rebateBurned : '$0.00',
+        rebateGained: this.currencyPipe.transform(this.rebateGained, '$'),
+        actualCharged: this.currencyPipe.transform(
+          this.consumedRebates ?
+            this.transactionAmount - this.consumedRebates :
+            this.transactionAmount, '$'),
+        transactionAmount: this.currencyPipe.transform(this.transactionAmount, '$'),
+        rebateBurned: this.currencyPipe.transform(this.consumedRebates, '$'),
         name: this.matchingMerchant ? this.matchingMerchant.name : '',
         logo: this.matchingMerchant ? this.matchingMerchant.logo : ''
       }

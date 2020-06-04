@@ -26,7 +26,10 @@ describe('TransactionCompleteComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TransactionCompleteComponent);
     component = fixture.componentInstance;
-    component.transactionObject = { logo: '', name: '', rebateBurned: '', rebateGained: '', transactionAmount: '' };
+    component.transactionObject = { logo: '',
+      name: '', rebateBurned: '', rebateGained: '', transactionAmount: '',
+      actualCharged: ''
+    };
     fixture.detectChanges();
   });
 

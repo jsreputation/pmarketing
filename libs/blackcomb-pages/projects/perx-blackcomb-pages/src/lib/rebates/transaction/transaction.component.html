@@ -15,7 +15,7 @@
       <input matInput textAlign="left" [formControl]="costControl" [placeholder]="0.00" currencyMask [(ngModel)]="transactionAmount"
              class="form-control" placeholder="Enter Amount">
     </div>
-    <p>You will be rebated <span id="red">{{matchingMerchant?.rebateAmount}}</span> on your next billing cycle</p>
+    <p>You will be rebated <span id="red">{{consumedRebates || 0 | currency: '$'}}</span> on your next billing cycle</p>
     <p>You will earn <span class="dark-blue">{{rebateGained | currency:'$'}}</span> cashback with this transaction</p>
   </div>
   <div class="button-group">
