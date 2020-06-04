@@ -74,7 +74,7 @@ export class NewsFeedComponent implements OnInit {
 
   public feedScrolled(event: Event) {
     // since the feed is full width we can assume each block of scrolling full width is one unit.
-    const unitsScrolledPast = (event.target as any).scrollLeft / window.innerWidth;
+    const unitsScrolledPast = (event.target as Element).scrollLeft / window.innerWidth;
     this.updateScrollIndex(Math.round(unitsScrolledPast)); // round to nearest integer
   }
 
