@@ -16,7 +16,8 @@ import {
   ProfileService,
   RewardPopupComponent,
   SettingsService,
-  TokenStorage
+  TokenStorage,
+  IFlags
 } from '@perxtech/core';
 import {
   MatDialog,
@@ -150,7 +151,8 @@ export class AppComponent implements OnInit {
 
     // init holding
     this.configService.readAppConfig().pipe(
-      switchMap(() => timer(0, 2000)
+      switchMap(() => this.settingsService.getRemoteFlagsSettings()),
+      switchMap((flags: IFlags) => timer(0, flags && flags.gatekeeperPollingInterval || 2000)
         .pipe(
           switchMap(() => this.settingsService.isGatekeeperOpen().pipe(
             catchError(() => {
