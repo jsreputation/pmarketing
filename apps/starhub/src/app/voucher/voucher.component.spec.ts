@@ -1,3 +1,4 @@
+import { IReward } from './../../../../../libs/core/projects/perx-core/src/lib/rewards/models/reward.model';
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { VoucherComponent } from './voucher.component';
@@ -107,26 +108,22 @@ describe('VoucherComponent', () => {
       expect(component.voucher).toBe(undefined);
     });
 
-    it('Redeem button should be disabled with future selling date', () => {
-      const today = new Date();
-      component.reward = {
+    it('Redeem button should be disabled with expired and redeemed voucher', () => {
+      component.voucher = {
         id: 1,
-        name: 'Reward Test',
-        description: 'Reward Description',
-        subtitle: 'Reward Subtitle',
-        validFrom: today,
-        sellingFrom: new Date(today.setHours(today.getHours() + 1)),
-        validTo: today,
-        rewardBanner: '',
-        termsAndConditions: '',
-        howToRedeem: '',
-        inventory: {
-          rewardTotalBalance: 100,
-          rewardTotalLimit: 100,
-          rewardLimitPerUserBalance: 100
-        }
+        state: VoucherState.expired,
+        reward: {} as IReward,
+        expiry: null
       };
-      const result: boolean = component.isButtonDisabled();
+      let result: boolean = component.isButtonDisabled();
+      expect(result).toBe(true);
+      component.voucher = {
+        id: 1,
+        state: VoucherState.redeemed,
+        reward: {} as IReward,
+        expiry: null
+      };
+      result = component.isButtonDisabled();
       expect(result).toBe(true);
     });
   });
