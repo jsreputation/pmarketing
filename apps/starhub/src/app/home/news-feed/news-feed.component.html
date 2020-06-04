@@ -1,4 +1,4 @@
-<div class="cards"(scroll)="feedScrolled($event)">
+<div class="cards" (scroll)="feedScrolled($event)">
   <ng-container *ngIf="!ghostFeed && items">
     <div *ngFor="let item of items; let i = index"
          class="hero-card">
