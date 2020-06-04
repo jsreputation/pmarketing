@@ -86,7 +86,10 @@ export class TransactionComponent implements OnInit {
     const navigationExtras: NavigationExtras = {
       state: {
         rebateGained: this.currencyPipe.transform(this.rebateGained, '$'),
-        actualCharged: this.currencyPipe.transform(this.consumedRebates ? this.transactionAmount - this.consumedRebates : this.transactionAmount, '$'),
+        actualCharged: this.currencyPipe.transform(
+          this.consumedRebates ?
+            this.transactionAmount - this.consumedRebates :
+            this.transactionAmount, '$'),
         transactionAmount: this.currencyPipe.transform(this.transactionAmount, '$'),
         rebateBurned: this.currencyPipe.transform(this.consumedRebates, '$'),
         name: this.matchingMerchant ? this.matchingMerchant.name : '',
