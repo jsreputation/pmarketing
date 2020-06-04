@@ -11,7 +11,7 @@ export interface IFlags {
   merchantMap?: boolean;
   rewardsCarousel?: boolean;
   rebateDemoFlow?: boolean;
-  gatekeeperPollingInterval?: boolean;
+  gatekeeperPollingInterval?: number;
 }
 
 export interface IRssFeeds {

@@ -43,7 +43,7 @@ interface IV4Flags {
     merchant_map: boolean;
     rewards_carousel: boolean;
     rebate_demo_flow: boolean;
-    gatekeeper_polling_interval: boolean;
+    gatekeeper_polling_interval: number;
   };
 }
 
