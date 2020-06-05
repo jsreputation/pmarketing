@@ -32,7 +32,7 @@ export class TransactionComponent implements OnInit {
           } else {
             this.consumedRebates = 0.00;
           }
-          this.rebateGained = Math.floor((currValue - this.consumedRebates) * 0.1); // get rebate base on actual charge
+          this.rebateGained = parseFloat(((currValue - this.consumedRebates) / 10 ).toFixed(2)); // get rebate base on actual charge
         }
       }
     );
