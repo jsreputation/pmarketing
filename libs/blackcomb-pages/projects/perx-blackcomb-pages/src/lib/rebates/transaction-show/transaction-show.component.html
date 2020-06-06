@@ -1,0 +1,18 @@
+<div class="overview-wrap" *ngIf="transactionObject">
+  <div class="banner-group">
+    <svg class="green-tick" width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M64.0001 10.6667C34.5601 10.6667 10.6667 34.56 10.6667 64C10.6667 93.44 34.5601 117.333 64.0001 117.333C93.4401 117.333 117.333 93.44 117.333 64C117.333 34.56 93.4401 10.6667 64.0001 10.6667ZM49.5467 86.88L30.4001 67.7333C28.3201 65.6533 28.3201 62.2933 30.4001 60.2133C32.4801 58.1333 35.8401 58.1333 37.9201 60.2133L53.3334 75.5733L90.0267 38.88C92.1067 36.8 95.4668 36.8 97.5468 38.88C99.6268 40.96 99.6268 44.32 97.5468 46.4L57.0667 86.88C55.0401 88.96 51.6267 88.96 49.5467 86.88Z" fill="#149B5F"/>
+    </svg>
+    <div class="text-elements">
+    <h1 class="amt-trans">Transaction successful</h1>
+    <h1 class="amt-trans">{{transactionObject.transactionAmount}} paid to {{transactionObject.name}}</h1>
+    <p>You've just earned <span class="dark-blue">{{transactionObject.rebateGained}}</span> cashback</p>
+    <p>{{transactionObject.dateNow}}</p>
+    </div>
+  </div>
+  <div class="button-group">
+    <button (click)="goReceipt()" mat-button>View Receipt</button>
+    <button (click)="goHome()" mat-stroked-button>Back To Home</button>
+  </div>
+</div>
+

@@ -35,7 +35,8 @@ const merchantsData: MerchantData[] = [
     name: 'O’Brien’s Irish Sandwich Bar',
     description: 'Any participating branch',
     imgUrl: 'https://media-cdn.tripadvisor.com/media/photo-s/06/da/b8/f2/exterior-of-restaurant.jpg',
-    rebateAmount: '$5.00'
+    rebateAmount: '$5.00',
+    price: '$10.00'
   },
   {
     logo: 'https://cdn.freebiesupply.com/images/large/2x/starbucks-logo-png-transparent.png',

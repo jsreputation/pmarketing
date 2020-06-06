@@ -1,0 +1,49 @@
+.overview-wrap {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-items: center;
+
+  p {
+    font-size: 0.8rem;
+    opacity: 0.7;
+  }
+
+  h1 {
+    margin: 0;
+  }
+
+  .dark-blue {
+    color: #001F67;
+    font-weight: 500;
+  }
+
+  .green-tick {
+    display: block;
+    margin: 5rem auto 1rem;
+  }
+
+  .text-elements {
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .amt-trans {
+      margin-bottom: 1rem;
+    }
+  }
+
+  .button-group {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    padding-top: 1.6rem;
+    padding-bottom: 1.6rem;
+    margin: auto auto 0;
+
+    button + button {
+      margin-top: 1.4rem;
+    }
+  }
+}

@@ -50,6 +50,10 @@ export class TransactionComponent implements OnInit {
     this.rebatesData = JSON.parse(localStorage.getItem('merchantsRebates') as string);
     this.matchingMerchant = this.rebatesData ?
       this.rebatesData.find(data => data.merchantId === parseInt(merchantRebateId, 10)) : undefined;
+    if (this.matchingMerchant && this.matchingMerchant.price) {
+      this.transactionAmount = TransactionComponent.convertStringCurrencyToFloat(this.matchingMerchant.price);
+      this.costControl.disable();
+    }
   }
 
   public validateMatchingMerchant(obj: any): obj is MerchantData {
@@ -96,6 +100,6 @@ export class TransactionComponent implements OnInit {
         logo: this.matchingMerchant ? this.matchingMerchant.logo : ''
       }
     };
-    this.router.navigate(['rebates/complete'], navigationExtras);
+    this.router.navigate(['rebates/show'], navigationExtras);
   }
 }
