@@ -16,13 +16,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import {MatCardModule} from '@angular/material';
 import {CurrencyMaskModule} from 'ng2-currency-mask';
+import { TransactionShowComponent } from './transaction-show/transaction-show.component';
 
 @NgModule({
   declarations: [
     RebatesWalletComponent,
     OverviewComponent,
     TransactionComponent,
-    TransactionCompleteComponent
+    TransactionCompleteComponent,
+    TransactionShowComponent
   ],
   exports: [
     RebatesWalletComponent,
