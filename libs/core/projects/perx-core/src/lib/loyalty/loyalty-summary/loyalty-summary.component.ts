@@ -77,7 +77,7 @@ export class LoyaltySummaryComponent implements OnInit {
       this.membershipExpiryFn = (loyalty: ILoyalty): string =>
         loyalty && loyalty.membershipExpiry || loyalty.endDate ?
           `Account Expiry: ${this.datePipe.transform(loyalty.membershipExpiry || loyalty.endDate, 'mediumDate')}` :
-          ''
+          '';
     }
 
     if (!this.profile$) {
