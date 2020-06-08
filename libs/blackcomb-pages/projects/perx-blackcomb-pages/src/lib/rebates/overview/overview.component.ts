@@ -18,9 +18,7 @@ export class OverviewComponent implements OnInit {
     const merchantRebate = JSON.parse(scannedRebateData);
     // find and update
     this.merchantPrice = merchantRebate.price;
-    console.log(this.merchantPrice, 'this is the rebate price');
     const {price, ...otherMerchantProperties} = merchantRebate;
-    console.log(otherMerchantProperties, 'what am i???');
     const rebatesData = JSON.parse(localStorage.getItem('merchantsRebates') as string);
     this.matchingMerchant = rebatesData ? rebatesData.find(data => data.merchantId === merchantRebate.merchantId) : null;
     if (this.matchingMerchant === undefined) {
