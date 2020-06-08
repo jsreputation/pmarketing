@@ -50,8 +50,8 @@ export class TransactionComponent implements OnInit {
     this.rebatesData = JSON.parse(localStorage.getItem('merchantsRebates') as string);
     this.matchingMerchant = this.rebatesData ?
       this.rebatesData.find(data => data.merchantId === parseInt(merchantRebateId, 10)) : undefined;
-    if (this.matchingMerchant && this.matchingMerchant.price) {
-      this.transactionAmount = TransactionComponent.convertStringCurrencyToFloat(this.matchingMerchant.price);
+    if (this.matchingMerchant && history.state.price) {
+      this.transactionAmount = TransactionComponent.convertStringCurrencyToFloat(history.state.price);
       this.costControl.disable();
     }
   }
