@@ -7,7 +7,7 @@
     </div>
   </ng-container>
   <ng-container *ngIf="loyalty; else elseBlockLoyalty">
-    <div *ngIf="loyalty.membershipExpiry" class="member-expiry-date">{{membershipExpiryFn(loyalty)}}</div>
+    <div *ngIf="loyalty.membershipExpiry || loyalty.endDate" class="member-expiry-date">{{membershipExpiryFn(loyalty)}}</div>
     <p *ngIf="showLoyaltyProgress && loyalty.membershipTierName" class="tier-description">{{loyalty.membershipTierName}} member</p>
 
     <div class="points">
