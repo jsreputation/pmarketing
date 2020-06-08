@@ -32,7 +32,10 @@ export class TransactionComponent implements OnInit {
           } else {
             this.consumedRebates = 0.00;
           }
-          this.rebateGained = parseFloat(Number(`${Math.floor(Number(`${(currValue - this.consumedRebates) / 10}e2`))}e-2`
+          this.rebateGained = parseFloat(
+            Number(`${Math.floor(
+              Number(`${(currValue - this.consumedRebates) / 10}e2`)
+            )}e-2`
           ).toFixed(2)); // get rebate base on actual charge
         }
       }
