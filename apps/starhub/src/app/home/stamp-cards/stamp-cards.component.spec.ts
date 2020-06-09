@@ -7,14 +7,11 @@ import {
   ICampaignService,
   CampaignType,
   CampaignState,
-  IGameService,
   ICampaign,
-  IGame,
-  GameType,
-  ConfigService
+  ConfigService,
+  StampService
 } from '@perxtech/core';
 import { Type } from '@angular/core';
-import { game } from '../../game.mock';
 import { IMacaron, MacaronService } from '../../services/macaron.service';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -24,15 +21,14 @@ describe('StampCardsComponent', () => {
   let component: StampCardsComponent;
   let fixture: ComponentFixture<StampCardsComponent>;
   let campaigndService: ICampaignService;
-  let gameService: IGameService;
   let macaronService: MacaronService;
   const campaignServiceStub: Partial<ICampaignService> = {
     getCampaigns: () => of([])
   };
-
-  const gameServiceStub: Partial<IGameService> = {
-    getGamesFromCampaign: () => of(game)
+  const stampServiceStub: Partial<StampService> = {
+    getCards: () => of()
   };
+
   const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of({
       apiHost: '',
@@ -57,7 +53,7 @@ describe('StampCardsComponent', () => {
       providers: [
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: ConfigService, useValue: configServiceStub },
-        { provide: IGameService, useValue: gameServiceStub }
+        { provide: StampService, useValue: stampServiceStub },
       ]
     })
       .compileComponents();
@@ -66,7 +62,6 @@ describe('StampCardsComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(StampCardsComponent);
     campaigndService = TestBed.get<ICampaignService>(ICampaignService as Type<ICampaignService>);
-    gameService = TestBed.get<IGameService>(IGameService as Type<IGameService>);
     macaronService = TestBed.get<MacaronService>(MacaronService as Type<MacaronService>);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -83,7 +78,7 @@ describe('StampCardsComponent', () => {
           id: 1,
           name: 'abc',
           description: 'abc',
-          type: CampaignType.game,
+          type: CampaignType.stamp,
           state: CampaignState.active,
           endsAt: null,
           rewards: [],
@@ -125,61 +120,8 @@ describe('StampCardsComponent', () => {
       component.ngOnInit();
       tick();
       expect(campaignsServiceSpy).toHaveBeenCalled();
-      expect(component.games).toEqual(game);
     }));
   });
-  it('should handle ngOnInit with games', fakeAsync(() => {
-    const campaigns: ICampaign[] = [
-      {
-        id: 1,
-        name: 'abc',
-        description: 'abc',
-        type: CampaignType.game,
-        state: CampaignState.active,
-        endsAt: null,
-        rewards: [],
-        thumbnailUrl: '',
-      }
-    ];
-    const games: IGame[] = [
-      {
-        id: 1,
-        campaignId: 1,
-        type: GameType.pinata,
-        remainingNumberOfTries: 1,
-        config: null,
-        texts: {
-          title: 'test'
-        },
-        results: {}
-      }
-    ];
-    spyOn(campaigndService, 'getCampaigns').and.returnValue(of(campaigns));
-    spyOn(gameService, 'getGamesFromCampaign').and.returnValue(of(games));
-    component.ngOnInit();
-    tick();
-  }));
-
-  it('should emit hasExpired with value true', () => {
-    const campaign: ICampaign = {
-      id: 1,
-      name: 'abc',
-      description: 'abc',
-      type: CampaignType.game,
-      state: CampaignState.active,
-      endsAt: null,
-      rewards: [],
-      thumbnailUrl: '',
-    };
-    component.games = [];
-    component.selected(campaign);
-
-    component.games = game;
-    spyOn(component.tapped, 'emit');
-    component.selected(campaign);
-    expect(component.tapped.emit).toHaveBeenCalledWith(1);
-  });
-
   it('getCampaignMacaron', fakeAsync(() => {
     const macron: IMacaron = { label: 'test', isButtonEnabled: false, class: 'test' };
     spyOn(macaronService, 'getCampaignMacaron').and.returnValue(macron);
@@ -187,7 +129,7 @@ describe('StampCardsComponent', () => {
       id: 1,
       name: 'test',
       description: 'test',
-      type: CampaignType.game,
+      type: CampaignType.stamp,
       state: CampaignState.draft,
       endsAt: new Date()
     });

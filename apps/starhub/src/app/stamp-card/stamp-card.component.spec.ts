@@ -1,8 +1,10 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { StampCardComponent } from './stamp-card.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { PuzzlesModule, StampCardState, StampService } from '@perxtech/core';
+import { PuzzlesModule, StampCardState, StampService, NotificationService, IStampCard, ConfigService } from '@perxtech/core';
 import { of } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { Type } from '@angular/core';
 
 describe('StampCardComponent', () => {
   let component: StampCardComponent;
@@ -18,6 +20,16 @@ describe('StampCardComponent', () => {
     addPopup: () => { }
   };
 
+  const configServiceStub: Partial<ConfigService> = {
+    readAppConfig: () => of({
+      apiHost: '',
+      production: false,
+      preAuth: false,
+      isWhistler: false,
+      baseHref: ''
+    })
+  };
+  
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [StampCardComponent],
@@ -26,11 +38,11 @@ describe('StampCardComponent', () => {
           { path: 'wallet', redirectTo: '/' }
         ]),
         PuzzlesModule,
-        TranslateModule.forRoot(),
       ],
       providers: [
         { provide: StampService, useValue: stampServiceStub },
-        { provide: ActivatedRoute, useValue: { paramMap: of(convertToParamMap({ id: '1' })) } },
+        { provide: ActivatedRoute, useValue: { queryParams: of({ id: '1' }) } },
+        { provide: ConfigService, useValue: configServiceStub },
         { provide: NotificationService, useValue: notificationStub }
       ]
     })
@@ -127,18 +139,5 @@ describe('StampCardComponent', () => {
       tick();
       expect(stampServiceSpy).toHaveBeenCalled();
     }));
-  });
-
-  describe('handleStamp', () => {
-    it('should throw error if card is empty ', async () => {
-      component.stampCard = null;
-      let errorMessage = 'No error thrown';
-      try {
-        await component.handleStamp(stamps[0]);
-      } catch (error) {
-        errorMessage = error.message;
-      }
-      expect(errorMessage).toBe('card or stamps is required');
-    });
   });
 });

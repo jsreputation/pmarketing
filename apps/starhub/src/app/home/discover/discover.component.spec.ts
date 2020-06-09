@@ -25,7 +25,7 @@ import {
   FeedReaderService,
   IGameService,
   IReward,
-  ConfigService, SettingsService
+  ConfigService, SettingsService, StampService
 } from '@perxtech/core';
 
 import { rewards } from '../../rewards.mock';
@@ -75,7 +75,9 @@ describe('DiscoverComponent', () => {
   const gameServiceStub: Partial<IGameService> = {
     getGamesFromCampaign: () => of()
   };
-
+  const stamServcieStub: Partial<StampService> = {
+    getCards: () => of()
+  };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -106,6 +108,7 @@ describe('DiscoverComponent', () => {
         { provide: FeedReaderService, useValue: feedReaderServiceStub },
         { provide: Router, useValue: routerStub },
         { provide: IGameService, useValue: gameServiceStub },
+        { provide: StampService, useValue: stamServcieStub },
         { provide: ConfigService, useValue: configServiceStub },
         { provide: SettingsService, useValue: settingsServiceStub },
       ]

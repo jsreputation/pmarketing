@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import { StampService, IStampCard, IStamp, IPopupConfig, PuzzleCollectReward, NotificationService, StampState } from '@perxtech/core';
+import { StampService, IStampCard, IStamp, IPopupConfig, PuzzleCollectReward, NotificationService, StampState, ConfigService } from '@perxtech/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { switchMap, tap, takeUntil, pairwise } from 'rxjs/operators';
 import { Subject, of } from 'rxjs';
@@ -53,12 +53,14 @@ export class StampCardComponent implements OnInit, OnDestroy {
     private router: Router,
     private analytics: AnalyticsService,
     private notificationService: NotificationService,
+    private configService: ConfigService
   ) {
   }
 
   public ngOnInit(): void {
-    this.route.queryParams
+    this.configService.readAppConfig()
       .pipe(
+        switchMap(() => this.route.queryParams),
         switchMap((params: Params) => {
           if (params.id) {
             this.idN = Number.parseInt(params.id, 10);
@@ -67,7 +69,6 @@ export class StampCardComponent implements OnInit, OnDestroy {
           return of({} as IStampCard);
         }),
         tap((stampCard: IStampCard) => {
-          console.log(stampCard);
           if (stampCard) {
             this.stampCard = stampCard;
             this.stamps = stampCard.stamps;
