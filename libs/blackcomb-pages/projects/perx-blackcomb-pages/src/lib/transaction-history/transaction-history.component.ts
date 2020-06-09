@@ -43,7 +43,7 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
       let text = '';
       const properties = oc(tr).transactionDetails.data.properties();
       if (properties) {
-        text = properties.storeName ? properties.storeName : '';
+        text = properties.productName ? properties.productName : '';
       }
       return text;
     }
@@ -56,7 +56,7 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
       let text = '';
       const properties = oc(tr).transactionDetails.data.properties();
       if (properties) {
-        text = properties.productName ? properties.productName : '';
+        text = properties.storeName ? properties.storeName : '';
       }
       return text;
     }
