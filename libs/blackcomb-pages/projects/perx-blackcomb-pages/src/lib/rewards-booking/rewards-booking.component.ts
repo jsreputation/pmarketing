@@ -71,7 +71,6 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
         return this.locationService.getFromMerchant(this.merchantId);
       })).subscribe(
       (merchantLocations: ILocation[]) => {
-        console.log(merchantLocations, 'merchant locaitons what are yiu?')
         this.updateMerchantData(merchantLocations);
       },
       () => {
