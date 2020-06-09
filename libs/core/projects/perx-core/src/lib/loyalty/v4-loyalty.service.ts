@@ -144,55 +144,55 @@ interface IV4TransactionHistoryResponse {
 }
 
 interface IV4TransactionPropertiesAbenson {
-  tenant: "abenson",
-  qty: number,
-  reg: number,
-  sku: number,
-  store: number,
-  trxno: number,
-  untprc: number,
-  cashier: number,
-  company: number,
-  trxdate: number,
-  trxtime: number,
-  mobileno: string,
-  store_name: string
+  tenant: 'abenson';
+  qty: number;
+  reg: number;
+  sku: number;
+  store: number;
+  trxno: number;
+  untprc: number;
+  cashier: number;
+  company: number;
+  trxdate: number;
+  trxtime: number;
+  mobileno: string;
+  store_name: string;
 }
 
 interface IV4TransactionPropertiesMerck {
-  tenant: "merck",
-  product: string,
-  pharmacy: string,
-  merchant_username: string,
-  merchant_account_id: number
+  tenant: 'merck';
+  product: string;
+  pharmacy: string;
+  merchant_username: string;
+  merchant_account_id: number;
 }
 
 interface IV4TransactionPropertiesAllit {
-  tenant: "allit",
-  amount: number,
-  quantity: number,
-  item_code: number,
-  item_name: string,
-  amount_net: number,
-  amount_std: number,
-  amount_txn: number,
-  guid_store: string,
-  amount_json: {},
-  branch_code: string,
-  guid_branch: string,
-  amount_signum: number,
-  reference_doc: string,
-  amount_tax_gst: number,
-  amount_tax_wht: number,
-  invoice_number: number,
-  amount_discount: number,
-  category_level_0: string,
-  category_level_1: string,
-  amount_gst_balance: number,
-  amount_wht_balance: number,
-  amount_open_balance: number,
-  transaction_item_guid: string,
-  transaction_line_guid: string
+  tenant: 'allit';
+  amount: number;
+  quantity: number;
+  item_code: number;
+  item_name: string;
+  amount_net: number;
+  amount_std: number;
+  amount_txn: number;
+  guid_store: string;
+  amount_json: {};
+  branch_code: string;
+  guid_branch: string;
+  amount_signum: number;
+  reference_doc: string;
+  amount_tax_gst: number;
+  amount_tax_wht: number;
+  invoice_number: number;
+  amount_discount: number;
+  category_level_0: string;
+  category_level_1: string;
+  amount_gst_balance: number;
+  amount_wht_balance: number;
+  amount_open_balance: number;
+  transaction_item_guid: string;
+  transaction_line_guid: string;
 }
 
 @Injectable({
@@ -343,7 +343,7 @@ export class V4LoyaltyService extends LoyaltyService {
     let data: ITransactionProperties = {};
 
     if((pthProps as IV4TransactionPropertiesAbenson).sku) {
-      let props = (pthProps as IV4TransactionPropertiesAbenson);
+      const props = (pthProps as IV4TransactionPropertiesAbenson);
       data = {
         productCode: props.sku.toString(),
         // productName: undefined,
@@ -353,7 +353,7 @@ export class V4LoyaltyService extends LoyaltyService {
       };
     }
     if((pthProps as IV4TransactionPropertiesAllit).guid_branch) {
-      let props = (pthProps as IV4TransactionPropertiesAllit);
+      const props = (pthProps as IV4TransactionPropertiesAllit);
       data = {
         productCode: props.item_code.toString(),
         productName: props.item_name,
@@ -363,7 +363,7 @@ export class V4LoyaltyService extends LoyaltyService {
       };
     }
     if((pthProps as IV4TransactionPropertiesMerck).product) {
-      let props = (pthProps as IV4TransactionPropertiesMerck);
+      const props = (pthProps as IV4TransactionPropertiesMerck);
       data = {
         // productCode: undefined,
         productName: props.product,
