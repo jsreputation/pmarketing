@@ -79,7 +79,6 @@ import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
 import { SignIn2Module } from './sign-in-2/sign-in-2.module';
 import { ProfileModule as BCPProfileModule } from './profile/profile.module';
 import { FindLocationModule } from './find-location/find-location.module';
-import { MatSelectInfiniteScrollModule } from 'ng-mat-select-infinite-scroll';
 
 const comps: any[] = [
   RewardComponent,
@@ -161,7 +160,6 @@ const comps: any[] = [
     CampaignLandingPageModule,
     LocationModule,
     FindLocationModule,
-    MatSelectInfiniteScrollModule
   ],
   exports: [
     ...comps,

@@ -71,7 +71,6 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
         return this.locationService.getFromMerchant(this.merchantId);
       })).subscribe(
       (merchantLocations: ILocation[]) => {
-        console.log(merchantLocations, 'merchant locaitons what are yiu?')
         this.updateMerchantData(merchantLocations);
       },
       () => {
@@ -115,9 +114,9 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
   }
 
   public submitForm(): void {
+
     const currentPrice = this.prices.find((price) => price.id === this.bookingForm.value.priceId);
-    // allow free rewards to go through
-    if (!currentPrice || currentPrice.points === undefined || null) {
+    if (!currentPrice || !currentPrice.points) {
       return;
     }
     const totalCost = currentPrice.points * this.bookingForm.value.quantity;
