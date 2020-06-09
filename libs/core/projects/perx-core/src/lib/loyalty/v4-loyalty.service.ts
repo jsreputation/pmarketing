@@ -306,14 +306,24 @@ export class V4LoyaltyService extends LoyaltyService {
           data.properties = this.v4TransactionPropertiesToTransactionProperties(pthProps as TenantTransactionProperties);
           break;
       }
-    } else {
+    } else if (Object.keys(transactionHistory.properties).length > 0) {
       // all-it transaction currently have no data in transaction_details assume it is a purchase.
-      const thProps = oc(transactionHistory).properties();
+      const thProps = transactionHistory.properties;
       data = {
         id: transactionHistory.id
       };
 
       data.properties = this.v4TransactionPropertiesToTransactionProperties(thProps as TenantTransactionProperties);
+    } else {
+      // assume it is a customer service action from dashboard
+      data = {
+        id: transactionHistory.id
+      };
+
+      // default blackcomb page is currently using productName as the default title
+      data.properties = {
+        productName: 'Customer Service Transaction'
+      }
     }
     return {
       id: transactionHistory.id,
