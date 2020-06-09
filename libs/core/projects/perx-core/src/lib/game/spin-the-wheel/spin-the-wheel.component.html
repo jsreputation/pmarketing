@@ -1,9 +1,7 @@
 <div class="main-wrap"
-  [style.pointer-events]="enabled ? 'auto' : 'none'"
-  [ngClass]="{'down': classPosition === 'mobile-preview-v2'}">
+  [style.pointer-events]="enabled ? 'auto' : 'none'">
   <div class="spin-wheel-container"
-    #wheel
-    [ngClass]="{'down': classPosition === 'mobile-preview-v2'}">
+    #wheel>
     <img id="wheel-canvas-stop"
       [src]="pointerImg"
       *ngIf="pointerImg">
