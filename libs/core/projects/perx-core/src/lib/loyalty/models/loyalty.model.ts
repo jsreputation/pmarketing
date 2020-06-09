@@ -1,4 +1,4 @@
-import {ICustomProperties} from '../../profile/profile.model';
+import { ICustomProperties } from '../../profile/profile.model';
 
 export const enum TransactionDetailType {
   'transaction' = 'Transaction',
@@ -50,6 +50,7 @@ export interface IRewardTransactionHistory {
   userAccount: string;
   rewardName: string;
   redemptionLocation?: string;
+  properties?: ITransactionProperties;
 }
 
 export interface IPurchaseTransactionHistory {
@@ -61,6 +62,7 @@ export interface IPurchaseTransactionHistory {
   transactionRef?: string;
   price?: number;
   currency?: string;
+  properties?: ITransactionProperties;
 }
 
 export interface ITransactionHistory {
@@ -74,6 +76,14 @@ export interface ITransactionHistory {
     type?: TransactionDetailType,
     data?: IPurchaseTransactionHistory | IRewardTransactionHistory
   };
+}
+
+export interface ITransactionProperties {
+  productCode?: string;
+  productName?: string;
+  quantity?: number;
+  storeCode?: string;
+  storeName?: string;
 }
 
 export interface IJoinMethod {
