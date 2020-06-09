@@ -46,7 +46,7 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
         text = properties.productName ? properties.productName : '';
       }
       return text;
-    }
+    };
 
     this.redemptionsTitleFn = (tr: ITransactionHistory) =>
       `${(tr.transactionDetails && tr.transactionDetails.data) ?
@@ -59,7 +59,7 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
         text = properties.storeName ? properties.storeName : '';
       }
       return text;
-    }
+    };
 
     this.subTitleFn = (tr: ITransactionHistory) => `${this.datePipe.transform(tr.transactedAt, 'dd/MM/yyyy')}`;
     this.priceLabelFn = (tr: ITransactionHistory) => `${this.transactionPipe.transform(tr.pointsAmount || 0)}`;
