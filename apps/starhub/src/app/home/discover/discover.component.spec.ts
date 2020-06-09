@@ -39,6 +39,7 @@ import { CatalogsComponent } from '../catalogs/catalogs.component';
 import { CampaignsComponent } from '../campaigns/campaigns.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { GhostCardComponent } from '../../ghosts/card-ghost.component';
+import { StampCardsComponent } from '../stamp-cards/stamp-cards.component';
 
 describe('DiscoverComponent', () => {
   let component: DiscoverComponent;
@@ -84,6 +85,7 @@ describe('DiscoverComponent', () => {
         RewardsCardsComponent,
         CatalogsComponent,
         CampaignsComponent,
+        StampCardsComponent,
         GhostCardComponent
       ],
       imports: [

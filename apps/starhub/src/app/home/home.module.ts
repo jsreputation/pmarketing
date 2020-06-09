@@ -23,6 +23,7 @@ import {
   OutcomeModule,
   PopupComponent,
   UtilsModule,
+  StampModule
 } from '@perxtech/core';
 
 import { HomeRoutingModule } from './home-routing.module';
@@ -36,6 +37,7 @@ import { CatalogsComponent } from './catalogs/catalogs.component';
 import { CampaignsComponent } from './campaigns/campaigns.component';
 import { NoRenewaleInNamePipe } from './no-renewale-in-name.pipe';
 import { GhostsModule } from '../ghosts/ghosts.module';
+import { StampCardsComponent } from './stamp-cards/stamp-cards.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,7 @@ import { GhostsModule } from '../ghosts/ghosts.module';
     RewardsCardsComponent,
     CatalogsComponent,
     CampaignsComponent,
+    StampCardsComponent,
     NoRenewaleInNamePipe
   ],
   imports: [
@@ -68,6 +71,7 @@ import { GhostsModule } from '../ghosts/ghosts.module';
     CampaignModule,
     CampaignServiceModule.forChild(),
     PerxGameServiceModule.forChild(),
+    StampModule,
     OutcomeModule,
     GhostsModule
   ],

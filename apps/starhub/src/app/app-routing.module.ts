@@ -9,6 +9,7 @@ import { RedemptionComponent } from './redemption/redemption.component';
 import { GameComponent } from './game/game.component';
 import { CongratsComponent } from './congrats/congrats.component';
 import { ErrorComponent } from './error/error.component';
+import { StampCardComponent } from './stamp-card/stamp-card.component';
 
 const routes: Routes = [
   { path: 'home', loadChildren: () => import('./home/home.module').then(mod => mod.HomeModule) },
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'redemption', component: RedemptionComponent },
   { path: '', pathMatch: 'full', redirectTo: 'home' },
   { path: 'game', component: GameComponent },
+  { path: 'stamp-card', component: StampCardComponent },
   { path: 'congrats', component: CongratsComponent },
   { path: 'error', component: ErrorComponent }
 ];

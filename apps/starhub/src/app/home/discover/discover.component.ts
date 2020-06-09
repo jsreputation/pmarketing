@@ -36,4 +36,8 @@ export class DiscoverComponent implements OnInit {
   public campaignSelected(gameId: number): void {
     this.router.navigate(['/game'], { queryParams: { id: gameId } });
   }
+
+  public stampSelected(campaignId: number): void {
+    this.router.navigate(['/stamp-card'], { queryParams: { id: campaignId } });
+  }
 }
