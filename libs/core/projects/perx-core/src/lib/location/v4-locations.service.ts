@@ -120,11 +120,10 @@ export class V4LocationsService extends LocationsService {
               latitude: outlet.coordinates.lat,
               longitude: outlet.coordinates.lng,
               phone: outlet.tel
-            }]
-          } else {
-            return merchantOutlets;
+            }];
           }
-        }, [])
+          return merchantOutlets;
+        }, []);
       })
     );
   }
