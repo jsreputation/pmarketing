@@ -323,7 +323,7 @@ export class V4LoyaltyService extends LoyaltyService {
       // default blackcomb page is currently using productName as the default title
       data.properties = {
         productName: 'Customer Service Transaction'
-      }
+      };
     }
     return {
       id: transactionHistory.id,
@@ -342,7 +342,7 @@ export class V4LoyaltyService extends LoyaltyService {
   private static v4TransactionPropertiesToTransactionProperties(pthProps: TenantTransactionProperties): ITransactionProperties {
     let data: ITransactionProperties = {};
 
-    if((pthProps as IV4TransactionPropertiesAbenson).sku) {
+    if ((pthProps as IV4TransactionPropertiesAbenson).sku) {
       const props = (pthProps as IV4TransactionPropertiesAbenson);
       data = {
         productCode: props.sku.toString(),
@@ -352,7 +352,7 @@ export class V4LoyaltyService extends LoyaltyService {
         storeName: props.store_name
       };
     }
-    if((pthProps as IV4TransactionPropertiesAllit).guid_branch) {
+    if ((pthProps as IV4TransactionPropertiesAllit).guid_branch) {
       const props = (pthProps as IV4TransactionPropertiesAllit);
       data = {
         productCode: props.item_code.toString(),
@@ -362,7 +362,7 @@ export class V4LoyaltyService extends LoyaltyService {
         // storeName: undefined
       };
     }
-    if((pthProps as IV4TransactionPropertiesMerck).product) {
+    if ((pthProps as IV4TransactionPropertiesMerck).product) {
       const props = (pthProps as IV4TransactionPropertiesMerck);
       data = {
         // productCode: undefined,
