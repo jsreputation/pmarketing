@@ -303,7 +303,7 @@ export class V4LoyaltyService extends LoyaltyService {
             price: pthDetails.amount,
             currency: pthDetails.currency,
           };
-          data.properties = this.v4TransactionPropertiesToTransactionProperties(pthProps as TenantTransactionProperties);
+          data.properties = V4LoyaltyService.v4TransactionPropertiesToTransactionProperties(pthProps as TenantTransactionProperties);
           break;
       }
     } else if (Object.keys(transactionHistory.properties).length > 0) {
@@ -313,7 +313,7 @@ export class V4LoyaltyService extends LoyaltyService {
         id: transactionHistory.id
       };
 
-      data.properties = this.v4TransactionPropertiesToTransactionProperties(thProps as TenantTransactionProperties);
+      data.properties = V4LoyaltyService.v4TransactionPropertiesToTransactionProperties(thProps as TenantTransactionProperties);
     } else {
       // assume it is a customer service action from dashboard
       data = {
