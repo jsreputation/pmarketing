@@ -102,20 +102,29 @@ export class V4LocationsService extends LocationsService {
   public getFromMerchant(merchantId: number, page?: number): Observable<ILocation[]> {
     return this.merchantsService.getMerchant(merchantId, page).pipe(
       filter((merchant: IMerchant) => (merchant.outlets !== undefined && (merchant.outlets ? merchant.outlets.length > 0 : false))),
-      // @ts-ignore
-      map((merchant: IMerchant) => merchant.outlets.map((outlet: IOutlet) => ({
-        merchantId: merchant.id,
-        merchantName: merchant.name,
-        locationId: outlet.outletId,
-        name: outlet.outletName,
-        tags: outlet.tags && outlet.tags.map(tag => tag.name),
-        address: outlet.outletAddress1,
-        address2: outlet.outletAddress2,
-        address3: outlet.outletAddress3,
-        latitude: outlet.coordinates.lat,
-        longitude: outlet.coordinates.lng,
-        phone: outlet.tel
-      })))
+      map((merchant: IMerchant) => {
+        const seenLocations = {};
+        // @ts-ignore
+        return merchant.outlets.reduce((merchantOutlets: ILocation[], outlet: IOutlet) => {
+          if (!seenLocations[outlet.outletId]) {
+            seenLocations[outlet.outletId] = true;
+            return [...merchantOutlets, {
+              merchantId: merchant.id,
+              merchantName: merchant.name,
+              locationId: outlet.outletId,
+              name: outlet.outletName,
+              tags: outlet.tags && outlet.tags.map(tag => tag.name),
+              address: outlet.outletAddress1,
+              address2: outlet.outletAddress2,
+              address3: outlet.outletAddress3,
+              latitude: outlet.coordinates.lat,
+              longitude: outlet.coordinates.lng,
+              phone: outlet.tel
+            }];
+          }
+          return merchantOutlets;
+        }, []);
+      })
     );
   }
 
