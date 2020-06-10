@@ -7,7 +7,7 @@ import { ProfileService } from '../../profile/profile.service';
 import { IProfile } from '../../profile/profile.model';
 import { ILoyalty } from '../models/loyalty.model';
 import { DatePipe } from '@angular/common';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-core-loyalty-summary',
@@ -45,6 +45,7 @@ export class LoyaltySummaryComponent implements OnInit {
   private subTitle: string;
   private welcomeTxt: string;
   public pointTo: string;
+  private nextTierName: string;
   private pointExpire: string;
   private accountExpire: string;
 
@@ -96,30 +97,31 @@ export class LoyaltySummaryComponent implements OnInit {
     }
 
     if (!this.loyalty$) {
-      this.loyaltyService.getLoyalty(this.loyaltyId)
+      this.loyalty$ = this.loyaltyService.getLoyalty(this.loyaltyId)
         .pipe(
           catchError(val => {
             if (val.status === 401) {
               this.loyaltyProgramExists = true;
             }
-            return of();
+            return of(val);
           })
         )
-        .subscribe(
-          (loyalty: ILoyalty) => {
-            this.loyalty = loyalty;
-            if (loyalty && loyalty.nextTierName) {
-              this.pointTo.replace('{nextTierName}', loyalty.nextTierName);
-            }
-          }
-        );
-    } else {
-      this.loyalty$.subscribe(
-        (loyalty: ILoyalty) => {
-          this.loyalty = loyalty;
-        }
-      );
     }
+    this.loyalty$.pipe(
+      tap((loyalty: ILoyalty) => {
+        if (loyalty && loyalty.nextTierName) {
+          this.translate.get(loyalty.nextTierName).subscribe(txt => this.nextTierName = txt);
+        }
+      })
+    ).subscribe(
+      (loyalty: ILoyalty) => {
+        this.loyalty = loyalty;
+        if (this.nextTierName) {
+          this.pointTo = this.pointTo.replace('{nextTierName}', this.nextTierName);
+        }
+      }
+    );
+
   }
 
   public getPercentageToNext(currentPoints: number, nextPoints: number | undefined): number {
