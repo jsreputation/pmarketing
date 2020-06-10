@@ -105,7 +105,7 @@ export class LoyaltySummaryComponent implements OnInit {
             }
             return of(val);
           })
-        )
+        );
     }
     this.loyalty$.pipe(
       tap((loyalty: ILoyalty) => {
