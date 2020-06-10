@@ -36,6 +36,9 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   public pointerImg: string | undefined;
 
   @Input()
+  public classPosition: string | undefined;
+
+  @Input()
   public willWin: boolean = false;
 
   @Input()

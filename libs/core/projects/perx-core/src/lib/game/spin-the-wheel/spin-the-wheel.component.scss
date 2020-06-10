@@ -4,6 +4,10 @@
 
 .main-wrap {
   height: 40rem;
+
+  &.down {
+    clip-path: inset(-8px -176px 38px -99px);
+  }
 }
 
 .spin-wheel-container {
@@ -12,6 +16,12 @@
   height: 100%;
   width: 24rem;
   display: block;
+
+  &.down {
+    transform: scale(2);
+    top: 30%;
+    height: 80%;
+  }
 }
 
 #wheel-canvas-stop {
