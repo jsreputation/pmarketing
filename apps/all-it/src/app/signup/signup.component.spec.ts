@@ -10,7 +10,6 @@ import {
   MatIconModule,
   MatNativeDateModule,
   MatDatepickerModule,
-  DateAdapter
 } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -48,7 +47,7 @@ describe('SignupComponent', () => {
       providers: [
         { provide: AuthenticationService, useValue: authServiceStub },
         { provide: NotificationService, useValue: notificationServiceStub },
-        { provide: DateAdapter }
+        { provide: MatDatepickerModule }
       ]
     })
       .compileComponents();
