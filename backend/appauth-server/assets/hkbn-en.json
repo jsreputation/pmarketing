@@ -89,5 +89,6 @@
   "HUNG_FOOK_TONG": "Hung Fook Tong",
   "BIG_BIG_SHOP": "big big shop",
   "REDEEM_NOW": "REDEEM NOW",
-  "MOBILE_CODE": "Code"
+  "MOBILE_CODE": "Code",
+  "LOGIN_SESSION_EXPIRED": "Login Session Expired"
 }

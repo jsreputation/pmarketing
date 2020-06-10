@@ -115,7 +115,9 @@
     "WALLET": "Wallet",
     "HISTORY": "History",
     "LEADER_BOARD": "Leaderboard",
-    "ACCOUNT": "Account"
+    "DEALS": "Deals",
+    "ACCOUNT": "Account",
+    "PAY": "Pay"
   },
   "QUIZ_TEMPLATE": {
     "CTA_START_TXT": "Take the quiz",
@@ -280,5 +282,16 @@
     "DESCRIPTION": "Description",
     "TNC": "Terms and Conditions"
   },
-  "CONTENT_PAGE": "Content Not Found"
+  "LOCATION_PAGE": {
+    "FILTER_BY": "Filter by",
+    "MAP": "Map",
+    "LIST": "List",
+    "APPLY": "Apply",
+    "CATEGORIES": "Categories",
+    "CLEAR_ALL": "Clear all",
+    "FILTER": "Filter",
+    "VIEW_LOCATION": "View location"
+  },
+  "CONTENT_PAGE": "Content Not Found",
+  "LOGIN_SESSION_EXPIRED": "Login Session Expired"
 }

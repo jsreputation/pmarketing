@@ -1,0 +1,33 @@
+<div [class]=" rewards$ ? 'card-list-container' : 'card-list-container loading'">
+    <ng-container *ngIf="merchants$ | async as merchants">
+      <div *ngIf="merchants.length > 0"></div>
+        <mat-card matRipple *ngFor="let merchant of merchants" (click)="merchantClickedHandler(merchant)">
+          <div class="reward-content">
+            <div class="reward-img__wrapper">
+              <img *ngIf="merchant.imgUrl || defaultImg"
+                   [src]="merchant.imgUrl || defaultImg"
+                   [alt]="merchant.name" />
+              <div *ngIf="!merchant.imgUrl && !defaultImg">
+                <svg width="375" height="200" viewBox="0 0 375 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M0 0H375V200H0V0Z" fill="#4E4E4E" />
+                  <path
+                    d="M190.4 90.1401L184.5 98.0001L189 104C189.66 104.88 189.48 106.14 188.6 106.8C187.72 107.46 186.46 107.3 185.8 106.4C183.7 103.6 181.18 100.26 179.6 98.1201C178.8 97.0601 177.2 97.0601 176.4 98.1201L168.4 108.78C167.42 110.12 168.36 112 170 112H206C207.64 112 208.58 110.12 207.6 108.8L193.6 90.1401C192.8 89.0601 191.2 89.0601 190.4 90.1401Z"
+                    fill="white" />
+                </svg>
+              </div>
+            </div>
+            <div class="reward-preview-details">
+              <h1>{{ merchant.name }}</h1>
+              <div class="description" *ngIf="merchant.name">
+                {{merchant.description}}
+              </div>
+              <div
+                class="rebate-details-block"
+                [ngStyle]="{'color': themeFontColor ? themeFontColor : colorPrimary}">
+                <p id="merchant-rebate-details">{{merchant.rebateAmount}} <span id="minor-details">rebate funds available</span></p>
+            </div>
+          </div>
+          </div>
+        </mat-card>
+    </ng-container>
+</div>

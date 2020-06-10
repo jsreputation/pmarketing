@@ -125,7 +125,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
     }
     this.retries = 0;
     this.logout();
-    this.notificationService.addSnack('Login Session Expired');
+    this.notificationService.addSnack('LOGIN_SESSION_EXPIRED');
     return of(true);
   }
 

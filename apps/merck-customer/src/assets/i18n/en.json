@@ -100,5 +100,6 @@
   "Silver": "Silver",
   "Green": "Green",
   "POINT_EARNED": "{points} Points earned",
-  "POINT_SPENT": "{points} Points spent"
+  "POINT_SPENT": "{points} Points spent",
+  "LOGIN_SESSION_EXPIRED": "Login Session Expired"
 }

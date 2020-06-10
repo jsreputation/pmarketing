@@ -20,13 +20,16 @@ import {
   AnalyticsService,
   PageType,
 } from '../../analytics.service';
-import { map, switchMap } from 'rxjs/operators';
+import {
+  map,
+  switchMap
+} from 'rxjs/operators';
 import { of } from 'rxjs';
 
 @Component({
   selector: 'app-news-feed',
   templateUrl: './news-feed.component.html',
-  styleUrls: ['./news-feed.component.scss']
+  styleUrls: [ './news-feed.component.scss' ]
 })
 export class NewsFeedComponent implements OnInit {
   public items: FeedItem[];
@@ -41,7 +44,7 @@ export class NewsFeedComponent implements OnInit {
       switchMap(() => this.settingsService.getRssFeeds()),
       map((res: IRssFeeds) => res.data ? res.data.find(feed => feed.page === RssFeedsPages.HOME) : undefined),
       switchMap((feedData: IRssFeedsData | undefined) => {
-        if (!feedData || !feedData.url) {
+        if (! feedData || ! feedData.url) {
           return of([] as FeedItem[]);
         }
         return this.reader.getFromUrl(feedData && feedData.url);
@@ -61,11 +64,18 @@ export class NewsFeedComponent implements OnInit {
     private analytics: AnalyticsService,
     private settingsService: SettingsService,
     private configService: ConfigService
-  ) { }
+  ) {
+  }
 
   public ngOnInit(): void {
-    this.initNewsFeedItems();
     this.itemSize = window.innerWidth;
+    this.initNewsFeedItems();
+  }
+
+  public feedScrolled(event: Event) {
+    // since the feed is full width we can assume each block of scrolling full width is one unit.
+    const unitsScrolledPast = (event.target as Element).scrollLeft / window.innerWidth;
+    this.updateScrollIndex(Math.round(unitsScrolledPast)); // round to nearest integer
   }
 
   public updateScrollIndex(index: number): void {
@@ -77,7 +87,7 @@ export class NewsFeedComponent implements OnInit {
     }
   }
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize', [ '$event' ])
   public onResize(): void {
     this.itemSize = window.innerWidth;
   }

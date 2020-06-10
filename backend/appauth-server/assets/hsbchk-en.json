@@ -280,5 +280,6 @@
     "DESCRIPTION": "Description",
     "TNC": "Terms and Conditions"
   },
-  "CONTENT_PAGE": "Content Not Found"
+  "CONTENT_PAGE": "Content Not Found",
+  "LOGIN_SESSION_EXPIRED": "Login Session Expired"
 }

@@ -1,4 +1,3 @@
-
 /*
  * Public API Surface of perx-core
  */
@@ -137,7 +136,8 @@ export {
   IRewardTransactionHistory,
   IPurchaseTransactionHistory,
   TransactionDetailType,
-  IJoinMethod
+  IJoinMethod,
+  ITransactionProperties
 } from './lib/loyalty/models/loyalty.model';
 export { TransactionPipe } from './lib/loyalty/loyalty-transactions-list/transaction.pipe';
 export { LoyaltySummaryComponent } from './lib/loyalty/loyalty-summary/loyalty-summary.component';
@@ -185,6 +185,7 @@ export { TimerComponent } from './lib/utils/timer/timer.component';
 export { SafeHtmlPipe } from './lib/utils/safe-html.pipe';
 export { SafeUrlPipe } from './lib/utils/safe-url.pipe';
 export { equalityValidator, emailValidator, inequalityValidator } from './lib/utils/validators';
+export { LocationFilterPopupComponent } from './lib/utils/location-filter-popup/location-filter-popup.component';
 
 /**
  * Puzzles
@@ -262,7 +263,8 @@ export {
   IMicrositeSettings,
   PagesObject,
   AccountPageObject,
-  RssFeedsPages
+  RssFeedsPages,
+  IFlags
 } from './lib/settings/models/settings.model';
 
 /**
@@ -290,6 +292,12 @@ export { MiniRankComponent } from './lib/rank/mini-rank/mini-rank.component';
 export { LeaderboardComponent } from './lib/rank/leaderboard/leaderboard.component';
 export { IRankService } from './lib/rank/irank.service';
 export { LeaderBoard, UserRanking } from './lib/rank/models/rank.model';
+/**
+ * Rebates
+ */
+export { RebatesModule } from './lib/rebates/rebates.module';
+export { RebatesListComponent } from './lib/rebates/rebates-list/rebates-list.component';
+export { QrScannerComponent } from './lib/rebates/rebates-qr-scanner/qrscanner.component';
 /**
  * Tenants
  */

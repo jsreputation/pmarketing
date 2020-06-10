@@ -26,5 +26,6 @@
   "STATIC_CONFIRM_PASSWORD": "確認密碼",
   "SUBMIT_BUTTON": "更新密碼",
   "POINT_EARNED": "獲得積分{points}",
-  "POINT_SPENT": "使用積分{points}"
+  "POINT_SPENT": "使用積分{points}",
+  "LOGIN_SESSION_EXPIRED": "登錄時間超時"
 }

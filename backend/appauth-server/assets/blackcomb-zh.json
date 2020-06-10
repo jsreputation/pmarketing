@@ -116,7 +116,9 @@
     "WALLET": "錢包",
     "HISTORY": "歷史",
     "LEADER_BOARD": "排行榜",
-    "ACCOUNT": "用戶"
+    "DEALS": "交易",
+    "ACCOUNT": "用戶",
+    "PAY": "付款"
   },
   "QUIZ_TEMPLATE": {
     "CTA_START_TXT": "參與問答遊戲",
@@ -216,6 +218,7 @@
   },
   "HOME": {
     "MY_QR": "我的二維碼",
+    "HELLO": "你好",
     "MY_BAR_CODE": "我的條形碼",
     "STAMP_CAMPAIGNS": "郵票卡活動",
     "CATALOG": "目錄",
@@ -281,5 +284,16 @@
     "BARCODE_TO_MERCHANT": "向商家出示此條形碼",
     "CTA": "取消"
   },
-  "CONTENT_PAGE": "找不到內容"
+  "LOCATION_PAGE": {
+    "FILTER_BY": "篩選",
+    "MAP": "地圖",
+    "LIST": "名單",
+    "APPLY": "應用",
+    "CATEGORIES": "分類",
+    "CLEAR_ALL": "清除所有選項",
+    "FILTER": "過濾",
+    "VIEW_LOCATION": "查看位置"
+  },
+  "CONTENT_PAGE": "找不到內容",
+  "LOGIN_SESSION_EXPIRED": "登錄時間超時"
 }

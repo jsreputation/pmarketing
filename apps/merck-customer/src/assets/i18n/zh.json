@@ -100,5 +100,6 @@
     "Silver": "銀卡",
     "Green": "綠色",
     "POINT_EARNED": "獲得積分{points}",
-    "POINT_SPENT": "使用積分{points}"
+    "POINT_SPENT": "使用積分{points}",
+    "LOGIN_SESSION_EXPIRED": "登錄時間超時"
 }

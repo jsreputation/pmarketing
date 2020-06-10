@@ -1,49 +1,60 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import {
+  APP_INITIALIZER,
+  NgModule
+} from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  PerxCoreModule,
-  VouchersModule,
-  MerchantsModule,
   AuthenticationModule,
-  LoyaltyModule,
-  GameModule,
-  UtilsModule,
-  ProfileModule,
-  ConfigModule,
-  CampaignModule,
-  RewardsModule,
   AuthenticationService,
-  ThemesService,
-  IConfig,
+  CampaignModule,
+  CampaignServiceModule,
+  ConfigModule,
   ConfigService,
-  TokenStorage,
+  GameModule,
+  IConfig,
   LanguageService,
-  CampaignServiceModule
+  LoyaltyModule,
+  MerchantsModule,
+  PerxCoreModule,
+  ProfileModule,
+  ProfileServiceModule,
+  RewardsModule,
+  ThemesService,
+  TokenStorage,
+  UtilsModule,
+  VouchersModule
 } from '@perxtech/core';
 import {
-  MatToolbarModule,
   MatButtonModule,
-  MatTabsModule,
   MatCardModule,
-  MatRippleModule,
-  MatIconModule,
-  MatFormFieldModule,
-  MatInputModule,
-  MatDialogModule,
-  MatProgressSpinnerModule,
   MatCheckboxModule,
+  MatDialogModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatInputModule,
+  MatProgressSpinnerModule,
+  MatRippleModule,
   MatSnackBarModule,
+  MatTabsModule,
+  MatToolbarModule,
 } from '@angular/material';
 
-import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  HttpClient,
+  HttpClientModule
+} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
 import { HomeComponent } from './home/home.component';
 import { RedeemComponent } from './redeem/redeem.component';
 import { environment } from '../environments/environment';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import {
+  FormsModule,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { HistoryComponent } from './history/history.component';
 import { PromosComponent } from './promos/promos.component';
 import { PromosComponent as PromosStagingComponent } from './promos/promos.component.staging';
@@ -55,8 +66,15 @@ import { QRCodeComponent } from './qr-code/qr-code.component';
 import { NgxBarcodeModule } from 'ngx-barcode';
 import { PopupComponent } from './popup/popup.component';
 import { registerLocaleData } from '@angular/common';
-import { TranslateService, TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { tap, switchMap } from 'rxjs/operators';
+import {
+  TranslateLoader,
+  TranslateModule,
+  TranslateService
+} from '@ngx-translate/core';
+import {
+  switchMap,
+  tap
+} from 'rxjs/operators';
 
 import enGb from '@angular/common/locales/en-GB';
 import localesEnGbExtra from '@angular/common/locales/extra/en-GB';
@@ -119,6 +137,7 @@ export const setLanguage = (
     AuthenticationModule,
     GameModule,
     ProfileModule,
+    ProfileServiceModule.forRoot(),
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,

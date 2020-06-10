@@ -1,0 +1,57 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+  text-align: center;
+
+  p {
+    opacity: 0.7;
+    font-size: 1.4rem;
+  }
+
+  .top-banner {
+    .logo-container {
+      margin: 0 auto;
+      width: 100px;
+      height: 100px;
+
+      img {
+        margin-top: 5px;
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .transaction-amount {
+      border-top: 1px solid lightgrey;
+      margin-top: 3rem;
+    }
+  }
+
+  .rebate-update {
+    text-align: right;
+    padding: 1.3rem;
+
+    .dark-blue,
+    .red {
+      display: inline-block;
+      width: 97px;
+      float: right;
+    }
+
+    .dark-blue {
+      color: #001F67;
+      font-weight: 500;
+    }
+
+    .red {
+      color: #E1091D;
+      font-weight: 500;
+    }
+
+    button {
+      width: 100%;
+    }
+  }
+}

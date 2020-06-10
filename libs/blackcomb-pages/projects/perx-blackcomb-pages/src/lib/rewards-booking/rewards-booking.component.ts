@@ -114,9 +114,9 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
   }
 
   public submitForm(): void {
-
     const currentPrice = this.prices.find((price) => price.id === this.bookingForm.value.priceId);
-    if (!currentPrice || !currentPrice.points) {
+    // allow free rewards to go through
+    if (!currentPrice || currentPrice.points === undefined || null) {
       return;
     }
     const totalCost = currentPrice.points * this.bookingForm.value.quantity;
