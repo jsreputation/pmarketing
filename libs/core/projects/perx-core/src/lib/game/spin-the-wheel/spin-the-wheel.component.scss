@@ -4,10 +4,6 @@
 
 .main-wrap {
   height: 40rem;
-
-  &.down {
-    overflow: hidden;
-  }
 }
 
 .spin-wheel-container {
@@ -18,8 +14,8 @@
   display: block;
 
   &.down {
-    transform: scale(1.4);
-    top: 30%;
+    transform: scale(2);
+    top: 50%;
     height: 80%;
   }
 }

@@ -23,6 +23,7 @@ import {
   IRewardTransactionHistory,
   ITransaction,
   ITransactionHistory,
+  ITransactionProperties,
   TransactionDetailType
 } from './models/loyalty.model';
 
@@ -36,6 +37,7 @@ import { IConfig } from '../config/models/config.model';
 import { Cacheable } from 'ngx-cacheable';
 
 const DEFAULT_PAGE_COUNT: number = 10;
+type TenantTransactionProperties = IV4TransactionPropertiesAbenson | IV4TransactionPropertiesMerck | IV4TransactionPropertiesAllit;
 
 interface IV4Meta {
   count?: number;
@@ -119,7 +121,7 @@ interface IV4PurchaseTransactionHistory {
   currency: string;
   workflow_id?: number;
   created_at: Date;
-  properties?: ICustomProperties;
+  properties?: ICustomProperties | TenantTransactionProperties;
   transaction_reference: string;
 }
 
@@ -130,7 +132,7 @@ interface IV4TransactionHistory {
   transacted_at: Date;
   amount: number;
   transacted_cents?: number; // property will probably be removed
-  properties: ICustomProperties;
+  properties: ICustomProperties | TenantTransactionProperties;
   transaction_details: {
     type: TransactionDetailType;
     data: IV4PurchaseTransactionHistory | IV4RewardTransactionHistory;
@@ -139,6 +141,58 @@ interface IV4TransactionHistory {
 
 interface IV4TransactionHistoryResponse {
   data: IV4TransactionHistory[];
+}
+
+interface IV4TransactionPropertiesAbenson {
+  tenant: 'abenson';
+  qty: number;
+  reg: number;
+  sku: number;
+  store: number;
+  trxno: number;
+  untprc: number;
+  cashier: number;
+  company: number;
+  trxdate: number;
+  trxtime: number;
+  mobileno: string;
+  store_name: string;
+}
+
+interface IV4TransactionPropertiesMerck {
+  tenant: 'merck';
+  product: string;
+  pharmacy: string;
+  merchant_username: string;
+  merchant_account_id: number;
+}
+
+interface IV4TransactionPropertiesAllit {
+  tenant: 'allit';
+  amount: number;
+  quantity: number;
+  item_code: number;
+  item_name: string;
+  amount_net: number;
+  amount_std: number;
+  amount_txn: number;
+  guid_store: string;
+  amount_json: {};
+  branch_code: string;
+  guid_branch: string;
+  amount_signum: number;
+  reference_doc: string;
+  amount_tax_gst: number;
+  amount_tax_wht: number;
+  invoice_number: number;
+  amount_discount: number;
+  category_level_0: string;
+  category_level_1: string;
+  amount_gst_balance: number;
+  amount_wht_balance: number;
+  amount_open_balance: number;
+  transaction_item_guid: string;
+  transaction_line_guid: string;
 }
 
 @Injectable({
@@ -215,7 +269,6 @@ export class V4LoyaltyService extends LoyaltyService {
   }
 
   public static v4TransactionHistoryToTransactionHistory(transactionHistory: IV4TransactionHistory): ITransactionHistory {
-
     const transactionDetails = oc(transactionHistory).transaction_details.data();
     let data: IPurchaseTransactionHistory | IRewardTransactionHistory | undefined;
 
@@ -234,6 +287,7 @@ export class V4LoyaltyService extends LoyaltyService {
           break;
         case TransactionDetailType.transaction:
           const pthDetails = transactionDetails as IV4PurchaseTransactionHistory;
+          // todo: microsites will handling mapping tenant specific properties temporarily
           const pthProps = oc(pthDetails).properties() as {
             merchant_username: string;
             pharmacy: string;
@@ -249,8 +303,27 @@ export class V4LoyaltyService extends LoyaltyService {
             price: pthDetails.amount,
             currency: pthDetails.currency,
           };
+          data.properties = V4LoyaltyService.v4TransactionPropertiesToTransactionProperties(pthProps as TenantTransactionProperties);
           break;
       }
+    } else if (Object.keys(transactionHistory.properties).length > 0) {
+      // all-it transaction currently have no data in transaction_details assume it is a purchase.
+      const thProps = transactionHistory.properties;
+      data = {
+        id: transactionHistory.id
+      };
+
+      data.properties = V4LoyaltyService.v4TransactionPropertiesToTransactionProperties(thProps as TenantTransactionProperties);
+    } else {
+      // assume it is a customer service action from dashboard
+      data = {
+        id: transactionHistory.id
+      };
+
+      // default blackcomb page is currently using productName as the default title
+      data.properties = {
+        productName: 'Customer Service Transaction'
+      };
     }
     return {
       id: transactionHistory.id,
@@ -258,12 +331,48 @@ export class V4LoyaltyService extends LoyaltyService {
       identifier: transactionHistory.identifier,
       transactedAt: transactionHistory.transacted_at,
       pointsAmount: transactionHistory.amount,
-      properties: transactionHistory.properties,
+      properties: transactionHistory.properties as ICustomProperties,
       transactionDetails: {
         type: oc(transactionHistory).transaction_details.type(),
         data
       }
     };
+  }
+
+  private static v4TransactionPropertiesToTransactionProperties(pthProps: TenantTransactionProperties): ITransactionProperties {
+    let data: ITransactionProperties = {};
+
+    if (pthProps && (pthProps as IV4TransactionPropertiesAbenson).sku) {
+      const props = (pthProps as IV4TransactionPropertiesAbenson);
+      data = {
+        productCode: props.sku.toString(),
+        // productName: undefined,
+        quantity: props.qty,
+        storeCode: props.store.toString(),
+        storeName: props.store_name
+      };
+    }
+    if (pthProps && (pthProps as IV4TransactionPropertiesAllit).guid_branch) {
+      const props = (pthProps as IV4TransactionPropertiesAllit);
+      data = {
+        productCode: props.item_code.toString(),
+        productName: props.item_name,
+        quantity: props.quantity,
+        storeCode: props.branch_code,
+        // storeName: undefined
+      };
+    }
+    if (pthProps && (pthProps as IV4TransactionPropertiesMerck).product) {
+      const props = (pthProps as IV4TransactionPropertiesMerck);
+      data = {
+        // productCode: undefined,
+        productName: props.product,
+        // quantity: undefined,
+        // storeCode: undefined,
+        storeName: props.pharmacy
+      };
+    }
+    return data;
   }
 
   @Cacheable({

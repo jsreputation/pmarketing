@@ -8,7 +8,8 @@ import { of } from 'rxjs';
 import {
   ICampaignService,
   IGameService,
-  QuizService
+  QuizService,
+  SafeHtmlPipe
 } from '@perxtech/core';
 
 describe('CampaignsCollectionComponent', () => {
@@ -29,7 +30,10 @@ describe('CampaignsCollectionComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CampaignsCollectionComponent ],
+      declarations: [
+        CampaignsCollectionComponent,
+        SafeHtmlPipe
+      ],
       imports: [
         MatCardModule,
         RouterTestingModule,

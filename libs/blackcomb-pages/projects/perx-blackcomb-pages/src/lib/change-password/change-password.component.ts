@@ -10,7 +10,7 @@ import {
   ProfileService
 } from '@perxtech/core';
 import {TranslateService} from '@ngx-translate/core';
-import {switchMap} from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-blackcomb-pages-change-password',
@@ -22,6 +22,7 @@ export class ChangePasswordComponent {
   public changePasswordForm: FormGroup;
   public profile: IProfile;
   public invalidPWText: string;
+  public loading: boolean = false;
   public invalidOldPW: boolean;
   private initTranslate(): void {
     this.translate.get('LOGIN_PAGE.PASSWORD_INVALID_TXT').subscribe((text) => this.invalidPWText = text);
@@ -68,9 +69,11 @@ export class ChangePasswordComponent {
     const oldPasswordField = this.changePasswordForm.get('oldPassword');
     const oldPasswordString = oldPasswordField ? oldPasswordField.value : '';
 
+    this.loading = true;
     this.authService.login(this.profile.phone as string, oldPasswordString)
       .pipe(
-        switchMap(() => this.authService.requestVerificationToken())
+        switchMap(() => this.authService.requestVerificationToken()),
+        tap( () => this.loading = false, () => this.loading = false)
       )
       .subscribe(
         () => {

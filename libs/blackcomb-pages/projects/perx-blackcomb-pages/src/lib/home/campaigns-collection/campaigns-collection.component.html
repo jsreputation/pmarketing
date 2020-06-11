@@ -10,7 +10,7 @@
     </div>
     <mat-card-content *ngIf="!withRewardsCounter" class="card-content">
       <p class="main-reward-title">{{campaign.name}}</p>
-      <p class="reward-subtitle">{{campaign.description}}</p>
+      <span class="reward-subtitle" [innerHtml]="campaign.description | safeHtml"></span>
     </mat-card-content>
     <mat-card-content *ngIf="withRewardsCounter" class="card-content reward">
 <!--      campaign name will be filled with reward name instead when api ready-->

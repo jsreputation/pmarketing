@@ -136,7 +136,8 @@ export {
   IRewardTransactionHistory,
   IPurchaseTransactionHistory,
   TransactionDetailType,
-  IJoinMethod
+  IJoinMethod,
+  ITransactionProperties
 } from './lib/loyalty/models/loyalty.model';
 export { TransactionPipe } from './lib/loyalty/loyalty-transactions-list/transaction.pipe';
 export { LoyaltySummaryComponent } from './lib/loyalty/loyalty-summary/loyalty-summary.component';
