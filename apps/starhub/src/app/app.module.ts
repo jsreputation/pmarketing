@@ -52,6 +52,8 @@ import {
   TokenStorage,
   UtilsModule,
   VouchersModule,
+  PuzzlesModule,
+  StampModule
 } from '@perxtech/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -68,6 +70,7 @@ import { RewardsSortPipe } from './category/rewards-sort.pipe';
 import { LocationShortFormatComponent } from './location-short-format/location-short-format.component';
 import { RewardDetailComponent } from './reward/reward-detail/reward-detail.component';
 import { GameComponent } from './game/game.component';
+import { StampCardComponent } from './stamp-card/stamp-card.component';
 import { CongratsComponent } from './congrats/congrats.component';
 import { ExpireTimerComponent } from './reward/expire-timer/expire-timer.component';
 import { ErrorComponent } from './error/error.component';
@@ -146,6 +149,7 @@ export const appInit =
     LocationShortFormatComponent,
     RewardDetailComponent,
     GameComponent,
+    StampCardComponent,
     CongratsComponent,
     ExpireTimerComponent,
     ErrorComponent,
@@ -183,6 +187,8 @@ export const appInit =
     CampaignModule,
     CampaignServiceModule.forRoot(),
     PerxGameServiceModule.forRoot(),
+    PuzzlesModule,
+    StampModule,
     MerchantsModule.forRoot(),
     QRCodeModule,
     NgxBarcodeModule,
