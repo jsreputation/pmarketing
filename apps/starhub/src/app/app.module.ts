@@ -1,8 +1,10 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import {
+  HTTP_INTERCEPTORS,
   HttpClient,
-  HttpClientModule
+  HttpClientModule, HttpEvent, HttpHandler,
+  HttpInterceptor, HttpRequest
 } from '@angular/common/http';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
@@ -85,11 +87,21 @@ import {
   TranslateModule,
   TranslateService
 } from '@ngx-translate/core';
+
 import { GhostsModule } from './ghosts/ghosts.module';
+import { Observable } from 'rxjs';
 
 Sentry.init({
   dsn: 'https://b7939e78d33d483685b1c82e9c076384@sentry.io/1873560'
 });
+
+@Injectable()
+export class HttpConfigInterceptor implements HttpInterceptor {
+  public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const requestClone = request.clone({ headers: request.headers.set('app-version', environment.appVersion) });
+    return next.handle(requestClone);
+  }
+}
 
 @Injectable()
 export class SentryErrorHandler implements ErrorHandler {
@@ -204,7 +216,8 @@ export const appInit =
     {
       provide: APP_INITIALIZER, useFactory: appInit,
       deps: [TranslateService, ConfigService, AuthenticationService, ThemesService], multi: true
-    }
+    },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
