@@ -1,6 +1,6 @@
 {
   "name": "@perxtech/starhub",
-  "version": "0.6.8",
+  "version": "0.6.9",
   "scripts": {
     "ng": "ng",
     "start": "PREAUTH=true npm run config && ng serve --host 0.0.0.0",
