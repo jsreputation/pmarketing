@@ -7,6 +7,7 @@ import {
   HttpInterceptor, HttpRequest
 } from '@angular/common/http';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+
 import {
   APP_INITIALIZER,
   ErrorHandler,
@@ -38,7 +39,6 @@ import {
   ConfigModule,
   ConfigService,
   FeedItemPopupComponent,
-  GameModule,
   GameServiceModule as PerxGameServiceModule,
   IConfig,
   LanguageService,
@@ -71,7 +71,6 @@ import { CategorySortComponent } from './category/category-sort/category-sort.co
 import { RewardsSortPipe } from './category/rewards-sort.pipe';
 import { LocationShortFormatComponent } from './location-short-format/location-short-format.component';
 import { RewardDetailComponent } from './reward/reward-detail/reward-detail.component';
-import { GameComponent } from './game/game.component';
 import { StampCardComponent } from './stamp-card/stamp-card.component';
 import { CongratsComponent } from './congrats/congrats.component';
 import { ExpireTimerComponent } from './reward/expire-timer/expire-timer.component';
@@ -88,13 +87,8 @@ import {
   TranslateModule,
   TranslateService
 } from '@ngx-translate/core';
-import {
-  ScratchComponent,
-  ShakeComponent,
-  TapComponent
-} from '@perxtech/blackcomb-pages';
-import {GhostsModule} from './ghosts/ghosts.module';
-import { Observable } from 'rxjs';
+
+import { GhostsModule } from './ghosts/ghosts.module';
 
 Sentry.init({
   dsn: 'https://b7939e78d33d483685b1c82e9c076384@sentry.io/1873560'
@@ -159,14 +153,10 @@ export const appInit =
     RewardsSortPipe,
     LocationShortFormatComponent,
     RewardDetailComponent,
-    GameComponent,
     StampCardComponent,
     CongratsComponent,
     ExpireTimerComponent,
-    ErrorComponent,
-    ShakeComponent,
-    TapComponent,
-    ScratchComponent
+    ErrorComponent
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
@@ -192,7 +182,6 @@ export const appInit =
     ProfileModule,
     PerxProfileServiceModule.forRoot(),
     VouchersModule,
-    GameModule,
     LocationModule,
     ScrollingModule,
     CampaignModule,
