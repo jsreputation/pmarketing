@@ -202,7 +202,7 @@ jobs:
 
       - name: Install helm
         env:
-          HELM_VERSION: 2.16.1
+          HELM_VERSION: 2.16.7
         run: |
           curl -LsSO https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz
           tar -zxvf helm-v${HELM_VERSION}-linux-amd64.tar.gz
@@ -213,9 +213,9 @@ jobs:
 
       - name: Install skaffold
         env:
-          SKAFFOLD_VERSION: latest
+          SKAFFOLD_VERSION: 1.10.1
         run: |
-          curl -LsSo skaffold https://storage.googleapis.com/skaffold/releases/${SKAFFOLD_VERSION}/skaffold-linux-amd64
+          curl -LsSo skaffold https://storage.googleapis.com/skaffold/releases/v${SKAFFOLD_VERSION}/skaffold-linux-amd64
           chmod +x skaffold
           sudo mv skaffold /usr/local/bin
 
