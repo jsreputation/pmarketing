@@ -230,7 +230,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
     let result = false;
     if (this.stampCard && this.stampCard.stamps) {
       this.stampCard.stamps.forEach(stamp => {
-        if (stamp && stamp.vouchers && stamp.vouchers.length > 0) {
+        if (stamp && stamp.vouchers && stamp.vouchers.length > 0 && stamp.state === StampState.redeemed) {
           result = true;
         }
       });
