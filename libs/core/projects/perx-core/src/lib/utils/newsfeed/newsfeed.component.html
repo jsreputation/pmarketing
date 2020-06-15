@@ -1,17 +1,13 @@
-<div *ngIf="items && items.length > 0">
-  <div class="cdk-virtual-scroll-data-source" (window:resize)="onResize()">
-    <cdk-virtual-scroll-viewport (scrolledIndexChange)="updateScrollIndex($event)" [itemSize]="itemSize"
-      orientation="horizontal">
-      <mat-card *cdkVirtualFor="let item of items" class="mat-item mat-elevation-z2"
-        [ngStyle]="{'width': ((itemSize-48) / 10)+'rem'}">
-        <img mat-card-image [src]="item.image" *ngIf="item.image">
-        <mat-card-content>
-          <p class="description">{{ getFirstLineShortTxt(item.description) | async}}</p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-button color="primary" (click)="readMore(item)">{{'HOME.READ_MORE' | translate}}</button>
-        </mat-card-actions>
-      </mat-card>
-    </cdk-virtual-scroll-viewport>
+<ng-container *ngIf=" items$ | async as items">
+  <div class="cards" *ngIf="items && items.length > 0">
+    <mat-card *ngFor="let item of items" class="mat-item mat-elevation-z2">
+      <img mat-card-image [src]="item.image" *ngIf="item.image">
+      <mat-card-content>
+        <p class="description">{{ getFirstLineShortTxt(item.description) | async}}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="primary" (click)="readMore(item)">{{'HOME.READ_MORE' | translate}}</button>
+      </mat-card-actions>
+    </mat-card>
   </div>
-</div>
+</ng-container>

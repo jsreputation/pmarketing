@@ -1,47 +1,36 @@
-.description {
-  font-size: 1.6rem;
-}
-
-cdk-virtual-scroll-viewport {
+.cards {
+  display: flex;
+  flex-direction: row;
   height: 30rem;
+  overflow-x: scroll;
   margin-top: 3rem;
-}
 
-.cdk-virtual-scroll-data-source .mat-item {
-  height: 100%;
-  width: calc(100% - 2rem) !important;
-  box-sizing: border-box;
-}
-
-::ng-deep {
-  .cdk-virtual-scroll-spacer {
-    width: 1px !important;
+  .mat-item {
+    width: calc(100% - 2rem) !important;
+    box-sizing: border-box;
+    flex-grow: 1;
+    flex-shrink: 0;
+    border: 2rem;
+    margin: 0 1rem;
   }
 }
 
-.card {
-  border: 2rem;
+.mat-card-content {
+  padding: 1rem;
+  min-height: 5rem;
+  margin-bottom: 0;
+
+  .description {
+    font-size: 1.6rem;
+    white-space: pre-line;
+  }
 }
 
-.mat-card {
-  margin: 0 1rem;
+.mat-card-image {
+  height: 15rem;
+  object-fit: cover;
+}
 
-  .mat-card-content {
-    padding: 1rem;
-    min-height: 5rem;
-    margin-bottom: 0;
-
-    p {
-      white-space: pre-line;
-    }
-  }
-
-  .mat-card-image {
-    height: 15rem;
-    object-fit: cover;
-  }
-
-  mat-card-actions {
-    padding-top: 0;
-  }
+mat-card-actions {
+  padding-top: 0;
 }
