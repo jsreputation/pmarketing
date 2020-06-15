@@ -39,7 +39,7 @@ export class FeedReaderService {
       const doc1 = parser.parseFromString(feed, 'text/html');
 
       // get the first channel
-      const body = doc.querySelector('body');
+      const body = doc1.querySelector('body');
 
       if (!body) {
         return [];
