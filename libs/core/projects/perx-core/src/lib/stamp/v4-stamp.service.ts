@@ -257,7 +257,7 @@ export class V4StampService implements StampService {
       },
       results: {},
       displayProperties: {
-        //They value pass from backend is actually number of items per col, so I need to switch
+        // They value pass from backend is actually number of items per col, so I need to switch
         numberOfRows: stampCard.display_properties.cols,
         numberOfCols: stampCard.display_properties.rows,
         cardImage,
