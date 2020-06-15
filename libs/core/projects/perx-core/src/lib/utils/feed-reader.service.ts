@@ -36,7 +36,7 @@ export class FeedReaderService {
     const parser = new DOMParser();
     if (feed.includes('html')) {
       // parse the dom
-      const doc = parser.parseFromString(feed, 'text/html');
+      const doc1 = parser.parseFromString(feed, 'text/html');
 
       // get the first channel
       const body = doc.querySelector('body');
@@ -54,9 +54,9 @@ export class FeedReaderService {
       const heroImgUrl = heroImg ? heroImg.src : null;
 
       // @ts-ignore
-      const items = Array.from(feedsContainer.querySelectorAll('.row > div'));
+      const items1 = Array.from(feedsContainer.querySelectorAll('.row > div'));
 
-      return items.map((item: Element) => {
+      return items1.map((item: Element) => {
         const dateStr = item.getElementsByTagName('time')[0].textContent;
         const image = item.getElementsByTagName('img')[0].src || heroImgUrl;
         const it = {
@@ -97,8 +97,8 @@ export class FeedReaderService {
       const image: string | null = mediaImg
         ? mediaImg.getAttribute('url')
         : imageTag
-        ? imageTag.textContent
-        : channelImgUrl;
+          ? imageTag.textContent
+          : channelImgUrl;
       const it: FeedItem = {
         title: item.getElementsByTagName('title')[0].textContent,
         description: item.getElementsByTagName('description')[0].textContent,
