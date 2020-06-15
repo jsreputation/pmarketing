@@ -16,7 +16,14 @@
       [willWin]="willWin"
       [game]="game"
       (loaded)="loadPreplay()"
-      (broken)=preplayGameCompleted()>
+      (broken)=preplayGameCompleted()
       ></perx-blackcomb-pages-scratch>
+    <perx-blackcomb-pages-spin
+      *ngSwitchCase="'spin'"
+      [game]="game"
+      [willWin]="willWin"
+      (loaded)="loadPreplay()"
+      (broken)=preplayGameCompleted()>
+    </perx-blackcomb-pages-spin>
   </div>
 </div>
