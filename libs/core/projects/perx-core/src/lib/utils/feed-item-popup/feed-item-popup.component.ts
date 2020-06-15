@@ -16,8 +16,8 @@ export class FeedItemPopupComponent {
   public showButton: boolean = true;
 
   constructor(
-    private router: Router,
-    @Inject(MAT_DIALOG_DATA) public item: FeedItem
+    @Inject(MAT_DIALOG_DATA) public item: FeedItem,
+    private router: Router
   ) {
     if (item.hideButton) {
       this.showButton = !item.hideButton;
@@ -26,7 +26,10 @@ export class FeedItemPopupComponent {
 
   public goToItemLink(): void {
     if (this.item.link != null) {
-      this.router.navigateByUrl(this.item.link);
+      if (this.item.link.startsWith('/')) {
+        this.router.navigateByUrl(this.item.link);
+      }
+      (window as any).open(this.item.link);
     }
   }
 }

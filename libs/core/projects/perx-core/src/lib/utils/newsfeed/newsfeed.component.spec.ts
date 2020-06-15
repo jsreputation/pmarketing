@@ -2,7 +2,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule, MatCardModule, MatDialogModule, MatDialog } from '@angular/material';
 import { NewsfeedComponent } from './newsfeed.component';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
-import { ScrollingModule } from '@angular/cdk/scrolling';
 import { TranslateModule } from '@ngx-translate/core';
 
 describe('NewsfeedComponent', () => {
@@ -37,7 +36,6 @@ describe('NewsfeedComponent', () => {
         MatButtonModule,
         NgxMultiLineEllipsisModule,
         MatDialogModule,
-        ScrollingModule,
         TranslateModule.forRoot()
       ]
     })
@@ -52,26 +50,6 @@ describe('NewsfeedComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  describe('updateScrollIndex', () => {
-    it('should update newsAfterScroll to Array(0) on updateScrollIndex', () => {
-      component.items = items;
-      component.updateScrollIndex(1);
-      expect(component.newsAfterScroll).toEqual(Array(0));
-    });
-
-    it('should update newsAfterScroll to [] on updateScrollIndex', () => {
-      component.items = [];
-      component.updateScrollIndex(0);
-      expect(component.newsAfterScroll).toEqual([]);
-    });
-  });
-
-  it('should update itemSize onResize', () => {
-    component.onResize();
-    const windowWidth = window.innerWidth;
-    expect(component.itemSize).toBe(windowWidth);
   });
 
   it('should open dialog on readMore', () => {
