@@ -2,17 +2,9 @@
   text-align: center;
 }
 
-.stamps {
-  padding: 0 1.5rem;
-}
-
 .content h1 {
   color: #212121;
   font-size: 2.4rem;
-}
-
-.available-stamp {
-  margin-bottom: 2.4rem;
 }
 
 .available-stamp .stampCountImage {
@@ -41,7 +33,7 @@
   background-size: cover;
   background-repeat: no-repeat;
   border-radius: 1rem;
-  padding: 1.7rem 0 3.2rem 0;
+  padding: 1.7rem 1.5rem 3.2rem 1.5rem;
 }
 
 .row {
@@ -106,6 +98,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 2.4rem;
 }
 
 .dummy-card-big {
