@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, OnIni
 
 import { IStamp, StampState } from '../../stamp/models/stamp.model';
 import { PuzzleCollectReward } from '../models/puzzle-stamp.model';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'perx-core-puzzle-collect-stamps',
@@ -10,18 +11,6 @@ import { PuzzleCollectReward } from '../models/puzzle-stamp.model';
 })
 
 export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
-  // This dummy array is describing the slots templates
-  private stampsOrientations: number[][] = [
-    [1, 2],
-    [2, 2],
-    [2, 1, 2],
-    [3, 3],
-    [3, 3, 1],
-    [4, 4],
-    [3, 3, 3],
-    [3, 3, 3, 1]
-  ];
-
   @Input()
   public defaultCardBgImage: string = '';
   @Input()
@@ -38,6 +27,12 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
 
   @Input()
   public nbSlots: number | null = null;
+
+  @Input()
+  public numberOfCols: number | undefined;
+
+  @Input()
+  public numberOfRows: number | undefined;
 
   @Input()
   private preStampImg: string | null = null;
@@ -61,6 +56,9 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
   public subTitle: string | null = null;
 
   @Input()
+  public newStampsLabelFn: () => Observable<string>;
+
+  @Input()
   public availableStampImg: string | null = null;
 
   @Input()
@@ -80,14 +78,25 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
     const availableStamps = this.stamps.filter(stamp => stamp.state === StampState.issued);
     this.availableStampCount = availableStamps.length;
     this.stampCardImage = this.postStampImg;
+    this.updateActiveOrientation();
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.nbSlots && this.nbSlots) {
-      this.currentActiveOrientation = this.stampsOrientations[this.nbSlots - 3];
+      this.updateActiveOrientation();
     }
     if (changes.stamps && this.stamps) {
       this.availableStampCount = this.stamps.filter(stamp => stamp.state === StampState.issued).length;
+    }
+  }
+
+  private updateActiveOrientation(): void {
+    if (this.nbSlots) {
+      this.numberOfCols = this.numberOfCols || 3;
+      this.numberOfRows = this.numberOfRows || Math.ceil(this.nbSlots / this.numberOfCols);
+
+      this.currentActiveOrientation = Array(this.numberOfRows - 1).fill(this.numberOfCols);
+      this.currentActiveOrientation.push(this.nbSlots % this.numberOfCols || this.numberOfCols);
     }
   }
 
