@@ -99,8 +99,8 @@ interface IV4StampCard {
     rewards: IV4Outcome[];
   };
   display_properties: {
-    number_of_cols?: number;
-    number_of_rows?: number;
+    cols?: number;
+    rows?: number;
     header?: {
       value: {
         title: string;
@@ -257,8 +257,9 @@ export class V4StampService implements StampService {
       },
       results: {},
       displayProperties: {
-        numberOfCols: stampCard.display_properties.number_of_cols,
-        numberOfRows: stampCard.display_properties.number_of_rows,
+        //They value pass from backend is actually number of items per col, so I need to switch
+        numberOfRows: stampCard.display_properties.cols,
+        numberOfCols: stampCard.display_properties.rows,
         cardImage,
         // todo: temporarily map this until v4 dashboard fixes naming
         cardBackgroundImage,

@@ -29,8 +29,11 @@ export class StampCardComponent implements OnInit, OnDestroy {
   public isEnabled: boolean = false;
   public stamps: IStamp[] | undefined;
   public stampCard: IStampCard | null;
+  public numberOfCols: number | undefined;
+  public numberOfRows: number | undefined;
   private idN: number;
   private destroy$: Subject<void> = new Subject();
+  public newStampsLabelFn = () => of(" new stamps");
   private rewardSuccessPopUp: IPopupConfig = {
     title: 'Stamp collect successfully',
     buttonTxt: 'View Reward'
@@ -221,5 +224,17 @@ export class StampCardComponent implements OnInit, OnDestroy {
 
   public closeAndRedirect(url: string): void {
     this.router.navigateByUrl(url);
+  }
+
+  public hasRewards(): boolean {
+    let result = false;
+    if (this.stampCard && this.stampCard.stamps) {
+      this.stampCard.stamps.forEach(stamp => {
+        if (stamp && stamp.vouchers && stamp.vouchers.length > 0) {
+          result = true;
+        }
+      });
+    }
+    return result;
   }
 }
