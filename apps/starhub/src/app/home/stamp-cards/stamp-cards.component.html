@@ -1,5 +1,5 @@
 <div *ngIf="(campaigns$ | async) as campaigns " class="main-container">
-  <h1 *ngIf="ghostCampaigns.length || campaigns.length">Stamp Cards</h1>
+  <h1 *ngIf="ghostCampaigns.length || campaigns.length">More to explore</h1>
   <div
    infiniteScroll
    [infiniteScrollDistance]="2"

@@ -4,6 +4,8 @@
     <perx-core-puzzle-collect-stamps
       [nbSlots]="stampCard.campaignConfig?.totalSlots || stampCard.displayProperties.totalSlots"
       [stamps]="stampCard.stamps"
+      [numberOfRows]="stampCard.displayProperties.numberOfRows"
+      [numberOfCols]="stampCard.displayProperties.numberOfCols"
       [rewards]="stampCard.campaignConfig?.collectionRewards || v4Rewards(stampCard)"
       [preStampImg]="stampCard.displayProperties.preStampImg"
       [postStampImg]="stampCard.displayProperties.postStampImg"
@@ -15,7 +17,13 @@
       [showStampsCounter]="true"
       [title]="stampCard.title || 'Stamp Card'"
       [subTitle]="stampCard.subTitle || 'Tap the stamps to earn your reward!'"
+      [newStampsLabelFn]="newStampsLabelFn"
       (availableStampClicked)="handleStamp($event)">
     </perx-core-puzzle-collect-stamps>
+  </div>
+  <div *ngIf="hasRewards()" class="game-footer">
+    <button mat-flat-button color="primary" [routerLink]="['/wallet']">
+      {{stampCard.buttonText || "View rewards" }}
+    </button>
   </div>
 </div>
