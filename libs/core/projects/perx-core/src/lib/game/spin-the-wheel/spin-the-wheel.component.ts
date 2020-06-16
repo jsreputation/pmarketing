@@ -83,6 +83,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
 
   public ngOnChanges(changes: SimpleChanges): void {
     if ((changes.slices && this.slices)
+      || (changes.rewardSlots && this.rewardSlots)
       || (changes.wheelImg && this.wheelImg)
       || (changes.pointerImg && this.pointerImg)
       || (changes.willWin)) {
@@ -123,7 +124,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
     } else {
       slots = [];
       for (let i = 0; i < this.slices.length; i++) {
-        if (!this.rewardSlots.includes(i)) {
+        if (this.rewardSlots.includes(i)) {
           slots.push(i);
         }
       }
@@ -134,8 +135,8 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
 
   private init(): void {
     this.arcDeg = 360 / this.slices.length;
-    // randomize initial wheel position
-    this.currentRotationAngleRad = Math.random() * 2 * Math.PI;
+    // Remove random initial point to avoid one load play and the wheel has different start point
+    this.currentRotationAngleRad = 0;
     this.slotToLand = this.determineSlot();
     const angleNeeded = this.getTargetAngle(this.slotToLand);
 
