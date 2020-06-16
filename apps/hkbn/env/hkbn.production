@@ -1,0 +1,3 @@
+export APIHOST=https://api.perxtech.net 
+export DEFAULT_LANG=zh 
+export PRODUCTION=true

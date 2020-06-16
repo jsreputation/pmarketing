@@ -1,0 +1,15 @@
+export PREAUTH=false
+export APIHOST=https://api.perxtech.io
+export IS_WHISTLER=false
+export SHOW_QUIZ_ON_HOMEPAGE=true
+export SHOW_CAMPAIGN_LANDING_PAGE=true
+export SHOW_USER_QR=true
+export SHOW_ACCOUNTS_PAGE=true
+export SHOW_HOME_PAGE=true
+export SHOW_HISTORY_PAGE=true
+export SHOW_USERINFO_ACCOUNTS=true
+export SHOW_TRANSANCTION_HISTORY_ACCOUNTS=true
+export SHOW_EXPIRY_REWARD_DETAIL=true
+export SHOW_LOGIN_SUBTITLE=true
+export REDIRECT_AFTER_LOGIN=/home
+export PRODUCTION=true
