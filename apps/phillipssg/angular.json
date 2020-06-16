@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "blackcomb": {
+    "phillipssg": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/blackcomb",
+            "outputPath": "dist/phillipssg",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -68,30 +68,30 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "blackcomb:build",
+            "browserTarget": "phillipssg:build",
             "port": 4201
           },
           "configurations": {
             "production": {
-              "browserTarget": "blackcomb:build:production"
+              "browserTarget": "phillipssg:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "blackcomb:build"
+            "browserTarget": "phillipssg:build"
           }
         },
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "blackcomb:serve"
+            "devServerTarget": "phillipssg:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "blackcomb:serve:production"
+              "devServerTarget": "phillipssg:serve:production"
             }
           }
         },
@@ -116,5 +116,5 @@
       }
     }
   },
-  "defaultProject": "blackcomb"
+  "defaultProject": "phillipssg"
 }
