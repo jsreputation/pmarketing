@@ -1,22 +1,22 @@
 import { style, animate, transition, query, stagger } from '@angular/animations';
 
-export function fadeIn(selector = ':enter', duration = '400ms ease-out') {
+export function fadeIn(selector: string = ':enter', duration: string = '400ms ease-out'): AnimationMetadata {
   return [
     transition('* => *', [
       query(selector, [
-        style({ opacity: 0, transform: 'translateY(-5px)'}),
+        style({ opacity: 0, transform: 'translateY(-5px)' }),
         stagger('50ms', [
           animate(duration, style({
             opacity: 1,
             transform: 'translateY(0px)'
           }))
         ])
-      ], {optional: true })
+      ], { optional: true })
     ])
   ];
 }
 
-export function fadeOut(selector = ':leave', duration = '200ms') {
+export function fadeOut(selector: string = ':leave', duration: string = '200ms'): AnimationMetadata {
   return [
     transition('* => *', [
       query(selector, [
@@ -26,7 +26,7 @@ export function fadeOut(selector = ':leave', duration = '200ms') {
             opacity: 0
           }))
         ])
-      ], {optional: true })
+      ], { optional: true })
     ])
   ];
 }
