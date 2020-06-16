@@ -1,0 +1,2 @@
+export APIHOST=https://api.perxtech.net 
+export PRODUCTION=true

@@ -1,0 +1,2 @@
+export PRODUCTION=true 
+export COMING_SOON=true
