@@ -79,7 +79,7 @@ import { ErrorComponent } from './error/error.component';
 import { environment } from '../environments/environment';
 import * as Sentry from '@sentry/browser';
 import {
-  switchMap,
+  // switchMap,
   tap
 } from 'rxjs/operators';
 import {
@@ -121,7 +121,7 @@ export const appInit =
     translateService: TranslateService,
     configService: ConfigService,
     authService: AuthenticationService,
-    themesService: ThemesService
+    // themesService: ThemesService
   ) => () => new Promise((resolve) => {
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get('token');
@@ -133,8 +133,8 @@ export const appInit =
 
     configService.readAppConfig().pipe(
       tap((config: IConfig<void>) => translateService.setDefaultLang(config.defaultLang || 'en')),
-      switchMap(() => authService.getAppToken()),
-      switchMap(() => themesService.getThemeSetting())
+      // switchMap(() => authService.getAppToken()),
+      // switchMap(() => themesService.getThemeSetting())
     ).toPromise().then(() => resolve());
     resolve();
   });
