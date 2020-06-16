@@ -1,6 +1,6 @@
-import { style, animate, transition, query, stagger } from '@angular/animations';
+import { animate, AnimationMetadata, query, stagger, style, transition } from '@angular/animations';
 
-export function fadeIn(selector: string = ':enter', duration: string = '400ms ease-out'): AnimationMetadata {
+export function fadeIn(selector: string = ':enter', duration: string = '400ms ease-out'): AnimationMetadata[] {
   return [
     transition('* => *', [
       query(selector, [
@@ -16,7 +16,7 @@ export function fadeIn(selector: string = ':enter', duration: string = '400ms ea
   ];
 }
 
-export function fadeOut(selector: string = ':leave', duration: string = '200ms'): AnimationMetadata {
+export function fadeOut(selector: string = ':leave', duration: string = '200ms'): AnimationMetadata[] {
   return [
     transition('* => *', [
       query(selector, [
