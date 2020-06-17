@@ -1,2 +1,2 @@
-export DEFAULT_LANG=zh 
-export PRODUCTION=true
+DEFAULT_LANG=zh 
+PRODUCTION=true

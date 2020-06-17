@@ -1,7 +1,7 @@
-export CONTACTUSURL=https://cdn.perxtech.net/content/daiichi/9bd709dd-b35a-4eab-aab6-77d43acbf42e.html
-export TNCURL=https://cdn.perxtech.net/content/daiichi/f339888a-8b49-4b23-89df-1d1cc0486887.html
-export PREAUTH=true
-export APIHOST=https://api.perxtech.io
-export IS_WHISTLER=false
-export PRODUCTION=true
-export DEFAULT_LANG=vi
+CONTACTUSURL=https://cdn.perxtech.net/content/daiichi/9bd709dd-b35a-4eab-aab6-77d43acbf42e.html
+TNCURL=https://cdn.perxtech.net/content/daiichi/f339888a-8b49-4b23-89df-1d1cc0486887.html
+PREAUTH=true
+APIHOST=https://api.perxtech.io
+IS_WHISTLER=false
+PRODUCTION=true
+DEFAULT_LANG=vi

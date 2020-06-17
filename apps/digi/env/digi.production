@@ -1,2 +1,2 @@
-export APIHOST=https://api.perxtech.net 
-export PRODUCTION=true
+APIHOST=https://api.perxtech.net 
+PRODUCTION=true
