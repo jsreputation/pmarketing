@@ -65,10 +65,12 @@ export class WhistlerMerchantAdminService implements IMerchantAdminService {
     throw new Error('getMerchantProfile Method not implemented.');
   }
 
-  // @ts-ignore
-  public getTransactionHistory(page?: number, pageSize?: number, locale?: string,
-                               // @ts-ignore
-                               sortBy?: string, orderBy?: string,): Observable<IMerchantTransactionHistory[]> {
+
+  public getTransactionHistory(
+    // @ts-ignore
+    page?: number, pageSize?: number, locale?: string,
+    // @ts-ignore
+    sortBy?: string, orderBy?: string): Observable<IMerchantTransactionHistory[]> {
     throw new Error('getTransactionHistory Method not implemented.');
   }
 
