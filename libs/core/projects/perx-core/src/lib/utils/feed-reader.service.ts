@@ -18,7 +18,7 @@ export interface FeedItem {
   providedIn: 'root',
 })
 export class FeedReaderService {
-  private http;
+  private http: HttpClient;
   constructor(handler: HttpBackend) {
     this.http = new HttpClient(handler);
   }
