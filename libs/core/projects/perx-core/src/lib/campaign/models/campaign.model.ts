@@ -3,7 +3,6 @@ import { WInformationCollectionSettingType, IWProperties } from '@perxtech/whist
 
 export interface CampaignDisplayProperties {
   landingPage?: CampaignLandingPage;
-  howToCollectStamps?: string;
   informationCollectionSetting?: WInformationCollectionSettingType;
   weblink?: boolean;
   noRewardsPopUp?: IWProperties;

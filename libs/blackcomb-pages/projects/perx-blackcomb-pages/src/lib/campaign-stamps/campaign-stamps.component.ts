@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of, Subject, forkJoin } from 'rxjs';
-import { ConfigService, IConfig, IStampCard, StampService, StampState, Voucher, ICampaignService, ICampaign } from '@perxtech/core';
+import { ConfigService, IConfig, IStampCard, StampService, StampState, Voucher, ICampaignService, ICampaign, CampaignLandingPage } from '@perxtech/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
@@ -20,7 +20,7 @@ export class CampaignStampsComponent implements OnInit {
   public stampCards$: Observable<IStampCard[]>;
   public title: string;
   public subTitle: string;
-  public howToCollectStamps: string;
+  public config: CampaignLandingPage | undefined;
   public filter: string[];
   public rewardsHeadline: string;
   public expiryLabelFn: ((v: Voucher) => string) | undefined;
@@ -68,7 +68,7 @@ export class CampaignStampsComponent implements OnInit {
       ([stampCards, campaign]: [IStampCard[], ICampaign]) => {
         this.title = campaign.name || 'Stamp cards';
         this.subTitle = campaign.description || '';
-        this.howToCollectStamps = oc(campaign).displayProperties.howToCollectStamps() || '';
+        this.config = oc(campaign).displayProperties.landingPage();
         this.stampCards$ = of(stampCards);
       }
     );
