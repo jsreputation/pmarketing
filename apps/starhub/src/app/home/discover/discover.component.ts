@@ -46,6 +46,6 @@ export class DiscoverComponent implements OnInit {
   }
 
   public stampSelected(campaignId: number): void {
-    this.router.navigate(['/stamp-card'], { queryParams: { id: campaignId } });
+    this.router.navigate([`/stamp/${campaignId}`]);
   }
 }

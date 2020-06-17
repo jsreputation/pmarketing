@@ -35,7 +35,7 @@ describe('StampCardComponent', () => {
       declarations: [StampCardComponent],
       imports: [
         RouterTestingModule.withRoutes([
-          { path: 'wallet', redirectTo: '/' }
+          { path: 'home', redirectTo: '/' }
         ]),
         PuzzlesModule,
       ],

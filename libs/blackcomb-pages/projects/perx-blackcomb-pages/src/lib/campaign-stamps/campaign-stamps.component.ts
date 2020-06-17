@@ -18,6 +18,8 @@ export class CampaignStampsComponent implements OnInit {
   private destroy$: Subject<void> = new Subject<void>();
 
   public stampCards$: Observable<IStampCard[]>;
+  public title: string;
+  public subTitle: string;
   public filter: string[];
   public rewardsHeadline: string;
   public expiryLabelFn: ((v: Voucher) => string) | undefined;
@@ -59,6 +61,8 @@ export class CampaignStampsComponent implements OnInit {
       takeUntil(this.destroy$)
     ).subscribe(
       (stampCards: IStampCard[]) => {
+        this.title = stampCards[0].title || 'Stamp cards';
+        this.subTitle = stampCards[0].subTitle || '';
         this.stampCards$ = of(stampCards);
       }
     );
