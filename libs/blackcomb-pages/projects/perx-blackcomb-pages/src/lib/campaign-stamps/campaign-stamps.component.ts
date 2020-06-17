@@ -61,7 +61,7 @@ export class CampaignStampsComponent implements OnInit {
         return forkJoin(
           this.stampService.getCards(campaignId),
           this.campaignService.getCampaign(campaignId)
-          );
+        );
       }),
       takeUntil(this.destroy$)
     ).subscribe(
