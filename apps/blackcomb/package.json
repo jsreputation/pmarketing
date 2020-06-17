@@ -23,9 +23,9 @@
     "lint:fix": "stylelint \"src/**/*.*css\" --fix && eslint \"./src/**/*.ts\" --fix",
     "e2e": "ng e2e",
     "start:v4": "PREAUTH=false APIHOST=https://api.perxtech.io IS_WHISTLER=false SHOW_USER_QR=true SHOW_ACCOUNTS_PAGE=true SHOW_HOME_PAGE=true SHOW_HISTORY_PAGE=true SHOW_USERINFO_ACCOUNTS=true SHOW_TRANSANCTION_HISTORY_ACCOUNTS=true SHOW_EXPIRY_REWARD_DETAIL=true SHOW_LOGIN_SUBTITLE=true REDIRECT_AFTER_LOGIN=/home npm run config && ng serve --host 0.0.0.0",
-    "start:v4:prod": "PREAUTH=false APIHOST=https://api.perxtech.net IS_WHISTLER=false SHOW_USER_QR=true SHOW_ACCOUNTS_PAGE=true SHOW_HOME_PAGE=true SHOW_HISTORY_PAGE=true SHOW_USERINFO_ACCOUNTS=true SHOW_TRANSANCTION_HISTORY_ACCOUNTS=true SHOW_EXPIRY_REWARD_DETAIL=true SHOW_LOGIN_SUBTITLE=true REDIRECT_AFTER_LOGIN=/home npm run config && ng serve --host 0.0.0.0",
-    "start:v4:daiichi": "env-cmd -f env/daiichi-dlvn.staging npm run config && ng serve --host 0.0.0.0",
-    "start:v4:oracle-demo": "env-cmd -f env/oracle-demo.staging npm run config && ng serve --host 0.0.0.0",
+    "start:blackcomb:production": "PREAUTH=false APIHOST=https://api.perxtech.net IS_WHISTLER=false SHOW_USER_QR=true SHOW_ACCOUNTS_PAGE=true SHOW_HOME_PAGE=true SHOW_HISTORY_PAGE=true SHOW_USERINFO_ACCOUNTS=true SHOW_TRANSANCTION_HISTORY_ACCOUNTS=true SHOW_EXPIRY_REWARD_DETAIL=true SHOW_LOGIN_SUBTITLE=true REDIRECT_AFTER_LOGIN=/home npm run config && ng serve --host 0.0.0.0",
+    "start:daiichi-dlvn:staging": "env-cmd -f env/daiichi-dlvn.staging npm run config && ng serve --host 0.0.0.0",
+    "start:oracle-demo:staging": "env-cmd -f env/oracle-demo.staging npm run config && ng serve --host 0.0.0.0",
     "test:watch": "jest --watch --config=jest.config.json"
   },
   "private": true,
