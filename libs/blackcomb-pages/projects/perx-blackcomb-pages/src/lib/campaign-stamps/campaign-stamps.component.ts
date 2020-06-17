@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
-import { ConfigService, IConfig, IStampCard, StampService, StampState, Voucher } from '@perxtech/core';
+import { Observable, of, Subject, forkJoin } from 'rxjs';
+import { ConfigService, IConfig, IStampCard, StampService, StampState, Voucher, ICampaignService, ICampaign } from '@perxtech/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
@@ -20,6 +20,7 @@ export class CampaignStampsComponent implements OnInit {
   public stampCards$: Observable<IStampCard[]>;
   public title: string;
   public subTitle: string;
+  public howToCollectStamps: string;
   public filter: string[];
   public rewardsHeadline: string;
   public expiryLabelFn: ((v: Voucher) => string) | undefined;
@@ -35,6 +36,7 @@ export class CampaignStampsComponent implements OnInit {
     private router: Router,
     private activeRoute: ActivatedRoute,
     private stampService: StampService,
+    private campaignService: ICampaignService,
     private configService: ConfigService) {
   }
 
@@ -56,13 +58,17 @@ export class CampaignStampsComponent implements OnInit {
       map((params: ParamMap) => params.get('id')),
       switchMap((id: string) => {
         const campaignId: number = Number.parseInt(id, 10);
-        return this.stampService.getCards(campaignId);
+        return forkJoin(
+          this.stampService.getCards(campaignId),
+          this.campaignService.getCampaign(campaignId)
+          );
       }),
       takeUntil(this.destroy$)
     ).subscribe(
-      (stampCards: IStampCard[]) => {
-        this.title = stampCards[0].title || 'Stamp cards';
-        this.subTitle = stampCards[0].subTitle || '';
+      ([stampCards, campaign]: [IStampCard[], ICampaign]) => {
+        this.title = campaign.name || 'Stamp cards';
+        this.subTitle = campaign.description || '';
+        this.howToCollectStamps = oc(campaign).displayProperties.howToCollectStamps() || '';
         this.stampCards$ = of(stampCards);
       }
     );
