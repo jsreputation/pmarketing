@@ -3,9 +3,6 @@
     'background': !cardBgImage && defaultCardBgImage }">
     <h1 *ngIf="title">{{title}}</h1>
     <p class="subtitle" *ngIf="subTitle" [innerHtml]="subTitle"></p>
-    <p class="subtitle">
-      Tap grey stamps to add New!
-    </p>
     <div class="available-stamp" *ngIf="showStampsCounter">
       <img *ngIf="stampCardImage" class="stampCountImage" [src]="stampCardImage" alt="">
       <div *ngIf="!stampCardImage" class="dummy-card" [ngStyle]="{'background-color': defaultstampCardImage }"></div>
