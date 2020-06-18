@@ -36,3 +36,9 @@ export interface IGetVoucherParams {
 export interface IRedeemOptions {
   pin?: string;
 }
+
+export interface IVoucherLocation {
+  // i only need the name and id
+  id: number;
+  name: string;
+}
