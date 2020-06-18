@@ -1,10 +1,9 @@
-import { IReward } from './../../../../../libs/core/projects/perx-core/src/lib/rewards/models/reward.model';
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { VoucherComponent } from './voucher.component';
 import { MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { IVoucherService, VoucherState, RedemptionType, RewardsService, Voucher } from '@perxtech/core';
+import { IVoucherService, VoucherState, RedemptionType, RewardsService, Voucher, IReward } from '@perxtech/core';
 import { LocationShortFormatComponent } from '../location-short-format/location-short-format.component';
 import { RewardDetailComponent } from '../reward/reward-detail/reward-detail.component';
 import { ExpireTimerComponent } from '../reward/expire-timer/expire-timer.component';
