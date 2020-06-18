@@ -71,7 +71,7 @@ import { CategorySortComponent } from './category/category-sort/category-sort.co
 import { RewardsSortPipe } from './category/rewards-sort.pipe';
 import { LocationShortFormatComponent } from './location-short-format/location-short-format.component';
 import { RewardDetailComponent } from './reward/reward-detail/reward-detail.component';
-import { StampCardComponent } from './stamp-card/stamp-card.component';
+import { StampCardComponent } from './stamp/stamp-card.component';
 import { CongratsComponent } from './congrats/congrats.component';
 import { ExpireTimerComponent } from './reward/expire-timer/expire-timer.component';
 import { ErrorComponent } from './error/error.component';

@@ -1,13 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CampaignStampsComponent } from './campaign-stamps.component';
-import { ConfigService, PuzzlesModule, StampService } from '@perxtech/core';
+import { ConfigService, PuzzlesModule, StampService, UtilsModule, ICampaignService } from '@perxtech/core';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 
 const stampServiceStub: Partial<StampService> = {
   getCards: () => of(),
+};
+const campaignServiceStub: Partial<ICampaignService> = {
+  getCampaign: () => of(),
 };
 const configServiceStub: Partial<ConfigService> = {
   readAppConfig: () => of({
@@ -27,12 +30,14 @@ describe('CampaignStampsComponent', () => {
     TestBed.configureTestingModule({
       declarations: [CampaignStampsComponent],
       imports: [
+        UtilsModule,
         RouterTestingModule,
         PuzzlesModule,
         InfiniteScrollModule,
       ],
       providers: [
         { provide: StampService, useValue: stampServiceStub },
+        { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: ConfigService, useValue: configServiceStub },
       ]
     })

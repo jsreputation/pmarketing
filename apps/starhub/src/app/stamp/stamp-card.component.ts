@@ -1,7 +1,7 @@
-import { ActivatedRoute, Router, Params } from '@angular/router';
+import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { StampService, IStampCard, IStamp, IPopupConfig, PuzzleCollectReward, NotificationService, StampState, ConfigService } from '@perxtech/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { switchMap, tap, takeUntil, pairwise } from 'rxjs/operators';
+import { switchMap, tap, takeUntil, pairwise, filter, map } from 'rxjs/operators';
 import { Subject, of } from 'rxjs';
 import { oc } from 'ts-optchain';
 import { AnalyticsService, PageType } from '../analytics.service';
@@ -63,13 +63,12 @@ export class StampCardComponent implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.configService.readAppConfig()
       .pipe(
-        switchMap(() => this.route.queryParams),
-        switchMap((params: Params) => {
-          if (params.id) {
-            this.idN = Number.parseInt(params.id, 10);
-            return this.stampService.getCurrentCard(this.idN);
-          }
-          return of({} as IStampCard);
+        switchMap(() => this.route.paramMap),
+        filter((params: ParamMap) => params.has('id')),
+        map((params: ParamMap) => params.get('id')),
+        switchMap((id: string) => {
+          this.idN = Number.parseInt(id, 10);
+          return this.stampService.getCurrentCard(this.idN);
         }),
         tap((stampCard: IStampCard) => {
           if (stampCard) {
@@ -114,15 +113,18 @@ export class StampCardComponent implements OnInit, OnDestroy {
             pairwise()
           )),
         takeUntil(this.destroy$)
-      ).subscribe(([prevStamps, currStamps]) => {
-        // after skip once we get definitely prev and current
-        if ((currStamps && currStamps.stamps) &&
-          (prevStamps && prevStamps.stamps) &&
-          prevStamps.stamps.length < currStamps.stamps.length) {
-          this.stampCard = currStamps;
-          this.notificationService.addSnack('You got a new stamp!');
-        }
-      }, () => this.router.navigate(['/wallet']));
+      ).subscribe(
+        ([prevStamps, currStamps]) => {
+          // after skip once we get definitely prev and current
+          if ((currStamps && currStamps.stamps) &&
+            (prevStamps && prevStamps.stamps) &&
+            prevStamps.stamps.length < currStamps.stamps.length) {
+            this.stampCard = currStamps;
+            this.notificationService.addSnack('You got a new stamp!');
+          }
+        },
+        () => this.router.navigate(['/home'])
+      );
   }
 
   public ngOnDestroy(): void {
