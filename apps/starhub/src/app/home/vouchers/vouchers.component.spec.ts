@@ -1,4 +1,10 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick
+} from '@angular/core/testing';
 
 import { VouchersComponent } from './vouchers.component';
 import { MatCardModule, MatIconModule } from '@angular/material';
@@ -21,7 +27,7 @@ describe('VouchersComponent', () => {
   };
 
   const today = new Date();
-  const tomorrow = new Date(today.getTime() + ((24 * 60 * 60 * 1000) * 1.1));
+  const tomorrow = new Date(today.getTime() + 24 * 60 * 60 * 1000 * 1.1);
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -29,18 +35,17 @@ describe('VouchersComponent', () => {
       imports: [
         MatCardModule,
         MatIconModule,
-        RouterTestingModule.withRoutes([{
-          path: 'voucher',
-          component: VouchersComponent
-        }]),
+        RouterTestingModule.withRoutes([
+          {
+            path: 'voucher',
+            component: VouchersComponent
+          }
+        ]),
         NgxMultiLineEllipsisModule,
         InfiniteScrollModule
       ],
-      providers: [
-        { provide: IVoucherService, useValue: vouchersServiceStub }
-      ]
-    })
-      .compileComponents();
+      providers: [{ provide: IVoucherService, useValue: vouchersServiceStub }]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -55,10 +60,12 @@ describe('VouchersComponent', () => {
   });
 
   it('should on ngOnInit', fakeAsync(() => {
-    const voucherService: IVoucherService = fixture.debugElement.injector.get<IVoucherService>
-      (IVoucherService as Type<IVoucherService>);
+    const voucherService: IVoucherService = fixture.debugElement.injector.get<IVoucherService>(IVoucherService as Type<IVoucherService>);
 
-    const voucherServiceSpy = spyOn(voucherService, 'getFromPage').and.returnValue(of(vouchers));
+    const voucherServiceSpy = spyOn(
+      voucherService,
+      'getFromPage'
+    ).and.returnValue(of(vouchers));
     component.ngOnInit();
     tick();
     expect(voucherServiceSpy).toHaveBeenCalled();
@@ -100,5 +107,4 @@ describe('VouchersComponent', () => {
     const textColorClass = component.getTextColorClass(mockVoucher);
     expect(textColorClass).toBe('less-three-days');
   });
-
 });

@@ -33,7 +33,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
   public numberOfRows: number | undefined;
   private idN: number;
   private destroy$: Subject<void> = new Subject();
-  public newStampsLabelFn = () => of(" new stamps");
+  public newStampsLabelFn = () => of(' new stamps');
   private rewardSuccessPopUp: IPopupConfig = {
     title: 'Stamp collect successfully',
     buttonTxt: 'View Reward'
@@ -98,7 +98,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
             if ((window as any).appboy) {
               (window as any).appboy.logCustomEvent(
                 'user_view_stamp_card',
-                { 'stamp_card_id': this.stampCard.id, 'campaign_id': this.stampCard.campaignId }
+                { stamp_card_id: this.stampCard.id, campaign_id: this.stampCard.campaignId }
               );
             }
             this.analytics.addEvent({

@@ -70,6 +70,7 @@
   "devDependencies": {
     "@angular-eslint/builder": "^0.0.1-alpha.27",
     "@nrwl/jest": "^9.2.2",
+    "env-cmd": "^10.1.0",
     "lerna": "^3.14.1"
   }
 }

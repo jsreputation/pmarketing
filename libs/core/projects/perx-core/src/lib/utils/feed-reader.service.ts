@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpBackend, HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 export interface FeedItem {
@@ -13,13 +13,15 @@ export interface FeedItem {
   pubDate: Date | null;
   hideButton?: boolean;
 }
-
+// https://stackoverflow.com/questions/46469349/how-to-make-an-angular-module-to-ignore-http-interceptor-added-in-a-core-module/49047764
 @Injectable({
   providedIn: 'root',
 })
 export class FeedReaderService {
-  constructor(private http: HttpClient) {}
-
+  private http: HttpClient;
+  constructor(handler: HttpBackend) {
+    this.http = new HttpClient(handler);
+  }
   public getFromUrl(
     url: string,
     useCorsProxy: boolean = true,
