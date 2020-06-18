@@ -13,6 +13,18 @@ require('dotenv').config();
 
 // Debug environment variables
 
+// create environment folder
+let envFolderPath ='./src/environments';
+if (!fs.existsSync(envFolderPath)){
+  fs.mkdirSync(envFolderPath);
+}
+// create config folder
+let configFolderPath ='./src/assets/config';
+if (!fs.existsSync(configFolderPath)){
+  fs.mkdirSync(configFolderPath);
+}
+
+
 const rssFeeds = `{
   "data": [
     {
