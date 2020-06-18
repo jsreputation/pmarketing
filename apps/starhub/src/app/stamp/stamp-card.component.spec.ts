@@ -29,7 +29,7 @@ describe('StampCardComponent', () => {
       baseHref: ''
     })
   };
-  
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [StampCardComponent],
