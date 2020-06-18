@@ -21,6 +21,7 @@ import {
   IReward,
   ICategoryTags,
   isEmptyArray,
+  VoucherState,
 } from '@perxtech/core';
 
 import {
@@ -39,7 +40,6 @@ import {
 })
 export class VoucherComponent implements OnInit {
   public voucher?: Voucher;
-  public reward: IReward;
   public locations: ILocation[];
   public isButtonEnable: boolean = false;
   public macaron: IMacaron | null;
@@ -74,7 +74,6 @@ export class VoucherComponent implements OnInit {
         map((voucher: Voucher) => voucher.reward)
       )
       .subscribe((reward: IReward) => {
-        this.reward = reward;
         this.macaron = this.macaronService.getMacaron(reward);
         if (this.macaron === null) {
           this.isButtonEnable = true;
@@ -83,11 +82,12 @@ export class VoucherComponent implements OnInit {
   }
 
   public isButtonDisabled(): boolean {
-    const nowTime: number = (new Date()).getTime();
-    const sellingFrom = this.reward.sellingFrom;
-    if (sellingFrom && sellingFrom.getTime() <= nowTime) {
-      return false;
+    if (
+      !this.voucher ||
+      (this.voucher.state !== VoucherState.issued && this.voucher.state !== VoucherState.released)
+    ) {
+      return true;
     }
-    return true;
+    return false;
   }
 }
