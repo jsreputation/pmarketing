@@ -13,8 +13,8 @@
     "lint": "stylelint \"src/**/*.*css\" && eslint \"./src/**/*.ts\"",
     "lint:fix": "stylelint \"src/**/*.*css\" --fix && eslint \"./src/**/*.ts\" --fix",
     "e2e": "ng e2e",
-    "start": "env-cmd -f env/phillipssg.staging npm run config && ng serve --host 0.0.0.0",
-    "start:prod": "env-cmd -f env/phillipssg.production npm run config && ng serve --host 0.0.0.0",
+    "start": "env-cmd -f env/phillipssg.staging.dev npm run config && ng serve --host 0.0.0.0",
+    "start:prod": "env-cmd -f env/phillipssg.production.dev npm run config && ng serve --host 0.0.0.0",
     "test:watch": "jest --watch --config=jest.config.json"
   },
   "private": true,
