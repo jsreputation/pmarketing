@@ -185,10 +185,10 @@ export class GameComponent implements OnInit {
 
   private gameCompletedHandler(vouchs: Voucher[], withRedirectAndPopup: boolean = true): void {
     if ((window as any).appboy) {
-      (window as any).appboy.logCustomEvent(
-        'user_played_game',
-        { 'game_id': this.game.id, 'campaign_id': this.game.campaignId }
-      );
+      (window as any).appboy.logCustomEvent('user_played_game', {
+        game_id: this.game.id,
+        campaign_id: this.game.campaignId
+      });
     }
     if (vouchs.length === 0) {
       // This params is specially for spin the wheel, load play first process
