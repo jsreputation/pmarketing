@@ -51,3 +51,4 @@ Thumbs.db
 skaffold-v-star-microsite.yaml
 */src/assets/config/RSS_FEEDS.json
 
+angular.json*.bak

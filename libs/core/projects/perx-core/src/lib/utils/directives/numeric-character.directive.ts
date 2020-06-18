@@ -6,7 +6,7 @@ import { Directive, HostListener } from '@angular/core';
 export class NumericCharacterDirective {
   public onlyNumbersRegExp: RegExp = new RegExp('^\\d+$');
 
-  @HostListener('paste', ['$event']) public pasteClipboard(e: ClipboardEvent): boolean {
+  @HostListener('paste', ['$event']) public pasteClipboard(e: any/*ClipboardEvent*/): boolean {
     if (!e.clipboardData) {
       return false;
     }

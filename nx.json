@@ -1,0 +1,81 @@
+{
+  "npmScope": "perxtech",
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/workspace/src/tasks-runner/tasks-runner-v2",
+      "options": {
+        "cacheableOperations": [
+          "build",
+          "test",
+          "lint"
+        ]
+      }
+    }
+  },
+  "implicitDependencies": {
+    "angular.json": "*",
+    "package.json": "*",
+    "tsconfig.json": "*",
+    "tslint.json": "*",
+    "nx.json": "*"
+  },
+  "projects": {
+    "blackcomb-pages": {
+      "tags": []
+    },
+    "core": {
+      "tags": []
+    },
+    "whistler": {
+      "tags": []
+    },
+    "abenson": {
+      "tags": []
+    },
+    "all-it": {
+      "tags": []
+    },
+    "blackcomb": {
+      "tags": []
+    },
+    "blackcomb-light": {
+      "tags": []
+    },
+    "bpi": {
+      "tags": []
+    },
+    "components-demo": {
+      "tags": []
+    },
+    "digi": {
+      "tags": []
+    },
+    "hkbn": {
+      "tags": []
+    },
+    "hsbc": {
+      "tags": []
+    },
+    "hsbc-rewards": {
+      "tags": []
+    },
+    "hsbchk": {
+      "tags": []
+    },
+    "merck-customer": {
+      "tags": []
+    },
+    "merck-merchant": {
+      "tags": []
+    },
+    "oracle-pay": {
+      "tags": []
+    },
+    "prudential": {
+      "tags": []
+    },
+    "starhub": {
+      "tags": []
+    }
+  }
+}

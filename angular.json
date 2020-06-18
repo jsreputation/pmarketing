@@ -1,0 +1,1843 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "projects": {
+    "starhub": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/starhub",
+      "sourceRoot": "apps/starhub/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/starhub",
+            "index": "apps/starhub/src/index.html",
+            "main": "apps/starhub/src/main.ts",
+            "polyfills": "apps/starhub/src/polyfills.ts",
+            "tsConfig": "apps/starhub/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "apps/starhub/src/favicon.ico",
+              "apps/starhub/src/assets",
+              "apps/starhub/src/robots.txt"
+            ],
+            "styles": ["apps/starhub/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "staging": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            },
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/starhub/src/index.html",
+                  "with": "apps/starhub/src/index.prod.html"
+                }
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "starhub:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "starhub:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "starhub:build"
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/starhub/e2e/protractor.conf.js",
+            "devServerTarget": "starhub:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "starhub:serve:production"
+            }
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/starhub/jest.config.json",
+            "tsConfig": "apps/starhub/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "apps/starhub/src/setup-jest.ts"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "apps/starhub/.eslintrc",
+            "files": ["apps/starhub/src/**/*.ts"]
+          }
+        }
+      }
+    },
+    "prudential": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/prudential",
+      "sourceRoot": "apps/prudential/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/prudential",
+            "index": "apps/prudential/src/index.html",
+            "main": "apps/prudential/src/main.ts",
+            "polyfills": "apps/prudential/src/polyfills.ts",
+            "preserveSymlinks": true,
+            "tsConfig": "apps/prudential/tsconfig.app.json",
+            "assets": [
+              "apps/prudential/src/favicon.ico",
+              "apps/prudential/src/assets",
+              "apps/prudential/src/robots.txt"
+            ],
+            "styles": ["apps/prudential/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/prudential/src/index.html",
+                  "with": "apps/prudential/src/index.prod.html"
+                }
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "prudential:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "prudential:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "prudential:build"
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/prudential/e2e/protractor.conf.js",
+            "devServerTarget": "prudential:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "prudential:serve:production"
+            }
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/prudential/jest.config.json",
+            "tsConfig": "apps/prudential/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "apps/prudential/src/setup-jest.ts"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "apps/prudential/.eslintrc",
+            "files": ["apps/prudential/src/**/*.ts"]
+          }
+        }
+      }
+    },
+    "oracle-pay": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/oracle-pay",
+      "sourceRoot": "apps/oracle-pay/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/oracle-pay",
+            "index": "apps/oracle-pay/src/index.html",
+            "main": "apps/oracle-pay/src/main.ts",
+            "polyfills": "apps/oracle-pay/src/polyfills.ts",
+            "tsConfig": "apps/oracle-pay/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "apps/oracle-pay/src/favicon.ico",
+              "apps/oracle-pay/src/assets",
+              "apps/oracle-pay/src/robots.txt"
+            ],
+            "styles": ["apps/oracle-pay/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/oracle-pay/src/index.html",
+                  "with": "apps/oracle-pay/src/index.prod.html"
+                }
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "oracle-pay:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "oracle-pay:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "oracle-pay:build"
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/oracle-pay/e2e/protractor.conf.js",
+            "devServerTarget": "oracle-pay:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "oracle-pay:serve:production"
+            }
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/oracle-pay/jest.config.json",
+            "tsConfig": "apps/oracle-pay/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "apps/oracle-pay/src/setup-jest.ts"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "apps/oracle-pay/.eslintrc",
+            "files": ["apps/oracle-pay/src/**/*.ts"]
+          }
+        }
+      }
+    },
+    "merck-merchant": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/merck-merchant",
+      "sourceRoot": "apps/merck-merchant/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/merck-merchant",
+            "index": "apps/merck-merchant/src/index.html",
+            "main": "apps/merck-merchant/src/main.ts",
+            "polyfills": "apps/merck-merchant/src/polyfills.ts",
+            "tsConfig": "apps/merck-merchant/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "apps/merck-merchant/src/favicon.ico",
+              "apps/merck-merchant/src/assets",
+              "apps/merck-merchant/src/robots.txt"
+            ],
+            "styles": ["apps/merck-merchant/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/merck-merchant/src/index.html",
+                  "with": "apps/merck-merchant/src/index.prod.html"
+                }
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "merck-merchant:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "merck-merchant:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "merck-merchant:build"
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/merck-merchant/e2e/protractor.conf.js",
+            "devServerTarget": "merck-merchant:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "merck-merchant:serve:production"
+            }
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/merck-merchant/jest.config.json",
+            "tsConfig": "apps/merck-merchant/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "apps/merck-merchant/src/setup-jest.ts"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "apps/merck-merchant/.eslintrc",
+            "files": ["apps/merck-merchant/src/**/*.ts"]
+          }
+        }
+      }
+    },
+    "merck-customer": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/merck-customer",
+      "sourceRoot": "apps/merck-customer/src",
+      "prefix": "mc",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/merck-customer",
+            "index": "apps/merck-customer/src/index.html",
+            "main": "apps/merck-customer/src/main.ts",
+            "polyfills": "apps/merck-customer/src/polyfills.ts",
+            "tsConfig": "apps/merck-customer/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "apps/merck-customer/src/favicon.ico",
+              "apps/merck-customer/src/assets",
+              "apps/merck-customer/src/robots.txt"
+            ],
+            "styles": ["apps/merck-customer/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/merck-customer/src/index.html",
+                  "with": "apps/merck-customer/src/index.prod.html"
+                }
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            },
+            "zh": {
+              "aot": true,
+              "baseHref": "/zh/",
+              "outputPath": "dist/merck-customer-zh/",
+              "i18nFile": "src/locale/messages.zh.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "zh",
+              "i18nMissingTranslation": "error"
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "merck-customer:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "merck-customer:build:production"
+            },
+            "zh": {
+              "browserTarget": "merck-customer:build:zh"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "merck-customer:build"
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/merck-customer/e2e/protractor.conf.js",
+            "devServerTarget": "merck-customer:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "merck-customer:serve:production"
+            }
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/merck-customer/jest.config.json",
+            "tsConfig": "apps/merck-customer/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "apps/merck-customer/src/setup-jest.ts"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "apps/merck-customer/.eslintrc",
+            "files": ["apps/merck-customer/src/**/*.ts"]
+          }
+        }
+      }
+    },
+    "hsbchk": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/hsbchk",
+      "sourceRoot": "apps/hsbchk/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/hsbchk",
+            "index": "apps/hsbchk/src/index.html",
+            "main": "apps/hsbchk/src/main.ts",
+            "polyfills": "apps/hsbchk/src/polyfills.ts",
+            "tsConfig": "apps/hsbchk/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "apps/hsbchk/src/favicon.ico",
+              "apps/hsbchk/src/assets",
+              "apps/hsbchk/src/static",
+              "apps/hsbchk/src/manifest.webmanifest",
+              "apps/hsbchk/src/robots.txt"
+            ],
+            "styles": [
+              "apps/hsbchk/src/styles.scss",
+              "apps/hsbchk/../../node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "apps/hsbchk/src/index.html",
+                  "with": "apps/hsbchk/src/index.prod.html"
+                }
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            },
+            "staging": {
+              "optimization": false,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/hsbchk/src/app/sign-up/sign-up/sign-up.component.html",
+                  "with": "apps/hsbchk/src/app/sign-up/sign-up/sign-up.component.staging.html"
+                },
+                {
+                  "replace": "apps/hsbchk/src/app/sign-up/sign-up/sign-up.component.ts",
+                  "with": "apps/hsbchk/src/app/sign-up/sign-up/sign-up.component.staging.ts"
+                }
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "hsbchk:build",
+            "port": 4201
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "hsbchk:build:production"
+            },
+            "staging": {
+              "browserTarget": "hsbchk:build:staging"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "hsbchk:build"
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/hsbchk/e2e/protractor.conf.js",
+            "devServerTarget": "hsbchk:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "hsbchk:serve:production"
+            }
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/hsbchk/jest.config.json",
+            "tsConfig": "apps/hsbchk/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "apps/hsbchk/src/setup-jest.ts"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "apps/hsbchk/.eslintrc",
+            "files": ["apps/hsbchk/src/**/*.ts"]
+          }
+        }
+      }
+    },
+    "hsbc-rewards": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/hsbc-rewards",
+      "sourceRoot": "apps/hsbc-rewards/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/hsbc-rewards",
+            "index": "apps/hsbc-rewards/src/index.html",
+            "main": "apps/hsbc-rewards/src/main.ts",
+            "polyfills": "apps/hsbc-rewards/src/polyfills.ts",
+            "tsConfig": "apps/hsbc-rewards/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "apps/hsbc-rewards/src/favicon.ico",
+              "apps/hsbc-rewards/src/assets",
+              "apps/hsbc-rewards/src/robots.txt"
+            ],
+            "styles": ["apps/hsbc-rewards/src/styles.scss"],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/styles"]
+            },
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/hsbc-rewards/src/index.html",
+                  "with": "apps/hsbc-rewards/src/index.prod.html"
+                }
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "hsbc-rewards:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "hsbc-rewards:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "hsbc-rewards:build"
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/hsbc-rewards/e2e/protractor.conf.js",
+            "devServerTarget": "hsbc-rewards:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "hsbc-rewards:serve:production"
+            }
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/hsbc-rewards/jest.config.json",
+            "tsConfig": "apps/hsbc-rewards/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "apps/hsbc-rewards/src/setup-jest.ts"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "apps/hsbc-rewards/.eslintrc",
+            "files": ["apps/hsbc-rewards/src/**/*.ts"]
+          }
+        }
+      }
+    },
+    "hsbc": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/hsbc",
+      "sourceRoot": "apps/hsbc/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/hsbc",
+            "index": "apps/hsbc/src/index.html",
+            "main": "apps/hsbc/src/main.ts",
+            "polyfills": "apps/hsbc/src/polyfills.ts",
+            "tsConfig": "apps/hsbc/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "apps/hsbc/src/favicon.ico",
+              "apps/hsbc/src/assets",
+              "apps/hsbc/src/robots.txt"
+            ],
+            "styles": ["apps/hsbc/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/hsbc/src/index.html",
+                  "with": "apps/hsbc/src/index.prod.html"
+                }
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "hsbc:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "hsbc:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "hsbc:build"
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/hsbc/e2e/protractor.conf.js",
+            "devServerTarget": "hsbc:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "hsbc:serve:production"
+            }
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/hsbc/jest.config.json",
+            "tsConfig": "apps/hsbc/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "apps/hsbc/src/setup-jest.ts"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "apps/hsbc/.eslintrc",
+            "files": ["apps/hsbc/src/**/*.ts"]
+          }
+        }
+      }
+    },
+    "hkbn": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/hkbn",
+      "sourceRoot": "apps/hkbn/src",
+      "prefix": "hkbn",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/hkbn",
+            "index": "apps/hkbn/src/index.html",
+            "main": "apps/hkbn/src/main.ts",
+            "polyfills": "apps/hkbn/src/polyfills.ts",
+            "tsConfig": "apps/hkbn/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "apps/hkbn/src/favicon.ico",
+              "apps/hkbn/src/assets",
+              "apps/hkbn/src/robots.txt"
+            ],
+            "styles": ["apps/hkbn/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/hkbn/src/index.html",
+                  "with": "apps/hkbn/src/index.prod.html"
+                }
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "hkbn:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "hkbn:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "hkbn:build"
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/hkbn/e2e/protractor.conf.js",
+            "devServerTarget": "hkbn:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "hkbn:serve:production"
+            }
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/hkbn/jest.config.json",
+            "tsConfig": "apps/hkbn/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "apps/hkbn/src/setup-jest.ts"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "apps/hkbn/.eslintrc",
+            "files": ["apps/hkbn/src/**/*.ts"]
+          }
+        }
+      }
+    },
+    "digi": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/digi",
+      "sourceRoot": "apps/digi/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/digi",
+            "index": "apps/digi/src/index.html",
+            "main": "apps/digi/src/main.ts",
+            "polyfills": "apps/digi/src/polyfills.ts",
+            "tsConfig": "apps/digi/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "apps/digi/src/favicon.ico",
+              "apps/digi/src/assets",
+              "apps/digi/src/robots.txt"
+            ],
+            "styles": ["apps/digi/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/digi/src/index.html",
+                  "with": "apps/digi/src/index.prod.html"
+                }
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "digi:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "digi:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "digi:build"
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/digi/e2e/protractor.conf.js",
+            "devServerTarget": "digi:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "digi:serve:production"
+            }
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/digi/jest.config.json",
+            "tsConfig": "apps/digi/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "apps/digi/src/setup-jest.ts"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "apps/digi/.eslintrc",
+            "files": ["apps/digi/src/**/*.ts"]
+          }
+        }
+      }
+    },
+    "components-demo": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/components-demo",
+      "sourceRoot": "apps/components-demo/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/components-demo",
+            "index": "apps/components-demo/src/index.html",
+            "main": "apps/components-demo/src/main.ts",
+            "polyfills": "apps/components-demo/src/polyfills.ts",
+            "tsConfig": "apps/components-demo/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "apps/components-demo/src/favicon.ico",
+              "apps/components-demo/src/assets",
+              "apps/components-demo/src/robots.txt"
+            ],
+            "styles": ["apps/components-demo/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/components-demo/src/index.html",
+                  "with": "apps/components-demo/src/index.prod.html"
+                }
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "components-demo:build",
+            "port": 4201
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "components-demo:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "components-demo:build"
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/components-demo/e2e/protractor.conf.js",
+            "devServerTarget": "components-demo:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "components-demo:serve:production"
+            }
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/components-demo/jest.config.json",
+            "tsConfig": "apps/components-demo/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "apps/components-demo/src/setup-jest.ts"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "apps/components-demo/.eslintrc",
+            "files": ["apps/components-demo/src/**/*.ts"]
+          }
+        }
+      }
+    },
+    "bpi": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/bpi",
+      "sourceRoot": "apps/bpi/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/bpi",
+            "index": "apps/bpi/src/index.html",
+            "main": "apps/bpi/src/main.ts",
+            "polyfills": "apps/bpi/src/polyfills.ts",
+            "tsConfig": "apps/bpi/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "apps/bpi/src/favicon.ico",
+              "apps/bpi/src/assets",
+              "apps/bpi/src/robots.txt"
+            ],
+            "styles": ["apps/bpi/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/bpi/src/index.html",
+                  "with": "apps/bpi/src/index.prod.html"
+                }
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "bpi:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "bpi:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "bpi:build"
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/bpi/e2e/protractor.conf.js",
+            "devServerTarget": "bpi:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "bpi:serve:production"
+            }
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/bpi/jest.config.json",
+            "tsConfig": "apps/bpi/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "apps/bpi/src/setup-jest.ts"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "apps/bpi/.eslintrc",
+            "files": ["apps/bpi/src/**/*.ts"]
+          }
+        }
+      }
+    },
+    "blackcomb-light": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/blackcomb-light",
+      "sourceRoot": "apps/blackcomb-light/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/blackcomb-light",
+            "index": "apps/blackcomb-light/src/index.html",
+            "main": "apps/blackcomb-light/src/main.ts",
+            "polyfills": "apps/blackcomb-light/src/polyfills.ts",
+            "tsConfig": "apps/blackcomb-light/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "apps/blackcomb-light/src/favicon.ico",
+              "apps/blackcomb-light/src/assets",
+              "apps/blackcomb-light/src/static",
+              "apps/blackcomb-light/src/manifest.webmanifest",
+              "apps/blackcomb-light/src/robots.txt"
+            ],
+            "styles": [
+              "apps/blackcomb-light/src/styles.scss",
+              "apps/blackcomb-light/../../node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "apps/blackcomb-light/src/index.html",
+                  "with": "apps/blackcomb-light/src/index.prod.html"
+                }
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ],
+              "serviceWorker": true,
+              "ngswConfigPath": "ngsw-config.json"
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "blackcomb-light:build",
+            "port": 4201
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "blackcomb-light:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "blackcomb-light:build"
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/blackcomb-light/e2e/protractor.conf.js",
+            "devServerTarget": "blackcomb-light:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "blackcomb-light:serve:production"
+            }
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/blackcomb-light/jest.config.json",
+            "tsConfig": "apps/blackcomb-light/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "apps/blackcomb-light/src/setup-jest.ts"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "apps/blackcomb-light/.eslintrc",
+            "files": ["apps/blackcomb-light/src/**/*.ts"]
+          }
+        }
+      }
+    },
+    "blackcomb": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/blackcomb",
+      "sourceRoot": "apps/blackcomb/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/blackcomb",
+            "index": "apps/blackcomb/src/index.html",
+            "main": "apps/blackcomb/src/main.ts",
+            "polyfills": "apps/blackcomb/src/polyfills.ts",
+            "tsConfig": "apps/blackcomb/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "apps/blackcomb/src/favicon.ico",
+              "apps/blackcomb/src/assets",
+              "apps/blackcomb/src/static",
+              "apps/blackcomb/src/manifest.webmanifest",
+              "apps/blackcomb/src/robots.txt"
+            ],
+            "styles": [
+              "apps/blackcomb/src/styles.scss",
+              "apps/blackcomb/../../node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "apps/blackcomb/src/index.html",
+                  "with": "apps/blackcomb/src/index.prod.html"
+                }
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ],
+              "serviceWorker": true,
+              "ngswConfigPath": "ngsw-config.json"
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "blackcomb:build",
+            "port": 4201
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "blackcomb:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "blackcomb:build"
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/blackcomb/e2e/protractor.conf.js",
+            "devServerTarget": "blackcomb:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "blackcomb:serve:production"
+            }
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/blackcomb/jest.config.json",
+            "tsConfig": "apps/blackcomb/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "apps/blackcomb/src/setup-jest.ts"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "apps/blackcomb/.eslintrc",
+            "files": ["apps/blackcomb/src/**/*.ts"]
+          }
+        }
+      }
+    },
+    "all-it": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/all-it",
+      "sourceRoot": "apps/all-it/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/all-it",
+            "index": "apps/all-it/src/index.html",
+            "main": "apps/all-it/src/main.ts",
+            "polyfills": "apps/all-it/src/polyfills.ts",
+            "tsConfig": "apps/all-it/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "apps/all-it/src/favicon.ico",
+              "apps/all-it/src/assets",
+              "apps/all-it/src/static",
+              "apps/all-it/src/manifest.webmanifest",
+              "apps/all-it/src/robots.txt"
+            ],
+            "styles": [
+              "apps/all-it/src/styles.scss",
+              "apps/all-it/../../node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/all-it/src/index.html",
+                  "with": "apps/all-it/src/index.prod.html"
+                }
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ],
+              "serviceWorker": true,
+              "ngswConfigPath": "ngsw-config.json"
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "all-it:build",
+            "port": 4201
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "all-it:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "all-it:build"
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/all-it/e2e/protractor.conf.js",
+            "devServerTarget": "all-it:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "all-it:serve:production"
+            }
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/all-it/jest.config.json",
+            "tsConfig": "apps/all-it/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "apps/all-it/src/setup-jest.ts"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "apps/all-it/.eslintrc",
+            "files": ["apps/all-it/src/**/*.ts"]
+          }
+        }
+      }
+    },
+    "abenson": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/abenson",
+      "sourceRoot": "apps/abenson/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/abenson",
+            "index": "apps/abenson/src/index.html",
+            "main": "apps/abenson/src/main.ts",
+            "polyfills": "apps/abenson/src/polyfills.ts",
+            "tsConfig": "apps/abenson/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "apps/abenson/src/favicon.ico",
+              "apps/abenson/src/assets",
+              "apps/abenson/src/robots.txt"
+            ],
+            "styles": [
+              "apps/abenson/src/styles.scss",
+              "apps/abenson/../../node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/abenson/src/index.html",
+                  "with": "apps/abenson/src/index.prod.html"
+                }
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            },
+            "staging": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/abenson/src/index.html",
+                  "with": "apps/abenson/src/index.prod.html"
+                },
+                {
+                  "replace": "apps/abenson/src/app/promos/promos.component.ts",
+                  "with": "apps/abenson/src/app/promos/promos.component.staging.ts"
+                }
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "abenson:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "abenson:build:production"
+            },
+            "staging": {
+              "browserTarget": "abenson:build:staging"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "abenson:build"
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/abenson/e2e/protractor.conf.js",
+            "devServerTarget": "abenson:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "abenson:serve:production"
+            }
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/abenson/jest.config.json",
+            "tsConfig": "apps/abenson/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "apps/abenson/src/setup-jest.ts"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "apps/abenson/.eslintrc",
+            "files": ["apps/abenson/src/**/*.ts"]
+          }
+        }
+      }
+    },
+    "whistler": {
+      "projectType": "library",
+      "root": "libs/whistler",
+      "sourceRoot": "libs/whistler/projects/whistler/src",
+      "prefix": "lib",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/whistler/jest.config.js",
+            "tsConfig": "libs/whistler/projects/whistler/tsconfig.spec.json",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/whistler/.eslintrc",
+            "files": ["libs/whistler/projects/**/*.ts"]
+          }
+        }
+      }
+    },
+    "core": {
+      "projectType": "library",
+      "root": "libs/core",
+      "sourceRoot": "libs/core/projects/perx-core/src",
+      "prefix": "perx-core",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/core/jest.config.json",
+            "tsConfig": "libs/core/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/core/projects/setup-jest.ts"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/core/.eslintrc",
+            "files": ["libs/core/projects/**/*.ts"]
+          }
+        }
+      }
+    },
+    "blackcomb-pages": {
+      "projectType": "library",
+      "root": "libs/blackcomb-pages",
+      "sourceRoot": "libs/blackcomb-pages/projects/perx-blackcomb-pages/src",
+      "prefix": "perx-blackcomb-pages",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/blackcomb-pages/jest.config.json",
+            "tsConfig": "libs/blackcomb-pages/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/blackcomb-pages/projects/setup-jest.ts"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/blackcomb-pages/.eslintrc",
+            "files": ["libs/blackcomb-pages/projects/**/*.ts"]
+          }
+        }
+      }
+    }
+  },
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
+}
