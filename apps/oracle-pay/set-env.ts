@@ -1,8 +1,9 @@
 // https://github.com/angular/angular-cli/issues/4318#issuecomment-464160213
 import { writeFile } from 'fs'; // fs = require('fs');
+import * as path from 'path';
 
 // Configure Angular `environment.ts` file path
-const targetPath = `./src/environments/environment.ts`;
+const targetPath = path.resolve(__dirname, './src/environments/environment.ts');
 
 // Load node modules
 const colors = require('colors');

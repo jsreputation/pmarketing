@@ -1,7 +1,8 @@
 const fs = require('fs');
+const path = require('path');
 
 // Configure Angular `environment.ts` file path
-const targetPath = `./src/environments/environment.ts`;
+const targetPath = path.resolve(__dirname, './src/environments/environment.ts');
 
 // Load node modules
 const colors = require('colors');
@@ -26,7 +27,6 @@ console.log(colors.grey(envConfigFile));
 fs.writeFile(targetPath, envConfigFile, (err: any) => {
   if (err) {
     throw console.error(err);
-  } else {
-    console.log(colors.magenta(`Angular environment.ts file generated correctly at ${targetPath} \n`));
   }
+  console.log(colors.magenta(`Angular environment.ts file generated correctly at ${targetPath} \n`));
 });

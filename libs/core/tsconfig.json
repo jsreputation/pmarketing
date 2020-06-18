@@ -18,13 +18,8 @@
         "transform": "ts-optchain/transform"
       }
     ],
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2018",
-      "dom"
-    ]
+    "typeRoots": ["../../node_modules/@types"],
+    "lib": ["es2018", "dom"]
   },
   "extends": "../../tsconfig.json"
 }

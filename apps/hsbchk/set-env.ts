@@ -1,9 +1,10 @@
 const fs = require('fs');
 const async = require('async');
+const path = require('path');
 
 // Configure Angular `environment.ts` file path
-const targetPath = `./src/environments/environment.ts`;
-const appConfigPath = `./src/assets/config/app-config.json`;
+const targetPath = path.resolve(__dirname, './src/environments/environment.ts');
+const appConfigPath = path.resolve(__dirname, './src/assets/config/app-config.json');
 
 // Load node modules
 const colors = require('colors');

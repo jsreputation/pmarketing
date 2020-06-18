@@ -1833,6 +1833,30 @@
           }
         }
       }
+    },
+    "appauth-server": {
+      "root": "backend/appauth-server",
+      "sourceRoot": "backend/appauth-server",
+      "projectType": "application",
+      "prefix": "appauth-server",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "options": {
+            "outputPath": "dist/backend/appauth-server",
+            "main": "backend/appauth-server/server.ts",
+            "tsConfig": "backend/appauth-server/tsconfig.json",
+            "assets": ["backend/appauth-server/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false
+            }
+          }
+        }
+      }
     }
   },
   "schematics": {
