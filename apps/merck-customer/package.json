@@ -4,15 +4,13 @@
   "scripts": {
     "ng": "ng",
     "start": "npm run config && ng serve --host 0.0.0.0",
-    "start-zh": "DEFAULT_LANG=zh npm run config && ng serve",
     "build": "npm run config && ng build",
-    "build:merck-customer:production": "APIHOST=https://api.perxtech.net PRODUCTION=true npm run config && ng build --prod",
-    "build:merck-customer:staging": "PRODUCTION=true npm run config && ng build --prod",
+    "build:merck-customer:production": "env-cmd -f env/merck-customer.production npm run config && ng build --prod",
+    "build:merck-customer:staging": "env-cmd -f env/merck-customer.staging npm run config && ng build --prod",
     "config": "ts-node --project tsconfig.node.json set-env.ts",
-    "test": "jest --config=jest.config.json",
     "lint": "stylelint \"src/**/*.*css\" && eslint \"./src/**/*.ts\"",
     "lint:fix": "stylelint \"src/**/*.*css\" --fix && eslint \"./src/**/*.ts\" --fix",
-    "e2e~": "ng e2e",
+    "test": "jest --config=jest.config.json",
     "test:watch": "jest --watch --config=jest.config.json"
   },
   "private": true,

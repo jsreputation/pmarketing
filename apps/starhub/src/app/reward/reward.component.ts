@@ -1,13 +1,6 @@
-import {
-  Component,
-  OnInit
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import {
-  ActivatedRoute,
-  Params,
-  Router
-} from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
   ConfigService,
   IReward,
@@ -15,19 +8,9 @@ import {
   NotificationService,
   RewardsService
 } from '@perxtech/core';
-import {
-  filter,
-  map,
-  switchMap
-} from 'rxjs/operators';
-import {
-  AnalyticsService,
-  PageType
-} from '../analytics.service';
-import {
-  IMacaron,
-  MacaronService
-} from '../services/macaron.service';
+import { filter, map, switchMap } from 'rxjs/operators';
+import { AnalyticsService, PageType } from '../analytics.service';
+import { IMacaron, MacaronService } from '../services/macaron.service';
 
 @Component({
   selector: 'app-reward',
@@ -53,7 +36,8 @@ export class RewardComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.configService.readAppConfig()
+    this.configService
+      .readAppConfig()
       .pipe(
         switchMap(() => this.activeRoute.queryParams),
         filter((params: Params) => params.id), // ignore anything not related to reward id
@@ -63,10 +47,10 @@ export class RewardComponent implements OnInit {
       .subscribe((reward: IReward) => {
         this.reward = reward;
         if ((window as any).appboy) {
-          (window as any).appboy.logCustomEvent(
-            'user_view_reward',
-            {'reward_id': reward.id, 'reward_name': reward.name}
-          );
+          (window as any).appboy.logCustomEvent('user_view_reward', {
+            reward_id: reward.id,
+            reward_name: reward.name
+          });
         }
         if (reward.categoryTags && reward.categoryTags.length > 0) {
           const category = reward.categoryTags[0].title;
@@ -84,7 +68,10 @@ export class RewardComponent implements OnInit {
           this.isButtonEnable = this.macaron.isButtonEnabled;
         }
 
-        if (reward.inventory && reward.inventory.rewardLimitPerUserBalance === 0) {
+        if (
+          reward.inventory &&
+          reward.inventory.rewardLimitPerUserBalance === 0
+        ) {
           this.isButtonEnable = false;
         }
       });
@@ -97,14 +84,13 @@ export class RewardComponent implements OnInit {
   public save(): void {
     this.isButtonEnable = false;
     this.loadingSubmit = true;
-    this.vouchersService.issueReward(this.reward.id)
-      .subscribe(
-        () => this.router.navigate(['/home/vouchers']),
-        () => {
-          this.isButtonEnable = true; // change button back to enable which it originally is, before save is triggered
-          this.loadingSubmit = false;
-          this.notificationService.addSnack('Sorry! Could not save reward.');
-        }
-      );
+    this.vouchersService.issueReward(this.reward.id).subscribe(
+      () => this.router.navigate(['/home/vouchers']),
+      () => {
+        this.isButtonEnable = true; // change button back to enable which it originally is, before save is triggered
+        this.loadingSubmit = false;
+        this.notificationService.addSnack('Sorry! Could not save reward.');
+      }
+    );
   }
 }
