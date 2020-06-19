@@ -45,7 +45,7 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
     this.transactions = this.loyaltyService.getTransactionHistory(this.pageNumber, this.pageSize);
     this.settingsService.getRemoteFlagsSettings().subscribe((flags: IFlags) => {
       if (flags.rebateDemoFlow) {
-        this.priceLabelFn = (tr: ITransactionHistory) => `${this.cashbackTransactionPipe.transform(tr.pointsAmount || 0)}`
+        this.priceLabelFn = (tr: ITransactionHistory) => `${this.cashbackTransactionPipe.transform(tr.pointsAmount || 0)}`;
         this.descFn = (tr: ITransactionHistory) => {
           let text = '';
           const properties = oc(tr).transactionDetails.data.properties();
