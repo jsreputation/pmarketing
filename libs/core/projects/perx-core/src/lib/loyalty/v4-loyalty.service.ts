@@ -51,6 +51,11 @@ interface IV4AgingPoints {
   points_expiring?: number;
 }
 
+interface IV4LoyaltyTiers {
+  points_difference: number;
+  points_requirement: number;
+}
+
 interface IV4Loyalty {
   id: number;
   name: string;
@@ -65,7 +70,7 @@ interface IV4Loyalty {
   points_currency: string;
   points_to_currency_rate: number;
   aging_points?: IV4AgingPoints[];
-  tiers: any[]; // will do proper mapping later on
+  tiers: IV4LoyaltyTiers[]; // will do proper mapping later on
   points_history?: IV4PointHistory[];
   membership_expiry: Date;
 }
