@@ -39,6 +39,11 @@ import { Cacheable } from 'ngx-cacheable';
 const DEFAULT_PAGE_COUNT: number = 10;
 type TenantTransactionProperties = IV4TransactionPropertiesAbenson | IV4TransactionPropertiesMerck | IV4TransactionPropertiesAllit;
 
+interface IV4Image {
+  type: string;
+  url: string;
+}
+
 interface IV4Meta {
   count?: number;
   size?: number;
@@ -52,8 +57,17 @@ interface IV4AgingPoints {
 }
 
 interface IV4LoyaltyTiers {
-  points_difference: number;
+  id: number;
+  name: string;
+  attained: boolean;
   points_requirement: number;
+  points_difference: number;
+  points_difference_converted_to_currency?: number;
+  multiplier_point?: number;
+  multiplier_points_to_currency_rate?: number;
+  images: IV4Image[];
+  tags: IV4Tag[];
+  custom_fields: ICustomProperties[];
 }
 
 interface IV4Loyalty {
