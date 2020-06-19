@@ -65,9 +65,9 @@ interface IV4LoyaltyTiers {
   points_difference_converted_to_currency?: number;
   multiplier_point?: number;
   multiplier_points_to_currency_rate?: number;
-  images: IV4Image[];
-  tags: IV4Tag[];
-  custom_fields: ICustomProperties[];
+  images?: IV4Image[];
+  tags?: IV4Tag[];
+  custom_fields?: ICustomProperties[];
 }
 
 interface IV4Loyalty {
