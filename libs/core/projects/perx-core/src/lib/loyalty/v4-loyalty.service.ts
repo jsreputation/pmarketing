@@ -268,14 +268,14 @@ export class V4LoyaltyService extends LoyaltyService {
         points: aging.points_expiring
       })),
       membershipExpiry: loyalty.membership_expiry,
-      tiers: loyalty.tiers.map(tier => ({
+      tiers: loyalty.tiers ? loyalty.tiers.map(tier => ({
         id: tier.id,
         name: tier.name,
         attained: tier.attained,
         pointsRequirement: tier.points_requirement,
         pointsDifference: tier.points_difference,
         images: oc(tier).images()
-      }))
+      })) : undefined
     };
   }
 
