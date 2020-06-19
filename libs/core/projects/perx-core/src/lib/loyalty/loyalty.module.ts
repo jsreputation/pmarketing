@@ -11,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
 import { WhistlerLoyaltyService } from './whistler-loyalty.service';
 import {MatProgressBarModule, MatProgressSpinnerModule} from '@angular/material';
 import { ConfigService } from '../config/config.service';
+import { CashbackTransactionPipe } from './loyalty-transactions-list/cashback-transaction.pipe';
 
 export function loyaltyServiceFactory(http: HttpClient, config: Config, configService: ConfigService): LoyaltyService {
   // Make decision on what to instantiate base on config
@@ -23,6 +24,7 @@ export function loyaltyServiceFactory(http: HttpClient, config: Config, configSe
 @NgModule({
   declarations: [
     TransactionPipe,
+    CashbackTransactionPipe,
     LoyaltySummaryComponent,
     LoyaltyTransactionsListComponent
   ],
@@ -38,6 +40,7 @@ export function loyaltyServiceFactory(http: HttpClient, config: Config, configSe
   providers: [
     DatePipe,
     TransactionPipe,
+    CashbackTransactionPipe,
     CurrencyPipe
   ]
 })

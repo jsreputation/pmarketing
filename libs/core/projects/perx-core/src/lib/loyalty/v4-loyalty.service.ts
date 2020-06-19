@@ -37,7 +37,11 @@ import { IConfig } from '../config/models/config.model';
 import { Cacheable } from 'ngx-cacheable';
 
 const DEFAULT_PAGE_COUNT: number = 10;
-type TenantTransactionProperties = IV4TransactionPropertiesAbenson | IV4TransactionPropertiesMerck | IV4TransactionPropertiesAllit;
+type TenantTransactionProperties =
+  IV4TransactionPropertiesAbenson
+  | IV4TransactionPropertiesMerck
+  | IV4TransactionPropertiesAllit
+  | IV4TransactionPropertiesCashback;
 
 interface IV4Image {
   type: string;
@@ -214,6 +218,13 @@ interface IV4TransactionPropertiesAllit {
   transaction_line_guid: string;
 }
 
+interface IV4TransactionPropertiesCashback {
+  tenant: 'perx'; // temporary template tenant name?
+  merchant_name: string;
+  item_name: string;
+  outlet_name: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -333,6 +344,7 @@ export class V4LoyaltyService extends LoyaltyService {
           data.properties = V4LoyaltyService.v4TransactionPropertiesToTransactionProperties(pthProps as TenantTransactionProperties);
           break;
       }
+    // } else if (transactionHistory.name === 'POS Update') { // hard-coded reason code from backend for POS transactions
     } else if (Object.keys(transactionHistory.properties).length > 0) {
       // all-it transaction currently have no data in transaction_details assume it is a purchase.
       const thProps = transactionHistory.properties;
@@ -397,6 +409,14 @@ export class V4LoyaltyService extends LoyaltyService {
         // quantity: undefined,
         // storeCode: undefined,
         storeName: props.pharmacy
+      };
+    }
+    if (pthProps && (pthProps as IV4TransactionPropertiesCashback).merchant_name) {
+      const props = (pthProps as IV4TransactionPropertiesCashback);
+      data = {
+        productName: props.item_name,
+        storeCode: props.merchant_name,
+        storeName: props.outlet_name
       };
     }
     return data;
