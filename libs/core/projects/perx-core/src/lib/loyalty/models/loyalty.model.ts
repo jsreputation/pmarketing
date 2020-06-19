@@ -10,6 +10,21 @@ export interface IExpiringPoints {
   points?: number;
 }
 
+export interface IV4Image {
+  type: string;
+  url: string;
+}
+
+export interface LoyaltyTiers {
+  id: number;
+  name: string;
+  attained: boolean;
+  pointsRequirement: number;
+  pointsDifference: number;
+  images?: IV4Image[]; // we don't have a generic named image type yet
+  customFields?: ICustomProperties;
+}
+
 export interface ILoyalty {
   id: number;
   name: string;
@@ -28,6 +43,7 @@ export interface ILoyalty {
   expiringPoints?: IExpiringPoints[];
   cardId?: number;
   membershipExpiry?: Date;
+  tiers?: LoyaltyTiers[];
 }
 
 export interface ITransaction {

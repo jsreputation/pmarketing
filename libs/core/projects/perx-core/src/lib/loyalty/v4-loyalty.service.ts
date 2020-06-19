@@ -39,6 +39,11 @@ import { Cacheable } from 'ngx-cacheable';
 const DEFAULT_PAGE_COUNT: number = 10;
 type TenantTransactionProperties = IV4TransactionPropertiesAbenson | IV4TransactionPropertiesMerck | IV4TransactionPropertiesAllit;
 
+interface IV4Image {
+  type: string;
+  url: string;
+}
+
 interface IV4Meta {
   count?: number;
   size?: number;
@@ -49,6 +54,20 @@ interface IV4Meta {
 interface IV4AgingPoints {
   expiring_on_date?: string;
   points_expiring?: number;
+}
+
+interface IV4LoyaltyTiers {
+  id: number;
+  name: string;
+  attained: boolean;
+  points_requirement: number;
+  points_difference: number;
+  points_difference_converted_to_currency?: number;
+  multiplier_point?: number;
+  multiplier_points_to_currency_rate?: number;
+  images?: IV4Image[];
+  tags?: IV4Tag[];
+  custom_fields?: ICustomProperties[];
 }
 
 interface IV4Loyalty {
@@ -65,7 +84,7 @@ interface IV4Loyalty {
   points_currency: string;
   points_to_currency_rate: number;
   aging_points?: IV4AgingPoints[];
-  tiers: any[]; // will do proper mapping later on
+  tiers: IV4LoyaltyTiers[]; // will do proper mapping later on
   points_history?: IV4PointHistory[];
   membership_expiry: Date;
 }
@@ -248,7 +267,15 @@ export class V4LoyaltyService extends LoyaltyService {
         expireDate: aging.expiring_on_date,
         points: aging.points_expiring
       })),
-      membershipExpiry: loyalty.membership_expiry
+      membershipExpiry: loyalty.membership_expiry,
+      tiers: loyalty.tiers ? loyalty.tiers.map(tier => ({
+        id: tier.id,
+        name: tier.name,
+        attained: tier.attained,
+        pointsRequirement: tier.points_requirement,
+        pointsDifference: tier.points_difference,
+        images: oc(tier).images()
+      })) : undefined
     };
   }
 
