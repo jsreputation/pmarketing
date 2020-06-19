@@ -17,7 +17,7 @@ export class RewardDetailComponent {
   public hasExpired: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @Output()
-  public hasExpired: EventEmitter<boolean> = new EventEmitter<boolean>();
+  public isRewardExpired: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @Input()
   public showBannerImage: boolean = true;
@@ -42,7 +42,7 @@ export class RewardDetailComponent {
   ) { }
 
   public setToExpired(): void {
-    this.hasExpired.emit(false);
+    this.isRewardExpired.emit(false);
     setTimeout(
       () => {
         this.showMacaron = true;
