@@ -94,7 +94,7 @@ describe('RewardDetailComponent', () => {
     component.onExpiring();
     tick();
     if (component.macaron) {
-      expect(component.macaron).toEqual({ label: 'Expiring', class: '', isButtonEnabled: false });
+      expect(component.macaron).toEqual({ label: 'Expiring', class: 'expiring', isButtonEnabled: true });
     }
   }));
 
@@ -141,13 +141,13 @@ describe('RewardDetailComponent', () => {
     component.macaron = undefined;
     component.setToExpired();
     tick();
-    expect(component.macaron && (component.macaron as IMacaron).label || '').toBe('Expiring');
+    expect(component.macaron && (component.macaron as IMacaron).label || '').toBe('Expired');
   }));
 
   it('should setToExpired and update macaron label', fakeAsync(() => {
     component.macaron = { label: '', class: '', isButtonEnabled: false };
     component.setToExpired();
     tick();
-    expect(component.macaron && (component.macaron as IMacaron).label || '').toBe('Expiring');
+    expect(component.macaron && (component.macaron as IMacaron).label || '').toBe('Expired');
   }));
 });

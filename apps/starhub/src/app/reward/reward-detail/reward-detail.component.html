@@ -17,7 +17,7 @@
         <div *ngIf="!isExpired && macaron">
           <app-expire-timer
             *ngIf="macaron.class === 'expiring'"
-            [timerEndDate]="reward.validTo"
+            [timerEndDate]="reward.sellingTo"
             (hasExpired)="setToExpired()"
             (isExpiring)="onExpiring()">
           </app-expire-timer>
