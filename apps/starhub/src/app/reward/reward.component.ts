@@ -93,4 +93,8 @@ export class RewardComponent implements OnInit {
       }
     );
   }
+
+  public disableButtonOnExpired(): void {
+    this.isButtonEnable = false;
+  }
 }

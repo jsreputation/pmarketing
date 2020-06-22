@@ -1,13 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  TestBed
+} from '@angular/core/testing';
 
 import { TransactionHistoryComponent } from './transaction-history.component';
-import { LoyaltyModule, LoyaltyService } from '@perxtech/core';
+import {
+  LoyaltyModule,
+  LoyaltyService,
+  SettingsService
+} from '@perxtech/core';
 import { of } from 'rxjs';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 describe('TransactionHistoryComponent', () => {
   let component: TransactionHistoryComponent;
   let fixture: ComponentFixture<TransactionHistoryComponent>;
+  const settingsServiceStub: Partial<SettingsService> = {
+    getRemoteFlagsSettings: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -15,7 +26,7 @@ describe('TransactionHistoryComponent', () => {
         LoyaltyModule,
         InfiniteScrollModule
       ],
-      declarations: [TransactionHistoryComponent],
+      declarations: [ TransactionHistoryComponent ],
       providers: [
         {
           provide: LoyaltyService,
@@ -23,7 +34,8 @@ describe('TransactionHistoryComponent', () => {
             getAllTransactions: () => of(),
             getTransactionHistory: () => of()
           }
-        }
+        },
+        { provide: SettingsService, useValue: settingsServiceStub }
       ]
     })
       .compileComponents();
