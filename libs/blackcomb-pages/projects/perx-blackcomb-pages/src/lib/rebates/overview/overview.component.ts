@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
-import {MerchantData} from '../rebates.types';
+import {
+  ILoyalty,
+  LoyaltyService
+} from '@perxtech/core';
 
 @Component({
   selector: 'perx-blackcomb-pages-overview',
@@ -8,25 +11,35 @@ import {MerchantData} from '../rebates.types';
   styleUrls: ['./overview.component.scss']
 })
 export class OverviewComponent implements OnInit {
-  public matchingMerchant: MerchantData;
+  public matchingMerchant: ILoyalty;
   public merchantPrice?: string;
   public constructor(
-    private router: Router
+    private router: Router,
+    private loyaltyService: LoyaltyService
   ) {}
   public ngOnInit(): void {
     const scannedRebateData = history.state.merchantRebateData;
-    const merchantRebate = JSON.parse(scannedRebateData);
+    const merchantJsonData = JSON.parse(scannedRebateData);
     // find and update
-    this.merchantPrice = merchantRebate.price;
-    const {price, ...otherMerchantProperties} = merchantRebate;
-    const rebatesData = JSON.parse(localStorage.getItem('merchantsRebates') as string);
-    this.matchingMerchant = rebatesData ? rebatesData.find(data => data.merchantId === merchantRebate.merchantId) : null;
-    if (this.matchingMerchant === undefined) {
-      // null if localStorage empty, undefined when cant find in localStorage
-      // save particular merchant before continuing
-      localStorage.setItem('merchantsRebates', JSON.stringify([...rebatesData, otherMerchantProperties]));
-      this.matchingMerchant = merchantRebate;
-    }
+    // const {price, ...otherMerchantProperties} = merchantJsonData;
+    // const rebatesData = JSON.parse(localStorage.getItem('merchantsRebates') as string);
+    // this.matchingMerchant = rebatesData ? rebatesData.find(data => data.merchantId === merchantJsonData.merchantId) : null;
+    // if (this.matchingMerchant === undefined) {
+    //   // null if localStorage empty, undefined when cant find in localStorage
+    //   // save particular merchant before continuing
+    //   localStorage.setItem('merchantsRebates', JSON.stringify([...rebatesData, otherMerchantProperties]));
+    //   this.matchingMerchant = merchantJsonData;
+    // }
+
+    this.loyaltyService.getLoyalty(merchantJsonData.id).subscribe(
+      (merchant: ILoyalty) => {
+        this.matchingMerchant = merchant;
+        this.merchantPrice = merchantJsonData.price;
+      },
+      () => {
+        console.log('unrecognised QR');
+      }
+    );
   }
   public transaction(): void {
     const navigationExtras: NavigationExtras = {
@@ -35,7 +48,7 @@ export class OverviewComponent implements OnInit {
       }
     };
     // navigate to transaction page will do reduction full amt of rebate avail
-    this.router.navigate(['rebates/transaction', this.matchingMerchant.merchantId], navigationExtras);
+    this.router.navigate(['rebates/transaction', this.matchingMerchant.id], navigationExtras);
   }
 
   public doNothing(): void {
