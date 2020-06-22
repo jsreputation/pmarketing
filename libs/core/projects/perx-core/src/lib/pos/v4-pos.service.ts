@@ -41,7 +41,6 @@ interface IV4PosLoyaltyTransaction {
 })
 export class V4PosService extends PosService {
   private identifier: string | undefined;
-  private appToken: string;
   private apiHost: string;
   private http: HttpClient;
 
@@ -82,11 +81,10 @@ export class V4PosService extends PosService {
   ): Observable<IPosLoyaltyTransaction> {
     return this.profileService.whoAmI().pipe(
       tap((profile: IProfile) => this.identifier = profile.identifier ? profile.identifier : undefined),
-      switchMap(() => this.authenticationService.getAppAccessToken()),
-      tap((token: string) => this.appToken = token),
-      switchMap(() => {
+      map(() => this.authenticationService.getAppAccessToken()),
+      switchMap((token: string) => {
         const headers = new HttpHeaders()
-          .set('Authorization', `Bearer ${this.appToken}`)
+          .set('Authorization', `Bearer ${token}`)
           .set('Content-Type', 'application/json');
         return this.http.post<IV4PosLoyaltyTransactionResponse>(
           `${this.apiHost}/v4/pos/loyalty_transactions`,
