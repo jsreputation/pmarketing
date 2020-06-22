@@ -57,7 +57,7 @@ import { MerchantData } from '../rebates.types';
 export class RebatesWalletComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject<void>();
   // private qrScannerDialogRef: MatDialogRef<any>;
-  public subTitleFn: (merchant: MerchantData[]) => string;
+  public subTitleFn: (merchant: ILoyalty[]) => string;
   public titleFn: (profile: IProfile) => string;
 
   public sumRebates: (merchant: ILoyalty[]) => string;
@@ -82,7 +82,7 @@ export class RebatesWalletComponent implements OnInit, OnDestroy {
     // there's no get all loyalties yet. make a query with a larger page size to get more.
     this.merchants$ = this.loyaltyService.getLoyalties();
 
-    this.subTitleFn = (data: MerchantData[]) => `Your total rebate funds across ${data.length} merchants`;
+    this.subTitleFn = (data: ILoyalty[]) => `Your total rebate funds across ${data.length} merchants`;
     this.titleFn = (profile) => {
       let returnString = 'Welcome';
       if (profile && profile.firstName && profile.firstName !== '') {
