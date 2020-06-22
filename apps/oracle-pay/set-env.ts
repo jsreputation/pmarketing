@@ -1,12 +1,12 @@
+// Load node modules
 // https://github.com/angular/angular-cli/issues/4318#issuecomment-464160213
 import { writeFile } from 'fs'; // fs = require('fs');
+const colors = require('colors');
+const path = require('path');
+require('dotenv').config();
 
 // Configure Angular `environment.ts` file path
-const targetPath = `./src/environments/environment.ts`;
-
-// Load node modules
-const colors = require('colors');
-require('dotenv').config();
+const targetPath = path.resolve(__dirname, './src/environments/environment.ts');
 
 // Debug environment variables
 
@@ -26,7 +26,6 @@ console.log(colors.grey(envConfigFile));
 writeFile(targetPath, envConfigFile, (err) => {
   if (err) {
     throw console.error(err);
-  } else {
-    console.log(colors.magenta(`Angular environment.ts file generated correctly at ${targetPath} \n`));
   }
+  console.log(colors.magenta(`Angular environment.ts file generated correctly at ${targetPath} \n`));
 });

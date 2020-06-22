@@ -1,13 +1,13 @@
+// Load node modules
 const fs = require('fs');
 const async = require('async');
+const colors = require('colors');
+const path = require('path');
+require('dotenv').config();
 
 // Configure Angular `environment.ts` file path
-const targetPath = `./src/environments/environment.ts`;
-const appConfigPath = `./src/assets/config/app-config.json`;
-
-// Load node modules
-const colors = require('colors');
-require('dotenv').config();
+const targetPath = path.resolve(__dirname, './src/environments/environment.ts');
+const appConfigPath = path.resolve(__dirname, './src/assets/config/app-config.json');
 
 // Debug environment variables
 const displayProperties = `"displayProperties": {
