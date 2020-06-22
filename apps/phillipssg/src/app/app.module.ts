@@ -77,7 +77,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SignUpModule } from './sign-up/sign-up.module';
 import { environment } from '../environments/environment';
-import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
 
 // https://medium.com/angular-in-depth/gestures-in-an-angular-application-dde71804c0d0
 // to override default settings
@@ -116,12 +115,19 @@ registerLocaleData(vi, 'vi', localesViExtra);
 registerLocaleData(ko, 'ko', localesKoExtra);
 registerLocaleData(fr, 'fr', localesFrExtra);
 
-export const setLanguage = (
+export const appInit = (
   translateService: TranslateService,
   configService: ConfigService,
   authService: AuthenticationService,
   themesService: ThemesService) =>
   () => new Promise((resolve) => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const cid = urlParams.get('cid');
+    if (cid) {
+      localStorage.setItem('cid', cid);
+    } else {
+      console.error('Could not retrieve campaign id');
+    }
     configService.readAppConfig().pipe(
       tap((config: IConfig<void>) => translateService.setDefaultLang(config.defaultLang || 'en')),
       switchMap(() => authService.getAppToken()),
@@ -167,13 +173,12 @@ export const setLanguage = (
       }
     }),
     // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    ForgotPasswordModule
   ],
   bootstrap: [AppComponent],
   providers: [
     {
       provide: APP_INITIALIZER,
-      useFactory: setLanguage,
+      useFactory: appInit,
       deps: [TranslateService, ConfigService, AuthenticationService, ThemesService], multi: true
     },
     // Locale Id factory ensures the Locale Id matches whatever translation is available in the backend.
