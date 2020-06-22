@@ -20,7 +20,7 @@ import {
   NavigationExtras,
   Router
 } from '@angular/router';
-import { MerchantData } from '../rebates.types';
+// import { MerchantData } from '../rebates.types';
 
 // const unformatMoney = (moneyString: string): number => {
 //   if (!moneyString) {
