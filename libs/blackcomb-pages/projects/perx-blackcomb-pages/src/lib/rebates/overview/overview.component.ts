@@ -13,6 +13,9 @@ import {
 export class OverviewComponent implements OnInit {
   public matchingMerchant: ILoyalty;
   public merchantPrice?: string;
+  private itemName?: string;
+  private outletName?: string;
+
   public constructor(
     private router: Router,
     private loyaltyService: LoyaltyService
@@ -34,7 +37,9 @@ export class OverviewComponent implements OnInit {
     this.loyaltyService.getLoyalty(merchantJsonData.id).subscribe(
       (merchant: ILoyalty) => {
         this.matchingMerchant = merchant;
+        this.outletName = merchantJsonData.outletName;
         this.merchantPrice = merchantJsonData.price;
+        this.itemName = merchantJsonData.item_name;
       },
       () => {
         console.log('unrecognised QR');
@@ -45,7 +50,9 @@ export class OverviewComponent implements OnInit {
     const navigationExtras: NavigationExtras = {
       state: {
         price: this.merchantPrice,
-        merchant: this.matchingMerchant
+        merchant: this.matchingMerchant,
+        itemName: this.itemName,
+        outletName: this.outletName
       }
     };
     // navigate to transaction page will do reduction full amt of rebate avail

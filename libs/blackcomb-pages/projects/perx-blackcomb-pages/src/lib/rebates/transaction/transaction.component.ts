@@ -5,7 +5,8 @@ import {CurrencyPipe} from '@angular/common';
 import {
   DecimalPointsPipe,
   ILoyalty,
-  LoyaltyService
+  LoyaltyService,
+  PosService
 } from '@perxtech/core';
 import {
   map,
@@ -33,7 +34,8 @@ export class TransactionComponent implements OnInit {
     private currencyPipe: CurrencyPipe,
     private router: Router,
     private loyaltyService: LoyaltyService,
-    private decimalPointsPipe: DecimalPointsPipe
+    private decimalPointsPipe: DecimalPointsPipe,
+    private posService: PosService
   ) {
     this.costControl.valueChanges.subscribe(
       (currValue) => {
@@ -113,24 +115,33 @@ export class TransactionComponent implements OnInit {
     //   });
     // }
     // localStorage.setItem('merchantsRebates', JSON.stringify(this.rebatesData));
-
-
-
-    // navigate to success - think about when will fail, just to display success/failure? not useful, combine
-    // wont have failure cause not api, just go to success page, pass down info required
-    const navigationExtras: NavigationExtras = {
-      state: {
-        rebateGained: this.currencyPipe.transform(this.rebateGained, '$'),
-        actualCharged: this.currencyPipe.transform(
-          this.consumedRebates ?
-            this.transactionAmount - this.consumedRebates :
-            this.transactionAmount, '$'),
-        transactionAmount: this.currencyPipe.transform(this.transactionAmount, '$'),
-        rebateBurned: this.currencyPipe.transform(this.consumedRebates, '$'),
-        name: this.matchingMerchant ? this.matchingMerchant.name : '',
-        // logo: this.matchingMerchant ? this.matchingMerchant.logo : ''
-      }
-    };
-    this.router.navigate(['rebates/show'], navigationExtras);
+    if (this.matchingMerchant) {
+      this.posService.createTransaction(
+        history.state.itemName,
+        this.matchingMerchant.name,
+        history.state.outletName,
+        this.transactionAmount,
+        this.matchingMerchant.id
+      ).subscribe(
+        () => {
+          // navigate to success - think about when will fail, just to display success/failure? not useful, combine
+          // wont have failure cause not api, just go to success page, pass down info required
+          const navigationExtras: NavigationExtras = {
+            state: {
+              rebateGained: this.currencyPipe.transform(this.rebateGained, '$'),
+              actualCharged: this.currencyPipe.transform(
+                this.consumedRebates ?
+                  this.transactionAmount - this.consumedRebates :
+                  this.transactionAmount, '$'),
+              transactionAmount: this.currencyPipe.transform(this.transactionAmount, '$'),
+              rebateBurned: this.currencyPipe.transform(this.consumedRebates, '$'),
+              name: this.matchingMerchant ? this.matchingMerchant.name : '',
+              // logo: this.matchingMerchant ? this.matchingMerchant.logo : ''
+            }
+          };
+          this.router.navigate([ 'rebates/show' ], navigationExtras);
+        }
+      )
+    }
   }
 }

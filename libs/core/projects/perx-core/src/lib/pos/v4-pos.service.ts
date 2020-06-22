@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { PosService } from './pos.service';
 import {
+  HttpBackend,
   HttpClient,
   HttpHeaders
 } from '@angular/common/http';
@@ -14,7 +15,9 @@ import {
   switchMap,
   tap
 } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import {
+  Observable
+} from 'rxjs';
 import { IConfig } from '../config/models/config.model';
 
 interface IV4PosLoyaltyTransactionResponse {
@@ -40,9 +43,10 @@ export class V4PosService extends PosService {
   private identifier: string | undefined;
   private appToken: string;
   private apiHost: string;
+  private http: HttpClient;
 
   constructor(
-    private http: HttpClient,
+    handler: HttpBackend,
     private configService: ConfigService,
     private authenticationService: AuthenticationService,
     private profileService: ProfileService
@@ -52,6 +56,7 @@ export class V4PosService extends PosService {
       (config: IConfig<void>) => {
         this.apiHost = config.apiHost as string;
       });
+    this.http = new HttpClient(handler);
   }
 
   public static v4PosTransactionToPosTransaction(pos: IV4PosLoyaltyTransaction): IPosLoyaltyTransaction {
