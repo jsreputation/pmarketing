@@ -1,10 +1,11 @@
 <div class="overview-wrap" *ngIf="matchingMerchant">
   <div class="banner-group">
     <div class="logo-container">
-      <img [src]="matchingMerchant.logo" [alt]="matchingMerchant.name">
+<!--      <img [src]="matchingMerchant.logo" [alt]="matchingMerchant.name">-->
+      <img [alt]="matchingMerchant.name">
     </div>
     <div class="merchant-content">
-      <p>You have <span class="dark-blue">{{matchingMerchant?.rebateAmount}}</span> in rebate funds with</p>
+      <p>You have <span class="dark-blue">${{matchingMerchant?.pointsBalance | toDecimalPoints: 2}}</span> in rebate funds with</p>
       <h1>{{matchingMerchant.name}}</h1>
     </div>
   </div>
