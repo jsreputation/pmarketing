@@ -14,7 +14,7 @@ import {
   ProfileService,
   QrScannerComponent,
   ILoyalty,
-  CashbackTransactionPipe
+  DecimalPointsPipe
 } from '@perxtech/core';
 import {
   NavigationExtras,
@@ -69,7 +69,7 @@ export class RebatesWalletComponent implements OnInit, OnDestroy {
     private profileService: ProfileService,
     private router: Router,
     private loyaltyService: LoyaltyService,
-    private cashbackTransactionPipe: CashbackTransactionPipe
+    private toDp: DecimalPointsPipe
   ) { }
 
   public ngOnInit(): void {
@@ -93,7 +93,7 @@ export class RebatesWalletComponent implements OnInit, OnDestroy {
       return returnString;
     };
     this.profile$ = this.profileService.whoAmI();
-    this.sumRebates = (merchants: ILoyalty[]) => `$${this.cashbackTransactionPipe.twodp(merchants.reduce((acc: number, curr: ILoyalty) => curr.pointsBalance + acc, 0))}`;
+    this.sumRebates = (merchants: ILoyalty[]) => `$${this.toDp.transform(merchants.reduce((acc: number, curr: ILoyalty) => curr.pointsBalance + acc, 0), 2)}`;
   }
 
   public ngOnDestroy(): void {

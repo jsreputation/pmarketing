@@ -6,7 +6,8 @@ import {
   RebatesModule as PerxRebatesModule,
   QrScannerComponent,
   UtilsModule,
-  ProfileServiceModule
+  ProfileServiceModule,
+  DecimalPointsPipe
 } from '@perxtech/core';
 import { RebatesWalletComponent } from './rebates-wallet/rebates-wallet.component';
 import { OverviewComponent } from './overview/overview.component';
@@ -45,6 +46,9 @@ import { TransactionShowComponent } from './transaction-show/transaction-show.co
   ],
   entryComponents: [
     QrScannerComponent
+  ],
+  providers: [
+    DecimalPointsPipe
   ]
 })
 export class RebatesModule { }

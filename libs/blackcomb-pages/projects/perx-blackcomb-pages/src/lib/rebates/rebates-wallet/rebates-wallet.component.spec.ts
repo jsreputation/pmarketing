@@ -5,6 +5,7 @@ import {
 } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {
+  DecimalPointsPipe,
   LoyaltyModule,
   ProfileService,
   RebatesListComponent,
@@ -48,6 +49,7 @@ describe('RebatesWalletComponent', () => {
       providers: [
         { provide: ProfileService, useValue: profileServiceStub },
         { provide: ThemesService, useValue: themesServiceStub },
+        DecimalPointsPipe
       ]
     })
       .compileComponents();
