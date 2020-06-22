@@ -120,7 +120,7 @@ export class TransactionComponent implements OnInit {
         history.state.itemName,
         this.matchingMerchant.name,
         history.state.outletName,
-        Number(this.transactionAmount + 'e2'),
+        Number(this.rebateGained + 'e2'),
         this.matchingMerchant.id
       ).subscribe(
         () => {
