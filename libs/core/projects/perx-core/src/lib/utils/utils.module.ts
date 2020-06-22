@@ -33,6 +33,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { TranslateModule } from '@ngx-translate/core';
 import { V4MicrositeSettingInterceptor } from './themes/v4publicSettings.interceptor';
 import { LocationFilterPopupComponent } from './location-filter-popup/location-filter-popup.component';
+import { DecimalPointsPipe } from './directives/to-decimal-point.pipe';
 
 export function themesServiceFactory(http: HttpClient, config: Config, configService: ConfigService): ThemesService {
   if (config.isWhistler) {
@@ -61,7 +62,8 @@ const pipes = [
   SortRewardsPipe,
   StripHtmlPipe,
   SafeHtmlPipe,
-  SafeUrlPipe
+  SafeUrlPipe,
+  DecimalPointsPipe
 ];
 
 // make sure we have only one instance of the NotificationService
