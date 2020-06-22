@@ -1,9 +1,12 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {
+  Pipe,
+  PipeTransform
+} from '@angular/core';
 
-@Pipe({name: 'toDecimalPoints'})
+@Pipe({ name: 'toDecimalPoints' })
 export class DecimalPointsPipe implements PipeTransform {
   public transform(value: number, decimalPoints: number): string {
-    return this.convertToNDecimals(value,decimalPoints);
+    return this.convertToNDecimals(value, decimalPoints);
   }
 
   public convertToNDecimals(value: number, decimalPoints: number): string {
