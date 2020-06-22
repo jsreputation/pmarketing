@@ -303,3 +303,9 @@ export { QrScannerComponent } from './lib/rebates/rebates-qr-scanner/qrscanner.c
 /**
  * Tenants
  */
+
+/**
+ * POS
+ */
+export { PosModule } from './lib/pos/pos.module';
+export { PosService } from './lib/pos/pos.service';
