@@ -44,7 +44,8 @@ export class OverviewComponent implements OnInit {
   public transaction(): void {
     const navigationExtras: NavigationExtras = {
       state: {
-        price: this.merchantPrice
+        price: this.merchantPrice,
+        merchant: this.matchingMerchant
       }
     };
     // navigate to transaction page will do reduction full amt of rebate avail
