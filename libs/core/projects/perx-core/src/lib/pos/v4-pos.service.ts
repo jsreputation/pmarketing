@@ -84,7 +84,7 @@ export class V4PosService extends PosService {
           .set('Authorization', `Bearer ${this.appToken}`)
           .set('Content-Type', 'application/json');
         return this.http.post<IV4PosLoyaltyTransactionResponse>(
-          `${this.apiHost}/v4/post/loyalty_transactions`,
+          `${this.apiHost}/v4/pos/loyalty_transactions`,
           {
             user_account: {
               identifier: `${this.identifier}`
