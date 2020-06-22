@@ -13,7 +13,8 @@ import {
   LoyaltyService,
   ProfileService,
   QrScannerComponent,
-  ILoyalty
+  ILoyalty,
+  CashbackTransactionPipe
 } from '@perxtech/core';
 import {
   NavigationExtras,
@@ -21,13 +22,13 @@ import {
 } from '@angular/router';
 import { MerchantData } from '../rebates.types';
 
-const unformatMoney = (moneyString: string): number => {
-  if (!moneyString) {
-    return 0.00;
-  }
-
-  return parseFloat(moneyString.replace('$', ''));
-};
+// const unformatMoney = (moneyString: string): number => {
+//   if (!moneyString) {
+//     return 0.00;
+//   }
+//
+//   return parseFloat(moneyString.replace('$', ''));
+// };
 //
 // const merchantsData: MerchantData[] = [
 //   {
@@ -59,7 +60,7 @@ export class RebatesWalletComponent implements OnInit, OnDestroy {
   public subTitleFn: (merchant: MerchantData[]) => string;
   public titleFn: (profile: IProfile) => string;
 
-  public sumRebates: (merchant: MerchantData[]) => string;
+  public sumRebates: (merchant: ILoyalty[]) => string;
   public profile$: Observable<IProfile>;
   public merchants$: Observable<ILoyalty[]>; // mocking merchant data
 
@@ -67,7 +68,8 @@ export class RebatesWalletComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private profileService: ProfileService,
     private router: Router,
-    private loyaltyService: LoyaltyService
+    private loyaltyService: LoyaltyService,
+    private cashbackTransactionPipe: CashbackTransactionPipe
   ) { }
 
   public ngOnInit(): void {
@@ -91,7 +93,7 @@ export class RebatesWalletComponent implements OnInit, OnDestroy {
       return returnString;
     };
     this.profile$ = this.profileService.whoAmI();
-    this.sumRebates = (merchants: MerchantData[]) => `$${merchants.reduce((acc: number, curr: MerchantData) => unformatMoney(curr.rebateAmount) + acc, 0).toFixed(2)}`;
+    this.sumRebates = (merchants: ILoyalty[]) => `$${this.cashbackTransactionPipe.twodp(merchants.reduce((acc: number, curr: ILoyalty) => curr.pointsBalance + acc, 0))}`;
   }
 
   public ngOnDestroy(): void {
