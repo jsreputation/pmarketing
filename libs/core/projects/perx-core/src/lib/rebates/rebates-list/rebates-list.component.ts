@@ -13,6 +13,7 @@ import {
   IReward
 } from '../../rewards/models/reward.model';
 import { ThemesService } from '../../utils/themes/themes.service';
+import { ILoyalty } from '../../loyalty/models/loyalty.model';
 
 export type MerchantData = {
   merchantId: number;
@@ -29,7 +30,7 @@ export type MerchantData = {
   styleUrls: ['./rebates-list.component.scss']
 })
 export class RebatesListComponent implements OnInit {
-  @Input('data') public merchants$: Observable<MerchantData[]>;
+  @Input('data') public merchants$: Observable<ILoyalty[]>;
 
   public theme: ITheme | null = null;
   public colorPrimary: Colors = Colors.Primary;
@@ -44,7 +45,7 @@ export class RebatesListComponent implements OnInit {
   public displayPriceFn: (rewardPrice: IPrice) => string;
 
   @Output()
-  public tapped: EventEmitter<MerchantData> = new EventEmitter<MerchantData>();
+  public tapped: EventEmitter<ILoyalty> = new EventEmitter<ILoyalty>();
 
   public get themeFontColor(): string | null {
     return this.theme ? this.theme.properties['--font_color'] : null;
@@ -64,7 +65,7 @@ export class RebatesListComponent implements OnInit {
     this.initTheme();
   }
 
-  public merchantClickedHandler(merchant: MerchantData): void {
+  public merchantClickedHandler(merchant: ILoyalty): void {
     this.tapped.emit(merchant);
   }
 }
