@@ -5,14 +5,15 @@ import {
 } from '@angular/core';
 import {
   Observable,
-  of,
   Subject
 } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import {
   IProfile,
+  LoyaltyService,
   ProfileService,
-  QrScannerComponent
+  QrScannerComponent,
+  ILoyalty
 } from '@perxtech/core';
 import {
   NavigationExtras,
@@ -27,26 +28,26 @@ const unformatMoney = (moneyString: string): number => {
 
   return parseFloat(moneyString.replace('$', ''));
 };
-
-const merchantsData: MerchantData[] = [
-  {
-    logo: 'https://d1yjjnpx0p53s8.cloudfront.net/styles/logo-original-577x577/s3/0007/1621/brand.gif?itok=i1z5e_GW',
-    merchantId: 0,
-    name: 'O’Brien’s Irish Sandwich Bar',
-    description: 'Any participating branch',
-    imgUrl: 'https://media-cdn.tripadvisor.com/media/photo-s/06/da/b8/f2/exterior-of-restaurant.jpg',
-    rebateAmount: '$5.00',
-    price: '$10.00'
-  },
-  {
-    logo: 'https://cdn.freebiesupply.com/images/large/2x/starbucks-logo-png-transparent.png',
-    merchantId: 1,
-    name: 'Starbucks Coffee',
-    description: 'Any participating branch',
-    imgUrl: 'https://api.time.com/wp-content/uploads/2016/06/starbucks1.jpg?w=800&quality=85',
-    rebateAmount: '$5.00'
-  }
-];
+//
+// const merchantsData: MerchantData[] = [
+//   {
+//     logo: 'https://d1yjjnpx0p53s8.cloudfront.net/styles/logo-original-577x577/s3/0007/1621/brand.gif?itok=i1z5e_GW',
+//     merchantId: 0,
+//     name: 'O’Brien’s Irish Sandwich Bar',
+//     description: 'Any participating branch',
+//     imgUrl: 'https://media-cdn.tripadvisor.com/media/photo-s/06/da/b8/f2/exterior-of-restaurant.jpg',
+//     rebateAmount: '$5.00',
+//     price: '$10.00'
+//   },
+//   {
+//     logo: 'https://cdn.freebiesupply.com/images/large/2x/starbucks-logo-png-transparent.png',
+//     merchantId: 1,
+//     name: 'Starbucks Coffee',
+//     description: 'Any participating branch',
+//     imgUrl: 'https://api.time.com/wp-content/uploads/2016/06/starbucks1.jpg?w=800&quality=85',
+//     rebateAmount: '$5.00'
+//   }
+// ];
 @Component({
   selector: 'perx-blackcomb-rebates-wallet',
   templateUrl: './rebates-wallet.component.html',
@@ -60,20 +61,25 @@ export class RebatesWalletComponent implements OnInit, OnDestroy {
 
   public sumRebates: (merchant: MerchantData[]) => string;
   public profile$: Observable<IProfile>;
-  public merchants$: Observable<any[]>; // mocking merchant data
+  public merchants$: Observable<ILoyalty[]>; // mocking merchant data
 
   constructor(
     private dialog: MatDialog,
     private profileService: ProfileService,
-    private router: Router
+    private router: Router,
+    private loyaltyService: LoyaltyService
   ) { }
 
   public ngOnInit(): void {
-    if (!localStorage.getItem('merchantsRebates')) {
-      localStorage.setItem('merchantsRebates', JSON.stringify(merchantsData));
-    }
-    const merchantCards = JSON.parse(localStorage.getItem('merchantsRebates') as string) as any[];
-    this.merchants$ = of(merchantCards);
+    // if (!localStorage.getItem('merchantsRebates')) {
+    //   localStorage.setItem('merchantsRebates', JSON.stringify(merchantsData));
+    // }
+    // const merchantCards = JSON.parse(localStorage.getItem('merchantsRebates') as string) as any[];
+    // this.merchants$ = of(merchantCards);
+
+    // there's no get all loyalties yet. make a query with a larger page size to get more.
+    this.merchants$ = this.loyaltyService.getLoyalties();
+
     this.subTitleFn = (data: MerchantData[]) => `Your total rebate funds across ${data.length} merchants`;
     this.titleFn = (profile) => {
       let returnString = 'Welcome';
