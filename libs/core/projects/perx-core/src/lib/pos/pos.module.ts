@@ -3,7 +3,10 @@ import {
   NgModule
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import {
+  HttpBackend,
+  // HttpClient
+} from '@angular/common/http';
 // import { Config } from '../config/config';
 import { ConfigService } from '../config/config.service';
 import { AuthenticationService } from '../auth/authentication/authentication.service';
@@ -12,7 +15,7 @@ import { V4PosService } from './v4-pos.service';
 import { ProfileService } from '../profile/profile.service';
 
 // export function posServiceFactory(http: HttpClient, config: Config, configService: ConfigService, authService: AuthenticationService, profileService: ProfileService): PosService {
-export function posServiceFactory(http: HttpClient, configService: ConfigService, authService: AuthenticationService, profileService: ProfileService): PosService {
+export function posServiceFactory(http: HttpBackend, configService: ConfigService, authService: AuthenticationService, profileService: ProfileService): PosService {
   // Make decision on what to instantiate base on config
   // if (config.isWhistler) {
   //   return new WhistlerPosService(http, config);
@@ -27,7 +30,7 @@ export function posServiceFactory(http: HttpClient, configService: ConfigService
     {
       provide: PosService,
       useFactory: posServiceFactory,
-      deps: [ HttpClient, ConfigService, AuthenticationService, ProfileService ]
+      deps: [ HttpBackend, ConfigService, AuthenticationService, ProfileService ]
     }
   ]
 })
