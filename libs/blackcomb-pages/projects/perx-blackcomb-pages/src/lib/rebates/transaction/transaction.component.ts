@@ -24,7 +24,7 @@ import {
 })
 export class TransactionComponent implements OnInit {
   // private rebatesData?: MerchantData[];
-  public matchingMerchant: ILoyalty | undefined;
+  public matchingMerchant: ILoyalty;
   public rebateGained: number = 0;
   public consumedRebates: number = 0;
   public transactionAmount: number = 0;
@@ -120,8 +120,16 @@ export class TransactionComponent implements OnInit {
         history.state.itemName,
         this.matchingMerchant.name,
         history.state.outletName,
-        Number(this.rebateGained + 'e2'),
+        Number('-' + this.consumedRebates + 'e2'),
         this.matchingMerchant.id
+      ).pipe(
+        switchMap(() => this.posService.createTransaction(
+          history.state.itemName,
+          this.matchingMerchant.name,
+          history.state.outletName,
+          Number(this.rebateGained + 'e2'),
+          this.matchingMerchant.id
+        ))
       ).subscribe(
         () => {
           // navigate to success - think about when will fail, just to display success/failure? not useful, combine
