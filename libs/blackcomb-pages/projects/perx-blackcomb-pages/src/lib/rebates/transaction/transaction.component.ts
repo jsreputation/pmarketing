@@ -117,16 +117,16 @@ export class TransactionComponent implements OnInit {
     // localStorage.setItem('merchantsRebates', JSON.stringify(this.rebatesData));
     if (this.matchingMerchant) {
       this.posService.createTransaction(
-        history.state.itemName,
+        history.state.itemName ? history.state.itemName : 'Pending',
         this.matchingMerchant.name,
-        history.state.outletName,
+        history.state.outletName ? history.state.outletName : '',
         Number('-' + this.consumedRebates + 'e2'),
         this.matchingMerchant.id
       ).pipe(
         switchMap(() => this.posService.createTransaction(
-          history.state.itemName,
+          history.state.itemName ? history.state.itemName : 'Pending',
           this.matchingMerchant.name,
-          history.state.outletName,
+          history.state.outletName ? history.state.outletName : '',
           Number(this.rebateGained + 'e2'),
           this.matchingMerchant.id
         ))
