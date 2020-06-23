@@ -119,7 +119,7 @@ export class TransactionComponent implements OnInit {
           history.state.itemName ? history.state.itemName : 'Pending',
           this.matchingMerchant.name,
           history.state.outletName ? history.state.outletName : '',
-          Number('-' + this.consumedRebates + 'e2'),
+          Number(`-${this.consumedRebates}e2`),
           this.matchingMerchant.id),
         of({})
       ).pipe(
@@ -128,7 +128,7 @@ export class TransactionComponent implements OnInit {
             history.state.itemName ? history.state.itemName : 'Pending',
             this.matchingMerchant.name,
             history.state.outletName ? history.state.outletName : '',
-            Number(this.rebateGained + 'e2'),
+            Number(`${this.rebateGained}e2`),
             this.matchingMerchant.id
           ),
           of({}))
