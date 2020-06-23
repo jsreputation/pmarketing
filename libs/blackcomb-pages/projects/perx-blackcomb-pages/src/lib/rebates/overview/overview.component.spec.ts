@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { OverviewComponent } from './overview.component';
 import {Router} from '@angular/router';
+import { UtilsModule } from '@perxtech/core';
 
 const router = {
   navigate: jest.fn()
@@ -15,6 +16,9 @@ describe('OverviewComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ OverviewComponent ],
+      imports: [
+        UtilsModule
+      ],
       providers: [
         { provide: Router, useValue: router }
       ]
