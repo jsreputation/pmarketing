@@ -44,6 +44,7 @@ export interface ILoyalty {
   cardId?: number;
   membershipExpiry?: Date;
   tiers?: LoyaltyTiers[];
+  membershipState?: 'active' | 'pending' | 'inactive' | 'expire';
 }
 
 export interface ITransaction {

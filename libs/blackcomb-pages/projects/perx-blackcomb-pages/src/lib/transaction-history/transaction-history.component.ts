@@ -30,7 +30,7 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
   public subTitleFn: (tr: ITransactionHistory) => string;
   public priceLabelFn: (tr: ITransactionHistory) => string;
 
-  private pageNumber: number = 1;
+  private pageNumber: number = 2;
   private pageSize: number = 10;
   private complitePagination: boolean = false;
   constructor(
@@ -42,7 +42,7 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
   ) { }
 
   public ngOnInit(): void {
-    this.transactions = this.loyaltyService.getTransactionHistory(this.pageNumber, this.pageSize);
+    this.transactions = this.loyaltyService.getTransactionHistory(this.pageNumber - 1, this.pageSize);
     this.settingsService.getRemoteFlagsSettings().subscribe((flags: IFlags) => {
       if (flags.rebateDemoFlow) {
         this.priceLabelFn = (tr: ITransactionHistory) => `${this.cashbackTransactionPipe.transform(tr.pointsAmount || 0)}`;
@@ -50,8 +50,15 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
           let text = '';
           const properties = oc(tr).transactionDetails.data.properties();
           if (properties) {
-            text = properties.storeName ?
-              `${properties.storeCode ? `${properties.storeCode} -` : ''} ${[ properties.storeName ]}` : '';
+            text = properties.storeName ? `${properties.storeName}` : '';
+          }
+          return text;
+        };
+        this.purchasesTitleFn = (tr: ITransactionHistory) => {
+          let text = '';
+          const properties = oc(tr).transactionDetails.data.properties();
+          if (properties) {
+            text = properties.storeCode ? properties.storeCode : '';
           }
           return text;
         };
@@ -65,16 +72,16 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
           }
           return text;
         };
+        this.purchasesTitleFn = (tr: ITransactionHistory) => {
+          let text = '';
+          const properties = oc(tr).transactionDetails.data.properties();
+          if (properties) {
+            text = properties.productName ? properties.productName : '';
+          }
+          return text;
+        };
       }
     });
-    this.purchasesTitleFn = (tr: ITransactionHistory) => {
-      let text = '';
-      const properties = oc(tr).transactionDetails.data.properties();
-      if (properties) {
-        text = properties.productName ? properties.productName : '';
-      }
-      return text;
-    };
 
     this.redemptionsTitleFn = (tr: ITransactionHistory) =>
       `${(tr.transactionDetails && tr.transactionDetails.data) ?

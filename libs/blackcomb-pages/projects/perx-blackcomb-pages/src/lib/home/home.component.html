@@ -4,7 +4,7 @@
   [infiniteScrollThrottle]="50"
   (scrolled)="onScroll()"
   [scrollWindow]="false">
-  <div class="loyalty-block" *ngIf="appConfig.showLoyaltyBlockOnHomePage">
+  <div class="loyalty-block" *ngIf="appConfig.showLoyaltyBlockOnHomePage && !appRemoteFlags.rebateDemoFlow">
     <perx-core-loyalty-summary [titleFn]="titleFn" [showLoyaltyProgress]="appConfig.showLoyaltyProgress"></perx-core-loyalty-summary>
     <div class="loyalty-item loyalty-item-qr" *ngIf="appConfig.showUserQR">
       <a
