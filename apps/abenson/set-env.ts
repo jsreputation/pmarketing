@@ -10,7 +10,11 @@ require('dotenv').config();
 const angularTargetPath = path.resolve(__dirname, './src/environments/environment.ts');
 const appConfigPath = path.resolve(__dirname, './src/assets/config/app-config.json');
 
-// Debug environment variables
+// create environment folders
+['./src/environments', './src/assets/config']
+  .map(relativePath => path.resolve(__dirname, relativePath))
+  .filter(fullPath => !fs.existsSync(fullPath))
+  .forEach(fullPath => fs.mkdirSync(fullPath));
 
 // `environment.ts` file structure that uses the environment variables
 const envConfigFile = `export const environment = {

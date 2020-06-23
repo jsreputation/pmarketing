@@ -9,6 +9,13 @@ require('dotenv').config();
 const targetPath = path.resolve(__dirname, './src/environments/environment.ts');
 const appConfigPath = path.resolve(__dirname, './src/assets/config/app-config.json');
 
+// create environment folders
+['./src/environments', './src/assets/config']
+  .map(relativePath => path.resolve(__dirname, relativePath))
+  .filter(fullPath => !fs.existsSync(fullPath))
+  .forEach(fullPath => fs.mkdirSync(fullPath));
+
+
 // Debug environment variables
 const displayProperties = `"displayProperties": {
   "account": {

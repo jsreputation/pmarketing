@@ -11,7 +11,11 @@ const targetPath = path.resolve(__dirname, './src/environments/environment.ts');
 const appConfigPath = path.resolve(__dirname, './src/assets/config/app-config.json');
 const rssFeedsPath = path.resolve(__dirname, './src/assets/config/RSS_FEEDS.json');
 
-// Debug environment variables
+// create environment folders
+['./src/environments', './src/assets/config']
+  .map(relativePath => path.resolve(__dirname, relativePath))
+  .filter(fullPath => !fs.existsSync(fullPath))
+  .forEach(fullPath => fs.mkdirSync(fullPath));
 
 const rssFeeds = `{
   "data": [
