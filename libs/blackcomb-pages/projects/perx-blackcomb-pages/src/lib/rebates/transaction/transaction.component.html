@@ -5,7 +5,7 @@
       <img [alt]="matchingMerchant.name">
     </div>
     <div class="merchant-content">
-      <p>You have <span class="dark-blue">${{matchingMerchant?.pointsBalance | toDecimalPoints: 2}}</span> in rebate funds with</p>
+      <p>You have <span class="dark-blue">${{matchingMerchant?.pointsBalance | pointsToCash: 2}}</span> in rebate funds with</p>
       <h1>{{matchingMerchant.name}}</h1>
     </div>
   </div>

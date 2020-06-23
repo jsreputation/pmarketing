@@ -12,7 +12,7 @@ import {
   RebatesListComponent,
   ThemesService,
   UtilsModule,
-  DecimalPointsPipe,
+  PointsToCashPipe,
 } from '@perxtech/core';
 import {
   MatCardModule,
@@ -59,7 +59,7 @@ describe('RebatesWalletComponent', () => {
         { provide: ProfileService, useValue: profileServiceStub },
         { provide: ThemesService, useValue: themesServiceStub },
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
-        DecimalPointsPipe
+        PointsToCashPipe
       ]
     })
       .compileComponents();

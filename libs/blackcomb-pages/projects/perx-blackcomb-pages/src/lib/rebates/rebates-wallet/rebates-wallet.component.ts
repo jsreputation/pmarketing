@@ -14,7 +14,7 @@ import {
   ProfileService,
   QrScannerComponent,
   ILoyalty,
-  DecimalPointsPipe
+  PointsToCashPipe
 } from '@perxtech/core';
 import {
   NavigationExtras,
@@ -69,7 +69,7 @@ export class RebatesWalletComponent implements OnInit, OnDestroy {
     private profileService: ProfileService,
     private router: Router,
     private loyaltyService: LoyaltyService,
-    private toDp: DecimalPointsPipe
+    private toDp: PointsToCashPipe
   ) { }
 
   public ngOnInit(): void {

@@ -10,7 +10,7 @@ import {
 import { FormControl } from '@angular/forms';
 import { CurrencyPipe } from '@angular/common';
 import {
-  DecimalPointsPipe,
+  PointsToCashPipe,
   ILoyalty,
   LoyaltyService,
   PosService
@@ -42,7 +42,7 @@ export class TransactionComponent implements OnInit {
     private currencyPipe: CurrencyPipe,
     private router: Router,
     private loyaltyService: LoyaltyService,
-    private decimalPointsPipe: DecimalPointsPipe,
+    private pointsToCashPipe: PointsToCashPipe,
     private posService: PosService
   ) {
     this.costControl.valueChanges.subscribe(
@@ -50,7 +50,7 @@ export class TransactionComponent implements OnInit {
         if (this.matchingMerchant) {
           // const parsedRebateAmount =
           // TransactionComponent.convertStringCurrencyToFloat(this.matchingMerchant.rebateAmount);
-          const parsedRebateAmount = parseFloat(this.decimalPointsPipe.transform(this.matchingMerchant.pointsBalance, 2));
+          const parsedRebateAmount = parseFloat(this.pointsToCashPipe.transform(this.matchingMerchant.pointsBalance, 2));
           if (parsedRebateAmount >= currValue) {
             this.consumedRebates = currValue;
           } else if (parsedRebateAmount > 0) {

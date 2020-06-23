@@ -3,8 +3,9 @@ import {
   PipeTransform
 } from '@angular/core';
 
-@Pipe({ name: 'toDecimalPoints' })
-export class DecimalPointsPipe implements PipeTransform {
+// intent to use a conversion rate of 100 points : 1 dollar.
+@Pipe({ name: 'pointsToCash' })
+export class PointsToCashPipe implements PipeTransform {
   public transform(value: number, decimalPoints: number): string {
     return this.convertToNDecimals(value, decimalPoints);
   }

@@ -15,7 +15,7 @@ import {
 } from 'rxjs';
 import { CurrencyPipe } from '@angular/common';
 import {
-  DecimalPointsPipe,
+  PointsToCashPipe,
   ILoyalty,
   LoyaltyService,
   UtilsModule
@@ -48,7 +48,7 @@ describe('TransactionComponent', () => {
         { provide: Router, useValue: jest.fn()},
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
         CurrencyPipe,
-        DecimalPointsPipe
+        PointsToCashPipe
       ]
     })
       .compileComponents();
