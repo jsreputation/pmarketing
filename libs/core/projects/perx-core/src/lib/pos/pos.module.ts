@@ -14,8 +14,18 @@ import { PosService } from './pos.service';
 import { V4PosService } from './v4-pos.service';
 import { ProfileService } from '../profile/profile.service';
 
-// export function posServiceFactory(http: HttpClient, config: Config, configService: ConfigService, authService: AuthenticationService, profileService: ProfileService): PosService {
-export function posServiceFactory(http: HttpBackend, configService: ConfigService, authService: AuthenticationService, profileService: ProfileService): PosService {
+// export function posServiceFactory(
+// http: HttpClient,
+// config: Config,
+// configService:
+// ConfigService,
+// authService: AuthenticationService,
+// profileService: ProfileService): PosService {
+export function posServiceFactory(
+  http: HttpBackend,
+  configService: ConfigService,
+  authService: AuthenticationService,
+  profileService: ProfileService): PosService {
   // Make decision on what to instantiate base on config
   // if (config.isWhistler) {
   //   return new WhistlerPosService(http, config);
