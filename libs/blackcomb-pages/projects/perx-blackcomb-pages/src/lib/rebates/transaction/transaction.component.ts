@@ -125,13 +125,16 @@ export class TransactionComponent implements OnInit {
           this.matchingMerchant.id),
         of({})
       ).pipe(
-        switchMap(() => this.posService.createTransaction(
-          history.state.itemName ? history.state.itemName : 'Pending',
-          this.matchingMerchant.name,
-          history.state.outletName ? history.state.outletName : '',
-          Number(this.rebateGained + 'e2'),
-          this.matchingMerchant.id
-        ))
+        switchMap(() => iif(() => (this.transactionAmount - this.consumedRebates) > 0,
+          this.posService.createTransaction(
+            history.state.itemName ? history.state.itemName : 'Pending',
+            this.matchingMerchant.name,
+            history.state.outletName ? history.state.outletName : '',
+            Number(this.rebateGained + 'e2'),
+            this.matchingMerchant.id
+          ),
+          of({}))
+        )
       ).subscribe(
         () => {
           // navigate to success - think about when will fail, just to display success/failure? not useful, combine
