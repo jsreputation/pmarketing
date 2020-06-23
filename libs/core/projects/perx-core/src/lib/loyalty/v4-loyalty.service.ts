@@ -91,6 +91,7 @@ interface IV4Loyalty {
   tiers: IV4LoyaltyTiers[]; // will do proper mapping later on
   points_history?: IV4PointHistory[];
   membership_expiry: Date;
+  membership_state?: 'active' | 'pending' | 'inactive' | 'expire';
 }
 
 interface IV4GetLoyaltiesResponse {
@@ -286,7 +287,8 @@ export class V4LoyaltyService extends LoyaltyService {
         pointsRequirement: tier.points_requirement,
         pointsDifference: tier.points_difference,
         images: oc(tier).images()
-      })) : undefined
+      })) : undefined,
+      membershipState: loyalty.membership_state
     };
   }
 
