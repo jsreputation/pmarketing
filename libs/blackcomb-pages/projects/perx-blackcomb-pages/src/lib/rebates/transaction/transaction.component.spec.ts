@@ -15,8 +15,10 @@ import {
 } from 'rxjs';
 import { CurrencyPipe } from '@angular/common';
 import {
+  DecimalPointsPipe,
   ILoyalty,
   LoyaltyService,
+  UtilsModule
 } from '@perxtech/core';
 
 const activatedRouteStub: Partial<ActivatedRoute> = {
@@ -37,12 +39,16 @@ describe('TransactionComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ TransactionComponent ],
-      imports: [ ReactiveFormsModule ],
+      imports: [
+        ReactiveFormsModule,
+        UtilsModule
+      ],
       providers: [
         { provide: ActivatedRoute, useValue: activatedRouteStub },
         { provide: Router, useValue: jest.fn()},
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
-        CurrencyPipe
+        CurrencyPipe,
+        DecimalPointsPipe
       ]
     })
       .compileComponents();
