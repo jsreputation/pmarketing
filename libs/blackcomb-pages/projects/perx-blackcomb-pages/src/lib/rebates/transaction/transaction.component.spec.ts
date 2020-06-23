@@ -35,7 +35,8 @@ describe('TransactionComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TransactionComponent);
     component = fixture.componentInstance;
-    component.matchingMerchant = { description: '', imgUrl: '', logo: '', merchantId: 0, name: '', rebateAmount: '' };
+    // component.matchingMerchant = { description: '', imgUrl: '', logo: '', merchantId: 0, name: '', rebateAmount: '' };
+    component.matchingMerchant = { description: '', id: 0, name: '', pointsBalance: 0 };
     fixture.detectChanges();
   });
 
