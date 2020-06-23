@@ -1,6 +1,6 @@
 // Load node modules
 // https://github.com/angular/angular-cli/issues/4318#issuecomment-464160213
-import { writeFile } from 'fs'; // fs = require('fs');
+import { writeFile, existsSync, mkdirSync } from 'fs';
 const colors = require('colors');
 const path = require('path');
 require('dotenv').config();
@@ -9,10 +9,10 @@ require('dotenv').config();
 const targetPath = path.resolve(__dirname, './src/environments/environment.ts');
 
 // create environment folders
-['./src/environments', './src/assets/config']
+['./src/environments']
   .map(relativePath => path.resolve(__dirname, relativePath))
-  .filter(fullPath => !fs.existsSync(fullPath))
-  .forEach(fullPath => fs.mkdirSync(fullPath));
+  .filter(fullPath => !existsSync(fullPath))
+  .forEach(fullPath => mkdirSync(fullPath));
 
 
 // `environment.ts` file structure that uses the environment variables
