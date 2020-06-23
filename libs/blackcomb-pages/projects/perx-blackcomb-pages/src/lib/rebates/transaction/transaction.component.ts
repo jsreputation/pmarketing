@@ -23,6 +23,7 @@ import {
   iif,
   of
 } from 'rxjs';
+import { globalCacheBusterNotifier } from 'ngx-cacheable';
 
 @Component({
   selector: 'perx-blackcomb-pages-transaction',
@@ -137,6 +138,7 @@ export class TransactionComponent implements OnInit {
         () => {
           // navigate to success - think about when will fail, just to display success/failure? not useful, combine
           // wont have failure cause not api, just go to success page, pass down info required
+          globalCacheBusterNotifier.next();
           const navigationExtras: NavigationExtras = {
             state: {
               rebateGained: this.currencyPipe.transform(this.rebateGained, '$'),
