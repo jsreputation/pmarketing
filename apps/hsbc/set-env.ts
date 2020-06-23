@@ -1,16 +1,21 @@
+// Load node modules
 // https://github.com/angular/angular-cli/issues/4318#issuecomment-464160213
 const fs = require('fs');
 const async = require('async');
 const path = require('path');
+const colors = require('colors');
+require('dotenv').config();
+
 // Configure Angular `environment.ts` file path
 const angularTargetPath = path.resolve(__dirname, './src/environments/environment.ts');
 const appConfigPath = path.resolve(__dirname, './src/assets/config/app-config.json');
 
-// Load node modules
-const colors = require('colors');
-require('dotenv').config();
+// create environment folders
+['./src/environments', './src/assets/config']
+  .map(relativePath => path.resolve(__dirname, relativePath))
+  .filter(fullPath => !fs.existsSync(fullPath))
+  .forEach(fullPath => fs.mkdirSync(fullPath));
 
-// Debug environment variables
 
 // `environment.ts` file structure that uses the environment variables
 const envConfigFile = `export const environment = {

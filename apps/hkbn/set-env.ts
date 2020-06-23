@@ -1,14 +1,18 @@
+// Load node modules
 const fs = require('fs');
+const colors = require('colors');
 const path = require('path');
+require('dotenv').config();
 
 // Configure Angular `environment.ts` file path
 const targetPath = path.resolve(__dirname, './src/environments/environment.ts');
 
-// Load node modules
-const colors = require('colors');
-require('dotenv').config();
+// create environment folders
+['./src/environments', './src/assets/config']
+  .map(relativePath => path.resolve(__dirname, relativePath))
+  .filter(fullPath => !fs.existsSync(fullPath))
+  .forEach(fullPath => fs.mkdirSync(fullPath));
 
-// Debug environment variables
 
 // `environment.ts` file structure that uses the environment variables
 const envConfigFile = `export const environment = {
