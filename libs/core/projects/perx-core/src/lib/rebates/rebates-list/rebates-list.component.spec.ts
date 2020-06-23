@@ -11,6 +11,7 @@ import {
 import { RebatesListComponent } from './rebates-list.component';
 import { of } from 'rxjs';
 import { ThemesService } from '../../utils/themes/themes.service';
+import { UtilsModule } from '../../utils/utils.module';
 
 describe('RebatesListComponent', () => {
   let component: RebatesListComponent;
@@ -25,7 +26,8 @@ describe('RebatesListComponent', () => {
       declarations: [RebatesListComponent],
       imports: [
         MatCardModule,
-        MatRippleModule
+        MatRippleModule,
+        UtilsModule
       ],
       providers: [
         { provide: ThemesService, useValue: themesServiceStub },

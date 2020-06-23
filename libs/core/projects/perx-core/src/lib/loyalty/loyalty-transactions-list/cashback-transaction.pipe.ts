@@ -6,7 +6,7 @@ export class CashbackTransactionPipe implements PipeTransform {
     return `$${this.twodp(value)} cashback ${value < 0 ? 'spent' : 'earned'}`;
   }
 
-  private twodp(value: number): string {
+  public twodp(value: number): string {
     return parseFloat(
       String(Number(`${
         Math.floor(

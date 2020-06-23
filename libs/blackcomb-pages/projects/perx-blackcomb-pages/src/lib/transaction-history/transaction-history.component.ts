@@ -50,8 +50,15 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
           let text = '';
           const properties = oc(tr).transactionDetails.data.properties();
           if (properties) {
-            text = properties.storeName ?
-              `${properties.storeCode ? `${properties.storeCode} -` : ''} ${[ properties.storeName ]}` : '';
+            text = properties.storeName ? `${properties.storeName}` : '';
+          }
+          return text;
+        };
+        this.purchasesTitleFn = (tr: ITransactionHistory) => {
+          let text = '';
+          const properties = oc(tr).transactionDetails.data.properties();
+          if (properties) {
+            text = properties.storeCode ? properties.storeCode : '';
           }
           return text;
         };
@@ -65,16 +72,16 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
           }
           return text;
         };
+        this.purchasesTitleFn = (tr: ITransactionHistory) => {
+          let text = '';
+          const properties = oc(tr).transactionDetails.data.properties();
+          if (properties) {
+            text = properties.productName ? properties.productName : '';
+          }
+          return text;
+        };
       }
     });
-    this.purchasesTitleFn = (tr: ITransactionHistory) => {
-      let text = '';
-      const properties = oc(tr).transactionDetails.data.properties();
-      if (properties) {
-        text = properties.productName ? properties.productName : '';
-      }
-      return text;
-    };
 
     this.redemptionsTitleFn = (tr: ITransactionHistory) =>
       `${(tr.transactionDetails && tr.transactionDetails.data) ?

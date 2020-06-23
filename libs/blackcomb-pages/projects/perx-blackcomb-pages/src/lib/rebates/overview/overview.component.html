@@ -1,12 +1,13 @@
 <div class="overview-wrap" *ngIf="matchingMerchant">
   <div class="content-group">
     <div class="merchant-banner">
-      <img [src]="matchingMerchant.imgUrl" [alt]="matchingMerchant.name">
+<!--      <img [src]="matchingMerchant.imgUrl" [alt]="matchingMerchant.name">-->
+      <img [alt]="matchingMerchant.name">
     </div>
     <div class="merchant-content">
       <h1>Welcome back to {{matchingMerchant.name}}</h1>
       <p>{{matchingMerchant.description}}</p>
-      <h1 class="rebate-amount">{{matchingMerchant.rebateAmount}}</h1>
+      <h1 class="rebate-amount">${{matchingMerchant.pointsBalance | pointsToCash: 2}}</h1>
       <p>Available rebate funds with {{matchingMerchant.name}}</p>
       <p class="expiring-info">$1.55 expiring on 12 Aug 2020</p>
     </div>
