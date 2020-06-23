@@ -68,7 +68,7 @@ describe('HomeComponent', () => {
       {
         id: 23,
         currencyCode: 'MYR',
-        price: '$0.00'
+        price: '0.00'
       }
     ],
     merchantId: undefined,
