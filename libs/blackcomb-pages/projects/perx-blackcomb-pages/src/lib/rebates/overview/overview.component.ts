@@ -39,7 +39,7 @@ export class OverviewComponent implements OnInit {
         this.matchingMerchant = merchant;
         this.outletName = merchantJsonData.outletName;
         this.merchantPrice = merchantJsonData.price;
-        this.itemName = merchantJsonData.item_name;
+        this.itemName = merchantJsonData.itemName;
       },
       () => {
         console.log('unrecognised QR');
