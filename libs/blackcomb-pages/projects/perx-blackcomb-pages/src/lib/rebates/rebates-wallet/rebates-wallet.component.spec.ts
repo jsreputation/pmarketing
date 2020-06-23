@@ -5,12 +5,14 @@ import {
 } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  DecimalPointsPipe,
   LoyaltyModule,
+  LoyaltyService,
+  ILoyalty,
   ProfileService,
   RebatesListComponent,
   ThemesService,
   UtilsModule,
+  DecimalPointsPipe,
 } from '@perxtech/core';
 import {
   MatCardModule,
@@ -28,7 +30,14 @@ describe('RebatesWalletComponent', () => {
   let fixture: ComponentFixture<RebatesWalletComponent>;
   const profileServiceStub: Partial<ProfileService> = { whoAmI: () => of() };
   const themesServiceStub: Partial<ThemesService> = { getThemeSetting: () => of() };
-
+  const mockLoyalty: ILoyalty = {
+    id: 42,
+    name: 'joe',
+    pointsBalance: 42
+  };
+  const loyaltyServiceStub: Partial<LoyaltyService> = {
+    getLoyalties: () => of([mockLoyalty]),
+  };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -49,6 +58,7 @@ describe('RebatesWalletComponent', () => {
       providers: [
         { provide: ProfileService, useValue: profileServiceStub },
         { provide: ThemesService, useValue: themesServiceStub },
+        { provide: LoyaltyService, useValue: loyaltyServiceStub },
         DecimalPointsPipe
       ]
     })
