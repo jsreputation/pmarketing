@@ -260,10 +260,10 @@
     ora "4.0.3"
     rxjs "6.5.4"
 
-"@angular-eslint/builder@^0.0.1-alpha.27":
-  version "0.0.1-alpha.27"
-  resolved "https://registry.yarnpkg.com/@angular-eslint/builder/-/builder-0.0.1-alpha.27.tgz#53119f2b904688f156cac9e742fb6ce7ea3faf8b"
-  integrity sha512-8kSqNo5t8APsMTS3BMDthzRkx1hlDu15QW/4wPYgpvn9RYlgn6hKCEAs76fue8xJhCZFIqV4y0bNYcbq2fM0ww==
+"@angular-eslint/builder@0.0.1-alpha.18":
+  version "0.0.1-alpha.18"
+  resolved "https://registry.yarnpkg.com/@angular-eslint/builder/-/builder-0.0.1-alpha.18.tgz#3a3ac2d93782ce24a99457df93b4755912cca8a9"
+  integrity sha512-xDipFDGxtY0Hjy2ua2BwsuxFKdC9eZBdXr+HXXXvbLCGn9DTHT5RbPinZJ4bMPJz4QE6yIrg6EhoB4CWHLZvhw==
 
 "@angular/animations@~8.0.0":
   version "8.0.3"
@@ -2711,6 +2711,14 @@
     "@angular-devkit/architect" "~0.901.0"
     "@angular-devkit/core" "~9.1.0"
     "@angular-devkit/schematics" "~9.1.0"
+
+"@nrwl/linter@^8.0.0":
+  version "8.12.11"
+  resolved "https://registry.yarnpkg.com/@nrwl/linter/-/linter-8.12.11.tgz#5a304aef9cac6175973035481689257d4f38b4b5"
+  integrity sha512-ocIiJQSDTrjSf4AbAyE2I5MWqzjulDovB8gnP0CrQHIhB7GKFu1wuxbMe7YwI5ShePzZ6AP1XeliLYRYIDMUgg==
+  dependencies:
+    "@angular-devkit/architect" "0.803.23"
+    "@angular-eslint/builder" "0.0.1-alpha.18"
 
 "@octokit/auth-token@^2.4.0":
   version "2.4.0"

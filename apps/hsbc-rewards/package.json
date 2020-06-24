@@ -8,7 +8,7 @@
     "build:hsbc-rewards:staging": "env-cmd -f hsbc-rewards.staging npm run config && ng build --prod",
     "config": "ts-node --project tsconfig.node.json set-env.ts",
     "clean": "rm -rf ./dist ./node_modules",
-    "lint": "stylelint \"src/**/*.*css\" && eslint \"./src/**/*.ts\"",
+    "lint": "stylelint \"src/**/*.*css\" && ng lint",
     "lint:fix": "stylelint \"src/**/*.*css\" --fix && eslint \"./src/**/*.ts\" --fix",
     "test": "jest --config=jest.config.json",
     "test:watch": "jest --watch --config=jest.config.json"

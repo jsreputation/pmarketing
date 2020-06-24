@@ -26,12 +26,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:lint",
           "options": {
-            "eslintConfig": ".eslintrc",
-            "files": [
-              "projects/**/*.ts"
-            ]
+            "linter": "eslint",
+            "config": ".eslintrc",
+            "files": ["projects/**/*.ts"]
           }
         }
       }
