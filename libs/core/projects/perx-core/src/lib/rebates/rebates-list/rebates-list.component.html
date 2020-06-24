@@ -4,10 +4,10 @@
         <mat-card matRipple *ngFor="let merchant of merchants" (click)="merchantClickedHandler(merchant)">
           <div class="reward-content">
             <div class="reward-img__wrapper">
-              <img *ngIf="merchant.imgUrl || defaultImg"
-                   [src]="merchant.imgUrl || defaultImg"
+              <img *ngIf="merchant.images.thumbnailUrl || defaultImg"
+                   [src]="merchant.images.thumbnailUrl || defaultImg"
                    [alt]="merchant.name" />
-              <div *ngIf="!merchant.imgUrl && !defaultImg">
+              <div *ngIf="!merchant.images.thumbnailUrl && !defaultImg">
                 <svg width="375" height="200" viewBox="0 0 375 200" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M0 0H375V200H0V0Z" fill="#4E4E4E" />
                   <path
