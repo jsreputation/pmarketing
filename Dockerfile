@@ -19,8 +19,8 @@ ARG env='production'
 ARG redirectdest
 
 RUN echo -e "\n--- Build Args ---\napihost: ${apihost}\nbasehref: ${basehref}\npreauth: ${preauth}\n" \
-           "iswhistler: ${iswhistler}\nsourcetype: ${sourcetype}\napp: ${app}\nenv: ${env}\n" \
-           "redirectdest: ${redirectdest}\n"
+    "iswhistler: ${iswhistler}\nsourcetype: ${sourcetype}\napp: ${app}\nenv: ${env}\n" \
+    "redirectdest: ${redirectdest}\n"
 
 RUN SOURCE_TYPE=${sourcetype} APIHOST=${apihost} BASE_HREF=${basehref} PREAUTH=${preauth} \
     IS_WHISTLER=${iswhistler} REDIRECT_AFTER_LOGIN=${redirectdest} \
@@ -46,12 +46,12 @@ COPY --from=builder /service/backend/appauth-server /service/express/
 ARG app
 ARG appbase=${app}
 
-COPY --from=builder /service/apps/$appbase/dist/$appbase /service/perx-microsite/
+COPY --from=builder /service/dist/$appbase /service/perx-microsite/
 
 ARG iswhistler='false'
 ARG basehref='/'
 
 RUN echo -e "\n--- Stage 2 Build Args ---\napp: ${app}\nappbase: ${appbase}\n" \
-            "port: ${port}\niswhistler: ${iswhistler}\nbasehref: ${basehref}\n"
+    "port: ${port}\niswhistler: ${iswhistler}\nbasehref: ${basehref}\n"
 
 ENV IS_WHISTLER=${iswhistler} BASE_HREF=${basehref} PORT=${port} PRODUCTION='true'
