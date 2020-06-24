@@ -43,6 +43,8 @@
     "build:perx-demo:production": "env-cmd -f apps/blackcomb/env/perx-demo.production ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && nx build --prod --",
     "build:perx-demo:staging": "env-cmd -f apps/blackcomb/env/perx-demo.staging ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && nx build --prod --",
     "build:petron-demo:production": "echo 'skipping petron-demo build'",
+    "build:philipssg:staging": "lerna run build:lib && lerna run build:philipssg:staging --",
+    "build:philipssg:production": "lerna run build:lib && lerna run build:philipssg:production --",
     "build:prudential:production": "echo 'skipping prudential build'",
     "build:prudential:staging": "echo 'skipping prudential build'",
     "build:starhub:production": "env-cmd -f apps/starhub/env/starhub.production ts-node --project tsconfig.node.json apps/starhub/set-env.ts && nx build starhub --prod --",
@@ -62,7 +64,8 @@
     "backend/*"
   ],
   "devDependencies": {
-    "@angular-eslint/builder": "^0.0.1-alpha.27",
+    "@nrwl/linter": "^8.0.0",
+    "@nrwl/jest": "^9.2.2",
     "env-cmd": "^10.1.0",
     "@angular-devkit/build-angular": "0.803.23",
     "@angular-devkit/build-ng-packagr": "~0.800.0",
@@ -107,8 +110,7 @@
     "webpack": "^4.35.0",
     "webpack-cli": "^3.3.4",
     "@nrwl/workspace": "^8.0.0",
-    "@nrwl/node": "^8.0.0",
-    "@nrwl/jest": "^9.2.2"
+    "@nrwl/node": "^8.0.0"
   },
   "dependencies": {
     "@angular/animations": "~8.0.0",

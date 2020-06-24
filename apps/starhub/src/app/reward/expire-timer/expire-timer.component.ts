@@ -30,7 +30,6 @@ export class ExpireTimerComponent implements OnInit {
     if (!this.timerEndDate) {
       return;
     }
-
     const dateNow = new Date();
     const differenceTime = this.timerEndDate.valueOf() - dateNow.valueOf();
     const differenceInSeconds = differenceTime / 1000;

@@ -8,7 +8,7 @@
     "build:merck-customer:production": "env-cmd -f env/merck-customer.production npm run config && ng build --prod",
     "build:merck-customer:staging": "env-cmd -f env/merck-customer.staging npm run config && ng build --prod",
     "config": "ts-node --project tsconfig.node.json set-env.ts",
-    "lint": "stylelint \"src/**/*.*css\" && eslint \"./src/**/*.ts\"",
+    "lint": "stylelint \"src/**/*.*css\" && ng lint",
     "lint:fix": "stylelint \"src/**/*.*css\" --fix && eslint \"./src/**/*.ts\" --fix",
     "test": "jest --config=jest.config.json",
     "test:watch": "jest --watch --config=jest.config.json"

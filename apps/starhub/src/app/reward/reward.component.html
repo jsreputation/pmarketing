@@ -2,6 +2,7 @@
   <app-reward-detail
     [reward]="reward"
     [macaron]="macaron"
+    (hasExpired)="disableButtonOnExpired()"
   ></app-reward-detail>
   <div *ngIf="isRewardsDetailsFetched" class="button-area">
     <button [disabled]="!isButtonEnable" class="full-width" mat-flat-button color="primary"

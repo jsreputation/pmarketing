@@ -37,7 +37,16 @@ import { IConfig } from '../config/models/config.model';
 import { Cacheable } from 'ngx-cacheable';
 
 const DEFAULT_PAGE_COUNT: number = 10;
-type TenantTransactionProperties = IV4TransactionPropertiesAbenson | IV4TransactionPropertiesMerck | IV4TransactionPropertiesAllit;
+type TenantTransactionProperties =
+  IV4TransactionPropertiesAbenson
+  | IV4TransactionPropertiesMerck
+  | IV4TransactionPropertiesAllit
+  | IV4TransactionPropertiesCashback;
+
+interface IV4Image {
+  type: string;
+  url: string;
+}
 
 interface IV4Meta {
   count?: number;
@@ -49,6 +58,20 @@ interface IV4Meta {
 interface IV4AgingPoints {
   expiring_on_date?: string;
   points_expiring?: number;
+}
+
+interface IV4LoyaltyTiers {
+  id: number;
+  name: string;
+  attained: boolean;
+  points_requirement: number;
+  points_difference: number;
+  points_difference_converted_to_currency?: number;
+  multiplier_point?: number;
+  multiplier_points_to_currency_rate?: number;
+  images?: IV4Image[];
+  tags?: IV4Tag[];
+  custom_fields?: ICustomProperties[];
 }
 
 interface IV4Loyalty {
@@ -65,9 +88,10 @@ interface IV4Loyalty {
   points_currency: string;
   points_to_currency_rate: number;
   aging_points?: IV4AgingPoints[];
-  tiers: any[]; // will do proper mapping later on
+  tiers: IV4LoyaltyTiers[]; // will do proper mapping later on
   points_history?: IV4PointHistory[];
   membership_expiry: Date;
+  membership_state?: 'active' | 'pending' | 'inactive' | 'expire';
 }
 
 interface IV4GetLoyaltiesResponse {
@@ -195,6 +219,13 @@ interface IV4TransactionPropertiesAllit {
   transaction_line_guid: string;
 }
 
+interface IV4TransactionPropertiesCashback {
+  tenant: 'perx'; // temporary template tenant name?
+  merchant_name: string;
+  item_name: string;
+  outlet_name: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -248,7 +279,16 @@ export class V4LoyaltyService extends LoyaltyService {
         expireDate: aging.expiring_on_date,
         points: aging.points_expiring
       })),
-      membershipExpiry: loyalty.membership_expiry
+      membershipExpiry: loyalty.membership_expiry,
+      tiers: loyalty.tiers ? loyalty.tiers.map(tier => ({
+        id: tier.id,
+        name: tier.name,
+        attained: tier.attained,
+        pointsRequirement: tier.points_requirement,
+        pointsDifference: tier.points_difference,
+        images: oc(tier).images()
+      })) : undefined,
+      membershipState: loyalty.membership_state
     };
   }
 
@@ -306,6 +346,7 @@ export class V4LoyaltyService extends LoyaltyService {
           data.properties = V4LoyaltyService.v4TransactionPropertiesToTransactionProperties(pthProps as TenantTransactionProperties);
           break;
       }
+    // } else if (transactionHistory.name === 'POS Update') { // hard-coded reason code from backend for POS transactions
     } else if (Object.keys(transactionHistory.properties).length > 0) {
       // all-it transaction currently have no data in transaction_details assume it is a purchase.
       const thProps = transactionHistory.properties;
@@ -370,6 +411,14 @@ export class V4LoyaltyService extends LoyaltyService {
         // quantity: undefined,
         // storeCode: undefined,
         storeName: props.pharmacy
+      };
+    }
+    if (pthProps && (pthProps as IV4TransactionPropertiesCashback).merchant_name) {
+      const props = (pthProps as IV4TransactionPropertiesCashback);
+      data = {
+        productName: props.item_name,
+        storeCode: props.merchant_name,
+        storeName: props.outlet_name
       };
     }
     return data;

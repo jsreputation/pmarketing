@@ -140,6 +140,7 @@ export {
   ITransactionProperties
 } from './lib/loyalty/models/loyalty.model';
 export { TransactionPipe } from './lib/loyalty/loyalty-transactions-list/transaction.pipe';
+export { CashbackTransactionPipe } from './lib/loyalty/loyalty-transactions-list/cashback-transaction.pipe';
 export { LoyaltySummaryComponent } from './lib/loyalty/loyalty-summary/loyalty-summary.component';
 export { LoyaltyTransactionsListComponent } from './lib/loyalty/loyalty-transactions-list/loyalty-transactions-list.component';
 /**
@@ -186,6 +187,7 @@ export { SafeHtmlPipe } from './lib/utils/safe-html.pipe';
 export { SafeUrlPipe } from './lib/utils/safe-url.pipe';
 export { equalityValidator, emailValidator, inequalityValidator } from './lib/utils/validators';
 export { LocationFilterPopupComponent } from './lib/utils/location-filter-popup/location-filter-popup.component';
+export { PointsToCashPipe } from './lib/utils/directives/points-to-cash.pipe';
 
 /**
  * Puzzles
@@ -301,3 +303,9 @@ export { QrScannerComponent } from './lib/rebates/rebates-qr-scanner/qrscanner.c
 /**
  * Tenants
  */
+
+/**
+ * POS
+ */
+export { PosModule } from './lib/pos/pos.module';
+export { PosService } from './lib/pos/pos.service';
