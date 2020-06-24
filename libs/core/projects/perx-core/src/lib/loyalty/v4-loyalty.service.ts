@@ -46,6 +46,7 @@ type TenantTransactionProperties =
 interface IV4Image {
   type: string;
   url: string;
+  section: string;
 }
 
 interface IV4Meta {
@@ -92,6 +93,7 @@ interface IV4Loyalty {
   points_history?: IV4PointHistory[];
   membership_expiry: Date;
   membership_state?: 'active' | 'pending' | 'inactive' | 'expire';
+  images?: IV4Image[];
 }
 
 interface IV4GetLoyaltiesResponse {
@@ -260,6 +262,10 @@ export class V4LoyaltyService extends LoyaltyService {
       highestTierData = copiedLoyalty.tiers.find(tier3 => tier3.points_requirement === highestPoints);
       highestTier = highestTierData ? highestTierData.name : undefined;
     }
+    const thumbnailImage = loyalty.images && loyalty.images.find((image: IV4Image) => {
+      return image.section === 'loyalty_thumbnail';
+    });
+
     return {
       id: loyalty.id,
       name: loyalty.name,
@@ -286,9 +292,12 @@ export class V4LoyaltyService extends LoyaltyService {
         attained: tier.attained,
         pointsRequirement: tier.points_requirement,
         pointsDifference: tier.points_difference,
-        images: oc(tier).images()
+        images: tier.images
       })) : undefined,
-      membershipState: loyalty.membership_state
+      membershipState: loyalty.membership_state,
+      images: {
+        thumbnailUrl: oc(thumbnailImage).url()
+      }
     };
   }
 
