@@ -2,6 +2,117 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "projects": {
+    "philipssg": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/philipssg",
+            "index": "apps/philipssg/src/index.html",
+            "main": "apps/philipssg/src/main.ts",
+            "polyfills": "apps/philipssg/src/polyfills.ts",
+            "tsConfig": "apps/philipssg/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "apps/philipssg/src/favicon.ico",
+              "apps/philipssg/src/assets",
+              "apps/philipssg/src/static",
+              "apps/philipssg/src/manifest.webmanifest",
+              "apps/philipssg/src/robots.txt"
+            ],
+            "styles": [
+              "apps/philipssg/src/styles.scss",
+              "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "apps/philipssg/src/index.html",
+                  "with": "apps/philipssg/src/index.prod.html"
+                }
+              ],
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ],
+              "serviceWorker": true,
+              "ngswConfigPath": "apps/philipssg/ngsw-config.json"
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "philipssg:build",
+            "port": 4201
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "philipssg:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "philipssg:build"
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/philipssg/e2e/protractor.conf.js",
+            "devServerTarget": "philipssg:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "philipssg:serve:production"
+            }
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/philipssg/jest.config.json",
+            "tsConfig": "apps/philipssg/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "apps/philipssg/src/setup-jest.ts"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "apps/philipssg/.eslintrc",
+            "files": ["apps/philipssg/src/**/*.ts"]
+          }
+        }
+      }
+    },
     "starhub": {
       "projectType": "application",
       "schematics": {
@@ -114,9 +225,10 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:lint",
           "options": {
-            "eslintConfig": "apps/starhub/.eslintrc",
+            "linter": "eslint",
+            "config": "apps/starhub/.eslintrc",
             "files": ["apps/starhub/src/**/*.ts"]
           }
         }
@@ -216,9 +328,10 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:lint",
           "options": {
-            "eslintConfig": "apps/prudential/.eslintrc",
+            "linter": "eslint",
+            "config": "apps/prudential/.eslintrc",
             "files": ["apps/prudential/src/**/*.ts"]
           }
         }
@@ -318,9 +431,10 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:lint",
           "options": {
-            "eslintConfig": "apps/oracle-pay/.eslintrc",
+            "linter": "eslint",
+            "config": "apps/oracle-pay/.eslintrc",
             "files": ["apps/oracle-pay/src/**/*.ts"]
           }
         }
@@ -420,9 +534,10 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:lint",
           "options": {
-            "eslintConfig": "apps/merck-merchant/.eslintrc",
+            "linter": "eslint",
+            "config": "apps/merck-merchant/.eslintrc",
             "files": ["apps/merck-merchant/src/**/*.ts"]
           }
         }
@@ -534,9 +649,10 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:lint",
           "options": {
-            "eslintConfig": "apps/merck-customer/.eslintrc",
+            "linter": "eslint",
+            "config": "apps/merck-customer/.eslintrc",
             "files": ["apps/merck-customer/src/**/*.ts"]
           }
         }
@@ -673,9 +789,10 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:lint",
           "options": {
-            "eslintConfig": "apps/hsbchk/.eslintrc",
+            "linter": "eslint",
+            "config": "apps/hsbchk/.eslintrc",
             "files": ["apps/hsbchk/src/**/*.ts"]
           }
         }
@@ -778,9 +895,10 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:lint",
           "options": {
-            "eslintConfig": "apps/hsbc-rewards/.eslintrc",
+            "linter": "eslint",
+            "config": "apps/hsbc-rewards/.eslintrc",
             "files": ["apps/hsbc-rewards/src/**/*.ts"]
           }
         }
@@ -880,9 +998,10 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:lint",
           "options": {
-            "eslintConfig": "apps/hsbc/.eslintrc",
+            "linter": "eslint",
+            "config": "apps/hsbc/.eslintrc",
             "files": ["apps/hsbc/src/**/*.ts"]
           }
         }
@@ -982,9 +1101,10 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:lint",
           "options": {
-            "eslintConfig": "apps/hkbn/.eslintrc",
+            "linter": "eslint",
+            "config": "apps/hkbn/.eslintrc",
             "files": ["apps/hkbn/src/**/*.ts"]
           }
         }
@@ -1084,9 +1204,10 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:lint",
           "options": {
-            "eslintConfig": "apps/digi/.eslintrc",
+            "linter": "eslint",
+            "config": "apps/digi/.eslintrc",
             "files": ["apps/digi/src/**/*.ts"]
           }
         }
@@ -1187,9 +1308,10 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:lint",
           "options": {
-            "eslintConfig": "apps/components-demo/.eslintrc",
+            "linter": "eslint",
+            "config": "apps/components-demo/.eslintrc",
             "files": ["apps/components-demo/src/**/*.ts"]
           }
         }
@@ -1289,9 +1411,10 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:lint",
           "options": {
-            "eslintConfig": "apps/bpi/.eslintrc",
+            "linter": "eslint",
+            "config": "apps/bpi/.eslintrc",
             "files": ["apps/bpi/src/**/*.ts"]
           }
         }
@@ -1399,9 +1522,10 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:lint",
           "options": {
-            "eslintConfig": "apps/blackcomb-light/.eslintrc",
+            "linter": "eslint",
+            "config": "apps/blackcomb-light/.eslintrc",
             "files": ["apps/blackcomb-light/src/**/*.ts"]
           }
         }
@@ -1509,9 +1633,10 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:lint",
           "options": {
-            "eslintConfig": "apps/blackcomb/.eslintrc",
+            "linter": "eslint",
+            "config": "apps/blackcomb/.eslintrc",
             "files": ["apps/blackcomb/src/**/*.ts"]
           }
         }
@@ -1619,9 +1744,10 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:lint",
           "options": {
-            "eslintConfig": "apps/all-it/.eslintrc",
+            "linter": "eslint",
+            "config": "apps/all-it/.eslintrc",
             "files": ["apps/all-it/src/**/*.ts"]
           }
         }
@@ -1755,9 +1881,10 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:lint",
           "options": {
-            "eslintConfig": "apps/abenson/.eslintrc",
+            "linter": "eslint",
+            "config": "apps/abenson/.eslintrc",
             "files": ["apps/abenson/src/**/*.ts"]
           }
         }
@@ -1778,9 +1905,10 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:lint",
           "options": {
-            "eslintConfig": "libs/whistler/.eslintrc",
+            "linter": "eslint",
+            "config": "libs/whistler/.eslintrc",
             "files": ["libs/whistler/projects/**/*.ts"]
           }
         }
@@ -1802,9 +1930,10 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:lint",
           "options": {
-            "eslintConfig": "libs/core/.eslintrc",
+            "linter": "eslint",
+            "config": "libs/core/.eslintrc",
             "files": ["libs/core/projects/**/*.ts"]
           }
         }
@@ -1826,9 +1955,10 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:lint",
           "options": {
-            "eslintConfig": "libs/blackcomb-pages/.eslintrc",
+            "linter": "eslint",
+            "config": "libs/blackcomb-pages/.eslintrc",
             "files": ["libs/blackcomb-pages/projects/**/*.ts"]
           }
         }

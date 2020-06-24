@@ -1,5 +1,4 @@
 /* tslint:disable:naming-convention */
-/* eslint-disable @typescript-eslint/naming-convention */
 
 export interface IJsonApiListPayload<T, S = any> {
   data: IJsonApiItem<T>[];

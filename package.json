@@ -43,8 +43,8 @@
     "build:perx-demo:production": "env-cmd -f apps/blackcomb/env/perx-demo.production ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && nx build --prod --",
     "build:perx-demo:staging": "env-cmd -f apps/blackcomb/env/perx-demo.staging ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && nx build --prod --",
     "build:petron-demo:production": "echo 'skipping petron-demo build'",
-    "build:philipssg:staging": "lerna run build:lib && lerna run build:philipssg:staging --",
-    "build:philipssg:production": "lerna run build:lib && lerna run build:philipssg:production --",
+    "build:philipssg:staging": "env-cmd -f apps/philipssg/env/philipssg.staging ts-node --project tsconfig.node.json apps/philipssg/set-env.ts && nx build philipssg --prod --",
+    "build:philipssg:production": "env-cmd -f apps/philipssg/env/philipssg.production ts-node --project tsconfig.node.json apps/philipssg/set-env.ts && nx build philipssg --prod --",
     "build:prudential:production": "echo 'skipping prudential build'",
     "build:prudential:staging": "echo 'skipping prudential build'",
     "build:starhub:production": "env-cmd -f apps/starhub/env/starhub.production ts-node --project tsconfig.node.json apps/starhub/set-env.ts && nx build starhub --prod --",
@@ -54,8 +54,8 @@
     "clean": "rm -rf ./dist ./node_modules",
     "lint-ci": "nx run-many --target=lint --all",
     "lint-ci:fix": "lerna run lint:fix",
-    "test-ci": "nx run-many --target=test --all",
-    "test-ci:local": "lerna run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI --concurrency=2 --maxWorkers=50%"
+    "test-ci": "nx run-many --target=test --all --parallel",
+    "test-ci:local": "nx run-many --target=test --all --parallel"
   },
   "private": true,
   "workspaces": [
