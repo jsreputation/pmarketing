@@ -18,30 +18,30 @@ spec:
     resources: &resources
       requests:
         cpu: 2
-        memory: '8Gi'
+        memory: "8Gi"
   steps:
     - name: yarn-install
-      workingDir: '/workspace/project'
-      command: ['yarn', 'install']
+      workingDir: "/workspace/project"
+      command: ["yarn", "install"]
       resources: *resources
-    - name: build-lib
-      workingDir: '/workspace/project'
-      command: ['yarn', 'build:lib']
-      resources: *resources
+    # - name: build-lib
+    #   workingDir: '/workspace/project'
+    #   command: ['yarn', 'build:lib']
+    #   resources: *resources
     - name: config
-      workingDir: '/workspace/project'
-      command: ['yarn', 'run', 'lerna', 'run', 'config']
+      workingDir: "/workspace/project"
+      command: ["yarn", "config"]
       resources: *resources
     - name: test
-      workingDir: '/workspace/project/$(inputs.params.folder)'
+      workingDir: "/workspace/project"
       command:
         [
-          'yarn',
-          'nx',
-          'test',
-          '$(inputs.params.folder)',
-          '--no-watch',
-          '--no-progress',
-          '--browsers=ChromeHeadlessCI',
+          "yarn",
+          "nx",
+          "test",
+          "$(inputs.params.folder)",
+          "--no-watch",
+          "--no-progress",
+          "--browsers=ChromeHeadlessCI",
         ]
       resources: *resources
