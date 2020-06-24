@@ -53,9 +53,9 @@
     "build:blackcomb-light:production": "env-cmd -f apps/blackcomb-light/env/blackcomb-light.production ts-node --project tsconfig.node.json apps/blackcomb-light/set-env.ts && nx build blackcomb-light --prod --",
     "clean": "rm -rf ./dist ./node_modules",
     "lint-ci": "nx run-many --target=lint --all",
-    "lint-ci:fix": "lerna run lint:fix",
-    "test-ci": "nx run-many --target=test --all --parallel",
-    "test-ci:local": "nx run-many --target=test --all --parallel"
+    "test-ci": "npm run config && nx run-many --target=test --all --parallel",
+    "test-ci:local": "nx run-many --target=test --all --parallel",
+    "config": "ts-node --project tsconfig.node.json config.ts"
   },
   "private": true,
   "workspaces": [

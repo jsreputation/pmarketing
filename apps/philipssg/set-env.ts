@@ -1,28 +1,21 @@
-// https://github.com/angular/angular-cli/issues/4318#issuecomment-464160213
-const fs = require('fs');
-const async = require('async');
-
-// Configure Angular `environment.ts` file path
-const targetPath = `./src/environments/environment.ts`;
-const appConfigPath = `./src/assets/config/app-config.json`;
-const rssFeedsPath = `./src/assets/config/RSS_FEEDS.json`;
-
 // Load node modules
+// https://github.com/angular/angular-cli/issues/4318#issuecomment-464160213
+const { writeFile, existsSync, mkdirSync } = require('fs');
+const async = require('async');
+const path = require('path');
 const colors = require('colors');
 require('dotenv').config();
 
-// Debug environment variables
+// Configure Angular `environment.ts` file path
+const targetPath = path.resolve(__dirname, './src/environments/environment.ts');
+const appConfigPath = path.resolve(__dirname, './src/assets/config/app-config.json');
+const rssFeedsPath = path.resolve(__dirname, './src/assets/config/RSS_FEEDS.json');
 
-// create environment folder
-let envFolderPath ='./src/environments';
-if (!fs.existsSync(envFolderPath)){
-  fs.mkdirSync(envFolderPath);
-}
-// create config folder
-let configFolderPath ='./src/assets/config';
-if (!fs.existsSync(configFolderPath)){
-  fs.mkdirSync(configFolderPath);
-}
+// create environment folders
+['./src/environments', './src/assets/config']
+  .map(relativePath => path.resolve(__dirname, relativePath))
+  .filter(fullPath => !existsSync(fullPath))
+  .forEach(fullPath => mkdirSync(fullPath));
 
 
 const rssFeeds = `{
@@ -103,7 +96,7 @@ async.each([[targetPath, envConfigFile], [appConfigPath, appConfigFile], [rssFee
     console.log(colors.magenta(`The file '${item[0]}' will be written with the following content: \n`));
     console.log(colors.grey(item[1]));
 
-    fs.writeFile(item[0], item[1], (err: any) => {
+    writeFile(item[0], item[1], (err: any) => {
       if (err) {
         throw console.error(err);
       }
