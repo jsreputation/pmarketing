@@ -262,9 +262,8 @@ export class V4LoyaltyService extends LoyaltyService {
       highestTierData = copiedLoyalty.tiers.find(tier3 => tier3.points_requirement === highestPoints);
       highestTier = highestTierData ? highestTierData.name : undefined;
     }
-    const thumbnailImage = loyalty.images && loyalty.images.find((image: IV4Image) => {
-      return image.section === 'loyalty_thumbnail';
-    });
+    const thumbnailImage = loyalty.images &&
+      loyalty.images.find((image: IV4Image) => image.section === 'loyalty_thumbnail');
 
     return {
       id: loyalty.id,
