@@ -68,7 +68,6 @@ export class IdentifierAuthComponent implements OnInit {
   }
   public redirectAfterLogin(): void {
     const campaignId = JSON.parse(localStorage.getItem('cid'));
-    console.log(campaignId, 'ensure i am getting cid');
     this.router.navigate([`/game/${campaignId}`]);
   }
 }
