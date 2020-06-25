@@ -1,6 +1,6 @@
 // just the mapper remove the various switches
 import { IGame, IGameOutcome, IPinata, IScratch, ISpin, ITree, GameType as TYPE } from './game.model';
-import {Outcome, Game, PinataDisplayProperties, ScratchDisplayProperties, SpinDisplayProperties, TreeDisplayProperties} from './v4-game.service';
+import { Outcome, Game, PinataDisplayProperties, ScratchDisplayProperties, SpinDisplayProperties, TreeDisplayProperties } from './v4-game.service';
 import { oc } from 'ts-optchain';
 import { patchUrl } from '../utils/patch-url.function';
 
@@ -156,7 +156,7 @@ export class SpinV4ToV4Mapper extends GameV4Mapper {
   public v4MapToMap(game: Game): IGame {
     const type = TYPE.spin;
     const dpps: SpinDisplayProperties = game.display_properties as SpinDisplayProperties;
-    const tempRewardSlots =[...Array(dpps.number_of_wedges).keys()].filter(item => item % 2 !== 0);
+    const tempRewardSlots = [...Array(dpps.number_of_wedges).keys()].filter(item => item % 2 !== 0);
     const config = {
       ...this.default(),
       numberOfWedges: dpps.number_of_wedges,
