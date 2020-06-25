@@ -213,10 +213,20 @@ export class GameComponent implements OnInit {
         map((game: IPlayOutcome) => game.vouchers)
       ).subscribe(
         (vouchs: Voucher[]) => {
-          this.hasNoRewardsPopup = false;
-          this.gameCompletedHandler(vouchs, false);
+          if (vouchs.length > 0) {
+            this.hasNoRewardsPopup = false;
+            this.willWin = true;
+            this.gameCompletedHandler(vouchs, false);
+          } else {
+            // For spin game with no outcome option
+            this.willWin = false;
+            this.hasNoRewardsPopup = true;
+          }
         },
-        () => this.hasNoRewardsPopup = true
+        () => {
+          this.willWin = false;
+          this.hasNoRewardsPopup = true;
+        }
       );
   }
 

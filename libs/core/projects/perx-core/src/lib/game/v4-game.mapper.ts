@@ -156,10 +156,11 @@ export class SpinV4ToV4Mapper extends GameV4Mapper {
   public v4MapToMap(game: Game): IGame {
     const type = TYPE.spin;
     const dpps: SpinDisplayProperties = game.display_properties as SpinDisplayProperties;
+    const tempRewardSlots =[...Array(dpps.number_of_wedges).keys()].filter(item => item % 2 !== 0);
     const config = {
       ...this.default(),
       numberOfWedges: dpps.number_of_wedges,
-      rewardSlots: [dpps.number_of_wedges - 1], // Display the reward Slot on the last wedge
+      rewardSlots: tempRewardSlots, // Display the reward Slot on the last wedge
       colorCtrls: Object.assign(dpps.wedge_colors),
       rewardIcon: oc(dpps).reward_image.value.image_url(''),
       wheelImg: oc(dpps).rim_image.value.image_url(''),

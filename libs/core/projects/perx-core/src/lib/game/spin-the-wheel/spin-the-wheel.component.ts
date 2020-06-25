@@ -117,20 +117,16 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   }
 
   private determineSlot(): number {
-    let slots: number[];
-    // if there are winning slots and we will win or all slots are winning
-    if (this.rewardSlots.length > 0 && (this.willWin || this.rewardSlots.length === this.slices.length)) {
-      slots = this.rewardSlots;
+    let noRewardsSlots: number[] = [...Array(this.slices.length).keys()].filter(item => !this.rewardSlots.includes(item));
+    let targetSlots: number[];
+    if(this.willWin && this.rewardSlots.length > 0) {
+      targetSlots = this.rewardSlots;
     } else {
-      slots = [];
-      for (let i = 0; i < this.slices.length; i++) {
-        if (this.rewardSlots.includes(i)) {
-          slots.push(i);
-        }
-      }
+      targetSlots = noRewardsSlots;
     }
-    const landedSlot = Math.floor(Math.random() * slots.length);
-    return slots[landedSlot]; // get a random number out of the reward slots
+  
+    const landedSlot = Math.floor(Math.random() * targetSlots.length);
+    return targetSlots[landedSlot]; // get a random number out of the reward slots
   }
 
   private init(): void {
