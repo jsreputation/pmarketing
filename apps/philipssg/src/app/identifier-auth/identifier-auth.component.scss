@@ -5,6 +5,7 @@
   margin: 0 auto;
   display: flex;
   height: 100%;
+  font-size: 1.6rem;
   align-items: center;
   justify-content: center;
 }
@@ -22,12 +23,20 @@
     height: 40%;
     justify-content: space-evenly;
 
+    .full-width__input {
+      width: 100%;
+
+      .mat-label {
+        color: rgba(0, 0, 0, 0.6);
+      }
+    }
+
     .error_msg {
       padding-bottom: 1rem;
 
       span {
         color: red;
-        font-size: 1.5rem;
+        font-size: 1.6rem;
       }
     }
 
