@@ -11,8 +11,12 @@ export interface IExpiringPoints {
 }
 
 export interface IV4Image {
-  type: string;
+  type?: string;
   url: string;
+  section?: string;
+}
+export interface LoyaltyImages {
+  thumbnailUrl?: string;
 }
 
 export interface LoyaltyTiers {
@@ -45,6 +49,7 @@ export interface ILoyalty {
   membershipExpiry?: Date;
   tiers?: LoyaltyTiers[];
   membershipState?: 'active' | 'pending' | 'inactive' | 'expire';
+  images?: LoyaltyImages;
 }
 
 export interface ITransaction {
