@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {
   HttpBackend,
-  HttpClient
+  HttpClient,
+  HttpHeaders
 } from '@angular/common/http';
 
 import {
@@ -185,7 +186,13 @@ export class V4SettingsService extends SettingsService {
     // return this.http.post<IV4GatekeeperResponse>(`${this.hostName}/v4/gatekeep_token`, null).pipe(
 
     // currently only implemented for prod todo: auth and staging/prod versions
-    return this.httpBackend.get<IV4GatekeeperResponse>('https://80ixbz8jt8.execute-api.ap-southeast-1.amazonaws.com/Prod/gatekeep_token').pipe(
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    return this.httpBackend.get<IV4GatekeeperResponse>(
+      'https://80ixbz8jt8.execute-api.ap-southeast-1.amazonaws.com/Prod/gatekeep_token',
+      {
+        headers
+      }).pipe(
       map((res: IV4GatekeeperResponse) => {
         if (res.message === 'go ahead') {
           return true;
