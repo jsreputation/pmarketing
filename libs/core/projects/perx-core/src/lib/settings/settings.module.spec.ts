@@ -38,7 +38,19 @@ describe('SettingsModule', () => {
   });
   it('should', inject([ HttpClient, HttpBackend, Config, ConfigService, AuthenticationService ],
     (http: HttpClient, httpBackend: HttpBackend, config: Config, configService: ConfigService, auth: AuthenticationService) => {
-      expect(settingsServiceFactory(http, httpBackend, { isWhistler: true }, configService, auth) instanceof WhistlerSettingsService).toBeTruthy();
-      expect(settingsServiceFactory(http, httpBackend, config, configService, auth) instanceof V4SettingsService).toBeTruthy();
+      expect(settingsServiceFactory(
+        http,
+        httpBackend,
+        { isWhistler: true },
+        configService,
+        auth
+      ) instanceof WhistlerSettingsService).toBeTruthy();
+      expect(settingsServiceFactory(
+        http,
+        httpBackend,
+        config,
+        configService,
+        auth
+      ) instanceof V4SettingsService).toBeTruthy();
     }));
 });
