@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {
+  HttpBackend,
+  HttpClient
+} from '@angular/common/http';
 
 import {
   Observable,
@@ -83,8 +86,10 @@ export class V4SettingsService extends SettingsService {
   private rssFeeds: IRssFeeds;
   private flags: IFlags;
 
+  private httpBackend: HttpClient;
   constructor(
     private http: HttpClient,
+    externalBackend: HttpBackend,
     private configService: ConfigService,
     private authenticationService: AuthenticationService
   ) {
@@ -92,6 +97,7 @@ export class V4SettingsService extends SettingsService {
     this.configService.readAppConfig().subscribe(
       (config: IConfig<void>) => {
         this.hostName = config.apiHost as string;
+        this.httpBackend = new HttpClient(externalBackend);
       });
   }
 
@@ -176,7 +182,10 @@ export class V4SettingsService extends SettingsService {
 
   public isGatekeeperOpen(): Observable<boolean> {
     // this will return a empty body and angular does not like it.
-    return this.http.post<IV4GatekeeperResponse>(`${this.hostName}/v4/gatekeep_token`, null).pipe(
+    // return this.http.post<IV4GatekeeperResponse>(`${this.hostName}/v4/gatekeep_token`, null).pipe(
+
+    // currently only implemented for prod todo: auth and staging/prod versions
+    return this.httpBackend.get<IV4GatekeeperResponse>('https://80ixbz8jt8.execute-api.ap-southeast-1.amazonaws.com/Prod/gatekeep_token').pipe(
       map((res: IV4GatekeeperResponse) => {
         if (res.message === 'go ahead') {
           return true;
