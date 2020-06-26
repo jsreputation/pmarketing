@@ -1,5 +1,8 @@
 import { TestBed, inject } from '@angular/core/testing';
-import { HttpClient } from '@angular/common/http';
+import {
+  HttpBackend,
+  HttpClient
+} from '@angular/common/http';
 import { AuthenticationService } from '../auth/authentication/authentication.service';
 import { Config } from '../config/config';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -33,9 +36,9 @@ describe('SettingsModule', () => {
       ]
     });
   });
-  it('should', inject([HttpClient, Config, ConfigService, AuthenticationService],
-    (http: HttpClient, config: Config, configService: ConfigService, auth: AuthenticationService) => {
-      expect(settingsServiceFactory(http, {isWhistler: true}, configService, auth) instanceof WhistlerSettingsService).toBeTruthy();
-      expect(settingsServiceFactory(http, config, configService, auth) instanceof V4SettingsService).toBeTruthy();
+  it('should', inject([ HttpClient, HttpBackend, Config, ConfigService, AuthenticationService ],
+    (http: HttpClient, httpBackend: HttpBackend, config: Config, configService: ConfigService, auth: AuthenticationService) => {
+      expect(settingsServiceFactory(http, httpBackend, { isWhistler: true }, configService, auth) instanceof WhistlerSettingsService).toBeTruthy();
+      expect(settingsServiceFactory(http, httpBackend, config, configService, auth) instanceof V4SettingsService).toBeTruthy();
     }));
 });
