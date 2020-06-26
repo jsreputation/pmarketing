@@ -189,7 +189,7 @@ export class V4SettingsService extends SettingsService {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
     return this.httpBackend.get<IV4GatekeeperResponse>(
-      'https://80ixbz8jt8.execute-api.ap-southeast-1.amazonaws.com/Prod/gatekeep_token',
+      'https://cors-proxy.perxtech.io/?url=https://80ixbz8jt8.execute-api.ap-southeast-1.amazonaws.com/Prod/gatekeep_token',
       {
         headers
       }).pipe(
