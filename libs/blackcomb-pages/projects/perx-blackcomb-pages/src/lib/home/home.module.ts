@@ -43,10 +43,13 @@ import { HomeComponent } from './home.component';
     OutcomeModule,
   ],
   exports: [
-    HomeComponent
+    HomeComponent,
+    CampaignsCollectionComponent,
+    GamesCollectionComponent,
+    CatalogsComponent
   ],
   entryComponents: [
-    RewardPopupComponent
+    RewardPopupComponent,
   ]
 })
 export class HomeModule { }
