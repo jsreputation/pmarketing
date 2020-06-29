@@ -255,7 +255,9 @@ export class V4LoyaltyService extends LoyaltyService {
     };
   }
 
-  public static v4TransactionHistoryToTransactionHistory(transactionHistory: IV4LoyaltyTransactionPropertiesHistory): ILoyaltyTransactionHistory {
+  public static v4TransactionHistoryToTransactionHistory(
+    transactionHistory: IV4LoyaltyTransactionPropertiesHistory
+  ): ILoyaltyTransactionHistory {
     const transactionDetails = oc(transactionHistory).transaction_details.data();
     let data: IPurchaseTransactionHistory | IRewardTransactionHistory | undefined;
 
@@ -327,8 +329,6 @@ export class V4LoyaltyService extends LoyaltyService {
     };
   }
 
-
-
   @Cacheable({
     maxAge: 300000 // 5 minutes
   })
@@ -387,7 +387,12 @@ export class V4LoyaltyService extends LoyaltyService {
     );
   }
 
-  public getTransactions(loyaltyId: number, page: number = 1, pageSize: number = 10, locale: string = 'en'): Observable<ILoyaltyTransaction[]> {
+  public getTransactions(
+    loyaltyId: number,
+    page: number = 1,
+    pageSize: number = 10,
+    locale: string = 'en'
+  ): Observable<ILoyaltyTransaction[]> {
     const headers = new HttpHeaders().set('Accept-Language', locale);
     return this.http.get<IV4GetLoyaltyResponse>(
       `${this.apiHost}/v4/loyalty/${loyaltyId}/transactions`,
@@ -440,7 +445,8 @@ export class V4LoyaltyService extends LoyaltyService {
     ).pipe(
       map((res: IV4LoyaltyTransactionPropertiesHistoryResponse) => res.data),
       map((transactionHistories: IV4LoyaltyTransactionPropertiesHistory[]) => transactionHistories.map(
-        (transactionHistory: IV4LoyaltyTransactionPropertiesHistory) => V4LoyaltyService.v4TransactionHistoryToTransactionHistory(transactionHistory)
+        (transactionHistory: IV4LoyaltyTransactionPropertiesHistory) =>
+          V4LoyaltyService.v4TransactionHistoryToTransactionHistory(transactionHistory)
       ))
     );
   }

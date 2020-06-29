@@ -17,7 +17,8 @@ import { ITransaction } from '../../transactions/models/transactions.model';
   styleUrls: ['./loyalty-transactions-list.component.scss']
 })
 export class LoyaltyTransactionsListComponent implements OnInit {
-  @Input('loyaltyTransactions') // needs flexibility to be of type Observable<ILoyaltyTransaction[]> | Observable<IMerchantAdminTransaction[]>
+  // needs flexibility to be of type Observable<ILoyaltyTransaction[]> | Observable<IMerchantAdminTransaction[]>
+  @Input('loyaltyTransactions')
   public loyaltyTransactions$: Observable<ILoyaltyTransaction[]>;
 
   @Input('externalTransactions')
