@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { ILoyaltyTransaction } from '../models/loyalty.model';
 import { DatePipe } from '@angular/common';
 import { TransactionPipe } from './transaction.pipe';
+import { ITransaction } from '../../transactions/models/transactions.model';
 
 @Component({
   selector: 'perx-core-loyalty-transactions-list',
@@ -16,9 +17,10 @@ import { TransactionPipe } from './transaction.pipe';
   styleUrls: ['./loyalty-transactions-list.component.scss']
 })
 export class LoyaltyTransactionsListComponent implements OnInit {
-  @Input('transactions') // needs flexibility to be of type Observable<ILoyaltyTransaction[]> | Observable<IMerchantAdminTransaction[]>
-  public transactions$: Observable<ILoyaltyTransaction[]>;
-  public transactions: ILoyaltyTransaction[];
+  @Input('loyaltyTransactions') // needs flexibility to be of type Observable<ILoyaltyTransaction[]> | Observable<IMerchantAdminTransaction[]>
+  public loyaltyTransactions$: Observable<ILoyaltyTransaction[]>;
+
+  public transactions: ILoyaltyTransaction[] | ITransaction[];
 
   @Output()
   public tapped: EventEmitter<ILoyaltyTransaction> = new EventEmitter<ILoyaltyTransaction>();
@@ -49,8 +51,8 @@ export class LoyaltyTransactionsListComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    if (this.transactions$) {
-      this.transactions$.subscribe(
+    if (this.loyaltyTransactions$) {
+      this.loyaltyTransactions$.subscribe(
         (transactions: ILoyaltyTransaction[]) => {
           this.transactions = transactions;
         },
