@@ -5,9 +5,8 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { ConfigService } from '../../config/config.service';
 import { V4TransactionsService } from './v4-transactions.service';
+import { TransactionsService } from './transactions.service';
 
-
-// @ts-ignore
 export function transactionServiceFactory(http: HttpClient, configService: ConfigService): any {
   // Make decision on what to instantiate base on config
   return new V4TransactionsService(http, configService);
@@ -21,7 +20,7 @@ export class TransactionsServiceModule {
       ngModule: TransactionsServiceModule,
       providers: [
         {
-          provide: TransactionsServiceModule,
+          provide: TransactionsService,
           useFactory: transactionServiceFactory,
           deps: [HttpClient, ConfigService]
         }
