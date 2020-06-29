@@ -38,10 +38,10 @@ import { Cacheable } from 'ngx-cacheable';
 
 const DEFAULT_PAGE_COUNT: number = 10;
 type TenantTransactionProperties =
-  IV4TransactionPropertiesAbenson
-  | IV4TransactionPropertiesMerck
-  | IV4TransactionPropertiesAllit
-  | IV4TransactionPropertiesCashback;
+  IV4LoyaltyTransactionPropertiesPropertiesAbenson
+  | IV4LoyaltyTransactionPropertiesPropertiesMerck
+  | IV4LoyaltyTransactionPropertiesPropertiesAllit
+  | IV4LoyaltyTransactionPropertiesPropertiesCashback;
 
 interface IV4Image {
   type: string;
@@ -151,7 +151,7 @@ interface IV4PurchaseTransactionHistory {
   transaction_reference: string;
 }
 
-interface IV4TransactionHistory {
+interface IV4LoyaltyTransactionPropertiesHistory {
   id: number;
   name: string;
   identifier: string;
@@ -165,11 +165,11 @@ interface IV4TransactionHistory {
   };
 }
 
-interface IV4TransactionHistoryResponse {
-  data: IV4TransactionHistory[];
+interface IV4LoyaltyTransactionPropertiesHistoryResponse {
+  data: IV4LoyaltyTransactionPropertiesHistory[];
 }
 
-interface IV4TransactionPropertiesAbenson {
+interface IV4LoyaltyTransactionPropertiesPropertiesAbenson {
   tenant: 'abenson';
   qty: number;
   reg: number;
@@ -185,7 +185,7 @@ interface IV4TransactionPropertiesAbenson {
   store_name: string;
 }
 
-interface IV4TransactionPropertiesMerck {
+interface IV4LoyaltyTransactionPropertiesPropertiesMerck {
   tenant: 'merck';
   product: string;
   pharmacy: string;
@@ -193,7 +193,7 @@ interface IV4TransactionPropertiesMerck {
   merchant_account_id: number;
 }
 
-interface IV4TransactionPropertiesAllit {
+interface IV4LoyaltyTransactionPropertiesPropertiesAllit {
   tenant: 'allit';
   amount: number;
   quantity: number;
@@ -221,7 +221,7 @@ interface IV4TransactionPropertiesAllit {
   transaction_line_guid: string;
 }
 
-interface IV4TransactionPropertiesCashback {
+interface IV4LoyaltyTransactionPropertiesPropertiesCashback {
   tenant: 'perx'; // temporary template tenant name?
   merchant_name: string;
   item_name: string;
@@ -316,7 +316,7 @@ export class V4LoyaltyService extends LoyaltyService {
     };
   }
 
-  public static v4TransactionHistoryToTransactionHistory(transactionHistory: IV4TransactionHistory): ILoyaltyTransactionHistory {
+  public static v4TransactionHistoryToTransactionHistory(transactionHistory: IV4LoyaltyTransactionPropertiesHistory): ILoyaltyTransactionHistory {
     const transactionDetails = oc(transactionHistory).transaction_details.data();
     let data: IPurchaseTransactionHistory | IRewardTransactionHistory | undefined;
 
@@ -391,8 +391,8 @@ export class V4LoyaltyService extends LoyaltyService {
   private static v4TransactionPropertiesToTransactionProperties(pthProps: TenantTransactionProperties): ILoyaltyTransactionProperties {
     let data: ILoyaltyTransactionProperties = {};
 
-    if (pthProps && (pthProps as IV4TransactionPropertiesAbenson).sku) {
-      const props = (pthProps as IV4TransactionPropertiesAbenson);
+    if (pthProps && (pthProps as IV4LoyaltyTransactionPropertiesPropertiesAbenson).sku) {
+      const props = (pthProps as IV4LoyaltyTransactionPropertiesPropertiesAbenson);
       data = {
         productCode: props.sku.toString(),
         // productName: undefined,
@@ -401,8 +401,8 @@ export class V4LoyaltyService extends LoyaltyService {
         storeName: props.store_name
       };
     }
-    if (pthProps && (pthProps as IV4TransactionPropertiesAllit).guid_branch) {
-      const props = (pthProps as IV4TransactionPropertiesAllit);
+    if (pthProps && (pthProps as IV4LoyaltyTransactionPropertiesPropertiesAllit).guid_branch) {
+      const props = (pthProps as IV4LoyaltyTransactionPropertiesPropertiesAllit);
       data = {
         productCode: props.item_code.toString(),
         productName: props.item_name,
@@ -411,8 +411,8 @@ export class V4LoyaltyService extends LoyaltyService {
         // storeName: undefined
       };
     }
-    if (pthProps && (pthProps as IV4TransactionPropertiesMerck).product) {
-      const props = (pthProps as IV4TransactionPropertiesMerck);
+    if (pthProps && (pthProps as IV4LoyaltyTransactionPropertiesPropertiesMerck).product) {
+      const props = (pthProps as IV4LoyaltyTransactionPropertiesPropertiesMerck);
       data = {
         // productCode: undefined,
         productName: props.product,
@@ -421,8 +421,8 @@ export class V4LoyaltyService extends LoyaltyService {
         storeName: props.pharmacy
       };
     }
-    if (pthProps && (pthProps as IV4TransactionPropertiesCashback).merchant_name) {
-      const props = (pthProps as IV4TransactionPropertiesCashback);
+    if (pthProps && (pthProps as IV4LoyaltyTransactionPropertiesPropertiesCashback).merchant_name) {
+      const props = (pthProps as IV4LoyaltyTransactionPropertiesPropertiesCashback);
       data = {
         productName: props.item_name,
         storeCode: props.merchant_name,
@@ -529,7 +529,7 @@ export class V4LoyaltyService extends LoyaltyService {
     orderBy: string = 'desc'
   ): Observable<ILoyaltyTransactionHistory[]> {
     const headers = new HttpHeaders().set('Accept-Language', locale);
-    return this.http.get<IV4TransactionHistoryResponse>(
+    return this.http.get<IV4LoyaltyTransactionPropertiesHistoryResponse>(
       `${this.apiHost}/v4/loyalty/transactions_history`,
       {
         headers,
@@ -541,9 +541,9 @@ export class V4LoyaltyService extends LoyaltyService {
         }
       }
     ).pipe(
-      map((res: IV4TransactionHistoryResponse) => res.data),
-      map((transactionHistories: IV4TransactionHistory[]) => transactionHistories.map(
-        (transactionHistory: IV4TransactionHistory) => V4LoyaltyService.v4TransactionHistoryToTransactionHistory(transactionHistory)
+      map((res: IV4LoyaltyTransactionPropertiesHistoryResponse) => res.data),
+      map((transactionHistories: IV4LoyaltyTransactionPropertiesHistory[]) => transactionHistories.map(
+        (transactionHistory: IV4LoyaltyTransactionPropertiesHistory) => V4LoyaltyService.v4TransactionHistoryToTransactionHistory(transactionHistory)
       ))
     );
   }
