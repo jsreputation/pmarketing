@@ -4,7 +4,9 @@ import { ConfigService } from '../../config/config.service';
 import { TransactionsService } from './transactions.service';
 import { IConfig } from '../../config/models/config.model';
 import { Observable } from 'rxjs';
-import { ITransaction } from '../models/transactions.model';
+import {
+  ITransactionProperties
+} from '../models/transactions.model';
 import { map } from 'rxjs/operators';
 
 interface IV4TransactionsResponse {
@@ -95,7 +97,53 @@ export class V4TransactionsService extends TransactionsService {
       });
   }
 
+  public static v4TransactionPropertiesToTransactionProperties(pthProps: V4TenantTransactionProperties): ITransactionProperties {
+    let data: ITransactionProperties = {};
+
+    if (pthProps && (pthProps as IV4TransactionPropertiesAbenson).sku) {
+      const props = (pthProps as IV4TransactionPropertiesAbenson);
+      data = {
+        productCode: props.sku.toString(),
+        // productName: undefined,
+        quantity: props.qty,
+        storeCode: props.store.toString(),
+        storeName: props.store_name
+      };
+    }
+    if (pthProps && (pthProps as IV4TransactionPropertiesAllit).guid_branch) {
+      const props = (pthProps as IV4TransactionPropertiesAllit);
+      data = {
+        productCode: props.item_code.toString(),
+        productName: props.item_name,
+        quantity: props.quantity,
+        storeCode: props.branch_code,
+        // storeName: undefined
+      };
+    }
+    if (pthProps && (pthProps as IV4TransactionPropertiesMerck).product) {
+      const props = (pthProps as IV4TransactionPropertiesMerck);
+      data = {
+        // productCode: undefined,
+        productName: props.product,
+        // quantity: undefined,
+        // storeCode: undefined,
+        storeName: props.pharmacy
+      };
+    }
+    if (pthProps && (pthProps as IV4TransactionPropertiesCashback).merchant_name) {
+      const props = (pthProps as IV4TransactionPropertiesCashback);
+      data = {
+        productName: props.item_name,
+        storeCode: props.merchant_name,
+        storeName: props.outlet_name
+      };
+    }
+    return data;
+  }
+
   public getTransactions(): Observable<any> {
-    return EMPTY
+    return this.http.get(`${this.apiHost}/v4/transactions`).pipe(
+      map((res: IV4TransactionsResponse) => res.data)
+    );
   }
 }

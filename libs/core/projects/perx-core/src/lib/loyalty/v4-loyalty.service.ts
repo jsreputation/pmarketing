@@ -23,7 +23,6 @@ import {
   IRewardTransactionHistory,
   ILoyaltyTransaction,
   ILoyaltyTransactionHistory,
-  ILoyaltyTransactionProperties,
   TransactionDetailType
 } from './models/loyalty.model';
 
@@ -37,10 +36,7 @@ import { IConfig } from '../config/models/config.model';
 import { Cacheable } from 'ngx-cacheable';
 import {
   V4TenantTransactionProperties,
-  IV4TransactionPropertiesAbenson,
-  IV4TransactionPropertiesAllit,
-  IV4TransactionPropertiesCashback,
-  IV4TransactionPropertiesMerck
+  V4TransactionsService
 } from '../transactions/transaction-service/v4-transactions.service';
 
 const DEFAULT_PAGE_COUNT: number = 10;
@@ -294,7 +290,7 @@ export class V4LoyaltyService extends LoyaltyService {
             price: pthDetails.amount,
             currency: pthDetails.currency,
           };
-          data.properties = V4LoyaltyService.v4TransactionPropertiesToTransactionProperties(pthProps as V4TenantTransactionProperties);
+          data.properties = V4TransactionsService.v4TransactionPropertiesToTransactionProperties(pthProps as V4TenantTransactionProperties);
           break;
       }
     // } else if (transactionHistory.name === 'POS Update') { // hard-coded reason code from backend for POS transactions
@@ -305,7 +301,7 @@ export class V4LoyaltyService extends LoyaltyService {
         id: transactionHistory.id
       };
 
-      data.properties = V4LoyaltyService.v4TransactionPropertiesToTransactionProperties(thProps as V4TenantTransactionProperties);
+      data.properties = V4TransactionsService.v4TransactionPropertiesToTransactionProperties(thProps as V4TenantTransactionProperties);
     } else {
       // assume it is a customer service action from dashboard
       data = {
@@ -331,49 +327,7 @@ export class V4LoyaltyService extends LoyaltyService {
     };
   }
 
-  private static v4TransactionPropertiesToTransactionProperties(pthProps: V4TenantTransactionProperties): ILoyaltyTransactionProperties {
-    let data: ILoyaltyTransactionProperties = {};
 
-    if (pthProps && (pthProps as IV4TransactionPropertiesAbenson).sku) {
-      const props = (pthProps as IV4TransactionPropertiesAbenson);
-      data = {
-        productCode: props.sku.toString(),
-        // productName: undefined,
-        quantity: props.qty,
-        storeCode: props.store.toString(),
-        storeName: props.store_name
-      };
-    }
-    if (pthProps && (pthProps as IV4TransactionPropertiesAllit).guid_branch) {
-      const props = (pthProps as IV4TransactionPropertiesAllit);
-      data = {
-        productCode: props.item_code.toString(),
-        productName: props.item_name,
-        quantity: props.quantity,
-        storeCode: props.branch_code,
-        // storeName: undefined
-      };
-    }
-    if (pthProps && (pthProps as IV4TransactionPropertiesMerck).product) {
-      const props = (pthProps as IV4TransactionPropertiesMerck);
-      data = {
-        // productCode: undefined,
-        productName: props.product,
-        // quantity: undefined,
-        // storeCode: undefined,
-        storeName: props.pharmacy
-      };
-    }
-    if (pthProps && (pthProps as IV4TransactionPropertiesCashback).merchant_name) {
-      const props = (pthProps as IV4TransactionPropertiesCashback);
-      data = {
-        productName: props.item_name,
-        storeCode: props.merchant_name,
-        storeName: props.outlet_name
-      };
-    }
-    return data;
-  }
 
   @Cacheable({
     maxAge: 300000 // 5 minutes

@@ -136,8 +136,7 @@ export {
   IRewardTransactionHistory,
   IPurchaseTransactionHistory,
   TransactionDetailType,
-  IJoinMethod,
-  ILoyaltyTransactionProperties
+  IJoinMethod
 } from './lib/loyalty/models/loyalty.model';
 export { TransactionPipe } from './lib/loyalty/loyalty-transactions-list/transaction.pipe';
 export { CashbackTransactionPipe } from './lib/loyalty/loyalty-transactions-list/cashback-transaction.pipe';
@@ -315,3 +314,4 @@ export { PosService } from './lib/pos/pos.service';
  */
 export { TransactionsServiceModule } from './lib/transactions/transaction-service/transactions.service.module';
 export { TransactionsService } from './lib/transactions/transaction-service/transactions.service';
+export { ITransaction, ITransactionProperties } from './lib/transactions/models/transactions.model';
