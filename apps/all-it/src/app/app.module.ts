@@ -31,6 +31,7 @@ import {
   GameModule as PerxGameModule,
   GameServiceModule,
   LoyaltyModule,
+  TransactionsServiceModule as PerxTransactionsServiceModule,
 } from '@perxtech/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -100,6 +101,7 @@ export const setLanguage = (
     MatButtonModule,
     MatSnackBarModule,
     LoyaltyModule.forRoot(),
+    PerxTransactionsServiceModule.forRoot(),
     RewardsModule.forRoot(),
     TranslateModule.forRoot({
       loader: {

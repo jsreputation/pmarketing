@@ -12,6 +12,8 @@ import {
   SettingsService,
   IFlags,
   ILoyalty,
+  TransactionsService,
+  ITransaction,
   // ILoyaltyTransactionProperties
 } from '@perxtech/core';
 import { oc } from 'ts-optchain';
@@ -25,7 +27,7 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./transaction-history.component.scss']
 })
 export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader */ {
-  public transactions: Observable<ILoyaltyTransactionHistory[]>;
+  public transactions: Observable<ILoyaltyTransactionHistory[]> | Observable<ITransaction[]>;
   public purchasesTitleFn: (tr: ILoyaltyTransactionHistory) => string;
   public redemptionsTitleFn: (tr: ILoyaltyTransactionHistory) => string;
   public descFn: (tr: ILoyaltyTransactionHistory) => string;
@@ -38,6 +40,7 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
   constructor(
     private loyaltyService: LoyaltyService,
     private settingsService: SettingsService,
+    private transactionsService: TransactionsService,
     private transactionPipe: TransactionPipe,
     private cashbackTransactionPipe: CashbackTransactionPipe,
     private datePipe: DatePipe
@@ -53,7 +56,7 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
         if (loyalty && loyalty.tiers !== undefined) {
           // @ts-ignore we are already doing null|undefined checks. todo: typescript upgrade due.
           this.transactions = iif(() => loyalty.tiers.filter((tier) => tier.name === 'Premium').length > 0,
-            of(), // todo: change to transactions API
+            this.transactionsService.getTransactions(),
             this.loyaltyService.getTransactionHistory(this.pageNumber - 1, this.pageSize)
           );
         }
