@@ -5,8 +5,16 @@
      (scrolled)="onScroll()"
      [scrollWindow]="false">
   <perx-core-loyalty-transactions-list
-    *ngIf="transactions"
+    *ngIf="transactions && !isPremiumMember"
     [loyaltyTransactions]="transactions"
+    [titleFn]="purchasesTitleFn"
+    [subTitleFn]="subTitleFn"
+    [descFn]="descFn"
+    [priceLabelFn]="priceLabelFn">
+  </perx-core-loyalty-transactions-list>
+  <perx-core-loyalty-transactions-list
+    *ngIf="transactions && isPremiumMember"
+    [externalTransactions]="transactions"
     [titleFn]="purchasesTitleFn"
     [subTitleFn]="subTitleFn"
     [descFn]="descFn"
