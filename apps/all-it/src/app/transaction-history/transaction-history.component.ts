@@ -87,7 +87,7 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
         };
       } else if (this.isPremiumMember) {
         this.priceLabelFn = (tr: ITransaction) => `${tr.currency ? tr.currency : ''}${tr.amount}`;
-        this.descFn = (tr: ITransaction) => `${tr.properties.storeName}`;
+        this.descFn = () => '';
         this.purchasesTitleFn = (tr: ITransaction) => `${tr.properties.productName}`;
       } else {
         this.priceLabelFn = (tr: ILoyaltyTransactionHistory) => `${this.transactionPipe.transform(tr.pointsAmount || 0)}`;
