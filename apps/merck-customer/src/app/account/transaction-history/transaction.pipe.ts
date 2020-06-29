@@ -8,7 +8,10 @@ import { map } from 'rxjs/operators';
 })
 export class TransactionPipe implements PipeTransform {
 
-  public transform(allTransanctions: Observable<ILoyaltyTransaction[]>, isPurchase?: boolean): Observable<ILoyaltyTransaction[]> {
+  public transform(
+    allTransanctions: Observable<ILoyaltyTransaction[]>,
+    isPurchase?: boolean
+  ): Observable<ILoyaltyTransaction[]> {
 
     return allTransanctions.pipe(
       map((transactions) => transactions.filter((transaction) => isPurchase ? (transaction.points < 0) : (transaction.points > 0)))
