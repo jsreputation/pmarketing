@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import {
   ILoyalty,
   ILoyaltyTransaction,
-  ITransactionHistory
+  ILoyaltyTransactionHistory
 } from './models/loyalty.model';
 
 export abstract class LoyaltyService {
@@ -20,5 +20,5 @@ export abstract class LoyaltyService {
     locale?: string,
     sortBy?: string,
     orderBy?: string
-  ): Observable<ITransactionHistory[]>;
+  ): Observable<ILoyaltyTransactionHistory[]>;
 }

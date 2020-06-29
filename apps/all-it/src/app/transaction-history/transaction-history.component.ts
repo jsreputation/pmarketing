@@ -4,7 +4,7 @@ import { Observable, forkJoin, of, iif } from 'rxjs';
 
 import {
   LoyaltyService,
-  ITransactionHistory,
+  ILoyaltyTransactionHistory,
   IRewardTransactionHistory,
   // IPurchaseTransactionHistory,
   TransactionPipe,
@@ -25,12 +25,12 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./transaction-history.component.scss']
 })
 export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader */ {
-  public transactions: Observable<ITransactionHistory[]>;
-  public purchasesTitleFn: (tr: ITransactionHistory) => string;
-  public redemptionsTitleFn: (tr: ITransactionHistory) => string;
-  public descFn: (tr: ITransactionHistory) => string;
-  public subTitleFn: (tr: ITransactionHistory) => string;
-  public priceLabelFn: (tr: ITransactionHistory) => string;
+  public transactions: Observable<ILoyaltyTransactionHistory[]>;
+  public purchasesTitleFn: (tr: ILoyaltyTransactionHistory) => string;
+  public redemptionsTitleFn: (tr: ILoyaltyTransactionHistory) => string;
+  public descFn: (tr: ILoyaltyTransactionHistory) => string;
+  public subTitleFn: (tr: ILoyaltyTransactionHistory) => string;
+  public priceLabelFn: (tr: ILoyaltyTransactionHistory) => string;
 
   private pageNumber: number = 2;
   private pageSize: number = 10;
@@ -62,8 +62,8 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
 
     this.settingsService.getRemoteFlagsSettings().subscribe((flags: IFlags) => {
       if (flags.rebateDemoFlow) {
-        this.priceLabelFn = (tr: ITransactionHistory) => `${this.cashbackTransactionPipe.transform(tr.pointsAmount || 0)}`;
-        this.descFn = (tr: ITransactionHistory) => {
+        this.priceLabelFn = (tr: ILoyaltyTransactionHistory) => `${this.cashbackTransactionPipe.transform(tr.pointsAmount || 0)}`;
+        this.descFn = (tr: ILoyaltyTransactionHistory) => {
           let text = '';
           const properties = oc(tr).transactionDetails.data.properties();
           if (properties) {
@@ -71,7 +71,7 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
           }
           return text;
         };
-        this.purchasesTitleFn = (tr: ITransactionHistory) => {
+        this.purchasesTitleFn = (tr: ILoyaltyTransactionHistory) => {
           let text = '';
           const properties = oc(tr).transactionDetails.data.properties();
           if (properties) {
@@ -80,8 +80,8 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
           return text;
         };
       } else {
-        this.priceLabelFn = (tr: ITransactionHistory) => `${this.transactionPipe.transform(tr.pointsAmount || 0)}`;
-        this.descFn = (tr: ITransactionHistory) => {
+        this.priceLabelFn = (tr: ILoyaltyTransactionHistory) => `${this.transactionPipe.transform(tr.pointsAmount || 0)}`;
+        this.descFn = (tr: ILoyaltyTransactionHistory) => {
           let text = '';
           const properties = oc(tr).transactionDetails.data.properties();
           if (properties) {
@@ -89,7 +89,7 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
           }
           return text;
         };
-        this.purchasesTitleFn = (tr: ITransactionHistory) => {
+        this.purchasesTitleFn = (tr: ILoyaltyTransactionHistory) => {
           let text = '';
           const properties = oc(tr).transactionDetails.data.properties();
           if (properties) {
@@ -100,11 +100,11 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
       }
     });
 
-    this.redemptionsTitleFn = (tr: ITransactionHistory) =>
+    this.redemptionsTitleFn = (tr: ILoyaltyTransactionHistory) =>
       `${(tr.transactionDetails && tr.transactionDetails.data) ?
         (tr.transactionDetails.data as IRewardTransactionHistory).rewardName : ''}`;
 
-    this.subTitleFn = (tr: ITransactionHistory) => `${this.datePipe.transform(tr.transactedAt, 'dd/MM/yyyy')}`;
+    this.subTitleFn = (tr: ILoyaltyTransactionHistory) => `${this.datePipe.transform(tr.transactedAt, 'dd/MM/yyyy')}`;
   }
 
   public onScroll(): void {

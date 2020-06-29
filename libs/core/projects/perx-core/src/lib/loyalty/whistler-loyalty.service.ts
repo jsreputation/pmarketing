@@ -23,7 +23,7 @@ import {
 import {
   ILoyalty,
   ILoyaltyTransaction,
-  ITransactionHistory,
+  ILoyaltyTransactionHistory,
 } from './models/loyalty.model';
 import { LoyaltyService } from './loyalty.service';
 
@@ -133,7 +133,7 @@ export class WhistlerLoyaltyService extends LoyaltyService {
   }
 
   // @ts-ignore
-  public getTransactionHistory(page: number = 1, pageSize: number = 10): Observable<ITransactionHistory[]> {
+  public getTransactionHistory(page: number = 1, pageSize: number = 10): Observable<ILoyaltyTransactionHistory[]> {
     throw new Error('Not implemented.');
   }
 }

@@ -132,7 +132,7 @@ export {
   ILoyalty,
   ILoyaltyTransaction,
   IExpiringPoints,
-  ITransactionHistory,
+  ILoyaltyTransactionHistory,
   IRewardTransactionHistory,
   IPurchaseTransactionHistory,
   TransactionDetailType,

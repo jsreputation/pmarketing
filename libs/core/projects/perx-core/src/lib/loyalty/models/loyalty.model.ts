@@ -87,7 +87,7 @@ export interface IPurchaseTransactionHistory {
   properties?: ITransactionProperties;
 }
 
-export interface ITransactionHistory {
+export interface ILoyaltyTransactionHistory {
   id: number;
   name?: string;
   identifier?: string;

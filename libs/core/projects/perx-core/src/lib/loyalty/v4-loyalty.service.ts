@@ -22,7 +22,7 @@ import {
   IPurchaseTransactionHistory,
   IRewardTransactionHistory,
   ILoyaltyTransaction,
-  ITransactionHistory,
+  ILoyaltyTransactionHistory,
   ITransactionProperties,
   TransactionDetailType
 } from './models/loyalty.model';
@@ -316,7 +316,7 @@ export class V4LoyaltyService extends LoyaltyService {
     };
   }
 
-  public static v4TransactionHistoryToTransactionHistory(transactionHistory: IV4TransactionHistory): ITransactionHistory {
+  public static v4TransactionHistoryToTransactionHistory(transactionHistory: IV4TransactionHistory): ILoyaltyTransactionHistory {
     const transactionDetails = oc(transactionHistory).transaction_details.data();
     let data: IPurchaseTransactionHistory | IRewardTransactionHistory | undefined;
 
@@ -527,7 +527,7 @@ export class V4LoyaltyService extends LoyaltyService {
     locale: string = 'en',
     sortBy: string = 'transacted_at',
     orderBy: string = 'desc'
-  ): Observable<ITransactionHistory[]> {
+  ): Observable<ILoyaltyTransactionHistory[]> {
     const headers = new HttpHeaders().set('Accept-Language', locale);
     return this.http.get<IV4TransactionHistoryResponse>(
       `${this.apiHost}/v4/loyalty/transactions_history`,
