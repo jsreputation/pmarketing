@@ -51,12 +51,11 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
     // if premium member hide stuff.
     this.loyaltyService.getLoyalties().pipe(
       map( (loyalties: ILoyalty[]) => loyalties[0]),
-    ).subscribe(
-      (loyalty: ILoyalty) => {
-        if (loyalty && loyalty.tiers !== undefined) {
-          // @ts-ignore we are already doing null|undefined checks. todo: typescript upgrade due.
-          this.transactions = iif(() => loyalty.tiers.filter((tier) => tier.name === 'Premium').length > 0,
-            this.transactionsService.getTransactions(),
+      map((loyalty: ILoyalty) => {
+        if (loyalty && loyalty.tiers) {
+          this.isPremiumMember = loyalty.tiers.filter((tier) => tier.name === 'Premium').length > 0;
+          this.transactions = iif(() => this.isPremiumMember,
+            this.transactionsService.getTransactions(this.pageNumber - 1, this.pageSize),
             this.loyaltyService.getTransactionHistory(this.pageNumber - 1, this.pageSize)
           );
         }
