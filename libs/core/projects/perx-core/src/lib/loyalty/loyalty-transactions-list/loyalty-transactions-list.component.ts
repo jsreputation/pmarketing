@@ -20,13 +20,16 @@ export class LoyaltyTransactionsListComponent implements OnInit {
   @Input('loyaltyTransactions') // needs flexibility to be of type Observable<ILoyaltyTransaction[]> | Observable<IMerchantAdminTransaction[]>
   public loyaltyTransactions$: Observable<ILoyaltyTransaction[]>;
 
+  @Input('externalTransactions')
+  public externalTransactions$: Observable<ITransaction[]>;
+
   public transactions: ILoyaltyTransaction[] | ITransaction[];
 
   @Output()
   public tapped: EventEmitter<ILoyaltyTransaction> = new EventEmitter<ILoyaltyTransaction>();
 
   @Input()
-  public titleFn: (tr: ILoyaltyTransaction) => string;
+  public titleFn: (tr: ILoyaltyTransaction | ITransaction) => string;
 
   @Input()
   public skuFn: (tr: ILoyaltyTransaction) => ({
@@ -36,13 +39,13 @@ export class LoyaltyTransactionsListComponent implements OnInit {
   });
 
   @Input()
-  public descFn: (tr: ILoyaltyTransaction) => string;
+  public descFn: (tr: ILoyaltyTransaction | ITransaction) => string;
 
   @Input()
-  public subTitleFn: (tr: ILoyaltyTransaction) => string;
+  public subTitleFn: (tr: ILoyaltyTransaction | ITransaction) => string;
 
   @Input()
-  public priceLabelFn: (tr: ILoyaltyTransaction) => string;
+  public priceLabelFn: (tr: ILoyaltyTransaction | ITransaction) => string;
 
   constructor(
     private datePipe: DatePipe,
