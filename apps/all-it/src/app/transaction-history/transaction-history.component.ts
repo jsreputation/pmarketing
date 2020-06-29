@@ -65,7 +65,7 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
           );
         }
       }),
-    switchMap(() => this.settingsService.getRemoteFlagsSettings())
+      switchMap(() => this.settingsService.getRemoteFlagsSettings())
     ).subscribe((flags: IFlags) => {
       if (flags.rebateDemoFlow) {
         this.priceLabelFn = (tr: ILoyaltyTransactionHistory) => `${this.cashbackTransactionPipe.transform(tr.pointsAmount || 0)}`;
