@@ -11,7 +11,7 @@ import {
   CashbackTransactionPipe,
   SettingsService,
   IFlags,
-  // ITransactionProperties
+  // ILoyaltyTransactionProperties
 } from '@perxtech/core';
 import { oc } from 'ts-optchain';
 

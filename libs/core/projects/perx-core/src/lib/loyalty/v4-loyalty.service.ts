@@ -23,7 +23,7 @@ import {
   IRewardTransactionHistory,
   ILoyaltyTransaction,
   ILoyaltyTransactionHistory,
-  ITransactionProperties,
+  ILoyaltyTransactionProperties,
   TransactionDetailType
 } from './models/loyalty.model';
 
@@ -388,8 +388,8 @@ export class V4LoyaltyService extends LoyaltyService {
     };
   }
 
-  private static v4TransactionPropertiesToTransactionProperties(pthProps: TenantTransactionProperties): ITransactionProperties {
-    let data: ITransactionProperties = {};
+  private static v4TransactionPropertiesToTransactionProperties(pthProps: TenantTransactionProperties): ILoyaltyTransactionProperties {
+    let data: ILoyaltyTransactionProperties = {};
 
     if (pthProps && (pthProps as IV4TransactionPropertiesAbenson).sku) {
       const props = (pthProps as IV4TransactionPropertiesAbenson);

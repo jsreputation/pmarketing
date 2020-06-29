@@ -12,7 +12,7 @@ import {
   SettingsService,
   IFlags,
   ILoyalty,
-  // ITransactionProperties
+  // ILoyaltyTransactionProperties
 } from '@perxtech/core';
 import { oc } from 'ts-optchain';
 import { map } from 'rxjs/operators';
