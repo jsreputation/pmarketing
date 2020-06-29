@@ -10,6 +10,8 @@ import {
 } from '../models/transactions.model';
 import { map } from 'rxjs/operators';
 
+const DEFAULT_PAGE_COUNT: number = 25;
+
 export type V4TenantTransactionProperties =
   IV4TransactionPropertiesAbenson
   | IV4TransactionPropertiesMerck
@@ -168,8 +170,14 @@ export class V4TransactionsService extends TransactionsService {
     return data;
   }
 
-  public getTransactions(): Observable<ITransaction[]> {
-    return this.http.get(`${this.apiHost}/v4/transactions`).pipe(
+  public getTransactions(page: number = 1, pageSize: number = DEFAULT_PAGE_COUNT): Observable<ITransaction[]> {
+    return this.http.get(`${this.apiHost}/v4/transactions`,
+      {
+        params: {
+          page: `${page}`,
+          size: `${pageSize}`
+        }
+      }).pipe(
       map((res: IV4TransactionsResponse) => res.data),
       map((transactions: IV4Transaction[]) =>
         transactions.map(transaction => V4TransactionsService.v4TransactionsToTransactions(transaction))
