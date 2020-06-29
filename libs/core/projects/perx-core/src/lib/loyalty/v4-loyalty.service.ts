@@ -35,13 +35,15 @@ import { ICustomProperties } from '../profile/profile.model';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
 import { Cacheable } from 'ngx-cacheable';
+import {
+  V4TenantTransactionProperties,
+  IV4TransactionPropertiesAbenson,
+  IV4TransactionPropertiesAllit,
+  IV4TransactionPropertiesCashback,
+  IV4TransactionPropertiesMerck
+} from '../transactions/transaction-service/v4-transactions.service';
 
 const DEFAULT_PAGE_COUNT: number = 10;
-type TenantTransactionProperties =
-  IV4TransactionPropertiesAbenson
-  | IV4TransactionPropertiesMerck
-  | IV4TransactionPropertiesAllit
-  | IV4TransactionPropertiesCashback;
 
 interface IV4Image {
   type: string;
@@ -147,7 +149,7 @@ interface IV4PurchaseTransactionHistory {
   currency: string;
   workflow_id?: number;
   created_at: Date;
-  properties?: ICustomProperties | TenantTransactionProperties;
+  properties?: ICustomProperties | V4TenantTransactionProperties;
   transaction_reference: string;
 }
 
@@ -158,7 +160,7 @@ interface IV4LoyaltyTransactionPropertiesHistory {
   transacted_at: Date;
   amount: number;
   transacted_cents?: number; // property will probably be removed
-  properties: ICustomProperties | TenantTransactionProperties;
+  properties: ICustomProperties | V4TenantTransactionProperties;
   transaction_details: {
     type: TransactionDetailType;
     data: IV4PurchaseTransactionHistory | IV4RewardTransactionHistory;
@@ -167,65 +169,6 @@ interface IV4LoyaltyTransactionPropertiesHistory {
 
 interface IV4LoyaltyTransactionPropertiesHistoryResponse {
   data: IV4LoyaltyTransactionPropertiesHistory[];
-}
-
-interface IV4TransactionPropertiesAbenson {
-  tenant: 'abenson';
-  qty: number;
-  reg: number;
-  sku: number;
-  store: number;
-  trxno: number;
-  untprc: number;
-  cashier: number;
-  company: number;
-  trxdate: number;
-  trxtime: number;
-  mobileno: string;
-  store_name: string;
-}
-
-interface IV4TransactionPropertiesMerck {
-  tenant: 'merck';
-  product: string;
-  pharmacy: string;
-  merchant_username: string;
-  merchant_account_id: number;
-}
-
-interface IV4TransactionPropertiesAllit {
-  tenant: 'allit';
-  amount: number;
-  quantity: number;
-  item_code: number;
-  item_name: string;
-  amount_net: number;
-  amount_std: number;
-  amount_txn: number;
-  guid_store: string;
-  amount_json: {};
-  branch_code: string;
-  guid_branch: string;
-  amount_signum: number;
-  reference_doc: string;
-  amount_tax_gst: number;
-  amount_tax_wht: number;
-  invoice_number: number;
-  amount_discount: number;
-  category_level_0: string;
-  category_level_1: string;
-  amount_gst_balance: number;
-  amount_wht_balance: number;
-  amount_open_balance: number;
-  transaction_item_guid: string;
-  transaction_line_guid: string;
-}
-
-interface IV4TransactionPropertiesCashback {
-  tenant: 'perx'; // temporary template tenant name?
-  merchant_name: string;
-  item_name: string;
-  outlet_name: string;
 }
 
 @Injectable({
@@ -351,7 +294,7 @@ export class V4LoyaltyService extends LoyaltyService {
             price: pthDetails.amount,
             currency: pthDetails.currency,
           };
-          data.properties = V4LoyaltyService.v4TransactionPropertiesToTransactionProperties(pthProps as TenantTransactionProperties);
+          data.properties = V4LoyaltyService.v4TransactionPropertiesToTransactionProperties(pthProps as V4TenantTransactionProperties);
           break;
       }
     // } else if (transactionHistory.name === 'POS Update') { // hard-coded reason code from backend for POS transactions
@@ -362,7 +305,7 @@ export class V4LoyaltyService extends LoyaltyService {
         id: transactionHistory.id
       };
 
-      data.properties = V4LoyaltyService.v4TransactionPropertiesToTransactionProperties(thProps as TenantTransactionProperties);
+      data.properties = V4LoyaltyService.v4TransactionPropertiesToTransactionProperties(thProps as V4TenantTransactionProperties);
     } else {
       // assume it is a customer service action from dashboard
       data = {
@@ -388,7 +331,7 @@ export class V4LoyaltyService extends LoyaltyService {
     };
   }
 
-  private static v4TransactionPropertiesToTransactionProperties(pthProps: TenantTransactionProperties): ILoyaltyTransactionProperties {
+  private static v4TransactionPropertiesToTransactionProperties(pthProps: V4TenantTransactionProperties): ILoyaltyTransactionProperties {
     let data: ILoyaltyTransactionProperties = {};
 
     if (pthProps && (pthProps as IV4TransactionPropertiesAbenson).sku) {
