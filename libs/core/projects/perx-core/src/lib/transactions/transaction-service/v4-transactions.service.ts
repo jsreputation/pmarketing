@@ -115,7 +115,7 @@ export class V4TransactionsService extends TransactionsService {
     return {
       id: transaction.id,
       transactionType: transaction.transaction_type,
-      transactionDate: transaction.transaction_date,
+      transactedAt: transaction.transaction_date,
       amount: transaction.amount,
       currency: transaction.currency,
       properties: V4TransactionsService.v4TransactionPropertiesToTransactionProperties(transaction.properties),
