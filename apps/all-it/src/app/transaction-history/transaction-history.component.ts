@@ -129,7 +129,7 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
         if (val[1].length < this.pageSize) {
           this.complitePagination = true;
         }
-        this.transactions = of([...val[0], ...val[1]]);
+        this.transactions = of([...val[0], ...val[1]]) as any;
       });
     this.pageNumber++;
   }
