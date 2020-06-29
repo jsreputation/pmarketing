@@ -52,7 +52,7 @@ export interface ILoyalty {
   images?: LoyaltyImages;
 }
 
-export interface ITransaction {
+export interface ILoyaltyTransaction {
   id: number;
   name?: string;
   sku?: string;

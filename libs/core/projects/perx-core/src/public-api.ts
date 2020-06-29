@@ -130,7 +130,7 @@ export { LoyaltyModule } from './lib/loyalty/loyalty.module';
 export { LoyaltyService } from './lib/loyalty/loyalty.service';
 export {
   ILoyalty,
-  ITransaction,
+  ILoyaltyTransaction,
   IExpiringPoints,
   ITransactionHistory,
   IRewardTransactionHistory,
@@ -309,3 +309,9 @@ export { QrScannerComponent } from './lib/rebates/rebates-qr-scanner/qrscanner.c
  */
 export { PosModule } from './lib/pos/pos.module';
 export { PosService } from './lib/pos/pos.service';
+
+/**
+ * Transactions
+ */
+export { TransactionsServiceModule } from './lib/transactions/transaction-service/transactions.service.module';
+export { TransactionsService } from './lib/transactions/transaction-service/transactions.service';

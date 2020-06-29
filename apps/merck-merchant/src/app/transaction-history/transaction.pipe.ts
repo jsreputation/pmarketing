@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ITransaction } from '@perxtech/core';
+import { ILoyaltyTransaction } from '@perxtech/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 })
 export class TransactionPipe implements PipeTransform {
 
-  public transform(allTransanctions: Observable<ITransaction[]>, isPurchase?: boolean): Observable<ITransaction[]> {
+  public transform(allTransanctions: Observable<ILoyaltyTransaction[]>, isPurchase?: boolean): Observable<ILoyaltyTransaction[]> {
 
     return allTransanctions.pipe(
       map((transactions) => transactions.filter((transaction) => isPurchase ? (transaction.points < 0) : (transaction.points > 0)))
