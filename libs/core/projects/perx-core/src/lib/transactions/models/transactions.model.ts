@@ -1,5 +1,12 @@
 export interface ITransaction {
-
+  id: number;
+  transactionType: string;
+  transactionDate: Date;
+  amount: number;
+  currency?: string;
+  properties: ITransactionProperties;
+  transactionReference: string;
+  pointsEarned: number;
 }
 
 export interface ITransactionProperties {

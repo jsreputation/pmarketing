@@ -5,21 +5,35 @@ import { TransactionsService } from './transactions.service';
 import { IConfig } from '../../config/models/config.model';
 import { Observable } from 'rxjs';
 import {
+  ITransaction,
   ITransactionProperties
 } from '../models/transactions.model';
 import { map } from 'rxjs/operators';
 
-interface IV4TransactionsResponse {
-  data: IV4Transactions[];
-}
-interface IV4Transactions {
-
-}
 export type V4TenantTransactionProperties =
   IV4TransactionPropertiesAbenson
   | IV4TransactionPropertiesMerck
   | IV4TransactionPropertiesAllit
   | IV4TransactionPropertiesCashback;
+
+interface IV4TransactionsResponse {
+  data: IV4Transaction[];
+}
+interface IV4Transaction {
+  id: number;
+  user_account_id: number;
+  updated_at: Date;
+  transaction_type: string;
+  amount: number;
+  transaction_date: Date;
+  currency?: string;
+  workflow_id?: string;
+  created_at: Date;
+  properties: V4TenantTransactionProperties;
+  transaction_reference: string;
+  points_earned: number;
+  merchant_user_account_id?: number;
+}
 
 export interface IV4TransactionPropertiesAbenson {
   tenant: 'abenson';
@@ -97,6 +111,19 @@ export class V4TransactionsService extends TransactionsService {
       });
   }
 
+  private static v4TransactionsToTransactions(transaction: IV4Transaction): ITransaction {
+    return {
+      id: transaction.id,
+      transactionType: transaction.transaction_type,
+      transactionDate: transaction.transaction_date,
+      amount: transaction.amount,
+      currency: transaction.currency,
+      properties: V4TransactionsService.v4TransactionPropertiesToTransactionProperties(transaction.properties),
+      transactionReference: transaction.transaction_reference,
+      pointsEarned: transaction.points_earned
+    };
+  }
+
   public static v4TransactionPropertiesToTransactionProperties(pthProps: V4TenantTransactionProperties): ITransactionProperties {
     let data: ITransactionProperties = {};
 
@@ -141,9 +168,12 @@ export class V4TransactionsService extends TransactionsService {
     return data;
   }
 
-  public getTransactions(): Observable<any> {
+  public getTransactions(): Observable<ITransaction[]> {
     return this.http.get(`${this.apiHost}/v4/transactions`).pipe(
-      map((res: IV4TransactionsResponse) => res.data)
+      map((res: IV4TransactionsResponse) => res.data),
+      map((transactions: IV4Transaction[]) =>
+        transactions.map(transaction => V4TransactionsService.v4TransactionsToTransactions(transaction))
+      )
     );
   }
 }
