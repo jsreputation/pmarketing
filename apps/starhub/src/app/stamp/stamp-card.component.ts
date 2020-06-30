@@ -183,7 +183,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
                 imageUrl: 'assets/prize.png',
                 disableOverlayClose: true,
                 ctaButtonClass: 'ga_game_completion',
-                url: `/voucher/${voucherId}`,
+                url: `redemption?id=${voucherId}`,
                 afterClosedCallBackRedirect: this,
                 buttonTxt: 'View Reward',
               };
