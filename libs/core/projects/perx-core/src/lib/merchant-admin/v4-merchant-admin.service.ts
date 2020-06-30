@@ -364,7 +364,7 @@ export class V4MerchantAdminService implements IMerchantAdminService {
     page: number = 1,
     pageSize: number = 10,
     locale: string = 'en',
-    sortBy: string = 'transaction_at', // [sort_by]
+    sortBy: string = 'transaction_at', // sort_by=[id|transaction_date|transaction_type|amount]
     orderBy: string = 'desc', //  [asc, desc]
   ): Observable<IMerchantPurchaseTransactionHistory[]> {
     const headers = new HttpHeaders().set('Accept-Language', locale);
