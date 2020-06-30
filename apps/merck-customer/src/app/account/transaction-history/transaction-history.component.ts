@@ -3,7 +3,7 @@ import { PageAppearence, PageProperties, BarSelectedItem } from '../../page-prop
 import { Observable, of, forkJoin } from 'rxjs';
 import {
   LoyaltyService,
-  ITransactionHistory,
+  ILoyaltyTransactionHistory,
   IRewardTransactionHistory,
   IPurchaseTransactionHistory
 } from '@perxtech/core';
@@ -18,12 +18,12 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class TransactionHistoryComponent implements OnInit, PageAppearence {
 
-  public transactions: Observable<ITransactionHistory[]>;
-  public purchasesTitleFn: (tr: ITransactionHistory) => string;
-  public redemptionsTitleFn: (tr: ITransactionHistory) => string;
-  public descFn: (tr: ITransactionHistory) => string;
-  public subTitleFn: (tr: ITransactionHistory) => string;
-  public priceLabelFn: (tr: ITransactionHistory) => string;
+  public transactions: Observable<ILoyaltyTransactionHistory[]>;
+  public purchasesTitleFn: (tr: ILoyaltyTransactionHistory) => string;
+  public redemptionsTitleFn: (tr: ILoyaltyTransactionHistory) => string;
+  public descFn: (tr: ILoyaltyTransactionHistory) => string;
+  public subTitleFn: (tr: ILoyaltyTransactionHistory) => string;
+  public priceLabelFn: (tr: ILoyaltyTransactionHistory) => string;
 
   private pageNumber: number = 1;
   private pageSize: number = 10;
@@ -44,24 +44,24 @@ export class TransactionHistoryComponent implements OnInit, PageAppearence {
   }
 
   public ngOnInit(): void {
-    this.purchasesTitleFn = (tr: ITransactionHistory) =>
+    this.purchasesTitleFn = (tr: ILoyaltyTransactionHistory) =>
       `${tr.transactionDetails && tr.transactionDetails.data ? (tr.transactionDetails.data as IPurchaseTransactionHistory).pharmacyName : 'no-name'}`;
 
-    this.redemptionsTitleFn = (tr: ITransactionHistory) =>
+    this.redemptionsTitleFn = (tr: ILoyaltyTransactionHistory) =>
       `${tr.transactionDetails && (tr.transactionDetails.data as IRewardTransactionHistory).rewardName}`;
 
-    this.descFn = (tr: ITransactionHistory) =>
+    this.descFn = (tr: ILoyaltyTransactionHistory) =>
       `${tr.transactionDetails && tr.transactionDetails.data ? (tr.transactionDetails.data as IPurchaseTransactionHistory).productName : ''}`;
 
-    this.subTitleFn = (tr: ITransactionHistory) => `${this.datePipe.transform(tr.transactedAt, 'dd/MM/yyyy')}`;
-    this.priceLabelFn = (tr: ITransactionHistory) => {
+    this.subTitleFn = (tr: ILoyaltyTransactionHistory) => `${this.datePipe.transform(tr.transactedAt, 'dd/MM/yyyy')}`;
+    this.priceLabelFn = (tr: ILoyaltyTransactionHistory) => {
       const value = tr.pointsAmount || 0;
       const absVal = String(Math.abs(value));
       return value < 0 ? this.pointsSpentTxt.replace('{points}', absVal) : this.pointsEarnedTxt.replace('{points}', absVal);
     };
 
     this.loyaltyService.getTransactionHistory(this.pageNumber, this.pageSize).subscribe(
-      (transactions: ITransactionHistory[]) => this.transactions = of(transactions),
+      (transactions: ILoyaltyTransactionHistory[]) => this.transactions = of(transactions),
       (err) => console.log(err)
     );
     this.pageNumber++;

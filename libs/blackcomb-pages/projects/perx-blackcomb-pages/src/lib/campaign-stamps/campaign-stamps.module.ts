@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ConfigModule, PuzzlesModule, StampModule } from '@perxtech/core';
+import { ConfigModule, PuzzlesModule, StampModule, UtilsModule } from '@perxtech/core';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { CampaignStampsComponent } from './campaign-stamps.component';
 
@@ -11,6 +11,7 @@ import { CampaignStampsComponent } from './campaign-stamps.component';
   ],
   imports: [
     CommonModule,
+    UtilsModule,
     InfiniteScrollModule,
     PuzzlesModule,
     RouterModule,

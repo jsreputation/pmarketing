@@ -15,7 +15,7 @@ import {
 import { TranslateService } from '@ngx-translate/core';
 
 import {
-  ITransaction,
+  ILoyaltyTransaction,
   LoyaltyService,
   ILoyalty,
   isEmptyArray,
@@ -29,17 +29,17 @@ const REQ_PAGE_SIZE: number = 10;
   styleUrls: ['./history.component.scss']
 })
 export class HistoryComponent implements OnInit {
-  public transactions$: Observable<ITransaction[]>;
-  private transactions: BehaviorSubject<ITransaction[]> = new BehaviorSubject<ITransaction[]>([]);
+  public transactions$: Observable<ILoyaltyTransaction[]>;
+  private transactions: BehaviorSubject<ILoyaltyTransaction[]> = new BehaviorSubject<ILoyaltyTransaction[]>([]);
   public transactionsLoaded: boolean = false;
   public transactionsEnded: boolean = false;
   private transactionsPageId: number = 1;
   private loyaltyId: number = null;
-  public accrued: Observable<ITransaction[]>;
-  public redeemed: Observable<ITransaction[]>;
-  public subTitleFn: (tr: ITransaction) => string;
-  public titleFn: (tr: ITransaction) => string;
-  public priceLabelFn: (tr: ITransaction) => string;
+  public accrued: Observable<ILoyaltyTransaction[]>;
+  public redeemed: Observable<ILoyaltyTransaction[]>;
+  public subTitleFn: (tr: ILoyaltyTransaction) => string;
+  public titleFn: (tr: ILoyaltyTransaction) => string;
+  public priceLabelFn: (tr: ILoyaltyTransaction) => string;
 
   private async initLoyaltyId(): Promise<void> {
     const loyalties: ILoyalty[] = await this.loyaltyService.getLoyalties().toPromise();
@@ -55,7 +55,7 @@ export class HistoryComponent implements OnInit {
     }
 
     this.loyaltyService.getTransactions(this.loyaltyId, this.transactionsPageId, REQ_PAGE_SIZE)
-      .subscribe((transactionsArr: ITransaction[]) => {
+      .subscribe((transactionsArr: ILoyaltyTransaction[]) => {
         if (isEmptyArray(transactionsArr)) {
           return;
         }
@@ -64,10 +64,10 @@ export class HistoryComponent implements OnInit {
         this.transactionsLoaded = true;
         // accrued/redeemed have to have separate requests, infinite-scroll
         this.accrued = this.transactions.pipe(
-          map((transactions: ITransaction[]) => transactions.filter(transaction => transaction.pointsBalance > 0))
+          map((transactions: ILoyaltyTransaction[]) => transactions.filter(transaction => transaction.pointsBalance > 0))
         );
         this.redeemed = this.transactions.pipe(
-          map((transactions: ITransaction[]) => transactions.filter(transaction => transaction.pointsBalance <= 0))
+          map((transactions: ILoyaltyTransaction[]) => transactions.filter(transaction => transaction.pointsBalance <= 0))
         );
         if (transactionsArr.length < REQ_PAGE_SIZE) {
           this.transactionsEnded = true;

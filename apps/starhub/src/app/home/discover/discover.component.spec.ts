@@ -25,7 +25,7 @@ import {
   FeedReaderService,
   IGameService,
   IReward,
-  ConfigService, SettingsService
+  ConfigService, SettingsService, StampService
 } from '@perxtech/core';
 
 import { rewards } from '../../rewards.mock';
@@ -39,6 +39,7 @@ import { CatalogsComponent } from '../catalogs/catalogs.component';
 import { CampaignsComponent } from '../campaigns/campaigns.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { GhostCardComponent } from '../../ghosts/card-ghost.component';
+import { StampCardsComponent } from '../stamp-cards/stamp-cards.component';
 
 describe('DiscoverComponent', () => {
   let component: DiscoverComponent;
@@ -49,7 +50,8 @@ describe('DiscoverComponent', () => {
     getCatalogs: () => of(catalogs),
   };
   const settingsServiceStub: Partial<SettingsService> = {
-    getRssFeeds: () => of()
+    getRssFeeds: () => of(),
+    getRemoteFlagsSettings: () => of()
   };
   const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of({
@@ -74,7 +76,9 @@ describe('DiscoverComponent', () => {
   const gameServiceStub: Partial<IGameService> = {
     getGamesFromCampaign: () => of()
   };
-
+  const stamServcieStub: Partial<StampService> = {
+    getCards: () => of()
+  };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -84,6 +88,7 @@ describe('DiscoverComponent', () => {
         RewardsCardsComponent,
         CatalogsComponent,
         CampaignsComponent,
+        StampCardsComponent,
         GhostCardComponent
       ],
       imports: [
@@ -104,6 +109,7 @@ describe('DiscoverComponent', () => {
         { provide: FeedReaderService, useValue: feedReaderServiceStub },
         { provide: Router, useValue: routerStub },
         { provide: IGameService, useValue: gameServiceStub },
+        { provide: StampService, useValue: stamServcieStub },
         { provide: ConfigService, useValue: configServiceStub },
         { provide: SettingsService, useValue: settingsServiceStub },
       ]

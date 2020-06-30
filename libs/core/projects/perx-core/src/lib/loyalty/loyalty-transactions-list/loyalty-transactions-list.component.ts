@@ -6,9 +6,10 @@ import {
   Output,
 } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ITransaction } from '../models/loyalty.model';
+import { ILoyaltyTransaction } from '../models/loyalty.model';
 import { DatePipe } from '@angular/common';
 import { TransactionPipe } from './transaction.pipe';
+import { ITransaction } from '../../transactions/models/transactions.model';
 
 @Component({
   selector: 'perx-core-loyalty-transactions-list',
@@ -16,31 +17,36 @@ import { TransactionPipe } from './transaction.pipe';
   styleUrls: ['./loyalty-transactions-list.component.scss']
 })
 export class LoyaltyTransactionsListComponent implements OnInit {
-  @Input('transactions') // needs flexibility to be of type Observable<ITransaction[]> | Observable<IMerchantAdminTransaction[]>
-  public transactions$: Observable<ITransaction[]>;
-  public transactions: ITransaction[];
+  // needs flexibility to be of type Observable<ILoyaltyTransaction[]> | Observable<IMerchantAdminTransaction[]>
+  @Input('loyaltyTransactions')
+  public loyaltyTransactions$: Observable<ILoyaltyTransaction[]>;
+
+  @Input('externalTransactions')
+  public externalTransactions$: Observable<ITransaction[]>;
+
+  public transactions: ILoyaltyTransaction[] | ITransaction[];
 
   @Output()
-  public tapped: EventEmitter<ITransaction> = new EventEmitter<ITransaction>();
+  public tapped: EventEmitter<ILoyaltyTransaction> = new EventEmitter<ILoyaltyTransaction>();
 
   @Input()
-  public titleFn: (tr: ITransaction) => string;
+  public titleFn: (tr: ILoyaltyTransaction | ITransaction) => string;
 
   @Input()
-  public skuFn: (tr: ITransaction) => ({
+  public skuFn: (tr: ILoyaltyTransaction) => ({
     sku: string | undefined;
     qty: string | undefined,
     untprc: string | undefined;
   });
 
   @Input()
-  public descFn: (tr: ITransaction) => string;
+  public descFn: (tr: ILoyaltyTransaction | ITransaction) => string;
 
   @Input()
-  public subTitleFn: (tr: ITransaction) => string;
+  public subTitleFn: (tr: ILoyaltyTransaction | ITransaction) => string;
 
   @Input()
-  public priceLabelFn: (tr: ITransaction) => string;
+  public priceLabelFn: (tr: ILoyaltyTransaction | ITransaction) => string;
 
   constructor(
     private datePipe: DatePipe,
@@ -49,19 +55,19 @@ export class LoyaltyTransactionsListComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    if (this.transactions$) {
-      this.transactions$.subscribe(
-        (transactions: ITransaction[]) => {
+    if (this.loyaltyTransactions$) {
+      this.loyaltyTransactions$.subscribe(
+        (transactions: ILoyaltyTransaction[]) => {
           this.transactions = transactions;
         },
         () => console.error('No transactions loaded to loyalty transactions list')
       );
     }
     if (!this.titleFn) {
-      this.titleFn = (tr: ITransaction) => `${tr.name}`;
+      this.titleFn = (tr: ILoyaltyTransaction) => `${tr.name}`;
     }
     if (!this.skuFn) {
-      this.skuFn = (tr: ITransaction) => ({
+      this.skuFn = (tr: ILoyaltyTransaction) => ({
         sku: tr.sku ? `sku${tr.sku}` : undefined,
         qty: tr.quantity ? (parseInt(tr.quantity, 10) > 1 ? `${tr.quantity} items` : `${tr.quantity} item`) : undefined,
         untprc: tr.purchaseAmount || undefined
@@ -71,10 +77,10 @@ export class LoyaltyTransactionsListComponent implements OnInit {
       this.descFn = () => '';
     }
     if (!this.subTitleFn) {
-      this.subTitleFn = (tr: ITransaction) => `${this.datePipe.transform(tr.earnedDate, 'shortDate')}`;
+      this.subTitleFn = (tr: ILoyaltyTransaction) => `${this.datePipe.transform(tr.earnedDate, 'shortDate')}`;
     }
     if (!this.priceLabelFn) {
-      this.priceLabelFn = (tr: ITransaction) => `${this.transactionPipe.transform(tr.points)}`;
+      this.priceLabelFn = (tr: ILoyaltyTransaction) => `${this.transactionPipe.transform(tr.points)}`;
     }
   }
 }

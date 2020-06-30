@@ -10,7 +10,14 @@ import {
   Voucher
 } from '@perxtech/core';
 import { Location } from '@angular/common';
-import { catchError, map, switchMap, take, takeUntil, tap } from 'rxjs/operators';
+import {
+  catchError,
+  map,
+  switchMap,
+  take,
+  takeUntil,
+  tap
+} from 'rxjs/operators';
 import { AnalyticsService, PageType } from '../analytics.service';
 import { GameOutcomeService } from '../congrats/game-outcome/game-outcome.service';
 import { Observable, Subject, throwError } from 'rxjs';
@@ -39,72 +46,70 @@ export class GameComponent implements OnInit {
     private analytics: AnalyticsService,
     private gameOutcomeService: GameOutcomeService,
     private configService: ConfigService
-  ) {
-  }
+  ) { }
 
   public ngOnInit(): void {
-    this.configService.readAppConfig().subscribe(
-      () => {
-        this.gameData$ = this.loadGame();
-      });
+    this.configService.readAppConfig().subscribe(() => {
+      this.gameData$ = this.loadGame();
+    });
   }
 
   public loadGame(): Observable<IGame> {
-    return this.activeRoute.queryParams
-      .pipe(
-        switchMap((params: Params) => {
-          if (params.id) {
-            const id = parseInt(params.id, 10);
-            return this.gameService.get(id);
-          }
+    return this.activeRoute.queryParams.pipe(
+      switchMap((params: Params) => {
+        if (params.id) {
+          const id = parseInt(params.id, 10);
+          return this.gameService.get(id);
+        }
 
-          const cid = parseInt(params.cid, 10);
-          return this.gameService.getGamesFromCampaign(cid).pipe(
-            take(1),
-            map((games: IGame[]) => games[0])
-          );
-        }),
-        tap(
-          (game: IGame) => {
-            if (!game) {
-              this.showErrorPopup();
-              return;
-            }
-            this.game = game;
-            this.title = game.texts.title || 'Shake the Pinata';
-            if (game.config && ('nbTaps' in game.config)) {
-              this.numberOfTaps = game.config && game.config.nbTaps;
-            }
-            if (game.remainingNumberOfTries !== null && game.remainingNumberOfTries <= 0) {
-              this.notificationService.addPopup({
-                title: game.results.noOutcome && game.results.noOutcome.title,
-                text: game.results.noOutcome && game.results.noOutcome.subTitle,
-                buttonTxt: game.results.noOutcome && game.results.noOutcome.button,
-                afterClosedCallBack: this,
-                panelClass: 'custom-class'
-              });
-            }
-
-            if ((window as any).appboy) {
-              (window as any).appboy.logCustomEvent(
-                'user_view_game',
-                {'game_id': this.game.id, 'campaign_id': this.game.campaignId}
-              );
-            }
-            this.analytics.addEvent({
-              pageName: `rewards:game:${this.title}`,
-              pageType: PageType.static,
-              siteSectionLevel2: 'rewards:game',
-              siteSectionLevel3: 'rewards:game'
-            });
-          }
-        ),
-        catchError((err: HttpErrorResponse) => {
+        const cid = parseInt(params.cid, 10);
+        return this.gameService.getGamesFromCampaign(cid).pipe(
+          take(1),
+          map((games: IGame[]) => games[0])
+        );
+      }),
+      tap((game: IGame) => {
+        if (!game) {
           this.showErrorPopup();
-          throw err;
-        }),
-        takeUntil(this.destroy$)
-      );
+          return;
+        }
+        this.game = game;
+        this.title = game.texts.title || 'Shake the Pinata';
+        if (game.config && 'nbTaps' in game.config) {
+          this.numberOfTaps = game.config && game.config.nbTaps;
+        }
+        if (
+          game.remainingNumberOfTries !== null &&
+          game.remainingNumberOfTries <= 0
+        ) {
+          this.notificationService.addPopup({
+            title: game.results.noOutcome && game.results.noOutcome.title,
+            text: game.results.noOutcome && game.results.noOutcome.subTitle,
+            buttonTxt: game.results.noOutcome && game.results.noOutcome.button,
+            afterClosedCallBack: this,
+            panelClass: 'custom-class'
+          });
+        }
+
+        if ((window as any).appboy) {
+          (window as any).appboy.logCustomEvent('user_view_game', {
+            game_id: this.game.id,
+            campaign_id: this.game.campaignId
+          });
+        }
+        this.analytics.addEvent({
+          pageName: `rewards:game:${this.title}`,
+          pageType: PageType.static,
+          siteSectionLevel2: 'rewards:game',
+          siteSectionLevel3: 'rewards:game'
+        });
+      }),
+      catchError((err: HttpErrorResponse) => {
+        this.showErrorPopup();
+        throw err;
+      }),
+      takeUntil(this.destroy$)
+    );
   }
 
   private showErrorPopup(): void {
@@ -116,55 +121,62 @@ export class GameComponent implements OnInit {
   }
 
   public loadPreplay(): void {
-    if (this.game && (this.game.remainingNumberOfTries > 0 || this.game.remainingNumberOfTries === null)) {
-      this.gameData$.pipe(
-        switchMap(
-          (game) => this.gameService.prePlay(game.id)
-        ),
-        catchError(err => throwError(err)),
-        takeUntil(this.destroy$)
-      ).subscribe(
-        (gameTransaction: IEngagementTransaction) => {
-          this.gameTransaction = gameTransaction;
-          if (gameTransaction.voucherIds && gameTransaction.voucherIds.length > 0) {
-            // set this as a property
-            if (this.game.results && this.game.results.outcome) {
-              this.gameOutcomeService.setOutcome(this.game.results.outcome);
-              this.willWin = true;
+    if (
+      this.game &&
+      (this.game.remainingNumberOfTries > 0 ||
+        this.game.remainingNumberOfTries === null)
+    ) {
+      this.gameData$
+        .pipe(
+          switchMap((game) => this.gameService.prePlay(game.id)),
+          catchError((err) => throwError(err)),
+          takeUntil(this.destroy$)
+        )
+        .subscribe(
+          (gameTransaction: IEngagementTransaction) => {
+            this.gameTransaction = gameTransaction;
+            if (
+              gameTransaction.voucherIds &&
+              gameTransaction.voucherIds.length > 0
+            ) {
+              // set this as a property
+              if (this.game.results && this.game.results.outcome) {
+                this.gameOutcomeService.setOutcome(this.game.results.outcome);
+                this.willWin = true;
+              }
+            } else {
+              this.willWin = false;
             }
-          } else {
-            this.willWin = false;
+          },
+          () => {
+            this.showErrorPopup();
           }
-        },
-        () => {
-          this.showErrorPopup();
-        }
-      );
+        );
     }
   }
 
   public preplayGameCompleted(): void {
-    this.gameService.prePlayConfirm(this.gameTransaction.id)
-      .pipe(
-        map((game: IPlayOutcome) => game.vouchers),
-      ).subscribe(
-      (vouchs: Voucher[]) => {
-        if ((window as any).appboy) {
-          (window as any).appboy.logCustomEvent(
-            'user_played_game',
-            {'game_id': this.game.id, 'campaign_id': this.game.campaignId}
-          );
-        }
-        if (vouchs.length === 0) {
-          this.showNoRewardsPopUp();
-        } else {
-          this.gameOutcomeService.setVouchersList(vouchs);
-          if (this.game.results && this.game.results.outcome) {
-            this.gameOutcomeService.setOutcome(this.game.results.outcome);
+    this.gameService
+      .prePlayConfirm(this.gameTransaction.id)
+      .pipe(map((game: IPlayOutcome) => game.vouchers))
+      .subscribe(
+        (vouchs: Voucher[]) => {
+          if ((window as any).appboy) {
+            (window as any).appboy.logCustomEvent('user_played_game', {
+              game_id: this.game.id,
+              campaign_id: this.game.campaignId
+            });
           }
-          this.router.navigate(['/congrats']);
-        }
-      },
+          if (vouchs.length === 0) {
+            this.showNoRewardsPopUp();
+          } else {
+            this.gameOutcomeService.setVouchersList(vouchs);
+            if (this.game.results && this.game.results.outcome) {
+              this.gameOutcomeService.setOutcome(this.game.results.outcome);
+            }
+            this.router.navigate(['/congrats']);
+          }
+        },
         () => this.showNoRewardsPopUp()
       );
   }
@@ -189,28 +201,28 @@ export class GameComponent implements OnInit {
   }
 
   public gameCompleted(): void {
-    this.gameService.play(this.game.id)
-      .pipe(
-        map((game: IPlayOutcome) => game.vouchers)
-      ).subscribe(
-      (vouchs: Voucher[]) => {
-        if ((window as any).appboy) {
-          (window as any).appboy.logCustomEvent(
-            'user_played_game',
-            {'game_id': this.game.id, 'campaign_id': this.game.campaignId}
-          );
-        }
-        if (vouchs.length === 0) {
-          this.showNoRewardsPopUp();
-        } else {
-          this.gameOutcomeService.setVouchersList(vouchs);
-          if (this.game.results && this.game.results.outcome) {
-            this.gameOutcomeService.setOutcome(this.game.results.outcome);
+    this.gameService
+      .play(this.game.id)
+      .pipe(map((game: IPlayOutcome) => game.vouchers))
+      .subscribe(
+        (vouchs: Voucher[]) => {
+          if ((window as any).appboy) {
+            (window as any).appboy.logCustomEvent('user_played_game', {
+              game_id: this.game.id,
+              campaign_id: this.game.campaignId
+            });
           }
-          this.router.navigate(['/congrats']);
-        }
-      },
-      () => this.showNoRewardsPopUp()
+          if (vouchs.length === 0) {
+            this.showNoRewardsPopUp();
+          } else {
+            this.gameOutcomeService.setVouchersList(vouchs);
+            if (this.game.results && this.game.results.outcome) {
+              this.gameOutcomeService.setOutcome(this.game.results.outcome);
+            }
+            this.router.navigate(['/congrats']);
+          }
+        },
+        () => this.showNoRewardsPopUp()
       );
   }
 
@@ -218,7 +230,8 @@ export class GameComponent implements OnInit {
     this.notificationService.addPopup({
       title: this.game.results.noOutcome && this.game.results.noOutcome.title,
       text: this.game.results.noOutcome && this.game.results.noOutcome.subTitle,
-      buttonTxt: this.game.results.noOutcome && this.game.results.noOutcome.button,
+      buttonTxt:
+        this.game.results.noOutcome && this.game.results.noOutcome.button,
       afterClosedCallBack: this,
       disableOverlayClose: true,
       panelClass: 'custom-class'

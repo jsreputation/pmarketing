@@ -12,6 +12,12 @@
   height: 100%;
   width: 24rem;
   display: block;
+
+  &.down {
+    transform: scale(2);
+    top: 50%;
+    height: 80%;
+  }
 }
 
 #wheel-canvas-stop {

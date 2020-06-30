@@ -39,7 +39,7 @@ export { IVoucherService } from './lib/vouchers/ivoucher.service';
 export { PinService } from './lib/vouchers/pin.service';
 export { VouchersComponent } from './lib/vouchers/vouchers/vouchers.component';
 export { VoucherComponent } from './lib/vouchers/voucher/voucher.component';
-export { IVoucher as Voucher, VoucherState, StatusLabelMapping } from './lib/vouchers/models/voucher.model';
+export { IVoucher as Voucher, VoucherState, StatusLabelMapping, IVoucherLocation } from './lib/vouchers/models/voucher.model';
 export { PinRedemptionComponent } from './lib/vouchers/pin-redemption/pin-redemption.component';
 export { BcodeRedemptionComponent } from './lib/vouchers/bcode-redemption/bcode-redemption.component';
 export { QrcodeRedemptionComponent } from './lib/vouchers/qrcode-redemption/qrcode-redemption.component';
@@ -130,16 +130,16 @@ export { LoyaltyModule } from './lib/loyalty/loyalty.module';
 export { LoyaltyService } from './lib/loyalty/loyalty.service';
 export {
   ILoyalty,
-  ITransaction,
+  ILoyaltyTransaction,
   IExpiringPoints,
-  ITransactionHistory,
+  ILoyaltyTransactionHistory,
   IRewardTransactionHistory,
   IPurchaseTransactionHistory,
   TransactionDetailType,
-  IJoinMethod,
-  ITransactionProperties
+  IJoinMethod
 } from './lib/loyalty/models/loyalty.model';
 export { TransactionPipe } from './lib/loyalty/loyalty-transactions-list/transaction.pipe';
+export { CashbackTransactionPipe } from './lib/loyalty/loyalty-transactions-list/cashback-transaction.pipe';
 export { LoyaltySummaryComponent } from './lib/loyalty/loyalty-summary/loyalty-summary.component';
 export { LoyaltyTransactionsListComponent } from './lib/loyalty/loyalty-transactions-list/loyalty-transactions-list.component';
 /**
@@ -186,6 +186,7 @@ export { SafeHtmlPipe } from './lib/utils/safe-html.pipe';
 export { SafeUrlPipe } from './lib/utils/safe-url.pipe';
 export { equalityValidator, emailValidator, inequalityValidator } from './lib/utils/validators';
 export { LocationFilterPopupComponent } from './lib/utils/location-filter-popup/location-filter-popup.component';
+export { PointsToCashPipe } from './lib/utils/directives/points-to-cash.pipe';
 
 /**
  * Puzzles
@@ -301,3 +302,16 @@ export { QrScannerComponent } from './lib/rebates/rebates-qr-scanner/qrscanner.c
 /**
  * Tenants
  */
+
+/**
+ * POS
+ */
+export { PosModule } from './lib/pos/pos.module';
+export { PosService } from './lib/pos/pos.service';
+
+/**
+ * Transactions
+ */
+export { TransactionsServiceModule } from './lib/transactions/transaction-service/transactions.service.module';
+export { TransactionsService } from './lib/transactions/transaction-service/transactions.service';
+export { ITransaction, ITransactionProperties } from './lib/transactions/models/transactions.model';

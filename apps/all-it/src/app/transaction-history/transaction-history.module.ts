@@ -1,13 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-  PerxBlackcombPagesModule,
-  TransactionHistoryComponent
+  PerxBlackcombPagesModule
 } from '@perxtech/blackcomb-pages';
 import { RouterModule, Routes } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
-import { LoyaltyModule } from '@perxtech/core';
+import {
+  LoyaltyModule,
+  TransactionsServiceModule
+} from '@perxtech/core';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { TransactionHistoryComponent } from './transaction-history.component';
 
 const routes: Routes = [{
   path: '',
@@ -15,11 +18,15 @@ const routes: Routes = [{
 }];
 
 @NgModule({
+  declarations : [
+    TransactionHistoryComponent
+  ],
   imports: [
     MatButtonModule,
     PerxBlackcombPagesModule,
     CommonModule,
     LoyaltyModule.forChild(),
+    TransactionsServiceModule.forChild(),
     RouterModule.forChild(routes),
     InfiniteScrollModule
   ]

@@ -1,18 +1,18 @@
 <div class="main-container"
-	infiniteScroll 
-	[infiniteScrollDistance]="2" 
+	infiniteScroll
+	[infiniteScrollDistance]="2"
 	[infiniteScrollThrottle]="50"
-	(scrolled)="onScroll()" 
+	(scrolled)="onScroll()"
 	[scrollWindow]="false">
 	 <mat-tab-group mat-stretch-tabs class="tabs" (selectedTabChange)="tabChanged($event)">
 		<mat-tab label="Purchases">
-			<perx-core-loyalty-transactions-list *ngIf="transactions" [transactions]="transactions | transactionHistory: true"
+			<perx-core-loyalty-transactions-list *ngIf="transactions" [loyaltyTransactions]="transactions | transactionHistory: true"
                                            [titleFn]="purchasesTitleFn" [subTitleFn]="subTitleFn"
                                            [descFn]="descFn" [priceLabelFn]="priceLabelFn">
 			</perx-core-loyalty-transactions-list>
 		</mat-tab>
 		<mat-tab label="Rewards">
-			<perx-core-loyalty-transactions-list *ngIf="transactions" [transactions]="transactions | transactionHistory: false"
+			<perx-core-loyalty-transactions-list *ngIf="transactions" [loyaltyTransactions]="transactions | transactionHistory: false"
                                            [titleFn]="redemptionsTitleFn" [subTitleFn]="subTitleFn" [priceLabelFn]="priceLabelFn">
 			</perx-core-loyalty-transactions-list>
 		</mat-tab>

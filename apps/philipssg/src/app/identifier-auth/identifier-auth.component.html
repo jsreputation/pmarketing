@@ -1,0 +1,28 @@
+<div class="main-wrap">
+  <div class="content-wrap">
+    <div class="logoWrapper" >
+      <img class="logo" [attr.src]="theme.properties['--logo']" [attr.alt]="theme.properties['--title']" />
+    </div>
+
+    <div class="input-content">
+      <h1>Login</h1>
+      <div class="error_msg">
+        <span>{{errorMessage}}</span>
+      </div>
+      <form class="input-content" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill" class="full-width__input">
+          <mat-label translate>Unique code</mat-label>
+          <input matInput formControlName="personalId" type="text" required>
+          <mat-error *ngIf="loginForm.hasError('personalId')">
+            personalId is <strong>invalid</strong>
+          </mat-error>
+        </mat-form-field>
+        <button mat-flat-button color="primary" type="submit">Login</button>
+      </form>
+    </div>
+
+    <p>
+      Don’t have a unique code? <span class="cta-text">Sign up</span> to our mailing list now and receive your unique code. Promotion ends July 9, 2020.
+    </p>
+  </div>
+</div>

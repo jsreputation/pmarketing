@@ -6,9 +6,9 @@ import { VoucherComponent } from './voucher/voucher.component';
 import { LocationsComponent } from './locations/locations.component';
 import { TncComponent } from './tnc/tnc.component';
 import { RedemptionComponent } from './redemption/redemption.component';
-import { GameComponent } from './game/game.component';
 import { CongratsComponent } from './congrats/congrats.component';
 import { ErrorComponent } from './error/error.component';
+import { StampCardComponent } from './stamp/stamp-card.component';
 
 const routes: Routes = [
   { path: 'home', loadChildren: () => import('./home/home.module').then(mod => mod.HomeModule) },
@@ -19,7 +19,9 @@ const routes: Routes = [
   { path: 'tnc', component: TncComponent },
   { path: 'redemption', component: RedemptionComponent },
   { path: '', pathMatch: 'full', redirectTo: 'home' },
-  { path: 'game', component: GameComponent },
+  { path: 'game', loadChildren: () => import('./game/game.module').then(mod => mod.SHGameModule) },
+  { path: 'stamp/:id', loadChildren: () => import('./stamp/stamps.module').then(mod => mod.SHStampsModule) },
+  { path: 'stamp-card/:id', component: StampCardComponent },
   { path: 'congrats', component: CongratsComponent },
   { path: 'error', component: ErrorComponent }
 ];

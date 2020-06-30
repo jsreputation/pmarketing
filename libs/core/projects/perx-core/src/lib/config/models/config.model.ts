@@ -9,6 +9,7 @@ export interface IConfig<T> {
   baseHref: string;
   defaultLang?: string;
   sourceType?: string;
+  appVersion?: string;
   custom?: T;
   displayProperties?: IWSetting;
 
