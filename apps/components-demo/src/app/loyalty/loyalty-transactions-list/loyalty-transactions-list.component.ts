@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { ITransaction, LoyaltyService } from '@perxtech/core';
+import { ILoyaltyTransaction, LoyaltyService } from '@perxtech/core';
 import { mockLoyalty, mockTransactions } from '../loyalty-mock';
 
 @Component({
@@ -9,7 +9,7 @@ import { mockLoyalty, mockTransactions } from '../loyalty-mock';
   styleUrls: ['./loyalty-transactions-list.component.scss']
 })
 export class LoyaltyTransactionsListComponent implements OnInit {
-  public transactions: Observable<ITransaction[]> | undefined;
+  public transactions: Observable<ILoyaltyTransaction[]> | undefined;
 
   constructor(private loyaltyService: LoyaltyService) { }
 

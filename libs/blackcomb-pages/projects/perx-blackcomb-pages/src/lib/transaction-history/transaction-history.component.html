@@ -1,12 +1,12 @@
 <div class="main"
-    infiniteScroll 
-    [infiniteScrollDistance]="2" 
+    infiniteScroll
+    [infiniteScrollDistance]="2"
     [infiniteScrollThrottle]="50"
-    (scrolled)="onScroll()" 
+    (scrolled)="onScroll()"
     [scrollWindow]="false">
     <perx-core-loyalty-transactions-list
         *ngIf="transactions"
-        [transactions]="transactions"
+        [loyaltyTransactions]="transactions"
         [titleFn]="purchasesTitleFn"
         [subTitleFn]="subTitleFn"
         [descFn]="descFn"

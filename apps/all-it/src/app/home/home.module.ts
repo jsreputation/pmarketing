@@ -14,13 +14,10 @@ import {
   RewardPopupComponent,
   RewardsModule,
   UtilsModule,
-  QuizModule,
-
+  QuizModule
 } from '@perxtech/core';
 import {
-  CampaignsCollectionComponent,
-  CatalogsComponent,
-  GamesCollectionComponent
+  HomeModule as BCPHomeModule
 } from '@perxtech/blackcomb-pages';
 
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
@@ -34,11 +31,9 @@ const routes: Routes = [{
 @NgModule({
   declarations: [
     HomeComponent,
-    CampaignsCollectionComponent,
-    GamesCollectionComponent,
-    CatalogsComponent
   ],
   imports: [
+    BCPHomeModule,
     CommonModule,
     RouterModule,
     MatCardModule,

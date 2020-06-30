@@ -1,4 +1,5 @@
 import { ICustomProperties } from '../../profile/profile.model';
+import { ITransactionProperties } from '../../transactions/models/transactions.model';
 
 export const enum TransactionDetailType {
   'transaction' = 'Transaction',
@@ -52,7 +53,7 @@ export interface ILoyalty {
   images?: LoyaltyImages;
 }
 
-export interface ITransaction {
+export interface ILoyaltyTransaction {
   id: number;
   name?: string;
   sku?: string;
@@ -87,7 +88,7 @@ export interface IPurchaseTransactionHistory {
   properties?: ITransactionProperties;
 }
 
-export interface ITransactionHistory {
+export interface ILoyaltyTransactionHistory {
   id: number;
   name?: string;
   identifier?: string;
@@ -98,14 +99,6 @@ export interface ITransactionHistory {
     type?: TransactionDetailType,
     data?: IPurchaseTransactionHistory | IRewardTransactionHistory
   };
-}
-
-export interface ITransactionProperties {
-  productCode?: string;
-  productName?: string;
-  quantity?: number;
-  storeCode?: string;
-  storeName?: string;
 }
 
 export interface IJoinMethod {
