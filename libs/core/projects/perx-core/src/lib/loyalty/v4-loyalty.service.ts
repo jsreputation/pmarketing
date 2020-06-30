@@ -21,9 +21,8 @@ import {
   ILoyalty,
   IPurchaseTransactionHistory,
   IRewardTransactionHistory,
-  ITransaction,
-  ITransactionHistory,
-  ITransactionProperties,
+  ILoyaltyTransaction,
+  ILoyaltyTransactionHistory,
   TransactionDetailType
 } from './models/loyalty.model';
 
@@ -35,17 +34,17 @@ import { ICustomProperties } from '../profile/profile.model';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
 import { Cacheable } from 'ngx-cacheable';
+import {
+  V4TenantTransactionProperties,
+  V4TransactionsService
+} from '../transactions/transaction-service/v4-transactions.service';
 
 const DEFAULT_PAGE_COUNT: number = 10;
-type TenantTransactionProperties =
-  IV4TransactionPropertiesAbenson
-  | IV4TransactionPropertiesMerck
-  | IV4TransactionPropertiesAllit
-  | IV4TransactionPropertiesCashback;
 
 interface IV4Image {
   type: string;
   url: string;
+  section: string;
 }
 
 interface IV4Meta {
@@ -92,6 +91,7 @@ interface IV4Loyalty {
   points_history?: IV4PointHistory[];
   membership_expiry: Date;
   membership_state?: 'active' | 'pending' | 'inactive' | 'expire';
+  images?: IV4Image[];
 }
 
 interface IV4GetLoyaltiesResponse {
@@ -145,85 +145,26 @@ interface IV4PurchaseTransactionHistory {
   currency: string;
   workflow_id?: number;
   created_at: Date;
-  properties?: ICustomProperties | TenantTransactionProperties;
+  properties?: ICustomProperties | V4TenantTransactionProperties;
   transaction_reference: string;
 }
 
-interface IV4TransactionHistory {
+interface IV4LoyaltyTransactionPropertiesHistory {
   id: number;
   name: string;
   identifier: string;
   transacted_at: Date;
   amount: number;
   transacted_cents?: number; // property will probably be removed
-  properties: ICustomProperties | TenantTransactionProperties;
+  properties: ICustomProperties | V4TenantTransactionProperties;
   transaction_details: {
     type: TransactionDetailType;
     data: IV4PurchaseTransactionHistory | IV4RewardTransactionHistory;
   };
 }
 
-interface IV4TransactionHistoryResponse {
-  data: IV4TransactionHistory[];
-}
-
-interface IV4TransactionPropertiesAbenson {
-  tenant: 'abenson';
-  qty: number;
-  reg: number;
-  sku: number;
-  store: number;
-  trxno: number;
-  untprc: number;
-  cashier: number;
-  company: number;
-  trxdate: number;
-  trxtime: number;
-  mobileno: string;
-  store_name: string;
-}
-
-interface IV4TransactionPropertiesMerck {
-  tenant: 'merck';
-  product: string;
-  pharmacy: string;
-  merchant_username: string;
-  merchant_account_id: number;
-}
-
-interface IV4TransactionPropertiesAllit {
-  tenant: 'allit';
-  amount: number;
-  quantity: number;
-  item_code: number;
-  item_name: string;
-  amount_net: number;
-  amount_std: number;
-  amount_txn: number;
-  guid_store: string;
-  amount_json: {};
-  branch_code: string;
-  guid_branch: string;
-  amount_signum: number;
-  reference_doc: string;
-  amount_tax_gst: number;
-  amount_tax_wht: number;
-  invoice_number: number;
-  amount_discount: number;
-  category_level_0: string;
-  category_level_1: string;
-  amount_gst_balance: number;
-  amount_wht_balance: number;
-  amount_open_balance: number;
-  transaction_item_guid: string;
-  transaction_line_guid: string;
-}
-
-interface IV4TransactionPropertiesCashback {
-  tenant: 'perx'; // temporary template tenant name?
-  merchant_name: string;
-  item_name: string;
-  outlet_name: string;
+interface IV4LoyaltyTransactionPropertiesHistoryResponse {
+  data: IV4LoyaltyTransactionPropertiesHistory[];
 }
 
 @Injectable({
@@ -260,6 +201,9 @@ export class V4LoyaltyService extends LoyaltyService {
       highestTierData = copiedLoyalty.tiers.find(tier3 => tier3.points_requirement === highestPoints);
       highestTier = highestTierData ? highestTierData.name : undefined;
     }
+    const thumbnailImage = loyalty.images &&
+      loyalty.images.find((image: IV4Image) => image.section === 'loyalty_thumbnail');
+
     return {
       id: loyalty.id,
       name: loyalty.name,
@@ -286,13 +230,16 @@ export class V4LoyaltyService extends LoyaltyService {
         attained: tier.attained,
         pointsRequirement: tier.points_requirement,
         pointsDifference: tier.points_difference,
-        images: oc(tier).images()
+        images: tier.images
       })) : undefined,
-      membershipState: loyalty.membership_state
+      membershipState: loyalty.membership_state,
+      images: {
+        thumbnailUrl: oc(thumbnailImage).url()
+      }
     };
   }
 
-  public static v4PointHistoryToPointHistory(pointHistory: IV4PointHistory): ITransaction {
+  public static v4PointHistoryToPointHistory(pointHistory: IV4PointHistory): ILoyaltyTransaction {
     const properties = pointHistory.properties;
     return {
       id: pointHistory.id,
@@ -308,7 +255,9 @@ export class V4LoyaltyService extends LoyaltyService {
     };
   }
 
-  public static v4TransactionHistoryToTransactionHistory(transactionHistory: IV4TransactionHistory): ITransactionHistory {
+  public static v4TransactionHistoryToTransactionHistory(
+    transactionHistory: IV4LoyaltyTransactionPropertiesHistory
+  ): ILoyaltyTransactionHistory {
     const transactionDetails = oc(transactionHistory).transaction_details.data();
     let data: IPurchaseTransactionHistory | IRewardTransactionHistory | undefined;
 
@@ -343,7 +292,7 @@ export class V4LoyaltyService extends LoyaltyService {
             price: pthDetails.amount,
             currency: pthDetails.currency,
           };
-          data.properties = V4LoyaltyService.v4TransactionPropertiesToTransactionProperties(pthProps as TenantTransactionProperties);
+          data.properties = V4TransactionsService.v4TransactionPropertiesToTransactionProperties(pthProps as V4TenantTransactionProperties);
           break;
       }
     // } else if (transactionHistory.name === 'POS Update') { // hard-coded reason code from backend for POS transactions
@@ -354,7 +303,7 @@ export class V4LoyaltyService extends LoyaltyService {
         id: transactionHistory.id
       };
 
-      data.properties = V4LoyaltyService.v4TransactionPropertiesToTransactionProperties(thProps as TenantTransactionProperties);
+      data.properties = V4TransactionsService.v4TransactionPropertiesToTransactionProperties(thProps as V4TenantTransactionProperties);
     } else {
       // assume it is a customer service action from dashboard
       data = {
@@ -378,50 +327,6 @@ export class V4LoyaltyService extends LoyaltyService {
         data
       }
     };
-  }
-
-  private static v4TransactionPropertiesToTransactionProperties(pthProps: TenantTransactionProperties): ITransactionProperties {
-    let data: ITransactionProperties = {};
-
-    if (pthProps && (pthProps as IV4TransactionPropertiesAbenson).sku) {
-      const props = (pthProps as IV4TransactionPropertiesAbenson);
-      data = {
-        productCode: props.sku.toString(),
-        // productName: undefined,
-        quantity: props.qty,
-        storeCode: props.store.toString(),
-        storeName: props.store_name
-      };
-    }
-    if (pthProps && (pthProps as IV4TransactionPropertiesAllit).guid_branch) {
-      const props = (pthProps as IV4TransactionPropertiesAllit);
-      data = {
-        productCode: props.item_code.toString(),
-        productName: props.item_name,
-        quantity: props.quantity,
-        storeCode: props.branch_code,
-        // storeName: undefined
-      };
-    }
-    if (pthProps && (pthProps as IV4TransactionPropertiesMerck).product) {
-      const props = (pthProps as IV4TransactionPropertiesMerck);
-      data = {
-        // productCode: undefined,
-        productName: props.product,
-        // quantity: undefined,
-        // storeCode: undefined,
-        storeName: props.pharmacy
-      };
-    }
-    if (pthProps && (pthProps as IV4TransactionPropertiesCashback).merchant_name) {
-      const props = (pthProps as IV4TransactionPropertiesCashback);
-      data = {
-        productName: props.item_name,
-        storeCode: props.merchant_name,
-        storeName: props.outlet_name
-      };
-    }
-    return data;
   }
 
   @Cacheable({
@@ -464,10 +369,10 @@ export class V4LoyaltyService extends LoyaltyService {
       );
   }
 
-  public getAllTransactions(loyaltyId: number = 1, locale: string = 'en'): Observable<ITransaction[]> {
+  public getAllTransactions(loyaltyId: number = 1, locale: string = 'en'): Observable<ILoyaltyTransaction[]> {
     const pageSize = 100;
     return this.getTransactions(loyaltyId, 1, pageSize, locale).pipe(
-      mergeMap((histories: ITransaction[]) => {
+      mergeMap((histories: ILoyaltyTransaction[]) => {
         const streams = [
           of(histories)
         ];
@@ -478,11 +383,16 @@ export class V4LoyaltyService extends LoyaltyService {
         return streams;
       }),
       concatAll(),
-      reduce((acc: ITransaction[], curr: ITransaction[]) => acc.concat(curr), [])
+      reduce((acc: ILoyaltyTransaction[], curr: ILoyaltyTransaction[]) => acc.concat(curr), [])
     );
   }
 
-  public getTransactions(loyaltyId: number, page: number = 1, pageSize: number = 10, locale: string = 'en'): Observable<ITransaction[]> {
+  public getTransactions(
+    loyaltyId: number,
+    page: number = 1,
+    pageSize: number = 10,
+    locale: string = 'en'
+  ): Observable<ILoyaltyTransaction[]> {
     const headers = new HttpHeaders().set('Accept-Language', locale);
     return this.http.get<IV4GetLoyaltyResponse>(
       `${this.apiHost}/v4/loyalty/${loyaltyId}/transactions`,
@@ -519,9 +429,9 @@ export class V4LoyaltyService extends LoyaltyService {
     locale: string = 'en',
     sortBy: string = 'transacted_at',
     orderBy: string = 'desc'
-  ): Observable<ITransactionHistory[]> {
+  ): Observable<ILoyaltyTransactionHistory[]> {
     const headers = new HttpHeaders().set('Accept-Language', locale);
-    return this.http.get<IV4TransactionHistoryResponse>(
+    return this.http.get<IV4LoyaltyTransactionPropertiesHistoryResponse>(
       `${this.apiHost}/v4/loyalty/transactions_history`,
       {
         headers,
@@ -533,9 +443,10 @@ export class V4LoyaltyService extends LoyaltyService {
         }
       }
     ).pipe(
-      map((res: IV4TransactionHistoryResponse) => res.data),
-      map((transactionHistories: IV4TransactionHistory[]) => transactionHistories.map(
-        (transactionHistory: IV4TransactionHistory) => V4LoyaltyService.v4TransactionHistoryToTransactionHistory(transactionHistory)
+      map((res: IV4LoyaltyTransactionPropertiesHistoryResponse) => res.data),
+      map((transactionHistories: IV4LoyaltyTransactionPropertiesHistory[]) => transactionHistories.map(
+        (transactionHistory: IV4LoyaltyTransactionPropertiesHistory) =>
+          V4LoyaltyService.v4TransactionHistoryToTransactionHistory(transactionHistory)
       ))
     );
   }

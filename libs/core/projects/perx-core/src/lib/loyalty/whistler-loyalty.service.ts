@@ -22,8 +22,8 @@ import {
 
 import {
   ILoyalty,
-  ITransaction,
-  ITransactionHistory,
+  ILoyaltyTransaction,
+  ILoyaltyTransactionHistory,
 } from './models/loyalty.model';
 import { LoyaltyService } from './loyalty.service';
 
@@ -123,17 +123,17 @@ export class WhistlerLoyaltyService extends LoyaltyService {
   }
 
   // @ts-ignore
-  public getAllTransactions(loyaltyId?: number): Observable<ITransaction[]> {
+  public getAllTransactions(loyaltyId?: number): Observable<ILoyaltyTransaction[]> {
     throw new Error('Not implemented.');
   }
 
   // @ts-ignore
-  public getTransactions(loyaltyId: number, page: number = 1, pageSize: number = 10): Observable<ITransaction[]> {
+  public getTransactions(loyaltyId: number, page: number = 1, pageSize: number = 10): Observable<ILoyaltyTransaction[]> {
     throw new Error('Not implemented.');
   }
 
   // @ts-ignore
-  public getTransactionHistory(page: number = 1, pageSize: number = 10): Observable<ITransactionHistory[]> {
+  public getTransactionHistory(page: number = 1, pageSize: number = 10): Observable<ILoyaltyTransactionHistory[]> {
     throw new Error('Not implemented.');
   }
 }

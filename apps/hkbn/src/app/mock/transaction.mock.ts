@@ -1,6 +1,6 @@
-import { ITransaction } from '@perxtech/core';
+import { ILoyaltyTransaction } from '@perxtech/core';
 
-export const transactions: ITransaction[] = [
+export const transactions: ILoyaltyTransaction[] = [
   {
     id: 0,
     points: 0,

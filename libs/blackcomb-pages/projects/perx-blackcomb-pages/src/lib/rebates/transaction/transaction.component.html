@@ -1,8 +1,7 @@
 <div class="overview-wrap" *ngIf="matchingMerchant">
   <div class="banner-group">
     <div class="logo-container">
-<!--      <img [src]="matchingMerchant.logo" [alt]="matchingMerchant.name">-->
-      <img [alt]="matchingMerchant.name">
+      <img [src]="matchingMerchant.images?.thumbnailUrl" [alt]="matchingMerchant.name">
     </div>
     <div class="merchant-content">
       <p>You have <span class="dark-blue">${{matchingMerchant?.pointsBalance | pointsToCash: 2}}</span> in rebate funds with</p>

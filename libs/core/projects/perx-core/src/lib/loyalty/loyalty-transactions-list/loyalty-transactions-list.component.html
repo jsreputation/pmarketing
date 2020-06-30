@@ -1,4 +1,4 @@
-<ng-container *ngIf="transactions$ | async as transactions">
+<ng-container *ngIf="(loyaltyTransactions$ || externalTransactions$) | async as transactions">
   <div *ngFor="let transaction of transactions" class="transaction">
     <div class="transaction-info">
       <div class="transaction-name">

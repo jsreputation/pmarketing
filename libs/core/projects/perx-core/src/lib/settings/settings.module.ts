@@ -1,6 +1,9 @@
 import {NgModule, ModuleWithProviders} from '@angular/core';
 import {Config} from '../config/config';
-import {HttpClient} from '@angular/common/http';
+import {
+  HttpBackend,
+  HttpClient
+} from '@angular/common/http';
 import {SettingsService} from './settings.service';
 import {V4SettingsService} from './v4-settings.service';
 import {AuthenticationService} from '../auth/authentication/authentication.service';
@@ -9,13 +12,14 @@ import {ConfigService} from '../config/config.service';
 
 export function settingsServiceFactory(
   http: HttpClient,
+  httpBackend: HttpBackend,
   config: Config,
   configService: ConfigService,
   authService: AuthenticationService): SettingsService {
   if (config.isWhistler) {
     return new WhistlerSettingsService(http, configService);
   }
-  return new V4SettingsService(http, configService, authService);
+  return new V4SettingsService(http, httpBackend, configService, authService);
 }
 
 @NgModule({
@@ -25,7 +29,7 @@ export function settingsServiceFactory(
     {
       provide: SettingsService,
       useFactory: settingsServiceFactory,
-      deps: [HttpClient, Config, ConfigService, AuthenticationService]
+      deps: [HttpClient, HttpBackend, Config, ConfigService, AuthenticationService]
     }
   ]
 })

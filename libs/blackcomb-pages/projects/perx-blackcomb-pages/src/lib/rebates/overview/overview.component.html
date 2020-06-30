@@ -1,8 +1,7 @@
 <div class="overview-wrap" *ngIf="matchingMerchant">
   <div class="content-group">
     <div class="merchant-banner">
-<!--      <img [src]="matchingMerchant.imgUrl" [alt]="matchingMerchant.name">-->
-      <img [alt]="matchingMerchant.name">
+      <img [src]="matchingMerchant.images?.thumbnailUrl" [alt]="matchingMerchant.name">
     </div>
     <div class="merchant-content">
       <h1>Welcome back to {{matchingMerchant.name}}</h1>

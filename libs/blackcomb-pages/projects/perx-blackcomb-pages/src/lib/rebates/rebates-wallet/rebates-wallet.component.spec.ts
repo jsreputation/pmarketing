@@ -33,7 +33,10 @@ describe('RebatesWalletComponent', () => {
   const mockLoyalty: ILoyalty = {
     id: 42,
     name: 'joe',
-    pointsBalance: 42
+    pointsBalance: 42,
+    images: {
+      thumbnailUrl: ''
+    }
   };
   const loyaltyServiceStub: Partial<LoyaltyService> = {
     getLoyalties: () => of([mockLoyalty]),
