@@ -5,13 +5,13 @@
 	(scrolled)="onScroll()"
 	[scrollWindow]="false">
 	 <mat-tab-group mat-stretch-tabs class="tabs" (selectedTabChange)="tabChanged($event)">
-		<mat-tab label="Purchases">
+		<mat-tab [label]="purchasesTxt">
 			<perx-core-loyalty-transactions-list *ngIf="transactions" [loyaltyTransactions]="transactions | transactionHistory: true"
                                            [titleFn]="purchasesTitleFn" [subTitleFn]="subTitleFn"
                                            [descFn]="descFn" [priceLabelFn]="priceLabelFn">
 			</perx-core-loyalty-transactions-list>
 		</mat-tab>
-		<mat-tab label="Rewards">
+		<mat-tab [label]="rewardsTxt">
 			<perx-core-loyalty-transactions-list *ngIf="transactions" [loyaltyTransactions]="transactions | transactionHistory: false"
                                            [titleFn]="redemptionsTitleFn" [subTitleFn]="subTitleFn" [priceLabelFn]="priceLabelFn">
 			</perx-core-loyalty-transactions-list>

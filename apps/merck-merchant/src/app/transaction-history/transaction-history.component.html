@@ -7,7 +7,7 @@
 </mat-toolbar>
 <div class="main-container">
   <mat-tab-group mat-stretch-tabs class="tabs">
-    <mat-tab label="Sales">
+    <mat-tab [label]="salesTxt">
       <div
         class="tab-container"
         infiniteScroll
@@ -26,7 +26,7 @@
         </perx-core-loyalty-transactions-list>
       </div>
     </mat-tab>
-    <mat-tab label="Redemption">
+    <mat-tab [label]="redemptionTxt">
       <div
         class="tab-container"
         infiniteScroll

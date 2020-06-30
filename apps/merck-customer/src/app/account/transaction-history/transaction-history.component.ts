@@ -30,6 +30,8 @@ export class TransactionHistoryComponent implements OnInit, PageAppearence {
   private complitePagination: boolean = false;
   private pointsEarnedTxt: string;
   private pointsSpentTxt: string;
+  public purchasesTxt: string;
+  public rewardsTxt: string;
   // @ts-ignore
   private labelIndex: number = 0;
   constructor(
@@ -40,6 +42,10 @@ export class TransactionHistoryComponent implements OnInit, PageAppearence {
     this.translate.get(['POINT_EARNED', 'POINT_SPENT']).subscribe((res: any) => {
       this.pointsEarnedTxt = res.POINT_EARNED;
       this.pointsSpentTxt = res.POINT_SPENT;
+    });
+    this.translate.get(['PURCHASES_TXT', 'REWARDS_TXT']).subscribe((res: any) => {
+      this.purchasesTxt = res.PURCHASES_TXT;
+      this.rewardsTxt = res.REWARDS_TXT;
     });
   }
 

@@ -101,5 +101,7 @@
   "Green": "Green",
   "POINT_EARNED": "{points} Points earned",
   "POINT_SPENT": "{points} Points spent",
-  "LOGIN_SESSION_EXPIRED": "Login Session Expired"
+  "LOGIN_SESSION_EXPIRED": "Login Session Expired",
+  "PURCHASES_TXT": "Purchases",
+  "REWARDS_TXT": "Rewards"
 }

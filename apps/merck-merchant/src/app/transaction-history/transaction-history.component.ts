@@ -26,6 +26,8 @@ export class TransactionHistoryComponent implements OnInit {
   public redemptionsPriceLabelFn: (tr: IMerchantRewardTransactionHistory) => string;
   private pointsEarnedTxt: string;
   private pointsSpentTxt: string;
+  public salesTxt: string;
+  public redemptionTxt: string;
 
   private pageNumberPurchase: number = 1;
   private pageSizePurchase: number = 10;
@@ -45,6 +47,10 @@ export class TransactionHistoryComponent implements OnInit {
     this.translate.get(['POINT_EARNED', 'POINT_SPENT']).subscribe((res: any) => {
       this.pointsEarnedTxt = res.POINT_EARNED;
       this.pointsSpentTxt = res.POINT_SPENT;
+    });
+    this.translate.get(['SALES_TXT', 'REDEMPTION_TXT']).subscribe((res: any) => {
+      this.salesTxt = res.SALES_TXT;
+      this.redemptionTxt = res.REDEMPTION_TXT;
     });
   }
 

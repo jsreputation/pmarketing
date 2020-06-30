@@ -27,5 +27,7 @@
   "SUBMIT_BUTTON": "Update password",
   "POINT_EARNED": "{points} Points earned",
   "POINT_SPENT": "{points} Points spent",
-  "LOGIN_SESSION_EXPIRED": "Login Session Expired"
+  "LOGIN_SESSION_EXPIRED": "Login Session Expired",
+  "SALES_TXT": "Sales",
+  "REDEMPTION_TXT": "Redemption"
 }

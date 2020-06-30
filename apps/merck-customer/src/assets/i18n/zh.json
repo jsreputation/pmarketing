@@ -101,5 +101,7 @@
     "Green": "綠色",
     "POINT_EARNED": "獲得積分{points}",
     "POINT_SPENT": "使用積分{points}",
-    "LOGIN_SESSION_EXPIRED": "登錄時間超時"
+    "LOGIN_SESSION_EXPIRED": "登錄時間超時",
+    "PURCHASES_TXT": "購買記錄",
+    "REWARDS_TXT": "獎賞"
 }
