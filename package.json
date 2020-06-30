@@ -112,7 +112,7 @@
     "webpack": "^4.35.0",
     "webpack-cli": "^3.3.4",
     "@nrwl/workspace": "^8.0.0",
-    "@nrwl/node": "^8.0.0"
+    "@nrwl/node": "~8.7.0"
   },
   "dependencies": {
     "@angular/animations": "~8.0.0",
