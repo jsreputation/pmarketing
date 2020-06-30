@@ -8,7 +8,10 @@ import { map } from 'rxjs/operators';
 })
 export class TransactionHistoryPipe implements PipeTransform {
 
-  public transform(allTransanctions: Observable<ILoyaltyTransactionHistory[]>, isPurchase?: boolean): Observable<ILoyaltyTransactionHistory[]> {
+  public transform(
+    allTransanctions: Observable<ILoyaltyTransactionHistory[]>,
+    isPurchase?: boolean
+  ): Observable<ILoyaltyTransactionHistory[]> {
 
     return allTransanctions.pipe(
       map((transactions: ILoyaltyTransactionHistory[]) => transactions.filter(
