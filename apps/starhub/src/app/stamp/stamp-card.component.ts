@@ -180,7 +180,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
               const data: IRewardPopupConfig = {
                 title: 'Congratulations!',
                 text: 'Here is a reward for you.',
-                imageUrl: 'assets/prize.png',
+                imageUrl: 'assets/reward.png',
                 disableOverlayClose: true,
                 ctaButtonClass: 'ga_game_completion',
                 url: `/voucher/${voucherId}`,
