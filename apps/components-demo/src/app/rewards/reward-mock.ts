@@ -34,7 +34,7 @@ export const mock: IReward[] = [
     rewardPrice: [{
       id: 23,
       currencyCode: '44',
-      price: 3
+      price: '3.00'
     }],
     categoryTags: lifestyleCategory,
   },
@@ -53,7 +53,7 @@ export const mock: IReward[] = [
     rewardPrice: [{
       id: 23,
       currencyCode: '44',
-      price: 3
+      price: '3.00'
     }],
     categoryTags: travelCategory,
   },
@@ -72,7 +72,7 @@ export const mock: IReward[] = [
     rewardPrice: [{
       id: 23,
       currencyCode: '44',
-      price: 3
+      price: '3.00'
     }],
     categoryTags: shoppingCategory,
   },
@@ -91,7 +91,7 @@ export const mock: IReward[] = [
     rewardPrice: [{
       id: 23,
       currencyCode: '44',
-      price: 3
+      price: '3.00'
     }],
   }
 ];

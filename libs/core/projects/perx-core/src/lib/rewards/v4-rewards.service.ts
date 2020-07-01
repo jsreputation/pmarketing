@@ -4,7 +4,7 @@ import {
   HttpHeaders,
   HttpParams,
 } from '@angular/common/http';
-
+import { formatNumber } from '@angular/common';
 import {
   Observable,
 } from 'rxjs';
@@ -182,7 +182,7 @@ export class V4RewardsService extends RewardsService {
       rewardPrice: reward.reward_price ? reward.reward_price.map(price => ({
         id: price.id,
         currencyCode: price.currency_code,
-        price: price.price,
+        price: Number(price.price || 0).toFixed(2),
         points: price.points,
         identifier: price.identifier
       })) : undefined,
@@ -241,7 +241,7 @@ export class V4RewardsService extends RewardsService {
     return {
       id: price.id,
       rewardCampaignId: price.reward_campaign_id,
-      price: price.price,
+      price: formatNumber(price.price || 0, 'en-us', '1.2'),
       currencyCode: price.currency_code,
       points: price.points,
       identifier: price.identifier

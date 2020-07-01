@@ -60,7 +60,7 @@ export class RewardsCollectionComponent implements OnInit {
 
     if (!this.displayPriceFn) {
       this.displayPriceFn = (rewardPrice: IPrice) => {
-        if (rewardPrice.price && rewardPrice.price > 0) {
+        if (rewardPrice.price && parseFloat(rewardPrice.price) > 0) {
           return `${rewardPrice.currencyCode} ${rewardPrice.price}`;
         }
 
