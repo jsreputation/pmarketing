@@ -145,7 +145,7 @@ export class WhistlerVouchersService implements IVoucherService {
   }
 
   // @ts-ignore
-  public issueReward(rewardId: number, sourceType?: string, locale: string = 'en', cardId?: number): Observable<IVoucher> {
+  public issueReward(rewardId: number, rewardParams?: IRewardParams, locale: string = 'en', cardId?: number): Observable<IVoucher> {
     return this.http.post<IJsonApiItemPayload<IWPurchaseAttributes>>(`${this.config.apiHost}/voucher-service/purchase_requests`,
       {
         data: {
