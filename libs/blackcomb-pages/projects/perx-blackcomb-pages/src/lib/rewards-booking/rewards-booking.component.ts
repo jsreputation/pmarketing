@@ -54,7 +54,7 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
           this.chooseQuantity = dataObj.chooseQuantity;
         }
       })
-    )
+    );
     this.route.params.pipe(
       switchMap((param) => {
         this.rewardId = param.id;
