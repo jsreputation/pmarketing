@@ -6,8 +6,8 @@
                     <mat-option *ngFor="let quantity of quantities" [value]="quantity">{{quantity}}</mat-option>
                 </mat-select>
             </div>
-            <div *ngIf="locationData" class="mat-select-wrap">
-                <mat-select placeholder="Location" formControlName="location">
+            <div class="mat-select-wrap">
+                <mat-select [disabled]="!locationData"  [placeholder]="locationData ? 'Location' : 'All locations'" formControlName="location">
                     <mat-option *ngFor="let location of locationData" [value]="location.id">{{location.name}}</mat-option>
                 </mat-select>
             </div>
@@ -28,7 +28,7 @@
                 </p>
             </div>
             <div class="redeem-container">
-                <button mat-flat-button type="submit" color="primary" [disabled]="bookingForm.invalid">Submit</button>
+                <button mat-flat-button type="submit" color="primary" [disabled]="bookingForm.invalid || loading">Submit</button>
             </div>
         </form>
     </div>
