@@ -51,6 +51,10 @@
     h1 {
       text-align: left;
     }
+
+    button {
+      flex-shrink: 0;
+    }
   }
 
   .philips-sign-up-text {
