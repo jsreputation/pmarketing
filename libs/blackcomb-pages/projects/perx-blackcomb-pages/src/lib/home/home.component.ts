@@ -145,14 +145,15 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.configService.readAppConfig<void>().subscribe(
-      (config: IConfig<void>) => {
+    this.configService.readAppConfig<void>().pipe(
+      map((config: IConfig<void>) => {
         this.appConfig = config;
         this.initCampaign();
-      }
-    );
-    this.settingsService.getRemoteFlagsSettings().subscribe(
+      }),
+      switchMap(() => this.settingsService.getRemoteFlagsSettings())
+    ).subscribe(
       (flags: IFlags) => {
+        // todo: create a function to wrap all the rest of the init calls
         this.appRemoteFlags = flags;
       }
     );
