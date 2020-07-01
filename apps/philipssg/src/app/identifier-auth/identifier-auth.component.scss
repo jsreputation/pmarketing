@@ -13,15 +13,23 @@
 .content-wrap {
   display: flex;
   flex-direction: column;
-  height: 70%;
-  justify-content: space-between;
+  height: 100%;
+
+  .logoWrapper {
+    flex: 0.5 1;
+    align-items: center;
+    display: flex;
+
+    img {
+      align-self: center;
+    }
+  }
 
   .input-content {
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 40%;
-    justify-content: space-evenly;
 
     .full-width__input {
       width: 100%;
@@ -43,6 +51,14 @@
     h1 {
       text-align: left;
     }
+
+    button {
+      flex-shrink: 0;
+    }
+  }
+
+  .philips-sign-up-text {
+    flex: 0.7 1;
   }
 
   .cta-text {
