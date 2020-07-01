@@ -340,11 +340,17 @@ export class V4VouchersService implements IVoucherService {
       );
   }
 
-  public issueReward(rewardId: number, sourceType?: string, locale: string = 'en'): Observable<IVoucher> {
+  public issueReward(rewardId: number, rewardParams?: IRewardParams, locale: string = 'en'): Observable<IVoucher> {
     const headers = new HttpHeaders().set('Accept-Language', locale);
     let params = new HttpParams();
-    if (sourceType) {
-      params = params.set('source_type', sourceType);
+    if (rewardParams && rewardParams.locationId) {
+      params = params.set('location_id', rewardParams.locationId.toString());
+    }
+    if (rewardParams && rewardParams.priceId) {
+      params = params.set('price_id', rewardParams.priceId.toString());
+    }
+    if (rewardParams && rewardParams.sourceType) {
+      params = params.set('source_type', rewardParams.sourceType);
     }
     return this.http.post<IV4ReserveRewardResponse>(`${this.apiHost}/v4/rewards/${rewardId}/issue`, { headers, params })
       .pipe(

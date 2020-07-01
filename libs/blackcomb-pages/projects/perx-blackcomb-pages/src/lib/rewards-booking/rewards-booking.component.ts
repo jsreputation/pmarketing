@@ -118,7 +118,7 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
     }
 
     forkJoin([...new Array(parseInt(this.bookingForm.value.quantity, 10))].map(() =>
-      this.vouchersService.reserveReward(this.rewardId,
+      this.vouchersService.issueReward(this.rewardId,
         {
           priceId: this.bookingForm.value.priceId,
           locationId: this.bookingForm.value.location,
