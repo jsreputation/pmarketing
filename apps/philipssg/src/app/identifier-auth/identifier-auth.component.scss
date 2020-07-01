@@ -16,6 +16,16 @@
   height: 100%;
   justify-content: space-between;
 
+  .logoWrapper {
+    flex: 0.7 1;
+    align-items: center;
+    display: flex;
+
+    img {
+      align-self: center;
+    }
+  }
+
   .input-content {
     display: flex;
     flex-direction: column;
