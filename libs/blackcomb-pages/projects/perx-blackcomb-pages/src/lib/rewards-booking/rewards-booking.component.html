@@ -1,7 +1,7 @@
 <div class="main-container">
     <div class="reward-body">
         <form class="booking-form" [formGroup]="bookingForm" (ngSubmit)="submitForm()">
-            <div class="mat-select-wrap">
+            <div *ngIf="chooseQuantity" class="mat-select-wrap">
                 <mat-select placeholder="Quantity" formControlName="quantity">
                     <mat-option *ngFor="let quantity of quantities" [value]="quantity">{{quantity}}</mat-option>
                 </mat-select>

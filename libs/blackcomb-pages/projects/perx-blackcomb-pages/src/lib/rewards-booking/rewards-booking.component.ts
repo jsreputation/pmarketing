@@ -29,6 +29,7 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
   public quantities: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   public bookingForm: FormGroup;
   private loyalty: ILoyalty;
+  public chooseQuantity: boolean = false;
 
   constructor(
     private rewardsService: RewardsService,
@@ -47,6 +48,13 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
   }
 
   private getData(): void {
+    this.route.data.pipe(
+      map((dataObj) => {
+        if (dataObj.chooseQuantity) {
+          this.chooseQuantity = dataObj.chooseQuantity;
+        }
+      })
+    )
     this.route.params.pipe(
       switchMap((param) => {
         this.rewardId = param.id;
@@ -95,7 +103,7 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
 
   public buildForm(): void {
     this.bookingForm = this.build.group({
-      quantity: [null, [Validators.required]],
+      quantity: [1, [Validators.required]],
       location: [null, []],
       priceId: [null, [Validators.required]],
       agreement: [false, [Validators.requiredTrue]]
