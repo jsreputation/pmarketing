@@ -73,7 +73,7 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
           let text = '';
           const properties = oc(tr).transactionDetails.data.properties();
           if (properties) {
-            text = properties.invoiceNumber ? `${properties.invoiceNumber}` : '';
+            text = properties.invoiceNumber ? `Invoice: ${properties.invoiceNumber}` : '';
           }
           return text;
         };
@@ -95,7 +95,7 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
           let text = '';
           const properties = oc(tr).transactionDetails.data.properties();
           if (properties) {
-            text = properties.invoiceNumber ? `${properties.invoiceNumber}` : '';
+            text = properties.invoiceNumber ? `Invoice: ${properties.invoiceNumber}` : '';
           }
           return text;
         };
