@@ -1,3 +1,4 @@
+import { switchMap, filter, share } from 'rxjs/operators';
 import {
   Component,
   OnDestroy,
@@ -5,7 +6,9 @@ import {
 } from '@angular/core';
 import {
   Observable,
-  Subject
+  Subject,
+  combineLatest,
+  of
 } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import {
@@ -14,7 +17,8 @@ import {
   ProfileService,
   QrScannerComponent,
   ILoyalty,
-  PointsToCashPipe
+  PointsToCashPipe,
+  ILoyaltyTransaction
 } from '@perxtech/core';
 import {
   NavigationExtras,
@@ -80,7 +84,20 @@ export class RebatesWalletComponent implements OnInit, OnDestroy {
     // this.merchants$ = of(merchantCards);
 
     // there's no get all loyalties yet. make a query with a larger page size to get more.
-    this.merchants$ = this.loyaltyService.getLoyalties();
+    this.merchants$ = this.loyaltyService.getLoyalties().pipe(
+      switchMap((loyalties: ILoyalty[]) => {
+        return combineLatest([...loyalties.map(loyalty => this.loyaltyService.getTransactions(loyalty.id).pipe(
+          switchMap((transactions: ILoyaltyTransaction[]) => {
+            if(transactions.length > 0) {
+              return of(loyalty);
+            }
+            return of(null)
+          }),
+          filter((loyal: ILoyalty) => loyal !== null)
+        ))])
+      }),
+      share()
+    );
 
     this.subTitleFn = (data: ILoyalty[]) => `Your total rebate funds across ${data.length} merchants`;
     this.titleFn = (profile) => {
