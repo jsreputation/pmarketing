@@ -11,14 +11,12 @@
   flex-direction: column;
   align-items: center;
   left: 0;
-  overflow: scroll;
 
   .reward-body {
     flex-grow: 1;
     max-height: 100%;
     width: $app-max-width;
     max-width: $app-max-width;
-    overflow: auto;
     padding: 3.5rem 1.5rem 4.5rem;
 
     .booking-form {
@@ -51,6 +49,10 @@
         color: #000000 !important;
         margin-bottom: 1.6rem;
         display: block;
+      }
+
+      #price-point-info {
+        white-space: pre-wrap;
       }
 
       .agreement {
