@@ -1,7 +1,7 @@
 <div class="main-container">
   <div class="top-section" *ngIf="userProfile && appConfig && theme">
     <ngx-barcode
-      [bc-value]="userProfile.identifier"
+      [bc-value]="userProfile.phone"
       [bc-display-value]="true"
       [bc-width]="1"></ngx-barcode>
     <h4 translate>QR.BARCODE_TO_MERCHANT</h4>
