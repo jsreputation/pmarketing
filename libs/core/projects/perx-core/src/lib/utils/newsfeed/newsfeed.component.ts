@@ -1,4 +1,4 @@
-import { Component, Input, HostListener, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FeedItem } from '../feed-reader.service';
 import { MatDialog } from '@angular/material';
 import { FeedItemPopupComponent } from '../feed-item-popup/feed-item-popup.component';
@@ -11,13 +11,10 @@ import { map } from 'rxjs/operators';
   templateUrl: './newsfeed.component.html',
   styleUrls: ['./newsfeed.component.scss']
 })
-export class NewsfeedComponent implements OnInit {
+export class NewsfeedComponent {
   // will be passed down to the dialog from readMoreClicked
   @Input()
   public items$: Observable<FeedItem[] | undefined>;
-
-  public items: FeedItem[] = [] as FeedItem[];
-  public itemSize: number;
   public newsBeforeScroll: number[];
   public newsAfterScroll: number[];
   public showButton: boolean = true;
@@ -26,29 +23,6 @@ export class NewsfeedComponent implements OnInit {
     private dialog: MatDialog,
     private translate: TranslateService
   ) { }
-
-  public ngOnInit(): void {
-    this.itemSize = window.innerWidth;
-    if (this.items$) {
-      this.items$.subscribe((res: FeedItem[]) => {
-        this.items = res;
-      });
-    }
-  }
-
-  public updateScrollIndex(index: number): void {
-    this.newsBeforeScroll = Array(index >= 0 ? index : 0);
-    if (this.items && this.items.length > 0 && index >= 0) {
-      this.newsAfterScroll = Array(this.items.length - index - 1);
-    } else {
-      this.newsAfterScroll = [];
-    }
-  }
-
-  @HostListener('window:resize')
-  public onResize(): void {
-    this.itemSize = window.innerWidth;
-  }
 
   public readMore(item: FeedItem): void {
     this.translate.get([item.title || '', item.description || '']).subscribe(res => {

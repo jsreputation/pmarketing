@@ -4,10 +4,13 @@ import { Observable, forkJoin, of } from 'rxjs';
 
 import {
   LoyaltyService,
-  ITransactionHistory,
+  ILoyaltyTransactionHistory,
   IRewardTransactionHistory,
   // IPurchaseTransactionHistory,
   TransactionPipe,
+  CashbackTransactionPipe,
+  SettingsService,
+  IFlags,
   // ITransactionProperties
 } from '@perxtech/core';
 import { oc } from 'ts-optchain';
@@ -20,49 +23,71 @@ import { oc } from 'ts-optchain';
   styleUrls: ['./transaction-history.component.scss']
 })
 export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader */ {
-  public transactions: Observable<ITransactionHistory[]>;
-  public purchasesTitleFn: (tr: ITransactionHistory) => string;
-  public redemptionsTitleFn: (tr: ITransactionHistory) => string;
-  public descFn: (tr: ITransactionHistory) => string;
-  public subTitleFn: (tr: ITransactionHistory) => string;
-  public priceLabelFn: (tr: ITransactionHistory) => string;
+  public transactions: Observable<ILoyaltyTransactionHistory[]>;
+  public purchasesTitleFn: (tr: ILoyaltyTransactionHistory) => string;
+  public redemptionsTitleFn: (tr: ILoyaltyTransactionHistory) => string;
+  public descFn: (tr: ILoyaltyTransactionHistory) => string;
+  public subTitleFn: (tr: ILoyaltyTransactionHistory) => string;
+  public priceLabelFn: (tr: ILoyaltyTransactionHistory) => string;
 
-  private pageNumber: number = 1;
+  private pageNumber: number = 2;
   private pageSize: number = 10;
   private complitePagination: boolean = false;
   constructor(
     private loyaltyService: LoyaltyService,
+    private settingsService: SettingsService,
     private transactionPipe: TransactionPipe,
+    private cashbackTransactionPipe: CashbackTransactionPipe,
     private datePipe: DatePipe
   ) { }
 
   public ngOnInit(): void {
-    this.transactions = this.loyaltyService.getTransactionHistory(this.pageNumber, this.pageSize);
-
-    this.purchasesTitleFn = (tr: ITransactionHistory) => {
-      let text = '';
-      const properties = oc(tr).transactionDetails.data.properties();
-      if (properties) {
-        text = properties.productName ? properties.productName : '';
+    this.transactions = this.loyaltyService.getTransactionHistory(this.pageNumber - 1, this.pageSize);
+    this.settingsService.getRemoteFlagsSettings().subscribe((flags: IFlags) => {
+      if (flags.rebateDemoFlow) {
+        this.priceLabelFn = (tr: ILoyaltyTransactionHistory) => `${this.cashbackTransactionPipe.transform(tr.pointsAmount || 0)}`;
+        this.descFn = (tr: ILoyaltyTransactionHistory) => {
+          let text = '';
+          const properties = oc(tr).transactionDetails.data.properties();
+          if (properties) {
+            text = properties.storeName ? `${properties.storeName}` : '';
+          }
+          return text;
+        };
+        this.purchasesTitleFn = (tr: ILoyaltyTransactionHistory) => {
+          let text = '';
+          const properties = oc(tr).transactionDetails.data.properties();
+          if (properties) {
+            text = properties.storeCode ? properties.storeCode : '';
+          }
+          return text;
+        };
+      } else {
+        this.priceLabelFn = (tr: ILoyaltyTransactionHistory) => `${this.transactionPipe.transform(tr.pointsAmount || 0)}`;
+        this.descFn = (tr: ILoyaltyTransactionHistory) => {
+          let text = '';
+          const properties = oc(tr).transactionDetails.data.properties();
+          if (properties) {
+            text = properties.storeName ? properties.storeName : '';
+          }
+          return text;
+        };
+        this.purchasesTitleFn = (tr: ILoyaltyTransactionHistory) => {
+          let text = '';
+          const properties = oc(tr).transactionDetails.data.properties();
+          if (properties) {
+            text = properties.productName ? properties.productName : '';
+          }
+          return text;
+        };
       }
-      return text;
-    };
+    });
 
-    this.redemptionsTitleFn = (tr: ITransactionHistory) =>
+    this.redemptionsTitleFn = (tr: ILoyaltyTransactionHistory) =>
       `${(tr.transactionDetails && tr.transactionDetails.data) ?
         (tr.transactionDetails.data as IRewardTransactionHistory).rewardName : ''}`;
 
-    this.descFn = (tr: ITransactionHistory) => {
-      let text = '';
-      const properties = oc(tr).transactionDetails.data.properties();
-      if (properties) {
-        text = properties.storeName ? properties.storeName : '';
-      }
-      return text;
-    };
-
-    this.subTitleFn = (tr: ITransactionHistory) => `${this.datePipe.transform(tr.transactedAt, 'dd/MM/yyyy')}`;
-    this.priceLabelFn = (tr: ITransactionHistory) => `${this.transactionPipe.transform(tr.pointsAmount || 0)}`;
+    this.subTitleFn = (tr: ILoyaltyTransactionHistory) => `${this.datePipe.transform(tr.transactedAt, 'dd/MM/yyyy')}`;
   }
 
   public onScroll(): void {

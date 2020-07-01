@@ -24,6 +24,7 @@ import {
   Observable,
   Subject
 } from 'rxjs';
+import { DateAdapter } from '@angular/material';
 
 @Component({
   selector: 'app-signup',
@@ -45,7 +46,8 @@ export class SignupComponent implements OnInit {
     private route: ActivatedRoute,
     private authService: AuthenticationService,
     private notificationService: NotificationService,
-    public generalStaticDataService: GeneralStaticDataService
+    public generalStaticDataService: GeneralStaticDataService,
+    private dateAdapter: DateAdapter<Date>
   ) {}
 
   public ngOnInit(): void {
@@ -115,7 +117,8 @@ export class SignupComponent implements OnInit {
 
     const signUpData: ISignUpData = {
       lastName: name,
-      birthDay: dob,
+      birthDay: this.dateAdapter.format(dob, 'yyyy-MM-dd')
+        .replace(/\//g, '-') ,
       phone: codeAndMobile,
       password: passwordString,
       passwordConfirmation: confirmPassword,

@@ -8,6 +8,7 @@ export interface IReward {
   validFrom: Date | null;
   validTo: Date | null;
   sellingFrom?: Date;
+  sellingTo?: Date;
   rewardThumbnail?: string;
   rewardBanner: string;
   merchantImg?: string;

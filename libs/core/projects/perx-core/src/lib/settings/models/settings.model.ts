@@ -12,6 +12,7 @@ export interface IFlags {
   rewardsCarousel?: boolean;
   rebateDemoFlow?: boolean;
   gatekeeperPollingInterval?: number;
+  showStampCampaigns?: boolean;
 }
 
 export interface IRssFeeds {

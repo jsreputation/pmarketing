@@ -2,11 +2,11 @@
   <div class="stamps mat-elevation-z3" [ngStyle]="{'background-image': cardBgImage? 'url(' + cardBgImage + ')': '',
     'background': !cardBgImage && defaultCardBgImage }">
     <h1 *ngIf="title">{{title}}</h1>
-    <p class="subtitle" *ngIf="subTitle">{{subTitle}}</p>
+    <p class="subtitle" *ngIf="subTitle" [innerHtml]="subTitle"></p>
     <div class="available-stamp" *ngIf="showStampsCounter">
       <img *ngIf="stampCardImage" class="stampCountImage" [src]="stampCardImage" alt="">
       <div *ngIf="!stampCardImage" class="dummy-card" [ngStyle]="{'background-color': defaultstampCardImage }"></div>
-      <span>= {{availableStampCount}}</span>
+      <span>= {{availableStampCount}}{{newStampsLabelFn() | async}}</span>
     </div>
     <div class="row" *ngFor="let rowItemsCount of currentActiveOrientation; let rowNum = index">
       <div class="dummy-container" *ngFor="let box of counter(rowItemsCount); let i = index">
@@ -15,11 +15,14 @@
         </ng-container>
         <ng-template #defaultStamp>
           <img *ngIf="getStampImage(i, rowNum) !== null" [src]="getStampImage(i, rowNum)" />
-          <div class="dummy-card-big" *ngIf="getStampImage(i, rowNum) === null" [ngStyle]="{'background-color': defaultstampCardImage }"></div>
+          <div class="dummy-card-big" *ngIf="getStampImage(i, rowNum) === null"
+            [ngStyle]="{'background-color': defaultstampCardImage }"></div>
           <div (click)="onAvailableStampClicked(i, rowNum)" *ngIf="isIssued(i, rowNum)" class="add">
             <span>+</span>
           </div>
         </ng-template>
+      </div>
+      <div class="dummy-container" *ngFor="let boxPlaceHolder of counter((numberOfCols || 3) - rowItemsCount); let i = index">
       </div>
     </div>
   </div>

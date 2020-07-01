@@ -76,6 +76,7 @@ export interface IV4Reward {
   category_tags?: ICategoryTags[];
   inventory?: IV4Inventory;
   selling_from?: string;
+  selling_to?: string;
   merchant_logo_url?: string;
   display_properties?: IWRewardDisplayProperties;
 }
@@ -164,6 +165,7 @@ export class V4RewardsService extends RewardsService {
     const rewardBanner: string = oc(banner).url('');
     const merchantImg = oc(reward).merchant_logo_url();
     const sellingFrom = reward.selling_from ? new Date(reward.selling_from) : undefined;
+    const sellingTo = reward.selling_to ? new Date(reward.selling_to) : undefined;
 
     const v4Invent = reward.inventory;
     const inventory = v4Invent ? {
@@ -190,6 +192,7 @@ export class V4RewardsService extends RewardsService {
       validFrom: new Date(reward.valid_from),
       validTo: new Date(reward.valid_to),
       sellingFrom,
+      sellingTo,
       merchantId: reward.merchant_id,
       merchantName: reward.merchant_name,
       merchantImg,

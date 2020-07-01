@@ -91,20 +91,20 @@ export class HomeComponent implements OnInit, OnDestroy {
   public catalogsEnded: boolean = false;
 
   public constructor(
-    private rewardsService: RewardsService,
-    private gamesService: IGameService,
-    private router: Router,
-    private titleService: Title,
-    private translate: TranslateService,
-    private themesService: ThemesService,
-    private configService: ConfigService,
-    private authService: AuthenticationService,
-    private campaignService: ICampaignService,
-    private instantOutcomeService: InstantOutcomeService,
-    private dialog: MatDialog,
-    private feedService: FeedReaderService,
-    private settingsService: SettingsService,
-    private profileService: ProfileService
+    public rewardsService: RewardsService,
+    public gamesService: IGameService,
+    public router: Router,
+    public titleService: Title,
+    public translate: TranslateService,
+    public themesService: ThemesService,
+    public configService: ConfigService,
+    public authService: AuthenticationService,
+    public campaignService: ICampaignService,
+    public instantOutcomeService: InstantOutcomeService,
+    public dialog: MatDialog,
+    public feedService: FeedReaderService,
+    public settingsService: SettingsService,
+    public profileService: ProfileService
   ) {
   }
 
@@ -145,14 +145,15 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.configService.readAppConfig<void>().subscribe(
-      (config: IConfig<void>) => {
+    this.configService.readAppConfig<void>().pipe(
+      map((config: IConfig<void>) => {
         this.appConfig = config;
         this.initCampaign();
-      }
-    );
-    this.settingsService.getRemoteFlagsSettings().subscribe(
+      }),
+      switchMap(() => this.settingsService.getRemoteFlagsSettings())
+    ).subscribe(
       (flags: IFlags) => {
+        // todo: create a function to wrap all the rest of the init calls
         this.appRemoteFlags = flags;
       }
     );
@@ -170,7 +171,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  private getTabbedList(): void {
+  // requires public access for extended implementation
+  public getTabbedList(): void {
     this.getTabs()
       .pipe(mergeMap((tabs) => forkJoin(tabs.map((tab) =>
         this.rewardsService.getRewards(1, this.pageSize, undefined, tab.rewardsType ? [tab.rewardsType] : undefined)
@@ -246,7 +248,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.currentTabIndex = event.index;
   }
 
-  private fetchPopupCampaigns(): void {
+  // requires public access for extended implementation
+  public fetchPopupCampaigns(): void {
     this.campaignService.getCampaigns({ type: CampaignType.give_reward })
       .pipe(
         catchError(() => of([]))
@@ -297,7 +300,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
   }
 
-  private initCampaign(): void {
+  // requires public access for extended implementation
+  public initCampaign(): void {
     // https://iamturns.com/continue-rxjs-streams-when-errors-occur/ also look at CatchError, exactly for this purpose
     if (!this.showGames) { // prevent calling unnecessarily (i.e. duped when perx-blackcomb-pages-campaigns-collection quiz present)
       this.games$ = this.gamesService.getActiveGames()
@@ -328,7 +332,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   // ** catalogs component section **
   // for paging through and accumulating pages
-  private initCatalogsScan(): void {
+  // requires public access for extended implementation
+  public initCatalogsScan(): void {
     this.catalogs$ = this.catalogsBvrSbjt.asObservable().pipe(
       scan((acc, curr) => [...acc, ...curr ? curr : []], [])
     );

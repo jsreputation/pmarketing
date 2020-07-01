@@ -1,0 +1,69 @@
+<div class="page"
+     *ngIf="theme && theme.properties && appConfig"
+     infiniteScroll [infiniteScrollDistance]="2"
+     [infiniteScrollThrottle]="50"
+     (scrolled)="onScroll()"
+     [scrollWindow]="false">
+  <div class="loyalty-block" *ngIf="appConfig.showLoyaltyBlockOnHomePage && !appRemoteFlags.rebateDemoFlow">
+    <perx-core-loyalty-summary [titleFn]="titleFn" [showLoyaltyProgress]="appConfig.showLoyaltyProgress"></perx-core-loyalty-summary>
+    <div class="loyalty-item loyalty-item-qr" *ngIf="appConfig.showUserQR">
+      <a
+        mat-raised-button
+        class="enlarge home-qr-button"
+        routerLink="/qr"
+        translate
+        *ngIf="!appConfig.showBarcodeOnHomeProfilePage">
+        {{ 'HOME.MY_QR' | translate }}
+      </a>
+      <a
+        mat-raised-button
+        class="enlarge home-qr-button"
+        routerLink="/barcode"
+        translate
+        *ngIf="appConfig.showBarcodeOnHomeProfilePage">
+        {{ 'HOME.MY_BAR_CODE' | translate }}
+      </a>
+
+    </div>
+  </div>
+  <perx-core-newsfeed [items$]="newsFeedItems"></perx-core-newsfeed>
+  <div class="rewards-collection" *ngIf="!restrictedView && appRemoteFlags?.rewardsCarousel || appConfig.showRewardsOnHomepage">
+    <div *ngIf="(rewards$ | async)?.length > 0" class="title" translate>HOME.FEATURED_REWARDS</div>
+    <perx-core-rewards-collection [rewardsList]="rewards$" (tapped)="goToReward($event)"></perx-core-rewards-collection>
+  </div>
+  <!-- Stamp card campaigns-->
+  <div class="campaigns">
+    <div *ngIf="!restrictedView && showCampaigns" class="title" translate>HOME.STAMP_CAMPAIGNS</div>
+    <perx-blackcomb-pages-campaigns-collection *ngIf="!restrictedView" [campaigns]="stampCampaigns$" (selected)="goToCampaignPage($event)">
+    </perx-blackcomb-pages-campaigns-collection>
+  </div>
+  <div class="catalogs" *ngIf="!restrictedView && appConfig.showCatalogOnHomePage">
+    <div *ngIf="(catalogs$ | async)?.length > 0" class="title" translate>HOME.CATALOG</div>
+    <perx-blackcomb-pages-catalogs
+      [catalogs]="catalogs$"
+      [catalogsEnded]="catalogsEnded"
+      (tapped)="catalogSelected($event)"
+      (loadCatalogs)="loadCatalogs($event)"
+    ></perx-blackcomb-pages-catalogs>
+  </div>
+  <!-- Game campaigns-->
+  <div class="campaigns">
+    <div *ngIf="!restrictedView && showGames" class="title" translate>HOME.GAMES</div>
+    <perx-blackcomb-games-collection *ngIf="!restrictedView" [games]="games$"></perx-blackcomb-games-collection>
+  </div>
+  <!-- Quiz campaigns -->
+  <div class="campaigns" *ngIf="!restrictedView && appConfig.showQuizOnHomePage">
+    <div *ngIf="(quizCampaigns$ | async)?.length > 0" class="title" translate>HOME.QUIZ</div>
+    <perx-blackcomb-pages-campaigns-collection
+      [defaultNbCampaigns]="3"
+      [campaigns]="quizCampaigns$"
+      [gameType]="gameType.quiz"
+      [withRewardsCounter]="appConfig.showCampaignRewardsCounterOnHomepage"
+      (selected)="goToCampaignPage($event)">
+    </perx-blackcomb-pages-campaigns-collection>
+  </div>
+  <div class="rewards-collection" *ngIf="!restrictedView && appConfig.showRewardsOnHomepage">
+    <perx-core-rewards-list-tabbed *ngIf="!restrictedView" [tabs$]="tabs$" (tapped)="goToReward($event)" (tabChanged)="tabChanged($event)">
+    </perx-core-rewards-list-tabbed>
+  </div>
+</div>

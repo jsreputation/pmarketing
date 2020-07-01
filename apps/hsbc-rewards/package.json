@@ -4,14 +4,13 @@
   "scripts": {
     "start": "npm run config && ng serve --host 0.0.0.0",
     "build": "npm run config && ng build",
-    "build:hsbc-rewards:production": "APIHOST=https://api-hsbc.perxtech.net PRODUCTION=true npm run config && ng build --prod",
-    "build:hsbc-rewards:staging": "PRODUCTION=true npm run config && ng build --prod",
+    "build:hsbc-rewards:production": "env-cmd -f hsbc-rewards.production npm run config && ng build --prod",
+    "build:hsbc-rewards:staging": "env-cmd -f hsbc-rewards.staging npm run config && ng build --prod",
     "config": "ts-node --project tsconfig.node.json set-env.ts",
     "clean": "rm -rf ./dist ./node_modules",
-    "test": "jest --config=jest.config.json",
-    "lint": "stylelint \"src/**/*.*css\" && eslint \"./src/**/*.ts\"",
+    "lint": "stylelint \"src/**/*.*css\" && ng lint",
     "lint:fix": "stylelint \"src/**/*.*css\" --fix && eslint \"./src/**/*.ts\" --fix",
-    "e2e": "ng e2e",
+    "test": "jest --config=jest.config.json",
     "test:watch": "jest --watch --config=jest.config.json"
   },
   "private": true,

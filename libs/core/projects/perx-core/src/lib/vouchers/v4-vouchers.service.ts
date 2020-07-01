@@ -6,13 +6,13 @@ import { interval, Observable, of } from 'rxjs';
 import { filter, flatMap, map, mergeAll, scan, switchMap, tap, mergeMap } from 'rxjs/operators';
 
 import { IVoucherService } from './ivoucher.service';
-import { IGetVoucherParams, IRedeemOptions, IVoucher, VoucherState } from './models/voucher.model';
-
+import { IGetVoucherParams, IRedeemOptions, IVoucher, IVoucherLocation } from './models/voucher.model';
 import { IRewardParams } from '../rewards/models/reward.model';
 import { IV4Reward, V4RewardsService } from '../rewards/v4-rewards.service';
 import { RedemptionType } from '../perx-core.models';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
+import { VoucherState } from './models/voucher.model';
 
 interface IV4Meta {
   count?: number;
@@ -21,12 +21,12 @@ interface IV4Meta {
   page?: number;
 }
 
-interface IV4ReserveRewardResponse {
+export interface IV4ReserveRewardResponse {
   data: IV4MinifiedVoucher;
   meta?: IV4Meta;
 }
 
-interface IV4MinifiedVoucher {
+export interface IV4MinifiedVoucher {
   id: number;
   voucher_code: string;
   voucher_key: string;
@@ -35,7 +35,7 @@ interface IV4MinifiedVoucher {
   reserved_expires_at: Date;
 }
 
-interface IV4VouchersResponse {
+export interface IV4VouchersResponse {
   data: IV4Voucher[];
   meta: {
     count: number
@@ -45,7 +45,7 @@ interface IV4VouchersResponse {
   };
 }
 
-interface IV4VoucherResponse {
+export interface IV4VoucherResponse {
   data: IV4Voucher;
 }
 
@@ -73,6 +73,30 @@ export interface IV4Voucher {
   voucher_type: RedemptionType;
   redemption_image?: any;
   redemption_text?: any;
+}
+
+export interface IV4VoucherLocationsResponse {
+  data: IV4VoucherLocation[];
+}
+
+export interface IV4VoucherLocation {
+  id: number;
+  name: string;
+  phone_number: string;
+  mobile_number: string;
+  website_url: string;
+  custom_fields: string;
+  postal_code: string;
+  address_line_1: string;
+  address_line_2: string;
+  address_line_3: string;
+  latitude: string;
+  longitude: string;
+  shopping_mall: string;
+  country: string;
+  state: string;
+  city: string;
+  operating_hours: string;
 }
 
 @Injectable({
@@ -108,6 +132,13 @@ export class V4VouchersService implements IVoucherService {
           (v.redemption_type.type !== null && v.redemption_type.type !== 'offline') ? v.redemption_type.type :
           v.voucher_type.toString() === 'code' ? RedemptionType.txtCode : v.voucher_type,
       accessoryImage: oc(accessoryImage).url('')
+    };
+  }
+
+  public static v4LocationToLocation(v: IV4VoucherLocation): IVoucherLocation {
+    return {
+      id: v.id,
+      name: v.name
     };
   }
 
@@ -302,11 +333,24 @@ export class V4VouchersService implements IVoucherService {
       );
   }
 
-  public issueReward(rewardId: number, sourceType?: string, locale: string = 'en'): Observable<IVoucher> {
+  public getRewardLocations(rewardId: number): Observable<IVoucherLocation[]> {
+    return this.http.get<IV4VoucherLocationsResponse >(`${this.apiHost}/v4/rewards/${rewardId}/locations`)
+      .pipe(
+        map((res: IV4VoucherLocationsResponse) => res.data.map(location => V4VouchersService.v4LocationToLocation(location)))
+      );
+  }
+
+  public issueReward(rewardId: number, rewardParams?: IRewardParams, locale: string = 'en'): Observable<IVoucher> {
     const headers = new HttpHeaders().set('Accept-Language', locale);
     let params = new HttpParams();
-    if (sourceType) {
-      params = params.set('source_type', sourceType);
+    if (rewardParams && rewardParams.locationId) {
+      params = params.set('location_id', rewardParams.locationId.toString());
+    }
+    if (rewardParams && rewardParams.priceId) {
+      params = params.set('price_id', rewardParams.priceId.toString());
+    }
+    if (rewardParams && rewardParams.sourceType) {
+      params = params.set('source_type', rewardParams.sourceType);
     }
     return this.http.post<IV4ReserveRewardResponse>(`${this.apiHost}/v4/rewards/${rewardId}/issue`, { headers, params })
       .pipe(

@@ -6,9 +6,9 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {ActivatedRoute, Router} from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { AuthenticationService, Config, ConfigService, ThemesService } from '@perxtech/core';
+import { AuthenticationService, Config, ConfigService, ILoyalty, LoyaltyService, ThemesService } from '@perxtech/core';
 import { IWAppAccessTokenResponse } from '@perxtech/whistler';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import * as uuid from 'uuid';
 import { SignIn2Component } from './sign-in-2.component';
 
@@ -53,6 +53,11 @@ describe('SignIn2Component', () => {
     getCurrentNavigation: () => null
   };
 
+  const loyaltyServiceStub: Partial<LoyaltyService> = {
+    getLoyalty: (): Observable<ILoyalty> => of(),
+    getLoyalties: (): Observable<ILoyalty[]> => of([])
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SignIn2Component],
@@ -76,7 +81,8 @@ describe('SignIn2Component', () => {
         { provide: Config, useValue: configStub },
         { provide: ConfigService, useValue: configServiceStub },
         { provide: Router, useValue: routerStub },
-        { provide: ActivatedRoute, useValue: activatedRouteStub }
+        { provide: ActivatedRoute, useValue: activatedRouteStub },
+        { provide: LoyaltyService, useValue: loyaltyServiceStub },
       ]
     })
       .compileComponents();

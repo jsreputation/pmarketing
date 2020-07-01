@@ -1,10 +1,13 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import {
+  HTTP_INTERCEPTORS,
   HttpClient,
-  HttpClientModule
+  HttpClientModule, HttpEvent, HttpHandler,
+  HttpInterceptor, HttpRequest
 } from '@angular/common/http';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+
 import {
   APP_INITIALIZER,
   ErrorHandler,
@@ -36,7 +39,6 @@ import {
   ConfigModule,
   ConfigService,
   FeedItemPopupComponent,
-  GameModule,
   GameServiceModule as PerxGameServiceModule,
   IConfig,
   LanguageService,
@@ -52,6 +54,8 @@ import {
   TokenStorage,
   UtilsModule,
   VouchersModule,
+  PuzzlesModule,
+  StampModule
 } from '@perxtech/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -67,7 +71,7 @@ import { CategorySortComponent } from './category/category-sort/category-sort.co
 import { RewardsSortPipe } from './category/rewards-sort.pipe';
 import { LocationShortFormatComponent } from './location-short-format/location-short-format.component';
 import { RewardDetailComponent } from './reward/reward-detail/reward-detail.component';
-import { GameComponent } from './game/game.component';
+import { StampCardComponent } from './stamp/stamp-card.component';
 import { CongratsComponent } from './congrats/congrats.component';
 import { ExpireTimerComponent } from './reward/expire-timer/expire-timer.component';
 import { ErrorComponent } from './error/error.component';
@@ -75,7 +79,7 @@ import { ErrorComponent } from './error/error.component';
 import { environment } from '../environments/environment';
 import * as Sentry from '@sentry/browser';
 import {
-  switchMap,
+  // switchMap,
   tap
 } from 'rxjs/operators';
 import {
@@ -83,16 +87,21 @@ import {
   TranslateModule,
   TranslateService
 } from '@ngx-translate/core';
-import {
-  ScratchComponent,
-  ShakeComponent,
-  TapComponent
-} from '@perxtech/blackcomb-pages';
-import {GhostsModule} from './ghosts/ghosts.module';
+
+import { GhostsModule } from './ghosts/ghosts.module';
+import { Observable } from 'rxjs';
 
 Sentry.init({
   dsn: 'https://b7939e78d33d483685b1c82e9c076384@sentry.io/1873560'
 });
+
+@Injectable()
+export class HttpConfigInterceptor implements HttpInterceptor {
+  public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const requestClone = request.clone({ headers: request.headers.set('app-version', environment.appVersion) });
+    return next.handle(requestClone);
+  }
+}
 
 @Injectable()
 export class SentryErrorHandler implements ErrorHandler {
@@ -112,7 +121,7 @@ export const appInit =
     translateService: TranslateService,
     configService: ConfigService,
     authService: AuthenticationService,
-    themesService: ThemesService
+    // themesService: ThemesService
   ) => () => new Promise((resolve) => {
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get('token');
@@ -124,8 +133,8 @@ export const appInit =
 
     configService.readAppConfig().pipe(
       tap((config: IConfig<void>) => translateService.setDefaultLang(config.defaultLang || 'en')),
-      switchMap(() => authService.getAppToken()),
-      switchMap(() => themesService.getThemeSetting())
+      // switchMap(() => authService.getAppToken()),
+      // switchMap(() => themesService.getThemeSetting())
     ).toPromise().then(() => resolve());
     resolve();
   });
@@ -145,13 +154,10 @@ export const appInit =
     RewardsSortPipe,
     LocationShortFormatComponent,
     RewardDetailComponent,
-    GameComponent,
+    StampCardComponent,
     CongratsComponent,
     ExpireTimerComponent,
-    ErrorComponent,
-    ShakeComponent,
-    TapComponent,
-    ScratchComponent
+    ErrorComponent
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
@@ -177,12 +183,13 @@ export const appInit =
     ProfileModule,
     PerxProfileServiceModule.forRoot(),
     VouchersModule,
-    GameModule,
     LocationModule,
     ScrollingModule,
     CampaignModule,
     CampaignServiceModule.forRoot(),
     PerxGameServiceModule.forRoot(),
+    PuzzlesModule,
+    StampModule,
     MerchantsModule.forRoot(),
     QRCodeModule,
     NgxBarcodeModule,
@@ -209,7 +216,8 @@ export const appInit =
     {
       provide: APP_INITIALIZER, useFactory: appInit,
       deps: [TranslateService, ConfigService, AuthenticationService, ThemesService], multi: true
-    }
+    },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

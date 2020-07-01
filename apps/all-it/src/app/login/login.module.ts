@@ -5,7 +5,10 @@ import { SignIn2Component, SignIn2Module } from '@perxtech/blackcomb-pages';
 const routes: Routes = [{
   path: '',
   component: SignIn2Component,
-  data: { countryList: ['Malaysia', 'Singapore']}
+  data: {
+    countryList: ['Malaysia', 'Singapore'],
+    validateMembership: true
+  }
 }];
 
 @NgModule({
