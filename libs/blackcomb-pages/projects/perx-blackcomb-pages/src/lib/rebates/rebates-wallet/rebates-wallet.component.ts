@@ -85,17 +85,17 @@ export class RebatesWalletComponent implements OnInit, OnDestroy {
 
     // there's no get all loyalties yet. make a query with a larger page size to get more.
     this.merchants$ = this.loyaltyService.getLoyalties().pipe(
-      switchMap((loyalties: ILoyalty[]) => {
-        return combineLatest([...loyalties.map(loyalty => this.loyaltyService.getTransactions(loyalty.id).pipe(
+      switchMap((loyalties: ILoyalty[]) => combineLatest(
+        [...loyalties.map(loyalty => this.loyaltyService.getTransactions(loyalty.id).pipe(
           switchMap((transactions: ILoyaltyTransaction[]) => {
-            if(transactions.length > 0) {
+            if (transactions.length > 0) {
               return of(loyalty);
             }
-            return of(null)
+            return of(null);
           }),
           filter((loyal: ILoyalty) => loyal !== null)
         ))])
-      }),
+      ),
       share()
     );
 
