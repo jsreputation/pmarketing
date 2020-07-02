@@ -39,7 +39,7 @@
     </div>
   </mat-card>
 
-  <div class="merchants-collection">
+  <div class="merchants-collection" *ngIf="merchants$ | async as merchants">
     <div class="title" translate>Merchants</div>
     <perx-core-rebates-list
       [data]="merchants$"
