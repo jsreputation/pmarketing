@@ -1,4 +1,4 @@
-import { switchMap, filter, share } from 'rxjs/operators';
+import { switchMap, share, map } from 'rxjs/operators';
 import {
   Component,
   OnDestroy,
@@ -92,10 +92,10 @@ export class RebatesWalletComponent implements OnInit, OnDestroy {
               return of(loyalty);
             }
             return of(null);
-          }),
-          filter((loyal: ILoyalty) => loyal !== null)
+          })
         ))])
       ),
+      map((res: ILoyalty[]) => res.filter(loyal => loyal !== null)),
       share()
     );
 
