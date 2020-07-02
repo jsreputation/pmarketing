@@ -10,7 +10,7 @@
     "build:abenson:production": "env-cmd -f env/abenson npm run config && ng build --prod",
     "build:abenson:staging": "env-cmd -f env/abenson npm run config && ng build --configuration staging",
     "config": "ts-node --project tsconfig.node.json set-env.ts",
-    "lint": "stylelint \"src/**/*.*css\" && eslint \"./src/**/*.ts\"",
+    "lint": "stylelint \"src/**/*.*css\" && ng lint",
     "lint:fix": "stylelint \"src/**/*.*css\" --fix && eslint \"./src/**/*.ts\" --fix",
     "test": "jest --config=jest.config.json",
     "test:watch": "jest --watch --config=jest.config.json"

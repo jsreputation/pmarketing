@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {
-  LocationsService,
   RewardsService,
-  ILocation,
+  IVoucherLocation,
   IReward,
   NotificationService,
   LoyaltyService,
@@ -14,7 +13,7 @@ import {
 } from '@perxtech/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, flatMap, map } from 'rxjs/operators';
-import { forkJoin, Observable, of, throwError } from 'rxjs';
+import { forkJoin, of, throwError } from 'rxjs';
 
 @Component({
   selector: 'perx-blackcomb-pages-rewards-booking',
@@ -25,18 +24,15 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
 
   public rewardId: number;
   public prices: IPrice[];
-  public locationData: Observable<ILocation[]>;
+  public locationData: IVoucherLocation[];
   public reward: IReward;
   public quantities: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   public bookingForm: FormGroup;
+  public loading: boolean = false;
   private loyalty: ILoyalty;
-  private merchantAllLocations: ILocation[] = [];
-  private lastMerchantPage: number = 1;
-  private isCurrentMerchantPageLoaded: boolean = false;
-  private merchantId: number;
+  public chooseQuantity: boolean = false;
 
   constructor(
-    private locationService: LocationsService,
     private rewardsService: RewardsService,
     private vouchersService: IVoucherService,
     private loyaltyService: LoyaltyService,
@@ -53,6 +49,13 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
   }
 
   private getData(): void {
+    this.route.data.pipe(
+      map((dataObj) => {
+        if (dataObj.chooseQuantity) {
+          this.chooseQuantity = dataObj.chooseQuantity;
+        }
+      })
+    );
     this.route.params.pipe(
       switchMap((param) => {
         this.rewardId = param.id;
@@ -66,12 +69,14 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
         if (!this.reward.merchantId) {
           return throwError({ message: 'merchantId is required' });
         }
-        this.merchantId = this.reward.merchantId;
         // merchantId can be null if reward is set up incorrectly on dashboard
-        return this.locationService.getFromMerchant(this.merchantId);
+        return this.vouchersService.getRewardLocations(this.rewardId);
       })).subscribe(
-      (merchantLocations: ILocation[]) => {
-        this.updateMerchantData(merchantLocations);
+      (locations: IVoucherLocation[] ) => {
+        if (locations.length > 0) {
+          this.locationData = locations;
+          this.bookingForm.controls.location.setValidators([Validators.required]);
+        }
       },
       () => {
         // validators will prevent form submission
@@ -99,24 +104,19 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
 
   public buildForm(): void {
     this.bookingForm = this.build.group({
-      quantity: [null, [Validators.required]],
-      location: [null, [Validators.required]],
+      quantity: [1, [Validators.required]],
+      location: [null, []],
       priceId: [null, [Validators.required]],
       agreement: [false, [Validators.requiredTrue]]
     });
   }
 
-  private updateMerchantData(merchantLocations: ILocation[]): any {
-    this.merchantAllLocations = this.merchantAllLocations.concat(merchantLocations);
-    this.locationData = of(this.merchantAllLocations);
-    this.lastMerchantPage++;
-    this.isCurrentMerchantPageLoaded = true;
-  }
-
   public submitForm(): void {
+    this.loading = true;
     const currentPrice = this.prices.find((price) => price.id === this.bookingForm.value.priceId);
     // allow free rewards to go through
     if (!currentPrice || currentPrice.points === undefined || null) {
+      this.loading =  false;
       return;
     }
     const totalCost = currentPrice.points * this.bookingForm.value.quantity;
@@ -125,11 +125,12 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
         title: 'Sorry',
         text: 'You do not have enough points for this transaction'
       });
+      this.loading =  false;
       return;
     }
 
     forkJoin([...new Array(parseInt(this.bookingForm.value.quantity, 10))].map(() =>
-      this.vouchersService.reserveReward(this.rewardId,
+      this.vouchersService.issueReward(this.rewardId,
         {
           priceId: this.bookingForm.value.priceId,
           locationId: this.bookingForm.value.location,
@@ -143,6 +144,7 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
         imageUrl: 'assets/congrats_image.png',
         afterClosedCallBack: this
       });
+      this.loading = false;
     }, (err) => {
       if (err.code === 40) {
         this.notificationService.addPopup({
@@ -150,27 +152,8 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
           text: 'You do not have enough points for this transaction'
         });
       }
+      this.loading = false;
     });
-  }
-
-  public getMerchantData(): void {
-    if (!this.isCurrentMerchantPageLoaded) {
-      return;
-    }
-
-    this.isCurrentMerchantPageLoaded = false;
-    this.locationService.getFromMerchant(this.merchantId, this.lastMerchantPage).subscribe(
-      (merchantLocations: ILocation[]) => {
-        this.updateMerchantData(merchantLocations);
-      },
-      () => {
-        // validators will prevent form submission
-        this.notificationService.addPopup({
-          title: 'Sorry',
-          text: 'We\'re unable to perform this transaction at this time'
-        });
-      }
-    );
   }
 
   public dialogClosed(): void {

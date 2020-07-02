@@ -368,7 +368,7 @@ describe('VouchersComponent', () => {
     });
   });
 
-  it('If there is mapping, the status of each voucher should be displayed.', () => {
+  it('If there is mapping and showRedeemedIcon is true, the status of each voucher should be displayed.', () => {
     const vouchers: IVoucher[] = [
       {
         id: 1,
@@ -429,6 +429,7 @@ describe('VouchersComponent', () => {
       reserved: 'Pending',
       released: 'Declined',
     };
+    component.showRedeemedIcon = true;
     fixture.detectChanges();
     const voucherOne = fixture.debugElement.queryAll(By.css('.voucher-details'))[0];
     expect(voucherOne.query(By.css('.ribbon')).nativeElement.textContent.trim()).toBe('Redeemed');

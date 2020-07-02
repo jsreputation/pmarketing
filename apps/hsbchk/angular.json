@@ -134,12 +134,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:lint",
           "options": {
-            "eslintConfig": ".eslintrc",
-            "files": [
-              "src/**/*.ts"
-            ]
+            "linter": "eslint",
+            "config": ".eslintrc",
+            "files": ["src/**/*.ts"]
           }
         }
       }

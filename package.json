@@ -48,6 +48,8 @@
     "build:petron-demo:production": "echo 'skipping petron-demo build'",
     "build:philipssg:staging": "lerna run build:lib && lerna run build:philipssg:staging --",
     "build:philipssg:production": "lerna run build:lib && lerna run build:philipssg:production --",
+    "build:dbshk-agent:production": "lerna run build:lib && lerna run build:dbshk-agent:production --",
+    "build:dbshk-agent:staging": "lerna run build:lib && lerna run build:dbshk-agent:staging --",
     "build:prudential:production": "echo 'skipping prudential build'",
     "build:prudential:staging": "echo 'skipping prudential build'",
     "build:starhub:production": "lerna run build:lib && lerna run build:starhub:production --",
@@ -70,7 +72,7 @@
     "backend/*"
   ],
   "devDependencies": {
-    "@angular-eslint/builder": "^0.0.1-alpha.27",
+    "@nrwl/linter": "^8.0.0",
     "@nrwl/jest": "^9.2.2",
     "env-cmd": "^10.1.0",
     "lerna": "^3.14.1"

@@ -1,10 +1,21 @@
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
-import { StampService, IStampCard, IStamp, IPopupConfig, PuzzleCollectReward, NotificationService, StampState, ConfigService } from '@perxtech/core';
+import {
+  StampService,
+  IStampCard,
+  IStamp,
+  IPopupConfig,
+  PuzzleCollectReward,
+  NotificationService,
+  StampState,
+  ConfigService,
+  RewardPopupComponent
+} from '@perxtech/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { switchMap, tap, takeUntil, pairwise, filter, map } from 'rxjs/operators';
 import { Subject, of } from 'rxjs';
 import { oc } from 'ts-optchain';
 import { AnalyticsService, PageType } from '../analytics.service';
+import { MatDialog } from '@angular/material/dialog';
 
 export interface IRewardPopupConfig extends IPopupConfig {
   afterClosedCallBackRedirect?: PopUpClosedCallBack;
@@ -56,7 +67,8 @@ export class StampCardComponent implements OnInit, OnDestroy {
     private router: Router,
     private analytics: AnalyticsService,
     private notificationService: NotificationService,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private dialog: MatDialog
   ) {
   }
 
@@ -180,14 +192,14 @@ export class StampCardComponent implements OnInit, OnDestroy {
               const data: IRewardPopupConfig = {
                 title: 'Congratulations!',
                 text: 'Here is a reward for you.',
-                imageUrl: 'assets/prize.png',
+                imageUrl: 'assets/reward.png',
                 disableOverlayClose: true,
                 ctaButtonClass: 'ga_game_completion',
-                url: `/voucher/${voucherId}`,
+                url: `redemption?id=${voucherId}`,
                 afterClosedCallBackRedirect: this,
                 buttonTxt: 'View Reward',
               };
-              this.notificationService.addPopup(data);
+              this.dialog.open(RewardPopupComponent, { data });
             }
 
           } else {

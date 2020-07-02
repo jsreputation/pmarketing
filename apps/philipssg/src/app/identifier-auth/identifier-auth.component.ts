@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { AuthenticationService, NotificationService } from '@perxtech/core';
+import { Component, OnInit } from '@angular/core';
+import { AuthenticationService, ITheme, NotificationService, ThemesService } from '@perxtech/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -9,14 +9,16 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './identifier-auth.component.html',
   styleUrls: ['./identifier-auth.component.scss']
 })
-export class IdentifierAuthComponent {
+export class IdentifierAuthComponent implements OnInit {
   public loginForm: FormGroup;
   public errorMessage: string | null;
+  public theme: ITheme;
 
   constructor(
     private authService: AuthenticationService,
     private fb: FormBuilder,
     private notificationService: NotificationService,
+    private themesService: ThemesService,
     private router: Router,
   ) {
     // attempt to first login automatically
@@ -30,6 +32,13 @@ export class IdentifierAuthComponent {
     this.loginForm = this.fb.group({
       personalId: ['', Validators.required],
     });
+  }
+
+  public ngOnInit(): void {
+    this.themesService.getThemeSetting().subscribe(
+      theme => {
+        this.theme = theme;
+      });
   }
 
   public onSubmit(): void {
@@ -59,7 +68,6 @@ export class IdentifierAuthComponent {
   }
   public redirectAfterLogin(): void {
     const campaignId = JSON.parse(localStorage.getItem('cid'));
-    console.log(campaignId, 'ensure i am getting cid');
     this.router.navigate([`/game/${campaignId}`]);
   }
 }

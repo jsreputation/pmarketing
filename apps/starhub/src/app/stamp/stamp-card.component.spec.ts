@@ -5,6 +5,7 @@ import { PuzzlesModule, StampCardState, StampService, NotificationService, IStam
 import { of } from 'rxjs';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { Type } from '@angular/core';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('StampCardComponent', () => {
   let component: StampCardComponent;
@@ -38,6 +39,7 @@ describe('StampCardComponent', () => {
           { path: 'home', redirectTo: '/' }
         ]),
         PuzzlesModule,
+        MatDialogModule
       ],
       providers: [
         { provide: StampService, useValue: stampServiceStub },

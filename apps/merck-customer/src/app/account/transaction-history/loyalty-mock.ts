@@ -1,4 +1,4 @@
-import { ILoyalty, ITransaction, ITransactionHistory, TransactionDetailType } from '@perxtech/core';
+import { ILoyalty, ILoyaltyTransaction, ILoyaltyTransactionHistory, TransactionDetailType } from '@perxtech/core';
 
 export const mockLoyalty: ILoyalty = {
   id: 1,
@@ -19,7 +19,7 @@ export const mockLoyalty: ILoyalty = {
   ]
 };
 
-interface ITransactionWithDescription extends ITransaction {
+interface ITransactionWithDescription extends ILoyaltyTransaction {
   description?: string;
 }
 
@@ -83,7 +83,7 @@ export const mockTransactions: ITransactionWithDescription[] = [
     properties: {}
   }
 ];
-export const mockTransactionsHistory: ITransactionHistory[] = [
+export const mockTransactionsHistory: ILoyaltyTransactionHistory[] = [
   {
     id: 749,
     name: 'Trigger',

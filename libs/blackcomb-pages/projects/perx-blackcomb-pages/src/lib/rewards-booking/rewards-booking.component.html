@@ -1,23 +1,25 @@
 <div class="main-container">
     <div class="reward-body">
         <form class="booking-form" [formGroup]="bookingForm" (ngSubmit)="submitForm()">
-            <div class="mat-select-wrap">
+            <div *ngIf="chooseQuantity" class="mat-select-wrap">
                 <mat-select placeholder="Quantity" formControlName="quantity">
                     <mat-option *ngFor="let quantity of quantities" [value]="quantity">{{quantity}}</mat-option>
                 </mat-select>
             </div>
             <div class="mat-select-wrap">
-                <mat-select placeholder="Location" formControlName="location" msInfiniteScroll (infiniteScroll)="getMerchantData()">
-                    <mat-option *ngFor="let location of locationData | async" [value]="location.locationId">{{location.name}}</mat-option>   
+                <mat-select [disabled]="!locationData"  [placeholder]="locationData ? 'Location' : 'All locations'" formControlName="location">
+                    <mat-option *ngFor="let location of locationData" [value]="location.id">{{location.name}}</mat-option>
                 </mat-select>
             </div>
             <mat-radio-group class="radio-group" formControlName="priceId">
                 <mat-radio-button *ngFor="let price of prices" class="radio-button" [value]="price.id">
+                  <p id="price-point-info">
                     Use
                     <span *ngIf="price.points">{{price.points}} points</span>
                     <span *ngIf="price.points && price.price"> + </span>
                     <span *ngIf="price.price">{{price.currencyCode}} {{price.price | number: '1.0-0'}}</span>
                     <span *ngIf="price.identifier"> (code: {{price.identifier}})</span>
+                  </p>
                 </mat-radio-button>
             </mat-radio-group>
             <div class="agreement">
@@ -28,8 +30,8 @@
                 </p>
             </div>
             <div class="redeem-container">
-                <button mat-flat-button type="submit" color="primary" [disabled]="bookingForm.invalid">Submit</button>
-            </div>           
+                <button mat-flat-button type="submit" color="primary" [disabled]="bookingForm.invalid || loading">Submit</button>
+            </div>
         </form>
     </div>
 </div>
