@@ -53,6 +53,7 @@ const authServiceStub: Partial<AuthenticationService> = {
   isAuthorized: () => of(true)
 };
 const loyaltyServiceStub: Partial<LoyaltyService> = {
+  getLoyalty: () => of(),
   getLoyalties: () => of([])
 };
 
