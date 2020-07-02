@@ -6,6 +6,7 @@ import {
 } from '@angular/common/http';
 
 import {
+  iif,
   Observable,
   of
 } from 'rxjs';
@@ -27,7 +28,8 @@ import {
   IMicrositeSettings,
   IRssFeeds,
   PagesObject,
-  IFlags
+  IFlags,
+  GatekeeperApis
 } from './models/settings.model';
 import { ConfigService } from '../config/config.service';
 
@@ -49,6 +51,7 @@ interface IV4Flags {
     rebate_demo_flow: boolean;
     gatekeeper_polling_interval: number;
     show_stamp_campaigns: boolean;
+    gatekeeper_api: GatekeeperApis;
   };
 }
 
@@ -117,7 +120,8 @@ export class V4SettingsService extends SettingsService {
       rewardsCarousel: data.json_value.rewards_carousel,
       rebateDemoFlow: data.json_value.rebate_demo_flow,
       gatekeeperPollingInterval: data.json_value.gatekeeper_polling_interval,
-      showStampCampaigns: data.json_value.show_stamp_campaigns
+      showStampCampaigns: data.json_value.show_stamp_campaigns,
+      gatekeeperApi: data.json_value.gatekeeper_api,
     };
   }
 
@@ -183,16 +187,19 @@ export class V4SettingsService extends SettingsService {
 
   public isGatekeeperOpen(): Observable<boolean> {
     // this will return a empty body and angular does not like it.
-    // return this.http.post<IV4GatekeeperResponse>(`${this.hostName}/v4/gatekeep_token`, null).pipe(
+    const perxGatekeeper = this.http.post<IV4GatekeeperResponse>(`${this.hostName}/v4/gatekeep_token`, null);
 
     // currently only implemented for prod todo: auth and staging/prod versions
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-
-    return this.httpBackend.get<IV4GatekeeperResponse>(
+    const awsGatekeeper = this.httpBackend.get<IV4GatekeeperResponse>(
       'https://cors-proxy.perxtech.io/?url=https://80ixbz8jt8.execute-api.ap-southeast-1.amazonaws.com/Prod/gatekeep_token',
       {
         headers
-      }).pipe(
+      });
+    return this.getRemoteFlagsSettings().pipe(
+      switchMap((flags: IFlags) =>
+        iif(() => flags.gatekeeperApi === GatekeeperApis.AWS, awsGatekeeper, perxGatekeeper)
+      ),
       map((res: IV4GatekeeperResponse) => {
         if (res.message === 'go ahead') {
           return true;
