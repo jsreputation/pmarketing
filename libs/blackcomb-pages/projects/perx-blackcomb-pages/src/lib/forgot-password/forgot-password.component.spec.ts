@@ -15,7 +15,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   AuthenticationService,
-  ConfigService,
+  ConfigService, ILoyalty, LoyaltyService,
   UtilsModule
 } from '@perxtech/core';
 import { Observable, of } from 'rxjs';
@@ -38,6 +38,11 @@ const configServiceStub: Partial<ConfigService> = {
     isWhistler: true,
     baseHref: ''
   })
+};
+
+const loyaltyServiceStub: Partial<LoyaltyService> = {
+  getLoyalty: (): Observable<ILoyalty> => of(),
+  getLoyalties: (): Observable<ILoyalty[]> => of([])
 };
 
 describe('ForgotPasswordComponent', () => {
@@ -74,7 +79,8 @@ describe('ForgotPasswordComponent', () => {
             login: () => of(true)
           }
         },
-        { provide: ConfigService, useValue: configServiceStub }
+        { provide: ConfigService, useValue: configServiceStub },
+        { provide: LoyaltyService, useValue: loyaltyServiceStub },
       ]
     })
       .compileComponents();
