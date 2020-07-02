@@ -69,6 +69,15 @@ export class HomeComponent extends BCHomeComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.loyaltyService.getLoyalty().subscribe((loyalty) => {
+      if (
+        loyalty &&
+        !loyalty.membershipState
+      ) {
+        this.authService.logout();
+        this.router.navigate(['/login']);
+      }
+    });
     this.profileService.getCustomProperties()
       .pipe(
         switchMap(
