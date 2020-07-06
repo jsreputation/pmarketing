@@ -341,7 +341,10 @@ export class V4VouchersService implements IVoucherService {
   }
 
   public issueReward(rewardId: number, rewardParams?: IRewardParams, locale: string = 'en'): Observable<IVoucher> {
-    const headers = new HttpHeaders().set('Accept-Language', locale);
+    const headers = new HttpHeaders()
+    headers.set('Accept-Language', locale);
+    headers.set('Content-type', 'application/json');
+
     let params = new HttpParams();
     if (rewardParams && rewardParams.sourceType) {
       params = params.set('source_type', rewardParams.sourceType);
