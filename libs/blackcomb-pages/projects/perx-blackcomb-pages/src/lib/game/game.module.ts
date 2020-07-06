@@ -12,7 +12,7 @@ import { GameComponent } from './game.component';
 import { ScratchComponent } from './scratch/scratch.component';
 import { ShakeComponent } from './shake/shake.component';
 import { SnakeComponent } from './snake/snake.component';
-import { ConfigToSlicesPipe, SpinComponent } from './spin/spin.component';
+import { SpinComponent } from './spin/spin.component';
 import { TapComponent } from './tap/tap.component';
 import { MatProgressBarModule, MatButtonModule } from '@angular/material';
 
@@ -23,7 +23,6 @@ import { MatProgressBarModule, MatButtonModule } from '@angular/material';
     ScratchComponent,
     GameComponent,
     SpinComponent,
-    ConfigToSlicesPipe,
     SnakeComponent
   ],
   exports: [
@@ -33,7 +32,6 @@ import { MatProgressBarModule, MatButtonModule } from '@angular/material';
     ScratchComponent,
     SpinComponent,
     SnakeComponent,
-    ConfigToSlicesPipe,
   ],
   imports: [
     CommonModule,

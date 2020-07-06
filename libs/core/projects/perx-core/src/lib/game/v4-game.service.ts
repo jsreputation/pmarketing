@@ -108,7 +108,7 @@ export interface SpinDisplayProperties extends GameProperties {
 export interface SpinWedge {
   position: number;
   color: string;
-  image: string;
+  image: Asset;
   has_reward: boolean;
 }
 

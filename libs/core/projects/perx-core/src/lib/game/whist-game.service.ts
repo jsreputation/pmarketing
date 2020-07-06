@@ -103,8 +103,7 @@ export class WhistlerGameService implements IGameService {
         ...defaultSpin(),
         numberOfWedges: spindp.nb_of_wedges,
         rewardSlots: spindp.slots,
-        colorCtrls: Object.assign(spindp.wedge_colors),
-        rewardIcon: spindp.reward_icon,
+        slices: [],
         wheelImg: spindp.wheel_img,
         wheelPosition: spindp.wheel_position,
         pointerImg: spindp.pointer_img

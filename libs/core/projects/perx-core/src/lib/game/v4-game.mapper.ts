@@ -165,7 +165,7 @@ export class SpinV4ToV4Mapper extends GameV4Mapper {
     const slices = dpps.wedges && dpps.wedges.map(slot => ({
       id: slot.position,
       backgroundColor: slot.color,
-      backgroundImage: slot.image
+      backgroundImage: slot.has_reward && oc(slot).image.value.image_url('')
     }));
     const config = {
       ...this.default(),

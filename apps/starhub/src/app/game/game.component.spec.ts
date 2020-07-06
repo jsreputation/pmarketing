@@ -16,7 +16,7 @@ import { GameComponent } from './game.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { Location } from '@angular/common';
-import { ScratchComponent, ShakeComponent, TapComponent, SpinComponent, ConfigToSlicesPipe } from '@perxtech/blackcomb-pages';
+import { ScratchComponent, ShakeComponent, TapComponent, SpinComponent } from '@perxtech/blackcomb-pages';
 import { Type } from '@angular/core';
 
 const mockGame: IGame = {
@@ -71,7 +71,7 @@ describe('GameComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [GameComponent, ScratchComponent, ShakeComponent, TapComponent, SpinComponent, ConfigToSlicesPipe],
+      declarations: [GameComponent, ScratchComponent, ShakeComponent, TapComponent, SpinComponent],
       imports: [MatIconModule, MatToolbarModule, GameModule],
       providers: [
         { provide: Router, useValue: routerStub },

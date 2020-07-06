@@ -3,12 +3,12 @@ import { ISlice } from '../game.model';
 import { loadImage } from '../../utils/load-image.function';
 
 interface ImageForPattern {
-  id: string;
+  id: number;
   image: HTMLImageElement;
 }
 
 interface Pattern {
-  id: string;
+  id: number;
   width: number;
   height: number;
   pattern: CanvasPattern;
@@ -59,7 +59,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   private spinTimeoutId: number;
   private wheelImgElt: HTMLImageElement | null = null;
   private slotToLand: number; // moved in, since it needs to be changed dynamically instd of pipe
-  private REFRESH_PERIOD: number = 20; // target 50FPS
+  static REFRESH_PERIOD: number = 20; // target 50FPS
 
   @ViewChild('canvas', { static: true })
   private canvasEl: ElementRef<HTMLCanvasElement>;
@@ -158,7 +158,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
 
   private createPatterns(arr: ImageForPattern[]): void {
     this.patterns = arr
-      .filter(({ id, image }) => id && image)
+      .filter(({ id, image }) => (id === 0 || id) && image)
       .map(item => ({
         id: item.id,
         width: item.image.width,
@@ -297,7 +297,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
       SpinTheWheelComponent.easeOut(this.spinTime, this.currentRotationAngleDeg, this.targetAngleDeg, this.spinDuration);
     this.currentRotationAngleRad = spinAngle * Math.PI / 180;
     this.drawWheel();
-    this.spinTimeoutId = window.setTimeout(() => this.rotateWheel(), this.REFRESH_PERIOD);
+    this.spinTimeoutId = window.setTimeout(() => this.rotateWheel(), SpinTheWheelComponent.REFRESH_PERIOD);
   }
 
   private stopRotateWheel(): void {
@@ -390,7 +390,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
    */
   private static easeOut(t: number, b: number, c: number, d: number): number {
     // todo improve this updateFactor and avoid magic number
-    const updateFactor = (t / d) * .2;
+    const updateFactor = (t / d) / this.REFRESH_PERIOD;
     return b + (c - b) * updateFactor;
   }
 }
