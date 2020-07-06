@@ -228,6 +228,9 @@
     "FILTER": "Filter",
     "VIEW_LOCATION": "View location"
   },
+  "GAME_PAGE": {
+    "STAMPS_LABEL_TXT": " new stamps"
+  },
   "CONTENT_PAGE": "Content Not Found",
   "LOGIN_SESSION_EXPIRED": "Login Session Expired"
 }
