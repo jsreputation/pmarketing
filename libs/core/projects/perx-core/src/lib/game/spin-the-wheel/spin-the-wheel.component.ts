@@ -59,7 +59,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   private spinTimeoutId: number;
   private wheelImgElt: HTMLImageElement | null = null;
   private slotToLand: number; // moved in, since it needs to be changed dynamically instd of pipe
-  static REFRESH_PERIOD: number = 20; // target 50FPS
+  private static REFRESH_PERIOD: number = 20; // target 50FPS
 
   @ViewChild('canvas', { static: true })
   private canvasEl: ElementRef<HTMLCanvasElement>;
@@ -390,7 +390,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
    */
   private static easeOut(t: number, b: number, c: number, d: number): number {
     // todo improve this updateFactor and avoid magic number
-    const updateFactor = (t / d) / this.REFRESH_PERIOD;
+    const updateFactor = (t / d) / SpinTheWheelComponent.REFRESH_PERIOD;
     return b + (c - b) * updateFactor;
   }
 }
