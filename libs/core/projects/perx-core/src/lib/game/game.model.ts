@@ -85,14 +85,11 @@ export function defaultSpin(): ISpin {
   return {
     numberOfWedges: 5,
     rewardSlots: [],
-    colorCtrls: {
-      0: 'red',
-      1: 'yellow',
-      2: 'green',
-      3: 'blue',
-      4: 'black'
-    },
-    rewardIcon: '',
+    slices: [{
+      id: 0,
+      backgroundColor: 'blue',
+      backgroundImage: ''
+    }],
     wheelImg: '',
     wheelPosition: '',
     pointerImg: '',
@@ -103,8 +100,7 @@ export function defaultSpin(): ISpin {
 export interface ISpin {
   numberOfWedges: number;
   rewardSlots: number[];
-  colorCtrls: { [index: number]: string };
-  rewardIcon: string;
+  slices: ISlice[];
   wheelImg: string; // diff from rimimage but hvnt implemented yet, will use rim 4 nw
   wheelPosition: string;
   pointerImg: string;
@@ -154,7 +150,7 @@ export interface IPlayOutcome {
 }
 
 export interface ISlice {
-  id: string;
+  id: number;
   label?: string;
   labelColor?: string;
   backgroundColor?: string;

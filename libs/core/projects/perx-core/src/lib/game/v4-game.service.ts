@@ -97,13 +97,19 @@ export interface PinataDisplayProperties extends GameProperties {
 
 export interface SpinDisplayProperties extends GameProperties {
   number_of_wedges: number;
-  wedge_colors: string[];
+  wedges: SpinWedge[];
   background_image: Asset;
-  reward_image: Asset;
   rim_image: Asset;
   wheel_image?: Asset;
   wheel_position: string;
   pointer_image: Asset;
+}
+
+export interface SpinWedge {
+  position: number;
+  color: string;
+  image: string;
+  has_reward: boolean;
 }
 
 export interface Game {

@@ -157,12 +157,21 @@ export class SpinV4ToV4Mapper extends GameV4Mapper {
     const type = TYPE.spin;
     const dpps: SpinDisplayProperties = game.display_properties as SpinDisplayProperties;
     const tempRewardSlots = [...Array(dpps.number_of_wedges).keys()].filter(item => item % 2 !== 0);
+    const rewardSlots = dpps.wedges && dpps.wedges.map(slot => {
+      if (slot.has_reward) {
+        return slot.position;
+      }
+    });
+    const slices = dpps.wedges && dpps.wedges.map(slot => ({
+      id: slot.position,
+      backgroundColor: slot.color,
+      backgroundImage: slot.image
+    }));
     const config = {
       ...this.default(),
       numberOfWedges: dpps.number_of_wedges,
-      rewardSlots: tempRewardSlots, // Display the reward Slot on the last wedge
-      colorCtrls: Object.assign(dpps.wedge_colors),
-      rewardIcon: oc(dpps).reward_image.value.image_url(''),
+      rewardSlots: rewardSlots && rewardSlots.length > 0 ? rewardSlots : tempRewardSlots,
+      slices,
       wheelImg: oc(dpps).rim_image.value.image_url(''),
       wheelPosition: oc(dpps).wheel_position('center'),
       pointerImg: oc(dpps).pointer_image.value.image_url(''),
@@ -184,14 +193,11 @@ export class SpinV4ToV4Mapper extends GameV4Mapper {
     return {
       numberOfWedges: 5,
       rewardSlots: [],
-      colorCtrls: {
-        0: 'red',
-        1: 'yellow',
-        2: 'green',
-        3: 'blue',
-        4: 'black'
-      },
-      rewardIcon: '',
+      slices: [{
+        id: 0,
+        backgroundColor: 'blue',
+        backgroundImage: ''
+      }],
       wheelImg: '',
       wheelPosition: '',
       pointerImg: '',
