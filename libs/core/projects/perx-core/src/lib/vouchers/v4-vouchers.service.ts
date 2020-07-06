@@ -363,7 +363,10 @@ export class V4VouchersService implements IVoucherService {
       };
       bodyData = {...bodyData, ...priceId};
     }
-    return this.http.post<IV4ReserveRewardResponse>(`${this.apiHost}/v4/rewards/${rewardId}/issue`, bodyData,{ headers, params })
+    return this.http.post<IV4ReserveRewardResponse>(`${this.apiHost}/v4/rewards/${rewardId}/issue`, bodyData, {
+      headers,
+      params
+    })
       .pipe(
         map(res => res.data),
         switchMap((minVoucher: IV4MinifiedVoucher) => this.get(minVoucher.id, undefined, undefined, locale)),
