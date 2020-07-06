@@ -341,7 +341,7 @@ export class V4VouchersService implements IVoucherService {
   }
 
   public issueReward(rewardId: number, rewardParams?: IRewardParams, locale: string = 'en'): Observable<IVoucher> {
-    const headers = new HttpHeaders()
+    const headers = new HttpHeaders();
     headers.set('Accept-Language', locale);
     headers.set('Content-type', 'application/json');
 
@@ -354,15 +354,14 @@ export class V4VouchersService implements IVoucherService {
     if (rewardParams && rewardParams.locationId) {
       const locationId = {
         location_id: rewardParams.locationId.toString()
-      }
-      bodyData = {...bodyData, ...locationId}
+      };
+      bodyData = {...bodyData, ...locationId};
     }
     if (rewardParams && rewardParams.priceId) {
       const priceId = {
         price_id: rewardParams.priceId.toString()
-      }
-      bodyData = {...bodyData, ...priceId}
-
+      };
+      bodyData = {...bodyData, ...priceId};
     }
     return this.http.post<IV4ReserveRewardResponse>(`${this.apiHost}/v4/rewards/${rewardId}/issue`, bodyData,{ headers, params })
       .pipe(
