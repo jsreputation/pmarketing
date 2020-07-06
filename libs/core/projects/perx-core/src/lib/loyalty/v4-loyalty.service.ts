@@ -21,8 +21,8 @@ import {
   ILoyalty,
   IPurchaseTransactionHistory,
   IRewardTransactionHistory,
-  ITransaction,
-  ITransactionHistory,
+  ILoyaltyTransaction,
+  ILoyaltyTransactionHistory,
   TransactionDetailType
 } from './models/loyalty.model';
 
@@ -34,8 +34,18 @@ import { ICustomProperties } from '../profile/profile.model';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
 import { Cacheable } from 'ngx-cacheable';
+import {
+  V4TenantTransactionProperties,
+  V4TransactionsService
+} from '../transactions/transaction-service/v4-transactions.service';
 
 const DEFAULT_PAGE_COUNT: number = 10;
+
+interface IV4Image {
+  type: string;
+  url: string;
+  section: string;
+}
 
 interface IV4Meta {
   count?: number;
@@ -47,6 +57,20 @@ interface IV4Meta {
 interface IV4AgingPoints {
   expiring_on_date?: string;
   points_expiring?: number;
+}
+
+interface IV4LoyaltyTiers {
+  id: number;
+  name: string;
+  attained: boolean;
+  points_requirement: number;
+  points_difference: number;
+  points_difference_converted_to_currency?: number;
+  multiplier_point?: number;
+  multiplier_points_to_currency_rate?: number;
+  images?: IV4Image[];
+  tags?: IV4Tag[];
+  custom_fields?: ICustomProperties[];
 }
 
 interface IV4Loyalty {
@@ -63,9 +87,11 @@ interface IV4Loyalty {
   points_currency: string;
   points_to_currency_rate: number;
   aging_points?: IV4AgingPoints[];
-  tiers: any[]; // will do proper mapping later on
+  tiers: IV4LoyaltyTiers[]; // will do proper mapping later on
   points_history?: IV4PointHistory[];
   membership_expiry: Date;
+  membership_state?: 'active' | 'pending' | 'inactive' | 'expire';
+  images?: IV4Image[];
 }
 
 interface IV4GetLoyaltiesResponse {
@@ -119,26 +145,26 @@ interface IV4PurchaseTransactionHistory {
   currency: string;
   workflow_id?: number;
   created_at: Date;
-  properties?: ICustomProperties;
+  properties?: ICustomProperties | V4TenantTransactionProperties;
   transaction_reference: string;
 }
 
-interface IV4TransactionHistory {
+interface IV4LoyaltyTransactionPropertiesHistory {
   id: number;
   name: string;
   identifier: string;
   transacted_at: Date;
   amount: number;
   transacted_cents?: number; // property will probably be removed
-  properties: ICustomProperties;
+  properties: ICustomProperties | V4TenantTransactionProperties;
   transaction_details: {
     type: TransactionDetailType;
     data: IV4PurchaseTransactionHistory | IV4RewardTransactionHistory;
   };
 }
 
-interface IV4TransactionHistoryResponse {
-  data: IV4TransactionHistory[];
+interface IV4LoyaltyTransactionPropertiesHistoryResponse {
+  data: IV4LoyaltyTransactionPropertiesHistory[];
 }
 
 @Injectable({
@@ -175,6 +201,9 @@ export class V4LoyaltyService extends LoyaltyService {
       highestTierData = copiedLoyalty.tiers.find(tier3 => tier3.points_requirement === highestPoints);
       highestTier = highestTierData ? highestTierData.name : undefined;
     }
+    const thumbnailImage = loyalty.images &&
+      loyalty.images.find((image: IV4Image) => image.section === 'loyalty_thumbnail');
+
     return {
       id: loyalty.id,
       name: loyalty.name,
@@ -194,11 +223,23 @@ export class V4LoyaltyService extends LoyaltyService {
         expireDate: aging.expiring_on_date,
         points: aging.points_expiring
       })),
-      membershipExpiry: loyalty.membership_expiry
+      membershipExpiry: loyalty.membership_expiry,
+      tiers: loyalty.tiers ? loyalty.tiers.map(tier => ({
+        id: tier.id,
+        name: tier.name,
+        attained: tier.attained,
+        pointsRequirement: tier.points_requirement,
+        pointsDifference: tier.points_difference,
+        images: tier.images
+      })) : undefined,
+      membershipState: loyalty.membership_state,
+      images: {
+        thumbnailUrl: oc(thumbnailImage).url()
+      }
     };
   }
 
-  public static v4PointHistoryToPointHistory(pointHistory: IV4PointHistory): ITransaction {
+  public static v4PointHistoryToPointHistory(pointHistory: IV4PointHistory): ILoyaltyTransaction {
     const properties = pointHistory.properties;
     return {
       id: pointHistory.id,
@@ -214,8 +255,9 @@ export class V4LoyaltyService extends LoyaltyService {
     };
   }
 
-  public static v4TransactionHistoryToTransactionHistory(transactionHistory: IV4TransactionHistory): ITransactionHistory {
-
+  public static v4TransactionHistoryToTransactionHistory(
+    transactionHistory: IV4LoyaltyTransactionPropertiesHistory
+  ): ILoyaltyTransactionHistory {
     const transactionDetails = oc(transactionHistory).transaction_details.data();
     let data: IPurchaseTransactionHistory | IRewardTransactionHistory | undefined;
 
@@ -234,6 +276,7 @@ export class V4LoyaltyService extends LoyaltyService {
           break;
         case TransactionDetailType.transaction:
           const pthDetails = transactionDetails as IV4PurchaseTransactionHistory;
+          // todo: microsites will handling mapping tenant specific properties temporarily
           const pthProps = oc(pthDetails).properties() as {
             merchant_username: string;
             pharmacy: string;
@@ -249,8 +292,28 @@ export class V4LoyaltyService extends LoyaltyService {
             price: pthDetails.amount,
             currency: pthDetails.currency,
           };
+          data.properties = V4TransactionsService.v4TransactionPropertiesToTransactionProperties(pthProps as V4TenantTransactionProperties);
           break;
       }
+    // } else if (transactionHistory.name === 'POS Update') { // hard-coded reason code from backend for POS transactions
+    } else if (Object.keys(transactionHistory.properties).length > 0) {
+      // all-it transaction currently have no data in transaction_details assume it is a purchase.
+      const thProps = transactionHistory.properties;
+      data = {
+        id: transactionHistory.id
+      };
+
+      data.properties = V4TransactionsService.v4TransactionPropertiesToTransactionProperties(thProps as V4TenantTransactionProperties);
+    } else {
+      // assume it is a customer service action from dashboard
+      data = {
+        id: transactionHistory.id
+      };
+
+      // default blackcomb page is currently using productName as the default title
+      data.properties = {
+        productName: 'Customer Service Transaction'
+      };
     }
     return {
       id: transactionHistory.id,
@@ -258,7 +321,7 @@ export class V4LoyaltyService extends LoyaltyService {
       identifier: transactionHistory.identifier,
       transactedAt: transactionHistory.transacted_at,
       pointsAmount: transactionHistory.amount,
-      properties: transactionHistory.properties,
+      properties: transactionHistory.properties as ICustomProperties,
       transactionDetails: {
         type: oc(transactionHistory).transaction_details.type(),
         data
@@ -306,10 +369,10 @@ export class V4LoyaltyService extends LoyaltyService {
       );
   }
 
-  public getAllTransactions(loyaltyId: number = 1, locale: string = 'en'): Observable<ITransaction[]> {
+  public getAllTransactions(loyaltyId: number = 1, locale: string = 'en'): Observable<ILoyaltyTransaction[]> {
     const pageSize = 100;
     return this.getTransactions(loyaltyId, 1, pageSize, locale).pipe(
-      mergeMap((histories: ITransaction[]) => {
+      mergeMap((histories: ILoyaltyTransaction[]) => {
         const streams = [
           of(histories)
         ];
@@ -320,11 +383,16 @@ export class V4LoyaltyService extends LoyaltyService {
         return streams;
       }),
       concatAll(),
-      reduce((acc: ITransaction[], curr: ITransaction[]) => acc.concat(curr), [])
+      reduce((acc: ILoyaltyTransaction[], curr: ILoyaltyTransaction[]) => acc.concat(curr), [])
     );
   }
 
-  public getTransactions(loyaltyId: number, page: number = 1, pageSize: number = 10, locale: string = 'en'): Observable<ITransaction[]> {
+  public getTransactions(
+    loyaltyId: number,
+    page: number = 1,
+    pageSize: number = 10,
+    locale: string = 'en'
+  ): Observable<ILoyaltyTransaction[]> {
     const headers = new HttpHeaders().set('Accept-Language', locale);
     return this.http.get<IV4GetLoyaltyResponse>(
       `${this.apiHost}/v4/loyalty/${loyaltyId}/transactions`,
@@ -361,9 +429,9 @@ export class V4LoyaltyService extends LoyaltyService {
     locale: string = 'en',
     sortBy: string = 'transacted_at',
     orderBy: string = 'desc'
-  ): Observable<ITransactionHistory[]> {
+  ): Observable<ILoyaltyTransactionHistory[]> {
     const headers = new HttpHeaders().set('Accept-Language', locale);
-    return this.http.get<IV4TransactionHistoryResponse>(
+    return this.http.get<IV4LoyaltyTransactionPropertiesHistoryResponse>(
       `${this.apiHost}/v4/loyalty/transactions_history`,
       {
         headers,
@@ -375,9 +443,10 @@ export class V4LoyaltyService extends LoyaltyService {
         }
       }
     ).pipe(
-      map((res: IV4TransactionHistoryResponse) => res.data),
-      map((transactionHistories: IV4TransactionHistory[]) => transactionHistories.map(
-        (transactionHistory: IV4TransactionHistory) => V4LoyaltyService.v4TransactionHistoryToTransactionHistory(transactionHistory)
+      map((res: IV4LoyaltyTransactionPropertiesHistoryResponse) => res.data),
+      map((transactionHistories: IV4LoyaltyTransactionPropertiesHistory[]) => transactionHistories.map(
+        (transactionHistory: IV4LoyaltyTransactionPropertiesHistory) =>
+          V4LoyaltyService.v4TransactionHistoryToTransactionHistory(transactionHistory)
       ))
     );
   }

@@ -29,6 +29,7 @@ import { PrivacyPolicyComponent } from './account/profile-additions/containers/p
 import { TermsAndConditionComponent } from './account/profile-additions/containers/terms-and-condition/terms-and-condition.component';
 import { CustomerSupportComponent } from './account/customer-support/customer-support.component';
 import { flatMap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -47,6 +48,7 @@ export class AppComponent implements OnInit {
     private notificationService: NotificationService,
     private dialog: MatDialog,
     private location: Location,
+    private router: Router,
     private snackBar: MatSnackBar,
     private themeService: ThemesService,
     private configService: ConfigService
@@ -60,7 +62,16 @@ export class AppComponent implements OnInit {
     this.notificationService.$popup
       .subscribe((data: IPopupConfig) => this.dialog.open(PopupComponent, { data }));
     this.notificationService.$snack
-      .subscribe((msg: string) => this.snackBar.open(msg, 'x', { duration: 2000 }));
+      .subscribe(
+        (msg: string) => {
+          if (msg === 'LOGIN_SESSION_EXPIRED') {
+            this.router.navigate(['/login']);
+            msg = 'Login Session Expired';
+          }
+          this.snackBar.open(msg, 'x', { duration: 2000 });
+        },
+        (err) => console.error(err)
+      );
   }
 
   public onActivate(ref: any): void {

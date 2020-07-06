@@ -5,14 +5,14 @@ import {
 import { Observable } from 'rxjs';
 
 import {
-  ITransaction,
+  ILoyaltyTransaction,
   ILoyalty
 } from '@perxtech/core';
 
 
 export class CardComponentMock implements OnInit {
-  public transactions$: Observable<ITransaction[]>;
-  public priceLabelFn: (tr: ITransaction) => string;
+  public transactions$: Observable<ILoyaltyTransaction[]>;
+  public priceLabelFn: (tr: ILoyaltyTransaction) => string;
   public membershipId: number;
   public transactionsLoaded: boolean = false;
   public transactionsEnded: boolean = false;

@@ -22,7 +22,8 @@ import {
   MatListModule,
   MatDialogModule,
   MatMenuModule,
-  MatInputModule, MatTableModule
+  MatInputModule,
+  MatTableModule
 } from '@angular/material';
 import { GameModule } from './game/game.module';
 import { HistoryModule } from './history/history.module';
@@ -36,7 +37,8 @@ import {
   ProfileModule,
   QuizModule,
   SecondsToStringPipe,
-  RankModule
+  RankModule,
+  LocationModule
 } from '@perxtech/core';
 
 import { RewardComponent } from './reward/reward.component';
@@ -76,6 +78,8 @@ import { LeaderboardPageComponent } from './leaderboard-page/leaderboard-page.co
 import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
 import { SignIn2Module } from './sign-in-2/sign-in-2.module';
 import { ProfileModule as BCPProfileModule } from './profile/profile.module';
+import { FindLocationModule } from './find-location/find-location.module';
+import { MatSelectInfiniteScrollModule } from 'ng-mat-select-infinite-scroll';
 
 const comps: any[] = [
   RewardComponent,
@@ -155,6 +159,9 @@ const comps: any[] = [
     BCPQuizModule,
     QuizResultsModule,
     CampaignLandingPageModule,
+    LocationModule,
+    FindLocationModule,
+    MatSelectInfiniteScrollModule
   ],
   exports: [
     ...comps,

@@ -3,7 +3,9 @@
      (scrolled)="onScroll()"
      [scrollWindow]="false">
   <div class="stamps-collection">
-    <h1>Stamp Cards</h1>
+    <h1 *ngIf="title">{{title}}</h1>
+    <p class="subtitle" *ngIf="subTitle" [innerHtml]="subTitle"></p>
+    <div *ngIf="config?.body" [innerHtml]="config?.body | safeHtml"></div>
     <perx-core-puzzle-list [repeatGhostCount]="1" [cards]="stampCards$"
                            [puzzleTextFn]="puzzleTextFn" [titleFn]="titleFn" (selected)="selected($event)">
     </perx-core-puzzle-list>

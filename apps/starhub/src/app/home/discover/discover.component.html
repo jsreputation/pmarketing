@@ -2,4 +2,5 @@
 <app-categories (tapped)="categorySelected($event)"></app-categories>
 <app-rewards-cards (tapped)="rewardSelected($event)"></app-rewards-cards>
 <app-catalogs (tapped)="catalogSelected($event)"></app-catalogs>
+<app-stamp-cards *ngIf="showStampCampaigns" (tapped)="stampSelected($event)"></app-stamp-cards>
 <app-campaigns (tapped)="campaignSelected($event)"></app-campaigns>

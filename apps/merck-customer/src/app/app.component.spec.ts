@@ -43,7 +43,9 @@ describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([
+          { path: 'login', redirectTo: '/' }
+        ]),
         MatSnackBarModule,
         MatIconModule,
         MatToolbarModule,

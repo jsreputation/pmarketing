@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { VoucherComponent } from './voucher.component';
 import { MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { IVoucherService, VoucherState, RedemptionType, RewardsService, Voucher } from '@perxtech/core';
+import { IVoucherService, VoucherState, RedemptionType, RewardsService, Voucher, IReward } from '@perxtech/core';
 import { LocationShortFormatComponent } from '../location-short-format/location-short-format.component';
 import { RewardDetailComponent } from '../reward/reward-detail/reward-detail.component';
 import { ExpireTimerComponent } from '../reward/expire-timer/expire-timer.component';
@@ -107,26 +107,22 @@ describe('VoucherComponent', () => {
       expect(component.voucher).toBe(undefined);
     });
 
-    it('Redeem button should be disabled with future selling date', () => {
-      const today = new Date();
-      component.reward = {
+    it('Redeem button should be disabled with expired and redeemed voucher', () => {
+      component.voucher = {
         id: 1,
-        name: 'Reward Test',
-        description: 'Reward Description',
-        subtitle: 'Reward Subtitle',
-        validFrom: today,
-        sellingFrom: new Date(today.setHours(today.getHours() + 1)),
-        validTo: today,
-        rewardBanner: '',
-        termsAndConditions: '',
-        howToRedeem: '',
-        inventory: {
-          rewardTotalBalance: 100,
-          rewardTotalLimit: 100,
-          rewardLimitPerUserBalance: 100
-        }
+        state: VoucherState.expired,
+        reward: {} as IReward,
+        expiry: null
       };
-      const result: boolean = component.isButtonDisabled();
+      let result: boolean = component.isButtonDisabled();
+      expect(result).toBe(true);
+      component.voucher = {
+        id: 1,
+        state: VoucherState.redeemed,
+        reward: {} as IReward,
+        expiry: null
+      };
+      result = component.isButtonDisabled();
       expect(result).toBe(true);
     });
   });

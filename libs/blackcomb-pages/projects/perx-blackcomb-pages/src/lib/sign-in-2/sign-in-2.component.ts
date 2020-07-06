@@ -6,14 +6,15 @@ import {
   ConfigService,
   IConfig,
   GeneralStaticDataService,
-  ICountryCode
+  ICountryCode,
+  LoyaltyService,
 } from '@perxtech/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Navigation, Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subject, Observable } from 'rxjs';
-import { map, switchMap, takeUntil } from 'rxjs/operators';
+import { map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { oc } from 'ts-optchain';
 
@@ -24,7 +25,7 @@ interface ISigninConfig {
 @Component({
   selector: 'perx-blackcomb-pages-login',
   templateUrl: './sign-in-2.component.html',
-  styleUrls: ['./sign-in-2.component.scss']
+  styleUrls: ['./sign-in-2.component.scss'],
 })
 export class SignIn2Component implements OnInit, OnDestroy {
   public loginForm: FormGroup;
@@ -37,6 +38,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
   public countriesList$: Observable<ICountryCode[]>;
   public loading: boolean = false;
 
+  private validateMembership: boolean = false;
   private custId: string = '';
   private destroy$: Subject<void> = new Subject();
 
@@ -46,10 +48,11 @@ export class SignIn2Component implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private authService: AuthenticationService,
     private notificationService: NotificationService,
+    private loyaltyService: LoyaltyService,
     private themesService: ThemesService,
     private configService: ConfigService,
     public translate: TranslateService,
-    public generalStaticDataService: GeneralStaticDataService
+    public generalStaticDataService: GeneralStaticDataService,
   ) {
     const nav: Navigation | null = this.router.getCurrentNavigation();
     this.custId = oc(nav).extras.state.phoneNumber('');
@@ -58,11 +61,15 @@ export class SignIn2Component implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.countriesList$ = this.route.data.pipe(
+      tap((dataObj) => this.validateMembership = dataObj.validateMembership),
       map((dataObj) => dataObj.countryList),
-      switchMap((countriesList) => this.generalStaticDataService.getCountriesList(countriesList)),
-      takeUntil(this.destroy$)
+      switchMap((countriesList) =>
+        this.generalStaticDataService.getCountriesList(countriesList),
+      ),
+      takeUntil(this.destroy$),
     );
-    this.configService.readAppConfig<ISigninConfig>()
+    this.configService
+      .readAppConfig<ISigninConfig>()
       .pipe(takeUntil(this.destroy$))
       .subscribe((conf) => {
         this.appConfig = conf;
@@ -77,14 +84,15 @@ export class SignIn2Component implements OnInit, OnDestroy {
       this.appAccessTokenFetched = true;
       this.theme = this.themesService.getThemeSetting();
     } else {
-      this.authService.getAppToken()
+      this.authService
+        .getAppToken()
         .pipe(takeUntil(this.destroy$))
         .subscribe(
           () => {
             this.appAccessTokenFetched = true;
             this.theme = this.themesService.getThemeSetting();
           },
-          (err) => console.error(`Error${err}`)
+          (err) => console.error(`Error${err}`),
         );
     }
   }
@@ -97,7 +105,12 @@ export class SignIn2Component implements OnInit, OnDestroy {
   public get identifier(): string {
     const customerIdField = this.loginForm.get('customerID');
     const countryCode = this.loginForm.get('countryCode');
-    if (customerIdField && customerIdField.value && countryCode && countryCode.value) {
+    if (
+      customerIdField &&
+      customerIdField.value &&
+      countryCode &&
+      countryCode.value
+    ) {
       return `${countryCode.value}${customerIdField.value}`;
     }
     return '';
@@ -113,12 +126,13 @@ export class SignIn2Component implements OnInit, OnDestroy {
     const password: string = pwdField ? pwdField.value : '';
     this.errorMessage = null;
     this.loading = true;
-    this.authService.login(username, password)
+    this.authService
+      .login(username, password)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         () => {
           // set global userID var for GA tracking
-          if (!((window as any).primaryIdentifier)) {
+          if (!(window as any).primaryIdentifier) {
             (window as any).primaryIdentifier = username;
             this.authService.saveAnonymous(false);
           }
@@ -150,11 +164,37 @@ export class SignIn2Component implements OnInit, OnDestroy {
   }
 
   private redirectAfterLogin(): void {
-    this.router.navigateByUrl(
-      this.authService.getInterruptedUrl() ?
-        this.authService.getInterruptedUrl() :
-        this.appConfig.custom && this.appConfig.custom.redirectAfterLogin as string || 'wallet'
-    );
+    if (this.validateMembership) {
+      this.loyaltyService.getLoyalty().subscribe((loyalty) => {
+        if (
+          loyalty &&
+          loyalty.membershipState &&
+          loyalty.membershipState === 'active'
+        ) {
+          this.router.navigateByUrl(
+            this.authService.getInterruptedUrl()
+              ? this.authService.getInterruptedUrl()
+              : (this.appConfig.custom &&
+              (this.appConfig.custom.redirectAfterLogin as string)) ||
+              'wallet',
+          );
+        } else {
+          this.loading = false;
+          this.notificationService.addPopup({
+            title: 'Membership required',
+            text: 'Please purchase a valid membership before logging in',
+          });
+        }
+      });
+    } else {
+      this.router.navigateByUrl(
+        this.authService.getInterruptedUrl()
+          ? this.authService.getInterruptedUrl()
+          : (this.appConfig.custom &&
+          (this.appConfig.custom.redirectAfterLogin as string)) ||
+          'wallet',
+      );
+    }
   }
 
   private initForm(): void {

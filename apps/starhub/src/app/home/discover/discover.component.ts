@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ICategory } from '../../category.model';
 import { Router } from '@angular/router';
-import { IReward, ICatalog } from '@perxtech/core';
+import { IReward, ICatalog, SettingsService, IFlags } from '@perxtech/core';
 import { AnalyticsService, PageType } from '../../analytics.service';
 
 @Component({
@@ -10,7 +10,13 @@ import { AnalyticsService, PageType } from '../../analytics.service';
   styleUrls: ['./discover.component.scss']
 })
 export class DiscoverComponent implements OnInit {
-  constructor(private router: Router, private analytics: AnalyticsService) { }
+  public showStampCampaigns: boolean;
+
+  constructor(
+    private router: Router,
+    private analytics: AnalyticsService,
+    private settingService: SettingsService
+  ) { }
 
   public ngOnInit(): void {
     this.analytics.addEvent({
@@ -19,6 +25,8 @@ export class DiscoverComponent implements OnInit {
       siteSectionLevel2: 'rewards:discover',
       siteSectionLevel3: 'rewards:discover'
     });
+    this.settingService.getRemoteFlagsSettings()
+      .subscribe((flags: IFlags) => this.showStampCampaigns = flags && flags.showStampCampaigns || false);
   }
 
   public categorySelected(category: ICategory): void {
@@ -35,5 +43,9 @@ export class DiscoverComponent implements OnInit {
 
   public campaignSelected(gameId: number): void {
     this.router.navigate(['/game'], { queryParams: { id: gameId } });
+  }
+
+  public stampSelected(campaignId: number): void {
+    this.router.navigate([`/stamp/${campaignId}`]);
   }
 }

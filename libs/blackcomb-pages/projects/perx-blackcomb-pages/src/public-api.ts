@@ -1,3 +1,5 @@
+export { FindLocationModule } from './lib/find-location/find-location.module';
+export { FindLocationComponent } from './lib/find-location/find-location.component';
 export { LoadingComponent } from './lib/loading/loading.component';
 export { PerxBlackcombPagesModule } from './lib/perx-blackcomb-pages.module';
 export { AccountComponent } from './lib/account/account.component';
@@ -16,6 +18,9 @@ export { HistoryComponent } from './lib/history/history.component';
 export { HistoryModule } from './lib/history/history.module';
 export { HomeComponent } from './lib/home/home.component';
 export { HomeModule } from './lib/home/home.module';
+export { CatalogsComponent } from './lib/home/catalogs/catalogs.component';
+export { GamesCollectionComponent } from './lib/home/games-collection/games-collection.component';
+export { CampaignsCollectionComponent } from './lib/home/campaigns-collection/campaigns-collection.component';
 export { RewardComponent } from './lib/reward/reward.component';
 export { SignIn2Component } from './lib/sign-in-2/sign-in-2.component';
 export { SignIn2Module } from './lib/sign-in-2/sign-in-2.module';
@@ -71,3 +76,6 @@ export { RebatesModule } from './lib/rebates/rebates.module';
 export { RebatesWalletComponent } from './lib/rebates/rebates-wallet/rebates-wallet.component';
 export { OverviewComponent } from './lib/rebates/overview/overview.component';
 export { TransactionComponent } from './lib/rebates/transaction/transaction.component';
+export { TransactionCompleteComponent } from './lib/rebates/transaction-complete/transaction-complete.component';
+export { TransactionShowComponent } from './lib/rebates/transaction-show/transaction-show.component';
+

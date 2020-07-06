@@ -1,10 +1,26 @@
-<p>rebateAmount to be used: {{matchingMerchant?.rebateAmount}}</p>
-<!--input to enter amount-->
-<p>Enter amount to pay the merchant (owe)</p>
-<div style="margin: 2rem;" class="input-field">
-  <input [formControl]="costControl" type="number" class="form-control" placeholder="Enter Amount">
+<div class="overview-wrap" *ngIf="matchingMerchant">
+  <div class="banner-group">
+    <div class="logo-container">
+      <img [src]="matchingMerchant.images?.thumbnailUrl" [alt]="matchingMerchant.name">
+    </div>
+    <div class="merchant-content">
+      <p>You have <span class="dark-blue">${{matchingMerchant?.pointsBalance | pointsToCash: 2}}</span> in rebate funds with</p>
+      <h1>{{matchingMerchant.name}}</h1>
+    </div>
+  </div>
+
+  <div class="input-group">
+    <h1 class="amt-trans">Transaction amount</h1>
+    <div class="input-field">
+      <input matInput textAlign="left" [formControl]="costControl" [placeholder]="0.00" currencyMask [(ngModel)]="transactionAmount"
+             class="form-control" placeholder="Enter Amount">
+    </div>
+    <p>You are using <span id="red">{{consumedRebates || 0 | currency: '$'}}</span> of your current available rebate</p>
+    <p>You will earn <span class="dark-blue">{{rebateGained | currency:'$'}}</span> cashback with this transaction</p>
+  </div>
+  <div class="button-group">
+    <button [disabled]="transactionAmount <= 0" mat-button (click)="confirmTransaction()">Confirm Transaction</button>
+    <button (click)="cancelTransaction()" mat-stroked-button>Cancel</button>
+  </div>
 </div>
-<!--maybe final amount to be charged to user’s card pipe-->
-<!--rebate amount to be issued observable pipe input-->
-<p>rebate gained from this transaction: {{rebateGained}}</p>
-<button (click)="confirmTransaction()">Confirm Transaction</button>
+

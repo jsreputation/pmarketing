@@ -52,7 +52,8 @@ import {
   RssFeedsPages,
   SettingsService,
   ThemesService,
-  ILoyalty
+  ILoyalty,
+  IFlags
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
@@ -73,6 +74,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject();
   public theme: ITheme;
   public appConfig: IConfig<void>;
+  public appRemoteFlags: IFlags;
   public newsFeedItems: Observable<FeedItem[] | undefined>;
   public rewards$: Observable<IReward[]>;
   public games$: Observable<IGame[]>;
@@ -143,7 +145,11 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.initCampaign();
       }
     );
-
+    this.settingsService.getRemoteFlagsSettings().subscribe(
+      (flags: IFlags) => {
+        this.appRemoteFlags = flags;
+      }
+    );
     this.authService.isAuthorized().subscribe((isAuth: boolean) => {
       if (isAuth) {
         this.fetchPopupCampaigns();
@@ -158,7 +164,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  private getTabbedList(): void {
+  // requires public access for extended implementation
+  public getTabbedList(): void {
     this.getTabs()
       .pipe(mergeMap((tabs) => forkJoin(tabs.map((tab) =>
         this.rewardsService.getRewards(1, this.pageSize, undefined, tab.rewardsType ? [tab.rewardsType] : undefined)
@@ -234,7 +241,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.currentTabIndex = event.index;
   }
 
-  private fetchPopupCampaigns(): void {
+  // requires public access for extended implementation
+  public fetchPopupCampaigns(): void {
     this.campaignService.getCampaigns({ type: CampaignType.give_reward })
       .pipe(
         catchError(() => of([]))
@@ -285,7 +293,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
   }
 
-  private initCampaign(): void {
+  // requires public access for extended implementation
+  public initCampaign(): void {
     // https://iamturns.com/continue-rxjs-streams-when-errors-occur/ also look at CatchError, exactly for this purpose
     if (!this.showGames) { // prevent calling unnecessarily (i.e. duped when perx-blackcomb-pages-campaigns-collection quiz present)
       this.games$ = this.gamesService.getActiveGames()
@@ -316,7 +325,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   // ** catalogs component section **
   // for paging through and accumulating pages
-  private initCatalogsScan(): void {
+  // requires public access for extended implementation
+  public initCatalogsScan(): void {
     this.catalogs$ = this.catalogsBvrSbjt.asObservable().pipe(
       scan((acc, curr) => [...acc, ...curr ? curr : []], [])
     );

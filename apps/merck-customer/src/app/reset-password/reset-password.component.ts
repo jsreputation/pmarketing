@@ -1,12 +1,12 @@
-import { TranslateService } from '@ngx-translate/core';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { AuthenticationService, NotificationService, ProfileService, IProfile } from '@perxtech/core';
+import { AuthenticationService, NotificationService } from '@perxtech/core';
 import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
 import { HttpErrorResponse } from '@angular/common/http';
-import { mergeMap } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { mergeMap, catchError } from 'rxjs/operators';
+import { throwError, of } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'mc-reset-password',
@@ -19,12 +19,14 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
   public mobileNumber: string = '';
   public otp: string = '';
   public errorMessage: string | null = null;
+  private pwUpdatedTxt: string;
+  private serverNotAvailable: string;
+  private invalidCredentials: string;
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private authService: AuthenticationService,
-    private profileService: ProfileService,
     private notificationService: NotificationService,
     private translate: TranslateService
   ) {
@@ -38,6 +40,8 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
       this.mobileNumber = currentNavigation.extras.state.mobileNo;
       this.otp = currentNavigation.extras.state.otp;
     }
+
+    this.initTranslate();
   }
 
   public ngOnInit(): void {
@@ -60,7 +64,6 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
       pageTitle: ''
     };
   }
-
   public onUpdatePassword(): void {
 
     const password = this.resetPasswordForm.value.password as string;
@@ -71,79 +74,54 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
       );
       return;
     }
-    let resetPaswordCall;
 
-    const userToken = this.authService.getUserAccessToken();
-    const appToken = this.authService.getAppAccessToken();
-    if (!this.otp && !this.mobileNumber && userToken) {
-      resetPaswordCall = this.profileService.whoAmI().pipe(
-        mergeMap((profile: IProfile) => {
-          this.mobileNumber = profile.phone || '';
-          return this.authService.resetPassword({
-            phone: this.mobileNumber,
-            newPassword: password,
-            otp: this.otp,
-            passwordConfirmation: confirmPassword
-          });
-        })
-      );
-    } else if (this.otp && this.mobileNumber && appToken) {
-      resetPaswordCall = this.authService.resetPassword({
-        phone: this.mobileNumber,
-        newPassword: password,
-        otp: this.otp,
-        passwordConfirmation: confirmPassword
-      });
-    } else {
-      resetPaswordCall = this.translate.get('RESET_PW_PAGE.UNKNOWN_ERROR').pipe(mergeMap(text => throwError(text)));
-    }
+    const resetPaswordCall = this.authService.resetPassword({
+      phone: this.mobileNumber,
+      newPassword: password,
+      otp: this.otp,
+      passwordConfirmation: confirmPassword
+    }).pipe(
+      catchError(err => throwError(err)),
+      mergeMap(() => {
+        if (this.authService.getUserAccessToken()) {
+          return this.authService.login(this.mobileNumber, password);
+        }
+        return of(true);
+      })
+    );
 
     resetPaswordCall.subscribe(
       () => {
-        if (!this.otp && !this.mobileNumber && userToken) {
-          // Send Login Call on successfull password reset
-          this.sendLoginCall(password);
-        } else {
-          // Let user use new password to login if reset the password through forget password
-          this.router.navigateByUrl('login');
+        if (!((window as any).primaryIdentifier)) {
+          (window as any).primaryIdentifier = this.mobileNumber;
         }
+        this.router.navigateByUrl(this.authService.getUserAccessToken() ? 'account' : 'login');
+        this.notificationService.addSnack(this.pwUpdatedTxt);
       },
       err => {
-        console.error(`ResetPassword: ${err}`);
         if (err instanceof HttpErrorResponse) {
-          this.notificationService.addSnack(err.statusText);
+          if (err.status === 0) {
+            this.notificationService.addSnack(this.serverNotAvailable);
+          } else if (err.status === 401) {
+            this.notificationService.addSnack(this.invalidCredentials);
+          } else {
+            this.notificationService.addSnack(err.message);
+          }
         } else {
           this.notificationService.addSnack(err.code);
         }
       });
   }
 
-  private sendLoginCall(password: string): void {
-    this.authService.login(this.mobileNumber, password).subscribe(
-      () => {
-        // set global userID var for GA tracking
-        if (!((window as any).primaryIdentifier)) {
-          (window as any).primaryIdentifier = this.mobileNumber;
-        }
-        this.router.navigateByUrl(this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : 'account');
-        this.translate.get('RESET_PW_PAGE.PASSWORD_UPDATE_SUCCESSFULLY').subscribe(text =>
-          this.notificationService.addSnack(text)
-        );
-      },
-      (err) => {
-        if (err instanceof HttpErrorResponse) {
-          if (err.status === 0) {
-            this.translate.get('RESET_PW_PAGE.SERVER_NOT_AVAILABLE').subscribe(text =>
-              this.notificationService.addSnack(text)
-            );
-          } else if (err.status === 401) {
-            this.translate.get('RESET_PW_PAGE.INVALID_CREDENTIALS').subscribe(text =>
-              this.notificationService.addSnack(text)
-            );
-          }
-        }
-      }
+  private initTranslate(): void {
+    this.translate.get('RESET_PW_PAGE.PASSWORD_UPDATE_SUCCESSFULLY').subscribe(text =>
+      this.pwUpdatedTxt = text
+    );
+    this.translate.get('RESET_PW_PAGE.SERVER_NOT_AVAILABLE').subscribe(text =>
+      this.serverNotAvailable = text
+    );
+    this.translate.get('RESET_PW_PAGE.INVALID_CREDENTIALS').subscribe(text =>
+      this.invalidCredentials = text
     );
   }
-
 }

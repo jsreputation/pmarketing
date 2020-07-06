@@ -5,13 +5,13 @@ import { Observable, forkJoin, of } from 'rxjs';
 
 import {
   LoyaltyService,
-  ITransactionHistory,
+  ILoyaltyTransactionHistory,
   IRewardTransactionHistory,
-  IPurchaseTransactionHistory
+  SettingsService,
+  IFlags,
 } from '@perxtech/core';
+import { oc } from 'ts-optchain';
 import { map } from 'rxjs/operators';
-
-// import { ShowTitleInHeader } from '../layout/layout.component';
 
 @Component({
   selector: 'perx-blackcomb-pages-transaction-history',
@@ -19,40 +19,86 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./transaction-history.component.scss']
 })
 export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader */ {
-  public transactions: Observable<ITransactionHistory[]>;
-  public purchasesTitleFn: (tr: ITransactionHistory) => Observable<string>;
-  public redemptionsTitleFn: (tr: ITransactionHistory) => Observable<string>;
-  public descFn: (tr: ITransactionHistory) => Observable<string>;
-  public subTitleFn: (tr: ITransactionHistory) => Observable<string>;
-  public priceLabelFn: (tr: ITransactionHistory) => Observable<string>;
+  public transactions: Observable<ILoyaltyTransactionHistory[]>;
+  public purchasesTitleFn: (tr: ILoyaltyTransactionHistory) => Observable<string>;
+  public redemptionsTitleFn: (tr: ILoyaltyTransactionHistory) => Observable<string>;
+  public descFn: (tr: ILoyaltyTransactionHistory) => Observable<string>;
+  public subTitleFn: (tr: ILoyaltyTransactionHistory) => Observable<string>;
+  public priceLabelFn: (tr: ILoyaltyTransactionHistory) => Observable<string>;
 
-  private pageNumber: number = 1;
+  private pageNumber: number = 2;
   private pageSize: number = 10;
   private complitePagination: boolean = false;
   constructor(
     private loyaltyService: LoyaltyService,
-    private datePipe: DatePipe,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private settingsService: SettingsService,
+    private datePipe: DatePipe
   ) { }
 
   public ngOnInit(): void {
-    this.transactions = this.loyaltyService.getTransactionHistory(this.pageNumber, this.pageSize);
+    this.transactions = this.loyaltyService.getTransactionHistory(this.pageNumber - 1, this.pageSize);
+    this.settingsService.getRemoteFlagsSettings().subscribe((flags: IFlags) => {
+      if (flags.rebateDemoFlow) {
+        this.priceLabelFn = (tr: ILoyaltyTransactionHistory) => this.translate.get(['WALLET.CASHBACK_EARNED', 'WALLET.CASHBACK_SPENT']).pipe(
+          map(res => {
+            let cashbackSpentTxt = res['WALLET.CASHBACK_EARNED'];
+            let cashbackEarnedTxt = res['WALLET.CASHBACK_SPENT'];
+            const value = tr.pointsAmount || 0;
+            const absVal = String(Math.abs(value));
+            return value < 0 ? cashbackSpentTxt.replace('{points}', absVal) : cashbackEarnedTxt.replace('{points}', absVal);
+          })
+        );
+        this.descFn = (tr: ILoyaltyTransactionHistory) => {
+          let text = '';
+          const properties = oc(tr).transactionDetails.data.properties();
+          if (properties) {
+            text = properties.storeName ? `${properties.storeName}` : '';
+          }
+          return of(text);
+        };
+        this.purchasesTitleFn = (tr: ILoyaltyTransactionHistory) => {
+          let text = '';
+          const properties = oc(tr).transactionDetails.data.properties();
+          if (properties) {
+            text = properties.storeCode ? properties.storeCode : '';
+          }
+          return of(text);
+        };
+      } else {
+        this.priceLabelFn = (tr: ILoyaltyTransactionHistory) => this.translate.get(['WALLET.POINT_EARNED', 'WALLET.POINT_SPENT']).pipe(
+          map(res => {
+            let pointSpentTxt = res['WALLET.POINT_EARNED'];
+            let pointEarnedTxt = res['WALLET.POINT_SPENT'];
+            const value = tr.pointsAmount || 0;
+            const absVal = String(Math.abs(value));
+            return value < 0 ? pointSpentTxt.replace('{points}', absVal) : pointEarnedTxt.replace('{points}', absVal);
+          })
+        );
+        this.descFn = (tr: ILoyaltyTransactionHistory) => {
+          let text = '';
+          const properties = oc(tr).transactionDetails.data.properties();
+          if (properties) {
+            text = properties.storeName ? properties.storeName : '';
+          }
+          return of(text);
+        };
+        this.purchasesTitleFn = (tr: ILoyaltyTransactionHistory) => {
+          let text = '';
+          const properties = oc(tr).transactionDetails.data.properties();
+          if (properties) {
+            text = properties.productName ? properties.productName : '';
+          }
+          return of(text);
+        };
+      }
+    });
 
-    this.purchasesTitleFn = (tr: ITransactionHistory) =>
-      of(`${(tr.transactionDetails && tr.transactionDetails.data) ?
-        (tr.transactionDetails.data as IPurchaseTransactionHistory).pharmacyName : ''}`);
-
-    this.redemptionsTitleFn = (tr: ITransactionHistory) =>
+    this.redemptionsTitleFn = (tr: ILoyaltyTransactionHistory) =>
       of(`${(tr.transactionDetails && tr.transactionDetails.data) ?
         (tr.transactionDetails.data as IRewardTransactionHistory).rewardName : ''}`);
 
-    this.descFn = (tr: ITransactionHistory) =>
-      of(`${tr.transactionDetails && tr.transactionDetails.data &&
-        (tr.transactionDetails.data as IPurchaseTransactionHistory).productName}`);
-
-    this.subTitleFn = (tr: ITransactionHistory) => of(`${this.datePipe.transform(tr.transactedAt, 'dd/MM/yyyy')}`);
-
-    this.initTranslate();
+    this.subTitleFn = (tr: ILoyaltyTransactionHistory) => of(`${this.datePipe.transform(tr.transactedAt, 'dd/MM/yyyy')}`);
   }
 
   public onScroll(): void {
@@ -68,17 +114,4 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
       });
     this.pageNumber++;
   }
-
-  private initTranslate(): void {
-    this.priceLabelFn = (tr: ITransactionHistory) => this.translate.get(['WALLET.POINT_EARNED', 'WALLET.POINT_SPENT']).pipe(
-      map(res => {
-        let pointsSpentTxt = res['WALLET.POINT_EARNED'];
-        let pointsEarnedTxt = res['WALLET.POINT_SPENT'];
-        const value = tr.pointsAmount || 0;
-        const absVal = String(Math.abs(value));
-        return value < 0 ? pointsSpentTxt.replace('{points}', absVal) : pointsEarnedTxt.replace('{points}', absVal);
-      })
-    );
-  }
-
 }

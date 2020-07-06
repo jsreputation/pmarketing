@@ -22,6 +22,7 @@ import { filter, map, mergeMap, switchMap, takeUntil, tap } from 'rxjs/operators
 export class ForgotPasswordComponent implements OnInit, OnDestroy {
   public currentStep: number = 1;
   public usersPhone: string;
+  public loadingSubmit: boolean = false;
   private static PASSWORD_MIN_LENGTH: number = 3;
   public countriesList$: Observable<ICountryCode[]>;
   public countryCodePrefix: string | undefined;

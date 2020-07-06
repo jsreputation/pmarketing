@@ -1,103 +1,175 @@
-mat-card {
-  margin: 1.2rem 0;
-  display: flex;
-  align-items: center;
-  padding: 0;
-  flex: 0 0 10.5rem;
-  height: 10.5rem;
-  justify-content: space-between;
-}
+@import "~@angular/material/theming";
+@import "../../mixins/mixins.scss";
 
-mat-icon {
-  color: #b2b2b2;
-  font-size: 3.6rem;
-  height: 3.6rem;
-  flex: 0 0 3.6rem;
-}
-
-.merchant-content {
+.reward-content {
   display: flex;
   flex-basis: auto;
   flex-grow: 1;
-  justify-content: flex-start;
-}
+  justify-content: center;
 
-.merchant-img__wrapper {
-  // flex: 0 0 10.5rem;
-  height: 10.5rem;
-  width: 10.5rem;
-  // display: flex;
-  // justify-content: center;
-}
-
-.merchant-thumbnail {
-  // margin: auto;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.no-merchants {
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-  align-content: center;
-  padding-top: 1rem;
-
-  .img-container {
+  .reward-img__wrapper {
+    flex: 0 0 10.5rem;
+    height: 10.5rem;
+    width: 10.5rem;
     display: flex;
     justify-content: center;
+    overflow: hidden;
 
     img {
-      margin: 0 auto;
-      width: 70%;
-      max-height: 70vh;
+      margin: auto;
+      height: 10.5rem;
+    }
+
+    .no-image {
+      background-color: #4E4E4E;
+    }
+
+    svg {
+      height: 10.5rem;
+      background: #4E4E4E;
+    }
+  }
+
+  .reward-preview-details {
+    font-size: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 1.6rem 0;
+    padding-left: 0.8rem;
+    box-sizing: border-box;
+
+    &:nth-child(1) {
+      margin-top: 0;
+    }
+
+    h1 {
+      font-size: 1.6rem;
+      line-height: 1.6rem;
+      padding: 0;
+      font-weight: 500;
+      margin: 4px 0;
+    }
+
+    p {
+      font-size: 1.2rem;
+      line-height: 1.6rem;
+      min-height: 1.6rem;
+      //color: #e42713;
+      margin: 4px 0;
+      padding: 0;
+    }
+
+    .description {
+      font-size: 1.2rem;
+    }
+
+    .ellipse-2-lines {
+      @include ellipse-lines(2);
+    }
+
+    .rebate-details-block {
+      margin-top: 1.3rem;
+    }
+
+    #merchant-rebate-details {
+      font-size: 1.6rem;
+      font-weight: 500;
+      line-height: 1.4rem;
+      min-height: 1.4rem;
+      color: #001F67;
+      align-content: flex-end;
+      margin-top: auto;
+    }
+
+    #minor-details {
+      font-size: 1.2rem;
+      font-weight: 100;
+      color: var(--font_color);
+    }
+  }
+
+  .no-rewards {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    padding-top: 1rem;
+
+    h3 {
+      text-align: center;
+    }
+
+    .img-container {
+      display: flex;
+      justify-content: center;
+
+      img {
+        margin: 0 auto;
+        width: 70%;
+        height: 100%;
+      }
     }
   }
 }
 
-.merchant-details {
-  padding: 0 1.6rem;
-  font-size: 1.4rem;
+.card-list-container {
+  padding: 0 0.2rem;
+}
+
+.card-list-container.loading {
+  overflow: hidden;
+
+  .ghost {
+    overflow: hidden;
+  }
+
+  .reward-content {
+    .reward-img__wrapper {
+      .img-placeholder {
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+    .reward-preview-details {
+      .reward-name {
+        height: 1.6rem;
+        margin: 0.4rem 0;
+      }
+
+      .reward-subtitle {
+        height: 1.6rem;
+        margin: 0.4rem 0;
+      }
+
+      .reward-price-details {
+        height: 1.4rem;
+      }
+    }
+  }
+}
+
+mat-card {
+  margin: 1.2rem 0;
   display: flex;
-  flex-direction: column;
-  margin: auto 0;
-  flex: 1;
-
-  h1 {
-    font-size: 1.4rem;
-    color: #37474f;
-    line-height: 1.6rem;
-    font-weight: 500;
-    margin: 4px 0;
-    padding: 0;
-  }
-
-  p {
-    font-size: 1.1rem;
-    line-height: 1.3rem;
-    color: #858585;
-    margin: 4px 0;
-    padding: 0;
-  }
+  padding: 0;
+  flex: 0 0 10.5rem;
+  height: 10.5rem;
+  cursor: pointer;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.merchant-details:nth-child(1) {
-  margin-top: 0;
+mat-card.disabled {
+  background-color: #ebebeb;
+  pointer-events: none;
+  opacity: 0.5;
 }
 
-.small {
-  .merchant-img,
-  .merchant-thumbnail {
-    max-height: 6rem;
-    max-width: 6rem;
-  }
-
-  .merchant-details {
-    padding-left: 0;
-  }
-}
-
-.merchant-expiry {
-  color: #858585;
+.badge-warn {
+  background-color: rgba(228, 39, 19, 0.1);
+  //color: #e42713;
+  padding: 2px 4px;
+  font-size: 1.2rem;
+  border-radius: 8px;
 }

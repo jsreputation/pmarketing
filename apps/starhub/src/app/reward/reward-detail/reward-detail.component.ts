@@ -16,9 +16,6 @@ export class RewardDetailComponent {
   @Output()
   public hasExpired: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  @Output()
-  public isButtonEnabled: EventEmitter<boolean> = new EventEmitter<boolean>();
-
   @Input()
   public showBannerImage: boolean = true;
 
@@ -27,6 +24,9 @@ export class RewardDetailComponent {
 
   @Input()
   public showMacaron: boolean = true;
+
+  @Input()
+  public showBalance: boolean = true;
 
   @Input()
   public reward: IReward;
@@ -44,10 +44,7 @@ export class RewardDetailComponent {
         this.showMacaron = true;
         this.hasExpired.emit(true);
         this.isExpired = true;
-        if (!this.macaron) {
-          this.macaron = { label: '', class: '', isButtonEnabled: false };
-        }
-        this.macaron.label = 'Expiring';
+        this.macaron = { label: 'Expired', class: 'expired', isButtonEnabled: false };
       }
     );
   }
@@ -56,10 +53,7 @@ export class RewardDetailComponent {
     setTimeout(
       () => {
         this.showMacaron = true;
-        if (!this.macaron) {
-          this.macaron = { label: '', class: '', isButtonEnabled: false };
-        }
-        this.macaron.label = 'Expiring';
+        this.macaron = { label: 'Expiring', class: 'expiring', isButtonEnabled: true };
       }
     );
   }

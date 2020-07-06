@@ -6,9 +6,9 @@
                     <mat-option *ngFor="let quantity of quantities" [value]="quantity">{{quantity}}</mat-option>
                 </mat-select>
             </div>
-            <div class="mat-select-wrap">
-                <mat-select placeholder="Location" formControlName="location" msInfiniteScroll (infiniteScroll)="getMerchantData()">
-                    <mat-option *ngFor="let location of locationData | async" [value]="location.locationId">{{location.name}}</mat-option>   
+            <div *ngIf="locationData" class="mat-select-wrap">
+                <mat-select placeholder="Location" formControlName="location">
+                    <mat-option *ngFor="let location of locationData" [value]="location.id">{{location.name}}</mat-option>
                 </mat-select>
             </div>
             <mat-radio-group class="radio-group" formControlName="priceId">
@@ -29,7 +29,7 @@
             </div>
             <div class="redeem-container">
                 <button mat-flat-button type="submit" color="primary" [disabled]="bookingForm.invalid">Submit</button>
-            </div>           
+            </div>
         </form>
     </div>
 </div>

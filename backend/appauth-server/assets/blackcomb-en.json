@@ -115,7 +115,9 @@
     "WALLET": "Wallet",
     "HISTORY": "History",
     "LEADER_BOARD": "Leaderboard",
-    "ACCOUNT": "Account"
+    "DEALS": "Deals",
+    "ACCOUNT": "Account",
+    "PAY": "Pay"
   },
   "QUIZ_TEMPLATE": {
     "CTA_START_TXT": "Take the quiz",
@@ -148,7 +150,9 @@
     "REWARD_STATUS_EXPIRED": "Expired",
     "CTA_TXT": "Redeem",
     "POINT_EARNED": "{points} Points earned",
-    "POINT_SPENT": "{points} Points spent"
+    "POINT_SPENT": "{points} Points spent",
+    "CASHBACK_EARNED": "{points} cashback earned",
+    "CASHBACK_SPENT": "{points} cashback spent"
   },
   "REDEMPTION": {
     "TITLE": "Input PIN",
@@ -295,9 +299,20 @@
     "DESCRIPTION": "Description",
     "TNC": "Terms and Conditions"
   },
-  "CONTENT_PAGE": "Content Not Found",
+  "LOCATION_PAGE": {
+    "FILTER_BY": "Filter by",
+    "MAP": "Map",
+    "LIST": "List",
+    "APPLY": "Apply",
+    "CATEGORIES": "Categories",
+    "CLEAR_ALL": "Clear all",
+    "FILTER": "Filter",
+    "VIEW_LOCATION": "View location"
+  },
   "Gold": "Gold",
   "Silver": "Silver",
   "Green": "Green",
-  "Basic": "Basic"
+  "Basic": "Basic",
+  "CONTENT_PAGE": "Content Not Found",
+  "LOGIN_SESSION_EXPIRED": "Login Session Expired"
 }

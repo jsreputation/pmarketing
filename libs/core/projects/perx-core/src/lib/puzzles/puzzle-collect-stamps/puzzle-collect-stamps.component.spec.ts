@@ -37,11 +37,12 @@ describe('PuzzleCollectStampsComponent', () => {
   it('ngOnChanges', () => {
     component.ngOnChanges({});
     component.nbSlots = 3;
+    component.numberOfCols = 3;
     component.stamps = [{ state: StampState.issued } as IStamp];
     component.ngOnChanges({
       nbSlots: 4,
       stamps: { state: StampState.issued } as IStamp
     } as any);
-    expect(component.currentActiveOrientation && component.currentActiveOrientation[0]).toBe(1);
+    expect(component.currentActiveOrientation && component.currentActiveOrientation[0]).toBe(3);
   });
 });

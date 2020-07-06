@@ -23,14 +23,8 @@
             "polyfills": "src/polyfills.ts",
             "preserveSymlinks": true,
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets",
-              "src/robots.txt"
-            ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "assets": ["src/favicon.ico", "src/assets", "src/robots.txt"],
+            "styles": ["src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -99,12 +93,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-eslint/builder:lint",
+          "builder": "@nrwl/linter:lint",
           "options": {
-            "eslintConfig": ".eslintrc",
-            "files": [
-              "src/**/*.ts"
-            ]
+            "linter": "eslint",
+            "config": ".eslintrc",
+            "files": ["src/**/*.ts"]
           }
         }
       }

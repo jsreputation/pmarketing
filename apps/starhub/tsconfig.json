@@ -13,6 +13,7 @@
     "noUnusedParameters": true,
     "importHelpers": true,
     "target": "es5",
+    "resolveJsonModule": true,
     "typeRoots": [
       "node_modules/@types"
     ],

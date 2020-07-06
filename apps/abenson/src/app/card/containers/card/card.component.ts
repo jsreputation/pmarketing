@@ -11,7 +11,7 @@ import {
 } from 'rxjs/operators';
 import {
   LoyaltyService,
-  ITransaction, ILoyalty, ConfigService, IConfig,
+  ILoyaltyTransaction, ILoyalty, ConfigService, IConfig,
 } from '@perxtech/core';
 import { IAbensonConfig } from '../../../model/IAbenson.model';
 import { CurrencyPipe, DatePipe } from '@angular/common';
@@ -22,9 +22,9 @@ import { CurrencyPipe, DatePipe } from '@angular/common';
   styleUrls: ['./card.component.scss']
 })
 export class CardComponent implements OnInit {
-  public transactions$: Observable<ITransaction[]>;
-  private transactions: BehaviorSubject<ITransaction[]> = new BehaviorSubject<ITransaction[]>([]);
-  public priceLabelFn: (tr: ITransaction) => Observable<string>;
+  public transactions$: Observable<ILoyaltyTransaction[]>;
+  private transactions: BehaviorSubject<ILoyaltyTransaction[]> = new BehaviorSubject<ILoyaltyTransaction[]>([]);
+  public priceLabelFn: (tr: ILoyaltyTransaction) => Observable<string>;
   public membershipId: number;
   public transactionsLoaded: boolean = false;
   public transactionsEnded: boolean = false;
@@ -39,7 +39,7 @@ export class CardComponent implements OnInit {
   public brandingImg: string;
   public subTitleFn: (loyalty: ILoyalty) => Observable<string>;
   public summaryExpiringFn: (loyalty: ILoyalty) => Observable<string>;
-  public skuFn: (tr: ITransaction) => Observable<{
+  public skuFn: (tr: ILoyaltyTransaction) => Observable<{
     sku: string | undefined;
     qty: string | undefined,
     untprc: string | undefined;
@@ -66,10 +66,10 @@ export class CardComponent implements OnInit {
         this.loyaltyCurrency = loyalty.currency;
         this.membershipId = parseInt(loyalty.membershipIdentifier || '0', 10);
       }
-      this.priceLabelFn = (tr: ITransaction) => of(`Points ${tr.points < 0 ? 'spent' : 'earned'}`);
+      this.priceLabelFn = (tr: ILoyaltyTransaction) => of(`Points ${tr.points < 0 ? 'spent' : 'earned'}`);
       this.getTransactions();
 
-      this.skuFn = (tr: ITransaction) => of({
+      this.skuFn = (tr: ILoyaltyTransaction) => of({
         sku: tr.sku ? `sku${tr.sku}` : undefined,
         qty: tr.quantity ? (parseInt(tr.quantity, 10) > 1 ? `${tr.quantity} items` : `${tr.quantity} item`) : undefined,
         untprc: tr.purchaseAmount ?

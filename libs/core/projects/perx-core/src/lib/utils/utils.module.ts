@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PopupComponent } from './popup/popup.component';
-import { MatButtonModule, MatDialogModule, MatCardModule } from '@angular/material';
+import { MatButtonModule, MatDialogModule, MatCardModule, MatToolbarModule, MatCheckboxModule } from '@angular/material';
 import { CommonModule } from '@angular/common';
 import {
   HTTP_INTERCEPTORS,
@@ -32,6 +32,8 @@ import { SafeUrlPipe } from './safe-url.pipe';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { TranslateModule } from '@ngx-translate/core';
 import { V4MicrositeSettingInterceptor } from './themes/v4publicSettings.interceptor';
+import { LocationFilterPopupComponent } from './location-filter-popup/location-filter-popup.component';
+import { PointsToCashPipe } from './directives/points-to-cash.pipe';
 
 export function themesServiceFactory(http: HttpClient, config: Config, configService: ConfigService): ThemesService {
   if (config.isWhistler) {
@@ -52,6 +54,7 @@ const components = [
   NewsfeedComponent,
   FeedItemPopupComponent,
   TimerComponent,
+  LocationFilterPopupComponent
 ];
 
 const pipes = [
@@ -59,7 +62,8 @@ const pipes = [
   SortRewardsPipe,
   StripHtmlPipe,
   SafeHtmlPipe,
-  SafeUrlPipe
+  SafeUrlPipe,
+  PointsToCashPipe
 ];
 
 // make sure we have only one instance of the NotificationService
@@ -78,7 +82,7 @@ export function notificationServiceFactory(): NotificationService {
     ...directives,
     ...components,
     ...pipes,
-    ForceLengthPipe
+    ForceLengthPipe,
   ],
   entryComponents: [
     ...components,
@@ -91,6 +95,8 @@ export function notificationServiceFactory(): NotificationService {
     MatCardModule,
     StorageModule,
     MatIconModule,
+    MatToolbarModule,
+    MatCheckboxModule,
     ScrollingModule,
     TranslateModule.forChild()
   ],

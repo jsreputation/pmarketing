@@ -20,6 +20,7 @@ import {
 } from '@perxtech/core';
 import { Observable, of } from 'rxjs';
 import { ForgotPasswordComponent } from './forgot-password.component';
+import { MatProgressSpinnerModule } from '@angular/material';
 
 class ActivatedRouteMock implements Partial<ActivatedRoute> {
   public get queryParams(): Observable<Params> {
@@ -47,6 +48,7 @@ describe('ForgotPasswordComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         CommonModule,
+        MatProgressSpinnerModule,
         ReactiveFormsModule,
         RouterTestingModule,
         MatFormFieldModule,

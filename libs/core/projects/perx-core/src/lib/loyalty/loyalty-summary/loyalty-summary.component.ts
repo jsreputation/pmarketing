@@ -1,12 +1,13 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import { TranslateService } from '@ngx-translate/core';
 import { Component, OnInit, Input } from '@angular/core';
-import { Observable, of, forkJoin } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { LoyaltyService } from '../loyalty.service';
 import { ProfileService } from '../../profile/profile.service';
 import { IProfile } from '../../profile/profile.model';
 import { ILoyalty } from '../models/loyalty.model';
 import { DatePipe } from '@angular/common';
+import { catchError, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-core-loyalty-summary',
@@ -47,10 +48,13 @@ export class LoyaltySummaryComponent implements OnInit {
 
   public loyaltyProgramExists: boolean = true;
   public pointTo: string;
+  private nextTierName: string;
+  private accountExpire: string;
 
   constructor(
     private profileService: ProfileService,
     private loyaltyService: LoyaltyService,
+    private translate: TranslateService,
     private datePipe: DatePipe
   ) {
   }
@@ -90,8 +94,8 @@ export class LoyaltySummaryComponent implements OnInit {
     }
 
     if (!this.membershipExpiryFn) {
-      this.membershipExpiryFn = (loyalty: ILoyalty): Observable<string> => loyalty && loyalty.membershipExpiry ?
-        of(`Account Expiry: ${this.datePipe.transform(loyalty.membershipExpiry, 'mediumDate')}`) :
+      this.membershipExpiryFn = (loyalty: ILoyalty): Observable<string> => loyalty && loyalty.membershipExpiry || loyalty.endDate ?
+        of(`${this.accountExpire}: ${this.datePipe.transform(loyalty.membershipExpiry || loyalty.endDate, 'mediumDate')}`) :
         of('');
     }
 
@@ -100,21 +104,31 @@ export class LoyaltySummaryComponent implements OnInit {
     }
 
     if (!this.loyalty$) {
-      this.loyalty$ = this.loyaltyService.getLoyalty(this.loyaltyId);
+      this.loyalty$ = this.loyaltyService.getLoyalty(this.loyaltyId)
+        .pipe(
+          catchError(val => {
+            if (val.status === 401) {
+              this.loyaltyProgramExists = true;
+            }
+            return of(val);
+          })
+        );
     }
-    forkJoin(this.loyalty$, this.pointToFn()).subscribe(
-      ([loyalty, txt]: [ILoyalty, string]) => {
-        this.loyalty = loyalty;
+    this.loyalty$.pipe(
+      tap((loyalty: ILoyalty) => {
         if (loyalty && loyalty.nextTierName) {
-          this.pointTo = txt.replace('{nextTierName}', loyalty.nextTierName);
+          this.translate.get(loyalty.nextTierName).subscribe(txt => this.nextTierName = txt);
         }
-      },
-      ([err, _]) => {
-        if (err instanceof HttpErrorResponse && err.status === 401) {
-          this.loyaltyProgramExists = true;
+      })
+    ).subscribe(
+      (loyalty: ILoyalty) => {
+        this.loyalty = loyalty;
+        if (this.nextTierName) {
+          this.pointTo = this.pointTo.replace('{nextTierName}', this.nextTierName);
         }
       }
     );
+
   }
 
   public getPercentageToNext(currentPoints: number, nextPoints: number | undefined): number {

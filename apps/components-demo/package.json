@@ -9,7 +9,7 @@
     "build:components-demo:production": "ng build --prod",
     "clean": "rm -rf ./dist ./node_modules",
     "test": "jest --config=jest.config.json",
-    "lint": "stylelint \"src/**/*.*css\" && eslint \"./src/**/*.ts\"",
+    "lint": "stylelint \"src/**/*.*css\" && ng lint",
     "lint:fix": "stylelint \"src/**/*.*css\" --fix && eslint \"./src/**/*.ts\" --fix",
     "e2e": "ng e2e",
     "test:watch": "jest --watch --config=jest.config.json"
@@ -33,7 +33,7 @@
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.800.0",
+    "@angular-devkit/build-angular": "0.803.23",
     "@angular/cli": "~8.0.2",
     "@angular/compiler-cli": "~8.0.0",
     "@angular/language-service": "~8.0.0",

@@ -1,4 +1,5 @@
-import {ICustomProperties} from '../../profile/profile.model';
+import { ICustomProperties } from '../../profile/profile.model';
+import { ITransactionProperties } from '../../transactions/models/transactions.model';
 
 export const enum TransactionDetailType {
   'transaction' = 'Transaction',
@@ -8,6 +9,25 @@ export const enum TransactionDetailType {
 export interface IExpiringPoints {
   expireDate?: string;
   points?: number;
+}
+
+export interface IV4Image {
+  type?: string;
+  url: string;
+  section?: string;
+}
+export interface LoyaltyImages {
+  thumbnailUrl?: string;
+}
+
+export interface LoyaltyTiers {
+  id: number;
+  name: string;
+  attained: boolean;
+  pointsRequirement: number;
+  pointsDifference: number;
+  images?: IV4Image[]; // we don't have a generic named image type yet
+  customFields?: ICustomProperties;
 }
 
 export interface ILoyalty {
@@ -28,9 +48,12 @@ export interface ILoyalty {
   expiringPoints?: IExpiringPoints[];
   cardId?: number;
   membershipExpiry?: Date;
+  tiers?: LoyaltyTiers[];
+  membershipState?: 'active' | 'pending' | 'inactive' | 'expire';
+  images?: LoyaltyImages;
 }
 
-export interface ITransaction {
+export interface ILoyaltyTransaction {
   id: number;
   name?: string;
   sku?: string;
@@ -50,6 +73,7 @@ export interface IRewardTransactionHistory {
   userAccount: string;
   rewardName: string;
   redemptionLocation?: string;
+  properties?: ITransactionProperties;
 }
 
 export interface IPurchaseTransactionHistory {
@@ -61,9 +85,10 @@ export interface IPurchaseTransactionHistory {
   transactionRef?: string;
   price?: number;
   currency?: string;
+  properties?: ITransactionProperties;
 }
 
-export interface ITransactionHistory {
+export interface ILoyaltyTransactionHistory {
   id: number;
   name?: string;
   identifier?: string;

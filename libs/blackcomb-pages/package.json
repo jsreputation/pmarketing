@@ -30,11 +30,13 @@
     "angularx-qrcode": "^1.6.4",
     "ngx-infinite-scroll": "^8.0.1",
     "ngx-multi-line-ellipsis": "^1.0.4",
+    "ng-mat-select-infinite-scroll": "^1.1.0",
     "rxjs": "~6.4.0",
     "ts-optchain": "^0.1.8",
     "tslib": "^1.9.0",
     "uuid": "^7.0.2",
-    "zone.js": "~0.9.1"
+    "zone.js": "~0.9.1",
+    "ng2-currency-mask": "~9.0.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.800.6",

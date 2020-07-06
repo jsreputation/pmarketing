@@ -13,7 +13,7 @@ import {
   LoyaltyModule,
   LoyaltyService,
   ProfileService,
-  ITransaction, ConfigService, IConfig,
+  ILoyaltyTransaction, ConfigService, IConfig,
 } from '@perxtech/core';
 
 import { CardComponent } from './card.component';
@@ -22,7 +22,7 @@ import { loyalty } from '../../../mock/loyalty.mock';
 import { MatTabChangeEvent } from '@angular/material';
 import { Type } from '@angular/core';
 
-const transaction: ITransaction = {
+const transaction: ILoyaltyTransaction = {
   id: 0,
   points: -11,
   earnedDate: new Date().toString(),

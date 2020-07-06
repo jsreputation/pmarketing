@@ -287,5 +287,6 @@
   "CONTENT_PAGE": "找不到內容",
   "Gold": "黃金",
   "Silver": "銀卡",
-  "Green": "綠色"
+  "Green": "綠色",
+  "LOGIN_SESSION_EXPIRED": "登錄時間超時"
 }

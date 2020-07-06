@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { ChangePasswordComponent } from './change-password.component';
-import { MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatFormFieldModule, MatInputModule, MatProgressSpinnerModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -28,6 +28,7 @@ describe('ChangePasswordComponent', () => {
         FormsModule,
         ReactiveFormsModule,
         RouterTestingModule,
+        MatProgressSpinnerModule,
         MatInputModule,
         NoopAnimationsModule,
         TranslateModule.forRoot()

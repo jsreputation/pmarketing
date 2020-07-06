@@ -20,7 +20,7 @@ interface IV4PointHistory {
   properties: {};
 }
 
-interface IV4TransactionHistory {
+interface IV4LoyaltyTransactionPropertiesHistory {
   id: number;
   name: string;
   identifier: string;
@@ -94,7 +94,7 @@ interface IV4GetLoyaltiesResponse {
   meta?: IV4Meta;
 }
 
-const transactionRaw: IV4TransactionHistory = {
+const transactionRaw: IV4LoyaltyTransactionPropertiesHistory = {
   id: 1,
   name: 'test',
   identifier: 'test',

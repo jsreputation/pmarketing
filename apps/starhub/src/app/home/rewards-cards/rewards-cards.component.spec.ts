@@ -1,4 +1,10 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick
+} from '@angular/core/testing';
 
 import { RewardsCardsComponent } from './rewards-cards.component';
 import { MatIconModule, MatCardModule } from '@angular/material';
@@ -7,7 +13,7 @@ import { of } from 'rxjs';
 import { Type } from '@angular/core';
 import { rewards } from '../../rewards.mock';
 import { MacaronService } from '../../services/macaron.service';
-import {GhostsModule} from '../../ghosts/ghosts.module';
+import { GhostsModule } from '../../ghosts/ghosts.module';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -22,14 +28,15 @@ describe('RewardsCardsComponent', () => {
     getMacaron: () => null
   };
   const configServiceStub: Partial<ConfigService> = {
-    readAppConfig: () => of({
-      apiHost: '',
-      production: false,
-      preAuth: false,
-      isWhistler: false,
-      baseHref: '',
-      rssFeeds: '',
-    })
+    readAppConfig: () =>
+      of({
+        apiHost: '',
+        production: false,
+        preAuth: false,
+        isWhistler: false,
+        baseHref: '',
+        rssFeeds: ''
+      })
   };
 
   beforeEach(async(() => {
@@ -47,8 +54,7 @@ describe('RewardsCardsComponent', () => {
         { provide: ConfigService, useValue: configServiceStub },
         { provide: MacaronService, useValue: macaronServiceStub }
       ]
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -62,8 +68,13 @@ describe('RewardsCardsComponent', () => {
   });
 
   it('should call macaronService.getMacaron getMacaron', () => {
-    const macaronService = TestBed.get<MacaronService>(MacaronService as Type<MacaronService>);
-    const macaronServiceSpy = spyOn(macaronService, 'getMacaron').and.returnValue(null);
+    const macaronService = TestBed.get<MacaronService>(
+      MacaronService as Type<MacaronService>
+    );
+    const macaronServiceSpy = spyOn(
+      macaronService,
+      'getMacaron'
+    ).and.returnValue(null);
     const macaron = component.getMacaron({} as IReward);
     expect(macaron).toBe(null);
     expect(macaronServiceSpy).toHaveBeenCalled();
@@ -73,7 +84,8 @@ describe('RewardsCardsComponent', () => {
     const reward = {
       id: 1,
       name: 'Get a Free Coke',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+      description:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
       subtitle: 'string',
       validFrom: new Date('2018-12-16T03:24:00'),
       validTo: new Date('2019-11-17T03:24:00'),
@@ -81,8 +93,10 @@ describe('RewardsCardsComponent', () => {
       rewardBanner: 'https://picsum.photos/300/200?random=2',
       merchantImg: 'https://picsum.photos/300/200?random=3',
       merchantName: 'Pizza Hut',
-      termsAndConditions: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-      howToRedeem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+      termsAndConditions:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+      howToRedeem:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
       merchantId: 2
     };
 
@@ -95,14 +109,19 @@ describe('RewardsCardsComponent', () => {
     it('should call rewardsService.getRewards', fakeAsync(() => {
       component.rewardsSnappingCompleted = false;
       component.rewardsFeaturedCompleted = false;
-      const rewardsService = TestBed.get<RewardsService>(RewardsService as Type<RewardsService>);
-      const rewardsServiceSpy = spyOn(rewardsService, 'getRewards').and.returnValue(of(rewards));
-      component.getRewardsSnapping().subscribe( () => {
+      const rewardsService = TestBed.get<RewardsService>(
+        RewardsService as Type<RewardsService>
+      );
+      const rewardsServiceSpy = spyOn(
+        rewardsService,
+        'getRewards'
+      ).and.returnValue(of(rewards));
+      component.getRewardsSnapping().subscribe(() => {
         expect(rewardsServiceSpy).toHaveBeenCalled();
-      })
-      component.getRewardsFeatured().subscribe( () => {
+      });
+      component.getRewardsFeatured().subscribe(() => {
         expect(rewardsServiceSpy).toHaveBeenCalled();
-      })
+      });
       tick();
     }));
   });

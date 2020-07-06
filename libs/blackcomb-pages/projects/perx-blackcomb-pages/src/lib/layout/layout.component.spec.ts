@@ -5,7 +5,7 @@ import { Location } from '@angular/common';
 import { LayoutComponent } from './layout.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MatToolbarModule, MatIconModule, MatDialogModule } from '@angular/material';
-import { ThemesService, ConfigModule, ConfigService, ITheme } from '@perxtech/core';
+import { ThemesService, ConfigModule, ConfigService, ITheme, SettingsService } from '@perxtech/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 
@@ -28,6 +28,10 @@ describe('LayoutComponent', () => {
 
   const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of()
+  };
+
+  const settingsServiceStub: Partial<SettingsService> = {
+    getRemoteFlagsSettings: () => of()
   };
 
   beforeEach(async(() => {
@@ -53,6 +57,10 @@ describe('LayoutComponent', () => {
         {
           provide: ConfigService,
           useValue: configServiceStub
+        },
+        {
+          provide: SettingsService,
+          useValue: settingsServiceStub
         },
         Title
       ]

@@ -7,17 +7,17 @@
 </mat-toolbar>
 <div class="main-container">
   <mat-tab-group mat-stretch-tabs class="tabs">
-    <mat-tab label="Sales">
+    <mat-tab [label]="salesTxt">
       <div
         class="tab-container"
-        infiniteScroll 
-        [infiniteScrollDistance]="2" 
+        infiniteScroll
+        [infiniteScrollDistance]="2"
         [infiniteScrollThrottle]="50"
-        (scrolled)="onScroll('purchase')" 
+        (scrolled)="onScroll('purchase')"
         [scrollWindow]="false">
         <perx-core-loyalty-transactions-list
           *ngIf="purchaseTransactions"
-          [transactions]="purchaseTransactions"
+          [loyaltyTransactions]="purchaseTransactions"
           [titleFn]="salesTitleFn"
           [subTitleFn]="salesSubTitleFn"
           [descFn]="salesDescFn"
@@ -26,17 +26,17 @@
         </perx-core-loyalty-transactions-list>
       </div>
     </mat-tab>
-    <mat-tab label="Redemption">
+    <mat-tab [label]="redemptionTxt">
       <div
         class="tab-container"
-        infiniteScroll 
-        [infiniteScrollDistance]="2" 
+        infiniteScroll
+        [infiniteScrollDistance]="2"
         [infiniteScrollThrottle]="50"
-        (scrolled)="onScroll('rewards')" 
+        (scrolled)="onScroll('rewards')"
         [scrollWindow]="false">
         <perx-core-loyalty-transactions-list
           *ngIf="rewardTransactions"
-          [transactions]="rewardTransactions"
+          [loyaltyTransactions]="rewardTransactions"
           [titleFn]="redemptionsTitleFn"
           [subTitleFn]="redemptionsSubTitleFn"
           [priceLabelFn]="redemptionsPriceLabelFn"

@@ -25,6 +25,8 @@ export class TransactionHistoryComponent implements OnInit {
   public redemptionsTitleFn: (tr: IMerchantRewardTransactionHistory) => Observable<string>;
   public redemptionsSubTitleFn: (tr: IMerchantRewardTransactionHistory) => Observable<string>;
   public redemptionsPriceLabelFn: (tr: IMerchantRewardTransactionHistory) => Observable<string>;
+  public salesTxt: string;
+  public redemptionTxt: string;
 
   private pageNumberPurchase: number = 1;
   private pageSizePurchase: number = 10;
@@ -40,8 +42,7 @@ export class TransactionHistoryComponent implements OnInit {
     private datePipe: DatePipe,
     private merchantAdminService: IMerchantAdminService,
     private translate: TranslateService
-  ) {
-  }
+  ) { }
 
   public ngOnInit(): void {
     this.currentSelectedLanguage = this.translate.currentLang || this.translate.defaultLang;
@@ -120,6 +121,10 @@ export class TransactionHistoryComponent implements OnInit {
   }
 
   private initTranslate(): void {
+    this.translate.get(['SALES_TXT', 'REDEMPTION_TXT']).subscribe((res: any) => {
+      this.salesTxt = res.SALES_TXT;
+      this.redemptionTxt = res.REDEMPTION_TXT;
+    });
     this.salespriceLabelFn = (tr: IMerchantPurchaseTransactionHistory) =>
       this.translate.get(['TRANSACTION_HISTORY.POINT_EARNED', 'TRANSACTION_HISTORY.POINT_SPENT']).pipe(
         map(res => {
@@ -130,7 +135,6 @@ export class TransactionHistoryComponent implements OnInit {
           return value < 0 ? pointsSpentTxt.replace('{points}', absVal) : pointsEarnedTxt.replace('{points}', absVal);
         })
       );
-
   }
 
 }

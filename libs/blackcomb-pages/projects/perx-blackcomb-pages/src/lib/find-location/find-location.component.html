@@ -1,0 +1,23 @@
+<mat-tab-group mat-stretch-tabs class="tabs">
+  <mat-tab i18n-label label="{{'LOCATION_PAGE.MAP' | translate }}">
+    <div class="filter-area" *ngIf="tags && tags.length > 0">
+      <button mat-button (click)="openDialog()">
+        <img src="assets/funnel.png" alt="">
+        <span translate>LOCATION_PAGE.FILTER_BY</span>
+      </button>
+    </div>
+    <perx-core-locations-map [locations]="locations" [key]="key" [viewLocationFn]="viewLocationFn">
+    </perx-core-locations-map>
+  </mat-tab>
+
+  <mat-tab i18n-label label="{{ 'LOCATION_PAGE.LIST' | translate}}">
+    <div class="filter-area" *ngIf="tags && tags.length > 0">
+      <button mat-button (click)="openDialog()">
+        <img src="assets/funnel.png" alt="">
+        <span translate>LOCATION_PAGE.FILTER_BY</span>
+      </button>
+    </div>
+    <perx-core-locations-list [locations]="locations" [headerFn]="headerFn" [viewLocationFn]="viewLocationFn">
+    </perx-core-locations-list>
+  </mat-tab>
+</mat-tab-group>

@@ -12,7 +12,7 @@
         <perx-core-loyalty-transactions-list
           *ngIf="accrued"
           [priceLabelFn]="priceLabelFn"
-          [transactions]="accrued"
+          [loyaltyTransactions]="accrued"
         ></perx-core-loyalty-transactions-list>
       </div>
     </mat-tab>
@@ -20,7 +20,7 @@
       <perx-core-loyalty-transactions-list
         *ngIf="redeemed"
         [priceLabelFn]="priceLabelFn"
-        [transactions]="redeemed"
+        [loyaltyTransactions]="redeemed"
       ></perx-core-loyalty-transactions-list>
     </mat-tab>
   </mat-tab-group>

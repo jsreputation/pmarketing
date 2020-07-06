@@ -70,7 +70,7 @@ export class RewardsCollectionComponent implements OnInit {
           if (rewardPrice.points && rewardPrice.points > 0) {
             return `${rewardPrice.points}${text}`;
           }
-          return `0${text}`; // is actually 0 or invalid value default
+          return ''; // is actually 0 or invalid value default
         };
       });
     }

@@ -43,7 +43,7 @@ export class RewardComponent implements OnInit {
           if (rewardPrice.points && rewardPrice.points > 0) {
             return `${rewardPrice.points}${res.REWARD && res.REWARD.POINT}`;
           }
-          return `0${res['REWARD.POINT']}`; // is actually 0 or invalid value default
+          return ''; // is actually 0 or invalid value default
         };
       });
     }

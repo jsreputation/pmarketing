@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Config } from '../config/config';
 import { IVoucherService } from './ivoucher.service';
 import { Observable, combineLatest, of } from 'rxjs';
-import { IVoucher, IGetVoucherParams, VoucherState } from './models/voucher.model';
+import { IVoucher, IGetVoucherParams, VoucherState, IVoucherLocation } from './models/voucher.model';
 import { map, switchMap, mergeMap, catchError } from 'rxjs/operators';
 import { RewardsService } from '../rewards/rewards.service';
 import { IReward, IRewardParams } from '../rewards/models/reward.model';
@@ -118,6 +118,11 @@ export class WhistlerVouchersService implements IVoucherService {
   // @ts-ignore
   public redeemVoucher(id: number): Observable<any> {
     throw new Error('Method not implemented.');
+  }
+
+  // @ts-ignore
+  public getRewardLocations(rewardId: number): Observable<IVoucherLocation[]> {
+    throw new Error('Method not implemented');
   }
 
   public reset(vouchers?: IVoucher[]): void {

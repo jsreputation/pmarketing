@@ -6,6 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { setLanguage } from './app.module';
 import { ConfigService, AuthenticationService, ThemesService } from '@perxtech/core';
 import { of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
 
 const translateServiceStub: Partial<TranslateService> = {
   defaultLang: null,
@@ -19,7 +20,7 @@ const configServiceStub: Partial<ConfigService> = {
     preAuth: false,
     isWhistler: false,
     baseHref: '',
-    defaultLang: 'en'
+    defaultLang: 'zh'
   })
 };
 
@@ -57,7 +58,10 @@ describe('AppModule', () => {
       ],
       imports: [
         MatDialogModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        RouterTestingModule.withRoutes([
+          { path: 'login', redirectTo: '/' }
+        ])
       ]
     });
   }));
@@ -69,6 +73,6 @@ describe('AppModule', () => {
   }));
 
   it('should set default laguage', inject([TranslateService], (translateService: TranslateService) => {
-    expect(translateService.defaultLang).toBe('en');
+    expect(translateService.defaultLang).toBe('zh');
   }));
 });

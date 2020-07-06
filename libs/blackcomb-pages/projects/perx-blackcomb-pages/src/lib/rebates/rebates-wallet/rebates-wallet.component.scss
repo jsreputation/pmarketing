@@ -1,85 +1,108 @@
-mat-card {
-  margin: 1.2rem 0;
+.loyalty-block {
+  background-color: var(--surface_colour);
   display: flex;
-  align-items: center;
-  padding: 0;
-  flex: 0 0 10.5rem;
-  height: 10.5rem;
+  width: 100%;
+  align-items: flex-end;
   justify-content: space-between;
 }
 
-h1 {
-  padding: 2rem 0 0;
-  margin: 0;
+.main-container {
+  background-color: var(--background);
+  min-height: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.qr-block {
+  width: 87%;
   display: flex;
-  font-size: 2rem;
-  font-style: normal;
+  justify-content: space-around;
+  margin: 1.5rem 0;
+
+  .qr-box {
+    position: relative;
+    padding: 0.7rem;
+    height: 76px;
+    width: 76px;
+  }
+
+  /* adds the 4 corners */
+  .qr-box::before, .qr-box::after, .qr-box > :first-child::before, .qr-box > :first-child::after {
+    position: absolute;
+    width: 10%;
+    height: 15%;
+    border-color: #000000;
+    border-style: solid;
+    content: ' ';
+  }
+
+  /* top left corner */
+  .qr-box::before {
+    top: 0;
+    left: 0;
+    border-width: 2px 0 0 2px;
+  }
+
+  /* top right corner */
+  .qr-box::after {
+    top: 0;
+    right: 0;
+    border-width: 2px 2px 0 0;
+  }
+
+  /* bottom right corner */
+  .qr-box > :first-child::before {
+    bottom: 0;
+    right: 0;
+    border-width: 0 2px 2px 0;
+  }
+
+  /* bottom left corner */
+  .qr-box > :first-child::after {
+    bottom: 0;
+    left: 0;
+    border-width: 0 0 2px 2px;
+  }
+
+  .qr-content {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.page {
+  background-color: var(--background);
+  min-height: 100%;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.merchants-collection {
+  padding: 0 1.5rem;
+}
+
+.title {
+  font-size: 1.8rem;
+  margin: 1rem 0;
+  line-height: 2.3rem;
+  color: #001F67;
   font-weight: 500;
 }
 
-.tab-group__content {
-  padding: 0 1.6rem;
-  height: 100%;
-  overflow-y: scroll;
-  box-sizing: border-box;
+.profile-container {
+  font-size: 1.2rem;
+  padding: 1.6rem;
+  line-height: 2.1rem;
 
-  > h1:first-child {
-    padding-top: 2rem;
-  }
-
-  a {
-    text-decoration: none;
-  }
-}
-
-.puzzle-content {
-  display: flex;
-  flex-basis: auto;
-  flex-grow: 1;
-  justify-content: flex-start;
-
-  .puzzle-img__wrapper {
-    height: 10.5rem;
-    width: 10.5rem;
-  }
-
-  .puzzle-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .puzzle-details {
-    padding: 0 1.6rem;
+  .welcome-text {
     font-size: 1.4rem;
-    display: flex;
-    flex-direction: column;
-    margin: auto 0;
-    flex: 1;
+    font-weight: 900;
+    line-height: 1.7rem;
   }
 
-  .puzzle-details:nth-child(1) {
-    margin-top: 0;
+  .points {
+    font-size: 4rem;
+    font-weight: 900;
+    line-height: 4.8rem;
   }
-
-  .main-reward-title {
-    font-size: 1.4rem;
-    color: #37474F;
-    line-height: 1.6rem;
-    font-weight: 500;
-    margin: 4px 0;
-    padding: 0;
-  }
-
-  .reward-subtitle {
-    font-size: 1.1rem;
-    line-height: 1.3rem;
-    color: #858585;
-    margin: 4px 0;
-    padding: 0;
-  }
-}
-
-:host ::ng-deep .game-container {
-  overflow: hidden;
 }

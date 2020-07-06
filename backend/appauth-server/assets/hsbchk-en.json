@@ -286,5 +286,6 @@
   "CONTENT_PAGE": "Content Not Found",
   "Gold": "Gold",
   "Silver": "Silver",
-  "Green": "Green"
+  "Green": "Green",
+  "LOGIN_SESSION_EXPIRED": "Login Session Expired"
 }

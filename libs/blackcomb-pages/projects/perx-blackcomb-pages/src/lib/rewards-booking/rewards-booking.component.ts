@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {
-  LocationsService,
   RewardsService,
-  ILocation,
+  IVoucherLocation,
   IReward,
   NotificationService,
   LoyaltyService,
@@ -14,7 +13,7 @@ import {
 } from '@perxtech/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, flatMap, map } from 'rxjs/operators';
-import { forkJoin, Observable, of, throwError } from 'rxjs';
+import { forkJoin, of, throwError } from 'rxjs';
 
 @Component({
   selector: 'perx-blackcomb-pages-rewards-booking',
@@ -25,18 +24,13 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
 
   public rewardId: number;
   public prices: IPrice[];
-  public locationData: Observable<ILocation[]>;
+  public locationData: IVoucherLocation[];
   public reward: IReward;
   public quantities: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   public bookingForm: FormGroup;
   private loyalty: ILoyalty;
-  private merchantAllLocations: ILocation[] = [];
-  private lastMerchantPage: number = 1;
-  private isCurrentMerchantPageLoaded: boolean = false;
-  private merchantId: number;
 
   constructor(
-    private locationService: LocationsService,
     private rewardsService: RewardsService,
     private vouchersService: IVoucherService,
     private loyaltyService: LoyaltyService,
@@ -66,12 +60,14 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
         if (!this.reward.merchantId) {
           return throwError({ message: 'merchantId is required' });
         }
-        this.merchantId = this.reward.merchantId;
         // merchantId can be null if reward is set up incorrectly on dashboard
-        return this.locationService.getFromMerchant(this.merchantId);
+        return this.vouchersService.getRewardLocations(this.rewardId);
       })).subscribe(
-      (merchantLocations: ILocation[]) => {
-        this.updateMerchantData(merchantLocations);
+      (locations: IVoucherLocation[] ) => {
+        if (locations.length > 0) {
+          this.locationData = locations;
+          this.bookingForm.controls.location.setValidators([Validators.required]);
+        }
       },
       () => {
         // validators will prevent form submission
@@ -100,23 +96,16 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
   public buildForm(): void {
     this.bookingForm = this.build.group({
       quantity: [null, [Validators.required]],
-      location: [null, [Validators.required]],
+      location: [null, []],
       priceId: [null, [Validators.required]],
       agreement: [false, [Validators.requiredTrue]]
     });
   }
 
-  private updateMerchantData(merchantLocations: ILocation[]): any {
-    this.merchantAllLocations = this.merchantAllLocations.concat(merchantLocations);
-    this.locationData = of(this.merchantAllLocations);
-    this.lastMerchantPage++;
-    this.isCurrentMerchantPageLoaded = true;
-  }
-
   public submitForm(): void {
-
     const currentPrice = this.prices.find((price) => price.id === this.bookingForm.value.priceId);
-    if (!currentPrice || !currentPrice.points) {
+    // allow free rewards to go through
+    if (!currentPrice || currentPrice.points === undefined || null) {
       return;
     }
     const totalCost = currentPrice.points * this.bookingForm.value.quantity;
@@ -151,26 +140,6 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
         });
       }
     });
-  }
-
-  public getMerchantData(): void {
-    if (!this.isCurrentMerchantPageLoaded) {
-      return;
-    }
-
-    this.isCurrentMerchantPageLoaded = false;
-    this.locationService.getFromMerchant(this.merchantId, this.lastMerchantPage).subscribe(
-      (merchantLocations: ILocation[]) => {
-        this.updateMerchantData(merchantLocations);
-      },
-      () => {
-        // validators will prevent form submission
-        this.notificationService.addPopup({
-          title: 'Sorry',
-          text: 'We\'re unable to perform this transaction at this time'
-        });
-      }
-    );
   }
 
   public dialogClosed(): void {

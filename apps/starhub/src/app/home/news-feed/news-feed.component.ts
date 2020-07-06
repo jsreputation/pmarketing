@@ -1,8 +1,4 @@
-import {
-  Component,
-  OnInit,
-  HostListener,
-} from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { MatDialog } from '@angular/material';
 
 import {
@@ -13,13 +9,10 @@ import {
   IRssFeeds,
   IRssFeedsData,
   RssFeedsPages,
-  ConfigService,
+  ConfigService
 } from '@perxtech/core';
 
-import {
-  AnalyticsService,
-  PageType,
-} from '../../analytics.service';
+import { AnalyticsService, PageType } from '../../analytics.service';
 import { map, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 
@@ -37,22 +30,34 @@ export class NewsFeedComponent implements OnInit {
   public ghostFeed?: any[] = new Array(1);
 
   private initNewsFeedItems(): void {
-    this.configService.readAppConfig().pipe(
-      switchMap(() => this.settingsService.getRssFeeds()),
-      map((res: IRssFeeds) => res.data ? res.data.find(feed => feed.page === RssFeedsPages.HOME) : undefined),
-      switchMap((feedData: IRssFeedsData | undefined) => {
-        if (!feedData || !feedData.url) {
-          return of([] as FeedItem[]);
+    this.configService
+      .readAppConfig()
+      .pipe(
+        switchMap(() => this.settingsService.getRssFeeds()),
+        map((res: IRssFeeds) =>
+          res.data
+            ? res.data.find((feed) => feed.page === RssFeedsPages.HOME)
+            : undefined
+        ),
+        switchMap((feedData: IRssFeedsData | undefined) => {
+          if (!feedData || !feedData.url) {
+            return of([] as FeedItem[]);
+          }
+          return this.reader.getFromUrl(feedData && feedData.url);
+        })
+      )
+      .subscribe(
+        (items) => {
+          this.items = items;
+          this.ghostFeed = undefined;
+          this.newsAfterScroll = Array.from(
+            Array(items.length > 0 ? items.length - 1 : 1).keys()
+          );
+        },
+        () => {
+          this.ghostFeed = undefined;
         }
-        return this.reader.getFromUrl(feedData && feedData.url);
-      })
-    ).subscribe(items => {
-      this.items = items;
-      this.ghostFeed = undefined;
-      this.newsAfterScroll = Array.from(Array(items.length > 0 ? items.length - 1 : 1).keys());
-    }, () => {
-      this.ghostFeed = undefined;
-    });
+      );
   }
 
   constructor(
@@ -64,8 +69,15 @@ export class NewsFeedComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.initNewsFeedItems();
     this.itemSize = window.innerWidth;
+    this.initNewsFeedItems();
+  }
+
+  public feedScrolled(event: Event): void {
+    // since the feed is full width we can assume each block of scrolling full width is one unit.
+    const unitsScrolledPast =
+      (event.target as Element).scrollLeft / window.innerWidth;
+    this.updateScrollIndex(Math.round(unitsScrolledPast)); // round to nearest integer
   }
 
   public updateScrollIndex(index: number): void {

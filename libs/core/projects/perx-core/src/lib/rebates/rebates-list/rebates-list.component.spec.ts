@@ -1,20 +1,36 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  TestBed
+} from '@angular/core/testing';
 
-import { MatCardModule, MatRippleModule } from '@angular/material';
+import {
+  MatCardModule,
+  MatRippleModule
+} from '@angular/material';
 import { RebatesListComponent } from './rebates-list.component';
+import { of } from 'rxjs';
+import { ThemesService } from '../../utils/themes/themes.service';
+import { UtilsModule } from '../../utils/utils.module';
 
 describe('RebatesListComponent', () => {
   let component: RebatesListComponent;
   let fixture: ComponentFixture<RebatesListComponent>;
+
+  const themesServiceStub: Partial<ThemesService> = {
+    getThemeSetting: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RebatesListComponent],
       imports: [
         MatCardModule,
-        MatRippleModule
+        MatRippleModule,
+        UtilsModule
       ],
       providers: [
+        { provide: ThemesService, useValue: themesServiceStub },
       ]
     })
       .compileComponents();

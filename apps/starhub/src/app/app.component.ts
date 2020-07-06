@@ -16,7 +16,8 @@ import {
   ProfileService,
   RewardPopupComponent,
   SettingsService,
-  TokenStorage
+  TokenStorage,
+  IFlags
 } from '@perxtech/core';
 import {
   MatDialog,
@@ -38,6 +39,7 @@ import {
   EMPTY,
   timer
 } from 'rxjs';
+import { Router } from '@angular/router';
 
 export interface IdataLayerSH {
   pageName: string;
@@ -61,7 +63,7 @@ declare const _satellite: {
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: [ './app.component.scss' ]
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
   // public selectedCampaign: ICampaign;
@@ -76,6 +78,7 @@ export class AppComponent implements OnInit {
     // private activeRoute: ActivatedRoute,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
+    private router: Router,
     private gameService: IGameService,
     private tokenStorage: TokenStorage,
     private analytics: AnalyticsService,
@@ -109,7 +112,17 @@ export class AppComponent implements OnInit {
           data, ...data.panelClass && { panelClass: data.panelClass }
         }));
 
-    this.notificationService.$snack.subscribe((msg: string) => this.snackBar.open(msg, 'x', { duration: 2000 }));
+    this.notificationService.$snack
+      .subscribe(
+        (msg: string) => {
+          if (msg === 'LOGIN_SESSION_EXPIRED') {
+            this.router.navigate(['/login']);
+            msg = 'Login Session Expired';
+          }
+          this.snackBar.open(msg, 'x', { duration: 2000 });
+        },
+        (err) => console.error(err)
+      );
 
     this.analytics.events$.subscribe(
       (event: IEvent) => {
@@ -138,7 +151,8 @@ export class AppComponent implements OnInit {
 
     // init holding
     this.configService.readAppConfig().pipe(
-      switchMap(() => timer(0, 2000)
+      switchMap(() => this.settingsService.getRemoteFlagsSettings()),
+      switchMap((flags: IFlags) => timer(0, flags && flags.gatekeeperPollingInterval || 2000)
         .pipe(
           switchMap(() => this.settingsService.isGatekeeperOpen().pipe(
             catchError(() => {
