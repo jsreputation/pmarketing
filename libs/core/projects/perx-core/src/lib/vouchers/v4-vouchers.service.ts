@@ -341,18 +341,32 @@ export class V4VouchersService implements IVoucherService {
   }
 
   public issueReward(rewardId: number, rewardParams?: IRewardParams, locale: string = 'en'): Observable<IVoucher> {
-    const headers = new HttpHeaders().set('Accept-Language', locale);
+    const headers = new HttpHeaders();
+    headers.set('Accept-Language', locale);
+    headers.set('Content-type', 'application/json');
+
     let params = new HttpParams();
-    if (rewardParams && rewardParams.locationId) {
-      params = params.set('location_id', rewardParams.locationId.toString());
-    }
-    if (rewardParams && rewardParams.priceId) {
-      params = params.set('price_id', rewardParams.priceId.toString());
-    }
     if (rewardParams && rewardParams.sourceType) {
       params = params.set('source_type', rewardParams.sourceType);
     }
-    return this.http.post<IV4ReserveRewardResponse>(`${this.apiHost}/v4/rewards/${rewardId}/issue`, { headers, params })
+
+    let bodyData = {};
+    if (rewardParams && rewardParams.locationId) {
+      const locationId = {
+        location_id: rewardParams.locationId.toString()
+      };
+      bodyData = {...bodyData, ...locationId};
+    }
+    if (rewardParams && rewardParams.priceId) {
+      const priceId = {
+        price_id: rewardParams.priceId.toString()
+      };
+      bodyData = {...bodyData, ...priceId};
+    }
+    return this.http.post<IV4ReserveRewardResponse>(`${this.apiHost}/v4/rewards/${rewardId}/issue`, bodyData, {
+      headers,
+      params
+    })
       .pipe(
         map(res => res.data),
         switchMap((minVoucher: IV4MinifiedVoucher) => this.get(minVoucher.id, undefined, undefined, locale)),
