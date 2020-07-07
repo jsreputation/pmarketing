@@ -5,7 +5,9 @@ import {
   EventEmitter,
   ElementRef,
   ViewChild,
+  OnInit,
 } from '@angular/core';
+import { Observable, of } from 'rxjs';
 
 interface DrawTile {
   puzzleLocation: number;
@@ -17,7 +19,7 @@ interface DrawTile {
   templateUrl: './puzzle-play.component.html',
   styleUrls: ['./puzzle-play.component.scss']
 })
-export class PuzzlePlayComponent {
+export class PuzzlePlayComponent implements OnInit {
   @Input()
   public img: string;
 
@@ -35,6 +37,15 @@ export class PuzzlePlayComponent {
 
   @Input()
   public nbAvailablePieces: number = 0;
+
+  @Input()
+  public puzzlePiecesText: () => Observable<string>;
+
+  @Input()
+  public collectPuzzleText: () => Observable<string>;
+
+  @Input()
+  public clickPuzzleText: () => Observable<string>;
 
   @Output()
   public moved: EventEmitter<void> = new EventEmitter<void>();
@@ -61,6 +72,18 @@ export class PuzzlePlayComponent {
   }
 
   @ViewChild('puzzleBoard', { static: false }) public puzzleView: ElementRef;
+
+  public ngOnInit(): void {
+    if (!this.puzzlePiecesText) {
+      this.puzzlePiecesText = () => of('PUZZLE PIECES');
+    }
+    if (!this.collectPuzzleText) {
+      this.collectPuzzleText = () => of('Collect pieces and complete the puzzle');
+    }
+    if (!this.clickPuzzleText) {
+      this.clickPuzzleText = () => of('Click on the piece to place it on the puzzle');
+    }
+  }
 
   public nextStampClicked(): void {
 

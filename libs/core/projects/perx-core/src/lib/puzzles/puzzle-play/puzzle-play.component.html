@@ -12,9 +12,9 @@
   <div class="static-content">
     <div class="red-color-font">
       <div class="vertically-aligned-row">
-        PUZZLE PIECES
+        {{puzzlePiecesText() | async}}
       </div>
-      <div class="static-collect-pieces">Collect pieces and complete the puzzle</div>
+      <div class="static-collect-pieces">{{collectPuzzleText() | async}}</div>
     </div>
     <div class="badge-warn">
       {{ remainingPuzzleTiles.length }}/{{totalPieces}}
@@ -41,7 +41,7 @@
     <div class="speech-bubble">
       <div class="triangle-tip"></div>
       <div class="rounded-rect">
-        <p>Click on the piece to place it on the puzzle</p>
+        <p>{{clickPuzzleText() | async}}</p>
       </div>
     </div>
   </div>

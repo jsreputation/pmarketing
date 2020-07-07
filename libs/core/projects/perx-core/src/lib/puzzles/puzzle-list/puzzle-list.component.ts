@@ -1,7 +1,7 @@
 import { Component, Output, EventEmitter, Input, OnChanges, SimpleChanges, OnDestroy, OnInit } from '@angular/core';
 import { StampService } from '../../stamp/stamp.service';
 import { IStampCard, StampCardState, StampState } from '../../stamp/models/stamp.model';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, of } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -24,10 +24,13 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
   public iconDisplay: string;
 
   @Input()
-  public titleFn: (index?: number, totalCount?: number) => string;
+  public titleFn: (index?: number, totalCount?: number) => Observable<string>;
 
   @Input()
-  public puzzleTextFn: (puzzle?: IStampCard) => string;
+  public puzzleTextFn: (puzzle?: IStampCard) => Observable<string>;
+
+  @Input()
+  public playBtnTextFn: () => Observable<string>;
 
   @Input()
   public thumbnailDefault: string = '';
@@ -46,13 +49,17 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
 
   public ngOnInit(): void {
     if (!this.titleFn) {
-      this.titleFn = (index: number) => `Puzzle #${this.indexToLetter(index)}`;
+      this.titleFn = (index: number) => of(`Puzzle #${this.indexToLetter(index)}`);
     }
 
     if (!this.puzzleTextFn) {
-      this.puzzleTextFn = () => 'new pieces';
+      this.puzzleTextFn = () => of('new pieces');
     }
 
+    if (!this.playBtnTextFn) {
+      this.playBtnTextFn = () => of('play now!');
+    }
+    
     if (this.puzzles) {
       this.puzzles
         .pipe(takeUntil(this.destroy$))

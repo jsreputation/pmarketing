@@ -29,8 +29,8 @@ export class CampaignStampsComponent implements OnInit {
   public completed: boolean = false;
 
   // public stampsType: string;
-  public puzzleTextFn: (puzzle: IStampCard) => string;
-  public titleFn: (index?: number) => string;
+  public puzzleTextFn: (puzzle: IStampCard) => Observable<string>;
+  public titleFn: (index?: number) => Observable<string>;
 
   constructor(
     private router: Router,
@@ -46,10 +46,10 @@ export class CampaignStampsComponent implements OnInit {
       take(1)
     ).subscribe((stampsType: string) => {
       if (stampsType === 'stamp_card') {
-        this.puzzleTextFn = (puzzle: IStampCard) => !puzzle.stamps ||
-          puzzle.stamps.filter(st => st.state === StampState.issued).length > 1 ? 'new stamps' : 'new stamp';
-        this.titleFn = (index?: number, totalCount?: number) => index !== undefined ?
-          `Stamp Card ${this.cardIndex(index)} out of ${totalCount}` : '';
+        this.puzzleTextFn = (puzzle: IStampCard) => of(!puzzle.stamps ||
+          puzzle.stamps.filter(st => st.state === StampState.issued).length > 1 ? 'new stamps' : 'new stamp');
+        this.titleFn = (index?: number, totalCount?: number) => of(index !== undefined ?
+          `Stamp Card ${this.cardIndex(index)} out of ${totalCount}` : '');
       }
     });
 
