@@ -1,5 +1,5 @@
 <div class="page"
-  *ngIf="theme && theme.properties && appConfig"
+  *ngIf="theme && theme.properties && appConfig && appRemoteFlags"
   infiniteScroll [infiniteScrollDistance]="2"
   [infiniteScrollThrottle]="50"
   (scrolled)="onScroll()"
