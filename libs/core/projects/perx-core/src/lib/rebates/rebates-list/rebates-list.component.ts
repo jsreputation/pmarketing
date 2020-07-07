@@ -5,7 +5,7 @@ import {
   OnInit,
   Output
 } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ITheme } from '../../utils/themes/themes.model';
 import { Colors } from '../../perx-core.constants';
 import {
@@ -42,7 +42,10 @@ export class RebatesListComponent implements OnInit {
   public defaultImg: string;
 
   @Input()
-  public displayPriceFn: (rewardPrice: IPrice) => string;
+  public displayPriceFn: (rewardPrice: IPrice) => Observable<string>;
+
+  @Input()
+  public rebatesDetailsTextFn: () => Observable<string>;
 
   @Output()
   public tapped: EventEmitter<ILoyalty> = new EventEmitter<ILoyalty>();
@@ -63,6 +66,9 @@ export class RebatesListComponent implements OnInit {
 
   public ngOnInit(): void {
     this.initTheme();
+    if (!this.rebatesDetailsTextFn) {
+      this.rebatesDetailsTextFn = () => of('rebate funds available');
+    }
   }
 
   public merchantClickedHandler(merchant: ILoyalty): void {

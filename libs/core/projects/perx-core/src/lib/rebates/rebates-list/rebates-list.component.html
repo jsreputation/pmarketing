@@ -24,7 +24,7 @@
               <div
                 class="rebate-details-block"
                 [ngStyle]="{'color': themeFontColor ? themeFontColor : colorPrimary}">
-                <p id="merchant-rebate-details">${{merchant.pointsBalance | pointsToCash:2}} <span id="minor-details">rebate funds available</span></p>
+                <p id="merchant-rebate-details">${{merchant.pointsBalance | pointsToCash:2}} <span id="minor-details">{{rebatesDetailsTextFn() | async}}</span></p>
             </div>
           </div>
           </div>
