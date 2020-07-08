@@ -17,7 +17,7 @@ import { TransactionCompleteComponent } from './transaction-complete/transaction
 import { ReactiveFormsModule } from '@angular/forms';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import {MatCardModule} from '@angular/material';
-import {CurrencyMaskModule} from 'ng2-currency-mask';
+import { NgxCurrencyModule } from "ngx-currency";
 import { TransactionShowComponent } from './transaction-show/transaction-show.component';
 
 @NgModule({
@@ -43,7 +43,7 @@ import { TransactionShowComponent } from './transaction-show/transaction-show.co
     MatCardModule,
     ProfileServiceModule,
     PosModule,
-    CurrencyMaskModule,
+    NgxCurrencyModule,
     TranslateModule.forChild()
   ],
   entryComponents: [
