@@ -53,6 +53,11 @@ jobs:
           declare -a TEKTON_TASKS
           FOLDERS=("${APP_FOLDERS[@]}" "${LIBS_FOLDERS[@]}" "${BACKEND_FOLDERS[@]}")
           for f in ${FOLDERS[@]}; do
+          # extract app name
+          IFS='/'
+          read -a SEGMENTS <<< "$f"
+          app=${SEGMENTS[1]}
+          echo "$f $app"
           TEKTON_TASK=$(cat <<EOT | kubectl -n build create -f - --output=jsonpath={.metadata.name}
           apiVersion: tekton.dev/v1beta1
           kind: TaskRun
@@ -80,6 +85,8 @@ jobs:
             params:
               - name: folder
                 value: ${f}
+              - name: app-name
+                value: ${app}
             podTemplate:
               securityContext:
                 runAsUser: 0

@@ -63,7 +63,30 @@
     "lint-ci:fix": "lerna run lint:fix",
     "pree2e-ci": "lerna run pree2e",
     "test-ci": "lerna run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
-    "test-ci:local": "lerna run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI --concurrency=2 --maxWorkers=50%"
+    "test-ci:local": "lerna run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI --concurrency=2 --maxWorkers=50%",
+    "config": "lerna run config",
+    "test:abenson": "lerna --scope @perxtech/abenson run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
+    "test:all-it": "lerna --scope @perxtech/all-it run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
+    "test:blackcomb": "lerna --scope @perxtech/blackcomb run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
+    "test:blackcomb-light": "lerna --scope @perxtech/blackcomb-light run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
+    "test:bpi": "lerna --scope @perxtech/bpi run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
+    "test:components-demo": "lerna --scope @perxtech/components-demo run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
+    "test:dbshk-agent": "lerna --scope @perxtech/dbshk-agent run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
+    "test:digi": "lerna --scope @perxtech/digi run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
+    "test:hkbn": "lerna --scope @perxtech/hkbn run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
+    "test:hsbc": "lerna --scope @perxtech/hsbc run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
+    "test:hsbc-rewards": "lerna --scope @perxtech/hsbc-rewards run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
+    "test:hsbchk": "lerna --scope @perxtech/hsbchk run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
+    "test:merck-customer": "lerna --scope @perxtech/merck-customer run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
+    "test:merck-merchant": "lerna --scope @perxtech/merck-merchant run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
+    "test:oracle-pay": "lerna --scope @perxtech/oracle-pay run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
+    "test:philipssg": "lerna --scope @perxtech/philipssg run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
+    "test:prudential": "lerna --scope @perxtech/prudential run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
+    "test:starhub": "lerna --scope @perxtech/starhub run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
+    "test:appauth-server": "lerna --scope @perxtech/appauth-server run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
+    "test:blackcomb-pages": "lerna --scope @perxtech/blackcomb-pages run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
+    "test:core": "lerna --scope @perxtech/core run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
+    "test:whistler": "lerna --scope @perxtech/whistler run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI"
   },
   "private": true,
   "workspaces": [
@@ -72,8 +95,8 @@
     "backend/*"
   ],
   "devDependencies": {
-    "@nrwl/linter": "^8.0.0",
     "@nrwl/jest": "^9.2.2",
+    "@nrwl/linter": "^8.0.0",
     "env-cmd": "^10.1.0",
     "lerna": "^3.14.1"
   }
