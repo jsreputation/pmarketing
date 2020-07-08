@@ -149,7 +149,8 @@ export class TransactionComponent implements OnInit {
               transactionAmount: this.currencyPipe.transform(this.transactionAmount, '$'),
               rebateBurned: this.currencyPipe.transform(this.consumedRebates, '$'),
               name: this.matchingMerchant ? this.matchingMerchant.name : '',
-              // logo: this.matchingMerchant ? this.matchingMerchant.logo : ''
+              logo: this.matchingMerchant && this.matchingMerchant.images ?
+                this.matchingMerchant.images.thumbnailUrl : ''
             }
           };
           this.router.navigate([ 'rebates/show' ], navigationExtras);

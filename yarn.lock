@@ -10012,11 +10012,6 @@ ng-packagr@^5.1.0:
     terser "^4.1.2"
     update-notifier "^3.0.0"
 
-ng2-currency-mask@~9.0.2:
-  version "9.0.2"
-  resolved "https://registry.yarnpkg.com/ng2-currency-mask/-/ng2-currency-mask-9.0.2.tgz#dc6d2f38b937ed4166f70d4d4ac2a7b684a33fcb"
-  integrity sha512-ydtSTEqXR32mHsCElDvmSEywmN45Dam4aWUhoYJl3eEm9T6QWgA3DzHxNiFcur2kH94gomdvlQAB490CcObGMg==
-
 ngx-auth@^5.0.0:
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/ngx-auth/-/ngx-auth-5.3.0.tgz#393ad9d30a17d0a3f09bd2b15aeadeb2448b3a6f"
@@ -10035,6 +10030,11 @@ ngx-cacheable@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/ngx-cacheable/-/ngx-cacheable-1.4.1.tgz#1aeb691cbfcfee6075cc0fed70b9919fe59dcf30"
   integrity sha512-Fj/oU2lhukD9C7XvLW7E+UWNV4EVREfearKHmJsbzJ9pbertsDXpwFR+wIsPXaZMLFKiDsHY8baTsnupOlI92g==
+
+ngx-currency@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-currency/-/ngx-currency-2.0.0.tgz#8b6de97f65caa934562e272487049d0864ee1d65"
+  integrity sha512-B5oZLrkSgnGGQ271TT4MoNvsDb3ATMDKPKHuDKNKvfqA9QQXVXl7HCWjQ/0WOep/alh6mpJYJI8xQkCk6TCP5g==
 
 ngx-ellipsis@^2.0.9:
   version "2.1.2"
