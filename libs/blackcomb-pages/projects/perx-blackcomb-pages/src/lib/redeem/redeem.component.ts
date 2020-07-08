@@ -147,7 +147,7 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
           if (voucher.state === VoucherState.issued) {
             this.status = voucher.state;
           }
-          if (this.status === VoucherState.issued && voucher.state === VoucherState.redeemed) {
+          if (voucher.state === VoucherState.redeemed) {
             const rewardName = this.voucher.reward ? this.voucher.reward.name : '';
             this.notificationService.addPopup({
               title: this.rewardSuccessPopUp.title,
