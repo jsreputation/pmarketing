@@ -17,6 +17,7 @@
     "build:oracle-demo:staging": "env-cmd -f env/oracle-demo.staging npm run config && ng build --prod",
     "build:perx-demo:production": "env-cmd -f env/perx-demo.production npm run config && ng build --prod",
     "build:perx-demo:staging": "env-cmd -f env/perx-demo.staging npm run config && ng build --prod",
+    "build:zeal:staging": "env-cmd -f env/zeal.staging npm run config && ng build --prod",
     "config": "ts-node --project tsconfig.node.json set-env.ts",
     "test": "jest --config=jest.config.json",
     "lint": "stylelint \"src/**/*.*css\" && ng lint",
