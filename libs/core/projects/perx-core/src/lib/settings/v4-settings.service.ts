@@ -52,6 +52,7 @@ interface IV4Flags {
     gatekeeper_polling_interval: number;
     show_stamp_campaigns: boolean;
     gatekeeper_api: GatekeeperApis;
+    show_loyalty_on_home: boolean;
   };
 }
 
@@ -122,6 +123,7 @@ export class V4SettingsService extends SettingsService {
       gatekeeperPollingInterval: data.json_value.gatekeeper_polling_interval,
       showStampCampaigns: data.json_value.show_stamp_campaigns,
       gatekeeperApi: data.json_value.gatekeeper_api,
+      showLoyaltyBlockOnHomePage: data.json_value.show_loyalty_on_home
     };
   }
 

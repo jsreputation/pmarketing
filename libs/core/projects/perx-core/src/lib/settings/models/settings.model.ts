@@ -14,6 +14,7 @@ export interface IFlags {
   gatekeeperPollingInterval?: number;
   gatekeeperApi?: GatekeeperApis;
   showStampCampaigns?: boolean;
+  showLoyaltyBlockOnHomePage?: boolean;
 }
 
 export interface IRssFeeds {
