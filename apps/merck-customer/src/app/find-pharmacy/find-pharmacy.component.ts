@@ -2,8 +2,9 @@ import {
   Component,
   OnInit,
   OnDestroy,
+  ViewChild,
 } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatTabChangeEvent } from '@angular/material';
 
 import {
   Observable,
@@ -22,6 +23,7 @@ import {
   ILocation,
   IMerchantsService,
   IMerchant,
+  LocationsMapComponent
 } from '@perxtech/core';
 
 import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
@@ -54,6 +56,7 @@ export class FindPharmacyComponent implements OnInit, PageAppearence, OnDestroy 
   public tags: ITag[];
   public filteredLocations: Observable<ILocation[]>;
   public headerFn: (location: ILocation) => Observable<string>;
+  @ViewChild('locationMap', { static: false }) public locationMap: LocationsMapComponent;
 
   constructor(
     private locationsService: LocationsService,
@@ -107,5 +110,12 @@ export class FindPharmacyComponent implements OnInit, PageAppearence, OnDestroy 
       bottomSelectedItem: BarSelectedItem.SEARCH,
       pageTitle: ''
     };
+  }
+
+  public updateActiveTab(event: MatTabChangeEvent): void {
+    // When click to map view, force the map to auto zoom again
+    if (event.index === 0) {
+      this.locationMap.updateBoundingBox();
+    }
   }
 }
