@@ -122,7 +122,8 @@ jobs:
           [ $APP == 'daiichi-dlvn' ] || \
           [ $APP == 'feature-demo' ] || \
           [ $APP == 'partners-demo' ] || \
-          [ $APP == 'perx-demo' ]
+          [ $APP == 'perx-demo' ] || \
+          [ $APP == 'zeal' ]
           then
             APP_BASE="blackcomb"
           else
