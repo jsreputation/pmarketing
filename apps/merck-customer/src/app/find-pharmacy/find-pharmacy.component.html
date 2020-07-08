@@ -1,4 +1,4 @@
-<mat-tab-group mat-stretch-tabs class="tabs">
+<mat-tab-group mat-stretch-tabs class="tabs"  (selectedTabChange)="updateActiveTab($event)">
   <mat-tab i18n-label label="{{'MAP' | translate }}">
     <div class="filter-area">
       <button mat-button (click)="openDialog()">
@@ -6,7 +6,7 @@
         <span translate>STATIC_FILTER</span>
       </button>
     </div>
-    <perx-core-locations-map [locations]="locations" [key]="key"></perx-core-locations-map>
+    <perx-core-locations-map #locationMap [locations]="locations" [key]="key"></perx-core-locations-map>
   </mat-tab>
 
   <mat-tab i18n-label label="{{ 'LIST' | translate}}">
