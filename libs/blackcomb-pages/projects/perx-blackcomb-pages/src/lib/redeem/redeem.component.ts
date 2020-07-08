@@ -158,7 +158,15 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
             this.router.navigate(['wallet']);
           }
         },
-        () => { /* voucher status polling is not implemented in whistler */ }
+        () => { /* voucher status polling is not implemented in whistler */
+          this.notificationService.addPopup({
+            // title: 'You\'re back?',
+            text: 'This voucher has already been redeeemed.',
+            buttonTxt: 'Close',
+            imageUrl: 'assets/redeem_success.png',
+          });
+          this.router.navigate(['wallet']);
+        }
       );
   }
 
