@@ -129,11 +129,16 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
           }
         }),
         switchMap((voucher: Voucher) => {
-          if (voucher.redemptionType === RedemptionType.txtCode ||
+          if (voucher.redemptionType === RedemptionType.txtCode && (voucher.code && voucher.code.length > 0) ||
             voucher.redemptionType === RedemptionType.qr ||
             voucher.redemptionType === RedemptionType.barcode) {
             return this.vouchersService.stateChangedForVoucher(voucher.id, 1000);
           }
+
+          if (! voucher.code || voucher.code.length === 0) {
+            return this.vouchersService.redeemVoucher(voucher.id);
+          }
+
           return of(voucher);
         }),
         takeUntil(this.destroy$)
@@ -142,7 +147,7 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
           if (voucher.state === VoucherState.issued) {
             this.status = voucher.state;
           }
-          if (this.status === VoucherState.issued && voucher.state === VoucherState.redeemed) {
+          if (voucher.state === VoucherState.redeemed) {
             const rewardName = this.voucher.reward ? this.voucher.reward.name : '';
             this.notificationService.addPopup({
               title: this.rewardSuccessPopUp.title,
@@ -153,7 +158,15 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
             this.router.navigate(['wallet']);
           }
         },
-        () => { /* voucher status polling is not implemented in whistler */ }
+        () => { /* voucher status polling is not implemented in whistler */
+          this.notificationService.addPopup({
+            // title: 'You\'re back?',
+            text: 'This voucher has already been redeeemed.',
+            buttonTxt: 'Close',
+            imageUrl: 'assets/redeem_success.png',
+          });
+          this.router.navigate(['wallet']);
+        }
       );
   }
 
