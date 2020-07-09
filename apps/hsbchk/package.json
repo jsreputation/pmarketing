@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "env-cmd -f env/hsbchk.staging.dev npm run config && ng serve --host 0.0.0.0",
+    "start": "env-cmd -f env/hsbchk.staging.dev npm run config && ng serve --host 0.0.0.0 --configuration staging",
     "start:prod": "env-cmd -f env/hsbchk.production.dev npm run config && ng serve --host 0.0.0.0",
     "start:hsbchk:staging": "env-cmd -f env/hsbchk.staging npm run config && ng serve --host 0.0.0.0 --configuration staging",
     "build": "npm run config && ng build",
