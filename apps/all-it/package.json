@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "env-cmd -f ./env/all-it.staging.dev npm run config && ng serve --host 0.0.0.0",
-    "star:prod": "env-cmd -f ./env/all-it.production.dev npm run config && ng serve --host 0.0.0.0",
+    "start:prod": "env-cmd -f ./env/all-it.production.dev npm run config && ng serve --host 0.0.0.0",
     "start-zh": "DEFAULT_LANG=zh npm run config && ng serve",
     "start-ru": "DEFAULT_LANG=ru npm run config && ng serve",
     "build": "npm run config && ng build",
