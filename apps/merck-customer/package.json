@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "npm run config && ng serve --host 0.0.0.0",
+    "start": "env-cmd -f env/merck-customer.staging.dev npm run config && ng serve --host 0.0.0.0",
+    "start:prod": "env-cmd -f env/merck-customer.production.dev npm run config && ng serve --host 0.0.0.0",
     "build": "npm run config && ng build",
     "build:merck-customer:production": "env-cmd -f env/merck-customer.production npm run config && ng build --prod",
     "build:merck-customer:staging": "env-cmd -f env/merck-customer.staging npm run config && ng build --prod",
