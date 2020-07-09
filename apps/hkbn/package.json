@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "DEFAULT_LANG=en npm run config && ng serve",
+    "start": "env-cmd -f env/hkbn.staging.dev npm run config && ng serve",
+    "start:prod": "env-cmd -f env/hkbn.production.dev npm run config && ng serve",
     "build": "npm run config && ng build",
     "build:hkbn:production": "env-cmd -f env/hkbn.production npm run config && ng build --prod",
     "build:hkbn:staging": "env-cmd -f env/hkbn.staging npm run config && ng build --prod",
