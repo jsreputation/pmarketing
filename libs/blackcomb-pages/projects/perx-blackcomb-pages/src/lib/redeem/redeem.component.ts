@@ -135,7 +135,7 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
             return this.vouchersService.stateChangedForVoucher(voucher.id, 1000);
           }
 
-          if (! voucher.code || voucher.code.length === 0) {
+          if (voucher.redemptionType === RedemptionType.txtCode && (!voucher.code || voucher.code.length === 0)) {
             return this.vouchersService.redeemVoucher(voucher.id);
           }
 
