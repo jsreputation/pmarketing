@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "npm run config && ng serve --host 0.0.0.0",
+    "start": "env-cmd -f env/blackcomb-light.staging.dev npm run config && ng serve --host 0.0.0.0",
+    "start:prod": "env-cmd -f env/blackcomb-light.production.dev npm run config && ng serve --host 0.0.0.0",
     "build": "npm run config && ng build",
     "build:blackcomb-light:production": "env-cmd -f env/blackcomb-light.production npm run config && ng build --prod",
     "build:blackcomb-light:staging": "env-cmd -f env/blackcomb-light.staging npm run config && ng build --prod",

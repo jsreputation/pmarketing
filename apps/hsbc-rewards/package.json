@@ -2,7 +2,8 @@
   "name": "@perxtech/hsbc-rewards",
   "version": "0.0.0",
   "scripts": {
-    "start": "npm run config && ng serve --host 0.0.0.0",
+    "start": "env-cmd -f hsbc-rewards.staging.dev npm run config && ng serve --host 0.0.0.0",
+    "start:prod": "env-cmd -f hsbc-rewards.production.dev npm run config && ng serve --host 0.0.0.0",
     "build": "npm run config && ng build",
     "build:hsbc-rewards:production": "env-cmd -f hsbc-rewards.production npm run config && ng build --prod",
     "build:hsbc-rewards:staging": "env-cmd -f hsbc-rewards.staging npm run config && ng build --prod",
