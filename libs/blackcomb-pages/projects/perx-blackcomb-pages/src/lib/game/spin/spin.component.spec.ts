@@ -10,7 +10,6 @@ import {
 } from '@perxtech/core';
 
 import {
-  ConfigToSlicesPipe,
   SpinComponent,
 } from './spin.component';
 
@@ -20,9 +19,12 @@ const dummyIGame = {
   remainingNumberOfTries: 3,
   config: {
     numberOfWedges: 5,
-    rewardSlots: [1, 2, 4],
-    colorCtrls: { 0: 'black', 1: 'yellow', 2: 'green', 3: 'blue', 4: 'red' },
-    rewardIcon: '',
+    rewardSlots: [0],
+    slices: [{
+      id: 0,
+      backgroundColor: 'blue',
+      backgroundImage: ''
+    }],
     wheelImg: '',
     wheelPosition: '',
     pointerImg: '',
@@ -41,8 +43,7 @@ describe('SpinComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        SpinComponent,
-        ConfigToSlicesPipe
+        SpinComponent
       ],
       imports: [
         GameModule,

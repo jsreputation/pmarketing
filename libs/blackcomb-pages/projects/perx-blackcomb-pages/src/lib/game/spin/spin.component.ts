@@ -1,25 +1,5 @@
-import { Component, EventEmitter, Input, Output, Pipe, PipeTransform } from '@angular/core';
-import { IGame, ISpin, ISlice } from '@perxtech/core';
-
-@Pipe({
-  name: 'slicesPipe',
-  pure: true // wont retrigger unless inputs change so getter wont keep calling
-})
-export class ConfigToSlicesPipe implements PipeTransform {
-  public transform(configObject: ISpin): ISlice[] {
-    let islices: ISlice[] = [];
-    let standardProperties;
-    for (let i = 0; i < configObject.numberOfWedges; i++) {
-      standardProperties = { id: i, backgroundColor: configObject.colorCtrls[i] };
-      if (configObject.rewardSlots.includes(i)) {
-        islices = [...islices, { ...standardProperties, backgroundImage: configObject.rewardIcon }];
-        continue;
-      }
-      islices = [...islices, { ...standardProperties }];
-    }
-    return islices;
-  }
-}
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { IGame, ISpin } from '@perxtech/core';
 
 @Component({
   selector: 'perx-blackcomb-pages-spin',
