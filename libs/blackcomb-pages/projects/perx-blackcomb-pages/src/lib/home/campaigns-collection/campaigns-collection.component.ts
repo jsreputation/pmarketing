@@ -142,7 +142,11 @@ export class CampaignsCollectionComponent implements OnInit {
   }
 
   public selectCampaign(campaign: ICampaign): void {
-    if (!this.isCampaignComplete(campaign.id) && (this.isCampaignDisabled[campaign.id] === undefined || !this.isCampaignDisabled[campaign.id])) {
+    if (
+      !this.isCampaignComplete(campaign.id) && 
+      (this.isCampaignDisabled[campaign.id] === undefined ||
+      !this.isCampaignDisabled[campaign.id])
+    ) {
       this.selected.emit(campaign);
     }
   }
