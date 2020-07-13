@@ -194,7 +194,7 @@ export class V4SettingsService extends SettingsService {
     // currently only implemented for prod todo: auth and staging/prod versions
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     const awsGatekeeper = this.httpBackend.get<IV4GatekeeperResponse>(
-      'https://cors-proxy.perxtech.io/?url=https://80ixbz8jt8.execute-api.ap-southeast-1.amazonaws.com/Prod/gatekeep_token',
+      'https://80ixbz8jt8.execute-api.ap-southeast-1.amazonaws.com/Prod/gatekeep_token',
       {
         headers
       });
