@@ -148,7 +148,7 @@ export class SignupComponent implements PageAppearence {
             { state:
               {
                 mobileNo: cleanedMobileNo,
-                countryCode
+                countryCode: countryCode.toString()
               }
             }
           );
