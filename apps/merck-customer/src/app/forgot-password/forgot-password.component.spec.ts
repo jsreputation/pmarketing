@@ -81,6 +81,13 @@ describe('ForgotPasswordComponent', () => {
     component.onSubmit();
     tick();
     expect(authSpy).toHaveBeenCalled();
-    expect(routerSpy).toHaveBeenCalledWith(['enter-pin/password'], { state: { mobileNo: '1234' } });
+    expect(routerSpy).toHaveBeenCalledWith(['enter-pin/password'],
+      { state:
+        {
+          mobileNo: '1234',
+          countryCode: '',
+        }
+      }
+    );
   }));
 });
