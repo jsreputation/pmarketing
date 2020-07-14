@@ -112,7 +112,7 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
       });
   }
 
-  private initTranslate(): void {
+  public initTranslate(): void {
     this.translate.get('PASSWORD_UPDATE_SUCCESSFULLY').subscribe(text =>
       this.pwUpdatedTxt = text
     );
