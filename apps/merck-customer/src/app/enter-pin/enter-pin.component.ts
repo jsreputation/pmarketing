@@ -50,7 +50,7 @@ export class EnterPinComponent implements OnInit, PageAppearence {
 
   private encodeMobileNo(mobileNo: string, countryCode: string): string {
     let encodedString = '';
-    const skipDigit = countryCode ? countryCode.length: 0;
+    const skipDigit = countryCode ? countryCode.length : 0;
     for (let i = skipDigit; i < mobileNo.length; i++) {
       if (i < 4 + skipDigit) {
         encodedString += '*';
