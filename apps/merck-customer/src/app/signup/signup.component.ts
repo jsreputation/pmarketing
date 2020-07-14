@@ -150,7 +150,8 @@ export class SignupComponent implements PageAppearence {
                 mobileNo: cleanedMobileNo,
                 countryCode
               }
-            });
+            }
+          );
         },
         err => {
           this.notificationService.addSnack(err.error.message);
