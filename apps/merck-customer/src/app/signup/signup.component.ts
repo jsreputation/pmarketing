@@ -144,7 +144,7 @@ export class SignupComponent implements PageAppearence {
             return;
           }
 
-          this.router.navigate(['enter-pin/register'], { state: { mobileNo: cleanedMobileNo } });
+          this.router.navigate(['enter-pin/register'], { state: { mobileNo: cleanedMobileNo, countryCode: countryCode } });
         },
         err => {
           this.notificationService.addSnack(err.error.message);

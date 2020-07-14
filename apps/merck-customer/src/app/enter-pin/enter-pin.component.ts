@@ -18,6 +18,7 @@ export class EnterPinComponent implements OnInit, PageAppearence {
   public MAX_DIGITS_COUNT: number = 6;
   public pinMode: PinMode = PinMode.password;
   private mobileNo?: string = undefined;
+  private countryCode: string;
   public visibleNo: string = '';
 
   constructor(
@@ -33,7 +34,8 @@ export class EnterPinComponent implements OnInit, PageAppearence {
 
     if (currentNavigation.extras.state) {
       this.mobileNo = currentNavigation.extras.state.mobileNo;
-      this.visibleNo = this.mobileNo ? this.encodeMobileNo(this.mobileNo) : '';
+      this.countryCode = currentNavigation.extras.state.countryCode;
+      this.visibleNo = this.mobileNo ? this.encodeMobileNo(this.mobileNo, this.countryCode) : '';
     }
   }
 
@@ -46,10 +48,11 @@ export class EnterPinComponent implements OnInit, PageAppearence {
     };
   }
 
-  private encodeMobileNo(mobileNo: string): string {
+  private encodeMobileNo(mobileNo: string, countryCode: string): string {
     let encodedString = '';
-    for (let i = 0; i < mobileNo.length; i++) {
-      if (i < 4) {
+    let skipDigit = countryCode.length;
+    for (let i = skipDigit; i < mobileNo.length; i++) {
+      if (i < 4 + skipDigit) {
         encodedString += '*';
       } else {
         encodedString += mobileNo.charAt(i);
