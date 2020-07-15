@@ -3,13 +3,13 @@
     mat-flat-button
     class="full-width__button btn-transparent"
     [ngClass]="{ 'active': currentSelectedLanguage === 'en' }"
-    (click)="switchLanguageEnglish()"
+    (click)="switchLanguage('en')"
   >English</button>
 
   <button
     mat-flat-button
     class="full-width__button btn-transparent"
     [ngClass]="{ 'active': currentSelectedLanguage === 'zh' }"
-    (click)="switchLanguageChinese()"
+    (click)="switchLanguage('zh')"
   >中文</button>
 </mat-action-list>

@@ -31,18 +31,10 @@ export class LanguageComponent implements OnInit, PageAppearence {
     };
   }
 
-  public switchLanguageEnglish(): void {
-    this.translateService.use('en');
+  public switchLanguage(language: string): void {
+    this.translateService.use(language);
     this.cd.detectChanges();
-    this.currentSelectedLanguage = this.translateService.currentLang || this.translateService.defaultLang;
+    this.currentSelectedLanguage = language;
     this.notificationService.addSnack('Language Updated.');
   }
-
-  public switchLanguageChinese(): void {
-    this.translateService.use('zh');
-    this.cd.detectChanges();
-    this.currentSelectedLanguage = this.translateService.currentLang || this.translateService.defaultLang;
-    this.notificationService.addSnack('Language Updated.');
-  }
-
 }
