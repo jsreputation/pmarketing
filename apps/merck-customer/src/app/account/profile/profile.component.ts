@@ -26,7 +26,7 @@ export class ProfileComponent implements OnInit, PageAppearence {
 
   public ngOnInit(): void {
     this.currentSelectedLanguage = this.translate.currentLang || this.translate.defaultLang;
-    this.selectedLanguage = this.currentSelectedLanguage === "zh" ? "中文" : "English"
+    this.selectedLanguage = this.currentSelectedLanguage === 'zh' ? '中文' : 'English';
     this.profileService.whoAmI().subscribe(res => {
       this.profile = res;
       this.conditions = this.getConditionsFromProfile(res);

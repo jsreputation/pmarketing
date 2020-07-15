@@ -10,7 +10,7 @@ describe('LanguageComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ LanguageComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
