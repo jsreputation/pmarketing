@@ -134,7 +134,6 @@ export class HomeComponent extends BCHomeComponent implements OnInit {
       (loyalty: ILoyalty) => {
         if (loyalty) {
           this.restrictedView = loyalty.tiers.filter((tier) => tier.name === 'Premium').length > 0;
-          console.log(this.restrictedView);
         }
       }
     );
