@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef, } from '@angular/core';
 import { PageAppearence, PageProperties, BarSelectedItem } from '../../page-properties';
-import { ProfileService, IProfile, NotificationService } from '@perxtech/core';
+import { NotificationService } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -10,13 +10,16 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class LanguageComponent implements OnInit, PageAppearence {
 
+  public currentSelectedLanguage: string;
+
   constructor(
     private cd: ChangeDetectorRef,
     private translateService: TranslateService,
     private notificationService: NotificationService
-    ) { }
+  ) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
+    this.currentSelectedLanguage = this.translateService.currentLang || this.translateService.defaultLang;
   }
 
   public getPageProperties(): PageProperties {
@@ -27,16 +30,18 @@ export class LanguageComponent implements OnInit, PageAppearence {
       pageTitle: 'STATIC_LANGUAGE'
     };
   }
-  
+
   public switchLanguageEnglish(): void {
     this.translateService.use('en');
     this.cd.detectChanges();
+    this.currentSelectedLanguage = this.translateService.currentLang || this.translateService.defaultLang;
     this.notificationService.addSnack('Language Updated.');
   }
 
   public switchLanguageChinese(): void {
     this.translateService.use('zh');
     this.cd.detectChanges();
+    this.currentSelectedLanguage = this.translateService.currentLang || this.translateService.defaultLang;
     this.notificationService.addSnack('Language Updated.');
   }
 
