@@ -26,7 +26,7 @@
     font-size: 1.6rem;
     white-space: pre-line;
 
-    &.ellipse-2-lines {
+    &.ellipsis-2-lines {
       @include ellipse-lines(2);
     }
   }
