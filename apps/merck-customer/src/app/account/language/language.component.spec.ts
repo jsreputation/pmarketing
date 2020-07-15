@@ -11,7 +11,7 @@ describe('LanguageComponent', () => {
 
   const translateServiceStub: Partial<TranslateService> = {
     currentLang: 'en',
-    use: () => of() 
+    use: () => of()
   };
 
   beforeEach(async(() => {
@@ -40,7 +40,7 @@ describe('LanguageComponent', () => {
   it('should retrieve the current selected language on init', fakeAsync(() => {
     component.ngOnInit();
     tick();
-    expect(component.currentSelectedLanguage).toBe('en')
+    expect(component.currentSelectedLanguage).toBe('en');
   }));
 
   it('should change language to english', () => {
