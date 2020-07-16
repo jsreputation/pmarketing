@@ -249,10 +249,14 @@
   },
   "REDEMPTION": {
     "TITLE": "Input PIN",
+    "CODE_INSTRUCTION_TXT": "The merchant will enter the redemption code when you are ready to redeem at the venue.",
     "DESCRIPTION": "Please present this screen to the cashier to enter the PIN code and redeem your reward.",
     "WRONG_PIN": "Incorrect PIN",
-    "SUCCESSFUL_REDEMPTION": "Reward successfully redeemed",
-    "CTA_TXT": "Cancel"
+    "SUCCESSFUL_REDEMPTION_TITLE": "Reward successfully redeemed",
+    "SUCCESSFUL_REDEMPTION_TXT": "You have redeemed {{reward}}",
+    "CTA_TXT": "Cancel",
+    "BACK_TO_WALLET": "Back To Wallet",
+    "UNKNOWN_ERROR_TXT": "Unknown error occurred, please try again later"
   },
   "PROMO_CODE": {
     "DESCRIPTION": "Please input this code during the checkout process",

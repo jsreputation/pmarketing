@@ -1,12 +1,22 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-
-import { AccountComponent } from './account.component';
-import { RouterTestingModule } from '@angular/router/testing';
-import { AuthenticationService, ProfileModule, ProfileService, IProfile } from '@perxtech/core';
-import { of, Observable } from 'rxjs';
-import { profile } from '../mock/profile.mock';
-import { Router } from '@angular/router';
 import { Type } from '@angular/core';
+import {
+  async,
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import {
+  AuthenticationService,
+  IProfile,
+  ProfileModule,
+  ProfileService,
+} from '@perxtech/core';
+import { Observable, of } from 'rxjs';
+import { profile } from '../mock/profile.mock';
+import { AccountComponent } from './account.component';
 
 describe('AccountComponent', () => {
   let component: AccountComponent;
@@ -14,36 +24,39 @@ describe('AccountComponent', () => {
   let auth: AuthenticationService;
   let router: Router;
   const authenticationServiceStub: Partial<AuthenticationService> = {
-    logout: () => { }
+    logout: () => {},
   };
 
   const profileServiceStub: Partial<ProfileService> = {
-    whoAmI: (): Observable<IProfile> => of(profile)
+    whoAmI: (): Observable<IProfile> => of(profile),
   };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [AccountComponent],
       imports: [
-        RouterTestingModule.withRoutes([{
-          path: 'login',
-          component: AccountComponent
-        }]),
-        ProfileModule
+        RouterTestingModule.withRoutes([
+          {
+            path: 'login',
+            component: AccountComponent,
+          },
+        ]),
+        ProfileModule,
       ],
       providers: [
         { provide: ProfileService, useValue: profileServiceStub },
-        { provide: AuthenticationService, useValue: authenticationServiceStub }
-      ]
-    })
-      .compileComponents();
+        { provide: AuthenticationService, useValue: authenticationServiceStub },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AccountComponent);
     component = fixture.componentInstance;
     router = TestBed.get<Router>(Router as Type<Router>);
-    auth = TestBed.get<AuthenticationService>(AuthenticationService as Type<AuthenticationService>);
+    auth = TestBed.get<AuthenticationService>(
+      AuthenticationService as Type<AuthenticationService>
+    );
     fixture.detectChanges();
   });
 

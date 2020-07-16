@@ -43,7 +43,7 @@ describe('RewardsCollectionComponent', () => {
         {
           id: 1,
           rewardCampaignId: 1,
-          price: 1,
+          price: '1.00',
           currencyCode: 'SGD',
           points: 1,
           identifier: '',
@@ -76,7 +76,7 @@ describe('RewardsCollectionComponent', () => {
         {
           id: 2,
           rewardCampaignId: 2,
-          price: 2,
+          price: '2.00',
           currencyCode: 'SGD',
           points: 2,
           identifier: '',

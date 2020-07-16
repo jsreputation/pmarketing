@@ -78,7 +78,14 @@ export class ForgotPasswordComponent implements PageAppearence {
     try {
       this.authService.forgotPassword(cleanedMobileNo).subscribe(
         () => {
-          this.router.navigate(['enter-pin/password'], { state: { mobileNo: cleanedMobileNo } });
+          this.router.navigate(['enter-pin/password'],
+            { state:
+              {
+                mobileNo: cleanedMobileNo,
+                countryCode
+              }
+            }
+          );
         },
         err => {
           if (err instanceof HttpErrorResponse) {

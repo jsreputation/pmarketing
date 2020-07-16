@@ -69,6 +69,15 @@ export class HomeComponent extends BCHomeComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.loyaltyService.getLoyalty().subscribe((loyalty) => {
+      if (
+        loyalty &&
+        !loyalty.membershipState
+      ) {
+        this.authService.logout();
+        this.router.navigate(['/login']);
+      }
+    });
     this.profileService.getCustomProperties()
       .pipe(
         switchMap(
@@ -105,10 +114,16 @@ export class HomeComponent extends BCHomeComponent implements OnInit {
       }
     );
 
-    this.configService.readAppConfig<void>().subscribe(
-      (config: IConfig<void>) => {
+    this.configService.readAppConfig<void>().pipe(
+      map((config: IConfig<void>) => {
         this.appConfig = config;
         this.initCampaign();
+      }),
+      switchMap(() => this.settingsService.getRemoteFlagsSettings())
+    ).subscribe(
+      (flags: IFlags) => {
+        // todo: create a function to wrap all the rest of the init calls
+        this.appRemoteFlags = flags;
       }
     );
 
@@ -119,16 +134,10 @@ export class HomeComponent extends BCHomeComponent implements OnInit {
       (loyalty: ILoyalty) => {
         if (loyalty) {
           this.restrictedView = loyalty.tiers.filter((tier) => tier.name === 'Premium').length > 0;
-          console.log(this.restrictedView);
         }
       }
     );
 
-    this.settingsService.getRemoteFlagsSettings().subscribe(
-      (flags: IFlags) => {
-        this.appRemoteFlags = flags;
-      }
-    );
     this.authService.isAuthorized().subscribe((isAuth: boolean) => {
       if (isAuth) {
         this.fetchPopupCampaigns();

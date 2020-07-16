@@ -1,0 +1,48 @@
+{
+  "app": "philipssg",
+  "apiHost": "https://api.perxtech.io",
+  "production": false,
+  "preAuth": true,
+  "isWhistler": false,
+  "baseHref": "/",
+  "defaultLang": "en",
+  "showSubtitleLogin": false,
+  "showHomePage": false,
+  "showHistoryPage": true,
+  "showAccountsPage": false,
+
+  "showLoyaltyBlockOnHomePage": true,
+  "showLoyaltyProgress": true,
+  "showCatalogOnHomePage": true,
+  "showQuizOnHomePage" : false,
+  "showCampaignRewardsCounterOnHomepage": false,
+  "showRewardsOnHomepage": true,
+  "showCampaignLandingPage": false,
+
+  "showQrPageSubtitle": false,
+  "showUserQR": true,
+  "showExpiryOnRewardDetail": true,
+  "showUserInfoOnAccountsPage": false,
+  "showTransactionHistoryOnAccountsPage": false,
+  "showVoucherBookingFromRewardsPage":  false,
+  "custom": {
+    "stampsType": "stamp_card",
+    "redirectAfterLogin": "/wallet"
+  },
+  "displayProperties": {
+  "account": {
+      "pages": [
+          {
+              "key": "contact-us",
+              "title": "Contact Us",
+              "content_url": ""
+          },
+          {
+              "key": "tnc",
+              "title": "Terms and Conditions",
+              "content_url": ""
+          }
+      ]
+  }
+}
+}

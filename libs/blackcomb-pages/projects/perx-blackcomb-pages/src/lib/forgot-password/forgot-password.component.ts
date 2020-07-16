@@ -9,6 +9,7 @@ import {
   equalityValidator,
   GeneralStaticDataService,
   ICountryCode,
+  LoyaltyService,
   NotificationService
 } from '@perxtech/core';
 import { Observable, Subject } from 'rxjs';
@@ -23,10 +24,11 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   public currentStep: number = 1;
   public usersPhone: string;
   public loadingSubmit: boolean = false;
-  private static PASSWORD_MIN_LENGTH: number = 3;
   public countriesList$: Observable<ICountryCode[]>;
   public countryCodePrefix: string | undefined;
   public loading: boolean = false;
+  private static PASSWORD_MIN_LENGTH: number = 3;
+  private validateMembership: boolean = false;
 
   public phoneStepForm: FormGroup = new FormGroup({
     phoneNumber: new FormControl(null, [
@@ -53,7 +55,8 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     private notificationService: NotificationService,
     private generalStaticDataService: GeneralStaticDataService,
     private configService: ConfigService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private loyaltyService: LoyaltyService,
   ) {
   }
 
@@ -64,6 +67,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.countriesList$ = this.route.data.pipe(
+      tap((dataObj) => this.validateMembership = dataObj.validateMembership),
       map((dataObj) => dataObj.countryList),
       switchMap((countriesList) => this.generalStaticDataService.getCountriesList(countriesList)),
       takeUntil(this.destroy$)
@@ -120,7 +124,9 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
 
       this.loading = true;
       this.authenticationService.forgotPassword(this.identifier)
-        .pipe(tap(() => this.loading = false, () => this.loading = false))
+        .pipe(
+          tap(() => this.loading = false, () => this.loading = false)
+        )
         .subscribe(
           () => this.currentStep = 2,
           (err) => this.handleError(err)
@@ -159,12 +165,34 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     }
     const value = this.newPasswordForm.value;
     this.loading = true;
-    this.authenticationService.resetPassword({ phone: this.identifier, otp: this.otp, ...value })
+    const resetPassword$ = this.authenticationService.resetPassword({ phone: this.identifier, otp: this.otp, ...value })
       .pipe(
         mergeMap(() => this.authenticationService.login(this.identifier, value.newPassword)),
         tap(() => this.loading = false, () => this.loading = false)
-      )
-      .subscribe(() => this.router.navigate(['/']));
+      );
+    if (this.validateMembership) {
+      resetPassword$.pipe(
+        switchMap(() =>
+          this.loyaltyService.getLoyalty()
+        )
+      ).subscribe((loyalty) => {
+        if (
+          loyalty &&
+          loyalty.membershipState &&
+          loyalty.membershipState === 'active'
+        ) {
+          this.router.navigate(['/']);
+        } else {
+          this.loading = false;
+          this.notificationService.addPopup({
+            title: 'Membership required',
+            text: 'Please purchase a valid membership before logging in',
+          });
+        }
+      });
+    } else {
+      resetPassword$.subscribe(() => this.router.navigate(['/']));
+    }
   }
 
   private handleError(err: any): void {

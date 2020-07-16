@@ -20,28 +20,46 @@ export abstract class IMerchantAdminService {
     type: string,
     reference: string,
     pharmacy: string,
-    productName: string
+    productName: string,
   ): Observable<IMerchantAdminTransaction>;
 
   public abstract redeemVoucher(id: number): Observable<IVoucher>;
 
-  public abstract issueVoucher(id: number, userId?: string): Observable<IVoucher>;
+  public abstract issueVoucher(
+    id: number,
+    userId?: string,
+  ): Observable<IVoucher>;
 
-  public abstract validateInvite(token: string, clientId: string): Observable<IMerchantProfile>;
+  public abstract validateInvite(
+    token: string,
+    clientId: string,
+  ): Observable<IMerchantProfile>;
 
-  public abstract setupNewMerchantsPassword(token: string, clientId: string, password: string): Observable<string>;
+  public abstract setupNewMerchantsPassword(
+    token: string,
+    clientId: string,
+    password: string,
+  ): Observable<string>;
 
   public abstract getMerchantProfile(): Observable<IMerchantProfile>;
 
-  public abstract getTransactionHistory(page?: number, pageSize?: number, locale?: string): Observable<IMerchantTransactionHistory[]>;
+  public abstract getTransactionHistory(
+    page?: number,
+    pageSize?: number,
+    locale?: string,
+    sortBy?: string,
+    orderBy?: string,
+  ): Observable<IMerchantTransactionHistory[]>;
 
   public abstract getRewardTransactionHistory(
     page?: number,
     pageSize?: number,
-    locale?: string
+    locale?: string,
   ): Observable<IMerchantRewardTransactionHistory[]>;
 
   public abstract forgotPassword(email: string): Observable<IMessageResponse>;
 
-  public abstract resetPassword(resetPasswordInfo: IResetPasswordData): Observable<IMessageResponse>;
+  public abstract resetPassword(
+    resetPasswordInfo: IResetPasswordData,
+  ): Observable<IMessageResponse>;
 }

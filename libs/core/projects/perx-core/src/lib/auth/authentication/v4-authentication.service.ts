@@ -43,6 +43,7 @@ import { oc } from 'ts-optchain';
 import { ConfigService } from '../../config/config.service';
 import { IConfig } from '../../config/models/config.model';
 import { NotificationService } from '../../utils/notification/notification.service';
+import { globalCacheBusterNotifier } from 'ngx-cacheable';
 
 interface IV4SignUpData {
   first_name?: string;
@@ -212,6 +213,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   }
 
   public logout(): void {
+    globalCacheBusterNotifier.next();
     this.tokenStorage.clearAppInfoProperty(['userAccessToken', 'pi', 'anonymous']);
   }
 
@@ -353,7 +355,10 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       .pipe(
         tap( // Log the result or error
           data => console.log(data),
-          error => console.log(error)
+          error => {
+            console.log(error);
+            throwError(error);
+          }
         )
       );
   }

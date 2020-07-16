@@ -33,12 +33,12 @@ export class RewardDetailComponent implements OnInit {
 
     this.displayPriceFn = (rewardPrice: IPrice) => {
 
-      if (rewardPrice.points && rewardPrice.points > 0 && rewardPrice.price && rewardPrice.price > 0) {
-        return `Fast Track: ${rewardPrice.points} points + ${rewardPrice.currencyCode} ${Math.floor(rewardPrice.price)}`;
+      if (rewardPrice.points && rewardPrice.points > 0 && rewardPrice.price && parseFloat(rewardPrice.price) > 0) {
+        return `Fast Track: ${rewardPrice.points} points + ${rewardPrice.currencyCode} ${Math.floor(parseFloat(rewardPrice.price))}`;
       }
 
-      if (rewardPrice.price && rewardPrice.price > 0) {
-        return `${rewardPrice.currencyCode} ${Math.floor(rewardPrice.price)}`;
+      if (rewardPrice.price && parseFloat(rewardPrice.price) > 0) {
+        return `${rewardPrice.currencyCode} ${Math.floor(parseFloat(rewardPrice.price))}`;
       }
 
       if (rewardPrice.points && rewardPrice.points > 0) {
@@ -52,12 +52,12 @@ export class RewardDetailComponent implements OnInit {
   }
 
   public displayPrice(rewardPrice: IPrice): string {
-    if (rewardPrice.points && rewardPrice.points > 0 && rewardPrice.price && rewardPrice.price > 0) {
-      return `Fast Track: ${rewardPrice.points} points + ${rewardPrice.currencyCode} ${rewardPrice.price}`;
+    if (rewardPrice.points && rewardPrice.points > 0 && rewardPrice.price && parseFloat(rewardPrice.price) > 0) {
+      return `Fast Track: ${rewardPrice.points} points + ${rewardPrice.currencyCode} ${Math.floor(parseFloat(rewardPrice.price))}`;
     }
 
-    if (rewardPrice.price && rewardPrice.price > 0) {
-      return `${rewardPrice.currencyCode} ${rewardPrice.price}`;
+    if (rewardPrice.price && parseFloat(rewardPrice.price) > 0) {
+      return `${rewardPrice.currencyCode} ${Math.floor(parseFloat(rewardPrice.price))}`;
     }
 
     if (rewardPrice.points && rewardPrice.points > 0) {

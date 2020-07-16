@@ -40,7 +40,7 @@
     "STATIC_AGREE_MARKETING": "我同意及接收默克集團(香港)的市場資訊",
     "STATIC_RESET_PASSWORD": "重設你的密碼",
     "STATIC_ENTER_NUMBER": "輸入你的手機號碼",
-    "STATIC_ENTER_NUMBER_LONG": "請輸入發送到您手機號碼{phoneNumber}的6位數一次性密碼",
+    "STATIC_ENTER_NUMBER_LONG": "請輸入發送到您手機號碼({{phoneNumber}})的6位數一次性密碼",
     "STATIC_GET_OPT": "取得一次性密碼",
     "SUBMIT_BUTTON": "更新密碼",
     "STATIC_NEW_REGISTER": "感謝您的註冊",

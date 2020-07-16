@@ -9,6 +9,7 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'wallet' },
+      { path: 'home', pathMatch: 'full', redirectTo: 'wallet' },
       {
         path: 'wallet', loadChildren: () => import('../wallet/wallet.module').then(mod => mod.WalletModule),
         canActivate: [ProtectedGuard]

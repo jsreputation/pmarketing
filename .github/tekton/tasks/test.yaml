@@ -13,6 +13,9 @@ spec:
     - name: folder
       type: string
       description: The folder to run the test command
+    - name: app-name
+      type: string
+      description: The app-name for which to run the test
   stepTemplate:
     image: circleci/node:10-browsers
     resources: &resources
@@ -24,24 +27,15 @@ spec:
       workingDir: "/workspace/project"
       command: ["yarn", "install"]
       resources: *resources
-    # - name: build-lib
-    #   workingDir: '/workspace/project'
-    #   command: ['yarn', 'build:lib']
-    #   resources: *resources
+    - name: build-lib
+      workingDir: "/workspace/project"
+      command: ["yarn", "build:lib"]
+      resources: *resources
     - name: config
       workingDir: "/workspace/project"
-      command: ["yarn", "config"]
+      command: ["yarn", "run", "config"]
       resources: *resources
     - name: test
       workingDir: "/workspace/project"
-      command:
-        [
-          "yarn",
-          "nx",
-          "test",
-          "$(inputs.params.folder)",
-          "--no-watch",
-          "--no-progress",
-          "--browsers=ChromeHeadlessCI",
-        ]
+      command: ["yarn", "test:$(inputs.params.app-name)"]
       resources: *resources

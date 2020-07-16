@@ -8,7 +8,6 @@ import { TransactionHistoryComponent } from './transaction-history.component';
 import {
   LoyaltyModule,
   LoyaltyService,
-  SettingsService,
   TransactionsService
 } from '@perxtech/core';
 import { of } from 'rxjs';
@@ -17,9 +16,6 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 describe('TransactionHistoryComponent', () => {
   let component: TransactionHistoryComponent;
   let fixture: ComponentFixture<TransactionHistoryComponent>;
-  const settingsServiceStub: Partial<SettingsService> = {
-    getRemoteFlagsSettings: () => of()
-  };
 
   const transactionServiceStub: Partial<TransactionsService> = {
     getTransactions: () => of()
@@ -42,7 +38,6 @@ describe('TransactionHistoryComponent', () => {
           }
         },
         { provide: TransactionsService, useValue: transactionServiceStub },
-        { provide: SettingsService, useValue: settingsServiceStub }
       ]
     })
       .compileComponents();

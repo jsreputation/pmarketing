@@ -28,7 +28,9 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
   public reward: IReward;
   public quantities: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   public bookingForm: FormGroup;
+  public loading: boolean = false;
   private loyalty: ILoyalty;
+  public chooseQuantity: boolean = false;
 
   constructor(
     private rewardsService: RewardsService,
@@ -47,6 +49,13 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
   }
 
   private getData(): void {
+    this.route.data.pipe(
+      map((dataObj) => {
+        if (dataObj.chooseQuantity) {
+          this.chooseQuantity = dataObj.chooseQuantity;
+        }
+      })
+    );
     this.route.params.pipe(
       switchMap((param) => {
         this.rewardId = param.id;
@@ -95,7 +104,7 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
 
   public buildForm(): void {
     this.bookingForm = this.build.group({
-      quantity: [null, [Validators.required]],
+      quantity: [1, [Validators.required]],
       location: [null, []],
       priceId: [null, [Validators.required]],
       agreement: [false, [Validators.requiredTrue]]
@@ -103,9 +112,11 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
   }
 
   public submitForm(): void {
+    this.loading = true;
     const currentPrice = this.prices.find((price) => price.id === this.bookingForm.value.priceId);
     // allow free rewards to go through
     if (!currentPrice || currentPrice.points === undefined || null) {
+      this.loading =  false;
       return;
     }
     const totalCost = currentPrice.points * this.bookingForm.value.quantity;
@@ -114,11 +125,12 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
         title: 'Sorry',
         text: 'You do not have enough points for this transaction'
       });
+      this.loading =  false;
       return;
     }
 
     forkJoin([...new Array(parseInt(this.bookingForm.value.quantity, 10))].map(() =>
-      this.vouchersService.reserveReward(this.rewardId,
+      this.vouchersService.issueReward(this.rewardId,
         {
           priceId: this.bookingForm.value.priceId,
           locationId: this.bookingForm.value.location,
@@ -132,6 +144,7 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
         imageUrl: 'assets/congrats_image.png',
         afterClosedCallBack: this
       });
+      this.loading = false;
     }, (err) => {
       if (err.code === 40) {
         this.notificationService.addPopup({
@@ -139,6 +152,7 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
           text: 'You do not have enough points for this transaction'
         });
       }
+      this.loading = false;
     });
   }
 

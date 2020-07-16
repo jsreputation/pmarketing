@@ -8,9 +8,6 @@ import {
   IRewardTransactionHistory,
   // IPurchaseTransactionHistory,
   TransactionPipe,
-  CashbackTransactionPipe,
-  SettingsService,
-  IFlags,
   ILoyalty,
   TransactionsService,
   ITransaction,
@@ -19,7 +16,6 @@ import {
 import { oc } from 'ts-optchain';
 import {
   map,
-  switchMap
 } from 'rxjs/operators';
 
 // import { ShowTitleInHeader } from '../layout/layout.component';
@@ -44,10 +40,9 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
 
   constructor(
     private loyaltyService: LoyaltyService,
-    private settingsService: SettingsService,
     private transactionsService: TransactionsService,
     private transactionPipe: TransactionPipe,
-    private cashbackTransactionPipe: CashbackTransactionPipe,
+    // private cashbackTransactionPipe: CashbackTransactionPipe,
     private datePipe: DatePipe
   ) { }
 
@@ -64,30 +59,18 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
             this.loyaltyService.getTransactionHistory(this.pageNumber - 1, this.pageSize)
           );
         }
-      }),
-      switchMap(() => this.settingsService.getRemoteFlagsSettings())
-    ).subscribe((flags: IFlags) => {
-      if (flags.rebateDemoFlow) {
-        this.priceLabelFn = (tr: ILoyaltyTransactionHistory) => `${this.cashbackTransactionPipe.transform(tr.pointsAmount || 0)}`;
-        this.descFn = (tr: ILoyaltyTransactionHistory) => {
-          let text = '';
-          const properties = oc(tr).transactionDetails.data.properties();
-          if (properties) {
-            text = properties.storeName ? `${properties.storeName}` : '';
-          }
-          return text;
-        };
-        this.purchasesTitleFn = (tr: ILoyaltyTransactionHistory) => {
-          let text = '';
-          const properties = oc(tr).transactionDetails.data.properties();
-          if (properties) {
-            text = properties.storeCode ? properties.storeCode : '';
-          }
-          return text;
-        };
-      } else if (this.isPremiumMember) {
+      })
+    ).subscribe(() => {
+      if (this.isPremiumMember) {
         this.priceLabelFn = (tr: ITransaction) => `${tr.currency ? tr.currency : 'MYR'}${tr.amount}`;
-        this.descFn = () => '';
+        this.descFn = (tr: ITransaction) => {
+          let text = '';
+          const properties = oc(tr).properties();
+          if (properties) {
+            text = properties.invoiceNumber ? `Invoice: ${properties.invoiceNumber}` : '';
+          }
+          return text;
+        };
         this.purchasesTitleFn = (tr: ITransaction) => `${tr.properties.productName}`;
       } else {
         this.priceLabelFn = (tr: ILoyaltyTransactionHistory) => `${this.transactionPipe.transform(tr.pointsAmount || 0)}`;
@@ -95,7 +78,7 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
           let text = '';
           const properties = oc(tr).transactionDetails.data.properties();
           if (properties) {
-            text = properties.storeName ? properties.storeName : '';
+            text = properties.invoiceNumber ? `Invoice: ${properties.invoiceNumber}` : '';
           }
           return text;
         };

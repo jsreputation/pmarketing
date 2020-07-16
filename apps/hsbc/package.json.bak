@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "npm run config && ng serve --host 0.0.0.0",
+    "start": "env-cmd -f env/hsbc.staging.dev npm run config && ng serve --host 0.0.0.0",
+    "start:prod": "env-cmd -f env/hsbc.production.dev npm run config && ng serve --host 0.0.0.0",
     "start:hsbc-xmas:staging": "env-cmd -f env/hsbc-xmas.staging npm run config && ng serve --host 0.0.0.0",
     "start:collect2:staging": "env-cmd -f env/hsbc-collect2.staging npm run config && ng serve --host 0.0.0.0",
     "build": "npm run config && ng build",

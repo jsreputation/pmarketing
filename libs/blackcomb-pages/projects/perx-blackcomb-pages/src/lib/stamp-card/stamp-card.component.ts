@@ -10,7 +10,7 @@ import {
 } from '@perxtech/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { filter, switchMap, takeUntil, map, tap, pairwise } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { oc } from 'ts-optchain';
 
@@ -37,6 +37,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
   public isEnabled: boolean = false;
   public stamps: IStamp[] | undefined;
   public stampCard: IStampCard | null;
+  public newStampsLabelFn: () => Observable<string>;
   private idN: number;
   private destroy$: Subject<void> = new Subject();
   private rewardSuccessPopUp: IPopupConfig = {
@@ -77,6 +78,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
     if (this.errorPopUp.buttonTxt) {
       this.translate.get(this.errorPopUp.buttonTxt).subscribe((text) => this.errorPopUp.buttonTxt = text);
     }
+    this.newStampsLabelFn = () => this.translate.get('GAME_PAGE.STAMPS_LABEL_TXT');
   }
 
   public ngOnInit(): void {

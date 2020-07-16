@@ -11,6 +11,6 @@ export abstract class IVoucherService {
   public abstract stateChangedForVoucher(voucherId: number, intervalPeriod?: number, locale?: string): Observable<IVoucher>;
   public abstract reserveReward(rewardId: number, rewardParams?: IRewardParams, locale?: string): Observable<IVoucher>;
   public abstract getRewardLocations(rewardId: number): Observable<IVoucherLocation[]>;
-  public abstract issueReward(rewardId: number, sourceType?: string, locale?: string, cardId?: number): Observable<IVoucher>;
+  public abstract issueReward(rewardId: number, rewardParams?: IRewardParams, locale?: string, cardId?: number): Observable<IVoucher>;
   public abstract getFromPage(page: number, voucherParams?: IGetVoucherParams, locale?: string): Observable<IVoucher[]>;
 }

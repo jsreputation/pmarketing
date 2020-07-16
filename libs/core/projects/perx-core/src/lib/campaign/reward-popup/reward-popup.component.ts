@@ -5,10 +5,16 @@ import { IPopupConfig } from '../../utils/popup/popup.component';
 export interface IRewardPopupConfig extends IPopupConfig {
   validTo?: Date;
   timerCallbacks?: TimerCallBack;
+  afterClosedCallBackRedirect?: PopUpClosedCallBack;
+  url?: string;
 }
 export interface TimerCallBack {
   timerExpired(): void;
   timerExpiring(): void;
+}
+
+export interface PopUpClosedCallBack {
+  closeAndRedirect(url: string): void;
 }
 
 @Component({
@@ -64,6 +70,9 @@ export class RewardPopupComponent {
     this.dialogRef.close();
     if (this.data.afterClosedCallBack) {
       this.data.afterClosedCallBack.dialogClosed();
+    }
+    if (this.data.afterClosedCallBackRedirect && this.data.url) {
+      this.data.afterClosedCallBackRedirect.closeAndRedirect(this.data.url);
     }
   }
 }

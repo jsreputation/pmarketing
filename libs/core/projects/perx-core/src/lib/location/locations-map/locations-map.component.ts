@@ -160,7 +160,7 @@ export class LocationsMapComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  private updateBoundingBox(): void {
+  public updateBoundingBox(): void {
     let bbox: google.maps.LatLngBounds = new google.maps.LatLngBounds();
     this.markersArray.forEach((marker: google.maps.Marker) => {
       const position = marker.getPosition();
