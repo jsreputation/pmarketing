@@ -1,3 +1,5 @@
+@import "../../mixins/mixins.scss";
+
 .cards {
   display: flex;
   flex-direction: row;
@@ -23,6 +25,10 @@
   .description {
     font-size: 1.6rem;
     white-space: pre-line;
+
+    &.ellipsis-2-lines {
+      @include ellipse-lines(2);
+    }
   }
 }
 
