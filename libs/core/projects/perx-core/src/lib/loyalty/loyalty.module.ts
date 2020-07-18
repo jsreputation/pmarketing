@@ -11,7 +11,6 @@ import { HttpClient } from '@angular/common/http';
 import { WhistlerLoyaltyService } from './whistler-loyalty.service';
 import {MatProgressBarModule, MatProgressSpinnerModule} from '@angular/material';
 import { ConfigService } from '../config/config.service';
-import { TranslateModule } from '@ngx-translate/core';
 import { CashbackTransactionPipe } from './loyalty-transactions-list/cashback-transaction.pipe';
 
 export function loyaltyServiceFactory(http: HttpClient, config: Config, configService: ConfigService): LoyaltyService {
@@ -33,7 +32,6 @@ export function loyaltyServiceFactory(http: HttpClient, config: Config, configSe
     CommonModule,
     MatProgressSpinnerModule,
     MatProgressBarModule,
-    TranslateModule.forChild()
   ],
   exports: [
     LoyaltySummaryComponent,

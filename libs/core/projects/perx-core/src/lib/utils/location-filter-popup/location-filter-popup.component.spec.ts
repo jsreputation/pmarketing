@@ -10,8 +10,6 @@ import {
   MatDialogRef
 } from '@angular/material';
 
-import { TranslateModule } from '@ngx-translate/core';
-
 describe('LocationFilterPopupComponent', () => {
   let component: LocationFilterPopupComponent;
   let fixture: ComponentFixture<LocationFilterPopupComponent>;
@@ -19,7 +17,7 @@ describe('LocationFilterPopupComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [LocationFilterPopupComponent],
-      imports: [MatDialogModule, MatIconModule, MatToolbarModule, MatCheckboxModule, TranslateModule.forRoot()],
+      imports: [MatDialogModule, MatIconModule, MatToolbarModule, MatCheckboxModule],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: ['a', 'b'] },
         { provide: MatDialogRef, useValue: LocationFilterPopupComponent }

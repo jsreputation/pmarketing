@@ -21,10 +21,17 @@ export class RewardComponent implements OnInit {
   public showExpiry: boolean = true;
 
   @Input()
-  public descriptionLabel: string = 'Description';
+  public descriptionLabel: Observable<string> = of('Description');
 
   @Input()
-  public tncLabel: string = 'Terms and Conditions';
+  public tncLabel: Observable<string> = of('Terms and Conditions');
+
+  @Input()
+  public codeLabel: Observable<string> = of('Code');
+
+  @Input()
+  public expiryLabel: Observable<string> = of('Expiry');
+  
 
   public ngOnInit(): void {
     if (!this.displayPriceFn) {

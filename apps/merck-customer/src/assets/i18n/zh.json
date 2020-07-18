@@ -113,6 +113,8 @@
     "REWARD": {
         "REDEEM": "換領",
         "EXPIRY": "過期",
+        "DESCRIPTION": "描述",
+        "TNC": "條款及細則",
         "AND": "和",
         "POINT": "分",
         "HOW_TO_REDEEM": "如何兌換",

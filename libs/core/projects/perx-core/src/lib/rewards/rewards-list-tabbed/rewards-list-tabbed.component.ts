@@ -3,7 +3,6 @@ import { Observable, of } from 'rxjs';
 import { IPrice, IReward } from '../models/reward.model';
 import { map } from 'rxjs/operators';
 import { MatTabChangeEvent } from '@angular/material';
-import { TranslateService } from '@ngx-translate/core';
 
 export interface ITabConfig {
   filterKey: string | null;
@@ -46,8 +45,6 @@ export class RewardsListTabbedComponent implements OnInit {
   public tabChanged: EventEmitter<MatTabChangeEvent> = new EventEmitter<MatTabChangeEvent>();
 
   public selectedIndex: number = 0;
-
-  constructor(private translate: TranslateService) { }
 
   public ngOnInit(): void {
     /**

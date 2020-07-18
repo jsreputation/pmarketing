@@ -112,6 +112,8 @@
   "REWARD": {
     "REDEEM": "Redeem",
     "EXPIRY": "Expiry",
+    "DESCRIPTION": "Description",
+    "TNC": "Terms and Conditions",
     "AND": " and ",
     "POINT": " points",
     "HOW_TO_REDEEM": "How to redeem",

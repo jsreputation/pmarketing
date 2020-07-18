@@ -1,4 +1,3 @@
-import { TranslateService } from '@ngx-translate/core';
 import { Component, OnInit, Input } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
@@ -54,7 +53,6 @@ export class LoyaltySummaryComponent implements OnInit {
   constructor(
     private profileService: ProfileService,
     private loyaltyService: LoyaltyService,
-    private translate: TranslateService,
     private datePipe: DatePipe
   ) {
   }
@@ -117,7 +115,8 @@ export class LoyaltySummaryComponent implements OnInit {
     this.loyalty$.pipe(
       tap((loyalty: ILoyalty) => {
         if (loyalty && loyalty.nextTierName) {
-          this.translate.get(loyalty.nextTierName).subscribe(txt => this.nextTierName = txt);
+          // Todo variable neeed to be translated, but core don't have transalate service
+          this.nextTierName = loyalty.nextTierName;
         }
       })
     ).subscribe(

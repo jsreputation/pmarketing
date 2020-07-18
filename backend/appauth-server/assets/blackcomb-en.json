@@ -297,7 +297,9 @@
   "REWARD": {
     "GET_VOUCHER": "Get Voucher",
     "DESCRIPTION": "Description",
-    "TNC": "Terms and Conditions"
+    "TNC": "Terms and Conditions",
+    "EXPIRY": "Expiry",
+    "CODE": "Code"
   },
   "LOCATION_PAGE": {
     "FILTER_BY": "Filter by",
