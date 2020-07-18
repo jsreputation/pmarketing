@@ -40,14 +40,14 @@ export class VouchersComponent implements OnInit, OnChanges {
   public mapping?: StatusLabelMapping;
 
   @Input()
-  public expiryLabelFn: ((tr: IVoucher) => string);
+  public expiryLabelFn: (tr: IVoucher) => Observable<string>;
 
   public repeatGhostCount: number = 10;
 
   public ghostTimeOut: boolean;
 
   constructor(private vouchersService: IVoucherService, private datePipe: DatePipe) {
-    this.expiryLabelFn = (v: IVoucher) => v.expiry ? `Expiry: ${this.datePipe.transform(v.expiry, 'shortDate')}` : '';
+    this.expiryLabelFn = (v: IVoucher) => of(v.expiry ? `Expiry: ${this.datePipe.transform(v.expiry, 'shortDate')}` : '');
   }
 
   public ngOnInit(): void {

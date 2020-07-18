@@ -14,7 +14,7 @@
         {{voucher?.reward?.merchantName}}
       </div>
       <div class="voucher-expiry" *ngIf="!hideExpiry && voucher.expiry!==null">
-        {{expiryFn(voucher)}}
+        {{expiryFn(voucher) | async}}
       </div>
       <div [ngClass]="'ribbon ' + voucher.state" *ngIf="mapping && showRedeemedIcon && mapping[voucher.state]">
         {{mapping[voucher.state]}}</div>
@@ -27,13 +27,13 @@
       <!--        </div>-->
       <!--      </div>-->
       <div class="section-heading" *ngIf="voucher.reward.description">
-        {{descriptionLabel}}
+        {{descriptionLabel | async}}
       </div>
       <div class="section-content" *ngIf="voucher.reward.description">
         <div id="rewardDescription" [innerHtml]="voucher.reward.description"></div>
       </div>
       <div class="section-heading" *ngIf="voucher.reward.termsAndConditions">
-        {{tncLabel}}
+        {{tncLabel | aysnc}}
       </div>
       <div class="section-content" *ngIf="voucher.reward.termsAndConditions">
         <div [innerHtml]="voucher.reward.termsAndConditions"></div>
@@ -48,7 +48,7 @@
   </div>
   <div class="actions-container" *ngIf="!hideActions">
     <button mat-raised-button color="primary" class="redeem-btn" (click)="onClick()">
-      {{ redeemLabelFn() }}
+      {{ redeemLabelFn() | async}}
     </button>
   </div>
 </ng-container>

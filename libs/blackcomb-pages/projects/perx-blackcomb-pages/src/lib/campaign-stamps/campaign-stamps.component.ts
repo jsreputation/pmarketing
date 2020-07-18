@@ -23,7 +23,7 @@ export class CampaignStampsComponent implements OnInit {
   public config: CampaignLandingPage | undefined;
   public filter: string[];
   public rewardsHeadline: string;
-  public expiryLabelFn: ((v: Voucher) => string) | undefined;
+  public expiryLabelFn: ((v: Voucher) => Observable<string>) | undefined;
 
   public currentPage: number = 0;
   public completed: boolean = false;
