@@ -17,7 +17,6 @@ import {
   RewardsService,
   ThemesService,
 } from '@perxtech/core';
-import { TranslateModule } from '@ngx-translate/core';
 import { RewardComponent } from './reward.component';
 
 describe('RewardComponent', () => {
@@ -40,7 +39,6 @@ describe('RewardComponent', () => {
         GameModule,
         MatDialogModule,
         RewardsModule,
-        TranslateModule.forRoot()
       ],
       providers: [
         {
