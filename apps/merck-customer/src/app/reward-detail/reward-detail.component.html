@@ -1,5 +1,5 @@
 <div class="reward-container">
-	<perx-core-reward [reward]="reward"></perx-core-reward>
+	<perx-core-reward [reward]="reward" [displayPriceFn]="displayPriceFn"></perx-core-reward>
 	<button mat-raised-button color="primary" class="redeem-btn" (click)="onClick()">
 		{{"REWARD.REDEEM" | translate}}
 	</button>

@@ -1,9 +1,9 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
-import { IReward, RewardsService, IProfile, ILoyalty, ITabConfigExtended } from '@perxtech/core';
+import { IReward, RewardsService, IProfile, ILoyalty, ITabConfigExtended, IPrice } from '@perxtech/core';
 import { Observable, of, Subject, forkJoin } from 'rxjs';
 import { Router } from '@angular/router';
-import { flatMap, map, tap } from 'rxjs/operators';
+import { flatMap, map, tap, mergeMap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { MatTabChangeEvent } from '@angular/material';
 import { DatePipe } from '@angular/common';
@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit, PageAppearence {
   public rewards: Observable<IReward[]>;
   public tabs: Subject<ITabConfigExtended[]> = new Subject<ITabConfigExtended[]>();
   public staticTab: ITabConfigExtended[];
+  public displayPriceFn: (rewardPrice: IPrice) => Observable<string>;
   public subTitleFn: (loyalty: ILoyalty) => Observable<string>;
   public titleFn: (profile: IProfile) => Observable<string>;
   public summaryExpiringFn: (loyalty: ILoyalty) => Observable<string>;
@@ -35,7 +36,7 @@ export class HomeComponent implements OnInit, PageAppearence {
   }
 
   public ngOnInit(): void {
-    
+
     this.rewardsService
       .getAllRewards()
       .subscribe((rewards) => this.rewards = of(rewards));
@@ -141,6 +142,19 @@ export class HomeComponent implements OnInit, PageAppearence {
       this.translate.get('HOME.ACCOUNT_EXPIRE').pipe(
         map(res => `${res}: ${this.datePipe.transform(loyalty.membershipExpiry, 'mediumDate')}`)
       ) : of('');
+
+    this.displayPriceFn = (rewardPrice: IPrice) => this.translate.get('REWARD.POINT').pipe(
+      mergeMap(text => {
+        if (rewardPrice.price && rewardPrice.price > 0) {
+          return of(`${rewardPrice.currencyCode} ${rewardPrice.price}`);
+        }
+
+        if (rewardPrice.points && rewardPrice.points > 0) {
+          return of(`${rewardPrice.points}${text}`);
+        }
+        return of(''); // is actually 0 or invalid value default
+      })
+    );
   }
 
 }

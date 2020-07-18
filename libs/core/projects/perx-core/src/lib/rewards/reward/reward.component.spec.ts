@@ -3,7 +3,6 @@ import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core
 import { RewardComponent } from './reward.component';
 import { IReward } from '../models/reward.model';
 import { of } from 'rxjs';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('RewardComponent', () => {
   let component: RewardComponent;
@@ -29,7 +28,6 @@ describe('RewardComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RewardComponent],
-      imports: [TranslateModule.forRoot()]
     })
       .compileComponents();
   }));

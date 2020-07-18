@@ -32,7 +32,7 @@
           class="points overline"
           [ngStyle]="{'color': themeFontColor ? themeFontColor : colorPrimary}">
           <div *ngFor="let rewardPrice of reward.rewardPrice">
-            {{displayPriceFn(rewardPrice)}}</div>
+            {{displayPriceFn(rewardPrice) | async}}</div>
         </div>
       </mat-card-content>
     </mat-card>

@@ -10,7 +10,6 @@ import { IReward } from '../models/reward.model';
 import { MaterialModule } from '../../shared/material.module';
 import { UtilsModule } from '../../utils/utils.module';
 import { ThemesService } from '../../utils/themes/themes.service';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('RewardsCollectionComponent', () => {
   let component: RewardsCollectionComponent;
@@ -97,7 +96,6 @@ describe('RewardsCollectionComponent', () => {
       imports: [
         MaterialModule,
         UtilsModule,
-        TranslateModule.forRoot()
       ],
       providers: [
         { provide: ThemesService, useValue: themesServiceStub }

@@ -35,10 +35,10 @@
                 <div *ngIf="reward.rewardPrice && reward.rewardPrice.length > 0">
                   <div *ngFor="let rewardPrice of reward.rewardPrice; let i = index">
                     <div *ngIf="reward.rewardPrice && reward.rewardPrice.length > 1; else singlePriceBlock">
-                      <span *ngIf="i === 0">From {{displayPriceFn(rewardPrice)}}</span>
+                      <span *ngIf="i === 0">From {{displayPriceFn(rewardPrice) | async}}</span>
                     </div>
                     <ng-template #singlePriceBlock>
-                      {{displayPriceFn(rewardPrice)}}
+                      {{displayPriceFn(rewardPrice) | async}}
                     </ng-template>
                   </div>
                 </div>

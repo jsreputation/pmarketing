@@ -1,6 +1,5 @@
-import { TranslateService } from '@ngx-translate/core';
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { IPrice, IReward } from '../models/reward.model';
 
 @Component({
@@ -13,7 +12,7 @@ export class RewardComponent implements OnInit {
   public reward$: Observable<IReward>;
 
   @Input()
-  public displayPriceFn: (rewardPrice: IPrice) => string;
+  public displayPriceFn: (rewardPrice: IPrice) => Observable<string>;
 
   @Input()
   public showRewardIdentifier: boolean = false;
@@ -27,25 +26,21 @@ export class RewardComponent implements OnInit {
   @Input()
   public tncLabel: string = 'Terms and Conditions';
 
-  constructor(private translate: TranslateService) { }
-
   public ngOnInit(): void {
     if (!this.displayPriceFn) {
-      this.translate.get(['REWARD.AND', 'REWARD.POINT']).subscribe((res: any) => {
-        this.displayPriceFn = (rewardPrice: IPrice) => {
-          if (rewardPrice.price && rewardPrice.price > 0) {
-            if (rewardPrice.points && rewardPrice.points > 0) {
-              return `${rewardPrice.currencyCode} ${rewardPrice.price}${res['REWARD.AND']}${rewardPrice.points}${res['REWARD.POINT']}`;
-            }
-            return `${rewardPrice.currencyCode} ${rewardPrice.price}`;
-          }
-
+      this.displayPriceFn = (rewardPrice: IPrice) => {
+        if (rewardPrice.price && rewardPrice.price > 0) {
           if (rewardPrice.points && rewardPrice.points > 0) {
-            return `${rewardPrice.points}${res.REWARD && res.REWARD.POINT}`;
+            return of(`${rewardPrice.currencyCode} ${rewardPrice.price} and ${rewardPrice.points} points`);
           }
-          return ''; // is actually 0 or invalid value default
-        };
-      });
+          return of(`${rewardPrice.currencyCode} ${rewardPrice.price}`);
+        }
+
+        if (rewardPrice.points && rewardPrice.points > 0) {
+          return of(`${rewardPrice.points} points`);
+        }
+        return of(''); // is actually 0 or invalid value default
+      };
     }
   }
 }

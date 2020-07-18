@@ -53,7 +53,8 @@ import {
   SettingsService,
   ThemesService,
   ILoyalty,
-  IFlags
+  IFlags,
+  IPrice
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
@@ -81,6 +82,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public stampCampaigns$: Observable<ICampaign[]>;
   public tabs$: BehaviorSubject<ITabConfigExtended[]> = new BehaviorSubject<ITabConfigExtended[]>([]);
   public staticTab: ITabConfigExtended[];
+  public displayPriceFn: (rewardPrice: IPrice) => Observable<string>;
   public subTitleFn: (loyalty: ILoyalty) => Observable<string>;
   public titleFn: (profile: IProfile) => Observable<string>;
   public summaryExpiringFn: (loyalty: ILoyalty) => Observable<string>;
@@ -380,6 +382,19 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.translate.get('HOME.ACCOUNT_EXPIRE').pipe(
         map(res => `${res}: ${this.datePipe.transform(loyalty.membershipExpiry, 'mediumDate')}`)
       ) : of('');
+
+    this.displayPriceFn = (rewardPrice: IPrice) => this.translate.get('REWARD.POINT').pipe(
+      mergeMap(text => {
+        if (rewardPrice.price && rewardPrice.price > 0) {
+          return of(`${rewardPrice.currencyCode} ${rewardPrice.price}`);
+        }
+
+        if (rewardPrice.points && rewardPrice.points > 0) {
+          return of(`${rewardPrice.points}${text}`);
+        }
+        return of(''); // is actually 0 or invalid value default
+      })
+    );
   }
 
 }

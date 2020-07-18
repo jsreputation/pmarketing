@@ -57,7 +57,7 @@ export class HomeComponent implements OnInit {
   public tabs: Subject<ITabConfig[]> = new Subject<ITabConfig[]>();
   public staticTab: ITabConfig[] = tabs;
   public rewardsCollection: Observable<IReward[]>;
-  public displayPriceFn: (price: IPrice) => string;
+  public displayPriceFn: (price: IPrice) => Observable<string>;
   public titleFn: (profile: IProfile) => Observable<string>;
   public subTitleFn: (loyalty: ILoyalty) => Observable<string>;
   public summaryExpiringFn: (loyalty: ILoyalty) => Observable<string>;
@@ -79,17 +79,17 @@ export class HomeComponent implements OnInit {
     this.getLoyalty();
     this.displayPriceFn = (rewardPrice: IPrice) => {
       if (rewardPrice.points && rewardPrice.points > 0 && rewardPrice.price && rewardPrice.price > 0) {
-        return `Fast Track: ${rewardPrice.points} points + ${rewardPrice.currencyCode} ${parseInt((rewardPrice.price).toString(), 10)}`;
+        return of(`Fast Track: ${rewardPrice.points} points + ${rewardPrice.currencyCode} ${parseInt((rewardPrice.price).toString(), 10)}`);
       }
 
       if (rewardPrice.price && rewardPrice.price > 0) {
-        return `${rewardPrice.currencyCode} ${parseInt((rewardPrice.price).toString(), 10)}`;
+        return of(`${rewardPrice.currencyCode} ${parseInt((rewardPrice.price).toString(), 10)}`);
       }
 
       if (rewardPrice.points && rewardPrice.points > 0) {
-        return `${rewardPrice.points} points`;
+        return of(`${rewardPrice.points} points`);
       }
-      return ''; // is actually 0 or invalid value default
+      return of(''); // is actually 0 or invalid value default
     };
     this.titleFn = (profile: IProfile) => {
       if (profile && profile.lastName) {

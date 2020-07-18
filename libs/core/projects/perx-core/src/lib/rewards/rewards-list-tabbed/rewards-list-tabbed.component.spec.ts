@@ -14,7 +14,6 @@ import { RewardsListComponent } from '../rewards-list/rewards-list.component';
 import { MaterialModule } from '../../shared/material.module';
 import { UtilsModule } from '../../utils/utils.module';
 import { ThemesService } from '../../utils/themes/themes.service';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('RewardsListTabbedComponent', () => {
   let component: RewardsListTabbedComponent;
@@ -35,7 +34,6 @@ describe('RewardsListTabbedComponent', () => {
         MaterialModule,
         UtilsModule,
         NgxMultiLineEllipsisModule,
-        TranslateModule.forRoot()
       ],
       providers: [
         {

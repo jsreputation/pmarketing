@@ -72,7 +72,7 @@
     </perx-blackcomb-pages-campaigns-collection>
   </div>
   <div class="rewards-collection" *ngIf="appConfig.showRewardsOnHomepage">
-    <perx-core-rewards-list-tabbed [tabs$]="tabs$" (tapped)="goToReward($event)" (tabChanged)="tabChanged($event)">
+    <perx-core-rewards-list-tabbed [tabs$]="tabs$" [displayPriceFn]="displayPriceFn" (tapped)="goToReward($event)" (tabChanged)="tabChanged($event)">
     </perx-core-rewards-list-tabbed>
   </div>
 </div>

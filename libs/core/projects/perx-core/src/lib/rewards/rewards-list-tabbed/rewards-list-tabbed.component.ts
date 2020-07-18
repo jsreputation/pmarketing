@@ -38,7 +38,7 @@ export class RewardsListTabbedComponent implements OnInit {
   ]);
 
   @Input()
-  public displayPriceFn: (rewardPrice: IPrice) => string;
+  public displayPriceFn: (rewardPrice: IPrice) => Observable<string>;
 
   @Output()
   public tapped: EventEmitter<IReward> = new EventEmitter<IReward>();
@@ -55,21 +55,19 @@ export class RewardsListTabbedComponent implements OnInit {
      * throw warning that this.rewards is ignored
      */
     if (!this.displayPriceFn) {
-      this.translate.get(['REWARD.AND', 'REWARD.POINT']).subscribe((res: any) => {
-        this.displayPriceFn = (rewardPrice: IPrice) => {
-          if (rewardPrice.price && rewardPrice.price > 0) {
-            if (rewardPrice.points && rewardPrice.points > 0) {
-              return `${rewardPrice.currencyCode} ${rewardPrice.price}${res['REWARD.AND']}${rewardPrice.points}${res['REWARD.POINT']}`;
-            }
-            return `${rewardPrice.currencyCode} ${rewardPrice.price}`;
-          }
-
+      this.displayPriceFn = (rewardPrice: IPrice) => {
+        if (rewardPrice.price && rewardPrice.price > 0) {
           if (rewardPrice.points && rewardPrice.points > 0) {
-            return `${rewardPrice.points}${res['REWARD.POINT']}`;
+            return of(`${rewardPrice.currencyCode} ${rewardPrice.price} and ${rewardPrice.points} points`);
           }
-          return ''; // is actually 0 or invalid value default
-        };
-      });
+          return of(`${rewardPrice.currencyCode} ${rewardPrice.price}`);
+        }
+
+        if (rewardPrice.points && rewardPrice.points > 0) {
+          return of(`${rewardPrice.points} points`);
+        }
+        return of(''); // is actually 0 or invalid value default
+      };
     }
   }
 
