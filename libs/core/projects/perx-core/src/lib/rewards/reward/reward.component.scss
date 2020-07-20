@@ -11,9 +11,7 @@
 }
 
 .reward-image-container {
-  max-height: 25vh;
-  display: flex;
-  justify-content: center;
+  flex: 0;
 
   .reward-image {
     width: 100%;
