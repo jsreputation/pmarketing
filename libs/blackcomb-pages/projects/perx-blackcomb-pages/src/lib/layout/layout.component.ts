@@ -14,6 +14,8 @@ import { Title } from '@angular/platform-browser';
 import {
   filter,
   map,
+  switchMap,
+  tap,
 } from 'rxjs/operators';
 
 import {
@@ -80,19 +82,16 @@ export class LayoutComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.themesService.getThemeSetting().subscribe(
-      theme => {
+    this.configService.readAppConfig().pipe(
+      tap((config: IConfig<void>) => this.appConfig = config),
+      switchMap(() => this.themesService.getThemeSetting()),
+      map(theme => {
         this.theme = theme;
         const title = (theme.properties ? theme.properties['--title'] : undefined) || 'Blackcomb';
         this.titleService.setTitle(title);
-      }
-    );
-
-    this.configService.readAppConfig().subscribe(
-      (config: IConfig<void>) => this.appConfig = config
-    );
-
-    this.settingsService.getRemoteFlagsSettings().subscribe(
+      }),
+      switchMap(() => this.settingsService.getRemoteFlagsSettings()),
+    ).subscribe(
       (flags: IFlags) => this.appRemoteFlags = flags
     );
 
