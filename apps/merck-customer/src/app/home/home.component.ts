@@ -135,8 +135,8 @@ export class HomeComponent implements OnInit, PageAppearence {
           : '')
       );
     this.pointToFn = () => this.translate.get('HOME.POINT_TO');
-    this.memberFn = (membershipTierName: string) => this.translate.get([membershipTierName, 'HOME.MEMBER']).pipe(
-      map(res => `${res[membershipTierName]}${res['HOME.MEMBER']}`)
+    this.memberFn = (membershipTierName: string) => this.translate.get('HOME.MEMBER').pipe(
+      map(res => `${membershipTierName}${res}`)
     );
     this.membershipExpiryFn = (loyalty: ILoyalty) => loyalty && loyalty.membershipExpiry ?
       this.translate.get('HOME.ACCOUNT_EXPIRE').pipe(

@@ -6,7 +6,7 @@ import { ProfileService } from '../../profile/profile.service';
 import { IProfile } from '../../profile/profile.model';
 import { ILoyalty } from '../models/loyalty.model';
 import { DatePipe } from '@angular/common';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, tap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-core-loyalty-summary',
@@ -46,7 +46,7 @@ export class LoyaltySummaryComponent implements OnInit {
   public showLoyaltyProgress: boolean = true;
 
   public loyaltyProgramExists: boolean = true;
-  public pointTo: string;
+  public pointTo: Observable<string>;
   private nextTierName: string;
   private accountExpire: string;
 
@@ -123,7 +123,9 @@ export class LoyaltySummaryComponent implements OnInit {
       (loyalty: ILoyalty) => {
         this.loyalty = loyalty;
         if (this.nextTierName) {
-          this.pointTo = this.pointTo.replace('{nextTierName}', this.nextTierName);
+          this.pointTo = this.pointToFn().pipe(
+            map(text => text.replace('{nextTierName}', this.nextTierName))
+          );
         }
       }
     );
