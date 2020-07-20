@@ -7,7 +7,7 @@ import {
   MatListModule
 } from '@angular/material';
 import { Location } from '@angular/common';
-import { ProfileService, LoyaltyService, IProfile } from '@perxtech/core';
+import { ProfileService, LoyaltyService, IProfile, ConfigService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { Router } from '@angular/router';
 import { Type } from '@angular/core';
@@ -49,6 +49,10 @@ describe('ProfileComponent', () => {
     getLoyalty: () => of()
   };
 
+  const configServiceStub: Partial<ConfigService> = {
+    readAppConfig: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ProfileComponent],
@@ -57,7 +61,8 @@ describe('ProfileComponent', () => {
         { provide: Location, useValue: locationStub },
         { provide: ProfileService, useValue: profileServiceStub },
         { provide: Router, useValue: routerStub },
-        { provide: LoyaltyService, useValue: loyaltyServiceStub }
+        { provide: LoyaltyService, useValue: loyaltyServiceStub },
+        { provide: ConfigService, useValue: configServiceStub },
       ]
     })
       .compileComponents();
