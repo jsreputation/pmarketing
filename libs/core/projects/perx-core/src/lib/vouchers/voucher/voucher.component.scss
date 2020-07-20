@@ -70,11 +70,14 @@ $max-width: 60rem;
 .section-heading {
   margin-top: 3rem;
   font-size: 1.4rem;
-  font-weight: bold;
+  font-weight: 900;
+  line-height: 2rem;
+  margin-bottom: 1.6rem;
 }
 
 .section-content {
   font-size: 1.4rem;
+  line-height: 2.5rem;
 
   &.description {
     white-space: pre-wrap;
