@@ -2,9 +2,8 @@ import { Component, Input } from '@angular/core';
 import { FeedItem } from '../feed-reader.service';
 import { MatDialog } from '@angular/material';
 import { FeedItemPopupComponent } from '../feed-item-popup/feed-item-popup.component';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-core-newsfeed',
@@ -40,18 +39,4 @@ export class NewsfeedComponent {
       });
     });
   }
-
-  public getFirstLineShortTxt(text: string): Observable<string> {
-    if (!text) {
-      return of('');
-    }
-    return this.translate.get(text).pipe(
-      map(txt => {
-        const lines = txt.match(/[^\r\n]+/g) || [];
-        const firstLine = lines && lines.length > 0 ? lines[0] : '';
-        return firstLine.length > 120 ? `${firstLine.slice(0, 120)}...` : firstLine;
-      })
-    );
-  }
-
 }

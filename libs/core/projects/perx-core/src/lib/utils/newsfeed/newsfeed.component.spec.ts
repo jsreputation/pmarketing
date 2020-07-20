@@ -58,24 +58,4 @@ describe('NewsfeedComponent', () => {
     component.readMore(items[0]);
     expect(openSpy).toHaveBeenCalled();
   });
-
-  describe('getFirstLineShortTxt', () => {
-    it('should return empty if string is empty', done => {
-      const text: string = '';
-      const firstLine = component.getFirstLineShortTxt(text);
-      firstLine.subscribe(txt => {
-        expect(txt).toBe('');
-        done();
-      });
-    });
-
-    it('should return the first line if there is a new line', done => {
-      const text: string = 'Lorem ipsum dolor sit amet \n consectetur adipiscing elit';
-      const firstLine = component.getFirstLineShortTxt(text);
-      firstLine.subscribe(txt => {
-        expect(txt).toBe('Lorem ipsum dolor sit amet ');
-        done();
-      });
-    });
-  });
 });

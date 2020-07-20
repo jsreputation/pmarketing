@@ -16,6 +16,7 @@ import { ProfileComponent } from './account/profile/profile.component';
 import { TransactionHistoryComponent } from './account/transaction-history/transaction-history.component';
 import { PrivacyPolicyComponent } from './account/privacy-policy/privacy-policy.component';
 import { ConditionComponent } from './account/condition/condition.component';
+import { LanguageComponent } from './account/language/language.component';
 
 const routes: Routes = [
   {
@@ -32,7 +33,8 @@ const routes: Routes = [
       { path: 'account/profile', component: ProfileComponent },
       { path: 'account/transaction-history', component: TransactionHistoryComponent },
       { path: 'account/privacy-policy', component: PrivacyPolicyComponent },
-      { path: 'account/condition', component: ConditionComponent }
+      { path: 'account/condition', component: ConditionComponent },
+      { path: 'account/language', component: LanguageComponent }
     ],
     canActivate: [ProtectedGuard]
   },

@@ -62,5 +62,6 @@
   "TOTAL_POINTS": "Your total points",
   "TIER" : "Tier",
   "DLP": "Diabetes Loyality Program",
-  "LOGIN_SESSION_EXPIRED": "Login Session Expired"
+  "LOGIN_SESSION_EXPIRED": "Login Session Expired",
+  "STATIC_LANGUAGE": "Language"
 }
