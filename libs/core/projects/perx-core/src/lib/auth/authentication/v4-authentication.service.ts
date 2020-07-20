@@ -355,7 +355,10 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       .pipe(
         tap( // Log the result or error
           data => console.log(data),
-          error => console.log(error)
+          error => {
+            console.log(error);
+            throwError(error);
+          }
         )
       );
   }

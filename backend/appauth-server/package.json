@@ -1,5 +1,5 @@
 {
-  "name": "microsite-apps-ng-server",
+  "name": "@perxtech/appauth-server",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {

@@ -70,7 +70,7 @@ describe('ResetPasswordComponent', () => {
       const notificationService: NotificationService = fixture.debugElement.injector.get<NotificationService>
       (NotificationService as Type<NotificationService>);
       const notificationServiceSpy = spyOn(notificationService, 'addSnack');
-      component['initTranslate']();
+      component.initTranslate();
       component.onUpdatePassword();
       expect(notificationServiceSpy).toHaveBeenCalledWith('PASSWORD_NOT_MATCH');
     });

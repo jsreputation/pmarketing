@@ -5,7 +5,10 @@ import { ForgotPasswordComponent, ForgotPasswordModule as BCPForgotPasswordModul
 const routes: Routes = [{
   path: '',
   component: ForgotPasswordComponent,
-  data: { countryList: ['Malaysia', 'Singapore']}
+  data: {
+    countryList: ['Malaysia', 'Singapore'],
+    validateMembership: true
+  }
 }];
 
 @NgModule({

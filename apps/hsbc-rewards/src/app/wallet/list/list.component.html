@@ -1,6 +1,7 @@
 <div class="page">
   <div class="header" *ngIf="paramId!=='history'">My Rewards</div>
   <perx-core-vouchers #voucher (route)="routeNavigate($event)"
+                      [showRedeemedIcon]="true"
                       [data]="vouchers"
                       [mapping]="mapping"
                       [filter]="filter"

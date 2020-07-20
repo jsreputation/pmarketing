@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "PREAUTH=true npm run config && ng serve --host 0.0.0.0",
+    "start": "env-cmd -f digi.staging.dev npm run config && ng serve --host 0.0.0.0",
+    "start:prod": "env-cmd -f digi.production.dev npm run config && ng serve --host 0.0.0.0",
     "build": "npm run config && ng build",
     "build:digi:production": "env-cmd -f digi.production npm run config && ng build --prod",
     "build:digi:staging": "env-cmd -f digi.staging npm run config && ng build --prod",

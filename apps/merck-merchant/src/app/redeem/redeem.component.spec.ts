@@ -55,7 +55,7 @@ describe('RedeemComponent', () => {
       {
         id: 23,
         currencyCode: 'MYR',
-        price: 0,
+        price: '0.00',
         points: 0
       }
     ],

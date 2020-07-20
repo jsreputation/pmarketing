@@ -12,6 +12,7 @@ import { RebatesListComponent } from './rebates-list.component';
 import { of } from 'rxjs';
 import { ThemesService } from '../../utils/themes/themes.service';
 import { UtilsModule } from '../../utils/utils.module';
+import { LoyaltyService } from '../../loyalty/loyalty.service';
 
 describe('RebatesListComponent', () => {
   let component: RebatesListComponent;
@@ -19,6 +20,10 @@ describe('RebatesListComponent', () => {
 
   const themesServiceStub: Partial<ThemesService> = {
     getThemeSetting: () => of()
+  };
+  const loyaltyServiceStub: Partial<LoyaltyService> = {
+    getLoyalties: () => of(),
+    getTransactions: () => of()
   };
 
   beforeEach(async(() => {
@@ -31,6 +36,7 @@ describe('RebatesListComponent', () => {
       ],
       providers: [
         { provide: ThemesService, useValue: themesServiceStub },
+        { provide: LoyaltyService, useValue: loyaltyServiceStub }
       ]
     })
       .compileComponents();

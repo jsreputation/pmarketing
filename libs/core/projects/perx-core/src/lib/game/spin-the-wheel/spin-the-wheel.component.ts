@@ -3,12 +3,12 @@ import { ISlice } from '../game.model';
 import { loadImage } from '../../utils/load-image.function';
 
 interface ImageForPattern {
-  id: string;
+  id: number;
   image: HTMLImageElement;
 }
 
 interface Pattern {
-  id: string;
+  id: number;
   width: number;
   height: number;
   pattern: CanvasPattern;
@@ -59,7 +59,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   private spinTimeoutId: number;
   private wheelImgElt: HTMLImageElement | null = null;
   private slotToLand: number; // moved in, since it needs to be changed dynamically instd of pipe
-  private REFRESH_PERIOD: number = 20; // target 50FPS
+  private static REFRESH_PERIOD: number = 20; // target 50FPS
 
   @ViewChild('canvas', { static: true })
   private canvasEl: ElementRef<HTMLCanvasElement>;
@@ -83,6 +83,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
 
   public ngOnChanges(changes: SimpleChanges): void {
     if ((changes.slices && this.slices)
+      || (changes.rewardSlots && this.rewardSlots)
       || (changes.wheelImg && this.wheelImg)
       || (changes.pointerImg && this.pointerImg)
       || (changes.willWin)) {
@@ -116,26 +117,22 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   }
 
   private determineSlot(): number {
-    let slots: number[];
-    // if there are winning slots and we will win or all slots are winning
-    if (this.rewardSlots.length > 0 && (this.willWin || this.rewardSlots.length === this.slices.length)) {
-      slots = this.rewardSlots;
+    const noRewardsSlots: number[] = [...Array(this.slices.length).keys()].filter(item => !this.rewardSlots.includes(item));
+    let targetSlots: number[];
+    if (this.willWin && this.rewardSlots.length > 0) {
+      targetSlots = this.rewardSlots;
     } else {
-      slots = [];
-      for (let i = 0; i < this.slices.length; i++) {
-        if (!this.rewardSlots.includes(i)) {
-          slots.push(i);
-        }
-      }
+      targetSlots = noRewardsSlots;
     }
-    const landedSlot = Math.floor(Math.random() * slots.length);
-    return slots[landedSlot]; // get a random number out of the reward slots
+
+    const landedSlot = Math.floor(Math.random() * targetSlots.length);
+    return targetSlots[landedSlot]; // get a random number out of the reward slots
   }
 
   private init(): void {
     this.arcDeg = 360 / this.slices.length;
-    // randomize initial wheel position
-    this.currentRotationAngleRad = Math.random() * 2 * Math.PI;
+    // Remove random initial point to avoid one load play and the wheel has different start point
+    this.currentRotationAngleRad = 0;
     this.slotToLand = this.determineSlot();
     const angleNeeded = this.getTargetAngle(this.slotToLand);
 
@@ -161,7 +158,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
 
   private createPatterns(arr: ImageForPattern[]): void {
     this.patterns = arr
-      .filter(({ id, image }) => id && image)
+      .filter(({ id, image }) => (id === 0 || id) && image)
       .map(item => ({
         id: item.id,
         width: item.image.width,
@@ -300,7 +297,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
       SpinTheWheelComponent.easeOut(this.spinTime, this.currentRotationAngleDeg, this.targetAngleDeg, this.spinDuration);
     this.currentRotationAngleRad = spinAngle * Math.PI / 180;
     this.drawWheel();
-    this.spinTimeoutId = window.setTimeout(() => this.rotateWheel(), this.REFRESH_PERIOD);
+    this.spinTimeoutId = window.setTimeout(() => this.rotateWheel(), SpinTheWheelComponent.REFRESH_PERIOD);
   }
 
   private stopRotateWheel(): void {
@@ -393,7 +390,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
    */
   private static easeOut(t: number, b: number, c: number, d: number): number {
     // todo improve this updateFactor and avoid magic number
-    const updateFactor = (t / d) * .2;
+    const updateFactor = (t / d) / SpinTheWheelComponent.REFRESH_PERIOD;
     return b + (c - b) * updateFactor;
   }
 }

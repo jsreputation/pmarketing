@@ -152,6 +152,14 @@ export class GameComponent implements OnInit, OnDestroy {
             buttonTxt: 'BACK_TO_WALLET',
             imageUrl: '',
           };
+        } else if (err instanceof HttpErrorResponse && err.error.code === 4103) {
+          console.log(`Error ${err.error.code}: ${err.error.message}`);
+          this.popupData = {
+            title: `Error ${err.error.code}`,
+            text: 'No rewards available',
+            buttonTxt: 'Back to wallet',
+            imageUrl: '',
+          };
         } else {
           this.popupData = this.noRewardsPopUp;
         }

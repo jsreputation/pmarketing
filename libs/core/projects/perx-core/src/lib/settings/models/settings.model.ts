@@ -12,7 +12,9 @@ export interface IFlags {
   rewardsCarousel?: boolean;
   rebateDemoFlow?: boolean;
   gatekeeperPollingInterval?: number;
+  gatekeeperApi?: GatekeeperApis;
   showStampCampaigns?: boolean;
+  showLoyaltyBlockOnHomePage?: boolean;
 }
 
 export interface IRssFeeds {
@@ -39,4 +41,9 @@ export enum RssFeedsPages {
   WALLET = 'wallet',
   CATALOGS = 'catalogs',
   REWARDS = 'rewards'
+}
+
+export enum GatekeeperApis {
+  AWS = 'aws',
+  PERX = 'perx'
 }

@@ -3,7 +3,7 @@
     <div *ngIf="vouchers.length > 0; then hasVouchersBlock else noVouchersBlock"></div>
     <ng-template #hasVouchersBlock>
       <ng-container *ngFor="let voucher of vouchers$ | async">
-        <mat-card *ngIf="filter === undefined || filter.includes(voucher.state)" mat-ripple
+        <mat-card *ngIf="filter === undefined || filter.includes(voucher.state)" mat-ripple class="ga_view_voucher"
           [matRippleDisabled]="notClickable(voucher)" (click)="onClick(voucher)">
           <div [ngClass]="'voucher-content ' + imageSize">
             <div class="voucher-img__wrapper">

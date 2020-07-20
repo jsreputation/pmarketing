@@ -33,5 +33,13 @@
     <p matLine class="conditions">{{conditions.length > 0 ? conditions.join(', ') : 'None'}}</p>
     <mat-icon (click)="onSubScreenNavigate('account/condition')">edit</mat-icon>
   </mat-list-item>
+
+  <mat-divider></mat-divider>
+
+  <mat-list-item>
+    <p matLine class="label" translate>STATIC_LANGUAGE</p>
+    <p matLine>{{selectedLanguage}}</p>
+    <mat-icon (click)="onSubScreenNavigate('account/language')">edit</mat-icon>
+  </mat-list-item>
   <mat-divider></mat-divider>
 </mat-list>

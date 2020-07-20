@@ -30,38 +30,38 @@ export class SpinComponent {
 
   public mockSlices: ISlice[] = [
     {
-      id: '0',
+      id: 0,
       backgroundColor: '#C2185B',
       label: 'France',
       labelColor: 'white',
     },
     {
-      id: '1',
+      id: 1,
       backgroundColor: '#8BC34A',
       label: 'Belgium',
       labelColor: 'white'
     },
     {
-      id: '2',
+      id: 2,
       backgroundColor: '#F8BBD0',
       // label: 'Netherlands',
       labelColor: '#212121',
       backgroundImage: 'http://perx-cdn.s3.amazonaws.com/content/dashboard/post-stamp-2.png'
     },
     {
-      id: '3',
+      id: 3,
       backgroundColor: '#C2185B',
       label: 'Germany',
       labelColor: 'white'
     },
     {
-      id: '4',
+      id: 4,
       backgroundColor: '#8BC34A',
       label: 'Italy',
       labelColor: 'white'
     },
     {
-      id: '5',
+      id: 5,
       backgroundColor: '#F8BBD0',
       // label: 'Austria',
       labelColor: '#212121',

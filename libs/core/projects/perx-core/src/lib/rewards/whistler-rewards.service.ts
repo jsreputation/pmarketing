@@ -68,7 +68,7 @@ export class WhistlerRewardsService implements RewardsService {
       merchantName: oc(merchants)[0].attributes.name('') || undefined,
       rewardPrice: [
         {
-          price: r.attributes.cost_of_reward,
+          price: r.attributes.cost_of_reward.toString(),
           currencyCode: r.attributes.currency,
           points: tierRewardCost && tierRewardCost[0] ? Number.parseInt(tierRewardCost[0].attributes.tier_value, 10) : undefined
         }

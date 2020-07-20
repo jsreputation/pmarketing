@@ -15,4 +15,5 @@ export interface ITransactionProperties {
   quantity?: number;
   storeCode?: string;
   storeName?: string;
+  invoiceNumber?: number;
 }

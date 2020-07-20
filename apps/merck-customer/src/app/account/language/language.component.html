@@ -1,0 +1,15 @@
+<mat-action-list class="btn-container">
+  <button
+    mat-flat-button
+    class="full-width__button btn-transparent"
+    [ngClass]="{ 'active': currentSelectedLanguage === 'en' }"
+    (click)="switchLanguage('en')"
+  >English</button>
+
+  <button
+    mat-flat-button
+    class="full-width__button btn-transparent"
+    [ngClass]="{ 'active': currentSelectedLanguage === 'zh' }"
+    (click)="switchLanguage('zh')"
+  >中文</button>
+</mat-action-list>

@@ -146,6 +146,7 @@ export class V4TransactionsService extends TransactionsService {
         productName: props.item_name,
         quantity: props.quantity,
         storeCode: props.branch_code,
+        invoiceNumber: props.invoice_number
         // storeName: undefined
       };
     }

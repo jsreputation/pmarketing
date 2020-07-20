@@ -17,7 +17,7 @@ export class VouchersComponent implements OnInit, OnChanges {
   @Input() public showMerchant: boolean = true;
   @Input() public showExpireDate: boolean = true;
   @Input() public showRedeemedDate: boolean = true;
-  @Input() public showRedeemedIcon: boolean = true;
+  @Input() public showRedeemedIcon: boolean = false;
   @Input() public canSelectRedeemed: boolean = false;
   @Input() public sourceType: string;
   /**

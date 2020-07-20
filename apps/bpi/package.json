@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "PREAUTH=true npm run config && ng serve --host 0.0.0.0",
+    "start": " env-cmd -f env/bpi.staging.dev npm run config && ng serve --host 0.0.0.0",
+    "start:prod": " env-cmd -f env/bpi.production.dev npm run config && ng serve --host 0.0.0.0",
     "build": "npm run config && ng build",
     "build:bpi:production": "env-cmd -f env/bpi.production npm run config && ng build --prod",
     "build:bpi:staging": "env-cmd -f env/bpi.staging npm run config && ng build --prod",

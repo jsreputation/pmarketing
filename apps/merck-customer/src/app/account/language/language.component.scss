@@ -1,0 +1,21 @@
+.mat-action-list {
+  padding-top: 6rem;
+}
+
+.btn-transparent {
+  width: 100%;
+  text-align: left;
+}
+
+.btn-container {
+  button {
+    font-size: 1.6rem;
+    font-weight: normal;
+    border-radius: 0;
+    padding: 1.6rem;
+  }
+
+  .active {
+    background-color: rgb(224, 224, 224);
+  }
+}

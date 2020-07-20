@@ -36,6 +36,7 @@ export class GameComponent implements OnInit {
   public gameTransaction: IEngagementTransaction;
   private destroy$: Subject<void> = new Subject();
   public willWin: boolean = false;
+  private hasNoRewardsPopup: boolean = false;
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -61,7 +62,6 @@ export class GameComponent implements OnInit {
           const id = parseInt(params.id, 10);
           return this.gameService.get(id);
         }
-
         const cid = parseInt(params.cid, 10);
         return this.gameService.getGamesFromCampaign(cid).pipe(
           take(1),
@@ -148,8 +148,16 @@ export class GameComponent implements OnInit {
               this.willWin = false;
             }
           },
-          () => {
-            this.showErrorPopup();
+          (err: { errorState: string } | HttpErrorResponse) => {
+            if (err instanceof HttpErrorResponse && err.error.code === 4103) {
+              this.notificationService.addPopup({
+                title: 'Oooops!',
+                text: 'No more rewards available',
+                panelClass: 'custom-class'
+              });
+            } else {
+              this.showErrorPopup();
+            }
           }
         );
     }
@@ -161,40 +169,11 @@ export class GameComponent implements OnInit {
       .pipe(map((game: IPlayOutcome) => game.vouchers))
       .subscribe(
         (vouchs: Voucher[]) => {
-          if ((window as any).appboy) {
-            (window as any).appboy.logCustomEvent('user_played_game', {
-              game_id: this.game.id,
-              campaign_id: this.game.campaignId
-            });
-          }
-          if (vouchs.length === 0) {
-            this.showNoRewardsPopUp();
-          } else {
-            this.gameOutcomeService.setVouchersList(vouchs);
-            if (this.game.results && this.game.results.outcome) {
-              this.gameOutcomeService.setOutcome(this.game.results.outcome);
-            }
-            this.router.navigate(['/congrats']);
-          }
+          this.gameCompletedHandler(vouchs);
         },
         () => this.showNoRewardsPopUp()
       );
   }
-
-  // public goBack(): void {
-  //   if (this.isEnabled) {
-  //     this.notificationService.addPopup({
-  //       title: 'Do you want to quit now?',
-  //       text: 'By leaving, your progress will not be saved.', // You’ve got a “Shake the Tree” reward!
-  //       buttonTxt2: 'Keep playing',
-  //       buttonTxt: 'Quit game',
-  //       afterClosedCallBack: this,
-  //       panelClass: 'custom-class'
-  //     });
-  //   } else {
-  //     this.location.back();
-  //   }
-  // }
 
   public dialogClosed(): void {
     this.location.back();
@@ -206,24 +185,65 @@ export class GameComponent implements OnInit {
       .pipe(map((game: IPlayOutcome) => game.vouchers))
       .subscribe(
         (vouchs: Voucher[]) => {
-          if ((window as any).appboy) {
-            (window as any).appboy.logCustomEvent('user_played_game', {
-              game_id: this.game.id,
-              campaign_id: this.game.campaignId
-            });
-          }
-          if (vouchs.length === 0) {
-            this.showNoRewardsPopUp();
-          } else {
-            this.gameOutcomeService.setVouchersList(vouchs);
-            if (this.game.results && this.game.results.outcome) {
-              this.gameOutcomeService.setOutcome(this.game.results.outcome);
-            }
-            this.router.navigate(['/congrats']);
-          }
+          this.gameCompletedHandler(vouchs);
         },
         () => this.showNoRewardsPopUp()
       );
+  }
+
+  private gameCompletedHandler(vouchs: Voucher[], withRedirectAndPopup: boolean = true): void {
+    if ((window as any).appboy) {
+      (window as any).appboy.logCustomEvent('user_played_game', {
+        game_id: this.game.id,
+        campaign_id: this.game.campaignId
+      });
+    }
+    if (vouchs.length === 0) {
+      // This params is specially for spin the wheel, load play first process
+      this.hasNoRewardsPopup = true;
+      if (withRedirectAndPopup) {
+        this.showNoRewardsPopUp();
+      }
+    } else {
+      this.gameOutcomeService.setVouchersList(vouchs);
+      if (this.game.results && this.game.results.outcome) {
+        this.gameOutcomeService.setOutcome(this.game.results.outcome);
+      }
+      if (withRedirectAndPopup) {
+        this.router.navigate(['/congrats']);
+      }
+    }
+  }
+
+  public loadPlay(): void {
+    this.gameService.play(this.game.id)
+      .pipe(
+        map((game: IPlayOutcome) => game.vouchers)
+      ).subscribe(
+        (vouchs: Voucher[]) => {
+          if (vouchs.length > 0) {
+            this.hasNoRewardsPopup = false;
+            this.willWin = true;
+            this.gameCompletedHandler(vouchs, false);
+          } else {
+            // For spin game with no outcome option
+            this.willWin = false;
+            this.hasNoRewardsPopup = true;
+          }
+        },
+        () => {
+          this.willWin = false;
+          this.hasNoRewardsPopup = true;
+        }
+      );
+  }
+
+  public playGameCompleted(): void {
+    if (this.hasNoRewardsPopup) {
+      this.showNoRewardsPopUp();
+    } else {
+      this.router.navigate(['/congrats']);
+    }
   }
 
   private showNoRewardsPopUp(): void {

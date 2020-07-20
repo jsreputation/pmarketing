@@ -5,7 +5,7 @@ import {
   OnInit,
   Output
 } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, combineLatest, of } from 'rxjs';
 import { ITheme } from '../../utils/themes/themes.model';
 import { Colors } from '../../perx-core.constants';
 import {
@@ -13,7 +13,9 @@ import {
   IReward
 } from '../../rewards/models/reward.model';
 import { ThemesService } from '../../utils/themes/themes.service';
-import { ILoyalty } from '../../loyalty/models/loyalty.model';
+import { ILoyalty, ILoyaltyTransaction } from '../../loyalty/models/loyalty.model';
+import { switchMap, share, map } from 'rxjs/operators';
+import { LoyaltyService } from '../../loyalty/loyalty.service';
 
 export type MerchantData = {
   merchantId: number;
@@ -62,12 +64,28 @@ export class RebatesListComponent implements OnInit {
 
   constructor(
     private themesService: ThemesService,
+    private loyaltyService: LoyaltyService
   ) { }
 
   public ngOnInit(): void {
     this.initTheme();
     if (!this.rebatesDetailsTextFn) {
       this.rebatesDetailsTextFn = () => of('rebate funds available');
+    if (!this.merchants$) {
+      this.merchants$ = this.loyaltyService.getLoyalties().pipe(
+        switchMap((loyalties: ILoyalty[]) => combineLatest(
+          [...loyalties.map(loyalty => this.loyaltyService.getTransactions(loyalty.id).pipe(
+            switchMap((transactions: ILoyaltyTransaction[]) => {
+              if (transactions.length > 0) {
+                return of(loyalty);
+              }
+              return of(null);
+            })
+          ))])
+        ),
+        map((res: ILoyalty[]) => res.filter(loyal => loyal !== null)),
+        share()
+      );
     }
   }
 

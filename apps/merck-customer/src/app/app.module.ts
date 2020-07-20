@@ -69,6 +69,7 @@ import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common
 import { PerxTranslateLoader } from './custom-translate.service';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { tap, switchMap } from 'rxjs/operators';
+import { LanguageComponent } from './account/language/language.component';
 
 export const setLanguage = (
   translateService: TranslateService,
@@ -106,6 +107,7 @@ export const setLanguage = (
     ConditionComponent,
     TransactionPipe,
     TransactionHistoryPipe,
+    LanguageComponent,
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),

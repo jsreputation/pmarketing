@@ -46,7 +46,7 @@ describe('SpinTheWheelComponent', () => {
       pointerImg: {} as SimpleChange
     });
     component.slices = [{
-      id: '1',
+      id: 1,
       backgroundImage: 'image.img'
     } as ISlice];
     component.ngOnChanges({
