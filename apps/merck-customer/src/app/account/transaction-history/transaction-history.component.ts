@@ -29,8 +29,6 @@ export class TransactionHistoryComponent implements OnInit, PageAppearence {
   private pageNumber: number = 1;
   private pageSize: number = 10;
   private complitePagination: boolean = false;
-  private pointsEarnedTxt: string;
-  private pointsSpentTxt: string;
   public purchasesTxt: string;
   public rewardsTxt: string;
   // @ts-ignore
@@ -54,10 +52,6 @@ export class TransactionHistoryComponent implements OnInit, PageAppearence {
       of(`${tr.transactionDetails && (tr.transactionDetails.data as IRewardTransactionHistory).rewardName}`);
 
     this.subTitleFn = (tr: ILoyaltyTransactionHistory) => of(`${this.datePipe.transform(tr.transactedAt, 'dd/MM/yyyy')}`);
-    this.translate.get(['POINT_EARNED', 'POINT_SPENT']).subscribe((res: any) => {
-      this.pointsEarnedTxt = res.POINT_EARNED;
-      this.pointsSpentTxt = res.POINT_SPENT;
-    });
     this.translate.get(['PURCHASES_TXT', 'REWARDS_TXT']).subscribe((res: any) => {
       this.purchasesTxt = res.PURCHASES_TXT;
       this.rewardsTxt = res.REWARDS_TXT;
