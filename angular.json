@@ -9,8 +9,8 @@
           "style": "scss"
         }
       },
-      "root": "",
-      "sourceRoot": "src",
+      "root": "apps/philipssg",
+      "sourceRoot": "apps/philipssg/src",
       "prefix": "app",
       "architect": {
         "build": {
