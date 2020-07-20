@@ -319,5 +319,7 @@
   "Green": "Green",
   "Basic": "Basic",
   "CONTENT_PAGE": "Content Not Found",
-  "LOGIN_SESSION_EXPIRED": "Login Session Expired"
+  "LOGIN_SESSION_EXPIRED": "Login Session Expired",
+  "Contact Us": "Contact Us",
+  "Terms and Conditions": "Terms and Conditions"
 }

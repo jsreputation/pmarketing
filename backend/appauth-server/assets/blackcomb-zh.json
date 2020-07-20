@@ -223,7 +223,6 @@
   "HOME": {
     "HELLO": "歡迎",
     "MY_QR": "我的二維碼",
-    "HELLO": "你好",
     "MY_BAR_CODE": "我的條形碼",
     "STAMP_CAMPAIGNS": "郵票卡活動",
     "CATALOG": "目錄",
@@ -317,5 +316,7 @@
   "Green": "綠色",
   "Basic": "基礎",
   "CONTENT_PAGE": "找不到內容",
-  "LOGIN_SESSION_EXPIRED": "登錄時間超時"
+  "LOGIN_SESSION_EXPIRED": "登錄時間超時",
+  "Contact Us": "聯繫我們",
+  "Terms and Conditions": "條款與細則"
 }
