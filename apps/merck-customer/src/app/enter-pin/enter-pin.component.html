@@ -1,7 +1,7 @@
 <div class="main-container">
 	<h2 *ngIf="pinMode === 'password'" translate>RESET_PW_PAGE.RESET_PASSWORD</h2>
 	<h2 *ngIf="pinMode === 'register'" translate>SIGN_UP_PAGE.NEW_REGISTER</h2>	
-	<div class="subheading"><span [translateParams]="{phoneNumber: this.visibleNo}">{{subHeading}}</span></div>
+	<div class="subheading"><span>{{subHeading}}</span></div>
 	<div class="pin-input-container">
 		<perx-core-pin-input 
 		[length]="MAX_DIGITS_COUNT"

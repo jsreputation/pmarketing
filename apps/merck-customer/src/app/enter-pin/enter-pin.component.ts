@@ -37,12 +37,12 @@ export class EnterPinComponent implements OnInit, PageAppearence {
 
     if (currentNavigation.extras.state) {
       this.mobileNo = currentNavigation.extras.state.mobileNo;
+      this.visibleNo = this.mobileNo ? this.encodeMobileNo(this.mobileNo, this.countryCode) : '';
       this.translate.get('OTP_PAGE.ENTER_NUMBER_LONG')
         .subscribe(text =>
           this.subHeading = text.replace('{phoneNumber}', this.visibleNo)
         );
       this.countryCode = currentNavigation.extras.state.countryCode;
-      this.visibleNo = this.mobileNo ? this.encodeMobileNo(this.mobileNo, this.countryCode) : '';
     }
   }
 

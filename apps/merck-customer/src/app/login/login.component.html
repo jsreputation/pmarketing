@@ -44,14 +44,14 @@
       </mat-form-field>
       <mat-form-field color="primary" class="full-width__input">
         <mat-label translate>PASSWORD</mat-label>
-        <input matInput placeholder="{{'PASSWORD' | translate }}" placeholder="Password"
+        <input matInput placeholder="{{'LOGIN_PAGE.PASSWORD' | translate }}" placeholder="Password"
           formControlName="password" type="password" required>
         <mat-error *ngIf="password && password.hasError('required')">
           {{'LOGIN_PAGE.PASSWORD_IS' | translate }}
         </mat-error>
       </mat-form-field>
       <div class="forgot-text" (click)="goToForgotPassword()" translate>LOGIN_PAGE.FORGOT_PASSWORD</div>
-      <button mat-flat-button type="submit" class="full-width__button">{{"LOGIN_PAGE.LOGIN_PAGE.LOGIN" | translate}}</button>
+      <button mat-flat-button type="submit" class="full-width__button">{{'LOGIN_PAGE.LOGIN' | translate}}</button>
       <div class="bottom-text" translate>LOGIN_PAGE.LEARN_MORE</div>
     </form>
   </div>
