@@ -41,7 +41,7 @@ ARG port=8000
 EXPOSE ${port}
 CMD ["run"]
 
-COPY --from=builder /service/backend/appauth-server /service/express/
+COPY --from=builder /service/dist/appauth-server /service/express/
 
 ARG app
 ARG appbase=${app}
