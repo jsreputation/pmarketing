@@ -1,3 +1,3 @@
 export interface IMerckConfig {
-    showConditions: boolean;
-  }
+  showConditions: boolean;
+}
