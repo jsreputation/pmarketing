@@ -148,8 +148,16 @@ export class GameComponent implements OnInit {
               this.willWin = false;
             }
           },
-          () => {
-            this.showErrorPopup();
+          (err: { errorState: string } | HttpErrorResponse) => {
+            if (err instanceof HttpErrorResponse && err.error.code === 4103) {
+              this.notificationService.addPopup({
+                title: 'Oooops!',
+                text: 'No more rewards available',
+                panelClass: 'custom-class'
+              });
+            } else {
+              this.showErrorPopup();
+            }
           }
         );
     }
