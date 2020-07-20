@@ -145,8 +145,8 @@ export class HomeComponent implements OnInit, PageAppearence {
 
     this.displayPriceFn = (rewardPrice: IPrice) => this.translate.get('REWARD.POINT').pipe(
       mergeMap(text => {
-        if (rewardPrice.price && rewardPrice.price > 0) {
-          return of(`${rewardPrice.currencyCode} ${rewardPrice.price}`);
+        if (rewardPrice.price && parseFloat(rewardPrice.price) > 0) {
+          return of(`${rewardPrice.currencyCode} ${Math.floor(parseFloat(rewardPrice.price))}`);
         }
 
         if (rewardPrice.points && rewardPrice.points > 0) {
