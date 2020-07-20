@@ -30,8 +30,8 @@
               "apps/dbshk-agent/src/robots.txt"
             ],
             "styles": [
-              "apps/dbshk-agentsrc/styles.scss",
-              "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+              "apps/dbshk-agent/src/styles.scss",
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
             ],
             "scripts": []
           },
