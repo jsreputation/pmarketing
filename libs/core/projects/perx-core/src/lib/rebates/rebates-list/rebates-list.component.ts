@@ -71,21 +71,22 @@ export class RebatesListComponent implements OnInit {
     this.initTheme();
     if (!this.rebatesDetailsTextFn) {
       this.rebatesDetailsTextFn = () => of('rebate funds available');
-    if (!this.merchants$) {
-      this.merchants$ = this.loyaltyService.getLoyalties().pipe(
-        switchMap((loyalties: ILoyalty[]) => combineLatest(
-          [...loyalties.map(loyalty => this.loyaltyService.getTransactions(loyalty.id).pipe(
-            switchMap((transactions: ILoyaltyTransaction[]) => {
-              if (transactions.length > 0) {
-                return of(loyalty);
-              }
-              return of(null);
-            })
-          ))])
-        ),
-        map((res: ILoyalty[]) => res.filter(loyal => loyal !== null)),
-        share()
-      );
+      if (!this.merchants$) {
+        this.merchants$ = this.loyaltyService.getLoyalties().pipe(
+          switchMap((loyalties: ILoyalty[]) => combineLatest(
+            [...loyalties.map(loyalty => this.loyaltyService.getTransactions(loyalty.id).pipe(
+              switchMap((transactions: ILoyaltyTransaction[]) => {
+                if (transactions.length > 0) {
+                  return of(loyalty);
+                }
+                return of(null);
+              })
+            ))])
+          ),
+          map((res: ILoyalty[]) => res.filter(loyal => loyal !== null)),
+          share()
+        );
+      }
     }
   }
 
