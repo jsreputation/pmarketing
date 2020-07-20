@@ -82,7 +82,7 @@
     "test:philipssg": "nx test philipssg -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
     "test:prudential": "nx test prudential -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
     "test:starhub": "nx test starhub -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
-    "test:appauth-server": "nx test appauth-server -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
+    "test:appauth-server": "echo 'no tests'",
     "test:blackcomb-pages": "nx test blackcomb-pages -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
     "test:core": "nx test core -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
     "test:whistler": "nx test whistler -- --no-watch --no-progress --browsers=ChromeHeadlessCI"
