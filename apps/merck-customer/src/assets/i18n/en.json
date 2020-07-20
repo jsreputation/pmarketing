@@ -2,7 +2,12 @@
   "NAVIGATION": {
     "HOME": "Home",
     "FIND_PHARMACY": "Find a Pharmacy",
-    "ACCOUNT": "My Account"
+    "ACCOUNT": "My Account",
+    "PROFILE": "Profile",
+    "CONDITION": "Condition",
+    "LANGUAGE": "Language",
+    "PRIVACY_POLICY": "Privacy Policy",
+    "TRANSACTION_HISTORY": "Transaction History"
   },
   "LOGIN_PAGE": {
     "LOGIN_SUBTITLE": "M Gear",
@@ -137,7 +142,8 @@
     "MEMBERSHIP_TIER": "Membership Tier",
     "PASSWORD": "Password",
     "CONDITION_SAVED": "Thank you! Here’s 500 points from us",
-    "CONDITION": "Condition"
+    "CONDITION": "Condition",
+    "LANGUAGE": "Language"
   },
   "LOCATION_PAGE": {
     "VIEW_LOCATION": "View location"

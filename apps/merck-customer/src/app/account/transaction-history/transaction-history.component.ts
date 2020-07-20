@@ -69,7 +69,7 @@ export class TransactionHistoryComponent implements OnInit, PageAppearence {
       header: true,
       backButtonEnabled: true,
       bottomSelectedItem: BarSelectedItem.ACCOUNT,
-      pageTitle: 'TRANSACTION_HISTORY'
+      pageTitle: 'NAVIGATION.TRANSACTION_HISTORY'
     };
   }
 

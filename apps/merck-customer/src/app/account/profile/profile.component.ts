@@ -64,7 +64,7 @@ export class ProfileComponent implements OnInit, PageAppearence {
       header: true,
       backButtonEnabled: true,
       bottomSelectedItem: BarSelectedItem.ACCOUNT,
-      pageTitle: 'PROFILE'
+      pageTitle: 'NAVIGATION.PROFILE'
     };
   }
 

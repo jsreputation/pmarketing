@@ -16,7 +16,7 @@ export class PrivacyPolicyComponent implements OnInit, PageAppearence {
       header: true,
       backButtonEnabled: true,
       bottomSelectedItem: BarSelectedItem.ACCOUNT,
-      pageTitle: 'PRIVACY_POLICY'
+      pageTitle: 'NAVIGATION.PRIVACY_POLICY'
     };
   }
 }

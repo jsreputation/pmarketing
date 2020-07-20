@@ -1,6 +1,6 @@
 <mat-list>
   <mat-list-item class="diabetes-section">
-    <p matLine translate class="label">DIABETES_CONDITION</p>
+    <p matLine translate class="label">ACCOUNT_PAGE.DIABETES_CONDITION</p>
     <mat-slide-toggle
       *ngIf="profile"
       [checked]="isChecked('diabetes')"
@@ -16,23 +16,21 @@
         value="diabetes"
         (change)="onDiabetesConditionChanged($event)"
         color="primary"
-        translate
-      >{{"DIABETES" | translate}}</mat-radio-button>
+      >{{"ACCOUNT_PAGE.DIABETES" | translate}}</mat-radio-button>
 
       <mat-radio-button
         [checked]="isDiabetesState('pre_diabetes')"
         value="pre_diabetes"
         (change)="onDiabetesConditionChanged($event)"
         color="primary"
-        translate
-      >{{"PRE_DIABETES" | translate}}</mat-radio-button>
+      >{{"ACCOUNT_PAGE.PRE_DIABETES" | translate}}</mat-radio-button>
     </mat-radio-group>
   </mat-list-item>
 
   <mat-divider></mat-divider>
 
   <mat-list-item>
-    <p matLine class="label" translate>HYPERTENSION</p>
+    <p matLine class="label" translate>ACCOUNT_PAGE.HYPERTENSION</p>
     <mat-slide-toggle
       *ngIf="profile"
       [checked]="isChecked('hypertension')"

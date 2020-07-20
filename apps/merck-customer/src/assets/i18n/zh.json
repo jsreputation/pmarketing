@@ -2,7 +2,12 @@
     "NAVIGATION": {
         "HOME": "主頁",
         "FIND_PHARMACY": "尋找藥房",
-        "ACCOUNT": "我的帳戶"
+        "ACCOUNT": "我的帳戶",
+        "PROFILE": "簡介",
+        "CONDITION": "細則",
+        "LANGUAGE": "語言",
+        "PRIVACY_POLICY": "私隱政策",
+        "TRANSACTION_HISTORY": "交易記錄"
     },
     "LOGIN_PAGE": {
         "LOGIN_SUBTITLE": "默糖心",
@@ -135,10 +140,11 @@
     "PROFILE": {
         "NAME": "姓名",
         "MOBILE": "手機號碼",
-        "MEMBERSHIP_TIER": "Membership Tier",
+        "MEMBERSHIP_TIER": "會員等級",
         "PASSWORD": "密碼",
         "CONDITION_SAVED": "感謝！這是我們送贈的500分",
-        "CONDITION": "細則"
+        "CONDITION": "細則",
+        "LANGUAGE": "語言"
     },
     "LOCATION_PAGE": {
         "VIEW_LOCATION": "查看位置"

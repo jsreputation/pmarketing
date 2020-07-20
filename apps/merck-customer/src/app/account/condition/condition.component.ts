@@ -88,7 +88,7 @@ export class ConditionComponent implements OnInit, PageAppearence {
       header: true,
       backButtonEnabled: true,
       bottomSelectedItem: BarSelectedItem.ACCOUNT,
-      pageTitle: 'CONDITION'
+      pageTitle: 'NAVIGATION.CONDITION'
     };
   }
 
