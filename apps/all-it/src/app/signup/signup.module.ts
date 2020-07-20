@@ -11,7 +11,6 @@ import {
   MatIconModule,
   MatNativeDateModule,
   MatDatepickerModule,
-  MAT_DATE_LOCALE
 } from '@angular/material';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -33,7 +32,6 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     FormsModule
   ],
   providers: [
-    {provide: MAT_DATE_LOCALE, useValue: 'en-MY'}
   ]
 })
 export class SignupModule { }
