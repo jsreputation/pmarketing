@@ -46,6 +46,8 @@ export class LoginComponent implements OnInit, PageAppearence {
 
   public preAuth: boolean;
 
+  public showConditions: boolean;
+
   public get mobileNo(): AbstractControl | null {
     return this.loginForm.get('mobileNo');
   }
@@ -85,6 +87,7 @@ export class LoginComponent implements OnInit, PageAppearence {
     this.configService.readAppConfig().subscribe(
       (config: IConfig<void>) => {
         this.preAuth = config.preAuth as boolean;
+        this.showConditions = config.custom.showConditions as boolean;
       }
     );
 
@@ -146,7 +149,7 @@ export class LoginComponent implements OnInit, PageAppearence {
   public navigateToNextPageAfterLogin(): void {
     this.profileService.getCustomProperties().subscribe(
       (res) => {
-        if (res.hasOwnProperty('questionaire_answered') && res.questionaire_answered) {
+        if (res.hasOwnProperty('questionaire_answered') && res.questionaire_answered && !this.showConditions) {
           this.router.navigateByUrl('/home');
         } else {
           this.router.navigateByUrl('/user-info');

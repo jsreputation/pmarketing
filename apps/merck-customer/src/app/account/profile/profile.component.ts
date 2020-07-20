@@ -1,6 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ProfileService, IProfile, LoyaltyService, ILoyalty, ICustomProperties } from '@perxtech/core';
+import {
+  ProfileService,
+  IProfile,
+  LoyaltyService,
+  ILoyalty,
+  ICustomProperties,
+  ConfigService,
+  IConfig
+} from '@perxtech/core';
 import { Router } from '@angular/router';
 import { PageAppearence, PageProperties, BarSelectedItem } from '../../page-properties';
 import { TranslateService } from '@ngx-translate/core';
@@ -16,9 +24,11 @@ export class ProfileComponent implements OnInit, PageAppearence {
   public tier?: string;
   public currentSelectedLanguage: string;
   public selectedLanguage: string;
+  public showConditions: boolean;
 
   constructor(
     private profileService: ProfileService,
+    private configService: ConfigService,
     private router: Router,
     private loyaltyService: LoyaltyService,
     private translate: TranslateService
@@ -31,6 +41,11 @@ export class ProfileComponent implements OnInit, PageAppearence {
       this.profile = res;
       this.conditions = this.getConditionsFromProfile(res);
     });
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig<void>) => {
+        this.showConditions = config.custom.showConditions as boolean;
+      }
+    );
 
     this.loyaltyService.getLoyalty().subscribe((loyalty: ILoyalty) => this.tier = loyalty.membershipTierName);
   }
