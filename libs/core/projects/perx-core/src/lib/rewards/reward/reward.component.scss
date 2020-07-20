@@ -11,9 +11,7 @@
 }
 
 .reward-image-container {
-  max-height: 25vh;
-  display: flex;
-  justify-content: center;
+  flex: 0;
 
   .reward-image {
     width: 100%;
@@ -47,10 +45,10 @@
     margin-top: 1.5rem;
     font-size: 1.8rem;
     text-align: center;
-    font-weight: 900;
   }
 
   .reward-subtitle {
+    font-size: 1.6rem;
     margin-top: 1.5rem;
     text-align: center;
     color: #858585;
