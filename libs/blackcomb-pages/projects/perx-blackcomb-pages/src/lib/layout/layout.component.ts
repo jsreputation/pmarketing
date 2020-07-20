@@ -41,7 +41,6 @@ import { CampaignStampsComponent } from '../campaign-stamps/campaign-stamps.comp
 import { LeaderboardPageComponent } from '../leaderboard-page/leaderboard-page.component';
 import { FindLocationComponent } from '../find-location/find-location.component';
 import { RebatesWalletComponent } from '../rebates/rebates-wallet/rebates-wallet.component';
-import { config } from 'rxjs';
 
 export interface ShowTitleInHeader {
   getTitle(): string;
