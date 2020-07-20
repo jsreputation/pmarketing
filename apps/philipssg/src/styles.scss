@@ -100,11 +100,18 @@ button.mat-stroked-button {
   padding: 1.6rem calc(1.3rem + 24px) 1.6rem 1.3rem !important;
 }
 
+//.logoWrapper {
+//  width: 180px;
+//  align-self: center;
+//
+//  img {
+//    width: 100%;
+//  }
+//}
 .logoWrapper {
-  width: 180px;
-  align-self: center;
+  height: 100%;
 
-  img {
-    width: 100%;
+  .logo {
+    height: 100%;
   }
 }
