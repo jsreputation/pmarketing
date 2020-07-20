@@ -12,6 +12,7 @@ import {
 import { Router } from '@angular/router';
 import { PageAppearence, PageProperties, BarSelectedItem } from '../../page-properties';
 import { TranslateService } from '@ngx-translate/core';
+import { IMerckConfig } from '../../model/IMerck.model';
 
 @Component({
   selector: 'mc-profile',
@@ -41,9 +42,9 @@ export class ProfileComponent implements OnInit, PageAppearence {
       this.profile = res;
       this.conditions = this.getConditionsFromProfile(res);
     });
-    this.configService.readAppConfig().subscribe(
-      (config: IConfig<void>) => {
-        this.showConditions = config.custom.showConditions as boolean;
+    this.configService.readAppConfig<IMerckConfig>().subscribe(
+      (config: IConfig<IMerckConfig>) => {
+        this.showConditions = config.custom ? config.custom.showConditions as boolean : false;
       }
     );
 

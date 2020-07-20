@@ -30,6 +30,7 @@ import {
   PageProperties,
   BarSelectedItem,
 } from '../page-properties';
+import { IMerckConfig } from '../model/IMerck.model';
 
 @Component({
   selector: 'mc-login',
@@ -84,10 +85,10 @@ export class LoginComponent implements OnInit, PageAppearence {
 
   public ngOnInit(): void {
     this.currentSelectedLanguage = this.translateService.currentLang || this.translateService.defaultLang;
-    this.configService.readAppConfig().subscribe(
-      (config: IConfig<void>) => {
+    this.configService.readAppConfig<IMerckConfig>().subscribe(
+      (config: IConfig<IMerckConfig>) => {
         this.preAuth = config.preAuth as boolean;
-        this.showConditions = config.custom.showConditions as boolean;
+        this.showConditions = config.custom ? config.custom.showConditions as boolean : false;
       }
     );
 
