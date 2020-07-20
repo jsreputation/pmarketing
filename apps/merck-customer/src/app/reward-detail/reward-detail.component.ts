@@ -59,11 +59,11 @@ export class RewardDetailComponent implements OnInit, PageAppearence {
   private initTranslate(): void {
     this.displayPriceFn = (rewardPrice: IPrice) => this.translate.get(['REWARD.AND', 'REWARD.POINT']).pipe(
       mergeMap((res: any) => {
-        if (rewardPrice.price && rewardPrice.price > 0) {
+        if (rewardPrice.price && parseFloat(rewardPrice.price) > 0) {
           if (rewardPrice.points && rewardPrice.points > 0) {
-            return of(`${rewardPrice.currencyCode} ${rewardPrice.price}${res['REWARD.AND']}${rewardPrice.points}${res['REWARD.POINT']}`);
+            return of(`${rewardPrice.currencyCode} ${Math.floor(parseFloat(rewardPrice.price))}}${res['REWARD.AND']}${rewardPrice.points}${res['REWARD.POINT']}`);
           }
-          return of(`${rewardPrice.currencyCode} ${rewardPrice.price}`);
+          return of(`${rewardPrice.currencyCode} ${Math.floor(parseFloat(rewardPrice.price))}}`);
         }
 
         if (rewardPrice.points && rewardPrice.points > 0) {
