@@ -1589,7 +1589,7 @@
                 }
               ],
               "serviceWorker": true,
-              "ngswConfigPath": "ngsw-config.json"
+              "ngswConfigPath": "apps/blackcomb-light/ngsw-config.json"
             }
           }
         },
@@ -1700,7 +1700,7 @@
                 }
               ],
               "serviceWorker": true,
-              "ngswConfigPath": "ngsw-config.json"
+              "ngswConfigPath": "apps/blackcomb/ngsw-config.json"
             }
           }
         },
@@ -1811,7 +1811,7 @@
                 }
               ],
               "serviceWorker": true,
-              "ngswConfigPath": "ngsw-config.json"
+              "ngswConfigPath": "apps/all-it/ngsw-config.json"
             }
           }
         },
