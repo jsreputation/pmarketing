@@ -51,7 +51,6 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
   private getData(): void {
     this.route.data.subscribe(
       ((dataObj) => {
-        console.log(dataObj);
         if (dataObj.chooseQuantity) {
           this.chooseQuantity = dataObj.chooseQuantity;
         }
