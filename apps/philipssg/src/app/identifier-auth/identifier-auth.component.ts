@@ -68,6 +68,6 @@ export class IdentifierAuthComponent implements OnInit {
   }
   public redirectAfterLogin(): void {
     const campaignId = JSON.parse(localStorage.getItem('cid'));
-    this.router.navigate([`/game/${campaignId}`]);
+    this.router.navigate([`/game/${campaignId ? campaignId : 1}`]);
   }
 }
