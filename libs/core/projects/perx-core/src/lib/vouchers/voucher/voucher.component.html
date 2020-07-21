@@ -29,7 +29,7 @@
       <div class="section-heading" *ngIf="voucher.merchantLocation">Location</div>
       <div class="section-content" *ngIf="voucher.merchantLocation">
         <p>{{voucher.merchantLocation.name}}</p>
-        <p>{{voucher.merchantLocation.address2}} {{voucher.merchantLocation.address1}}</p>
+        <p>{{voucher.merchantLocation.address1}} {{voucher.merchantLocation.address2}}</p>
         <p>{{voucher.merchantLocation.city}}, {{voucher.merchantLocation.country}} {{voucher.merchantLocation.postalCode}}</p>
       </div>
       <div class="section-heading" *ngIf="voucher.reward.description">
