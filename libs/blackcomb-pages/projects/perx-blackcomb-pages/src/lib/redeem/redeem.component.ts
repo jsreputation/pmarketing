@@ -11,7 +11,12 @@ import {
   Voucher,
   VoucherState
 } from '@perxtech/core';
-import { of, Subject, Subscription } from 'rxjs';
+import {
+  iif,
+  of,
+  Subject,
+  Subscription
+} from 'rxjs';
 import { filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -226,9 +231,12 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
           });
           this.router.navigate(['wallet']);
         },
-        () => {
+        (error) => {
           this.pinInputError = true;
-          this.translate.get('REDEMPTION.FAIL_REDEMPTION_TXT').subscribe(text =>
+          iif(() => error.status === 422,
+            this.translate.get('REDEMPTION.WRONG_PIN'),
+            this.translate.get('REDEMPTION.FAIL_REDEMPTION_TXT')
+          ).subscribe(text =>
             this.notificationService.addSnack(text)
           );
         }
