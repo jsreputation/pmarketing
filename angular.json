@@ -2107,14 +2107,18 @@
             "outputPath": "dist/appauth-server",
             "main": "backend/appauth-server/server.ts",
             "tsConfig": "backend/appauth-server/tsconfig.json",
-            "assets": ["backend/appauth-server/assets"],
+            "assets": [
+              "backend/appauth-server/assets",
+              "backend/appauth-server/config.json"
+            ],
             "externalDependencies": "none"
           },
           "configurations": {
             "production": {
               "optimization": true,
               "extractLicenses": true,
-              "inspect": false
+              "inspect": false,
+              "assets": ["backend/appauth-server/assets"]
             }
           }
         },
