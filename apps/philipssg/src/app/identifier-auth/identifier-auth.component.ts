@@ -29,6 +29,7 @@ export class IdentifierAuthComponent implements OnInit {
     //     }
     //   );
     // }
+    this.authService.logout();
     this.loginForm = this.fb.group({
       personalId: ['', Validators.required],
     });
