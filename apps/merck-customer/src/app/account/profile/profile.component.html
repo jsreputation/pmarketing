@@ -28,7 +28,7 @@
 
   <mat-divider></mat-divider>
 
-  <mat-list-item>
+  <mat-list-item *ngIf="showConditions">
     <p matLine class="label" translate>PROFILE.CONDITION</p>
     <p matLine class="conditions">{{conditions.length > 0 ? conditions.join(', ') : 'None'}}</p>
     <mat-icon (click)="onSubScreenNavigate('account/condition')">edit</mat-icon>

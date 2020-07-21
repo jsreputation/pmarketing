@@ -30,6 +30,7 @@ import {
   PageProperties,
   BarSelectedItem,
 } from '../page-properties';
+import { IMerckConfig } from '../model/IMerck.model';
 
 @Component({
   selector: 'mc-login',
@@ -47,6 +48,8 @@ export class LoginComponent implements OnInit, PageAppearence {
   public currentSelectedLanguage: string = 'en';
 
   public preAuth: boolean;
+
+  public showConditions: boolean;
 
   public get mobileNo(): AbstractControl | null {
     return this.loginForm.get('mobileNo');
@@ -85,9 +88,10 @@ export class LoginComponent implements OnInit, PageAppearence {
 
   public ngOnInit(): void {
     this.currentSelectedLanguage = this.translateService.currentLang || this.translateService.defaultLang;
-    this.configService.readAppConfig().subscribe(
-      (config: IConfig<void>) => {
+    this.configService.readAppConfig<IMerckConfig>().subscribe(
+      (config: IConfig<IMerckConfig>) => {
         this.preAuth = config.preAuth as boolean;
+        this.showConditions = config.custom ? config.custom.showConditions as boolean : false;
       }
     );
 
@@ -150,7 +154,7 @@ export class LoginComponent implements OnInit, PageAppearence {
   public navigateToNextPageAfterLogin(): void {
     this.profileService.getCustomProperties().subscribe(
       (res) => {
-        if (res.hasOwnProperty('questionaire_answered') && res.questionaire_answered) {
+        if (res.hasOwnProperty('questionaire_answered') && res.questionaire_answered && !this.showConditions) {
           this.router.navigateByUrl('/home');
         } else {
           this.router.navigateByUrl('/user-info');

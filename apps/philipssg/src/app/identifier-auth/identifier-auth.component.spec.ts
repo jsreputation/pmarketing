@@ -17,6 +17,7 @@ const mockTheme: ITheme = {
 const authenticationServiceStub: Partial<AuthenticationService> = {
   getUserAccessToken: () => '',
   autoLogin: () => of(),
+  logout: () => {},
 };
 const routerStub: Partial<Router> = {
   navigate: () => Promise.resolve(true)
