@@ -19,7 +19,7 @@
     "build:daiichi-dlvn:staging": "env-cmd -f apps/blackcomb/env/daiichi-dlvn.staging ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && nx build blackcomb --prod --",
     "build:digi:production": "echo 'skipping digi build'",
     "build:digi:staging": "echo 'skipping digi build'",
-    "build:feature-demo:staging": "echo 'skipping feature-demo build'",
+    "build:feature-demo:staging": "env-cmd -f apps/blackcomb/env/feature-demo.staging ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && nx build blackcomb --prod --",
     "build:hkbn:production": "echo 'skipping hkbn build'",
     "build:hkbn:staging": "echo 'skipping hkbn build'",
     "build:hsbc-rewards:production": "echo 'skipping hsbc-rewards build'",
