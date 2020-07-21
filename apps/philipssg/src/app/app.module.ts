@@ -126,7 +126,8 @@ export const appInit = (
     if (cid) {
       localStorage.setItem('cid', cid);
     } else {
-      console.error('Could not retrieve campaign id');
+      console.error('Could not retrieve campaign id from URL');
+      localStorage.removeItem('cid');
     }
     configService.readAppConfig().pipe(
       tap((config: IConfig<void>) => translateService.setDefaultLang(config.defaultLang || 'en')),
