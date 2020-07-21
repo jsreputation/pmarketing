@@ -72,7 +72,7 @@ describe('ResetPasswordComponent', () => {
       const notificationServiceSpy = spyOn(notificationService, 'addSnack');
       component.initTranslate();
       component.onUpdatePassword();
-      expect(notificationServiceSpy).toHaveBeenCalledWith('PASSWORD_NOT_MATCH');
+      expect(notificationServiceSpy).toHaveBeenCalledWith('RESET_PW_PAGE.PASSWORD_NOT_MATCH');
     });
 
     // it('should reset password and call login', (done: jest.DoneCallback) => {
