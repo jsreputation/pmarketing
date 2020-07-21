@@ -22,13 +22,14 @@ export class IdentifierAuthComponent implements OnInit {
     private router: Router,
   ) {
     // attempt to first login automatically
-    if (this.authService.getUserAccessToken()) {
-      this.authService.autoLogin().subscribe(
-        () => {
-          this.redirectAfterLogin();
-        }
-      );
-    }
+    // if (this.authService.getUserAccessToken()) {
+    //   this.authService.autoLogin().subscribe(
+    //     () => {
+    //       this.redirectAfterLogin();
+    //     }
+    //   );
+    // }
+    this.authService.logout();
     this.loginForm = this.fb.group({
       personalId: ['', Validators.required],
     });
