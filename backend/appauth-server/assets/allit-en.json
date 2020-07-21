@@ -256,6 +256,7 @@
     "SUCCESSFUL_REDEMPTION_TITLE": "Reward successfully redeemed",
     "SUCCESSFUL_REDEMPTION_TXT": "You have redeemed {{reward}}",
     "CTA_TXT": "Cancel",
+    "FAIL_REDEMPTION_TXT": "Sorry! Voucher redemption failed.",
     "BACK_TO_WALLET": "Back To Wallet",
     "UNKNOWN_ERROR_TXT": "Unknown error occurred, please try again later"
   },
