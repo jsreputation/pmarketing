@@ -59,7 +59,7 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
     if (!this.playBtnTextFn) {
       this.playBtnTextFn = () => of('play now!');
     }
-    
+
     if (this.puzzles) {
       this.puzzles
         .pipe(takeUntil(this.destroy$))
