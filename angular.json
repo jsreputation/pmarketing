@@ -2107,15 +2107,21 @@
             "outputPath": "dist/appauth-server",
             "main": "backend/appauth-server/server.ts",
             "tsConfig": "backend/appauth-server/tsconfig.json",
-            "assets": ["backend/appauth-server/assets"]
+            "assets": ["backend/appauth-server/assets"],
+            "externalDependencies": "none"
           },
           "configurations": {
             "production": {
               "optimization": true,
               "extractLicenses": true,
-              "inspect": false,
-              "externalDependencies": "none"
+              "inspect": false
             }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "appauth-server:build"
           }
         }
       }
