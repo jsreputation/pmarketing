@@ -22,7 +22,7 @@ export class IdentifierAuthComponent implements OnInit {
     private router: Router,
   ) {
     // attempt to first login automatically
-    if (!this.authService.getUserAccessToken()) {
+    if (this.authService.getUserAccessToken()) {
       this.authService.autoLogin().subscribe(
         () => {
           this.redirectAfterLogin();

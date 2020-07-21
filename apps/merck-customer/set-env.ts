@@ -35,7 +35,10 @@ const appConfigFile = `{
   "isWhistler": ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : false},
   "baseHref": "${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}",
   "defaultLang": "${process.env.DEFAULT_LANG ? process.env.DEFAULT_LANG : 'en'}",
-  "sourceType": "${process.env.SOURCE_TYPE ? process.env.SOURCE_TYPE : ''}"
+  "sourceType": "${process.env.SOURCE_TYPE ? process.env.SOURCE_TYPE : ''}",
+  "custom": {
+    "showConditions": ${process.env.SHOW_CONDITIONS ? process.env.SHOW_CONDITIONS : false}
+  }
 }
 `;
 
