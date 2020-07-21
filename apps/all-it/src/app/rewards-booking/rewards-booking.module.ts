@@ -6,7 +6,10 @@ import { CommonModule } from '@angular/common';
 const routes: Routes = [
   {
     path: '',
-    component: RewardsBookingComponent
+    component: RewardsBookingComponent,
+    data: {
+      chooseQuantity: true
+    }
   }
 ];
 

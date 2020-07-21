@@ -94,11 +94,11 @@ $card-actual-height: 200px;
     }
   }
 
-  .ellipse-1-line {
-    @include ellipse-lines(1);
+  .ellipsis-2-lines {
+    @include ellipse-lines(2);
   }
 
-  .ellipse-2-lines {
-    @include ellipse-lines(2);
+  .ellipsis-1-line {
+    @include ellipse-lines(1);
   }
 }

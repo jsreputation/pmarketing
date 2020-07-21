@@ -3,7 +3,8 @@ import {
   NgModule,
   APP_INITIALIZER,
   Injectable,
-  ErrorHandler
+  ErrorHandler,
+  LOCALE_ID
 } from '@angular/core';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -44,6 +45,8 @@ import { tap, switchMap } from 'rxjs/operators';
 import { MatButtonModule } from '@angular/material/button';
 import { SignupModule } from './signup/signup.module';
 import * as Sentry from '@sentry/browser';
+import { registerLocaleData } from '@angular/common';
+import localeENMY from '@angular/common/locales/en-MY';
 
 Sentry.init({
   dsn: 'https://813ab4ad94c94d5eb4370961b9e31e81@o225970.ingest.sentry.io/5276501'
@@ -72,6 +75,7 @@ export const setLanguage = (
       switchMap(() => themesService.getThemeSetting())
     ).toPromise().then(() => resolve());
   });
+registerLocaleData(localeENMY);
 
 @NgModule({
   declarations: [AppComponent],
@@ -114,6 +118,7 @@ export const setLanguage = (
   ],
   bootstrap: [AppComponent],
   providers: [
+    { provide: LOCALE_ID, useValue: 'en-MY' },
     {
       provide: APP_INITIALIZER,
       useFactory: setLanguage,

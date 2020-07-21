@@ -101,10 +101,9 @@ button.mat-stroked-button {
 }
 
 .logoWrapper {
-  width: 180px;
-  align-self: center;
+  height: 100%;
 
-  img {
-    width: 100%;
+  .logo {
+    height: 100%;
   }
 }

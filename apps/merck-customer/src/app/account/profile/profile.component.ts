@@ -1,9 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ProfileService, IProfile, LoyaltyService, ILoyalty, ICustomProperties } from '@perxtech/core';
+import {
+  ProfileService,
+  IProfile,
+  LoyaltyService,
+  ILoyalty,
+  ICustomProperties,
+  ConfigService,
+  IConfig
+} from '@perxtech/core';
 import { Router } from '@angular/router';
 import { PageAppearence, PageProperties, BarSelectedItem } from '../../page-properties';
 import { TranslateService } from '@ngx-translate/core';
+import { IMerckConfig } from '../../model/IMerck.model';
 
 @Component({
   selector: 'mc-profile',
@@ -16,9 +25,11 @@ export class ProfileComponent implements OnInit, PageAppearence {
   public tier?: string;
   public currentSelectedLanguage: string;
   public selectedLanguage: string;
+  public showConditions: boolean;
 
   constructor(
     private profileService: ProfileService,
+    private configService: ConfigService,
     private router: Router,
     private loyaltyService: LoyaltyService,
     private translate: TranslateService
@@ -31,6 +42,11 @@ export class ProfileComponent implements OnInit, PageAppearence {
       this.profile = res;
       this.conditions = this.getConditionsFromProfile(res);
     });
+    this.configService.readAppConfig<IMerckConfig>().subscribe(
+      (config: IConfig<IMerckConfig>) => {
+        this.showConditions = config.custom ? config.custom.showConditions as boolean : false;
+      }
+    );
 
     this.loyaltyService.getLoyalty().subscribe((loyalty: ILoyalty) => this.tier = loyalty.membershipTierName);
   }

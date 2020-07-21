@@ -180,6 +180,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
           );
         } else {
           this.loading = false;
+          this.authService.logout();
           this.notificationService.addPopup({
             title: 'Membership required',
             text: 'Please purchase a valid membership before logging in',
