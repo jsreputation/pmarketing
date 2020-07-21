@@ -18,7 +18,7 @@ export class LeaderboardComponent implements OnInit {
   public columnsToDisplay: ['rank', 'displayName', 'value'] = ['rank', 'displayName', 'value'];
   @Input() public dataArray: UserRanking[];
   @Input()
-  public nickNameTxtFn: () => Observable<string>
+  public nickNameTxtFn: () => Observable<string>;
   // @Input() public dataNumberToDisplay: number = 10;
 
   public ngOnInit(): void {

@@ -21,7 +21,7 @@ export class ResultsComponent implements OnInit {
 
 
   public ngOnInit(): void {
-    if(!this.timeConsumed) {
+    if (!this.timeConsumed) {
       this.timeConsumed = of('You took {{time}} to answer this.');
     }
   }

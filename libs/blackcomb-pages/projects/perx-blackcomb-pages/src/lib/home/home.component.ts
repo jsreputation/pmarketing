@@ -100,21 +100,21 @@ export class HomeComponent implements OnInit, OnDestroy {
   public catalogsEnded: boolean = false;
 
   public constructor(
-    private rewardsService: RewardsService,
-    private gamesService: IGameService,
-    private router: Router,
-    private titleService: Title,
-    private translate: TranslateService,
-    private themesService: ThemesService,
-    private configService: ConfigService,
-    private authService: AuthenticationService,
-    private campaignService: ICampaignService,
-    private instantOutcomeService: InstantOutcomeService,
-    private dialog: MatDialog,
-    private feedService: FeedReaderService,
-    private settingsService: SettingsService,
-    private profileService: ProfileService,
-    private datePipe: DatePipe
+    protected rewardsService: RewardsService,
+    protected gamesService: IGameService,
+    protected router: Router,
+    protected titleService: Title,
+    protected translate: TranslateService,
+    protected themesService: ThemesService,
+    protected configService: ConfigService,
+    protected authService: AuthenticationService,
+    protected campaignService: ICampaignService,
+    protected instantOutcomeService: InstantOutcomeService,
+    protected dialog: MatDialog,
+    protected feedService: FeedReaderService,
+    protected settingsService: SettingsService,
+    protected profileService: ProfileService,
+    protected datePipe: DatePipe
   ) {
   }
 

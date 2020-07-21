@@ -16,16 +16,16 @@ export class QrScannerComponent implements OnInit {
     public dialogRef: MatDialogRef<QrScannerComponent>,
   ) { }
 
-  public ngOnInit():void {
+  public ngOnInit(): void {
     if (!this.merchantTextFn) {
       this.merchantTextFn = () => of('Capture the Merchant\’s QR Code in the frame below');
     }
   }
   public scanSuccessHandler(data: string): void {
-    if ( !data ) {
+    if (!data) {
       return;
     }
-    this.dialogRef.close({data});
+    this.dialogRef.close({ data });
   }
 
 }

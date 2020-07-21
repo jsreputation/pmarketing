@@ -31,7 +31,7 @@ export class RewardComponent implements OnInit {
 
   @Input()
   public expiryLabel: Observable<string> = of('Expiry');
-  
+
 
   public ngOnInit(): void {
     if (!this.displayPriceFn) {

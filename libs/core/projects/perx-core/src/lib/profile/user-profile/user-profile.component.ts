@@ -12,15 +12,15 @@ export class UserProfileComponent implements OnInit {
   @Input()
   public profile: IProfile;
   @Input()
-  public playerCodeFn: () => Observable<string>
+  public playerCodeFn: () => Observable<string>;
   @Input()
-  public last4DigitFn: () => Observable<string>
+  public last4DigitFn: () => Observable<string>;
 
   public ngOnInit(): void {
-    if(!this.playerCodeFn) {
+    if (!this.playerCodeFn) {
       this.playerCodeFn = () => of('Player Code');
     }
-    if(!this.last4DigitFn) {
+    if (!this.last4DigitFn) {
       this.last4DigitFn = () => of('Card Last 4 Digit');
     }
   }

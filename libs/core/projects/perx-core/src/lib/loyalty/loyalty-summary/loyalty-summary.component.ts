@@ -78,7 +78,7 @@ export class LoyaltySummaryComponent implements OnInit {
         if (profile && profile.lastName) {
           return of(`Welcome ${profile.lastName}`);
         }
-        return of(`Welcome`);
+        return of('Welcome');
       };
     }
 
