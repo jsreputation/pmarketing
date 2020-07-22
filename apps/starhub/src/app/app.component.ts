@@ -18,8 +18,6 @@ import {
   SettingsService,
   TokenStorage,
   IFlags,
-  IConfig,
-
 } from '@perxtech/core';
 import {
   MatDialog,
@@ -42,7 +40,6 @@ import {
   timer
 } from 'rxjs';
 import { Router } from '@angular/router';
-import { IStarhubConfig } from './model/IStarhub.model';
 
 export interface IdataLayerSH {
   pageName: string;
@@ -74,7 +71,6 @@ export class AppComponent implements OnInit {
   public theme: ITheme;
   public holdingGateOpened: boolean = true;
   public loading: boolean = true;
-  public gatekeeperURL: string;
 
   constructor(
     // private authenticationService: AuthenticationService,
@@ -154,14 +150,11 @@ export class AppComponent implements OnInit {
     );
 
     // init holding
-    this.configService.readAppConfig<IStarhubConfig>().pipe(
-      map( (config: IConfig<IStarhubConfig>) =>
-        this.gatekeeperURL = config.custom ? config.custom.gatekeeperURL : 'https://80ixbz8jt8.execute-api.ap-southeast-1.amazonaws.com/Prod/gatekeep_token'
-      ),
+    this.configService.readAppConfig().pipe(
       switchMap(() => this.settingsService.getRemoteFlagsSettings()),
       switchMap((flags: IFlags) => timer(0, flags && flags.gatekeeperPollingInterval || 2000)
         .pipe(
-          switchMap(() => this.settingsService.isGatekeeperOpen(this.gatekeeperURL).pipe(
+          switchMap(() => this.settingsService.isGatekeeperOpen().pipe(
             catchError(() => {
               this.holdingGateOpened = false;
               return EMPTY;
