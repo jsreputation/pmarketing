@@ -84,8 +84,8 @@ describe('CardComponent', () => {
   });
 
   it('shoulld priceLabelFn', () => {
-    expect(component.priceLabelFn(transaction)).toBe('Points spent');
-    expect(component.priceLabelFn({ ...transaction, points: 11 })).toBe('Points earned');
+    component.priceLabelFn(transaction).subscribe(text => expect(text).toBe('Points spent'));
+    component.priceLabelFn({ ...transaction, points: 11 }).subscribe(text => expect(text).toBe('Points earned'));
   });
 
   it('should change tab, trigger onscroll', () => {
