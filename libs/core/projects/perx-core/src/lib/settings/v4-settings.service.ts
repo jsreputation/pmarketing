@@ -187,17 +187,14 @@ export class V4SettingsService extends SettingsService {
     );
   }
 
-  public isGatekeeperOpen(): Observable<boolean> {
+  public isGatekeeperOpen(
+    url: string = 'https://80ixbz8jt8.execute-api.ap-southeast-1.amazonaws.com/Prod/gatekeep_token'
+  ): Observable<boolean> {
     // this will return a empty body and angular does not like it.
     const perxGatekeeper = this.http.post<IV4GatekeeperResponse>(`${this.hostName}/v4/gatekeep_token`, null);
-
     // currently only implemented for prod todo: auth and staging/prod versions
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    const awsGatekeeper = this.httpBackend.get<IV4GatekeeperResponse>(
-      'https://80ixbz8jt8.execute-api.ap-southeast-1.amazonaws.com/Prod/gatekeep_token',
-      {
-        headers
-      });
+    const awsGatekeeper = this.httpBackend.get<IV4GatekeeperResponse>(url, { headers });
     return this.getRemoteFlagsSettings().pipe(
       switchMap((flags: IFlags) =>
         iif(() => flags.gatekeeperApi === GatekeeperApis.AWS, awsGatekeeper, perxGatekeeper)
