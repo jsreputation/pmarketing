@@ -1,4 +1,3 @@
 export interface IStarhubConfig {
-    gatekeeperURL: string;
-  }
-  
+  gatekeeperURL: string;
+}
