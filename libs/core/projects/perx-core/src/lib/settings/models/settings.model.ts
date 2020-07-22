@@ -15,6 +15,7 @@ export interface IFlags {
   gatekeeperApi?: GatekeeperApis;
   showStampCampaigns?: boolean;
   showLoyaltyBlockOnHomePage?: boolean;
+  gatekeeperUrl?: string;
 }
 
 export interface IRssFeeds {
