@@ -40,15 +40,16 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
     this.transactions = this.loyaltyService.getTransactionHistory(this.pageNumber - 1, this.pageSize);
     this.settingsService.getRemoteFlagsSettings().subscribe((flags: IFlags) => {
       if (flags.rebateDemoFlow) {
-        this.priceLabelFn = (tr: ILoyaltyTransactionHistory) => this.translate.get(['WALLET.CASHBACK_EARNED', 'WALLET.CASHBACK_SPENT']).pipe(
-          map(res => {
-            let cashbackSpentTxt = res['WALLET.CASHBACK_EARNED'];
-            let cashbackEarnedTxt = res['WALLET.CASHBACK_SPENT'];
-            const value = tr.pointsAmount || 0;
-            const absVal = String(Math.abs(value));
-            return value < 0 ? cashbackSpentTxt.replace('{points}', absVal) : cashbackEarnedTxt.replace('{points}', absVal);
-          })
-        );
+        this.priceLabelFn = (tr: ILoyaltyTransactionHistory) =>
+          this.translate.get(['WALLET.CASHBACK_EARNED', 'WALLET.CASHBACK_SPENT']).pipe(
+            map(res => {
+              const cashbackSpentTxt = res['WALLET.CASHBACK_EARNED'];
+              const cashbackEarnedTxt = res['WALLET.CASHBACK_SPENT'];
+              const value = tr.pointsAmount || 0;
+              const absVal = String(Math.abs(value));
+              return value < 0 ? cashbackSpentTxt.replace('{points}', absVal) : cashbackEarnedTxt.replace('{points}', absVal);
+            })
+          );
         this.descFn = (tr: ILoyaltyTransactionHistory) => {
           let text = '';
           const properties = oc(tr).transactionDetails.data.properties();
@@ -68,8 +69,8 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
       } else {
         this.priceLabelFn = (tr: ILoyaltyTransactionHistory) => this.translate.get(['WALLET.POINT_EARNED', 'WALLET.POINT_SPENT']).pipe(
           map(res => {
-            let pointSpentTxt = res['WALLET.POINT_EARNED'];
-            let pointEarnedTxt = res['WALLET.POINT_SPENT'];
+            const pointSpentTxt = res['WALLET.POINT_EARNED'];
+            const pointEarnedTxt = res['WALLET.POINT_SPENT'];
             const value = tr.pointsAmount || 0;
             const absVal = String(Math.abs(value));
             return value < 0 ? pointSpentTxt.replace('{points}', absVal) : pointEarnedTxt.replace('{points}', absVal);
