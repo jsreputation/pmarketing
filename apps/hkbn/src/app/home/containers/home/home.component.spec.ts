@@ -2,8 +2,6 @@ import {
   async,
   ComponentFixture,
   TestBed,
-  fakeAsync,
-  tick,
 } from '@angular/core/testing';
 import { Type } from '@angular/core';
 import { Router } from '@angular/router';
@@ -47,7 +45,6 @@ describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
   let rewardsService: RewardsService;
-  let translateService: TranslateService;
 
   const themesServiceStub: Partial<ThemesService> = {
     getThemeSetting: () => of()
@@ -97,7 +94,6 @@ describe('HomeComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
-    translateService = TestBed.get(TranslateService);
     rewardsService = fixture.debugElement.injector.get<RewardsService>(RewardsService as Type<RewardsService>);
     fixture.detectChanges();
   });
@@ -119,13 +115,4 @@ describe('HomeComponent', () => {
     component.ngOnInit();
     expect(spy).toHaveBeenCalled();
   });
-
-  it('should call translate service', fakeAsync(() => {
-    const spy = spyOn(translateService, 'get');
-    spy.and.returnValue(of({ HOME: {YOU_HAVE: 'YOU_HAVE', HELLO: 'HELLO', POINTS_EXPITING: 'POINTS_EXPITING' }}));
-    component.ngOnInit();
-    expect(spy).toHaveBeenCalledWith(['HOME.YOU_HAVE', 'HOME.HELLO', 'HOME.POINTS_EXPITING']);
-    tick();
-    expect(component.titleFn(user)).toBe('HELLO' + ` ${user.lastName},`);
-  }));
 });
