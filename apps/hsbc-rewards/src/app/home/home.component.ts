@@ -78,11 +78,11 @@ export class HomeComponent implements OnInit {
     this.getRewardsCollection();
     this.getLoyalty();
     this.displayPriceFn = (rewardPrice: IPrice) => {
-      if (rewardPrice.points && rewardPrice.points > 0 && rewardPrice.price && rewardPrice.price > 0) {
+      if (rewardPrice.points && rewardPrice.points > 0 && rewardPrice.price && parseFloat(rewardPrice.price) > 0) {
         return of(`Fast Track: ${rewardPrice.points} points + ${rewardPrice.currencyCode} ${parseInt((rewardPrice.price).toString(), 10)}`);
       }
 
-      if (rewardPrice.price && rewardPrice.price > 0) {
+      if (rewardPrice.price && parseFloat(rewardPrice.price) > 0) {
         return of(`${rewardPrice.currencyCode} ${parseInt((rewardPrice.price).toString(), 10)}`);
       }
 
