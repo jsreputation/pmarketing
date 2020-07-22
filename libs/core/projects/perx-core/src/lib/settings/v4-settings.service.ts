@@ -53,6 +53,7 @@ interface IV4Flags {
     show_stamp_campaigns: boolean;
     gatekeeper_api: GatekeeperApis;
     show_loyalty_on_home: boolean;
+    gatekeeper_url: string;
   };
 }
 
@@ -123,7 +124,8 @@ export class V4SettingsService extends SettingsService {
       gatekeeperPollingInterval: data.json_value.gatekeeper_polling_interval,
       showStampCampaigns: data.json_value.show_stamp_campaigns,
       gatekeeperApi: data.json_value.gatekeeper_api,
-      showLoyaltyBlockOnHomePage: data.json_value.show_loyalty_on_home
+      showLoyaltyBlockOnHomePage: data.json_value.show_loyalty_on_home,
+      gatekeeperUrl: data.json_value.gatekeeper_url
     };
   }
 
@@ -187,17 +189,17 @@ export class V4SettingsService extends SettingsService {
     );
   }
 
-  public isGatekeeperOpen(
-    url: string = 'https://80ixbz8jt8.execute-api.ap-southeast-1.amazonaws.com/Prod/gatekeep_token'
-  ): Observable<boolean> {
+  public isGatekeeperOpen(): Observable<boolean> {
     // this will return a empty body and angular does not like it.
     const perxGatekeeper = this.http.post<IV4GatekeeperResponse>(`${this.hostName}/v4/gatekeep_token`, null);
     // currently only implemented for prod todo: auth and staging/prod versions
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    const awsGatekeeper = this.httpBackend.get<IV4GatekeeperResponse>(url, { headers });
     return this.getRemoteFlagsSettings().pipe(
       switchMap((flags: IFlags) =>
-        iif(() => flags.gatekeeperApi === GatekeeperApis.AWS, awsGatekeeper, perxGatekeeper)
+        iif(() => flags.gatekeeperApi === GatekeeperApis.AWS,
+          this.httpBackend.get<IV4GatekeeperResponse>(flags.gatekeeperUrl ? flags.gatekeeperUrl : '', { headers }),
+          perxGatekeeper
+        )
       ),
       map((res: IV4GatekeeperResponse) => {
         if (res.message === 'go ahead') {
