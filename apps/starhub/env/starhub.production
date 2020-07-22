@@ -1,4 +1,3 @@
 RSS_FEEDS=https://cdn.perxtech.net/content/starhub/rss.xml 
 PRODUCTION=true 
 APIHOST=https://api-starhub.perxtech.net
-GATEKEEPER_URL=https://043b2dnlch.execute-api.ap-southeast-1.amazonaws.com/Prod/gatekeep_token

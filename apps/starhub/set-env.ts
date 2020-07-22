@@ -43,10 +43,7 @@ const appConfigFile = `{
   "production": ${process.env.PRODUCTION ? process.env.PRODUCTION : false},
   "preAuth": ${process.env.PREAUTH ? process.env.PREAUTH : false},
   "isWhistler": ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : false},
-  "baseHref": "${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}",
-  "custom": {
-    "gatekeeperURL": "${process.env.GATEKEEPER_URL ? process.env.GATEKEEPER_URL : 'https://80ixbz8jt8.execute-api.ap-southeast-1.amazonaws.com/Prod/gatekeep_token'}"
-  }
+  "baseHref": "${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}"
 }
 `;
 

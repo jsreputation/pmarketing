@@ -13,5 +13,5 @@ export abstract class SettingsService {
   public abstract getTenantAppSettings(key: string): Observable<IMicrositeSettings>;
   public abstract getAccountSettings(): Observable<PagesObject>;
   public abstract getRemoteFlagsSettings(): Observable<IFlags>;
-  public abstract isGatekeeperOpen(url: string): Observable<boolean>;
+  public abstract isGatekeeperOpen(): Observable<boolean>;
 }
