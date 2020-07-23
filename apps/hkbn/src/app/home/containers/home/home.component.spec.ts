@@ -34,13 +34,6 @@ import { HomeComponent } from './home.component';
 
 import { mockLoyalty } from '../loyalty.mock';
 
-const user = {
-  id: 5,
-  state: 'active',
-  firstName: 'test',
-  lastName: 'test'
-};
-
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
