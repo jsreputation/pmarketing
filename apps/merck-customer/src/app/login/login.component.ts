@@ -150,7 +150,7 @@ export class LoginComponent implements OnInit, PageAppearence {
   public navigateToNextPageAfterLogin(): void {
     this.profileService.getCustomProperties().subscribe(
       (res) => {
-        if (res.hasOwnProperty('questionaire_answered') && res.questionaire_answered && !this.showConditions) {
+        if ((res.hasOwnProperty('questionaire_answered') && res.questionaire_answered) || !this.showConditions) {
           this.router.navigateByUrl('/home');
         } else {
           this.router.navigateByUrl('/user-info');
