@@ -1,14 +1,14 @@
 <div *ngIf="(campaigns$ | async) as campaigns " class="main-container">
   <h1 *ngIf="ghostCampaigns.length || campaigns.length">Play and win</h1>
-  <div
-   infiniteScroll
-   [infiniteScrollDistance]="2"
-   [infiniteScrollThrottle]="500"
-   (scrolled)="onScroll()"
-   [scrollWindow]="false"
-   [horizontal]="true"
-  >
-    <div class="ga_campaign cards" *ngIf="campaigns.length > 0">
+    <div class="ga_campaign cards"
+      *ngIf="campaigns.length > 0"
+      infiniteScroll
+      [infiniteScrollDistance]="2"
+      [infiniteScrollThrottle]="500"
+      (scrolled)="onScroll()"
+      [scrollWindow]="false"
+      [horizontal]="true"
+    >
       <mat-card [@fadeIn]="campaigns.length" *ngFor="let campaign of campaigns" (click)="selected(campaign)" matRipple
                 [matRippleDisabled]="campaign?.macaron?.class === 'coming-soon'">
         <div class="featured-image">
@@ -29,5 +29,4 @@
       </mat-card>
     </div>
     <ghost-cards class="cards" [@fadeOut]="!ghostCampaigns.length" [ghosts]="ghostCampaigns"></ghost-cards>
-  </div>
 </div>
