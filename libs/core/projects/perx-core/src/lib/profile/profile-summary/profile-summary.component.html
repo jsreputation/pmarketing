@@ -1,10 +1,12 @@
-<mat-card class="basic-info mat-elevation-z0">
-  <mat-card-header>
-    <div mat-card-avatar>
+<div class="basic-info mat-elevation-z0">
+  <div class="card-container">
+    <div class="avatar">
       <img *ngIf="profileImg" src="profileImg" alt=""/>
       <img *ngIf="!profileImg" src="assets/avatar.png" alt="">
     </div>
-    <mat-card-title *ngIf="profile$ | async as profile">{{titleFn(profile) | async}}</mat-card-title>
-    <mat-card-subtitle *ngIf="loyalty$ | async as loyalty">{{memberFn(loyalty.membershipTierName) | async}}</mat-card-subtitle>
-  </mat-card-header>
-</mat-card>
+    <div class="title-center">
+      <div class="heading" *ngIf="profile$ | async as profile">{{titleFn(profile) | async}}</div>
+      <div class="subheading" *ngIf="loyalty$ | async as loyalty">{{memberFn(loyalty.membershipTierName) | async}}</div>
+    </div>
+  </div>
+</div>
