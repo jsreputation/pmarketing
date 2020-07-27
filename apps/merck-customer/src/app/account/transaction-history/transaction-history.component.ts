@@ -50,7 +50,7 @@ export class TransactionHistoryComponent implements OnInit, PageAppearence {
       of(`${tr.transactionDetails && tr.transactionDetails.data ? (tr.transactionDetails.data as IPurchaseTransactionHistory).pharmacyName : ''}`);
 
     this.redemptionsTitleFn = (tr: ILoyaltyTransactionHistory) =>
-    of(`${tr.transactionDetails && tr.transactionDetails.data && (tr.transactionDetails.data as IRewardTransactionHistory).rewardName ? (tr.transactionDetails.data as IRewardTransactionHistory).rewardName : this.triggerTxt}`);
+      of(`${tr.transactionDetails && tr.transactionDetails.data && (tr.transactionDetails.data as IRewardTransactionHistory).rewardName ? (tr.transactionDetails.data as IRewardTransactionHistory).rewardName : this.triggerTxt}`);
 
     this.subTitleFn = (tr: ILoyaltyTransactionHistory) => of(`${this.datePipe.transform(tr.transactedAt, 'dd/MM/yyyy')}`);
     this.translate.get(['PURCHASES_TXT', 'REWARDS_TXT', 'UPDATED_PROFILE_INFORMATION_TXT']).subscribe((res: any) => {
