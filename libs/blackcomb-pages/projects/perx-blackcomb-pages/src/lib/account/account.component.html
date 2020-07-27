@@ -1,7 +1,7 @@
 <ng-container *ngIf="profile$ | async; else ghostBlock">
   <div class="page-container" *ngIf="theme | async as th"
     [ngStyle]="{'background-color': th?.properties['--account_background_color']}">
-    <div *ngIf="appConfig | async as aConfig">
+    <div *ngIf="appConfig$ | async as aConfig">
       <div *ngIf="aConfig.showUserInfoOnAccountsPage">
         <perx-core-profile-summary
           [profile$]="profile$"
