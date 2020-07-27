@@ -143,7 +143,7 @@ export class LoginComponent implements OnInit, PageAppearence {
           console.log(err);
           if (err.status === 0) {
             this.notificationService.addSnack(this.serverErrorTxt);
-          } else if (err.status === 401) {
+          } else if (err.status === 401 || err.status === 403) {
             this.notificationService.addSnack(this.invalidCredentials);
           }
         }
@@ -178,7 +178,7 @@ export class LoginComponent implements OnInit, PageAppearence {
   }
 
   private initTranslate(): void {
-    this.translateService.get('SERVER_NOT_AVAILABLE').subscribe(text => this.serverErrorTxt = text);
-    this.translateService.get('INVALID_CREDENTIALS').subscribe(text => this.invalidCredentials = text);
+    this.translateService.get('LOGIN_PAGE.SERVER_NOT_AVAILABLE').subscribe(text => this.serverErrorTxt = text);
+    this.translateService.get('LOGIN_PAGE.INVALID_CREDENTIALS').subscribe(text => this.invalidCredentials = text);
   }
 }
