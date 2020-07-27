@@ -162,5 +162,6 @@
   "POINT_SPENT": "{points} Points spent",
   "LOGIN_SESSION_EXPIRED": "Login Session Expired",
   "PURCHASES_TXT": "Purchases",
-  "REWARDS_TXT": "Rewards"
+  "REWARDS_TXT": "Rewards",
+  "UPDATED_PROFILE_INFORMATION_TXT": "Updated Profile Information"
 }
