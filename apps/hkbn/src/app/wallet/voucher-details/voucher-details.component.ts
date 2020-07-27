@@ -25,7 +25,7 @@ export class VoucherDetailsComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.translate.get('REDEEM_NOW').subscribe((redeem) => this.redeemLabelFn = () => redeem);
+    this.translate.get('WALLET.REDEEM_NOW').subscribe((redeem) => this.redeemLabelFn = () => redeem);
     this.activeRoute.paramMap
       .pipe(
         takeUntil(this.destroy$)

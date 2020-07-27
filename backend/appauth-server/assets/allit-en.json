@@ -70,8 +70,8 @@
   "ENTER_NEW_PASSWORD": "Enter new password",
   "CONFIRM_NEW_PASSWORD": "Confirm new password",
   "SAVE": "Save",
-  "STATIC_RESET_PASSWORD": "Reset your password",
-  "STATIC_RESET_PASSWORD_SUBHEADING": "Enter the 6-digit One-Time Password (OTP) sent to your mobile number ",
+  "RESET_PASSWORD": "Reset your password",
+  "RESET_PASSWORD_SUBHEADING": "Enter the 6-digit One-Time Password (OTP) sent to your mobile number ",
   "REDEND_OTP": "Resend OTP",
   "STATIC_NEW_REGISTER": "Thank you for registering",
   "GET_VOUCHER": "Get Voucher",
@@ -118,6 +118,7 @@
   "HOME": {
     "HELLO": "Welcome",
     "GAMES": "Games",
+    "MEMBER": " member",
     "MY_BAR_CODE": "My Barcode",
     "MY_QR": "My QR",
     "STAMP_CAMPAIGNS": "Stamp Card Campaigns",
@@ -255,6 +256,7 @@
     "SUCCESSFUL_REDEMPTION_TITLE": "Reward successfully redeemed",
     "SUCCESSFUL_REDEMPTION_TXT": "You have redeemed {{reward}}",
     "CTA_TXT": "Cancel",
+    "FAIL_REDEMPTION_TXT": "Sorry! Voucher redemption failed.",
     "BACK_TO_WALLET": "Back To Wallet",
     "UNKNOWN_ERROR_TXT": "Unknown error occurred, please try again later"
   },

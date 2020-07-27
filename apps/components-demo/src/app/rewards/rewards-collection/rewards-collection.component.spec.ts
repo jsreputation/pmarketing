@@ -11,7 +11,7 @@ import {
   ThemesService,
 } from '@perxtech/core';
 import { RewardsService } from '@perxtech/core';
-
+import { TranslateModule } from '@ngx-translate/core';
 import { RewardsCollectionComponent } from './rewards-collection.component';
 
 describe('RewardsCollectionComponent', () => {
@@ -30,6 +30,7 @@ describe('RewardsCollectionComponent', () => {
       declarations: [RewardsCollectionComponent],
       imports: [
         PerxRewardsModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         {

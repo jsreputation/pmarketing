@@ -10,14 +10,6 @@ import { IReward } from '../models/reward.model';
 import { MaterialModule } from '../../shared/material.module';
 import { UtilsModule } from '../../utils/utils.module';
 import { ThemesService } from '../../utils/themes/themes.service';
-import { Directive, Input } from '@angular/core';
-
-@Directive({
-  selector: '[ngxEllipsis]'
-})
-export class LineDirectiveMockDirective {
-  @Input() public lines: number;
-}
 
 describe('RewardsCollectionComponent', () => {
   let component: RewardsCollectionComponent;
@@ -99,8 +91,7 @@ describe('RewardsCollectionComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        RewardsCollectionComponent,
-        LineDirectiveMockDirective
+        RewardsCollectionComponent
       ],
       imports: [
         MaterialModule,

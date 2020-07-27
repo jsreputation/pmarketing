@@ -22,7 +22,6 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
   private pwUpdatedTxt: string;
   private serverNotAvailable: string;
   private invalidCredentials: string;
-  private passwordNotMatch: string;
 
   constructor(
     private router: Router,
@@ -70,7 +69,9 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
     const password = this.resetPasswordForm.value.password as string;
     const confirmPassword = this.resetPasswordForm.value.confirmPassword as string;
     if (password !== confirmPassword) {
-      this.notificationService.addSnack(this.passwordNotMatch);
+      this.translate.get('RESET_PW_PAGE.PASSWORD_NOT_MATCH').subscribe(text =>
+        this.notificationService.addSnack(text)
+      );
       return;
     }
 
@@ -113,17 +114,14 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
   }
 
   public initTranslate(): void {
-    this.translate.get('PASSWORD_UPDATE_SUCCESSFULLY').subscribe(text =>
+    this.translate.get('RESET_PW_PAGE.PASSWORD_UPDATE_SUCCESSFULLY').subscribe(text =>
       this.pwUpdatedTxt = text
     );
-    this.translate.get('SERVER_NOT_AVAILABLE').subscribe(text =>
+    this.translate.get('RESET_PW_PAGE.SERVER_NOT_AVAILABLE').subscribe(text =>
       this.serverNotAvailable = text
     );
-    this.translate.get('INVALID_CREDENTIALS').subscribe(text =>
+    this.translate.get('RESET_PW_PAGE.INVALID_CREDENTIALS').subscribe(text =>
       this.invalidCredentials = text
-    );
-    this.translate.get('PASSWORD_NOT_MATCH').subscribe(text =>
-      this.passwordNotMatch = text
     );
   }
 }

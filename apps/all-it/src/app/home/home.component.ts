@@ -24,6 +24,7 @@ import {
 } from '@angular/material';
 import { switchMap, map } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-home',
@@ -34,20 +35,21 @@ export class HomeComponent extends BCHomeComponent implements OnInit {
   public restrictedView: boolean = false;
 
   public constructor(
-    public rewardsService: RewardsService,
-    public gamesService: IGameService,
-    public router: Router,
-    public titleService: Title,
-    public translate: TranslateService,
-    public themesService: ThemesService,
-    public configService: ConfigService,
-    public authService: AuthenticationService,
-    public campaignService: ICampaignService,
-    public instantOutcomeService: InstantOutcomeService,
-    public dialog: MatDialog,
-    public feedService: FeedReaderService,
-    public settingsService: SettingsService,
-    public profileService: ProfileService,
+    rewardsService: RewardsService,
+    gamesService: IGameService,
+    router: Router,
+    titleService: Title,
+    translate: TranslateService,
+    themesService: ThemesService,
+    configService: ConfigService,
+    authService: AuthenticationService,
+    campaignService: ICampaignService,
+    instantOutcomeService: InstantOutcomeService,
+    dialog: MatDialog,
+    feedService: FeedReaderService,
+    settingsService: SettingsService,
+    profileService: ProfileService,
+    datePipe: DatePipe,
     private loyaltyService: LoyaltyService
   ) {
     super(
@@ -64,7 +66,8 @@ export class HomeComponent extends BCHomeComponent implements OnInit {
       dialog,
       feedService,
       settingsService,
-      profileService
+      profileService,
+      datePipe
     );
   }
 
@@ -88,21 +91,25 @@ export class HomeComponent extends BCHomeComponent implements OnInit {
             return EMPTY;
           })
       ).subscribe();
-    this.translate.get('HOME.HELLO').subscribe(
-      (msg: string) => this.titleFn = (profile) => {
-        let returnString = msg;
-        if (profile &&
-          profile.firstName && profile.firstName !== '' &&
-          profile.lastName && profile.lastName !== '') {
-          returnString = `${returnString}, ${profile.firstName} ${profile.lastName}`;
-        } else if (profile && profile.firstName && profile.firstName !== '') {
-          returnString = `${returnString}, ${profile.firstName}`;
-        } else if (profile && profile.lastName && profile.lastName !== '') {
-          returnString = `${returnString}, ${profile.lastName}`;
+
+    this.titleFn = (profile) => this.translate.get('HOME.HELLO').pipe(
+      switchMap(
+        (msg: string) => {
+          let returnString = msg;
+          if (profile &&
+            profile.firstName && profile.firstName !== '' &&
+            profile.lastName && profile.lastName !== '') {
+            returnString = `${returnString}, ${profile.firstName} ${profile.lastName}`;
+          } else if (profile && profile.firstName && profile.firstName !== '') {
+            returnString = `${returnString}, ${profile.firstName}`;
+          } else if (profile && profile.lastName && profile.lastName !== '') {
+            returnString = `${returnString}, ${profile.lastName}`;
+          }
+          return returnString;
         }
-        return returnString;
-      }
+      )
     );
+
     this.rewards$ = this.rewardsService.getAllRewards(['featured']);
     this.getTabbedList();
 
@@ -129,7 +136,7 @@ export class HomeComponent extends BCHomeComponent implements OnInit {
 
     // if premium member hide stuff.
     this.loyaltyService.getLoyalties().pipe(
-      map( (loyalties: ILoyalty[]) => loyalties[0]),
+      map((loyalties: ILoyalty[]) => loyalties[0]),
     ).subscribe(
       (loyalty: ILoyalty) => {
         if (loyalty) {

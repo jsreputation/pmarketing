@@ -3,12 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { Location, DatePipe } from '@angular/common';
 import { Observable, of, forkJoin } from 'rxjs';
 import {
-  TransactionPipe,
   IMerchantAdminService,
   IMerchantTransactionHistory,
   IMerchantPurchaseTransactionHistory,
   IMerchantRewardTransactionHistory
 } from '@perxtech/core';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-transaction-history',
@@ -18,13 +18,15 @@ import {
 export class TransactionHistoryComponent implements OnInit {
   public purchaseTransactions: Observable<IMerchantPurchaseTransactionHistory[]>;
   public rewardTransactions: Observable<IMerchantRewardTransactionHistory[]>;
-  public salesTitleFn: (tr: IMerchantPurchaseTransactionHistory) => string;
-  public salesDescFn: (tr: IMerchantTransactionHistory) => string;
-  public salesSubTitleFn: (tr: IMerchantTransactionHistory) => string;
-  public salespriceLabelFn: (tr: IMerchantTransactionHistory) => string;
-  public redemptionsTitleFn: (tr: IMerchantRewardTransactionHistory) => string;
-  public redemptionsSubTitleFn: (tr: IMerchantRewardTransactionHistory) => string;
-  public redemptionsPriceLabelFn: (tr: IMerchantRewardTransactionHistory) => string;
+  public salesTitleFn: (tr: IMerchantPurchaseTransactionHistory) => Observable<string>;
+  public salesDescFn: (tr: IMerchantTransactionHistory) => Observable<string>;
+  public salesSubTitleFn: (tr: IMerchantTransactionHistory) => Observable<string>;
+  public salespriceLabelFn: (tr: IMerchantTransactionHistory) => Observable<string>;
+  public redemptionsTitleFn: (tr: IMerchantRewardTransactionHistory) => Observable<string>;
+  public redemptionsSubTitleFn: (tr: IMerchantRewardTransactionHistory) => Observable<string>;
+  public redemptionsPriceLabelFn: (tr: IMerchantRewardTransactionHistory) => Observable<string>;
+  public salesTxt: string;
+  public redemptionTxt: string;
 
   private pageNumberPurchase: number = 1;
   private pageSizePurchase: number = 10;
@@ -38,28 +40,28 @@ export class TransactionHistoryComponent implements OnInit {
   constructor(
     private location: Location,
     private datePipe: DatePipe,
-    private transactionPipe: TransactionPipe,
-    private translate: TranslateService,
-    private merchantAdminService: IMerchantAdminService
+    private merchantAdminService: IMerchantAdminService,
+    private translate: TranslateService
   ) { }
 
   public ngOnInit(): void {
     this.currentSelectedLanguage = this.translate.currentLang || this.translate.defaultLang;
+    this.initTranslate();
     this.salesTitleFn = (tr: IMerchantPurchaseTransactionHistory) =>
-      `${tr.pharmacyName}`;
+      of(`${tr.pharmacyName}`);
     this.salesDescFn = (tr: IMerchantPurchaseTransactionHistory) =>
-      `${tr.productName}`;
+      of(`${tr.productName}`);
     this.salesSubTitleFn = (tr: IMerchantPurchaseTransactionHistory) =>
-      `${this.datePipe.transform(tr.transactionDate, 'dd/MM/yyyy')}`;
-    this.salespriceLabelFn = (tr: IMerchantPurchaseTransactionHistory) =>
-      `${this.transactionPipe.transform(tr.pointsIssued || 0)}`;
+      of(`${this.datePipe.transform(tr.transactionDate, 'dd/MM/yyyy')}`);
+
 
     this.redemptionsTitleFn = (tr: IMerchantRewardTransactionHistory) =>
-      `${tr.rewardName}`;
+      of(`${tr.rewardName}`);
     this.redemptionsSubTitleFn = (tr: IMerchantRewardTransactionHistory) =>
-      `${this.datePipe.transform(tr.issuedDate, 'dd/MM/yyyy')}`;
+      of(`${this.datePipe.transform(tr.issuedDate, 'dd/MM/yyyy')}`);
+
     this.redemptionsPriceLabelFn = (tr: IMerchantRewardTransactionHistory) =>
-      `${tr.customerName}`;
+      of(`${tr.customerName}`);
 
     this.merchantAdminService.getTransactionHistory(this.pageNumberPurchase, this.pageSizePurchase).subscribe(
       (transactions: IMerchantPurchaseTransactionHistory[]) => this.purchaseTransactions = of(transactions),
@@ -116,6 +118,23 @@ export class TransactionHistoryComponent implements OnInit {
       this.rewardTransactions = of([...val[0], ...val[1]]);
     });
     this.pageNumberReward++;
+  }
+
+  private initTranslate(): void {
+    this.translate.get(['SALES_TXT', 'REDEMPTION_TXT']).subscribe((res: any) => {
+      this.salesTxt = res.SALES_TXT;
+      this.redemptionTxt = res.REDEMPTION_TXT;
+    });
+    this.salespriceLabelFn = (tr: IMerchantPurchaseTransactionHistory) =>
+      this.translate.get(['TRANSACTION_HISTORY.POINT_EARNED', 'TRANSACTION_HISTORY.POINT_SPENT']).pipe(
+        map(res => {
+          const pointsSpentTxt = res['TRANSACTION_HISTORY.POINT_EARNED'];
+          const pointsEarnedTxt = res['TRANSACTION_HISTORY.POINT_SPENT'];
+          const value = tr.pointsIssued || 0;
+          const absVal = String(Math.abs(value));
+          return value < 0 ? pointsSpentTxt.replace('{points}', absVal) : pointsEarnedTxt.replace('{points}', absVal);
+        })
+      );
   }
 
 }

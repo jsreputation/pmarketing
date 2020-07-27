@@ -4,12 +4,20 @@
   [infiniteScrollThrottle]="50"
   (scrolled)="onScroll()"
   [scrollWindow]="false">
-<!--  let app decide if it wants to, then check if remote, then if demo mode-->
   <div class="loyalty-block" *ngIf="
-       appConfig.showLoyaltyBlockOnHomePage &&
-       appRemoteFlags.showLoyaltyBlockOnHomePage &&
-       !appRemoteFlags.rebateDemoFlow">
-    <perx-core-loyalty-summary [titleFn]="titleFn" [showLoyaltyProgress]="appConfig.showLoyaltyProgress"></perx-core-loyalty-summary>
+    appConfig.showLoyaltyBlockOnHomePage &&
+    appRemoteFlags.showLoyaltyBlockOnHomePage &&
+    !appRemoteFlags.rebateDemoFlow">
+    <perx-core-loyalty-summary 
+      [showLoyaltyProgress]="appConfig.showLoyaltyProgress"
+      class="loyalty-item" 
+      [subTitleFn]="subTitleFn" 
+      [titleFn]="titleFn" 
+      [summaryExpiringFn]="summaryExpiringFn"
+      [pointToFn]="pointToFn"
+      [memberFn]="memberFn"
+      [membershipExpiryFn]="membershipExpiryFn"
+     ></perx-core-loyalty-summary>
     <div class="loyalty-item loyalty-item-qr" *ngIf="appConfig.showUserQR">
       <a
         mat-raised-button
@@ -67,7 +75,7 @@
     </perx-blackcomb-pages-campaigns-collection>
   </div>
   <div class="rewards-collection" *ngIf="appConfig.showRewardsOnHomepage">
-    <perx-core-rewards-list-tabbed [tabs$]="tabs$" (tapped)="goToReward($event)" (tabChanged)="tabChanged($event)">
+    <perx-core-rewards-list-tabbed [tabs$]="tabs$" [displayPriceFn]="displayPriceFn" (tapped)="goToReward($event)" (tabChanged)="tabChanged($event)">
     </perx-core-rewards-list-tabbed>
   </div>
 </div>

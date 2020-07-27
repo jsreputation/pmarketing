@@ -24,13 +24,14 @@ import {
   MerchantsModule,
   ConfigModule,
   ProfileModule,
+  ProfileServiceModule,
   MerchantAdminModule,
   LanguageInterceptor,
   ConfigService,
   TokenStorage,
   AuthenticationService,
   ThemesService,
-  IConfig, ProfileServiceModule
+  IConfig
 } from '@perxtech/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';

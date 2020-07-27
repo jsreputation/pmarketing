@@ -146,7 +146,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
                 .subscribe(res => {
                   this.notificationService.addPopup({
                     title: res['LOGIN_PAGE.POPUP_TITLE'],
-                    text: res['LOGIN_PAGE.POPUP_TXT']
+                    text: res['LOGIN_PAGE.POPUP.TXT']
                   });
                 });
             } else if (err.status === 401 || err.status === 403) {

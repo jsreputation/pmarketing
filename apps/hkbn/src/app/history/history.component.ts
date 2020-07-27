@@ -37,9 +37,9 @@ export class HistoryComponent implements OnInit {
   private loyaltyId: number = null;
   public accrued: Observable<ILoyaltyTransaction[]>;
   public redeemed: Observable<ILoyaltyTransaction[]>;
-  public subTitleFn: (tr: ILoyaltyTransaction) => string;
-  public titleFn: (tr: ILoyaltyTransaction) => string;
-  public priceLabelFn: (tr: ILoyaltyTransaction) => string;
+  public priceLabelFn: (tr: ILoyaltyTransaction) => Observable<string>;
+  public subTitleFn: (tr: ILoyaltyTransaction) => Observable<string>;
+  public titleFn: (tr: ILoyaltyTransaction) => Observable<string>;
 
   private async initLoyaltyId(): Promise<void> {
     const loyalties: ILoyalty[] = await this.loyaltyService.getLoyalties().toPromise();
@@ -91,10 +91,8 @@ export class HistoryComponent implements OnInit {
   public async ngOnInit(): Promise<void> {
     await this.initLoyaltyId();
     this.loadTransactions();
-    this.translate.get('POINTS')
-      .subscribe((res: string) => {
-        this.priceLabelFn = () => res;
-      });
+    this.initTranslate();
+
   }
 
   public onScroll(): void {
@@ -104,5 +102,17 @@ export class HistoryComponent implements OnInit {
 
     this.transactionsPageId++;
     this.loadTransactions();
+  }
+
+  private initTranslate(): void {
+    this.priceLabelFn = (tr: ILoyaltyTransaction) => this.translate.get(['TRANSACTION_HISTORY.POINT_EARNED', 'TRANSACTION_HISTORY.POINT_SPENT']).pipe(
+      map(res => {
+        const pointsSpentTxt = res['TRANSACTION_HISTORY.POINT_EARNED'];
+        const pointsEarnedTxt = res['TRANSACTION_HISTORY.POINT_SPENT'];
+        const value = tr.points || 0;
+        const absVal = String(Math.abs(value));
+        return value < 0 ? pointsSpentTxt.replace('{points}', absVal) : pointsEarnedTxt.replace('{points}', absVal);
+      })
+    );
   }
 }

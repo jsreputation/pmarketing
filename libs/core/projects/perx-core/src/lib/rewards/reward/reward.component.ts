@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { IPrice, IReward } from '../models/reward.model';
 
 @Component({
@@ -12,7 +12,7 @@ export class RewardComponent implements OnInit {
   public reward$: Observable<IReward>;
 
   @Input()
-  public displayPriceFn: (rewardPrice: IPrice) => string;
+  public displayPriceFn: (rewardPrice: IPrice) => Observable<string>;
 
   @Input()
   public showRewardIdentifier: boolean = false;
@@ -21,25 +21,32 @@ export class RewardComponent implements OnInit {
   public showExpiry: boolean = true;
 
   @Input()
-  public descriptionLabel: string = 'Description';
+  public descriptionLabel: Observable<string> = of('Description');
 
   @Input()
-  public tncLabel: string = 'Terms and Conditions';
+  public tncLabel: Observable<string> = of('Terms and Conditions');
+
+  @Input()
+  public codeLabel: Observable<string> = of('Code');
+
+  @Input()
+  public expiryLabel: Observable<string> = of('Expiry');
+
 
   public ngOnInit(): void {
     if (!this.displayPriceFn) {
       this.displayPriceFn = (rewardPrice: IPrice) => {
         if (rewardPrice.price && parseFloat(rewardPrice.price) > 0) {
           if (rewardPrice.points && rewardPrice.points > 0) {
-            return `${rewardPrice.currencyCode} ${rewardPrice.price} and ${rewardPrice.points} points`;
+            return of(`${rewardPrice.currencyCode} ${rewardPrice.price} and ${rewardPrice.points} points`);
           }
-          return `${rewardPrice.currencyCode} ${rewardPrice.price}`;
+          return of(`${rewardPrice.currencyCode} ${rewardPrice.price}`);
         }
 
         if (rewardPrice.points && rewardPrice.points > 0) {
-          return `${rewardPrice.points} points`;
+          return of(`${rewardPrice.points} points`);
         }
-        return ''; // is actually 0 or invalid value default
+        return of(''); // is actually 0 or invalid value default
       };
     }
   }

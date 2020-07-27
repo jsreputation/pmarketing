@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { TranslateModule } from '@ngx-translate/core';
 import { RewardComponent } from './reward.component';
 import {
   RewardsModule, RewardsService, IReward
@@ -23,7 +23,8 @@ describe('RewardComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         RewardsModule,
-        MatButtonModule
+        MatButtonModule,
+        TranslateModule.forRoot()
       ],
       declarations: [RewardComponent],
       providers: [

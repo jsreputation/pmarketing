@@ -15,14 +15,14 @@
         <div class="puzzle-details">
           <h1>
             <ng-container>
-              {{titleFn(i, (puzzles | async)?.length)}}
+              {{titleFn(i, (puzzles | async)?.length) | async}}
             </ng-container>
             <span class="badge-warn">
               {{nbPlacedStamps(puzzle)}}/{{puzzle?.displayProperties.totalSlots}}
             </span>
           </h1>
-          <p>{{nbAvailableStamps(puzzle)}} {{puzzleTextFn(puzzle)}}</p>
-          <p class="play-now">Play Now!</p>
+          <p>{{nbAvailableStamps(puzzle)}} {{puzzleTextFn(puzzle) | async}}</p>
+          <p class="play-now">{{playBtnTextFn() | async}}</p>
         </div>
       </div>
       <mat-icon *ngIf="iconDisplay">

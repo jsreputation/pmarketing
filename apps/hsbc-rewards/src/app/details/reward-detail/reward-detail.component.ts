@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RewardsService, IReward, IPrice } from '@perxtech/core';
 import { switchMap, map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-reward-detail',
@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 })
 export class RewardDetailComponent implements OnInit {
   public reward: Observable<IReward>;
-  public displayPriceFn: (price: IPrice) => string;
+  public displayPriceFn: (price: IPrice) => Observable<string>;
 
   public id: number;
   constructor(
@@ -34,17 +34,17 @@ export class RewardDetailComponent implements OnInit {
     this.displayPriceFn = (rewardPrice: IPrice) => {
 
       if (rewardPrice.points && rewardPrice.points > 0 && rewardPrice.price && parseFloat(rewardPrice.price) > 0) {
-        return `Fast Track: ${rewardPrice.points} points + ${rewardPrice.currencyCode} ${Math.floor(parseFloat(rewardPrice.price))}`;
+        return of(`Fast Track: ${rewardPrice.points} points + ${rewardPrice.currencyCode} ${Math.floor(parseFloat(rewardPrice.price))}`);
       }
 
       if (rewardPrice.price && parseFloat(rewardPrice.price) > 0) {
-        return `${rewardPrice.currencyCode} ${Math.floor(parseFloat(rewardPrice.price))}`;
+        return of(`${rewardPrice.currencyCode} ${Math.floor(parseFloat(rewardPrice.price))}`);
       }
 
       if (rewardPrice.points && rewardPrice.points > 0) {
-        return `${rewardPrice.points} points`;
+        return of(`${rewardPrice.points} points`);
       }
-      return ''; // is actually 0 or invalid value default
+      return of(''); // is actually 0 or invalid value default
     };
   }
   public moveToBooking(): void {

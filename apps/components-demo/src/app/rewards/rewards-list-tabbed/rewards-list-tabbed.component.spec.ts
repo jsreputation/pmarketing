@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { TranslateModule } from '@ngx-translate/core';
 import { RewardsListTabbedComponent } from './rewards-list-tabbed.component';
 import { RewardsModule as PerxRewardsModule, RewardsService } from '@perxtech/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -27,7 +27,8 @@ describe('RewardsListTabbedComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         PerxRewardsModule,
-        NoopAnimationsModule
+        NoopAnimationsModule,
+        TranslateModule.forRoot()
       ],
       declarations: [RewardsListTabbedComponent],
       providers: [

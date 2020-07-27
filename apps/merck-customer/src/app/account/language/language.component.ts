@@ -27,7 +27,7 @@ export class LanguageComponent implements OnInit, PageAppearence {
       header: true,
       backButtonEnabled: true,
       bottomSelectedItem: BarSelectedItem.ACCOUNT,
-      pageTitle: 'STATIC_LANGUAGE'
+      pageTitle: 'NAVIGATION.LANGUAGE'
     };
   }
 

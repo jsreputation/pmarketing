@@ -8,7 +8,7 @@
     </td>
   </ng-container>3
   <ng-container matColumnDef="displayName">
-    <th mat-header-cell *matHeaderCellDef> NICKNAME </th>
+    <th mat-header-cell *matHeaderCellDef>{{nickNameTxtFn() | async}}</th>
     <td mat-cell *matCellDef="let user"> {{user.displayName || user.id}} </td>
   </ng-container>
   <ng-container matColumnDef="value">

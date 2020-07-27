@@ -44,6 +44,7 @@ export class AccountComponent implements OnInit {
   public preAuth: boolean = false;
   public theme: Observable<ITheme>;
   public appConfig: Observable<IConfig<void>>;
+  public memberFn: (membershipTierName: string) => Observable<string>;
 
   constructor(
     public config: Config,
@@ -75,6 +76,9 @@ export class AccountComponent implements OnInit {
         take(1)
       );
     this.loyalty$ = this.loyaltyService.getLoyalty();
+    this.memberFn = (membershipTierName: string) => this.translate.get([membershipTierName, 'HOME.MEMBER']).pipe(
+      map(res => `${res[membershipTierName]}${res['HOME.MEMBER']}`)
+    );
   }
 
   public logout(): void {

@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { TranslateModule } from '@ngx-translate/core';
 import { TransactionHistoryComponent } from './transaction-history.component';
 import { TransactionHistoryPipe } from './transaction-history.pipe';
 import { MatIconModule, MatToolbarModule, MatTabsModule } from '@angular/material';
@@ -9,6 +9,7 @@ import { of } from 'rxjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { mockLoyalty, mockTransactions, mockTransactionsHistory } from './loyalty-mock';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+
 
 describe('TransactionHistoryComponent', () => {
   let component: TransactionHistoryComponent;
@@ -26,7 +27,8 @@ describe('TransactionHistoryComponent', () => {
         MatTabsModule,
         LoyaltyModule,
         BrowserAnimationsModule,
-        InfiniteScrollModule
+        InfiniteScrollModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         {

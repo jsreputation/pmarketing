@@ -24,8 +24,10 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   public reward$: Observable<IReward>;
   public displayPriceFn: (price: IPrice) => string;
   private destroy$: Subject<void> = new Subject();
-  public descriptionLabel: string = 'Description';
-  public tncLabel: string = 'Terms and Conditions';
+  public descriptionLabel: Observable<string>;
+  public tncLabel: Observable<string>;
+  public codeLabel: Observable<string>;
+  public expiryLabel: Observable<string>;
   public buttonLabel: string = 'Redeem';
   public appConfig: IConfig<void>;
   public rewardData: IReward;
@@ -35,10 +37,10 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   public maxRewardCost?: number;
   private initTranslate(): void {
     this.translate.get('REWARD.GET_VOUCHER').subscribe((text) => this.buttonLabel = text);
-    this.translate.get('REWARD.DESCRIPTION')
-      .subscribe((desc: string) => this.descriptionLabel = desc);
-    this.translate.get('REWARD.TNC')
-      .subscribe((tnc: string) => this.tncLabel = tnc);
+    this.descriptionLabel = this.translate.get('REWARD.DESCRIPTION');
+    this.tncLabel = this.translate.get('REWARD.TNC');
+    this.codeLabel = this.translate.get('REWARD.CODE');
+    this.expiryLabel = this.translate.get('REWARD.EXPIRY');
   }
 
   constructor(

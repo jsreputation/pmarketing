@@ -56,7 +56,7 @@ describe('RewardDetailComponent', () => {
       imports: [
         MatDialogModule,
         RewardsModule,
-        RouterTestingModule
+        RouterTestingModule,
       ],
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub },

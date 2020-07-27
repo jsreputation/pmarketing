@@ -36,7 +36,7 @@ export class WalletComponent implements OnInit, OnDestroy {
   public vouchers$: Observable<Voucher[]>;
   public filter: string[];
   public rewardsHeadline: string;
-  public expiryLabelFn: ((v: Voucher) => string) | undefined;
+  public expiryLabelFn: ((v: Voucher) => Observable<string>) | undefined;
   public newsFeedItems: Observable<FeedItem[] | undefined>;
 
   public currentPage: number = 0;
@@ -61,7 +61,7 @@ export class WalletComponent implements OnInit, OnDestroy {
       .subscribe((text: string) => {
         this.expiryLabelFn = (v: Voucher) => {
           const dateStr = this.datePipe.transform(v.expiry, 'shortDate');
-          return text.replace('{{date}}', dateStr || '~');
+          return of(text.replace('{{date}}', dateStr || '~'));
         };
       });
   }

@@ -4,22 +4,22 @@
       <mat-icon>close</mat-icon>
     </button>
   </div>
-  <div class="title">Filter</div>
-  <div class="clear" (click)="onClearFilter()">Clear all</div>
+  <div class="title">{{'PHARMACY.FILTER' | translate}}</div>
+  <div class="clear" (click)="onClearFilter()">{{'PHARMACY.CLEAR_ALL' | translate}}</div>
 </mat-toolbar>
 
 <mat-dialog-content>
-  <p class="label">Categories</p>
+  <p class="label">{{'PHARMACY.CATEGORIES' | translate}}</p>
   <mat-checkbox
     *ngFor="let tag of tags; let i = index;"
     value="{{tag.name}}"
     (change)="onRadioSelect($event, i)"
     [checked]="tag.isSelected"
   >
-  {{tag.name}}
+  {{tag.name | translate}}
   </mat-checkbox>
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button mat-button (click)="onApplyFilter()">Apply</button>
+  <button mat-button (click)="onApplyFilter()">{{'PHARMACY.APPLY' | translate}}</button>
 </mat-dialog-actions>

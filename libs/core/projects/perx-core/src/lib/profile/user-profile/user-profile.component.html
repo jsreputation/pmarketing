@@ -2,7 +2,7 @@
     <perx-core-micro-profile [profile]="profile"></perx-core-micro-profile>
     <div class="profile-item" *ngIf="profile.customProperties && profile.customProperties['code']">
         <div class="profile-item_label">
-            Player Code
+            {{playerCodeFn() | async}}
         </div>
         <div class="profile-item_detail">
             {{profile.customProperties['code']}}
@@ -10,7 +10,7 @@
     </div>
     <div class="profile-item" *ngIf="profile.customProperties && profile.customProperties['last_4']">
         <div class="profile-item_label">
-            Card Last 4 Digit
+            {{last4DigitFn() | async}}
         </div>
         <div class="profile-item_detail">
             {{profile.customProperties['last_4']}}

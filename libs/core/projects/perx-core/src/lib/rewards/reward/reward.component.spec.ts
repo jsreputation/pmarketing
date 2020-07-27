@@ -27,7 +27,7 @@ describe('RewardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RewardComponent]
+      declarations: [RewardComponent],
     })
       .compileComponents();
   }));

@@ -5,7 +5,7 @@
     <h1>{{title}}</h1>
     <h2 *ngIf="subTitle">{{subTitle}}</h2>
     <mat-card class="survey-card">
-      <perx-core-results [results]="results">
+      <perx-core-results [results]="results" [timeConsumed]="timeConsumed">
       </perx-core-results>
     </mat-card>
   </div>

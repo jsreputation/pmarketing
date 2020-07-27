@@ -52,7 +52,9 @@ import {
   RssFeedsPages,
   SettingsService,
   ThemesService,
-  IFlags
+  ILoyalty,
+  IFlags,
+  IPrice
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
@@ -60,6 +62,7 @@ import {
   MatDialog,
   MatTabChangeEvent
 } from '@angular/material';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'perx-blackcomb-home',
@@ -79,7 +82,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   public stampCampaigns$: Observable<ICampaign[]>;
   public tabs$: BehaviorSubject<ITabConfigExtended[]> = new BehaviorSubject<ITabConfigExtended[]>([]);
   public staticTab: ITabConfigExtended[];
-  public titleFn: (profile: IProfile) => string;
+  public displayPriceFn: (rewardPrice: IPrice) => Observable<string>;
+  public subTitleFn: (loyalty: ILoyalty) => Observable<string>;
+  public titleFn: (profile: IProfile) => Observable<string>;
+  public summaryExpiringFn: (loyalty: ILoyalty) => Observable<string>;
+  public pointToFn: () => Observable<string>;
+  public memberFn: (membershipTierName: string) => Observable<string>;
+  public membershipExpiryFn: (loyalty: ILoyalty) => Observable<string>;
   public showGames: boolean = false;
   public showCampaigns: boolean = false;
   private firstComefirstServeCampaign: ICampaign;
@@ -91,20 +100,21 @@ export class HomeComponent implements OnInit, OnDestroy {
   public catalogsEnded: boolean = false;
 
   public constructor(
-    public rewardsService: RewardsService,
-    public gamesService: IGameService,
-    public router: Router,
-    public titleService: Title,
-    public translate: TranslateService,
-    public themesService: ThemesService,
-    public configService: ConfigService,
-    public authService: AuthenticationService,
-    public campaignService: ICampaignService,
-    public instantOutcomeService: InstantOutcomeService,
-    public dialog: MatDialog,
-    public feedService: FeedReaderService,
-    public settingsService: SettingsService,
-    public profileService: ProfileService
+    protected rewardsService: RewardsService,
+    protected gamesService: IGameService,
+    protected router: Router,
+    protected titleService: Title,
+    protected translate: TranslateService,
+    protected themesService: ThemesService,
+    protected configService: ConfigService,
+    protected authService: AuthenticationService,
+    protected campaignService: ICampaignService,
+    protected instantOutcomeService: InstantOutcomeService,
+    protected dialog: MatDialog,
+    protected feedService: FeedReaderService,
+    protected settingsService: SettingsService,
+    protected profileService: ProfileService,
+    protected datePipe: DatePipe
   ) {
   }
 
@@ -119,21 +129,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             return EMPTY;
           })
       ).subscribe();
-    this.translate.get('HOME.HELLO').subscribe(
-      (msg: string) => this.titleFn = (profile) => {
-        let returnString = msg;
-        if (profile &&
-          profile.firstName && profile.firstName !== '' &&
-          profile.lastName && profile.lastName !== '') {
-          returnString = `${returnString}, ${profile.firstName} ${profile.lastName}`;
-        } else if (profile && profile.firstName && profile.firstName !== '') {
-          returnString = `${returnString}, ${profile.firstName}`;
-        } else if (profile && profile.lastName && profile.lastName !== '') {
-          returnString = `${returnString}, ${profile.lastName}`;
-        }
-        return returnString;
-      }
-    );
+    this.initTranslate();
     this.rewards$ = this.rewardsService.getAllRewards(['featured']);
     this.getTabbedList();
 
@@ -350,6 +346,56 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.catalogsEnded = true;
         }
       });
+  }
+
+  private initTranslate(): void {
+    this.subTitleFn = () => this.translate.get('HOME.YOU_HAVE');
+    this.titleFn = (profile: IProfile) => this.translate.get('HOME.HELLO').pipe(
+      map(msg => {
+        let returnString = msg;
+        if (profile &&
+          profile.firstName && profile.firstName !== '' &&
+          profile.lastName && profile.lastName !== '') {
+          returnString = `${returnString}, ${profile.firstName} ${profile.lastName}`;
+        } else if (profile && profile.firstName && profile.firstName !== '') {
+          returnString = `${returnString}, ${profile.firstName}`;
+        } else if (profile && profile.lastName && profile.lastName !== '') {
+          returnString = `${returnString}, ${profile.lastName}`;
+        }
+        return returnString;
+      })
+    );
+    this.summaryExpiringFn = (loyalty: ILoyalty) =>
+      this.translate.get('HOME.POINTS_EXPITING').pipe(
+        map(res => loyalty && loyalty.expiringPoints && loyalty.expiringPoints.length && loyalty.expiringPoints[0].points &&
+          loyalty.expiringPoints[0].points !== 0 ?
+          res
+            .replace('{{points}}', (loyalty.expiringPoints[0].points ? loyalty.expiringPoints[0].points : 0).toString())
+            .replace('{{date}}', loyalty.expiringPoints[0].expireDate ?
+              this.datePipe.transform(loyalty.expiringPoints[0].expireDate, 'd MMM y') : '')
+          : '')
+      );
+    this.pointToFn = () => this.translate.get('HOME.POINT_TO');
+    this.memberFn = (membershipTierName: string) => this.translate.get([membershipTierName, 'HOME.MEMBER']).pipe(
+      map(res => `${res[membershipTierName]}${res['HOME.MEMBER']}`)
+    );
+    this.membershipExpiryFn = (loyalty: ILoyalty) => loyalty && loyalty.membershipExpiry ?
+      this.translate.get('HOME.ACCOUNT_EXPIRE').pipe(
+        map(res => `${res}: ${this.datePipe.transform(loyalty.membershipExpiry, 'mediumDate')}`)
+      ) : of('');
+
+    this.displayPriceFn = (rewardPrice: IPrice) => this.translate.get('REWARD.POINT').pipe(
+      mergeMap(text => {
+        if (rewardPrice.price && parseFloat(rewardPrice.price) > 0) {
+          return of(`${rewardPrice.currencyCode} ${Math.floor(parseFloat(rewardPrice.price))}`);
+        }
+
+        if (rewardPrice.points && rewardPrice.points > 0) {
+          return of(`${rewardPrice.points}${text}`);
+        }
+        return of(''); // is actually 0 or invalid value default
+      })
+    );
   }
 
 }

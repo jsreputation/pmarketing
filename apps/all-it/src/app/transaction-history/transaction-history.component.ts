@@ -27,11 +27,11 @@ import {
 })
 export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader */ {
   public transactions: Observable<ILoyaltyTransactionHistory[] | ITransaction[]>;
-  public purchasesTitleFn: (tr: ILoyaltyTransactionHistory | ITransaction) => string;
-  public redemptionsTitleFn: (tr: ILoyaltyTransactionHistory) => string;
-  public descFn: (tr: ILoyaltyTransactionHistory | ITransaction) => string;
-  public subTitleFn: (tr: ILoyaltyTransactionHistory | ITransaction) => string;
-  public priceLabelFn: (tr: ILoyaltyTransactionHistory | ITransaction) => string;
+  public purchasesTitleFn: (tr: ILoyaltyTransactionHistory | ITransaction) => Observable<string>;
+  public redemptionsTitleFn: (tr: ILoyaltyTransactionHistory) => Observable<string>;
+  public descFn: (tr: ILoyaltyTransactionHistory | ITransaction) => Observable<string>;
+  public subTitleFn: (tr: ILoyaltyTransactionHistory | ITransaction) => Observable<string>;
+  public priceLabelFn: (tr: ILoyaltyTransactionHistory | ITransaction) => Observable<string>;
 
   private pageNumber: number = 2;
   private pageSize: number = 25;
@@ -62,25 +62,25 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
       })
     ).subscribe(() => {
       if (this.isPremiumMember) {
-        this.priceLabelFn = (tr: ITransaction) => `${tr.currency ? tr.currency : 'MYR'}${tr.amount}`;
+        this.priceLabelFn = (tr: ITransaction) => of(`${tr.currency ? tr.currency : 'MYR'}${tr.amount}`);
         this.descFn = (tr: ITransaction) => {
           let text = '';
           const properties = oc(tr).properties();
           if (properties) {
             text = properties.invoiceNumber ? `Invoice: ${properties.invoiceNumber}` : '';
           }
-          return text;
+          return of(text);
         };
-        this.purchasesTitleFn = (tr: ITransaction) => `${tr.properties.productName}`;
+        this.purchasesTitleFn = (tr: ITransaction) => of(`${tr.properties.productName}`);
       } else {
-        this.priceLabelFn = (tr: ILoyaltyTransactionHistory) => `${this.transactionPipe.transform(tr.pointsAmount || 0)}`;
+        this.priceLabelFn = (tr: ILoyaltyTransactionHistory) => of(`${this.transactionPipe.transform(tr.pointsAmount || 0)}`);
         this.descFn = (tr: ILoyaltyTransactionHistory) => {
           let text = '';
           const properties = oc(tr).transactionDetails.data.properties();
           if (properties) {
             text = properties.invoiceNumber ? `Invoice: ${properties.invoiceNumber}` : '';
           }
-          return text;
+          return of(text);
         };
         this.purchasesTitleFn = (tr: ILoyaltyTransactionHistory) => {
           let text = '';
@@ -88,16 +88,16 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
           if (properties) {
             text = properties.productName ? properties.productName : '';
           }
-          return text;
+          return of(text);
         };
       }
     });
 
     this.redemptionsTitleFn = (tr: ILoyaltyTransactionHistory) =>
-      `${(tr.transactionDetails && tr.transactionDetails.data) ?
-        (tr.transactionDetails.data as IRewardTransactionHistory).rewardName : ''}`;
+      of(`${(tr.transactionDetails && tr.transactionDetails.data) ?
+        (tr.transactionDetails.data as IRewardTransactionHistory).rewardName : ''}`);
 
-    this.subTitleFn = (tr: ILoyaltyTransactionHistory | ITransaction) => `${this.datePipe.transform(tr.transactedAt, 'dd/MM/yyyy')}`;
+    this.subTitleFn = (tr: ILoyaltyTransactionHistory | ITransaction) => of(`${this.datePipe.transform(tr.transactedAt, 'dd/MM/yyyy')}`);
   }
 
   public onScroll(): void {

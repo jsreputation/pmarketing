@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IVoucherService, Voucher, IConfig, ConfigService } from '@perxtech/core';
 import { DatePipe } from '@angular/common';
+import { of, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-voucher',
@@ -15,7 +16,7 @@ export class VoucherComponent implements OnInit {
   public voucher: Voucher;
   public btnTxt: string = 'View Code';
   public sourceType: string;
-  public expiryFn: (voucher: Voucher) => string;
+  public expiryFn: (voucher: Voucher) => Observable<string>;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,7 +29,7 @@ export class VoucherComponent implements OnInit {
   public ngOnInit(): void {
     this.firstTime = this.route.snapshot.paramMap.get('win') === 'true';
     this.id = this.route.snapshot.params.id;
-    this.expiryFn = (v: Voucher) => v.expiry ? `Expiry: ${this.datePipe.transform(v.expiry, 'mediumDate')}` : '';
+    this.expiryFn = (v: Voucher) => of(v.expiry ? `Expiry: ${this.datePipe.transform(v.expiry, 'mediumDate')}` : '');
 
     this.configService.readAppConfig().subscribe(
       (config: IConfig<void>) => {

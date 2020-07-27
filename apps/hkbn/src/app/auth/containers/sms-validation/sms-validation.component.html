@@ -8,13 +8,13 @@
 </div>
 <div class="container">
   <div class="validation-description">
-    <p>{{"THANKS_FOR_REGISTER" | translate}}</p>
+    <p>{{"SIGN_UP_PAGE.THANKS_FOR_REGISTER" | translate}}</p>
     <p>
-      <ng-container>{{"OTP_SENT" | translate}}</ng-container>
+      <ng-container>{{"SIGN_UP_PAGE.OTP_SENT" | translate}}</ng-container>
       (******78)
-      <ng-container>{{"CHECK_SMS" | translate}}</ng-container>
+      <ng-container>{{"SIGN_UP_PAGE.CHECK_SMS" | translate}}</ng-container>
     </p>
   </div>
   <perx-core-pin-input [length]="6" (full)="validate($event)"></perx-core-pin-input>
-  <p class="resend-sms" (click)="resendSms()">{{"RESEND_SMS" | translate}}</p>
+  <p class="resend-sms" (click)="resendSms()">{{"SIGN_UP_PAGE.RESEND_SMS" | translate}}</p>
 </div>
