@@ -163,5 +163,6 @@
     "POINT_SPENT": "使用積分{points}",
     "LOGIN_SESSION_EXPIRED": "登錄時間超時",
     "PURCHASES_TXT": "購買記錄",
-    "REWARDS_TXT": "獎賞"
+    "REWARDS_TXT": "獎賞",
+    "UPDATED_PROFILE_INFORMATION_TXT": "更新的個人資料信息"
 }
