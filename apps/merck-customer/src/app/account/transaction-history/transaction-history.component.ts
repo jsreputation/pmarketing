@@ -31,6 +31,7 @@ export class TransactionHistoryComponent implements OnInit, PageAppearence {
   private complitePagination: boolean = false;
   public purchasesTxt: string;
   public rewardsTxt: string;
+  public triggerTxt: string;
   // @ts-ignore
   private labelIndex: number = 0;
   constructor(
@@ -49,12 +50,13 @@ export class TransactionHistoryComponent implements OnInit, PageAppearence {
       of(`${tr.transactionDetails && tr.transactionDetails.data ? (tr.transactionDetails.data as IPurchaseTransactionHistory).pharmacyName : ''}`);
 
     this.redemptionsTitleFn = (tr: ILoyaltyTransactionHistory) =>
-      of(`${tr.transactionDetails && (tr.transactionDetails.data as IRewardTransactionHistory).rewardName}`);
+      of(`${tr.transactionDetails && tr.transactionDetails.data && (tr.transactionDetails.data as IRewardTransactionHistory).rewardName ? (tr.transactionDetails.data as IRewardTransactionHistory).rewardName : this.triggerTxt}`);
 
     this.subTitleFn = (tr: ILoyaltyTransactionHistory) => of(`${this.datePipe.transform(tr.transactedAt, 'dd/MM/yyyy')}`);
-    this.translate.get(['PURCHASES_TXT', 'REWARDS_TXT']).subscribe((res: any) => {
+    this.translate.get(['PURCHASES_TXT', 'REWARDS_TXT', 'UPDATED_PROFILE_INFORMATION_TXT']).subscribe((res: any) => {
       this.purchasesTxt = res.PURCHASES_TXT;
       this.rewardsTxt = res.REWARDS_TXT;
+      this.triggerTxt = res.UPDATED_PROFILE_INFORMATION_TXT;
     });
 
     this.loyaltyService.getTransactionHistory(this.pageNumber, this.pageSize).subscribe(

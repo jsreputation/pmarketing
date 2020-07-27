@@ -17,7 +17,10 @@ export class TransactionHistoryPipe implements PipeTransform {
       map((transactions: ILoyaltyTransactionHistory[]) => transactions.filter(
         (transaction: ILoyaltyTransactionHistory) => transaction.transactionDetails ? isPurchase ?
           (transaction.transactionDetails.type === TransactionDetailType.transaction) :
-          (transaction.transactionDetails.type === TransactionDetailType.reward) : null))
+          ((transaction.transactionDetails.type === TransactionDetailType.reward) ||
+          // transaction Trigger has no type field
+            transaction.name === 'Trigger'
+          ) : null))
     );
   }
 }
