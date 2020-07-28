@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { IGame, ISpin } from '@perxtech/core';
 
 @Component({
@@ -6,7 +6,7 @@ import { IGame, ISpin } from '@perxtech/core';
   templateUrl: './spin.component.html',
   styleUrls: ['./spin.component.scss']
 })
-export class SpinComponent {
+export class SpinComponent implements OnInit {
   @Input() public willWin: boolean = false;
 
   @Input() public game: IGame;
@@ -21,8 +21,12 @@ export class SpinComponent {
   public subheaderStyle: { [key: string]: string } = {};
 
   public ngOnInit(): void {
-    if(this.game.texts.headerColour) this.headerStyle.color = this.game.texts.headerColour;
-    if(this.game.texts.subheaderColour) this.subheaderStyle.color = this.game.texts.subheaderColour;
+    if (this.game.texts.headerColour) {
+      this.headerStyle.color = this.game.texts.headerColour;
+    }
+    if (this.game.texts.subheaderColour) {
+      this.subheaderStyle.color = this.game.texts.subheaderColour;
+    }
   }
 
   public get config(): ISpin {

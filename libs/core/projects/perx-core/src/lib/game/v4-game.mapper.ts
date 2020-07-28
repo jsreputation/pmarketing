@@ -13,8 +13,12 @@ export abstract class GameV4Mapper {
     if (game.display_properties.header) {
       texts.title = game.display_properties.header.value.title;
       texts.subTitle = game.display_properties.header.value.description;
-      if(game.display_properties.header.header_colour) texts.headerColour = game.display_properties.header.header_colour;
-      if(game.display_properties.header.subheader_colour) texts.subheaderColour = game.display_properties.header.subheader_colour;
+      if (game.display_properties.header.header_colour) {
+        texts.headerColour = game.display_properties.header.header_colour;
+      }
+      if (game.display_properties.header.subheader_colour) {
+        texts.subheaderColour = game.display_properties.header.subheader_colour;
+      }
     }
     if (game.display_properties.play_button_text) {
       texts.button = game.display_properties.play_button_text;
