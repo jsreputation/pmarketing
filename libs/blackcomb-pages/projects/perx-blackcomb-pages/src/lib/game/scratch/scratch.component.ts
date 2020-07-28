@@ -24,8 +24,13 @@ export class ScratchComponent implements OnInit {
   @Output() public broken: EventEmitter<void> = new EventEmitter();
   @Output() public loaded: EventEmitter<boolean> = new EventEmitter();
 
+  public headerStyle: { [key: string]: string } = {};
+  public subheaderStyle: { [key: string]: string } = {};
+
   public ngOnInit(): void {
     this.loaded.emit();
+    console.log('game', this.game);
+    //if(this.game.texts.headerColour) this.headerStyle.color = this.game.texts.headerColour
   }
 
   public isEnabled: boolean = false;
