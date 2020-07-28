@@ -32,7 +32,7 @@ const displayProperties = `"displayProperties": {
           {
               "key": "contact-us",
               "title": "Contact Us",
-              "content_url": "${process.env.CONTACTUSURL ? process.env.CONTACTUSURL : ''}"
+              "content_url": "${process.env.CONTACTUSURL ? process.env.CONTACTUSURL : '/contact-us'}"
           },
           {
               "key": "tnc",

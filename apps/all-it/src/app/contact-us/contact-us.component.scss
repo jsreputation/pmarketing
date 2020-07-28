@@ -1,0 +1,18 @@
+.static-page-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 0 1.6rem;
+
+  .address-table {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    .row {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+}
