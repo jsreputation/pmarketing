@@ -30,7 +30,8 @@ export class ScratchComponent implements OnInit {
   public ngOnInit(): void {
     this.loaded.emit();
     console.log('game', this.game);
-    //if(this.game.texts.headerColour) this.headerStyle.color = this.game.texts.headerColour
+    if(this.game.texts.headerColour) this.headerStyle.color = this.game.texts.headerColour;
+    if(this.game.texts.subheaderColour) this.subheaderStyle.color = this.game.texts.subheaderColour;
   }
 
   public isEnabled: boolean = false;

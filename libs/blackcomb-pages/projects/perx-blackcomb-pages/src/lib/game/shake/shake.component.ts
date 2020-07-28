@@ -24,4 +24,12 @@ export class ShakeComponent {
   public gameCompleted(): void {
     this.broken.emit();
   }
+
+  public headerStyle: { [key: string]: string } = {};
+  public subheaderStyle: { [key: string]: string } = {};
+  
+  public ngOnInit(): void {
+    if(this.game.texts.headerColour) this.headerStyle.color = this.game.texts.headerColour;
+    if(this.game.texts.subheaderColour) this.subheaderStyle.color = this.game.texts.subheaderColour;
+  }
 }

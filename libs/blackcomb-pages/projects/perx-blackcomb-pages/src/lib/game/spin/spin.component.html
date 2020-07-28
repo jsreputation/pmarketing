@@ -1,7 +1,7 @@
 <div class="main-puzzle-container">
     <div class="game-header">
-      <h1>{{game.texts.title}}</h1>
-      <h3>{{game.texts.subTitle}}</h3>
+      <h1 [ngStyle]="headerStyle">{{game.texts.title}}</h1>
+      <h3 [ngStyle]="subheaderStyle">{{game.texts.subTitle}}</h3>
     </div>
     <div class="game-wrapper">
       <div class="spin-wrapper">
