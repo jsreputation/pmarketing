@@ -240,7 +240,8 @@
     "ACCOUNT_EXPIRE": "賬戶過期於",
     "POINT_TO": "升級到{nextTierName}會員所需積分",
     "ALL": "所有",
-    "CLOSE": "完成"
+    "CLOSE": "完成",
+    "REWARDS": "獎勵"
   },
   "NEWS_FEED": {
     "BTN_1": "開始遊戲",
