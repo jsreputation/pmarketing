@@ -168,6 +168,10 @@
     "ERROR_TXT": "Incorrect OTP",
     "ERROR_LINK": "Resend OTP",
     "CTA_TXT": "Next",
+    "RESEND_TXT": "Verification code has been resent",
+    "POPUP_TITLE": "Password Changed!",
+    "POPUP_TXT": "You can log in with new password",
+    "POPUP_BTN_TXT": "Back to Home",
     "CTA_TXT_SUCCESS": "Account successfully created"
   },
   "LOGIN_PAGE": {
