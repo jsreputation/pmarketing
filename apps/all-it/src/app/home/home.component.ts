@@ -92,24 +92,6 @@ export class HomeComponent extends BCHomeComponent implements OnInit {
           })
       ).subscribe();
 
-    this.titleFn = (profile) => this.translate.get('HOME.HELLO').pipe(
-      switchMap(
-        (msg: string) => {
-          let returnString = msg;
-          if (profile &&
-            profile.firstName && profile.firstName !== '' &&
-            profile.lastName && profile.lastName !== '') {
-            returnString = `${returnString}, ${profile.firstName} ${profile.lastName}`;
-          } else if (profile && profile.firstName && profile.firstName !== '') {
-            returnString = `${returnString}, ${profile.firstName}`;
-          } else if (profile && profile.lastName && profile.lastName !== '') {
-            returnString = `${returnString}, ${profile.lastName}`;
-          }
-          return returnString;
-        }
-      )
-    );
-
     this.rewards$ = this.rewardsService.getAllRewards(['featured']);
     this.getTabbedList();
 

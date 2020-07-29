@@ -48,7 +48,6 @@ export class LoyaltySummaryComponent implements OnInit {
   public loyaltyProgramExists: boolean = true;
   public pointTo: Observable<string>;
   private nextTierName: string;
-  private accountExpire: string;
 
   constructor(
     private profileService: ProfileService,
@@ -93,7 +92,7 @@ export class LoyaltySummaryComponent implements OnInit {
 
     if (!this.membershipExpiryFn) {
       this.membershipExpiryFn = (loyalty: ILoyalty): Observable<string> => loyalty && loyalty.membershipExpiry || loyalty.endDate ?
-        of(`${this.accountExpire}: ${this.datePipe.transform(loyalty.membershipExpiry || loyalty.endDate, 'mediumDate')}`) :
+        of(`Account Expiry: ${this.datePipe.transform(loyalty.membershipExpiry || loyalty.endDate, 'mediumDate')}`) :
         of('');
     }
 
