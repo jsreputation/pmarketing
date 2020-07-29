@@ -37,7 +37,8 @@ import {
 } from './analytics.service';
 import {
   EMPTY,
-  timer
+  timer,
+  throwError
 } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -156,7 +157,7 @@ export class AppComponent implements OnInit {
         .pipe(
           switchMap(() => this.settingsService.isGatekeeperOpen().pipe(
             catchError((err: string) => {
-              console.error(err);
+              throwError(err);
               this.holdingGateOpened = false;
               return EMPTY;
             })
