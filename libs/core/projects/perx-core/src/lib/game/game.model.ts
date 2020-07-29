@@ -33,6 +33,8 @@ export interface IGame {
     title?: string;
     subTitle?: string;
     button?: string;
+    headerColour?: string;
+    subheaderColour?: string;
   };
   results: {
     outcome?: IGameOutcome;
