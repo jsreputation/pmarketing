@@ -8,7 +8,8 @@ import {
 import {
   iif,
   Observable,
-  of
+  of,
+  throwError
 } from 'rxjs';
 import {
   map,
@@ -190,14 +191,22 @@ export class V4SettingsService extends SettingsService {
   }
 
   public isGatekeeperOpen(): Observable<boolean> {
+    let gateKeeperURL = '';
     // this will return a empty body and angular does not like it.
     const perxGatekeeper = this.http.post<IV4GatekeeperResponse>(`${this.hostName}/v4/gatekeep_token`, null);
     // currently only implemented for prod todo: auth and staging/prod versions
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this.getRemoteFlagsSettings().pipe(
+      switchMap((flags: IFlags) => {
+        if (!flags.gatekeeperUrl) {
+          return throwError('Gate keeper URL is empty');
+        }
+        gateKeeperURL = flags.gatekeeperUrl;
+        return of(flags);
+      }),
       switchMap((flags: IFlags) =>
         iif(() => flags.gatekeeperApi === GatekeeperApis.AWS,
-          this.httpBackend.get<IV4GatekeeperResponse>(flags.gatekeeperUrl ? flags.gatekeeperUrl : '', { headers }),
+          this.httpBackend.get<IV4GatekeeperResponse>(gateKeeperURL, { headers }),
           perxGatekeeper
         )
       ),
