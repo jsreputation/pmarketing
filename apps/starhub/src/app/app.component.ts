@@ -158,6 +158,7 @@ export class AppComponent implements OnInit {
           switchMap(() => this.settingsService.isGatekeeperOpen().pipe(
             catchError((err: string) => {
               throwError(err);
+              console.error(err);
               this.holdingGateOpened = false;
               return EMPTY;
             })
