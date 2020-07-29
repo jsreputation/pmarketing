@@ -200,9 +200,8 @@ export class V4SettingsService extends SettingsService {
       switchMap((flags: IFlags) => {
         if (!flags.gatekeeperUrl) {
           return throwError('Gate keeper URL is empty');
-        } else {
-          gateKeeperURL = flags.gatekeeperUrl;
         }
+        gateKeeperURL = flags.gatekeeperUrl;
         return of(flags);
       }),
       switchMap((flags: IFlags) =>
