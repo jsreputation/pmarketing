@@ -49,15 +49,6 @@
     <perx-blackcomb-pages-campaigns-collection [campaigns]="stampCampaigns$" (selected)="goToCampaignPage($event)">
     </perx-blackcomb-pages-campaigns-collection>
   </div>
-  <div class="catalogs" *ngIf="appConfig.showCatalogOnHomePage">
-    <div *ngIf="(catalogs$ | async)?.length > 0" class="title" translate>HOME.CATALOG</div>
-    <perx-blackcomb-pages-catalogs
-      [catalogs]="catalogs$"
-      [catalogsEnded]="catalogsEnded"
-      (tapped)="catalogSelected($event)"
-      (loadCatalogs)="loadCatalogs($event)"
-    ></perx-blackcomb-pages-catalogs>
-  </div>
   <!-- Game campaigns-->
   <div class="campaigns">
     <div *ngIf="showGames" class="title" translate>HOME.GAMES</div>
@@ -73,6 +64,15 @@
       [withRewardsCounter]="appConfig.showCampaignRewardsCounterOnHomepage"
       (selected)="goToCampaignPage($event)">
     </perx-blackcomb-pages-campaigns-collection>
+  </div>
+  <div class="catalogs" *ngIf="appConfig.showCatalogOnHomePage">
+    <div *ngIf="(catalogs$ | async)?.length > 0" class="title" translate>HOME.CATALOG</div>
+    <perx-blackcomb-pages-catalogs
+      [catalogs]="catalogs$"
+      [catalogsEnded]="catalogsEnded"
+      (tapped)="catalogSelected($event)"
+      (loadCatalogs)="loadCatalogs($event)"
+    ></perx-blackcomb-pages-catalogs>
   </div>
   <div class="rewards-collection" *ngIf="appConfig.showRewardsOnHomepage">
     <div class="title" translate>HOME.REWARDS</div>
