@@ -37,6 +37,12 @@ export class VoucherDetailComponent implements OnInit, OnDestroy {
           this.voucherId = Number.parseInt(id, 10);
           return this.vouchersService.get(this.voucherId);
         }),
+        map((voucher: Voucher) => {
+          const tncWithOlPadding = voucher && voucher.reward && voucher.reward.termsAndConditions.replace(/(ol>)/, 'ol' +
+            ' style="padding-inline-start:' +
+            ' 1em;">');
+          return {...voucher, reward: {...voucher.reward, termsAndConditions: tncWithOlPadding }} as Voucher;
+        }),
         takeUntil(this.destroy$)
       );
 
