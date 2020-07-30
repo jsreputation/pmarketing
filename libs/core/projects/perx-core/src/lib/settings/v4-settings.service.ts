@@ -193,7 +193,7 @@ export class V4SettingsService extends SettingsService {
   public isGatekeeperOpen(): Observable<boolean> {
     let gateKeeperURL = '';
     // this will return a empty body and angular does not like it.
-    const perxGatekeeper = this.http.post<IV4GatekeeperResponse>(`${this.hostName}/v4/gatekeep_token`, null);
+    const perxGatekeeper = this.http.get<IV4GatekeeperResponse>(`${this.hostName}/v4/gatekeep_token`);
     // currently only implemented for prod todo: auth and staging/prod versions
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this.getRemoteFlagsSettings().pipe(
