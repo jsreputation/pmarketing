@@ -1,15 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 // @import ~@angular/material/theming;
-@import "./custom-theme.scss";
+@import './custom-theme.scss';
 
 :root {
   --font: Roboto;
-  --logo: "assets/header_logo.png";
-  --title: "all-it";
-  --accent: #0088D1;
+  --logo: 'assets/header_logo.png';
+  --title: 'all-it';
+  --accent: #0088d1;
   --primary: #ffffff;
   --button_text_color: #ffffff;
-  --button_background_color: #0F69AF;
+  --button_background_color: #0f69af;
   --header_color: #000000;
   --background: #ffffff;
   --font_color: #212121;
@@ -20,6 +20,12 @@ html {
   font-family: var(--font);
   font-style: normal;
   background-color: #fafafa;
+}
+
+@media only screen and (max-height: 560px) {
+  html {
+    font-size: 50%;
+  }
 }
 
 html,
