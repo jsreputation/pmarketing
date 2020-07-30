@@ -80,6 +80,7 @@ import { SignIn2Module } from './sign-in-2/sign-in-2.module';
 import { ProfileModule as BCPProfileModule } from './profile/profile.module';
 import { FindLocationModule } from './find-location/find-location.module';
 import { MatSelectInfiniteScrollModule } from 'ng-mat-select-infinite-scroll';
+import { NearmeComponent } from './nearme/nearme.component';
 
 const comps: any[] = [
   RewardComponent,
@@ -91,7 +92,8 @@ const comps: any[] = [
   RewardsBookingComponent,
   LuckyDrawDetailsComponent,
   ReferralComponent,
-  LeaderboardPageComponent
+  LeaderboardPageComponent,
+  NearmeComponent
 ];
 
 @NgModule({
@@ -167,7 +169,7 @@ const comps: any[] = [
     ...comps,
   ],
   declarations: [
-    ...comps
+    ...comps,
   ],
   providers: [
     SecondsToStringPipe
