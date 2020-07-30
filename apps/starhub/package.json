@@ -1,6 +1,6 @@
 {
   "name": "@perxtech/starhub",
-  "version": "0.6.23",
+  "version": "0.6.24",
   "scripts": {
     "ng": "ng",
     "start": "env-cmd -f ./env/starhub.staging.dev npm run config && ng serve --host 0.0.0.0",
