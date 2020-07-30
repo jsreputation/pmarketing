@@ -29,8 +29,6 @@ export class VoucherComponent implements OnChanges, OnInit {
   public voucherId: number;
 
   @Input('voucher')
-  public voucherInitial$: Observable<IVoucher>;
-
   public voucher$: Observable<IVoucher>;
 
   @Input()
@@ -56,7 +54,13 @@ export class VoucherComponent implements OnChanges, OnInit {
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.voucherId) {
-      this.voucherInitial$ = this.vouchersService.get(this.voucherId);
+      this.voucher$ = this.vouchersService.get(this.voucherId).pipe(
+        map((voucher: IVoucher) => {
+          const tncWithOlPadding = voucher && voucher.reward && voucher.reward.termsAndConditions.replace(/(ol>)/, 'ol' +
+            ' style="padding-inline-start:' +
+            ' 1em;">');
+          return {...voucher, reward: {...voucher.reward, termsAndConditions: tncWithOlPadding }} as IVoucher;
+        }));
     }
   }
 
@@ -65,14 +69,6 @@ export class VoucherComponent implements OnChanges, OnInit {
   }
 
   public ngOnInit(): void {
-    this.voucher$ = this.voucherInitial$.pipe(
-      map(voucher => {
-        const tncWithOlPadding = voucher && voucher.reward && voucher.reward.termsAndConditions.replace(/(ol>)/, 'ol' +
-          ' style="padding-inline-start:' +
-          ' 1em;">');
-        return {...voucher, reward: {...voucher.reward, termsAndConditions: tncWithOlPadding }} as IVoucher;
-      })
-    );
     if (!this.redeemLabelFn) {
       this.redeemLabelFn = () => of('REDEEM NOW');
     }
