@@ -78,7 +78,7 @@ describe('VoucherComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(VoucherComponent);
     component = fixture.componentInstance;
-    component.voucherInitial$ = of(mockVoucher);
+    component.voucher$ = of(mockVoucher);
     fixture.detectChanges();
   });
 
