@@ -46,6 +46,12 @@
           <span translate>NAVIGATION.DEALS</span>
         </div>
       </a>
+      <a matRipple [routerLink]="[ '/nearme' ]" routerLinkActive="active">
+        <div class="nav-item">
+          <mat-icon aria-hidden="false">location_on</mat-icon>
+          <span translate>NAVIGATION.NEARME</span>
+        </div>
+      </a>
       <a matRipple [routerLink]="[ '/leaderboard' ]" routerLinkActive="active" *ngIf="appConfig.showLeaderboardPage">
         <div class="nav-item">
           <mat-icon aria-hidden="false">star_border</mat-icon>
