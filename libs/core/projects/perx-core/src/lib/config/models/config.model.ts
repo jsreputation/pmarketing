@@ -50,4 +50,5 @@ export interface IConfig<T> {
   /* Reward page */
   showVoucherBookingFromRewardsPage?: boolean;
   showExpiryOnRewardDetail?: boolean;
+  showRewardFavButton?: boolean;
 }

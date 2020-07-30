@@ -35,6 +35,8 @@ export class RewardComponent implements OnInit {
   @Input()
   public expiryLabel: Observable<string> = of('Expiry');
 
+  @Input()
+  public showRewardFavButton?: boolean;
 
   public ngOnInit(): void {
     this.reward$ = this.rewardInitial$.pipe(
@@ -58,5 +60,10 @@ export class RewardComponent implements OnInit {
         return of(''); // is actually 0 or invalid value default
       };
     }
+  }
+
+  public rewardFavoriteHandler(reward: IReward): IReward {
+    // wait BE, should click and update backend for user favoriting [PLACEHOLDER]
+    return reward;
   }
 }

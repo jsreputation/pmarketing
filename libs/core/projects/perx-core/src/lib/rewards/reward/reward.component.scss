@@ -91,4 +91,13 @@
     font-size: 1.4rem;
     line-height: 2.5rem;
   }
+
+  .include-heart {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .show-pointer {
+    cursor: pointer;
+  }
 }
