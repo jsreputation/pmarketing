@@ -28,7 +28,8 @@
   "ORDER": {
     "CANCEL": "取消",
     "CONFIRM": "確認",
-    "BACK": "返回"
+    "BACK": "返回",
+    "NEXT": "繼續"
   },
   "REDEEM": {
     "CANCEL": "取消",

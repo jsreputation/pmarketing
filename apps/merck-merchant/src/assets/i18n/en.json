@@ -28,7 +28,8 @@
   "ORDER": {
     "CANCEL": "Cancel",
     "CONFIRM": "Confirm",
-    "BACK": "Back"
+    "BACK": "Back",
+    "NEXT": "Next"
   },
   "REDEEM": {
     "CANCEL": "Cancel",
