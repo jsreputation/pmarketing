@@ -7,14 +7,17 @@
       <img class="merchant-image" src="{{reward.merchantImg}}" [alt]="reward.merchantName">
     </div>
     <div class="details">
-      <div class="reward-name">
-        {{reward.name}}
-      </div>
       <div class="merchant-name">
         {{reward.merchantName}}
       </div>
+      <div class="reward-name">
+        {{reward.name}}
+      </div>
       <div class="reward-subtitle" *ngIf="reward.subtitle">
         {{reward.subtitle}}
+      </div>
+      <div class="reward-expiry" *ngIf="showExpiry && reward.validTo !== null">
+        {{expiryLabel | async}}: {{reward.validTo | date: 'dd/MM/yyyy'}}
       </div>
       <div class="reward-price" *ngIf="reward.rewardPrice && reward.rewardPrice.length > 0">
         <div class="points-cost" *ngFor="let rewardPrice of reward.rewardPrice; let i = index">
@@ -22,9 +25,6 @@
           <span>{{displayPriceFn(rewardPrice) | async}}</span><span class="points-code"
             *ngIf="showRewardIdentifier && rewardPrice.identifier"> ({{codeLabel | async}}: {{rewardPrice.identifier}})</span>
         </div>
-      </div>
-      <div class="reward-expiry" *ngIf="showExpiry && reward.validTo !== null">
-        {{expiryLabel | async}}: {{reward.validTo | date: 'dd/MM/yyyy'}}
       </div>
       <div class="section-heading" *ngIf="reward.description">
         {{descriptionLabel | async}}
@@ -36,7 +36,7 @@
         {{tncLabel | async}}
       </div>
       <div class="section-content" *ngIf="reward.termsAndConditions">
-        <div [innerHtml]="reward.termsAndConditions"></div>
+        <div [innerHtml]="reward.termsAndConditions | safeHtml"></div>
       </div>
       <!--
       <div class="section-heading" *ngIf="reward.howToRedeem">
