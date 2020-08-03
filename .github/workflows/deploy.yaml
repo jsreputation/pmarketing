@@ -203,12 +203,11 @@ jobs:
 
       - name: Install helm
         env:
-          HELM_VERSION: 2.16.7
+          HELM_VERSION: 3.2.4
         run: |
           curl -LsSO https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz
           tar -zxvf helm-v${HELM_VERSION}-linux-amd64.tar.gz
           sudo mv linux-amd64/helm /usr/local/bin/helm
-          helm init --client-only
           helm repo add perx https://chartmuseum.perxtech.io --username perx --password ${{ secrets.HELM_PASSWORD }}
           helm repo update
 

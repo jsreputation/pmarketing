@@ -17,7 +17,6 @@ import {
 } from '@perxtech/core';
 
 import { CardComponent } from './card.component';
-
 import { SharedModule } from '../../../shared/shared.module';
 import { loyalty } from '../../../mock/loyalty.mock';
 import { MatTabChangeEvent } from '@angular/material';
@@ -62,7 +61,7 @@ describe('CardComponent', () => {
         LoyaltyModule,
         NoopAnimationsModule,
         NgxBarcodeModule,
-        InfiniteScrollModule,
+        InfiniteScrollModule
       ],
       providers: [
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
@@ -85,8 +84,8 @@ describe('CardComponent', () => {
   });
 
   it('shoulld priceLabelFn', () => {
-    expect(component.priceLabelFn(transaction)).toBe('Points spent');
-    expect(component.priceLabelFn({ ...transaction, points: 11 })).toBe('Points earned');
+    component.priceLabelFn(transaction).subscribe(text => expect(text).toBe('Points spent'));
+    component.priceLabelFn({ ...transaction, points: 11 }).subscribe(text => expect(text).toBe('Points earned'));
   });
 
   it('should change tab, trigger onscroll', () => {

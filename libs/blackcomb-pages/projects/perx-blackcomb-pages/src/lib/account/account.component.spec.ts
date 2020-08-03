@@ -33,7 +33,7 @@ import { AccountComponent } from './account.component';
 import { profile } from '../mock/profile.mock';
 import { pagesObject } from '../mock/pages.mock';
 
-import { MatCardModule, MatListModule } from '@angular/material';
+import { MatCardModule, MatIconModule, MatListModule } from '@angular/material';
 
 describe('AccountComponent', () => {
   const notificationServiceStub: Partial<NotificationService> = {};
@@ -81,6 +81,7 @@ describe('AccountComponent', () => {
         ProfileModule,
         MatCardModule,
         MatListModule,
+        MatIconModule,
         TranslateModule.forRoot(),
         ConfigModule.forRoot({ ...environment })
       ],

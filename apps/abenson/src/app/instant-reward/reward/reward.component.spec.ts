@@ -17,7 +17,6 @@ import {
   RewardsService,
   ThemesService,
 } from '@perxtech/core';
-
 import { RewardComponent } from './reward.component';
 
 describe('RewardComponent', () => {

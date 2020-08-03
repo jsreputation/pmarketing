@@ -73,6 +73,10 @@ const routes: Routes = [
         path: 'booking/:id',
         loadChildren: () => import('../rewards-booking/rewards-booking.module').then((mod) => mod.RewardsBookingModule)
       },
+      {
+        path: 'c/contact-us',
+        loadChildren: () => import('../contact-us/contact-us.module').then((mod) => mod.ContactUsModule)
+      },
     ]
   }
 ];

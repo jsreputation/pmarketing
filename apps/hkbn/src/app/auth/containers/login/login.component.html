@@ -4,8 +4,8 @@
     <h1 class="header-title">Home + Shop</h1>
   </header>
   <mat-card>
-    <h2 class="sign-in">{{"LOGIN" | translate}}</h2>
-    <a class="register-message" [routerLink]="'/registration'">{{"REGISTER_FOR_AN_ACCOUNT" | translate}}</a>
+    <h2 class="sign-in">{{"LOGIN_PAGE.LOGIN" | translate}}</h2>
+    <a class="register-message" [routerLink]="'/registration'">{{"LOGIN_PAGE.REGISTER_FOR_AN_ACCOUNT" | translate}}</a>
 
     <hkbn-login-form (loginSubmit)="login($event)" (forgotPassword)="forgotPassword($event)">
 

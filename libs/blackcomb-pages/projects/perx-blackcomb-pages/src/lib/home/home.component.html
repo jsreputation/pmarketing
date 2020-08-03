@@ -4,12 +4,20 @@
   [infiniteScrollThrottle]="50"
   (scrolled)="onScroll()"
   [scrollWindow]="false">
-<!--  let app decide if it wants to, then check if remote, then if demo mode-->
   <div class="loyalty-block" *ngIf="
-       appConfig.showLoyaltyBlockOnHomePage &&
-       appRemoteFlags.showLoyaltyBlockOnHomePage &&
-       !appRemoteFlags.rebateDemoFlow">
-    <perx-core-loyalty-summary [titleFn]="titleFn" [showLoyaltyProgress]="appConfig.showLoyaltyProgress"></perx-core-loyalty-summary>
+    appConfig.showLoyaltyBlockOnHomePage &&
+    appRemoteFlags.showLoyaltyBlockOnHomePage &&
+    !appRemoteFlags.rebateDemoFlow">
+    <perx-core-loyalty-summary
+      [showLoyaltyProgress]="appConfig.showLoyaltyProgress"
+      class="loyalty-item"
+      [subTitleFn]="subTitleFn"
+      [titleFn]="titleFn"
+      [summaryExpiringFn]="summaryExpiringFn"
+      [pointToFn]="pointToFn"
+      [memberFn]="memberFn"
+      [membershipExpiryFn]="membershipExpiryFn"
+     ></perx-core-loyalty-summary>
     <div class="loyalty-item loyalty-item-qr" *ngIf="appConfig.showUserQR">
       <a
         mat-raised-button
@@ -33,22 +41,13 @@
   <perx-core-newsfeed [items$]="newsFeedItems"></perx-core-newsfeed>
   <div class="rewards-collection" *ngIf="appRemoteFlags?.rewardsCarousel || appConfig.showRewardsOnHomepage">
     <div *ngIf="(rewards$ | async)?.length > 0" class="title" translate>HOME.FEATURED_REWARDS</div>
-    <perx-core-rewards-collection [rewardsList]="rewards$" (tapped)="goToReward($event)"></perx-core-rewards-collection>
+    <perx-core-rewards-collection [showRewardFavButton]="appConfig.showRewardFavButton" [rewardsList]="rewards$" (tapped)="goToReward($event)"></perx-core-rewards-collection>
   </div>
   <!-- Stamp card campaigns-->
   <div class="campaigns">
     <div *ngIf="showCampaigns" class="title" translate>HOME.STAMP_CAMPAIGNS</div>
     <perx-blackcomb-pages-campaigns-collection [campaigns]="stampCampaigns$" (selected)="goToCampaignPage($event)">
     </perx-blackcomb-pages-campaigns-collection>
-  </div>
-  <div class="catalogs" *ngIf="appConfig.showCatalogOnHomePage">
-    <div *ngIf="(catalogs$ | async)?.length > 0" class="title" translate>HOME.CATALOG</div>
-    <perx-blackcomb-pages-catalogs
-      [catalogs]="catalogs$"
-      [catalogsEnded]="catalogsEnded"
-      (tapped)="catalogSelected($event)"
-      (loadCatalogs)="loadCatalogs($event)"
-    ></perx-blackcomb-pages-catalogs>
   </div>
   <!-- Game campaigns-->
   <div class="campaigns">
@@ -66,8 +65,18 @@
       (selected)="goToCampaignPage($event)">
     </perx-blackcomb-pages-campaigns-collection>
   </div>
+  <div class="catalogs" *ngIf="appConfig.showCatalogOnHomePage">
+    <div *ngIf="(catalogs$ | async)?.length > 0" class="title" translate>HOME.CATALOG</div>
+    <perx-blackcomb-pages-catalogs
+      [catalogs]="catalogs$"
+      [catalogsEnded]="catalogsEnded"
+      (tapped)="catalogSelected($event)"
+      (loadCatalogs)="loadCatalogs($event)"
+    ></perx-blackcomb-pages-catalogs>
+  </div>
   <div class="rewards-collection" *ngIf="appConfig.showRewardsOnHomepage">
-    <perx-core-rewards-list-tabbed [tabs$]="tabs$" (tapped)="goToReward($event)" (tabChanged)="tabChanged($event)">
+    <div class="title" translate>HOME.REWARDS</div>
+    <perx-core-rewards-list-tabbed [tabs$]="tabs$" [displayPriceFn]="displayPriceFn" (tapped)="goToReward($event)" (tabChanged)="tabChanged($event)">
     </perx-core-rewards-list-tabbed>
   </div>
 </div>

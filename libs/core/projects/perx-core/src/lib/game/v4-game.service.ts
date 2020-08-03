@@ -61,6 +61,8 @@ export interface Outcome {
 export interface GameProperties {
   header?: {
     type: string;
+    header_colour?: string;
+    subheader_colour?: string;
     value: {
       title: string;
       description: string;

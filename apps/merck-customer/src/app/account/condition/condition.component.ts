@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Component, OnInit } from '@angular/core';
 import { PageAppearence, PageProperties, BarSelectedItem } from '../../page-properties';
 import { ProfileService, IProfile, NotificationService } from '@perxtech/core';
@@ -12,11 +13,15 @@ export class ConditionComponent implements OnInit, PageAppearence {
   public showDiabetesCondition: boolean = false;
   public profile: IProfile;
   public conditions: string[];
+  private conditionUpdateTxt: string;
 
   constructor(
     private profileService: ProfileService,
-    private notificationService: NotificationService
-  ) { }
+    private notificationService: NotificationService,
+    private translate: TranslateService
+  ) {
+    this.translate.get('ACCOUNT.CONDITION_UPDATED').subscribe(text => this.conditionUpdateTxt = text);
+  }
 
   public ngOnInit(): void {
     this.profileService.whoAmI().subscribe(res => {
@@ -73,10 +78,9 @@ export class ConditionComponent implements OnInit, PageAppearence {
       return;
     }
     this.profileService.setCustomProperties(this.profile.customProperties).subscribe(
-      () => this.notificationService.addSnack('Condition Updated.'),
-      err => {
-        this.notificationService.addSnack(`ProfileService::SetCustomProperties : ${err.error.message}`);
-      });
+      () => this.notificationService.addSnack(this.conditionUpdateTxt),
+      err => this.notificationService.addSnack(err.error.message)
+    );
   }
 
   public getPageProperties(): PageProperties {
@@ -84,7 +88,7 @@ export class ConditionComponent implements OnInit, PageAppearence {
       header: true,
       backButtonEnabled: true,
       bottomSelectedItem: BarSelectedItem.ACCOUNT,
-      pageTitle: 'STATIC_CONDITION'
+      pageTitle: 'NAVIGATION.CONDITION'
     };
   }
 

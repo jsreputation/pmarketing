@@ -26,7 +26,7 @@ describe('RewardsListComponent', () => {
       imports: [
         MatCardModule,
         UtilsModule,
-        NgxMultiLineEllipsisModule
+        NgxMultiLineEllipsisModule,
       ],
       providers: [
         { provide: ThemesService, useValue: themesServiceStub },

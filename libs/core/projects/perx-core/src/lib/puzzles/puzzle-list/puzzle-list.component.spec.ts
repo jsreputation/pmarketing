@@ -88,7 +88,7 @@ describe('PuzzleListComponent', () => {
   }));
 
   it('init with title fn', () => {
-    const testFn = () => 'test';
+    const testFn = () => of('test');
     component.titleFn = testFn;
     component.puzzleTextFn = testFn;
     component.ngOnInit();
@@ -100,9 +100,11 @@ describe('PuzzleListComponent', () => {
     delete component.titleFn;
     delete component.puzzleTextFn;
     component.ngOnInit();
-    const title = component.titleFn(1);
+    let title;
+    let puzzle;
+    component.titleFn(1).subscribe(text => title = text);
     expect(title).toBe(`Puzzle #${component.indexToLetter(1)}`);
-    const puzzle = component.puzzleTextFn();
+    component.puzzleTextFn().subscribe(text => puzzle = text);
     expect(puzzle).toBe('new pieces');
   });
 });

@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { IPoints } from '../models/quiz.model';
-import { TranslateService } from '@ngx-translate/core';
 import { SecondsToStringPipe } from '../seconds-to-string.pipe';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-core-results',
@@ -11,22 +12,23 @@ import { SecondsToStringPipe } from '../seconds-to-string.pipe';
 export class ResultsComponent implements OnInit {
   @Input()
   public results: IPoints[];
-
-  public timeConsumed: string;
+  @Input()
+  public timeConsumed: Observable<string>;
 
   constructor(
-    private translate: TranslateService,
     private secondsToString: SecondsToStringPipe
   ) { }
 
 
   public ngOnInit(): void {
-    this.translate.get('QUIZ_TEMPLATE.QUESTION_TIME_TAKEN').subscribe((text) => {
-      this.timeConsumed = text;
-    });
+    if (!this.timeConsumed) {
+      this.timeConsumed = of('You took {{time}} to answer this.');
+    }
   }
 
-  public getTimeConsumedLabel(timeInSeconds: number): string {
-    return this.timeConsumed.replace('{{time}}', this.secondsToString.transform(timeInSeconds));
+  public getTimeConsumedLabel(timeInSeconds: number): Observable<string> {
+    return this.timeConsumed.pipe(
+      map(timeCosumedTxt => timeCosumedTxt.replace('{{time}}', this.secondsToString.transform(timeInSeconds)))
+    );
   }
 }

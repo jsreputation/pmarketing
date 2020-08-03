@@ -43,7 +43,8 @@ export class AccountComponent implements OnInit {
   public pages!: AccountPageObject[];
   public preAuth: boolean = false;
   public theme: Observable<ITheme>;
-  public appConfig: Observable<IConfig<void>>;
+  public appConfig$: Observable<IConfig<void>>;
+  public memberFn: (membershipTierName: string) => Observable<string>;
 
   constructor(
     public config: Config,
@@ -69,12 +70,15 @@ export class AccountComponent implements OnInit {
         flatMap((pages: AccountPageObject[]) => this.translate.get(pages.map((page: AccountPageObject) => page.title))),
       )
       .subscribe((translations) => this.pages.forEach((page) => page.title = translations[page.title]));
-    this.appConfig = this.configService.readAppConfig();
+    this.appConfig$ = this.configService.readAppConfig();
     this.profile$ = this.profileService.whoAmI()
       .pipe(
         take(1)
       );
     this.loyalty$ = this.loyaltyService.getLoyalty();
+    this.memberFn = (membershipTierName: string) => this.translate.get([membershipTierName, 'HOME.MEMBER']).pipe(
+      map(res => `${res[membershipTierName]}${res['HOME.MEMBER']}`)
+    );
   }
 
   public logout(): void {

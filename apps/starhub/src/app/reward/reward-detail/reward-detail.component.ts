@@ -26,7 +26,7 @@ export class RewardDetailComponent {
   public showMacaron: boolean = true;
 
   @Input()
-  public showBalance: boolean = true;
+  public showBalance: boolean = false;
 
   @Input()
   public reward: IReward;

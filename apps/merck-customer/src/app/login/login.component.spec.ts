@@ -89,7 +89,7 @@ describe('LoginComponent', () => {
     expect(routerStub.navigate).toHaveBeenCalledWith(['forgot-password'], { state: { country: '852', mobileNo: '' } });
   });
 
-  it('should navigate to user-info if authenticated', fakeAsync(() => {
+  it('should navigate to home if authenticated', fakeAsync(() => {
     const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
       AuthenticationService as Type<AuthenticationService>
     );
@@ -101,7 +101,7 @@ describe('LoginComponent', () => {
     tick();
     fixture.detectChanges();
     expect(authSpy).toHaveBeenCalled();
-    expect(routerSpy).toHaveBeenCalledWith('/user-info');
+    expect(routerSpy).toHaveBeenCalledWith('/home');
   }));
 
 });

@@ -33,6 +33,7 @@ import { HomeComponent } from './home.component';
 })
 export class PerxCoreRewardsCollectionMockComponent {
   @Input() public rewardsList: Observable<IReward>;
+  @Input() public displayPriceFn: () => Observable<string>;
   @Output() public tapped: EventEmitter<IReward> = new EventEmitter();
 }
 
@@ -42,6 +43,7 @@ export class PerxCoreRewardsCollectionMockComponent {
 })
 export class PerxCoreRewardsListTabbedMockComponent {
   @Input() public tabs$: Observable<any>;
+  @Input() public displayPriceFn: () => Observable<string>;
   @Output() public tapped: EventEmitter<IReward> = new EventEmitter();
   @Output() public tabChanged: EventEmitter<any> = new EventEmitter();
 }

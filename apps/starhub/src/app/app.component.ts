@@ -17,7 +17,7 @@ import {
   RewardPopupComponent,
   SettingsService,
   TokenStorage,
-  IFlags
+  IFlags,
 } from '@perxtech/core';
 import {
   MatDialog,
@@ -37,7 +37,8 @@ import {
 } from './analytics.service';
 import {
   EMPTY,
-  timer
+  timer,
+  throwError
 } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -155,7 +156,9 @@ export class AppComponent implements OnInit {
       switchMap((flags: IFlags) => timer(0, flags && flags.gatekeeperPollingInterval || 2000)
         .pipe(
           switchMap(() => this.settingsService.isGatekeeperOpen().pipe(
-            catchError(() => {
+            catchError((err: string) => {
+              throwError(err);
+              console.error(err);
               this.holdingGateOpened = false;
               return EMPTY;
             })

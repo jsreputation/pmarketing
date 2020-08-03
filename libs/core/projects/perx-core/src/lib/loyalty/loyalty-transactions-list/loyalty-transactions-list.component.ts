@@ -5,7 +5,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ILoyaltyTransaction } from '../models/loyalty.model';
 import { DatePipe } from '@angular/common';
 import { TransactionPipe } from './transaction.pipe';
@@ -30,23 +30,23 @@ export class LoyaltyTransactionsListComponent implements OnInit {
   public tapped: EventEmitter<ILoyaltyTransaction> = new EventEmitter<ILoyaltyTransaction>();
 
   @Input()
-  public titleFn: (tr: ILoyaltyTransaction | ITransaction) => string;
+  public titleFn: (tr: ILoyaltyTransaction | ITransaction) => Observable<string>;
 
   @Input()
-  public skuFn: (tr: ILoyaltyTransaction) => ({
+  public skuFn: (tr: ILoyaltyTransaction | ITransaction) => Observable<{
     sku: string | undefined;
     qty: string | undefined,
     untprc: string | undefined;
-  });
+  }>;
 
   @Input()
-  public descFn: (tr: ILoyaltyTransaction | ITransaction) => string;
+  public descFn: (tr: ILoyaltyTransaction | ITransaction) => Observable<string>;
 
   @Input()
-  public subTitleFn: (tr: ILoyaltyTransaction | ITransaction) => string;
+  public subTitleFn: (tr: ILoyaltyTransaction | ITransaction) => Observable<string>;
 
   @Input()
-  public priceLabelFn: (tr: ILoyaltyTransaction | ITransaction) => string;
+  public priceLabelFn: (tr: ILoyaltyTransaction | ITransaction) => Observable<string>;
 
   constructor(
     private datePipe: DatePipe,
@@ -64,23 +64,23 @@ export class LoyaltyTransactionsListComponent implements OnInit {
       );
     }
     if (!this.titleFn) {
-      this.titleFn = (tr: ILoyaltyTransaction) => `${tr.name}`;
+      this.titleFn = (tr: ILoyaltyTransaction) => of(`${tr.name}`);
     }
     if (!this.skuFn) {
-      this.skuFn = (tr: ILoyaltyTransaction) => ({
+      this.skuFn = (tr: ILoyaltyTransaction) => of({
         sku: tr.sku ? `sku${tr.sku}` : undefined,
         qty: tr.quantity ? (parseInt(tr.quantity, 10) > 1 ? `${tr.quantity} items` : `${tr.quantity} item`) : undefined,
         untprc: tr.purchaseAmount || undefined
       });
     }
     if (!this.descFn) {
-      this.descFn = () => '';
+      this.descFn = () => of('');
     }
     if (!this.subTitleFn) {
-      this.subTitleFn = (tr: ILoyaltyTransaction) => `${this.datePipe.transform(tr.earnedDate, 'shortDate')}`;
+      this.subTitleFn = (tr: ILoyaltyTransaction) => of(`${this.datePipe.transform(tr.earnedDate, 'shortDate')}`);
     }
     if (!this.priceLabelFn) {
-      this.priceLabelFn = (tr: ILoyaltyTransaction) => `${this.transactionPipe.transform(tr.points)}`;
+      this.priceLabelFn = (tr: ILoyaltyTransaction) => of(`${this.transactionPipe.transform(tr.points)}`);
     }
   }
 }

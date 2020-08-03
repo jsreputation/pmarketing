@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Data, Params, Router } from '@angular/router';
 import { IPoints, SecondsToStringPipe, NotificationService, IPopupConfig, IQuiz } from '@perxtech/core';
-import { merge } from 'rxjs';
+import { merge, Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 import { TranslateService } from '@ngx-translate/core';
@@ -13,6 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class QuizResultsComponent implements OnInit {
   public results: IPoints[] = [];
+  public timeConsumed: Observable<string>;
 
   public backgroundImgUrl: string = '';
   private quiz: IQuiz | undefined;
@@ -29,6 +30,10 @@ export class QuizResultsComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
+
+    this.translate.get('QUIZ_TEMPLATE.QUESTION_TIME_TAKEN').subscribe((text) => {
+      this.timeConsumed = text;
+    });
     merge(this.activatedRoute.data, this.activatedRoute.params)
       .pipe(
         filter((data: Data | Params) => data.results),
@@ -77,7 +82,7 @@ export class QuizResultsComponent implements OnInit {
         'QUIZ_TEMPLATE.NO_OUTCOME_TXT',
         'QUIZ_TEMPLATE.NO_OUTCOME_CTA'
       ]).subscribe((res: any) => {
-        const noOutcomeTitle = res['QUIZ_TEMPLATE.NO_OUTCOME_SCORE'].replace('{{points}}', points);
+        const noOutcomeTitle = (res['QUIZ_TEMPLATE.NO_OUTCOME_SCORE']).replace('{{points}}', points);
         this.popup = {
           title: oc(noOutcome).title(noOutcomeTitle),
           text: oc(noOutcome).subTitle(res['QUIZ_TEMPLATE.NO_OUTCOME_TXT']),
@@ -94,7 +99,7 @@ export class QuizResultsComponent implements OnInit {
         'QUIZ_TEMPLATE.POSITIVE_OUTCOME_REWARD',
         'QUIZ_TEMPLATE.POSITIVE_OUTCOME_CTA'
       ]).subscribe((res: any) => {
-        const outcomeTitle = res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_TXT'].replace('{{points}}', points);
+        const outcomeTitle = (res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_TXT']).replace('{{points}}', points);
         this.popup = {
           title: oc(outcome).title(outcomeTitle),
           text: oc(outcome).subTitle(res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_REWARD']),

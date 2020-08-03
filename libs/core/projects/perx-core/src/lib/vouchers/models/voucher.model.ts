@@ -26,6 +26,17 @@ export interface IVoucher {
   redemptionDate?: Date | null;
   redemptionType?: RedemptionType | null;
   accessoryImage?: string | null;
+  merchantLocation?: IMerchantLocation | null;
+}
+
+export interface IMerchantLocation {
+  id: number;
+  address1: string;
+  address2: string;
+  city: string;
+  country: string;
+  name: string;
+  postalCode: string;
 }
 
 export interface IGetVoucherParams {

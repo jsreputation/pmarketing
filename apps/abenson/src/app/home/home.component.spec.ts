@@ -57,7 +57,7 @@ describe('HomeComponent', () => {
         MatCardModule,
         VouchersModule,
         LoyaltyModule,
-        ProfileModule,
+        ProfileModule
       ],
       providers: [
         { provide: Router, useValue: router },

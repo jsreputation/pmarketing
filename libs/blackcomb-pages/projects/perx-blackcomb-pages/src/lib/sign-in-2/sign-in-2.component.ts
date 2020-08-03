@@ -146,7 +146,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
                 .subscribe(res => {
                   this.notificationService.addPopup({
                     title: res['LOGIN_PAGE.POPUP_TITLE'],
-                    text: res['LOGIN_PAGE.POPUP_TXT']
+                    text: res['LOGIN_PAGE.POPUP.TXT']
                   });
                 });
             } else if (err.status === 401 || err.status === 403) {
@@ -180,6 +180,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
           );
         } else {
           this.loading = false;
+          this.authService.logout();
           this.notificationService.addPopup({
             title: 'Membership required',
             text: 'Please purchase a valid membership before logging in',

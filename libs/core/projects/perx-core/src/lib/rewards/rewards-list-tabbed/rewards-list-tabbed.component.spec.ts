@@ -33,7 +33,7 @@ describe('RewardsListTabbedComponent', () => {
         NoopAnimationsModule,
         MaterialModule,
         UtilsModule,
-        NgxMultiLineEllipsisModule
+        NgxMultiLineEllipsisModule,
       ],
       providers: [
         {

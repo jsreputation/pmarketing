@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService, NotificationService } from '@perxtech/core';
@@ -20,10 +21,12 @@ export class EnterPinComponent implements OnInit, PageAppearence {
   private mobileNo?: string = undefined;
   private countryCode: string;
   public visibleNo: string = '';
+  public subHeading: string;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private translate: TranslateService,
     private authService: AuthenticationService,
     private notificationService: NotificationService
   ) {
@@ -34,8 +37,12 @@ export class EnterPinComponent implements OnInit, PageAppearence {
 
     if (currentNavigation.extras.state) {
       this.mobileNo = currentNavigation.extras.state.mobileNo;
-      this.countryCode = currentNavigation.extras.state.countryCode;
       this.visibleNo = this.mobileNo ? this.encodeMobileNo(this.mobileNo, this.countryCode) : '';
+      this.translate.get('OTP_PAGE.ENTER_NUMBER_LONG')
+        .subscribe(text =>
+          this.subHeading = text.replace('{phoneNumber}', this.visibleNo)
+        );
+      this.countryCode = currentNavigation.extras.state.countryCode;
     }
   }
 
@@ -103,7 +110,9 @@ export class EnterPinComponent implements OnInit, PageAppearence {
       this.authService.resendOTP(this.mobileNo).subscribe(
         () => {
           console.log('Resend Otp request sent');
-          this.notificationService.addSnack('Resend Otp request sent');
+          this.translate.get('OTP_PAGE.RESEND_OTP').subscribe(text =>
+            this.notificationService.addSnack(text)
+          );
         },
         err => {
           console.error(`ResendOTP: ${err}`);

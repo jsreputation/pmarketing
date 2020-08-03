@@ -1,6 +1,13 @@
 <div class="reward-container">
-	<perx-core-reward [reward]="reward"></perx-core-reward>
+	<perx-core-reward 
+		[reward]="reward" 
+		[displayPriceFn]="displayPriceFn"
+		[descriptionLabel]="descriptionLabel"
+		[tncLabel]="tncLabel"
+		[codeLabel]="codeLabel"
+		[expiryLabel]="expiryLabel"
+	></perx-core-reward>
 	<button mat-raised-button color="primary" class="redeem-btn" (click)="onClick()">
-		{{"STATIC_REDEEM" | translate}}
+		{{"REWARD.REDEEM" | translate}}
 	</button>
 </div>

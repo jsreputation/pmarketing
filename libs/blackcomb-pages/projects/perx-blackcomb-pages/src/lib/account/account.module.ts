@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatCardModule, MatListModule } from '@angular/material';
+import { MatCardModule, MatListModule, MatIconModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { LoyaltyModule, ProfileModule, UtilsModule } from '@perxtech/core';
@@ -15,6 +15,7 @@ import { AccountComponent } from './account.component';
     MatListModule,
     MatCardModule,
     ProfileModule,
+    MatIconModule,
     TranslateModule.forChild(),
     LoyaltyModule.forChild(),
     RouterModule

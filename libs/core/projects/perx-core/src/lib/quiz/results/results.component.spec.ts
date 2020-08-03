@@ -3,7 +3,6 @@ import { MatIconModule } from '@angular/material';
 import { MatListModule } from '@angular/material';
 import { ResultsComponent } from './results.component';
 import { SecondsToStringPipe } from '../seconds-to-string.pipe';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('ResultsComponent', () => {
   let component: ResultsComponent;
@@ -17,7 +16,6 @@ describe('ResultsComponent', () => {
       imports: [
         MatListModule,
         MatIconModule,
-        TranslateModule.forRoot()
       ],
       providers: [SecondsToStringPipe]
     })

@@ -17,7 +17,7 @@
                 {{voucher?.reward?.merchantName}}
               </p>
               <p *ngIf="showExpireDate && voucher.expiry && voucher.expiry !== null">
-                {{expiryLabelFn(voucher)}}
+                {{expiryLabelFn(voucher) | async}}
               </p>
               <p *ngIf="showRedeemedDate && voucher.redemptionDate">
                 Redeemed on {{voucher.redemptionDate | date: 'shortDate'}}

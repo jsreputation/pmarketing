@@ -57,10 +57,10 @@ export class HomeComponent implements OnInit {
   public tabs: Subject<ITabConfig[]> = new Subject<ITabConfig[]>();
   public staticTab: ITabConfig[] = tabs;
   public rewardsCollection: Observable<IReward[]>;
-  public displayPriceFn: (price: IPrice) => string;
-  public titleFn: (profile: IProfile) => string;
-  public subTitleFn: (loyalty: ILoyalty) => string;
-  public summaryExpiringFn: (loyalty: ILoyalty) => string;
+  public displayPriceFn: (price: IPrice) => Observable<string>;
+  public titleFn: (profile: IProfile) => Observable<string>;
+  public subTitleFn: (loyalty: ILoyalty) => Observable<string>;
+  public summaryExpiringFn: (loyalty: ILoyalty) => Observable<string>;
   public currentTab: string;
   private rewardMultiPageMetaTracker: PageTracker = {};
   private requestPageSize: number = 10;
@@ -78,27 +78,27 @@ export class HomeComponent implements OnInit {
     this.getRewardsCollection();
     this.getLoyalty();
     this.displayPriceFn = (rewardPrice: IPrice) => {
-      if (rewardPrice.points && rewardPrice.points > 0 && rewardPrice.price && parseInt(rewardPrice.price, 10) > 0) {
-        return `Fast Track: ${rewardPrice.points} points + ${rewardPrice.currencyCode} ${parseInt(rewardPrice.price, 10)}`;
+      if (rewardPrice.points && rewardPrice.points > 0 && rewardPrice.price && parseFloat(rewardPrice.price) > 0) {
+        return of(`Fast Track: ${rewardPrice.points} points + ${rewardPrice.currencyCode} ${parseInt((rewardPrice.price).toString(), 10)}`);
       }
 
-      if (rewardPrice.price && parseInt(rewardPrice.price, 10) > 0) {
-        return `${rewardPrice.currencyCode} ${parseInt(rewardPrice.price, 10)}`;
+      if (rewardPrice.price && parseFloat(rewardPrice.price) > 0) {
+        return of(`${rewardPrice.currencyCode} ${parseInt((rewardPrice.price).toString(), 10)}`);
       }
 
       if (rewardPrice.points && rewardPrice.points > 0) {
-        return `${rewardPrice.points} points`;
+        return of(`${rewardPrice.points} points`);
       }
-      return ''; // is actually 0 or invalid value default
+      return of(''); // is actually 0 or invalid value default
     };
     this.titleFn = (profile: IProfile) => {
       if (profile && profile.lastName) {
-        return `Welcome ${profile.lastName},`;
+        return of(`Welcome ${profile.lastName},`);
       }
-      return 'Welcome';
+      return of('Welcome');
     };
-    this.subTitleFn = () => `Your total points as of ${this.datePipe.transform(new Date(), 'ddMMMyy')}`;
-    this.summaryExpiringFn = (): string => '';
+    this.subTitleFn = () => of(`Your total points as of ${this.datePipe.transform(new Date(), 'ddMMMyy')}`);
+    this.summaryExpiringFn = (): Observable<string> => of('');
     this.loadCurrentTabRewards(this.staticTab[0].tabName);
   }
 

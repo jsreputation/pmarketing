@@ -22,13 +22,14 @@ export class IdentifierAuthComponent implements OnInit {
     private router: Router,
   ) {
     // attempt to first login automatically
-    if (this.authService.getUserAccessToken()) {
-      this.authService.autoLogin().subscribe(
-        () => {
-          this.redirectAfterLogin();
-        }
-      );
-    }
+    // if (this.authService.getUserAccessToken()) {
+    //   this.authService.autoLogin().subscribe(
+    //     () => {
+    //       this.redirectAfterLogin();
+    //     }
+    //   );
+    // }
+    this.authService.logout();
     this.loginForm = this.fb.group({
       personalId: ['', Validators.required],
     });
@@ -68,6 +69,6 @@ export class IdentifierAuthComponent implements OnInit {
   }
   public redirectAfterLogin(): void {
     const campaignId = JSON.parse(localStorage.getItem('cid'));
-    this.router.navigate([`/game/${campaignId}`]);
+    this.router.navigate([`/game/${campaignId ? campaignId : 1}`]);
   }
 }

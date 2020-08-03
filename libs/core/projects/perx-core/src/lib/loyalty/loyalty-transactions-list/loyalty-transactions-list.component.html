@@ -2,25 +2,24 @@
   <div *ngFor="let transaction of transactions" class="transaction">
     <div class="transaction-info">
       <div class="transaction-name">
-        {{titleFn(transaction)}}
-        <span>
-          {{skuFn(transaction).sku}}
+        {{titleFn(transaction) | async}}
+        <span *ngIf="skuFn(transaction) | async as skuInfo">
+          {{skuInfo.sku}}
         </span>
       </div>
-      <div class="transaction-sku-details"
-        *ngIf="skuFn(transaction)?.sku && skuFn(transaction)?.qty && skuFn(transaction)?.untprc">
-        {{skuFn(transaction).qty}} <br />
-        {{skuFn(transaction).untprc}}
+      <div class="transaction-sku-details" *ngIf="skuFn(transaction) | async as skuInfo">
+        {{skuInfo.qty}} <br />
+        {{skuInfo.untprc}}
       </div>
       <div class="transaction-description">
-        {{descFn(transaction)}}
+        {{descFn(transaction) | async}}
       </div>
       <div class="transaction-point">
-        {{transaction.points}} {{priceLabelFn(transaction)}}
+        {{transaction.points}} {{priceLabelFn(transaction) | async}}
       </div>
     </div>
     <div class="transaction-date">
-      {{subTitleFn(transaction)}}
+      {{subTitleFn(transaction) | async}}
     </div>
   </div>
 </ng-container>

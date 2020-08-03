@@ -44,7 +44,10 @@ export class RebatesListComponent implements OnInit {
   public defaultImg: string;
 
   @Input()
-  public displayPriceFn: (rewardPrice: IPrice) => string;
+  public displayPriceFn: (rewardPrice: IPrice) => Observable<string>;
+
+  @Input()
+  public rebatesDetailsTextFn: () => Observable<string>;
 
   @Output()
   public tapped: EventEmitter<ILoyalty> = new EventEmitter<ILoyalty>();
@@ -66,21 +69,24 @@ export class RebatesListComponent implements OnInit {
 
   public ngOnInit(): void {
     this.initTheme();
-    if (!this.merchants$) {
-      this.merchants$ = this.loyaltyService.getLoyalties().pipe(
-        switchMap((loyalties: ILoyalty[]) => combineLatest(
-          [...loyalties.map(loyalty => this.loyaltyService.getTransactions(loyalty.id).pipe(
-            switchMap((transactions: ILoyaltyTransaction[]) => {
-              if (transactions.length > 0) {
-                return of(loyalty);
-              }
-              return of(null);
-            })
-          ))])
-        ),
-        map((res: ILoyalty[]) => res.filter(loyal => loyal !== null)),
-        share()
-      );
+    if (!this.rebatesDetailsTextFn) {
+      this.rebatesDetailsTextFn = () => of('rebate funds available');
+      if (!this.merchants$) {
+        this.merchants$ = this.loyaltyService.getLoyalties().pipe(
+          switchMap((loyalties: ILoyalty[]) => combineLatest(
+            [...loyalties.map(loyalty => this.loyaltyService.getTransactions(loyalty.id).pipe(
+              switchMap((transactions: ILoyaltyTransaction[]) => {
+                if (transactions.length > 0) {
+                  return of(loyalty);
+                }
+                return of(null);
+              })
+            ))])
+          ),
+          map((res: ILoyalty[]) => res.filter(loyal => loyal !== null)),
+          share()
+        );
+      }
     }
   }
 
