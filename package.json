@@ -28,6 +28,8 @@
     "build:hsbc-rewards:staging": "echo 'skipping hsbc-rewards build'",
     "build:hsbc:production": "lerna run build:lib && lerna run build:hsbc:production --",
     "build:hsbc:staging": "lerna run build:lib && lerna run build:hsbc:staging --",
+    "build:hsbcph-blackcomb:production": "lerna run build:lib && lerna run build:hsbcph-blackcomb:production --",
+    "build:hsbcph-blackcomb:staging": "lerna run build:lib && lerna run build:hsbcph-blackcomb:staging --",
     "build:hsbchk:production": "lerna run build:lib && lerna run build:hsbchk:production --",
     "build:hsbchk:staging": "lerna run build:lib && lerna run build:hsbchk:staging --",
     "build:lib": "lerna run build:lib",
