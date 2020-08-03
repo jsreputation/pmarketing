@@ -7,6 +7,13 @@ import {
   ElementRef
 } from '@angular/core';
 
+import {
+  RewardsService,
+  IReward,
+  IVoucherLocation,
+  IVoucherService
+} from '@perxtech/core';
+
 @Component({
   selector: 'perx-blackcomb-pages-nearme',
   templateUrl: './nearme.component.html',
@@ -16,10 +23,14 @@ export class NearmeComponent implements OnInit {
 
   @ViewChild('gmap', { static: false }) public gmapElement: ElementRef;
   public map: google.maps.Map;
-
   public key: string = 'AIzaSyDdNa7j6XYHHzYbzQDGTn52Rfj-wDw7X7w';
+  public markersArray: google.maps.Marker[] = [];
+  public current: IReward | null;
 
-  constructor() { }
+  constructor(
+    private rewardsService: RewardsService,
+    private vouchersService: IVoucherService
+  ) { }
 
   ngOnInit() {
     this.loadScript()
@@ -30,6 +41,8 @@ export class NearmeComponent implements OnInit {
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
+        this.map.addListener('click', () => this.current = null);
+        this.updateMarkers();
       });
   }
 
@@ -59,4 +72,31 @@ export class NearmeComponent implements OnInit {
     return p;
   }
 
+  private updateMarkers(): void {
+    this.rewardsService.nearMe(10000).subscribe((rewards: IReward[]) => {
+      rewards.forEach((reward: IReward) => {
+        this.vouchersService.getRewardLocations(reward.id).subscribe(
+          (locations: IVoucherLocation[] ) => {
+            if (locations.length === 1) {
+              const location: IVoucherLocation = locations[0];
+              const latitude = location.latitude !== null ? parseFloat(location.latitude) : 0;
+              const longitude = location.longitude !== null ? parseFloat(location.longitude) : 0;
+              const latLng: google.maps.LatLng = new google.maps.LatLng({ lat: latitude, lng: longitude});
+              const marker = new google.maps.Marker({
+                position: latLng,
+                map: this.map,
+                title: 'Test',
+                label: '50 pts'
+              });
+              marker.addListener('click', () => {
+                this.current = reward;
+                console.log(this.current);
+              });
+              this.markersArray.push(marker);
+            }
+          }
+        )
+      })
+    });
+  }
 }
