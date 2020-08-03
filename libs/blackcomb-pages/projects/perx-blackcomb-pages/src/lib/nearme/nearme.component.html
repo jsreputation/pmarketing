@@ -1,1 +1,8 @@
 <div #gmap class="map"></div>
+
+<div class="loc-card-container">
+    <mat-card *ngIf="current" class="loc-card mat-elevation-z8">
+      <mat-card-title>{{current.merchantName}}</mat-card-title>
+      <mat-card-subtitle>{{current.name}}</mat-card-subtitle>
+    </mat-card>
+</div>
