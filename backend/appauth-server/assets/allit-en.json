@@ -279,6 +279,7 @@
   },
   "ACCOUNT_PAGE": {
     "PROFILE": "My Profile",
+    "FAVORITE_REWARD": "Favorite Rewards",
     "TRANSACTION_HISTORY": "Transaction History",
     "REFER_FRIEND": "Refer a friend",
     "LIFE_TALK": "LIFE Talk",

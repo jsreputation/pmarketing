@@ -101,4 +101,13 @@ $card-actual-height: 200px;
   .ellipsis-1-line {
     @include ellipse-lines(1);
   }
+
+  .include-heart {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .show-pointer {
+    cursor: pointer;
+  }
 }

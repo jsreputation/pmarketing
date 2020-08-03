@@ -7,8 +7,9 @@
       <img class="merchant-image" src="{{reward.merchantImg}}" [alt]="reward.merchantName">
     </div>
     <div class="details">
-      <div class="merchant-name">
-        {{reward.merchantName}}
+      <div *ngIf="reward.merchantName" class="merchant-name include-heart">
+        <div>{{reward.merchantName}}</div>
+        <mat-icon class="show-pointer" *ngIf="showRewardFavButton" (click)="rewardFavoriteHandler(reward)">{{false ? 'favorite' : 'favorite_border'}}</mat-icon>
       </div>
       <div class="reward-name">
         {{reward.name}}

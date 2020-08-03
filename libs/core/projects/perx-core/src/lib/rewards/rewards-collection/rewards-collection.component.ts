@@ -33,6 +33,9 @@ export class RewardsCollectionComponent implements OnInit {
   public rewards$: Observable<IReward[]>;
 
   @Input()
+  public showRewardFavButton?: boolean;
+
+  @Input()
   public defaultImg: string;
 
   @Input()
@@ -77,5 +80,10 @@ export class RewardsCollectionComponent implements OnInit {
 
   public rewardClickedHandler(reward: IReward): void {
     this.tapped.emit(reward);
+  }
+
+  public rewardFavoriteHandler(reward: IReward): IReward {
+    // wait BE, should click and update backend for user favoriting [PLACEHOLDER]
+    return reward;
   }
 }

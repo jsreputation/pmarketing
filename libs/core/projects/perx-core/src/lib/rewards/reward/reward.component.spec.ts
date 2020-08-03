@@ -4,6 +4,7 @@ import { RewardComponent } from './reward.component';
 import { IReward } from '../models/reward.model';
 import { of } from 'rxjs';
 import { UtilsModule } from '../../utils/utils.module';
+import { MatIconModule } from '@angular/material';
 
 describe('RewardComponent', () => {
   let component: RewardComponent;
@@ -29,7 +30,10 @@ describe('RewardComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RewardComponent],
-      imports: [UtilsModule]
+      imports: [
+        UtilsModule,
+        MatIconModule
+      ]
     })
       .compileComponents();
   }));
