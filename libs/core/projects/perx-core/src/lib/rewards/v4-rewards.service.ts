@@ -7,9 +7,11 @@ import {
 import { formatNumber } from '@angular/common';
 import {
   Observable,
+  Observer
 } from 'rxjs';
 import {
-  map
+  map,
+  switchMap
 } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 
@@ -385,5 +387,21 @@ export class V4RewardsService extends RewardsService {
         (price: IV4Price) => V4RewardsService.v4PriceToPrice(price)
       ))
     );
+  }
+
+  public nearMe(rad: number = 20): Observable<IReward[]> {
+    return Observable.create(
+      (observer: Observer<any>) => navigator.geolocation.getCurrentPosition((position)=>{
+        observer.next(position)
+      })
+    ).pipe(
+      switchMap((position: any) => 
+        this.http.get<IV4GetRewardsResponse>(`${this.apiHost}/v4/rewards?radius=${rad}&lat=${position.coords.latitude}&lng=${position.coords.longitude}`)
+      ),
+      map((res: IV4GetRewardsResponse) => res.data),
+      map((rewards: IV4Reward[]) => rewards.map(
+         (reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward)
+      ))
+    )
   }
 }
