@@ -86,7 +86,7 @@ export class SignupComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
       accept_terms: [false, Validators.required],
-      accept_marketing: [false, Validators.required]
+      // accept_marketing: [false, Validators.required]
     });
   }
 
