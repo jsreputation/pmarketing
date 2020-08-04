@@ -7,7 +7,8 @@ import {
 import { formatNumber } from '@angular/common';
 import {
   Observable,
-  Observer
+  Observer,
+  of
 } from 'rxjs';
 import {
   map,
@@ -136,6 +137,19 @@ interface IV4Catalog {
 interface IV4CatalogResults {
   count: number;
   first_result_id?: number;
+}
+
+interface IV4Position {
+  coords: {
+    accuracy: number | null;
+    altitude: number | null;
+    altitudeAccuracy: number | null;
+    heading: number | null;
+    latitude: number | null;
+    longitude: number | null;
+    speed: number | null;
+  } | null;
+  timestamp: number | null;
 }
 
 @Injectable({
@@ -390,8 +404,11 @@ export class V4RewardsService extends RewardsService {
   }
 
   public nearMe(rad: number = 20): Observable<IReward[]> {
+    if(!navigator.geolocation) {
+      return of([]);
+    }
     return Observable.create(
-      (observer: Observer<any>) => navigator.geolocation.getCurrentPosition((position)=>{
+      (observer: Observer<IV4Position>) => navigator.geolocation.getCurrentPosition((position)=>{
         observer.next(position)
       })
     ).pipe(
