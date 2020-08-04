@@ -13,7 +13,9 @@ import {
   ISignUpData,
   IProfile,
   ICountryCode,
-  GeneralStaticDataService
+  GeneralStaticDataService,
+  ThemesService,
+  ITheme
 } from '@perxtech/core';
 import {
   map,
@@ -36,7 +38,7 @@ export class SignupComponent implements OnInit {
   public signupForm: FormGroup;
   public errorMessage: string | null;
   public appAccessTokenFetched: boolean = false;
-
+  public theme: Observable<ITheme>;
   public countriesList$: Observable<ICountryCode[]>;
   private destroy$: Subject<void> = new Subject();
 
@@ -47,10 +49,12 @@ export class SignupComponent implements OnInit {
     private authService: AuthenticationService,
     private notificationService: NotificationService,
     public generalStaticDataService: GeneralStaticDataService,
-    private dateAdapter: DateAdapter<Date>
+    private dateAdapter: DateAdapter<Date>,
+    private themesService: ThemesService,
   ) {}
 
   public ngOnInit(): void {
+    this.theme = this.themesService.getThemeSetting();
     this.countriesList$ = this.route.data.pipe(
       map((dataObj) => dataObj.countryList),
       switchMap((countriesList) => this.generalStaticDataService.getCountriesList(countriesList)),
