@@ -6,7 +6,7 @@ import {
 import {
   Router,
   NavigationEnd,
-  Event,
+  Event, ActivatedRoute
 } from '@angular/router';
 import { Location } from '@angular/common';
 import { Title } from '@angular/platform-browser';
@@ -62,6 +62,7 @@ export class LayoutComponent implements OnInit {
   public theme: ITheme;
   public appConfig: IConfig<void>;
   public appRemoteFlags: IFlags;
+  public tenant: string;
 
   private initBackArrow(url: string): void {
     this.backArrowIcon = BACK_ARROW_URLS.some(test => url.startsWith(test)) ? 'arrow_backward' : '';
@@ -70,6 +71,7 @@ export class LayoutComponent implements OnInit {
   constructor(
     private location: Location,
     private router: Router,
+    private route: ActivatedRoute,
     private themesService: ThemesService,
     private titleService: Title,
     private cd: ChangeDetectorRef,
@@ -83,6 +85,12 @@ export class LayoutComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.route.data.subscribe(
+      (dataObj) => {
+        this.tenant = dataObj.tenant;
+        console.log(this.tenant, 'take a look')
+      }
+    );
     this.configService.readAppConfig().pipe(
       tap((config: IConfig<void>) => this.appConfig = config),
       switchMap(() => this.themesService.getThemeSetting()),
