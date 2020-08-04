@@ -82,7 +82,7 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
             text = properties.invoiceNumber ? `Invoice: ${properties.invoiceNumber}` : '';
           } else if (rewardData) {
             // if there is a reward in this transaction it means that it has a associated voucher
-            text = "Obtained voucher";
+            text = 'Obtained voucher';
           }
           return of(text);
         };
