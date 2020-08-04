@@ -88,7 +88,6 @@ export class LayoutComponent implements OnInit {
     this.route.data.subscribe(
       (dataObj) => {
         this.tenant = dataObj.tenant;
-        console.log(this.tenant, 'take a look')
       }
     );
     this.configService.readAppConfig().pipe(
