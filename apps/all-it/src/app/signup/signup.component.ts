@@ -103,6 +103,12 @@ export class SignupComponent implements OnInit {
       return;
     }
 
+    const termsConditions = this.signupForm.value.accept_terms as boolean;
+      if (!termsConditions) {
+        this.errorMessage = 'Please accept the terms and conditions'
+        return;
+      }
+
     const name = this.signupForm.value.name;
     const dob = this.signupForm.value.dob;
 
