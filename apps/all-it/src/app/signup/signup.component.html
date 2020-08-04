@@ -1,5 +1,5 @@
-<div class="main-container">
-        <img src="assets/header_logo.png">
+<div class="main-container"  *ngIf="theme | async as th">
+        <img [attr.src]="th?.properties['--logo']">
         <div class="content-container">
             <div class="main-heading">Sign Up</div>
             <div class="subtitle"><ng-container>Have an account? </ng-container><span class="link" (click)="goToLogin()">Sign In</span></div>
