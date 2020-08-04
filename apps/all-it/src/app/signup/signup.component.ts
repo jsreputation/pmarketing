@@ -79,7 +79,7 @@ export class SignupComponent implements OnInit {
       title: ['', Validators.required],
       name: ['', Validators.required],
       dob: ['', Validators.required],
-      postcode: ['', Validators.required],
+      // postcode: ['', Validators.required],
       countryCode: ['60', Validators.required],
       mobileNo: ['', Validators.required],
       email: ['', Validators.email],
@@ -113,7 +113,7 @@ export class SignupComponent implements OnInit {
     const emailValue = this.signupForm.value.email;
 
     const titleString = this.signupForm.value.title;
-    const postcodeString = this.signupForm.value.postcode;
+    // const postcodeString = this.signupForm.value.postcode;
 
     const signUpData: ISignUpData = {
       lastName: name,
@@ -124,7 +124,7 @@ export class SignupComponent implements OnInit {
       passwordConfirmation: confirmPassword,
       email: emailValue,
       title: titleString,
-      postcode: postcodeString
+      // postcode: postcodeString
     };
 
     this.authService.signup(signUpData)
