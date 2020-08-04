@@ -23,7 +23,7 @@ import {
   MatDialogModule,
   MatMenuModule,
   MatInputModule,
-  MatTableModule
+  MatTableModule, MatAutocompleteModule
 } from '@angular/material';
 import { GameModule } from './game/game.module';
 import { HistoryModule } from './history/history.module';
@@ -80,6 +80,7 @@ import { SignIn2Module } from './sign-in-2/sign-in-2.module';
 import { ProfileModule as BCPProfileModule } from './profile/profile.module';
 import { FindLocationModule } from './find-location/find-location.module';
 import { MatSelectInfiniteScrollModule } from 'ng-mat-select-infinite-scroll';
+import { RewardsPageComponent } from './rewards-page/rewards-page.component';
 
 const comps: any[] = [
   RewardComponent,
@@ -91,7 +92,8 @@ const comps: any[] = [
   RewardsBookingComponent,
   LuckyDrawDetailsComponent,
   ReferralComponent,
-  LeaderboardPageComponent
+  LeaderboardPageComponent,
+  RewardsPageComponent
 ];
 
 @NgModule({
@@ -161,13 +163,14 @@ const comps: any[] = [
     CampaignLandingPageModule,
     LocationModule,
     FindLocationModule,
-    MatSelectInfiniteScrollModule
+    MatSelectInfiniteScrollModule,
+    MatAutocompleteModule
   ],
   exports: [
     ...comps,
   ],
   declarations: [
-    ...comps
+    ...comps,
   ],
   providers: [
     SecondsToStringPipe

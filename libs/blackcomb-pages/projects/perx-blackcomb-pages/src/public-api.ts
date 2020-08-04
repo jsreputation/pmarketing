@@ -50,6 +50,7 @@ export { ChangePasswordComponent } from './lib/change-password/change-password.c
 export { EnterPinComponent } from './lib/enter-pin/enter-pin.component';
 export { EnterPinModule } from './lib/enter-pin/enter-pin.module';
 export { RewardsBookingComponent } from './lib/rewards-booking/rewards-booking.component';
+export { RewardsPageComponent } from './lib/rewards-page/rewards-page.component';
 export { ProfileBarcodeComponent } from './lib/profile-barcode/profile-barcode.component';
 export { ProfileBarcodeModule } from './lib/profile-barcode/profile-barcode.module';
 export { EditProfileFieldComponent } from './lib/edit-profile-field/edit-profile-field.component';
