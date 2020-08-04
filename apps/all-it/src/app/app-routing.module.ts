@@ -32,6 +32,7 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./layout/layout.module').then((mod) => mod.LayoutModule),
+    data: { tenant: 'all-it'},
     canActivate: [PreLoginGuard, ProtectedGuard]
   },
   {

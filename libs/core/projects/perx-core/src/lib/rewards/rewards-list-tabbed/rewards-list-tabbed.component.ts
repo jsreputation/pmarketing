@@ -9,6 +9,8 @@ export interface ITabConfig {
   filterValue: string | null;
   tabName: string;
   rewardsList?: Observable<IReward[]> | null;
+  merchantNames?: string[];
+  rewardNames?: string[];
 }
 
 export interface ITabConfigExtended extends ITabConfig {

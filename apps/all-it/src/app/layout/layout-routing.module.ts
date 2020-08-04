@@ -10,6 +10,9 @@ const routes: Routes = [
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'home' },
       { path: 'home', loadChildren: () => import('../home/home.module').then((mod) => mod.HomeModule) },
+      {
+        path: 'rewards', loadChildren: () => import('../rewards/rewards.module').then(mod => mod.RewardsModule),
+      },
       { path: 'wallet', loadChildren: () => import('../wallet/wallet.module').then((mod) => mod.WalletModule), canActivate: [WalletGuard] },
       {
         path: 'voucher-detail/:id',
