@@ -37,7 +37,7 @@ export class LoyaltyTransactionsListComponent implements OnInit {
     sku: string | undefined;
     qty: string | undefined,
     untprc: string | undefined;
-  }>;
+  } | boolean>;
 
   @Input()
   public descFn: (tr: ILoyaltyTransaction | ITransaction) => Observable<string>;
@@ -67,11 +67,11 @@ export class LoyaltyTransactionsListComponent implements OnInit {
       this.titleFn = (tr: ILoyaltyTransaction) => of(`${tr.name}`);
     }
     if (!this.skuFn) {
-      this.skuFn = (tr: ILoyaltyTransaction) => of({
+      this.skuFn = (tr: ILoyaltyTransaction) => tr.sku ? of({
         sku: tr.sku ? `sku${tr.sku}` : undefined,
         qty: tr.quantity ? (parseInt(tr.quantity, 10) > 1 ? `${tr.quantity} items` : `${tr.quantity} item`) : undefined,
         untprc: tr.purchaseAmount || undefined
-      });
+      }) : of(false);
     }
     if (!this.descFn) {
       this.descFn = () => of('');
