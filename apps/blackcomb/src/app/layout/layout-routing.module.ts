@@ -14,6 +14,10 @@ const routes: Routes = [
         canActivate: [ProtectedGuard]
       },
       {
+        path: 'rewards', loadChildren: () => import('../rewards/rewards.module').then(mod => mod.RewardsModule),
+        canActivate: [ProtectedGuard]
+      },
+      {
         path: 'wallet', loadChildren: () => import('../wallet/wallet.module').then(mod => mod.WalletModule),
         canActivate: [ProtectedGuard]
       },
