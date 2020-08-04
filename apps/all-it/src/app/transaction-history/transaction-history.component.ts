@@ -77,16 +77,24 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
         this.descFn = (tr: ILoyaltyTransactionHistory) => {
           let text = '';
           const properties = oc(tr).transactionDetails.data.properties();
+          const rewardData = (oc(tr).transactionDetails.data() as IRewardTransactionHistory);
           if (properties) {
             text = properties.invoiceNumber ? `Invoice: ${properties.invoiceNumber}` : '';
+          } else if (rewardData) {
+            // if there is a reward in this transaction it means that it has a associated voucher
+            text = "Obtained voucher";
           }
           return of(text);
         };
         this.purchasesTitleFn = (tr: ILoyaltyTransactionHistory) => {
           let text = '';
           const properties = oc(tr).transactionDetails.data.properties();
+          const rewardData = (oc(tr).transactionDetails.data() as IRewardTransactionHistory);
           if (properties) {
             text = properties.productName ? properties.productName : '';
+          } else if (rewardData) {
+            // if there is a reward in this transaction it means that it has a associated voucher
+            text = rewardData.rewardName ? rewardData.rewardName : '';
           }
           return of(text);
         };
