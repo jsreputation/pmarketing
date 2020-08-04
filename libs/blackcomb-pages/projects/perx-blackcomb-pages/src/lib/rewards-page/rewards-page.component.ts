@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { combineLatest, forkJoin, Observable, of, Subject } from 'rxjs';
-import { IPrice, IReward, ITabConfig, RewardsService } from '@perxtech/core';
-import { MatTabChangeEvent } from '@angular/material';
+import { IPrice, IReward, ITabConfig, ITabConfigExtended, RewardsService } from '@perxtech/core';
 import { FormControl } from '@angular/forms';
 import {
   debounceTime,
@@ -58,10 +57,7 @@ export class RewardsPageComponent implements OnInit, OnDestroy {
   @Output()
   public tapped: EventEmitter<IReward> = new EventEmitter<IReward>();
 
-  @Output()
-  public tabChanged: EventEmitter<MatTabChangeEvent> = new EventEmitter<MatTabChangeEvent
-  >();
-
+  public staticTab: ITabConfigExtended[];
   public selectedIndex: number = 0;
   private pageSize: number = 10;
   public searchControl: FormControl = new FormControl();
@@ -113,9 +109,10 @@ export class RewardsPageComponent implements OnInit, OnDestroy {
                 }),
                 takeUntil(this.destroy$),
               ),
-          ),
-        ),
+          )
+        )
       ),
+      tap((tabs: ITabConfigExtended[]) => this.staticTab = tabs)
     );
 
     this.filteredRwdRewardNames = this.searchControl.valueChanges.pipe(
@@ -145,9 +142,6 @@ export class RewardsPageComponent implements OnInit, OnDestroy {
       this.filteredRwdRewardNames,
       this.filteredRwdMerchantNames,
     ).pipe(
-      tap(([rewards, rewardNames, merchantNames]) =>
-        console.log(rewards, rewardNames, merchantNames, 'see everything'),
-      ),
       map(
         ([rewards, rewardNames, merchantNames]: [
           IReward[],
@@ -200,6 +194,31 @@ export class RewardsPageComponent implements OnInit, OnDestroy {
     );
   }
 
+  public onScroll(): void {
+    if (!this.staticTab) {
+      return;
+    }
+    const stTab = this.staticTab[this.selectedIndex];
+    if (!stTab || !stTab.rewardsList || stTab.completePagination) {
+      return;
+    }
+    if (!stTab.rewardsList) {
+      stTab.rewardsList = of([]);
+    }
+    stTab.currentPage = stTab.currentPage ? ++stTab.currentPage : 1;
+    forkJoin(this.rewardsService.getRewards(
+      stTab.currentPage,
+      this.pageSize,
+      undefined,
+      stTab.rewardsType ? [stTab.rewardsType] : undefined), stTab.rewardsList
+    ).subscribe((val) => {
+      if (val[0].length < this.pageSize) {
+        stTab.completePagination = true;
+      }
+      stTab.rewardsList = of([...val[1], ...val[0]]);
+    });
+  }
+
   public filterRewards(tab: ITabConfig): Observable<IReward[]> {
     const rewardsList = tab.rewardsList;
     if (!rewardsList) {
@@ -213,9 +232,6 @@ export class RewardsPageComponent implements OnInit, OnDestroy {
         this.filteredRwdRewardNames,
         this.filteredRwdMerchantNames,
       ),
-      tap(([rewards, rewardNames, merchantNames]) =>
-        console.log(rewards, rewardNames, merchantNames, 'see everything'),
-      ),
       map(
         ([rewards, rewardNames, merchantNames]: [
           IReward[],
@@ -226,13 +242,8 @@ export class RewardsPageComponent implements OnInit, OnDestroy {
             rewardNames.includes(reward.name) ||
             (reward.merchantName &&
               merchantNames.includes(reward.merchantName)))
-      ),
-      tap((result) => console.log(result, 'what is the reuslt??')),
+      )
     );
-  }
-
-  public tabChangedHandler(event: MatTabChangeEvent): void {
-    this.tabChanged.emit(event);
   }
 
   public rewardTappedHandler(reward: IReward): void {

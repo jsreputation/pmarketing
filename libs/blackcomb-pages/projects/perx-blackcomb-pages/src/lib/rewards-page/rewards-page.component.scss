@@ -1,6 +1,9 @@
 .mat-tab-group-wrapper {
-  margin-top: 2rem;
-  min-height: 60rem;
+  width: 96%;
+  margin-right: auto;
+  margin-left: auto;
+  height: 100%;
+  overflow: auto;
 }
 
 .full-width__input {

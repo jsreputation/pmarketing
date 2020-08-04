@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RewardsModule, RewardsService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 const rewardsServiceStub: Partial<RewardsService> = {
   getAllRewards: () => of([]),
@@ -27,6 +28,7 @@ describe('RewardsPageComponent', () => {
         MatIconModule,
         MatInputModule,
         MatTabsModule,
+        InfiniteScrollModule,
         NgxMultiLineEllipsisModule
       ],
       providers: [{ provide: RewardsService, useValue: rewardsServiceStub }],
