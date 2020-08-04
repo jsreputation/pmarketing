@@ -85,7 +85,7 @@ export class SignupComponent implements OnInit {
       email: ['', Validators.email],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
-      accept_terms: [false, Validators.required],
+      accept_terms: [false, Validators.requiredTrue],
       accept_marketing: [false, Validators.required]
     });
   }
@@ -100,12 +100,6 @@ export class SignupComponent implements OnInit {
     const confirmPassword = this.signupForm.get('confirmPassword').value;
     if (passwordString !== confirmPassword) {
       this.errorMessage = 'Passwords do not match';
-      return;
-    }
-
-    const termsConditions = this.signupForm.value.accept_terms as boolean;
-    if (!termsConditions) {
-      this.errorMessage = 'Please accept the terms and conditions';
       return;
     }
 
