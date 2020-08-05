@@ -7,12 +7,10 @@ import {
 import { formatNumber } from '@angular/common';
 import {
   Observable,
-  Observer,
   of
 } from 'rxjs';
 import {
-  map,
-  switchMap
+  map
 } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 
@@ -137,19 +135,6 @@ interface IV4Catalog {
 interface IV4CatalogResults {
   count: number;
   first_result_id?: number;
-}
-
-interface IV4Position {
-  coords: {
-    accuracy: number | null;
-    altitude: number | null;
-    altitudeAccuracy: number | null;
-    heading: number | null;
-    latitude: number | null;
-    longitude: number | null;
-    speed: number | null;
-  } | null;
-  timestamp: number | null;
 }
 
 @Injectable({
@@ -403,22 +388,16 @@ export class V4RewardsService extends RewardsService {
     );
   }
 
-  public nearMe(rad: number = 20): Observable<IReward[]> {
-    if(!navigator.geolocation) {
-      return of([]);
+  public nearMe(rad: number = 20, position: Position): Observable<IReward[]> {
+    if (position) {
+      return this.http.get<IV4GetRewardsResponse>(`${this.apiHost}/v4/rewards?radius=${rad}&lat=${position.coords.latitude}&lng=${position.coords.longitude}`).pipe(
+        map((res: IV4GetRewardsResponse) => res.data),
+        map((rewards: IV4Reward[]) => rewards.map(
+           (reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward)
+        ))
+      )
     }
-    return Observable.create(
-      (observer: Observer<IV4Position>) => navigator.geolocation.getCurrentPosition((position)=>{
-        observer.next(position)
-      })
-    ).pipe(
-      switchMap((position: any) => 
-        this.http.get<IV4GetRewardsResponse>(`${this.apiHost}/v4/rewards?radius=${rad}&lat=${position.coords.latitude}&lng=${position.coords.longitude}`)
-      ),
-      map((res: IV4GetRewardsResponse) => res.data),
-      map((rewards: IV4Reward[]) => rewards.map(
-         (reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward)
-      ))
-    )
+
+    return of([]);
   }
 }
