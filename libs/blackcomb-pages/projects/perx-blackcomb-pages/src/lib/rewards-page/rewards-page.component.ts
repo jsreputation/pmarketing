@@ -12,6 +12,7 @@ import {
   tap,
   withLatestFrom,
 } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'perx-blackcomb-pages-rewards-page',
@@ -20,7 +21,10 @@ import {
 })
 export class RewardsPageComponent implements OnInit, OnDestroy {
   private destroy$: Subject<void> = new Subject();
-  public constructor(protected rewardsService: RewardsService) {}
+  public constructor(
+    protected rewardsService: RewardsService,
+    private router: Router
+  ) {}
 
   @Input()
   public rewards?: Observable<IReward[]>;
@@ -248,6 +252,6 @@ export class RewardsPageComponent implements OnInit, OnDestroy {
 
   public rewardTappedHandler(reward: IReward): void {
     // forward the tapped event
-    this.tapped.emit(reward);
+    this.router.navigate([`/reward-detail/${reward.id}`]);
   }
 }
