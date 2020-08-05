@@ -18,6 +18,7 @@ import {
   ThemesService,
 } from '@perxtech/core';
 import { RewardComponent } from './reward.component';
+import { TokenStorage } from '@perxtech/core';
 
 describe('RewardComponent', () => {
   let component: RewardComponent;
@@ -29,6 +30,11 @@ describe('RewardComponent', () => {
 
   const rewardsServiceStub: Partial<RewardsService> = {
     getAllRewards: () => of(),
+  };
+
+  const tokenStorageStub = {
+    getAppInfoProperty: () => null,
+    setAppInfoProperty: () => { }
   };
 
   beforeEach(async(() => {
@@ -53,6 +59,10 @@ describe('RewardComponent', () => {
           provide: ThemesService,
           useValue: themesServiceStub,
         },
+        {
+          provide: TokenStorage,
+          useValue: tokenStorageStub
+        }
       ]
     })
       .compileComponents();
