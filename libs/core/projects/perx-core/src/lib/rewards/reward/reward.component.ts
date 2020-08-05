@@ -39,9 +39,7 @@ export class RewardComponent implements OnInit {
   @Input()
   public showRewardFavButton?: boolean;
 
-  public favoriteRewards: IReward[] = (
-    this.tokenStorage.getAppInfoProperty('favoriteRewards') as unknown as IReward[]
-  ) || [];
+  public favoriteRewards: IReward[];
 
   public constructor(
     private tokenStorage: TokenStorage
@@ -49,6 +47,9 @@ export class RewardComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.favoriteRewards = (
+      this.tokenStorage.getAppInfoProperty('favoriteRewards') as unknown as IReward[]
+    ) || [];
     this.reward$ = this.rewardInitial$.pipe(
       map(reward => {
         const tncWithOlPadding = reward.termsAndConditions.replace(/(ol>)/, 'ol style="padding-inline-start: 1em;">');

@@ -17,7 +17,7 @@ export class FavoriteRewardsComponent implements OnInit {
     private tokenStorage: TokenStorage
   ) { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
     this.rewardsList$ = of(this.tokenStorage.getAppInfoProperty('favoriteRewards') as unknown as IReward[]);
   }
 
