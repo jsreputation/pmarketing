@@ -34,6 +34,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { V4MicrositeSettingInterceptor } from './themes/v4publicSettings.interceptor';
 import { LocationFilterPopupComponent } from './location-filter-popup/location-filter-popup.component';
 import { PointsToCashPipe } from './directives/points-to-cash.pipe';
+import { CheckIdExistsPipe } from './directives/check-id-exists-pipe';
 
 export function themesServiceFactory(http: HttpClient, config: Config, configService: ConfigService): ThemesService {
   if (config.isWhistler) {
@@ -63,7 +64,8 @@ const pipes = [
   StripHtmlPipe,
   SafeHtmlPipe,
   SafeUrlPipe,
-  PointsToCashPipe
+  PointsToCashPipe,
+  CheckIdExistsPipe
 ];
 
 // make sure we have only one instance of the NotificationService

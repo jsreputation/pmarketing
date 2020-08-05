@@ -28,12 +28,12 @@ export class LocalTokenStorage extends TokenStorage {
     return of(this.appInfo);
   }
 
-  public getAppInfoProperty(key: string): string | undefined {
+  public getAppInfoProperty(key: string): string | any | undefined {
     this.getAppInfo();
     return this.appInfo[key];
   }
 
-  public setAppInfoProperty(value: string | number, key: string): void {
+  public setAppInfoProperty(value: string | number | any[], key: string): void {
     this.getAppInfo();
     this.appInfo[key] = value;
     localStorage.setItem('appInfo', JSON.stringify(this.appInfo));

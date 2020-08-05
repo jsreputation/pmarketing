@@ -5,6 +5,8 @@ import { IReward } from '../models/reward.model';
 import { of } from 'rxjs';
 import { UtilsModule } from '../../utils/utils.module';
 import { MatIconModule } from '@angular/material';
+import { TokenStorage } from '../../utils/storage/token-storage.service';
+import { Config } from '../../config/config';
 
 describe('RewardComponent', () => {
   let component: RewardComponent;
@@ -27,12 +29,21 @@ describe('RewardComponent', () => {
     merchantId: 2
   };
 
+  const tokenStorageStub = {
+    getAppInfoProperty: () => null,
+    setAppInfoProperty: () => { }
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RewardComponent],
       imports: [
         UtilsModule,
         MatIconModule
+      ],
+      providers: [
+        { provide: TokenStorage, useValue: tokenStorageStub },
+        { provide: Config }
       ]
     })
       .compileComponents();

@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { IPrice, IReward } from '../models/reward.model';
 import { map } from 'rxjs/operators';
+import { TokenStorage } from '../../utils/storage/token-storage.service';
 
 @Component({
   selector: 'perx-core-reward',
@@ -38,6 +39,15 @@ export class RewardComponent implements OnInit {
   @Input()
   public showRewardFavButton?: boolean;
 
+  public favoriteRewards: IReward[] = (
+    this.tokenStorage.getAppInfoProperty('favoriteRewards') as unknown as IReward[]
+  ) || [];
+
+  public constructor(
+    private tokenStorage: TokenStorage
+  ) {
+  }
+
   public ngOnInit(): void {
     this.reward$ = this.rewardInitial$.pipe(
       map(reward => {
@@ -62,8 +72,24 @@ export class RewardComponent implements OnInit {
     }
   }
 
-  public rewardFavoriteHandler(reward: IReward): IReward {
-    // wait BE, should click and update backend for user favoriting [PLACEHOLDER]
-    return reward;
+  public rewardFavoriteHandler(rewardToggled: IReward): void {
+    const favoriteRewards = this.tokenStorage.getAppInfoProperty('favoriteRewards');
+    let rwdsArray;
+    if (favoriteRewards) {
+      // if found id remove it, if cant find add it
+      const foundIndex = (favoriteRewards as unknown as IReward[]).findIndex(
+        reward => reward.id === rewardToggled.id);
+      if (foundIndex >= 0) {
+        (favoriteRewards as unknown as IReward[]).splice(foundIndex, 1);
+        rwdsArray = favoriteRewards;
+      } else {
+        rwdsArray = [...favoriteRewards, rewardToggled];
+      }
+    } else {
+      rwdsArray = [rewardToggled];
+    }
+    this.favoriteRewards = rwdsArray;
+    this.tokenStorage.setAppInfoProperty(rwdsArray, 'favoriteRewards');
   }
+
 }

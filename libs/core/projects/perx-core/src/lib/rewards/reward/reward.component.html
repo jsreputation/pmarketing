@@ -9,7 +9,10 @@
     <div class="details">
       <div *ngIf="reward.merchantName" class="merchant-name include-heart">
         <div>{{reward.merchantName}}</div>
-        <mat-icon class="show-pointer" *ngIf="showRewardFavButton" (click)="rewardFavoriteHandler(reward)">{{false ? 'favorite' : 'favorite_border'}}</mat-icon>
+        <mat-icon class="show-pointer"
+                  *ngIf="showRewardFavButton"
+                  (click)="rewardFavoriteHandler(reward)">
+          {{favoriteRewards | checkId: reward.id}}</mat-icon>
       </div>
       <div class="reward-name">
         {{reward.name}}
