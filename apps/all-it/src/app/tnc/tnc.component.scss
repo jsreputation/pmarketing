@@ -8,20 +8,21 @@
 
   ul {
     padding-inline-start: 1rem;
+
     li {
       margin: 0.5rem 0;
     }
   }
 
   h3 {
-    margin-bottom: 0rem;
+    margin-bottom: 0;
   }
 
   .heading {
-      margin-bottom: 0;
+    margin-bottom: 0;
   }
 
-  table, th, td{
+  table, th, td {
     border-collapse: collapse;
     border: 0.1rem solid black;
     padding: 0.5rem;

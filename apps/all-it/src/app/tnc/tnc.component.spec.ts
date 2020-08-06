@@ -10,7 +10,7 @@ describe('TncComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ TncComponent ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
