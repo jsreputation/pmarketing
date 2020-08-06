@@ -14,8 +14,8 @@
     }
   }
 
-  .none {
-    list-style: none;
+  ol {
+    list-style-type: lower-alpha;
     padding-inline-start: 0.5rem;
 
     li {
