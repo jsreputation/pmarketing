@@ -48,6 +48,8 @@ export interface Asset {
 export interface Outcome {
   button_text: string;
   description: string;
+  button_colour?: string;
+  button_text_colour?: string;
   title: string;
   type?: string;
   value?: {
@@ -69,6 +71,8 @@ export interface GameProperties {
     }
   };
   play_button_text?: string;
+  play_button_text_colour?: string;
+  play_button_colour?: string;
   nooutcome?: Outcome;
   outcome?: Outcome;
   background_image?: Asset;

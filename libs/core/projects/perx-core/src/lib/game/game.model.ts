@@ -21,6 +21,8 @@ export interface IGameOutcome {
   subTitle: string;
   image?: string;
   button: string;
+  buttonColour?: string;
+  buttonTextColour?: string;
 }
 export interface IGame {
   id: number;
@@ -32,7 +34,9 @@ export interface IGame {
   texts: {
     title?: string;
     subTitle?: string;
-    button?: string;
+    buttonText?: string;
+    buttonColour?: string;
+    buttonTextColour?: string;
     headerColour?: string;
     subheaderColour?: string;
   };

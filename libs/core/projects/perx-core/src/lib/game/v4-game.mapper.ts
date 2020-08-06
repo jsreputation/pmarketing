@@ -21,7 +21,13 @@ export abstract class GameV4Mapper {
       }
     }
     if (game.display_properties.play_button_text) {
-      texts.button = game.display_properties.play_button_text;
+      texts.buttonText = game.display_properties.play_button_text;
+    }
+    if (game.display_properties.play_button_text_colour) {
+      texts.buttonTextColour = game.display_properties.play_button_text_colour;
+    }
+    if (game.display_properties.play_button_colour) {
+      texts.buttonColour = game.display_properties.play_button_colour;
     }
 
     const results: { [key: string]: IGameOutcome } = {};
@@ -53,7 +59,9 @@ function outcomeToGameOutcome(outcome: Outcome): IGameOutcome {
   const res: IGameOutcome = {
     title: outcome.title,
     subTitle: outcome.description,
-    button: outcome.button_text
+    button: outcome.button_text,
+    buttonColour: outcome.button_colour,
+    buttonTextColour: outcome.button_text_colour
   };
   if (outcome.type === 'image') {
     res.image = oc(outcome).value.image_url() || oc(outcome).value.file();
