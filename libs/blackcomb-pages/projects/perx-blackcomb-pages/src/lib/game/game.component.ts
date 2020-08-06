@@ -89,8 +89,8 @@ export class GameComponent implements OnInit, OnDestroy {
       map((games: IGame[]) => games[0]),
       tap((game: IGame) => {
         if (game) {
-          if (!game.texts.button) {
-            this.translate.get('START_PLAYING').subscribe((text) => game.texts.button = text);
+          if (!game.texts.buttonText) {
+            this.translate.get('START_PLAYING').subscribe((text) => game.texts.buttonText = text);
           }
           const { displayProperties } = game;
           this.gameId = game.id;
