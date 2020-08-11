@@ -48,7 +48,9 @@ export interface Asset {
 export interface Outcome {
   button_text: string;
   description: string;
+  // intentionally not mapped to IGame
   button_colour?: string;
+  //intentionally not mapped to IGame
   button_text_colour?: string;
   title: string;
   type?: string;

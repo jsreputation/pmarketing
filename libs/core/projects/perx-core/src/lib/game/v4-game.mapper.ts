@@ -59,9 +59,7 @@ function outcomeToGameOutcome(outcome: Outcome): IGameOutcome {
   const res: IGameOutcome = {
     title: outcome.title,
     subTitle: outcome.description,
-    button: outcome.button_text,
-    buttonColour: outcome.button_colour,
-    buttonTextColour: outcome.button_text_colour
+    button: outcome.button_text
   };
   if (outcome.type === 'image') {
     res.image = oc(outcome).value.image_url() || oc(outcome).value.file();
