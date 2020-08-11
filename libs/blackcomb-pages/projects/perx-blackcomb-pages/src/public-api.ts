@@ -78,4 +78,5 @@ export { OverviewComponent } from './lib/rebates/overview/overview.component';
 export { TransactionComponent } from './lib/rebates/transaction/transaction.component';
 export { TransactionCompleteComponent } from './lib/rebates/transaction-complete/transaction-complete.component';
 export { TransactionShowComponent } from './lib/rebates/transaction-show/transaction-show.component';
+export { BACK_ARROW_URLS } from './lib/perx-blackcomb-pages.constants';
 
