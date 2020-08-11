@@ -50,7 +50,7 @@ export interface Outcome {
   description: string;
   // intentionally not mapped to IGame
   button_colour?: string;
-  //intentionally not mapped to IGame
+  // intentionally not mapped to IGame
   button_text_colour?: string;
   title: string;
   type?: string;

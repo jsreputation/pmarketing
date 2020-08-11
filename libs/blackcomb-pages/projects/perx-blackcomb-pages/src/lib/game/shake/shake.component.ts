@@ -28,7 +28,7 @@ export class ShakeComponent implements OnInit {
 
   public headerStyle: { [key: string]: string } = {};
   public subheaderStyle: { [key: string]: string } = {};
-  public buttonStyle: { [key: string]: string } = {}
+  public buttonStyle: { [key: string]: string } = {};
 
   public ngOnInit(): void {
     this.headerStyle.color = this.game.texts.headerColour ? this.game.texts.headerColour : '';
