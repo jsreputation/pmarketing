@@ -3,6 +3,14 @@ import { MatButtonModule, MatCardModule, MatDialogModule, MatDialog } from '@ang
 import { NewsfeedComponent } from './newsfeed.component';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 import { TranslateModule } from '@ngx-translate/core';
+import { SettingsService } from '../../settings/settings.service'
+import { of } from 'rxjs';
+
+
+const settingsServiceStub: Partial<SettingsService> = {
+  getRssFeeds: () => of(),
+  getRemoteFlagsSettings: () => of()
+};
 
 describe('NewsfeedComponent', () => {
   let component: NewsfeedComponent;
@@ -37,6 +45,9 @@ describe('NewsfeedComponent', () => {
         NgxMultiLineEllipsisModule,
         MatDialogModule,
         TranslateModule.forRoot()
+      ],
+      providers: [
+        { provide: SettingsService, useValue: settingsServiceStub },
       ]
     })
       .compileComponents();
