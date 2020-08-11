@@ -16,13 +16,12 @@
     </div>
   </div>
   <div class="game-footer">
-      <button 
-        class="js-play ga_start_game" 
-        mat-flat-button 
-        (click)="isEnabled = true"
-        [ngStyle]="{ 'visibility': isEnabled ? 'hidden': 'visible'}"
-        color="primary">
-        {{ game.texts.button }}
+      <button
+        class="js-play ga_start_game"
+        mat-flat-button
+        (click)="onClick()"
+        [ngStyle]="buttonStyle">
+        {{ game.texts.buttonText }}
       </button>
   </div>
 </div>
