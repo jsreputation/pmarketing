@@ -31,7 +31,7 @@ export class NewsfeedComponent implements OnInit {
     private settingsService: SettingsService
   ) { }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.settingsService.getRemoteFlagsSettings().subscribe(
       (flags: IFlags) => {
         this.showButton = oc(flags).showRSSfeedCTA(true);
