@@ -8,7 +8,7 @@ import { of } from 'rxjs';
 import { TncComponent } from './tnc.component';
 
 describe('TncComponent', () => {
-  
+
   const mockTheme: ITheme = {
     name: 'theme',
     properties: {
