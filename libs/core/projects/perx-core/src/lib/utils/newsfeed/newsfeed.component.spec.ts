@@ -3,7 +3,7 @@ import { MatButtonModule, MatCardModule, MatDialogModule, MatDialog } from '@ang
 import { NewsfeedComponent } from './newsfeed.component';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 import { TranslateModule } from '@ngx-translate/core';
-import { SettingsService } from '../../settings/settings.service'
+import { SettingsService } from '../../settings/settings.service';
 import { of } from 'rxjs';
 
 
