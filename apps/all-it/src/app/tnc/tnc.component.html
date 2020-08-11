@@ -1,3 +1,16 @@
+<mat-toolbar class="toolbar mat-elevation-z3">
+    <mat-icon
+    class="backArrow"
+    (click)="backArrowClick()">
+    {{backArrowIcon}}
+    </mat-icon>
+    <a class="logoWrapper" [routerLink]="[ '/home' ]">
+    <img class="logo" [attr.src]="theme.properties['--logo']" [attr.alt]="theme.properties['--title']" />
+    </a>
+    <!-- ghost stuff-->
+    <span></span>
+</mat-toolbar>
+<div class="outer">
 <div class="container">
     <h1>Terms and Conditions</h1>
 
@@ -147,4 +160,5 @@
         <li>ALL IT Hypermarket does not hold any responsibility on partner’s voucher offerings or shall there be any changes.</li>
         <li>ALL IT and its collaborators reserve the right to revise the Terms & Conditions without prior notice.</li>
     </ul>
+</div>
 </div>

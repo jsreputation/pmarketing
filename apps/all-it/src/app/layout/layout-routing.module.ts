@@ -79,11 +79,7 @@ const routes: Routes = [
       {
         path: 'c/contact-us',
         loadChildren: () => import('../contact-us/contact-us.module').then((mod) => mod.ContactUsModule)
-      },
-      {
-        path: 'c/tnc',
-        loadChildren: () => import('../tnc/tnc.module').then((mod) => mod.TncModule)
-      },
+      }
     ]
   }
 ];
