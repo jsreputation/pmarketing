@@ -84,6 +84,10 @@ const routes: Routes = [
         path: 'favorite-rewards',
         loadChildren: () => import('../favorite-rewards/favorite-rewards.module').then((mod) => mod.FavoriteRewardsModule)
       },
+      {
+        path: 'c/tnc',
+        loadChildren: () => import('../tnc/tnc.module').then((mod) => mod.TncModule)
+      },
     ]
   }
 ];

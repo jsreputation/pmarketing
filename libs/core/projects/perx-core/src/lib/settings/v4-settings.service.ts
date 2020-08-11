@@ -33,6 +33,7 @@ import {
   GatekeeperApis
 } from './models/settings.model';
 import { ConfigService } from '../config/config.service';
+import { oc } from 'ts-optchain';
 
 interface IV4FlagsResponse {
   data: IV4Flags;
@@ -133,12 +134,14 @@ export class V4SettingsService extends SettingsService {
 
   public static v4WordPressRssToRss(data: IV4WordPressRss): IRssFeeds {
     const newIRssFeeds: IRssFeeds = { data: [] };
-    data.json_value.blog_section.forEach(rssSection => {
-      newIRssFeeds.data.push({
-        url: rssSection.url,
-        page: rssSection.section
+    if (oc(data).json_value.blog_section()) {
+      data.json_value.blog_section.forEach(rssSection => {
+        newIRssFeeds.data.push({
+          url: rssSection.url,
+          page: rssSection.section
+        });
       });
-    });
+    }
     return newIRssFeeds;
   }
 

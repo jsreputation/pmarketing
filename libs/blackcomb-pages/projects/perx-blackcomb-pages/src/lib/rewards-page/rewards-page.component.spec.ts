@@ -7,6 +7,7 @@ import { RewardsModule, RewardsService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { RouterTestingModule } from '@angular/router/testing';
 
 const rewardsServiceStub: Partial<RewardsService> = {
   getAllRewards: () => of([]),
@@ -29,7 +30,8 @@ describe('RewardsPageComponent', () => {
         MatInputModule,
         MatTabsModule,
         InfiniteScrollModule,
-        NgxMultiLineEllipsisModule
+        NgxMultiLineEllipsisModule,
+        RouterTestingModule,
       ],
       providers: [{ provide: RewardsService, useValue: rewardsServiceStub }],
     }).compileComponents();
