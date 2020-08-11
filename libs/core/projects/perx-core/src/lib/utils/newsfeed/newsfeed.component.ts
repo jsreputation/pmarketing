@@ -1,16 +1,23 @@
-import { Component, Input } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit
+} from '@angular/core';
 import { FeedItem } from '../feed-reader.service';
 import { MatDialog } from '@angular/material';
 import { FeedItemPopupComponent } from '../feed-item-popup/feed-item-popup.component';
 import { Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import { SettingsService } from '../../settings/settings.service';
+import { IFlags } from '../../settings/models/settings.model';
+import { oc } from 'ts-optchain';
 
 @Component({
   selector: 'perx-core-newsfeed',
   templateUrl: './newsfeed.component.html',
   styleUrls: ['./newsfeed.component.scss']
 })
-export class NewsfeedComponent {
+export class NewsfeedComponent implements OnInit {
   // will be passed down to the dialog from readMoreClicked
   @Input()
   public items$: Observable<FeedItem[] | undefined>;
@@ -20,8 +27,17 @@ export class NewsfeedComponent {
 
   constructor(
     private dialog: MatDialog,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private settingsService: SettingsService
   ) { }
+
+  public ngOnInit() {
+    this.settingsService.getRemoteFlagsSettings().subscribe(
+      (flags: IFlags) => {
+        this.showButton = oc(flags).showRSSfeedCTA(true);
+      }
+    );
+  }
 
   public readMore(item: FeedItem): void {
     this.translate.get([item.title || '', item.description || '']).subscribe(res => {
