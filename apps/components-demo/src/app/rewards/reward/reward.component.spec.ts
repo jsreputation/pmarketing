@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { RewardComponent } from './reward.component';
 import {
-  RewardsModule, RewardsService, IReward
+  RewardsModule, RewardsService, IReward, ThemesService, TokenStorage
 } from '@perxtech/core';
 import { MatButtonModule } from '@angular/material';
 import { of } from 'rxjs';
@@ -18,7 +18,13 @@ describe('RewardComponent', () => {
   const rewardsServiceStub: Partial<RewardsService> = {
     getReward: () => of(mockReward)
   };
-
+  const themesServiceStub: Partial<ThemesService> = {
+    getThemeSetting: () => of()
+  };
+  const tokenStorageStub = {
+    getAppInfoProperty: () => null,
+    setAppInfoProperty: () => { }
+  };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -28,7 +34,9 @@ describe('RewardComponent', () => {
       ],
       declarations: [RewardComponent],
       providers: [
-        { provide: RewardsService, useValue: rewardsServiceStub }
+        { provide: RewardsService, useValue: rewardsServiceStub },
+        { provide: ThemesService, useValue: themesServiceStub },
+        { provide: TokenStorage, useValue: tokenStorageStub }
       ]
     })
       .compileComponents();
