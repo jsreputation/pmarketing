@@ -21,7 +21,7 @@ export abstract class GameV4Mapper {
       }
     }
     if (game.display_properties.play_button_text) {
-      texts.buttonText = game.display_properties.play_button_text;
+      texts.button = game.display_properties.play_button_text;
     }
     if (game.display_properties.play_button_text_colour) {
       texts.buttonTextColour = game.display_properties.play_button_text_colour;

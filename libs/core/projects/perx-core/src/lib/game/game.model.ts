@@ -32,7 +32,7 @@ export interface IGame {
   texts: {
     title?: string;
     subTitle?: string;
-    buttonText?: string;
+    button?: string;
     buttonColour?: string;
     buttonTextColour?: string;
     headerColour?: string;
