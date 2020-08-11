@@ -19,7 +19,7 @@ export const games: IGame[] = [
     texts: {
       title: 'Tap the Tree!',
       subTitle: 'Tap the tree and win rewards',
-      button: 'Play',
+      buttonText: 'Play',
     },
     results: {
       outcome: {
@@ -54,7 +54,7 @@ export const games: IGame[] = [
     texts: {
       title: 'Tap the Tree! For Campaign 2',
       subTitle: 'Tap the tree and win rewards',
-      button: 'Play',
+      buttonText: 'Play',
     },
     results: {
       outcome: {
@@ -85,7 +85,7 @@ export const games: IGame[] = [
     texts: {
       title: 'Hit the Pinata!',
       subTitle: 'Hit the Pinata and win rewards',
-      button: 'Play',
+      buttonText: 'Play',
     },
     results: {
       outcome: {
@@ -116,7 +116,7 @@ export const games: IGame[] = [
     texts: {
       title: 'Hit the Pinata! For campaign 2',
       subTitle: 'Hit the Pinata and win rewards',
-      button: 'Play',
+      buttonText: 'Play',
     },
     results: {
       outcome: {
