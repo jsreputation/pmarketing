@@ -25,7 +25,7 @@ const routes: Routes = [
   },
   {
     path: 'otp/:type',
-    loadChildren: (): any => import('./otp/otp.module')
+    loadChildren: () => import('./otp/otp.module')
       .then((mod: any) => mod.OtpModule)
   },
   {
