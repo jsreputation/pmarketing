@@ -38,7 +38,8 @@ import {
   QuizModule,
   SecondsToStringPipe,
   RankModule,
-  LocationModule
+  LocationModule,
+  CampaignServiceModule
 } from '@perxtech/core';
 
 import { RewardComponent } from './reward/reward.component';
@@ -164,7 +165,9 @@ const comps: any[] = [
     LocationModule,
     FindLocationModule,
     MatSelectInfiniteScrollModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    CampaignServiceModule.forRoot(),
+    TranslateModule.forRoot()
   ],
   exports: [
     ...comps,
