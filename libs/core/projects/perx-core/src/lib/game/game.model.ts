@@ -150,11 +150,9 @@ export interface IScratch {
 
 export interface IPointsOutcome {
   id: number;
-  loyalty_program_id: number;
-  outcome_type: OutcomeType.points;
+  outcomeType: OutcomeType.points;
   points: number;
   properties: any;
-  transacted_at: Date
 }
 
 export interface IPlayOutcome {
