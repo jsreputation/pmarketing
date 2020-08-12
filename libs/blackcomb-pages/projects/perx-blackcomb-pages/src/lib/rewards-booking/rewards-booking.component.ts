@@ -139,7 +139,7 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
     )).subscribe(() => {
       this.notificationService.addPopup({
         text: 'You can access your voucher from the wallet',
-        title: 'Download Successful!',
+        title: 'Successfully collected!',
         buttonTxt: 'Go to Wallet',
         imageUrl: 'assets/congrats_image.png',
         afterClosedCallBack: this
