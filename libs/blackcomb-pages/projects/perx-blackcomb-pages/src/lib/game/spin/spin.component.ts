@@ -25,8 +25,10 @@ export class SpinComponent implements OnInit {
 
   public ngOnInit(): void {
     this.themesService.getThemeSetting().subscribe( (theme: ITheme) => {
-      this.buttonStyle['background-color'] = this.game.texts.buttonColour ? this.game.texts.buttonColour : theme.properties['--button_background_color'] ? theme.properties['--button_background_color'] : '';
-      this.buttonStyle.color = this.game.texts.buttonTextColour ? this.game.texts.buttonTextColour : theme.properties['--button_text_color'] ? theme.properties['--button_text_color'] : '';
+      this.buttonStyle['background-color'] = this.game.texts.buttonColour ? this.game.texts.buttonColour :
+        theme.properties['--button_background_color'] ? theme.properties['--button_background_color'] : '';
+      this.buttonStyle.color = this.game.texts.buttonTextColour ? this.game.texts.buttonTextColour :
+        theme.properties['--button_text_color'] ? theme.properties['--button_text_color'] : '';
     });
     this.headerStyle.color = this.game.texts.headerColour ? this.game.texts.headerColour : '';
     this.subheaderStyle.color = this.game.texts.subheaderColour ? this.game.texts.subheaderColour : '';

@@ -9,6 +9,8 @@ import {
   GameModule,
   IGameService,
   IGame,
+  ThemesService,
+  ITheme
 } from '@perxtech/core';
 
 import { of } from 'rxjs';
@@ -36,6 +38,17 @@ describe('ScratchComponent', () => {
     results: {
     }
   };
+  const mockTheme: ITheme = {
+    name: 'theme',
+    properties: {
+      '--background': 'red',
+      '--font_color': 'black'
+    }
+  };
+
+  const themesServiceStub: Partial<ThemesService> = {
+    getThemeSetting: () => of(mockTheme)
+  };
   const gameServiceStub: Partial<IGameService> = {
     get: () => of(),
     getGamesFromCampaign: () => of()
@@ -47,6 +60,7 @@ describe('ScratchComponent', () => {
       imports: [GameModule],
       providers: [
         { provide: IGameService, useValue: gameServiceStub },
+        { provide: ThemesService, useValue: themesServiceStub }
       ]
     })
       .compileComponents();
