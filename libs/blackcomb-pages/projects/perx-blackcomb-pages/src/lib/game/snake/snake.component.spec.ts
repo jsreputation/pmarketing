@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { IGame, SnakeGameComponent } from '@perxtech/core';
+import { IGame, SnakeGameComponent, ThemesService, ITheme } from '@perxtech/core';
 import { SnakeComponent } from './snake.component';
+import { of } from 'rxjs';
 
 describe('SnakeComponent', () => {
   let component: SnakeComponent;
@@ -24,12 +25,26 @@ describe('SnakeComponent', () => {
     results: {
     }
   };
+  const mockTheme: ITheme = {
+    name: 'theme',
+    properties: {
+      '--background': 'red',
+      '--font_color': 'black'
+    }
+  };
+
+  const themesServiceStub: Partial<ThemesService> = {
+    getThemeSetting: () => of(mockTheme)
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         SnakeComponent,
         SnakeGameComponent
+      ],
+      providers: [
+        { provide: ThemesService, useValue: themesServiceStub }
       ]
     })
       .compileComponents();
