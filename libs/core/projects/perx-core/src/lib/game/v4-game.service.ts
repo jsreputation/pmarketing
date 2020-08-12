@@ -217,7 +217,7 @@ export class V4GameService implements IGameService {
     return gameMapper.v4MapToMap(game);
   }
 
-  public play(gameId: number): Observable<IPlayOutcome | void> {
+  public play(gameId: number): Observable<IPlayOutcome> {
     return this.httpClient.put<IV4PlayResponse>(`${this.hostName}/v4/games/${gameId}/play`, null)
       .pipe(
         tap(() => gamesCacheBuster.next(true)), // bust the cache if games has been updated
@@ -303,7 +303,7 @@ export class V4GameService implements IGameService {
       );
   }
 
-  private generatePlayReturn(res: IV4PlayResponse): IPlayOutcome | void {
+  private generatePlayReturn(res: IV4PlayResponse): IPlayOutcome {
     const rewards: IV4Voucher[] = res.data.outcomes.filter((out) => out.outcome_type === OutcomeType.reward) as IV4Voucher[];
     const points: IV4PointsOutcome[] = res.data.outcomes.filter((out) => out.outcome_type === OutcomeType.points) as IV4PointsOutcome[];
     return {

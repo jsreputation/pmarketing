@@ -157,7 +157,7 @@ export class WhistlerGameService implements IGameService {
     return a.campaignId - b.campaignId;
   }
 
-  public play(campaignId: number, gameId: number): Observable<IPlayOutcome | void> {
+  public play(campaignId: number, gameId: number): Observable<IPlayOutcome> {
     const body = {
       data: {
         type: 'transactions',
