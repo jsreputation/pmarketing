@@ -25,8 +25,7 @@ const routes: Routes = [
   },
   {
     path: 'otp/:type',
-    loadChildren: () => import('./otp/otp.module')
-      .then((mod: any) => mod.OtpModule)
+    loadChildren: () => import('./otp/otp.module').then((mod: any) => mod.OtpModule)
   },
   {
     path: 'forgot-password',
