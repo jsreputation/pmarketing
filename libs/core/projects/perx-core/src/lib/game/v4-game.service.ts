@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import {Observable, of, combineLatest, throwError, EMPTY, Subject} from 'rxjs';
+import { Observable, of, combineLatest, throwError, EMPTY, Subject } from 'rxjs';
 import { IGameService } from './igame.service';
 import {
   IGame,
@@ -8,6 +8,7 @@ import {
   IPlayOutcome,
   IEngagementTransaction,
   Error400States,
+  IPointsOutcome,
 } from './game.model';
 import {
   catchError,
@@ -26,6 +27,8 @@ import {
   SpinV4ToV4Mapper,
   TapV4ToV4Mapper
 } from './v4-game.mapper';
+import { TransactionState } from '../transactions/models/transactions.model';
+import { OutcomeType } from '../outcome/models/outcome.model';
 
 const enum GameType {
   shakeTheTree = 'shake_the_tree',
@@ -132,15 +135,22 @@ interface GameResponse {
   data: Game;
 }
 
+interface IV4RewardOutcome extends IV4Voucher {
+  outcome_type: OutcomeType.reward;
+}
+
+
+interface IV4PlayGeneral {
+  campaign_id: number;
+  game_id: number;
+  id: number;
+  use_account_id: number;
+  state: TransactionState;
+  outcomes: (IV4RewardOutcome | IPointsOutcome)[];
+}
+
 interface IV4PlayResponse {
-  data: {
-    campaign_id: number;
-    game_id: number;
-    id: number;
-    outcomes: IV4Voucher[];
-    state: 'reserved' | 'issued';
-    use_account_id: number;
-  };
+  data: IV4PlayGeneral;
 }
 
 interface IV4LightGameCampaign {
@@ -192,18 +202,11 @@ export class V4GameService implements IGameService {
     return gameMapper.v4MapToMap(game);
   }
 
-  public play(gameId: number): Observable<IPlayOutcome> {
+  public play(gameId: number): Observable<IPlayOutcome | void> {
     return this.httpClient.put<IV4PlayResponse>(`${this.hostName}/v4/games/${gameId}/play`, null)
       .pipe(
         tap(() => gamesCacheBuster.next(true)), // bust the cache if games has been updated
-        map((res: IV4PlayResponse) => {
-          // @ts-ignore
-          const vs: IV4Voucher[] = res.data.outcomes.filter((out) => out.outcome_type === 'reward');
-          return {
-            vouchers: vs.map(v => V4VouchersService.v4VoucherToVoucher(v)),
-            rawPayload: res
-          };
-        })
+        map((res: IV4PlayResponse) => this.generatePlayReturn(res))
       );
   }
 
@@ -241,18 +244,23 @@ export class V4GameService implements IGameService {
       .put<IV4PlayResponse>(`${this.hostName}/v4/games/${gameId}/reserve`, null)
       .pipe(
         tap(() => gamesCacheBuster.next(true)),
-        map(res => ({
-          id: res.data.id,
-          voucherIds: res.data.outcomes.map(
-            outcome => outcome.id
-          ).filter(id => id),
-          rewardIds: res.data.outcomes.reduce((accRewardIds, currVouch) => {
-            if (currVouch.reward) {
-              return accRewardIds.concat(currVouch.reward.id);
-            }
-            return accRewardIds;
-          }, [] as number[])
-        })),
+        map(res => {
+          const rewards = res.data.outcomes.filter(outcome => outcome.id && outcome.outcome_type == OutcomeType.reward) as IV4Voucher[];
+          const points = res.data.outcomes.filter(outcome => outcome.id && outcome.outcome_type == OutcomeType.points) as IPointsOutcome[];
+          return {
+            id: res.data.id,
+            voucherIds: rewards.map(
+              outcome => outcome.id
+            ),
+            rewardIds: rewards.reduce((accRewardIds, currVouch) => {
+              if (currVouch.reward) {
+                return accRewardIds.concat(currVouch.reward.id);
+              }
+              return accRewardIds;
+            }, [] as number[]),
+            points
+          };
+        }),
         catchError((err: HttpErrorResponse) => {
           let errorStateObj: { errorState: string };
           if (err.error && err.error.message && err.error.code && err.error.code === 40) {
@@ -275,15 +283,18 @@ export class V4GameService implements IGameService {
       .put<IV4PlayResponse>(`${this.hostName}/v4/game_transactions/${gameId}/confirm`, null)
       .pipe(
         tap(() => gamesCacheBuster.next(true)), // bust the cache if games has been updated
-        map((res: IV4PlayResponse) => {
-          // @ts-ignore
-          const vs: IV4Voucher[] = res.data.outcomes.filter((out) => out.outcome_type === 'reward');
-          return {
-            vouchers: vs.map(v => V4VouchersService.v4VoucherToVoucher(v)),
-            rawPayload: res
-          };
-        })
+        map((res: IV4PlayResponse) => this.generatePlayReturn(res))
       );
+  }
+
+  private generatePlayReturn(res: IV4PlayResponse): IPlayOutcome | void {
+    const rewards: IV4Voucher[] = res.data.outcomes.filter((out) => out.outcome_type === OutcomeType.reward) as IV4Voucher[];
+    const points: IPointsOutcome[] = res.data.outcomes.filter((out) => out.outcome_type === OutcomeType.points) as IPointsOutcome[];
+    return {
+      vouchers: rewards.map(v => V4VouchersService.v4VoucherToVoucher(v)),
+      points,
+      rawPayload: res
+    };
   }
 
   public getActiveGames(): Observable<IGame[]> {

@@ -17,3 +17,11 @@ export interface ITransactionProperties {
   storeName?: string;
   invoiceNumber?: number;
 }
+
+export enum TransactionState {
+  issued = 'issued',
+  redeemed = 'redeemed',
+  expired = 'expired',
+  reserved = 'reserved',
+  released = 'released'
+}
