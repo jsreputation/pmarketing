@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AccountPageObject, ITheme, PagesObject, SettingsService, ThemesService, ConfigService } from '@perxtech/core';
-import { combineLatest, Observable, of, Subject, iif } from 'rxjs';
+import { combineLatest, Observable, of, Subject } from 'rxjs';
 import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 @Component({
@@ -34,14 +34,17 @@ export class ContentComponent implements OnInit, OnDestroy {
       switchMap(() => this.route.params),
       filter((params: Params) => params.key),
       map((params: Params) => params.key),
-      switchMap(key => iif(() => key === 'tnc' || key === 'contact-us',
-        this.http.get(`${this.baseHref}assets/content/${key}.html`, { responseType: 'text' }),
-        combineLatest(of(key), this.settingsService.getAccountSettings()).pipe(
-          map(([k, settings]: [string, PagesObject]) => settings.pages.find(s => s.key === k)),
-          map((page: AccountPageObject) => page.content_url),
-          switchMap((url) => this.http.get(`https://cors-proxy.perxtech.io/?url=${url}`, { responseType: 'text' })),
+      switchMap(key => {
+        return this.http.get(`${this.baseHref}assets/content/${key}.html`, { responseType: 'text' }).pipe(
+          catchError(() => {
+            return combineLatest(of(key), this.settingsService.getAccountSettings()).pipe(
+              map(([k, settings]: [string, PagesObject]) => settings.pages.find(s => s.key === k)),
+              map((page: AccountPageObject) => page.content_url),
+              switchMap((url) => this.http.get(`https://cors-proxy.perxtech.io/?url=${url}`, { responseType: 'text' })),
+            )
+          })
         )
-      )),
+      }),
       catchError(() => {
         this.error$.next(true);
         return of(void 0);
