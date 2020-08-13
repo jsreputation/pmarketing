@@ -391,7 +391,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         }
 
         if (rewardPrice.points && rewardPrice.points > 0) {
-          return of(`${rewardPrice.points}${text}`);
+          return of(`${rewardPrice.points} ${text}`);
         }
         return of(''); // is actually 0 or invalid value default
       })
