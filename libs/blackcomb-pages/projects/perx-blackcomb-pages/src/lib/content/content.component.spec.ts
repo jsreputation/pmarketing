@@ -5,7 +5,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ActivatedRoute, Params } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { PagesObject, SettingsService, ThemesService } from '@perxtech/core';
+import { PagesObject, SettingsService, ThemesService, ConfigService } from '@perxtech/core';
 import { Observable, of, ReplaySubject, throwError } from 'rxjs';
 import { ContentComponent } from './content.component';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -30,6 +30,9 @@ describe('ContentComponent', () => {
       }
     })
   };
+  const configServiceStub: Partial<ConfigService> = {
+    readAppConfig: () => of()
+  };
 
   beforeEach(async(() => {
     params = new ReplaySubject<Params>();
@@ -50,7 +53,8 @@ describe('ContentComponent', () => {
         { provide: SettingsService, useValue: settingsServiceStub },
         { provide: ActivatedRoute, useValue: activatedRouteStub },
         { provide: HttpClient, useValue: httpClientStub },
-        { provide: ThemesService, useValue: themeServiceStub }
+        { provide: ThemesService, useValue: themeServiceStub },
+        { provide: ConfigService, useValue: configServiceStub},
       ]
     })
       .compileComponents();
