@@ -35,7 +35,7 @@ export class ContentComponent implements OnInit, OnDestroy {
       filter((params: Params) => params.key),
       map((params: Params) => params.key),
       switchMap(key => iif(() => key === 'tnc' || key === 'contact-us',
-      this.http.get(`${this.baseHref}assets/content/${key}.html`, { responseType: 'text' }),
+        this.http.get(`${this.baseHref}assets/content/${key}.html`, { responseType: 'text' }),
         combineLatest(of(key), this.settingsService.getAccountSettings()).pipe(
           map(([k, settings]: [string, PagesObject]) => settings.pages.find(s => s.key === k)),
           map((page: AccountPageObject) => page.content_url),
