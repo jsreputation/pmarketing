@@ -301,7 +301,8 @@
     "DESCRIPTION": "Description",
     "TNC": "Terms and Conditions",
     "EXPIRY": "Expiry",
-    "CODE": "Code"
+    "CODE": "Code",
+    "POINT": "Points"
   },
   "LOCATION_PAGE": {
     "FILTER_BY": "Filter by",

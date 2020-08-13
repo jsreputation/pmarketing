@@ -209,7 +209,8 @@
   "REWARD": {
     "GET_VOUCHER": "Get Voucher",
     "DESCRIPTION": "Description",
-    "TNC": "Terms and Conditions"
+    "TNC": "Terms and Conditions",
+    "POINT": "Points"
   },
   "CONTENT_PAGE": "Content Not Found"
 }
