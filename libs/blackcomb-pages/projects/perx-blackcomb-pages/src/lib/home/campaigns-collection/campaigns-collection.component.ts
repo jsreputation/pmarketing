@@ -167,6 +167,10 @@ export class CampaignsCollectionComponent implements OnInit {
   }
 
   public isQuizRewardsEmpty(campaignId: number): boolean {
+    if (!this.withRewardsCounter) {
+      return false;
+    }
+
     if (this.quizzes && this.quizzes.length > 0 && this.gameType === GameType.quiz) {
       const matchingCampaign = this.campaigns.find((campaign: ICampaign) =>
         campaign.id === campaignId

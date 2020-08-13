@@ -35,6 +35,8 @@ export interface IGame {
     title?: string;
     subTitle?: string;
     button?: string;
+    buttonColour?: string;
+    buttonTextColour?: string;
     headerColour?: string;
     subheaderColour?: string;
   };

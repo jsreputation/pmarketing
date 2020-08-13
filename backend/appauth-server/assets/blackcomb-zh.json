@@ -292,7 +292,8 @@
     "DESCRIPTION": "獎勵詳情",
     "TNC": "條款與細則",
     "EXPIRY": "過期",
-    "CODE": "代碼"
+    "CODE": "代碼",
+    "POINT": "點積分"
   },
   "QR": {
     "QR_TO_MERCHANT": "向商家出示此二維碼",

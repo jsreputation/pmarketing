@@ -18,9 +18,8 @@
   <div class="game-footer">
       <button class="js-play ga_start_game"
               mat-flat-button
-              color="primary"
-              [ngStyle]="{ 'visibility': isEnabled ? 'hidden': 'visible'}"
-              (click)="isEnabled = true">
+              [ngStyle]="buttonStyle"
+              (click)="onClick()">
         {{ game.texts.button }}
       </button>
   </div>
