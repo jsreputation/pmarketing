@@ -54,6 +54,7 @@
                                 matInput
                                 [placeholder]="'LOGIN_PAGE.MOBILE_FIELD' | translate"
                                 formControlName="customerID"
+                                required
                                 [value]="">
                             <mat-error *ngIf="loginForm.hasError('required', ['customerID'])">
                                 {{'LOGIN_PAGE.MOBILE_REQUIRED_TXT' | translate}}
