@@ -99,14 +99,11 @@ export class NearmeComponent implements OnInit, OnDestroy {
   }
 
   private isNearMe(radius: number, latitude: number, longitude: number): boolean {
-    const rad = function(x: number) {
-      return x * Math.PI / 180;
-    };
     const earthRadius = 6378137;
-    const dLat = rad(this.position.coords.latitude - latitude);
-    const dLong = rad(this.position.coords.longitude - longitude);
+    const dLat = (this.position.coords.latitude - latitude) * Math.PI / 180;
+    const dLong = (this.position.coords.longitude - longitude) * Math.PI / 180;
     const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(rad(latitude)) * Math.cos(rad(this.position.coords.latitude)) *
+      Math.cos((latitude) * Math.PI / 180) * Math.cos((this.position.coords.latitude) * Math.PI / 180) *
       Math.sin(dLong / 2) * Math.sin(dLong / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     const d = earthRadius * c;
@@ -123,18 +120,20 @@ export class NearmeComponent implements OnInit, OnDestroy {
   }
 
   private updateMarkers(): void {
-    const rad = 10000
+    const rad = 10000;
     this.rewardsService.nearMe(rad, this.position).pipe(
       takeUntil(this.destroy$),
-      mergeMap((rewards: IReward[]) => 
+      mergeMap((rewards: IReward[]) =>
         from(rewards).pipe(
           mergeMap(reward => this.vouchersService.getRewardLocations(reward.id).pipe(
-            mergeMap((locations: IVoucherLocation[]) => 
+            mergeMap((locations: IVoucherLocation[]) =>
               from(locations).pipe(
                 filter((location: IVoucherLocation) => {
                   const lat = location.latitude !== null ? parseFloat(location.latitude) : 0;
                   const lng = location.longitude !== null ? parseFloat(location.longitude) : 0;
-                  if (lat === 0 || lng === 0) return false;
+                  if (lat === 0 || lng === 0) {
+                    return false;
+                  }
                   return this.isNearMe(rad, lat, lng);
                 }),
                 tap((location: IVoucherLocation) => {
@@ -144,10 +143,8 @@ export class NearmeComponent implements OnInit, OnDestroy {
                   const marker = new google.maps.Marker({
                     position: latLng,
                     map: this.map,
-                    title: 'Test',
-                    label: '50 pts'
                   });
-                  marker.addListener('click', () => { 
+                  marker.addListener('click', () => {
                     this.current = reward;
                     this.currentPrice = reward.rewardPrice ? reward.rewardPrice[0] : null;
                   });
