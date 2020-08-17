@@ -35,11 +35,13 @@ export class ShakeComponent implements OnInit {
   public buttonStyle: { [key: string]: string } = {};
 
   public ngOnInit(): void {
+    this.buttonStyle.visibility = 'hidden';
     this.themesService.getThemeSetting().subscribe( (theme: ITheme) => {
       this.buttonStyle['background-color'] = this.game.texts.buttonColour ? this.game.texts.buttonColour :
         theme.properties['--button_background_color'] ? theme.properties['--button_background_color'] : '';
       this.buttonStyle.color = this.game.texts.buttonTextColour ? this.game.texts.buttonTextColour :
         theme.properties['--button_text_color'] ? theme.properties['--button_text_color'] : '';
+      this.buttonStyle.visibility = 'visible';
     });
     this.headerStyle.color = this.game.texts.headerColour ? this.game.texts.headerColour : '';
     this.subheaderStyle.color = this.game.texts.subheaderColour ? this.game.texts.subheaderColour : '';
