@@ -43,7 +43,8 @@ describe('WalletComponent', () => {
   };
 
   const settingsServiceStub: Partial<SettingsService> = {
-    getRssFeeds: () => of()
+    getRssFeeds: () => of(),
+    getRemoteFlagsSettings: () => of()
   };
 
   const campaignServiceStub: Partial<ICampaignService> = {

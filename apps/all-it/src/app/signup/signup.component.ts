@@ -110,7 +110,8 @@ export class SignupComponent implements OnInit {
     const name = this.signupForm.value.name;
     const dob = this.signupForm.value.dob;
 
-    const mobileNumber = this.signupForm.value.mobileNo;
+    // converting to Number will strip leading 0s
+    const mobileNumber: number = Number(this.signupForm.value.mobileNo);
     const countryCode = this.signupForm.value.countryCode;
     const codeAndMobile = countryCode + mobileNumber;
 

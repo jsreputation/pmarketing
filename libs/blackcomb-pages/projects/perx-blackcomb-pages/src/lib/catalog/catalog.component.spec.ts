@@ -18,7 +18,8 @@ describe('CatalogComponent', () => {
     getRewards: () => of()
   };
   const settingsServiceStub: Partial<SettingsService> = {
-    getRssFeeds: () => of()
+    getRssFeeds: () => of(),
+    getRemoteFlagsSettings: () => of()
   };
   const activatedRouteStub = {
     snapshot: {

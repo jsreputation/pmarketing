@@ -16,13 +16,16 @@ const routes: Routes = [
     canActivate: [PublicGuard]
   },
   {
+    path: 'c/tnc',
+    loadChildren: () => import('./tnc/tnc.module').then((mod) => mod.TncModule)
+  },
+  {
     path: 'loading',
     loadChildren: () => import('./loading/loading.module').then((mod) => mod.LoadingModule)
   },
   {
     path: 'otp/:type',
-    loadChildren: (): any => import('./otp/otp.module')
-      .then((mod: any) => mod.OtpModule)
+    loadChildren: () => import('./otp/otp.module').then((mod) => mod.OtpModule)
   },
   {
     path: 'forgot-password',

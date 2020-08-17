@@ -1,10 +1,23 @@
-<div class="container">
+<mat-toolbar class="toolbar mat-elevation-z3">
+    <mat-icon
+    class="backArrow"
+    (click)="backArrowClick()">
+    {{backArrowIcon}}
+    </mat-icon>
+    <a class="logoWrapper" [routerLink]="[ '/home' ]">
+    <img class="logo" [attr.src]="theme.properties['--logo']" [attr.alt]="theme.properties['--title']" />
+    </a>
+    <!-- ghost stuff-->
+    <span></span>
+</mat-toolbar>
+<div class="outer">
+  <div class="container">
     <h1>Terms and Conditions</h1>
 
     <h2>All IT Rewards Program Application Terms & Conditions</h2>
-    
+
     <h3>1. Membership</h3>
-    
+
     <ul>
         <li>This Rewards Card is issued to applicant aged 16 years old and above.</li>
         <li>Applicant must have a valid Malaysian or Singaporean mobile number while registering for membership, in order to receive OTP for verification.</li>
@@ -30,7 +43,7 @@
             </ol>
         </li>
     </ul>
-    
+
     <h3>2. Accumulation of Rewards Points</h3>
     <ul>
         <li>The mobile number that is registered must be presented prior to purchase payment to earn Rewards Points. NO EXCEPTION.</li>
@@ -136,15 +149,5 @@
     <ul>
         <li>Each Member is entitled to redeem 1 exclusive birthday gift during the month of his/her birthday at any of ALL IT outlets.</li>
     </ul>
-
-    <h2 class="heading">All IT Hypermarket Terms of Service</h2>
-    <ul>
-        <li>By downloading the vouchers, you have agreed to all the Terms & Conditions listed on the respective voucher’s page.</li>
-        <li>If voucher is listed with points, that indicates points are needed to download the voucher.</li>
-        <li>Once voucher is downloaded (if points are deducted), the transaction cannot be reversed; thus points are not returnable, refundable, or exchanged for cash.</li>
-        <li>The voucher is not valid once the date expires.</li>
-        <li>Partner’s Deals - Each voucher’s T&Cs may vary according to respective partner’s offerings.</li>
-        <li>ALL IT Hypermarket does not hold any responsibility on partner’s voucher offerings or shall there be any changes.</li>
-        <li>ALL IT and its collaborators reserve the right to revise the Terms & Conditions without prior notice.</li>
-    </ul>
+</div>
 </div>

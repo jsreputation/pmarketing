@@ -87,7 +87,7 @@ const routes: Routes = [
       {
         path: 'c/tnc',
         loadChildren: () => import('../tnc/tnc.module').then((mod) => mod.TncModule)
-      },
+      }
     ]
   }
 ];

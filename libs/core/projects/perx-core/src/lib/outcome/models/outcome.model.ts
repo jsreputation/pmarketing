@@ -19,3 +19,9 @@ export interface IOutcomeMsg {
   image?: string;
   button: string;
 }
+
+export enum OutcomeType {
+  reward = 'reward',
+  points = 'points',
+  custom = 'custom',
+}
