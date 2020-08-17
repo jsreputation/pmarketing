@@ -5,7 +5,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ActivatedRoute, Params } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { PagesObject, SettingsService, ThemesService } from '@perxtech/core';
+import { PagesObject, SettingsService, ThemesService, ConfigService } from '@perxtech/core';
 import { Observable, of, ReplaySubject, throwError } from 'rxjs';
 import { ContentComponent } from './content.component';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -30,6 +30,15 @@ describe('ContentComponent', () => {
       }
     })
   };
+  const configServiceStub: Partial<ConfigService> = {
+    readAppConfig: () => of({
+      apiHost: '',
+      production: false,
+      preAuth: false,
+      isWhistler: false,
+      baseHref: '/'
+    })
+  };
 
   beforeEach(async(() => {
     params = new ReplaySubject<Params>();
@@ -50,7 +59,8 @@ describe('ContentComponent', () => {
         { provide: SettingsService, useValue: settingsServiceStub },
         { provide: ActivatedRoute, useValue: activatedRouteStub },
         { provide: HttpClient, useValue: httpClientStub },
-        { provide: ThemesService, useValue: themeServiceStub }
+        { provide: ThemesService, useValue: themeServiceStub },
+        { provide: ConfigService, useValue: configServiceStub},
       ]
     })
       .compileComponents();
@@ -90,7 +100,7 @@ describe('ContentComponent', () => {
 
       flushMicrotasks();
       expect(getAccountSettingsSpy).toHaveBeenCalledTimes(1);
-      expect(getSpy).toHaveBeenCalledTimes(1);
+      expect(getSpy).toHaveBeenCalledTimes(2);
       expect(getSpy).toHaveBeenCalledWith('https://cors-proxy.perxtech.io/?url=http://failingStuff', { responseType: 'text' });
       const compiled = fixture.debugElement.nativeElement;
       expect(compiled.querySelector('.content')).toBeNull();
@@ -107,14 +117,15 @@ describe('ContentComponent', () => {
         }]
       };
       getAccountSettingsSpy.mockReturnValue(of(pages));
-      getSpy.mockReturnValue('blabla');
+      getSpy.mockReturnValueOnce(throwError('error')).mockReturnValueOnce('blabla');
 
       component.ngOnInit();
       fixture.detectChanges();
 
       flushMicrotasks();
+      expect(getSpy).toHaveBeenCalledWith('/assets/content/test.html', { responseType: 'text' });
       expect(getAccountSettingsSpy).toHaveBeenCalledTimes(1);
-      expect(getSpy).toHaveBeenCalledTimes(1);
+      expect(getSpy).toHaveBeenCalledTimes(2);
       expect(getSpy).toHaveBeenCalledWith('https://cors-proxy.perxtech.io/?url=http://goodStuff', { responseType: 'text' });
       const compiled = fixture.debugElement.nativeElement;
       expect(compiled.querySelector('.content')).not.toBeNull();
@@ -131,14 +142,15 @@ describe('ContentComponent', () => {
         }]
       };
       getAccountSettingsSpy.mockReturnValue(of(pages));
-      getSpy.mockReturnValue(new Observable());
+      getSpy.mockReturnValueOnce(throwError('error')).mockReturnValueOnce(new Observable());
 
       component.ngOnInit();
       fixture.detectChanges();
 
       flushMicrotasks();
+      expect(getSpy).toHaveBeenCalledWith('/assets/content/test.html', { responseType: 'text' });
       expect(getAccountSettingsSpy).toHaveBeenCalledTimes(1);
-      expect(getSpy).toHaveBeenCalledTimes(1);
+      expect(getSpy).toHaveBeenCalledTimes(2);
       expect(getSpy).toHaveBeenCalledWith('https://cors-proxy.perxtech.io/?url=http://goodStuff', { responseType: 'text' });
       const compiled = fixture.debugElement.nativeElement;
       expect(compiled.querySelector('.content')).toBeNull();
@@ -152,14 +164,14 @@ describe('ContentComponent', () => {
       };
       getAccountSettingsSpy.mockReturnValue(of(pages));
       // @ts-ignore
-      getSpy.mockReturnValue('blabla');
+      getSpy.mockReturnValueOnce(throwError('error')).mockReturnValue('blabla');
 
       component.ngOnInit();
       fixture.detectChanges();
 
       flushMicrotasks();
+      expect(getSpy).toHaveBeenCalledWith('/assets/content/test.html', { responseType: 'text' });
       expect(getAccountSettingsSpy).toHaveBeenCalledTimes(1);
-      expect(getSpy).not.toHaveBeenCalled();
       const compiled = fixture.debugElement.nativeElement;
       expect(compiled.querySelector('.content')).toBeNull();
       expect(compiled.querySelector('.error')).toBeDefined();
