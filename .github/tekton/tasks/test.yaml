@@ -19,6 +19,9 @@ spec:
   stepTemplate:
     image: circleci/node:10-browsers
     resources: &resources
+      limits:
+        cpu: 3
+        memory: "10Gi"
       requests:
         cpu: 2
         memory: "8Gi"
