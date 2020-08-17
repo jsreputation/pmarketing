@@ -364,8 +364,8 @@ export class GameComponent implements OnInit, OnDestroy {
     if (this.noRewardsPopUp.buttonTxt) {
       this.translate.get(this.noRewardsPopUp.buttonTxt).subscribe((text) => this.noRewardsPopUp.buttonTxt = text);
     }
-    this.translate.get('GAME_SUCCESS_TEXT_REWARDS').subscribe((text) => this.rewardsTxt = text);
-    this.translate.get('GAME_SUCCESS_TEXT_POINTS').subscribe((text) => this.pointsTxt = text);
+    this.translate.get('GAME_PAGE.GAME_SUCCESS_TEXT_REWARDS').subscribe((text) => this.rewardsTxt = text);
+    this.translate.get('GAME_PAGE.GAME_SUCCESS_TEXT_POINTS').subscribe((text) => this.pointsTxt = text);
   }
 
   public dialogClosed(): void {
