@@ -36,8 +36,8 @@ body {
 }
 
 button {
-  background-color: var(--button_background_color) !important;
-  color: var(--button_text_color) !important;
+  background-color: var(--button_background_color);
+  color: var(--button_text_color);
 }
 
 button:disabled {

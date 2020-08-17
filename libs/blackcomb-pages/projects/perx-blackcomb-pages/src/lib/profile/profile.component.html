@@ -26,9 +26,9 @@
     <p matLine>{{loyaltyMembershipExpiry}}</p>
   </mat-list-item>
 
-  <mat-divider></mat-divider>
+  <mat-divider *ngIf="profile.customProperties && profile.customProperties.postcode"></mat-divider>
 
-  <mat-list-item>
+  <mat-list-item *ngIf="profile.customProperties && profile.customProperties.postcode">
     <p matLine class="label">Postcode</p>
     <p matLine>
       {{(profile.customProperties && profile.customProperties.postcode) ? profile.customProperties.postcode : ''}}</p>

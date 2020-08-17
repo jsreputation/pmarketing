@@ -50,6 +50,7 @@ export { ChangePasswordComponent } from './lib/change-password/change-password.c
 export { EnterPinComponent } from './lib/enter-pin/enter-pin.component';
 export { EnterPinModule } from './lib/enter-pin/enter-pin.module';
 export { RewardsBookingComponent } from './lib/rewards-booking/rewards-booking.component';
+export { RewardsPageComponent } from './lib/rewards-page/rewards-page.component';
 export { ProfileBarcodeComponent } from './lib/profile-barcode/profile-barcode.component';
 export { ProfileBarcodeModule } from './lib/profile-barcode/profile-barcode.module';
 export { EditProfileFieldComponent } from './lib/edit-profile-field/edit-profile-field.component';
@@ -78,3 +79,4 @@ export { TransactionComponent } from './lib/rebates/transaction/transaction.comp
 export { TransactionCompleteComponent } from './lib/rebates/transaction-complete/transaction-complete.component';
 export { TransactionShowComponent } from './lib/rebates/transaction-show/transaction-show.component';
 export { NearmeComponent } from './lib/nearme/nearme.component';
+export { BACK_ARROW_URLS } from './lib/perx-blackcomb-pages.constants';

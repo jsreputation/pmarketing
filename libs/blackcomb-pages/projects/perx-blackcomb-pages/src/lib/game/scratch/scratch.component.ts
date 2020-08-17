@@ -9,6 +9,8 @@ import {
 import {
   IGame,
   IScratch,
+  ThemesService,
+  ITheme
 } from '@perxtech/core';
 
 @Component({
@@ -26,15 +28,20 @@ export class ScratchComponent implements OnInit {
 
   public headerStyle: { [key: string]: string } = {};
   public subheaderStyle: { [key: string]: string } = {};
+  public buttonStyle: { [key: string]: string } = {};
+
+  constructor(private themesService: ThemesService) {}
 
   public ngOnInit(): void {
     this.loaded.emit();
-    if (this.game.texts.headerColour) {
-      this.headerStyle.color = this.game.texts.headerColour;
-    }
-    if (this.game.texts.subheaderColour) {
-      this.subheaderStyle.color = this.game.texts.subheaderColour;
-    }
+    this.themesService.getThemeSetting().subscribe( (theme: ITheme) => {
+      this.buttonStyle['background-color'] = this.game.texts.buttonColour ? this.game.texts.buttonColour :
+        theme.properties['--button_background_color'] ? theme.properties['--button_background_color'] : '';
+      this.buttonStyle.color = this.game.texts.buttonTextColour ? this.game.texts.buttonTextColour :
+        theme.properties['--button_text_color'] ? theme.properties['--button_text_color'] : '';
+    });
+    this.headerStyle.color = this.game.texts.headerColour ? this.game.texts.headerColour : '';
+    this.subheaderStyle.color = this.game.texts.subheaderColour ? this.game.texts.subheaderColour : '';
   }
 
   public isEnabled: boolean = false;
@@ -47,4 +54,8 @@ export class ScratchComponent implements OnInit {
     this.broken.emit();
   }
 
+  public onClick(): void {
+    this.isEnabled = true;
+    this.buttonStyle.visibility = 'hidden';
+  }
 }

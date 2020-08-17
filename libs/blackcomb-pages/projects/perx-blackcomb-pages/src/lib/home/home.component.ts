@@ -349,7 +349,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   private initTranslate(): void {
-    this.subTitleFn = () => this.translate.get('HOME.YOU_HAVE');
+    // this.subTitleFn = () => this.translate.get('HOME.YOU_HAVE');
     this.titleFn = (profile: IProfile) => this.translate.get('HOME.HELLO').pipe(
       map(msg => {
         let returnString = msg;
@@ -391,7 +391,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         }
 
         if (rewardPrice.points && rewardPrice.points > 0) {
-          return of(`${rewardPrice.points}${text}`);
+          return of(`${rewardPrice.points} ${text}`);
         }
         return of(''); // is actually 0 or invalid value default
       })

@@ -1,5 +1,6 @@
 import { IVoucher } from '../vouchers/models/voucher.model';
 import { IWCampaignDisplayProperties } from '@perxtech/whistler';
+import { OutcomeType } from '../outcome/models/outcome.model';
 
 export enum GameType {
   unknown = -1,
@@ -15,6 +16,7 @@ export interface IEngagementTransaction {
   id: number;
   voucherIds?: number[];
   rewardIds?: number[];
+  points?: IPointsOutcome[];
 }
 export interface IGameOutcome {
   title: string;
@@ -33,6 +35,8 @@ export interface IGame {
     title?: string;
     subTitle?: string;
     button?: string;
+    buttonColour?: string;
+    buttonTextColour?: string;
     headerColour?: string;
     subheaderColour?: string;
   };
@@ -146,8 +150,16 @@ export interface IScratch {
   nbTaps: number;
 }
 
+export interface IPointsOutcome {
+  id: number;
+  outcomeType: OutcomeType.points;
+  points: number;
+  properties: any;
+}
+
 export interface IPlayOutcome {
   vouchers: IVoucher[];
+  points?: IPointsOutcome[];
   rawPayload: any;
 }
 

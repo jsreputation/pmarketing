@@ -23,7 +23,7 @@ import {
   MatDialogModule,
   MatMenuModule,
   MatInputModule,
-  MatTableModule
+  MatTableModule, MatAutocompleteModule
 } from '@angular/material';
 import { GameModule } from './game/game.module';
 import { HistoryModule } from './history/history.module';
@@ -38,7 +38,8 @@ import {
   QuizModule,
   SecondsToStringPipe,
   RankModule,
-  LocationModule
+  LocationModule,
+  CampaignServiceModule
 } from '@perxtech/core';
 
 import { RewardComponent } from './reward/reward.component';
@@ -81,6 +82,7 @@ import { ProfileModule as BCPProfileModule } from './profile/profile.module';
 import { FindLocationModule } from './find-location/find-location.module';
 import { MatSelectInfiniteScrollModule } from 'ng-mat-select-infinite-scroll';
 import { NearmeComponent } from './nearme/nearme.component';
+import { RewardsPageComponent } from './rewards-page/rewards-page.component';
 
 const comps: any[] = [
   RewardComponent,
@@ -93,7 +95,8 @@ const comps: any[] = [
   LuckyDrawDetailsComponent,
   ReferralComponent,
   LeaderboardPageComponent,
-  NearmeComponent
+  NearmeComponent,
+  RewardsPageComponent
 ];
 
 @NgModule({
@@ -163,7 +166,10 @@ const comps: any[] = [
     CampaignLandingPageModule,
     LocationModule,
     FindLocationModule,
-    MatSelectInfiniteScrollModule
+    MatSelectInfiniteScrollModule,
+    MatAutocompleteModule,
+    CampaignServiceModule.forRoot(),
+    TranslateModule.forRoot()
   ],
   exports: [
     ...comps,

@@ -16,6 +16,25 @@ import { of } from 'rxjs';
 //   results: {}
 // });
 
+export const mockDataPictureSelect$ = of({
+  questions: [
+    {id: '0',
+      question: 'select a picture',
+      description: 'no description',
+      required: true,
+      payload:  {
+        type: QuizQuestionType.pictureChoice,
+        multiple: true,
+        choices: [{  img_url: 'http://lorempixel.com/200/200/',
+          text: 'testImage1'}, {  img_url: 'http://lorempixel.com/200/200/',
+          text: 'testImage2'}, {  img_url: 'http://lorempixel.com/200/200/',
+          text: 'testImage3'}, {  img_url: 'http://lorempixel.com/200/200/',
+          text: 'testImage4'}, {  img_url: 'http://lorempixel.com/200/200/',
+          text: 'testImage5'}]
+      }},
+  ]
+});
+
 export const mockData$ = of({
   id: '1',
   title: 'mocked quiz',

@@ -3,6 +3,8 @@ import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core
 import { RewardComponent } from './reward.component';
 import { IReward } from '../models/reward.model';
 import { of } from 'rxjs';
+import { UtilsModule } from '../../utils/utils.module';
+import { MatIconModule } from '@angular/material';
 
 describe('RewardComponent', () => {
   let component: RewardComponent;
@@ -28,6 +30,10 @@ describe('RewardComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RewardComponent],
+      imports: [
+        UtilsModule,
+        MatIconModule
+      ]
     })
       .compileComponents();
   }));
@@ -35,6 +41,7 @@ describe('RewardComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RewardComponent);
     component = fixture.componentInstance;
+    component.rewardInitial$ = of(mockReward);
     fixture.detectChanges();
   });
 
@@ -43,7 +50,6 @@ describe('RewardComponent', () => {
   });
 
   it('reward name should be displayed', fakeAsync(() => {
-    component.reward$ = of(mockReward);
     component.ngOnInit();
     fixture.detectChanges();
     tick();

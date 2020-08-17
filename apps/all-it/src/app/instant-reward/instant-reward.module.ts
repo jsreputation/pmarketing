@@ -11,7 +11,6 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [RewardComponent],
   imports: [
     CommonModule,
     RewardsModule,

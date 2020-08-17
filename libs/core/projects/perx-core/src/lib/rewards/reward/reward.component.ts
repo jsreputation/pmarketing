@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { IPrice, IReward } from '../models/reward.model';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-core-reward',
@@ -9,6 +10,8 @@ import { IPrice, IReward } from '../models/reward.model';
 })
 export class RewardComponent implements OnInit {
   @Input('reward')
+  public rewardInitial$: Observable<IReward>;
+
   public reward$: Observable<IReward>;
 
   @Input()
@@ -32,8 +35,16 @@ export class RewardComponent implements OnInit {
   @Input()
   public expiryLabel: Observable<string> = of('Expiry');
 
+  @Input()
+  public showRewardFavButton?: boolean;
 
   public ngOnInit(): void {
+    this.reward$ = this.rewardInitial$.pipe(
+      map(reward => {
+        const tncWithOlPadding = reward.termsAndConditions.replace(/(ol>)/, 'ol style="padding-inline-start: 1em;">');
+        return {...reward, termsAndConditions: tncWithOlPadding};
+      })
+    );
     if (!this.displayPriceFn) {
       this.displayPriceFn = (rewardPrice: IPrice) => {
         if (rewardPrice.price && parseFloat(rewardPrice.price) > 0) {
@@ -49,5 +60,10 @@ export class RewardComponent implements OnInit {
         return of(''); // is actually 0 or invalid value default
       };
     }
+  }
+
+  public rewardFavoriteHandler(reward: IReward): IReward {
+    // wait BE, should click and update backend for user favoriting [PLACEHOLDER]
+    return reward;
   }
 }

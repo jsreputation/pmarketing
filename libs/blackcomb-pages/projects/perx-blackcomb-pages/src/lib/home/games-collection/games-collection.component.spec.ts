@@ -8,10 +8,24 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { GamesCollectionComponent } from './games-collection.component';
 import { MatCardModule } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
+import { ThemesService, ITheme } from '@perxtech/core';
+import { of } from 'rxjs';
 
 describe('GamesCollectionComponent', () => {
+  const mockTheme: ITheme = {
+    name: 'theme',
+    properties: {
+      '--background': 'red',
+      '--font_color': 'black'
+    }
+  };
+
   let component: GamesCollectionComponent;
   let fixture: ComponentFixture<GamesCollectionComponent>;
+
+  const themesServiceStub: Partial<ThemesService> = {
+    getThemeSetting: () => of(mockTheme)
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -20,6 +34,12 @@ describe('GamesCollectionComponent', () => {
         MatCardModule,
         RouterTestingModule,
         TranslateModule.forRoot()
+      ],
+      providers: [
+        {
+          provide: ThemesService,
+          useValue: themesServiceStub
+        }
       ]
     })
       .compileComponents();

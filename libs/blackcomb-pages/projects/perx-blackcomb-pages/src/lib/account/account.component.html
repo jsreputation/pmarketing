@@ -17,6 +17,9 @@
           <mat-list-item *ngIf="aConfig.showReferralOnAccountsPage" routerLink="/referral">
             {{'ACCOUNT_PAGE.REFER_FRIEND' | translate}}
           </mat-list-item>
+          <mat-list-item *ngIf="aConfig.showRewardFavButton" routerLink="/favorite-rewards">
+            <mat-icon>favorite</mat-icon>&nbsp;&nbsp;{{'ACCOUNT_PAGE.FAVORITE_REWARD' | translate}}
+          </mat-list-item>
         </mat-nav-list>
       </div>
 

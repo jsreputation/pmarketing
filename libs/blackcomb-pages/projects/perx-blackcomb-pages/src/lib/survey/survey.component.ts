@@ -5,7 +5,8 @@ import {
   ViewChild,
   ElementRef,
   NgZone,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  Input
 } from '@angular/core';
 import {
   NotificationService,
@@ -17,7 +18,7 @@ import {
 } from '@perxtech/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable, Subject, of } from 'rxjs';
-import { filter, switchMap, takeUntil, map, catchError } from 'rxjs/operators';
+import { catchError, filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SurveyComponent as SurveyCoreComponent } from '@perxtech/core';
@@ -38,6 +39,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
   @ViewChild('overFarrow', { static: false }) private overFarrow: ElementRef;
   @ViewChild('coreSurvey', { static: false })
   private coreSurvey: SurveyCoreComponent;
+  @Input('data')
   public data$: Observable<ISurvey>;
   public intervalId: number;
   public survey: ISurvey;
@@ -50,6 +52,15 @@ export class SurveyComponent implements OnInit, OnDestroy {
   private informationCollectionSetting: string;
   private destroy$: Subject<void> = new Subject();
   private popupData: IPopupConfig;
+  public progressBarValue: number;
+  public updateProgressValue(event: Event): void {
+    const currentTarget: Element = event && event.currentTarget as unknown as Element;
+    const winScroll: number = (currentTarget && (currentTarget as Element).scrollTop) || 0;
+    const height = currentTarget.scrollHeight - currentTarget.clientHeight;
+    const scrolled = (winScroll / height) * 100;
+    this.progressBarValue = scrolled;
+  }
+
   public successPopUp: IPopupConfig = {
     title: 'SURVEY_SUCCESS_TITLE',
     text: 'SURVEY_SUCCESS_TEXT',
@@ -187,22 +198,6 @@ export class SurveyComponent implements OnInit, OnDestroy {
       'click',
       this.hideArrow
     );
-  }
-
-  public get progressBarValue(): number {
-    const surveyId =
-      this.survey && this.survey.id
-        ? Number.parseInt(this.survey.id, 10)
-        : null;
-    // current questionPointer, WARNING: not implemented yet, stub
-    if (surveyId) {
-      this.surveyService.patchSurveyAnswer(
-        this.answers,
-        this.route.snapshot.params.id,
-        surveyId
-      );
-    }
-    return ((this.questionPointer + 1) / this.totalLength) * 100 || 0;
   }
 
   public get surveyComplete(): boolean {
