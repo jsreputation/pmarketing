@@ -111,7 +111,13 @@ export class SignIn2Component implements OnInit, OnDestroy {
       countryCode &&
       countryCode.value
     ) {
-      return `${countryCode.value}${customerIdField.value}`;
+      let sanitizedId: string = customerIdField.value;
+      // converting to Number will strip leading 0s
+      const numberedId = Number(sanitizedId);
+      if (!isNaN(numberedId)) {
+        sanitizedId = numberedId.toString();
+      }
+      return `${countryCode.value}${sanitizedId}`;
     }
     return '';
   }

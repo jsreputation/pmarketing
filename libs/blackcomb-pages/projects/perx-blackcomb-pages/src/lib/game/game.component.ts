@@ -9,6 +9,7 @@ import {
   AuthenticationService,
   NotificationService,
   IPrePlayStateData,
+  IPointsOutcome,
 } from '@perxtech/core';
 import { map, tap, first, filter, switchMap, bufferCount, catchError, takeUntil } from 'rxjs/operators';
 import { Observable, interval, throwError, Subject, combineLatest } from 'rxjs';
@@ -33,19 +34,20 @@ export class GameComponent implements OnInit, OnDestroy {
   private isAnonymousUser: boolean;
   private informationCollectionSetting: string;
   private rewardCount: string;
+  private points: IPointsOutcome;
   public willWin: boolean = false;
   public successPopUp: IPopupConfig = {
-    title: 'GAME_SUCCESS_TITLE',
-    text: 'GAME_SUCCESS_TEXT',
-    buttonTxt: 'VIEW_REWARD',
+    title: 'GAME_PAGE.GAME_SUCCESS_TITLE',
+    text: 'GAME_PAGE.GAME_SUCCESS_TEXT',
+    buttonTxt: 'GAME_PAGE.VIEW_REWARD',
     imageUrl: 'assets/congrats_image.png',
     ctaButtonClass: 'ga_game_completion'
   };
 
   public noRewardsPopUp: IPopupConfig = {
-    title: 'GAME_NO_REWARDS_TITLE',
-    text: 'GAME_NO_REWARDS_TEXT',
-    buttonTxt: 'BACK_TO_WALLET',
+    title: 'GAME_PAGE.GAME_NO_REWARDS_TITLE',
+    text: 'GAME_PAGE.GAME_NO_REWARDS_TEXT',
+    buttonTxt: 'GAME_PAGE.BACK_TO_WALLET',
     imageUrl: '',
   };
 
@@ -55,6 +57,8 @@ export class GameComponent implements OnInit, OnDestroy {
     buttonTxt: 'BACK_TO_WALLET',
     imageUrl: '',
   };
+  public rewardsTxt: string;
+  public pointsTxt: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -139,10 +143,11 @@ export class GameComponent implements OnInit, OnDestroy {
         if (gameTransaction.voucherIds && gameTransaction.voucherIds.length > 0) {
           // set this as a property
           this.rewardCount = gameTransaction.voucherIds.length.toString();
-          this.fillSuccess(this.rewardCount);
-        } else {
-          this.fillFailure();
         }
+        if (gameTransaction.points) {
+          this.points = gameTransaction.points[0];
+        }
+        this.checkFailureOrSuccess();
       },
       (err: { errorState: string } | HttpErrorResponse) => {
         if (!(err instanceof HttpErrorResponse) && err.errorState) {
@@ -177,9 +182,11 @@ export class GameComponent implements OnInit, OnDestroy {
           // set this as a property
           this.rewardCount = gameOutcome.vouchers.length.toString();
           this.fillSuccess(this.rewardCount);
-        } else {
-          this.fillFailure();
         }
+        if (gameOutcome.points) {
+          this.points = gameOutcome.points[0];
+        }
+        this.checkFailureOrSuccess();
       },
       () => {
         this.popupData = this.noRewardsPopUp;
@@ -209,10 +216,14 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   // mutates willWin property, succespopup text and popup data
-  private fillSuccess(rewardCount: string): void {
+  private fillSuccess(rewardCount?: string, pointsOutcome?: IPointsOutcome): void {
     this.willWin = true;
-    this.successPopUp.text =
-      this.successPopUp.text ? this.successPopUp.text.replace('{{rewards}}', rewardCount) : `You earned ${rewardCount} rewards`;
+    if (rewardCount && parseInt(rewardCount, 10) > 0) {
+      this.successPopUp.text += this.rewardsTxt.replace('{{rewards}}', rewardCount);
+    }
+    if (pointsOutcome) {
+      this.successPopUp.text += this.pointsTxt.replace('{{points}}', pointsOutcome.points.toString());
+    }
     this.popupData = this.successPopUp;
   }
 
@@ -221,18 +232,27 @@ export class GameComponent implements OnInit, OnDestroy {
     this.popupData = this.noRewardsPopUp;
   }
 
+  private checkFailureOrSuccess(): void {
+    if (this.rewardCount || this.points) {
+      this.fillSuccess(this.rewardCount, this.points);
+    } else {
+      this.fillFailure();
+    }
+  }
+
   public gameCompleted(): void {
     const gameOutcome$ = this.gameService.play(
       this.gameId
     ).pipe(
       tap((gameOutcome: IPlayOutcome) => {
-        if (gameOutcome.vouchers.length > 0) {
+        if (gameOutcome.vouchers.length > 0 || gameOutcome.points) {
           // set this as a property
           this.rewardCount = gameOutcome.vouchers.length.toString();
-          this.fillSuccess(this.rewardCount);
-        } else {
-          this.fillFailure();
         }
+        if (gameOutcome && gameOutcome.points) {
+          this.points = gameOutcome.points[0];
+        }
+        this.checkFailureOrSuccess();
       }),
       catchError((err: HttpErrorResponse) => {
         this.popupData = this.noRewardsPopUp;
@@ -258,24 +278,26 @@ export class GameComponent implements OnInit, OnDestroy {
     const userAction$: Observable<IEngagementTransaction | IPlayOutcome> = this
       .gameService.prePlayConfirm(this.transactionId, this.informationCollectionSetting).pipe(
         tap((response: IEngagementTransaction | IPlayOutcome) => {
+
           if (this.isIEngagementTrascation(response)) {
             const gameTransaction = response as IEngagementTransaction;
             if (gameTransaction.voucherIds && gameTransaction.voucherIds.length > 0) {
               // set this as a property
               this.rewardCount = gameTransaction.voucherIds.length.toString();
-              this.fillSuccess(this.rewardCount);
-            } else {
-              this.fillFailure();
+            }
+            if (gameTransaction.points) {
+              this.points = gameTransaction.points[0];
             }
           } else if (this.isIPlayOutcome(response)) {
             const vouchers = response.vouchers;
             if (vouchers.length > 0) {
               this.rewardCount = vouchers.length.toString();
-              this.fillSuccess(this.rewardCount);
-            } else {
-              this.fillFailure();
+            }
+            if (response.points) {
+              this.points = response.points[0];
             }
           }
+          this.checkFailureOrSuccess();
         }),
         catchError((err: HttpErrorResponse) => {
           this.popupData = this.noRewardsPopUp;
@@ -342,6 +364,8 @@ export class GameComponent implements OnInit, OnDestroy {
     if (this.noRewardsPopUp.buttonTxt) {
       this.translate.get(this.noRewardsPopUp.buttonTxt).subscribe((text) => this.noRewardsPopUp.buttonTxt = text);
     }
+    this.translate.get('GAME_SUCCESS_TEXT_REWARDS').subscribe((text) => this.rewardsTxt = text);
+    this.translate.get('GAME_SUCCESS_TEXT_POINTS').subscribe((text) => this.pointsTxt = text);
   }
 
   public dialogClosed(): void {

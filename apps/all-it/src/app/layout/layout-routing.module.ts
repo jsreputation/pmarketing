@@ -10,6 +10,9 @@ const routes: Routes = [
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'home' },
       { path: 'home', loadChildren: () => import('../home/home.module').then((mod) => mod.HomeModule) },
+      {
+        path: 'rewards', loadChildren: () => import('../rewards/rewards.module').then(mod => mod.RewardsModule),
+      },
       { path: 'wallet', loadChildren: () => import('../wallet/wallet.module').then((mod) => mod.WalletModule), canActivate: [WalletGuard] },
       {
         path: 'voucher-detail/:id',
@@ -72,11 +75,7 @@ const routes: Routes = [
       {
         path: 'booking/:id',
         loadChildren: () => import('../rewards-booking/rewards-booking.module').then((mod) => mod.RewardsBookingModule)
-      },
-      {
-        path: 'c/contact-us',
-        loadChildren: () => import('../contact-us/contact-us.module').then((mod) => mod.ContactUsModule)
-      },
+      }
     ]
   }
 ];

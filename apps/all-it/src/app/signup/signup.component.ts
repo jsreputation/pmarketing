@@ -13,7 +13,9 @@ import {
   ISignUpData,
   IProfile,
   ICountryCode,
-  GeneralStaticDataService
+  GeneralStaticDataService,
+  ThemesService,
+  ITheme
 } from '@perxtech/core';
 import {
   map,
@@ -36,7 +38,7 @@ export class SignupComponent implements OnInit {
   public signupForm: FormGroup;
   public errorMessage: string | null;
   public appAccessTokenFetched: boolean = false;
-
+  public theme: Observable<ITheme>;
   public countriesList$: Observable<ICountryCode[]>;
   private destroy$: Subject<void> = new Subject();
 
@@ -47,10 +49,12 @@ export class SignupComponent implements OnInit {
     private authService: AuthenticationService,
     private notificationService: NotificationService,
     public generalStaticDataService: GeneralStaticDataService,
-    private dateAdapter: DateAdapter<Date>
+    private dateAdapter: DateAdapter<Date>,
+    private themesService: ThemesService,
   ) {}
 
   public ngOnInit(): void {
+    this.theme = this.themesService.getThemeSetting();
     this.countriesList$ = this.route.data.pipe(
       map((dataObj) => dataObj.countryList),
       switchMap((countriesList) => this.generalStaticDataService.getCountriesList(countriesList)),
@@ -79,13 +83,13 @@ export class SignupComponent implements OnInit {
       title: ['', Validators.required],
       name: ['', Validators.required],
       dob: ['', Validators.required],
-      postcode: ['', Validators.required],
+      // postcode: ['', Validators.required],
       countryCode: ['60', Validators.required],
       mobileNo: ['', Validators.required],
       email: ['', Validators.email],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
-      accept_terms: [false, Validators.required],
+      accept_terms: [false, Validators.requiredTrue],
       accept_marketing: [false, Validators.required]
     });
   }
@@ -106,14 +110,15 @@ export class SignupComponent implements OnInit {
     const name = this.signupForm.value.name;
     const dob = this.signupForm.value.dob;
 
-    const mobileNumber = this.signupForm.value.mobileNo;
+    // converting to Number will strip leading 0s
+    const mobileNumber: number = Number(this.signupForm.value.mobileNo);
     const countryCode = this.signupForm.value.countryCode;
     const codeAndMobile = countryCode + mobileNumber;
 
     const emailValue = this.signupForm.value.email;
 
     const titleString = this.signupForm.value.title;
-    const postcodeString = this.signupForm.value.postcode;
+    // const postcodeString = this.signupForm.value.postcode;
 
     const signUpData: ISignUpData = {
       lastName: name,
@@ -124,7 +129,7 @@ export class SignupComponent implements OnInit {
       passwordConfirmation: confirmPassword,
       email: emailValue,
       title: titleString,
-      postcode: postcodeString
+      // postcode: postcodeString
     };
 
     this.authService.signup(signUpData)

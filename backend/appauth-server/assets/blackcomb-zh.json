@@ -292,7 +292,8 @@
     "DESCRIPTION": "獎勵詳情",
     "TNC": "條款與細則",
     "EXPIRY": "過期",
-    "CODE": "代碼"
+    "CODE": "代碼",
+    "POINT": "點積分"
   },
   "QR": {
     "QR_TO_MERCHANT": "向商家出示此二維碼",
@@ -310,7 +311,16 @@
     "VIEW_LOCATION": "查看位置"
   },
   "GAME_PAGE": {
-    "STAMPS_LABEL_TXT": "個新的印章"
+    "STAMPS_LABEL_TXT": "個新的印章",
+    "GAME_NO_REWARDS_TITLE": "感謝參與",
+    "GAME_NO_REWARDS_TEXT": "很遺憾，這次您沒有贏得任何獎金",
+    "GAME_SUCCESS_TITLE": "恭喜!",
+    "GAME_SUCCESS_TEXT": "您獲得了",
+    "GAME_SUCCESS_TEXT_REWARDS": "{{rewards}}份獎勵",
+    "GAME_SUCCESS_TEXT_POINTS": "{{points}}積分",
+    "BACK_TO_WALLET": "回到錢包頁面",
+    "GAME_NOT_VALID": "哎呀!",
+    "GAME_NOT_VALID_TEXT": "您目前無法使用該遊戲."
   },
   "Gold": "黃金",
   "Silver": "銀卡",

@@ -123,7 +123,8 @@ jobs:
           [ $APP == 'feature-demo' ] || \
           [ $APP == 'partners-demo' ] || \
           [ $APP == 'perx-demo' ] || \
-          [ $APP == 'zeal' ]
+          [ $APP == 'zeal' ] || \
+          [ $APP == 'hsbcph-blackcomb' ]
           then
             APP_BASE="blackcomb"
           else

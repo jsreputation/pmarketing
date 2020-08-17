@@ -1,6 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { CampaignLandingPage, ICampaign, ICampaignService } from '@perxtech/core';
+import {
+  CampaignLandingPage,
+  ConfigService,
+  ICampaign,
+  ICampaignService
+} from '@perxtech/core';
 import { Subject } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
@@ -8,7 +13,6 @@ import { oc } from 'ts-optchain';
 @Component({
   selector: 'perx-blackcomb-pages-campaign-landing-page',
   templateUrl: './campaign-landing-page.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./campaign-landing-page.component.scss']
 })
 export class CampaignLandingPageComponent implements OnInit, OnDestroy {
@@ -20,12 +24,14 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private campaignService: ICampaignService,
+    private configService: ConfigService,
     private router: Router
   ) { }
 
   public ngOnInit(): void {
-    this.activatedRoute.params
+    this.configService.readAppConfig()
       .pipe(
+        switchMap(() => this.activatedRoute.params),
         filter((params: Params) => params.cid),
         map((params: Params) => Number.parseInt(params.cid, 10)),
         switchMap((id) => this.campaignService.getCampaign(id))

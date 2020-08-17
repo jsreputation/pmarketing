@@ -8,6 +8,7 @@ import { MatToolbarModule, MatIconModule, MatDialogModule } from '@angular/mater
 import { ThemesService, ConfigModule, ConfigService, ITheme, SettingsService } from '@perxtech/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 describe('LayoutComponent', () => {
   const mockTheme: ITheme = {
@@ -32,6 +33,10 @@ describe('LayoutComponent', () => {
 
   const settingsServiceStub: Partial<SettingsService> = {
     getRemoteFlagsSettings: () => of()
+  };
+
+  const activatedRouteStub: Partial<ActivatedRoute> = {
+    data: of()
   };
 
   beforeEach(async(() => {
@@ -61,6 +66,10 @@ describe('LayoutComponent', () => {
         {
           provide: SettingsService,
           useValue: settingsServiceStub
+        },
+        {
+          provide: ActivatedRoute,
+          useValue: activatedRouteStub
         },
         Title
       ]

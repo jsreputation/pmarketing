@@ -184,6 +184,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
           this.router.navigate(['/']);
         } else {
           this.loading = false;
+          this.authenticationService.logout();
           this.notificationService.addPopup({
             title: 'Membership required',
             text: 'Please purchase a valid membership before logging in',

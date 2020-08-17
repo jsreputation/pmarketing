@@ -28,6 +28,12 @@
           <span translate>NAVIGATION.HOME</span>
         </div>
       </a>
+      <a matRipple [routerLink]="[ '/rewards' ]" routerLinkActive="active" *ngIf="tenant !== 'all-it' && appConfig.showRewardFavButton">
+        <div class="nav-item">
+          <mat-icon aria-hidden="false">card_giftcard</mat-icon>
+          <span translate>NAVIGATION.REWARDS</span>
+        </div>
+      </a>
       <a matRipple [routerLink]="[ '/wallet' ]" routerLinkActive="active">
         <div class="nav-item">
           <mat-icon aria-hidden="false">account_balance_wallet</mat-icon>
