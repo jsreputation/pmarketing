@@ -27,6 +27,8 @@
     "build:hsbc": "ts-node --project tsconfig.node.json apps/hsbc/set-env.ts && nx build hsbc --",
     "build:hsbc:production": "env-cmd -f apps/hsbc/env/hsbc.production ts-node --project tsconfig.node.json apps/hsbc/set-env.ts && nx build hsbc --prod --",
     "build:hsbc:staging": "env-cmd -f apps/hsbc/env/hsbc.staging ts-node --project tsconfig.node.json apps/hsbc/set-env.ts && nx build hsbc --prod --",
+    "build:hsbcph-blackcomb:production": "env-cmd -f apps/blackcomb/env/hsbcph.production ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && nx build --prod --",
+    "build:hsbcph-blackcomb:staging": "env-cmd -f apps/blackcomb/env/hsbcph.production ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && nx build --prod --",
     "build:hsbchk:production": "env-cmd -f apps/hsbchk/env/hsbchk.production ts-node --project tsconfig.node.json apps/hsbchk/set-env.ts && nx build hsbchk --prod --",
     "build:hsbchk:staging": "env-cmd -f apps/hsbchk/env/hsbchk.staging ts-node --project tsconfig.node.json apps/hsbchk/set-env.ts && nx build hsbchk --configuration staging --",
     "build:merck-customer": "ts-node --project tsconfig.node.json apps/merck-customer/set-env.ts && nx build merck-customer --",
