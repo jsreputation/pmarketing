@@ -16,6 +16,7 @@ import { Observable, interval, throwError, Subject, combineLatest } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { IPlayOutcome } from '@perxtech/core';
+import { globalCacheBusterNotifier } from 'ngx-cacheable';
 
 @Component({
   selector: 'perx-blackcomb-pages-game',
@@ -328,6 +329,7 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   private redirectUrlAndPopUp(): void {
+    globalCacheBusterNotifier.next();
     const state: IPrePlayStateData = {
       popupData: this.popupData,
       engagementType: 'game',
