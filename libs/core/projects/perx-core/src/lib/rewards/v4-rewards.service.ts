@@ -393,9 +393,9 @@ export class V4RewardsService extends RewardsService {
       return this.http.get<IV4GetRewardsResponse>(`${this.apiHost}/v4/rewards?radius=${rad}&lat=${position.coords.latitude}&lng=${position.coords.longitude}`).pipe(
         map((res: IV4GetRewardsResponse) => res.data),
         map((rewards: IV4Reward[]) => rewards.map(
-           (reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward)
+          (reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward)
         ))
-      )
+      );
     }
 
     return of([]);
