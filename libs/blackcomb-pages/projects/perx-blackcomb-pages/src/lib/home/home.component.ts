@@ -349,7 +349,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   private initTranslate(): void {
-    this.subTitleFn = () => this.translate.get('HOME.YOU_HAVE');
+    // this.subTitleFn = () => this.translate.get('HOME.YOU_HAVE');
     this.titleFn = (profile: IProfile) => this.translate.get('HOME.HELLO').pipe(
       map(msg => {
         let returnString = msg;
