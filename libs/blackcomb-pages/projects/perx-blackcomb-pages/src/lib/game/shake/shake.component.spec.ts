@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ShakeComponent } from './shake.component';
-import { GameModule, IGameService, IGame } from '@perxtech/core';
+import { GameModule, IGameService, IGame, ITheme, ThemesService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { By } from '@angular/platform-browser';
 
@@ -25,7 +25,17 @@ describe('ShakeComponent', () => {
     results: {
     }
   };
+  const mockTheme: ITheme = {
+    name: 'theme',
+    properties: {
+      '--background': 'red',
+      '--font_color': 'black'
+    }
+  };
 
+  const themesServiceStub: Partial<ThemesService> = {
+    getThemeSetting: () => of(mockTheme)
+  };
   const gameServiceStub: Partial<IGameService> = {
     get: () => of(),
     getGamesFromCampaign: () => of()
@@ -38,7 +48,8 @@ describe('ShakeComponent', () => {
         GameModule
       ],
       providers: [
-        { provide: IGameService, useValue: gameServiceStub }
+        { provide: IGameService, useValue: gameServiceStub },
+        { provide: ThemesService, useValue: themesServiceStub }
       ]
     })
       .compileComponents();

@@ -26,6 +26,65 @@
         border: 1px solid black;
         border-collapse: collapse;
       }
+
+      .tnc {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding: 0 1.6rem;
+        overflow-y: auto;
+        height: 100%;
+
+        ul {
+          padding-inline-start: 1.6rem;
+
+          li {
+            margin: 0.5rem 0;
+          }
+        }
+
+        ol {
+          list-style-type: lower-alpha;
+          padding-inline-start: 0.5rem;
+
+          li {
+            margin: 0.5rem 0;
+          }
+        }
+
+        h3 {
+          margin-bottom: 0;
+        }
+
+        .heading {
+          margin-bottom: 0;
+        }
+
+        table, th, td {
+          border-collapse: collapse;
+          border: 0.1rem solid black;
+          padding: 0.5rem;
+        }
+      }
+
+      .contact-us {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding: 0 1.6rem;
+
+        .address-table {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+
+          .row {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+          }
+        }
+      }
     }
   }
 

@@ -2,9 +2,9 @@ import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { AccountPageObject, ITheme, PagesObject, SettingsService, ThemesService } from '@perxtech/core';
+import { AccountPageObject, ITheme, PagesObject, SettingsService, ThemesService, ConfigService } from '@perxtech/core';
 import { combineLatest, Observable, of, Subject } from 'rxjs';
-import { catchError, filter, map, switchMap, takeUntil } from 'rxjs/operators';
+import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-blackcomb-pages-content',
@@ -16,6 +16,7 @@ export class ContentComponent implements OnInit, OnDestroy {
   public error$: Subject<boolean> = new Subject<boolean>();
   private destroy$: Subject<void> = new Subject();
   public theme: ITheme;
+  public baseHref: string;
 
   constructor(
     private settingsService: SettingsService,
@@ -23,24 +24,29 @@ export class ContentComponent implements OnInit, OnDestroy {
     private http: HttpClient,
     private themeService: ThemesService,
     private location: Location,
-    private router: Router
+    private router: Router,
+    private configService: ConfigService
   ) { }
 
   public ngOnInit(): void {
-    this.content$ = this.route.params
-      .pipe(
-        filter((params: Params) => params.key),
-        map((params: Params) => params.key),
-        switchMap(k => combineLatest(of(k), this.settingsService.getAccountSettings())),
-        map(([k, settings]: [string, PagesObject]) => settings.pages.find(s => s.key === k)),
-        map((page: AccountPageObject) => page.content_url),
-        switchMap((url) => this.http.get(`https://cors-proxy.perxtech.io/?url=${url}`, { responseType: 'text' })),
-        catchError(() => {
-          this.error$.next(true);
-          return of(void 0);
-        }),
-        takeUntil(this.destroy$)
-      );
+    this.content$ = this.configService.readAppConfig().pipe(
+      tap(config => this.baseHref = config.baseHref),
+      switchMap(() => this.route.params),
+      filter((params: Params) => params.key),
+      map((params: Params) => params.key),
+      switchMap(key => this.http.get(`${this.baseHref}assets/content/${key}.html`, { responseType: 'text' }).pipe(
+        catchError(() => combineLatest(of(key), this.settingsService.getAccountSettings()).pipe(
+          map(([k, settings]: [string, PagesObject]) => settings.pages.find(s => s.key === k)),
+          map((page: AccountPageObject) => page.content_url),
+          switchMap((url) => this.http.get(`https://cors-proxy.perxtech.io/?url=${url}`, { responseType: 'text' })),
+        ))
+      )),
+      catchError(() => {
+        this.error$.next(true);
+        return of(void 0);
+      }),
+      takeUntil(this.destroy$)
+    );
 
     this.themeService.getThemeSetting().subscribe(theme => this.theme = theme);
   }

@@ -16,6 +16,7 @@ export interface IFlags {
   showStampCampaigns?: boolean;
   showLoyaltyBlockOnHomePage?: boolean;
   gatekeeperUrl?: string;
+  showRSSfeedCTA?: boolean;
 }
 
 export interface IRssFeeds {

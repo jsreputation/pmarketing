@@ -112,6 +112,7 @@
   },
   "NAVIGATION": {
     "HOME": "Home",
+    "REWARDS": "Rewards",
     "WALLET": "Wallet",
     "HISTORY": "History",
     "LEADER_BOARD": "Leaderboard",
@@ -301,7 +302,8 @@
     "DESCRIPTION": "Description",
     "TNC": "Terms and Conditions",
     "EXPIRY": "Expiry",
-    "CODE": "Code"
+    "CODE": "Code",
+    "POINT": "Points"
   },
   "LOCATION_PAGE": {
     "FILTER_BY": "Filter by",
@@ -314,7 +316,17 @@
     "VIEW_LOCATION": "View location"
   },
   "GAME_PAGE": {
-    "STAMPS_LABEL_TXT": " new stamps"
+    "STAMPS_LABEL_TXT": " new stamps",
+    "GAME_NO_REWARDS_TITLE": "Thanks for playing",
+    "GAME_NO_REWARDS_TEXT": "Unfortunately, you did not win anything this time",
+    "GAME_SUCCESS_TITLE": "Congratulations!",
+    "GAME_SUCCESS_TEXT": "You earned",
+    "GAME_SUCCESS_TEXT_REWARDS": " {rewards}} rewards",
+    "GAME_SUCCESS_TEXT_POINTS": " {{points}} points",
+    "GAME_NOT_VALID": "Oops!",
+    "BACK_TO_WALLET": "Back to wallet",
+    "GAME_NOT_VALID_TEXT": "This game is not available for you at the moment.",
+    "View Reward": "This game is not available for you at the moment."
   },
   "Gold": "Gold",
   "Silver": "Silver",

@@ -1,4 +1,8 @@
 mat-list {
+  height: 100%;
+  display: block;
+  overflow-x: auto;
+
   p {
     color: #1b1b25;
     font-size: 1.4rem;

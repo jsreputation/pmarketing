@@ -6,7 +6,7 @@ import {
 import {
   Router,
   NavigationEnd,
-  Event,
+  Event, ActivatedRoute
 } from '@angular/router';
 import { Location } from '@angular/common';
 import { Title } from '@angular/platform-browser';
@@ -42,6 +42,7 @@ import { LeaderboardPageComponent } from '../leaderboard-page/leaderboard-page.c
 import { FindLocationComponent } from '../find-location/find-location.component';
 import { RebatesWalletComponent } from '../rebates/rebates-wallet/rebates-wallet.component';
 import { NearmeComponent } from '../nearme/nearme.component';
+import { RewardsPageComponent } from '../rewards-page/rewards-page.component';
 
 export interface ShowTitleInHeader {
   getTitle(): string;
@@ -62,6 +63,7 @@ export class LayoutComponent implements OnInit {
   public theme: ITheme;
   public appConfig: IConfig<void>;
   public appRemoteFlags: IFlags;
+  public tenant: string;
 
   private initBackArrow(url: string): void {
     this.backArrowIcon = BACK_ARROW_URLS.some(test => url.startsWith(test)) ? 'arrow_backward' : '';
@@ -70,6 +72,7 @@ export class LayoutComponent implements OnInit {
   constructor(
     private location: Location,
     private router: Router,
+    private route: ActivatedRoute,
     private themesService: ThemesService,
     private titleService: Title,
     private cd: ChangeDetectorRef,
@@ -83,6 +86,11 @@ export class LayoutComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.route.data.subscribe(
+      (dataObj) => {
+        this.tenant = dataObj.tenant;
+      }
+    );
     this.configService.readAppConfig().pipe(
       tap((config: IConfig<void>) => this.appConfig = config),
       switchMap(() => this.themesService.getThemeSetting()),
@@ -118,6 +126,7 @@ export class LayoutComponent implements OnInit {
       ref instanceof FindLocationComponent ||
       ref instanceof TransactionHistoryComponent ||
       ref instanceof RebatesWalletComponent ||
+      ref instanceof RewardsPageComponent ||
       ref instanceof NearmeComponent;
     this.cd.detectChanges();
   }

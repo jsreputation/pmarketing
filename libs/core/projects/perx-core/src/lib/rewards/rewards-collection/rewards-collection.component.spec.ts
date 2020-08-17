@@ -10,6 +10,7 @@ import { IReward } from '../models/reward.model';
 import { MaterialModule } from '../../shared/material.module';
 import { UtilsModule } from '../../utils/utils.module';
 import { ThemesService } from '../../utils/themes/themes.service';
+import { MatIconModule } from '@angular/material';
 
 describe('RewardsCollectionComponent', () => {
   let component: RewardsCollectionComponent;
@@ -96,6 +97,7 @@ describe('RewardsCollectionComponent', () => {
       imports: [
         MaterialModule,
         UtilsModule,
+        MatIconModule
       ],
       providers: [
         { provide: ThemesService, useValue: themesServiceStub }

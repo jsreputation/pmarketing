@@ -12,7 +12,9 @@ import {
   IGame,
   AuthenticationService,
   NotificationService,
-  ConfigService
+  ConfigService,
+  ThemesService,
+  ITheme
 } from '@perxtech/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -77,10 +79,21 @@ const gameSignup: IGame = {
   },
 };
 
+const mockTheme: ITheme = {
+  name: 'theme',
+  properties: {
+    '--background': 'red',
+    '--font_color': 'black'
+  }
+};
+
 describe('GameComponent', () => {
   let component: GameComponent;
   let fixture: ComponentFixture<GameComponent>;
 
+  const themesServiceStub: Partial<ThemesService> = {
+    getThemeSetting: () => of(mockTheme)
+  };
   const gameServiceStub: Partial<IGameService> = {
     getGamesFromCampaign: () => of([gamePi]),
     prePlay: () => of(),
@@ -128,7 +141,8 @@ describe('GameComponent', () => {
         { provide: Router, useValue: routerStub },
         { provide: AuthenticationService, useValue: authServiceStub },
         { provide: NotificationService, useValue: notificationServiceStub },
-        { provide: ConfigService, useValue: configServiceStub }
+        { provide: ConfigService, useValue: configServiceStub },
+        { provide: ThemesService, useValue: themesServiceStub }
       ]
     })
       // .overrideModule(BrowserDynamicTestingModule, { set: { entryComponents: [PopupComponent] } })

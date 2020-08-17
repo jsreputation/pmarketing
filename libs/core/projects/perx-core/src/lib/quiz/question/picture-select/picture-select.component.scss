@@ -1,13 +1,14 @@
 .choice-container {
   display: flex;
   flex-wrap: wrap;
+  margin-top: 1rem; // leave a bit space for if the qn has description
 
   .choice-content {
     display: flex;
     flex: 1 1 13rem;
     flex-direction: column;
     overflow: hidden;
-    margin: 0 1rem 1rem 0;
+    margin: 0 1rem 1rem 3rem;
 
     &:nth-child(2n) {
       margin: 0 0 1rem 1rem;
@@ -20,6 +21,7 @@
       background-size: cover;
       border-radius: 8px;
       min-height: 13rem;
+      max-width: 13rem; // for overflow to kick in and border-radius all sides
       overflow: hidden;
 
       &:focus {
@@ -29,7 +31,6 @@
       img {
         object-fit: contain;
         position: absolute;
-        width: 100%;
         height: 100%;
         cursor: pointer;
       }
@@ -47,6 +48,9 @@
       line-height: 1.6rem;
       letter-spacing: 0.4px;
       color: #212121;
+      max-width: 13rem; // consistent with the image and allow text position center correctly
+      margin-top: 0.5rem; // space from the image
+      text-align: center;
     }
   }
 }

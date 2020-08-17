@@ -12,7 +12,9 @@
         </svg>
       </div>
       <mat-card-content>
-        <div class="subtitle-1 ellipsis-1-line">{{reward.name}}</div>
+        <div class="subtitle-1 include-heart"><div class="ellipsis-1-line">{{reward.name}}</div>
+          <mat-icon *ngIf="showRewardFavButton" class="show-pointer" (click)="rewardFavoriteHandler(reward)">{{false ? 'favorite' : 'favorite_border'}}</mat-icon></div>
+        <!-- favorited property not added to reward yet but will look for this property to decide which icon to use-->
         <!--
         have to repeat div declaration because the directive reads the
         dom to insert ellipsis and will otherwise render angular logic code
