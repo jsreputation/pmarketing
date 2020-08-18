@@ -163,7 +163,9 @@ export class V4VouchersService implements IVoucherService {
   public static v4LocationToLocation(v: IV4VoucherLocation): IVoucherLocation {
     return {
       id: v.id,
-      name: v.name
+      name: v.name,
+      latitude: v.latitude,
+      longitude: v.longitude
     };
   }
 

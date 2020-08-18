@@ -118,7 +118,8 @@
     "LEADER_BOARD": "Leaderboard",
     "DEALS": "Deals",
     "ACCOUNT": "Account",
-    "PAY": "Pay"
+    "PAY": "Pay",
+    "NEARME": "Near Me"
   },
   "QUIZ_TEMPLATE": {
     "CTA_START_TXT": "Take the quiz",
