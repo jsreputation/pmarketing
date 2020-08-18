@@ -18,7 +18,8 @@ import {
 } from '@perxtech/core';
 
 import {
-  Subject, from
+  Subject,
+  from
 } from 'rxjs';
 import { takeUntil, mergeMap, filter, tap } from 'rxjs/operators';
 
@@ -50,7 +51,7 @@ export class NearmeComponent implements OnInit, OnDestroy {
     this.userLocation
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
-        this.updateMarkers();
+        this.updateMarkers(this.position);
       });
 
     this.loadScript()
@@ -68,7 +69,7 @@ export class NearmeComponent implements OnInit, OnDestroy {
             this.updateUserPosition(position);
             this.position = position;
           });
-        this.updateMarkers();
+        this.updateMarkers(this.position);
       });
   }
 
@@ -119,9 +120,13 @@ export class NearmeComponent implements OnInit, OnDestroy {
     });
   }
 
-  private updateMarkers(): void {
+  private updateMarkers(position: Position): void {
+    if (!position) {
+      return;
+    }
+
     const rad = 10000;
-    this.rewardsService.nearMe(rad, this.position).pipe(
+    this.rewardsService.nearMe(rad, position).pipe(
       takeUntil(this.destroy$),
       mergeMap((rewards: IReward[]) =>
         from(rewards).pipe(

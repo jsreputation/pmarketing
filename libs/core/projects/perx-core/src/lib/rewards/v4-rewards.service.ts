@@ -7,7 +7,6 @@ import {
 import { formatNumber } from '@angular/common';
 import {
   Observable,
-  of
 } from 'rxjs';
 import {
   map
@@ -389,15 +388,11 @@ export class V4RewardsService extends RewardsService {
   }
 
   public nearMe(rad: number = 20, position: Position): Observable<IReward[]> {
-    if (position) {
-      return this.http.get<IV4GetRewardsResponse>(`${this.apiHost}/v4/rewards?radius=${rad}&lat=${position.coords.latitude}&lng=${position.coords.longitude}`).pipe(
-        map((res: IV4GetRewardsResponse) => res.data),
-        map((rewards: IV4Reward[]) => rewards.map(
-          (reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward)
-        ))
-      );
-    }
-
-    return of([]);
+    return this.http.get<IV4GetRewardsResponse>(`${this.apiHost}/v4/rewards?radius=${rad}&lat=${position.coords.latitude}&lng=${position.coords.longitude}`).pipe(
+      map((res: IV4GetRewardsResponse) => res.data),
+      map((rewards: IV4Reward[]) => rewards.map(
+        (reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward)
+      ))
+    );
   }
 }
