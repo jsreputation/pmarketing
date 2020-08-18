@@ -81,6 +81,7 @@ import { SignIn2Module } from './sign-in-2/sign-in-2.module';
 import { ProfileModule as BCPProfileModule } from './profile/profile.module';
 import { FindLocationModule } from './find-location/find-location.module';
 import { MatSelectInfiniteScrollModule } from 'ng-mat-select-infinite-scroll';
+import { NearmeComponent } from './nearme/nearme.component';
 import { RewardsPageComponent } from './rewards-page/rewards-page.component';
 
 const comps: any[] = [
@@ -94,6 +95,7 @@ const comps: any[] = [
   LuckyDrawDetailsComponent,
   ReferralComponent,
   LeaderboardPageComponent,
+  NearmeComponent,
   RewardsPageComponent
 ];
 

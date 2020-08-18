@@ -135,6 +135,11 @@ const routes: Routes = [
         loadChildren: () => import('../locations/locations.module')
           .then(mod => mod.LocationsModule),
         canActivate: [ProtectedGuard]
+      },
+      {
+        path: 'nearme',
+        loadChildren: () => import('../nearme/nearme.module').then(mod => mod.NearmeModule),
+        canActivate: [ProtectedGuard]
       }
     ]
   }

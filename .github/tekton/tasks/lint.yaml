@@ -12,9 +12,12 @@ spec:
   stepTemplate:
     image: circleci/node:10
     resources: &resources
+      limits:
+        cpu: 3
+        memory: "4Gi"
       requests:
         cpu: 2
-        memory: "4Gi"
+        memory: "3Gi"
   steps:
     - name: yarn-install
       workingDir: "/workspace/project"

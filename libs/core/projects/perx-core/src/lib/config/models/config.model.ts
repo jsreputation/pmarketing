@@ -33,6 +33,7 @@ export interface IConfig<T> {
   showQrPageSubtitle?: boolean;
   showUserQR?: boolean;
   showHistoryPage?: boolean;
+  showNearMePage?: boolean;
 
   /* Login page */
   showSubtitleLogin?: boolean;
