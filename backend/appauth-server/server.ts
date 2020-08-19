@@ -30,7 +30,7 @@ app.use(express.json());
 app.use('/static', express.static('static'));
 
 const PORT = process.env.PORT || 4000;
-const EXPRESS_DIST_FOLDER = join(process.cwd(), 'dist');
+const EXPRESS_DIST_FOLDER = join(__dirname, 'dist');
 const appPath = join(EXPRESS_DIST_FOLDER, '../../perx-microsite');
 
 const BASE_HREF = process.env.BASE_HREF || '/';

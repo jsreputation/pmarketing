@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import fs from 'fs';
 import { join } from 'path';
 
-const EXPRESS_DIST_FOLDER = join(process.cwd());
+const EXPRESS_DIST_FOLDER = join(__dirname);
 
 export const language = () => (req: Request, res: Response, next: NextFunction) => {
   try {
