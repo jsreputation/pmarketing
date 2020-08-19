@@ -8,6 +8,8 @@
     "start:abenson:staging": "env-cmd -f apps/abenson/env/abenson.staging.dev ts-node --project tsconfig.node.json apps/abenson/set-env.ts && yarn nx serve abenson --",
     "build:all-it:production": "env-cmd -f apps/all-it/env/all-it.production ts-node --project tsconfig.node.json apps/all-it/set-env.ts && yarn nx build all-it --prod --",
     "build:all-it:staging": "env-cmd -f apps/all-it/env/all-it.staging ts-node --project tsconfig.node.json apps/all-it/set-env.ts && yarn nx build all-it --prod --",
+    "start:all-it:production": "env-cmd -f apps/all-it/env/all-it.production.dev ts-node --project tsconfig.node.json apps/all-it/set-env.ts && yarn nx serve all-it --",
+    "start:all-it:staging": "env-cmd -f apps/all-it/env/all-it.staging.dev ts-node --project tsconfig.node.json apps/all-it/set-env.ts && yarn nx serve all-it --",
     "build:backend": "nx build appauth-server --prod",
     "build:blackcomb": "ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx build blackcomb --",
     "build:blackcomb:production": "env-cmd -f apps/blackcomb/env/blackcomb.production ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx build blackcomb --prod --",
