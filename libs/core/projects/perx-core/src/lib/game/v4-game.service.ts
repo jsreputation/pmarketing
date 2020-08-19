@@ -208,7 +208,7 @@ export class V4GameService implements IGameService {
     };
   }
 
-  private static v4GameToGame(game: Game): IGame {
+  private static v4GameToGame(game: Game, campaign?: ICampaign): IGame {
     const gameMapperFetcher = {
       shake_the_tree: new ShakeV4ToV4Mapper(),
       hit_the_pinata: new TapV4ToV4Mapper(),
@@ -220,7 +220,11 @@ export class V4GameService implements IGameService {
     if (!gameMapper) {
       throw new Error(`${game.game_type} is not mapped yet`);
     }
-    return gameMapper.v4MapToMap(game);
+    return {
+      ...gameMapper.v4MapToMap(game),
+      campaignName: campaign ? campaign.name : '',
+      campaignDescription: campaign ? campaign.description: ''
+    };
   }
 
   public play(gameId: number): Observable<IPlayOutcome> {
@@ -249,12 +253,12 @@ export class V4GameService implements IGameService {
     shouldCacheDecider: gamesCacheDecider,
     maxCacheCount: 50
   })
-  public getGamesFromCampaign(campaignId: number): Observable<IGame[]> {
-    return this.httpClient.get<GamesResponse>(`${this.hostName}/v4/campaigns/${campaignId}/games`)
+  public getGamesFromCampaign(campaign: ICampaign): Observable<IGame[]> {
+    return this.httpClient.get<GamesResponse>(`${this.hostName}/v4/campaigns/${campaign.id}/games`)
       .pipe(
         map(res => res.data),
         map((games: Game[]) => games.filter((game: Game) => game.game_type !== GameType.quiz)),
-        map((games: Game[]) => games.map((game: Game): IGame => V4GameService.v4GameToGame(game))),
+        map((games: Game[]) => games.map((game: Game): IGame => V4GameService.v4GameToGame(game, campaign))),
         catchError(_ => EMPTY)
       );
   }
