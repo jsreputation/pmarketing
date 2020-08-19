@@ -14,6 +14,7 @@ import { Observable, of } from 'rxjs';
 import { ConfigModule } from '../config/config.module';
 import { RedemptionType } from '../perx-core.models';
 import { ConfigService } from '../../lib/config/config.service';
+import { ICampaignService } from '../../lib/campaign/icampaign.service';
 
 jest.mock('ngx-cacheable', () => ({
   // tslint:disable-next-line:variable-name
@@ -39,7 +40,9 @@ describe('V4GameService', () => {
   const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of(environment)
   };
-
+  const campaignServiceStub: Partial<ICampaignService> = {
+    getCampaigns: () => of()
+  };
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -47,7 +50,8 @@ describe('V4GameService', () => {
         ConfigModule.forRoot({ ...environment })
       ],
       providers: [
-        { provide: ConfigService, useValue: configServiceStub }
+        { provide: ConfigService, useValue: configServiceStub },
+        { provide: ICampaignService, useValue: campaignServiceStub }
       ]
     });
 
