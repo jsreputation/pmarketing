@@ -29,6 +29,11 @@ import {
 } from './v4-game.mapper';
 import { TransactionState } from '../transactions/models/transactions.model';
 import { OutcomeType } from '../outcome/models/outcome.model';
+import { ICampaignService } from '../campaign/icampaign.service';
+import {
+  CampaignType,
+  ICampaign
+} from '../campaign/models/campaign.model';
 
 const enum GameType {
   shakeTheTree = 'shake_the_tree',
@@ -191,7 +196,8 @@ export class V4GameService implements IGameService {
 
   constructor(
     private httpClient: HttpClient,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private campaignService: ICampaignService
   ) {
     this.configService.readAppConfig().subscribe(
       (config: IConfig<void>) => {
@@ -324,28 +330,25 @@ export class V4GameService implements IGameService {
   }
 
   public getActiveGames(): Observable<IGame[]> {
-    return this.httpClient.get<IV4GameCampaigns>(`${this.hostName}/v4/campaigns?campaign_type=game`)
-      .pipe(
-        map(res => res.data),
-        map(cs => {
-          const now = (new Date()).getTime();
-          return cs.filter(c => {
-            if (c.begins_at === null) {
-              return true;
-            }
-            const beginsAt = new Date(c.begins_at);
-            return beginsAt.getTime() <= now;
-          });
-        }),
-        // for each campaign, fetch associated games
-        switchMap((cs: IV4LightGameCampaign[]) => combineLatest([
-          ...cs.map(c => of(c)),
-          ...cs.map(c => this.getGamesFromCampaign(c.id))
-        ])),
-        map((s: (IV4LightGameCampaign | IGame[])[]) => {
+    return this.campaignService.getCampaigns({ type: CampaignType.game }).pipe(
+      map(cs => {
+        const now = (new Date()).getTime();
+        return cs.filter(c => {
+          if (c.beginsAt === null) {
+            return true;
+          }
+          return !! (c.beginsAt && c.beginsAt.getTime() <= now);
+        });
+      }),
+      // for each campaign, fetch associated games
+      switchMap((cs: ICampaign[]) => combineLatest([
+         ...cs.map(c => of(c)),
+         ...cs.map(c => this.getGamesFromCampaign(c))
+       ])),
+        map((s: (ICampaign | IGame[])[]) => {
           // split again the campaigns from the games
           // @ts-ignore
-          const campaigns: IV4LightGameCampaign[] = s.splice(0, s.length / 2);
+          const campaigns: ICampaign[] = s.splice(0, s.length / 2);
           // @ts-ignore
           const games: IGame[][] = s;
           const res: IGame[] = [];
