@@ -84,7 +84,15 @@ export class GameComponent implements OnInit, OnDestroy {
       map((params: Params) => params.id),
       map((id: string) => Number.parseInt(id, 10)),
       tap((id: number) => this.campaignId = id),
-      switchMap((id: number) => this.campaignService.getCampaign(id)),
+      switchMap((id: number) => this.campaignService.getCampaign(id).pipe(
+        catchError((err: HttpErrorResponse) => {
+          if (err.status === 403 || err.status === 404) {
+            this.popupData = this.gameNotAvailablePopUp;
+            this.redirectUrlAndPopUp();
+          }
+          throw err;
+        }))
+      ),
       switchMap((campaign: ICampaign) => this.gameService.getGamesFromCampaign(campaign).pipe(
         catchError((err: HttpErrorResponse) => {
           if (err.status === 403 || err.status === 404) {
