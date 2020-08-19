@@ -5,7 +5,7 @@ import { IVoucherService } from '../vouchers/ivoucher.service';
 import { gameServiceFactory } from './game.service.module';
 import { V4GameService } from './v4-game.service';
 import { WhistlerGameService } from './whist-game.service';
-import { ConfigService } from '../../public-api';
+import { ConfigService } from '../config/config.service';
 import { of } from 'rxjs';
 
 describe('GameModule', () => {
