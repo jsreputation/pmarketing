@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpBackend } from '@angular/common/http';
 import {
   map,
   catchError, shareReplay
@@ -16,6 +16,7 @@ import { LIGHT } from './themes.model';
 import { IConfig } from '../../config/models/config.model';
 import { oc } from 'ts-optchain';
 import { ConfigService } from '../../config/config.service';
+import { TokenStorage } from '../storage/token-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,9 +24,16 @@ import { ConfigService } from '../../config/config.service';
 export class V4ThemesService extends ThemesService {
   private themeSettingEndpoint: string;
   private responseCache: Map<string, ITheme> = new Map();
+  private httpBypass: HttpClient;
 
-  constructor(private http: HttpClient, private configService: ConfigService) {
+  constructor(
+    private handler: HttpBackend,
+    private http: HttpClient,
+    private configService: ConfigService,
+    private tokenStorage: TokenStorage
+  ) {
     super();
+    this.httpBypass = new HttpClient(this.handler);
     this.configService.readAppConfig().subscribe(
       (config: IConfig<void>) => {
         this.themeSettingEndpoint = `${config.apiHost}/v4/settings/microsite_settings`;
@@ -47,17 +55,21 @@ export class V4ThemesService extends ThemesService {
       responseFallback = this.http.get<ITheme>(`${config.baseHref}assets/theme.json`);
     }
 
-    const response = this.http.get<ThemeJsonApiItemPayLoad<IThemeV4ApiProperties>>(this.themeSettingEndpoint)
-      .pipe(
-        map((res) => V4ThemesService.VThemeToTheme(res.data)),
-        shareReplay(1),
-        catchError(() => {
-          if (responseFallback) {
-            return responseFallback;
-          }
-          return of(LIGHT);
-        })
-      );
+    const appToken = this.tokenStorage.getAppInfoProperty('appAccessToken') as string;
+    const contentHeader: HttpHeaders = new HttpHeaders({ Authorization: `Bearer ${appToken}` });
+    const response = this.httpBypass.get<ThemeJsonApiItemPayLoad<IThemeV4ApiProperties>>(
+      this.themeSettingEndpoint,
+      { headers: contentHeader }
+    ).pipe(
+      map((res) => V4ThemesService.VThemeToTheme(res.data)),
+      shareReplay(1),
+      catchError(() => {
+        if (responseFallback) {
+          return responseFallback;
+        }
+        return of(LIGHT);
+      })
+    );
     response.subscribe((themeSetting: ITheme) => {
       this.responseCache.set(url, themeSetting);
       this.setActiveTheme(themeSetting);
