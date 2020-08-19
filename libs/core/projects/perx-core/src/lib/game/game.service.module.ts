@@ -14,14 +14,14 @@ export function gameServiceFactory(
   config: Config,
   configService: ConfigService,
   vouchSvc: IVoucherService,
-  campaignService?: ICampaignService,
+  campaignService: ICampaignService,
   auth?: AuthenticationService
 ): IGameService {
   // Make decision on what to instantiate base on config
   if (config.isWhistler) {
     return new WhistlerGameService(http, config, vouchSvc, campaignService, auth);
   }
-  return new V4GameService(http, configService);
+  return new V4GameService(http, configService, campaignService);
 }
 
 
