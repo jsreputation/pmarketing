@@ -361,7 +361,7 @@ export class V4GameService implements IGameService {
             }
             const g = gs[0];
             const c = campaigns[i];
-            g.imgUrl = oc(c).images[0].url();
+            g.imgUrl = oc(c).thumbnailUrl();
             res.push(g);
           }
           return res;
