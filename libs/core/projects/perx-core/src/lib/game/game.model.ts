@@ -27,6 +27,8 @@ export interface IGameOutcome {
 export interface IGame {
   id: number;
   campaignId?: number;
+  campaignName?: string;
+  campaignDescription?: string;
   type: GameType;
   remainingNumberOfTries: number;
   config: ITree | IPinata | IScratch | ISpin | ISnake | null;
