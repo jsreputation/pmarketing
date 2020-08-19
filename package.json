@@ -31,6 +31,8 @@
     "start:feature-demo:staging": "env-cmd -f apps/blackcomb/env/feature-demo.staging.dev ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx serve blackcomb --",
     "build:hkbn:production": "echo 'skipping hkbn build'",
     "build:hkbn:staging": "echo 'skipping hkbn build'",
+    "start:hkbn:production": "env-cmd -f apps/hkbn/env/hkbn.production.dev ts-node --project tsconfig.node.json apps/hkbn/set-env.ts && yarn nx serve hkbn --",
+    "start:hkbn:staging": "env-cmd -f apps/hkbn/env/hkbn.staging.dev ts-node --project tsconfig.node.json apps/hkbn/set-env.ts && yarn nx serve hkbn --",
     "build:hsbc-rewards:production": "echo 'skipping hsbc-rewards build'",
     "build:hsbc-rewards:staging": "echo 'skipping hsbc-rewards build'",
     "build:hsbc": "ts-node --project tsconfig.node.json apps/hsbc/set-env.ts && yarn nx build hsbc --",
