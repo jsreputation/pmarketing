@@ -108,7 +108,7 @@ export class CampaignsCollectionComponent implements OnInit {
               catchError(( () => of([])))
             );
           }
-          return this.gamesService.getGamesFromCampaign(campaign.id);
+          return this.gamesService.getGamesFromCampaign(campaign);
         })
       ]))
     ).subscribe(
