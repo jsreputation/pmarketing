@@ -13,7 +13,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { ConfigModule } from '../config/config.module';
 import { RedemptionType } from '../perx-core.models';
-import { ConfigService } from '../../public-api';
+import { ConfigService } from '../../lib/config/config.service';
 
 jest.mock('ngx-cacheable', () => ({
   // tslint:disable-next-line:variable-name
