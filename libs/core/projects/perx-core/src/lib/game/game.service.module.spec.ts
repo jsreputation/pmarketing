@@ -8,7 +8,7 @@ import { WhistlerGameService } from './whist-game.service';
 import { ConfigService } from '../config/config.service';
 import { of } from 'rxjs';
 
-describe('GameModule', () => {
+describe('GameServiceModule', () => {
   const configServiceStub: Partial<ConfigService> = {
     readAppConfig: () => of()
   };
