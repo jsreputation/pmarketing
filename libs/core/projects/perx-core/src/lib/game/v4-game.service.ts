@@ -170,19 +170,19 @@ interface IV4PlayResponse {
   data: IV4PlayGeneral;
 }
 
-interface IV4LightGameCampaign {
-  id: number;
-  name: string;
-  begins_at: string;
-  images: {
-    url: string;
-    type: string;
-  }[];
-}
+// interface IV4LightGameCampaign {
+//   id: number;
+//   name: string;
+//   begins_at: string;
+//   images: {
+//     url: string;
+//     type: string;
+//   }[];
+// }
 
-interface IV4GameCampaigns {
-  data: IV4LightGameCampaign[];
-}
+// interface IV4GameCampaigns {
+//   data: IV4LightGameCampaign[];
+// }
 
 const gamesCacheBuster: Subject<boolean> = new Subject();
 const gamesCacheDecider: (response: any) => boolean = res => res && !(res instanceof HttpErrorResponse); // don't cache if empty/error
