@@ -14,7 +14,8 @@ import {
   NotificationService,
   ConfigService,
   ThemesService,
-  ITheme
+  ITheme,
+  ICampaignService
 } from '@perxtech/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -102,7 +103,9 @@ describe('GameComponent', () => {
   const routerStub: Partial<Router> = {
     navigate: () => Promise.resolve(true)
   };
-
+  const campaignServiceStub: Partial<ICampaignService> = {
+    getCampaigns: () => of()
+  };
   const authServiceStub: Partial<AuthenticationService> = {
     getAnonymous: () => true,
   };
@@ -141,6 +144,7 @@ describe('GameComponent', () => {
         { provide: Router, useValue: routerStub },
         { provide: AuthenticationService, useValue: authServiceStub },
         { provide: NotificationService, useValue: notificationServiceStub },
+        { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: ConfigService, useValue: configServiceStub },
         { provide: ThemesService, useValue: themesServiceStub }
       ]
