@@ -6,6 +6,7 @@ import { gameServiceFactory } from './game.service.module';
 import { V4GameService } from './v4-game.service';
 import { WhistlerGameService } from './whist-game.service';
 import { ConfigService } from '../config/config.service';
+import { ICampaignService } from '../campaign/icampaign.service';
 import { of } from 'rxjs';
 
 describe('GameServiceModule', () => {
@@ -25,8 +26,8 @@ describe('GameServiceModule', () => {
   });
 
   it('gameServiceFactory', inject([HttpClient, IVoucherService, ConfigService],
-    (http: HttpClient, voucherService: IVoucherService, configService: ConfigService) => {
-      expect(gameServiceFactory(http, { isWhistler: false }, configService, voucherService) instanceof V4GameService).toBeTruthy();
-      expect(gameServiceFactory(http, { isWhistler: true }, configService, voucherService) instanceof WhistlerGameService).toBeTruthy();
+    (http: HttpClient, voucherService: IVoucherService, configService: ConfigService, campaignService: ICampaignService) => {
+      expect(gameServiceFactory(http, { isWhistler: false }, configService, voucherService, campaignService) instanceof V4GameService).toBeTruthy();
+      expect(gameServiceFactory(http, { isWhistler: true }, configService, voucherService, campaignService) instanceof WhistlerGameService).toBeTruthy();
     }));
 });
