@@ -10,6 +10,8 @@ import {
   NotificationService,
   IPrePlayStateData,
   IPointsOutcome,
+  ICampaignService,
+  ICampaign,
 } from '@perxtech/core';
 import { map, tap, first, filter, switchMap, bufferCount, catchError, takeUntil } from 'rxjs/operators';
 import { Observable, interval, throwError, Subject, combineLatest } from 'rxjs';
@@ -68,6 +70,7 @@ export class GameComponent implements OnInit, OnDestroy {
     private notificationService: NotificationService,
     private auth: AuthenticationService,
     private translate: TranslateService,
+    private campaignService: ICampaignService
   ) {
   }
 
@@ -75,12 +78,14 @@ export class GameComponent implements OnInit, OnDestroy {
     this.initTranslate();
 
     this.isAnonymousUser = this.auth.getAnonymous();
+    // @ts-ignore observable too long, linter cannot compute
     this.gameData$ = this.route.params.pipe(
       filter((params: Params) => params.id),
       map((params: Params) => params.id),
       map((id: string) => Number.parseInt(id, 10)),
       tap((id: number) => this.campaignId = id),
-      switchMap((id: number) => this.gameService.getGamesFromCampaign(id).pipe(
+      switchMap((id: number) => this.campaignService.getCampaign(id)),
+      switchMap((campaign: ICampaign) => this.gameService.getGamesFromCampaign(campaign).pipe(
         catchError((err: HttpErrorResponse) => {
           if (err.status === 403 || err.status === 404) {
             this.popupData = this.gameNotAvailablePopUp;
