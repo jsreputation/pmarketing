@@ -38,6 +38,8 @@
     "build:hsbc": "ts-node --project tsconfig.node.json apps/hsbc/set-env.ts && yarn nx build hsbc --",
     "build:hsbc:production": "env-cmd -f apps/hsbc/env/hsbc.production ts-node --project tsconfig.node.json apps/hsbc/set-env.ts && yarn nx build hsbc --prod --",
     "build:hsbc:staging": "env-cmd -f apps/hsbc/env/hsbc.staging ts-node --project tsconfig.node.json apps/hsbc/set-env.ts && yarn nx build hsbc --prod --",
+    "start:hsbc:production": "env-cmd -f apps/hsbc/env/hsbc.production.dev ts-node --project tsconfig.node.json apps/hsbc/set-env.ts && yarn nx serve hsbc --",
+    "start:hsbc:staging": "env-cmd -f apps/hsbc/env/hsbc.staging.dev ts-node --project tsconfig.node.json apps/hsbc/set-env.ts && yarn nx serve hsbc --",
     "build:hsbcph-blackcomb:production": "env-cmd -f apps/blackcomb/env/hsbcph.production ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx build blackcomb --prod --",
     "build:hsbcph-blackcomb:staging": "env-cmd -f apps/blackcomb/env/hsbcph.staging ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx build blackcomb --prod --",
     "start:hsbcph-blackcomb:production": "env-cmd -f apps/blackcomb/env/hsbcph.production.dev ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx serve blackcomb --",
