@@ -92,7 +92,7 @@ const campaign: ICampaign = {
   endsAt: null,
   rewards: [],
   thumbnailUrl: '',
-}
+};
 
 const mockTheme: ITheme = {
   name: 'theme',
