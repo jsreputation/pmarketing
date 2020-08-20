@@ -15,7 +15,10 @@ import {
   ConfigService,
   ThemesService,
   ITheme,
-  ICampaignService
+  ICampaignService,
+  ICampaign,
+  CampaignType,
+  CampaignState
 } from '@perxtech/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -80,6 +83,17 @@ const gameSignup: IGame = {
   },
 };
 
+const campaign: ICampaign = {
+  id: 1,
+  name: 'abc',
+  description: 'abc',
+  type: CampaignType.game,
+  state: CampaignState.active,
+  endsAt: null,
+  rewards: [],
+  thumbnailUrl: '',
+}
+
 const mockTheme: ITheme = {
   name: 'theme',
   properties: {
@@ -104,7 +118,7 @@ describe('GameComponent', () => {
     navigate: () => Promise.resolve(true)
   };
   const campaignServiceStub: Partial<ICampaignService> = {
-    getCampaigns: () => of()
+    getCampaign: () => of(campaign)
   };
   const authServiceStub: Partial<AuthenticationService> = {
     getAnonymous: () => true,
