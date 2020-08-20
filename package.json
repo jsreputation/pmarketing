@@ -59,7 +59,7 @@
     "start:merck-merchant:production": "env-cmd -f apps/merck-merchant/env/merck-merchant.production.dev ts-node --project tsconfig.node.json apps/merck-merchant/set-env.ts && yarn nx serve merck-merchant --",
     "start:merck-merchant:staging": "env-cmd -f apps/merck-merchant/env/merck-merchant.staging.dev ts-node --project tsconfig.node.json apps/merck-merchant/set-env.ts && yarn nx serve merck-merchant --",
     "build:oracle-demo:staging": "env-cmd -f apps/blackcomb/env/oracle-demo.staging ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx build blackcomb --prod --",
-    "build:oracle-demo:production": "env-cmd -f apps/blackcomb/env/oracle-demo.staging ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx build blackcomb --prod --",
+    "start:oracle-demo:staging": "env-cmd -f apps/blackcomb/env/oracle-demo.staging.dev ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx serve blackcomb --",
     "build:oracle-pay:production": "echo 'skipping oracle-pay build'",
     "build:oracle-pay:staging": "echo 'skipping oracle-pay build'",
     "build:partners-demo:production": "env-cmd -f apps/blackcomb/env/partners-demo.production ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx build blackcomb --prod --",
