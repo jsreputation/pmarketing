@@ -86,6 +86,7 @@
     "build:blackcomb-light:staging": "echo 'skipping blackcomb-light build'",
     "build:blackcomb-light:production": "echo 'skipping blackcomb-light build'",
     "build:zeal:staging": "env-cmd -f apps/blackcomb/env/zeal.staging ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx build blackcomb --prod --",
+    "start:zeal:staging": "env-cmd -f apps/blackcomb/env/zeal.staging.dev ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx serve blackcomb --",
     "build:lib": "echo 'nothing to do 😀'",
     "clean": "rm -rf ./dist ./node_modules",
     "lint-ci": "nx run-many --target=lint --all",
