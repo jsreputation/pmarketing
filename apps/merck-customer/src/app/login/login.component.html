@@ -37,7 +37,7 @@
       <mat-form-field color="primary" class="full-width__input">
         <mat-label translate>LOGIN_PAGE.MOBILE_NO</mat-label>
         <input matInput placeholder="{{'MOBILE_NO' | translate}}" placeholder="Mobile No"
-          formControlName="mobileNo" required>
+          formControlName="mobileNo" type="tel" autocomplete="tel-national" required>
         <mat-error *ngIf="mobileNo && mobileNo.hasError('required')">
           {{'LOGIN_PAGE.MOBILE_NO_IS' | translate}}
         </mat-error>
