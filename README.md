@@ -30,18 +30,14 @@ yarn nx run-many --target=lint --all
 
 # Dev bootstrap
 
-To start working on a specific app, eventually generate the config using something like this:
-
 ```bash
-yarn env-cmd -f apps/blackcomb-light/env/blackcomb-light.staging ts-node --project tsconfig.node.json apps/blackcomb-light/set-env.ts
+yarn start:{app}:[staging|production]
 ```
 
-Then launch the app using
-
+e.g.
 ```bash
-yarn nx serve <app>
+yarn start:perx-demo:staging
 ```
-
 ### node express proxy
 
 Create `backend/apputh-server/config.json` with the following format. Ask someone for the secrets
