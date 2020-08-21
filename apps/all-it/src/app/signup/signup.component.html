@@ -51,7 +51,7 @@
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="full-width__input">
                     <mat-label>Mobile No</mat-label>
-                    <input matInput placeholder="Mobile No" formControlName="mobileNo" type="number" required>
+                    <input matInput placeholder="Mobile No" formControlName="mobileNo" type="tel" autocomplete="tel-national" required>
                     <mat-error *ngIf="signupForm.get('mobileNo').hasError('required')">
                         <span>Mobile No is </span><strong>REQUIRED</strong>
                     </mat-error>
