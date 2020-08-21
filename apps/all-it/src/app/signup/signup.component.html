@@ -60,7 +60,7 @@
                     <mat-label>Email Address</mat-label>
                     <input matInput placeholder="Email Address" formControlName="email" required>
                     <mat-error *ngIf="signupForm.get('email').hasError('required')">
-                        <span>Email is</span><strong>REQUIRED</strong>
+                        <span>Email is </span><strong>REQUIRED</strong>
                     </mat-error>
                     <mat-error *ngIf="signupForm.get('email').hasError('email')">
                         <span>Incorrect email format</span>
