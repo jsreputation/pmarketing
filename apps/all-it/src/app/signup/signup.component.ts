@@ -41,6 +41,7 @@ export class SignupComponent implements OnInit {
   public theme: Observable<ITheme>;
   public countriesList$: Observable<ICountryCode[]>;
   private destroy$: Subject<void> = new Subject();
+  public maxDobDate: Date = new Date(); // today
 
   constructor(
     private fb: FormBuilder,
