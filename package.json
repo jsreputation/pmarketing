@@ -71,6 +71,8 @@
     "build:petron-demo:production": "echo 'skipping petron-demo build'",
     "build:philipssg:staging": "env-cmd -f apps/philipssg/env/philipssg.staging ts-node --project tsconfig.node.json apps/philipssg/set-env.ts && yarn nx build philipssg --prod --",
     "build:philipssg:production": "env-cmd -f apps/philipssg/env/philipssg.production ts-node --project tsconfig.node.json apps/philipssg/set-env.ts && yarn nx build philipssg --prod --",
+    "start:philipssg:staging": "env-cmd -f apps/philipssg/env/philipssg.staging.dev ts-node --project tsconfig.node.json apps/philipssg/set-env.ts && yarn nx serve philipssg --",
+    "start:philipssg:production": "env-cmd -f apps/philipssg/env/philipssg.production.dev ts-node --project tsconfig.node.json apps/philipssg/set-env.ts && yarn nx serve philipssg --",
     "build:dbshk-agent:production": "env-cmd -f apps/dbshk-agent/env/dbshk-agent.production ts-node --project tsconfig.node.json apps/dbshk-agent/set-env.ts && yarn nx build dbshk-agent --prod --",
     "build:dbshk-agent:staging": "env-cmd -f apps/dbshk-agent/env/dbshk-agent.staging ts-node --project tsconfig.node.json apps/dbshk-agent/set-env.ts && yarn nx build dbshk-agent --prod --",
     "build:prudential:production": "echo 'skipping prudential build'",
