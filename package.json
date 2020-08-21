@@ -81,6 +81,8 @@
     "build:prudential:staging": "echo 'skipping prudential build'",
     "build:starhub:production": "env-cmd -f apps/starhub/env/starhub.production ts-node --project tsconfig.node.json apps/starhub/set-env.ts && yarn nx build starhub --prod --",
     "build:starhub:staging": "env-cmd -f apps/starhub/env/starhub.staging ts-node --project tsconfig.node.json apps/starhub/set-env.ts && yarn nx build starhub --configuration staging --",
+    "start:starhub:production": "env-cmd -f apps/starhub/env/starhub.production.dev ts-node --project tsconfig.node.json apps/starhub/set-env.ts && yarn nx serve starhub --prod --",
+    "start:starhub:staging": "env-cmd -f apps/starhub/env/starhub.staging.dev ts-node --project tsconfig.node.json apps/starhub/set-env.ts && yarn nx serve starhub --configuration staging --",
     "build:blackcomb-light:staging": "env-cmd -f apps/blackcomb-light/env/blackcomb-light.staging ts-node --project tsconfig.node.json apps/blackcomb-light/set-env.ts && yarn nx build blackcomb-light --prod --",
     "build:blackcomb-light:production": "env-cmd -f apps/blackcomb-light/env/blackcomb-light.production ts-node --project tsconfig.node.json apps/blackcomb-light/set-env.ts && yarn nx build blackcomb-light --prod --",
     "build:zeal:staging": "env-cmd -f apps/blackcomb/env/zeal.staging ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx build blackcomb --prod --",
