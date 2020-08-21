@@ -24,21 +24,21 @@ spec:
         memory: "10Gi"
       requests:
         cpu: 2
-        memory: "8Gi"
+        memory: '8Gi'
   steps:
     - name: yarn-install
-      workingDir: "/workspace/project"
-      command: ["yarn", "install"]
+      workingDir: '/workspace/project'
+      command: ['yarn', 'install']
       resources: *resources
     - name: build-lib
-      workingDir: "/workspace/project"
-      command: ["yarn", "build:lib"]
+      workingDir: '/workspace/project'
+      command: ['yarn', 'build:lib']
       resources: *resources
     - name: config
-      workingDir: "/workspace/project"
-      command: ["yarn", "run", "config"]
+      workingDir: '/workspace/project'
+      command: ['yarn', 'run', 'config']
       resources: *resources
     - name: test
-      workingDir: "/workspace/project"
-      command: ["yarn", "test:$(inputs.params.app-name)"]
+      workingDir: '/workspace/project'
+      command: ['yarn', 'test:$(inputs.params.app-name)']
       resources: *resources

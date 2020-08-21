@@ -31,7 +31,6 @@ console.log(colors.grey(envConfigFile));
 fs.writeFile(targetPath, envConfigFile, (err: any) => {
   if (err) {
     throw console.error(err);
-  } else {
-    console.log(colors.magenta(`Angular environment.ts file generated correctly at ${targetPath} \n`));
   }
+  console.log(colors.magenta(`Angular environment.ts file generated correctly at ${targetPath} \n`));
 });
