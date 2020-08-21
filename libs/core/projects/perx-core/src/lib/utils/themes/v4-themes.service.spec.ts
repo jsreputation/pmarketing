@@ -7,6 +7,11 @@ import { IConfig } from '../../config/models/config.model';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 import { DARK, ITheme } from './themes.model';
+import { TokenStorage } from '../storage/token-storage.service';
+
+const tokenStorageStub: Partial<TokenStorage> = {
+  getAppInfoProperty: () => undefined,
+};
 
 describe('ThemesService', () => {
   let service: V4ThemesService;
@@ -14,6 +19,9 @@ describe('ThemesService', () => {
     imports: [
       HttpClientTestingModule,
       ConfigModule.forRoot({})
+    ],
+    providers: [
+      { provide: TokenStorage, useValue: tokenStorageStub }
     ]
   }));
   beforeEach(() => {

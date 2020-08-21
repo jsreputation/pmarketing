@@ -3,8 +3,8 @@ import { PopupComponent } from './popup/popup.component';
 import { MatButtonModule, MatDialogModule, MatCardModule, MatToolbarModule, MatCheckboxModule } from '@angular/material';
 import { CommonModule } from '@angular/common';
 import {
-  HTTP_INTERCEPTORS,
-  HttpClient
+  HttpClient,
+  HttpBackend
 } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NotificationService } from './notification/notification.service';
@@ -31,15 +31,21 @@ import { SafeHtmlPipe } from './safe-html.pipe';
 import { SafeUrlPipe } from './safe-url.pipe';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { TranslateModule } from '@ngx-translate/core';
-import { V4MicrositeSettingInterceptor } from './themes/v4publicSettings.interceptor';
 import { LocationFilterPopupComponent } from './location-filter-popup/location-filter-popup.component';
 import { PointsToCashPipe } from './directives/points-to-cash.pipe';
+import { TokenStorage } from './storage/token-storage.service';
 
-export function themesServiceFactory(http: HttpClient, config: Config, configService: ConfigService): ThemesService {
+export function themesServiceFactory(
+  handler: HttpBackend,
+  http: HttpClient,
+  config: Config,
+  configService: ConfigService,
+  tokenStorage: TokenStorage
+): ThemesService {
   if (config.isWhistler) {
     return new WhistlerThemesService(http, config);
   }
-  return new V4ThemesService(http, configService);
+  return new V4ThemesService(handler, http, configService, tokenStorage);
 }
 
 const directives = [
@@ -106,14 +112,13 @@ export function notificationServiceFactory(): NotificationService {
     ...pipes
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: V4MicrositeSettingInterceptor, multi: true },
     { provide: NotificationService, useFactory: notificationServiceFactory },
     FeedReaderService,
     GeneralStaticDataService,
     {
       provide: ThemesService,
       useFactory: themesServiceFactory,
-      deps: [HttpClient, Config, ConfigService]
+      deps: [HttpBackend, HttpClient, Config, ConfigService, TokenStorage]
     }
   ]
 })
