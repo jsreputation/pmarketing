@@ -127,34 +127,31 @@ imports: [
 
 ## Local Deployment
 
-Doing this allows you to emulate your build on the server. It does not live reload because it is set up for server side rendering.
+Doing this allows you to emulate your build as it would in live environments. It does not live reload.
 
-to build the prudential shake the tree app:
+#### Example
 
+You should have an entry in the config.json which is your Local IP i.e
+```json
+"endpoints": {
+  ...
+  "192.168.1.202": {
+    "account_id": "generic-staging"
+  }
+}
 ```
-docker build -t microsite-apps-ng . --build-arg app=prudential
+
+Build the perx demo app:
+```
+docker build -t microsite-apps-ng . --build-arg app=perx-demo --build-arg env=staging --build-arg appbase=blackcomb
 ```
 
-we expose port 8000 in the dockerfile
-
+Run the image and expose on port 8000
 ```
 docker run -p 8000:8000 --rm --name microsite-apps-ng microsite-apps-ng
 ```
 
-you should have the server now listening on `http://localhost:8000
-
-to find the process list
-
-```
-docker ps -a
-```
-
-to kill the process
-
-```
-docker rm processname
-
-```
+you should have the server now listening on http://localhost:8000
 
 # TAG Deployment
 
