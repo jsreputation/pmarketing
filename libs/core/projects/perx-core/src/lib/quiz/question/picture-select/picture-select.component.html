@@ -1,13 +1,13 @@
 <div class="choice-container">
     <div class="choice-content" *ngFor="let choice of payload?.choices; let i = index">
-        <div 
+        <div
             class="choice-image"
             [ngClass]="isSelected(i) ? 'selected' : ''"
             (click)="onSelect(i)">
-            <img class="image" [src]="choice?.img_url" [alt]="choice?.text">
+            <img class="image" [src]="choice?.answer?.en?.image?.value?.image_url" [alt]="choice?.answer?.en?.text">
         </div>
         <div class="choice-label">
-            {{ choice?.text }}
+            {{ choice?.answer?.en?.text }}
         </div>
     </div>
 </div>

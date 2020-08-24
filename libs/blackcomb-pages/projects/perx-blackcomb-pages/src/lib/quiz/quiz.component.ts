@@ -236,7 +236,7 @@ export class QuizComponent implements OnInit, OnDestroy {
       tap((res: IAnswerResult) => {
         this.points[questionPointer] = {
           questionId: answer.questionId,
-          question: this.quiz.questions[questionPointer].question,
+          question: this.quiz.questions[questionPointer].question.text,
           points: res.points,
           time
         };
@@ -245,7 +245,7 @@ export class QuizComponent implements OnInit, OnDestroy {
         // save the fact the broken submission for next page
         this.points[questionPointer] = {
           questionId: answer.questionId,
-          question: this.quiz.questions[questionPointer].question,
+          question: this.quiz.questions[questionPointer].question.text,
           points: undefined,
           time
         };
