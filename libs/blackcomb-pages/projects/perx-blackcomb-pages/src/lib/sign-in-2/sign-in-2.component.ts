@@ -18,8 +18,15 @@ import { map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { oc } from 'ts-optchain';
 
+enum LoginType {
+  phone='phone',
+  email='email',
+  username='username'
+}
+
 interface ISigninConfig {
   redirectAfterLogin: string;
+  loginMethod: LoginType;
 }
 
 @Component({

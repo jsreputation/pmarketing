@@ -40,6 +40,7 @@ export interface IConfig<T> {
   redirectAfterLogin?: string;
   redirectBeforeLogin?: string; // this is used for routing the user on the landing page before login
   showForgetPasswordOnLogin?: boolean;
+  loginMethod?: string;
 
   /* Account page */
   showAccountsPage?: boolean;
