@@ -7,6 +7,7 @@ import {
   GameModule,
   IGameService,
   GameType,
+  ICampaignService,
   NotificationService,
   IPlayOutcome,
   IGame,
@@ -54,6 +55,9 @@ const configServiceStub: Partial<ConfigService> = {
     baseHref: ''
   })
 };
+const campaignServiceStub: Partial<ICampaignService> = {
+  getCampaign: () => of()
+};
 describe('GameComponent', () => {
   let component: GameComponent;
   let fixture: ComponentFixture<GameComponent>;
@@ -80,6 +84,7 @@ describe('GameComponent', () => {
         { provide: Location, useValue: locationStub },
         { provide: NotificationService, useValue: notificationServiceStub },
         { provide: ConfigService, useValue: configServiceStub },
+        { provide: ICampaignService, useValue: campaignServiceStub },
       ]
     })
       .compileComponents();
