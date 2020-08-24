@@ -29,8 +29,8 @@ export interface ITracker<T = any> {
 
 export interface IQQuestion<T = any> {
   id: string;
-  question: string;
-  description?: string;
+  question: {text: string};
+  description?: {text: string};
   required: boolean;
   payload: IPayload;
   answer?: any;
@@ -59,8 +59,8 @@ export enum QuizMode {
 export interface IQuiz {
   id?: number;
   campaignId?: number;
-  title: string;
-  subTitle?: string;
+  title?: {text: string};
+  subTitle?: {text: string};
   progressBarColor?: MaterialColor;
   cardBackgroundImgUrl?: string;
   backgroundImgUrl?: string;

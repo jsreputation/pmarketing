@@ -8,7 +8,19 @@ export interface IPictureSelectPayload {
 }
 
 interface IPictureChoice {
-  'img_url': string;
+  answer: {
+    [langKey: string]: INestedChoice
+  };
+}
+
+interface INestedChoice {
+  image: {
+    type: string;
+    value: {
+      filename: string;
+      image_url: string;
+    }
+  };
   text: string;
 }
 
