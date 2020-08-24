@@ -5,6 +5,8 @@ import {
   IEngagementTransaction,
   IGame,
   IGameService,
+  ICampaignService,
+  ICampaign,
   IPlayOutcome,
   NotificationService,
   Voucher
@@ -46,7 +48,8 @@ export class GameComponent implements OnInit {
     private router: Router,
     private analytics: AnalyticsService,
     private gameOutcomeService: GameOutcomeService,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private campaignService: ICampaignService
   ) { }
 
   public ngOnInit(): void {
@@ -63,10 +66,11 @@ export class GameComponent implements OnInit {
           return this.gameService.get(id);
         }
         const cid = parseInt(params.cid, 10);
-        return this.gameService.getGamesFromCampaign(cid).pipe(
+        return this.campaignService.getCampaign(cid).pipe(
+          switchMap((campaign: ICampaign) => this.gameService.getGamesFromCampaign(campaign)),
           take(1),
           map((games: IGame[]) => games[0])
-        );
+        )
       }),
       tap((game: IGame) => {
         if (!game) {

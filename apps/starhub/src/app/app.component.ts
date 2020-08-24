@@ -187,7 +187,7 @@ export class AppComponent implements OnInit {
   }
 
   protected checkGame(campaign: ICampaign): void {
-    this.gameService.getGamesFromCampaign(campaign.id)
+    this.gameService.getGamesFromCampaign(campaign)
       .pipe(
         filter(games => games.length > 0),
         map(games => games[0])
