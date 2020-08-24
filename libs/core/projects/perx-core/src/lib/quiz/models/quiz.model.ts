@@ -29,7 +29,17 @@ export interface ITracker<T = any> {
 
 export interface IQQuestion<T = any> {
   id: string;
-  question: {text: string};
+  question: {
+    text: string,
+    image?: {
+      type: string,
+      value: {
+        section: string,
+        filename: string,
+        image_id: number,
+        image_url: string;
+      }
+  }};
   description?: {text: string};
   required: boolean;
   payload: IPayload;

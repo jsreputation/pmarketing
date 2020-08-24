@@ -1,4 +1,4 @@
-<div class="survey-container" *ngIf="data">
+<div *ngIf="data">
   <div *ngFor="let question of data.questions ; let i = index;">
     <perx-core-quiz-question
       [ngClass]="{ hidden : questionPointer!=i }"

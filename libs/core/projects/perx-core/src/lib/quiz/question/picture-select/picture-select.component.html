@@ -1,13 +1,22 @@
 <div class="choice-container">
-    <div class="choice-content" *ngFor="let choice of payload?.choices; let i = index">
-        <div
-            class="choice-image"
-            [ngClass]="isSelected(i) ? 'selected' : ''"
-            (click)="onSelect(i)">
-            <img class="image" [src]="choice?.answer?.en?.image?.value?.image_url" [alt]="choice?.answer?.en?.text">
-        </div>
-        <div class="choice-label">
-            {{ choice?.answer?.en?.text }}
-        </div>
+    <div class="choice-content"
+         [ngClass]="isSelected(i) ? 'selected' : ''"
+         *ngFor="let choice of payload?.choices; let i = index">
+      <mat-radio-button
+        class="choice-image"
+        [color]="'primary'"
+        [labelPosition]="'before'"
+        (click)="onSelect(i)">
+          <img class="image" [src]="choice?.answer?.en?.image?.value?.image_url" [alt]="choice?.answer?.en?.text">
+      </mat-radio-button>
+      <div class="choice-label">
+          {{ choice?.answer?.en?.text }}
+      </div>
     </div>
 </div>
+<!--  <mat-radio-button-->
+<!--    class="selection-radio-button choice-box selected"-->
+<!--    *ngFor="let choice of payload?.choices"-->
+<!--    [value]="choice.id">-->
+<!--    {{choice?.title?.text}}-->
+<!--  </mat-radio-button>-->
