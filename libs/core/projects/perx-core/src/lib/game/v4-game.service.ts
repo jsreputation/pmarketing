@@ -229,7 +229,7 @@ export class V4GameService implements IGameService {
     return {
       ...gameMapper.v4MapToMap(game),
       campaignName: campaign ? campaign.name : '',
-      campaignDescription: campaign ? campaign.description: ''
+      campaignDescription: campaign ? campaign.description : ''
     };
   }
 
@@ -342,30 +342,30 @@ export class V4GameService implements IGameService {
       }),
       // for each campaign, fetch associated games
       switchMap((cs: ICampaign[]) => combineLatest([
-         ...cs.map(c => of(c)),
-         ...cs.map(c => this.getGamesFromCampaign(c))
-       ])),
-        map((s: (ICampaign | IGame[])[]) => {
-          // split again the campaigns from the games
-          // @ts-ignore
-          const campaigns: ICampaign[] = s.splice(0, s.length / 2);
-          // @ts-ignore
-          const games: IGame[][] = s;
-          const res: IGame[] = [];
-          // eslint-disable-next-line guard-for-in
-          for (const i in games) {
-            const gs = games[i].filter(game => game.type !== TYPE.quiz);
-            // if there is no underlying game, move on to next campaign
-            if (gs.length === 0) {
-              continue;
-            }
-            const g = gs[0];
-            const c = campaigns[i];
-            g.imgUrl = oc(c).thumbnailUrl();
-            res.push(g);
+        ...cs.map(c => of(c)),
+        ...cs.map(c => this.getGamesFromCampaign(c))
+      ])),
+      map((s: (ICampaign | IGame[])[]) => {
+        // split again the campaigns from the games
+        // @ts-ignore
+        const campaigns: ICampaign[] = s.splice(0, s.length / 2);
+        // @ts-ignore
+        const games: IGame[][] = s;
+        const res: IGame[] = [];
+        // eslint-disable-next-line guard-for-in
+        for (const i in games) {
+          const gs = games[i].filter(game => game.type !== TYPE.quiz);
+          // if there is no underlying game, move on to next campaign
+          if (gs.length === 0) {
+            continue;
           }
-          return res;
-        })
-      );
+          const g = gs[0];
+          const c = campaigns[i];
+          g.imgUrl = oc(c).thumbnailUrl();
+          res.push(g);
+        }
+        return res;
+      })
+    );
   }
 }

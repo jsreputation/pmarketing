@@ -27,7 +27,9 @@ describe('GameServiceModule', () => {
 
   it('gameServiceFactory', inject([HttpClient, IVoucherService, ConfigService],
     (http: HttpClient, voucherService: IVoucherService, configService: ConfigService, campaignService: ICampaignService) => {
-      expect(gameServiceFactory(http, { isWhistler: false }, configService, voucherService, campaignService) instanceof V4GameService).toBeTruthy();
-      expect(gameServiceFactory(http, { isWhistler: true }, configService, voucherService, campaignService) instanceof WhistlerGameService).toBeTruthy();
+      expect(gameServiceFactory(http, { isWhistler: false }, configService, voucherService, campaignService)
+        instanceof V4GameService).toBeTruthy();
+      expect(gameServiceFactory(http, { isWhistler: true }, configService, voucherService, campaignService)
+        instanceof WhistlerGameService).toBeTruthy();
     }));
 });
