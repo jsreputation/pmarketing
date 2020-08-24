@@ -8,6 +8,7 @@ import {
   GeneralStaticDataService,
   ICountryCode,
   LoyaltyService,
+  LoginType,
 } from '@perxtech/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Navigation, Router } from '@angular/router';
@@ -18,11 +19,6 @@ import { map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { oc } from 'ts-optchain';
 
-enum LoginType {
-  phone='phone',
-  email='email',
-  username='username'
-}
 
 interface ISigninConfig {
   redirectAfterLogin: string;
@@ -44,7 +40,8 @@ export class SignIn2Component implements OnInit, OnDestroy {
   public countryCodePrefix: string;
   public countriesList$: Observable<ICountryCode[]>;
   public loading: boolean = false;
-
+  public loginMethod: LoginType;
+  public loginTypes = LoginType;
   private validateMembership: boolean = false;
   private custId: string = '';
   private destroy$: Subject<void> = new Subject();
