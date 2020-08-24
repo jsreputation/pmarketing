@@ -11,7 +11,7 @@
       </div>
       <div class="section profile">
         <mat-nav-list>
-          <mat-list-item routerLink="/profile">
+          <mat-list-item *ngIf="aConfig.showUserInfoOnAccountsPage" routerLink="/profile">
             {{'ACCOUNT_PAGE.PROFILE' | translate}}
           </mat-list-item>
           <mat-list-item *ngIf="aConfig.showReferralOnAccountsPage" routerLink="/referral">

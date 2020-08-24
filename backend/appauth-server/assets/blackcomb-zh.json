@@ -320,7 +320,8 @@
     "GAME_SUCCESS_TEXT_POINTS": "{{points}}積分",
     "BACK_TO_WALLET": "回到錢包頁面",
     "GAME_NOT_VALID": "哎呀!",
-    "GAME_NOT_VALID_TEXT": "您目前無法使用該遊戲."
+    "GAME_NOT_VALID_TEXT": "您目前無法使用該遊戲.",
+    "VIEW_REWARD": "查看奖励"
   },
   "Gold": "黃金",
   "Silver": "銀卡",
@@ -329,5 +330,6 @@
   "CONTENT_PAGE": "找不到內容",
   "LOGIN_SESSION_EXPIRED": "登錄時間超時",
   "Contact Us": "聯繫我們",
-  "Terms and Conditions": "條款與細則"
+  "Terms and Conditions": "條款與細則",
+  "TRY_AGAIN": "再试一次"
 }

@@ -38,7 +38,7 @@
     "INFORMATION_UPDATE_FAIL": "Information Update failed. Please try again.",
     "ALERT_TITLE": "Reminder: If you do not agree with this term, you will not be eligible to join the LIFE Dojo lucky draw.",
     "ALERT_BTN_TXT": "Confirm",
-    "ALERT_BTN_TXT2": "Cancel",
+    "ALERT_BTN_TXT2": "Quay lại",
     "NICKNAME_FIELD": "Nickname",
     "NICKNAME_REQUIRED_TXT": "Please input a nickname",
     "REFERRAL_FIELD": "Referral code (optional)",
@@ -87,7 +87,12 @@
     "FORGET_PASSWORD_TXT": "Forgot password?",
     "POPUP_TITLE": "We could not reach the server",
     "POPUP_TXT": "Please try again soon",
-    "CTA_TXT": "Log in"
+    "CTA_TXT": "Log in",
+    "PI_INSTRUCTIONS": "Để đăng nhập vào giỏ quà, Quý Khách vui lòng nhập số điện thoại mà Quý Khách đã đăng ký với Dai-ichi Life Việt Nam",
+    "PI_TEXT_LABEL": "Số điện thoại",
+    "PI_BUTTON_LABEL": "Đăng nhập",
+    "PI_NOT_EXIST": "Rất tiếc! Số điện thoại Quý Khách vừa nhập không phải là số điện thoại nhận được tin nhắn tặng quà từ Dai-ichi Life Việt Nam.",
+    "PI_MERGE_FAIL": "Lỗi kết nối mạng. Vui lòng kiểm tra kết nối mạng internet của Quý Khách."
   },
   "FORGET_PW_PAGE": {
     "TITLE": "Forgot Password",
@@ -113,11 +118,11 @@
   "NAVIGATION": {
     "HOME": "Home",
     "REWARDS": "Rewards",
-    "WALLET": "Wallet",
-    "HISTORY": "History",
+    "WALLET": "Giỏ quà",
+    "HISTORY": "Lịch sử",
     "LEADER_BOARD": "Leaderboard",
     "DEALS": "Deals",
-    "ACCOUNT": "Account",
+    "ACCOUNT": "Tài khoản",
     "PAY": "Pay",
     "NEARME": "Near Me"
   },
@@ -144,13 +149,13 @@
   },
   "WALLET": {
     "REWARDS_TITLE": "My Rewards",
-    "HISTORY_TITLE": "My History",
-    "MY_WALLET": "My Wallet",
+    "HISTORY_TITLE": "Lịch sử của tôi",
+    "MY_WALLET": "Quà của tôi",
     "REDEEMED": "Redeemed",
-    "REWARD_STATUS_EXPIRY": "Expires on {{date}}",
+    "REWARD_STATUS_EXPIRY": "Hiệu lực đến: {{date}}",
     "REWARD_STATUS_REDEEMED": "Redeemed",
     "REWARD_STATUS_EXPIRED": "Expired",
-    "CTA_TXT": "Redeem",
+    "CTA_TXT": "Sử dụng",
     "POINT_EARNED": "{points} Points earned",
     "POINT_SPENT": "{points} Points spent",
     "CASHBACK_EARNED": "{points} cashback earned",
@@ -166,11 +171,11 @@
     "UNKNOWN_ERROR_TXT": "Unknown error occurred, please try again later",
     "FAIL_REDEMPTION_TXT": "Sorry! Voucher redemption failed.",
     "BACK_TO_WALLET": "Back to wallet",
-    "CTA_TXT": "Cancel"
+    "CTA_TXT": "Quay lại"
   },
   "PROMO_CODE": {
     "DESCRIPTION": "Please input this code during the checkout process",
-    "CTA_TXT": "Cancel"
+    "CTA_TXT": "Quay lại"
   },
   "LEADER_BOARD": {
     "TITLE": "Welcome {{profile.customProperties.nickname}}",
@@ -291,7 +296,7 @@
   "QR": {
     "QR_TO_MERCHANT": "Present this QR code to the merchant",
     "BARCODE_TO_MERCHANT": "Present this Barcode to the merchant",
-    "CTA": "Cancel"
+    "CTA": "Quay lại"
   },
   "VOUCHER": {
     "REDEEM": "Redeem",
@@ -317,16 +322,28 @@
   },
   "GAME_PAGE": {
     "STAMPS_LABEL_TXT": " new stamps",
-    "GAME_NO_REWARDS_TITLE": "Thanks for playing",
-    "GAME_NO_REWARDS_TEXT": "Unfortunately, you did not win anything this time",
-    "GAME_SUCCESS_TITLE": "Congratulations!",
-    "GAME_SUCCESS_TEXT": "You earned",
+    "GAME_NO_REWARDS_TITLE": "Cảm ơn vi đa chơi",
+    "GAME_NO_REWARDS_TEXT": "Thật không may, lần này bạn không giành được bất cứ điều gì",
+    "GAME_SUCCESS_TITLE": "Xin chúc mừng!",
+    "GAME_SUCCESS_TEXT": "Bạn đã kiếm được {{rewards}} phần thưởng",
     "GAME_SUCCESS_TEXT_REWARDS": " {rewards}} rewards",
     "GAME_SUCCESS_TEXT_POINTS": " {{points}} points",
     "GAME_NOT_VALID": "Oops!",
-    "BACK_TO_WALLET": "Back to wallet",
+    "BACK_TO_WALLET": "Quay lại ví",
     "GAME_NOT_VALID_TEXT": "This game is not available for you at the moment.",
-    "VIEW_REWARD": "View reward"
+    "VIEW_REWARD": "Xem phần thưởng"
+  },
+  "DLVN_CAMPAIGNS": {
+    "INSTANT_REWARD": {
+      "NO_REWARDS_TITLE": "Chúng tôi xin lỗi, tất cả các phần thưởng đã được yêu cầu",
+      "NO_REWARDS_TEXT": "Xem ra cho phần thưởng nhiều hơn theo cách của bạn, sớm!"
+    },
+    "SURVEY": {
+      "SUCCESS_TITLE": "RSVP của bạn thành công!",
+      "SUCCESS_TEXT": "Hẹn gặp bạn tại sự kiện của chúng tôi!",
+      "NO_REWARDS_TITLE": "Cám ơn sự quan tâm của bạn. Chúng tôi xin lỗi, tất cả các địa điểm đã được thực hiện.",
+      "NO_REWARDS_TEXT": "Tuy nhiên, chúng tôi đã thêm bạn vào danh sách chờ sự kiện của chúng tôi và sẽ gọi cho bạn khi các địa điểm có sẵn vào ngày 07 tháng 10 năm 2019"
+    }
   },
   "Gold": "Gold",
   "Silver": "Silver",
@@ -334,7 +351,8 @@
   "Basic": "Basic",
   "CONTENT_PAGE": "Content Not Found",
   "LOGIN_SESSION_EXPIRED": "Login Session Expired",
-  "Contact Us": "Contact Us",
-  "Terms and Conditions": "Terms and Conditions",
-  "TRY_AGAIN": "Try again"
+  "LOGGING_IN": "Logging In...",
+  "Contact Us": "Liên hệ",
+  "Terms and Conditions": "Điều khoản và Điều kiện áp dụng",
+  "TRY_AGAIN": "Thử lại"
 }
