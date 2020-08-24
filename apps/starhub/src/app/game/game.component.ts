@@ -70,7 +70,7 @@ export class GameComponent implements OnInit {
           switchMap((campaign: ICampaign) => this.gameService.getGamesFromCampaign(campaign)),
           take(1),
           map((games: IGame[]) => games[0])
-        )
+        );
       }),
       tap((game: IGame) => {
         if (!game) {
