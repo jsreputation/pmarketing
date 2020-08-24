@@ -331,7 +331,7 @@
     "GAME_NOT_VALID": "Oops!",
     "BACK_TO_WALLET": "Quay lại ví",
     "GAME_NOT_VALID_TEXT": "This game is not available for you at the moment.",
-    "View Reward": "This game is not available for you at the moment."
+    "VIEW_REWARD": "Xem phần thưởng"
   },
   "Gold": "Gold",
   "Silver": "Silver",
@@ -342,4 +342,5 @@
   "LOGGING_IN": "Logging In...",
   "Contact Us": "Liên hệ",
   "Terms and Conditions": "Điều khoản và Điều kiện áp dụng",
+  "TRY_AGAIN": "Thử lại"
 }

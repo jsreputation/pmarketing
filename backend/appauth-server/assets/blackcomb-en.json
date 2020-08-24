@@ -326,7 +326,7 @@
     "GAME_NOT_VALID": "Oops!",
     "BACK_TO_WALLET": "Back to wallet",
     "GAME_NOT_VALID_TEXT": "This game is not available for you at the moment.",
-    "View Reward": "This game is not available for you at the moment."
+    "VIEW_REWARD": "View reward"
   },
   "Gold": "Gold",
   "Silver": "Silver",
@@ -335,5 +335,6 @@
   "CONTENT_PAGE": "Content Not Found",
   "LOGIN_SESSION_EXPIRED": "Login Session Expired",
   "Contact Us": "Contact Us",
-  "Terms and Conditions": "Terms and Conditions"
+  "Terms and Conditions": "Terms and Conditions",
+  "TRY_AGAIN": "Try again"
 }
