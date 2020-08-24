@@ -2,16 +2,16 @@
     <div class="question-content" *ngIf="question">
         <div class="question">
             <span *ngIf="!hideIndex">
-                {{(alpha ? alpha + '. ' :  id + 1 + '. ' ) + question?.question}}
+                {{(alpha ? alpha + '. ' :  id + 1 + '. ' ) + question?.question?.text}}
             </span>
             <span *ngIf="hideIndex">
-                {{ (question?.question) }}
+                {{ (question?.question?.text) }}
             </span>
             <span class="required-star">
                 {{question?.required ? '*': ''}}
             </span>
         </div>
-        <div class="description" [innerHTML]="question?.description"></div>
+        <div class="description" [innerHTML]="question?.description?.text"></div>
         <!-- for group component below (updatePoints)="updateGroupPoint($event)"-->
         <perx-core-quiz-select
             *ngIf="question.payload.type === quizQuestionType.multipleChoice"

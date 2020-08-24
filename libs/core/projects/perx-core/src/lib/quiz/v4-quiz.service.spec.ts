@@ -15,7 +15,7 @@ describe('V4QuizService', () => {
     campaign_id: 4,
     game_type: 'quiz',
     display_properties: {
-      header: { value: { title: 'yo' } },
+      header: { value: { title: {en: 'yo' } }},
       questions: []
     },
     number_of_tries: 100

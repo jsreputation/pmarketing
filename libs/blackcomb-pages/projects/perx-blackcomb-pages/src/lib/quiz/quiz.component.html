@@ -1,20 +1,24 @@
 <div *ngIf="quiz" class="quiz-main-container"
   [ngStyle]="{'background-image': quiz.backgroundImgUrl ? 'url(' + quiz.backgroundImgUrl + ')' : '' }">
   <div class="quiz-page">
-    <div class="progress">
-      <p class="progress-text">{{'QUIZ_TEMPLATE.QUESTION' | translate}}<strong>{{questionPointer + 1}}</strong>{{'QUIZ_TEMPLATE.OUT_OF' | translate}}{{totalLength}}</p>
-      <mat-progress-bar class="progress-bar" mode="determinate" color="warn" [value]="progressBarValue">
-      </mat-progress-bar>
+    <div class="progress-container">
+      <div class="progress">
+        <p class="progress-text">{{'QUIZ_TEMPLATE.QUESTION' | translate}}<strong>{{questionPointer + 1}}</strong>{{'QUIZ_TEMPLATE.OUT_OF' | translate}}{{totalLength}}</p>
+        <perx-core-timer class="timer" [timeToRun]="30000" (done)="nextWithoutValidation()" [reset]="resetTimer$">
+        </perx-core-timer>
+      </div>
+      <div class="progress-bar">
+        <mat-progress-bar mode="determinate" [value]="progressBarValue">
+        </mat-progress-bar>
+      </div>
     </div>
-    <perx-core-timer class="timer" [timeToRun]="30000" (done)="nextWithoutValidation()" [reset]="resetTimer$">
-    </perx-core-timer>
+
     <div #overflowContainer>
-      <mat-card
+      <div
         *ngIf="quiz.mode === mode.basic"
-        class="quiz-card"
-        [ngStyle]="{'background-image': quiz.cardBackgroundImgUrl ? 'url(' + quiz?.cardBackgroundImgUrl + ')' : '' }">
-        <h1>{{quiz.title}}</h1>
-        <h2 *ngIf="quiz.subTitle">{{quiz.subTitle}}</h2>
+        class="quiz-card">
+        <h1>{{quiz?.title?.text}}</h1>
+        <h2 *ngIf="quiz.subTitle">{{quiz?.subTitle?.text}}</h2>
         <perx-core-quiz
           [hideIndex]="true"
           #coreComponent
@@ -31,7 +35,7 @@
               fill="#186DE1" />
           </svg>
         </div>
-      </mat-card>
+      </div>
       <div *ngIf="quiz.mode !== mode.basic" class="quiz-no-card">
         <h1>{{quiz.title}}</h1>
         <h2 *ngIf="quiz.subTitle">{{quiz.subTitle}}</h2>

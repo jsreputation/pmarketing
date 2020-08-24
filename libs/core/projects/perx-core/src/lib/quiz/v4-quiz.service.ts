@@ -37,8 +37,8 @@ const enum V4QuizMode {
 export interface QuizDisplayProperties {
   title: string;
   questions: {
-    question: { [k: string]: string };
-    description: { [k: string]: string };
+    question: { [k: string]: {text: string} };
+    description: { [k: string]: {text: string} };
     id: string;
     required: boolean;
     payload: any;
@@ -55,8 +55,8 @@ export interface QuizDisplayProperties {
   quiz_interaction: V4QuizMode;
   header?: {
     value?: {
-      title?: string;
-      description?: string;
+      title?: { [k: string]: {text: string} };
+      description?: { [k: string]: {text: string} };
     };
   };
   headline_text?: string;
@@ -201,8 +201,13 @@ export class V4QuizService implements QuizService {
         return {
           id: game.id,
           campaignId: game.campaign_id,
-          title: oc(game).display_properties.header.value.title(''),
-          subTitle: oc(game).display_properties.header.value.description(),
+          // need to typecast directly because library return TSOC type, will resolve and be clean when update angular w/
+          // TS optional chaining
+          title: (oc(game).display_properties.header.value.title ?
+            oc(game).display_properties.header.value.title[lang]() : oc(game).display_properties.header.value.title.en()) as {text: string},
+          subTitle: (oc(game).display_properties.header.value.description() ?
+            oc(game).display_properties.header.value.description[lang]() :
+            oc(game).display_properties.header.value.description.en()) as {text: string},
           results: {
             outcome
           },
