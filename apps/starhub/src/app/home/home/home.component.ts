@@ -182,8 +182,7 @@ export class HomeComponent implements OnInit {
             if (err.error && err.error.code === 4103) {
               // user has already been issued voucher
               this.router.navigate(['/home/vouchers']);
-            }
-            else if (err.status === 401) {
+            } else if (err.status === 401) {
               this.router.navigate(['/error']);
             }
             console.error(

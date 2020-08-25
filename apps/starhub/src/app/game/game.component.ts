@@ -159,11 +159,9 @@ export class GameComponent implements OnInit {
                 text: 'No more rewards available',
                 panelClass: 'custom-class'
               });
-            } 
-            else if (err instanceof HttpErrorResponse && err.status === 401) {
+            } else if (err instanceof HttpErrorResponse && err.status === 401) {
               this.router.navigate(['error']);
-            }
-            else {
+            } else {
               this.showErrorPopup();
             }
           }
