@@ -361,13 +361,16 @@ export class GameComponent implements OnInit, OnDestroy {
       transactionId: this.transactionId,
       collectInfo: true
     };
-
-    if (this.isAnonymousUser && this.informationCollectionSetting === 'pi_required') {
-      this.router.navigate(['/pi'], { state });
-    } else if (this.isAnonymousUser && this.informationCollectionSetting === 'signup_required') {
-      this.router.navigate(['/signup'], { state });
+    if (!this.isEmbedded) {
+      if (this.isAnonymousUser && this.informationCollectionSetting === 'pi_required') {
+        this.router.navigate([ '/pi' ], { state });
+      } else if (this.isAnonymousUser && this.informationCollectionSetting === 'signup_required') {
+        this.router.navigate([ '/signup' ], { state });
+      } else {
+        this.router.navigate([ '/wallet' ]);
+        this.notificationService.addPopup(this.popupData);
+      }
     } else {
-      this.router.navigate(['/wallet']);
       this.notificationService.addPopup(this.popupData);
     }
   }
