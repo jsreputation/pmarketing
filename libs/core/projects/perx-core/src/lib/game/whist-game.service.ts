@@ -197,16 +197,16 @@ export class WhistlerGameService implements IGameService {
       );
   }
 
-  public getGamesFromCampaign(campaignId: number): Observable<IGame[]> {
+  public getGamesFromCampaign(campaign: ICampaign): Observable<IGame[]> {
     let disProp: IWCampaignDisplayProperties | null = null;
-    return this.http.get<IJsonApiItemPayload<IWCampaignAttributes>>(`${this.hostName}/campaign/entities/${campaignId}`)
+    return this.http.get<IJsonApiItemPayload<IWCampaignAttributes>>(`${this.hostName}/campaign/entities/${campaign.id}`)
       .pipe(
         map((res: IJsonApiItemPayload<IWCampaignAttributes>) => res.data.attributes),
         map((entity: IWCampaignAttributes) => {
           disProp = { ...entity.display_properties };
           return entity.engagement_id;
         }),
-        switchMap((correctId: number) => this.get(correctId, campaignId)),
+        switchMap((correctId: number) => this.get(correctId, campaign.id)),
         map((game: IGame) => {
           const results: { [key: string]: IGameOutcome } = {};
           if (disProp && disProp.successPopUp) {
@@ -217,7 +217,7 @@ export class WhistlerGameService implements IGameService {
           }
           return [{
             ...game,
-            campaignId,
+            campaignId: campaign.id,
             results,
             displayProperties: { ...game.displayProperties, ...disProp }
           }];

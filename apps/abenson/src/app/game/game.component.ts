@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IGameService, IGame, PopupComponent, GameType } from '@perxtech/core';
-import { flatMap, take, map, tap } from 'rxjs/operators';
+import { IGameService, IGame, PopupComponent, GameType, ICampaignService, ICampaign, } from '@perxtech/core';
+import { flatMap, take, map, tap, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material';
 
@@ -18,12 +18,14 @@ export class GameComponent implements OnInit {
     private route: ActivatedRoute,
     private gameService: IGameService,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private campaignService: ICampaignService
   ) { }
 
   public ngOnInit(): void {
     this.gameData$ = this.route.params.pipe(
-      flatMap((params) => this.gameService.getGamesFromCampaign(parseInt(params.id, 10))),
+      flatMap((params) => this.campaignService.getCampaign(parseInt(params.id, 10))),
+      switchMap((campaign: ICampaign) => this.gameService.getGamesFromCampaign(campaign)),
       take(1),
       tap((games) => !games || !games.length && this.router.navigate(['/wallet'])),
       map((games) => games[0])

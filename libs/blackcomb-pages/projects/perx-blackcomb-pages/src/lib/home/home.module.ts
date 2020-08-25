@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatButtonModule, MatCardModule, MatDialogModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatDialogModule, MatRippleModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import {
@@ -31,6 +31,7 @@ import { HomeComponent } from './home.component';
     RouterModule,
     MatCardModule,
     MatButtonModule,
+    MatRippleModule,
     MatDialogModule,
     LoyaltyModule,
     UtilsModule,

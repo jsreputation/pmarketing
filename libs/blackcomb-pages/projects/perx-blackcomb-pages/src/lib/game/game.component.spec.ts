@@ -14,7 +14,11 @@ import {
   NotificationService,
   ConfigService,
   ThemesService,
-  ITheme
+  ITheme,
+  ICampaignService,
+  ICampaign,
+  CampaignType,
+  CampaignState
 } from '@perxtech/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -79,6 +83,17 @@ const gameSignup: IGame = {
   },
 };
 
+const campaign: ICampaign = {
+  id: 1,
+  name: 'abc',
+  description: 'abc',
+  type: CampaignType.game,
+  state: CampaignState.active,
+  endsAt: null,
+  rewards: [],
+  thumbnailUrl: '',
+};
+
 const mockTheme: ITheme = {
   name: 'theme',
   properties: {
@@ -102,7 +117,9 @@ describe('GameComponent', () => {
   const routerStub: Partial<Router> = {
     navigate: () => Promise.resolve(true)
   };
-
+  const campaignServiceStub: Partial<ICampaignService> = {
+    getCampaign: () => of(campaign)
+  };
   const authServiceStub: Partial<AuthenticationService> = {
     getAnonymous: () => true,
   };
@@ -141,6 +158,7 @@ describe('GameComponent', () => {
         { provide: Router, useValue: routerStub },
         { provide: AuthenticationService, useValue: authServiceStub },
         { provide: NotificationService, useValue: notificationServiceStub },
+        { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: ConfigService, useValue: configServiceStub },
         { provide: ThemesService, useValue: themesServiceStub }
       ]

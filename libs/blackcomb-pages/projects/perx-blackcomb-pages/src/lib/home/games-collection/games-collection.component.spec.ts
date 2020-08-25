@@ -8,7 +8,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { GamesCollectionComponent } from './games-collection.component';
 import { MatCardModule } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
-import { ThemesService, ITheme } from '@perxtech/core';
+import { ThemesService, ITheme, StripHtmlPipe } from '@perxtech/core';
 import { of } from 'rxjs';
 
 describe('GamesCollectionComponent', () => {
@@ -29,7 +29,7 @@ describe('GamesCollectionComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GamesCollectionComponent ],
+      declarations: [ GamesCollectionComponent, StripHtmlPipe ],
       imports: [
         MatCardModule,
         RouterTestingModule,

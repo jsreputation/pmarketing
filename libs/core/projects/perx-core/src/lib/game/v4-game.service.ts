@@ -29,6 +29,11 @@ import {
 } from './v4-game.mapper';
 import { TransactionState } from '../transactions/models/transactions.model';
 import { OutcomeType } from '../outcome/models/outcome.model';
+import { ICampaignService } from '../campaign/icampaign.service';
+import {
+  CampaignType,
+  ICampaign
+} from '../campaign/models/campaign.model';
 
 const enum GameType {
   shakeTheTree = 'shake_the_tree',
@@ -165,19 +170,19 @@ interface IV4PlayResponse {
   data: IV4PlayGeneral;
 }
 
-interface IV4LightGameCampaign {
-  id: number;
-  name: string;
-  begins_at: string;
-  images: {
-    url: string;
-    type: string;
-  }[];
-}
+// interface IV4LightGameCampaign {
+//   id: number;
+//   name: string;
+//   begins_at: string;
+//   images: {
+//     url: string;
+//     type: string;
+//   }[];
+// }
 
-interface IV4GameCampaigns {
-  data: IV4LightGameCampaign[];
-}
+// interface IV4GameCampaigns {
+//   data: IV4LightGameCampaign[];
+// }
 
 const gamesCacheBuster: Subject<boolean> = new Subject();
 const gamesCacheDecider: (response: any) => boolean = res => res && !(res instanceof HttpErrorResponse); // don't cache if empty/error
@@ -191,7 +196,8 @@ export class V4GameService implements IGameService {
 
   constructor(
     private httpClient: HttpClient,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private campaignService: ICampaignService
   ) {
     this.configService.readAppConfig().subscribe(
       (config: IConfig<void>) => {
@@ -208,7 +214,7 @@ export class V4GameService implements IGameService {
     };
   }
 
-  private static v4GameToGame(game: Game): IGame {
+  private static v4GameToGame(game: Game, campaign?: ICampaign): IGame {
     const gameMapperFetcher = {
       shake_the_tree: new ShakeV4ToV4Mapper(),
       hit_the_pinata: new TapV4ToV4Mapper(),
@@ -220,7 +226,11 @@ export class V4GameService implements IGameService {
     if (!gameMapper) {
       throw new Error(`${game.game_type} is not mapped yet`);
     }
-    return gameMapper.v4MapToMap(game);
+    return {
+      ...gameMapper.v4MapToMap(game),
+      campaignName: campaign ? campaign.name : '',
+      campaignDescription: campaign ? campaign.description : ''
+    };
   }
 
   public play(gameId: number): Observable<IPlayOutcome> {
@@ -249,12 +259,12 @@ export class V4GameService implements IGameService {
     shouldCacheDecider: gamesCacheDecider,
     maxCacheCount: 50
   })
-  public getGamesFromCampaign(campaignId: number): Observable<IGame[]> {
-    return this.httpClient.get<GamesResponse>(`${this.hostName}/v4/campaigns/${campaignId}/games`)
+  public getGamesFromCampaign(campaign: ICampaign): Observable<IGame[]> {
+    return this.httpClient.get<GamesResponse>(`${this.hostName}/v4/campaigns/${campaign.id}/games`)
       .pipe(
         map(res => res.data),
         map((games: Game[]) => games.filter((game: Game) => game.game_type !== GameType.quiz)),
-        map((games: Game[]) => games.map((game: Game): IGame => V4GameService.v4GameToGame(game))),
+        map((games: Game[]) => games.map((game: Game): IGame => V4GameService.v4GameToGame(game, campaign))),
         catchError(_ => EMPTY)
       );
   }
@@ -320,45 +330,42 @@ export class V4GameService implements IGameService {
   }
 
   public getActiveGames(): Observable<IGame[]> {
-    return this.httpClient.get<IV4GameCampaigns>(`${this.hostName}/v4/campaigns?campaign_type=game`)
-      .pipe(
-        map(res => res.data),
-        map(cs => {
-          const now = (new Date()).getTime();
-          return cs.filter(c => {
-            if (c.begins_at === null) {
-              return true;
-            }
-            const beginsAt = new Date(c.begins_at);
-            return beginsAt.getTime() <= now;
-          });
-        }),
-        // for each campaign, fetch associated games
-        switchMap((cs: IV4LightGameCampaign[]) => combineLatest([
-          ...cs.map(c => of(c)),
-          ...cs.map(c => this.getGamesFromCampaign(c.id))
-        ])),
-        map((s: (IV4LightGameCampaign | IGame[])[]) => {
-          // split again the campaigns from the games
-          // @ts-ignore
-          const campaigns: IV4LightGameCampaign[] = s.splice(0, s.length / 2);
-          // @ts-ignore
-          const games: IGame[][] = s;
-          const res: IGame[] = [];
-          // eslint-disable-next-line guard-for-in
-          for (const i in games) {
-            const gs = games[i].filter(game => game.type !== TYPE.quiz);
-            // if there is no underlying game, move on to next campaign
-            if (gs.length === 0) {
-              continue;
-            }
-            const g = gs[0];
-            const c = campaigns[i];
-            g.imgUrl = oc(c).images[0].url();
-            res.push(g);
+    return this.campaignService.getCampaigns({ type: CampaignType.game }).pipe(
+      map(cs => {
+        const now = (new Date()).getTime();
+        return cs.filter(c => {
+          if (c.beginsAt === null) {
+            return true;
           }
-          return res;
-        })
-      );
+          return !! (c.beginsAt && c.beginsAt.getTime() <= now);
+        });
+      }),
+      // for each campaign, fetch associated games
+      switchMap((cs: ICampaign[]) => combineLatest([
+        ...cs.map(c => of(c)),
+        ...cs.map(c => this.getGamesFromCampaign(c))
+      ])),
+      map((s: (ICampaign | IGame[])[]) => {
+        // split again the campaigns from the games
+        // @ts-ignore
+        const campaigns: ICampaign[] = s.splice(0, s.length / 2);
+        // @ts-ignore
+        const games: IGame[][] = s;
+        const res: IGame[] = [];
+        // eslint-disable-next-line guard-for-in
+        for (const i in games) {
+          const gs = games[i].filter(game => game.type !== TYPE.quiz);
+          // if there is no underlying game, move on to next campaign
+          if (gs.length === 0) {
+            continue;
+          }
+          const g = gs[0];
+          const c = campaigns[i];
+          g.imgUrl = oc(c).thumbnailUrl();
+          res.push(g);
+        }
+        return res;
+      })
+    );
   }
 }
