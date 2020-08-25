@@ -13,7 +13,6 @@ import { oc } from 'ts-optchain';
 import { Asset } from '../game/v4-game.service';
 import {
   IQAnswer,
-  IQQuestion,
   IQuiz,
   IQuizOutcome,
   QuizMode,
@@ -21,6 +20,7 @@ import {
 } from './models/quiz.model';
 import {
   IAnswerResult,
+  IQQuestion,
   QuizService
 } from './quiz.service';
 import { ConfigService } from '../config/config.service';

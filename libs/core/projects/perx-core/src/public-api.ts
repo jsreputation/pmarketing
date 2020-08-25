@@ -233,8 +233,8 @@ export { PasswordComponent } from './lib/survey/question/password/password.compo
  * Quiz
  */
 export { QuizModule } from './lib/quiz/quiz.module';
-export { QuizService, IAnswerResult } from './lib/quiz/quiz.service';
-export { IQuiz, QuizQuestionType, IQQuestion, IQAnswer, ITracker, IPoints, QuizMode } from './lib/quiz/models/quiz.model';
+export { QuizService, IAnswerResult, IQQuestion } from './lib/quiz/quiz.service';
+export { IQuiz, QuizQuestionType, IQAnswer, ITracker, IPoints, QuizMode } from './lib/quiz/models/quiz.model';
 export { QuizComponent } from './lib/quiz/quiz/quiz.component';
 export { QuizQuestionComponent } from './lib/quiz/question/question.component';
 export { QuizSelectComponent } from './lib/quiz/question/select/select.component';
