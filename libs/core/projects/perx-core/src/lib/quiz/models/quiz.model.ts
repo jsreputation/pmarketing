@@ -4,6 +4,7 @@ import { IPictureSelectPayload } from '../question/picture-select/picture-select
 import { IRatingPayload } from '../question/rating/rating.component';
 import { ISelectPayload } from '../question/select/select.component';
 import { ISwipePayload } from '../question/swipe-list/swipe-list.component';
+import { IQQuestion } from '../quiz.service';
 
 export interface IQAnswer {
   questionId: string;
@@ -25,16 +26,6 @@ export interface IDateRange {
 
 export interface ITracker<T = any> {
   [key: string]: T;
-}
-
-export interface IQQuestion<T = any> {
-  id: string;
-  question: {text: string};
-  description?: {text: string};
-  required: boolean;
-  payload: IPayload;
-  answer?: any;
-  meta?: T;
 }
 
 export enum MaterialColor {

@@ -59,7 +59,7 @@ export class QuizPictureSelectComponent implements OnChanges {
 
   public emitValue(): void {
     let result: string[] = [];
-    if (this.payload.multiple && this.selectedChoices) {
+    if (this.payload && this.payload.multiple && this.selectedChoices) {
       result = Object.entries(this.selectedChoices)
         .filter(([key, value]) => key !== undefined && value !== undefined && value !== false)
         .map(data => data[0]);
@@ -70,6 +70,6 @@ export class QuizPictureSelectComponent implements OnChanges {
   }
 
   public isSelected(index: number): boolean {
-    return this.payload.multiple ? this.selectedChoices && this.selectedChoices[index] : this.selectedChoice === index;
+    return (this.payload && this.payload.multiple) ? this.selectedChoices && this.selectedChoices[index] : this.selectedChoice === index;
   }
 }

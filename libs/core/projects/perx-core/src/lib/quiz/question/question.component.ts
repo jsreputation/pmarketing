@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Optional, Output } from '@angular/core';
-import { IErrors, IPoints, IQAnswer, IQQuestion, QuizQuestionType } from '../models/quiz.model';
+import { IErrors, IPoints, IQAnswer, QuizQuestionType } from '../models/quiz.model';
+import { IQQuestion } from '../quiz.service';
 
 @Component({
   selector: 'perx-core-quiz-question',

@@ -2,12 +2,12 @@
 <div class="survey-main-container"
   [ngStyle]="{'background-image': backgroundImgUrl ? 'url(' + backgroundImgUrl + ')' : '' }">
   <div class="survey-page">
-    <h1>{{title}}</h1>
-    <h2 *ngIf="subTitle">{{subTitle}}</h2>
-    <mat-card class="survey-card">
+    <div class="results-text-container">
+      <h1>{{title}}</h1>
+      <h2 *ngIf="subTitle">{{subTitle}}</h2>
       <perx-core-results [results]="results" [timeConsumed]="timeConsumed">
       </perx-core-results>
-    </mat-card>
+    </div>
   </div>
   <mat-toolbar class="bottom-nav-container mat-elevation-z2">
     <button color="primary" (click)="next()" mat-flat-button>

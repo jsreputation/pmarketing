@@ -17,8 +17,6 @@
       <div
         *ngIf="quiz.mode === mode.basic"
         class="quiz-card">
-        <h1>{{quiz?.title?.text}}</h1>
-        <h2 *ngIf="quiz.subTitle">{{quiz?.subTitle?.text}}</h2>
         <perx-core-quiz
           [hideIndex]="true"
           #coreComponent
