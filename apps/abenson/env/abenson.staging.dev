@@ -1,3 +1,2 @@
 APIHOST=https://api.perxtech.io
-PRODUCTION=true
-COMING_SOON=true
+COMING_SOON=false
