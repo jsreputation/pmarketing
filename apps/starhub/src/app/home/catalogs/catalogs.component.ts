@@ -1,4 +1,5 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { BehaviorSubject, Observable } from 'rxjs';
 import { finalize, scan } from 'rxjs/operators';
@@ -45,7 +46,12 @@ export class CatalogsComponent implements OnInit {
             this.catalogsEnded = true;
           }
         },
-        () => (this.ghostCatalogs = [])
+        (error) => {
+          this.ghostCatalogs = [];
+          if (error.status === 401) {
+            this.router.navigate(['/error']);
+          }
+        }
       );
   }
 
@@ -58,7 +64,8 @@ export class CatalogsComponent implements OnInit {
 
   constructor(
     private rewardsService: RewardsService,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private router: Router
   ) {
     this.initCatalogsScan();
   }

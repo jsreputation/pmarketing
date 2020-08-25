@@ -33,12 +33,26 @@ export class VouchersComponent implements OnInit {
       siteSectionLevel2: 'rewards:vouchers',
       siteSectionLevel3: 'rewards:vouchers'
     });
-    this.vouchersService.getFromPage(this.currentPage, { type: 'active' }).subscribe((vouchers) => {
-      this.issuedVoucher = of(vouchers);
-    });
-    this.getRedeemedVouchers().subscribe((vouchers) => {
-      this.redeemedVouchers = of(vouchers);
-    });
+    this.vouchersService.getFromPage(this.currentPage, { type: 'active' }).subscribe(
+      (vouchers) => {
+        this.issuedVoucher = of(vouchers);
+      },
+      (error) => {
+        if (error.status === 401) {
+          this.router.navigate(['/error']);
+        }
+      }
+    );
+    this.getRedeemedVouchers().subscribe(
+      (vouchers) => {
+        this.redeemedVouchers = of(vouchers);
+      },
+      (error) => {
+        if (error.status === 401) {
+          this.router.navigate(['/error']);
+        }
+      }
+    );
   }
 
   public voucherSelected(voucher: Voucher): void {
@@ -92,12 +106,19 @@ export class VouchersComponent implements OnInit {
       return;
     }
     if (this.complited) {
-      forkJoin(this.redeemedVouchers, this.getRedeemedVouchers()).subscribe(val => {
-        if (!val[1].length && val[1].length < REQ_PAGE_SIZE) {
-          this.complited = true;
+      forkJoin(this.redeemedVouchers, this.getRedeemedVouchers()).subscribe(
+        val => {
+          if (!val[1].length && val[1].length < REQ_PAGE_SIZE) {
+            this.complited = true;
+          }
+          this.redeemedVouchers = of([...val[0], ...val[1]]);
+        },
+        (error) => {
+          if (error.status === 401) {
+            this.router.navigate(['/error']);
+          }
         }
-        this.redeemedVouchers = of([...val[0], ...val[1]]);
-      });
+      );
       return;
     }
     ++this.currentPage;
@@ -105,11 +126,18 @@ export class VouchersComponent implements OnInit {
       this.issuedVoucher,
       this.vouchersService.getFromPage(this.currentPage, { type: 'active' })
     )
-      .subscribe(val => {
-        if (!val[1].length && val[1].length < REQ_PAGE_SIZE) {
-          this.complited = true;
+      .subscribe(
+        val => {
+          if (!val[1].length && val[1].length < REQ_PAGE_SIZE) {
+            this.complited = true;
+          }
+          this.issuedVoucher = of([...val[0], ...val[1]]);
+        },
+        (error) => {
+          if (error.status === 401) {
+            this.router.navigate(['/error']);
+          }
         }
-        this.issuedVoucher = of([...val[0], ...val[1]]);
-      });
+      );
   }
 }

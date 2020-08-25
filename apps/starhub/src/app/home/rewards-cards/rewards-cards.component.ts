@@ -4,6 +4,7 @@ import {
   OnInit,
   Output
 } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   ConfigService,
   IReward,
@@ -58,7 +59,8 @@ export class RewardsCardsComponent implements OnInit {
   constructor(
     private rewardsService: RewardsService,
     private macaronService: MacaronService,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private router: Router
   ) {
   }
 
@@ -69,12 +71,26 @@ export class RewardsCardsComponent implements OnInit {
   }
 
   private initRewards(): void {
-    this.getRewardsSnapping().subscribe((rewards: IReward[]) => {
-      this.rewardsSnapping$ = of(rewards);
-    });
-    this.getRewardsFeatured().subscribe((rewards: IReward[]) => {
-      this.rewardsFeatured$ = of(rewards);
-    });
+    this.getRewardsSnapping().subscribe(
+      (rewards: IReward[]) => {
+        this.rewardsSnapping$ = of(rewards);
+      },
+      (error) => {
+        if (error.status === 401) {
+          this.router.navigate(['/error']);
+        }
+      }
+    );
+    this.getRewardsFeatured().subscribe(
+      (rewards: IReward[]) => {
+        this.rewardsFeatured$ = of(rewards);
+      },
+      (error) => {
+        if (error.status === 401) {
+          this.router.navigate(['/error']);
+        }
+      }
+    );
   }
 
   private sortRewards(rewards: IReward[]): IReward[] {

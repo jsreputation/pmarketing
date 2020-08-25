@@ -26,7 +26,14 @@ export class DiscoverComponent implements OnInit {
       siteSectionLevel3: 'rewards:discover'
     });
     this.settingService.getRemoteFlagsSettings()
-      .subscribe((flags: IFlags) => this.showStampCampaigns = flags && flags.showStampCampaigns || false);
+      .subscribe(
+        (flags: IFlags) => this.showStampCampaigns = flags && flags.showStampCampaigns || false,
+        (error) => {
+          if (error.status === 401) {
+            this.router.navigate(['/error']);
+          }
+        }
+      );
   }
 
   public categorySelected(category: ICategory): void {

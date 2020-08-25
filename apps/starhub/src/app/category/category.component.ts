@@ -92,8 +92,11 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
           this.rewardsEnded = true;
           this.ghostRewards = [];
         }},
-      (_) => {
+      (error) => {
         this.ghostRewards = [];
+        if (error.status === 401) {
+          this.router.navigate(['/error']);
+        }
       });
   }
 

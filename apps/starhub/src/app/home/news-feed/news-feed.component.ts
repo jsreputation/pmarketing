@@ -1,4 +1,5 @@
 import { Component, OnInit, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 
 import {
@@ -54,8 +55,11 @@ export class NewsFeedComponent implements OnInit {
             Array(items.length > 0 ? items.length - 1 : 1).keys()
           );
         },
-        () => {
+        (error) => {
           this.ghostFeed = undefined;
+          if (error.status === 401) {
+            this.router.navigate(['/error']);
+          }
         }
       );
   }
@@ -65,7 +69,8 @@ export class NewsFeedComponent implements OnInit {
     private dialog: MatDialog,
     private analytics: AnalyticsService,
     private settingsService: SettingsService,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private router: Router
   ) { }
 
   public ngOnInit(): void {

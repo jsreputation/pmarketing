@@ -5,6 +5,7 @@ import {
   OnInit,
   ChangeDetectorRef
 } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   ICampaign,
   CampaignType,
@@ -46,7 +47,8 @@ export class StampCardsComponent implements OnInit {
     private stampService: StampService,
     private macaronService: MacaronService,
     private configService: ConfigService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private router: Router
   ) {
     this.initCampaignsScan();
   }
@@ -112,9 +114,12 @@ export class StampCardsComponent implements OnInit {
           this.ghostCampaigns = [];
           this.cd.detectChanges();
         },
-        () => {
+        (error) => {
           this.ghostCampaigns = [];
           this.cd.detectChanges();
+          if (error.status === 401) {
+            this.router.navigate(['/error']);
+          }
         }
       );
   }

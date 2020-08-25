@@ -44,37 +44,44 @@ export class RewardComponent implements OnInit {
         map((params: Params) => params.id), // get reward id
         switchMap((id: number) => this.rewardsService.getReward(id)) // get the full reward information
       )
-      .subscribe((reward: IReward) => {
-        this.reward = reward;
-        if ((window as any).appboy) {
-          (window as any).appboy.logCustomEvent('user_view_reward', {
-            reward_id: reward.id,
-            reward_name: reward.name
-          });
-        }
-        if (reward.categoryTags && reward.categoryTags.length > 0) {
-          const category = reward.categoryTags[0].title;
-          this.analyticsService.addEvent({
-            pageName: `rewards:discover:${category.toLowerCase()}:${reward.name}`,
-            pageType: PageType.detailPage,
-            siteSectionLevel2: 'rewards:discover',
-            siteSectionLevel3: `rewards:discover:${category.toLowerCase()}`
-          });
-        }
+      .subscribe(
+        (reward: IReward) => {
+          this.reward = reward;
+          if ((window as any).appboy) {
+            (window as any).appboy.logCustomEvent('user_view_reward', {
+              reward_id: reward.id,
+              reward_name: reward.name
+            });
+          }
+          if (reward.categoryTags && reward.categoryTags.length > 0) {
+            const category = reward.categoryTags[0].title;
+            this.analyticsService.addEvent({
+              pageName: `rewards:discover:${category.toLowerCase()}:${reward.name}`,
+              pageType: PageType.detailPage,
+              siteSectionLevel2: 'rewards:discover',
+              siteSectionLevel3: `rewards:discover:${category.toLowerCase()}`
+            });
+          }
 
-        this.macaron = this.macaronService.getMacaron(reward);
-        this.isRewardsDetailsFetched = true;
-        if (this.macaron !== null) {
-          this.isButtonEnable = this.macaron.isButtonEnabled;
-        }
+          this.macaron = this.macaronService.getMacaron(reward);
+          this.isRewardsDetailsFetched = true;
+          if (this.macaron !== null) {
+            this.isButtonEnable = this.macaron.isButtonEnabled;
+          }
 
-        if (
-          reward.inventory &&
-          reward.inventory.rewardLimitPerUserBalance === 0
-        ) {
-          this.isButtonEnable = false;
+          if (
+            reward.inventory &&
+            reward.inventory.rewardLimitPerUserBalance === 0
+          ) {
+            this.isButtonEnable = false;
+          }
+        },
+        (error) => {
+          if (error.status === 401) {
+            this.router.navigate(['/error']);
+          }
         }
-      });
+      );
   }
 
   public back(): void {
@@ -86,10 +93,13 @@ export class RewardComponent implements OnInit {
     this.loadingSubmit = true;
     this.vouchersService.issueReward(this.reward.id).subscribe(
       () => this.router.navigate(['/home/vouchers']),
-      () => {
+      (error) => {
         this.isButtonEnable = true; // change button back to enable which it originally is, before save is triggered
         this.loadingSubmit = false;
         this.notificationService.addSnack('Sorry! Could not save reward.');
+        if (error.status === 401) {
+          this.router.navigate(['/error']);
+        }
       }
     );
   }

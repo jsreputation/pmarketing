@@ -166,24 +166,38 @@ export class AppComponent implements OnInit {
         )
       ),
       first(res => res === true)
-    ).subscribe(() => {
-      this.loadApp();
-      this.loading = false;
-    });
+    ).subscribe(
+      () => {
+        this.loadApp();
+        this.loading = false;
+      },
+      (error) => {
+        if (error.status === 401) {
+          this.router.navigate(['/error']);
+        }
+      }
+    );
   }
 
   private loadApp(): void {
     this.loyaltyService.getLoyalty().pipe(
       switchMap(() => this.profileService.whoAmI())
-    ).subscribe((profile: IProfile) => {
-      (window as any).dataLayer.push({ user_properties: { identifier: profile.identifier } });
-      if ((window as any).newrelic) {
-        (window as any).newrelic.interaction().end();
+    ).subscribe(
+      (profile: IProfile) => {
+        (window as any).dataLayer.push({ user_properties: { identifier: profile.identifier } });
+        if ((window as any).newrelic) {
+          (window as any).newrelic.interaction().end();
+        }
+        if ((window as any).appboy) {
+          (window as any).appboy.changeUser(profile.identifier);
+        }
+      },
+      (error) => {
+        if (error.status === 401) {
+          this.router.navigate(['/error']);
+        }
       }
-      if ((window as any).appboy) {
-        (window as any).appboy.changeUser(profile.identifier);
-      }
-    });
+    );
   }
 
   protected checkGame(campaign: ICampaign): void {
@@ -208,7 +222,10 @@ export class AppComponent implements OnInit {
           this.putIdInStorage(campaign.id);
           this.dialog.open(RewardPopupComponent, { data });
         },
-        () => { /* nothing to do here, just fail silently */
+        (error) => {
+          if (error.status === 401) {
+            this.router.navigate(['/error']);
+          }
         }
       );
   }
