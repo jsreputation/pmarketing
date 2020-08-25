@@ -91,7 +91,7 @@ import {
 
 import { GhostsModule } from './ghosts/ghosts.module';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router'
+import { Router } from '@angular/router';
 
 Sentry.init({
   dsn: 'https://b7939e78d33d483685b1c82e9c076384@sentry.io/1873560'
