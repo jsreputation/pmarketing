@@ -12,6 +12,7 @@ import {
   APP_INITIALIZER,
   ErrorHandler,
   Injectable,
+  Injector,
   NgModule
 } from '@angular/core';
 import {
@@ -90,6 +91,7 @@ import {
 
 import { GhostsModule } from './ghosts/ghosts.module';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router'
 
 Sentry.init({
   dsn: 'https://b7939e78d33d483685b1c82e9c076384@sentry.io/1873560'
@@ -105,11 +107,17 @@ export class HttpConfigInterceptor implements HttpInterceptor {
 
 @Injectable()
 export class SentryErrorHandler implements ErrorHandler {
+  constructor(private injector: Injector) {}
+
   public handleError(error: any): void {
     // const eventId =
     Sentry.captureException(error.originalError || error);
     if (!environment.production) {
       console.error(error);
+    }
+    if (error.status === 401) {
+      const router = this.injector.get(Router);
+      router.navigateByUrl('/error');
     }
     // Sentry.showReportDialog({ eventId });
   }
