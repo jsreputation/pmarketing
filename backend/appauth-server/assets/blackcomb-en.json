@@ -79,6 +79,8 @@
     "MOBILE_NOTFOUND_TXT": "Account not found",
     "MOBILE_INVALID_TXT": "Please input a valid mobile number",
     "MOBILE_REQUIRED_TXT": "Please enter your mobile number",
+    "USERNAME_FIELD": "Username",
+    "USERNAME_REQUIRED_TXT": "Please enter your username",
     "OTP_SEND_TO": "OTP send to ",
     "CHECK_YOUR_SMS": "Check your sms",
     "PASSWORD_FIELD": "Password",
