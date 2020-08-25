@@ -114,7 +114,11 @@ export class LayoutComponent implements OnInit {
   }
 
   public onActivate(ref: any): void {
-    this.showHeader = !(ref instanceof SignIn2Component);
+    this.route.queryParams.subscribe((params) => {
+      const paramArr: string[] = params.flags && params.flags.split(',');
+
+      this.showHeader = paramArr && paramArr.includes('chromeless') ? false : !(ref instanceof SignIn2Component);
+    })
     this.showToolbar = ref instanceof HomeComponent ||
       ref instanceof HistoryComponent ||
       ref instanceof AccountComponent ||
