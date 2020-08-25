@@ -8,7 +8,6 @@ import {
   MatCardModule,
 } from '@angular/material';
 
-import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
@@ -35,9 +34,6 @@ describe('CatalogsComponent', () => {
       rssFeeds: '',
     })
   };
-  const routerStub: Partial<Router> = {
-    navigate: () => Promise.resolve(true)
-  };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CatalogsComponent, GhostCardComponent],
@@ -49,8 +45,7 @@ describe('CatalogsComponent', () => {
       ],
       providers: [
         { provide: ConfigService, useValue: configServiceStub },
-        { provide: RewardsService, useValue: catalogsServiceStub },
-        { provide: Router, useValue: routerStub }
+        { provide: RewardsService, useValue: catalogsServiceStub }
       ]
     })
       .compileComponents();

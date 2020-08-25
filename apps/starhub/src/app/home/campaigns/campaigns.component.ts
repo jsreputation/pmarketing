@@ -1,5 +1,4 @@
 import { Component, Output, EventEmitter, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import {
   ICampaign,
   CampaignType,
@@ -40,8 +39,7 @@ export class CampaignsComponent implements OnInit {
     private campaignService: ICampaignService,
     private gameService: IGameService,
     private macaronService: MacaronService,
-    private configService: ConfigService,
-    private router: Router,
+    private configService: ConfigService
   ) {
     this.initCampaignsScan();
   }
@@ -102,12 +100,7 @@ export class CampaignsComponent implements OnInit {
           this.campaignsSubj.next(filteredAndMacoronedCampaigns);
           this.ghostCampaigns = [];
         },
-        (error) => {
-          this.ghostCampaigns = [];
-          if (error.status === 401) {
-            this.router.navigate(['/error']);
-          }
-        }
+        () => (this.ghostCampaigns = [])
       );
   }
 

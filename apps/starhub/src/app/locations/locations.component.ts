@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ILocation, LocationsService, IReward, filterDuplicateLocations, IVoucherService } from '@perxtech/core';
 import { Observable } from 'rxjs';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { filter, map, tap } from 'rxjs/operators';
 import { AnalyticsService, PageType } from '../analytics.service';
 
@@ -19,8 +19,7 @@ export class LocationsComponent implements OnInit {
     private locationService: LocationsService,
     private activeRoute: ActivatedRoute,
     private analytics: AnalyticsService,
-    public voucherService: IVoucherService,
-    private router: Router
+    public voucherService: IVoucherService
   ) {
   }
 
@@ -30,16 +29,9 @@ export class LocationsComponent implements OnInit {
         filter((params: Params) => params.merchantId),
         map((params: Params) => params.merchantId)
       )
-      .subscribe(
-        (merchantId: number) => {
-          this.locations$ = this.locationService.getFromMerchant(merchantId).pipe(map(filterDuplicateLocations));
-        },
-        (error) => {
-          if (error.status === 401) {
-            this.router.navigate(['/error']);
-          }
-        }
-      );
+      .subscribe((merchantId: number) => {
+        this.locations$ = this.locationService.getFromMerchant(merchantId).pipe(map(filterDuplicateLocations));
+      });
     this.activeRoute.queryParams
       .pipe(
         filter((params: Params) => params.voucherId),
@@ -57,13 +49,7 @@ export class LocationsComponent implements OnInit {
             siteSectionLevel2: 'rewards:discover',
             siteSectionLevel3: 'rewards:discover:locations'
           });
-        },
-        (error) => {
-          if (error.status === 401) {
-            this.router.navigate(['/error']);
-          }
-        }
-      );
+        });
   }
 
   public back(): void {

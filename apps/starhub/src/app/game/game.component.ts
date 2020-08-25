@@ -159,8 +159,6 @@ export class GameComponent implements OnInit {
                 text: 'No more rewards available',
                 panelClass: 'custom-class'
               });
-            } else if (err instanceof HttpErrorResponse && err.status === 401) {
-              this.router.navigate(['error']);
             } else {
               this.showErrorPopup();
             }
@@ -177,12 +175,7 @@ export class GameComponent implements OnInit {
         (vouchs: Voucher[]) => {
           this.gameCompletedHandler(vouchs);
         },
-        (error) => {
-          this.showNoRewardsPopUp();
-          if (error.status === 401) {
-            this.router.navigate(['/error']);
-          }
-        }
+        () => this.showNoRewardsPopUp()
       );
   }
 
@@ -198,12 +191,7 @@ export class GameComponent implements OnInit {
         (vouchs: Voucher[]) => {
           this.gameCompletedHandler(vouchs);
         },
-        (error) => {
-          this.showNoRewardsPopUp();
-          if (error.status === 401) {
-            this.router.navigate(['/error']);
-          }
-        }
+        () => this.showNoRewardsPopUp()
       );
   }
 
@@ -247,12 +235,9 @@ export class GameComponent implements OnInit {
             this.hasNoRewardsPopup = true;
           }
         },
-        (error) => {
+        () => {
           this.willWin = false;
           this.hasNoRewardsPopup = true;
-          if (error.status === 401) {
-            this.router.navigate(['/error']);
-          }
         }
       );
   }

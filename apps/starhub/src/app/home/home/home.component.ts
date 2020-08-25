@@ -159,10 +159,7 @@ export class HomeComponent implements OnInit {
             return;
           }
         },
-        (error) => {
-          if (error.status === 401) {
-            this.router.navigate(['/error']);
-          }
+        () => {
           // no campaign that is popup eligible. fail silently.
         }
       );
@@ -182,8 +179,6 @@ export class HomeComponent implements OnInit {
             if (err.error && err.error.code === 4103) {
               // user has already been issued voucher
               this.router.navigate(['/home/vouchers']);
-            } else if (err.status === 401) {
-              this.router.navigate(['/error']);
             }
             console.error(
               `Something fishy, we should not be here, without any reward or game. ERR print: ${err.error.message}`

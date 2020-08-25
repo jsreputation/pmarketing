@@ -5,7 +5,6 @@ import {
 import {
   ActivatedRoute,
   Params,
-  Router
 } from '@angular/router';
 
 import {
@@ -48,8 +47,7 @@ export class VoucherComponent implements OnInit {
     private vouchersService: IVoucherService,
     private activeRoute: ActivatedRoute,
     private analytics: AnalyticsService,
-    private macaronService: MacaronService,
-    private router: Router
+    private macaronService: MacaronService
   ) {
   }
 
@@ -75,19 +73,12 @@ export class VoucherComponent implements OnInit {
         }),
         map((voucher: Voucher) => voucher.reward)
       )
-      .subscribe(
-        (reward: IReward) => {
-          this.macaron = this.macaronService.getMacaron(reward);
-          if (this.macaron === null) {
-            this.isButtonEnable = true;
-          }
-        },
-        (error) => {
-          if (error.status === 401) {
-            this.router.navigate(['/error']);
-          }
+      .subscribe((reward: IReward) => {
+        this.macaron = this.macaronService.getMacaron(reward);
+        if (this.macaron === null) {
+          this.isButtonEnable = true;
         }
-      );
+      });
   }
 
   public isButtonDisabled(): boolean {

@@ -14,7 +14,6 @@ import {
   ConfigService
 } from '@perxtech/core';
 import { Type } from '@angular/core';
-import { Router } from '@angular/router';
 import { game } from '../../game.mock';
 import { IMacaron, MacaronService } from '../../services/macaron.service';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
@@ -45,10 +44,6 @@ describe('CampaignsComponent', () => {
     })
   };
 
-  const routerStub: Partial<Router> = {
-    navigate: () => Promise.resolve(true)
-  };
-
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CampaignsComponent, GhostCardComponent],
@@ -62,8 +57,7 @@ describe('CampaignsComponent', () => {
       providers: [
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: ConfigService, useValue: configServiceStub },
-        { provide: IGameService, useValue: gameServiceStub },
-        { provide: Router, useValue: routerStub }
+        { provide: IGameService, useValue: gameServiceStub }
       ]
     })
       .compileComponents();

@@ -65,17 +65,10 @@ export class RedemptionComponent implements OnInit {
         }),
         map((voucher: Voucher) => voucher.reward)
       )
-      .subscribe(
-        (reward: IReward) => {
-          this.reward = reward;
-          this.macaron = this.macaronService.getMacaron(reward);
-        },
-        (error) => {
-          if (error.status === 401) {
-            this.router.navigate(['/error']);
-          }
-        }
-      );
+      .subscribe((reward: IReward) => {
+        this.reward = reward;
+        this.macaron = this.macaronService.getMacaron(reward);
+      });
   }
 
   public back(): void {
@@ -90,12 +83,9 @@ export class RedemptionComponent implements OnInit {
     this.vouchersService.redeemVoucher(this.voucher.id, { pin })
       .subscribe(
         () => this.voucher.state = VoucherState.redeemed,
-        (error) => {
+        () => {
           this.pinInputError = true;
           this.notficationService.addSnack('Sorry! Voucher redemption failed.');
-          if (error.status === 401) {
-            this.router.navigate(['/error']);
-          }
         }
       );
   }

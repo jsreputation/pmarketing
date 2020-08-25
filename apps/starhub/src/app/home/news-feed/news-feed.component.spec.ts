@@ -1,6 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Router } from '@angular/router';
 import { NewsFeedComponent } from './news-feed.component';
 import { MatCardModule, MatButtonModule, MatDialogModule, MatDialog } from '@angular/material';
 import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
@@ -33,10 +32,6 @@ describe('NewsFeedComponent', () => {
       baseHref: '',
       rssFeeds: '',
     })
-  };
-
-  const routerStub: Partial<Router> = {
-    navigate: () => Promise.resolve(true)
   };
 
   const items = [
@@ -72,8 +67,7 @@ describe('NewsFeedComponent', () => {
       providers: [
         { provide: FeedReaderService, useValue: feedReaderServiceStub },
         { provide: SettingsService, useValue: settingsServiceStub },
-        { provide: ConfigService, useValue: configServiceStub },
-        { provide: Router, useValue: routerStub }
+        { provide: ConfigService, useValue: configServiceStub }
       ]
     })
       .compileComponents();

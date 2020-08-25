@@ -135,12 +135,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
             this.notificationService.addSnack('You got a new stamp!');
           }
         },
-        (error) => {
-          if (error.status === 401) {
-            this.router.navigate(['/error']);
-          }
-          this.router.navigate(['/home']);
-        }
+        () => this.router.navigate(['/home'])
       );
   }
 

@@ -44,44 +44,37 @@ export class RewardComponent implements OnInit {
         map((params: Params) => params.id), // get reward id
         switchMap((id: number) => this.rewardsService.getReward(id)) // get the full reward information
       )
-      .subscribe(
-        (reward: IReward) => {
-          this.reward = reward;
-          if ((window as any).appboy) {
-            (window as any).appboy.logCustomEvent('user_view_reward', {
-              reward_id: reward.id,
-              reward_name: reward.name
-            });
-          }
-          if (reward.categoryTags && reward.categoryTags.length > 0) {
-            const category = reward.categoryTags[0].title;
-            this.analyticsService.addEvent({
-              pageName: `rewards:discover:${category.toLowerCase()}:${reward.name}`,
-              pageType: PageType.detailPage,
-              siteSectionLevel2: 'rewards:discover',
-              siteSectionLevel3: `rewards:discover:${category.toLowerCase()}`
-            });
-          }
-
-          this.macaron = this.macaronService.getMacaron(reward);
-          this.isRewardsDetailsFetched = true;
-          if (this.macaron !== null) {
-            this.isButtonEnable = this.macaron.isButtonEnabled;
-          }
-
-          if (
-            reward.inventory &&
-            reward.inventory.rewardLimitPerUserBalance === 0
-          ) {
-            this.isButtonEnable = false;
-          }
-        },
-        (error) => {
-          if (error.status === 401) {
-            this.router.navigate(['/error']);
-          }
+      .subscribe((reward: IReward) => {
+        this.reward = reward;
+        if ((window as any).appboy) {
+          (window as any).appboy.logCustomEvent('user_view_reward', {
+            reward_id: reward.id,
+            reward_name: reward.name
+          });
         }
-      );
+        if (reward.categoryTags && reward.categoryTags.length > 0) {
+          const category = reward.categoryTags[0].title;
+          this.analyticsService.addEvent({
+            pageName: `rewards:discover:${category.toLowerCase()}:${reward.name}`,
+            pageType: PageType.detailPage,
+            siteSectionLevel2: 'rewards:discover',
+            siteSectionLevel3: `rewards:discover:${category.toLowerCase()}`
+          });
+        }
+
+        this.macaron = this.macaronService.getMacaron(reward);
+        this.isRewardsDetailsFetched = true;
+        if (this.macaron !== null) {
+          this.isButtonEnable = this.macaron.isButtonEnabled;
+        }
+
+        if (
+          reward.inventory &&
+          reward.inventory.rewardLimitPerUserBalance === 0
+        ) {
+          this.isButtonEnable = false;
+        }
+      });
   }
 
   public back(): void {
