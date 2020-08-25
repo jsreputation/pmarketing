@@ -38,6 +38,7 @@ export class GameComponent implements OnInit, OnDestroy {
   private informationCollectionSetting: string;
   private rewardCount: string;
   private points: IPointsOutcome;
+  private isEmbedded: boolean;
   public willWin: boolean = false;
   public successPopUp: IPopupConfig = {
     title: 'GAME_PAGE.GAME_SUCCESS_TITLE',
@@ -78,6 +79,11 @@ export class GameComponent implements OnInit, OnDestroy {
     this.initTranslate();
 
     this.isAnonymousUser = this.auth.getAnonymous();
+    this.route.queryParams.subscribe((params: Params) => {
+      const paramArr: string[] = params.flags && params.flags.split(',');
+      this.isEmbedded = paramArr && paramArr.includes('nonav');
+    });
+
     // @ts-ignore observable too long, linter cannot compute
     this.gameData$ = this.route.params.pipe(
       filter((params: Params) => params.id),
