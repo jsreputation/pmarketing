@@ -3,7 +3,7 @@ import { StampCardComponent } from './stamp-card.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { PuzzlesModule, StampCardState, StampService, NotificationService, IStampCard, ConfigService } from '@perxtech/core';
 import { of } from 'rxjs';
-import { ActivatedRoute, convertToParamMap } from '@angular/router';
+import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
 import { Type } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
 
@@ -31,6 +31,10 @@ describe('StampCardComponent', () => {
     })
   };
 
+  const routerStub: Partial<Router> = {
+    navigate: () => Promise.resolve(true)
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [StampCardComponent],
@@ -45,7 +49,8 @@ describe('StampCardComponent', () => {
         { provide: StampService, useValue: stampServiceStub },
         { provide: ActivatedRoute, useValue: { paramMap: of(convertToParamMap({ id: '1' })) } },
         { provide: ConfigService, useValue: configServiceStub },
-        { provide: NotificationService, useValue: notificationStub }
+        { provide: NotificationService, useValue: notificationStub },
+        { provide: Router, useValue: routerStub }
       ]
     })
       .compileComponents();

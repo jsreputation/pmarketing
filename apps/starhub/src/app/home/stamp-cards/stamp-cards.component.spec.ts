@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 
 import { StampCardsComponent } from './stamp-cards.component';
 import { MatCardModule, MatIconModule, MatRippleModule } from '@angular/material';
+import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import {
   ICampaignService,
@@ -40,6 +41,10 @@ describe('StampCardsComponent', () => {
     })
   };
 
+  const routerStub: Partial<Router> = {
+    navigate: () => Promise.resolve(true)
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [StampCardsComponent, GhostCardComponent],
@@ -54,6 +59,7 @@ describe('StampCardsComponent', () => {
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: ConfigService, useValue: configServiceStub },
         { provide: StampService, useValue: stampServiceStub },
+        { provide: Router, useValue: routerStub }
       ]
     })
       .compileComponents();

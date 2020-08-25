@@ -11,6 +11,7 @@ import { MatIconModule, MatCardModule } from '@angular/material';
 import { RewardsService, IReward, ConfigService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
+import { Router } from '@angular/router';
 import { rewards } from '../../rewards.mock';
 import { MacaronService } from '../../services/macaron.service';
 import { GhostsModule } from '../../ghosts/ghosts.module';
@@ -38,6 +39,9 @@ describe('RewardsCardsComponent', () => {
         rssFeeds: ''
       })
   };
+  const routerStub: Partial<Router> = {
+    navigate: () => Promise.resolve(true)
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -52,7 +56,8 @@ describe('RewardsCardsComponent', () => {
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub },
         { provide: ConfigService, useValue: configServiceStub },
-        { provide: MacaronService, useValue: macaronServiceStub }
+        { provide: MacaronService, useValue: macaronServiceStub },
+        { provide: Router, useValue: routerStub }
       ]
     }).compileComponents();
   }));
