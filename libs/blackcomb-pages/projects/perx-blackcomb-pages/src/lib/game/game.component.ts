@@ -217,14 +217,20 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   // mutates willWin property, succespopup text and popup data
+  // @ts-ignore
   private fillSuccess(rewardCount?: string, pointsOutcome?: IPointsOutcome): void {
     this.willWin = true;
-    if (rewardCount && parseInt(rewardCount, 10) > 0) {
-      this.successPopUp.text += this.rewardsTxt.replace('{{rewards}}', rewardCount);
-    }
-    if (pointsOutcome) {
-      this.successPopUp.text += this.pointsTxt.replace('{{points}}', pointsOutcome.points.toString());
-    }
+
+    /*  todo:
+    *    1. block is commented out because popup content is managed by dashboard.
+    *    2. this block gets called twice and so unintentionally ends up doubling the text
+    */
+    // if (rewardCount && parseInt(rewardCount, 10) > 0) {
+    //   this.successPopUp.text += this.rewardsTxt.replace('{{rewards}}', rewardCount);
+    // }
+    // if (pointsOutcome) {
+    //   this.successPopUp.text += this.pointsTxt.replace('{{points}}', pointsOutcome.points.toString());
+    // }
     this.popupData = this.successPopUp;
   }
 
