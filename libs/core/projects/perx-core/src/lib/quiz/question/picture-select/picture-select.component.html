@@ -1,4 +1,20 @@
 <div class="choice-container">
+  <ng-container *ngIf="payload && payload.multiple; else elseBlock">
+    <div class="choice-content"
+         [ngClass]="isSelected(i) ? 'selected' : ''"
+         *ngFor="let choice of payload?.choices; let i = index">
+      <mat-checkbox
+        class="choice-image"
+        [color]="'primary'"
+        (click)="onSelect(i)">
+        <img class="image" [src]="choice?.answer?.en?.image?.value?.image_url" [alt]="choice?.answer?.en?.text">
+      </mat-checkbox>
+      <div class="choice-label">
+          {{ choice?.answer?.en?.text }}
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #elseBlock>
     <div class="choice-content"
          [ngClass]="isSelected(i) ? 'selected' : ''"
          *ngFor="let choice of payload?.choices; let i = index">
@@ -7,16 +23,12 @@
         [color]="'primary'"
         [labelPosition]="'before'"
         (click)="onSelect(i)">
-          <img class="image" [src]="choice?.answer?.en?.image?.value?.image_url" [alt]="choice?.answer?.en?.text">
+        <img class="image" [src]="choice?.answer?.en?.image?.value?.image_url" [alt]="choice?.answer?.en?.text">
       </mat-radio-button>
       <div class="choice-label">
-          {{ choice?.answer?.en?.text }}
+        {{ choice?.answer?.en?.text }}
       </div>
     </div>
+  </ng-template>
 </div>
-<!--  <mat-radio-button-->
-<!--    class="selection-radio-button choice-box selected"-->
-<!--    *ngFor="let choice of payload?.choices"-->
-<!--    [value]="choice.id">-->
-<!--    {{choice?.title?.text}}-->
-<!--  </mat-radio-button>-->
+

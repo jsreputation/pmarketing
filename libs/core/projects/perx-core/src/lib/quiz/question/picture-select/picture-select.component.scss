@@ -40,11 +40,26 @@
         }
       }
 
-      //below possibly mat-radio-label-before too
       ::ng-deep .mat-radio-label-content {
         width: 100%;
         height: 13rem;
         padding: 0;
+      }
+
+      ::ng-deep .mat-checkbox-layout {
+        width: 100%;
+        height: 13rem;
+      }
+
+      ::ng-deep .mat-checkbox-inner-container {
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        background: white;
+      }
+
+      ::ng-deep .mat-checkbox-label {
+        width: 100%;
       }
 
       img {
@@ -56,15 +71,15 @@
     }
 
     .choice-label {
-      font-size: 1.2rem;
+      font-size: 1.4rem;
       line-height: 1.6rem;
       letter-spacing: 0.4px;
       color: #212121;
       max-width: 13rem; // consistent with the image and allow text position center correctly
       margin-top: 1.5rem; // space from the image
       margin-bottom: 1.5rem;
-      text-align: center;
+      margin-inline-start: 2rem;
+      font-weight: 500;
     }
   }
 }
-
