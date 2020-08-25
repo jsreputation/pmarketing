@@ -1,21 +1,41 @@
 import {
   AuthenticationService,
-  NotificationService,
-  ITheme,
-  ThemesService,
   ConfigService,
-  IConfig,
   GeneralStaticDataService,
+  IConfig,
   ICountryCode,
-  LoyaltyService,
+  ITheme,
   LoginType,
+  LoyaltyService,
+  NotificationService,
+  ThemesService,
 } from '@perxtech/core';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Navigation, Router } from '@angular/router';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import {
+  Component,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
+import {
+  ActivatedRoute,
+  Navigation,
+  Router
+} from '@angular/router';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators
+} from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Subject, Observable } from 'rxjs';
-import { map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import {
+  Observable,
+  Subject
+} from 'rxjs';
+import {
+  map,
+  switchMap,
+  takeUntil,
+  tap
+} from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { oc } from 'ts-optchain';
 
