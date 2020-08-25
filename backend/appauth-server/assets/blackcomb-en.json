@@ -321,7 +321,7 @@
     "GAME_NO_REWARDS_TEXT": "Unfortunately, you did not win anything this time",
     "GAME_SUCCESS_TITLE": "Congratulations!",
     "GAME_SUCCESS_TEXT": "You earned",
-    "GAME_SUCCESS_TEXT_REWARDS": " {rewards}} rewards",
+    "GAME_SUCCESS_TEXT_REWARDS": " {{rewards}} rewards",
     "GAME_SUCCESS_TEXT_POINTS": " {{points}} points",
     "GAME_NOT_VALID": "Oops!",
     "BACK_TO_WALLET": "Back to wallet",
