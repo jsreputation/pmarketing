@@ -80,6 +80,9 @@ export class SignIn2Component implements OnInit, OnDestroy {
         if (conf.countryCodePrefix) {
           this.countryCodePrefix = conf.countryCodePrefix;
         }
+        if (conf.loginMethod) {
+          this.loginMethod = conf.loginMethod;
+        }
         this.initForm();
       });
     // todo: make this a input
@@ -108,22 +111,33 @@ export class SignIn2Component implements OnInit, OnDestroy {
 
   public get identifier(): string {
     const customerIdField = this.loginForm.get('customerID');
-    const countryCode = this.loginForm.get('countryCode');
-    if (
-      customerIdField &&
-      customerIdField.value &&
-      countryCode &&
-      countryCode.value
-    ) {
-      let sanitizedId: string = customerIdField.value;
-      // converting to Number will strip leading 0s
-      const numberedId = Number(sanitizedId);
-      if (!isNaN(numberedId)) {
-        sanitizedId = numberedId.toString();
-      }
-      return `${countryCode.value}${sanitizedId}`;
+    let result = '';
+    switch (this.loginMethod) {
+      case LoginType.phone:
+        const countryCode = this.loginForm.get('countryCode');
+        if (
+          customerIdField &&
+          customerIdField.value &&
+          countryCode &&
+          countryCode.value
+        ) {
+          let sanitizedId: string = customerIdField.value;
+          // converting to Number will strip leading 0s
+          const numberedId = Number(sanitizedId);
+          if (! isNaN(numberedId)) {
+            sanitizedId = numberedId.toString();
+          }
+          result = `${countryCode.value}${sanitizedId}`;
+        }
+        break;
+      case LoginType.username:
+      case LoginType.email:
+        result = customerIdField && customerIdField.value ? customerIdField.value : '';
+        break;
+      default:
+        result = '';
     }
-    return '';
+    return result;
   }
 
   public onSubmit(): void {

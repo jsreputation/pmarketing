@@ -12,6 +12,7 @@
             <span>{{errorMessage}}</span>
         </div>
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <div *ngIf="loginMethod === loginTypes.phone">
             <div *ngIf="countryCodePrefix; then withPrefixBlock else elseBlock"></div>
             <ng-template #withPrefixBlock>
                 <mat-form-field appearance="standard" class="full-width__input">
@@ -73,6 +74,23 @@
                     </mat-error>
                 </mat-form-field>
             </ng-template>
+          </div>
+          <div *ngIf="loginMethod === loginTypes.username">
+            <mat-form-field appearance="standard" class="full-width__input">
+              <input matInput [placeholder]="'LOGIN_PAGE.USERNAME_FIELD' | translate" formControlName="customerID"
+                     [value]="">
+              <mat-error *ngIf="loginForm.hasError('customerID')">
+                {{'LOGIN_PAGE.USERNAME_REQUIRED_TXT' | translate}}
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="standard" class="full-width__input">
+              <input matInput [placeholder]="'LOGIN_PAGE.PASSWORD_FIELD' | translate" formControlName="password"
+                     type="password">
+              <mat-error *ngIf="loginForm.hasError('password')">
+                {{'LOGIN_PAGE.PASSWORD_INVALID_TXT' | translate}}
+              </mat-error>
+            </mat-form-field>
+          </div>
             <div class="subtitle forgot-password" *ngIf="appConfig.showForgetPasswordOnLogin">
                 <a [routerLink]="['/forgot-password']" [queryParams]="{ identifier: identifier }" class="link">
                     {{'LOGIN_PAGE.FORGET_PASSWORD_TXT' | translate}}
