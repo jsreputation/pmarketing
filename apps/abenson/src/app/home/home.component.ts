@@ -6,7 +6,6 @@ import {
   ICampaignService,
   IConfig,
   ILoyalty,
-  IVoucherService,
   Voucher,
   VoucherState
 } from '@perxtech/core';
@@ -31,7 +30,6 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private vouchersService: IVoucherService,
     private campaignService: ICampaignService,
     private configService: ConfigService,
     private datePipe: DatePipe,

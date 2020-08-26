@@ -3,8 +3,6 @@ import { HomeComponent } from './home.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import {
-  IVoucherService,
-  VouchersModule,
   ICampaignService,
   LoyaltyModule,
   ProfileModule,
@@ -25,9 +23,6 @@ describe('HomeComponent', () => {
   };
   const configServiceStub: Partial<ConfigService> = {
     readAppConfig: <T>(): Observable<IConfig<T>> => of()
-  };
-  const vouchersServiceStub: Partial<IVoucherService> = {
-    getAll: () => of()
   };
 
   const campaignServiceStub: Partial<ICampaignService> = {
@@ -55,13 +50,11 @@ describe('HomeComponent', () => {
       imports: [
         NoopAnimationsModule,
         MatCardModule,
-        VouchersModule,
         LoyaltyModule,
         ProfileModule
       ],
       providers: [
         { provide: Router, useValue: router },
-        { provide: IVoucherService, useValue: vouchersServiceStub },
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: ProfileService, useValue: profileServiceStub },
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
