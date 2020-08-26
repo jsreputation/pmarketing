@@ -140,7 +140,7 @@ describe('GameComponent', () => {
   };
   const activatedRouteStub: Partial<ActivatedRoute> = {
     queryParams: of({ params: { flags: 'nonav, chromeless' } }),
-    params: of({ id: '1' })
+    params: of({ id: 1 })
   };
 
   beforeEach(async(() => {
