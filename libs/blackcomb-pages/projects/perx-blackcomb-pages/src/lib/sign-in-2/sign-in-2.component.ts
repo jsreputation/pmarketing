@@ -61,7 +61,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
   public countriesList$: Observable<ICountryCode[]>;
   public loading: boolean = false;
   public loginMethod: LoginType;
-  public loginTypes = LoginType;
+  public loginTypes: LoginType = LoginType;
   private validateMembership: boolean = false;
   private custId: string = '';
   private destroy$: Subject<void> = new Subject();
