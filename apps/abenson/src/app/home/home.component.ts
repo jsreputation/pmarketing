@@ -39,12 +39,11 @@ export class HomeComponent implements OnInit {
   public ngOnInit(): void {
     this.configService.readAppConfig<IAbensonConfig>().subscribe((config: IConfig<IAbensonConfig>) => {
       this.comingSoon = config.custom ? config.custom.comingSoon as boolean : false;
+      this.campaigns$ = this.campaignService.getCampaigns({type: CampaignType.game})
+        .pipe(
+          share()
+        );
     });
-    this.campaigns$ = this.campaignService.getCampaigns({type: CampaignType.game})
-      .pipe(
-        share()
-      );
-    this.vouchers$ = this.vouchersService.getAll();
     this.filter = [VoucherState.issued, VoucherState.reserved, VoucherState.released];
     this.subTitleFn = (loyalty: ILoyalty) => of(`Equivalent to ${this.currencyPipe.transform(loyalty.currencyBalance, loyalty.currency, 'symbol-narrow', '1.0-0', 'en-PH')} e-Cash`);
     this.summaryExpiringFn = () => of(`Your total points as of ${this.datePipe.transform(new Date(), 'mediumDate')}`);
