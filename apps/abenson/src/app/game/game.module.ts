@@ -5,9 +5,10 @@ import { GameRoutingModule } from './game-routing.module';
 import { GameComponent } from './game.component';
 import { ShakeComponent } from './shake/shake.component';
 import { TapComponent } from './tap/tap.component';
+import { SpinComponent } from './spin/spin.component';
 
 @NgModule({
-  declarations: [GameComponent, ShakeComponent, TapComponent],
+  declarations: [GameComponent, ShakeComponent, TapComponent, SpinComponent],
   imports: [
     CommonModule,
     GameRoutingModule,
