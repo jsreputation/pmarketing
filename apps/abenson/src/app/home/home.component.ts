@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  ICampaign,
-  ICampaignService,
-  IVoucherService,
-  VoucherState,
-  Voucher,
   CampaignType,
   ConfigService,
-  IConfig, ILoyalty
+  ICampaign,
+  ICampaignService,
+  IConfig,
+  ILoyalty,
+  IVoucherService,
+  Voucher,
+  VoucherState
 } from '@perxtech/core';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import {map, share} from 'rxjs/operators';
+import { share } from 'rxjs/operators';
 import { IAbensonConfig } from '../model/IAbenson.model';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 
@@ -41,9 +42,8 @@ export class HomeComponent implements OnInit {
     this.configService.readAppConfig<IAbensonConfig>().subscribe((config: IConfig<IAbensonConfig>) => {
       this.comingSoon = config.custom ? config.custom.comingSoon as boolean : false;
     });
-    this.campaigns$ = this.campaignService.getCampaigns()
+    this.campaigns$ = this.campaignService.getCampaigns({type: CampaignType.game})
       .pipe(
-        map((campaign) => campaign.filter(el => el.type === CampaignType.game)),
         share()
       );
     this.vouchers$ = this.vouchersService.getAll();
