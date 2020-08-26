@@ -5,7 +5,7 @@
       [summaryExpiringFn]="summaryExpiringFn"
     ></perx-core-loyalty-summary>
   </div>
-  <div *ngIf="!comingSoon && campaigns$ | async as campaigns">
+  <div *ngIf="campaigns$ | async as campaigns">
     <div *ngIf="campaigns.length">
       <h1>Games</h1>
       <div class="games">
@@ -15,7 +15,7 @@
           matRipple
           (click)="onCampaignSelect(campaign)"
         >
-          <img class="puzzle-img" [src]="campaign.thumbnailUrl" />
+          <img class="puzzle-img" [src]="campaign.thumbnailUrl ? campaign.thumbnailUrl : ''" />
           <mat-card-content>
             <p class="main-reward-title">{{ campaign.name }}</p>
             <p class="reward-subtitle">{{ campaign.description }}</p>
