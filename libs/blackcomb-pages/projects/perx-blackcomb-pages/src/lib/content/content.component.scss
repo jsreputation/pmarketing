@@ -43,7 +43,15 @@
           }
         }
 
-        ol {
+        .numbered {
+          padding-inline-start: 0.5rem;
+
+          li {
+            margin: 0.5rem 0;
+          }
+        }
+
+        .lettered {
           list-style-type: lower-alpha;
           padding-inline-start: 0.5rem;
 
