@@ -1,3 +1,4 @@
+APP=hsbcph
 PREAUTH=false
 APIHOST=https://api.perxtech.io
 IS_WHISTLER=false
