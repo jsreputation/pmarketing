@@ -100,8 +100,8 @@ export class SignIn2Component implements OnInit, OnDestroy {
         if (conf.countryCodePrefix) {
           this.countryCodePrefix = conf.countryCodePrefix;
         }
-        if (conf.loginMethod) {
-          this.loginMethod = conf.loginMethod;
+        if (conf.custom && conf.custom.loginMethod) {
+          this.loginMethod = conf.custom.loginMethod;
         }
         this.initForm();
       });
