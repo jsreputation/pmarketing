@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthenticationModule, ConfigModule, UtilsModule } from '@perxtech/core';
 import { SignIn2Component } from './sign-in-2.component';
+import { MatOptionModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { SignIn2Component } from './sign-in-2.component';
     MatProgressSpinnerModule,
     MatInputModule,
     MatButtonModule,
+    MatOptionModule,
     AuthenticationModule,
     UtilsModule,
   ],
