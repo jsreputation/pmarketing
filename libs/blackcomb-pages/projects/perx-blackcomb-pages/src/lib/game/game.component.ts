@@ -38,6 +38,7 @@ export class GameComponent implements OnInit, OnDestroy {
   private informationCollectionSetting: string;
   private rewardCount: string;
   private points: IPointsOutcome;
+  private isEmbedded: boolean;
   public willWin: boolean = false;
   public successPopUp: IPopupConfig = {
     title: 'GAME_PAGE.GAME_SUCCESS_TITLE',
@@ -78,6 +79,11 @@ export class GameComponent implements OnInit, OnDestroy {
     this.initTranslate();
 
     this.isAnonymousUser = this.auth.getAnonymous();
+    this.route.queryParams.subscribe((params: Params) => {
+      const paramArr: string[] = params.flags && params.flags.split(',');
+      this.isEmbedded = paramArr && paramArr.includes('nonav');
+    });
+
     // @ts-ignore observable too long, linter cannot compute
     this.gameData$ = this.route.params.pipe(
       filter((params: Params) => params.id),
@@ -122,19 +128,19 @@ export class GameComponent implements OnInit, OnDestroy {
             this.noRewardsPopUp.title = noOutcome.title;
             this.noRewardsPopUp.text = noOutcome.subTitle;
             this.noRewardsPopUp.imageUrl = noOutcome.image || this.noRewardsPopUp.imageUrl;
-            this.noRewardsPopUp.buttonTxt = noOutcome.button || this.noRewardsPopUp.buttonTxt;
+            this.noRewardsPopUp.buttonTxt = this.isEmbedded ? null : noOutcome.button || this.noRewardsPopUp.buttonTxt;
           }
           if (successOutcome) {
             this.successPopUp.title = successOutcome.title;
             this.successPopUp.text = successOutcome.subTitle;
             this.successPopUp.imageUrl = successOutcome.image || this.successPopUp.imageUrl;
-            this.successPopUp.buttonTxt = successOutcome.button || this.successPopUp.buttonTxt;
+            this.successPopUp.buttonTxt = this.isEmbedded ? null : successOutcome.button || this.successPopUp.buttonTxt;
           }
           if (game.remainingNumberOfTries <= 0 && game.remainingNumberOfTries !== null) { // null is recognised as infinite from dashboard
             this.notificationService.addPopup({
               title: 'No more tries',
               text: 'Come back when you\'ve earned more tries!',
-              buttonTxt: 'Close',
+              buttonTxt: this.isEmbedded ? null : 'Close',
               afterClosedCallBack: this,
               disableOverlayClose: true
             });
@@ -168,7 +174,7 @@ export class GameComponent implements OnInit, OnDestroy {
           this.popupData = {
             title: err.errorState,
             text: '',
-            buttonTxt: 'BACK_TO_WALLET',
+            buttonTxt: this.isEmbedded ? null : 'BACK_TO_WALLET',
             imageUrl: '',
           };
         } else if (err instanceof HttpErrorResponse && err.error.code === 4103) {
@@ -176,7 +182,7 @@ export class GameComponent implements OnInit, OnDestroy {
           this.popupData = {
             title: `Error ${err.error.code}`,
             text: 'No rewards available',
-            buttonTxt: 'Back to wallet',
+            buttonTxt: this.isEmbedded ? null : 'Back to wallet',
             imageUrl: '',
           };
         } else {
@@ -355,13 +361,16 @@ export class GameComponent implements OnInit, OnDestroy {
       transactionId: this.transactionId,
       collectInfo: true
     };
-
-    if (this.isAnonymousUser && this.informationCollectionSetting === 'pi_required') {
-      this.router.navigate(['/pi'], { state });
-    } else if (this.isAnonymousUser && this.informationCollectionSetting === 'signup_required') {
-      this.router.navigate(['/signup'], { state });
+    if (!this.isEmbedded) {
+      if (this.isAnonymousUser && this.informationCollectionSetting === 'pi_required') {
+        this.router.navigate([ '/pi' ], { state });
+      } else if (this.isAnonymousUser && this.informationCollectionSetting === 'signup_required') {
+        this.router.navigate([ '/signup' ], { state });
+      } else {
+        this.router.navigate([ '/wallet' ]);
+        this.notificationService.addPopup(this.popupData);
+      }
     } else {
-      this.router.navigate(['/wallet']);
       this.notificationService.addPopup(this.popupData);
     }
   }
@@ -387,6 +396,11 @@ export class GameComponent implements OnInit, OnDestroy {
     }
     this.translate.get('GAME_PAGE.GAME_SUCCESS_TEXT_REWARDS').subscribe((text) => this.rewardsTxt = text);
     this.translate.get('GAME_PAGE.GAME_SUCCESS_TEXT_POINTS').subscribe((text) => this.pointsTxt = text);
+
+    if (this.isEmbedded) {
+      this.successPopUp.buttonTxt = null;
+      this.noRewardsPopUp.buttonTxt = null;
+    }
   }
 
   public dialogClosed(): void {
