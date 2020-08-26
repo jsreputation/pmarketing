@@ -37,7 +37,8 @@ const appConfigFile = `{
   "defaultLang": "${process.env.DEFAULT_LANG ? process.env.DEFAULT_LANG : 'en'}",
   "sourceType": "${process.env.SOURCE_TYPE ? process.env.SOURCE_TYPE : ''}",
   "custom": {
-    "showConditions": ${process.env.SHOW_CONDITIONS ? process.env.SHOW_CONDITIONS : false}
+    "showConditions": ${process.env.SHOW_CONDITIONS ? process.env.SHOW_CONDITIONS : false},
+    "loginMethod": "${process.env.LOGIN_METHOD ? process.env.LOGIN_METHOD : 'phone'}"
   }
 }
 `;

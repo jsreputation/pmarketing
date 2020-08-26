@@ -252,7 +252,8 @@ export { ConfigModule } from './lib/config/config.module';
 export { Config } from './lib/config/config';
 export { ConfigService } from './lib/config/config.service';
 export {
-  IConfig
+  IConfig,
+  LoginType
 } from './lib/config/models/config.model';
 
 /**
