@@ -15,7 +15,7 @@
           matRipple
           (click)="onCampaignSelect(campaign)"
         >
-          <img class="puzzle-img" [src]="campaign.thumbnailUrl" />
+          <img class="puzzle-img" [src]="campaign.thumbnailUrl ? campaign.thumbnailUrl : ''" />
           <mat-card-content>
             <p class="main-reward-title">{{ campaign.name }}</p>
             <p class="reward-subtitle">{{ campaign.description }}</p>
