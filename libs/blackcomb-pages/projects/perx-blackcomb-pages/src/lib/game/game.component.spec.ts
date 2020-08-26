@@ -1,7 +1,10 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick, discardPeriodicTasks } from '@angular/core/testing';
 
 import { GameComponent } from './game.component';
-import { of, throwError } from 'rxjs';
+import {
+  of,
+  throwError
+} from 'rxjs';
 import { ShakeComponent } from './shake/shake.component';
 import { TapComponent } from './tap/tap.component';
 import { ScratchComponent } from './scratch/scratch.component';
@@ -135,6 +138,10 @@ describe('GameComponent', () => {
       baseHref: '',
     })
   };
+  const activatedRouteStub: Partial<ActivatedRoute> = {
+    queryParams: of({ params: { flags: 'nonav, chromeless' } }),
+    params: of({ id: '1' })
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -156,6 +163,7 @@ describe('GameComponent', () => {
         { provide: IGameService, useValue: gameServiceStub },
         { provide: ActivatedRoute, useValue: { params: of({ id: 1 }) } },
         { provide: Router, useValue: routerStub },
+        { provide: ActivatedRoute, useValue: activatedRouteStub },
         { provide: AuthenticationService, useValue: authServiceStub },
         { provide: NotificationService, useValue: notificationServiceStub },
         { provide: ICampaignService, useValue: campaignServiceStub },
