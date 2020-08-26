@@ -19,14 +19,14 @@
                     <span matPrefix>+{{countryCodePrefix}}&nbsp;<span class="prefix-spacer"></span></span>
                     <input matInput [placeholder]="'LOGIN_PAGE.MOBILE_FIELD' | translate" formControlName="customerID"
                         [value]="">
-                    <mat-error *ngIf="loginForm.hasError('customerID')">
+                    <mat-error *ngIf="loginForm.hasError('required', ['customerID'])">
                         {{'LOGIN_PAGE.MOBILE_INVALID_TXT' | translate}}
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="standard" class="full-width__input">
                     <input matInput [placeholder]="'LOGIN_PAGE.PASSWORD_FIELD' | translate" formControlName="password"
                         type="password">
-                    <mat-error *ngIf="loginForm.hasError('password')">
+                    <mat-error *ngIf="loginForm.hasError('required', ['password'])">
                         {{'LOGIN_PAGE.PASSWORD_INVALID_TXT' | translate}}
                     </mat-error>
                 </mat-form-field>
@@ -79,15 +79,15 @@
             <mat-form-field appearance="standard" class="full-width__input">
               <input matInput [placeholder]="'LOGIN_PAGE.USERNAME_FIELD' | translate" formControlName="customerID"
                      [value]="">
-              <mat-error *ngIf="loginForm.hasError('customerID')">
+              <mat-error *ngIf="loginForm.hasError('required', ['customerID'])">
                 {{'LOGIN_PAGE.USERNAME_REQUIRED_TXT' | translate}}
               </mat-error>
             </mat-form-field>
             <mat-form-field appearance="standard" class="full-width__input">
               <input matInput [placeholder]="'LOGIN_PAGE.PASSWORD_FIELD' | translate" formControlName="password"
                      type="password">
-              <mat-error *ngIf="loginForm.hasError('password')">
-                {{'LOGIN_PAGE.PASSWORD_INVALID_TXT' | translate}}
+              <mat-error *ngIf="loginForm.hasError('required', ['password'])">
+                {{'LOGIN_PAGE.PASSWORD_REQUIRED_TXT' | translate}}
               </mat-error>
             </mat-form-field>
           </div>
