@@ -64,7 +64,7 @@
                     </div>
                 </div>
                 <mat-form-field appearance="fill" class="full-width__input">
-                    <mat-label translate>{{'LOGIN_PAGE.PASSWORD_FIELD' | translate}}</mat-label>
+                    <mat-label>{{'LOGIN_PAGE.PASSWORD_FIELD' | translate}}</mat-label>
                     <input matInput
                         [placeholder]="'LOGIN_PAGE.PASSWORD_FIELD' | translate"
                         formControlName="password"
@@ -77,7 +77,7 @@
           </div>
           <div *ngIf="loginMethod === loginTypes.username">
             <mat-form-field appearance="fill" class="full-width__input">
-              <mat-label translate>{{'LOGIN_PAGE.USERNAME_FIELD' | translate}}</mat-label>
+              <mat-label>{{'LOGIN_PAGE.USERNAME_FIELD' | translate}}</mat-label>
               <input matInput [placeholder]="'LOGIN_PAGE.USERNAME_FIELD' | translate" formControlName="customerID"
                      [value]="">
               <mat-error *ngIf="loginForm.hasError('required', ['customerID'])">
@@ -85,7 +85,7 @@
               </mat-error>
             </mat-form-field>
             <mat-form-field appearance="fill" class="full-width__input">
-              <mat-label translate>{{'LOGIN_PAGE.PASSWORD_FIELD' | translate}}</mat-label>
+              <mat-label>{{'LOGIN_PAGE.PASSWORD_FIELD' | translate}}</mat-label>
               <input matInput [placeholder]="'LOGIN_PAGE.PASSWORD_FIELD' | translate" formControlName="password"
                      type="password">
               <mat-error *ngIf="loginForm.hasError('required', ['password'])">
