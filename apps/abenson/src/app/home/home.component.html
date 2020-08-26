@@ -5,7 +5,7 @@
       [summaryExpiringFn]="summaryExpiringFn"
     ></perx-core-loyalty-summary>
   </div>
-  <div *ngIf="!comingSoon && campaigns$ | async as campaigns">
+  <div *ngIf="campaigns$ | async as campaigns">
     <div *ngIf="campaigns.length">
       <h1>Games</h1>
       <div class="games">
