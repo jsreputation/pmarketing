@@ -248,7 +248,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
       password: ['', Validators.required],
       countryCode: [this.countryCodePrefix]
     });
-    if (!this.countryCodePrefix) {
+    if (!this.countryCodePrefix && this.loginMethod === LoginType.phone) {
       this.loginForm.controls.countryCode.setValidators([Validators.required]);
     }
   }
