@@ -61,7 +61,8 @@ export class SignIn2Component implements OnInit, OnDestroy {
   public countriesList$: Observable<ICountryCode[]>;
   public loading: boolean = false;
   public loginMethod: LoginType;
-  public loginTypes: LoginType = LoginType;
+  // @ts-ignore for using the enum within the template
+  public loginTypes = LoginType;
   private validateMembership: boolean = false;
   private custId: string = '';
   private destroy$: Subject<void> = new Subject();
