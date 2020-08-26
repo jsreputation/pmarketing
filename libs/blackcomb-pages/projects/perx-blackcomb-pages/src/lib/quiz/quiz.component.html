@@ -4,7 +4,11 @@
     <div class="progress-container">
       <div class="progress">
         <p class="progress-text">{{'QUIZ_TEMPLATE.QUESTION' | translate}}<strong>{{questionPointer + 1}}</strong>{{'QUIZ_TEMPLATE.OUT_OF' | translate}}{{totalLength}}</p>
-        <perx-core-timer class="timer" [timeToRun]="30000" (done)="nextWithoutValidation()" [reset]="resetTimer$">
+        <perx-core-timer
+          *ngIf="(quiz.timeConfig | json) != '{}'" class="timer"
+          [countType]="quiz?.timeConfig?.timerType"
+          [timeToRun]="quiz.timeConfig?.timerCountSeconds * 1000"
+          (done)="nextWithoutValidation()" [reset]="resetTimer$">
         </perx-core-timer>
       </div>
       <div class="progress-bar">

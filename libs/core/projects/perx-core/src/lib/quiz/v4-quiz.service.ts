@@ -15,8 +15,10 @@ import {
   IQAnswer,
   IQuiz,
   IQuizOutcome,
+  ITimeConfig,
   QuizMode,
-  QuizQuestionType
+  QuizQuestionType,
+  TimerType
 } from './models/quiz.model';
 import {
   IAnswerResult,
@@ -62,6 +64,9 @@ export interface QuizDisplayProperties {
   headline_text?: string;
   body_text?: string;
   button_text?: string;
+  timer_count: number;
+  timer_enabled: boolean;
+  timer_type: TimerType;
 }
 
 interface V4NextMoveResponse {
@@ -198,6 +203,12 @@ export class V4QuizService implements QuizService {
             button: oc(game).display_properties.button_text('')
           };
         }
+        let timeConfig: ITimeConfig = {};
+        if (oc(game).display_properties.timer_enabled()) {
+          // set defaults if timer_enabled and for some case cant fetch the type and count property (unlikely)
+          timeConfig.timerType = oc(game).display_properties.timer_type(TimerType.countDown);
+          timeConfig.timerCountSeconds = oc(game).display_properties.timer_count(120);
+        }
         return {
           id: game.id,
           campaignId: game.campaign_id,
@@ -215,7 +226,8 @@ export class V4QuizService implements QuizService {
           mode,
           backgroundImgUrl: patchUrl(oc(game).display_properties.background_image.value.image_url('')),
           cardBackgroundImgUrl: patchUrl(oc(game).display_properties.card_image.value.image_url('')),
-          remainingNumberOfTries: game.number_of_tries
+          remainingNumberOfTries: game.number_of_tries,
+          timeConfig
         };
       })
     );
