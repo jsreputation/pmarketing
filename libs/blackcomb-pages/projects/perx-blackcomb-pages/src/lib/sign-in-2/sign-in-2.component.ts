@@ -62,7 +62,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
   public loading: boolean = false;
   public loginMethod: LoginType;
   // @ts-ignore for using the enum within the template
-  public loginTypes: Object = LoginType;
+  public loginTypes: typeof LoginType = LoginType;
   private validateMembership: boolean = false;
   private custId: string = '';
   private destroy$: Subject<void> = new Subject();
