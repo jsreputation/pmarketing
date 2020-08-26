@@ -2,7 +2,7 @@ import { TestBed, async, fakeAsync, ComponentFixture, tick } from '@angular/core
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MatDialogModule, MatToolbarModule, MatIconModule, MatSnackBarModule, MatDialog, MatSnackBar } from '@angular/material';
-import { NotificationService, AuthenticationService, IVoucherService, ICampaignService, ProfileService, ConfigService, ThemesService } from '@perxtech/core';
+import { NotificationService, AuthenticationService, ICampaignService, ProfileService, ConfigService, ThemesService } from '@perxtech/core';
 import { HomeComponent } from './home/home.component';
 import { TermsAndConditionComponent } from './account/profile-additions/containers/terms-and-condition/terms-and-condition.component';
 import { ProfileComponent } from './account/profile/profile.component';
@@ -101,7 +101,6 @@ describe('AppComponent', () => {
     const router = {} as Router;
     const form = {} as FormBuilder;
     const notifi = {} as NotificationService;
-    const voucherService = {} as IVoucherService;
     const campaingService = {} as ICampaignService;
     const profile = {} as ProfileService;
     const locationTest = {} as Location;
@@ -112,7 +111,7 @@ describe('AppComponent', () => {
     // , profile, ntfs //for below signupcomponent but remove temp on disable card section
     app.onActivate(new SignUpComponent(form, auth, router, notifi));
     expect(app.showHeader).toBeFalsy();
-    app.onActivate(new HomeComponent(router, voucherService, campaingService, configService, datePipe, currencyPipe));
+    app.onActivate(new HomeComponent(router, campaingService, configService, datePipe, currencyPipe));
     expect(app.showToolbar).toBeTruthy();
     app.onActivate(new TermsAndConditionComponent());
     expect(app.headerTitle).toBe('Terms & Conditions');
