@@ -161,7 +161,6 @@ describe('GameComponent', () => {
       ],
       providers: [
         { provide: IGameService, useValue: gameServiceStub },
-        { provide: ActivatedRoute, useValue: { params: of({ id: 1 }) } },
         { provide: Router, useValue: routerStub },
         { provide: ActivatedRoute, useValue: activatedRouteStub },
         { provide: AuthenticationService, useValue: authServiceStub },
