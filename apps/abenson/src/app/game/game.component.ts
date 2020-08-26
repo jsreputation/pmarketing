@@ -1,48 +1,269 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { IGameService, IGame, PopupComponent, GameType, ICampaignService, ICampaign, } from '@perxtech/core';
-import { flatMap, take, map, tap, switchMap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-import { MatDialog } from '@angular/material';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router, Params } from '@angular/router';
+import {
+  IGameService,
+  IGame,
+  GameType,
+  IPopupConfig,
+  AuthenticationService,
+  NotificationService,
+  IPrePlayStateData,
+  IPointsOutcome,
+  ICampaignService,
+  ICampaign,
+} from '@perxtech/core';
+import { map, tap, first, filter, switchMap, bufferCount, catchError } from 'rxjs/operators';
+import { Observable, interval, Subject, combineLatest } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+import { IPlayOutcome } from '@perxtech/core';
+import { globalCacheBusterNotifier } from 'ngx-cacheable';
 
 @Component({
   selector: 'app-game',
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss']
 })
-export class GameComponent implements OnInit {
+export class GameComponent implements OnInit, OnDestroy {
   public gameData$: Observable<IGame>;
-  public congratsDetailText: string = 'You just won 2 rewards';
   public gt: typeof GameType = GameType;
+  private gameId: number;
+  private transactionId: number;
+  public progressValue: number;
+  private destroy$: Subject<void> = new Subject();
+  private popupData: IPopupConfig;
+  private isAnonymousUser: boolean;
+  private informationCollectionSetting: string;
+  private rewardCount: string;
+  private points: IPointsOutcome;
+  public willWin: boolean = false;
+  public successPopUp: IPopupConfig = {
+    title: 'Congratulations!',
+    text: 'You earned',
+    buttonTxt: 'View reward',
+    imageUrl: 'assets/congrats_image.png',
+    ctaButtonClass: 'ga_game_completion'
+  };
+
+  public noRewardsPopUp: IPopupConfig = {
+    title: 'Thanks for playing',
+    text: 'Unfortunately, you did not win anything this time',
+    buttonTxt: 'Back to wallet',
+    imageUrl: '',
+  };
+
+  public gameNotAvailablePopUp: IPopupConfig = {
+    title: 'Oops!',
+    text: 'This game is not available for you at the moment.',
+    buttonTxt: 'Back to wallet',
+    imageUrl: '',
+  };
+  public rewardsTxt: string;
+  public pointsTxt: string;
+
   constructor(
     private route: ActivatedRoute,
     private gameService: IGameService,
     private router: Router,
-    private dialog: MatDialog,
+    private notificationService: NotificationService,
+    private auth: AuthenticationService,
     private campaignService: ICampaignService
-  ) { }
+  ) {
+  }
 
   public ngOnInit(): void {
+    this.isAnonymousUser = this.auth.getAnonymous();
+    // @ts-ignore observable too long, linter cannot compute
     this.gameData$ = this.route.params.pipe(
-      flatMap((params) => this.campaignService.getCampaign(parseInt(params.id, 10))),
-      switchMap((campaign: ICampaign) => this.gameService.getGamesFromCampaign(campaign)),
-      take(1),
-      tap((games) => !games || !games.length && this.router.navigate(['/wallet'])),
-      map((games) => games[0])
+      filter((params: Params) => params.id),
+      map((params: Params) => params.id),
+      map((id: string) => Number.parseInt(id, 10)),
+      switchMap((id: number) => this.campaignService.getCampaign(id).pipe(
+        catchError((err: HttpErrorResponse) => {
+          if (err.status === 403 || err.status === 404) {
+            this.popupData = this.gameNotAvailablePopUp;
+            this.redirectUrlAndPopUp();
+          }
+          throw err;
+        }))
+      ),
+      switchMap((campaign: ICampaign) => this.gameService.getGamesFromCampaign(campaign).pipe(
+        catchError((err: HttpErrorResponse) => {
+          if (err.status === 403 || err.status === 404) {
+            this.popupData = this.gameNotAvailablePopUp;
+            this.redirectUrlAndPopUp();
+          }
+          throw err;
+        }))
+      ),
+      first(),
+      tap((games: IGame[]) => !games || !games.length && this.router.navigate(['/wallet'])),
+      map((games: IGame[]) => games[0]),
+      tap((game: IGame) => {
+        if (game) {
+          if (!game.texts.button) {
+            game.texts.button = 'Start Playing';
+          }
+          const { displayProperties } = game;
+          this.gameId = game.id;
+          if (displayProperties && displayProperties.informationCollectionSetting) {
+            this.informationCollectionSetting = displayProperties.informationCollectionSetting;
+          }
+
+          const successOutcome = game.results.outcome;
+          const noOutcome = game.results.noOutcome;
+          if (noOutcome) {
+            this.noRewardsPopUp.title = noOutcome.title;
+            this.noRewardsPopUp.text = noOutcome.subTitle;
+            this.noRewardsPopUp.imageUrl = noOutcome.image || this.noRewardsPopUp.imageUrl;
+            this.noRewardsPopUp.buttonTxt = noOutcome.button || this.noRewardsPopUp.buttonTxt;
+          }
+          if (successOutcome) {
+            this.successPopUp.title = successOutcome.title;
+            this.successPopUp.text = successOutcome.subTitle;
+            this.successPopUp.imageUrl = successOutcome.image || this.successPopUp.imageUrl;
+            this.successPopUp.buttonTxt = successOutcome.button || this.successPopUp.buttonTxt;
+          }
+          if (game.remainingNumberOfTries <= 0 && game.remainingNumberOfTries !== null) { // null is recognised as infinite from dashboard
+            this.notificationService.addPopup({
+              title: 'No more tries',
+              text: 'Come back when you\'ve earned more tries!',
+              buttonTxt: 'Close',
+              afterClosedCallBack: this,
+              disableOverlayClose: true
+            });
+          }
+        }
+      })
     );
   }
 
-  public gameCompleted(): void {
-    const dialog = this.dialog.open(PopupComponent, {
-      data: {
-        title: 'Congratulations!',
-        text: this.congratsDetailText,
-        buttonTxt: 'View Rewards',
-        imageUrl: 'assets/congrats_image.png',
+  public loadPlay(): void {
+    this.gameService.play(
+      this.gameId
+    ).subscribe(
+      (gameOutcome: IPlayOutcome) => {
+        if (gameOutcome.vouchers.length > 0) {
+          // set this as a property
+          this.rewardCount = gameOutcome.vouchers.length.toString();
+          this.fillSuccess(this.rewardCount);
+        }
+        if (gameOutcome.points) {
+          this.points = gameOutcome.points[0];
+        }
+        this.checkFailureOrSuccess();
+      },
+      () => {
+        this.popupData = this.noRewardsPopUp;
+        this.redirectUrlAndPopUp(); // wont call preplayConfirm direct away if preplay fail
       }
-    });
-    dialog.afterClosed().subscribe(() => {
+    );
+  }
+
+  public gameCompletedLoad(): void {
+    const delay = 3000;
+    const nbSteps = 60;
+    const processBar$ = interval(delay / nbSteps)
+      .pipe(
+        tap(v => this.progressValue = v * 100 / nbSteps),
+        bufferCount(nbSteps),
+        first()
+      );
+    processBar$.subscribe(
+      () => this.redirectUrlAndPopUp(),
+      () => this.redirectUrlAndPopUp()
+    );
+  }
+
+  public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  // mutates willWin property, succespopup text and popup data
+  // @ts-ignore
+  private fillSuccess(rewardCount?: string, pointsOutcome?: IPointsOutcome): void {
+    this.willWin = true;
+
+    /*  todo:
+    *    1. block is commented out because popup content is managed by dashboard.
+    *    2. this block gets called twice and so unintentionally ends up doubling the text
+    */
+    // if (rewardCount && parseInt(rewardCount, 10) > 0) {
+    //   this.successPopUp.text += this.rewardsTxt.replace('{{rewards}}', rewardCount);
+    // }
+    // if (pointsOutcome) {
+    //   this.successPopUp.text += this.pointsTxt.replace('{{points}}', pointsOutcome.points.toString());
+    // }
+    this.popupData = this.successPopUp;
+  }
+
+  private fillFailure(): void {
+    this.willWin = false;
+    this.popupData = this.noRewardsPopUp;
+  }
+
+  private checkFailureOrSuccess(): void {
+    if (this.rewardCount || this.points) {
+      this.fillSuccess(this.rewardCount, this.points);
+    } else {
+      this.fillFailure();
+    }
+  }
+
+  public gameCompleted(): void {
+    const gameOutcome$ = this.gameService.play(
+      this.gameId
+    ).pipe(
+      tap((gameOutcome: IPlayOutcome) => {
+        if (gameOutcome.vouchers.length > 0 || gameOutcome.points) {
+          // set this as a property
+          this.rewardCount = gameOutcome.vouchers.length.toString();
+        }
+        if (gameOutcome && gameOutcome.points) {
+          this.points = gameOutcome.points[0];
+        }
+        this.checkFailureOrSuccess();
+      }),
+      catchError((err: HttpErrorResponse) => {
+        this.popupData = this.noRewardsPopUp;
+        throw err;
+      })
+    );
+    // display a loader before redirecting to next page
+    const delay = 3000;
+    const nbSteps = 60;
+    const processBar$ = interval(delay / nbSteps)
+      .pipe(
+        tap(v => this.progressValue = v * 100 / nbSteps),
+        bufferCount(nbSteps),
+        first()
+      );
+    combineLatest(processBar$, gameOutcome$).subscribe(
+      () => this.redirectUrlAndPopUp(),
+      () => this.redirectUrlAndPopUp()
+    );
+  }
+
+  private redirectUrlAndPopUp(): void {
+    globalCacheBusterNotifier.next();
+    const state: IPrePlayStateData = {
+      popupData: this.popupData,
+      engagementType: 'game',
+      transactionId: this.transactionId,
+      collectInfo: true
+    };
+
+    if (this.isAnonymousUser && this.informationCollectionSetting === 'pi_required') {
+      this.router.navigate(['/pi'], { state });
+    } else if (this.isAnonymousUser && this.informationCollectionSetting === 'signup_required') {
+      this.router.navigate(['/signup'], { state });
+    } else {
       this.router.navigate(['/wallet']);
-    });
+      this.notificationService.addPopup(this.popupData);
+    }
+  }
+
+  public dialogClosed(): void {
+    this.router.navigate(['/home']);
   }
 }

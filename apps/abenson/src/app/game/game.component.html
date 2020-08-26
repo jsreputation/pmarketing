@@ -2,5 +2,12 @@
   <ng-container [ngSwitch]="game.type">
     <app-shake [game]="game" *ngSwitchCase="gt.shakeTheTree" (broken)=gameCompleted()></app-shake>
     <app-tap [game]="game" *ngSwitchCase="gt.pinata" (broken)=gameCompleted()></app-tap>
+    <app-spin
+      *ngSwitchCase="gt.spin"
+      [willWin]="willWin"
+      [game]="game"
+      (loaded)="loadPlay()"
+      (broken)=gameCompletedLoad()
+    ></app-spin>
   </ng-container>
 </div>
