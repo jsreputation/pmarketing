@@ -1,9 +1,9 @@
 import { IWSetting } from '@perxtech/whistler';
 
 export enum LoginType {
-  phone='phone',
-  email='email',
-  username='username'
+  phone = 'phone',
+  email = 'email',
+  username = 'username'
 }
 
 export interface IConfig<T> {
