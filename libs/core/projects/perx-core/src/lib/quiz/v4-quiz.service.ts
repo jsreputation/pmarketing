@@ -203,7 +203,7 @@ export class V4QuizService implements QuizService {
             button: oc(game).display_properties.button_text('')
           };
         }
-        let timeConfig: ITimeConfig = {};
+        const timeConfig: ITimeConfig = {};
         if (oc(game).display_properties.timer_enabled()) {
           // set defaults if timer_enabled and for some case cant fetch the type and count property (unlikely)
           timeConfig.timerType = oc(game).display_properties.timer_type(TimerType.countDown);

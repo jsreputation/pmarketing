@@ -68,7 +68,7 @@ export interface IQuiz {
 
 export interface ITimeConfig {
   timerCountSeconds?: number;
-  timerType?: TimerType
+  timerType?: TimerType;
 }
 
 export enum TimerType {
