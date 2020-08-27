@@ -29,6 +29,7 @@ const envConfigFile = `export const environment = {
 `;
 
 const appConfigFile = `{
+  "app": "abenson",
   "apiHost": "${
   process.env.APIHOST ? process.env.APIHOST : 'https://api.perxtech.io'
   }",
