@@ -5,6 +5,7 @@ import {
   IGame,
   GameType,
   IPopupConfig,
+  IEngagementTransaction,
   AuthenticationService,
   NotificationService,
   IPrePlayStateData,
@@ -12,8 +13,8 @@ import {
   ICampaignService,
   ICampaign,
 } from '@perxtech/core';
-import { map, tap, first, filter, switchMap, bufferCount, catchError } from 'rxjs/operators';
-import { Observable, interval, Subject, combineLatest } from 'rxjs';
+import { map, tap, first, filter, switchMap, bufferCount, catchError, takeUntil } from 'rxjs/operators';
+import { Observable, interval, throwError, Subject, combineLatest } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { IPlayOutcome } from '@perxtech/core';
 import { globalCacheBusterNotifier } from 'ngx-cacheable';
@@ -26,6 +27,7 @@ import { globalCacheBusterNotifier } from 'ngx-cacheable';
 export class GameComponent implements OnInit, OnDestroy {
   public gameData$: Observable<IGame>;
   public gt: typeof GameType = GameType;
+  private campaignId: number;
   private gameId: number;
   private transactionId: number;
   public progressValue: number;
@@ -77,6 +79,7 @@ export class GameComponent implements OnInit, OnDestroy {
       filter((params: Params) => params.id),
       map((params: Params) => params.id),
       map((id: string) => Number.parseInt(id, 10)),
+      tap((id: number) => this.campaignId = id),
       switchMap((id: number) => this.campaignService.getCampaign(id).pipe(
         catchError((err: HttpErrorResponse) => {
           if (err.status === 403 || err.status === 404) {
@@ -174,6 +177,49 @@ export class GameComponent implements OnInit, OnDestroy {
     );
   }
 
+  public loadPreplay(): void {
+    this.gameData$.pipe(
+      switchMap(
+        (game: IGame) => this.gameService.prePlay(game.id, this.campaignId)
+      ),
+      catchError(err => throwError(err)),
+      takeUntil(this.destroy$)
+    ).subscribe(
+      (gameTransaction: IEngagementTransaction) => {
+        this.transactionId = gameTransaction.id;
+        if (gameTransaction.voucherIds && gameTransaction.voucherIds.length > 0) {
+          // set this as a property
+          this.rewardCount = gameTransaction.voucherIds.length.toString();
+        }
+        if (gameTransaction.points) {
+          this.points = gameTransaction.points[0];
+        }
+        this.checkFailureOrSuccess();
+      },
+      (err: { errorState: string } | HttpErrorResponse) => {
+        if (!(err instanceof HttpErrorResponse) && err.errorState) {
+          this.popupData = {
+            title: err.errorState,
+            text: '',
+            buttonTxt: 'BACK_TO_WALLET',
+            imageUrl: '',
+          };
+        } else if (err instanceof HttpErrorResponse && err.error.code === 4103) {
+          console.log(`Error ${err.error.code}: ${err.error.message}`);
+          this.popupData = {
+            title: `Error ${err.error.code}`,
+            text: 'No rewards available',
+            buttonTxt: 'Back to wallet',
+            imageUrl: '',
+          };
+        } else {
+          this.popupData = this.noRewardsPopUp;
+        }
+        this.redirectUrlAndPopUp(); // wont call preplayConfirm direct away if preplay fail
+      }
+    );
+  }
+
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
@@ -242,6 +288,59 @@ export class GameComponent implements OnInit, OnDestroy {
       () => this.redirectUrlAndPopUp(),
       () => this.redirectUrlAndPopUp()
     );
+  }
+
+  public preplayGameCompleted(): void {
+    const userAction$: Observable<IEngagementTransaction | IPlayOutcome> = this
+      .gameService.prePlayConfirm(this.transactionId, this.informationCollectionSetting).pipe(
+        tap((response: IEngagementTransaction | IPlayOutcome) => {
+
+          if (this.isIEngagementTrascation(response)) {
+            const gameTransaction = response as IEngagementTransaction;
+            if (gameTransaction.voucherIds && gameTransaction.voucherIds.length > 0) {
+              // set this as a property
+              this.rewardCount = gameTransaction.voucherIds.length.toString();
+            }
+            if (gameTransaction.points) {
+              this.points = gameTransaction.points[0];
+            }
+          } else if (this.isIPlayOutcome(response)) {
+            const vouchers = response.vouchers;
+            if (vouchers.length > 0) {
+              this.rewardCount = vouchers.length.toString();
+            }
+            if (response.points) {
+              this.points = response.points[0];
+            }
+          }
+          this.checkFailureOrSuccess();
+        }),
+        catchError((err: HttpErrorResponse) => {
+          this.popupData = this.noRewardsPopUp;
+          throw err;
+        })
+      );
+
+    // display a loader before redirecting to next page
+    const delay = 2000;
+    const nbSteps = 60;
+    const processBar$ = interval(delay / nbSteps)
+      .pipe(
+        tap(v => this.progressValue = v * 100 / nbSteps),
+        bufferCount(nbSteps),
+        first()
+      );
+    combineLatest(processBar$, userAction$).subscribe(
+      () => this.redirectUrlAndPopUp(),
+      () => this.redirectUrlAndPopUp()
+    );
+  }
+
+  private isIEngagementTrascation(object: any): object is IEngagementTransaction {
+    return 'voucherIds' in object;
+  }
+  private isIPlayOutcome(object: any): object is IPlayOutcome {
+    return 'vouchers' in object;
   }
 
   private redirectUrlAndPopUp(): void {

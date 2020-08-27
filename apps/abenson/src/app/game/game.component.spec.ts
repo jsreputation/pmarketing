@@ -1,9 +1,10 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick, discardPeriodicTasks } from '@angular/core/testing';
 
 import { GameComponent } from './game.component';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { ShakeComponent } from './shake/shake.component';
 import { TapComponent } from './tap/tap.component';
+import { ScratchComponent } from './scratch/scratch.component';
 import {
   GameModule,
   IGameService,
@@ -41,6 +42,33 @@ const gamePi: IGame = {
   results: {},
   displayProperties: {
     informationCollectionSetting: WInformationCollectionSettingType.pi_required,
+    noRewardsPopUp: {
+      headLine: 'test headline',
+      subHeadLine: 'test subHeadline',
+      buttonTxt: 'btnText',
+    },
+    successPopUp: {
+      headLine: 'test headline',
+      subHeadLine: 'test subHeadline',
+      buttonTxt: 'btnText',
+    },
+  },
+};
+
+const gameSignup: IGame = {
+  id: 1,
+  campaignId: 1,
+  type: GameType.pinata,
+  remainingNumberOfTries: 1,
+  config: {
+    stillImg: '',
+    brokenImg: '',
+    nbTaps: 1,
+  },
+  texts: {},
+  results: {},
+  displayProperties: {
+    informationCollectionSetting: WInformationCollectionSettingType.signup_required,
     noRewardsPopUp: {
       headLine: 'test headline',
       subHeadLine: 'test subHeadline',
@@ -113,6 +141,7 @@ describe('GameComponent', () => {
         GameComponent,
         ShakeComponent,
         TapComponent,
+        ScratchComponent,
         SpinComponent,
       ],
       imports: [
@@ -166,4 +195,42 @@ describe('GameComponent', () => {
     }));
   });
 
+  it('should call redirectUrlAndPopup', fakeAsync(() => {
+    const authService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
+      AuthenticationService as Type<AuthenticationService>);
+    const gameService: IGameService = fixture.debugElement.injector.get<IGameService>(IGameService as Type<IGameService>);
+    const router: Router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
+    spyOn(authService, 'getAnonymous').and.returnValue(false);
+    spyOn(gameService, 'getGamesFromCampaign').and.returnValue(of([gameSignup]));
+    const error = 'error';
+    const spy = spyOn(gameService, 'prePlay').and.returnValue(throwError(error));
+    const routerSpy = spyOn(router, 'navigate');
+    component.ngOnInit();
+    component.loadPreplay();
+    component.preplayGameCompleted();
+    tick(1000);
+    fixture.detectChanges();
+    tick();
+    discardPeriodicTasks();
+    expect(spy).toHaveBeenCalled();
+    expect(routerSpy).toHaveBeenCalledWith(['/wallet']);
+  }));
+
+  it('should set willWin true value', () => {
+    const gameService: IGameService = fixture.debugElement.injector.get<IGameService>(IGameService as Type<IGameService>);
+    const spy = spyOn(gameService, 'prePlay').and.returnValue(of({ id: 3, voucherIds: [1, 2, 3] }));
+    component.ngOnInit();
+    component.loadPreplay();
+    expect(spy).toHaveBeenCalled();
+    expect(component.willWin).toBe(true);
+  });
+
+  it('should set willWin false value', () => {
+    const gameService: IGameService = fixture.debugElement.injector.get<IGameService>(IGameService as Type<IGameService>);
+    const spy = spyOn(gameService, 'prePlay').and.returnValue(of({ id: 3, voucherIds: [] }));
+    component.ngOnInit();
+    component.loadPreplay();
+    expect(spy).toHaveBeenCalled();
+    expect(component.willWin).toBe(false);
+  });
 });
