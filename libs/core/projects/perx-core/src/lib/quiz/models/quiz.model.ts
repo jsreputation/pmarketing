@@ -63,6 +63,17 @@ export interface IQuiz {
   };
   remainingNumberOfTries?: number;
   displayProperties?: IWCampaignDisplayProperties;
+  timeConfig: ITimeConfig;
+}
+
+export interface ITimeConfig {
+  timerCountSeconds?: number;
+  timerType?: TimerType;
+}
+
+export enum TimerType {
+  countDown = 'count_down',
+  countUp = 'count_up'
 }
 
 export enum QuizQuestionType {

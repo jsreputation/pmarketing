@@ -11,6 +11,7 @@ export const quiz: IQuiz = {
   title: {
     text: 'Question pour un champion'
   },
+  timeConfig: {},
   backgroundImgUrl: 'assets/quiz/background.png',
   cardBackgroundImgUrl: 'assets/quiz/card.png',
   mode: QuizMode.swipe,
