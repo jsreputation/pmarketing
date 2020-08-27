@@ -140,6 +140,43 @@ export class GameComponent implements OnInit, OnDestroy {
     );
   }
 
+  public loadPlay(): void {
+    this.gameService.play(
+      this.gameId
+    ).subscribe(
+      (gameOutcome: IPlayOutcome) => {
+        if (gameOutcome.vouchers.length > 0) {
+          // set this as a property
+          this.rewardCount = gameOutcome.vouchers.length.toString();
+          this.fillSuccess(this.rewardCount);
+        }
+        if (gameOutcome.points) {
+          this.points = gameOutcome.points[0];
+        }
+        this.checkFailureOrSuccess();
+      },
+      () => {
+        this.popupData = this.noRewardsPopUp;
+        this.redirectUrlAndPopUp(); // wont call preplayConfirm direct away if preplay fail
+      }
+    );
+  }
+
+  public gameCompletedLoad(): void {
+    const delay = 3000;
+    const nbSteps = 60;
+    const processBar$ = interval(delay / nbSteps)
+      .pipe(
+        tap(v => this.progressValue = v * 100 / nbSteps),
+        bufferCount(nbSteps),
+        first()
+      );
+    processBar$.subscribe(
+      () => this.redirectUrlAndPopUp(),
+      () => this.redirectUrlAndPopUp()
+    );
+  }
+
   public loadPreplay(): void {
     this.gameData$.pipe(
       switchMap(

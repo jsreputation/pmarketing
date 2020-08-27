@@ -25,6 +25,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Type } from '@angular/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
+import { SpinComponent } from './spin/spin.component';
 import { WInformationCollectionSettingType } from '@perxtech/whistler';
 
 const gamePi: IGame = {
@@ -141,6 +142,7 @@ describe('GameComponent', () => {
         ShakeComponent,
         TapComponent,
         ScratchComponent,
+        SpinComponent,
       ],
       imports: [
         MatProgressBarModule,

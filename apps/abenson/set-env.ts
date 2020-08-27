@@ -39,7 +39,7 @@ const appConfigFile = `{
   "sourceType": "${process.env.SOURCE_TYPE ? process.env.SOURCE_TYPE : ''}",
   "redirectAfterLogin": "${process.env.redirectAfterLogin ? process.env.redirectAfterLogin : '/wallet'}",
   "custom": {
-    "loginMethod": "${process.env.LOGIN_METHOD ? process.env.LOGIN_METHOD : 'phone'}"
+    "loginMethod": "${process.env.LOGIN_METHOD ? process.env.LOGIN_METHOD : 'phone'}",
     "comingSoon": ${process.env.COMING_SOON ? process.env.COMING_SOON : false},
     "cardBrandingImage": "${
   process.env.CARD_BRANDING_IMG

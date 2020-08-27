@@ -9,5 +9,12 @@
       (loaded)="loadPreplay()"
       (broken)=preplayGameCompleted()>
     ></app-scratch>
+    <app-spin
+      *ngSwitchCase="gt.spin"
+      [willWin]="willWin"
+      [game]="game"
+      (loaded)="loadPlay()"
+      (broken)=gameCompletedLoad()
+    ></app-spin>
   </ng-container>
 </div>
