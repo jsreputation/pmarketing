@@ -72,27 +72,27 @@ export class QuizResultsComponent implements OnInit {
   }
 
   public next(): void {
-    // const points = this.results.reduce((sum, p) => sum + oc(p).points(0), 0);
-    //
+    const points = this.results.reduce((sum, p) => sum + oc(p).points(0), 0);
+
     let nextRoute: string;
-    // if (this.correctAnswers !== this.results.length) {
-    //   const noOutcome = oc(this.quiz).results.noOutcome();
-    //   this.translate.get([
-    //     'QUIZ_TEMPLATE.NO_OUTCOME_SCORE',
-    //     'QUIZ_TEMPLATE.NO_OUTCOME_TXT',
-    //     'QUIZ_TEMPLATE.NO_OUTCOME_CTA'
-    //   ]).subscribe((res: any) => {
-    //     const noOutcomeTitle = (res['QUIZ_TEMPLATE.NO_OUTCOME_SCORE']).replace('{{points}}', points);
-    //     this.popup = {
-    //       title: oc(noOutcome).title(noOutcomeTitle),
-    //       text: oc(noOutcome).subTitle(res['QUIZ_TEMPLATE.NO_OUTCOME_TXT']),
-    //       imageUrl: oc(noOutcome).image(),
-    //       buttonTxt: oc(noOutcome).button(res['QUIZ_TEMPLATE.NO_OUTCOME_CTA'])
-    //     };
-    //     this.notificationService.addPopup(this.popup);
-    //   });
-    //   nextRoute = '/home';
-    // } else {
+    if (this.correctAnswers !== this.results.length) {
+      const noOutcome = oc(this.quiz).results.noOutcome();
+      this.translate.get([
+        'QUIZ_TEMPLATE.NO_OUTCOME_SCORE',
+        'QUIZ_TEMPLATE.NO_OUTCOME_TXT',
+        'QUIZ_TEMPLATE.NO_OUTCOME_CTA'
+      ]).subscribe((res: any) => {
+        const noOutcomeTitle = (res['QUIZ_TEMPLATE.NO_OUTCOME_SCORE']).replace('{{points}}', points);
+        this.popup = {
+          title: oc(noOutcome).title(noOutcomeTitle),
+          text: oc(noOutcome).subTitle(res['QUIZ_TEMPLATE.NO_OUTCOME_TXT']),
+          imageUrl: oc(noOutcome).image(),
+          buttonTxt: oc(noOutcome).button(res['QUIZ_TEMPLATE.NO_OUTCOME_CTA'])
+        };
+        this.notificationService.addPopup(this.popup);
+      });
+      nextRoute = '/home';
+    } else {
       const outcome = oc(this.quiz).results.outcome();
       this.translate.get([
         // 'QUIZ_TEMPLATE.POSITIVE_OUTCOME_TXT',
@@ -112,7 +112,7 @@ export class QuizResultsComponent implements OnInit {
         this.notificationService.addPopup(this.popup);
       });
       nextRoute = '/wallet';
-    // }
+    }
     this.router.navigate([nextRoute]);
   }
 
