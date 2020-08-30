@@ -34,6 +34,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { LocationFilterPopupComponent } from './location-filter-popup/location-filter-popup.component';
 import { PointsToCashPipe } from './directives/points-to-cash.pipe';
 import { TokenStorage } from './storage/token-storage.service';
+import { CheckIdExistsPipe } from './directives/check-id-exists-pipe';
 
 export function themesServiceFactory(
   handler: HttpBackend,
@@ -69,7 +70,8 @@ const pipes = [
   StripHtmlPipe,
   SafeHtmlPipe,
   SafeUrlPipe,
-  PointsToCashPipe
+  PointsToCashPipe,
+  CheckIdExistsPipe
 ];
 
 // make sure we have only one instance of the NotificationService
