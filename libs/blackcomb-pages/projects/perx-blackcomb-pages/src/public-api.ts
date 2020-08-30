@@ -80,3 +80,4 @@ export { TransactionCompleteComponent } from './lib/rebates/transaction-complete
 export { TransactionShowComponent } from './lib/rebates/transaction-show/transaction-show.component';
 export { NearmeComponent } from './lib/nearme/nearme.component';
 export { BACK_ARROW_URLS } from './lib/perx-blackcomb-pages.constants';
+export { FavoriteRewardsComponent } from './lib/favorite-rewards/favorite-rewards.component';
