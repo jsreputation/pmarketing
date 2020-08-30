@@ -41,6 +41,7 @@ export class SignupComponent implements OnInit {
   public theme: Observable<ITheme>;
   public countriesList$: Observable<ICountryCode[]>;
   private destroy$: Subject<void> = new Subject();
+  public maxDobDate: Date = new Date(); // today
 
   constructor(
     private fb: FormBuilder,
@@ -83,6 +84,7 @@ export class SignupComponent implements OnInit {
       title: ['', Validators.required],
       name: ['', Validators.required],
       dob: ['', Validators.required],
+      gender: ['', Validators.required],
       // postcode: ['', Validators.required],
       countryCode: ['60', Validators.required],
       mobileNo: ['', Validators.required],
@@ -118,6 +120,7 @@ export class SignupComponent implements OnInit {
     const emailValue = this.signupForm.value.email;
 
     const titleString = this.signupForm.value.title;
+    const genderString = this.signupForm.value.gender;
     // const postcodeString = this.signupForm.value.postcode;
 
     const signUpData: ISignUpData = {
@@ -129,6 +132,7 @@ export class SignupComponent implements OnInit {
       passwordConfirmation: confirmPassword,
       email: emailValue,
       title: titleString,
+      gender: genderString
       // postcode: postcodeString
     };
 

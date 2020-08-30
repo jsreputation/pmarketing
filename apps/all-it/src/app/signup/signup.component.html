@@ -25,12 +25,19 @@
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="full-width__input">
                     <mat-label>Date of Birth</mat-label>
-                    <input matInput [matDatepicker]="picker" placeholder="Date of Birth" formControlName="dob" required>
+                    <input matInput [matDatepicker]="picker" [max]='maxDobDate' placeholder="Date of Birth" formControlName="dob" required>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker color="primary" #picker></mat-datepicker>
                     <mat-error *ngIf="signupForm.get('dob').hasError('required')">
                       <span>Date of Birth is </span><strong>REQUIRED</strong>
                     </mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="full-width__input">
+                    <mat-label>Gender</mat-label>
+                    <mat-select placeholder="Gender" formControlName="gender">
+                        <mat-option value="Male">Male</mat-option>
+                        <mat-option value="Female">Female</mat-option>
+                    </mat-select>
                 </mat-form-field>
 <!--                <mat-form-field appearance="fill" class="full-width__input">-->
 <!--                    <mat-label>Postcode</mat-label>-->
@@ -51,7 +58,7 @@
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="full-width__input">
                     <mat-label>Mobile No</mat-label>
-                    <input matInput placeholder="Mobile No" formControlName="mobileNo" type="number" required>
+                    <input matInput placeholder="Mobile No" formControlName="mobileNo" type="tel" autocomplete="tel-national" required>
                     <mat-error *ngIf="signupForm.get('mobileNo').hasError('required')">
                         <span>Mobile No is </span><strong>REQUIRED</strong>
                     </mat-error>
@@ -60,7 +67,7 @@
                     <mat-label>Email Address</mat-label>
                     <input matInput placeholder="Email Address" formControlName="email" required>
                     <mat-error *ngIf="signupForm.get('email').hasError('required')">
-                        <span>Email is</span><strong>REQUIRED</strong>
+                        <span>Email is </span><strong>REQUIRED</strong>
                     </mat-error>
                     <mat-error *ngIf="signupForm.get('email').hasError('email')">
                         <span>Incorrect email format</span>

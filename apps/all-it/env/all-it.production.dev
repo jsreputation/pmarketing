@@ -1,3 +1,4 @@
 APIHOST=https://api.perxtech.net
 SHOW_FAVORITE_REWARD_BUTTON=false
+LOGIN_METHOD=phone
 

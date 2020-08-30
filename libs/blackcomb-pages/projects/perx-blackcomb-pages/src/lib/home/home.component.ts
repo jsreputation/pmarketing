@@ -195,10 +195,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (campaign.type === CampaignType.game && campaign.subType === 'quiz') {
       // currently only the quiz have proper data for landing page, once other campaign
       // type have proper data, move this block out
-      if (this.appConfig.showCampaignLandingPage) {
-        this.router.navigate([`campaign-welcome/${campaign.id}`]);
-        return;
-      }
+      // if (this.appConfig.showCampaignLandingPage) {
+      //   this.router.navigate([`campaign-welcome/${campaign.id}`]);
+      //   return;
+      // }
 
       this.router.navigate([`quiz/${campaign.id}`]);
       return;
@@ -349,7 +349,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   private initTranslate(): void {
-    this.subTitleFn = () => this.translate.get('HOME.YOU_HAVE');
+    // this.subTitleFn = () => this.translate.get('HOME.YOU_HAVE');
     this.titleFn = (profile: IProfile) => this.translate.get('HOME.HELLO').pipe(
       map(msg => {
         let returnString = msg;

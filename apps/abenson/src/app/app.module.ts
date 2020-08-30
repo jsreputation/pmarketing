@@ -12,6 +12,7 @@ import {
   ConfigModule,
   ConfigService,
   GameModule,
+  GameServiceModule,
   IConfig,
   LanguageService,
   LoyaltyModule,
@@ -49,7 +50,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
 import { HomeComponent } from './home/home.component';
-import { RedeemComponent } from './redeem/redeem.component';
 import { environment } from '../environments/environment';
 import {
   FormsModule,
@@ -117,7 +117,6 @@ export const setLanguage = (
     AppComponent,
     LoginComponent,
     HomeComponent,
-    RedeemComponent,
     HistoryComponent,
     PromosComponent,
     PromosStagingComponent,
@@ -136,6 +135,7 @@ export const setLanguage = (
     MerchantsModule.forRoot(),
     AuthenticationModule,
     GameModule,
+    GameServiceModule.forRoot(),
     ProfileModule,
     ProfileServiceModule.forRoot(),
     BrowserAnimationsModule,

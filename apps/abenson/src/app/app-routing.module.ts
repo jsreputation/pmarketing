@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { RedeemComponent } from './redeem/redeem.component';
 import { LoginComponent } from './auth/login/login.component';
 import { HistoryComponent } from './history/history.component';
 import { PromosComponent } from './promos/promos.component';
@@ -23,7 +22,9 @@ const routes: Routes = [
         path: 'account',
         loadChildren: (): any => import('./account/account.module').then((mod: any) => mod.AccountModule)
       },
-      { path: 'redeem/:id', component: RedeemComponent },
+      {
+        path: 'redeem/:id', loadChildren: () => import('./redeem/redeem.module').then(mod => mod.RedeemModule),
+      },
       { path: 'game/:id', loadChildren: (): any => import('./game/game.module').then((mod: any) => mod.GameModule) },
       { path: 'stamp/:id', loadChildren: (): any => import('./stamp/stamp.module').then((mod: any) => mod.StampModule) },
       { path: 'survey/:id', loadChildren: (): any => import('./survey/survey.module').then((mod: any) => mod.SurveyModule) },

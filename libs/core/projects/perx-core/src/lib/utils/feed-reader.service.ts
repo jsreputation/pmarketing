@@ -36,7 +36,7 @@ export class FeedReaderService {
 
   public getFromText(feed: string): FeedItem[] {
     const parser = new DOMParser();
-    if (feed.includes('html')) {
+    if (feed.includes('<html>')) {
       // parse the dom
       const doc1 = parser.parseFromString(feed, 'text/html');
 

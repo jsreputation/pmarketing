@@ -18,7 +18,9 @@ const appConfigPath = path.resolve(__dirname, './src/assets/config/app-config.js
 
 // `environment.ts` file structure that uses the environment variables
 const envConfigFile = `export const environment = {
-  apiHost: '${process.env.APIHOST ? process.env.APIHOST : 'https://api.perxtech.io'}',
+  apiHost: '${
+  process.env.APIHOST ? process.env.APIHOST : 'https://api.perxtech.io'
+  }',
   production: ${process.env.PRODUCTION ? process.env.PRODUCTION : false},
   preAuth: ${process.env.PREAUTH ? process.env.PREAUTH : false},
   isWhistler: ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : false},
@@ -27,7 +29,10 @@ const envConfigFile = `export const environment = {
 `;
 
 const appConfigFile = `{
-  "apiHost": "${process.env.APIHOST ? process.env.APIHOST : 'https://api.perxtech.io'}",
+  "app": "abenson",
+  "apiHost": "${
+  process.env.APIHOST ? process.env.APIHOST : 'https://api.perxtech.io'
+  }",
   "production": ${process.env.PRODUCTION ? process.env.PRODUCTION : false},
   "preAuth": ${process.env.PREAUTH ? process.env.PREAUTH : false},
   "isWhistler": ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : false},
@@ -35,19 +40,35 @@ const appConfigFile = `{
   "sourceType": "${process.env.SOURCE_TYPE ? process.env.SOURCE_TYPE : ''}",
   "redirectAfterLogin": "${process.env.redirectAfterLogin ? process.env.redirectAfterLogin : '/wallet'}",
   "custom": {
+    "loginMethod": "${process.env.LOGIN_METHOD ? process.env.LOGIN_METHOD : 'phone'}",
     "comingSoon": ${process.env.COMING_SOON ? process.env.COMING_SOON : false},
-    "cardBrandingImage": "${process.env.CARD_BRANDING_IMG ? process.env.CARD_BRANDING_IMG : 'assets/abenson_plus_banner.png'}"
+    "cardBrandingImage": "${
+  process.env.CARD_BRANDING_IMG
+    ? process.env.CARD_BRANDING_IMG
+    : 'assets/abenson_plus_banner.png'
+  }"
   }
 }
 `;
 
-console.log(colors.magenta('The file `environment.ts` will be written with the following content: \n'));
+console.log(
+  colors.magenta(
+    'The file `environment.ts` will be written with the following content: \n'
+  )
+);
 console.log(colors.grey(envConfigFile));
 
-async.each([[angularTargetPath, envConfigFile], [appConfigPath, appConfigFile]],
+async.each(
+  [
+    [angularTargetPath, envConfigFile],
+    [appConfigPath, appConfigFile]
+  ],
   (item: [[string, string], [string, string]], callback: any) => {
-
-    console.log(colors.magenta(`The file '${item[0]}' will be written with the following content: \n`));
+    console.log(
+      colors.magenta(
+        `The file '${item[0]}' will be written with the following content: \n`
+      )
+    );
     console.log(colors.grey(item[1]));
 
     fs.writeFile(item[0], item[1], (err: any) => {
@@ -57,4 +78,5 @@ async.each([[angularTargetPath, envConfigFile], [appConfigPath, appConfigFile]],
       console.log(colors.magenta(`file generated correctly at ${item[0]} \n`));
       callback();
     });
-  });
+  }
+);

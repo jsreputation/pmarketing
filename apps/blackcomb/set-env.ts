@@ -56,7 +56,7 @@ const envConfigFile = `export const environment = {
 `;
 
 const appConfigFile = `{
-  "app": "blackcomb",
+  "app": "${process.env.APP ? process.env.APP : 'blackcomb'}",
   "apiHost": "${process.env.APIHOST ? process.env.APIHOST : 'https://api.perxtech.io'}",
   "production": ${process.env.PRODUCTION ? process.env.PRODUCTION : false},
   "preAuth": ${process.env.PREAUTH ? process.env.PREAUTH : true},
@@ -84,9 +84,11 @@ const appConfigFile = `{
   "showUserInfoOnAccountsPage": ${process.env.SHOW_USERINFO_ACCOUNTS ? process.env.SHOW_USERINFO_ACCOUNTS : false},
   "showTransactionHistoryOnAccountsPage": ${process.env.SHOW_TRANSANCTION_HISTORY_ACCOUNTS ? process.env.SHOW_TRANSANCTION_HISTORY_ACCOUNTS : false},
   "showVoucherBookingFromRewardsPage":  ${process.env.SHOW_VOUCHER_BOOKING_FROM_REWARDS ? process.env.SHOW_VOUCHER_BOOKING_FROM_REWARDS : false},
+  "showNearMePage": ${process.env.SHOW_NEAR_ME_PAGE ? process.env.SHOW_NEAR_ME_PAGE : false},
   "custom": {
     "stampsType": "${process.env.STAMPS_TYPE ? process.env.STAMPS_TYPE : 'stamp_card'}",
-    "redirectAfterLogin": "${process.env.REDIRECT_AFTER_LOGIN ? process.env.REDIRECT_AFTER_LOGIN : '/wallet'}"
+    "redirectAfterLogin": "${process.env.REDIRECT_AFTER_LOGIN ? process.env.REDIRECT_AFTER_LOGIN : '/wallet'}",
+    "loginMethod": "${process.env.LOGIN_METHOD ? process.env.LOGIN_METHOD : 'phone'}"
   },
   ${displayProperties}
 }

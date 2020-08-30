@@ -3,6 +3,12 @@
   display: block;
 }
 
+.question-image {
+  height: 145px;
+  object-fit: fill;
+  width: 100%;
+}
+
 .question-container {
   height: 100%;
   display: flex;
@@ -11,15 +17,18 @@
   // padding: 1.6rem;
 
   .question-content {
+    margin: auto;
     display: flex;
     height: 100%;
+    width: 34rem;
     flex-direction: column;
     justify-content: flex-start;
 
     .question {
+      margin-top: 1rem;
       font-size: 1.6rem;
       line-height: 2.8rem;
-      color: #212121;
+      color: #ffffff;
       letter-spacing: 0.5px;
 
       .required-star {
@@ -36,6 +45,8 @@
     }
 
     .error-message {
+      margin-top: 1.4rem;
+      margin-bottom: 1.4rem;
       height: 1.6rem;
       overflow: hidden;
 

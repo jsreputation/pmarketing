@@ -13,7 +13,7 @@ import {
   PopUpClosedCallBack,
   IPlayOutcome,
 } from '@perxtech/core';
-import { map, take } from 'rxjs/operators';
+import { map, take, switchMap } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -116,22 +116,22 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
   }
 
   private fetchGame(): void {
-    this.gameService.getGamesFromCampaign(this.campaignId)
-      .pipe(
-        take(1),
-        map((games: IGame[]) => games[0])
-      )
-      .subscribe(
-        (game: IGame) => this.game = game,
-        (err: any) => {
-          console.log(err);
-          this.isEnabled = false;
-          this.notificationService.addPopup({
-            title: 'Oooops!',
-            text: 'Something is wrong, game cannot be played at the moment!'
-          });
-        }
-      );
+    this.campaignService.getCampaign(this.campaignId).pipe(
+      switchMap((campaign: ICampaign) => this.gameService.getGamesFromCampaign(campaign)),
+      take(1),
+      map((games: IGame[]) => games[0])
+    )
+    .subscribe(
+      (game: IGame) => this.game = game,
+      (err: any) => {
+        console.log(err);
+        this.isEnabled = false;
+        this.notificationService.addPopup({
+          title: 'Oooops!',
+          text: 'Something is wrong, game cannot be played at the moment!'
+        });
+      }
+    );
   }
 
   public onComplete(): void {

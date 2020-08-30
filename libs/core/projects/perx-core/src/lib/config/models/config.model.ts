@@ -1,5 +1,11 @@
 import { IWSetting } from '@perxtech/whistler';
 
+export enum LoginType {
+  phone = 'phone',
+  email = 'email',
+  username = 'username'
+}
+
 export interface IConfig<T> {
   app?: string;
   apiHost: string;
@@ -33,12 +39,14 @@ export interface IConfig<T> {
   showQrPageSubtitle?: boolean;
   showUserQR?: boolean;
   showHistoryPage?: boolean;
+  showNearMePage?: boolean;
 
   /* Login page */
   showSubtitleLogin?: boolean;
   redirectAfterLogin?: string;
   redirectBeforeLogin?: string; // this is used for routing the user on the landing page before login
   showForgetPasswordOnLogin?: boolean;
+  loginMethod?: LoginType;
 
   /* Account page */
   showAccountsPage?: boolean;

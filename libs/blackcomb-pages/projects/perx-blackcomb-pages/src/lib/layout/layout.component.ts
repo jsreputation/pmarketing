@@ -41,6 +41,7 @@ import { CampaignStampsComponent } from '../campaign-stamps/campaign-stamps.comp
 import { LeaderboardPageComponent } from '../leaderboard-page/leaderboard-page.component';
 import { FindLocationComponent } from '../find-location/find-location.component';
 import { RebatesWalletComponent } from '../rebates/rebates-wallet/rebates-wallet.component';
+import { NearmeComponent } from '../nearme/nearme.component';
 import { RewardsPageComponent } from '../rewards-page/rewards-page.component';
 
 export interface ShowTitleInHeader {
@@ -113,7 +114,10 @@ export class LayoutComponent implements OnInit {
   }
 
   public onActivate(ref: any): void {
-    this.showHeader = !(ref instanceof SignIn2Component);
+    this.route.queryParams.subscribe((params) => {
+      const paramArr: string[] = params.flags && params.flags.split(',');
+      this.showHeader = paramArr && paramArr.includes('chromeless') ? false : !(ref instanceof SignIn2Component);
+    });
     this.showToolbar = ref instanceof HomeComponent ||
       ref instanceof HistoryComponent ||
       ref instanceof AccountComponent ||
@@ -124,8 +128,9 @@ export class LayoutComponent implements OnInit {
       ref instanceof LeaderboardPageComponent ||
       ref instanceof FindLocationComponent ||
       ref instanceof TransactionHistoryComponent ||
+      ref instanceof RebatesWalletComponent ||
       ref instanceof RewardsPageComponent ||
-      ref instanceof RebatesWalletComponent;
+      ref instanceof NearmeComponent;
     this.cd.detectChanges();
   }
 

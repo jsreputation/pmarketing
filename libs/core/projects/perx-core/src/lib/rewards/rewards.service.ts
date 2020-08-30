@@ -24,4 +24,6 @@ export abstract class RewardsService {
   public abstract getCatalogs(page?: number, pageSize?: number, locale?: string): Observable<ICatalog[]>;
 
   public abstract getCategories(): Observable<ITabConfigExtended[]>;
+
+  public abstract nearMe(rad?: number, position?: Position): Observable<IReward[]>;
 }

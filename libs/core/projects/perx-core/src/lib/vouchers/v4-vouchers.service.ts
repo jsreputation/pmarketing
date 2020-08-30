@@ -141,7 +141,7 @@ export class V4VouchersService implements IVoucherService {
       reward: reward ? V4RewardsService.v4RewardToReward(reward) : null,
       state: v.state,
       code: (typeof v.voucher_code === 'string') ? v.voucher_code : undefined,
-      expiry: reward && reward.valid_to !== null ? new Date(reward.valid_to) : null,
+      expiry: v.valid_to !== null ? new Date(v.valid_to) : null,
       redemptionDate: v.redemption_date !== null ? new Date(v.redemption_date) : null,
       redemptionType:
         v.redemption_type !== null &&
@@ -163,7 +163,9 @@ export class V4VouchersService implements IVoucherService {
   public static v4LocationToLocation(v: IV4VoucherLocation): IVoucherLocation {
     return {
       id: v.id,
-      name: v.name
+      name: v.name,
+      latitude: v.latitude,
+      longitude: v.longitude
     };
   }
 

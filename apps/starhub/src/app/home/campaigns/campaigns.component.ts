@@ -71,7 +71,7 @@ export class CampaignsComponent implements OnInit {
           combineLatest(
             ...campaigns.map((campaign) =>
               this.gameService
-                .getGamesFromCampaign(campaign.id)
+                .getGamesFromCampaign(campaign)
                 .pipe(catchError(() => of([])))
             )
           )

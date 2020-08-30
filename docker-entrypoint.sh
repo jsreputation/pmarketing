@@ -1,7 +1,7 @@
 #!/bin/sh
 if [[ "$1" = 'run' ]]; then
 
-  exec node dist/server.js
+  exec node ./main.js
 
 fi
 

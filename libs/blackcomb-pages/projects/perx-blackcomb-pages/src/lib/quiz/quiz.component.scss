@@ -9,35 +9,36 @@
 
     align-items: stretch;
 
-    .progress {
-      z-index: 1;
-      width: 100%;
-      background-color: black;
-      padding: 2.4rem 0;
+    .progress-container {
+      background: var(--surface_colour, #fff);
+      padding: 1.3rem 0;
 
-      .progress-text {
-        font-size: 1.6rem;
-        letter-spacing: 0.4px;
-        text-align: left;
-        color: white;
-        font-style: normal;
-        font-weight: normal;
-        margin: 0 1.6rem 1.1rem;
+      .progress {
+        z-index: 1;
+        margin: auto;
+        width: 34rem;
+        display: flex;
+        justify-content: space-between;
+
+        .progress-text {
+          letter-spacing: 0.4px;
+          text-align: left;
+          font-style: normal;
+          font-weight: normal;
+        }
       }
 
       .progress-bar {
-        width: auto;
-        margin: 0 1.6rem;
+        width: 34rem;
         border-radius: 1rem;
+        margin: auto;
       }
     }
 
     .timer {
-      color: var(--font_color, white);
-      font-size: 2.4rem;
-      margin-top: 2.4rem;
+      color: #B00020;
       display: flex;
-      justify-content: center;
+      align-items: center;
     }
 
     .quiz-card {
@@ -49,8 +50,8 @@
       h1 {
         font-style: normal;
         font-weight: 500;
-        font-size: 2rem;
-        text-align: center;
+        font-size: 1.6rem;
+        color: #ffffff;
       }
 
       h2 {

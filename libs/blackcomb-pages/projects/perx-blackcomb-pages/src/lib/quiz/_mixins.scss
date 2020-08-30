@@ -21,9 +21,8 @@
 @mixin quizCard {
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  max-height: 45rem;
-  width: 34rem;
-  margin-top: 2rem;
+  //max-height: 45rem;
+  width: 100%;
   z-index: 1;
   display: flex;
   flex-direction: column;

@@ -54,7 +54,7 @@ export class GameComponent implements OnInit {
       .pipe(
         map((campaigns: ICampaign[]) => campaigns.filter(camp => camp.type === CampaignType.game)),
         map(campaigns => campaigns[0]),
-        switchMap((campaign: ICampaign) => this.gameService.getGamesFromCampaign(campaign.id)),
+        switchMap((campaign: ICampaign) => this.gameService.getGamesFromCampaign(campaign)),
         map(game => game[0])
       );
     this.actionOnGameStatus();

@@ -1,7 +1,10 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick, discardPeriodicTasks } from '@angular/core/testing';
 
 import { GameComponent } from './game.component';
-import { of, throwError } from 'rxjs';
+import {
+  of,
+  throwError
+} from 'rxjs';
 import { ShakeComponent } from './shake/shake.component';
 import { TapComponent } from './tap/tap.component';
 import { ScratchComponent } from './scratch/scratch.component';
@@ -14,7 +17,11 @@ import {
   NotificationService,
   ConfigService,
   ThemesService,
-  ITheme
+  ITheme,
+  ICampaignService,
+  ICampaign,
+  CampaignType,
+  CampaignState
 } from '@perxtech/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -79,6 +86,17 @@ const gameSignup: IGame = {
   },
 };
 
+const campaign: ICampaign = {
+  id: 1,
+  name: 'abc',
+  description: 'abc',
+  type: CampaignType.game,
+  state: CampaignState.active,
+  endsAt: null,
+  rewards: [],
+  thumbnailUrl: '',
+};
+
 const mockTheme: ITheme = {
   name: 'theme',
   properties: {
@@ -102,7 +120,9 @@ describe('GameComponent', () => {
   const routerStub: Partial<Router> = {
     navigate: () => Promise.resolve(true)
   };
-
+  const campaignServiceStub: Partial<ICampaignService> = {
+    getCampaign: () => of(campaign)
+  };
   const authServiceStub: Partial<AuthenticationService> = {
     getAnonymous: () => true,
   };
@@ -117,6 +137,10 @@ describe('GameComponent', () => {
       isWhistler: false,
       baseHref: '',
     })
+  };
+  const activatedRouteStub: Partial<ActivatedRoute> = {
+    queryParams: of({ params: { flags: 'nonav, chromeless' } }),
+    params: of({ id: 1 })
   };
 
   beforeEach(async(() => {
@@ -137,10 +161,11 @@ describe('GameComponent', () => {
       ],
       providers: [
         { provide: IGameService, useValue: gameServiceStub },
-        { provide: ActivatedRoute, useValue: { params: of({ id: 1 }) } },
         { provide: Router, useValue: routerStub },
+        { provide: ActivatedRoute, useValue: activatedRouteStub },
         { provide: AuthenticationService, useValue: authServiceStub },
         { provide: NotificationService, useValue: notificationServiceStub },
+        { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: ConfigService, useValue: configServiceStub },
         { provide: ThemesService, useValue: themesServiceStub }
       ]

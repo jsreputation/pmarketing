@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Optional, Output } from '@angular/core';
-import { IErrors, IPoints, IQAnswer, IQQuestion, QuizQuestionType } from '../models/quiz.model';
+import { IErrors, IPoints, IQAnswer, QuizQuestionType } from '../models/quiz.model';
+import { IQQuestion } from '../quiz.service';
 
 @Component({
   selector: 'perx-core-quiz-question',
@@ -47,7 +48,7 @@ export class QuizQuestionComponent {
     this.point = this.question && this.question.required ?
       (this.question.answer === 0 || (this.question.answer && this.question.answer.length > 0) ? 1 : 0) : 1;
     // }
-    this.updatePoints.emit({ questionId: this.question.id, points: this.point, question: this.question.question });
+    this.updatePoints.emit({ questionId: this.question.id, points: this.point, question: this.question.question.text });
   }
 
   public questionValidation(): boolean {
