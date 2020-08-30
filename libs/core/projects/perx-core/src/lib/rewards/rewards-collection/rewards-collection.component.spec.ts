@@ -11,6 +11,8 @@ import { MaterialModule } from '../../shared/material.module';
 import { UtilsModule } from '../../utils/utils.module';
 import { ThemesService } from '../../utils/themes/themes.service';
 import { MatIconModule } from '@angular/material';
+import { TokenStorage } from '../../utils/storage/token-storage.service';
+import { Config } from '../../config/config';
 
 describe('RewardsCollectionComponent', () => {
   let component: RewardsCollectionComponent;
@@ -18,6 +20,11 @@ describe('RewardsCollectionComponent', () => {
 
   const themesServiceStub: Partial<ThemesService> = {
     getThemeSetting: () => of()
+  };
+
+  const tokenStorageStub = {
+    getAppInfoProperty: () => null,
+    setAppInfoProperty: () => { }
   };
 
   const rewards: IReward[] = [
@@ -100,7 +107,9 @@ describe('RewardsCollectionComponent', () => {
         MatIconModule
       ],
       providers: [
-        { provide: ThemesService, useValue: themesServiceStub }
+        { provide: ThemesService, useValue: themesServiceStub },
+        { provide: TokenStorage, useValue: tokenStorageStub },
+        { provide: Config }
       ]
     })
       .compileComponents();

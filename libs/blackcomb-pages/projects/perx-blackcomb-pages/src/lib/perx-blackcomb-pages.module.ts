@@ -83,6 +83,7 @@ import { FindLocationModule } from './find-location/find-location.module';
 import { MatSelectInfiniteScrollModule } from 'ng-mat-select-infinite-scroll';
 import { NearmeComponent } from './nearme/nearme.component';
 import { RewardsPageComponent } from './rewards-page/rewards-page.component';
+import { FavoriteRewardsComponent } from './favorite-rewards/favorite-rewards.component';
 
 const comps: any[] = [
   RewardComponent,
@@ -96,7 +97,8 @@ const comps: any[] = [
   ReferralComponent,
   LeaderboardPageComponent,
   NearmeComponent,
-  RewardsPageComponent
+  RewardsPageComponent,
+  FavoriteRewardsComponent
 ];
 
 @NgModule({

@@ -27,7 +27,7 @@ import {
   RewardsModule,
   VouchersModule,
   ILoyalty,
-  RewardsService, ThemesService
+  RewardsService, ThemesService, TokenStorage
 } from '@perxtech/core';
 
 import { HomeComponent } from './home.component';
@@ -48,6 +48,10 @@ describe('HomeComponent', () => {
   };
   const rewardServiceStub: Partial<RewardsService> = {
     getAllRewards: (): Observable<IReward[]> => of([])
+  };
+  const tokenStorageStub = {
+    getAppInfoProperty: () => null,
+    setAppInfoProperty: () => { }
   };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -78,6 +82,9 @@ describe('HomeComponent', () => {
           provide: ThemesService,
           useValue: themesServiceStub,
         },
+        { provide: TokenStorage,
+          useValue: tokenStorageStub
+        }
       ],
       declarations: [HomeComponent]
     })

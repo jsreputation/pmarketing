@@ -19,7 +19,8 @@ import {
   ThemesService,
   IOutcome,
   UtilsModule,
-  SettingsService
+  SettingsService,
+  TokenStorage
 } from '@perxtech/core';
 import { WInformationCollectionSettingType } from '@perxtech/whistler';
 import { RewardComponent } from './reward.component';
@@ -80,6 +81,11 @@ describe('RewardComponent', () => {
     getRemoteFlagsSettings: () => of()
   };
 
+  const tokenStorageStub = {
+    getAppInfoProperty: () => null,
+    setAppInfoProperty: () => { }
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RewardComponent],
@@ -116,7 +122,8 @@ describe('RewardComponent', () => {
           provide: ThemesService,
           useValue: themesServiceStub,
         },
-        { provide: SettingsService, useValue: settingsServiceStub }
+        { provide: SettingsService, useValue: settingsServiceStub },
+        { provide: TokenStorage, useValue: tokenStorageStub }
       ]
     })
       .compileComponents();
