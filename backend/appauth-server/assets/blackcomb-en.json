@@ -134,7 +134,7 @@
     "SUMMARY_TIME_TAKEN": "You took a total of ",
     "QUESTION_TIME_TAKEN": "You took {{time}} to answer this.",
     "POSITIVE_OUTCOME_TXT": "Congratulations! You scored {{points}} points",
-    "POSITIVE_OUTCOME_REWARD": "Here’s a reward for you",
+    "POSITIVE_OUTCOME_REWARD": "Congratulations! Get your reward!",
     "POSITIVE_OUTCOME_CTA": "View Reward",
     "NO_OUTCOME_SCORE": "You scored {{points}} points for this round",
     "NO_OUTCOME_TXT": "",

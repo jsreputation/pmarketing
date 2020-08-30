@@ -72,45 +72,47 @@ export class QuizResultsComponent implements OnInit {
   }
 
   public next(): void {
-    const points = this.results.reduce((sum, p) => sum + oc(p).points(0), 0);
-
+    // const points = this.results.reduce((sum, p) => sum + oc(p).points(0), 0);
+    //
     let nextRoute: string;
-    if (this.correctAnswers !== this.results.length) {
-      const noOutcome = oc(this.quiz).results.noOutcome();
-      this.translate.get([
-        'QUIZ_TEMPLATE.NO_OUTCOME_SCORE',
-        'QUIZ_TEMPLATE.NO_OUTCOME_TXT',
-        'QUIZ_TEMPLATE.NO_OUTCOME_CTA'
-      ]).subscribe((res: any) => {
-        const noOutcomeTitle = (res['QUIZ_TEMPLATE.NO_OUTCOME_SCORE']).replace('{{points}}', points);
-        this.popup = {
-          title: oc(noOutcome).title(noOutcomeTitle),
-          text: oc(noOutcome).subTitle(res['QUIZ_TEMPLATE.NO_OUTCOME_TXT']),
-          imageUrl: oc(noOutcome).image(),
-          buttonTxt: oc(noOutcome).button(res['QUIZ_TEMPLATE.NO_OUTCOME_CTA'])
-        };
-        this.notificationService.addPopup(this.popup);
-      });
-      nextRoute = '/home';
-    } else {
+    // if (this.correctAnswers !== this.results.length) {
+    //   const noOutcome = oc(this.quiz).results.noOutcome();
+    //   this.translate.get([
+    //     'QUIZ_TEMPLATE.NO_OUTCOME_SCORE',
+    //     'QUIZ_TEMPLATE.NO_OUTCOME_TXT',
+    //     'QUIZ_TEMPLATE.NO_OUTCOME_CTA'
+    //   ]).subscribe((res: any) => {
+    //     const noOutcomeTitle = (res['QUIZ_TEMPLATE.NO_OUTCOME_SCORE']).replace('{{points}}', points);
+    //     this.popup = {
+    //       title: oc(noOutcome).title(noOutcomeTitle),
+    //       text: oc(noOutcome).subTitle(res['QUIZ_TEMPLATE.NO_OUTCOME_TXT']),
+    //       imageUrl: oc(noOutcome).image(),
+    //       buttonTxt: oc(noOutcome).button(res['QUIZ_TEMPLATE.NO_OUTCOME_CTA'])
+    //     };
+    //     this.notificationService.addPopup(this.popup);
+    //   });
+    //   nextRoute = '/home';
+    // } else {
       const outcome = oc(this.quiz).results.outcome();
       this.translate.get([
-        'QUIZ_TEMPLATE.POSITIVE_OUTCOME_TXT',
+        // 'QUIZ_TEMPLATE.POSITIVE_OUTCOME_TXT',
         'QUIZ_TEMPLATE.POSITIVE_OUTCOME_REWARD',
         'QUIZ_TEMPLATE.POSITIVE_OUTCOME_CTA'
       ]).subscribe((res: any) => {
-        const outcomeTitle = (res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_TXT']).replace('{{points}}', points);
+        // const outcomeTitle = (res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_TXT']).replace('{{points}}', points);
+        console.log(outcome, 'lok at the outcome man')
+        console.log(res, 'look at the res manjn')
         this.popup = {
-          title: oc(outcome).title(outcomeTitle),
-          text: oc(outcome).subTitle(res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_REWARD']),
-          buttonTxt: oc(outcome).button(res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_CTA']),
+          // title: oc(outcome).title(outcomeTitle),
+          text: oc(outcome).subTitle['en'].text(res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_REWARD']),
+          buttonTxt: oc(outcome).button['en'].text(res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_CTA']),
           imageUrl: 'assets/quiz/reward.png',
           ctaButtonClass: 'ga_game_completion'
         };
         this.notificationService.addPopup(this.popup);
       });
       nextRoute = '/wallet';
-    }
+    // }
     this.router.navigate([nextRoute]);
   }
 
