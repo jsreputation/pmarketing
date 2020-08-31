@@ -73,8 +73,9 @@ export class TimerComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
   }
 
   public ngOnInit(): void {
+    const timerStartValue = this.countType === TimerType.countUp ? 0 : this.timeToRun / this.INTERVAL;
     const reset: Observable<Partial<TimerState>> = this.resetSubject$.pipe(
-      map(() => ({ value: this.countType === TimerType.countUp ? 0 : this.timeToRun / this.INTERVAL, count: true }))
+      map(() => ({ value: timerStartValue, count: true }))
     );
     const start: Observable<Partial<TimerState>> = this.startSubject$.pipe(map(() => ({ count: true })));
     const stop: Observable<Partial<TimerState>> = this.stopSubject$.pipe(map(() => ({ count: false })));
@@ -82,7 +83,7 @@ export class TimerComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
     const initState: TimerState = {
       count: false,
       speed: this.INTERVAL,
-      value: this.countType === TimerType.countUp ? 0 : this.timeToRun / this.INTERVAL,
+      value: timerStartValue,
       countup: this.countType === TimerType.countUp ? true : false,
       increase: 1
     };

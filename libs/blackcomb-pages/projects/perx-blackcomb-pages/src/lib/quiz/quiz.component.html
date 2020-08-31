@@ -12,7 +12,7 @@
         </perx-core-timer>
       </div>
       <div class="progress-bar">
-        <mat-progress-bar mode="determinate" [value]="progressBarValue">
+        <mat-progress-bar mode="determinate" [value]="progress$ | async">
         </mat-progress-bar>
       </div>
     </div>
