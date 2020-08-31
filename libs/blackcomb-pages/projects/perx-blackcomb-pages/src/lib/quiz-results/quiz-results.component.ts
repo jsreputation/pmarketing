@@ -75,7 +75,7 @@ export class QuizResultsComponent implements OnInit {
     const points = this.results.reduce((sum, p) => sum + oc(p).points(0), 0);
     let nextRoute: string;
     if (this.correctAnswers !== this.results.length) {
-      const noOutcome = oc(this.quiz).results.noOutcome() // note: currently empty because not configured;
+      const noOutcome = oc(this.quiz).results.noOutcome(); // note: currently empty because not configured;
       this.translate.get([
         'QUIZ_TEMPLATE.NO_OUTCOME_SCORE',
         'QUIZ_TEMPLATE.NO_OUTCOME_TXT',
