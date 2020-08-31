@@ -170,8 +170,7 @@ const comps: any[] = [
     FindLocationModule,
     MatSelectInfiniteScrollModule,
     MatAutocompleteModule,
-    CampaignServiceModule.forRoot(),
-    TranslateModule.forRoot()
+    CampaignServiceModule.forRoot()
   ],
   exports: [
     ...comps,
