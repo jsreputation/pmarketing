@@ -247,9 +247,9 @@ export class GameComponent implements OnInit, OnDestroy {
     // if (rewardCount && parseInt(rewardCount, 10) > 0) {
     //   this.successPopUp.text += this.rewardsTxt.replace('{{rewards}}', rewardCount);
     // }
-    // if (pointsOutcome) {
-    //   this.successPopUp.text += this.pointsTxt.replace('{{points}}', pointsOutcome.points.toString());
-    // }
+    if (pointsOutcome) {
+      this.successPopUp.text += `\n ${this.pointsTxt.replace('{{points}}', pointsOutcome.points.toString())}`;
+    }
     this.popupData = this.successPopUp;
   }
 
