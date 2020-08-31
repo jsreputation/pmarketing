@@ -192,7 +192,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   public goToCampaignPage(campaign: ICampaign): void {
-    if (campaign.type === CampaignType.game && campaign.subType === 'quiz') {
+    if (campaign.type === CampaignType.game) {
       // currently only the quiz have proper data for landing page, once other campaign
       // type have proper data, move this block out
       if (this.appConfig.showCampaignLandingPage) {
