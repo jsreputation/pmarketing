@@ -151,10 +151,6 @@ export class QuizComponent implements OnInit, OnDestroy {
     }
   }
 
-  public get progressBarValue(): number {
-    return ((this.questionPointer + 1) / this.totalLength) * 100 || 0;
-  }
-
   private questionChanged(): void {
     this.cd.detectChanges();
 
