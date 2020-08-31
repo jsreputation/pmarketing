@@ -8,7 +8,7 @@ import { of } from 'rxjs';
 
 import {
   RewardsModule as PerxRewardsModule,
-  ThemesService,
+  ThemesService, TokenStorage
 } from '@perxtech/core';
 import { RewardsService } from '@perxtech/core';
 import { TranslateModule } from '@ngx-translate/core';
@@ -23,6 +23,10 @@ describe('RewardsCollectionComponent', () => {
   };
   const themesServiceStub: Partial<ThemesService> = {
     getThemeSetting: () => of()
+  };
+  const tokenStorageStub = {
+    getAppInfoProperty: () => null,
+    setAppInfoProperty: () => { }
   };
 
   beforeEach(async(() => {
@@ -40,6 +44,10 @@ describe('RewardsCollectionComponent', () => {
         {
           provide: ThemesService,
           useValue: themesServiceStub,
+        },
+        {
+          provide: TokenStorage,
+          useValue: tokenStorageStub,
         },
       ]
     }).compileComponents();

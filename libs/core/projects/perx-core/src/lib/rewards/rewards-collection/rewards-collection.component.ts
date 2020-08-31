@@ -17,6 +17,7 @@ import {
 } from '../../perx-core.constants';
 import { ITheme } from '../../utils/themes/themes.model';
 import { ThemesService } from '../../utils/themes/themes.service';
+import { TokenStorage } from '../../utils/storage/token-storage.service';
 
 @Component({
   selector: 'perx-core-rewards-collection',
@@ -28,6 +29,9 @@ export class RewardsCollectionComponent implements OnInit {
   public repeatGhostCount: number = 10;
   public colorPrimary: Colors = Colors.Primary;
   public theme: ITheme | null = null;
+  public favoriteRewards: IReward[] = (
+    this.tokenStorage.getAppInfoProperty('favoriteRewards') as unknown as IReward[]
+  ) || [];
 
   @Input('rewardsList')
   public rewards$: Observable<IReward[]>;
@@ -56,6 +60,7 @@ export class RewardsCollectionComponent implements OnInit {
 
   constructor(
     private themesService: ThemesService,
+    private tokenStorage: TokenStorage
   ) { }
 
   public ngOnInit(): void {
@@ -82,8 +87,23 @@ export class RewardsCollectionComponent implements OnInit {
     this.tapped.emit(reward);
   }
 
-  public rewardFavoriteHandler(reward: IReward): IReward {
-    // wait BE, should click and update backend for user favoriting [PLACEHOLDER]
-    return reward;
+  public rewardFavoriteHandler(rewardToggled: IReward): void {
+    const favoriteRewards = this.tokenStorage.getAppInfoProperty('favoriteRewards');
+    let rwdsArray;
+    if (favoriteRewards) {
+      // if found id remove it, if cant find add it
+      const foundIndex = (favoriteRewards as unknown as IReward[]).findIndex(
+        reward => reward.id === rewardToggled.id);
+      if (foundIndex >= 0) {
+        (favoriteRewards as unknown as IReward[]).splice(foundIndex, 1);
+        rwdsArray = favoriteRewards;
+      } else {
+        rwdsArray = [...favoriteRewards, rewardToggled];
+      }
+    } else {
+      rwdsArray = [rewardToggled];
+    }
+    this.favoriteRewards = rwdsArray;
+    this.tokenStorage.setAppInfoProperty(rwdsArray, 'favoriteRewards');
   }
 }

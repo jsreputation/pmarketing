@@ -2,13 +2,13 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RewardDetailComponent } from './reward-detail.component';
 import { MatDialogModule } from '@angular/material';
-import { RewardsModule, RewardsService, LoyaltyService, IVoucherService } from '@perxtech/core';
+import { RewardsModule, RewardsService, LoyaltyService, IVoucherService, ThemesService } from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { rewards } from '../../mock/rewards.mock';
 import { loyalty } from '../../mock/loyalty.mock';
 import { VoucherState } from '@perxtech/core';
-import { RedemptionType } from '@perxtech/core';
+import { RedemptionType, TokenStorage } from '@perxtech/core';
 
 const rewardsServiceStub: Partial<RewardsService> = {
   getReward: () => of(rewards[0])
@@ -46,6 +46,15 @@ const iVoucherServiceStub: Partial<IVoucherService> = {
   })
 };
 
+const tokenStorageStub = {
+  getAppInfoProperty: () => null,
+  setAppInfoProperty: () => { }
+};
+
+const themesServiceStub: Partial<ThemesService> = {
+  getThemeSetting: () => of()
+};
+
 describe('RewardDetailComponent', () => {
   let component: RewardDetailComponent;
   let fixture: ComponentFixture<RewardDetailComponent>;
@@ -61,7 +70,9 @@ describe('RewardDetailComponent', () => {
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub },
         { provide: LoyaltyService, useValue: LoyaltyServiceStub },
-        { provide: IVoucherService, useValue: iVoucherServiceStub }
+        { provide: IVoucherService, useValue: iVoucherServiceStub },
+        { provide: TokenStorage, useValue: tokenStorageStub },
+        { provide: ThemesService, useValue: themesServiceStub },
       ]
     })
       .compileComponents();

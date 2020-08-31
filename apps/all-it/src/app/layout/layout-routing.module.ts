@@ -75,6 +75,10 @@ const routes: Routes = [
       {
         path: 'booking/:id',
         loadChildren: () => import('../rewards-booking/rewards-booking.module').then((mod) => mod.RewardsBookingModule)
+      },
+      {
+        path: 'favorite-rewards',
+        loadChildren: () => import('../favorite-rewards/favorite-rewards.module').then((mod) => mod.FavoriteRewardsModule)
       }
     ]
   }
