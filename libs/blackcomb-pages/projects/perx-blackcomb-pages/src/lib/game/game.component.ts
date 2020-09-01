@@ -14,12 +14,18 @@ import {
   ICampaign,
 } from '@perxtech/core';
 import { map, tap, first, filter, switchMap, bufferCount, catchError, takeUntil } from 'rxjs/operators';
-import { Observable, interval, throwError, Subject, combineLatest } from 'rxjs';
+import {
+  Observable,
+  interval,
+  throwError,
+  Subject,
+  combineLatest,
+  EMPTY
+} from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { IPlayOutcome } from '@perxtech/core';
 import { globalCacheBusterNotifier } from 'ngx-cacheable';
-import { empty } from 'rxjs/internal/Observer';
 
 @Component({
   selector: 'perx-blackcomb-pages-game',
@@ -114,7 +120,7 @@ export class GameComponent implements OnInit, OnDestroy {
         if (!games || !games.length) {
           this.popupData = this.gameNotAvailablePopUp;
           this.redirectUrlAndPopUp();
-          return empty;
+          return EMPTY;
         }
         return games;
       }),
