@@ -109,7 +109,12 @@ export class GameComponent implements OnInit, OnDestroy {
         }))
       ),
       first(),
-      tap((games: IGame[]) => !games || !games.length && this.router.navigate(['/wallet'])),
+      tap((games: IGame[]) => {
+        if (!games || !games.length) {
+          this.popupData = this.gameNotAvailablePopUp;
+          this.redirectUrlAndPopUp();
+        }
+      }),
       map((games: IGame[]) => games[0]),
       tap((game: IGame) => {
         if (game) {
