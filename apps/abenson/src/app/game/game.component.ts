@@ -18,6 +18,7 @@ import { Observable, interval, throwError, Subject, combineLatest } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { IPlayOutcome } from '@perxtech/core';
 import { globalCacheBusterNotifier } from 'ngx-cacheable';
+import { empty } from 'rxjs/internal/Observer';
 
 @Component({
   selector: 'app-game',
@@ -99,7 +100,14 @@ export class GameComponent implements OnInit, OnDestroy {
         }))
       ),
       first(),
-      tap((games: IGame[]) => !games || !games.length && this.router.navigate(['/wallet'])),
+      map((games: IGame[]) => {
+        if (!games || !games.length) {
+          this.popupData = this.gameNotAvailablePopUp;
+          this.redirectUrlAndPopUp();
+          return empty;
+        }
+        return games;
+      }),
       map((games: IGame[]) => games[0]),
       tap((game: IGame) => {
         if (game) {
