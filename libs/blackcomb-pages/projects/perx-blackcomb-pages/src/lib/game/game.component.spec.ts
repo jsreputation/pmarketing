@@ -57,33 +57,33 @@ const game: IGame = {
     },
   },
 };
-
-const gamePi: IGame = {
-  id: 1,
-  campaignId: 1,
-  type: GameType.pinata,
-  remainingNumberOfTries: 1,
-  config: {
-    stillImg: '',
-    brokenImg: '',
-    nbTaps: 1,
-  },
-  texts: {},
-  results: {},
-  displayProperties: {
-    informationCollectionSetting: WInformationCollectionSettingType.pi_required,
-    noRewardsPopUp: {
-      headLine: 'test headline',
-      subHeadLine: 'test subHeadline',
-      buttonTxt: 'btnText',
-    },
-    successPopUp: {
-      headLine: 'test headline',
-      subHeadLine: 'test subHeadline',
-      buttonTxt: 'btnText',
-    },
-  },
-};
+//
+// const gamePi: IGame = {
+//   id: 1,
+//   campaignId: 1,
+//   type: GameType.pinata,
+//   remainingNumberOfTries: 1,
+//   config: {
+//     stillImg: '',
+//     brokenImg: '',
+//     nbTaps: 1,
+//   },
+//   texts: {},
+//   results: {},
+//   displayProperties: {
+//     informationCollectionSetting: WInformationCollectionSettingType.pi_required,
+//     noRewardsPopUp: {
+//       headLine: 'test headline',
+//       subHeadLine: 'test subHeadline',
+//       buttonTxt: 'btnText',
+//     },
+//     successPopUp: {
+//       headLine: 'test headline',
+//       subHeadLine: 'test subHeadline',
+//       buttonTxt: 'btnText',
+//     },
+//   },
+// };
 
 const gameSignup: IGame = {
   id: 1,
@@ -139,7 +139,7 @@ describe('GameComponent', () => {
     getThemeSetting: () => of(mockTheme)
   };
   const gameServiceStub: Partial<IGameService> = {
-    getGamesFromCampaign: () => of([gamePi]),
+    getGamesFromCampaign: () => of([game]),
     prePlay: () => of(),
     prePlayConfirm: () => of(),
   };
