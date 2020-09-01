@@ -41,7 +41,7 @@ const gamePi: IGame = {
   texts: {},
   results: {},
   displayProperties: {
-    informationCollectionSetting: WInformationCollectionSettingType.pi_required,
+    informationCollectionSetting: WInformationCollectionSettingType.signup_required,
     noRewardsPopUp: {
       headLine: 'test headline',
       subHeadLine: 'test subHeadline',
