@@ -1,3 +1,5 @@
+@import "../../mixins";
+
 mat-card {
   display: flex;
   flex-direction: column;
@@ -47,4 +49,8 @@ mat-card {
 .see-button {
   margin: 0.8rem 1.6rem;
   flex-grow: 1;
+}
+
+.ellipsis-1-line {
+  @include ellipse-lines(1);
 }
