@@ -274,7 +274,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       result.birthday = data.birthDay;
     }
     if (data.gender) {
-      result.gender = data.gender;
+      result.gender = data.gender.toLowerCase();
     }
 
     if (data.title || data.postcode || data.anonymous) {
