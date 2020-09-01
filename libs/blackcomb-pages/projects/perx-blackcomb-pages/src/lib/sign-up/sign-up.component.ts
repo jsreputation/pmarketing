@@ -246,15 +246,14 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.translate.get(error).subscribe(res => this.errorMessage = res);
   }
 
-  public matchingPasswords(passwordKey: string, passwordConfirmationKey: string) {
+  public matchingPasswords(passwordKey: string, passwordConfirmationKey: string): (group: FormGroup) => void {
     return (group: FormGroup) => {
-        let password = group.controls[passwordKey];
-        let passwordConfirmation = group.controls[passwordConfirmationKey];
+        const password = group.controls[passwordKey];
+        const passwordConfirmation = group.controls[passwordConfirmationKey];
         if (password.value !== passwordConfirmation.value) {
-            return passwordConfirmation.setErrors({mismatchedPasswords: true})
-        } else {
-          passwordConfirmation.setErrors(null);
-      }
-    }
+            return passwordConfirmation.setErrors({mismatchedPasswords: true});
+        }
+        passwordConfirmation.setErrors(null);
+    };
   }
 }
