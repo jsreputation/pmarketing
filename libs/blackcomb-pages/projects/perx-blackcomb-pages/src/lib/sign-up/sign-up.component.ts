@@ -57,7 +57,8 @@ export class SignUpComponent implements OnInit, OnDestroy {
     countryCode: ['', Validators.required],
     primary_identifier: ['', Validators.required],
     password: ['', [Validators.required, Validators.minLength(6)]],
-  }) as FormGroup;
+    confirmPassword: ['', Validators.required]
+  }, {validator: this.matchingPasswords('password', 'confirmPassword')}) as FormGroup;
   public countriesList$: Observable<ICountryCode[]>;
 
   constructor(
@@ -243,5 +244,17 @@ export class SignUpComponent implements OnInit, OnDestroy {
 
   public updateErrorMessage(error: string): void {
     this.translate.get(error).subscribe(res => this.errorMessage = res);
+  }
+
+  public matchingPasswords(passwordKey: string, passwordConfirmationKey: string) {
+    return (group: FormGroup) => {
+        let password = group.controls[passwordKey];
+        let passwordConfirmation = group.controls[passwordConfirmationKey];
+        if (password.value !== passwordConfirmation.value) {
+            return passwordConfirmation.setErrors({mismatchedPasswords: true})
+        } else {
+          passwordConfirmation.setErrors(null);
+      }
+    }
   }
 }
