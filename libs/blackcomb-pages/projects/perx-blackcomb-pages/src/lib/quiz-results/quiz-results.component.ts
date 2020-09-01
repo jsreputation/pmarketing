@@ -73,10 +73,9 @@ export class QuizResultsComponent implements OnInit {
 
   public next(): void {
     const points = this.results.reduce((sum, p) => sum + oc(p).points(0), 0);
-
     let nextRoute: string;
     if (this.correctAnswers !== this.results.length) {
-      const noOutcome = oc(this.quiz).results.noOutcome();
+      const noOutcome = oc(this.quiz).results.noOutcome(); // note: currently empty because not configured;
       this.translate.get([
         'QUIZ_TEMPLATE.NO_OUTCOME_SCORE',
         'QUIZ_TEMPLATE.NO_OUTCOME_TXT',
@@ -102,10 +101,12 @@ export class QuizResultsComponent implements OnInit {
         const outcomeTitle = (res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_TXT']).replace('{{points}}', points);
         this.popup = {
           title: oc(outcome).title(outcomeTitle),
-          text: oc(outcome).subTitle(res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_REWARD']),
-          buttonTxt: oc(outcome).button(res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_CTA']),
+          /* eslint-disable */
+          text: oc(outcome).subTitle['en'].text(res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_REWARD']),
+          buttonTxt: oc(outcome).button['en'].text(res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_CTA']),
           imageUrl: 'assets/quiz/reward.png',
           ctaButtonClass: 'ga_game_completion'
+          /* eslint-enable */
         };
         this.notificationService.addPopup(this.popup);
       });

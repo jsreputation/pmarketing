@@ -18,7 +18,7 @@ import {
   TokenStorage,
   IPopupConfig,
 } from '@perxtech/core';
-import { Observable, Subject, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
 import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -35,6 +35,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   public questionPointer: number = 0;
   public complete: boolean = false;
   public resetTimer$: Subject<void> = new Subject<void>();
+  public progress$: BehaviorSubject<number> = new BehaviorSubject(0);
 
   private destroy$: Subject<void> = new Subject();
   @ViewChild('overflowContainer', { static: false })
@@ -150,10 +151,6 @@ export class QuizComponent implements OnInit, OnDestroy {
     }
   }
 
-  public get progressBarValue(): number {
-    return ((this.questionPointer + 1) / this.totalLength) * 100 || 0;
-  }
-
   private questionChanged(): void {
     this.cd.detectChanges();
 
@@ -201,6 +198,7 @@ export class QuizComponent implements OnInit, OnDestroy {
         );
       this.resetTimer();
       this.questionPointer++;
+      this.progress$.next(((this.questionPointer) / this.totalLength) * 100 || 0);
       this.questionChanged();
     }
   }
