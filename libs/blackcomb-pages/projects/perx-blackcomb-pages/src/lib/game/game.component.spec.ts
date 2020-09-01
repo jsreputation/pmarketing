@@ -32,6 +32,32 @@ import { SpinComponent } from './spin/spin.component';
 import { WInformationCollectionSettingType } from '@perxtech/whistler';
 import { SnakeComponent } from './snake/snake.component';
 
+const game: IGame = {
+  id: 1,
+  campaignId: 1,
+  type: GameType.pinata,
+  remainingNumberOfTries: 1,
+  config: {
+    stillImg: '',
+    brokenImg: '',
+    nbTaps: 1,
+  },
+  texts: {},
+  results: {},
+  displayProperties: {
+    noRewardsPopUp: {
+      headLine: 'test headline',
+      subHeadLine: 'test subHeadline',
+      buttonTxt: 'btnText',
+    },
+    successPopUp: {
+      headLine: 'test headline',
+      subHeadLine: 'test subHeadline',
+      buttonTxt: 'btnText',
+    },
+  },
+};
+
 const gamePi: IGame = {
   id: 1,
   campaignId: 1,
@@ -227,6 +253,7 @@ describe('GameComponent', () => {
 
   it('should set willWin true value', () => {
     const gameService: IGameService = fixture.debugElement.injector.get<IGameService>(IGameService as Type<IGameService>);
+    spyOn(gameService, 'getGamesFromCampaign').and.returnValue(of([game]));
     const spy = spyOn(gameService, 'prePlay').and.returnValue(of({ id: 3, voucherIds: [1, 2, 3] }));
     component.ngOnInit();
     component.loadPreplay();
@@ -236,6 +263,7 @@ describe('GameComponent', () => {
 
   it('should set willWin false value', () => {
     const gameService: IGameService = fixture.debugElement.injector.get<IGameService>(IGameService as Type<IGameService>);
+    spyOn(gameService, 'getGamesFromCampaign').and.returnValue(of([game]));
     const spy = spyOn(gameService, 'prePlay').and.returnValue(of({ id: 3, voucherIds: [] }));
     component.ngOnInit();
     component.loadPreplay();
