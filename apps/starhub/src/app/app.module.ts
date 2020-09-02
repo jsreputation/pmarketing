@@ -105,7 +105,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
 
 @Injectable()
 export class SentryErrorHandler implements ErrorHandler {
-  public handleError(error: any): void {
+    public handleError(error: any): void {
     // const eventId =
     Sentry.captureException(error.originalError || error);
     if (!environment.production) {

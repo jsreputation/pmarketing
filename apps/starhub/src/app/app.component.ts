@@ -17,7 +17,7 @@ import {
   RewardPopupComponent,
   SettingsService,
   TokenStorage,
-  IFlags,
+  IFlags
 } from '@perxtech/core';
 import {
   MatDialog,
@@ -117,7 +117,7 @@ export class AppComponent implements OnInit {
       .subscribe(
         (msg: string) => {
           if (msg === 'LOGIN_SESSION_EXPIRED') {
-            this.router.navigate(['/login']);
+            this.router.navigate(['/error']);
             msg = 'Login Session Expired';
           }
           this.snackBar.open(msg, 'x', { duration: 2000 });
@@ -208,7 +208,8 @@ export class AppComponent implements OnInit {
           this.putIdInStorage(campaign.id);
           this.dialog.open(RewardPopupComponent, { data });
         },
-        () => { /* nothing to do here, just fail silently */
+        () => {
+          // nothing to do here, just fail silently
         }
       );
   }
