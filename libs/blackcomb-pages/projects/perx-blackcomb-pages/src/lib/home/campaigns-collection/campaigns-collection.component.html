@@ -9,12 +9,12 @@
       <img class="puzzle-img" src="{{getCampaignImage(campaign)}}" alt="Campaign image">
     </div>
     <mat-card-content *ngIf="!withRewardsCounter" class="card-content">
-      <p class="main-reward-title">{{campaign.name}}</p>
+      <p class="main-reward-title ellipsis-1-line">{{campaign.name}}</p>
       <span class="reward-subtitle" [innerHtml]="campaign.description | safeHtml"></span>
     </mat-card-content>
     <mat-card-content *ngIf="withRewardsCounter" class="card-content reward">
 <!--      campaign name will be filled with reward name instead when api ready-->
-      <p class="main-reward-title">{{campaign.name}}</p>
+      <p class="main-reward-title ellipsis-1-line">{{campaign.name}}</p>
       <ng-container *ngIf="rewardsCountBvrSubjects[campaign.id] | async as rwdBvrSbj">
         <p class="reward-subtitle" *ngIf="rwdBvrSbj > 0"><span class="bold-points">{{rwdBvrSbj}}</span>{{"HOME.REWARDS_LEFT" | translate}}</p>
       </ng-container>

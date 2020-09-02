@@ -189,3 +189,11 @@ $button-height-min: 4.8rem;
   cursor: pointer;
   color: var(--button_text_color, white);
 }
+
+@mixin ellipse-lines($lines) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
