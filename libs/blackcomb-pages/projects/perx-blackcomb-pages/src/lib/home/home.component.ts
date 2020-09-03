@@ -98,8 +98,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public catalogsBvrSbjt: BehaviorSubject<ICatalog[]> = new BehaviorSubject<ICatalog[]>([]);
   public catalogs$: Observable<ICatalog[]>;
   public catalogsEnded: boolean = false;
-  private surveyCampaigns$: Observable<ICampaign[]>;
-  private showSurvey: boolean;
+  public surveyCampaigns$: Observable<ICampaign[]>;
 
   public constructor(
     protected rewardsService: RewardsService,
@@ -320,7 +319,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.surveyCampaigns$ = this.campaignService.getCampaigns({ gameType: GameType.survey })
       .pipe(
-        tap((campaigns: ICampaign[]) => this.showSurvey = campaigns.length > 0),
         takeLast(1)
       );
 

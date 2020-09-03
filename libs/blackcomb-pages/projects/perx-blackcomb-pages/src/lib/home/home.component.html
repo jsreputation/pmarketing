@@ -66,8 +66,8 @@
     </perx-blackcomb-pages-campaigns-collection>
   </div>
   <!-- Survey campaigns -->
-  <div class="campaigns">
-    <div *ngIf="(surveyCampaigns$ | async)?.length > 0" class="title">Surveys</div>
+  <div class="campaigns" *ngIf="(surveyCampaigns$ | async)?.length > 0" >
+    <div class="title">Surveys</div>
     <perx-blackcomb-pages-campaigns-collection
       [gameType]="gameType.survey"
       [campaigns]="surveyCampaigns$" (selected)="goToCampaignPage($event)">
