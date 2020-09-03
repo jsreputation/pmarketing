@@ -70,17 +70,6 @@ describe('SignupComponent', () => {
   });
 
   describe('onSubmit', () => {
-
-    it('should fail password matching and call addSnack', () => {
-      component.signupForm.controls.password.setValue(1234);
-      component.signupForm.controls.confirmPassword.setValue(123);
-      const notificationService: NotificationService = fixture.debugElement.injector.get<NotificationService>
-      (NotificationService as Type<NotificationService>);
-      const notificationServiceSpy = spyOn(notificationService, 'addSnack');
-      component.onSubmit();
-      expect(notificationServiceSpy).toHaveBeenCalledWith('SIGN_UP_PAGE.PASSWORD_NOT_MATCH');
-    });
-
     it('should call addSnack if terms and conditions not accepted', () => {
       component.signupForm.controls.accept_terms.setValue(false);
       const notificationService: NotificationService = fixture.debugElement.injector.get<NotificationService>
