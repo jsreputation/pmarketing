@@ -1,9 +1,13 @@
+.single-divider {
+  background: white;
+}
+
 .choice-content {
   display: flex;
   flex-direction: column;
   overflow: hidden;
   border-radius: 2px;
-  background: white;
+  //background: white;
 
   &.selected {
     border: 2px solid #186de1;
@@ -72,10 +76,16 @@
     line-height: 1.6rem;
     letter-spacing: 0.4px;
     color: #212121;
-    max-width: 13rem; // consistent with the image and allow text position center correctly
-    margin-top: 1.5rem; // space from the image
-    margin-bottom: 1.5rem;
+    //max-width: 13rem; // consistent with the image and allow text position center correctly
+    //margin-top: 1.5rem; // space from the image
+    //margin-bottom: 1.5rem;
     margin-inline-start: 2rem;
+    padding: 1.5rem;
     font-weight: 500;
   }
+
+  .single-divider + .single-divider {
+    margin-top: 2rem;
+  }
 }
+

@@ -1,5 +1,7 @@
-<ng-container>
-  <div class="choice-content" *ngFor="let option of to.options | formlySelectOptions: field | async; let i = index">
+<ng-container *ngIf="to.multiple; else elseBlock">
+  <div class="choice-content single-divider"
+       [ngClass]="isChecked(option) ? 'selected' : ''"
+       *ngFor="let option of to.options | formlySelectOptions: field | async; let i = index">
     <mat-checkbox
       class="choice-image"
       [id]="id + '_' + i"
@@ -17,3 +19,27 @@
     </div>
   </div>
 </ng-container>
+<ng-template #elseBlock>
+  <div class="choice-content">
+    <mat-radio-group
+      [formControl]="formControl"
+      [formlyAttributes]="field"
+      [required]="to.required"
+      [tabindex]="to.tabindex"
+    >
+      <div class="single-divider"
+        *ngFor="let option of to.options | formlySelectOptions: field | async; let i = index">
+        <mat-radio-button
+          class="choice-image"
+          [id]="id + '_' + i"
+          [color]="'primary'"
+          [value]="option.value">
+          <img class="image" [src]="option.label" [alt]="option.value">
+        </mat-radio-button>
+        <div class="choice-label">
+          {{ option.value }}
+        </div>
+      </div>
+    </mat-radio-group>
+  </div>
+</ng-template>

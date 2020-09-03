@@ -11,16 +11,7 @@ import { MatCheckbox } from '@angular/material';
 export class SurveyPictureSelectComponent extends FieldType {
   @ViewChildren(MatCheckbox) checkboxes!: QueryList<MatCheckbox>;
 
-  defaultOptions = {
-    templateOptions: {
-      hideFieldUnderline: true,
-      floatLabel: 'always',
-      options: [],
-      color: 'accent', // workaround for https://github.com/angular/components/issues/18465
-    },
-  };
-
-  onChange(value: any, checked: boolean) {
+  public onChange(value: any, checked: boolean) {
     if (this.to.type === 'array') {
       this.formControl.patchValue(
         checked
@@ -33,14 +24,14 @@ export class SurveyPictureSelectComponent extends FieldType {
     this.formControl.markAsTouched();
   }
 
-  onContainerClick(event: MouseEvent): void {
+  public onContainerClick(event: MouseEvent): void {
     if (this.checkboxes.length) {
       this.checkboxes.first.focus();
     }
     super.onContainerClick(event);
   }
 
-  isChecked(option: any) {
+  public isChecked(option: any) {
     const value = this.formControl.value;
 
     return value && (this.to.type === 'array' ? value.indexOf(option.value) !== -1 : value[option.value]);

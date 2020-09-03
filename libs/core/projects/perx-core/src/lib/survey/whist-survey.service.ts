@@ -36,7 +36,7 @@ export class WhistlerSurveyService {
     return t as unknown as SurveyQuestionType;
   }
 
-  public static WSurveyToSurvey(survey: IJsonApiItemPayload<Partial<IWSurveyEngagementAttributes>>): ISurvey {
+  public static WSurveyToSurvey(survey: IJsonApiItemPayload<Partial<IWSurveyEngagementAttributes>>): any {
     const dp = survey.data.attributes.display_properties;
     if (dp) {
       const questions: IQuestion[] = dp.questions.map(q => {
