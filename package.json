@@ -2,7 +2,7 @@
   "name": "perxtech",
   "scripts": {
     "build:abenson": "env-cmd -f apps/abenson/env/abenson ts-node --project tsconfig.node.json apps/abenson/set-env.ts && yarn nx build abenson --",
-    "build:abenson:production": "env-cmd -f apps/abenson/env/abenson.production ts-node --project tsconfig.node.json apps/abenson/set-env.ts && yarn nx build abenson --prod --",
+    "build:abenson:production": "env-cmd -f apps/abenson/env/abenson.production ts-node --project tsconfig.node.json apps/abenson/set-env.ts && yarn nx build abenson -- --prod",
     "build:abenson:staging": "env-cmd -f apps/abenson/env/abenson.staging ts-node --project tsconfig.node.json apps/abenson/set-env.ts && yarn nx build abenson -- --configuration staging",
     "start:abenson:production": "env-cmd -f apps/abenson/env/abenson.production.dev ts-node --project tsconfig.node.json apps/abenson/set-env.ts && yarn nx serve abenson --",
     "start:abenson:staging": "env-cmd -f apps/abenson/env/abenson.staging.dev ts-node --project tsconfig.node.json apps/abenson/set-env.ts && yarn nx serve abenson -- --configuration staging",
