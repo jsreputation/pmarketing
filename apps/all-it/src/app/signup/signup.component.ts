@@ -52,7 +52,15 @@ export class SignupComponent implements OnInit {
     public generalStaticDataService: GeneralStaticDataService,
     private dateAdapter: DateAdapter<Date>,
     private themesService: ThemesService,
-  ) {}
+  ) {
+    // router.events.subscribe((event: NavigationStart) => {
+    //   if (event.navigationTrigger === 'popstate') {
+    //     if (event.url === '/otp/register') {
+    //       router.navigate(['/signup']);
+    //     }
+    //   }
+    // });
+  }
 
   public ngOnInit(): void {
     this.theme = this.themesService.getThemeSetting();
@@ -143,7 +151,7 @@ export class SignupComponent implements OnInit {
             return;
           }
 
-          this.router.navigateByUrl('otp/register', { state: { mobileNo: codeAndMobile } });
+          this.router.navigateByUrl('otp/register', { state: { mobileNo: codeAndMobile }, skipLocationChange: true});
         },
         err => {
           this.notificationService.addSnack(err.error.message);
