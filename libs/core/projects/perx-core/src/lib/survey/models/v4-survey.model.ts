@@ -8,15 +8,17 @@ export interface IV4SurveyOutcome {
   button: string;
 }
 
+export interface IV4SurveyQuestion {
+  question: { [k: string]: {text: string} };
+  description: { [k: string]: {text: string} };
+  id: string;
+  required: boolean;
+  payload: any;
+}
+
 export interface IV4SurveyDisplayProperties {
   title: string;
-  questions: {
-    question: { [k: string]: {text: string} };
-    description: { [k: string]: {text: string} };
-    id: string;
-    required: boolean;
-    payload: any;
-  }[];
+  questions: IV4SurveyQuestion[];
   landing_page: {
     body: string;
     media?: { youtube?: string; };

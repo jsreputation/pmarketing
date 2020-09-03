@@ -5,7 +5,7 @@ import { Observable, throwError } from 'rxjs';
 import { IFormsService } from './iforms.service';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { SurveyService } from '../../survey/survey.service';
+import { WhistlerSurveyService } from '../../survey/whist-survey.service';
 
 import {
   IWCognitoTenantAttributes,
@@ -28,7 +28,7 @@ export class WhistlerFormsService implements IFormsService {
         map(res => res.data),
         map(res => res[0]),
         map(res => res.attributes.properties.signup),
-        map(form => form ? SurveyService.WSurveyToSurvey({
+        map(form => form ? WhistlerSurveyService.WSurveyToSurvey({
           data: {
             id: '',
             type: '',

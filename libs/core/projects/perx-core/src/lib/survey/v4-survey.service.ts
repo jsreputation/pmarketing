@@ -1,19 +1,14 @@
 import { Injectable } from '@angular/core';
-import {
-  ConfigService, IAnswer,
-  IConfig,
-  IQQuestion,
-  SurveyService
-} from '@perxtech/core';
-import { Observable, ReplaySubject, Subject } from 'rxjs';
+import { ConfigService, IAnswer, IConfig, ISurvey, SurveyQuestionType, SurveyService } from '@perxtech/core';
+import { Observable, of, ReplaySubject, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Cacheable } from 'ngx-cacheable';
 import { map, switchMap } from 'rxjs/operators';
 import { IV4Campaign, IV4CampaignResponse } from '../campaign/v4-campaign.service';
-import { IV4Survey, IV4SurveyDisplayProperties, IV4SurveyOutcome } from './models/v4-survey.model';
+import { IV4SurveyDisplayProperties, IV4SurveyOutcome, IV4SurveyQuestion } from './models/v4-survey.model';
 import { oc } from 'ts-optchain';
 import { patchUrl } from '../utils/patch-url.function';
-
+import { FormlyFieldConfig } from '@ngx-formly/core';
 
 @Injectable({
   providedIn: 'root'
@@ -31,28 +26,58 @@ export class V4SurveyService implements SurveyService {
       });
   }
 
+  private mapQuestionTypeToFormlyType(type: SurveyQuestionType): string {
+    switch (type) {
+      case SurveyQuestionType.choice:
+          return 'survey-select';
+        break;
+      case SurveyQuestionType.pictureChoice:
+        return 'pic-survey-select';
+      default:
+        return 'survey-select';
+    }
+  }
+
+  private makeFormlyConfig(questionSurvey: IV4SurveyQuestion, lang: string = 'en'): FormlyFieldConfig {
+   const {payload, question, required, description} = questionSurvey;
+   const formlyCustomFieldType = this.mapQuestionTypeToFormlyType(payload.type);
+   const fieldConfig: FormlyFieldConfig = {
+    templateOptions: {
+      label: question[lang].text,
+      description: description[lang].text,
+      required
+    },
+    fieldGroup: [{
+      key: question[lang].text,
+      type: formlyCustomFieldType,
+      templateOptions: {
+        type: payload.multiple ? 'array' : 'string',
+        multiple: payload.multiple,
+        // comes a point i should conditionally have options field or not for example input,
+        // need more info on how alternative question choices are going to look like,
+        // https://github.com/PerxTech/perx-api/blob/develop/app/schemas/questions/long-text.json will work on it later, when dashboard
+        // is configurable
+        options: payload.choices.map((choice) => {
+          return {
+            label: (formlyCustomFieldType === 'pic-survey-select') ? choice.answer[lang].image.value.image_url : choice.answer[lang].text,
+            value: choice.answer[lang].text
+          }
+        }),
+        required
+      }
+    }]};
+    return fieldConfig;
+  }
+
   @Cacheable({})
-  public getSurveyFromCampaign(campaignId: number, lang: string = 'en'): Observable<any> {
-    console.log('AM I BEING CALLED')
+  public getSurveyFromCampaign(campaignId: number, lang: string = 'en'): Observable<ISurvey> {
     return this.baseUrl$.pipe(
       switchMap(baseUrl => this.http.get<IV4CampaignResponse>(`${baseUrl}/v4/campaigns/${campaignId}`)),
       map((res) => res.data),
-      map((surveyCampaign: IV4Campaign): IV4Survey => {
+      map((surveyCampaign: IV4Campaign): ISurvey => {
         const dp: IV4SurveyDisplayProperties = surveyCampaign.display_properties as IV4SurveyDisplayProperties;
-        const questions: IQQuestion[] = dp.questions.map(question => {
-          const payload = { ...question.payload };
-          payload.choices = payload.choices.map(choice => ({
-            title: choice.answer[lang] || choice.answer.en,
-            id: choice.answer_id
-          }));
-
-          return {
-            id: question.id,
-            question: question.question[lang] || question.question.en,
-            description: question.description ? question.description[lang] : oc(question).description.en(),
-            required: question.required,
-            payload
-          };
+        const fields: FormlyFieldConfig[] = dp.questions.map((question) => {
+          return this.makeFormlyConfig(question, lang);
         });
         let outcome: IV4SurveyOutcome | undefined;
         if (oc(dp).headline_text() ||
@@ -76,7 +101,7 @@ export class V4SurveyService implements SurveyService {
           results: {
             outcome
           },
-          questions,
+          fields,
           backgroundImgUrl: patchUrl(oc(dp).background_image.value.image_url('')),
           cardBackgroundImgUrl: patchUrl(oc(dp).card_image.value.image_url('')),
         };
@@ -84,9 +109,12 @@ export class V4SurveyService implements SurveyService {
     );
   }
 
-  public postSurveyAnswer(answers: IAnswer[], campaignId: number, surveyId: number): Observable<any> {
-    console.log(answers, campaignId, surveyId, 'not imeplemented yet')
+  public postSurveyAnswer(answers: IAnswer[], campaignId: number, surveyId: number): Observable<any>{
+    console.log(answers, campaignId, surveyId, 'not imeplemented yet');
+    return of('tested');
   }
+
+  // formly json take in requires backend integration else we do manual adapter
 
   // public postQuizAnswer(answer: IQAnswer, moveId: number): Observable<IAnswerResult> {
   //   const payload: V4QuizAnswerRequest = {
@@ -118,6 +146,4 @@ export class V4SurveyService implements SurveyService {
   //   }
   //   return QuizMode.basic;
   // }
-
-
 }
