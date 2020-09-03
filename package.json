@@ -29,7 +29,7 @@
     "start:digi:production": "env-cmd -f apps/digi/env/digi.production.dev ts-node --project tsconfig.node.json apps/digi/set-env.ts && yarn nx serve digi --",
     "start:digi:staging": "env-cmd -f apps/digi/env/digi.staging.dev ts-node --project tsconfig.node.json apps/digi/set-env.ts && yarn nx serve digi --",
     "build:feature-demo:production": "yarn build:feature-demo:staging",
-    "build:feature-demo:staging": "env-cmd -f apps/blackcomb/env/feature-demo.staging ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx build blackcomb --prod --",
+    "build:feature-demo:staging": "env-cmd -f apps/blackcomb/env/feature-demo.staging ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx build blackcomb -- --prod",
     "start:feature-demo:staging": "env-cmd -f apps/blackcomb/env/feature-demo.staging.dev ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx serve blackcomb --",
     "build:hkbn:production": "echo 'skipping hkbn build'",
     "build:hkbn:staging": "echo 'skipping hkbn build'",
