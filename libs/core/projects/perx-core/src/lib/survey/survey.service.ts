@@ -1,11 +1,9 @@
 import { Observable } from 'rxjs';
-import { IAnswer } from './models/survey.model';
+import { IAnswer, ISurvey } from './models/survey.model';
+import { IJsonApiItemPayload, IWSurveyEngagementAttributes } from '@perxtech/whistler';
 
 export abstract class SurveyService {
-  // surveys will be fetched from home page using getCampaigns type survey, dont double fetch just to
-  // pass down the id like quiz
-  // would be passed down something that is directly returned from api
-  // will do the other methods after confirm with sergey, shuld be similar to whistler post and patch answer
-  public abstract getSurveyFromCampaign(id: number): Observable<any>;
+  public WSurveyToSurvey?(survey: IJsonApiItemPayload<Partial<IWSurveyEngagementAttributes>>): ISurvey;
+  public abstract getSurveyFromCampaign(id: number): Observable<ISurvey>;
   public abstract postSurveyAnswer(answers: IAnswer[], campaignId: number, surveyId: number): Observable<any>;
 }
