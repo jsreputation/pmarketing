@@ -1,0 +1,19 @@
+<ng-container>
+  <div class="choice-content" *ngFor="let option of to.options | formlySelectOptions: field | async; let i = index">
+    <mat-checkbox
+      class="choice-image"
+      [id]="id + '_' + i"
+      [formlyAttributes]="field"
+      [tabindex]="to.tabindex"
+      [color]="to.color"
+      [labelPosition]="to.labelPosition"
+      [checked]="isChecked(option)"
+      [disabled]="formControl.disabled"
+      (change)="onChange(option.value, $event.checked)">
+      <img class="image" [src]="option.label" [alt]="option.value">
+    </mat-checkbox>
+    <div class="choice-label">
+      {{ option.value }}
+    </div>
+  </div>
+</ng-container>

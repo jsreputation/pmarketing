@@ -1,0 +1,18 @@
+`<div class="select-wrapper">
+  <ng-container>
+    <div *ngFor="let option of to.options | formlySelectOptions: field | async; let i = index">
+      <mat-checkbox
+        class="choice-box"
+        [id]="id + '_' + i"
+        [formlyAttributes]="field"
+        [tabindex]="to.tabindex"
+        [color]="to.color"
+        [labelPosition]="to.labelPosition"
+        [checked]="isChecked(option)"
+        [disabled]="formControl.disabled"
+        (change)="onChange(option.value, $event.checked)">
+        {{option.label}}
+      </mat-checkbox>
+    </div>
+  </ng-container>
+</div>`
