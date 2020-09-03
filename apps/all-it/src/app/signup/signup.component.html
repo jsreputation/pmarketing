@@ -38,6 +38,9 @@
                         <mat-option value="Male">Male</mat-option>
                         <mat-option value="Female">Female</mat-option>
                     </mat-select>
+                    <mat-error *ngIf="signupForm.get('gender').hasError('required')">
+                        <span>Gender is </span><strong>REQUIRED</strong>
+                    </mat-error>
                 </mat-form-field>
 <!--                <mat-form-field appearance="fill" class="full-width__input">-->
 <!--                    <mat-label>Postcode</mat-label>-->
@@ -86,11 +89,8 @@
                 <mat-form-field appearance="fill" class="full-width__input">
                     <mat-label>Confirm Password</mat-label>
                     <input matInput placeholder="Confirm Password" formControlName="confirmPassword" type="password" autocomplete="on" required>
-                    <mat-error *ngIf="signupForm.get('confirmPassword').hasError('required')">
-                        <span>Confirm Password is </span><strong>REQUIRED</strong>
-                    </mat-error>
-                    <mat-error *ngIf="signupForm.get('confirmPassword').hasError('minlength')">
-                        <span>Password should be atleast six characters long</span>
+                    <mat-error *ngIf="signupForm?.get('confirmPassword')!.hasError('mismatchedPasswords')">
+                        <span>Passwords should match</span>
                     </mat-error>
                 </mat-form-field>
                 <div class="checkbox-container">
