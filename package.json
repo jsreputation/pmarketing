@@ -65,7 +65,7 @@
     "start:oracle-demo:staging": "env-cmd -f apps/blackcomb/env/oracle-demo.staging.dev ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx serve blackcomb --",
     "build:oracle-pay:production": "echo 'skipping oracle-pay build'",
     "build:oracle-pay:staging": "echo 'skipping oracle-pay build'",
-    "build:partners-demo:production": "env-cmd -f apps/blackcomb/env/partners-demo.production ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx build blackcomb --prod --",
+    "build:partners-demo:production": "env-cmd -f apps/blackcomb/env/partners-demo.production ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx build blackcomb -- --prod",
     "start:partners-demo:production": "env-cmd -f apps/blackcomb/env/partners-demo.production.dev ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx serve blackcomb --",
     "build:perx-demo:production": "env-cmd -f apps/blackcomb/env/perx-demo.production ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx build blackcomb -- --prod",
     "build:perx-demo:staging": "env-cmd -f apps/blackcomb/env/perx-demo.staging ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx build blackcomb -- --prod",
