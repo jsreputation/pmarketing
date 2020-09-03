@@ -18,7 +18,7 @@
     "build:bpi:staging": "echo 'skipping bpi build'",
     "build:components-demo": "nx build components-demo --",
     "build:components-demo:production": "yarn build:components-demo:staging",
-    "build:components-demo:staging": "nx build components-demo --prod --",
+    "build:components-demo:staging": "nx build components-demo -- --prod",
     "start:components-demo:staging": "nx serve components-demo --",
     "build:daiichi-dlvn:production": "env-cmd -f apps/blackcomb/env/daiichi-dlvn.production ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx build blackcomb --prod --",
     "build:daiichi-dlvn:staging": "env-cmd -f apps/blackcomb/env/daiichi-dlvn.staging ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx build blackcomb --prod --",
