@@ -115,11 +115,6 @@ export class SignupComponent implements OnInit {
 
     const passwordString = this.signupForm.get('password').value;
     const confirmPassword = this.signupForm.get('confirmPassword').value;
-    if (passwordString !== confirmPassword) {
-      this.errorMessage = 'Passwords do not match';
-      return;
-    }
-
     const name = this.signupForm.value.name;
     const dob = this.signupForm.value.dob;
 
