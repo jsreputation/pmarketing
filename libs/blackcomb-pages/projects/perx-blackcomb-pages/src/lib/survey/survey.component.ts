@@ -5,18 +5,18 @@ import {
   Input
 } from '@angular/core';
 import {
-  // NotificationService,
+  NotificationService,
   ISurvey,
   SurveyService,
   IPopupConfig,
-  // IPrePlayStateData,
+  IPrePlayStateData,
   AuthenticationService
 } from '@perxtech/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
-import { filter, map, switchMap, takeUntil } from 'rxjs/operators';
+import { Observable, of, Subject } from 'rxjs';
+import { catchError, filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
-// import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 
 interface IAnswer {
   questionId: string;
@@ -34,10 +34,10 @@ export class SurveyComponent implements OnInit, OnDestroy {
   public intervalId: number;
   public survey: ISurvey;
   public answers: IAnswer[] = [];
-  // private isAnonymousUser: boolean;
-  // private informationCollectionSetting: string;
+  private isAnonymousUser: boolean;
+  private informationCollectionSetting: string;
   private destroy$: Subject<void> = new Subject();
-  // private popupData: IPopupConfig;
+  private popupData: IPopupConfig;
 
   public successPopUp: IPopupConfig = {
     title: 'SURVEY_SUCCESS_TITLE',
@@ -87,7 +87,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    // private notificationService: NotificationService,
+    private notificationService: NotificationService,
     private router: Router,
     private route: ActivatedRoute,
     private surveyService: SurveyService,
@@ -149,78 +149,76 @@ export class SurveyComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
-  // reference this to modify the submit method of formly
-  public onSubmit(): void {
-    // const surveyId =
-    //   this.survey && this.survey.id
-    //     ? Number.parseInt(this.survey.id, 10)
-    //     : null;
-    // const isCollectDataRequired = !!(
-    //   this.informationCollectionSetting === 'pi_required' ||
-    //   this.informationCollectionSetting === 'signup_required'
-    // );
-    // const userAction$: Observable<{ hasOutcomes: boolean }> =
-    //   !surveyId || (this.isAnonymousUser && isCollectDataRequired)
-    //     ? of({ hasOutcomes: true })
-    //     : this.surveyService
-    //       .postSurveyAnswer(
-    //         this.answers,
-    //         this.route.snapshot.params.id,
-    //         surveyId
-    //       )
-    //       .pipe(
-    //         catchError((err: HttpErrorResponse) => {
-    //           this.popupData = this.noRewardsPopUp;
-    //           throw err;
-    //         })
-    //       );
-    //
-    // userAction$.subscribe(
-    //   res => {
-    //     this.popupData = res.hasOutcomes
-    //       ? this.successPopUp
-    //       : this.noRewardsPopUp;
-    //     this.redirectUrlAndPopUp();
-    //   },
-    //   () => {
-    //     this.popupData = this.noRewardsPopUp;
-    //     this.redirectUrlAndPopUp();
-    //   }
-    // );
+
+  public onSubmit(_: {[key:string]: any}): void {
+    // work not done on postSurveyAnswer, endpoint likely different and fields
+    console.log(_, ' testing emitted correctly');
+    const surveyId =
+      (this.survey && this.survey.id) || null;
+    const isCollectDataRequired = !!(
+      this.informationCollectionSetting === 'pi_required' ||
+      this.informationCollectionSetting === 'signup_required'
+    );
+    const userAction$: Observable<{ hasOutcomes: boolean }> =
+      !surveyId || (this.isAnonymousUser && isCollectDataRequired)
+        ? of({ hasOutcomes: true })
+        : this.surveyService
+          .postSurveyAnswer(
+            this.answers, // how should the answer be submitted? wait sergey
+            this.route.snapshot.params.id,
+            surveyId
+          )
+          .pipe(
+            catchError((err: HttpErrorResponse) => {
+              this.popupData = this.noRewardsPopUp;
+              throw err;
+            })
+          );
+
+    userAction$.subscribe(
+      res => {
+        this.popupData = res.hasOutcomes
+          ? this.successPopUp
+          : this.noRewardsPopUp;
+        this.redirectUrlAndPopUp();
+      },
+      () => {
+        this.popupData = this.noRewardsPopUp;
+        this.redirectUrlAndPopUp();
+      }
+    );
   }
-  // move this method to stepper component
-  // private redirectUrlAndPopUp(): void {
-  //   const surveyId =
-  //     this.survey && this.survey.id
-  //       ? Number.parseInt(this.survey.id, 10)
-  //       : null;
-  //   const campaignId = this.route.snapshot.params.id
-  //     ? Number.parseInt(this.route.snapshot.params.id, 10)
-  //     : null;
-  //   const state: IPrePlayStateData = {
-  //     popupData: this.popupData,
-  //     engagementType: 'survey',
-  //     surveyId,
-  //     collectInfo: true,
-  //     campaignId,
-  //     answers: this.answers
-  //   };
-  //
-  //   if (
-  //     this.isAnonymousUser &&
-  //     this.informationCollectionSetting === 'pi_required'
-  //   ) {
-  //     this.router.navigate(['/pi'], { state });
-  //   } else if (
-  //     this.isAnonymousUser &&
-  //     this.informationCollectionSetting === 'signup_required'
-  //   ) {
-  //     this.router.navigate(['/signup'], { state });
-  //   } else {
-  //     this.router.navigate(['/wallet']);
-  //     this.notificationService.addPopup(this.popupData);
-  //   }
-  // }
+
+  private redirectUrlAndPopUp(): void {
+    const surveyId =
+      (this.survey && this.survey.id) || null;
+    const campaignId = this.route.snapshot.params.id
+      ? Number.parseInt(this.route.snapshot.params.id, 10)
+      : null;
+    const state: IPrePlayStateData = {
+      popupData: this.popupData,
+      engagementType: 'survey',
+      surveyId,
+      collectInfo: true,
+      campaignId,
+      answers: this.answers
+    };
+
+    if (
+      this.isAnonymousUser &&
+      this.informationCollectionSetting === 'pi_required'
+    ) {
+      this.router.navigate(['/pi'], { state });
+    } else if (
+      this.isAnonymousUser &&
+      this.informationCollectionSetting === 'signup_required'
+    ) {
+      this.router.navigate(['/signup'], { state });
+    } else {
+      this.router.navigate(['/wallet']);
+      this.notificationService.addPopup(this.popupData);
+    }
+  }
 
   public updateSurveyStatus(answers: IAnswer[]): void {
     if (this.answers) {

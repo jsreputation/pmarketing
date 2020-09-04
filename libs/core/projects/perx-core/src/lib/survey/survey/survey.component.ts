@@ -1,9 +1,10 @@
 import {
-  Component, Input, OnInit
+  Component, EventEmitter, Input, OnInit, Output
 } from '@angular/core';
 
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
+import { IReward } from '../../rewards/models/reward.model';
 
 @Component({
   selector: 'perx-core-survey',
@@ -11,6 +12,8 @@ import { FormlyFieldConfig } from '@ngx-formly/core';
   styleUrls: ['./survey.component.scss']
 })
 export class SurveyComponent implements OnInit {
+  @Output()
+  public submitted: EventEmitter<{[key: string]: any}> = new EventEmitter();
   @Input('fields')
   public fieldsSurvey: FormlyFieldConfig[];
   public form = new FormGroup({});
@@ -31,6 +34,8 @@ export class SurveyComponent implements OnInit {
   }
 
   public onSubmit() {
+    // here should just emit
+    this.submitted.emit(this.model);
     console.log(JSON.stringify(this.model));
   }
 }
