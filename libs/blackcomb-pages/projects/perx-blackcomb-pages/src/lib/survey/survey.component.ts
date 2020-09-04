@@ -150,9 +150,8 @@ export class SurveyComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  public onSubmit(_: {[key:string]: any}): void {
+  public onSubmit(_: {[key: string]: any}): void {
     // work not done on postSurveyAnswer, endpoint likely different and fields
-    console.log(_, ' testing emitted correctly');
     const surveyId =
       (this.survey && this.survey.id) || null;
     const isCollectDataRequired = !!(
@@ -166,7 +165,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
           .postSurveyAnswer(
             this.answers, // how should the answer be submitted? wait sergey
             this.route.snapshot.params.id,
-            surveyId
+            +surveyId
           )
           .pipe(
             catchError((err: HttpErrorResponse) => {
