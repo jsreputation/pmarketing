@@ -9,9 +9,10 @@ import { MatCheckbox } from '@angular/material';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SurveyPictureSelectComponent extends FieldType {
-  @ViewChildren(MatCheckbox) checkboxes!: QueryList<MatCheckbox>;
+  @ViewChildren(MatCheckbox)
+  public checkboxes!: QueryList<MatCheckbox>;
 
-  public onChange(value: any, checked: boolean) {
+  public onChange(value: any, checked: boolean): void {
     if (this.to.type === 'array') {
       this.formControl.patchValue(
         checked
@@ -31,7 +32,7 @@ export class SurveyPictureSelectComponent extends FieldType {
     super.onContainerClick(event);
   }
 
-  public isChecked(option: any) {
+  public isChecked(option: any): boolean {
     const value = this.formControl.value;
 
     return value && (this.to.type === 'array' ? value.indexOf(option.value) !== -1 : value[option.value]);

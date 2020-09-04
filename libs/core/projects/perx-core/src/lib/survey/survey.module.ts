@@ -33,7 +33,7 @@ import { MatProgressBarModule, MatStepperModule } from '@angular/material';
 import { SurveySelectComponent } from './formly-question/select/select.component';
 import { FormlySelectModule } from '@ngx-formly/core/select';
 import { SurveyPictureSelectComponent } from './formly-question/picture-select/pic-select.component';
-import { FormlyFieldStepper } from './formly-stepper/formly-stepper';
+import { FormlyFieldStepperComponent } from './formly-stepper/formly-stepper';
 
 export function surveyServiceFactory(http: HttpClient, config: ConfigService): SurveyService {
   // Make decision on what to instantiate base on config
@@ -51,7 +51,7 @@ const components = [
   DateComponent,
   PhoneComponent,
   PasswordComponent,
-  FormlyFieldStepper,
+  FormlyFieldStepperComponent,
   SurveySelectComponent,
   SurveyPictureSelectComponent,
 ];
@@ -86,7 +86,8 @@ const components = [
       ],
       types: [
         {
-          name: 'stepper', component: FormlyFieldStepper
+          name: 'stepper',
+          component: FormlyFieldStepperComponent
         },
         {
           name: 'survey-select',

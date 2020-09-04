@@ -16,6 +16,7 @@ export interface IV4SurveyQuestion {
   payload: any;
 }
 
+/* eslint-disable */
 export interface IV4SurveyDisplayProperties {
   title: string;
   questions: IV4SurveyQuestion[];
@@ -38,6 +39,7 @@ export interface IV4SurveyDisplayProperties {
   body_text?: string;
   button_text?: string;
 }
+/* eslint-enable */
 
 export interface IV4Survey {
   id?: number;

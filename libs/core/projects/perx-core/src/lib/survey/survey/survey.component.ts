@@ -4,7 +4,6 @@ import {
 
 import { FormGroup } from '@angular/forms';
 import { FormlyFieldConfig } from '@ngx-formly/core';
-import { IReward } from '../../rewards/models/reward.model';
 
 @Component({
   selector: 'perx-core-survey',
@@ -16,8 +15,8 @@ export class SurveyComponent implements OnInit {
   public submitted: EventEmitter<{[key: string]: any}> = new EventEmitter();
   @Input('fields')
   public fieldsSurvey: FormlyFieldConfig[];
-  public form = new FormGroup({});
-  public model = {
+  public form: FormGroup = new FormGroup({});
+  public model: {} = {
   }; // what is fetched from the api etc
   // how formly decides how the form is going to look like
   public fields:  FormlyFieldConfig[] = [{
@@ -25,17 +24,14 @@ export class SurveyComponent implements OnInit {
     fieldGroup: []
   }];
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.fields = [{
       ...this.fields[0],
       fieldGroup: this.fieldsSurvey
     }];
-    console.log(this.fieldsSurvey)
   }
 
-  public onSubmit() {
-    // here should just emit
+  public onSubmit(): void {
     this.submitted.emit(this.model);
-    console.log(JSON.stringify(this.model));
   }
 }
