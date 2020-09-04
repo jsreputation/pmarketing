@@ -3,7 +3,10 @@
         <div class="choice-container">
             <mat-checkbox
               color="primary"
-              class="choice-box" *ngFor="let choice of payload?.choices; let i = index" [(ngModel)]="selectedChoices[choice.id]" (change)="emitValue()">
+              class="choice-box"
+              *ngFor="let choice of payload?.choices; let i = index"
+              [(ngModel)]="selectedChoices[choice.id]"
+              (change)="emitValue()">
               {{choice?.title?.text}}
             </mat-checkbox>
         </div>

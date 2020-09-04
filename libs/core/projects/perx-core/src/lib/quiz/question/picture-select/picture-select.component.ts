@@ -11,6 +11,7 @@ interface IPictureChoice {
   answer: {
     [langKey: string]: INestedChoice
   };
+  answer_id: string;
 }
 
 interface INestedChoice {
@@ -40,7 +41,7 @@ export class QuizPictureSelectComponent implements OnChanges {
   public updateAnswers: EventEmitter<string[]> = new EventEmitter<string[]>();
 
   public selectedChoices: ITracker = {};
-  public selectedChoice: number;
+  public selectedChoice: string;
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.flush && changes.flush.currentValue !== undefined) {
@@ -48,11 +49,11 @@ export class QuizPictureSelectComponent implements OnChanges {
     }
   }
 
-  public onSelect(index: number): void {
+  public onSelect(answer_id: string): void {
     if (this.payload.multiple) {
-      this.selectedChoices[index] = !this.selectedChoices[index];
+      this.selectedChoices[answer_id] = !this.selectedChoices[answer_id];
     } else {
-      this.selectedChoice = index;
+      this.selectedChoice = answer_id;
     }
     this.emitValue();
   }
@@ -69,7 +70,7 @@ export class QuizPictureSelectComponent implements OnChanges {
     this.updateAnswers.emit(result);
   }
 
-  public isSelected(index: number): boolean {
+  public isSelected(index: string): boolean {
     return (this.payload && this.payload.multiple) ? this.selectedChoices && this.selectedChoices[index] : this.selectedChoice === index;
   }
 }
