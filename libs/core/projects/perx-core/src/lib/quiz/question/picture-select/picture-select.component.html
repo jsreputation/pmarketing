@@ -1,12 +1,12 @@
 <div class="choice-container">
   <ng-container *ngIf="payload && payload.multiple; else elseBlock">
     <div class="choice-content"
-         [ngClass]="isSelected(i) ? 'selected' : ''"
+         [ngClass]="isSelected(choice.answer_id) ? 'selected' : ''"
          *ngFor="let choice of payload?.choices; let i = index">
       <mat-checkbox
         class="choice-image"
         [color]="'primary'"
-        (click)="onSelect(i)">
+        (click)="onSelect(choice.answer_id)">
         <img class="image" [src]="choice?.answer?.en?.image?.value?.image_url" [alt]="choice?.answer?.en?.text">
       </mat-checkbox>
       <div class="choice-label">
@@ -16,13 +16,13 @@
   </ng-container>
   <ng-template #elseBlock>
     <div class="choice-content"
-         [ngClass]="isSelected(i) ? 'selected' : ''"
+         [ngClass]="isSelected(choice.answer_id) ? 'selected' : ''"
          *ngFor="let choice of payload?.choices; let i = index">
       <mat-radio-button
         class="choice-image"
         [color]="'primary'"
         [labelPosition]="'before'"
-        (click)="onSelect(i)">
+        (click)="onSelect(choice.answer_id)">
         <img class="image" [src]="choice?.answer?.en?.image?.value?.image_url" [alt]="choice?.answer?.en?.text">
       </mat-radio-button>
       <div class="choice-label">
