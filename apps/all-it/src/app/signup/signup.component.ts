@@ -90,10 +90,21 @@ export class SignupComponent implements OnInit {
       mobileNo: ['', Validators.required],
       email: ['', Validators.email],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', Validators.required],
       accept_terms: [false, Validators.requiredTrue],
       accept_marketing: [false, Validators.required]
-    });
+    }, {validator: this.matchingPasswords('password', 'confirmPassword')});
+  }
+
+  public matchingPasswords(passwordKey: string, passwordConfirmationKey: string): (group: FormGroup) => void {
+    return (group: FormGroup) => {
+        const password = group.controls[passwordKey];
+        const passwordConfirmation = group.controls[passwordConfirmationKey];
+        if (password.value !== passwordConfirmation.value) {
+            return passwordConfirmation.setErrors({mismatchedPasswords: true});
+        }
+        passwordConfirmation.setErrors(null);
+    };
   }
 
   public onSubmit(): void {
@@ -104,11 +115,6 @@ export class SignupComponent implements OnInit {
 
     const passwordString = this.signupForm.get('password').value;
     const confirmPassword = this.signupForm.get('confirmPassword').value;
-    if (passwordString !== confirmPassword) {
-      this.errorMessage = 'Passwords do not match';
-      return;
-    }
-
     const name = this.signupForm.value.name;
     const dob = this.signupForm.value.dob;
 

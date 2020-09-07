@@ -68,10 +68,9 @@
         "PASSWORD_IS": "請輸入密碼",
         "PASSWORD_SIX_CHARS": "密碼至少含6個字符",
         "CONFIRM_PASSWORD": "確認密碼",
-        "CONFIRM_PASSWORD_IS": "請輸入確認密碼",
+        "CONFIRM_PASSWORD_IS": "密碼不符.",
         "ACCEPT_TERMS": "我接受這些條款及細則",
         "AGREE_MARKETING": "我同意及接收默克集團(香港)的市場資訊",
-        "PASSWORD_NOT_MATCH": "密碼不符.",
         "ACCEPT_TNC": "同意條款與細則",
         "ACCEPT_MARKETING": "同意接收默糖心的廣告信息",
         "REGISTER_BTN": "寄存器"
