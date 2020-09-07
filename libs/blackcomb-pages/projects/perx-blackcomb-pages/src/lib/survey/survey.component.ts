@@ -2,10 +2,6 @@ import {
   Component,
   OnInit,
   OnDestroy,
-  ViewChild,
-  ElementRef,
-  NgZone,
-  ChangeDetectorRef,
   Input
 } from '@angular/core';
 import {
@@ -17,11 +13,10 @@ import {
   AuthenticationService
 } from '@perxtech/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { Observable, Subject, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { catchError, filter, map, switchMap, takeUntil } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { SurveyComponent as SurveyCoreComponent } from '@perxtech/core';
 
 interface IAnswer {
   questionId: string;
@@ -34,32 +29,15 @@ interface IAnswer {
   styleUrls: ['./survey.component.scss']
 })
 export class SurveyComponent implements OnInit, OnDestroy {
-  @ViewChild('overflowContainer', { static: false })
-  private overflowContainer: ElementRef;
-  @ViewChild('overFarrow', { static: false }) private overFarrow: ElementRef;
-  @ViewChild('coreSurvey', { static: false })
-  private coreSurvey: SurveyCoreComponent;
   @Input('data')
   public data$: Observable<ISurvey>;
   public intervalId: number;
   public survey: ISurvey;
   public answers: IAnswer[] = [];
-  public totalLength: number;
-  public currentPointer: number;
-  public questionPointer: number = 0;
-  private hideArrow = () => this.overFarrow.nativeElement.classList.add('hidden');
   private isAnonymousUser: boolean;
   private informationCollectionSetting: string;
   private destroy$: Subject<void> = new Subject();
   private popupData: IPopupConfig;
-  public progressBarValue: number;
-  public updateProgressValue(event: Event): void {
-    const currentTarget: Element = event && event.currentTarget as unknown as Element;
-    const winScroll: number = (currentTarget && (currentTarget as Element).scrollTop) || 0;
-    const height = currentTarget.scrollHeight - currentTarget.clientHeight;
-    const scrolled = (winScroll / height) * 100;
-    this.progressBarValue = scrolled;
-  }
 
   public successPopUp: IPopupConfig = {
     title: 'SURVEY_SUCCESS_TITLE',
@@ -115,8 +93,6 @@ export class SurveyComponent implements OnInit, OnDestroy {
     private surveyService: SurveyService,
     private translate: TranslateService,
     private auth: AuthenticationService,
-    private cd: ChangeDetectorRef,
-    private ngZone: NgZone
   ) { }
 
   public ngOnInit(): void {
@@ -161,24 +137,6 @@ export class SurveyComponent implements OnInit, OnDestroy {
             this.successPopUp.buttonTxt =
               successOutcome.button || this.successPopUp.buttonTxt;
           }
-          this.ngZone.runOutsideAngular(() => {
-            // everytime an event fires change detection gets run, we run these events outside angular to minimise cd change
-            // setTimeout allows me delay so that i am confirmed access the nativeElement
-            window.setTimeout(() => {
-              // handle scroll event on angular,
-              if (this.overflowContainer) {
-                this.overflowContainer.nativeElement.addEventListener(
-                  'scroll',
-                  this.hideArrow,
-                  { passive: true }
-                );
-                this.overflowContainer.nativeElement.addEventListener(
-                  'click',
-                  this.hideArrow
-                );
-              }
-            }, 0);
-          });
         }
       },
       () => {
@@ -190,36 +148,12 @@ export class SurveyComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
-    this.overflowContainer.nativeElement.removeEventListener(
-      'scroll',
-      this.hideArrow
-    );
-    this.overflowContainer.nativeElement.removeEventListener(
-      'click',
-      this.hideArrow
-    );
   }
 
-  public get surveyComplete(): boolean {
-    const { questions } = this.survey; // to find if the question is required or not
-    if (
-      this.questionPointer === this.totalLength - 1 &&
-      !questions[this.questionPointer].required
-    ) {
-      return true;
-    }
-    return (
-      this.questionPointer === this.totalLength - 1 &&
-      this.answers[this.questionPointer] &&
-      this.answers[this.questionPointer].content
-    );
-  }
-
-  public onSubmit(): void {
+  public onSubmit(_: {[key: string]: any}): void {
+    // work not done on postSurveyAnswer, endpoint likely different and fields
     const surveyId =
-      this.survey && this.survey.id
-        ? Number.parseInt(this.survey.id, 10)
-        : null;
+      (this.survey && this.survey.id) || null;
     const isCollectDataRequired = !!(
       this.informationCollectionSetting === 'pi_required' ||
       this.informationCollectionSetting === 'signup_required'
@@ -229,9 +163,9 @@ export class SurveyComponent implements OnInit, OnDestroy {
         ? of({ hasOutcomes: true })
         : this.surveyService
           .postSurveyAnswer(
-            this.answers,
+            this.answers, // how should the answer be submitted? wait sergey
             this.route.snapshot.params.id,
-            surveyId
+            +surveyId
           )
           .pipe(
             catchError((err: HttpErrorResponse) => {
@@ -256,9 +190,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
 
   private redirectUrlAndPopUp(): void {
     const surveyId =
-      this.survey && this.survey.id
-        ? Number.parseInt(this.survey.id, 10)
-        : null;
+      (this.survey && this.survey.id) || null;
     const campaignId = this.route.snapshot.params.id
       ? Number.parseInt(this.route.snapshot.params.id, 10)
       : null;
@@ -287,63 +219,9 @@ export class SurveyComponent implements OnInit, OnDestroy {
     }
   }
 
-  public setTotalLength(totalLength: number): void {
-    this.totalLength = totalLength;
-  }
-
-  public setCurrentPointer(currentPointer: number): void {
-    // has to have two detectChanges here
-    this.currentPointer = currentPointer;
-    this.cd.detectChanges();
-
-    this.checkShowOverArrow();
-    this.cd.detectChanges();
-  }
-
   public updateSurveyStatus(answers: IAnswer[]): void {
     if (this.answers) {
       this.answers = answers;
-    }
-  }
-
-  public checkShowOverArrow(): void {
-    let card: HTMLElement;
-    let arrow: HTMLElement;
-    if (this.overflowContainer && this.overflowContainer.nativeElement) {
-      card = this.overflowContainer.nativeElement;
-      arrow = this.overFarrow.nativeElement;
-      const isOverflowing = card.clientHeight < card.scrollHeight;
-      if (isOverflowing) {
-        arrow.classList.remove('hidden');
-      } else {
-        arrow.classList.add('hidden');
-      }
-    }
-  }
-
-  public updateQuestionPointer(action: string): void {
-    const { questions } = this.survey; // to find if the question is required or not
-    // updateQuestion will be called when questionPointer cause child to emit currentPointer
-    if (action === 'next') {
-      // core validate
-      const questionComponentsArr = this.coreSurvey.questionComponents.toArray();
-      // call validate on the particular question
-      questionComponentsArr[this.questionPointer].questionValidation();
-      if (!questionComponentsArr[this.questionPointer].errorState.hasError) {
-        if (!questions[this.questionPointer].required) {
-          // able to go next if not required
-          this.questionPointer++;
-        }
-        const answerToCurrentQuestion = this.answers.find(
-          answer => parseInt(answer.questionId, 10) === this.questionPointer
-        );
-        if (answerToCurrentQuestion && answerToCurrentQuestion.content) {
-          // able to go next if answer has been answered
-          this.questionPointer++;
-        }
-      }
-    } else {
-      this.questionPointer--;
     }
   }
 }

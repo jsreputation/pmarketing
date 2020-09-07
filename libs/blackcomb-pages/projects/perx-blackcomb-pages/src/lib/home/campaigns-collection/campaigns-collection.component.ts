@@ -21,7 +21,8 @@ import {
   IGame,
   IGameService,
   IQuiz,
-  QuizService
+  QuizService,
+  SurveyService
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import {
@@ -66,6 +67,7 @@ export class CampaignsCollectionComponent implements OnInit {
     private gamesService: IGameService,
     private campaignService: ICampaignService,
     private quizService: QuizService,
+    private surveyService: SurveyService
   ) { }
 
 
@@ -105,6 +107,11 @@ export class CampaignsCollectionComponent implements OnInit {
         ...campaigns.map((campaign: ICampaign) => {
           if (this.gameType === GameType.quiz) {
             return this.quizService.getQuizFromCampaign(campaign.id).pipe(
+              catchError(( () => of([])))
+            );
+          }
+          if (this.gameType === GameType.survey) {
+            return this.surveyService.getSurveyFromCampaign(campaign.id).pipe(
               catchError(( () => of([])))
             );
           }

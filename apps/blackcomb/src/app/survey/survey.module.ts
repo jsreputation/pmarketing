@@ -6,7 +6,6 @@ import {
   CampaignServiceModule as PerxSvcCampaignModule,
   ConfigModule,
   AuthenticationModule,
-  SurveyComponent,
 } from '@perxtech/core';
 
 import {
@@ -18,7 +17,9 @@ import {
   MatToolbarModule,
   MatCheckboxModule
 } from '@angular/material';
-import { PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
+import {
+  SurveyComponent,
+  PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [

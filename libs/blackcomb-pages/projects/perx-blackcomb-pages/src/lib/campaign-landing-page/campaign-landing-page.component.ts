@@ -54,6 +54,10 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
         this.router.navigate([`quiz/${this.campaign.id}`]);
         return;
       }
+      if (this.campaign.subType === 'survey') {
+        this.router.navigate([`survey/${this.campaign.id}`]);
+        return;
+      }
 
       this.router.navigate([`${this.campaign.type}/${this.campaign.id}`]);
     }
