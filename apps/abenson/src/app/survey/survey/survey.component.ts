@@ -52,7 +52,7 @@ export class SurveyComponent implements OnInit {
     return this.currentPointer === this.totalLength;
   }
   public onSubmit(): void {
-    const surveyId = this.survey && this.survey.id ? Number.parseInt(this.survey.id, 10) : null;
+    const surveyId = this.survey && this.survey.id ? this.survey.id : null;
     if (surveyId) {
       this.surveyService.postSurveyAnswer(this.answers, this.route.snapshot.params.id, surveyId).subscribe(
         () => {
