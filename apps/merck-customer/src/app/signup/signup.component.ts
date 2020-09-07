@@ -86,11 +86,22 @@ export class SignupComponent implements PageAppearence {
       name: ['', Validators.required],
       mobileNo: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', Validators.required],
       accept_terms: [false, Validators.required],
       accept_marketing: [false, Validators.required],
       countryCode: ['852', Validators.required]
-    });
+    }, {validator: this.matchingPasswords('password', 'confirmPassword')});
+  }
+
+  public matchingPasswords(passwordKey: string, passwordConfirmationKey: string): (group: FormGroup) => void {
+    return (group: FormGroup) => {
+        const password = group.controls[passwordKey];
+        const passwordConfirmation = group.controls[passwordConfirmationKey];
+        if (password.value !== passwordConfirmation.value) {
+            return passwordConfirmation.setErrors({mismatchedPasswords: true});
+        }
+        passwordConfirmation.setErrors(null);
+    };
   }
 
   public getPageProperties(): PageProperties {
@@ -106,12 +117,6 @@ export class SignupComponent implements PageAppearence {
     try {
       const passwordString = this.signupForm.value.password as string;
       const confirmPassword = this.signupForm.value.confirmPassword as string;
-      if (passwordString !== confirmPassword) {
-        this.translate.get('SIGN_UP_PAGE.PASSWORD_NOT_MATCH').subscribe(text =>
-          this.notificationService.addSnack(text)
-        );
-        return;
-      }
       const termsConditions = this.signupForm.value.accept_terms as boolean;
       if (!termsConditions) {
         this.translate.get('SIGN_UP_PAGE.ACCEPT_TNC').subscribe(text =>
