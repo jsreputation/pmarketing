@@ -49,11 +49,11 @@ export class QuizPictureSelectComponent implements OnChanges {
     }
   }
 
-  public onSelect(answer_id: string): void {
+  public onSelect(answerId: string): void {
     if (this.payload.multiple) {
-      this.selectedChoices[answer_id] = !this.selectedChoices[answer_id];
+      this.selectedChoices[answerId] = !this.selectedChoices[answerId];
     } else {
-      this.selectedChoice = answer_id;
+      this.selectedChoice = answerId;
     }
     this.emitValue();
   }
