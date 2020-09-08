@@ -7,7 +7,7 @@
   margin-top: 2rem;
   width: 100%;
   display: flex;
-  flex: 0 1 50rem;
+  flex: 0 1 47rem;
   flex-direction: column;
   box-sizing: border-box;
   overflow-y: auto;
@@ -19,8 +19,7 @@
 }
 
 :host ::ng-deep {
-  .mat-horizontal-content-container,
-  .mat-stepper-horizontal {
+  .mat-horizontal-content-container {
     height: 100%;
   }
 }
