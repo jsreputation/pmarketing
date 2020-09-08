@@ -59,7 +59,9 @@ export class V4SurveyService implements SurveyService {
         // is configurable
         options: payload.choices.map((choice) =>
           ({
-            label: (formlyCustomFieldType === 'pic-survey-select') ? choice.answer[lang].image.value.image_url : choice.answer[lang].text,
+            label: (formlyCustomFieldType === 'pic-survey-select') ? (
+              choice.answer[lang].image ? choice.answer[lang].image.value.image_url : '')
+              : choice.answer[lang].text,
             value: choice.answer[lang].text
           })
         ),
