@@ -4,7 +4,7 @@
     "build:abenson": "env-cmd -f apps/abenson/env/abenson ts-node --project tsconfig.node.json apps/abenson/set-env.ts && yarn nx build abenson --",
     "build:abenson:production": "env-cmd -f apps/abenson/env/abenson.production ts-node --project tsconfig.node.json apps/abenson/set-env.ts && yarn nx build abenson -- --prod",
     "build:abenson:staging": "env-cmd -f apps/abenson/env/abenson.staging ts-node --project tsconfig.node.json apps/abenson/set-env.ts && yarn nx build abenson --",
-    "start:abenson:production": "env-cmd -f apps/abenson/env/abenson.production.dev ts-node --project tsconfig.node.json apps/abenson/set-env.ts && yarn nx serve abenson --",
+    "start:abenson:production": "env-cmd -f apps/abenson/env/abenson.production.dev ts-node --project tsconfig.node.json apps/abenson/set-env.ts && yarn nx serve abenson -- --prod",
     "start:abenson:staging": "env-cmd -f apps/abenson/env/abenson.staging.dev ts-node --project tsconfig.node.json apps/abenson/set-env.ts && yarn nx serve abenson --",
     "build:all-it:production": "env-cmd -f apps/all-it/env/all-it.production ts-node --project tsconfig.node.json apps/all-it/set-env.ts && yarn nx build all-it -- --prod",
     "build:all-it:staging": "env-cmd -f apps/all-it/env/all-it.staging ts-node --project tsconfig.node.json apps/all-it/set-env.ts && yarn nx build all-it -- --prod",
