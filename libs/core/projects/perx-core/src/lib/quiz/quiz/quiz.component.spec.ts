@@ -17,6 +17,7 @@ import { QuizRatingComponent } from '../question/rating/rating.component';
 import { QuizSelectComponent } from '../question/select/select.component';
 import { QuizSwipeListComponent } from '../question/swipe-list/swipe-list.component';
 import { QuizComponent } from './quiz.component';
+import { PinchZoomModule } from 'ngx-pinch-zoom';
 
 
 describe('QuizComponent', () => {
@@ -47,6 +48,7 @@ describe('QuizComponent', () => {
         FormsModule,
         MatListModule,
         ReactiveFormsModule,
+        PinchZoomModule
       ]
     })
       .compileComponents();

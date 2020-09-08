@@ -1,14 +1,9 @@
-<div class="survey-container" *ngIf="data">
-    <div *ngFor="let question of data.questions ; let i = index;">
-      <perx-core-question
-        #questionsList
-        [hideIndex]="hideIndex"
-        [id]="i"
-        [questionPointer]="questionPointer"
-        [totalQuestions]="data.questions.length"
-        [question]="question"
-        (updateAnswers)="updateAnswers($event)"
-        (updatePoints)="updatePoints($event)"
-        ></perx-core-question>
-    </div>
+<div class="survey-container">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <formly-form
+    [model]="model"
+    [fields]="fields"
+    [form]="form">
+    </formly-form>
+  </form>
 </div>

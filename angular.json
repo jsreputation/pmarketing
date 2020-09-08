@@ -1930,34 +1930,10 @@
                 {
                   "replace": "apps/abenson/src/index.html",
                   "with": "apps/abenson/src/index.prod.html"
-                }
-              ],
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                }
-              ]
-            },
-            "staging": {
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": false,
-              "fileReplacements": [
-                {
-                  "replace": "apps/abenson/src/index.html",
-                  "with": "apps/abenson/src/index.prod.html"
                 },
                 {
                   "replace": "apps/abenson/src/app/promos/promos.component.ts",
-                  "with": "apps/abenson/src/app/promos/promos.component.staging.ts"
+                  "with": "apps/abenson/src/app/promos/promos.component.prod.ts"
                 }
               ],
               "budgets": [

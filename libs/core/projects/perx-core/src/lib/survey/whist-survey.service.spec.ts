@@ -3,9 +3,6 @@ import { HttpClient } from '@angular/common/http';
 
 import { of } from 'rxjs';
 
-import { SurveyService } from './survey.service';
-import { ISurvey } from './models/survey.model';
-
 import {
   ICampaign,
   CampaignType,
@@ -20,10 +17,11 @@ import {
   IWSurveyEngagementAttributes,
 } from '@perxtech/whistler';
 import { ConfigModule } from '../config/config.module';
+import { WhistlerSurveyService } from './whist-survey.service';
 
-describe('SurveyService', () => {
+describe('WhistlerSurveyService', () => {
   let httpClientSpy: Partial<HttpClient>;
-  let service: SurveyService;
+  let service: WhistlerSurveyService;
   const mockCampaign: ICampaign = {
     id: 1,
     name: 'Survey Campaign',
@@ -81,7 +79,7 @@ describe('SurveyService', () => {
         { provide: HttpClient, useValue: httpClientSpy }
       ]
     });
-    service = TestBed.get(SurveyService);
+    service = TestBed.get(WhistlerSurveyService);
 
   });
 
@@ -97,7 +95,7 @@ describe('SurveyService', () => {
 
     service.getSurveyFromCampaign(42)
       .subscribe(
-        (s: ISurvey) => {
+        (s: any) => {
           expect(s.questions.length).toBe(0);
           expect(s.title).toBe(noQuestionMockSurvey.attributes.display_properties.title);
           done();

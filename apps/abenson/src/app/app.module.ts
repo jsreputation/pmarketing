@@ -57,7 +57,7 @@ import {
 } from '@angular/forms';
 import { HistoryComponent } from './history/history.component';
 import { PromosComponent } from './promos/promos.component';
-import { PromosComponent as PromosStagingComponent } from './promos/promos.component.staging';
+import { PromosComponent as PromosProdComponent } from './promos/promos.component.prod';
 import { ForgotPinComponent } from './forgot-pin/forgot-pin.component';
 import { SignUpComponent } from './auth/signup/signup.component';
 import { UnauthorizedInterceptor } from './auth/unauthorized.interceptor';
@@ -119,7 +119,7 @@ export const setLanguage = (
     HomeComponent,
     HistoryComponent,
     PromosComponent,
-    PromosStagingComponent,
+    PromosProdComponent,
     SignUpComponent,
     ForgotPinComponent,
     SmsValidationComponent,

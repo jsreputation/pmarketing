@@ -1,115 +1,37 @@
 import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  OnInit,
-  OnDestroy,
-  OnChanges,
-  SimpleChanges,
-  ViewChildren,
-  QueryList,
+  Component, EventEmitter, Input, OnInit, Output
 } from '@angular/core';
-import { IAnswer, ISurvey, ITracker, IPoints } from '../models/survey.model';
-import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { QuestionComponent } from '../question/question.component';
+
+import { FormGroup } from '@angular/forms';
+import { FormlyFieldConfig } from '@ngx-formly/core';
 
 @Component({
   selector: 'perx-core-survey',
   templateUrl: './survey.component.html',
   styleUrls: ['./survey.component.scss']
 })
-export class SurveyComponent implements OnInit, OnChanges, OnDestroy {
-  @Input('data')
-  public data$: Observable<ISurvey>;
-
-  @Input()
-  public hideIndex: boolean = false;
-
-  @Input()
-  public questionPointer: number = 0;
-
+export class SurveyComponent implements OnInit {
   @Output()
-  public totalLength: EventEmitter<number> = new EventEmitter();
-
-  @Output()
-  public currentPointer: EventEmitter<number> = new EventEmitter(false);
-
-  @Output()
-  public surveyDone: EventEmitter<IAnswer[]> = new EventEmitter();
-
-  @ViewChildren('questionsList') public questionComponents: QueryList<QuestionComponent>;
-
-  public answersTracker: ITracker = {};
-
-  public pointsTracker: ITracker = {};
-
-  public data: ISurvey;
-
-  public viewChecked: boolean = false;
-
-  private destroy$: Subject<void> = new Subject();
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    const questionPointerChange = changes.questionPointer;
-    if (questionPointerChange && this.questionComponents) {
-      // emitting helps to update calling setCurrentPointer on parentElement
-      // signal has been called with answer alrdy
-      this.currentPointer.emit(questionPointerChange.currentValue);
-    }
-  }
+  public submitted: EventEmitter<{[key: string]: any}> = new EventEmitter();
+  @Input('fields')
+  public fieldsSurvey: FormlyFieldConfig[];
+  public form: FormGroup = new FormGroup({});
+  public model: {} = {
+  }; // what is fetched from the api etc
+  // how formly decides how the form is going to look like
+  public fields:  FormlyFieldConfig[] = [{
+    type: 'stepper',
+    fieldGroup: []
+  }];
 
   public ngOnInit(): void {
-    if (this.data$) {
-      this.data$
-        .pipe(takeUntil(this.destroy$))
-        .subscribe(data => {
-          this.data = data;
-          if (this.data) {
-            this.totalLength.emit(this.data.questions.length);
-            this.currentPointer.emit(0);
-          }
-        });
-    }
+    this.fields = [{
+      ...this.fields[0],
+      fieldGroup: this.fieldsSurvey
+    }];
   }
 
-  public updateAnswers(answer: IAnswer): void {
-    if (answer.questionId) {
-      this.answersTracker[answer.questionId] = answer;
-    }
-  }
-
-  public updatePoints(points: IPoints): void {
-    if (points.questionId) {
-      this.pointsTracker[points.questionId] = points.point;
-      this.updateParent();
-    }
-  }
-
-  public updateParent(): void {
-    const currentPoint = this.calculatePoints();
-    const totalQuestion = this.data && this.data.questions.length;
-    if (this.data) {
-      this.totalLength.emit(totalQuestion);
-      this.currentPointer.emit(currentPoint);
-    }
-    // to keep track of questions answered state, update after each question answered / updated
-    // OLD: if (currentPoint >= totalQuestion) {
-    const answers: IAnswer[] = Object.entries(this.answersTracker).map(([id, answer]) => ({
-      questionId: id,
-      content: answer.content
-    }));
-    this.surveyDone.emit(answers);
-    // }
-  }
-
-  public calculatePoints(): number {
-    return Object.values(this.pointsTracker).reduce((sum, point) => sum + point, 0);
-  }
-
-  public ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
+  public onSubmit(): void {
+    this.submitted.emit(this.model);
   }
 }

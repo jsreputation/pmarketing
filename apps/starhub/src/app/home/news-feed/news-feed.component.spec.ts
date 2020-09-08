@@ -67,7 +67,7 @@ describe('NewsFeedComponent', () => {
       providers: [
         { provide: FeedReaderService, useValue: feedReaderServiceStub },
         { provide: SettingsService, useValue: settingsServiceStub },
-        { provide: ConfigService, useValue: configServiceStub },
+        { provide: ConfigService, useValue: configServiceStub }
       ]
     })
       .compileComponents();

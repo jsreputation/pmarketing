@@ -9,7 +9,8 @@ import {
   ICampaignService,
   IGameService,
   QuizService,
-  SafeHtmlPipe
+  SafeHtmlPipe,
+  SurveyService
 } from '@perxtech/core';
 
 describe('CampaignsCollectionComponent', () => {
@@ -28,6 +29,10 @@ describe('CampaignsCollectionComponent', () => {
     getVoucherLeftCount: () => of()
   };
 
+  const surveyServiceStub: Partial<SurveyService> = {
+    getSurveyFromCampaign: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -42,7 +47,8 @@ describe('CampaignsCollectionComponent', () => {
       providers: [
         { provide: IGameService, useValue: gameServiceStub },
         { provide: QuizService, useValue: quizServiceStub },
-        { provide: ICampaignService, useValue: campaignServiceStub }
+        { provide: ICampaignService, useValue: campaignServiceStub },
+        { provide: SurveyService, useValue: surveyServiceStub },
       ]
     })
       .compileComponents();

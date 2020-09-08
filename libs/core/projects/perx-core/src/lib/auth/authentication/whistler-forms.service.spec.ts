@@ -4,7 +4,7 @@ import { ConfigModule } from '../../config/config.module';
 import { HttpClient } from '@angular/common/http';
 import { WhistlerFormsService } from './whistler-forms.service';
 import { of } from 'rxjs';
-import { SurveyService } from '../../survey/survey.service';
+import { WhistlerSurveyService } from '../../survey/whist-survey.service';
 
 describe('WhistlerFormsService', () => {
   beforeEach(() => TestBed.configureTestingModule({
@@ -24,7 +24,7 @@ describe('WhistlerFormsService', () => {
   it('should create form ', fakeAsync(inject([HttpClient, WhistlerFormsService],
     (http: HttpClient, formService: WhistlerFormsService) => {
       const spy = jest.spyOn(http, 'get').mockReturnValue(of({ data: [{ attributes: { properties: { signup: {} } } }] }));
-      jest.spyOn(SurveyService, 'WSurveyToSurvey').mockReturnValue({ title: '', results: {}, questions: [] });
+      jest.spyOn(WhistlerSurveyService, 'WSurveyToSurvey').mockReturnValue({ title: '', results: {}, questions: [] });
       formService.getSignupForm().subscribe(() => { });
       tick();
       expect(spy).toHaveBeenCalled();

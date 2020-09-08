@@ -86,10 +86,13 @@ export class RewardComponent implements OnInit {
     this.loadingSubmit = true;
     this.vouchersService.issueReward(this.reward.id).subscribe(
       () => this.router.navigate(['/home/vouchers']),
-      () => {
+      (error) => {
         this.isButtonEnable = true; // change button back to enable which it originally is, before save is triggered
         this.loadingSubmit = false;
         this.notificationService.addSnack('Sorry! Could not save reward.');
+        if (error.status === 401) {
+          this.router.navigate(['/error']);
+        }
       }
     );
   }

@@ -8,12 +8,8 @@
     <mat-card class="survey-card mat-elevation-z2" *ngIf="data$ | async as data">
         <h1>Headline</h1>
         <h2>Sub-headline</h2>
-        <perx-core-survey 
-            [data]="data$"
-            (surveyDone)="updateSurveyStatus($event)"
-            (totalLength)="setTotalLength($event)"
-            (currentPointer)="setCurrentPointer($event)"
-            ></perx-core-survey>
+        <perx-core-survey
+          [fields]="data$"></perx-core-survey>
         <button *ngIf="surveyComplete" mat-flat-button color="primary" (click)="onSubmit()">Submit</button>
     </mat-card>
 </div>

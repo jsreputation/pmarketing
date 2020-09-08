@@ -1,5 +1,10 @@
 <div *ngIf="question?.question?.image">
-  <img class="question-image" [src]="question?.question?.image?.value?.image_url" alt="question-img">
+  <pinch-zoom *ngIf="allowPicZoom; else noPinchZoom">
+    <img class="question-image" [src]="question?.question?.image?.value?.image_url" alt="question-img">
+  </pinch-zoom>
+  <ng-template #noPinchZoom>
+    <img class="question-image" [src]="question?.question?.image?.value?.image_url" alt="question-img">
+  </ng-template>
 </div>
 <div class="question-container">
     <div class="question-content" *ngIf="question">

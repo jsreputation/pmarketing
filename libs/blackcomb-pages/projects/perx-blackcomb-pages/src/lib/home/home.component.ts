@@ -98,6 +98,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public catalogsBvrSbjt: BehaviorSubject<ICatalog[]> = new BehaviorSubject<ICatalog[]>([]);
   public catalogs$: Observable<ICatalog[]>;
   public catalogsEnded: boolean = false;
+  public surveyCampaigns$: Observable<ICampaign[]>;
 
   public constructor(
     protected rewardsService: RewardsService,
@@ -203,7 +204,10 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.router.navigate([`quiz/${campaign.id}`]);
       return;
     }
-
+    if (campaign.subType === 'survey') {
+      this.router.navigate([`survey/${campaign.id}`]);
+      return;
+    }
     this.router.navigate([`${campaign.type}/${campaign.id}`]);
   }
 
@@ -311,6 +315,11 @@ export class HomeComponent implements OnInit, OnDestroy {
       .pipe(
         tap((campaigns: ICampaign[]) => this.showCampaigns = campaigns.length > 0),
         switchMap((campaigns: ICampaign[]) => of(campaigns).pipe(catchError(err => of(err)))),
+        takeLast(1)
+      );
+
+    this.surveyCampaigns$ = this.campaignService.getCampaigns({ gameType: GameType.survey })
+      .pipe(
         takeLast(1)
       );
 

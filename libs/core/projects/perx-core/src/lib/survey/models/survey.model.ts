@@ -7,6 +7,7 @@ import { IPhonePayload } from '../question/phone/phone.component';
 import { IPictureSelectPayload } from '../question/picture-select/picture-select.component';
 import { IRatingPayload } from '../question/rating/rating.component';
 import { ISelectPayload } from '../question/select/select.component';
+import { FormlyFieldConfig } from '@ngx-formly/core';
 
 export interface IAnswer {
   questionId?: string;
@@ -48,13 +49,13 @@ export interface ISurveyOutcome {
 }
 
 export interface ISurvey {
-  id?: string;
-  title: string;
-  subTitle?: string;
+  id?: number;
+  title?: {text: string};
+  subTitle?: {text: string};
   progressBarColor?: MaterialColor;
   cardBackgroundImgUrl?: string;
   backgroundImgUrl?: string;
-  questions: IQuestion[];
+  fields?: FormlyFieldConfig[];
   results: {
     outcome?: ISurveyOutcome;
     noOutcome?: ISurveyOutcome;
@@ -65,8 +66,9 @@ export interface ISurvey {
 export enum SurveyQuestionType {
   rating = 'rating',
   pictureChoice = 'picture-select',
-  longText = 'long-text',
   multipleChoice = 'select',
+  longText = 'long-text',
+  choice = 'select',
   questionGroup = 'group',
   date = 'date',
   phone = 'phone',

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FeedItem, FeedReaderService } from '@perxtech/core';
 import { MatDialog } from '@angular/material';
-import { PopupComponent } from '../popup/popup.component';
 import { Observable } from 'rxjs';
+import { PopupComponent } from '../popup/popup.component';
 
 interface FeedItemGroup {
   label: string;
@@ -24,11 +24,11 @@ export class PromosComponent implements OnInit {
     this.itemsGroup$ = [
       {
         label: 'Exclusives',
-        items: this.reader.getFromUrl('https://teamplusrewards.home.blog/category/Exclusives-Staging/feed/', true)
+        items: this.reader.getFromUrl('https://teamplusrewards.home.blog/category/Exclusives/feed/', true)
       },
       {
         label: 'Promotions',
-        items: this.reader.getFromUrl('https://teamplusrewards.home.blog/category/Promotions-Staging/feed/', true)
+        items: this.reader.getFromUrl('https://teamplusrewards.home.blog/category/Promotions/feed/', true)
       }
     ];
   }

@@ -19,6 +19,7 @@ import { QuizDisplayProperties } from '../quiz/v4-quiz.service';
 import { GameType } from '../game/game.model';
 import { patchUrl } from '../utils/patch-url.function';
 import { Cacheable } from 'ngx-cacheable';
+import { IV4SurveyDisplayProperties } from '../survey/models/v4-survey.model';
 
 interface IV4Image {
   type: string;
@@ -30,6 +31,7 @@ type DisplayProperties = TreeDisplayProperties |
   PinataDisplayProperties |
   ScratchDisplayProperties |
   SpinDisplayProperties |
+  IV4SurveyDisplayProperties |
   QuizDisplayProperties;
 /* eslint-enable @typescript-eslint/indent */
 
@@ -41,7 +43,7 @@ type CampaignConfig = {
   referral_rewards?: IV4Reward[];
 };
 
-interface IV4Campaign {
+export interface IV4Campaign {
   id: number;
   name: string;
   description: string;
@@ -66,7 +68,7 @@ type CountObject = {
   count: number;
 };
 
-interface IV4CampaignResponse {
+export interface IV4CampaignResponse {
   data: IV4Campaign;
   meta: {
     count: number;

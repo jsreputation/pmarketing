@@ -9,6 +9,9 @@ import { IQQuestion } from '../quiz.service';
 })
 export class QuizQuestionComponent {
   @Input()
+  public allowPicZoom: boolean = true;
+
+  @Input()
   public id: number;
 
   @Input()

@@ -63,9 +63,9 @@ export class GameComponent implements OnInit, OnDestroy {
   };
 
   public gameNotAvailablePopUp: IPopupConfig = {
-    title: 'GAME_NOT_VALID',
-    text: 'GAME_NOT_VALID_TEXT',
-    buttonTxt: 'BACK_TO_WALLET',
+    title: 'GAME_PAGE.GAME_NOT_VALID',
+    text: 'GAME_PAGE.GAME_NOT_VALID_TEXT',
+    buttonTxt: 'GAME_PAGE.BACK_TO_WALLET',
     imageUrl: '',
   };
   public rewardsTxt: string;
@@ -407,6 +407,15 @@ export class GameComponent implements OnInit, OnDestroy {
     }
     if (this.noRewardsPopUp.buttonTxt) {
       this.translate.get(this.noRewardsPopUp.buttonTxt).subscribe((text) => this.noRewardsPopUp.buttonTxt = text);
+    }
+    if (this.gameNotAvailablePopUp.title) {
+      this.translate.get(this.gameNotAvailablePopUp.title).subscribe((text) => this.gameNotAvailablePopUp.title = text);
+    }
+    if (this.gameNotAvailablePopUp.text) {
+      this.translate.get(this.gameNotAvailablePopUp.text).subscribe((text) => this.gameNotAvailablePopUp.text = text);
+    }
+    if (this.gameNotAvailablePopUp.buttonTxt) {
+      this.translate.get(this.gameNotAvailablePopUp.buttonTxt).subscribe((text) => this.gameNotAvailablePopUp.buttonTxt = text);
     }
     this.translate.get('GAME_PAGE.GAME_SUCCESS_TEXT_REWARDS').subscribe((text) => this.rewardsTxt = text);
     this.translate.get('GAME_PAGE.GAME_SUCCESS_TEXT_POINTS').subscribe((text) => this.pointsTxt = text);

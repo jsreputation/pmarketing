@@ -10,7 +10,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SurveyService } from './survey.service';
 import { SurveyComponent } from './survey/survey.component';
 import { QuestionComponent } from './question/question.component';
@@ -21,15 +21,23 @@ import { SelectComponent } from './question/select/select.component';
 import { GroupComponent } from './question/group/group.component';
 import { DateComponent } from './question/date/date.component';
 import { PhoneComponent } from './question/phone/phone.component';
-import { Config } from '../config/config';
-import { HttpClient } from '@angular/common/http';
-import { ICampaignService } from '../campaign/icampaign.service';
+
 import { PasswordComponent } from './question/password/password.component';
 import { MatListModule } from '@angular/material/list';
+import { FormlyModule } from '@ngx-formly/core';
+import { FormlyMaterialModule } from '@ngx-formly/material';
+import { V4SurveyService } from './v4-survey.service';
+import { ConfigService } from '../config/config.service';
+import { HttpClient } from '@angular/common/http';
+import { MatProgressBarModule, MatStepperModule } from '@angular/material';
+import { SurveySelectComponent } from './formly-question/select/select.component';
+import { FormlySelectModule } from '@ngx-formly/core/select';
+import { SurveyPictureSelectComponent } from './formly-question/picture-select/pic-select.component';
+import { FormlyFieldStepperComponent } from './formly-stepper/formly-stepper';
 
-export function surveyServiceFactory(http: HttpClient, campaignService: ICampaignService, config: Config): SurveyService {
+export function surveyServiceFactory(http: HttpClient, config: ConfigService): SurveyService {
   // Make decision on what to instantiate base on config
-  return new SurveyService(http, campaignService, config);
+  return new V4SurveyService(http, config);
 }
 
 const components = [
@@ -43,6 +51,9 @@ const components = [
   DateComponent,
   PhoneComponent,
   PasswordComponent,
+  FormlyFieldStepperComponent,
+  SurveySelectComponent,
+  SurveyPictureSelectComponent,
 ];
 
 @NgModule({
@@ -52,6 +63,7 @@ const components = [
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
@@ -62,13 +74,40 @@ const components = [
     MatCheckboxModule,
     MatRadioModule,
     MatListModule,
-    MatRippleModule
+    MatRippleModule,
+    MatStepperModule,
+    FormlyModule.forRoot({
+      validators: [],
+      validationMessages: [
+        {
+          name: 'required',
+          message: 'This field is required.'
+        }
+      ],
+      types: [
+        {
+          name: 'stepper',
+          component: FormlyFieldStepperComponent
+        },
+        {
+          name: 'survey-select',
+          component: SurveySelectComponent
+        },
+        {
+          name: 'pic-survey-select',
+          component: SurveyPictureSelectComponent
+        }
+      ]
+    }),
+    FormlyMaterialModule,
+    FormlySelectModule,
+    MatProgressBarModule
   ],
   providers: [
     {
       provide: SurveyService,
       useFactory: surveyServiceFactory,
-      deps: [HttpClient, ICampaignService, Config]
+      deps: [HttpClient, ConfigService]
     }
   ],
   exports: [

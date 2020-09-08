@@ -1,21 +1,16 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { GameModule as PerxGameModule } from '@perxtech/core';
-import { GameRoutingModule } from './game-routing.module';
-import { GameComponent } from './game.component';
-import { ShakeComponent } from './shake/shake.component';
-import { TapComponent } from './tap/tap.component';
-import { ScratchComponent } from './scratch/scratch.component';
-import { SpinComponent } from './spin/spin.component';
-import { MatButtonModule } from '@angular/material/button';
+import { RouterModule, Routes } from '@angular/router';
+import { GameComponent, GameModule as BCGameModule } from '@perxtech/blackcomb-pages';
+
+const routes: Routes = [{
+  path: '',
+  component: GameComponent
+}];
 
 @NgModule({
-  declarations: [GameComponent, ShakeComponent, TapComponent, SpinComponent, ScratchComponent],
   imports: [
-    CommonModule,
-    GameRoutingModule,
-    PerxGameModule,
-    MatButtonModule
+    BCGameModule,
+    RouterModule.forChild(routes),
   ]
 })
 export class GameModule { }

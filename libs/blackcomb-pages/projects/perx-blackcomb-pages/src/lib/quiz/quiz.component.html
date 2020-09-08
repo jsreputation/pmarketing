@@ -22,6 +22,7 @@
         *ngIf="quiz.mode === mode.basic"
         class="quiz-card">
         <perx-core-quiz
+          [allowPicZoom]="allowPicZoom$ | async"
           [hideIndex]="true"
           #coreComponent
           [data]="data$"

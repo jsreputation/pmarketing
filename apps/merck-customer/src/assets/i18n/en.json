@@ -68,10 +68,9 @@
     "PASSWORD_IS": "Password is required",
     "PASSWORD_SIX_CHARS": "Password should be at least 6 characters",
     "CONFIRM_PASSWORD": "Confirm password",
-    "CONFIRM_PASSWORD_IS": "Confirm Password is required",
+    "CONFIRM_PASSWORD_IS": "Passwords must match",
     "ACCEPT_TERMS": "I accept the terms and conditions",
     "AGREE_MARKETING": "I agree to receive marketing communications from Merck Group HK",
-    "PASSWORD_NOT_MATCH": "Passwords do not match.",
     "ACCEPT_TNC": "Please accept terms & conditions.",
     "ACCEPT_MARKETING": "Please agree to receive marketing communications from Merck Group hk.",
     "REGISTER_BTN": "Register"
