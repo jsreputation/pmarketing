@@ -1930,6 +1930,10 @@
                 {
                   "replace": "apps/abenson/src/index.html",
                   "with": "apps/abenson/src/index.prod.html"
+                },
+                {
+                  "replace": "apps/abenson/src/app/promos/promos.component.ts",
+                  "with": "apps/abenson/src/app/promos/promos.component.prod.ts"
                 }
               ],
               "budgets": [
