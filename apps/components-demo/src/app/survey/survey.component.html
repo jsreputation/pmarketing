@@ -1,1 +1,1 @@
-<perx-core-survey [fields]="data"></perx-core-survey>
+<perx-core-survey *ngIf="data | async as survey" [fields]="survey.fields"></perx-core-survey>

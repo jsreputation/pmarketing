@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NotificationService, ISurvey, SurveyService } from '@perxtech/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { Observable, throwError } from 'rxjs';
-import { filter, switchMap, tap } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+import { filter, switchMap } from 'rxjs/operators';
 
 interface IAnswer {
   question_id: string;
@@ -15,7 +15,6 @@ interface IAnswer {
   styleUrls: ['./survey.component.scss']
 })
 export class SurveyComponent implements OnInit {
-  public data$: Observable<ISurvey>;
   public answers: IAnswer[];
   public totalLength: number;
   public currentPointer: number;
@@ -29,7 +28,7 @@ export class SurveyComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.data$ = this.route.paramMap
+    this.route.paramMap
       .pipe(
         filter((params: ParamMap) => params.has('id')),
         switchMap((params: ParamMap) => {
@@ -39,9 +38,8 @@ export class SurveyComponent implements OnInit {
           }
           const idN = Number.parseInt(id, 10);
           return this.surveyService.getSurveyFromCampaign(idN);
-        }),
-        tap((survey: ISurvey) => this.survey = survey)
-      );
+        })
+      ).subscribe((survey: ISurvey) => this.survey = survey);
   }
 
   public get progressBarValue(): number {
@@ -56,7 +54,7 @@ export class SurveyComponent implements OnInit {
     if (surveyId) {
       this.surveyService.postSurveyAnswer(this.answers, this.route.snapshot.params.id, surveyId).subscribe(
         () => {
-          this.router.navigate(['/wallet']);
+          this.router.navigate(['/']);
           this.notificationService.addPopup({
             text: 'Here is a reward for you.',
             title: 'Thanks for completing the survey.',
