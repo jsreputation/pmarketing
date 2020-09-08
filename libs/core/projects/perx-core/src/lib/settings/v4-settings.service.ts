@@ -9,13 +9,14 @@ import {
   iif,
   Observable,
   of,
-  throwError
+  throwError,
 } from 'rxjs';
 import {
   map,
   share,
   switchMap,
   tap,
+  catchError
 } from 'rxjs/operators';
 
 import { IWSetting } from '@perxtech/whistler';
@@ -169,7 +170,8 @@ export class V4SettingsService extends SettingsService {
     return this.http.get<IV4FlagsResponse>(`${this.hostName}/v4/settings/microsite_feature_flags`).pipe(
       map((res: IV4FlagsResponse) => res.data),
       map((data: IV4Flags) => V4SettingsService.v4FlagsToFlags(data)),
-      tap((data: IFlags) => this.flags = data)
+      tap((data: IFlags) => this.flags = data),
+      catchError(err => throwError(err))
     );
   }
 
