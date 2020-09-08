@@ -320,6 +320,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.surveyCampaigns$ = this.campaignService.getCampaigns({ gameType: GameType.survey })
       .pipe(
+        switchMap((campaigns: ICampaign[]) => of(campaigns).pipe(catchError(err => of(err)))),
         takeLast(1)
       );
 
