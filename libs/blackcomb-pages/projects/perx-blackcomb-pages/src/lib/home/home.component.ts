@@ -152,6 +152,9 @@ export class HomeComponent implements OnInit, OnDestroy {
       (flags: IFlags) => {
         // todo: create a function to wrap all the rest of the init calls
         this.appRemoteFlags = flags;
+      },
+      (error) => {
+        console.log(error);
       }
     );
     this.authService.isAuthorized().subscribe((isAuth: boolean) => {
