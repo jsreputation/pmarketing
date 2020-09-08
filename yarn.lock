@@ -9075,6 +9075,13 @@ ngx-multi-line-ellipsis@^1.0.4:
   resolved "https://registry.yarnpkg.com/ngx-multi-line-ellipsis/-/ngx-multi-line-ellipsis-1.0.4.tgz#1354237469d757d8d2e4c320d3cfd516b4b3a271"
   integrity sha1-E1QjdGnXV9jS5MMg08/VFrSzonE=
 
+ngx-pinch-zoom@^2.4.4:
+  version "2.4.4"
+  resolved "https://registry.yarnpkg.com/ngx-pinch-zoom/-/ngx-pinch-zoom-2.4.4.tgz#dbc19d73d1c464888fca78c090c7e47514124dbc"
+  integrity sha512-36GZ+ck16m5xrDSz8c/ZX0u5grAelPbi6/hL/UvNSpkgkolamlsg5p+FwMwPgoHiOmwsYQpTo5FPeWmwrS9cHg==
+  dependencies:
+    tslib "^1.9.0"
+
 nice-try@^1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"

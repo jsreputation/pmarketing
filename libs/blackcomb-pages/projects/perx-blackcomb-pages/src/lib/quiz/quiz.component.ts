@@ -36,6 +36,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   public complete: boolean = false;
   public resetTimer$: Subject<void> = new Subject<void>();
   public progress$: BehaviorSubject<number> = new BehaviorSubject(0);
+  public allowPicZoom$!: Observable<boolean>;
 
   private destroy$: Subject<void> = new Subject();
   @ViewChild('overflowContainer', { static: false })
@@ -77,6 +78,9 @@ export class QuizComponent implements OnInit, OnDestroy {
     this.initTranslate();
 
     const lang = LocaleIdFactory(this.tokenStorage);
+    this.allowPicZoom$ = this.route.data.pipe(
+      map((dataObj) => dataObj.allowPicZoom)
+    );
     this.data$ = this.route.paramMap.pipe(
       filter((params: ParamMap) => params.has('cid')),
       map((params: ParamMap) => params.get('cid')),
