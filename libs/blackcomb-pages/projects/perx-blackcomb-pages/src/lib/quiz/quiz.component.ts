@@ -36,7 +36,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   public complete: boolean = false;
   public resetTimer$: Subject<void> = new Subject<void>();
   public progress$: BehaviorSubject<number> = new BehaviorSubject(0);
-  public allowPicZoom$: Observable<boolean> = true;
+  public allowPicZoom$!: Observable<boolean>;
 
   private destroy$: Subject<void> = new Subject();
   @ViewChild('overflowContainer', { static: false })
