@@ -196,6 +196,7 @@
     "@ngx-formly/material": "^5.10.0",
     "@ngx-translate/core": "^11.0.1",
     "@ngx-translate/http-loader": "^4.0.0",
+    "ngx-pinch-zoom": "^2.4.4",
     "@sentry/browser": "^5.10.1",
     "@sentry/node": "5.10.2",
     "@zxing/ngx-scanner": "^2.0.0",

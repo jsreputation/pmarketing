@@ -25,6 +25,7 @@ import { QuizComponent } from './quiz/quiz.component';
 import { ResultsComponent } from './results/results.component';
 import { SecondsToStringPipe } from './seconds-to-string.pipe';
 import { V4QuizService } from './v4-quiz.service';
+import { PinchZoomModule } from 'ngx-pinch-zoom';
 
 export function quizServiceFactory(http: HttpClient, config: ConfigService): QuizService {
   // Make decision on what to instantiate base on config
@@ -77,7 +78,8 @@ export class MyHammerConfig extends HammerGestureConfig {
     MatNativeDateModule,
     MatCheckboxModule,
     MatRadioModule,
-    MatListModule
+    MatListModule,
+    PinchZoomModule
   ],
   providers: [
     {
