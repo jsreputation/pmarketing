@@ -21,6 +21,8 @@ const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
   { path: 'game', loadChildren: () => import('./game/game.module').then(mod => mod.SHGameModule) },
   { path: 'stamp/:id', loadChildren: () => import('./stamp/stamps.module').then(mod => mod.SHStampsModule) },
+  { path: 'survey/:id', loadChildren: () => import('./survey/survey.module').then(mod => mod.SHSurveyModule) },
+  { path: 'quiz/:id', loadChildren: () => import('./quiz/quiz.module').then(mod => mod.SHQuizModule) },
   { path: 'stamp-card/:id', component: StampCardComponent },
   { path: 'congrats', component: CongratsComponent },
   { path: 'error', component: ErrorComponent }
