@@ -314,15 +314,21 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.stampCampaigns$ = this.campaignService.getCampaigns({ type: CampaignType.stamp })
       .pipe(
         tap((campaigns: ICampaign[]) => this.showCampaigns = campaigns.length > 0),
+        switchMap((campaigns: ICampaign[]) => of(campaigns).pipe(catchError(err => of(err)))),
         takeLast(1)
       );
 
     this.surveyCampaigns$ = this.campaignService.getCampaigns({ gameType: GameType.survey })
       .pipe(
+        switchMap((campaigns: ICampaign[]) => of(campaigns).pipe(catchError(err => of(err)))),
         takeLast(1)
       );
 
-    this.quizCampaigns$ = this.campaignService.getCampaigns({ gameType: GameType.quiz });
+    this.quizCampaigns$ = this.campaignService.getCampaigns({ gameType: GameType.quiz })
+      .pipe(
+        switchMap((campaigns: ICampaign[]) => of(campaigns).pipe(catchError(err => of(err)))),
+        takeLast(1)
+      );
 
     this.newsFeedItems = this.settingsService.getRssFeeds().pipe(
       map((res: IRssFeeds) => res.data ? res.data.find(feed => feed.page === RssFeedsPages.HOME) : undefined),
