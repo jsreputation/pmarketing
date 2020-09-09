@@ -1,4 +1,6 @@
-<div class="survey-page" [ngStyle]="{'background': survey.backgroundImgUrl ? 'url(' + survey.backgroundImgUrl + ')' : ''}">
+<div class="survey-page"
+     *ngIf="survey$ | async as survey"
+     [ngStyle]="{'background': survey.backgroundImgUrl ? 'url(' + survey.backgroundImgUrl + ')' : ''}">
   <perx-core-survey
     (submitted)="onSubmit($event)"
     [fields]="survey.fields"

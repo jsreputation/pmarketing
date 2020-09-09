@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NotificationService, ISurvey, SurveyService } from '@perxtech/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { throwError } from 'rxjs';
-import { filter, switchMap } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { filter, switchMap, tap } from 'rxjs/operators';
 
 interface IAnswer {
   question_id: string;
@@ -18,6 +18,7 @@ export class SurveyComponent implements OnInit {
   public answers: IAnswer[];
   public totalLength: number;
   public currentPointer: number;
+  public survey$!: Observable<ISurvey>;
   private survey: ISurvey;
 
   constructor(
@@ -28,7 +29,7 @@ export class SurveyComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.route.paramMap
+    this.survey$ = this.route.paramMap
       .pipe(
         filter((params: ParamMap) => params.has('id')),
         switchMap((params: ParamMap) => {
@@ -38,8 +39,9 @@ export class SurveyComponent implements OnInit {
           }
           const idN = Number.parseInt(id, 10);
           return this.surveyService.getSurveyFromCampaign(idN);
-        })
-      ).subscribe((survey: ISurvey) => this.survey = survey);
+        }),
+        tap((survey: ISurvey) => this.survey = survey)
+      );
   }
 
   public get progressBarValue(): number {
