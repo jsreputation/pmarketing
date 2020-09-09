@@ -49,6 +49,7 @@ export class RewardComponent implements OnInit, OnDestroy {
     text: 'INSTANT_OUTCOME_NO_REWARDS_TEXT',
     buttonTxt: 'BACK_TO_WALLET',
     imageUrl: '',
+    disableOverlayClose: true
   };
 
   public instantOutcomeNotAvailablePopUp: IPopupConfig = {
@@ -56,6 +57,7 @@ export class RewardComponent implements OnInit, OnDestroy {
     text: 'INSTANT_OUTCOME_NOT_VALID_TEXT',
     buttonTxt: 'BACK_TO_WALLET',
     imageUrl: '',
+    disableOverlayClose: true
   };
 
   private destroy$: Subject<void> = new Subject();
