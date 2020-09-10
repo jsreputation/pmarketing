@@ -100,7 +100,7 @@ export class QuizResultsComponent implements OnInit {
       ]).subscribe((res: any) => {
         const outcomeTitle = (res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_TXT']).replace('{{points}}', points);
         this.popup = {
-          title: oc(outcome).title(outcomeTitle),
+          title: oc(outcome).title['en'].text(outcomeTitle),
           /* eslint-disable */
           text: oc(outcome).subTitle['en'].text(res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_REWARD']),
           buttonTxt: oc(outcome).button['en'].text(res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_CTA']),

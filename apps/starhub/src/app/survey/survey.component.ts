@@ -19,7 +19,7 @@ export class SurveyComponent implements OnInit {
   public totalLength: number;
   public currentPointer: number;
   public survey$!: Observable<ISurvey>;
-  private survey: ISurvey;
+  public survey: ISurvey;
 
   constructor(
     private notificationService: NotificationService,
