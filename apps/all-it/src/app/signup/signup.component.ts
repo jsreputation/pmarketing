@@ -52,15 +52,7 @@ export class SignupComponent implements OnInit {
     public generalStaticDataService: GeneralStaticDataService,
     private dateAdapter: DateAdapter<Date>,
     private themesService: ThemesService,
-  ) {
-    // router.events.subscribe((event: NavigationStart) => {
-    //   if (event.navigationTrigger === 'popstate') {
-    //     if (event.url === '/otp/register') {
-    //       router.navigate(['/signup']);
-    //     }
-    //   }
-    // });
-  }
+  ) {}
 
   public ngOnInit(): void {
     this.theme = this.themesService.getThemeSetting();
