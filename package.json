@@ -83,7 +83,7 @@
     "build:prudential:production": "echo 'skipping prudential build'",
     "build:prudential:staging": "echo 'skipping prudential build'",
     "build:razer:production": "env-cmd -f apps/blackcomb/env/razer.production ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx build blackcomb -- --prod",
-    "build:razer:staging": "env-cmd -f apps/blackcomb/env/razer.production ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx build blackcomb -- --prod",
+    "build:razer:staging": "env-cmd -f apps/blackcomb/env/razer.staging ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx build blackcomb -- --prod",
     "start:razer:staging": "env-cmd -f apps/blackcomb/env/razer.staging.dev ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx serve blackcomb --",
     "start:razer:production": "env-cmd -f apps/blackcomb/env/razer.production.dev ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx serve blackcomb --",
     "build:starhub:production": "env-cmd -f apps/starhub/env/starhub.production ts-node --project tsconfig.node.json apps/starhub/set-env.ts && yarn nx build starhub -- --prod",
