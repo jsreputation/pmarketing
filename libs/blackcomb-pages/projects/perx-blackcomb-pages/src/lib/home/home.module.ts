@@ -11,7 +11,8 @@ import {
   RewardPopupComponent,
   RewardsModule,
   UtilsModule,
-  QuizModule
+  QuizModule,
+  SurveyModule
 } from '@perxtech/core';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { CampaignsCollectionComponent } from './campaigns-collection/campaigns-collection.component';
@@ -42,6 +43,7 @@ import { HomeComponent } from './home.component';
     CampaignServiceModule.forChild(),
     QuizModule,
     OutcomeModule,
+    SurveyModule
   ],
   exports: [
     HomeComponent,
