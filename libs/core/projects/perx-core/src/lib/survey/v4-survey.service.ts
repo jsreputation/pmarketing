@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ConfigService, IAnswer, IConfig, ISurvey, SurveyQuestionType, SurveyService } from '@perxtech/core';
+import { SurveyService } from './survey.service';
+import { IAnswer,  ISurvey, SurveyQuestionType } from './models/survey.model';
+import { ConfigService } from '../config/config.service';
+import { IConfig } from '../config/models/config.model';
 import { Observable, of, ReplaySubject, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Cacheable } from 'ngx-cacheable';
