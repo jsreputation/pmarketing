@@ -14,7 +14,7 @@ import {
 } from '@perxtech/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable, of, Subject } from 'rxjs';
-import { catchError, filter, map, switchMap, takeUntil } from 'rxjs/operators';
+import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -31,6 +31,8 @@ interface IAnswer {
 export class SurveyComponent implements OnInit, OnDestroy {
   @Input('data')
   public data$: Observable<ISurvey>;
+  public moveId$: Observable<number>;
+  private moveId: number;
   public intervalId: number;
   public survey: ISurvey;
   public answers: IAnswer[] = [];
@@ -107,6 +109,10 @@ export class SurveyComponent implements OnInit, OnDestroy {
       }),
       takeUntil(this.destroy$)
     );
+    this.moveId$ = this.data$.pipe(
+      switchMap((survey: ISurvey) => this.surveyService.getMoveId(survey.id)),
+      tap((moveId: number) => this.moveId = moveId)
+    );
     this.data$.subscribe(
       (survey: ISurvey) => {
         if (survey) {
@@ -138,9 +144,6 @@ export class SurveyComponent implements OnInit, OnDestroy {
               successOutcome.button || this.successPopUp.buttonTxt;
           }
         }
-      },
-      () => {
-        this.router.navigate(['/wallet']);
       }
     );
   }
@@ -150,8 +153,7 @@ export class SurveyComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  public onSubmit(_: {[key: string]: any}): void {
-    // work not done on postSurveyAnswer, endpoint likely different and fields
+  public onSubmit(finalAnswer: IAnswer): void {
     const surveyId =
       (this.survey && this.survey.id) || null;
     const isCollectDataRequired = !!(
@@ -163,9 +165,8 @@ export class SurveyComponent implements OnInit, OnDestroy {
         ? of({ hasOutcomes: true })
         : this.surveyService
           .postSurveyAnswer(
-            this.answers, // how should the answer be submitted? wait sergey
-            this.route.snapshot.params.id,
-            +surveyId
+            finalAnswer,
+            this.moveId
           )
           .pipe(
             catchError((err: HttpErrorResponse) => {
