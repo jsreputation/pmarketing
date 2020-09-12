@@ -5,7 +5,7 @@ import { Observable, throwError } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
 
 interface IAnswer {
-  question_id: string;
+  questionId: string;
   content: any;
 }
 
@@ -20,6 +20,8 @@ export class SurveyComponent implements OnInit {
   public currentPointer: number;
   public survey$!: Observable<ISurvey>;
   public survey: ISurvey;
+  public moveId$: Observable<number>;
+  private moveId: number;
 
   constructor(
     private notificationService: NotificationService,
@@ -42,41 +44,42 @@ export class SurveyComponent implements OnInit {
         }),
         tap((survey: ISurvey) => this.survey = survey)
       );
+
+    this.moveId$ = this.survey$.pipe(
+      switchMap((survey: ISurvey) => this.surveyService.getMoveId(survey.id)),
+      tap((moveId: number) => this.moveId = moveId)
+    );
   }
 
-  public get progressBarValue(): number {
-    return Math.round(this.currentPointer / this.totalLength * 100) || 0;
-  }
+  public onSubmit(finalAnswer: IAnswer): void {
+    console.log('submitting survey answers', finalAnswer);
 
-  public get surveyComplete(): boolean {
-    return this.currentPointer === this.totalLength;
-  }
-  public onSubmit(_: {[key: string]: any}): void {
-    const surveyId = this.survey && this.survey.id ? this.survey.id : null;
-    if (surveyId) {
-      this.surveyService.postSurveyAnswer(this.answers, this.route.snapshot.params.id, surveyId).subscribe(
-        () => {
-          this.router.navigate(['/']);
+    this.surveyService.postSurveyAnswer(
+      finalAnswer,
+      this.moveId
+    ).pipe(
+      tap((res: {
+        hasOutcomes: boolean,
+        answers: IAnswer[]
+      }) => this.answers = res.answers)
+    ).subscribe(
+      (res) => {
+        // reward guaranteed, need to clarified
+        if (res.hasOutcomes) {
           this.notificationService.addPopup({
             text: 'Here is a reward for you.',
             title: 'Thanks for completing the survey.',
             buttonTxt: 'View Reward',
             imageUrl: 'assets/congrats_image.png'
           });
+        } else {
+          this.notificationService.addPopup({
+            title: 'Thanks for completing the survey.',
+            buttonTxt: 'Back To Home',
+          });
         }
-      );
-    }
-  }
-
-  public setTotalLength(totalLength: number): void {
-    this.totalLength = totalLength;
-  }
-
-  public setCurrentPointer(currentPointer: number): void {
-    this.currentPointer = currentPointer;
-  }
-
-  public updateSurveyStatus(answers: IAnswer[]): void {
-    this.answers = answers;
+        this.router.navigate(['/']);
+      }
+    );
   }
 }

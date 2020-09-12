@@ -2,6 +2,7 @@
      *ngIf="survey$ | async as survey"
      [ngStyle]="{'background': survey.backgroundImgUrl ? 'url(' + survey.backgroundImgUrl + ')' : ''}">
   <perx-core-survey
+    [moveId]="moveId$ | async"
     (submitted)="onSubmit($event)"
     [fields]="survey.fields"
   ></perx-core-survey>

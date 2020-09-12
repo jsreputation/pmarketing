@@ -3,7 +3,7 @@ import { IConfig } from '../config/models/config.model';
 import { ConfigService } from '../config/config.service';
 import { IAnswer,  ISurvey, SurveyQuestionType } from './models/survey.model';
 import { SurveyService } from './survey.service';
-import { Observable, ReplaySubject, Subject } from 'rxjs';
+import { Observable, of, ReplaySubject, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Cacheable } from 'ngx-cacheable';
 import { map, switchMap } from 'rxjs/operators';
@@ -163,7 +163,10 @@ export class V4SurveyService implements SurveyService {
     );
   }
 
-  public getMoveId(gameId: number): Observable<number> {
+  public getMoveId(gameId?: number): Observable<number> {
+    if (gameId === undefined || gameId === null) {
+      return of();
+    }
     return this.baseUrl$.pipe(
       switchMap(baseUrl => this.http.post<{data: {id: number}}>(`${baseUrl}/v4/games/${gameId}/next_move`, null)),
       map((api) => api.data.id)

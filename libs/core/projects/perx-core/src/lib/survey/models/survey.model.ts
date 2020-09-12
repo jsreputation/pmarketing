@@ -49,7 +49,7 @@ export interface ISurveyOutcome {
 }
 
 export interface ISurvey {
-  id: number;
+  id?: number;
   title?: {text: string};
   subTitle?: {text: string};
   progressBarColor?: MaterialColor;

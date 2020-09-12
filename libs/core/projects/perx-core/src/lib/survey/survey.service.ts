@@ -9,5 +9,5 @@ export abstract class SurveyService {
     hasOutcomes: boolean,
     answers: IAnswer[]
   }>;
-  public abstract getMoveId(gameId: number): Observable<number>;
+  public abstract getMoveId(gameId?: number): Observable<number>;
 }
