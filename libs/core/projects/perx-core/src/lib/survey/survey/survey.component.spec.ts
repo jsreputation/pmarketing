@@ -25,10 +25,12 @@ import { PasswordComponent } from '../question/password/password.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyFieldStepperComponent } from '../formly-stepper/formly-stepper';
+import { SurveyService } from '@perxtech/core';
 
 describe('SurveyComponent', () => {
   let component: SurveyComponent;
   let fixture: ComponentFixture<SurveyComponent>;
+  const surveyServiceStub: Partial<SurveyService> = {};
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -67,6 +69,9 @@ describe('SurveyComponent', () => {
             }
           ]
         })
+      ],
+      providers: [
+        { provide: SurveyService, useValue: surveyServiceStub }
       ]
     })
       .compileComponents();
