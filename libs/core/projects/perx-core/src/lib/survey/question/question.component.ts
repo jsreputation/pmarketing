@@ -55,7 +55,7 @@ export class QuestionComponent {
   public updateAnswer(answer: IAnswer): void {
     this.question.answer = answer.content.toString();
     const questionId = answer.questionId ? answer.questionId : this.question.id;
-    this.updateAnswers.emit({ questionId, content: answer.content.toString() });
+    this.updateAnswers.emit({ questionId: questionId || 'sign-in', content: answer.content.toString() });
     this.updateNonGroupPoint();
     this.questionValidation();
   }
