@@ -1,4 +1,12 @@
-import { ChangeDetectorRef, Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  NgZone,
+  OnDestroy,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import {
   NotificationService,
   IQuiz,
@@ -23,7 +31,7 @@ import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operato
   templateUrl: './quiz.component.html',
   styleUrls: ['./quiz.component.scss']
 })
-export class QuizComponent implements OnInit {
+export class QuizComponent implements OnInit, OnDestroy {
   public data$: Observable<IQuiz>;
   public quiz: IQuiz;
   public mode: typeof QuizMode = QuizMode;
@@ -101,7 +109,6 @@ export class QuizComponent implements OnInit {
 
     this.data$.subscribe(
       (quiz: IQuiz) => {
-        console.log(quiz, 'anythign happening here???')
         this.quiz = quiz;
         this.fetchMoveId();
         this.resetTimer();
