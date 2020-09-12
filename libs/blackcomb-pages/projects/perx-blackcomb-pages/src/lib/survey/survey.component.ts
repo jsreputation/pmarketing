@@ -35,11 +35,11 @@ export class SurveyComponent implements OnInit, OnDestroy {
   private moveId: number;
   public intervalId: number;
   public survey: ISurvey;
-  public answers: IAnswer[] = [];
   private isAnonymousUser: boolean;
   private informationCollectionSetting: string;
   private destroy$: Subject<void> = new Subject();
   private popupData: IPopupConfig;
+  public answers: IAnswer[];
 
   public successPopUp: IPopupConfig = {
     title: 'SURVEY_SUCCESS_TITLE',
@@ -169,6 +169,10 @@ export class SurveyComponent implements OnInit, OnDestroy {
             this.moveId
           )
           .pipe(
+            tap((res: {
+              hasOutcomes: boolean,
+              answers: IAnswer[]
+            }) => this.answers = res.answers),
             catchError((err: HttpErrorResponse) => {
               this.popupData = this.noRewardsPopUp;
               throw err;
@@ -217,12 +221,6 @@ export class SurveyComponent implements OnInit, OnDestroy {
     } else {
       this.router.navigate(['/wallet']);
       this.notificationService.addPopup(this.popupData);
-    }
-  }
-
-  public updateSurveyStatus(answers: IAnswer[]): void {
-    if (this.answers) {
-      this.answers = answers;
     }
   }
 }

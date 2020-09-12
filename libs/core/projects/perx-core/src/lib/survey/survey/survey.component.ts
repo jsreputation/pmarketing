@@ -13,7 +13,7 @@ import { IAnswer } from '../models/survey.model';
 })
 export class SurveyComponent implements OnInit, OnChanges {
   @Output()
-  public submitted: EventEmitter<{[key: string]: any}> = new EventEmitter();
+  public submitted: EventEmitter<IAnswer> = new EventEmitter();
   @Input('fields')
   public fieldsSurvey: FormlyFieldConfig[];
   @Input('moveId')

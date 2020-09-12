@@ -24,7 +24,7 @@ interface V4NextMoveResponse {
     created_by_type: string;
     created_by_id: number;
     expiry_date: null | string;
-    answers: any[];
+    answers: V4SurveyAnswer[];
   };
 }
 
@@ -32,7 +32,7 @@ interface V4SurveyAnswerRequest {
   answer: V4SurveyAnswer;
 }
 
-interface V4SurveyAnswer {
+export interface V4SurveyAnswer {
   question_id: string;
   content: (string | number)[] | string;
 }
@@ -137,8 +137,9 @@ export class V4SurveyService implements SurveyService {
     );
   }
 
-  public postSurveyAnswer(answer: IAnswer, moveId: number): Observable<{
-    hasOutcomes: boolean
+  public postSurveyAnswer(answer: IAnswer | IAnswer[], moveId: number): Observable<{
+    hasOutcomes: boolean,
+    answers: IAnswer[]
   }> {
     const payload: V4SurveyAnswerRequest = {
       answer: {
@@ -150,7 +151,11 @@ export class V4SurveyService implements SurveyService {
       switchMap(baseUrl => this.http.patch<V4NextMoveResponse>(`${baseUrl}/v4/game_transactions/${moveId}/answer`, payload)),
       map(res => {
         return {
-          hasOutcomes: res.data.outcomes.length > 0
+          hasOutcomes: res.data.outcomes.length > 0,
+          answers: res.data.answers.map(answer => ({
+            questionId: answer.question_id,
+            content: answer.content
+          }))
         };
       })
     );
