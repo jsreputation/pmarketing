@@ -220,7 +220,6 @@ export class GameComponent implements OnInit, OnDestroy {
         if (gameOutcome.points) {
           this.points = gameOutcome.points[0];
         }
-        this.checkFailureOrSuccess();
       },
       () => {
         this.popupData = this.noRewardsPopUp;
@@ -337,7 +336,6 @@ export class GameComponent implements OnInit, OnDestroy {
               this.points = response.points[0];
             }
           }
-          this.checkFailureOrSuccess();
         }),
         catchError((err: HttpErrorResponse) => {
           this.popupData = this.noRewardsPopUp;

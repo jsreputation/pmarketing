@@ -152,6 +152,9 @@ export class HomeComponent implements OnInit, OnDestroy {
       (flags: IFlags) => {
         // todo: create a function to wrap all the rest of the init calls
         this.appRemoteFlags = flags;
+      },
+      (error) => {
+        console.log(error);
       }
     );
     this.authService.isAuthorized().subscribe((isAuth: boolean) => {
@@ -314,15 +317,21 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.stampCampaigns$ = this.campaignService.getCampaigns({ type: CampaignType.stamp })
       .pipe(
         tap((campaigns: ICampaign[]) => this.showCampaigns = campaigns.length > 0),
+        switchMap((campaigns: ICampaign[]) => of(campaigns).pipe(catchError(err => of(err)))),
         takeLast(1)
       );
 
     this.surveyCampaigns$ = this.campaignService.getCampaigns({ gameType: GameType.survey })
       .pipe(
+        switchMap((campaigns: ICampaign[]) => of(campaigns).pipe(catchError(err => of(err)))),
         takeLast(1)
       );
 
-    this.quizCampaigns$ = this.campaignService.getCampaigns({ gameType: GameType.quiz });
+    this.quizCampaigns$ = this.campaignService.getCampaigns({ gameType: GameType.quiz })
+      .pipe(
+        switchMap((campaigns: ICampaign[]) => of(campaigns).pipe(catchError(err => of(err)))),
+        takeLast(1)
+      );
 
     this.newsFeedItems = this.settingsService.getRssFeeds().pipe(
       map((res: IRssFeeds) => res.data ? res.data.find(feed => feed.page === RssFeedsPages.HOME) : undefined),

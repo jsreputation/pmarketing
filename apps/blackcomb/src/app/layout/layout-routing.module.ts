@@ -103,6 +103,10 @@ const routes: Routes = [
         canActivate: [ProtectedGuard]
       },
       {
+        path: 'booking/:id',
+        loadChildren: () => import('../rewards-booking/rewards-booking.module').then(mod => mod.RewardsBookingModule)
+      },
+      {
         path: 'profile',
         loadChildren: () => import('../profile/profile.module').then(mod => mod.ProfileModule)
       },
