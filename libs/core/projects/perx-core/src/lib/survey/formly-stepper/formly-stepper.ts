@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '
 import { FieldType, FormlyFieldConfig } from '@ngx-formly/core';
 import { SurveyService } from '../survey.service';
 import { MatHorizontalStepper } from '@angular/material';
-import { NotificationService } from '@perxtech/core';
+import { NotificationService } from '../../utils/notification/notification.service';
 
 @Component({
   selector: 'formly-field-stepper',

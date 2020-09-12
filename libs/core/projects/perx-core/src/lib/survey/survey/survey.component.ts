@@ -27,7 +27,7 @@ export class SurveyComponent implements OnInit, OnChanges {
     fieldGroup: []
   }];
 
-  public ngOnChanges(changes: SimpleChanges) {
+  public ngOnChanges(changes: SimpleChanges): void {
     if (changes.moveId) {
       this.model = {
         ...this.model,
