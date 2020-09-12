@@ -1,19 +1,31 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {
-  QuizModule,
-  QuizComponent
-} from '@perxtech/blackcomb-pages';
+import { QuizComponent } from './quiz.component';
+import { CommonModule } from '@angular/common';
+import { QuizModule as PerxCoreQuizModule, UtilsModule } from '@perxtech/core';
+import { MatButtonModule, MatCardModule, MatProgressBarModule, MatToolbarModule } from '@angular/material';
 
 const routes: Routes = [{
   path: '',
-  component: QuizComponent
+  component: QuizComponent,
+  data: {
+    allowPicZoom: true
+  }
 }];
 
 @NgModule({
+  declarations: [
+    QuizComponent
+  ],
   imports: [
-    QuizModule,
-    RouterModule.forChild(routes),
+    CommonModule,
+    PerxCoreQuizModule,
+    UtilsModule,
+    MatProgressBarModule,
+    MatCardModule,
+    MatToolbarModule,
+    MatButtonModule,
+    RouterModule.forChild(routes)
   ]
 })
 export class SHQuizModule { }
