@@ -10,7 +10,7 @@ import { ISelectPayload } from '../question/select/select.component';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 
 export interface IAnswer {
-  questionId?: string;
+  questionId: string;
   content: any;
 }
 
@@ -49,7 +49,7 @@ export interface ISurveyOutcome {
 }
 
 export interface ISurvey {
-  id?: number;
+  id: number;
   title?: {text: string};
   subTitle?: {text: string};
   progressBarColor?: MaterialColor;

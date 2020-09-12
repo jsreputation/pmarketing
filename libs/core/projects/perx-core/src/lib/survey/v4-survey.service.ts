@@ -10,6 +10,24 @@ import { oc } from 'ts-optchain';
 import { patchUrl } from '../utils/patch-url.function';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 
+interface V4NextMoveResponse {
+  data: {
+    acquired_via: string;
+    id: number;
+    user_account_id: number;
+    state: string;
+    campaign_id: number;
+    game_id: number;
+    outcomes: any[],
+    reason: null;
+    issued_at: string;
+    created_by_type: string;
+    created_by_id: number;
+    expiry_date: null | string;
+    answers: any[];
+  };
+}
+
 interface V4SurveyAnswerRequest {
   answer: V4SurveyAnswer;
 }
@@ -119,7 +137,9 @@ export class V4SurveyService implements SurveyService {
     );
   }
 
-  public postSurveyAnswer(answer: IAnswer, moveId: number): Observable<any> {
+  public postSurveyAnswer(answer: IAnswer, moveId: number): Observable<{
+    hasOutcomes: boolean
+  }> {
     const payload: V4SurveyAnswerRequest = {
       answer: {
         question_id: answer && answer.questionId,
@@ -127,9 +147,8 @@ export class V4SurveyService implements SurveyService {
       }
     };
     return this.baseUrl$.pipe(
-      switchMap(baseUrl => this.http.patch<any>(`${baseUrl}/v4/game_transactions/${moveId}/answer`, payload)),
+      switchMap(baseUrl => this.http.patch<V4NextMoveResponse>(`${baseUrl}/v4/game_transactions/${moveId}/answer`, payload)),
       map(res => {
-        console.log(res, 'look at the res')
         return {
           hasOutcomes: res.data.outcomes.length > 0
         };
@@ -139,7 +158,7 @@ export class V4SurveyService implements SurveyService {
 
   public getMoveId(gameId: number): Observable<number> {
     return this.baseUrl$.pipe(
-      switchMap(baseUrl => this.http.post<any>(`${baseUrl}/v4/games/${gameId}/next_move`, null)),
+      switchMap(baseUrl => this.http.post<{data: {id: number}}>(`${baseUrl}/v4/games/${gameId}/next_move`, null)),
       map((api) => api.data.id)
     );
   }

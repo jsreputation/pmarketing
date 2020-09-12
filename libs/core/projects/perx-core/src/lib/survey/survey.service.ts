@@ -5,5 +5,8 @@ import { IJsonApiItemPayload, IWSurveyEngagementAttributes } from '@perxtech/whi
 export abstract class SurveyService {
   public WSurveyToSurvey?(survey: IJsonApiItemPayload<Partial<IWSurveyEngagementAttributes>>): ISurvey;
   public abstract getSurveyFromCampaign(id: number): Observable<ISurvey>;
-  public abstract postSurveyAnswer(answers: IAnswer[], campaignId: number, surveyId: number): Observable<any>;
+  public abstract postSurveyAnswer(answer: IAnswer, moveId: number): Observable<{
+    hasOutcomes: boolean
+  }>;
+  public abstract getMoveId(gameId: number): Observable<number>;
 }
