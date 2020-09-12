@@ -1,109 +1,71 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatButtonModule, MatCardModule, MatProgressBarModule, MatToolbarModule } from '@angular/material';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterTestingModule } from '@angular/router/testing';
-import { TranslateModule } from '@ngx-translate/core';
-import {
-  AuthenticationService,
-  ConfigModule,
-  ICampaignService,
-  ISurvey,
-  SurveyModule as PerxSurveyModule,
-  SurveyService
-} from '@perxtech/core';
-import { WInformationCollectionSettingType } from '@perxtech/whistler';
-import { of } from 'rxjs';
-import { SurveyComponent } from './survey.component';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { AuthenticationService, ConfigService, ICampaignService, NotificationService, QuizModule, UtilsModule, Config } from '@perxtech/core';
+import { BehaviorSubject, of } from 'rxjs';
+import { QuizComponent } from './quiz.component';
 
-describe('SurveyComponent', () => {
-  let component: SurveyComponent;
-  let fixture: ComponentFixture<SurveyComponent>;
-  const iCampaignServiceStub: Partial<ICampaignService> = {};
-  const survey: ISurvey = {
-    id: 1,
-    title: {text: 'Survey Test'},
-    subTitle: {text: 'Test'},
-    results: {},
-    displayProperties: {
-      informationCollectionSetting: WInformationCollectionSettingType.signup_required,
-      noRewardsPopUp: {
-        headLine: '',
-        subHeadLine: '',
-        imageURL: '',
-        buttonTxt: ''
-      },
-      successPopUp: {
-        headLine: '',
-        subHeadLine: '',
-        imageURL: '',
-        buttonTxt: ''
-      }
-    }
-  };
-  const surveyServiceStub: Partial<SurveyService> = {
-    getSurveyFromCampaign: () => of(),
-    postSurveyAnswer: () => of()
-  };
+const campaignServiceStub: Partial<ICampaignService> = {};
+const translateServiceStub: Partial<TranslateService> = {
+  get: () => new BehaviorSubject('yo')
+};
+const configStub: Config = {};
+const authenticationServiceStub: Partial<AuthenticationService> = {
+  getAnonymous: () => false
+};
+const notificationServiceStub: Partial<NotificationService> = {};
+const configServiceStub: Partial<ConfigService> = {
+  readAppConfig: () => of({
+    apiHost: '',
+    production: false,
+    preAuth: false,
+    isWhistler: false,
+    baseHref: ''
+  })
+};
 
-  const authServiceStub: Partial<AuthenticationService> = {
-    getAnonymous: () => true,
-  };
+describe('QuizComponent', () => {
+  let component: QuizComponent;
+  let fixture: ComponentFixture<QuizComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SurveyComponent],
+      declarations: [
+        QuizComponent
+      ],
       imports: [
-        ConfigModule.forRoot({}),
-        MatCardModule,
-        MatButtonModule,
-        RouterTestingModule.withRoutes([
-          { path: 'wallet', redirectTo: '/' }
-        ]),
-        MatProgressBarModule,
+        QuizModule,
         MatToolbarModule,
-        PerxSurveyModule,
-        TranslateModule.forRoot(),
-        BrowserAnimationsModule
+        MatCardModule,
+        MatProgressBarModule,
+        RouterTestingModule,
+        HttpClientTestingModule,
+        UtilsModule,
+        TranslateModule.forRoot()
       ],
       providers: [
-        {
-          provide: ICampaignService,
-          useValue: iCampaignServiceStub
-        },
-        {
-          provide: SurveyService, useValue: surveyServiceStub
-        },
-        { provide: AuthenticationService, useValue: authServiceStub },
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            paramMap: of(convertToParamMap({ id: 1 })),
-            snapshot: {
-              params: { id: 1 }
-            }
-          }
-        },
-        {
-          provide: Router,
-          useValue: {
-            navigate: () => { }
-          }
-        },
+        { provide: ICampaignService, useValue: campaignServiceStub },
+        { provide: Config, useValue: configStub },
+        { provide: ConfigService, useValue: configServiceStub },
+        { provide: TranslateService, useValue: translateServiceStub },
+        { provide: AuthenticationService, useValue: authenticationServiceStub },
+        { provide: NotificationService, useValue: notificationServiceStub }
       ]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SurveyComponent);
+    fixture = TestBed.createComponent(QuizComponent);
     component = fixture.componentInstance;
-    component.survey = survey;
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
 });

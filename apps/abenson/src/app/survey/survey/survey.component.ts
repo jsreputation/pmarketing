@@ -5,7 +5,7 @@ import { throwError } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
 
 interface IAnswer {
-  question_id: string;
+  questionId: string;
   content: any;
 }
 
@@ -52,7 +52,7 @@ export class SurveyComponent implements OnInit {
   public onSubmit(): void {
     const surveyId = this.survey && this.survey.id ? this.survey.id : null;
     if (surveyId) {
-      this.surveyService.postSurveyAnswer(this.answers, this.route.snapshot.params.id, surveyId).subscribe(
+      this.surveyService.postSurveyAnswer(this.answers, this.route.snapshot.params.id).subscribe(
         () => {
           this.router.navigate(['/']);
           this.notificationService.addPopup({
