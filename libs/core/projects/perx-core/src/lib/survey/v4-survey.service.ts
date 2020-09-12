@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ConfigService, IAnswer, IConfig, ISurvey, SurveyQuestionType, SurveyService } from '@perxtech/core';
-import { Observable, of, ReplaySubject, Subject } from 'rxjs';
+import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Cacheable } from 'ngx-cacheable';
 import { map, switchMap } from 'rxjs/operators';
@@ -9,6 +9,15 @@ import { IV4SurveyDisplayProperties, IV4SurveyOutcome, IV4SurveyQuestion } from 
 import { oc } from 'ts-optchain';
 import { patchUrl } from '../utils/patch-url.function';
 import { FormlyFieldConfig } from '@ngx-formly/core';
+
+interface V4SurveyAnswerRequest {
+  answer: V4SurveyAnswer;
+}
+
+interface V4SurveyAnswer {
+  question_id: string;
+  content: (string | number)[] | string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +48,7 @@ export class V4SurveyService implements SurveyService {
   }
 
   private makeFormlyConfig(questionSurvey: IV4SurveyQuestion, lang: string = 'en'): FormlyFieldConfig {
-   const { payload, question, required, description } = questionSurvey;
+   const { payload, question, required, description, id } = questionSurvey;
    const formlyCustomFieldType = this.mapQuestionTypeToFormlyType(payload.type);
    return {
     templateOptions: {
@@ -48,7 +57,7 @@ export class V4SurveyService implements SurveyService {
       required
     },
     fieldGroup: [{
-      key: question[lang].text,
+      key: id,
       type: formlyCustomFieldType,
       templateOptions: {
         type: payload.multiple ? 'array' : 'string',
@@ -73,8 +82,8 @@ export class V4SurveyService implements SurveyService {
   @Cacheable({})
   public getSurveyFromCampaign(campaignId: number, lang: string = 'en'): Observable<ISurvey> {
     return this.baseUrl$.pipe(
-      switchMap(baseUrl => this.http.get<IV4CampaignResponse>(`${baseUrl}/v4/campaigns/${campaignId}`)),
-      map((res) => res.data),
+      switchMap(baseUrl => this.http.get<IV4CampaignResponse>(`${baseUrl}/v4/campaigns/${campaignId}/games`)),
+      map((res) => res.data[0]),
       map((surveyCampaign: IV4Campaign): ISurvey => {
         const dp: IV4SurveyDisplayProperties = surveyCampaign.display_properties as IV4SurveyDisplayProperties;
         const fields: FormlyFieldConfig[] = dp.questions.map((question) => this.makeFormlyConfig(question, lang));
@@ -110,41 +119,29 @@ export class V4SurveyService implements SurveyService {
     );
   }
 
-  public postSurveyAnswer(answers: IAnswer[], campaignId: number, surveyId: number): Observable<any> {
-    console.log(answers, campaignId, surveyId, 'not imeplemented yet');
-    return of('tested');
+  public postSurveyAnswer(answer: IAnswer, moveId: number): Observable<any> {
+    const payload: V4SurveyAnswerRequest = {
+      answer: {
+        question_id: answer && answer.questionId,
+        content: answer.content,
+      }
+    };
+    return this.baseUrl$.pipe(
+      switchMap(baseUrl => this.http.patch<any>(`${baseUrl}/v4/game_transactions/${moveId}/answer`, payload)),
+      map(res => {
+        console.log(res, 'look at the res')
+        return {
+          hasOutcomes: res.data.outcomes.length > 0
+        };
+      })
+    );
   }
 
-  // formly json take in requires backend integration else we do manual adapter
+  public getMoveId(gameId: number): Observable<number> {
+    return this.baseUrl$.pipe(
+      switchMap(baseUrl => this.http.post<any>(`${baseUrl}/v4/games/${gameId}/next_move`, null)),
+      map((api) => api.data.id)
+    );
+  }
 
-  // public postQuizAnswer(answer: IQAnswer, moveId: number): Observable<IAnswerResult> {
-  //   const payload: V4QuizAnswerRequest = {
-  //     answer: {
-  //       question_id: answer.questionId,
-  //       answer_ids: answer.content,
-  //       time_taken: answer.timeTaken || -1
-  //     }
-  //   };
-  //   return this.baseUrl$.pipe(
-  //     switchMap(baseUrl => this.http.put<V4QuizAnswerResponse>(`${baseUrl}/v4/game_transactions/${moveId}/answer_quiz`, payload)),
-  //     map(res => {
-  //       const result: V4AnswerResponse | undefined = res.data.answers.find(ans => answer.questionId === ans.question_id);
-  //       const points: number = oc(result).score(oc(result).is_correct() ? 1 : 0) || 0;
-  //       return {
-  //         hasOutcomes: res.data.outcomes.length > 0,
-  //         points
-  //       };
-  //     })
-  //   );
-  // }
-  //
-  // private static v2Mode2Mode(mode: V4QuizMode): QuizMode {
-  //   if (mode === V4QuizMode.swipe) {
-  //     return QuizMode.swipe;
-  //   }
-  //   if (mode === V4QuizMode.elimination) {
-  //     return QuizMode.elimination;
-  //   }
-  //   return QuizMode.basic;
-  // }
 }
