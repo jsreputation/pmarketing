@@ -32,8 +32,8 @@ export class SurveyComponent implements OnInit, OnChanges {
       this.model = {
         ...this.model,
         id: changes.moveId.currentValue
-      }
-    };
+      };
+    }
   }
 
   public ngOnInit(): void {
@@ -41,7 +41,7 @@ export class SurveyComponent implements OnInit, OnChanges {
       ...this.fields[0],
       fieldGroup: this.fieldsSurvey
     }];
-  };
+  }
 
   public onSubmit(): void {
     const answer = Object.entries(this.model).map(([key, value]): IAnswer => ({

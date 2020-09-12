@@ -23,7 +23,7 @@ export class FormlyFieldStepperComponent extends FieldType implements AfterViewI
 
   public TOTAL_LENGTH!: number;
 
-  public ngOnInit() {
+  public ngOnInit(): void {
    this.stepper.selectionChange.subscribe(
      (change) => {
        // add 1 to ignore the Id
@@ -44,7 +44,7 @@ export class FormlyFieldStepperComponent extends FieldType implements AfterViewI
            });
        }
      }
-   )
+   );
   }
 
   public ngAfterViewInit(): void {

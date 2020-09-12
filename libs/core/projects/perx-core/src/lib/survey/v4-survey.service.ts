@@ -140,27 +140,26 @@ export class V4SurveyService implements SurveyService {
     );
   }
 
-  public postSurveyAnswer(answer: IAnswer, moveId: number): Observable<{
+  public postSurveyAnswer(answerPost: IAnswer, moveId: number): Observable<{
     hasOutcomes: boolean,
     answers: IAnswer[]
   }> {
     const payload: V4SurveyAnswerRequest = {
       answer: {
-        question_id: answer && answer.questionId,
-        content: answer.content,
+        question_id: answerPost && answerPost.questionId,
+        content: answerPost.content,
       }
     };
     return this.baseUrl$.pipe(
       switchMap(baseUrl => this.http.patch<V4NextMoveResponse>(`${baseUrl}/v4/game_transactions/${moveId}/answer`, payload)),
-      map(res => {
-        return {
+      map(res => ({
           hasOutcomes: res.data.outcomes.length > 0,
           answers: res.data.answers.map(answer => ({
             questionId: answer.question_id,
             content: answer.content
           }))
-        };
-      })
+        })
+      )
     );
   }
 
