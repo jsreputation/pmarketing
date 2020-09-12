@@ -137,7 +137,7 @@ export class V4SurveyService implements SurveyService {
     );
   }
 
-  public postSurveyAnswer(answer: IAnswer | IAnswer[], moveId: number): Observable<{
+  public postSurveyAnswer(answer: IAnswer, moveId: number): Observable<{
     hasOutcomes: boolean,
     answers: IAnswer[]
   }> {

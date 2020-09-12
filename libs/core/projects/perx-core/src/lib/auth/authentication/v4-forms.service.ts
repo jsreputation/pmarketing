@@ -9,6 +9,7 @@ import { ISurvey } from '../../survey/models/survey.model';
 export class V4FormsService implements IFormsService {
   public getSignupForm(): Observable<ISurvey | undefined> { // not stepper
     return of({
+      id: 1,
       title: {text: ''},
       results: {},
       fields: [
@@ -60,6 +61,7 @@ export class V4FormsService implements IFormsService {
 
   public getLuckyDrawDetailsForm(): Observable<ISurvey | undefined> {
     return of({
+      id: 2,
       title: {text: ''},
       results: {},
       fields: [

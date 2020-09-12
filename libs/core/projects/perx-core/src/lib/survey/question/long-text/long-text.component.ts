@@ -30,7 +30,7 @@ export class LongTextComponent implements OnChanges, OnInit {
     this.subject.pipe(
       debounceTime(300)
     ).subscribe(inputValue => {
-      this.updateAnswers.emit({ content: inputValue });
+      this.updateAnswers.emit({ questionId: 'long-text', content: inputValue });
     });
   }
 
