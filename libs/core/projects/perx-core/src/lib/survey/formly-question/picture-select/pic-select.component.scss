@@ -3,11 +3,28 @@
 }
 
 .choice-content {
+  font-size: 1.4rem;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   border-radius: 2px;
   //background: white;
+
+  .choice-box {
+    display: block;
+    width: 100%;
+    height: 56px;
+    background: white;
+
+    ::ng-deep .mat-checkbox-layout,
+    ::ng-deep .mat-radio-label {
+      width: 100%;
+      height: 100%;
+      display: block !important;
+      color: #212121 !important;
+      padding: 1.6rem !important;
+    }
+  }
 
   &.selected {
     border: 2px solid #186de1;
@@ -72,7 +89,6 @@
   }
 
   .choice-label {
-    font-size: 1.4rem;
     line-height: 1.6rem;
     letter-spacing: 0.4px;
     color: #212121;
@@ -88,4 +104,3 @@
     margin-top: 2rem;
   }
 }
-

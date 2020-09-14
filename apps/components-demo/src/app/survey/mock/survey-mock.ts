@@ -1,6 +1,7 @@
 import { ISurvey } from '@perxtech/core';
 
 export const mock: ISurvey = {
+  id: 1,
   title: {text: 'Please help us knowing you better'},
   results: {},
   // questions: [

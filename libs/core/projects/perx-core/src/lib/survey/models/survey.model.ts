@@ -10,7 +10,7 @@ import { ISelectPayload } from '../question/select/select.component';
 import { FormlyFieldConfig } from '@ngx-formly/core';
 
 export interface IAnswer {
-  questionId?: string;
+  questionId: string;
   content: any;
 }
 

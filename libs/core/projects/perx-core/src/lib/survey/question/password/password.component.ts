@@ -30,7 +30,7 @@ export class PasswordComponent implements OnInit, OnChanges {
     this.subject.pipe(
       debounceTime(500)
     ).subscribe(inputValue => {
-      this.updateAnswers.emit({ content: inputValue });
+      this.updateAnswers.emit({ questionId: 'password', content: inputValue });
     });
   }
 

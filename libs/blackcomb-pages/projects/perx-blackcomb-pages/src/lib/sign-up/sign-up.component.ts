@@ -60,6 +60,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
     confirmPassword: ['', Validators.required]
   }, {validator: this.matchingPasswords('password', 'confirmPassword')}) as FormGroup;
   public countriesList$: Observable<ICountryCode[]>;
+  public moveId: number;
 
   constructor(
     protected fb: FormBuilder,
@@ -90,6 +91,12 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.oldToken = this.authService.getUserAccessToken();
     this.oldAnonymousStatus = this.authService.getAnonymous();
     this.stateData = this.location.getState() as IPrePlayStateData;
+    this.stateData = this.location.getState() as IPrePlayStateData;
+    if (this.stateData && this.stateData.campaignId) {
+      this.surveyService.getMoveId(this.stateData.campaignId).subscribe(
+        (moveId: number) => this.moveId = moveId
+      );
+    }
     const token = this.authService.getAppAccessToken();
     if (token) {
       this.appAccessTokenFetched = true;
@@ -209,7 +216,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
               this.stateData.answers &&
               this.stateData.surveyId
             ) {
-              return this.surveyService.postSurveyAnswer(this.stateData.answers, this.stateData.campaignId, this.stateData.surveyId);
+              return this.surveyService.postSurveyAnswer(this.stateData.answers[0], this.moveId);
             }
             if (this.stateData && this.stateData.engagementType === 'game' && this.stateData.transactionId) {
               return this.gameService.prePlayConfirm(this.stateData.transactionId).pipe(

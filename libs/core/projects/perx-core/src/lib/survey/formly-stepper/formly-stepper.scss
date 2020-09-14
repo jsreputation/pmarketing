@@ -1,17 +1,26 @@
-// hide the stepper-header use our progress-bar NOTE: find out how to get progress
-:host {
-  font-size: 1rem;
+// hide the stepper-header use our progress-bar
+.stepper-wrap {
+  height: 100%;
+  margin: 0; // prevents scroll bar
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    'progress'
+    'stepper';
+
+  .stepper {
+    grid-area: stepper;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+    height: 100%;
+  }
 }
 
 .question-overflow {
-  margin-top: 2rem;
-  width: 100%;
-  display: flex;
-  flex: 0 1 50rem;
-  flex-direction: column;
-  box-sizing: border-box;
   overflow-y: auto;
-  align-items: stretch;
+  max-height: 47rem;
 }
 
 :host ::ng-deep .mat-horizontal-stepper-header-container {
@@ -19,17 +28,14 @@
 }
 
 :host ::ng-deep {
-  .mat-horizontal-content-container,
-  .mat-stepper-horizontal {
+  .mat-horizontal-content-container {
     height: 100%;
+    padding: 0 24px 0 24px;
   }
 }
 
 :host ::ng-deep .mat-horizontal-stepper-content {
-  display: flex;
-  flex-direction: column;
-  height: 90%;
-  justify-content: space-between;
+  height: 100%;
 }
 
 :host ::ng-deep .mat-stepper-horizontal {
@@ -39,6 +45,7 @@
 .progress-container {
   background: var(--surface_colour, #fff);
   padding: 1.3rem 0;
+  grid-area: progress;
 
   .progress {
     z-index: 1;
@@ -74,6 +81,7 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 1.5rem;
+  padding: 1.3rem 0;
 
   .back-btn {
     flex: 0 1 36px;

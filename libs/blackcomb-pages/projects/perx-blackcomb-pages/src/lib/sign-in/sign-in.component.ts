@@ -39,7 +39,7 @@ import {
   IPrePlayStateData,
   SurveyService,
   IConfig,
-  ConfigService,
+  ConfigService
 } from '@perxtech/core';
 
 interface ISigninConfig {
@@ -64,6 +64,7 @@ export class SignInComponent implements OnInit, OnDestroy {
   private oldToken: string;
   private oldAnonymousStatus: boolean;
   private appConfig: IConfig<ISigninConfig>;
+  private moveId: number;
 
   private initForm(): void {
     this.PIForm = this.fb.group({
@@ -94,6 +95,11 @@ export class SignInComponent implements OnInit, OnDestroy {
     this.oldToken = this.authService.getUserAccessToken();
     this.oldAnonymousStatus = this.authService.getAnonymous();
     this.stateData = this.location.getState() as IPrePlayStateData;
+    if (this.stateData && this.stateData.campaignId) {
+      this.surveyService.getMoveId(this.stateData.campaignId).subscribe(
+        (moveId: number) => this.moveId = moveId
+      );
+    }
     this.authService.logout();
   }
 
@@ -159,7 +165,8 @@ export class SignInComponent implements OnInit, OnDestroy {
             this.stateData.answers &&
             this.stateData.surveyId
           ) {
-            return this.surveyService.postSurveyAnswer(this.stateData.answers, this.stateData.campaignId, this.stateData.surveyId);
+            // now submitting answer one by one through the api
+            return this.surveyService.postSurveyAnswer(this.stateData.answers[0], this.moveId);
           }
           if (this.stateData && this.stateData.engagementType === 'game' && this.stateData.transactionId) {
             return this.gameService.prePlayConfirm(this.stateData.transactionId).pipe(

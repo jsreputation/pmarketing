@@ -53,7 +53,7 @@ export class PictureSelectComponent implements OnChanges {
     } else {
       result[0] = this.selectedChoice.toString();
     }
-    this.updateAnswers.emit({ content: result });
+    this.updateAnswers.emit({ questionId: 'picture-select', content: result });
   }
   public isSelected(index: number): boolean {
     return this.payload.multiple ? this.selectedChoices && this.selectedChoices[index] : this.selectedChoice === index;

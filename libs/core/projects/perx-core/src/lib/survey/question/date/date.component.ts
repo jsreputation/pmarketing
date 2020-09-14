@@ -7,6 +7,7 @@ export interface IDatePayload {
   duration: boolean;
 }
 
+// all such components would need to be modified and ported
 @Component({
   selector: 'perx-core-date',
   templateUrl: './date.component.html',
@@ -69,7 +70,7 @@ export class DateComponent implements OnChanges, OnInit {
 
   public updateInput(value: string | IDateRange): void {
     this.answer = value;
-    this.updateAnswers.emit({ content: value });
+    this.updateAnswers.emit({ questionId: 'date', content: value });
   }
 
   public updateInputFrom(value: string): void {
@@ -77,7 +78,7 @@ export class DateComponent implements OnChanges, OnInit {
     // @ts-ignore
     /*eslint-disable*/
     if (this.answer['from'] && this.answer['to']) {
-      this.updateAnswers.emit({ content: this.answer });
+      this.updateAnswers.emit({ questionId: 'date', content: this.answer });
     }
   }
 
@@ -86,7 +87,7 @@ export class DateComponent implements OnChanges, OnInit {
     // @ts-ignore
     /*eslint-disable*/
     if (this.answer['from'] && this.answer['to']) {
-      this.updateAnswers.emit({ content: this.answer });
+      this.updateAnswers.emit({ questionId: 'date', content: this.answer });
     }
   }
 }
