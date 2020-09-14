@@ -52,7 +52,7 @@
           <span translate>NAVIGATION.DEALS</span>
         </div>
       </a>
-      <a matRipple [routerLink]="[ '/nearme' ]" routerLinkActive="active" *ngIf="appConfig.showNearMePage">
+      <a matRipple [routerLink]="[ '/nearme' ]" routerLinkActive="active" *ngIf="appConfig.showNearMePage && appRemoteFlags?.showNearMePage">
         <div class="nav-item">
           <mat-icon aria-hidden="false">location_on</mat-icon>
           <span translate>NAVIGATION.NEARME</span>
