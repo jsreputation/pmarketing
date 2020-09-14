@@ -57,7 +57,7 @@ export class QuizComponent implements OnInit, OnDestroy {
     numberOfIcons: 1,
     listType: SwipeListType.LISTWITHICON
   };
-  private submitErrorTxt: string;
+  private submitErrorTxt: string = 'Error Submitting Answer';
 
   constructor(
     private router: Router,

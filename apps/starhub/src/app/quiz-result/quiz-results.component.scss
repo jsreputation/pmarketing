@@ -1,0 +1,79 @@
+.survey-main-container {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  background-size: cover;
+  background-color: var(--background, #444);
+}
+
+.survey-page {
+  width: 100%;
+  display: flex;
+  flex: 1 1 36rem;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow-y: auto;
+  align-items: start;
+  color: white;
+  //color: var(--font_color, white);
+
+  .survey-card {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 34rem;
+    align-items: center;
+    background-size: cover;
+    max-width: 100%;
+
+    perx-core-results {
+      width: 100%;
+    }
+  }
+
+  .results-text-container {
+    width: 34rem;
+    margin: 0 auto 0 auto;
+
+    h1 {
+      margin-block-end: 0;
+      font-size: 3.4rem;
+      font-style: normal;
+      font-weight: 300;
+    }
+
+    h2 {
+      margin-block-start: 0.5rem;
+      font-size: 1.6rem;
+      font-style: normal;
+      font-weight: normal;
+    }
+  }
+}
+
+.bottom-nav-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex: 0 0 7rem;
+  font-size: 1rem;
+  line-height: 1.6rem;
+  background: transparent;
+
+  button,
+  a {
+    text-decoration: none;
+    text-align: center;
+    height: 4rem;
+    flex: 1;
+
+    &:not(:last-child) {
+      margin-right: 1.6rem;
+    }
+  }
+}
