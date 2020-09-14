@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Data, Params, Router } from '@angular/router';
-import { IPoints, SecondsToStringPipe, NotificationService, IPopupConfig, IQuiz } from '@perxtech/core';
-import { merge, Observable, of } from 'rxjs';
+import { IPoints, NotificationService, IPopupConfig, IQuiz } from '@perxtech/core';
+import { merge, Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'perx-blackcomb-pages-quiz-results',
+  selector: 'app-quiz-results',
   templateUrl: './quiz-results.component.html',
   styleUrls: ['./quiz-results.component.scss']
 })
@@ -22,18 +21,12 @@ export class QuizResultsComponent implements OnInit {
   public subTitle: string;
 
   constructor(
-    private secondsToString: SecondsToStringPipe,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private notificationService: NotificationService,
-    private translate: TranslateService
+    private notificationService: NotificationService
   ) { }
 
   public ngOnInit(): void {
-
-    this.translate.get('QUIZ_TEMPLATE.QUESTION_TIME_TAKEN').subscribe((text) => {
-      this.timeConsumed = of(text);
-    });
     merge(this.activatedRoute.data, this.activatedRoute.params)
       .pipe(
         filter((data: Data | Params) => data.results),
@@ -49,67 +42,35 @@ export class QuizResultsComponent implements OnInit {
         this.results = res.points;
         this.backgroundImgUrl = oc(res).quiz.backgroundImgUrl('');
         this.quiz = res.quiz;
-        this.fetchTitle();
-        this.fetchSubTitle();
+        this.title = this.correctAnswers !== this.results.length ? 'You Failed!' : 'You passed!';
+        this.subTitle = `You scored ${this.correctAnswers} out of ${this.results.length} Quiz Points`;
       });
-  }
-
-  public fetchTitle(): void {
-    this.translate.get('QUIZ_TEMPLATE.SUMMARY_CORRECT').subscribe((text) => {
-      this.title = text.replace('{{total_length}}', this.results.length).replace('{{total_correct}}', this.correctAnswers);
-    });
-  }
-
-  public fetchSubTitle(): void {
-    const total = this.results.reduce((sum, q) => sum + oc(q).time(0), 0);
-    if (total === 0) {
-      this.subTitle = '';
-    }
-
-    this.translate.get('QUIZ_TEMPLATE.SUMMARY_TIME_TAKEN').subscribe((text) => {
-      this.subTitle = `${text}${this.secondsToString.transform(total)}`;
-    });
   }
 
   public next(): void {
-    const points = this.results.reduce((sum, p) => sum + oc(p).points(0), 0);
     let nextRoute: string;
     if (this.correctAnswers !== this.results.length) {
       const noOutcome = oc(this.quiz).results.noOutcome(); // note: currently empty because not configured;
-      this.translate.get([
-        'QUIZ_TEMPLATE.NO_OUTCOME_SCORE',
-        'QUIZ_TEMPLATE.NO_OUTCOME_TXT',
-        'QUIZ_TEMPLATE.NO_OUTCOME_CTA'
-      ]).subscribe((res: any) => {
-        const noOutcomeTitle = (res['QUIZ_TEMPLATE.NO_OUTCOME_SCORE']).replace('{{points}}', points);
-        this.popup = {
-          title: oc(noOutcome).title(noOutcomeTitle),
-          text: oc(noOutcome).subTitle(res['QUIZ_TEMPLATE.NO_OUTCOME_TXT']),
-          imageUrl: oc(noOutcome).image(),
-          buttonTxt: oc(noOutcome).button(res['QUIZ_TEMPLATE.NO_OUTCOME_CTA'])
-        };
-        this.notificationService.addPopup(this.popup);
-      });
+      this.popup = {
+        title: oc(noOutcome).title(''),
+        text: oc(noOutcome).subTitle('Sorry try again'),
+        imageUrl: oc(noOutcome).image(),
+        buttonTxt: oc(noOutcome).button('NEXT')
+      };
+      this.notificationService.addPopup(this.popup);
       nextRoute = '/home';
     } else {
       const outcome = oc(this.quiz).results.outcome();
-      this.translate.get([
-        'QUIZ_TEMPLATE.POSITIVE_OUTCOME_TXT',
-        'QUIZ_TEMPLATE.POSITIVE_OUTCOME_REWARD',
-        'QUIZ_TEMPLATE.POSITIVE_OUTCOME_CTA'
-      ]).subscribe((res: any) => {
-        const outcomeTitle = (res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_TXT']).replace('{{points}}', points);
-        this.popup = {
-          /* eslint-disable */
-          title: oc(outcome).title['en'].text(outcomeTitle),
-          text: oc(outcome).subTitle['en'].text(res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_REWARD']),
-          buttonTxt: oc(outcome).button['en'].text(res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_CTA']),
-          imageUrl: 'assets/quiz/reward.png',
-          ctaButtonClass: 'ga_game_completion'
-          /* eslint-enable */
-        };
-        this.notificationService.addPopup(this.popup);
-      });
+      this.popup = {
+        /* eslint-disable */
+        title: oc(outcome).title['en'].text(''),
+        text: oc(outcome).subTitle['en'].text('A Reward is on your way!'),
+        buttonTxt: oc(outcome).button['en'].text('NEXT'),
+        imageUrl: 'assets/quiz/reward.png',
+        ctaButtonClass: 'ga_game_completion'
+        /* eslint-enable */
+      };
+      this.notificationService.addPopup(this.popup);
       nextRoute = '/wallet';
     }
     this.router.navigate([nextRoute]);
