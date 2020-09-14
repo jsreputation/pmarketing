@@ -30,6 +30,7 @@ export interface IConfig<T> {
   showLoyaltyProgress?: boolean;
   showCatalogOnHomePage?: boolean;
   showQuizOnHomePage?: boolean;
+  showSurveyOnHomePage?: boolean;
   showCampaignRewardsCounterOnHomepage?: boolean;
   showRewardsOnHomepage?: boolean;
   showCampaignLandingPage?: boolean;
