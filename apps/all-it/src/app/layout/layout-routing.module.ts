@@ -13,6 +13,11 @@ const routes: Routes = [
       {
         path: 'rewards', loadChildren: () => import('../rewards/rewards.module').then(mod => mod.RewardsModule),
       },
+      {
+        path: 'catalogs',
+        loadChildren: () => import('../catalog/catalog.module')
+          .then(mod => mod.CatalogModule)
+      },
       { path: 'wallet', loadChildren: () => import('../wallet/wallet.module').then((mod) => mod.WalletModule), canActivate: [WalletGuard] },
       {
         path: 'voucher-detail/:id',
