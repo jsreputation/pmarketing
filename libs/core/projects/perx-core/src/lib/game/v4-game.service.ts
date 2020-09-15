@@ -14,7 +14,9 @@ import {
   catchError,
   map,
   switchMap,
-  tap
+  tap,
+  expand,
+  reduce
 } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 import { IV4Voucher, V4VouchersService } from '../vouchers/v4-vouchers.service';
@@ -331,7 +333,16 @@ export class V4GameService implements IGameService {
   }
 
   public getActiveGames(): Observable<IGame[]> {
-    return this.campaignService.getCampaigns({ type: CampaignType.game }).pipe(
+    return this.campaignService.getCampaigns({page: 1, type: CampaignType.game })
+    .pipe(
+      expand((cs, i) => {
+        // i + 2 because index starts at 0, but for the next call, page 2 needs to load.
+        return cs.length !== 0 ? this.campaignService.getCampaigns({page: i + 2, type: CampaignType.game}) : EMPTY;
+      }),
+      reduce((acc, cs) => {
+        return acc.concat(cs);
+      }),
+      tap(cs => console.log(cs)),
       map(cs => {
         const now = (new Date()).getTime();
         return cs.filter(c => {
