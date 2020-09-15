@@ -3,7 +3,7 @@
   <div class="quiz-page">
     <div class="progress-container">
       <div class="progress">
-        <p class="progress-text">QN<strong>{{questionPointer + 1}}</strong>/{{totalLength}}</p>
+        <p class="progress-text">QN <strong>{{questionPointer + 1}}</strong>/{{totalLength}}</p>
         <perx-core-timer
           *ngIf="(quiz.timeConfig | json) != '{}'" class="timer"
           [countType]="quiz?.timeConfig?.timerType"
