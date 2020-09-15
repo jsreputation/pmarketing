@@ -317,6 +317,7 @@
     "GAME_SUCCESS_TITLE": "恭喜!",
     "GAME_SUCCESS_TEXT": "您獲得了",
     "GAME_SUCCESS_TEXT_REWARDS": "{{rewards}}份獎勵",
+    "GAME_SUCCESS_TEXT_POINT": "1積分",
     "GAME_SUCCESS_TEXT_POINTS": "{{points}}積分",
     "BACK_TO_WALLET": "回到錢包頁面",
     "GAME_NOT_VALID": "哎呀!",
