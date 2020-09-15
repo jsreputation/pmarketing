@@ -158,7 +158,14 @@ export class LoadingComponent implements OnInit, OnDestroy {
 
   private redirectAfterLogin(): void {
     if (this.campaignData && !this.isCampaignEnded) {
-      this.redirectToEngagementPage(this.campaignData.type);
+      let path = this.campaignData.type.toString();
+      if (this.campaignData.subType === 'quiz') {
+        path = 'quiz';
+      }
+      if (this.campaignData.subType === 'survey') {
+        path = 'survey';
+      }
+      this.redirectToEngagementPage(path);
     } else if (this.campaignId && this.isCampaignEnded) {
       this.initCampaignEndedPopup();
     } else {
