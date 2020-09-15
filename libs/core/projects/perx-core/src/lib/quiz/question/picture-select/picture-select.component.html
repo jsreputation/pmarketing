@@ -4,12 +4,19 @@
          [ngClass]="isSelected(choice.answer_id) ? 'selected' : ''"
          *ngFor="let choice of payload?.choices; let i = index">
       <mat-checkbox
-        class="choice-image"
+        [ngClass]="choice?.answer?.en?.image?.value?.image_url ? 'choice-image' : 'choice-box'"
         [color]="'primary'"
         (click)="onSelect(choice.answer_id)">
-        <img class="image" [src]="choice?.answer?.en?.image?.value?.image_url" [alt]="choice?.answer?.en?.text">
+        <img
+          *ngIf="choice?.answer?.en?.image?.value?.image_url else textLabel"
+          class="image" [src]="choice?.answer?.en?.image?.value?.image_url" [alt]="choice?.answer?.en?.text">
+        <ng-template #textLabel>
+          <div class="span-text-pic">
+            {{ choice?.answer?.en?.text }}
+          </div>
+        </ng-template>
       </mat-checkbox>
-      <div class="choice-label">
+      <div class="choice-label" *ngIf="choice?.answer?.en?.image?.value?.image_url">
           {{ choice?.answer?.en?.text }}
       </div>
     </div>
@@ -19,13 +26,18 @@
          [ngClass]="isSelected(choice.answer_id) ? 'selected' : ''"
          *ngFor="let choice of payload?.choices; let i = index">
       <mat-radio-button
-        class="choice-image"
+        [ngClass]="choice?.answer?.en?.image?.value?.image_url ? 'choice-image' : 'choice-box'"
         [color]="'primary'"
         [labelPosition]="'before'"
         (click)="onSelect(choice.answer_id)">
-        <img class="image" [src]="choice?.answer?.en?.image?.value?.image_url" [alt]="choice?.answer?.en?.text">
+        <img *ngIf="choice?.answer?.en?.image?.value?.image_url; else textLabel"
+             class="image" [src]="choice?.answer?.en?.image?.value?.image_url"
+             [alt]="choice?.answer?.en?.text">
+        <ng-template #textLabel>
+          {{ choice?.answer?.en?.text }}
+        </ng-template>
       </mat-radio-button>
-      <div class="choice-label">
+      <div class="choice-label" *ngIf="choice?.answer?.en?.image?.value?.image_url">
         {{ choice?.answer?.en?.text }}
       </div>
     </div>

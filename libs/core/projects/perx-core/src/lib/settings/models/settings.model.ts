@@ -17,6 +17,7 @@ export interface IFlags {
   showLoyaltyBlockOnHomePage?: boolean;
   gatekeeperUrl?: string;
   showRSSfeedCTA?: boolean;
+  showNearMePage?: boolean;
 }
 
 export interface IRssFeeds {

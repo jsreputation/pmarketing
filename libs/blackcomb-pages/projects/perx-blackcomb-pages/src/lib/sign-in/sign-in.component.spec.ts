@@ -70,7 +70,7 @@ describe('SignInComponent', () => {
   };
 
   const surveyServiceStub: Partial<SurveyService> = {
-    postSurveyAnswer: () => of({ hasOutcomes: true })
+    postSurveyAnswer: () => of({ hasOutcomes: true, answers: [] })
   };
 
   beforeEach(async(() => {

@@ -19,11 +19,6 @@ import { WInformationCollectionSettingType } from '@perxtech/whistler';
 import { of } from 'rxjs';
 import { SurveyComponent } from './survey.component';
 
-interface IAnswer {
-  questionId: string;
-  content: any;
-}
-
 describe('SurveyComponent', () => {
   let component: SurveyComponent;
   let fixture: ComponentFixture<SurveyComponent>;
@@ -170,19 +165,6 @@ describe('SurveyComponent', () => {
       expect(component.survey.displayProperties).toBe(undefined);
     }));
 
-    it('should updateSurveyStatus', () => {
-      const answers: IAnswer[] = [
-        {
-          questionId: '1',
-          content: 'test'
-        }
-      ];
-      component.updateSurveyStatus(answers);
-      expect(component.answers.length).toBe(1);
-      expect(component.answers[0].questionId).toBe('1');
-      expect(component.answers[0].content).toBe('test');
-    });
-
     describe('onSubmit', () => {
       it('should navigate to signup if informationCollectionSetting is signup_required', fakeAsync(() => {
         component.survey = survey;
@@ -208,13 +190,13 @@ describe('SurveyComponent', () => {
           engagementType: 'survey',
           surveyId: 1,
           collectInfo: true,
-          campaignId: 1,
-          answers: []
+          campaignId: 1
         };
 
         component.ngOnInit();
         component.onSubmit({
-          qn1: 'yes'
+          questionId: 'test',
+          content: 'msg'
         });
         tick();
         expect(routerSpy).toHaveBeenCalledWith(['/signup'], { state });
@@ -252,12 +234,12 @@ describe('SurveyComponent', () => {
           surveyId: 1,
           collectInfo: true,
           campaignId: 1,
-          answers: []
         };
 
         component.ngOnInit();
         component.onSubmit({
-          qn1: 'test'
+          questionId: 'test',
+          content: 'msg'
         });
         tick();
         expect(routerSpy).toHaveBeenCalledWith(['/pi'], { state });

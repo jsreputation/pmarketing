@@ -1,4 +1,9 @@
 {
+  "SURVEY_SUCCESS_TITLE": "",
+  "SURVEY_SUCCESS_TEXT": "Thank you for answering!",
+  "SURVEY_NO_REWARDS_TITLE": "",
+  "SURVEY_NO_REWARDS_TEXT": "Thank you for answering!",
+  "BACK_TO_WALLET": "Back to Wallet",
   "LANDING": {
     "CAMPAIGN_TITLE": "Weekly LIFE Dojo Winners Wanted! ",
     "CAMPAIGN_INTRO": "LIFE Dojo returns with weekly quizzes and a grand lucky draw. \nTest your knowledge and earn points to enter the lucky draw. Choose from three difficulty levels, and answer each question within 15 seconds by choosing the best answer. It’s time to play!",

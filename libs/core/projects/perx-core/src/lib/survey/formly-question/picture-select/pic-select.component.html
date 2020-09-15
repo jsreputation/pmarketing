@@ -3,18 +3,23 @@
        [ngClass]="isChecked(option) ? 'selected' : ''"
        *ngFor="let option of to.options | formlySelectOptions: field | async; let i = index">
     <mat-checkbox
-      class="choice-image"
+      [ngClass]="option.label ? 'choice-image' : 'choice-box'"
       [id]="id + '_' + i"
       [formlyAttributes]="field"
       [tabindex]="to.tabindex"
-      [color]="to.color"
+      [color]="'primary'"
       [labelPosition]="to.labelPosition"
       [checked]="isChecked(option)"
       [disabled]="formControl.disabled"
-      (change)="onChange(option.value, $event.checked)">
-      <img class="image" [src]="option.label" [alt]="option.value">
+      (change)="onChange(i + '.' + option.value, $event.checked)">
+      <img class="image"
+           *ngIf="option.label else textLabel"
+           [src]="option.label" [alt]="option.value">
+      <ng-template #textLabel>
+        {{ option.value }}
+      </ng-template>
     </mat-checkbox>
-    <div class="choice-label">
+    <div class="choice-label" *ngIf="option.label">
       {{ option.value }}
     </div>
   </div>
@@ -30,11 +35,11 @@
       <div class="single-divider"
         *ngFor="let option of to.options | formlySelectOptions: field | async; let i = index">
         <mat-radio-button
-          class="choice-image"
+          [ngClass]="option.label ? 'choice-image' : 'choice-box'"
           [id]="id + '_' + i"
           [color]="'primary'"
           [value]="option.value">
-          <img class="image" [src]="option.label" [alt]="option.value">
+          <img *ngIf="option.label" class="image" [src]="option.label" [alt]="option.value">
         </mat-radio-button>
         <div class="choice-label">
           {{ option.value }}

@@ -40,7 +40,7 @@ export class SelectComponent implements OnChanges {
     } else {
       result[0] = this.selectedChoice.toString();
     }
-    this.updateAnswers.emit({ content: result });
+    this.updateAnswers.emit({ questionId: 'select', content: result });
   }
 
   public isSelected(index: number): boolean {

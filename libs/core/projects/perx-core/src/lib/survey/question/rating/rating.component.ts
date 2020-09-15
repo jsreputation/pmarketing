@@ -51,7 +51,7 @@ export class RatingComponent implements OnChanges {
 
   public onSelect(index: number): void {
     this.selectedChoice = index;
-    this.updateAnswers.emit({ content: index });
+    this.updateAnswers.emit({ questionId: 'rating', content: index });
   }
 
   public isSelected(index: number): boolean {
