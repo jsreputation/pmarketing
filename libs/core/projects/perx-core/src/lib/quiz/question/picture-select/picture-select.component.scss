@@ -1,5 +1,9 @@
 .choice-container {
   margin-top: 1rem; // leave a bit space for if the qn has description
+  font-size: 1.4rem;
+  letter-spacing: 0.4px;
+  color: #212121;
+  font-weight: 500;
 
   .choice-content {
     font-size: 1.4rem;
@@ -12,16 +16,18 @@
     .choice-box {
       display: block;
       width: 100%;
-      height: 56px;
       background: white;
 
       ::ng-deep .mat-checkbox-layout,
       ::ng-deep .mat-radio-label {
         width: 100%;
         height: 100%;
-        display: block !important;
         color: #212121 !important;
-        padding: 1.6rem !important;
+        padding: 1.4rem !important;
+      }
+
+      ::ng-deep .mat-checkbox-inner-container {
+        margin: 0;
       }
 
       ::ng-deep .mat-radio-label-content {
@@ -92,15 +98,16 @@
     }
 
     .choice-label {
-      font-size: 1.4rem;
-      line-height: 1.6rem;
-      letter-spacing: 0.4px;
-      color: #212121;
-      max-width: 13rem; // consistent with the image and allow text position center correctly
       margin-top: 1.5rem; // space from the image
       margin-bottom: 1.5rem;
       margin-inline-start: 2rem;
-      font-weight: 500;
+    }
+
+    .span-text-pic {
+      width: 280px;
+      margin-left: 8px;
+      white-space: normal;
+      line-height: normal;
     }
   }
 }

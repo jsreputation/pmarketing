@@ -4,14 +4,19 @@
   margin: 15px 0;
 }
 
+.span-text {
+  display: block;
+  width: 30rem;
+  white-space: normal;
+  margin-left: 8px;
+}
+
 .selection-radio-button {
   margin: 5px;
 }
 
 .choice-box {
   display: block;
-  width: 312px;
-  height: 56px;
   background: white;
 
   &:not(:last-child) {
@@ -24,8 +29,11 @@
   ::ng-deep .mat-radio-label {
     width: 100%;
     height: 100%;
-    display: block !important;
     color: #212121 !important;
-    padding: 1.6rem !important;
+    padding: 1.4rem !important;
+  }
+
+  ::ng-deep .mat-checkbox-inner-container {
+    margin-top: 5px; // for alignment with text
   }
 }

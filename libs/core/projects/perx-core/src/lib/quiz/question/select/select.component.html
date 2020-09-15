@@ -7,7 +7,9 @@
               *ngFor="let choice of payload?.choices; let i = index"
               [(ngModel)]="selectedChoices[choice.id]"
               (change)="emitValue()">
-              {{choice?.title?.text}}
+              <span class="span-text">
+                {{choice?.title?.text}}
+              </span>
             </mat-checkbox>
         </div>
     </ng-container>
