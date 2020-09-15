@@ -149,7 +149,7 @@ export class SignupComponent implements OnInit {
             return;
           }
 
-          this.router.navigateByUrl('otp/register', { state: { mobileNo: codeAndMobile } });
+          this.router.navigateByUrl('otp/register', { state: { mobileNo: codeAndMobile }, skipLocationChange: true});
         },
         err => {
           this.notificationService.addSnack(err.error.message);
