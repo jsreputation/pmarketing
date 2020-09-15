@@ -71,7 +71,6 @@ export class GameComponent implements OnInit, OnDestroy {
     disableOverlayClose: true
   };
   public rewardsTxt: string;
-  public pointsTxt: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -263,9 +262,18 @@ export class GameComponent implements OnInit, OnDestroy {
     //   this.successPopUp.text += this.rewardsTxt.replace('{{rewards}}', rewardCount);
     // }
     if (pointsOutcome) {
-      this.successPopUp.text += `\n ${this.pointsTxt.replace('{{points}}', pointsOutcome.points.toString())}`;
+      if (pointsOutcome.points === 1) {
+        this.translate.get('GAME_PAGE.GAME_SUCCESS_TEXT_POINT').subscribe((text) => {
+          this.successPopUp.text += `\n ${text}`;
+          this.popupData = this.successPopUp;
+        });
+      } else {
+        this.translate.get('GAME_PAGE.GAME_SUCCESS_TEXT_POINTS').subscribe((text) => {
+          this.successPopUp.text += `\n ${text.replace('{{points}}', pointsOutcome.points.toString())}`;
+          this.popupData = this.successPopUp;
+        });
+      }
     }
-    this.popupData = this.successPopUp;
   }
 
   private fillFailure(): void {
@@ -418,7 +426,6 @@ export class GameComponent implements OnInit, OnDestroy {
       this.translate.get(this.gameNotAvailablePopUp.buttonTxt).subscribe((text) => this.gameNotAvailablePopUp.buttonTxt = text);
     }
     this.translate.get('GAME_PAGE.GAME_SUCCESS_TEXT_REWARDS').subscribe((text) => this.rewardsTxt = text);
-    this.translate.get('GAME_PAGE.GAME_SUCCESS_TEXT_POINTS').subscribe((text) => this.pointsTxt = text);
 
     if (this.isEmbedded) {
       this.successPopUp.buttonTxt = null;
