@@ -52,7 +52,8 @@ export class GameComponent implements OnInit, OnDestroy {
     text: 'GAME_PAGE.GAME_SUCCESS_TEXT',
     buttonTxt: 'GAME_PAGE.VIEW_REWARD',
     imageUrl: 'assets/congrats_image.png',
-    ctaButtonClass: 'ga_game_completion'
+    ctaButtonClass: 'ga_game_completion',
+    disableOverlayClose: true
   };
 
   public noRewardsPopUp: IPopupConfig = {
@@ -60,6 +61,7 @@ export class GameComponent implements OnInit, OnDestroy {
     text: 'GAME_PAGE.GAME_NO_REWARDS_TEXT',
     buttonTxt: 'GAME_PAGE.BACK_TO_WALLET',
     imageUrl: '',
+    disableOverlayClose: true
   };
 
   public gameNotAvailablePopUp: IPopupConfig = {
