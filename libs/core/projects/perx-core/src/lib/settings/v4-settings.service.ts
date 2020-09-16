@@ -59,6 +59,7 @@ interface IV4Flags {
     gatekeeper_url: string;
     show_rssfeed_cta: boolean;
     show_nearme: boolean;
+    show_stamp_campaigns_nav_button: boolean;
   };
 }
 
@@ -132,7 +133,8 @@ export class V4SettingsService extends SettingsService {
       showLoyaltyBlockOnHomePage: data.json_value.show_loyalty_on_home,
       gatekeeperUrl: data.json_value.gatekeeper_url,
       showRSSfeedCTA: data.json_value.show_rssfeed_cta,
-      showNearMePage: data.json_value.show_nearme
+      showNearMePage: data.json_value.show_nearme,
+      showStampCampaignsNavButton: data.json_value.show_stamp_campaigns_nav_button
     };
   }
 
