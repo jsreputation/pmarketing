@@ -102,43 +102,7 @@ yarn nx serve appauth-server
 
 # Module Dependencies
 
-When importing the following Modules you will also have to include sister modules with `forRoot()` declarations (Until a config service is made):
-
-### AuthenticationModule
-
-```typescript
-import {
-  AuthenticationModule,
-} from '@perxtech/core';
-import { environment } from '../environments/environment';
-
-@NgModule({
-...
-imports: [
-  AuthenticationModule.forRoot({env: environment}),
-]
-})
-
-```
-
-### RewardsModule
-
-```typescript
-import {
-  RewardsModule,
-  VouchersModule,
-} from '@perxtech/core';
-import { environment } from '../environments/environment';
-
-@NgModule({
-...
-imports: [
-  RewardsModule.forRoot({env: environment}),
-  VouchersModule.forRoot({env: environment}),
-]
-})
-
-```
+Section in progress
 
 ## Local Deployment
 
