@@ -84,6 +84,7 @@ import { MatSelectInfiniteScrollModule } from 'ng-mat-select-infinite-scroll';
 import { NearmeComponent } from './nearme/nearme.component';
 import { RewardsPageComponent } from './rewards-page/rewards-page.component';
 import { FavoriteRewardsComponent } from './favorite-rewards/favorite-rewards.component';
+import { StampCampaignHomeModule } from './stamp-campaign-home/stamp-campaign-home.module';
 
 const comps: any[] = [
   RewardComponent,
@@ -170,7 +171,8 @@ const comps: any[] = [
     FindLocationModule,
     MatSelectInfiniteScrollModule,
     MatAutocompleteModule,
-    CampaignServiceModule.forRoot()
+    CampaignServiceModule.forRoot(),
+    StampCampaignHomeModule
   ],
   exports: [
     ...comps,

@@ -4,6 +4,7 @@ import { StampCampaignHomeComponent } from './stamp-campaign-home.component';
 
 @NgModule({
   declarations: [StampCampaignHomeComponent],
+  exports: [StampCampaignHomeComponent],
   imports: [
     CommonModule
   ]
