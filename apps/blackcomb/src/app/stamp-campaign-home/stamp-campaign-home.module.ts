@@ -6,12 +6,12 @@ import {
 } from '@angular/router';
 import {
   PerxBlackcombPagesModule,
-  StampCardComponent
+  StampCampaignHomeComponent
 } from '@perxtech/blackcomb-pages';
 import { ConfigModule } from '@perxtech/core';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', component: StampCardComponent },
+  { path: '', pathMatch: 'full', component: StampCampaignHomeComponent },
   { path: '*', redirectTo: '' }
 ];
 
@@ -23,4 +23,4 @@ const routes: Routes = [
     RouterModule.forChild(routes),
   ]
 })
-export class StampCardHomeModule { }
+export class StampCampaignHomeModule { }

@@ -51,7 +51,7 @@ const routes: Routes = [
       },
       {
         path: 'stamp-campaigns/:id',
-        loadChildren: () => import('../stamp-card-home/stamp-card-home.module').then(mod => mod.StampCardHomeModule),
+        loadChildren: () => import('../stamp-campaign-home/stamp-campaign-home.module').then(mod => mod.StampCampaignHomeModule),
         canActivate: [ProtectedGuard]
       },
       {

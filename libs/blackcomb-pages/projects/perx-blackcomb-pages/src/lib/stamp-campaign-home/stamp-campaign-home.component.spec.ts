@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StampCardHomeComponent } from './stamp-card-home.component';
+import { StampCampaignHomeComponent } from './stamp-campaign-home.component';
 
-describe('StampCardHomeComponent', () => {
-  let component: StampCardHomeComponent;
-  let fixture: ComponentFixture<StampCardHomeComponent>;
+describe('StampCampaignHomeComponent', () => {
+  let component: StampCampaignHomeComponent;
+  let fixture: ComponentFixture<StampCampaignHomeComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StampCardHomeComponent ]
+      declarations: [ StampCampaignHomeComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StampCardHomeComponent);
+    fixture = TestBed.createComponent(StampCampaignHomeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
