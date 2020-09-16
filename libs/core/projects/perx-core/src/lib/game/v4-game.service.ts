@@ -40,7 +40,8 @@ const enum GameType {
   pinata = 'hit_the_pinata',
   scratch = 'scratch_card',
   spin = 'spin_the_wheel',
-  quiz = 'quiz'
+  quiz = 'quiz',
+  survey = 'survey'
 }
 
 export interface Asset {
@@ -263,7 +264,7 @@ export class V4GameService implements IGameService {
     return this.httpClient.get<GamesResponse>(`${this.hostName}/v4/campaigns/${campaign.id}/games`)
       .pipe(
         map(res => res.data),
-        map((games: Game[]) => games.filter((game: Game) => game.game_type !== GameType.quiz)),
+        map((games: Game[]) => games.filter((game: Game) => game.game_type !== GameType.quiz && game.game_type !== GameType.survey)),
         map((games: Game[]) => games.map((game: Game): IGame => V4GameService.v4GameToGame(game, campaign))),
         catchError(_ => EMPTY)
       );
@@ -354,7 +355,7 @@ export class V4GameService implements IGameService {
         const res: IGame[] = [];
         // eslint-disable-next-line guard-for-in
         for (const i in games) {
-          const gs = games[i].filter(game => game.type !== TYPE.quiz);
+          const gs = games[i].filter(game => game.type !== TYPE.quiz && game.type !== TYPE.survey);
           // if there is no underlying game, move on to next campaign
           if (gs.length === 0) {
             continue;
