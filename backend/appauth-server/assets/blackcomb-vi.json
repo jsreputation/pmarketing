@@ -327,6 +327,7 @@
     "GAME_SUCCESS_TITLE": "Xin chúc mừng!",
     "GAME_SUCCESS_TEXT": "Bạn đã kiếm được {{rewards}} phần thưởng",
     "GAME_SUCCESS_TEXT_REWARDS": " {{rewards}} rewards",
+    "GAME_SUCCESS_TEXT_POINT": " 1 point",
     "GAME_SUCCESS_TEXT_POINTS": " {{points}} points",
     "GAME_NOT_VALID": "Oops!",
     "BACK_TO_WALLET": "Quay lại ví",
