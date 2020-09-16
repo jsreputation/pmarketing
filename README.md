@@ -38,6 +38,21 @@ e.g.
 ```bash
 yarn start:perx-demo:staging
 ```
+
+### Generating new components
+```bash
+yarn nx g [c|m] [component-name] --project=[app-project-name]
+```
+`app-project-name` can be found in the root angular.json under the project key
+
+e.g. 
+```bash
+# a library example
+yarn nx g c my-component --project=blackcomb-pages
+
+# an app example
+yarn nx g m my-component --project=blackcomb
+```
 ### node express proxy
 
 Create `backend/apputh-server/config.json` with the following format. Ask someone for the secrets
