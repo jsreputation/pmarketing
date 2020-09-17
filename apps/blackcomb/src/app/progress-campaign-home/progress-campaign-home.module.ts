@@ -9,7 +9,7 @@ import {
 } from '@perxtech/blackcomb-pages';
 
 const routes: Routes = [
-  { path: '', component: ProgressCampaignHomeComponent },
+  { path: '', pathMatch: 'full', component: ProgressCampaignHomeComponent },
 ];
 
 @NgModule({

@@ -10,7 +10,7 @@ import {
 
 
 const routes: Routes = [
-  { path: '', component: ProgressCampaignComponent },
+  { path: '', pathMatch: 'full', component: ProgressCampaignComponent },
 ];
 
 @NgModule({
