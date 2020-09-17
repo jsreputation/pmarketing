@@ -5,6 +5,7 @@ import { UtilsModule } from '@perxtech/core';
 import { MatCardModule } from '@angular/material/card';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatRippleModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
     CommonModule,
     MatCardModule,
     MatButtonModule,
+    MatRippleModule,
     TranslateModule.forChild(),
     UtilsModule
   ],
