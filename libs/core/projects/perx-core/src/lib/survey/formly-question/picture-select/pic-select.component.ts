@@ -16,7 +16,7 @@ export class SurveyPictureSelectComponent extends FieldType {
     if (this.to.type === 'array') {
       this.formControl.patchValue(
         checked
-          ? [...(this.formControl.value || []), value]
+          ? [...new Set([...(this.formControl.value || []), value])] // when go back qn, dw to double patch
           : [...(this.formControl.value || [])].filter((o) => o !== value),
       );
     } else {
