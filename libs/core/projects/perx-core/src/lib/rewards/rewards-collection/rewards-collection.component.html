@@ -1,4 +1,4 @@
-<div [class]=" rewards$ ? 'card-collection-container' : 'card-collection-container loading'">
+<drag-scroll [class]=" rewards$ ? 'card-collection-container' : 'card-collection-container loading'">
   <ng-container *ngIf="rewards$ | async as rewards; else elseBlock">
     <mat-card matRipple *ngFor="let reward of rewards" (click)="rewardClickedHandler(reward)">
       <img mat-card-image *ngIf="reward.rewardThumbnail || defaultImg" [class.no-image]="!reward.rewardThumbnail"
@@ -51,4 +51,4 @@
       </mat-card-content>
     </mat-card>
   </ng-template>
-</div>
+</drag-scroll>
