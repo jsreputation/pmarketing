@@ -85,6 +85,7 @@ import { NearmeComponent } from './nearme/nearme.component';
 import { RewardsPageComponent } from './rewards-page/rewards-page.component';
 import { FavoriteRewardsComponent } from './favorite-rewards/favorite-rewards.component';
 import { StampCampaignHomeModule } from './stamp-campaign-home/stamp-campaign-home.module';
+import { PageComponentsModule } from './page-components/page-components.module';
 
 const comps: any[] = [
   RewardComponent,
@@ -99,7 +100,7 @@ const comps: any[] = [
   LeaderboardPageComponent,
   NearmeComponent,
   RewardsPageComponent,
-  FavoriteRewardsComponent
+  FavoriteRewardsComponent,
 ];
 
 @NgModule({
@@ -172,7 +173,8 @@ const comps: any[] = [
     MatSelectInfiniteScrollModule,
     MatAutocompleteModule,
     CampaignServiceModule.forRoot(),
-    StampCampaignHomeModule
+    StampCampaignHomeModule,
+    PageComponentsModule
   ],
   exports: [
     ...comps,

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent, HomeModule as BCPHomeModule } from '@perxtech/blackcomb-pages';
+import { HomeComponent, PerxBlackcombPagesModule} from '@perxtech/blackcomb-pages';
 import { RewardPopupComponent } from '@perxtech/core';
 const routes: Routes = [{
   path: '',
@@ -9,7 +9,7 @@ const routes: Routes = [{
 
 @NgModule({
   imports: [
-    BCPHomeModule,
+    PerxBlackcombPagesModule,
     RouterModule.forChild(routes)
   ],
   entryComponents: [
