@@ -27,9 +27,8 @@ export class FormlyFieldStepperComponent extends FieldType implements AfterViewI
    this.stepper.selectionChange.subscribe(
      (change) => {
        // add 1 to ignore the Id
-       const answerEntry = Object.entries(this.model)[
-         change.previouslySelectedIndex === 0 ? change.previouslySelectedIndex + 1
-           : change.previouslySelectedIndex]; // the first index in model is occupied by the moveId
+       // the first index in model is occupied by the moveId
+       const answerEntry = Object.entries(this.model)[change.previouslySelectedIndex + 1];
        if (answerEntry) {
          this.surveyService.postSurveyAnswer(
            {
