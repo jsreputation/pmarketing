@@ -86,6 +86,8 @@ import { RewardsPageComponent } from './rewards-page/rewards-page.component';
 import { FavoriteRewardsComponent } from './favorite-rewards/favorite-rewards.component';
 import { ProgressCampaignHomeModule } from './progress-campaign-home/progress-campaign-home.module';
 import { PageComponentsModule } from './page-components/page-components.module';
+import { ProgressCampaignComponent } from './progress-campaign/progress-campaign.component';
+import { ProgressCampaignModule } from './progress-campaign/progress-campaign.module';
 
 const comps: any[] = [
   RewardComponent,
@@ -101,6 +103,7 @@ const comps: any[] = [
   NearmeComponent,
   RewardsPageComponent,
   FavoriteRewardsComponent,
+  ProgressCampaignComponent
 ];
 
 @NgModule({
@@ -174,7 +177,8 @@ const comps: any[] = [
     MatAutocompleteModule,
     CampaignServiceModule.forRoot(),
     ProgressCampaignHomeModule,
-    PageComponentsModule
+    PageComponentsModule,
+    ProgressCampaignModule
   ],
   exports: [
     ...comps,

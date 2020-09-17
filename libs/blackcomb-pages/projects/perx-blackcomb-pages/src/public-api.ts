@@ -83,3 +83,5 @@ export { BACK_ARROW_URLS } from './lib/perx-blackcomb-pages.constants';
 export { FavoriteRewardsComponent } from './lib/favorite-rewards/favorite-rewards.component';
 export { ProgressCampaignHomeModule } from './lib/progress-campaign-home/progress-campaign-home.module'
 export { ProgressCampaignHomeComponent } from './lib/progress-campaign-home/progress-campaign-home.component'
+export { ProgressCampaignModule } from './lib/progress-campaign/progress-campaign.module'
+export { ProgressCampaignComponent } from './lib/progress-campaign/progress-campaign.component'

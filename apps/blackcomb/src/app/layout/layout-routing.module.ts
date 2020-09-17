@@ -55,6 +55,11 @@ const routes: Routes = [
         canActivate: [ProtectedGuard]
       },
       {
+        path: 'progress-campaign/:id',
+        loadChildren: () => import('../progress-campaign/progress-campaign.module').then(mod => mod.ProgressCampaignModule),
+        canActivate: [ProtectedGuard]
+      },
+      {
         path: 'pi', loadChildren: () => import('../pi/pi.module').then(mod => mod.PiModule),
         canActivate: [ProtectedGuard]
       },
