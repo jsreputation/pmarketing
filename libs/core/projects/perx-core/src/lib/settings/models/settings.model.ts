@@ -18,7 +18,7 @@ export interface IFlags {
   gatekeeperUrl?: string;
   showRSSfeedCTA?: boolean;
   showNearMePage?: boolean;
-  showStampCampaignsNavButton?: boolean;
+  showProgressCampaignsNavButton?: boolean;
 }
 
 export interface IRssFeeds {
