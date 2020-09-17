@@ -89,3 +89,7 @@ mat-card {
 .ellipsis-1-line {
   @include ellipse-lines(1);
 }
+
+.ellipsis-2-line {
+  @include ellipse-lines(2);
+}
