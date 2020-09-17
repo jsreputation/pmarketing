@@ -338,7 +338,6 @@ export class V4GameService implements IGameService {
       // i + 2 because index starts at 0, but for the next call, page 2 needs to load.
       expand((cs, i) => cs.length !== 0 ? this.campaignService.getCampaigns({page: i + 2, type: CampaignType.game}) : EMPTY),
       reduce((acc, cs) => acc.concat(cs)),
-      tap(cs => console.log(cs)),
       map(cs => {
         const now = (new Date()).getTime();
         return cs.filter(c => {
