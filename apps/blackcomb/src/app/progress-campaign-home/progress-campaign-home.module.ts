@@ -5,11 +5,11 @@ import {
 } from '@angular/router';
 import {
   PerxBlackcombPagesModule,
-  StampCampaignHomeComponent,
+  ProgressCampaignHomeComponent,
 } from '@perxtech/blackcomb-pages';
 
 const routes: Routes = [
-  { path: '', component: StampCampaignHomeComponent },
+  { path: '', component: ProgressCampaignHomeComponent },
 ];
 
 @NgModule({
@@ -18,4 +18,4 @@ const routes: Routes = [
     RouterModule.forChild(routes),
   ]
 })
-export class StampCampaignHomeModule { }
+export class ProgressCampaignHomeModule { }

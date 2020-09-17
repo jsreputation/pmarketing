@@ -26,10 +26,10 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'perx-blackcomb-pages-campaign-card-home',
-  templateUrl: './stamp-campaign-home.component.html',
-  styleUrls: [ './stamp-campaign-home.component.scss' ]
+  templateUrl: './progress-campaign-home.component.html',
+  styleUrls: [ './progress-campaign-home.component.scss' ]
 })
-export class StampCampaignHomeComponent implements OnInit {
+export class ProgressCampaignHomeComponent implements OnInit {
   public appConfig: IConfig<void>;
   public stampCampaigns$: Observable<ICampaign[]>;
   public appRemoteFlags: IFlags;
@@ -88,7 +88,8 @@ export class StampCampaignHomeComponent implements OnInit {
     //   return;
     // }
 
-    // todo: unit test - expected to be stamps only here
-    this.router.navigate([`${campaign.type}/${campaign.id}`]);
+    // todo: unit test - expected to be progress campaigns only here
+
+    this.router.navigate([`progress-campaign/${campaign.id}`]);
   }
 }

@@ -50,8 +50,8 @@ const routes: Routes = [
         canActivate: [ProtectedGuard]
       },
       {
-        path: 'stamp-campaigns',
-        loadChildren: () => import('../stamp-campaign-home/stamp-campaign-home.module').then(mod => mod.StampCampaignHomeModule),
+        path: 'progress-campaigns',
+        loadChildren: () => import('../progress-campaign-home/progress-campaign-home.module').then(mod => mod.ProgressCampaignHomeModule),
         canActivate: [ProtectedGuard]
       },
       {

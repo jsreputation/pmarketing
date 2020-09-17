@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StampCampaignHomeComponent } from './stamp-campaign-home.component';
+import { ProgressCampaignHomeComponent } from './progress-campaign-home.component';
 import { CampaignServiceModule } from '@perxtech/core';
 import { PageComponentsModule } from '../page-components/page-components.module';
 
 @NgModule({
   declarations: [
-    StampCampaignHomeComponent,
+    ProgressCampaignHomeComponent,
   ],
-  exports: [StampCampaignHomeComponent],
+  exports: [ProgressCampaignHomeComponent],
   imports: [
     CommonModule,
     CampaignServiceModule.forChild(),
     PageComponentsModule
   ]
 })
-export class StampCampaignHomeModule { }
+export class ProgressCampaignHomeModule { }

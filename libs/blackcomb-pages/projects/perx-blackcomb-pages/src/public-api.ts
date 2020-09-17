@@ -81,5 +81,5 @@ export { TransactionShowComponent } from './lib/rebates/transaction-show/transac
 export { NearmeComponent } from './lib/nearme/nearme.component';
 export { BACK_ARROW_URLS } from './lib/perx-blackcomb-pages.constants';
 export { FavoriteRewardsComponent } from './lib/favorite-rewards/favorite-rewards.component';
-export { StampCampaignHomeModule } from './lib/stamp-campaign-home/stamp-campaign-home.module'
-export { StampCampaignHomeComponent } from './lib/stamp-campaign-home/stamp-campaign-home.component'
+export { ProgressCampaignHomeModule } from './lib/progress-campaign-home/progress-campaign-home.module'
+export { ProgressCampaignHomeComponent } from './lib/progress-campaign-home/progress-campaign-home.component'
