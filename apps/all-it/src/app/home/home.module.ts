@@ -16,12 +16,10 @@ import {
   UtilsModule,
   QuizModule
 } from '@perxtech/core';
-import {
-  HomeModule as BCPHomeModule
-} from '@perxtech/blackcomb-pages';
 
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { HomeComponent } from './home.component';
+import { PageComponentsModule } from '@perxtech/blackcomb-pages';
 
 const routes: Routes = [{
   path: '',
@@ -33,7 +31,6 @@ const routes: Routes = [{
     HomeComponent,
   ],
   imports: [
-    BCPHomeModule,
     CommonModule,
     RouterModule,
     MatCardModule,
@@ -49,6 +46,7 @@ const routes: Routes = [{
     QuizModule,
     OutcomeModule,
     RouterModule.forChild(routes),
+    PageComponentsModule,
   ],
   exports: [
     HomeComponent
