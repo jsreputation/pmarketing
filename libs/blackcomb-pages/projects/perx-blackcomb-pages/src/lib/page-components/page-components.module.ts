@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
 import { GamesCollectionComponent } from '../home/games-collection/games-collection.component';
 import { CatalogsComponent } from '../home/catalogs/catalogs.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { CatalogsComponent } from '../home/catalogs/catalogs.component';
     MatButtonModule,
     MatRippleModule,
     TranslateModule.forChild(),
-    UtilsModule
+    UtilsModule,
+    RouterModule
   ],
   exports: [
     GamesCollectionComponent,
