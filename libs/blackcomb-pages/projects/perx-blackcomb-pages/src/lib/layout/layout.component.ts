@@ -43,6 +43,7 @@ import { FindLocationComponent } from '../find-location/find-location.component'
 import { RebatesWalletComponent } from '../rebates/rebates-wallet/rebates-wallet.component';
 import { NearmeComponent } from '../nearme/nearme.component';
 import { RewardsPageComponent } from '../rewards-page/rewards-page.component';
+import { ProgressCampaignHomeComponent } from '../progress-campaign-home/progress-campaign-home.component';
 
 export interface ShowTitleInHeader {
   getTitle(): string;
@@ -130,6 +131,7 @@ export class LayoutComponent implements OnInit {
       ref instanceof TransactionHistoryComponent ||
       ref instanceof RebatesWalletComponent ||
       ref instanceof RewardsPageComponent ||
+      ref instanceof ProgressCampaignHomeComponent ||
       ref instanceof NearmeComponent;
     this.cd.detectChanges();
   }

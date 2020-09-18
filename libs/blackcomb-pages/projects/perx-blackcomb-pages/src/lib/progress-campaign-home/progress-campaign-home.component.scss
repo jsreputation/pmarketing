@@ -1,0 +1,19 @@
+.page {
+  background-color: var(--background);
+  min-height: 100%;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.games, .campaigns {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 2rem;
+  margin: 2.4rem 1.5rem 1.6rem;
+  line-height: 2.3rem;
+  color: var(--font_color);
+  font-weight: 500;
+}

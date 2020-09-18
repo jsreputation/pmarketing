@@ -38,6 +38,21 @@ e.g.
 ```bash
 yarn start:perx-demo:staging
 ```
+
+### Generating new components
+```bash
+yarn nx g [c|m] [component-name] --project=[app-project-name]
+```
+`app-project-name` can be found in the root angular.json under the project key
+
+e.g. 
+```bash
+# a library example
+yarn nx g c my-component --project=blackcomb-pages
+
+# an app example
+yarn nx g m my-component --project=blackcomb
+```
 ### node express proxy
 
 Create `backend/apputh-server/config.json` with the following format. Ask someone for the secrets
@@ -87,43 +102,7 @@ yarn nx serve appauth-server
 
 # Module Dependencies
 
-When importing the following Modules you will also have to include sister modules with `forRoot()` declarations (Until a config service is made):
-
-### AuthenticationModule
-
-```typescript
-import {
-  AuthenticationModule,
-} from '@perxtech/core';
-import { environment } from '../environments/environment';
-
-@NgModule({
-...
-imports: [
-  AuthenticationModule.forRoot({env: environment}),
-]
-})
-
-```
-
-### RewardsModule
-
-```typescript
-import {
-  RewardsModule,
-  VouchersModule,
-} from '@perxtech/core';
-import { environment } from '../environments/environment';
-
-@NgModule({
-...
-imports: [
-  RewardsModule.forRoot({env: environment}),
-  VouchersModule.forRoot({env: environment}),
-]
-})
-
-```
+Section in progress
 
 ## Local Deployment
 

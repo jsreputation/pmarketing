@@ -45,6 +45,21 @@ const routes: Routes = [
         canActivate: [ProtectedGuard]
       },
       {
+        path: 'stamp-card/:id',
+        loadChildren: () => import('../stamp/stamp.module').then(mod => mod.StampModule),
+        canActivate: [ProtectedGuard]
+      },
+      {
+        path: 'progress-campaign/:id',
+        loadChildren: () => import('../progress-campaign/progress-campaign.module').then(mod => mod.ProgressCampaignModule),
+        canActivate: [ProtectedGuard]
+      },
+      {
+        path: 'progress-campaigns',
+        loadChildren: () => import('../progress-campaign-home/progress-campaign-home.module').then(mod => mod.ProgressCampaignHomeModule),
+        canActivate: [ProtectedGuard]
+      },
+      {
         path: 'pi', loadChildren: () => import('../pi/pi.module').then(mod => mod.PiModule),
         canActivate: [ProtectedGuard]
       },
@@ -64,11 +79,6 @@ const routes: Routes = [
       {
         path: 'lucky-draw',
         loadChildren: () => import('../lucky-draw-details/lucky-draw-details.module').then((mod) => mod.LuckyDrawDetailsModule),
-        canActivate: [ProtectedGuard]
-      },
-      {
-        path: 'stamp-card/:id',
-        loadChildren: () => import('../stamp/stamp.module').then(mod => mod.StampModule),
         canActivate: [ProtectedGuard]
       },
       {
