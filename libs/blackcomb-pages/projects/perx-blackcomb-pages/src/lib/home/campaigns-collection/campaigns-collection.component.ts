@@ -76,26 +76,27 @@ export class CampaignsCollectionComponent implements OnInit {
       this.rewardsLeft = text;
     });
 
-    this.campaignsWithRewards$ = this.campaigns$.pipe(
-      switchMap(
-        (campaigns: ICampaign[]) => zip(...campaigns.map(campaign => this.campaignService.getVoucherLeftCount(campaign.id))
-        )),
-      tap(rewardsArr => {
-        rewardsArr.forEach((reward) => {
-          this.rewardsCountBvrSubjects[reward.campaignId] = new BehaviorSubject(0);
-          this.rewardsCountBvrSubjects[reward.campaignId].next(reward.count);
-        });
-      }),
-      withLatestFrom(this.campaigns$),
-      map(
-        ([rewardsArr, campaigns]) => {
-          const rewardsCampaignIndexedObj = rewardsArr.reduce((acc, curr) => ({
-            ...acc, [curr.campaignId]: curr.count
-          }), {});
-          return campaigns.map(campaign => ({...campaign, rewardsCount: rewardsCampaignIndexedObj[campaign.id]}));
-        }
-      ));
-
+    if (this.campaigns$) {
+      this.campaignsWithRewards$ = this.campaigns$.pipe(
+        switchMap(
+          (campaigns: ICampaign[]) => zip(...campaigns.map(campaign => this.campaignService.getVoucherLeftCount(campaign.id))
+          )),
+        tap(rewardsArr => {
+          rewardsArr.forEach((reward) => {
+            this.rewardsCountBvrSubjects[reward.campaignId] = new BehaviorSubject(0);
+            this.rewardsCountBvrSubjects[reward.campaignId].next(reward.count);
+          });
+        }),
+        withLatestFrom(this.campaigns$),
+        map(
+          ([ rewardsArr, campaigns ]) => {
+            const rewardsCampaignIndexedObj = rewardsArr.reduce((acc, curr) => ({
+              ...acc, [curr.campaignId]: curr.count
+            }), {});
+            return campaigns.map(campaign => ({ ...campaign, rewardsCount: rewardsCampaignIndexedObj[campaign.id] }));
+          }
+        ));
+    }
     iif(
       () => this.withRewardsCounter,
       this.campaignsWithRewards$,
