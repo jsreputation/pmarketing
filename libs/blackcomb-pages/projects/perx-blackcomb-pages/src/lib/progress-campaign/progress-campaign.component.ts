@@ -9,7 +9,7 @@ export class ProgressCampaignComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
   }
 
 }
