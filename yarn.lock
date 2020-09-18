@@ -9054,6 +9054,13 @@ ngx-currency@2.0.0:
   resolved "https://registry.yarnpkg.com/ngx-currency/-/ngx-currency-2.0.0.tgz#8b6de97f65caa934562e272487049d0864ee1d65"
   integrity sha512-B5oZLrkSgnGGQ271TT4MoNvsDb3ATMDKPKHuDKNKvfqA9QQXVXl7HCWjQ/0WOep/alh6mpJYJI8xQkCk6TCP5g==
 
+ngx-drag-scroll@^9.0.0-beta.4:
+  version "9.0.0-beta.4"
+  resolved "https://registry.yarnpkg.com/ngx-drag-scroll/-/ngx-drag-scroll-9.0.0-beta.4.tgz#45f50983feb4bb8cfb6402157549ce8b83d50de6"
+  integrity sha512-hn1Vgbb5Xlh8I6mZHogk5RfZ4ZJRBvE0scKhRxVQPk+yEWNRt09Ie+8yeBHBYLm5/rNVwQZBqXg4Ue+SBia9ng==
+  dependencies:
+    tslib "^1.10.0"
+
 ngx-ellipsis@^2.0.9:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/ngx-ellipsis/-/ngx-ellipsis-2.1.2.tgz#dad1a4bdeeaab005740c7eaaf1d4aca40cffdadf"

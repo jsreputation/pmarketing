@@ -13,6 +13,7 @@ import { ThemesService } from '../../utils/themes/themes.service';
 import { MatIconModule } from '@angular/material';
 import { TokenStorage } from '../../utils/storage/token-storage.service';
 import { Config } from '../../config/config';
+import { DragScrollModule } from 'ngx-drag-scroll';
 
 describe('RewardsCollectionComponent', () => {
   let component: RewardsCollectionComponent;
@@ -104,7 +105,8 @@ describe('RewardsCollectionComponent', () => {
       imports: [
         MaterialModule,
         UtilsModule,
-        MatIconModule
+        MatIconModule,
+        DragScrollModule
       ],
       providers: [
         { provide: ThemesService, useValue: themesServiceStub },

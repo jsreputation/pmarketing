@@ -13,6 +13,7 @@ import { Config } from '../config/config';
 import { WhistlerRewardsService } from './whistler-rewards.service';
 import { StampsCardsListComponent } from '../stamp/stamps-cards-list/stamps-cards-list.component';
 import { ConfigService } from '../config/config.service';
+import { DragScrollModule } from 'ngx-drag-scroll';
 
 const components = [
   RewardsCollectionComponent,
@@ -35,6 +36,7 @@ export function rewardsServiceFactory(http: HttpClient, config: Config, configSe
     ...components,
   ],
   imports: [
+    DragScrollModule,
     CommonModule,
     MaterialModule,
     UtilsModule
