@@ -6,10 +6,14 @@ import { MatCardModule } from '@angular/material/card';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
+import { GamesCollectionComponent } from '../home/games-collection/games-collection.component';
+import { CatalogsComponent } from '../home/catalogs/catalogs.component';
 
 @NgModule({
   declarations: [
-    CampaignsCollectionComponent
+    GamesCollectionComponent,
+    CampaignsCollectionComponent,
+    CatalogsComponent
   ],
   imports: [
     CommonModule,
@@ -20,7 +24,9 @@ import { MatRippleModule } from '@angular/material/core';
     UtilsModule
   ],
   exports: [
-    CampaignsCollectionComponent
+    GamesCollectionComponent,
+    CampaignsCollectionComponent,
+    CatalogsComponent
   ]
 })
 export class PageComponentsModule {}

@@ -85,3 +85,4 @@ export { ProgressCampaignHomeModule } from './lib/progress-campaign-home/progres
 export { ProgressCampaignHomeComponent } from './lib/progress-campaign-home/progress-campaign-home.component';
 export { ProgressCampaignModule } from './lib/progress-campaign/progress-campaign.module';
 export { ProgressCampaignComponent } from './lib/progress-campaign/progress-campaign.component';
+export { PageComponentsModule } from './lib/page-components/page-components.module';
