@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
 import { GamesCollectionComponent } from '../home/games-collection/games-collection.component';
 import { CatalogsComponent } from '../home/catalogs/catalogs.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
@@ -22,6 +23,7 @@ import { RouterModule } from '@angular/router';
     MatButtonModule,
     MatRippleModule,
     TranslateModule.forChild(),
+    InfiniteScrollModule,
     UtilsModule,
     RouterModule
   ],
