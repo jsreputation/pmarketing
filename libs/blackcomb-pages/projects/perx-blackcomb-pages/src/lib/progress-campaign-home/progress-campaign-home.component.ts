@@ -52,7 +52,10 @@ export class ProgressCampaignHomeComponent implements OnInit {
         this.initCampaign();
       }),
       switchMap(() => this.settingsService.getTenantAppSettings('microsite_custom_content')),
-      tap((settings: IMicrositeSettings) => this.bannerImg = <string>settings.jsonValue.campaign_banner),
+      tap((settings: IMicrositeSettings) => {
+        this.bannerImg = <string>settings.jsonValue.campaign_banner;
+        this.showPageTitle = !this.bannerImg;
+      }),
       switchMap(() => this.settingsService.getRemoteFlagsSettings())
     ).subscribe(
       (flags: IFlags) => {
@@ -69,7 +72,6 @@ export class ProgressCampaignHomeComponent implements OnInit {
   private initCampaign(): void {
     this.stampCampaigns$ = this.campaignService.getCampaigns({ type: CampaignType.stamp })
       .pipe(
-        tap((campaigns: ICampaign[]) => this.showPageTitle = campaigns.length > 0 && !this.bannerImg),
         switchMap((campaigns: ICampaign[]) => of(campaigns).pipe(catchError(err => of(err)))),
         takeLast(1)
       );
