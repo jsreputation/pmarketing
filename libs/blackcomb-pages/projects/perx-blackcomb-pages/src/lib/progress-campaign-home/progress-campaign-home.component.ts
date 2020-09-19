@@ -97,4 +97,7 @@ export class ProgressCampaignHomeComponent implements OnInit {
 
     this.router.navigate([`progress-campaign/${campaign.id}`]);
   }
+
+//  START CUSTOM RAZER THROWAWAY CODE
+//  END CUSTOM RAZER THROWAWAY CODE
 }
