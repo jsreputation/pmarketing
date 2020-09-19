@@ -33,7 +33,7 @@ export class ProgressCampaignHomeComponent implements OnInit {
   public appConfig: IConfig<void>;
   public stampCampaigns$: Observable<ICampaign[]>;
   public appRemoteFlags: IFlags;
-  public showCampaigns: boolean = false;
+  public showPageTitle: boolean = false;
 
   constructor(
     protected router: Router,
@@ -65,7 +65,7 @@ export class ProgressCampaignHomeComponent implements OnInit {
   private initCampaign(): void {
     this.stampCampaigns$ = this.campaignService.getCampaigns({ type: CampaignType.stamp })
       .pipe(
-        tap((campaigns: ICampaign[]) => this.showCampaigns = campaigns.length > 0),
+        tap((campaigns: ICampaign[]) => this.showPageTitle = campaigns.length > 0),
         switchMap((campaigns: ICampaign[]) => of(campaigns).pipe(catchError(err => of(err)))),
         takeLast(1)
       );
