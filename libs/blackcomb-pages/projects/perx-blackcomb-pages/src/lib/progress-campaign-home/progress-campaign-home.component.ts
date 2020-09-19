@@ -9,6 +9,7 @@ import {
   ICampaignService,
   IConfig,
   IFlags,
+  IMicrositeSettings,
   SettingsService
 } from '@perxtech/core';
 import {
@@ -34,6 +35,7 @@ export class ProgressCampaignHomeComponent implements OnInit {
   public stampCampaigns$: Observable<ICampaign[]>;
   public appRemoteFlags: IFlags;
   public showPageTitle: boolean = false;
+  public bannerImg: string;
 
   constructor(
     protected router: Router,
@@ -49,6 +51,8 @@ export class ProgressCampaignHomeComponent implements OnInit {
         this.appConfig = config;
         this.initCampaign();
       }),
+      switchMap(() => this.settingsService.getTenantAppSettings('microsite_custom_content')),
+      tap((settings: IMicrositeSettings) => this.bannerImg = <string>settings.jsonValue.campaign_banner),
       switchMap(() => this.settingsService.getRemoteFlagsSettings())
     ).subscribe(
       (flags: IFlags) => {
@@ -65,10 +69,11 @@ export class ProgressCampaignHomeComponent implements OnInit {
   private initCampaign(): void {
     this.stampCampaigns$ = this.campaignService.getCampaigns({ type: CampaignType.stamp })
       .pipe(
-        tap((campaigns: ICampaign[]) => this.showPageTitle = campaigns.length > 0),
+        tap((campaigns: ICampaign[]) => this.showPageTitle = campaigns.length > 0 && !this.bannerImg),
         switchMap((campaigns: ICampaign[]) => of(campaigns).pipe(catchError(err => of(err)))),
         takeLast(1)
       );
+
   }
 
   public goToCampaignPage(campaign: ICampaign): void {
