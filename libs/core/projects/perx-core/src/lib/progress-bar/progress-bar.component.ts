@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
 @Component({
@@ -9,7 +9,7 @@ import { Observable, of } from 'rxjs';
   ]
 })
 
-export class ProgressBarComponent implements OnInit {
+export class ProgressBarComponent {
   @Input()
   public stampImgUrl: string = 'https://perx-cdn-staging.s3.amazonaws.com/razer-assets/razer-stamp.png';
   @Input()
