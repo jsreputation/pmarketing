@@ -11,21 +11,15 @@ import { Observable, of } from 'rxjs';
 
 export class ProgressBarComponent implements OnInit {
   @Input()
-  stampImgUrl: string = 'https://perx-cdn-staging.s3.amazonaws.com/razer-assets/razer-stamp.png';
+  public stampImgUrl: string = 'https://perx-cdn-staging.s3.amazonaws.com/razer-assets/razer-stamp.png';
   @Input()
-  noStampImgUrl: string = 'https://perx-cdn-staging.s3.amazonaws.com/razer-assets/unstamped.png';
+  public noStampImgUrl: string = 'https://perx-cdn-staging.s3.amazonaws.com/razer-assets/unstamped.png';
   @Input()
-  stages: number = 5;
+  public stages: number = 5;
   @Input()
-  updater$: Observable<number> = of(2);
+  public updater$: Observable<number> = of(2);
   @Input()
-  stageLabels: string|number[] = [1, 10, 30, 60, 120];
-
-  constructor() {
-  }
-
-  ngOnInit() {
-  }
+  public stageLabels: string|number[] = [1, 10, 30, 60, 120];
 
   // helper function for rendering # slots using ngFor
   public arrayFromNumber(n: number): any[] {
