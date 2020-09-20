@@ -318,3 +318,9 @@ export { PosService } from './lib/pos/pos.service';
 export { TransactionsServiceModule } from './lib/transactions/transaction-service/transactions.service.module';
 export { TransactionsService } from './lib/transactions/transaction-service/transactions.service';
 export { ITransaction, ITransactionProperties, TransactionState } from './lib/transactions/models/transactions.model';
+
+/**
+ * ProgressBar
+ */
+export { ProgressBarModule } from './lib/progress-bar/progress-bar.module';
+export { ProgressBarComponent } from './lib/progress-bar/progress-bar.component';

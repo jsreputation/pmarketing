@@ -1,0 +1,49 @@
+.relative-container {
+  position: relative;
+  min-height: 60px;
+  width: 34rem;
+  align-items: center;
+  display: flex;
+  margin: 0 auto;
+}
+
+.in-progress {
+  background: #44D62C;
+  line-height: 0.4em;
+
+  /* Hide the text. */
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.to-progress {
+  background: #D6D6D6;
+  line-height: 0.4em;
+
+  /* Hide the text. */
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+#stepProgressBar {
+  position: absolute;
+  border: 1px solid red; // temp
+  display: flex;
+  min-width: 100%;
+  justify-content: space-between;
+  align-items: center;
+
+  .stamp-img {
+    width: 24px;
+    height: 24px;
+    background-size: auto;
+    line-height: 7rem;
+    //
+    //&::before {
+    //  content: '';
+    //}
+  }
+
+}
