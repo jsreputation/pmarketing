@@ -53,7 +53,7 @@ export class ProgressCampaignHomeComponent implements OnInit {
       }),
       switchMap(() => this.settingsService.getTenantAppSettings('microsite_custom_content')),
       tap((settings: IMicrositeSettings) => {
-        this.bannerImg = <string>settings.jsonValue.campaign_banner;
+        this.bannerImg = <string> settings.jsonValue.campaign_banner;
         this.showPageTitle = !this.bannerImg;
       }),
       switchMap(() => this.settingsService.getRemoteFlagsSettings())
