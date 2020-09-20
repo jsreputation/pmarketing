@@ -1,8 +1,6 @@
 /*
  * Public API Surface of perx-core
  */
-import { RewardsLargeListComponent } from './lib/rewards/rewards-large-list/rewards-large-list.component';
-
 export { PerxCoreModule } from './lib/perx-core.module';
 /**
  * Shared
