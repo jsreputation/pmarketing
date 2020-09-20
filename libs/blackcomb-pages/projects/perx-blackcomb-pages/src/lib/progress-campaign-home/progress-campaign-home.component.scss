@@ -17,3 +17,17 @@
   color: var(--font_color);
   font-weight: 500;
 }
+
+.banner-img {
+  max-height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+
+  img {
+    flex-shrink: 0;
+    min-width: 100%;
+    min-height: 100%
+  }
+}

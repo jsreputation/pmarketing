@@ -9,6 +9,7 @@ import {
   ICampaignService,
   IConfig,
   IFlags,
+  IMicrositeSettings,
   SettingsService
 } from '@perxtech/core';
 import {
@@ -33,7 +34,8 @@ export class ProgressCampaignHomeComponent implements OnInit {
   public appConfig: IConfig<void>;
   public stampCampaigns$: Observable<ICampaign[]>;
   public appRemoteFlags: IFlags;
-  public showCampaigns: boolean = false;
+  public showPageTitle: boolean = false;
+  public bannerImg: string;
 
   constructor(
     protected router: Router,
@@ -48,6 +50,11 @@ export class ProgressCampaignHomeComponent implements OnInit {
       map((config: IConfig<void>) => {
         this.appConfig = config;
         this.initCampaign();
+      }),
+      switchMap(() => this.settingsService.getTenantAppSettings('microsite_custom_content')),
+      tap((settings: IMicrositeSettings) => {
+        this.bannerImg = <string> settings.jsonValue.campaign_banner;
+        this.showPageTitle = !this.bannerImg;
       }),
       switchMap(() => this.settingsService.getRemoteFlagsSettings())
     ).subscribe(
@@ -65,10 +72,10 @@ export class ProgressCampaignHomeComponent implements OnInit {
   private initCampaign(): void {
     this.stampCampaigns$ = this.campaignService.getCampaigns({ type: CampaignType.stamp })
       .pipe(
-        tap((campaigns: ICampaign[]) => this.showCampaigns = campaigns.length > 0),
         switchMap((campaigns: ICampaign[]) => of(campaigns).pipe(catchError(err => of(err)))),
         takeLast(1)
       );
+
   }
 
   public goToCampaignPage(campaign: ICampaign): void {
@@ -92,4 +99,7 @@ export class ProgressCampaignHomeComponent implements OnInit {
 
     this.router.navigate([`progress-campaign/${campaign.id}`]);
   }
+
+//  START CUSTOM RAZER THROWAWAY CODE
+//  END CUSTOM RAZER THROWAWAY CODE
 }
