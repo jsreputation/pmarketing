@@ -14,12 +14,14 @@ import { WhistlerRewardsService } from './whistler-rewards.service';
 import { StampsCardsListComponent } from '../stamp/stamps-cards-list/stamps-cards-list.component';
 import { ConfigService } from '../config/config.service';
 import { DragScrollModule } from 'ngx-drag-scroll';
+import { RewardsLargeListComponent } from './rewards-large-list/rewards-large-list.component';
 
 const components = [
   RewardsCollectionComponent,
   RewardsListComponent,
   RewardsListTabbedComponent,
   RewardComponent,
+  RewardsLargeListComponent,
   StampsCardsListComponent
 ];
 
