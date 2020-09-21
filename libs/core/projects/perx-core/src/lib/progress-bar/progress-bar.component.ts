@@ -1,8 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { Observable, of } from 'rxjs';
 
 @Component({
-  selector: 'progress-bar',
+  selector: 'perx-progress-bar',
   templateUrl: 'progress-bar.component.html',
   styleUrls: [
     'progress-bar.component.scss'
@@ -17,7 +16,7 @@ export class ProgressBarComponent {
   @Input()
   public stages: number = 5;
   @Input()
-  public updater$: Observable<number> = of(2);
+  public current: number = 2;
   @Input()
   public stageLabels: string|number[] = [1, 10, 30, 60, 120];
 

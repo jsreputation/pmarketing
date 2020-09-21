@@ -33,6 +33,12 @@ export enum CampaignState {
   draft = 'draft'
 }
 
+export interface CampaignProgress {
+  stages: number;
+  current: number;
+  stageLabels: string|number[];
+}
+
 export interface ICampaign {
   id: number;
   name: string;
@@ -51,6 +57,7 @@ export interface ICampaign {
   rawPayload?: any;
   displayProperties?: CampaignDisplayProperties;
   referralCodes?: string[];
+  progress?: CampaignProgress;
 }
 
 export enum CommChannel {

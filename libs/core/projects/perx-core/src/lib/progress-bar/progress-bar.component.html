@@ -1,4 +1,4 @@
-<div class="relative-container" *ngIf="updater$| async as current">
+<div class="relative-container" *ngIf="current">
   <p class="in-progress" [ngStyle]="{
       'width': ((current / stages) * 100) - 10 + '%'
     }">
