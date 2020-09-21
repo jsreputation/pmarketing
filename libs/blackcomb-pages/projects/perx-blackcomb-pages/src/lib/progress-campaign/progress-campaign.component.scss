@@ -1,0 +1,20 @@
+.page {
+  height: 100%;
+  background-color: var(--background);
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow-y: auto;
+
+  .banner {
+    width: 100%;
+    background: var(--surface_colour);
+    min-height: 10rem;
+    flex: 1;
+    border-radius: 0;
+  }
+
+  .rewards {
+    padding: 1.2rem 1.5rem 2.4rem;
+  }
+}
