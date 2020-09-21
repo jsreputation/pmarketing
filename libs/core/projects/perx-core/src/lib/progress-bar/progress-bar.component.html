@@ -1,0 +1,27 @@
+<div class="relative-container" *ngIf="updater$| async as current">
+  <p class="in-progress" [ngStyle]="{
+      'width': ((current / stages) * 100) - 10 + '%'
+    }">
+    hidden
+  </p>
+  <p class="to-progress" [ngStyle]="{
+      'width': ((1 - current / stages) * 100) + 10 + '%'
+    }">
+    hidden
+  </p>
+  <div id="stepProgressBar">
+      <!--  testing progress bar-->
+      <!--  will take in 2 images - stampurl and unstamped url-->
+      <!--  take in a param named stages for how many bar tiers-->
+      <!--  takes in an observable to update the progress async-->
+      <!--  take in optionally startValue and endValue-->
+      <div *ngFor="let stamp of arrayFromNumber(stages); let i = index"
+           class="stamp-img"
+           [ngStyle]="{
+            'background-image': 'url(' + (current >= i + 1 ? stampImgUrl : noStampImgUrl) + ')'
+           }">
+        {{stageLabels[i]}}
+      </div>
+    </div>
+</div>
+
