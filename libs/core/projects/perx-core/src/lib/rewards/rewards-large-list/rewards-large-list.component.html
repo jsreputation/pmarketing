@@ -7,7 +7,7 @@
         <mat-card matRipple
           *ngFor="let reward of rewards" (click)="rewardClickedHandler(reward)">
           <div class="img-wrapper">
-            <img class="puzzle-img"*ngIf="reward.rewardThumbnail || defaultImg"
+            <img class="thumbnail-img"*ngIf="reward.rewardThumbnail || defaultImg"
                  [class.no-image]="!reward.rewardThumbnail"
                  [src]="reward.rewardThumbnail || defaultImg"
                  [alt]="reward.name" />
