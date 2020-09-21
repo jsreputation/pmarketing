@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { MatCardModule } from '@angular/material/card';
 import { ProgressCampaignComponent } from './progress-campaign.component';
 import {
   ConfigService,
@@ -31,7 +31,8 @@ describe('ProgressCampaignComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ProgressCampaignComponent ],
       imports: [
-        RewardsModule
+        RewardsModule,
+        MatCardModule
       ],
       providers: [
         {
