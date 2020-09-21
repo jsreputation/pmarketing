@@ -1,5 +1,5 @@
-@import "../../custom-theme";
-@import "../../mixins";
+@import "../custom-theme";
+@import "../mixins";
 
 mat-card {
   display: flex;
@@ -75,15 +75,6 @@ mat-card {
       }
     }
   }
-}
-
-.flex-for-button {
-  display: flex;
-}
-
-.see-button {
-  margin: 0.8rem 1.6rem;
-  flex-grow: 1;
 }
 
 .ellipsis-1-line {
