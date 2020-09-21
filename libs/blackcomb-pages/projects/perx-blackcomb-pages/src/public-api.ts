@@ -86,3 +86,5 @@ export { ProgressCampaignHomeComponent } from './lib/progress-campaign-home/prog
 export { ProgressCampaignModule } from './lib/progress-campaign/progress-campaign.module';
 export { ProgressCampaignComponent } from './lib/progress-campaign/progress-campaign.component';
 export { PageComponentsModule } from './lib/page-components/page-components.module';
+export { RazAdaptedCampaignsCollectionComponent } from './lib/raz-adapted-campaigns-collection/raz-adapted-campaigns-collection.component';
+export { RazAdaptedCampaignsCollectionModule } from './lib/raz-adapted-campaigns-collection/raz-adapted-campaigns-collection.module';
