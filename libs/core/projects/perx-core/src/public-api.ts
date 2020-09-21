@@ -160,6 +160,7 @@ export { RewardsCollectionComponent } from './lib/rewards/rewards-collection/rew
 export { RewardComponent } from './lib/rewards/reward/reward.component';
 export { RewardsListTabbedComponent } from './lib/rewards/rewards-list-tabbed/rewards-list-tabbed.component';
 export { RewardsListComponent } from './lib/rewards/rewards-list/rewards-list.component';
+export { RewardsLargeListComponent } from './lib/rewards/rewards-large-list/rewards-large-list.component';
 /**
  * Utils
  */
