@@ -12,6 +12,7 @@ import {
   convertToParamMap
 } from '@angular/router';
 import { of } from 'rxjs';
+import { RouterTestingModule } from '@angular/router/testing';
 
 const campaignServiceStub: Partial<ICampaignService> = {
   getCampaign: () => of(),
@@ -31,6 +32,7 @@ describe('ProgressCampaignComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ProgressCampaignComponent ],
       imports: [
+		RouterTestingModule,
         RewardsModule,
         MatCardModule
       ],

@@ -3,6 +3,6 @@
     <!-- todo: put the progress bar here -->
   </mat-card>
   <div class="rewards" *ngIf="rewards$">
-    <perx-core-rewards-large-list [rewardsList]="rewards$"></perx-core-rewards-large-list>
+    <perx-core-rewards-large-list [rewardsList]="rewards$" (tapped)="goToReward($event)"></perx-core-rewards-large-list>
   </div>
 </div>
