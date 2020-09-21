@@ -25,7 +25,6 @@
     }
 
     svg {
-      height: 10.5rem;
       background: #4E4E4E;
     }
   }
@@ -139,11 +138,10 @@
 }
 
 mat-card {
-  margin: 1.2rem 0;
   display: flex;
+  margin: 1.2rem 0;
+  flex-direction: column;
   padding: 0;
-  flex: 0 0 10.5rem;
-  height: 10.5rem;
   cursor: pointer;
   align-items: center;
   justify-content: space-between;
