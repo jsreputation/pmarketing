@@ -62,7 +62,7 @@ export class ProgressCampaignComponent implements OnInit {
     ).subscribe(
       (campaign: ICampaign) => {
         this.campaign = campaign;
-        this.rewards$ = campaign.rewards ? of(campaign.rewards): null;
+        this.rewards$ = campaign.rewards ? of(campaign.rewards) : null;
       },
       (error) => {
         console.log(error);
