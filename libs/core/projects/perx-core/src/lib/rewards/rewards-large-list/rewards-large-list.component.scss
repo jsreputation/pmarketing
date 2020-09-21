@@ -3,21 +3,16 @@
 
 .reward-content {
   display: flex;
-  flex-basis: auto;
-  flex-grow: 1;
-  justify-content: center;
+  flex-direction: column;
 
   .reward-img__wrapper {
-    flex: 0 0 10.5rem;
-    height: 10.5rem;
-    width: 10.5rem;
     display: flex;
     justify-content: center;
     overflow: hidden;
+    max-height: 20rem;
 
     img {
       margin: auto;
-      height: 10.5rem;
     }
 
     .no-image {
@@ -34,46 +29,54 @@
     display: flex;
     flex-direction: column;
     flex: 1;
-    padding: 1.6rem 0;
-    padding-left: 0.8rem;
+    padding: 1.2rem 0.8rem;
     box-sizing: border-box;
+    width: 100%;
 
-    &:nth-child(1) {
-      margin-top: 0;
-    }
+    .mat-card-content {
+      margin: 0;
+      display: flex;
 
-    h1 {
-      font-size: 1.6rem;
-      line-height: 1.6rem;
-      padding: 0;
-      font-weight: 500;
-      margin: 4px 0;
-    }
+      h1 {
+        font-size: 1.6rem;
+        line-height: 1.6rem;
+        padding: 0;
+        font-weight: 500;
+        margin: 4px 0;
+      }
 
-    p {
-      font-size: 1.2rem;
-      line-height: 1.6rem;
-      min-height: 1.6rem;
-      //color: #e42713;
-      margin: 4px 0;
-      padding: 0;
-    }
+      p {
+        font-size: 1.2rem;
+        line-height: 1.6rem;
+        min-height: 1.6rem;
+        //color: #e42713;
+        margin: 4px 0;
+        padding: 0;
+      }
 
-    .description {
-      font-size: 1.2rem;
-    }
+      .ellipse-2-lines {
+        @include ellipse-lines(2);
+      }
 
-    .ellipse-2-lines {
-      @include ellipse-lines(2);
-    }
+      &.bottom-content {
+        flex-direction: row;
+        font-size: 1.2rem;
 
-    .reward-price-details {
-      font-size: 1rem;
-      line-height: 1.4rem;
-      min-height: 1.4rem;
-      color: #ddac27;
-      align-content: flex-end;
-      margin-top: auto;
+        .description {
+          align-self: flex-start;
+          flex: 0.3;
+        }
+
+        .spacer {
+          flex: 0.4;
+        }
+
+        .counter {
+          align-self: flex-end;
+          flex: 0.3;
+          text-align: end;
+        }
+      }
     }
   }
 
