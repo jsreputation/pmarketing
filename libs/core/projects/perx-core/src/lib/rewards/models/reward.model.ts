@@ -24,6 +24,12 @@ export interface IReward {
   redemptionText?: string;
   rawPayload?: any;
   displayProperties?: IWRewardDisplayProperties;
+  customFields?: { [key: string]: any };
+}
+
+export interface IReferralReward extends IReward {
+  refereeRequired: number;
+  balanceTillReward: number;
 }
 
 export interface IRewardState {

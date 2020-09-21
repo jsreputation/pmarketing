@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material';
-import { CampaignServiceModule, LoyaltyModule, ProgressBarModule, SafeHtmlPipe, StampModule, SurveyModule } from '@perxtech/core';
+import { CampaignServiceModule, LoyaltyModule, ProgressBarModule, StampModule, SurveyModule } from '@perxtech/core';
 import { RazAdaptedCampaignsCollectionComponent } from './raz-adapted-campaigns-collection.component';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -18,9 +18,6 @@ import { TranslateModule } from '@ngx-translate/core';
     LoyaltyModule,
     CampaignServiceModule.forChild(),
     TranslateModule.forChild()
-  ],
-  providers: [
-    SafeHtmlPipe
   ],
   exports: [
     RazAdaptedCampaignsCollectionComponent
