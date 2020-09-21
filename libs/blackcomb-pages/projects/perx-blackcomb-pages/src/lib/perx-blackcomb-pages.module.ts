@@ -90,7 +90,6 @@ import { PageComponentsModule } from './page-components/page-components.module';
 import { ProgressCampaignComponent } from './progress-campaign/progress-campaign.component';
 import { ProgressCampaignModule } from './progress-campaign/progress-campaign.module';
 import { RazAdaptedCampaignsCollectionModule } from './raz-adapted-campaigns-collection/raz-adapted-campaigns-collection.module';
-import { RazAdaptedCampaignsCollectionComponent } from './raz-adapted-campaigns-collection/raz-adapted-campaigns-collection.component';
 
 const comps: any[] = [
   RewardComponent,
@@ -107,7 +106,6 @@ const comps: any[] = [
   RewardsPageComponent,
   FavoriteRewardsComponent,
   ProgressCampaignComponent,
-  RazAdaptedCampaignsCollectionComponent
 ];
 
 @NgModule({

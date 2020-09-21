@@ -4,6 +4,7 @@ import { ProgressCampaignHomeComponent } from './progress-campaign-home.componen
 import { CampaignServiceModule } from '@perxtech/core';
 import { PageComponentsModule } from '../page-components/page-components.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { RazAdaptedCampaignsCollectionModule } from '../raz-adapted-campaigns-collection/raz-adapted-campaigns-collection.module';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { TranslateModule } from '@ngx-translate/core';
     CommonModule,
     CampaignServiceModule.forChild(),
     TranslateModule,
-    PageComponentsModule
+    PageComponentsModule,
+    RazAdaptedCampaignsCollectionModule
   ]
 })
 export class ProgressCampaignHomeModule { }
