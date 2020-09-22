@@ -1,6 +1,6 @@
 <div class="relative-container">
   <p class="in-progress" [ngStyle]="{
-      'width': ((current / stages) * 100) + '%'
+      'width': (current && stages) ?((current / stages) * 100) : 0 + '%'
     }">
     hidden
   </p>
@@ -20,7 +20,7 @@
            [ngStyle]="{
             'background-image': 'url(' + (current >= i + 1 ? stampImgUrl : noStampImgUrl) + ')'
            }">
-        <span *ngIf="stageLabels[i]">{{stageLabels[i]}}</span>
+        <span *ngIf="stageLabels && stageLabels[i]">{{stageLabels[i]}}</span>
       </div>
     </div>
 </div>

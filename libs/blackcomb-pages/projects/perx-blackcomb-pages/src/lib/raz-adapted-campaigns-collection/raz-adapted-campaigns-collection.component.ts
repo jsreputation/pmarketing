@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { BehaviorSubject, Observable, of, zip } from 'rxjs';
+import { BehaviorSubject, Observable, zip } from 'rxjs';
 import { CampaignType, ICampaign, ICampaignService, LoyaltyService, StampService } from '@perxtech/core';
-import { map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { listAnimation } from '../home/games-collection/games-collection.animation';
 
 @Component({
@@ -46,7 +46,6 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
   // if referral call as is but map the referral fields
 
   public ngOnInit(): void {
-    this.loyaltyService.getLoyalty(1).subscribe(res => console.log(res, 'loyalty rpesent and i have everything?'))
     if (this.campaigns$) {
       this.campaignsWithProgress$ = this.campaigns$.pipe(
         // call the mapperService here, have it as a method here first, priority: do stamps first
@@ -54,14 +53,21 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
           (campaigns: ICampaign[]) => zip(...campaigns.map(campaign => {
             if (campaign.type === CampaignType.stamp) {
               return this.stampService.getCards(campaign.id).pipe(
-                map((stampCards) => ({
-                    stages: stampCards[0].displayProperties.rewardPositions ? stampCards[0].displayProperties.rewardPositions.length : 2,
-                    current: (stampCards[0].stamps && stampCards[0].stamps.length) || 0,
-                    stageLabels: stampCards[0].displayProperties.rewardPositions ?
-                      stampCards[0].displayProperties.rewardPositions.sort((a,b) => a - b) :
-                      []
+                // there is only going to be one stamp. take first obj in array,
+                // configured to be one single stampcard
+                map((stampCards) => {
+                  if (stampCards && stampCards[0] && stampCards[0].displayProperties) {
+                    return ({
+                        stages: stampCards[0].displayProperties.rewardPositions ? stampCards[0].displayProperties.rewardPositions.length : 2,
+                        current: (stampCards[0].stamps && stampCards[0].stamps.length) || 0,
+                        stageLabels: stampCards[0].displayProperties.rewardPositions ?
+                          stampCards[0].displayProperties.rewardPositions.sort((a,b) => a - b) :
+                          []
+                      }
+                    )
                   }
-                ))
+                  return {};
+                })
               ) as any;
             } else if (campaign.type === CampaignType.give_reward) {
               // only supports one loyalty prgm, hardcode default
@@ -78,7 +84,7 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
                        )], []).filter(v => v)
                      };
                    }
-                   return of({}); // return an empty obj
+                   return {}; // return an empty obj
                  })
                );
             } else if (campaign.type === CampaignType.invite) {
@@ -93,7 +99,7 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
                         .sort((a,b) => a - b)
                     }
                   }
-                  return of({});
+                  return {};
                 })
               );
             }
@@ -102,8 +108,7 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
         withLatestFrom(this.campaigns$),
         map(
           ([progress, campaigns]) => campaigns.map((campaign, index) => ({ ...campaign, progress: progress[index] }))
-        ),
-        tap(res => console.log(res, 'ensure the job is done i have progress proeprrty'))
+        )
       );
     }
   }
