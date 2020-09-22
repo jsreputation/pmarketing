@@ -7,11 +7,8 @@ import {
   Observable,
   of
 } from 'rxjs';
-import {
-  IPrice,
-  IReward,
-  TokenStorage
-} from '@perxtech/core';
+import { IPrice, IReward } from '../models/reward.model';
+import { TokenStorage } from '../../utils/storage/token-storage.service';
 import { map } from 'rxjs/operators';
 
 @Component({
