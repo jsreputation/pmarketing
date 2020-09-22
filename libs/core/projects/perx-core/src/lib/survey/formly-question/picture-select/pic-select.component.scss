@@ -38,10 +38,8 @@
   }
 
   .choice-image {
-    flex: 1 1 auto;
     position: relative;
-    // background: #4e4e4e 50%;
-    //background-size: cover;
+    width: 100%;
     overflow: hidden;
 
     &:focus {
