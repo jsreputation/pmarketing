@@ -1,7 +1,4 @@
-import {
-  Component,
-  OnInit
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   CampaignType,
   ConfigService,
@@ -12,17 +9,8 @@ import {
   IMicrositeSettings,
   SettingsService
 } from '@perxtech/core';
-import {
-  catchError,
-  map,
-  switchMap,
-  takeLast,
-  tap
-} from 'rxjs/operators';
-import {
-  Observable,
-  of
-} from 'rxjs';
+import { catchError, map, switchMap, takeLast, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
@@ -32,7 +20,7 @@ import { Router } from '@angular/router';
 })
 export class ProgressCampaignHomeComponent implements OnInit {
   public appConfig: IConfig<void>;
-  public stampCampaigns$: Observable<ICampaign[]>;
+  public campaigns$: Observable<ICampaign[]>;
   public appRemoteFlags: IFlags;
   public showPageTitle: boolean = false;
   public bannerImg: string;
@@ -70,7 +58,7 @@ export class ProgressCampaignHomeComponent implements OnInit {
   }
 
   private initCampaign(): void {
-    this.stampCampaigns$ = this.campaignService.getCampaigns({ type: CampaignType.stamp })
+    this.campaigns$ = this.campaignService.getCampaigns()
       .pipe(
         switchMap((campaigns: ICampaign[]) => of(campaigns).pipe(catchError(err => of(err)))),
         takeLast(1)

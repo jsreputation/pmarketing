@@ -154,6 +154,9 @@ export class V4CampaignService implements ICampaignService {
           V4RewardsService.v4RewardToReward(reward)
         );
       }
+      if (campaign.campaign_config.referees_attained !== null || undefined) {
+        refersAttained = campaign.campaign_config.referees_attained;
+      }
     }
     return {
       id: campaign.id,

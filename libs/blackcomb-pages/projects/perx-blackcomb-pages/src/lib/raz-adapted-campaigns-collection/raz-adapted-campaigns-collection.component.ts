@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BehaviorSubject, Observable, of, zip } from 'rxjs';
-import { CampaignType, ICampaign, LoyaltyService, StampService } from '@perxtech/core';
-import { TranslateService } from '@ngx-translate/core';
+import { CampaignType, ICampaign, ICampaignService, LoyaltyService, StampService } from '@perxtech/core';
 import { map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { listAnimation } from '../home/games-collection/games-collection.animation';
 
@@ -27,7 +26,6 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
   @Output()
   public selected: EventEmitter<ICampaign> = new EventEmitter<ICampaign>();
 
-  public showAllCampaigns: boolean = false;
   public rewardsLeft: string;
   public campaigns: ICampaign[];
   public campaignsWithRewards$: Observable<ICampaign[]>;
@@ -37,9 +35,9 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
   public rewardsCountBvrSubjects: { [campaignId: string]: BehaviorSubject<number> } = {};
 
   constructor(
-    private translate: TranslateService,
     private stampService: StampService,
-    private loyaltyService: LoyaltyService
+    private loyaltyService: LoyaltyService,
+    private campaignsService: ICampaignService
   ) { }
 
   // differentiate by the campaign_type
@@ -48,10 +46,7 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
   // if referral call as is but map the referral fields
 
   public ngOnInit(): void {
-    this.translate.get('HOME.REWARDS_LEFT').subscribe((text) => {
-      this.rewardsLeft = text;
-    });
-
+    this.loyaltyService.getLoyalty(1).subscribe(res => console.log(res, 'loyalty rpesent and i have everything?'))
     if (this.campaigns$) {
       this.campaignsWithProgress$ = this.campaigns$.pipe(
         // call the mapperService here, have it as a method here first, priority: do stamps first
@@ -61,11 +56,12 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
               return this.stampService.getCards(campaign.id).pipe(
                 map((stampCards) => ({
                     stages: stampCards[0].displayProperties.rewardPositions ? stampCards[0].displayProperties.rewardPositions.length : 2,
-                    current: stampCards[0].stamps && stampCards[0].stamps.length,
-                    stageLabels: stampCards[0].displayProperties.rewardPositions
+                    current: (stampCards[0].stamps && stampCards[0].stamps.length) || 0,
+                    stageLabels: stampCards[0].displayProperties.rewardPositions ?
+                      stampCards[0].displayProperties.rewardPositions.sort((a,b) => a - b) :
+                      []
                   }
-                )),
-                tap((res) => console.log('how would the stamp progress really look like?', res))
+                ))
               ) as any;
             } else if (campaign.type === CampaignType.give_reward) {
               // only supports one loyalty prgm, hardcode default
@@ -80,30 +76,34 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
                        stageLabels: campaign.rewards.reduce((acc, curr) => [...acc, (
                          curr && curr.customFields && curr.customFields.points
                        )], []).filter(v => v)
-                     }
-                   } else {
-                     return {}; // return an empty obj
+                     };
                    }
-                 }),
-                 tap((res) => console.log('how would the loyalty progress really look like?', res))
+                   return of({}); // return an empty obj
+                 })
                );
-            } else if (campaign.type === CampaignType.invite && campaign.referralRewards) {
-              return of({
-                stages: campaign.referralRewards.length || 2,
-                current: campaign.refersAttained, // reached
-                stageLabels: campaign.referralRewards.map(reward => reward.refereeRequired)
-              })
-            } else {
-              return {}; // no progress
+            } else if (campaign.type === CampaignType.invite) {
+              // only from detail referral details appears on campaign_config
+              return this.campaignsService.getCampaign(campaign.id).pipe(
+                map(campaign => {
+                  if (campaign.referralRewards) {
+                    return {
+                      stages: campaign.referralRewards.length || 2,
+                      current: campaign.refersAttained, // reached
+                      stageLabels: campaign.referralRewards.map(reward => reward.refereeRequired)
+                        .sort((a,b) => a - b)
+                    }
+                  }
+                  return of({});
+                })
+              );
             }
           }))
         ),
         withLatestFrom(this.campaigns$),
         map(
-          ([progress, campaigns]) => {
-            return campaigns.map(campaign => ({ ...campaign, progress }));
-          }
-        )
+          ([progress, campaigns]) => campaigns.map((campaign, index) => ({ ...campaign, progress: progress[index] }))
+        ),
+        tap(res => console.log(res, 'ensure the job is done i have progress proeprrty'))
       );
     }
   }
