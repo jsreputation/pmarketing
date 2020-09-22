@@ -16,6 +16,7 @@ import { ConfigService } from '../config/config.service';
 import { DragScrollModule } from 'ngx-drag-scroll';
 import { RewardsLargeListComponent } from './rewards-large-list/rewards-large-list.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { RewardVoucherComponent } from './reward-voucher/reward-voucher.component';
 
 const components = [
   RewardsCollectionComponent,
@@ -23,6 +24,7 @@ const components = [
   RewardsListTabbedComponent,
   RewardComponent,
   RewardsLargeListComponent,
+  RewardVoucherComponent,
   StampsCardsListComponent
 ];
 
