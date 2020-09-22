@@ -70,7 +70,8 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
                   return {};
                 })
               ) as any;
-            } if (campaign.type === CampaignType.give_reward) {
+            }
+            if (campaign.type === CampaignType.give_reward) {
               // only supports one loyalty prgm, hardcode default
                return this.loyaltyService.getLoyalty(1).pipe(
                  map((loyalty) => {
@@ -88,7 +89,8 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
                    return {}; // return an empty obj
                  })
                );
-            } if (campaign.type === CampaignType.invite) {
+            }
+            if (campaign.type === CampaignType.invite) {
               // only from detail referral details appears on campaign_config
               return this.campaignsService.getCampaign(campaign.id).pipe(
                 map(campaignInv => {
