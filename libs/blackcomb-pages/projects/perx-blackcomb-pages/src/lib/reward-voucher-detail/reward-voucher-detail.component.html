@@ -1,6 +1,6 @@
 <div class="prize-wrapper">
   <div class="reward-container">
-    <perx-core-reward
+    <perx-core-reward-voucher
       *ngIf="appConfig"
       [reward]="reward$"
       [displayPriceFn]="displayPriceFn"
@@ -10,7 +10,7 @@
       [expiryLabel]="expiryLabel"
       [showRewardFavButton]="appConfig.showRewardFavButton"
       [showExpiry]="appConfig.showExpiryOnRewardDetail"
-    ></perx-core-reward>
+    ></perx-core-reward-voucher>
   </div>
   <div class="actions-container mat-elevation-z2" *ngIf="appConfig">
     <button mat-raised-button color="primary" class="reward-buy ga_purchase_reward"
