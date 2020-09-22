@@ -3,7 +3,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
   ConfigService,
-  ICampaignService,
+  ICampaignService, ThemesService,
   UtilsModule
 } from '@perxtech/core';
 import { CampaignLandingPageComponent } from './campaign-landing-page.component';
@@ -22,6 +22,9 @@ describe('CampaignLandingPageComponent', () => {
       baseHref: '',
     })
   };
+  const themesServiceStub: Partial<ThemesService> = {
+    getThemeSetting: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -33,7 +36,8 @@ describe('CampaignLandingPageComponent', () => {
       ],
       providers: [
         { provide: ICampaignService, useValue: campaignServiceStub },
-        { provide: ConfigService, useValue: configServiceStub }
+        { provide: ConfigService, useValue: configServiceStub },
+        { provide: ThemesService, useValue: themesServiceStub }
       ]
     })
       .compileComponents();

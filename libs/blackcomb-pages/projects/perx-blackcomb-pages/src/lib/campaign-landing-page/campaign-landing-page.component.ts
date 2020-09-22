@@ -4,7 +4,7 @@ import {
   CampaignLandingPage,
   ConfigService,
   ICampaign,
-  ICampaignService
+  ICampaignService, ITheme, ThemesService
 } from '@perxtech/core';
 import { Subject } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
@@ -20,15 +20,23 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
   public config: CampaignLandingPage | undefined;
   public backgroundUrl: string = '';
   private destroy$: Subject<void> = new Subject();
+  public buttonStyle: { [key: string]: string } = {};
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private campaignService: ICampaignService,
     private configService: ConfigService,
+    private themesService: ThemesService,
     private router: Router
   ) { }
 
   public ngOnInit(): void {
+    this.themesService.getThemeSetting().subscribe( (theme: ITheme) => {
+      this.buttonStyle['background-color'] = theme.properties['--button_background_color'] ?
+        theme.properties['--button_background_color'] : '';
+      this.buttonStyle.color = theme.properties['--button_text_color'] ?
+        theme.properties['--button_text_color'] : '';
+    });
     this.configService.readAppConfig()
       .pipe(
         switchMap(() => this.activatedRoute.params),

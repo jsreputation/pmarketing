@@ -15,7 +15,7 @@
   <mat-toolbar class="bottom-nav-container mat-elevation-z2">
     <button
       mat-flat-button
-      color="primary"
+      [ngStyle]="buttonStyle"
       (click)="next()">{{config?.buttonText || 'Play'}}</button>
   </mat-toolbar>
 </div>
