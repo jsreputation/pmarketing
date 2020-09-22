@@ -73,6 +73,6 @@ export class ProgressCampaignComponent implements OnInit {
   }
 
   public goToReward(reward: IReward): void {
-    this.router.navigate([`/reward-detail/${reward.id}`]);
+    this.router.navigate([`/reward-voucher-detail/${reward.id}`]);
   }
 }
