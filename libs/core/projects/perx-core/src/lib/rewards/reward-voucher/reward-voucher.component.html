@@ -3,8 +3,16 @@
     <div class="reward-image-container" *ngIf="reward.rewardBanner">
       <img class="reward-image" src="{{reward.rewardBanner}}" [alt]="reward.name">
     </div>
-    <div class="merchant-image-container" *ngIf="reward.merchantImg">
-      <img class="merchant-image" src="{{reward.merchantImg}}" [alt]="reward.merchantName">
+    <div class="title-card-wrapper">
+      <mat-card class="title-card">
+        <img *ngIf="reward.merchantImg" class="merchant-image" src="{{reward.merchantImg}}" [alt]="reward.merchantName">
+        <div class="reward-name">
+          {{reward.name}}
+        </div>
+        <div class="reward-subtitle" *ngIf="reward.subtitle">
+          {{reward.subtitle}}
+        </div>
+      </mat-card>
     </div>
     <div class="details">
       <div *ngIf="reward.merchantName" class="merchant-name include-heart">
@@ -13,12 +21,6 @@
                   *ngIf="showRewardFavButton"
                   (click)="rewardFavoriteHandler(reward)">
           {{favoriteRewards | checkId: reward.id}}</mat-icon>
-      </div>
-      <div class="reward-name">
-        {{reward.name}}
-      </div>
-      <div class="reward-subtitle" *ngIf="reward.subtitle">
-        {{reward.subtitle}}
       </div>
       <div class="reward-expiry" *ngIf="showExpiry && reward.validTo !== null">
         {{expiryLabel | async}}: {{reward.validTo | date: 'dd/MM/yyyy'}}
