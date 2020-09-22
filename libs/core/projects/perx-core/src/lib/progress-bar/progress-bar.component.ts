@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'perx-progress-bar',
@@ -8,7 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
   ]
 })
 
-export class ProgressBarComponent implements OnInit{
+export class ProgressBarComponent {
   @Input()
   public stampImgUrl: string = 'https://perx-cdn-staging.s3.amazonaws.com/razer-assets/razer-stamp.png';
   @Input()
@@ -19,11 +19,6 @@ export class ProgressBarComponent implements OnInit{
   public current: number = 0;
   @Input()
   public stageLabels: string|number[] = [];
-
-  public ngOnInit() {
-    const { stages, current, stageLabels } = this;
-    console.log('stages, current, label', stages, current, stageLabels);
-  }
 
   // helper function for rendering # slots using ngFor
   public arrayFromNumber(n: number): any[] {

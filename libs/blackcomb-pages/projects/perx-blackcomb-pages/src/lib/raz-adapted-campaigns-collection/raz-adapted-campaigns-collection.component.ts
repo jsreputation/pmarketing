@@ -58,18 +58,19 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
                 map((stampCards) => {
                   if (stampCards && stampCards[0] && stampCards[0].displayProperties) {
                     return ({
-                        stages: stampCards[0].displayProperties.rewardPositions ? stampCards[0].displayProperties.rewardPositions.length : 2,
+                        stages: stampCards[0].displayProperties.rewardPositions ?
+                          stampCards[0].displayProperties.rewardPositions.length : 2,
                         current: (stampCards[0].stamps && stampCards[0].stamps.length) || 0,
                         stageLabels: stampCards[0].displayProperties.rewardPositions ?
-                          stampCards[0].displayProperties.rewardPositions.sort((a,b) => a - b) :
+                          stampCards[0].displayProperties.rewardPositions.sort((a, b) => a - b) :
                           []
                       }
-                    )
+                    );
                   }
                   return {};
                 })
               ) as any;
-            } else if (campaign.type === CampaignType.give_reward) {
+            } if (campaign.type === CampaignType.give_reward) {
               // only supports one loyalty prgm, hardcode default
                return this.loyaltyService.getLoyalty(1).pipe(
                  map((loyalty) => {
@@ -87,17 +88,17 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
                    return {}; // return an empty obj
                  })
                );
-            } else if (campaign.type === CampaignType.invite) {
+            } if (campaign.type === CampaignType.invite) {
               // only from detail referral details appears on campaign_config
               return this.campaignsService.getCampaign(campaign.id).pipe(
-                map(campaign => {
-                  if (campaign.referralRewards) {
+                map(campaignInv => {
+                  if (campaignInv.referralRewards) {
                     return {
-                      stages: campaign.referralRewards.length || 2,
-                      current: campaign.refersAttained, // reached
-                      stageLabels: campaign.referralRewards.map(reward => reward.refereeRequired)
-                        .sort((a,b) => a - b)
-                    }
+                      stages: campaignInv.referralRewards.length || 2,
+                      current: campaignInv.refersAttained, // reached
+                      stageLabels: campaignInv.referralRewards.map(reward => reward.refereeRequired)
+                        .sort((a, b) => a - b)
+                    };
                   }
                   return {};
                 })
