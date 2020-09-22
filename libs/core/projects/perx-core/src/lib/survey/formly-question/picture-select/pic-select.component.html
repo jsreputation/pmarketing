@@ -39,9 +39,12 @@
           [id]="id + '_' + i"
           [color]="'primary'"
           [value]="option.value">
-          <img *ngIf="option.label" class="image" [src]="option.label" [alt]="option.value">
+          <img *ngIf="option.label; else textLabel" class="image" [src]="option.label" [alt]="option.value">
+          <ng-template #textLabel>
+            {{ option.value }}
+          </ng-template>
         </mat-radio-button>
-        <div class="choice-label">
+        <div *ngIf="option.label" class="choice-label">
           {{ option.value }}
         </div>
       </div>
