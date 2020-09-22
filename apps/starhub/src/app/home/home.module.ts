@@ -38,6 +38,7 @@ import { CampaignsComponent } from './campaigns/campaigns.component';
 import { NoRenewaleInNamePipe } from './no-renewale-in-name.pipe';
 import { GhostsModule } from '../ghosts/ghosts.module';
 import { StampCardsComponent } from './stamp-cards/stamp-cards.component';
+import { QuizSurveyCampaignsComponent } from './quiz-campaigns/quiz-survey-campaigns.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { StampCardsComponent } from './stamp-cards/stamp-cards.component';
     CatalogsComponent,
     CampaignsComponent,
     StampCardsComponent,
-    NoRenewaleInNamePipe
+    NoRenewaleInNamePipe,
+    QuizSurveyCampaignsComponent,
   ],
   imports: [
     ConfigModule.forChild(),

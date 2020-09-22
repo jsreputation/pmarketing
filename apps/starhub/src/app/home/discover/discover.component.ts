@@ -45,6 +45,10 @@ export class DiscoverComponent implements OnInit {
     this.router.navigate(['/game'], { queryParams: { id: gameId } });
   }
 
+  public sqCampaignSelected(campaignId: number): void {
+    this.router.navigate([`campaign-welcome/${campaignId}`]);
+  }
+
   public stampSelected(campaignId: number): void {
     this.router.navigate([`/stamp/${campaignId}`]);
   }
