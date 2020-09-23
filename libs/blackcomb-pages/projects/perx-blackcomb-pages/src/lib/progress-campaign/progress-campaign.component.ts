@@ -17,6 +17,7 @@ import {
 import {
   ActivatedRoute,
   ParamMap,
+  Router,
 } from '@angular/router';
 import {
   Observable,
@@ -37,6 +38,7 @@ export class ProgressCampaignComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    protected router: Router,
     protected configService: ConfigService,
     protected campaignService: ICampaignService,
     protected settingsService: SettingsService,
@@ -70,4 +72,7 @@ export class ProgressCampaignComponent implements OnInit {
     );
   }
 
+  public goToReward(reward: IReward): void {
+    this.router.navigate([`/reward-voucher-detail/${reward.id}`]);
+  }
 }

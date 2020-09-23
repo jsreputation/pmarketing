@@ -87,9 +87,10 @@ import { RewardsPageComponent } from './rewards-page/rewards-page.component';
 import { FavoriteRewardsComponent } from './favorite-rewards/favorite-rewards.component';
 import { ProgressCampaignHomeModule } from './progress-campaign-home/progress-campaign-home.module';
 import { PageComponentsModule } from './page-components/page-components.module';
-import { ProgressCampaignComponent } from './progress-campaign/progress-campaign.component';
 import { ProgressCampaignModule } from './progress-campaign/progress-campaign.module';
+import { RewardVoucherDetailModule } from './reward-voucher-detail/reward-voucher-detail.module';
 import { RazAdaptedCampaignsCollectionModule } from './raz-adapted-campaigns-collection/raz-adapted-campaigns-collection.module';
+
 
 const comps: any[] = [
   RewardComponent,
@@ -105,7 +106,6 @@ const comps: any[] = [
   NearmeComponent,
   RewardsPageComponent,
   FavoriteRewardsComponent,
-  ProgressCampaignComponent,
 ];
 
 @NgModule({
@@ -181,6 +181,7 @@ const comps: any[] = [
     ProgressCampaignHomeModule,
     PageComponentsModule,
     ProgressCampaignModule,
+    RewardVoucherDetailModule,
     ProgressBarModule,
     RazAdaptedCampaignsCollectionModule
   ],

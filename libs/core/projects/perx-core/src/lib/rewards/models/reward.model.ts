@@ -24,7 +24,11 @@ export interface IReward {
   redemptionText?: string;
   rawPayload?: any;
   displayProperties?: IWRewardDisplayProperties;
-  customFields?: { [key: string]: any };
+  customProperties?: {
+    faqLink: string;
+    tncLink: string;
+    pointsRequirement: string;
+  };
 }
 
 export interface IReferralReward extends IReward {

@@ -75,14 +75,16 @@ export interface IV4Reward {
   steps_to_redeem?: string;
   tags?: IV4Tag[];
   category_tags?: ICategoryTags[];
-  custom_fields?: {
-    points: string // to convert to number
-  };
   inventory?: IV4Inventory;
   selling_from?: string;
   selling_to?: string;
   merchant_logo_url?: string;
   display_properties?: IWRewardDisplayProperties;
+  custom_fields?: {
+    faq_link: string;
+    tnc_link: string;
+    points_requirement: string; // to convert to number
+  };
   referee_required_for_reward?: number;
   referee_balance_to_next_reward?: number;
 }
@@ -172,7 +174,6 @@ export class V4RewardsService extends RewardsService {
     const merchantImg = oc(reward).merchant_logo_url();
     const sellingFrom = reward.selling_from ? new Date(reward.selling_from) : undefined;
     const sellingTo = reward.selling_to ? new Date(reward.selling_to) : undefined;
-    const customFields = reward.custom_fields ? reward.custom_fields : undefined;
     const refereeRequired = reward.referee_required_for_reward ? reward.referee_required_for_reward : undefined;
     const balanceTillReward = reward.referee_balance_to_next_reward ? reward.referee_balance_to_next_reward : undefined;
 
@@ -210,10 +211,14 @@ export class V4RewardsService extends RewardsService {
       howToRedeem: oc(reward).steps_to_redeem(''),
       categoryTags: reward.category_tags,
       inventory,
-      customFields,
       refereeRequired,
       balanceTillReward,
       displayProperties: reward.display_properties,
+      customProperties: reward.custom_fields ? {
+        pointsRequirement: reward.custom_fields.points_requirement,
+        faqLink: reward.custom_fields.faq_link,
+        tncLink: reward.custom_fields.tnc_link
+      } : undefined
     };
   }
 

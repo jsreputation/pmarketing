@@ -113,6 +113,11 @@ const routes: Routes = [
         canActivate: [ProtectedGuard]
       },
       {
+        path: 'reward-voucher-detail',
+        loadChildren: () => import('../reward-voucher-detail/reward-voucher-detail.module').then(mod => mod.RewardVoucherDetailModule),
+        canActivate: [ProtectedGuard]
+      },
+      {
         path: 'booking/:id',
         loadChildren: () => import('../rewards-booking/rewards-booking.module').then(mod => mod.RewardsBookingModule)
       },

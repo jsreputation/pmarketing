@@ -35,6 +35,7 @@ import { LocationFilterPopupComponent } from './location-filter-popup/location-f
 import { PointsToCashPipe } from './directives/points-to-cash.pipe';
 import { TokenStorage } from './storage/token-storage.service';
 import { CheckIdExistsPipe } from './directives/check-id-exists-pipe';
+import { MatRippleModule } from '@angular/material/core';
 
 export function themesServiceFactory(
   handler: HttpBackend,
@@ -101,6 +102,7 @@ export function notificationServiceFactory(): NotificationService {
     MatButtonModule,
     ReactiveFormsModule,
     MatCardModule,
+    MatRippleModule,
     StorageModule,
     MatIconModule,
     MatToolbarModule,
