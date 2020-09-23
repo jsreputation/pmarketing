@@ -53,5 +53,11 @@
       </div>
       -->
     </div>
+    <mat-action-list *ngIf="reward.customProperties">
+      <a mat-list-item matRipple *ngIf="reward.customProperties.tncLink"
+         [href]="reward.customProperties.tncLink" target="_blank">Terms and Conditions</a>
+      <a mat-list-item matRipple *ngIf="reward.customProperties.faqLink"
+         [href]="reward.customProperties.faqLink" target="_blank">FAQs </a>
+    </mat-action-list>
   </div>
 </ng-container>

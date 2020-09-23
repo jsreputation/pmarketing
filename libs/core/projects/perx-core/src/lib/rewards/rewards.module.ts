@@ -17,6 +17,8 @@ import { DragScrollModule } from 'ngx-drag-scroll';
 import { RewardsLargeListComponent } from './rewards-large-list/rewards-large-list.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { RewardVoucherComponent } from './reward-voucher/reward-voucher.component';
+import { MatListModule } from '@angular/material/list';
+import { MatRippleModule } from '@angular/material/core';
 
 const components = [
   RewardsCollectionComponent,
@@ -45,7 +47,9 @@ export function rewardsServiceFactory(http: HttpClient, config: Config, configSe
     CommonModule,
     MaterialModule,
     UtilsModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    MatListModule,
+    MatRippleModule
   ],
   exports: [
     ...components,
