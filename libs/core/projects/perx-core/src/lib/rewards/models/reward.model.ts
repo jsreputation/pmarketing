@@ -29,8 +29,6 @@ export interface IReward {
     tncLink: string;
     pointsRequirement: string;
   };
-
-  customFields?: { [key: string]: any };
 }
 
 export interface IReferralReward extends IReward {

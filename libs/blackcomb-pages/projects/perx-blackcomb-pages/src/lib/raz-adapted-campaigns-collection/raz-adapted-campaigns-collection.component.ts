@@ -82,7 +82,7 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
                        // find the highest point and see if balance >=, at final stage
                        current: loyalty.currencyBalance,
                        stageLabels: campaign.rewards.reduce((acc, curr) => [...acc, (
-                         curr && curr.customFields && curr.customFields.points
+                         curr && curr.customProperties && curr.customProperties.pointsRequirement
                        )], []).filter(v => v)
                      };
                    }
