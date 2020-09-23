@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
 import {
   Observable,
   Subject
@@ -33,7 +37,7 @@ import {
   templateUrl: './reward-voucher-detail.component.html',
   styleUrls: ['./reward-voucher-detail.component.scss']
 })
-export class RewardVoucherDetailComponent implements OnInit {
+export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
   public reward$: Observable<IReward>;
   public displayPriceFn: (price: IPrice) => string;
   private destroy$: Subject<void> = new Subject();
