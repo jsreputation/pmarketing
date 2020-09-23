@@ -17,7 +17,7 @@
             [disabled]="maxRewardCost && maxRewardCost > 0 && (!loyalty || !loyalty.pointsBalance || (loyalty.pointsBalance < (maxRewardCost || 0))) || waitForSubmission"
             perxCoreAppDebounceClick
             [debounceTime]="400"
-            (debounceClick)="buyReward()">
+            (debounceClick)="this.voucherId ? navToRedeem() : buyReward()">
       <i class="loading-spin"
          *ngIf="waitForSubmission">
         <mat-progress-spinner
