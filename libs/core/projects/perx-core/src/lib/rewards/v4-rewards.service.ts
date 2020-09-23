@@ -83,8 +83,7 @@ export interface IV4Reward {
   custom_fields?: {
     faq_link: string;
     tnc_link: string;
-    points_requirement: string;
-    points: string // to convert to number
+    points_requirement: string; // to convert to number
   };
   referee_required_for_reward?: number;
   referee_balance_to_next_reward?: number;
