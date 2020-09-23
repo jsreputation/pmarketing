@@ -22,5 +22,7 @@ export const BACK_ARROW_URLS: string[] = [
   '/locations',
   '/rebates/overview',
   '/rebates/transaction',
-  '/rebates/complete'
+  '/rebates/complete',
+  '/reward-voucher-detail',
+  '/progress-campaign/'
 ];
