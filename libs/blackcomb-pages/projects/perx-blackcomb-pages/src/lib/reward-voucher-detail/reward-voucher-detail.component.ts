@@ -76,7 +76,7 @@ export class RewardVoucherDetailComponent implements OnInit {
     ).subscribe(
       (loyalty: ILoyalty) => this.loyalty = loyalty
     );
-    if(this.activeRoute.params) {
+    if (this.activeRoute.params) {
       this.reward$ = this.activeRoute.params
         .pipe(
           filter((ps: Params) => ps.rewardId),
