@@ -83,6 +83,11 @@ export interface IV4Reward {
   selling_to?: string;
   merchant_logo_url?: string;
   display_properties?: IWRewardDisplayProperties;
+  custom_fields?: {
+    faq_link: string;
+    tnc_link: string;
+    points_requirement: string;
+  };
   referee_required_for_reward?: number;
   referee_balance_to_next_reward?: number;
 }
@@ -214,6 +219,11 @@ export class V4RewardsService extends RewardsService {
       refereeRequired,
       balanceTillReward,
       displayProperties: reward.display_properties,
+      customProperties: reward.custom_fields ? {
+        pointsRequirement: reward.custom_fields.points_requirement,
+        faqLink: reward.custom_fields.faq_link,
+        tncLink: reward.custom_fields.tnc_link
+      } : undefined
     };
   }
 
