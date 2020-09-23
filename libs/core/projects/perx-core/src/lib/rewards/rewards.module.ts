@@ -18,8 +18,6 @@ import { RewardsLargeListComponent } from './rewards-large-list/rewards-large-li
 import { TranslateModule } from '@ngx-translate/core';
 import { RewardVoucherComponent } from './reward-voucher/reward-voucher.component';
 import { MatListModule } from '@angular/material/list';
-import { MatRippleModule } from '@angular/material/core';
-import { MatIconModule } from '@angular/material/icon';
 
 const components = [
   RewardsCollectionComponent,
@@ -50,8 +48,6 @@ export function rewardsServiceFactory(http: HttpClient, config: Config, configSe
     UtilsModule,
     TranslateModule.forChild(),
     MatListModule,
-    MatRippleModule,
-    MatIconModule
   ],
   exports: [
     ...components,
