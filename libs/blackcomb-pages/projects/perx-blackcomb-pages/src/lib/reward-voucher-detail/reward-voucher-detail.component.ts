@@ -131,6 +131,10 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
     }
   }
 
+  public navToRedeem(): void {
+    this.router.navigate(['redeem', this.voucherId]);
+  }
+
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
