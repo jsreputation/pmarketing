@@ -76,22 +76,24 @@ export class RewardVoucherDetailComponent implements OnInit {
     ).subscribe(
       (loyalty: ILoyalty) => this.loyalty = loyalty
     );
-    this.reward$ = this.activeRoute.params
-      .pipe(
-        filter((ps: Params) => ps.rewardId),
-        map((ps: Params) => Number.parseInt(ps.rewardId, 10)),
-        switchMap((id: number) => this.rewardsService.getReward(id)),
-        tap((reward: IReward) => {
-          this.rewardData = reward;
-          if (reward.displayProperties) {
-            this.buttonLabel = reward.displayProperties.CTAButtonTxt || this.buttonLabel;
-          }
-          this.maxRewardCost = reward.rewardPrice && reward.rewardPrice.length > 0 ? reward.rewardPrice
-            .map((price) => price.points)
-            .reduce((acc = 0, points) => acc >= (points || 0) ? acc : points) : 0;
-        }),
-        takeUntil(this.destroy$)
-      );
+    if(this.activeRoute.params) {
+      this.reward$ = this.activeRoute.params
+        .pipe(
+          filter((ps: Params) => ps.rewardId),
+          map((ps: Params) => Number.parseInt(ps.rewardId, 10)),
+          switchMap((id: number) => this.rewardsService.getReward(id)),
+          tap((reward: IReward) => {
+            this.rewardData = reward;
+            if (reward.displayProperties) {
+              this.buttonLabel = reward.displayProperties.CTAButtonTxt || this.buttonLabel;
+            }
+            this.maxRewardCost = reward.rewardPrice && reward.rewardPrice.length > 0 ? reward.rewardPrice
+              .map((price) => price.points)
+              .reduce((acc = 0, points) => acc >= (points || 0) ? acc : points) : 0;
+          }),
+          takeUntil(this.destroy$)
+        );
+    }
   }
 
   public buyReward(): void {
