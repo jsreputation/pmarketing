@@ -1,11 +1,11 @@
-<div class="relative-container" *ngIf="updater$| async as current">
+<div class="relative-container">
   <p class="in-progress" [ngStyle]="{
-      'width': ((current / stages) * 100) - 10 + '%'
+      'width': (current && stages) ?((current / stages) * 100) : 0 + '%'
     }">
     hidden
   </p>
   <p class="to-progress" [ngStyle]="{
-      'width': ((1 - current / stages) * 100) + 10 + '%'
+      'width': ((1 - (current ? current / stages : 0)) * 100) + '%'
     }">
     hidden
   </p>
@@ -20,7 +20,7 @@
            [ngStyle]="{
             'background-image': 'url(' + (current >= i + 1 ? stampImgUrl : noStampImgUrl) + ')'
            }">
-        {{stageLabels[i]}}
+        <span *ngIf="stageLabels && stageLabels[i]">{{stageLabels[i]}}</span>
       </div>
     </div>
 </div>

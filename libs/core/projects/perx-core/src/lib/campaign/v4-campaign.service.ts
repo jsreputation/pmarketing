@@ -144,9 +144,19 @@ export class V4CampaignService implements ICampaignService {
         oc(dp as GameProperties).background_image.value.image_url('')
       );
     }
-    let referralCodes;
-    if (campaign.campaign_config && campaign.campaign_config.referral_codes) {
-      referralCodes = [...campaign.campaign_config.referral_codes];
+    let referralCodes, referralRewards, refersAttained;
+    if (campaign.campaign_config) {
+      if (campaign.campaign_config.referral_codes) {
+        referralCodes = [...campaign.campaign_config.referral_codes];
+      }
+      if (campaign.campaign_config.referral_rewards) {
+        referralRewards = campaign.campaign_config.referral_rewards.map((reward: IV4Reward) =>
+          V4RewardsService.v4RewardToReward(reward)
+        );
+      }
+      if (campaign.campaign_config.referees_attained !== null || undefined) {
+        refersAttained = campaign.campaign_config.referees_attained;
+      }
     }
     return {
       id: campaign.id,
@@ -158,6 +168,8 @@ export class V4CampaignService implements ICampaignService {
       endsAt: campaign.ends_at ? new Date(campaign.ends_at) : null,
       beginsAt: campaign.begins_at ? new Date(campaign.begins_at) : null,
       referralCodes,
+      referralRewards,
+      refersAttained,
       rewards,
       thumbnailUrl,
       campaignBannerUrl,

@@ -7,17 +7,16 @@ import {
   CampaignServiceModule,
   ConfigService,
   ICampaignService,
-  IGameService,
+  IGameService, LoyaltyService,
   QuizService,
-  SettingsService,
+  SettingsService, StampService,
   SurveyService
 } from '@perxtech/core';
 import { of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
+import { RazAdaptedCampaignsCollectionModule } from '@perxtech/blackcomb-pages';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-const configServiceStub: Partial<ConfigService> = {
-  readAppConfig: () => of()
-};
 const campaignServiceStub: Partial<ICampaignService> = {
   getCampaigns: () => of()
 };
@@ -33,10 +32,19 @@ const quizServiceStub: Partial<QuizService> = {
 const surveyServiceStub: Partial<SurveyService> = {
   getSurveyFromCampaign: () => of()
 };
+const configServiceStub: Partial<ConfigService> = {
+  readAppConfig: () => of()
+};
 
 describe('ProgressCampaignHomeComponent', () => {
   let component: ProgressCampaignHomeComponent;
   let fixture: ComponentFixture<ProgressCampaignHomeComponent>;
+  const stampServiceStub: Partial<StampService> = {
+    getCards: () => of()
+  };
+  const loyaltyServiceStub: Partial<LoyaltyService> = {
+    getLoyalty: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -44,6 +52,8 @@ describe('ProgressCampaignHomeComponent', () => {
       imports: [
         PageComponentsModule,
         RouterTestingModule,
+        RazAdaptedCampaignsCollectionModule,
+        HttpClientTestingModule,
         CampaignServiceModule.forChild(),
         TranslateModule.forRoot()
       ],
@@ -54,6 +64,8 @@ describe('ProgressCampaignHomeComponent', () => {
         { provide: IGameService, useValue: gameServiceStub },
         { provide: SettingsService, useValue: settingsServiceStub },
         { provide: SurveyService, useValue: surveyServiceStub },
+        { provide: StampService, value: stampServiceStub },
+        { provide: LoyaltyService, value: loyaltyServiceStub },
       ]
     })
     .compileComponents();

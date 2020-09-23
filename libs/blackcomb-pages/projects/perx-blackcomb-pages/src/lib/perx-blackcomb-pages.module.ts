@@ -39,7 +39,8 @@ import {
   SecondsToStringPipe,
   RankModule,
   LocationModule,
-  CampaignServiceModule
+  CampaignServiceModule,
+  ProgressBarModule
 } from '@perxtech/core';
 
 import { RewardComponent } from './reward/reward.component';
@@ -88,6 +89,7 @@ import { ProgressCampaignHomeModule } from './progress-campaign-home/progress-ca
 import { PageComponentsModule } from './page-components/page-components.module';
 import { ProgressCampaignComponent } from './progress-campaign/progress-campaign.component';
 import { ProgressCampaignModule } from './progress-campaign/progress-campaign.module';
+import { RazAdaptedCampaignsCollectionModule } from './raz-adapted-campaigns-collection/raz-adapted-campaigns-collection.module';
 
 const comps: any[] = [
   RewardComponent,
@@ -103,7 +105,7 @@ const comps: any[] = [
   NearmeComponent,
   RewardsPageComponent,
   FavoriteRewardsComponent,
-  ProgressCampaignComponent
+  ProgressCampaignComponent,
 ];
 
 @NgModule({
@@ -178,7 +180,9 @@ const comps: any[] = [
     CampaignServiceModule.forRoot(),
     ProgressCampaignHomeModule,
     PageComponentsModule,
-    ProgressCampaignModule
+    ProgressCampaignModule,
+    ProgressBarModule,
+    RazAdaptedCampaignsCollectionModule
   ],
   exports: [
     ...comps,
