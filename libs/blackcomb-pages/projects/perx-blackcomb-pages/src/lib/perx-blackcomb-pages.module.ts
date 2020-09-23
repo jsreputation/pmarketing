@@ -181,9 +181,9 @@ const comps: any[] = [
     ProgressCampaignHomeModule,
     PageComponentsModule,
     ProgressCampaignModule,
-    RewardVoucherDetailModule,
-	ProgressBarModule,
-	RazAdaptedCampaignsCollectionModule
+    RewardVoucherDetailModule,
+    ProgressBarModule,
+    RazAdaptedCampaignsCollectionModule
   ],
   exports: [
     ...comps,

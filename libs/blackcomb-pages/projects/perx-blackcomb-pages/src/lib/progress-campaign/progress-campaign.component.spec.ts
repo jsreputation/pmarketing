@@ -32,7 +32,7 @@ describe('ProgressCampaignComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ProgressCampaignComponent ],
       imports: [
-		RouterTestingModule,
+		    RouterTestingModule,
         RewardsModule,
         MatCardModule
       ],
