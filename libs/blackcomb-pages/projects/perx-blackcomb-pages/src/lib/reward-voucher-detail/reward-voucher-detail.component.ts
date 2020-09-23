@@ -50,14 +50,32 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
   public rewardData: IReward;
   public loyalty: ILoyalty;
   public waitForSubmission: boolean = false;
+  public voucherId: number;
+  public rewardId: number;
 
   public maxRewardCost?: number;
   private initTranslate(): void {
-    this.translate.get('REWARD.GET_VOUCHER').subscribe((text) => this.buttonLabel = text);
     this.descriptionLabel = this.translate.get('REWARD.DESCRIPTION');
     this.tncLabel = this.translate.get('REWARD.TNC');
     this.codeLabel = this.translate.get('REWARD.CODE');
     this.expiryLabel = this.translate.get('REWARD.EXPIRY');
+    this.activeRoute.params
+      .pipe(
+        tap((ps: Params) => {
+          if (ps.rewardId) {
+            this.rewardId = Number.parseInt(ps.rewardId, 10);
+          }
+          if (ps.voucherId) {
+            this.voucherId = Number.parseInt(ps.voucherId, 10);
+          }
+        }),
+        switchMap(() => this.translate.get('REWARD.GET_VOUCHER')),
+      ).subscribe((text: string) => {
+        if (!this.voucherId) {
+          this.buttonLabel = text;
+        }
+      }
+    );
   }
 
   constructor(
