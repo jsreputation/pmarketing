@@ -6,6 +6,9 @@ import { of } from 'rxjs';
 import { UtilsModule } from '../../utils/utils.module';
 import { MatIconModule } from '@angular/material';
 import { TokenStorage } from '../../utils/storage/token-storage.service';
+import { MatCardModule } from '@angular/material/card';
+import { MatRippleModule } from '@angular/material/core';
+import { MatListModule } from '@angular/material/list';
 
 describe('RewardVoucherComponent', () => {
   let component: RewardVoucherComponent;
@@ -38,7 +41,10 @@ describe('RewardVoucherComponent', () => {
       declarations: [RewardVoucherComponent],
       imports: [
         UtilsModule,
-        MatIconModule
+        MatIconModule,
+        MatCardModule,
+        MatRippleModule,
+        MatListModule,
       ],
       providers: [
         { provide: TokenStorage, useValue: tokenStorageStub },
