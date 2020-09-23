@@ -46,11 +46,11 @@ export interface QuizDisplayProperties {
     payload: any;
   }[];
   landing_page: {
-    body: string;
+    body: { en: { text: string } };
     media?: { youtube?: string; };
-    heading: string;
-    button_text: string;
-    sub_heading: string;
+    heading: { en: { text: string } };
+    button_text: { en: { text: string } };
+    sub_heading: { en: { text: string }};
   };
   background_image?: Asset;
   card_image?: Asset;
