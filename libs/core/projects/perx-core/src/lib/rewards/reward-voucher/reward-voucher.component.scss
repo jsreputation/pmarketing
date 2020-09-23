@@ -8,6 +8,16 @@
   height: 100%;
   width: 100%;
   // max-width: $max-width;
+
+  .external-link-list {
+    a {
+      text-decoration: none;
+    }
+
+    .link-icon {
+      margin-right: 1rem;
+    }
+  }
 }
 
 .reward-image-container {
