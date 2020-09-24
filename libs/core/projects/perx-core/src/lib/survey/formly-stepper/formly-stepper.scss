@@ -97,7 +97,6 @@
 }
 
 .question {
-  margin-top: 1rem;
   font-size: 1.6rem;
   line-height: 2.8rem;
   color: #ffffff;
@@ -105,5 +104,9 @@
 
   .required-star {
     color: #ff6767;
+  }
+
+  .margin-top-1 {
+    margin-top: 1rem;
   }
 }

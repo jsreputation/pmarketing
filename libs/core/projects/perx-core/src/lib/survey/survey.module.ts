@@ -34,6 +34,7 @@ import { SurveySelectComponent } from './formly-question/select/select.component
 import { FormlySelectModule } from '@ngx-formly/core/select';
 import { SurveyPictureSelectComponent } from './formly-question/picture-select/pic-select.component';
 import { FormlyFieldStepperComponent } from './formly-stepper/formly-stepper';
+import { PinchZoomModule } from 'ngx-pinch-zoom';
 
 export function surveyServiceFactory(http: HttpClient, config: ConfigService): SurveyService {
   // Make decision on what to instantiate base on config
@@ -101,7 +102,8 @@ const components = [
     }),
     FormlyMaterialModule,
     FormlySelectModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    PinchZoomModule
   ],
   providers: [
     {
