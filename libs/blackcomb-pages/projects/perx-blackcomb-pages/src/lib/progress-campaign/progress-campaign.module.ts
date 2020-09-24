@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RewardsModule } from '@perxtech/core';
+import { ProgressBarModule, RewardsModule } from '@perxtech/core';
 import { ProgressCampaignComponent } from './progress-campaign.component';
 import { MatCardModule } from '@angular/material/card';
 import { ProgressInfoPipe } from './progress-pipes/info/progress-info.pipe';
@@ -17,6 +17,7 @@ import { ProgressInfoPipe } from './progress-pipes/info/progress-info.pipe';
   imports: [
     CommonModule,
     MatCardModule,
+    ProgressBarModule,
     RewardsModule.forChild()
   ]
 })
