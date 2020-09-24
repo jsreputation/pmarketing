@@ -240,6 +240,14 @@ export class V4QuizService implements QuizService {
     );
   }
 
+  public postFinalQuizAnswer(moveId: number): Observable<any> {
+    // idk what thing is returned yet, i will see and then maybe map it into IAnswerResult
+    // dk what is returned bcz keep fail
+    return this.baseUrl$.pipe(
+      switchMap(baseUrl => this.http.put<V4QuizAnswerResponse>(`${baseUrl}/v4/game_transactions/${moveId}/finish`, {}))
+    );
+  }
+
   public postQuizAnswer(answer: IQAnswer, moveId: number): Observable<IAnswerResult> {
     const payload: V4QuizAnswerRequest = {
       answer: {
@@ -249,7 +257,7 @@ export class V4QuizService implements QuizService {
       }
     };
     return this.baseUrl$.pipe(
-      switchMap(baseUrl => this.http.put<V4QuizAnswerResponse>(`${baseUrl}/v4/game_transactions/${moveId}/answer_quiz`, payload)),
+      switchMap(baseUrl => this.http.put<V4QuizAnswerResponse>(`${baseUrl}/v4/game_transactions/${moveId}/answer`, payload)),
       map(res => {
         const result: V4AnswerResponse | undefined = res.data.answers.find(ans => answer.questionId === ans.question_id);
         const points: number = oc(result).score(oc(result).is_correct() ? 1 : 0) || 0;

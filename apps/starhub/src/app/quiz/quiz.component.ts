@@ -23,7 +23,7 @@ import {
   IAnswerResult
 } from '@perxtech/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
+import { BehaviorSubject, EMPTY, iif, Observable, Subject, throwError } from 'rxjs';
 import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 @Component({
@@ -81,7 +81,7 @@ export class QuizComponent implements OnInit, OnDestroy {
       map((cid: string) => Number.parseInt(cid, 10)),
       switchMap((cidN: number) => this.quizService.getQuizFromCampaign(cidN)),
       catchError((err: Error) => {
-        console.log(err.name, err.message);
+        console.error(err.name, err.message);
         this.notificationService.addPopup({
           title: 'Quiz is not Available',
           buttonTxt: 'Back'
@@ -176,7 +176,7 @@ export class QuizComponent implements OnInit, OnDestroy {
       .subscribe(
         () => this.redirectUrlAndPopUp(),
         (err) => {
-          console.log(err);
+          console.error(err);
           this.notificationService.addSnack(this.submitErrorTxt);
           this.redirectUrlAndPopUp();
         }
@@ -193,7 +193,7 @@ export class QuizComponent implements OnInit, OnDestroy {
         .subscribe(
           () => { },
           (err) => {
-            console.log(err);
+            console.error(err);
             this.notificationService.addSnack(this.submitErrorTxt);
           }
         );
@@ -240,7 +240,15 @@ export class QuizComponent implements OnInit, OnDestroy {
           time
         };
       }),
+      switchMap(
+        () => iif(
+          () => this.complete,
+            this.quizService.postFinalQuizAnswer(this.moveId!),
+            EMPTY
+        )
+      ),
       catchError(err => {
+        // the posting finalquiz answer causing error to catch and rewriting the points to undefined
         // save the fact the broken submission for next page
         this.points[questionPointer] = {
           questionId: answer.questionId,

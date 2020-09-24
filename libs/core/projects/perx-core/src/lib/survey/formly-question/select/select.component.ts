@@ -13,7 +13,6 @@ export class SurveySelectComponent extends FieldType {
   public checkboxes!: QueryList<MatCheckbox>;
 
   public onChange(value: any, checked: boolean): void {
-    console.log('see the value pelase', value);
     if (this.to.type === 'array') {
       this.formControl.patchValue(
         checked

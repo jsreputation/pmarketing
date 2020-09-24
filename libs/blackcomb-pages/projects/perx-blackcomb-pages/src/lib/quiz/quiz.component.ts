@@ -18,7 +18,7 @@ import {
   TokenStorage,
   IPopupConfig,
 } from '@perxtech/core';
-import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
+import { BehaviorSubject, EMPTY, iif, Observable, Subject, throwError } from 'rxjs';
 import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -243,6 +243,13 @@ export class QuizComponent implements OnInit, OnDestroy {
           time
         };
       }),
+      switchMap(
+        () => iif(
+          () => this.complete,
+          this.quizService.postFinalQuizAnswer(this.moveId!),
+          EMPTY
+        )
+      ),
       catchError(err => {
         // save the fact the broken submission for next page
         this.points[questionPointer] = {

@@ -151,7 +151,7 @@ export class V4SurveyService implements SurveyService {
       }
     };
     return this.baseUrl$.pipe(
-      switchMap(baseUrl => this.http.patch<V4NextMoveResponse>(`${baseUrl}/v4/game_transactions/${moveId}/answer`, payload)),
+      switchMap(baseUrl => this.http.put<V4NextMoveResponse>(`${baseUrl}/v4/game_transactions/${moveId}/answer`, payload)),
       map(res => ({
           hasOutcomes: res.data.outcomes.length > 0,
           answers: res.data.answers.map(answer => ({
