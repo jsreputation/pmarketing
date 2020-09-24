@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RewardsLargeListComponent } from './rewards-large-list.component';
 import {
+  ProgressBarModule,
   ThemesService,
   UtilsModule
 } from '@perxtech/core';
@@ -20,7 +21,8 @@ describe('RewardsLargeListComponent', () => {
       declarations: [ RewardsLargeListComponent ],
       imports: [
         UtilsModule,
-        MatCardModule
+        MatCardModule,
+        ProgressBarModule
       ],
       providers: [
         { provide: ThemesService, useValue: themesServiceStub },

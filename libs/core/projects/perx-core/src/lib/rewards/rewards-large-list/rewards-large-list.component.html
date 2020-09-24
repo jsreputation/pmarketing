@@ -32,16 +32,16 @@
               </div>
               <ng-template #showDescription>
                 <div class="description ellipse-2-lines" [innerHtml]="'test string'">
-
                 </div>
               </ng-template>
               <div class="spacer"></div>
-              <div class="counter">
-                1/10 transactions
-                <!-- todo: dynamic counter with custom metric-->
-<!--            <ng-container *ngIf="rewardsCountBvrSubjects[campaign.id] | async as rwdBvrSbj">-->
-<!--              <p class="reward-subtitle ellipsis-2-line" *ngIf="rwdBvrSbj > 0"><span class="bold-points">{{rwdBvrSbj}}</span>{{"HOME.REWARDS_LEFT" | translate}}</p>-->
-<!--            </ng-container>-->
+              <perx-progress-bar
+                [stages]="reward?.progress?.stages"
+                [current]="reward?.progress?.current"
+                [stageLabels]="reward?.progress?.stageLabels"
+                [showProgressLabels]="false" [current]="1"></perx-progress-bar>
+              <div class="counter" *ngIf="reward?.progress?.stageLabels?.length">
+                {{reward?.progress.current}}/{{reward.progress.stageLabels[reward.progress.stageLabels.length - 1]}} {{rewardType}}
               </div>
             </mat-card-content>
           </div>
