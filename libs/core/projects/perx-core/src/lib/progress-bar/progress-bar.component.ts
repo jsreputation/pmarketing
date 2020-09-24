@@ -29,7 +29,9 @@ export class ProgressBarComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.currentRewardIndex = this.stageLabels
-      .findIndex((labelNum) => this.current < labelNum);
+    if (this.stageLabels) {
+      this.currentRewardIndex = this.stageLabels
+        .findIndex((labelNum) => this.current < labelNum);
+    }
   }
 }
