@@ -52,31 +52,7 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
   public waitForSubmission: boolean = false;
   public voucherId: number;
   public rewardId: number;
-
   public maxRewardCost?: number;
-  private initTranslate(): void {
-    this.descriptionLabel = this.translate.get('REWARD.DESCRIPTION');
-    this.tncLabel = this.translate.get('REWARD.TNC');
-    this.codeLabel = this.translate.get('REWARD.CODE');
-    this.expiryLabel = this.translate.get('REWARD.EXPIRY');
-    this.activeRoute.params
-      .pipe(
-        tap((ps: Params) => {
-          if (ps.rewardId) {
-            this.rewardId = Number.parseInt(ps.rewardId, 10);
-          }
-          if (ps.voucherId) {
-            this.voucherId = Number.parseInt(ps.voucherId, 10);
-          }
-        }),
-        switchMap(() => this.translate.get('REWARD.GET_VOUCHER')),
-      ).subscribe((text: string) => {
-        if (!this.voucherId) {
-          this.buttonLabel = text;
-        }
-      }
-    );
-  }
 
   constructor(
     private rewardsService: RewardsService,
@@ -92,13 +68,13 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
     this.configService.readAppConfig<void>()
       .subscribe((config: IConfig<void>) => this.appConfig = config);
 
-    this.initTranslate();
     this.loyaltyService.getLoyalties().pipe(
       map(loyalties => loyalties[0])
     ).subscribe(
       (loyalty: ILoyalty) => this.loyalty = loyalty
     );
     if (this.activeRoute.params) {
+      this.initTranslate();
       this.reward$ = this.activeRoute.params
         .pipe(
           filter((ps: Params) => ps.rewardId),
@@ -130,6 +106,33 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
         );
     }
   }
+
+  private initTranslate(): void {
+    this.descriptionLabel = this.translate.get('REWARD.DESCRIPTION');
+    this.tncLabel = this.translate.get('REWARD.TNC');
+    this.codeLabel = this.translate.get('REWARD.CODE');
+    this.expiryLabel = this.translate.get('REWARD.EXPIRY');
+    if (this.activeRoute) {
+      this.activeRoute.params
+        .pipe(
+          tap((ps: Params) => {
+            if (ps.rewardId) {
+              this.rewardId = Number.parseInt(ps.rewardId, 10);
+            }
+            if (ps.voucherId) {
+              this.voucherId = Number.parseInt(ps.voucherId, 10);
+            }
+          }),
+          switchMap(() => this.translate.get('REWARD.GET_VOUCHER')),
+        ).subscribe((text: string) => {
+          if (!this.voucherId) {
+            this.buttonLabel = text;
+          }
+        }
+      );
+    }
+  }
+
 
   public navToRedeem(): void {
     this.router.navigate(['redeem', this.voucherId]);
