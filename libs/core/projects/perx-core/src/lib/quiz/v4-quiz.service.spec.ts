@@ -92,7 +92,7 @@ describe('V4QuizService', () => {
       );
     expect(putFnMock.mock.calls.length).toBe(1);
     expect(putFnMock.mock.calls[0]).toEqual([
-      'https://blabla/v4/game_transactions/3/answer_quiz',
+      'https://blabla/v4/game_transactions/3/answer',
       { answer: { answer_ids: [], question_id: '', time_taken: -1 } }
     ]);
   });
