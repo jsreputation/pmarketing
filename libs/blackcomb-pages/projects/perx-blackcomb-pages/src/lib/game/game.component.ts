@@ -91,6 +91,8 @@ export class GameComponent implements OnInit, OnDestroy {
       const paramArr: string[] = params.flags && params.flags.split(',');
       this.isEmbedded = paramArr && paramArr.includes('nonav');
     });
+    this.popupData = this.noRewardsPopUp; // must pass data to notif,
+    // see path to '[/wallet]' notif svc no popupData
 
     // @ts-ignore observable too long, linter cannot compute
     this.gameData$ = this.route.params.pipe(
