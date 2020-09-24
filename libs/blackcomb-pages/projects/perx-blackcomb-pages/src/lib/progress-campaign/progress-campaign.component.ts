@@ -31,9 +31,8 @@ export enum CampaignRewardMode {
 }
 
 // helper function for Ts to detect removed undefined
-const isNumber = (obj: any): obj is number => {
-  return typeof obj === 'number';
-};
+const isNumber = (obj: any): obj is number => typeof obj === 'number';
+
 
 @Component({
   selector: 'perx-blackcomb-pages-progress-campaign',
@@ -79,7 +78,6 @@ export class ProgressCampaignComponent implements OnInit {
         return this.campaignService.getCampaign(idN);
       })
     );
-
 
 
     // different campaigns get rewards differently
@@ -141,12 +139,12 @@ export class ProgressCampaignComponent implements OnInit {
                   return {
                     ...reward,
                     progress
-                  }
+                  };
                 });
               }
               return [];
             })
-          )
+          );
         }
         if (campaign.type === CampaignType.invite) {
           this.campaignRewardMode = CampaignRewardMode.Referral;
@@ -165,12 +163,12 @@ export class ProgressCampaignComponent implements OnInit {
                       current: (campaignInv.refersAttained || 0)  >= completeStageLabels[index] ?
                         completeStageLabels[index] : (campaignInv.refersAttained || 0),
                       stageLabels
-                    }
+                    };
                   }
                   return {
                     ...reward,
                     progress
-                  }
+                  };
                 });
               }
               return [];

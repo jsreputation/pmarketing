@@ -74,26 +74,23 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
             }
             if (campaign.type === CampaignType.give_reward) {
                return this.campaignsService.getCampaign(campaign.id).pipe(
-                 concatMap((campaign) => {
-                   return               this.loyaltyService.getLoyalty(1).pipe(
+                 concatMap((campaignRwd) => this.loyaltyService.getLoyalty(1).pipe(
                      map((loyalty) => {
-                       if (campaign.rewards) {
-                         console.log(campaign, '; hey hey reward have rewrd here')
+                       if (campaignRwd.rewards) {
                          return {
-                           stages: campaign.rewards.length || 2, // if length 0 default to 2 stages
+                           stages: campaignRwd.rewards.length || 2, // if length 0 default to 2 stages
                            // biggest reward return last, test if really need
                            // find the highest point and see if balance >=, at final stage
                            current: loyalty.pointsBalance || 0,
-                           stageLabels: campaign.rewards.reduce((acc, curr) => [...acc, (
+                           stageLabels: campaignRwd.rewards.reduce((acc, curr) => [...acc, (
                              curr && curr.customFields && curr.customFields.pointsRequired
                            )], []).filter(v => v)
                          };
                        }
                        return {};
                      })
-                   );
-                 })
-               )
+                   )
+               ))
             }
             if (campaign.type === CampaignType.invite) {
               // only from detail referral details appears on campaign_config

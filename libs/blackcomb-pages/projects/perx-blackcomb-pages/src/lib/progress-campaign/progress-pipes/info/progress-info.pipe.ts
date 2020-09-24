@@ -13,9 +13,9 @@ export class ProgressInfoPipe implements PipeTransform {
       case CampaignRewardMode.TransactionAmount:
         return `You've transacted <strong>$${value}</strong>`;
       case CampaignRewardMode.Referral:
-        return `You've made <strong>{value} referrals</strong>`;
+        return `You've made <strong>${value} referrals</strong>`;
       default:
-        return `You have made ${value} points.`
+        return `You have made ${value} points.`;
 
     }
     return null;
