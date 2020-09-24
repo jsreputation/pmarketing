@@ -214,8 +214,8 @@ export class V4RewardsService extends RewardsService {
       refereeRequired,
       balanceTillReward,
       displayProperties: reward.display_properties,
-      customProperties: reward.custom_fields ? {
-        pointsRequirement: reward.custom_fields.points_requirement,
+      customFields: reward.custom_fields ? {
+        pointsRequired: reward.custom_fields.points_requirement,
         faqLink: reward.custom_fields.faq_link,
         tncLink: reward.custom_fields.tnc_link
       } : undefined

@@ -33,7 +33,7 @@ export enum CampaignState {
   draft = 'draft'
 }
 
-export interface CampaignProgress {
+export interface ProgressBarFields {
   stages: number;
   current: number;
   stageLabels: string|number[];
@@ -59,7 +59,7 @@ export interface ICampaign {
   referralCodes?: string[];
   referralRewards?: IReferralReward[];
   refersAttained?: number;
-  progress?: CampaignProgress;
+  progress?: ProgressBarFields;
 }
 
 export enum CommChannel {

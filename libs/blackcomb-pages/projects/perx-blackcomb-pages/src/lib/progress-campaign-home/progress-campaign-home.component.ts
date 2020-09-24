@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {
+  CampaignType,
   ConfigService,
   ICampaign,
   ICampaignService,
@@ -9,7 +10,7 @@ import {
   SettingsService
 } from '@perxtech/core';
 import { catchError, map, switchMap, takeLast, tap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { Observable, of, zip } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
@@ -57,33 +58,31 @@ export class ProgressCampaignHomeComponent implements OnInit {
   }
 
   private initCampaign(): void {
-    this.campaigns$ = this.campaignService.getCampaigns()
-      .pipe(
-        switchMap((campaigns: ICampaign[]) => of(campaigns).pipe(catchError(err => of(err)))),
-        takeLast(1)
-      );
+    // get targeted campaigns to prevent zip within raz-adapted-collection from returning undefined
+    const stampCampaigns: Observable<ICampaign[]> = this.campaignService.getCampaigns({ type: CampaignType.stamp }).pipe(
+      switchMap((campaigns: ICampaign[]) => of(campaigns).pipe(catchError(err => of(err)))),
+      takeLast(1)
+    );
+    const loyaltyCampaigns: Observable<ICampaign[]> = this.campaignService.getCampaigns({ type: CampaignType.give_reward }).pipe(
+      switchMap((campaigns: ICampaign[]) => of(campaigns).pipe(catchError(err => of(err)))),
+      takeLast(1)
+    );
+    const referralCampaigns: Observable<ICampaign[]> = this.campaignService.getCampaigns({ type: CampaignType.invite }).pipe(
+      switchMap((campaigns: ICampaign[]) => of(campaigns).pipe(catchError(err => of(err)))),
+      takeLast(1)
+    );
 
+    this.campaigns$ = zip(
+      stampCampaigns,
+      loyaltyCampaigns,
+      referralCampaigns
+    ).pipe(
+      map(([stamp, loyalty, referral]) => [...stamp, ...loyalty, ...referral])
+    );
   }
 
   public goToCampaignPage(campaign: ICampaign): void {
-    // if (campaign.type === CampaignType.game) {
-    //   // currently only the quiz have proper data for landing page, once other campaign
-    //   // type have proper data, move this block out
-    //   if (this.appConfig.showCampaignLandingPage) {
-    //     this.router.navigate([`campaign-welcome/${campaign.id}`]);
-    //     return;
-    //   }
-    //
-    //   this.router.navigate([`quiz/${campaign.id}`]);
-    //   return;
-    // }
-    // if (campaign.subType === 'survey') {
-    //   this.router.navigate([`survey/${campaign.id}`]);
-    //   return;
-    // }
-
     // todo: unit test - expected to be progress campaigns only here
-
     this.router.navigate([`progress-campaign/${campaign.id}`]);
   }
 

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { BehaviorSubject, Observable, zip } from 'rxjs';
-import { CampaignType, ICampaign, ICampaignService, LoyaltyService, StampService } from '@perxtech/core';
-import { map, switchMap, withLatestFrom } from 'rxjs/operators';
+import { Observable, zip } from 'rxjs';
+import { CampaignType, ICampaign, ICampaignService, LoyaltyService, ProgressBarFields, StampService } from '@perxtech/core';
+import { concatMap, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { listAnimation } from '../home/games-collection/games-collection.animation';
 
 @Component({
@@ -22,6 +22,8 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
   public withProgressBar: boolean;
   @Input()
   public gameType: string;
+  @Input()
+  public showProgressLabels: boolean = false;
 
   @Output()
   public selected: EventEmitter<ICampaign> = new EventEmitter<ICampaign>();
@@ -29,10 +31,9 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
   public rewardsLeft: string;
   public campaigns: ICampaign[];
   public campaignsWithRewards$: Observable<ICampaign[]>;
-  public campaignsWithProgress$: Observable<any[]>;
+  public campaignsWithProgress$: Observable<(ICampaign & {progress?: Partial<ProgressBarFields>})[]>;
   public gamesLoaded: boolean = false;
   public isCampaignDisabled: boolean[] = [];
-  public rewardsCountBvrSubjects: { [campaignId: string]: BehaviorSubject<number> } = {};
 
   constructor(
     private stampService: StampService,
@@ -72,23 +73,24 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
               ) as any;
             }
             if (campaign.type === CampaignType.give_reward) {
-              // only supports one loyalty prgm, hardcode default
-               return this.loyaltyService.getLoyalty(1).pipe(
-                 map((loyalty) => {
-                   if (campaign.rewards && loyalty.currencyBalance) {
-                     return {
-                       stages: campaign.rewards.length || 2, // if length 0 default to 2 stages
-                       // biggest reward return last, test if really need
-                       // find the highest point and see if balance >=, at final stage
-                       current: loyalty.currencyBalance,
-                       stageLabels: campaign.rewards.reduce((acc, curr) => [...acc, (
-                         curr && curr.customProperties && curr.customProperties.pointsRequirement
-                       )], []).filter(v => v)
-                     };
-                   }
-                   return {}; // return an empty obj
-                 })
-               );
+               return this.campaignsService.getCampaign(campaign.id).pipe(
+                 concatMap((campaignRwd) => this.loyaltyService.getLoyalty(1).pipe(
+                     map((loyalty) => {
+                       if (campaignRwd.rewards) {
+                         return {
+                           stages: campaignRwd.rewards.length || 2, // if length 0 default to 2 stages
+                           // biggest reward return last, test if really need
+                           // find the highest point and see if balance >=, at final stage
+                           current: loyalty.pointsBalance || 0,
+                           stageLabels: campaignRwd.rewards.reduce((acc, curr) => [...acc, (
+                             curr && curr.customFields && curr.customFields.pointsRequired
+                           )], []).filter(v => v)
+                         };
+                       }
+                       return {};
+                     })
+                   )
+               ));
             }
             if (campaign.type === CampaignType.invite) {
               // only from detail referral details appears on campaign_config
@@ -110,8 +112,9 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
         ),
         withLatestFrom(this.campaigns$),
         map(
-          ([progress, campaigns]) => campaigns.map((campaign, index) => ({ ...campaign, progress: progress[index] }))
-        )
+          ([progress, campaigns]) => campaigns.map((campaign, index) => ({ ...campaign, progress: progress[index] as ProgressBarFields }))
+        ),
+        // tap to see transformed
       );
     }
   }

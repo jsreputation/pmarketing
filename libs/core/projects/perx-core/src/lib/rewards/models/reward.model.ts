@@ -24,10 +24,10 @@ export interface IReward {
   redemptionText?: string;
   rawPayload?: any;
   displayProperties?: IWRewardDisplayProperties;
-  customProperties?: {
+  customFields?: {
     faqLink: string;
     tncLink: string;
-    pointsRequirement: string;
+    pointsRequired: string;
   };
 }
 

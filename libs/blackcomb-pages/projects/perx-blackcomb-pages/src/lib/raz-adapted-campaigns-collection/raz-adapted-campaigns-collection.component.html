@@ -1,4 +1,4 @@
-<div *ngIf="campaignsWithProgress$ | async as campaigns" [@listAnimation]="!showAllCampaigns || campaigns.length">
+<div *ngIf="campaignsWithProgress$ | async as campaigns" [@listAnimation]="campaigns.length">
   <mat-card
     *ngFor="let campaign of campaigns"
     matRipple
@@ -12,7 +12,9 @@
       <perx-progress-bar *ngIf="campaign.progress as progress"
                          [stages]="progress?.stages"
                          [current]="progress?.current"
-                         [stageLabels]="progress?.stageLabels"></perx-progress-bar>
+                         [stageLabels]="progress?.stageLabels"
+                         [showProgressLabels]="showProgressLabels"
+      ></perx-progress-bar>
     </mat-card-content>
   </mat-card>
 </div>
