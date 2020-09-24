@@ -6,7 +6,7 @@ import { IPrice, IReward } from '../models/reward.model';
 import { ThemesService } from '../../utils/themes/themes.service';
 import { delay } from 'rxjs/operators';
 import { ProgressBarFields } from '../../campaign/models/campaign.model';
-enum CampaignRewardMode {
+const enum CampaignRewardMode {
   TransactionAmount = 'trans-amount',
   TransactionQuantity = 'trans-qty',
   Referral = 'referral'
@@ -81,13 +81,13 @@ export class RewardsLargeListComponent implements OnInit {
   }
 
   public get rewardType(): string {
-    switch (this.rewardMode){
+    switch (this.rewardMode) {
       case CampaignRewardMode.Referral:
-        return 'referrals'
+        return 'referrals';
       case CampaignRewardMode.TransactionQuantity:
-        return 'transactions'
+        return 'transactions';
       default:
-        return ''
+        return '';
     }
   }
 

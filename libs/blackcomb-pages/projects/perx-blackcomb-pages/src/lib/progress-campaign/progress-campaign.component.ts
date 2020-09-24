@@ -134,7 +134,7 @@ export class ProgressCampaignComponent implements OnInit {
                       current: (loyalty.pointsBalance || 0) >= completeStageLabels[index] ?
                         completeStageLabels[index] : (loyalty.pointsBalance || 0),
                       stageLabels
-                    }
+                    };
                   }
                   return {
                     ...reward,

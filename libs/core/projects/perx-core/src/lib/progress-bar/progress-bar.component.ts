@@ -22,13 +22,13 @@ export class ProgressBarComponent implements OnInit {
   @Input()
   public showProgressLabels: boolean = false;
 
-  public currentRewardIndex = 0;
+  public currentRewardIndex: number = 0;
   // helper function for rendering # slots using ngFor
   public arrayFromNumber(n: number): any[] {
     return Array(n);
   }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.currentRewardIndex = this.stageLabels
       .findIndex((labelNum) => this.current < labelNum);
   }

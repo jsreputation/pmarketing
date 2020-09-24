@@ -90,7 +90,7 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
                        return {};
                      })
                    )
-               ))
+               ));
             }
             if (campaign.type === CampaignType.invite) {
               // only from detail referral details appears on campaign_config
