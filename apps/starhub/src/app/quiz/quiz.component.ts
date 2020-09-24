@@ -243,7 +243,7 @@ export class QuizComponent implements OnInit, OnDestroy {
       switchMap(
         () => iif(
           () => this.complete,
-            this.quizService.postFinalQuizAnswer(this.moveId!),
+            this.quizService.postFinalQuizAnswer(this.moveId as number),
             EMPTY
         )
       ),
