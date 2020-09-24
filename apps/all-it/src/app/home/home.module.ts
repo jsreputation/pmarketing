@@ -14,7 +14,8 @@ import {
   RewardPopupComponent,
   RewardsModule,
   UtilsModule,
-  QuizModule
+  QuizModule,
+  SurveyModule
 } from '@perxtech/core';
 
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
@@ -47,6 +48,7 @@ const routes: Routes = [{
     OutcomeModule,
     RouterModule.forChild(routes),
     PageComponentsModule,
+    SurveyModule,
   ],
   exports: [
     HomeComponent
