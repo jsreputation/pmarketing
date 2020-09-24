@@ -4,8 +4,11 @@ import { ProgressCampaignComponent } from './progress-campaign.component';
 import {
   ConfigService,
   ICampaignService,
+  LoyaltyService,
+  ProgressBarModule,
   RewardsModule,
-  SettingsService
+  SettingsService,
+  StampService
 } from '@perxtech/core';
 import {
   ActivatedRoute,
@@ -13,6 +16,7 @@ import {
 } from '@angular/router';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ProgressInfoPipe } from './progress-pipes/info/progress-info.pipe';
 
 const campaignServiceStub: Partial<ICampaignService> = {
   getCampaign: () => of(),
@@ -23,6 +27,12 @@ const settingsServiceStub: Partial<SettingsService> = {
 const configServiceStub: Partial<ConfigService> = {
   readAppConfig: () => of()
 };
+const loyaltyServiceStub: Partial<LoyaltyService> = {
+  getLoyalty: () => of()
+};
+const stampServiceStub: Partial<StampService> = {
+  getCards: () => of()
+};
 
 describe('ProgressCampaignComponent', () => {
   let component: ProgressCampaignComponent;
@@ -30,11 +40,12 @@ describe('ProgressCampaignComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProgressCampaignComponent ],
+      declarations: [ ProgressCampaignComponent, ProgressInfoPipe ],
       imports: [
 		    RouterTestingModule,
         RewardsModule,
-        MatCardModule
+        MatCardModule,
+        ProgressBarModule
       ],
       providers: [
         {
@@ -45,6 +56,8 @@ describe('ProgressCampaignComponent', () => {
         { provide: ICampaignService, useValue: campaignServiceStub},
         { provide: ConfigService, useValue: configServiceStub },
         { provide: SettingsService, useValue: settingsServiceStub },
+        { provide: StampService, value: stampServiceStub },
+        { provide: LoyaltyService, value: loyaltyServiceStub },
       ]
     })
     .compileComponents();
