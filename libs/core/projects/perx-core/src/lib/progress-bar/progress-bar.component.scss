@@ -1,7 +1,7 @@
 .relative-container {
   position: relative;
   min-height: 60px;
-  width: 34rem;
+  //width: 34rem;
   align-items: center;
   display: flex;
   margin: 0 auto;
@@ -10,6 +10,10 @@
 .in-progress {
   background: #44D62C;
   line-height: 0.4em;
+  //new
+  position: absolute;
+  z-index: 100;
+  left: 2px;
 
   /* Hide the text. */
   text-indent: 100%;
@@ -20,6 +24,10 @@
 .to-progress {
   background: #D6D6D6;
   line-height: 0.4em;
+  //new
+  position: absolute;
+  left: 2px;
+  width: 34rem;
 
   /* Hide the text. */
   text-indent: 100%;
@@ -30,19 +38,34 @@
 #stepProgressBar {
   position: absolute;
   display: flex;
-  min-width: 100%;
+  //min-width: 100%;
+  z-index: 100;
+  width: 36rem;
   justify-content: space-between;
-  align-items: center;
+  //align-items: center;
+  //top: 1.6rem;
+
+  // NEW
+  //width: 100%;
+  //height: 2rem;
 
   .stamp-img {
+    //position: absolute;
+    display: inline-block;
     width: 24px;
     height: 24px;
+    min-width: 24px;
     background-size: auto;
     line-height: 7rem;
-    //
-    //&::before {
-    //  content: '';
-    //}
   }
 
+  .stamp-label {
+    //margin-left: 0.7rem;
+  }
+}
+
+.progress-bar-container {
+  //width: 95%;
+  //margin: 0 auto;
+  height: 26px;
 }

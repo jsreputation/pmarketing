@@ -1,14 +1,28 @@
 <div class="relative-container">
-  <p class="in-progress" [ngStyle]="{
-      'width': (current && stages) ?((current / stages) * 100) : 0 + '%'
-    }">
-    hidden
-  </p>
-  <p class="to-progress" [ngStyle]="{
-      'width': ((1 - (current ? current / stages : 0)) * 100) + '%'
-    }">
-    hidden
-  </p>
+  <div class="progress-bar-container">
+    <p class="in-progress" [ngStyle]="{
+        'width': (
+          current >= stageLabels[stageLabels.length - 1]  ?
+          34 : ((34 / stages) * (currentRewardIndex ))
+         ) + 'rem'
+      }">
+      hidden
+    </p>
+    <p class="to-progress">
+      hidden
+    </p>
+  </div>
+<!--  <p class="in-progress" [ngStyle]="{-->
+<!--      'width': ((current && stageLabels?.length) ? ((current / stageLabels[stageLabels?.length - 1]) * 100) : 0) + '%'-->
+<!--    }">-->
+<!--    hidden-->
+<!--  </p>-->
+<!--  <p class="to-progress" [ngStyle]="{-->
+<!--      'width': ((1 - ((current && stageLabels?.length) ? current / stageLabels[stageLabels?.length - 1] : 0)) * 100) + '%',-->
+<!--      'left': ((current && stageLabels?.length) ? ((current / stageLabels[stageLabels?.length - 1]) * 100) : 'auto') + '%'-->
+<!--    }">-->
+<!--    hidden-->
+<!--  </p>-->
   <div id="stepProgressBar">
       <!--  testing progress bar-->
       <!--  will take in 2 images - stampurl and unstamped url-->
@@ -18,9 +32,13 @@
       <div *ngFor="let stamp of arrayFromNumber(stages); let i = index"
            class="stamp-img"
            [ngStyle]="{
-            'background-image': 'url(' + (current >= i + 1 ? stampImgUrl : noStampImgUrl) + ')'
+            'left': i === 0 ? 0 :
+            (stageLabels ? ((stageLabels[i] / stageLabels[stageLabels?.length - 1]) * 100) + ((i === stages - 1) ? - 4 : 0) : 0) + '%',
+            'background-image': 'url(' + (current >= stageLabels[i] ? stampImgUrl : noStampImgUrl) + ')'
            }">
-        <span *ngIf="stageLabels && stageLabels[i]">{{stageLabels[i]}}</span>
+        <span class="stamp-label" *ngIf="showProgressLabels && stageLabels && stageLabels[i]">
+          {{stageLabels[i]}}
+        </span>
       </div>
     </div>
 </div>
