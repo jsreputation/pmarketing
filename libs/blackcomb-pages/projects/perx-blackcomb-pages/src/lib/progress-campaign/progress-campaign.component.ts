@@ -11,7 +11,9 @@ import {
   LoyaltyService,
   ProgressBarFields,
   SettingsService,
-  StampService
+  StampService,
+  IVoucherService,
+  Voucher
 } from '@perxtech/core';
 import {
   ActivatedRoute,
@@ -57,6 +59,7 @@ export class ProgressCampaignComponent implements OnInit {
     protected campaignService: ICampaignService,
     protected settingsService: SettingsService,
     protected stampService: StampService,
+    protected voucherService: IVoucherService,
     private cd: ChangeDetectorRef
 ) { }
 
@@ -243,7 +246,20 @@ export class ProgressCampaignComponent implements OnInit {
   }
 
   public goToReward(reward: IReward): void {
-    this.router.navigate([`/reward-voucher-detail/${reward.id}`]);
+    this.voucherService.getAll().subscribe(
+      (vouchers: Voucher[]) => {
+        let voucherId;
+        for (let v of vouchers) {
+          if (v.reward && v.reward.id === reward.id) {
+            voucherId = v.id;
+          }
+        }
+        this.router.navigate( voucherId ?
+          [`/reward-voucher-detail/${reward.id}/${voucherId}`] :
+          [`/reward-voucher-detail/${reward.id}`]
+        );
+      }
+    )
   }
 
 }

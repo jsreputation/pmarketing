@@ -4,6 +4,7 @@ import { ProgressCampaignComponent } from './progress-campaign.component';
 import {
   ConfigService,
   ICampaignService,
+  IVoucherService,
   LoyaltyService,
   ProgressBarModule,
   RewardsModule,
@@ -33,6 +34,9 @@ const loyaltyServiceStub: Partial<LoyaltyService> = {
 const stampServiceStub: Partial<StampService> = {
   getCards: () => of()
 };
+const voucherServiceStub: Partial<IVoucherService> = {
+  getAll: () => of([])
+};
 
 describe('ProgressCampaignComponent', () => {
   let component: ProgressCampaignComponent;
@@ -58,6 +62,7 @@ describe('ProgressCampaignComponent', () => {
         { provide: SettingsService, useValue: settingsServiceStub },
         { provide: StampService, value: stampServiceStub },
         { provide: LoyaltyService, value: loyaltyServiceStub },
+        { provide: IVoucherService, useValue: voucherServiceStub },
       ]
     })
     .compileComponents();
