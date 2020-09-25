@@ -259,7 +259,7 @@ export class ProgressCampaignComponent implements OnInit {
     this.voucherService.getAll().subscribe(
       (vouchers: Voucher[]) => {
         let voucherId;
-        for (let v of vouchers) {
+        for (const v of vouchers) {
           if (v.reward && v.reward.id === reward.id) {
             voucherId = v.id;
           }
