@@ -1,5 +1,14 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { filter, map, switchMap, tap } from 'rxjs/operators';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnInit
+} from '@angular/core';
+import {
+  filter,
+  map,
+  switchMap,
+  tap
+} from 'rxjs/operators';
 import {
   CampaignType,
   ConfigService,
@@ -39,7 +48,7 @@ const isNumber = (obj: any): obj is number => typeof obj === 'number';
 @Component({
   selector: 'perx-blackcomb-pages-progress-campaign',
   templateUrl: './progress-campaign.component.html',
-  styleUrls: ['./progress-campaign.component.scss']
+  styleUrls: [ './progress-campaign.component.scss' ]
 })
 export class ProgressCampaignComponent implements OnInit {
   public appConfig: IConfig<void>;
@@ -61,7 +70,8 @@ export class ProgressCampaignComponent implements OnInit {
     protected stampService: StampService,
     protected voucherService: IVoucherService,
     private cd: ChangeDetectorRef
-) { }
+  ) {
+  }
 
   public ngOnInit(): void {
     this.campaign$ = this.configService.readAppConfig<void>().pipe(
@@ -74,7 +84,7 @@ export class ProgressCampaignComponent implements OnInit {
       filter((params: ParamMap) => params.has('id')),
       switchMap((params: ParamMap) => {
         const id: string | null = params.get('id');
-        if (!id) {
+        if (! id) {
           return throwError({ message: 'campaign id is required' });
         }
         const idN = Number.parseInt(id, 10);
@@ -102,7 +112,7 @@ export class ProgressCampaignComponent implements OnInit {
                 if (campaign && campaign.rewards) {
                   return campaign.rewards.map((reward, index) => {
                     if (rewardPositionsSorted.length && rewardPositionsSorted[index]) {
-                      const stageLabels = [0, rewardPositionsSorted[index]];
+                      const stageLabels = [ 0, rewardPositionsSorted[index] ];
                       progress = {
                         stages: stageLabels.length,
                         current: oc(stampCard).stamps.length(0) >= rewardPositionsSorted[index] ?
@@ -110,7 +120,7 @@ export class ProgressCampaignComponent implements OnInit {
                         stageLabels
                       };
                     }
-                    return {...reward, progress};
+                    return { ...reward, progress };
                   });
                 }
               }
@@ -125,13 +135,13 @@ export class ProgressCampaignComponent implements OnInit {
           return this.loyaltyService.getLoyalty(1).pipe(
             map((loyalty) => {
               if (campaign.rewards) {
-                const completeStageLabels: number[] = campaign.rewards.reduce((acc, curr) => [...acc, (
+                const completeStageLabels: number[] = campaign.rewards.reduce((acc, curr) => [ ...acc, (
                   curr && curr.customFields && +curr.customFields.pointsRequired
-                )], []).filter(isNumber);
+                ) ], []).filter(isNumber);
                 let progress: Partial<ProgressBarFields> = {};
                 return campaign.rewards.map((reward, index) => {
                   if (completeStageLabels && completeStageLabels[index]) {
-                    const stageLabels = [0, completeStageLabels[index]];
+                    const stageLabels = [ 0, completeStageLabels[index] ];
                     progress = {
                       stages: stageLabels.length || 2, // actually it's always going to be 2, can just hardcode 2
                       current: (loyalty.pointsBalance || 0) >= completeStageLabels[index] ?
@@ -160,10 +170,10 @@ export class ProgressCampaignComponent implements OnInit {
                 let progress: Partial<ProgressBarFields> = {};
                 return campaignInv.referralRewards.map((reward, index) => {
                   if (completeStageLabels && completeStageLabels[index] && campaignInv.refersAttained !== (undefined || null)) {
-                    const stageLabels = [0, completeStageLabels[index]];
+                    const stageLabels = [ 0, completeStageLabels[index] ];
                     progress = {
                       stages: stageLabels.length || 2, // actually it's always going to be 2, can just hardcode 2
-                      current: (campaignInv.refersAttained || 0)  >= completeStageLabels[index] ?
+                      current: (campaignInv.refersAttained || 0) >= completeStageLabels[index] ?
                         completeStageLabels[index] : (campaignInv.refersAttained || 0),
                       stageLabels
                     };
@@ -183,7 +193,7 @@ export class ProgressCampaignComponent implements OnInit {
     );
 
     this.campaignProgress$ = this.campaign$.pipe(
-      switchMap( (campaign) => {
+      switchMap((campaign) => {
         if (campaign.type === CampaignType.stamp) {
           return this.stampService.getCards(campaign.id).pipe(
             // there is only going to be one stamp. take first obj in array,
@@ -214,9 +224,9 @@ export class ProgressCampaignComponent implements OnInit {
                   // biggest reward return last, test if really need
                   // find the highest point and see if balance >=, at final stage
                   current: loyalty.pointsBalance || 0,
-                  stageLabels: campaign.rewards.reduce((acc, curr) => [...acc, (
+                  stageLabels: campaign.rewards.reduce((acc, curr) => [ ...acc, (
                     curr && curr.customFields && curr.customFields.pointsRequired
-                  )], []).filter(v => v)
+                  ) ], []).filter(v => v)
                 };
               }
               return {}; // return an empty obj
@@ -254,12 +264,12 @@ export class ProgressCampaignComponent implements OnInit {
             voucherId = v.id;
           }
         }
-        this.router.navigate( voucherId ?
-          [`/reward-voucher-detail/${reward.id}/${voucherId}`] :
-          [`/reward-voucher-detail/${reward.id}`]
+        this.router.navigate(voucherId ?
+          [ `/reward-voucher-detail/${reward.id}/${voucherId}` ] :
+          [ `/reward-voucher-detail/${reward.id}` ]
         );
       }
-    )
+    );
   }
 
 }
