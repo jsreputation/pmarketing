@@ -6,7 +6,7 @@
 
 .span-text {
   display: block;
-  width: 30rem;
+  width: 29rem;
   white-space: normal;
   margin-left: 8px;
   padding-right: 8px;
@@ -33,6 +33,12 @@
     height: 100%;
     color: #212121 !important;
     padding: 1.4rem !important;
+  }
+
+  ::ng-deep .mat-radio-label-content {
+    width: 29rem;
+    word-wrap: break-word;
+    white-space: normal;
   }
 
   ::ng-deep .mat-checkbox-inner-container {
