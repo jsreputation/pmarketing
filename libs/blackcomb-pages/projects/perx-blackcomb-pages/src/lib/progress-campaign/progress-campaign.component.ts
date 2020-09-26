@@ -164,12 +164,13 @@ export class ProgressCampaignComponent implements OnInit {
           this.cd.detectChanges();
           return this.campaignService.getCampaign(campaign.id).pipe(
             map(campaignInv => {
-              if (campaignInv.referralRewards) {
-                const completeStageLabels = campaignInv.referralRewards.map((reward) => reward.refereeRequired)
-                  .sort((a, b) => a - b);
+              if (campaignInv.rewards) {
+                const completeStageLabels: number[] = campaignInv.rewards.reduce((acc, curr) => [ ...acc, (
+                  curr && curr.customFields && +curr.customFields.pointsRequired
+                ) ], []).filter(isNumber);
                 let progress: Partial<ProgressBarFields> = {};
-                return campaignInv.referralRewards.map((reward, index) => {
-                  if (completeStageLabels && completeStageLabels[index] && campaignInv.refersAttained !== (undefined || null)) {
+                return campaignInv.rewards.map((reward, index) => {
+                  if (completeStageLabels && completeStageLabels[index]) {
                     const stageLabels = [ 0, completeStageLabels[index] ];
                     progress = {
                       stages: stageLabels.length || 2, // actually it's always going to be 2, can just hardcode 2
