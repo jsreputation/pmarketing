@@ -21,6 +21,8 @@ export class ProgressBarComponent implements OnInit {
   public stageLabels: number[] = []; // length must be the same as stages
   @Input()
   public showProgressLabels: boolean = false;
+  @Input()
+  public customHeight: number = 26;
 
   public currentRewardIndex: number = 0;
   // helper function for rendering # slots using ngFor
@@ -30,8 +32,9 @@ export class ProgressBarComponent implements OnInit {
 
   public ngOnInit(): void {
     if (this.stageLabels) {
-      this.currentRewardIndex = this.stageLabels
+      const oneTierAboveReward = this.stageLabels
         .findIndex((labelNum) => this.current < labelNum);
+      this.currentRewardIndex = oneTierAboveReward === -1 ? 0 : oneTierAboveReward - 1;
     }
   }
 }
