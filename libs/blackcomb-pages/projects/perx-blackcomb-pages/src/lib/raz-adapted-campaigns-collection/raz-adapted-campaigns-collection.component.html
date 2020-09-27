@@ -10,6 +10,7 @@
     <mat-card-content class="card-content">
       <p class="main-reward-title ellipsis-1-line">{{campaign.name}}</p>
       <perx-progress-bar *ngIf="campaign.progress as progress"
+                         [customHeight]="30"
                          [stages]="progress?.stages"
                          [current]="progress?.current"
                          [stageLabels]="progress?.stageLabels"

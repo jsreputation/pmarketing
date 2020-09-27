@@ -27,13 +27,8 @@ export interface IReward {
   customFields?: {
     faqLink: string;
     tncLink: string;
-    pointsRequired: string;
+    requirement: string; // note number in context of campaign type (RAZ)
   };
-}
-
-export interface IReferralReward extends IReward {
-  refereeRequired: number;
-  balanceTillReward: number;
 }
 
 export interface IRewardState {

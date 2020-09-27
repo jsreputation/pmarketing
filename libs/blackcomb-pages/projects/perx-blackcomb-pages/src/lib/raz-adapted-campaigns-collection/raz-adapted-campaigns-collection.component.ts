@@ -83,7 +83,7 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
                            // find the highest point and see if balance >=, at final stage
                            current: loyalty.pointsBalance || 0,
                            stageLabels: campaignRwd.rewards.reduce((acc, curr) => [...acc, (
-                             curr && curr.customFields && curr.customFields.pointsRequired
+                             curr && curr.customFields && curr.customFields.requirement
                            )], []).filter(v => v)
                          };
                        }
@@ -96,12 +96,12 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
               // only from detail referral details appears on campaign_config
               return this.campaignsService.getCampaign(campaign.id).pipe(
                 map(campaignInv => {
-                  if (campaignInv.referralRewards) {
+                  if (campaignInv.rewards) {
                     return {
-                      stages: campaignInv.referralRewards.length || 2,
+                      stages: campaignInv.rewards.length || 2,
                       current: campaignInv.refersAttained, // reached
-                      stageLabels: campaignInv.referralRewards.map(reward => reward.refereeRequired)
-                        .sort((a, b) => a - b)
+                      stageLabels: campaignInv.rewards.map(reward => reward.customFields && +reward.customFields.requirement)
+                        .sort((a: number, b: number) => a - b)
                     };
                   }
                   return {};

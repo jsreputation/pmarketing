@@ -1,4 +1,4 @@
-import { IReferralReward, IReward } from '../../rewards/models/reward.model';
+import { IReward } from '../../rewards/models/reward.model';
 import { WInformationCollectionSettingType, IWProperties } from '@perxtech/whistler';
 
 export interface CampaignDisplayProperties {
@@ -57,7 +57,6 @@ export interface ICampaign {
   rawPayload?: any;
   displayProperties?: CampaignDisplayProperties;
   referralCodes?: string[];
-  referralRewards?: IReferralReward[];
   refersAttained?: number;
   progress?: ProgressBarFields;
 }

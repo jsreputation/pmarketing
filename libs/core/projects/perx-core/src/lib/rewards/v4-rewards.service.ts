@@ -20,8 +20,7 @@ import {
   IReward,
   ICatalog,
   IPrice,
-  ICategoryTags,
-  IReferralReward
+  ICategoryTags
 } from './models/reward.model';
 
 import { RewardStateHelper } from './reward-state-helper';
@@ -84,6 +83,7 @@ export interface IV4Reward {
     faq_link: string;
     tnc_link: string;
     points_requirement: string; // to convert to number
+    referrals_requirement: string;
   };
   referee_required_for_reward?: number;
   referee_balance_to_next_reward?: number;
@@ -162,7 +162,7 @@ export class V4RewardsService extends RewardsService {
   }
 
 
-  public static v4RewardToReward(reward: IV4Reward): IReward | IReferralReward {
+  public static v4RewardToReward(reward: IV4Reward): IReward {
     const images = reward.images || [];
     let thumbnail = images.find((image: IV4Image) => image.type === 'reward_thumbnail');
     if (thumbnail === undefined) {
@@ -174,8 +174,6 @@ export class V4RewardsService extends RewardsService {
     const merchantImg = oc(reward).merchant_logo_url();
     const sellingFrom = reward.selling_from ? new Date(reward.selling_from) : undefined;
     const sellingTo = reward.selling_to ? new Date(reward.selling_to) : undefined;
-    const refereeRequired = reward.referee_required_for_reward ? reward.referee_required_for_reward : undefined;
-    const balanceTillReward = reward.referee_balance_to_next_reward ? reward.referee_balance_to_next_reward : undefined;
 
     const v4Invent = reward.inventory;
     const inventory = v4Invent ? {
@@ -211,11 +209,9 @@ export class V4RewardsService extends RewardsService {
       howToRedeem: oc(reward).steps_to_redeem(''),
       categoryTags: reward.category_tags,
       inventory,
-      refereeRequired,
-      balanceTillReward,
       displayProperties: reward.display_properties,
       customFields: reward.custom_fields ? {
-        pointsRequired: reward.custom_fields.points_requirement,
+        requirement: reward.custom_fields.points_requirement || reward.custom_fields.referrals_requirement,
         faqLink: reward.custom_fields.faq_link,
         tncLink: reward.custom_fields.tnc_link
       } : undefined

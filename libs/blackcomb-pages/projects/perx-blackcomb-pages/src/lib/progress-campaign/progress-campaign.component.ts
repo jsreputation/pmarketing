@@ -136,7 +136,7 @@ export class ProgressCampaignComponent implements OnInit {
             map((loyalty) => {
               if (campaign.rewards) {
                 const completeStageLabels: number[] = campaign.rewards.reduce((acc, curr) => [ ...acc, (
-                  curr && curr.customFields && +curr.customFields.pointsRequired
+                  curr && curr.customFields && +curr.customFields.requirement
                 ) ], []).filter(isNumber);
                 let progress: Partial<ProgressBarFields> = {};
                 return campaign.rewards.map((reward, index) => {
@@ -166,7 +166,7 @@ export class ProgressCampaignComponent implements OnInit {
             map(campaignInv => {
               if (campaignInv.rewards) {
                 const completeStageLabels: number[] = campaignInv.rewards.reduce((acc, curr) => [ ...acc, (
-                  curr && curr.customFields && +curr.customFields.pointsRequired
+                  curr && curr.customFields && +curr.customFields.requirement
                 ) ], []).filter(isNumber);
                 let progress: Partial<ProgressBarFields> = {};
                 return campaignInv.rewards.map((reward, index) => {
@@ -226,7 +226,7 @@ export class ProgressCampaignComponent implements OnInit {
                   // find the highest point and see if balance >=, at final stage
                   current: loyalty.pointsBalance || 0,
                   stageLabels: campaign.rewards.reduce((acc, curr) => [ ...acc, (
-                    curr && curr.customFields && curr.customFields.pointsRequired
+                    curr && curr.customFields && curr.customFields.requirement
                   ) ], []).filter(v => v)
                 };
               }
@@ -238,12 +238,12 @@ export class ProgressCampaignComponent implements OnInit {
           // only from detail referral details appears on campaign_config
           return this.campaignService.getCampaign(campaign.id).pipe(
             map(campaignInv => {
-              if (campaignInv.referralRewards) {
+              if (campaignInv.rewards) {
                 return {
-                  stages: campaignInv.referralRewards.length || 2,
+                  stages: campaignInv.rewards.length || 2,
                   current: campaignInv.refersAttained, // reached
-                  stageLabels: campaignInv.referralRewards.map(reward => reward.refereeRequired)
-                    .sort((a, b) => a - b)
+                  stageLabels: campaignInv.rewards.map(reward => reward.customFields && (+reward.customFields.requirement || 0))
+                    .sort((a: number, b: number) => a - b)
                 };
               }
               return {};

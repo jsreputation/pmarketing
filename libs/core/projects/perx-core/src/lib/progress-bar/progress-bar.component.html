@@ -1,9 +1,11 @@
 <div  *ngIf="stageLabels && stageLabels.length >= 1"  class="relative-container">
-  <div class="progress-bar-container">
+  <div class="progress-bar-container" [ngStyle]="{
+    'height': customHeight + 'px'
+  }">
     <p class="in-progress" *ngIf="current" [ngStyle]="{
         'width': (
           current >= stageLabels[stageLabels?.length - 1]  ?
-          34 : ((34 / stages) * (currentRewardIndex ))
+          32 : ((32 / stages) * (currentRewardIndex + 1))
          ) + 'rem'
       }">
       hidden
