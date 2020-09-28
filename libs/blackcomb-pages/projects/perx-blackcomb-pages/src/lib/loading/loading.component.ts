@@ -174,8 +174,16 @@ export class LoadingComponent implements OnInit, OnDestroy {
   }
 
   private redirectToEngagementPage(type: string): void {
-    this.router.navigateByUrl(
-      this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : `${type}/${this.campaignId}`
-    );
+    if (type === ('quiz' || 'survey')) {
+      this.router.navigateByUrl(
+        this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : `campaign-welcome/${this.campaignId}`
+      );
+    } else {
+      this.router.navigateByUrl(
+        this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : `type/${this.campaignId}` // placehold might be
+        // updated
+      );
+    }
+
   }
 }
