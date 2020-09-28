@@ -12,7 +12,10 @@
       *ngFor="let step of field.fieldGroup; let index = index; let last = last;">
       <div class="stepper">
         <div class="question">
-            <span>
+          <pinch-zoom *ngIf="step.templateOptions?.bannerImage">
+            <img class="question-image" [src]="step.templateOptions?.bannerImage" alt="question-img">
+          </pinch-zoom>
+            <span class="margin-top-1">
                 {{(index + 1) + '. ' + step.templateOptions.label}}
             </span>
           <span class="required-star">

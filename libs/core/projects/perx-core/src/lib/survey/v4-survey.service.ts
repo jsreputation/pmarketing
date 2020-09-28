@@ -75,6 +75,7 @@ export class V4SurveyService implements SurveyService {
     templateOptions: {
       label: question[lang].text,
       description: description[lang].text,
+      bannerImage: oc(question[lang]).image.value.image_url(''),
       required
     },
     fieldGroup: [{

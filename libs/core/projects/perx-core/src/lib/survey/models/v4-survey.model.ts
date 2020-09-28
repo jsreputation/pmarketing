@@ -9,7 +9,7 @@ export interface IV4SurveyOutcome {
 }
 
 export interface IV4SurveyQuestion {
-  question: { [k: string]: {text: string} };
+  question: { [k: string]: ({text: string} & {image: {value: {image_url}}}) };
   description: { [k: string]: {text: string} };
   id: string;
   required: boolean;
