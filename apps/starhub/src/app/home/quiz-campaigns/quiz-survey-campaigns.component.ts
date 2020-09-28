@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { GameType, ICampaign, ICampaignService, IGame } from '@perxtech/core';
-import { catchError, tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { catchError, scan, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { trigger } from '@angular/animations';
 import { fadeIn, fadeOut } from '../../utils/fade-animations';
 
@@ -15,6 +15,7 @@ const REQ_PAGE_SIZE: number = 10;
 })
 export class QuizSurveyCampaignsComponent implements OnInit {
   public campaigns$: Observable<ICampaign[] | {}>;
+  public campaignsSbjt$: BehaviorSubject<ICampaign[]> = new BehaviorSubject<ICampaign[]>([]);
   public ghostCampaigns: any[] = new Array(3);
   public games: IGame[];
   public campaignsPageId: number = 1;
@@ -36,7 +37,11 @@ export class QuizSurveyCampaignsComponent implements OnInit {
   }
 
   public loadCampaigns(): void {
-    this.campaigns$ = this.campaignService
+    this.campaigns$ = this.campaignsSbjt$.asObservable().pipe(
+      scan((accCampaigns, currCampaigns) =>
+        accCampaigns.concat(currCampaigns), [])
+    );
+    this.campaignService
       .getCampaigns({
         gameType: this.switchToSurvey ? GameType.survey : GameType.quiz
         , page: this.campaignsPageId })
@@ -47,12 +52,13 @@ export class QuizSurveyCampaignsComponent implements OnInit {
             // actual check here if no more campaigns then end -> ensure all pages combed
             this.campaignsEnded = true;
           }
+          this.campaignsSbjt$.next(campaigns);
         }),
         catchError(err => {
           this.ghostCampaigns = [];
           return err;
         })
-      );
+      ).subscribe();
   }
 
   public selected(campaign: ICampaign): void {
