@@ -1,5 +1,5 @@
-<div *ngIf="(campaigns$ | async) as campaigns " class="main-container">
-  <h1 *ngIf="ghostCampaigns.length || campaigns.length">{{ switchToSurvey ?
+<div *ngIf="(campaigns$ | async) as campaigns" class="main-container">
+  <h1 *ngIf="campaigns.length">{{ switchToSurvey ?
     'Surveys' : 'Quizzes' }}</h1>
   <div class="ga_campaign cards"
        *ngIf="campaigns.length > 0"

@@ -66,12 +66,12 @@ export class QuizResultsComponent implements OnInit {
         title: oc(outcome).title['en'].text(''),
         text: oc(outcome).subTitle['en'].text('A Reward is on your way!'),
         buttonTxt: oc(outcome).button['en'].text('NEXT'),
-        imageUrl: 'assets/quiz/reward.png',
+        imageUrl: 'assets/reward.png',
         ctaButtonClass: 'ga_game_completion'
         /* eslint-enable */
       };
       this.notificationService.addPopup(this.popup);
-      nextRoute = '/wallet';
+      nextRoute = '/home/vouchers';
     }
     this.router.navigate([nextRoute]);
   }
