@@ -7,16 +7,15 @@ export interface IV4SurveyOutcome {
   image?: string;
   button: string;
 }
-
+/* eslint-disable */
 export interface IV4SurveyQuestion {
-  question: { [k: string]: ({text: string} & {image: {value: {image_url}}}) };
+  question: { [k: string]: ({text: string} & {image: {value: {image_url: string}}}) };
   description: { [k: string]: {text: string} };
   id: string;
   required: boolean;
   payload: any;
 }
 
-/* eslint-disable */
 export interface IV4SurveyDisplayProperties {
   title: string;
   questions: IV4SurveyQuestion[];

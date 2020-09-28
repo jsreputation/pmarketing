@@ -26,6 +26,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyFieldStepperComponent } from '../formly-stepper/formly-stepper';
 import { SurveyService } from '@perxtech/core';
+import { PinchZoomModule } from 'ngx-pinch-zoom';
 
 describe('SurveyComponent', () => {
   let component: SurveyComponent;
@@ -61,6 +62,7 @@ describe('SurveyComponent', () => {
         MatProgressBarModule,
         MatStepperModule,
         ReactiveFormsModule,
+        PinchZoomModule,
         FormlyModule.forRoot({
           types: [
             {
