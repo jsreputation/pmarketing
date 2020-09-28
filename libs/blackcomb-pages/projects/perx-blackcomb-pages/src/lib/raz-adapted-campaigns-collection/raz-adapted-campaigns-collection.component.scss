@@ -26,7 +26,8 @@ mat-card {
     width: 100%;
     height: 10rem;
 
-    img {
+    .campaign-img {
+      border-radius: 4px;
       bottom: 15rem;
       height: 100%;
       width: 100%;

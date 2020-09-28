@@ -10,9 +10,9 @@ import { Component, Input, OnInit } from '@angular/core';
 
 export class ProgressBarComponent implements OnInit {
   @Input()
-  public stampImgUrl: string = 'https://perx-cdn-staging.s3.amazonaws.com/razer-assets/razer-stamp.png';
+  public stampImgUrl: string = 'https://perx-cdn-staging.s3.amazonaws.com/razer-assets/stamp.svg';
   @Input()
-  public noStampImgUrl: string = 'https://perx-cdn-staging.s3.amazonaws.com/razer-assets/unstamped.png';
+  public noStampImgUrl: string = 'https://perx-cdn-staging.s3.amazonaws.com/razer-assets/unstamp.svg';
   @Input()
   public stages: number = 3;
   @Input()
