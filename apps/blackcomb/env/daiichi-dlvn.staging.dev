@@ -4,3 +4,4 @@ PREAUTH=true
 APIHOST=https://api.perxtech.io
 IS_WHISTLER=false
 DEFAULT_LANG=vi
+EXTRA_LANGUAGE=vi

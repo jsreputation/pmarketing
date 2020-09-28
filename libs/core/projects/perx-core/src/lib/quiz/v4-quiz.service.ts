@@ -146,19 +146,25 @@ interface V4GamesResponse {
 })
 export class V4QuizService implements QuizService {
   private baseUrl$: Subject<string> = new ReplaySubject(1);
+  private lang: string;
 
   constructor(
     private http: HttpClient,
     configService: ConfigService
   ) {
     configService.readAppConfig().subscribe(
-      (config: IConfig<void>) => {
+      (config: IConfig<any>) => {
+        if ( config && config.custom && (
+          (config.custom as any).languageOptions).includes(window.navigator.language) ) {
+          this.lang = window.navigator.language === 'vi' ? 'vn' : window.navigator.language; // jz specific to BE stored mapping
+        }
         this.baseUrl$.next(config.apiHost);
       });
   }
 
   @Cacheable({})
   public getQuizFromCampaign(campaignId: number, lang: string = 'en'): Observable<IQuiz> {
+    lang = this.lang ? this.lang : lang;
     return this.baseUrl$.pipe(
       switchMap(baseUrl => this.http.get<V4GamesResponse>(`${baseUrl}/v4/campaigns/${campaignId}/games`)),
       map((res) => res.data),
