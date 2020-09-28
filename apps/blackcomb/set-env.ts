@@ -94,6 +94,7 @@ const appConfigFile = `{
       "en", "${process.env.EXTRA_LANGUAGE}"
     ]
   },
+  "homeAsProgressPage": ${process.env.PROGRESS_PAGE_HOME ? process.env.PROGRESS_PAGE_HOME : false},
   ${displayProperties}
 }
 `;

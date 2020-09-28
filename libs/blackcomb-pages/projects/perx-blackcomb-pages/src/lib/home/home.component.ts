@@ -120,6 +120,24 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
+    this.configService.readAppConfig<void>().pipe(
+      tap((config: IConfig<void>) => {
+        if (config.homeAsProgressPage) {
+          this.router.navigate(['/progress-campaigns']);
+        }
+        this.appConfig = config;
+        this.initCampaign();
+      }),
+      switchMap(() => this.settingsService.getRemoteFlagsSettings())
+    ).subscribe(
+      (flags: IFlags) => {
+        // todo: create a function to wrap all the rest of the init calls
+        this.appRemoteFlags = flags;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
     this.profileService.getCustomProperties()
       .pipe(
         switchMap(
@@ -142,21 +160,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.configService.readAppConfig<void>().pipe(
-      map((config: IConfig<void>) => {
-        this.appConfig = config;
-        this.initCampaign();
-      }),
-      switchMap(() => this.settingsService.getRemoteFlagsSettings())
-    ).subscribe(
-      (flags: IFlags) => {
-        // todo: create a function to wrap all the rest of the init calls
-        this.appRemoteFlags = flags;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
     this.authService.isAuthorized().subscribe((isAuth: boolean) => {
       if (isAuth) {
         this.fetchPopupCampaigns();
