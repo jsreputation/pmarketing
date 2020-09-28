@@ -1,7 +1,7 @@
 <ng-container *ngIf="reward$ | async as reward">
   <div class="reward-container">
-    <div class="reward-image-container" *ngIf="reward.rewardBanner">
-      <img class="reward-image" src="{{reward.rewardBanner}}" [alt]="reward.name">
+    <div class="reward-image-container" *ngIf="reward.rewardBanner || reward.rewardThumbnail">
+      <img class="reward-image" src="{{reward.rewardBanner || reward.rewardThumbnail}}" [alt]="reward.name">
     </div>
     <div class="title-card-wrapper">
       <mat-card class="title-card">
