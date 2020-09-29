@@ -39,7 +39,7 @@ describe('RewardVoucherComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RewardVoucherComponent],
+      declarations: [ RewardVoucherComponent ],
       imports: [
         UtilsModule,
         MatIconModule,
