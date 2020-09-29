@@ -2,35 +2,37 @@
   <div class="progress-bar-container" [ngStyle]="{
     'height': customHeight + 'px'
   }">
-    <p class="in-progress" *ngIf="current" [ngStyle]="{
-        'width': (
-          current >= stageLabels[stageLabels?.length - 1]  ?
-          32 : ((32 / stages) * (currentRewardIndex + 1))
-         ) + 'rem'
-      }">
+    <p *ngIf="accurateProg; else inProgInAccurate"
+      class="in-progress" [ngStyle]="{
+      'width': ((current && stageLabels?.length) ? ((current / stageLabels[stageLabels?.length - 1]) * 100) : 0) + '%'
+    }">
       hidden
     </p>
-    <p class="to-progress">
+    <p *ngIf="accurateProg; else progAccurate"
+      class="to-progress" [ngStyle]="{
+      'width': ((1 - ((current && stageLabels?.length) ? current / stageLabels[stageLabels?.length - 1] : 0)) * 100) + '%',
+      'left': ((current && stageLabels?.length) ? ((current / stageLabels[stageLabels?.length - 1]) * 100) : 'auto') + '%'
+    }">
       hidden
     </p>
+    <ng-template #inProgInAccurate>
+      <p class="in-progress" *ngIf="current" [ngStyle]="{
+            'width': (
+              current >= stageLabels[stageLabels?.length - 1]  ?
+              32 : ((32 / stages) * (currentRewardIndex + 1))
+             ) + 'rem'
+          }">
+        hidden
+      </p>
+    </ng-template>
+    <ng-template #progAccurate>
+      <p class="to-progress">
+        hidden
+      </p>
+    </ng-template>
   </div>
-<!--  <p class="in-progress" [ngStyle]="{-->
-<!--      'width': ((current && stageLabels?.length) ? ((current / stageLabels[stageLabels?.length - 1]) * 100) : 0) + '%'-->
-<!--    }">-->
-<!--    hidden-->
-<!--  </p>-->
-<!--  <p class="to-progress" [ngStyle]="{-->
-<!--      'width': ((1 - ((current && stageLabels?.length) ? current / stageLabels[stageLabels?.length - 1] : 0)) * 100) + '%',-->
-<!--      'left': ((current && stageLabels?.length) ? ((current / stageLabels[stageLabels?.length - 1]) * 100) : 'auto') + '%'-->
-<!--    }">-->
-<!--    hidden-->
-<!--  </p>-->
+
   <div id="stepProgressBar">
-      <!--  testing progress bar-->
-      <!--  will take in 2 images - stampurl and unstamped url-->
-      <!--  take in a param named stages for how many bar tiers-->
-      <!--  takes in an observable to update the progress async-->
-      <!--  take in optionally startValue and endValue-->
       <div *ngFor="let stamp of arrayFromNumber(stages); let i = index"
            class="stamp-img"
            [ngStyle]="{
