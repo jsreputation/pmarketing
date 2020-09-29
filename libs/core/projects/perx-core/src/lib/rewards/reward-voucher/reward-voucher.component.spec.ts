@@ -9,6 +9,7 @@ import { TokenStorage } from '../../utils/storage/token-storage.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatRippleModule } from '@angular/material/core';
 import { MatListModule } from '@angular/material/list';
+import { ProgressBarModule } from '@perxtech/core';
 
 describe('RewardVoucherComponent', () => {
   let component: RewardVoucherComponent;
@@ -38,13 +39,14 @@ describe('RewardVoucherComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RewardVoucherComponent],
+      declarations: [ RewardVoucherComponent ],
       imports: [
         UtilsModule,
         MatIconModule,
         MatCardModule,
         MatRippleModule,
         MatListModule,
+        ProgressBarModule
       ],
       providers: [
         { provide: TokenStorage, useValue: tokenStorageStub },

@@ -1,0 +1,16 @@
+<div class="campaign-container" *ngIf="settings$ | async as settings; else notAvail">
+  <div class="campaign-image-container">
+    <img class="campaign-image" *ngIf="settings.bannerImg" src="{{settings.bannerImg}}" alt="banner-img">
+    <img class="campaign-image" *ngIf="!(settings.bannerImg)">
+  </div>
+  <div class="details" [innerHtml]="
+   '<h1>dasdas</h1>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius ipsum, nemo officia perspiciatisx'">
+    <!-- lorem to be replaced by settings.bannerText -->
+  </div>
+</div>
+
+<ng-template #notAvail>
+  <div class="campaign-container">
+    Details are not available
+  </div>
+</ng-template>

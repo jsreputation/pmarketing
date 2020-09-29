@@ -1,0 +1,27 @@
+// $max-width: 60rem;
+
+.campaign-container {
+  margin: 0 auto;
+  background: var(--background);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  // max-width: $max-width;
+}
+
+.campaign-image-container {
+  flex: 0;
+
+  .campaign-image {
+    width: 100%;
+    height: 18rem;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
+.details {
+  width: 90%;
+  margin: 2rem auto;
+}
