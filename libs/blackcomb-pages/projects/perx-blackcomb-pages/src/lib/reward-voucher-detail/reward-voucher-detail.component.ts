@@ -14,7 +14,7 @@ import {
   IPrice,
   IReward,
   IVoucherService,
-  LoyaltyService,
+  LoyaltyService, ProgressBarFields,
   RewardsService,
   Voucher
 } from '@perxtech/core';
@@ -53,6 +53,7 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
   public voucherId: number;
   public rewardId: number;
   public maxRewardCost?: number;
+  public rewardProgress: Partial<ProgressBarFields>; // stages always 2
 
   constructor(
     private rewardsService: RewardsService,
@@ -65,6 +66,14 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
+    const { current, stageLabels } = history.state;
+    if (current !== (undefined) && stageLabels) {
+      this.rewardProgress = {
+        current: history.state.current,
+        stages: 2,
+        stageLabels: history.state.stageLabels
+      };
+    }
     this.configService.readAppConfig<void>()
       .subscribe((config: IConfig<void>) => this.appConfig = config);
 

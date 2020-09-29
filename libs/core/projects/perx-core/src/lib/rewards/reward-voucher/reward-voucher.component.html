@@ -17,6 +17,9 @@
     </div>
     <div>
       <perx-progress-bar
+        [stages]="rewardProgress?.stages"
+        [current]="rewardProgress?.current"
+        [stageLabels]="rewardProgress?.stageLabels"
         [showProgressLabels]="true"></perx-progress-bar>
     </div>
     <div class="details">

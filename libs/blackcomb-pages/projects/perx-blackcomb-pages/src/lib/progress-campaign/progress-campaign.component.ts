@@ -26,8 +26,9 @@ import {
 } from '@perxtech/core';
 import {
   ActivatedRoute,
+  NavigationExtras,
   ParamMap,
-  Router,
+  Router
 } from '@angular/router';
 import {
   Observable,
@@ -56,8 +57,8 @@ export class ProgressCampaignComponent implements OnInit {
   public campaign$: Observable<ICampaign>;
   public campaignRewards$: Observable<IReward[]>;
   public campaignProgress$: Observable<Partial<ProgressBarFields>>;
-  public rewards$: Observable<IReward[]> | null;
   public campaignRewardMode!: CampaignRewardMode;
+  public campaignRewards: (IReward & {progress: ProgressBarFields})[];
 
 
   constructor(
@@ -190,7 +191,8 @@ export class ProgressCampaignComponent implements OnInit {
           );
         }
         return [];
-      })
+      }),
+      tap((rewardsWithProgress: (IReward & {progress: ProgressBarFields})[]) => this.campaignRewards = rewardsWithProgress)
     );
 
     this.campaignProgress$ = this.campaign$.pipe(
@@ -259,6 +261,16 @@ export class ProgressCampaignComponent implements OnInit {
   public goToReward(reward: IReward): void {
     this.voucherService.getAll().subscribe(
       (vouchers: Voucher[]) => {
+        let navigationExtras: NavigationExtras = {};
+        const selectedRewardWithProgress = this.campaignRewards.find(progReward => progReward.id === reward.id);
+        if (selectedRewardWithProgress) {
+          navigationExtras = {
+            state: {
+              current: selectedRewardWithProgress.progress.current,
+              stageLabels: selectedRewardWithProgress.progress.stageLabels,
+            }
+          };
+        }
         let voucherId;
         for (const v of vouchers) {
           if (v.reward && v.reward.id === reward.id) {
@@ -268,7 +280,7 @@ export class ProgressCampaignComponent implements OnInit {
         this.router.navigate(voucherId ?
           [ `/reward-voucher-detail/${reward.id}/${voucherId}` ] :
           [ `/reward-voucher-detail/${reward.id}` ]
-        );
+        , navigationExtras);
       }
     );
   }
