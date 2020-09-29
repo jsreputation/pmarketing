@@ -159,7 +159,11 @@ const routes: Routes = [
         path: 'nearme',
         loadChildren: () => import('../nearme/nearme.module').then(mod => mod.NearmeModule),
         canActivate: [ProtectedGuard]
-      }
+      },
+      {
+        path: 'find-out-more', loadChildren: () => import('../find-more/find-more.module').then(mod => mod.FindMoreModule),
+        canActivate: [ProtectedGuard]
+      },
     ]
   }
 

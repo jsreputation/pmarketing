@@ -3,7 +3,7 @@
     <div *ngIf="showPageTitle" class="title" translate>HOME.STAMP_CAMPAIGNS</div>
     <div class="banner-img" *ngIf="bannerImg"><img [src]="bannerImg" usemap="#bannermap"></div>
     <map name="bannermap">
-      <area shape="rect" coords="85,91,270,134" alt="find-more" [routerLink]="[ 'profile' ]">
+      <area shape="rect" coords="85,91,270,134" alt="find-more" [routerLink]="[ '/find-out-more' ]">
     </map>
     <!--    todo: update the collection to support infinite scrolling without the see more button   -->
     <perx-blackcomb-pages-raz-adapted-campaigns-collection

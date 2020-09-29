@@ -90,4 +90,5 @@ export { RewardVoucherDetailModule } from './lib/reward-voucher-detail/reward-vo
 export { RewardVoucherDetailComponent } from './lib/reward-voucher-detail/reward-voucher-detail.component';
 export { RazAdaptedCampaignsCollectionComponent } from './lib/raz-adapted-campaigns-collection/raz-adapted-campaigns-collection.component';
 export { RazAdaptedCampaignsCollectionModule } from './lib/raz-adapted-campaigns-collection/raz-adapted-campaigns-collection.module';
-
+export { CampaignsDetailComponent } from './lib/campaigns-detail/campaigns-detail.component';
+export { CampaignsDetailModule } from './lib/campaigns-detail/campaigns-detail.module';
