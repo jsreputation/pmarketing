@@ -14,7 +14,10 @@ import {
   IPrice,
   IVoucherLocation,
   IVoucherService,
-  GeoLocationService
+  GeoLocationService,
+  TokenStorage,
+  ConfigService,
+  IConfig
 } from '@perxtech/core';
 
 import {
@@ -40,14 +43,26 @@ export class NearmeComponent implements OnInit, OnDestroy {
   public userLocation: Subject<Position> = new Subject();
   public userMarker: google.maps.Marker;
   public position: Position;
+  public favoriteRewards: IReward[];
+  public showRewardFavButton?: boolean;
 
   constructor(
+    private config: ConfigService,
+    private tokenStorage: TokenStorage,
     private rewardsService: RewardsService,
     private vouchersService: IVoucherService,
     private geoLocationService: GeoLocationService
   ) { }
 
   public ngOnInit(): void {
+    this.favoriteRewards = (
+      this.tokenStorage.getAppInfoProperty('favoriteRewards') as unknown as IReward[]
+    ) || [];
+
+    this.config.readAppConfig().subscribe((config: IConfig<void>) => {
+      this.showRewardFavButton = config.showRewardFavButton;
+    });
+
     this.userLocation
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => {
@@ -125,7 +140,7 @@ export class NearmeComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const rad = 10000;
+    const rad = 1000000000;
     this.rewardsService.nearMe(rad, position).pipe(
       takeUntil(this.destroy$),
       mergeMap((rewards: IReward[]) =>
@@ -155,7 +170,6 @@ export class NearmeComponent implements OnInit, OnDestroy {
                   });
                   this.markersArray.push(marker);
                   this.updateBoundingBox();
-                  console.log(reward);
                 })
               )
             )
@@ -200,6 +214,26 @@ export class NearmeComponent implements OnInit, OnDestroy {
       }
     }
     this.map.fitBounds(bbox);
+  }
+
+  public rewardFavoriteHandler(rewardToggled: IReward): void {
+    const favoriteRewards = this.tokenStorage.getAppInfoProperty('favoriteRewards');
+    let rwdsArray;
+    if (favoriteRewards) {
+      // if found id remove it, if cant find add it
+      const foundIndex = (favoriteRewards as unknown as IReward[]).findIndex(
+        reward => reward.id === rewardToggled.id);
+      if (foundIndex >= 0) {
+        (favoriteRewards as unknown as IReward[]).splice(foundIndex, 1);
+        rwdsArray = favoriteRewards;
+      } else {
+        rwdsArray = [...favoriteRewards, rewardToggled];
+      }
+    } else {
+      rwdsArray = [rewardToggled];
+    }
+    this.favoriteRewards = rwdsArray;
+    this.tokenStorage.setAppInfoProperty(rwdsArray, 'favoriteRewards');
   }
 
   public ngOnDestroy(): void {
