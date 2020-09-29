@@ -5,6 +5,7 @@ import { CampaignServiceModule, ProgressBarModule } from '@perxtech/core';
 import { PageComponentsModule } from '../page-components/page-components.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { RazAdaptedCampaignsCollectionModule } from '../raz-adapted-campaigns-collection/raz-adapted-campaigns-collection.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { RazAdaptedCampaignsCollectionModule } from '../raz-adapted-campaigns-co
     TranslateModule,
     PageComponentsModule,
     RazAdaptedCampaignsCollectionModule,
-    ProgressBarModule
+    ProgressBarModule,
+    RouterModule
   ]
 })
 export class ProgressCampaignHomeModule { }

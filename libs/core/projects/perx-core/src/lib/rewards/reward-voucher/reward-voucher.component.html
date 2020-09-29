@@ -1,7 +1,8 @@
 <ng-container *ngIf="reward$ | async as reward">
   <div class="reward-container">
-    <div class="reward-image-container" *ngIf="reward.rewardBanner || reward.rewardThumbnail">
-      <img class="reward-image" src="{{reward.rewardBanner || reward.rewardThumbnail}}" [alt]="reward.name">
+    <div class="reward-image-container">
+      <img class="reward-image" *ngIf="reward.rewardBanner || reward.rewardThumbnail" src="{{reward.rewardBanner || reward.rewardThumbnail}}" [alt]="reward.name">
+      <img class="reward-image" *ngIf="!(reward.rewardBanner || reward.rewardThumbnail)">
     </div>
     <div class="title-card-wrapper">
       <mat-card class="title-card">
@@ -13,6 +14,13 @@
           {{reward.subtitle}}
         </div>
       </mat-card>
+    </div>
+    <div>
+      <perx-progress-bar
+        [stages]="reward?.progress?.stages"
+        [current]="reward?.progress?.current"
+        [stageLabels]="reward?.progress?.stageLabels"
+        [showProgressLabels]="true"></perx-progress-bar>
     </div>
     <div class="details">
       <div *ngIf="reward.merchantName" class="merchant-name include-heart">
