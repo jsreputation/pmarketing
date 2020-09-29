@@ -10,6 +10,7 @@ import {
 import { IPrice, IReward } from '../models/reward.model';
 import { TokenStorage } from '../../utils/storage/token-storage.service';
 import { map } from 'rxjs/operators';
+import { ProgressBarFields } from '@perxtech/core';
 
 @Component({
   selector: 'perx-core-reward-voucher',
@@ -17,6 +18,8 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./reward-voucher.component.scss']
 })
 export class RewardVoucherComponent implements OnInit {
+  @Input()
+  public rewardProgress: ProgressBarFields;
 
   @Input('reward')
   public rewardInitial$: Observable<IReward>;
