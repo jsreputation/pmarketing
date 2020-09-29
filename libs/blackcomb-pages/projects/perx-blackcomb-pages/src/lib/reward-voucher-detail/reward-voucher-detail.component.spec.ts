@@ -38,6 +38,7 @@ const activatedRouteStub = {
 describe('RewardVoucherDetailComponent', () => {
   let component: RewardVoucherDetailComponent;
   let fixture: ComponentFixture<RewardVoucherDetailComponent>;
+  history.pushState({ data: '{"id": 1234, "current": "12", "stageLabels": [12, 14]}' }, '', '');
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
