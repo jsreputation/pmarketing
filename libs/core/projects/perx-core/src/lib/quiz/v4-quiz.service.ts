@@ -156,7 +156,7 @@ export class V4QuizService implements QuizService {
       (config: IConfig<any>) => {
         if ( config && config.custom && (
           (config.custom as any).languageOptions).includes(window.navigator.language) ) {
-          this.lang = window.navigator.language === 'vi' ? 'vn' : window.navigator.language; // jz specific to BE stored mapping
+          this.lang = window.navigator.language;
         }
         this.baseUrl$.next(config.apiHost);
       });
