@@ -10,8 +10,8 @@
         <div class="reward-name">
           {{reward.name}}
         </div>
-        <div class="reward-subtitle" *ngIf="reward.subtitle">
-          {{reward.subtitle}}
+        <div class="reward-subtitle">
+          {{rewardProgress?.stageLabels[rewardProgress?.stageLabels.length -1] | progressRequire : rewardType}}
         </div>
       </mat-card>
     </div>

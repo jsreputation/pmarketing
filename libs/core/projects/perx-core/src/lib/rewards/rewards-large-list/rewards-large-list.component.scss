@@ -71,9 +71,11 @@
         }
 
         .counter {
-          align-self: flex-end;
-          flex: 0.3;
-          text-align: end;
+          width: 94%;
+          margin: 0 auto;
+          color: #666666;
+          display: flex;
+          justify-content: space-between;
         }
       }
     }

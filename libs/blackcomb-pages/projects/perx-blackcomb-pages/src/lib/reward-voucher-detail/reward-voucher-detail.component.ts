@@ -8,6 +8,7 @@ import {
   Subject
 } from 'rxjs';
 import {
+  CampaignRewardMode,
   ConfigService,
   IConfig,
   ILoyalty,
@@ -54,6 +55,7 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
   public rewardId: number;
   public maxRewardCost?: number;
   public rewardProgress: Partial<ProgressBarFields>; // stages always 2
+  public rewardType: CampaignRewardMode;
 
   constructor(
     private rewardsService: RewardsService,
@@ -66,7 +68,8 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    const { current, stageLabels } = history.state;
+    const { current, stageLabels, rewardType } = history.state;
+    this.rewardType = rewardType;
     if (current !== (undefined) && stageLabels) {
       this.rewardProgress = {
         current: history.state.current,

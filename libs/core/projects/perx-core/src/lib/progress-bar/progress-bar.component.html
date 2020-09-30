@@ -34,9 +34,15 @@
            [ngStyle]="{
             'left': i === 0 ? 0 :
             (stageLabels ? ((stageLabels[i] / stageLabels[stageLabels?.length - 1]) * 100) + ((i === stages - 1) ? - 4 : 0) : 0) + '%',
-            'background-image': 'url(' + (current >= stageLabels[i] ? stampImgUrl : noStampImgUrl) + ')'
+            'background-image': 'url(' + ((current >= stageLabels[i] || i === 0) ? stampImgUrl : noStampImgUrl) + ')'
            }">
-        <span class="stamp-label" *ngIf="showProgressLabels && stageLabels && stageLabels[i]">
+        <span class="stamp-label"
+              [ngStyle]="{
+                'margin-left': stageLabels[i] < 10 ? 0.8+'rem' : (
+                 stageLabels[i] < 100 ? 0.5+'rem' : 0
+                )
+              }"
+              *ngIf="showProgressLabels && stageLabels && stageLabels[i]">
           {{stageLabels[i]}}
         </span>
       </div>
