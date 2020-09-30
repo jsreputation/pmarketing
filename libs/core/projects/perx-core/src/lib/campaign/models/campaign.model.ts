@@ -10,11 +10,11 @@ export interface CampaignDisplayProperties {
 }
 
 export interface CampaignLandingPage {
-  body?: { en: { text: string } };
+  body?: { text: string };
   media?: { youtube?: string; };
-  heading?: { en: { text: string } };
-  buttonText?: { en: { text: string } };
-  subHeading?: { en: { text: string } };
+  heading?: { text: string };
+  buttonText?: { text: string };
+  subHeading?: { text: string };
   backgroundUrl?: string;
 }
 
