@@ -10,6 +10,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatRippleModule } from '@angular/material/core';
 import { MatListModule } from '@angular/material/list';
 import { ProgressBarModule } from '@perxtech/core';
+import { ProgressRequirePipe } from '../rewards-large-list/reward-requirement.pipe';
 
 describe('RewardVoucherComponent', () => {
   let component: RewardVoucherComponent;
@@ -39,7 +40,10 @@ describe('RewardVoucherComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RewardVoucherComponent ],
+      declarations: [
+        RewardVoucherComponent,
+        ProgressRequirePipe
+      ],
       imports: [
         UtilsModule,
         MatIconModule,

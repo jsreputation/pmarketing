@@ -8,6 +8,7 @@ import {
 } from '@perxtech/core';
 import { MatCardModule } from '@angular/material/card';
 import { of } from 'rxjs';
+import { ProgressRequirePipe } from './reward-requirement.pipe';
 
 describe('RewardsLargeListComponent', () => {
   let component: RewardsLargeListComponent;
@@ -18,7 +19,10 @@ describe('RewardsLargeListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RewardsLargeListComponent ],
+      declarations: [
+        RewardsLargeListComponent,
+        ProgressRequirePipe
+      ],
       imports: [
         UtilsModule,
         MatCardModule,
