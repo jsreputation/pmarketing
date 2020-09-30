@@ -12,6 +12,9 @@ export class QuizQuestionComponent {
   public allowPicZoom: boolean = true;
 
   @Input()
+  public questionTitleColor: ('black' | 'white');
+
+  @Input()
   public id: number;
 
   @Input()
