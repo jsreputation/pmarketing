@@ -1,6 +1,7 @@
 <div class="prize-wrapper">
   <div class="reward-container">
     <perx-core-reward-voucher
+      [rewardType]="rewardType"
       *ngIf="appConfig"
       [reward]="reward$"
       [displayPriceFn]="displayPriceFn"
