@@ -23,6 +23,8 @@ export class ProgressBarComponent implements OnInit {
   public showProgressLabels: boolean = false;
   @Input()
   public customHeight: number = 26;
+  @Input()
+  public accurateProg: boolean = false;
 
   public currentRewardIndex: number = 0;
   // helper function for rendering # slots using ngFor
