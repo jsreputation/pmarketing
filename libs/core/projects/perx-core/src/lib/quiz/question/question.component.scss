@@ -24,11 +24,18 @@
     flex-direction: column;
     justify-content: flex-start;
 
+    .black {
+      color: #231f20;
+    }
+
+    .white {
+      color: #ffffff;
+    }
+
     .question {
       margin-top: 1rem;
       font-size: 1.6rem;
       line-height: 2.8rem;
-      color: #ffffff;
       letter-spacing: 0.5px;
 
       .required-star {

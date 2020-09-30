@@ -1,6 +1,7 @@
 <div *ngIf="data">
   <div *ngFor="let question of data.questions ; let i = index;">
     <perx-core-quiz-question
+      [questionTitleColor]="customTitleColor"
       [allowPicZoom]="allowPicZoom"
       [ngClass]="{ hidden : questionPointer!=i }"
       #questionsList

@@ -22,6 +22,7 @@
         *ngIf="quiz.mode === mode.basic"
         class="quiz-card">
         <perx-core-quiz
+          [customTitleColor]="'white'"
           [allowPicZoom]="allowPicZoom$ | async"
           [hideIndex]="true"
           #coreComponent
@@ -43,6 +44,7 @@
         <h1>{{quiz.title}}</h1>
         <h2 *ngIf="quiz.subTitle">{{quiz.subTitle}}</h2>
         <perx-core-quiz
+          [customTitleColor]="'white'"
           [hideIndex]="true"
           #coreComponent
           [data]="data$"

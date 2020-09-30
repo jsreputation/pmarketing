@@ -17,10 +17,15 @@ import { QuizRatingComponent } from './rating/rating.component';
 import { QuizSelectComponent } from './select/select.component';
 import { QuizSwipeListComponent } from './swipe-list/swipe-list.component';
 import { PinchZoomModule } from 'ngx-pinch-zoom';
+import { ThemesService } from '@perxtech/core';
+import { of } from 'rxjs';
 
 describe('QuizQuestionComponent', () => {
   let component: QuizQuestionComponent;
   let fixture: ComponentFixture<QuizQuestionComponent>;
+  const themesServiceStub: Partial<ThemesService> = {
+    getThemeSetting: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -47,6 +52,9 @@ describe('QuizQuestionComponent', () => {
         MatListModule,
         ReactiveFormsModule,
         PinchZoomModule
+      ],
+      providers: [
+        { provide: ThemesService, useValue: themesServiceStub }
       ]
     })
       .compileComponents();
