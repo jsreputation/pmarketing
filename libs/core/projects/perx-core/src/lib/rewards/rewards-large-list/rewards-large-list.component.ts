@@ -6,7 +6,8 @@ import { IPrice, IReward } from '../models/reward.model';
 import { ThemesService } from '../../utils/themes/themes.service';
 import { delay } from 'rxjs/operators';
 import { ProgressBarFields } from '../../campaign/models/campaign.model';
-const enum CampaignRewardMode {
+
+export const enum CampaignRewardMode {
   TransactionAmount = 'trans-amount',
   TransactionQuantity = 'trans-qty',
   Referral = 'referral'

@@ -27,13 +27,6 @@
               <!-- todo: progress bar goes here -->
             </mat-card-content>
             <mat-card-content class="bottom-content">
-              <div class="description" *ngIf="reward.merchantName; else showDescription">
-                {{reward.merchantName}}
-              </div>
-              <ng-template #showDescription>
-                <div class="description ellipse-2-lines" [innerHtml]="'test string'">
-                </div>
-              </ng-template>
               <div class="spacer"></div>
               <perx-progress-bar
                 [accurateProg]="true"
@@ -42,7 +35,12 @@
                 [stageLabels]="reward?.progress?.stageLabels"
                 [showProgressLabels]="false"></perx-progress-bar>
               <div class="counter" *ngIf="reward?.progress?.stageLabels?.length">
-                {{reward?.progress.current}}/{{reward.progress.stageLabels[reward.progress.stageLabels.length - 1]}} {{rewardType}}
+                <div>
+                  {{reward.progress.stageLabels[reward.progress.stageLabels.length - 1]  | progressRequire: rewardMode}}
+                </div>
+                <div>
+                  {{reward?.progress.current}}/{{reward.progress.stageLabels[reward.progress.stageLabels.length - 1]}} {{rewardType}}
+                </div>
               </div>
             </mat-card-content>
           </div>
