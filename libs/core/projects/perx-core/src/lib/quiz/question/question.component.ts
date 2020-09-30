@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Optional, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Optional, Output } from '@angular/core';
 import { IErrors, IPoints, IQAnswer, QuizQuestionType } from '../models/quiz.model';
 import { IQQuestion } from '../quiz.service';
 
@@ -7,7 +7,7 @@ import { IQQuestion } from '../quiz.service';
   templateUrl: './question.component.html',
   styleUrls: ['./question.component.scss']
 })
-export class QuizQuestionComponent implements OnInit {
+export class QuizQuestionComponent {
   @Input()
   public allowPicZoom: boolean = true;
 
