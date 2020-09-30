@@ -19,6 +19,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RewardVoucherComponent } from './reward-voucher/reward-voucher.component';
 import { MatListModule } from '@angular/material/list';
 import { ProgressBarModule } from '../progress-bar/progress-bar.module';
+import { ProgressRequirePipe } from './rewards-large-list/reward-requirement.pipe';
 
 const components = [
   RewardsCollectionComponent,
@@ -27,7 +28,8 @@ const components = [
   RewardComponent,
   RewardsLargeListComponent,
   RewardVoucherComponent,
-  StampsCardsListComponent
+  StampsCardsListComponent,
+  ProgressRequirePipe
 ];
 
 export function rewardsServiceFactory(http: HttpClient, config: Config, configService: ConfigService): RewardsService {

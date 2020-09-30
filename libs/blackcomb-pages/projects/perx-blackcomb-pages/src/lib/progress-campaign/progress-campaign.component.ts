@@ -268,6 +268,7 @@ export class ProgressCampaignComponent implements OnInit {
             state: {
               current: selectedRewardWithProgress.progress.current,
               stageLabels: selectedRewardWithProgress.progress.stageLabels,
+              rewardType: this.campaignRewardMode
             }
           };
         }
