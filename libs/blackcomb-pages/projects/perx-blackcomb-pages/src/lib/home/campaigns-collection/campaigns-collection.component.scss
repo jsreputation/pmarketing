@@ -52,6 +52,9 @@ mat-card {
       margin: 0;
 
       ::ng-deep p {
+        @include ellipse-lines(1);
+
+        white-space: nowrap;
         margin: 0;
       }
     }
