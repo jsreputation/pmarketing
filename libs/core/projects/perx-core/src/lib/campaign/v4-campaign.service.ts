@@ -88,15 +88,20 @@ const campaignsCacheBuster: Subject<boolean> = new Subject();
 export class V4CampaignService implements ICampaignService {
   public campaignsCache: Observable<ICampaign>[] = [];
   public baseUrl: string;
+  private lang: string = 'en';
 
   constructor(private http: HttpClient, private configService: ConfigService) {
     this.configService.readAppConfig().subscribe(
-      (config: IConfig<void>) => {
+      (config: IConfig<any>) => {
+        if ( config && config.custom && (
+          (config.custom as any).languageOptions).includes(window.navigator.language) ) {
+          this.lang = window.navigator.language.substr(0, 2); // so en-Us etc becomes just en
+        }
         this.baseUrl = config.apiHost as string;
       });
   }
 
-  public static v4CampaignToCampaign(campaign: IV4Campaign): ICampaign {
+  public static v4CampaignToCampaign(campaign: IV4Campaign, lang: string = 'en'): ICampaign {
     const thumbnail = campaign.images.find(image =>
       ['catalog_thumbnail', 'campaign_thumbnail'].some(ty => ty === image.type)
     );
@@ -119,10 +124,10 @@ export class V4CampaignService implements ICampaignService {
       const lp = (dp as QuizDisplayProperties).landing_page;
       displayProperties = {
         landingPage: {
-          body: lp.body,
-          heading: lp.heading,
-          subHeading: lp.sub_heading,
-          buttonText: lp.button_text
+          body: lp.body[lang],
+          heading: lp.heading[lang],
+          subHeading: lp.sub_heading[lang],
+          buttonText: lp.button_text[lang]
         }
       };
       let youtubeUrl = oc(lp).media.youtube() || null;
@@ -201,7 +206,7 @@ export class V4CampaignService implements ICampaignService {
         map(resp => resp.data),
         map((campaigns: IV4Campaign[]) =>
           campaigns.map(campaign =>
-            V4CampaignService.v4CampaignToCampaign(campaign)
+            V4CampaignService.v4CampaignToCampaign(campaign, this.lang)
           )
         )
       );
@@ -226,7 +231,7 @@ export class V4CampaignService implements ICampaignService {
       .pipe(
         map(resp => resp.data),
         map((campaign: IV4Campaign) =>
-          V4CampaignService.v4CampaignToCampaign(campaign)
+          V4CampaignService.v4CampaignToCampaign(campaign, this.lang)
         ),
         catchError(_ => {
           delete this.campaignsCache[id];
