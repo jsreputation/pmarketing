@@ -8,11 +8,7 @@
     }">
       hidden
     </p>
-    <p *ngIf="accurateProg; else progAccurate"
-      class="to-progress" [ngStyle]="{
-      'width': ((1 - ((current && stageLabels?.length) ? current / stageLabels[stageLabels?.length - 1] : 0)) * 100) + '%',
-      'left': ((current && stageLabels?.length) ? ((current / stageLabels[stageLabels?.length - 1]) * 100) : 'auto') + '%'
-    }">
+    <p *ngIf="accurateProg; else progInAccurate" class="to-progress">
       hidden
     </p>
     <ng-template #inProgInAccurate>
@@ -25,7 +21,7 @@
         hidden
       </p>
     </ng-template>
-    <ng-template #progAccurate>
+    <ng-template #progInAccurate>
       <p class="to-progress">
         hidden
       </p>
