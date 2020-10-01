@@ -154,6 +154,19 @@ export class NearmeComponent implements OnInit, OnDestroy {
     this.map.fitBounds(bbox);
   }
 
+  public searchThisArea(): void {
+    this.clearMarkers();
+    const bounds = this.map.getBounds();
+    if (bounds) {
+      const center = bounds.getCenter();
+      const ne = bounds.getNorthEast();
+      const lat = center.lat();
+      const lng = center.lng();
+      // Calculate radius (in meters).
+      const radius = Math.floor(google.maps.geometry.spherical.computeDistanceBetween(center, ne));
+      this.updateMarkers(lat, lng, radius);
+    }
+  }
 
   public ngOnDestroy(): void {
     this.destroy$.next();
