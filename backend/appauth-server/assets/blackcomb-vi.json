@@ -128,13 +128,9 @@
   },
   "QUIZ_TEMPLATE": {
     "CTA_START_TXT": "Take the quiz",
-    "QUESTION": "Question ",
-    "OUT_OF": " out of ",
+    "QUESTION": "câu hỏi ",
+    "OUT_OF": " ra khỏi ",
     "PROGRESS_BAR": "Question {{questionId + 1}} out of {{questions.length}}",
-    "CTA_NEXT_TXT": "Next",
-    "CTA_SUBMIT_TXT": "Submit",
-    "SUMMARY_CORRECT": "You got {{total_correct}} out of {{total_length}} questions correct!",
-    "SUMMARY_TIME_TAKEN": "You took a total of ",
     "QUESTION_TIME_TAKEN": "You took {{time}} to answer this.",
     "POSITIVE_OUTCOME_TXT": "Congratulations! You scored {{points}} points",
     "POSITIVE_OUTCOME_REWARD": "Here’s a reward for you",
@@ -145,7 +141,11 @@
     "NOT_AVAILABLE_TITLE": "Sorry!",
     "NOT_AVAILABLE_CTA": "Close",
     "NOT_AVAILABLE_TXT": "This quiz is not available at the moment. Try again later.",
-    "SUBMIT_ERROR_TXT": "There was an issue when trying to submit your last answer."
+    "SUBMIT_ERROR_TXT": "There was an issue when trying to submit your last answer.",
+    "CTA_NEXT_TXT": "Tiếp tục",
+    "CTA_SUBMIT_TXT": "Gửi đi",
+    "SUMMARY_CORRECT": "Bạn đã trả lời chính xác {{total_correct}} trên {{total_length}} câu hỏi",
+    "SUMMARY_TIME_TAKEN": "Thời gian hoàn thành là "
   },
   "WALLET": {
     "REWARDS_TITLE": "My Rewards",

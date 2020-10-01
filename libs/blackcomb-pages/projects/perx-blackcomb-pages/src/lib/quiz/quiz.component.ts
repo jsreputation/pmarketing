@@ -77,7 +77,7 @@ export class QuizComponent implements OnInit, OnDestroy {
     // reuse the factory to resolve current language so that we make sure, we use the same logic
     this.initTranslate();
 
-    const lang = LocaleIdFactory(this.tokenStorage);
+    const lang = LocaleIdFactory(this.tokenStorage) || 'en';
     this.allowPicZoom$ = this.route.data.pipe(
       map((dataObj) => dataObj.allowPicZoom)
     );
@@ -177,7 +177,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   public submit(): void {
     this.pushAnswer(this.questionPointer)
       .subscribe(
-        () => this.redirectUrlAndPopUp(),
+        (finishPayload: { rewardAcquired: boolean }) => this.redirectUrlAndPopUp(finishPayload),
         (err) => {
           console.log(err);
           this.notificationService.addSnack(this.submitErrorTxt);
@@ -223,7 +223,7 @@ export class QuizComponent implements OnInit, OnDestroy {
     }
   }
 
-  private pushAnswer(questionPointer: number): Observable<void> {
+  private pushAnswer(questionPointer: number): Observable<{ rewardAcquired: boolean }> {
     if (!this.moveId) {
       return throwError('Cannot push answer without move id');
     }
@@ -260,7 +260,7 @@ export class QuizComponent implements OnInit, OnDestroy {
         };
         return throwError(err);
       }),
-      map(() => (void 0))
+      // map(() => (void 0))
     );
   }
 
@@ -300,8 +300,8 @@ export class QuizComponent implements OnInit, OnDestroy {
     }
   }
 
-  private redirectUrlAndPopUp(): void {
-    const resultsStr = JSON.stringify({ points: Object.values(this.points), quiz: this.quiz });
+  private redirectUrlAndPopUp(payload?: { rewardAcquired: boolean }): void {
+    const resultsStr = JSON.stringify({ points: Object.values(this.points), quiz: this.quiz, rewardAcquired: payload });
     this.router.navigate(['/quiz-results', { results: resultsStr }], { skipLocationChange: true });
   }
 

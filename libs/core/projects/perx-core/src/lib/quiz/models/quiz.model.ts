@@ -35,10 +35,10 @@ export enum MaterialColor {
 }
 
 export interface IQuizOutcome {
-  title: string;
-  subTitle: string;
+  title: { [lang: string]: {text: string} };
+  subTitle: { [lang: string]: {text: string} };
   image?: string;
-  button: string;
+  button: { [lang: string]: {text: string} };
 }
 
 export enum QuizMode {
