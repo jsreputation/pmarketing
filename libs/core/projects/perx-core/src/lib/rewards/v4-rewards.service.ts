@@ -201,7 +201,7 @@ export class V4RewardsService extends RewardsService {
       inventory,
       displayProperties: reward.display_properties,
       customFields: reward.custom_fields ? {
-        requirement: campaignType ? this.custFieldRequirementSelector(campaignType, reward.custom_fields) : (
+        requirement: campaignType ? V4RewardsService.custFieldRequirementSelector(campaignType, reward.custom_fields) : (
           reward.custom_fields.points_requirement || reward.custom_fields.referrals_requirement
         ),
         faqLink: reward.custom_fields.faq_link,
