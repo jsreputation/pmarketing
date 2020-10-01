@@ -125,7 +125,6 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
           }
         ),
         // tap to see transformed
-        tap(res => console.log(res, ' chilling looking at the stuff here'))
       );
     }
   }
