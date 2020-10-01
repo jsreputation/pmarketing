@@ -210,8 +210,8 @@ export class ProgressCampaignComponent implements OnInit {
                     current: (stampCards[0].stamps && stampCards[0].stamps.length) || 0,
                     stageLabels: stampCards[0].displayProperties.rewardPositions ?
                       (stampCards[0].displayProperties.rewardPositions.length === 1 ?
-                        [0 ,...stampCards[0].displayProperties.rewardPositions].sort(( a, b) => a - b)
-                        : [0 ,...stampCards[0].displayProperties.rewardPositions].sort(( a, b) => a - b)) : // if len is only 1 add 0
+                        [ 0 , ...stampCards[0].displayProperties.rewardPositions ].sort(( a, b) => a - b)
+                        : [ 0 , ...stampCards[0].displayProperties.rewardPositions ].sort(( a, b) => a - b)) : // if len is only 1 add 0
                       []
                   });
               }
