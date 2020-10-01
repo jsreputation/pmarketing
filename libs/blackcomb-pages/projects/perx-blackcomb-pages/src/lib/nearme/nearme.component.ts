@@ -37,8 +37,6 @@ export class NearmeComponent implements OnInit, OnDestroy {
   public current: IReward | null;
   public currentPrice: IPrice | null;
   private destroy$: Subject<void> = new Subject();
-  public userLocation: Subject<Position> = new Subject();
-  public userMarker: google.maps.Marker;
   public position: Position;
 
   constructor(
@@ -48,11 +46,6 @@ export class NearmeComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    this.userLocation
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-        this.updateMarkers(this.position);
-      });
 
     this.loadScript()
       .then(() => {
@@ -66,7 +59,6 @@ export class NearmeComponent implements OnInit, OnDestroy {
         this.geoLocationService.positions()
           .pipe(takeUntil(this.destroy$))
           .subscribe((position: Position) => {
-            this.updateUserPosition(position);
             this.position = position;
           });
         this.updateMarkers(this.position);
@@ -99,20 +91,6 @@ export class NearmeComponent implements OnInit, OnDestroy {
     return p;
   }
 
-  private isNearMe(radius: number, latitude: number, longitude: number): boolean {
-    const earthRadius = 6378137;
-    const dLat = (this.position.coords.latitude - latitude) * Math.PI / 180;
-    const dLong = (this.position.coords.longitude - longitude) * Math.PI / 180;
-    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos((latitude) * Math.PI / 180) * Math.cos((this.position.coords.latitude) * Math.PI / 180) *
-      Math.sin(dLong / 2) * Math.sin(dLong / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    const d = earthRadius * c;
-    if (d <= radius) {
-      return true;
-    }
-    return false;
-  }
 
   public clearMarkers(): void {
     this.markersArray.forEach(item => {
@@ -165,24 +143,6 @@ export class NearmeComponent implements OnInit, OnDestroy {
     ).subscribe();
   }
 
-  private updateUserPosition(position: Position | null): void {
-    if (position === null) {
-      return;
-    }
-    const location: google.maps.LatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-    this.map.panTo(location);
-    this.userLocation.next(position);
-
-    if (!this.userMarker) {
-      this.userMarker = new google.maps.Marker({
-        icon: 'https://maps.google.com/mapfiles/kml/paddle/blu-blank-lv.png',
-        position: location,
-        map: this.map,
-      });
-    } else {
-      this.userMarker.setPosition(location);
-    }
-    this.updateBoundingBox();
   }
 
   public updateBoundingBox(): void {
