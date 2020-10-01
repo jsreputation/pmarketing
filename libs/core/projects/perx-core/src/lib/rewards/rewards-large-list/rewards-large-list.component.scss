@@ -9,10 +9,12 @@
     display: flex;
     justify-content: center;
     overflow: hidden;
-    max-height: 20rem;
+    max-height: 10rem;
 
     img {
-      margin: auto;
+      //margin: auto;
+      object-position: center;
+      object-fit: cover;
     }
 
     .no-image {
