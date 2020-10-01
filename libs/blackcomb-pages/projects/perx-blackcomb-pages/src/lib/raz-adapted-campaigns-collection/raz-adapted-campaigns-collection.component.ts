@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable, zip } from 'rxjs';
 import { CampaignType, ICampaign, ICampaignService, LoyaltyService, ProgressBarFields, StampService } from '@perxtech/core';
-import { concatMap, map, switchMap, withLatestFrom } from 'rxjs/operators';
+import { concatMap, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { listAnimation } from '../home/games-collection/games-collection.animation';
 
 @Component({
@@ -60,13 +60,13 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
                   if (stampCards && stampCards[0] && stampCards[0].displayProperties) {
                     return ({
                         stages: stampCards[0].displayProperties.rewardPositions ?
-                          stampCards[0].displayProperties.rewardPositions.length : 2,
+                          (stampCards[0].displayProperties.rewardPositions.length === 1 ? 2 : stampCards[0].displayProperties.rewardPositions.length) : 2,
                         current: (stampCards[0].stamps && stampCards[0].stamps.length) || 0,
                         stageLabels: stampCards[0].displayProperties.rewardPositions ?
-                          stampCards[0].displayProperties.rewardPositions.sort((a, b) => a - b) :
+                          (stampCards[0].displayProperties.rewardPositions.length === 1 ? [0 ,...stampCards[0].displayProperties.rewardPositions].sort((a, b) => a - b)
+                            : [0 ,...stampCards[0].displayProperties.rewardPositions].sort((a, b) => a - b)) : // if len is only 1 add 0
                           []
-                      }
-                    );
+                      });
                   }
                   return {};
                 })
@@ -113,15 +113,19 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
         withLatestFrom(this.campaigns$),
         map(
           ([progress, campaigns]) => {
+            // ASSUME guaranteed to have ultimate campaign
             const ultimateCampaign = campaigns.find(campaign => campaign.name === 'Ultimate Task');
             const ultimateCampaignInd = campaigns.findIndex(campaign => campaign.name === 'Ultimate Task');
             const campaignsWithoutUltimateCampaign = campaigns.filter(campaign => campaign.name !== 'Ultimate Task');
             return [...campaignsWithoutUltimateCampaign, ultimateCampaign].map((campaign, index) =>
               // index skip over ultimateCampaign
-              ({ ...campaign as ICampaign, progress: progress[index > ultimateCampaignInd ? index + 1 : index] as ProgressBarFields }));
+              ({ ...campaign as ICampaign, progress: (
+                index === campaigns.length - 1 ? progress[ultimateCampaignInd] : progress[index >= ultimateCampaignInd ? index + 1 : index]
+              ) as ProgressBarFields }));
           }
         ),
         // tap to see transformed
+        tap(res => console.log(res, ' chilling looking at the stuff here'))
       );
     }
   }

@@ -1,32 +1,20 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-  HttpHeaders,
-  HttpParams,
-} from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { formatNumber } from '@angular/common';
-import {
-  Observable,
-} from 'rxjs';
-import {
-  map
-} from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 
 import { IWRewardDisplayProperties } from '@perxtech/whistler';
 
 import { RewardsService } from './rewards.service';
-import {
-  IReward,
-  ICatalog,
-  IPrice,
-  ICategoryTags
-} from './models/reward.model';
+import { ICatalog, ICategoryTags, IPrice, IReward } from './models/reward.model';
 
 import { RewardStateHelper } from './reward-state-helper';
 import { ITabConfigExtended } from './rewards-list-tabbed/rewards-list-tabbed.component';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
+import { CampaignType } from '../campaign/models/campaign.model';
 
 export interface IV4Tag {
   id: number;
@@ -57,6 +45,13 @@ interface IV4Inventory {
   } | null;
 }
 
+interface IV4CustomField {
+  faq_link: string;
+  tnc_link: string;
+  points_requirement: string; // to convert to number
+  referrals_requirement: string;
+}
+
 export interface IV4Reward {
   id: number;
   name: string;
@@ -79,12 +74,7 @@ export interface IV4Reward {
   selling_to?: string;
   merchant_logo_url?: string;
   display_properties?: IWRewardDisplayProperties;
-  custom_fields?: {
-    faq_link: string;
-    tnc_link: string;
-    points_requirement: string; // to convert to number
-    referrals_requirement: string;
-  };
+  custom_fields?: IV4CustomField;
   referee_required_for_reward?: number;
   referee_balance_to_next_reward?: number;
 }
@@ -162,7 +152,7 @@ export class V4RewardsService extends RewardsService {
   }
 
 
-  public static v4RewardToReward(reward: IV4Reward): IReward {
+  public static v4RewardToReward(reward: IV4Reward, campaignType?: CampaignType): IReward {
     const images = reward.images || [];
     let thumbnail = images.find((image: IV4Image) => image.type === 'reward_thumbnail');
     if (thumbnail === undefined) {
@@ -211,11 +201,24 @@ export class V4RewardsService extends RewardsService {
       inventory,
       displayProperties: reward.display_properties,
       customFields: reward.custom_fields ? {
-        requirement: reward.custom_fields.points_requirement || reward.custom_fields.referrals_requirement,
+        requirement: campaignType ? this.custFieldRequirementSelector(campaignType, reward.custom_fields) : (
+          reward.custom_fields.points_requirement || reward.custom_fields.referrals_requirement
+        ),
         faqLink: reward.custom_fields.faq_link,
         tncLink: reward.custom_fields.tnc_link
       } : undefined
     };
+  }
+
+  public static custFieldRequirementSelector(campaignType: CampaignType, customField: IV4CustomField): string {
+    switch (campaignType) {
+      case CampaignType.give_reward:
+        return customField.points_requirement;
+      case CampaignType.invite:
+        return customField.referrals_requirement;
+      default:
+        return customField.points_requirement;
+    }
   }
 
   private static v4CatalogToCatalog(catalog: IV4Catalog): ICatalog {
