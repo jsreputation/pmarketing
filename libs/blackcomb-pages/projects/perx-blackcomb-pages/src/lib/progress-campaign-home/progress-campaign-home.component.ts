@@ -71,7 +71,7 @@ export class ProgressCampaignHomeComponent implements OnInit {
       switchMap((campaigns: ICampaign[]) => of(campaigns).pipe(catchError(err => of(err)))),
       takeLast(1)
     );
-
+    // ordered by fetching stamp campaigns firstly
     this.campaigns$ = zip(
       stampCampaigns,
       loyaltyCampaigns,
