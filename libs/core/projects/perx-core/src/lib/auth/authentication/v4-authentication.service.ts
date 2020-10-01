@@ -50,6 +50,7 @@ interface IV4SignUpData {
   last_name: string;
   middle_name?: string;
   phone: string;
+  identifier?: string;
   email?: string;
   birthday?: string;
   gender?: string;
@@ -84,6 +85,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   private maxRetries: number = 2;
   public isSignUpEnded: boolean = true;
   public preauth: boolean = false;
+  public isRazer: boolean = false;
 
   constructor(
     private configService: ConfigService,
@@ -101,6 +103,9 @@ export class V4AuthenticationService extends AuthenticationService implements Au
         } else {
           this.appAuthEndPoint = `${config.baseHref}v2/oauth`;
           this.userAuthEndPoint = `${config.baseHref}v4/oauth`;
+        }
+        if (config.homeAsProgressPage) { // razer
+          this.isRazer = true;
         }
         if (config.preAuth) {
           this.preauth = config.preAuth;
@@ -258,13 +263,20 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   }
 
   private signUpDataToV4SignUpData(data: ISignUpData): IV4SignUpData {
+    let conditionalIdentifier: boolean | object = false;
+    if (this.isRazer) {
+      conditionalIdentifier = {
+        identifier: data.phone
+      };
+    }
     const result: IV4SignUpData = {
       last_name: data.lastName || '',
       first_name: data.firstName,
       middle_name: data.middleName,
       password: data.password,
       password_confirmation: data.passwordConfirmation,
-      phone: data.phone
+      phone: data.phone,
+      ...conditionalIdentifier
     };
 
     if (data.email) {
