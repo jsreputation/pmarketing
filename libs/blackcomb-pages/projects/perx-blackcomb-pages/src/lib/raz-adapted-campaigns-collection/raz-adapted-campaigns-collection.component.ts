@@ -118,7 +118,7 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
             const campaignsWithoutUltimateCampaign = campaigns.filter(campaign => campaign.name !== 'Ultimate Task');
             return [...campaignsWithoutUltimateCampaign, ultimateCampaign].map((campaign, index) =>
               // index skip over ultimateCampaign
-              ({ ...campaign as ICampaign, progress: progress[index > ultimateCampaignInd ? index + 1 : index] as ProgressBarFields }))
+              ({ ...campaign as ICampaign, progress: progress[index > ultimateCampaignInd ? index + 1 : index] as ProgressBarFields }));
           }
         ),
         // tap to see transformed
