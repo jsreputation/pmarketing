@@ -41,6 +41,7 @@ export class NearmeComponent implements OnInit, OnDestroy {
   public userMarker: google.maps.Marker;
   public position: Position;
   public upcoming: boolean = true;
+  public merchantImg: boolean;
 
   constructor(
     private rewardsService: RewardsService,
@@ -153,6 +154,7 @@ export class NearmeComponent implements OnInit, OnDestroy {
                   marker.addListener('click', () => {
                     this.current = reward;
                     this.currentPrice = reward.rewardPrice ? reward.rewardPrice[0] : null;
+                    this.merchantImg = this.current.merchantImg ? true : false;
 
                     const sellingFrom = this.current.sellingFrom;
                     const nowTime: number = (new Date()).getTime();

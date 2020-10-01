@@ -3,7 +3,7 @@
   <div class="loc-card-container">
       <div *ngIf="current && currentPrice" class="loc-card mat-elevation-z8">
         <div class="card-content">
-          <div class="logo"><img [attr.src]="current.merchantImg"></div>
+          <div *ngIf="merchantImg" class="logo"><img [attr.src]="current.merchantImg"></div>
           <div class="merchant"><p>{{current.merchantName}}</p></div>
           <div class="reward">
             <h1>{{current.name}}</h1>
