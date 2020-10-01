@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable, zip } from 'rxjs';
 import { CampaignType, ICampaign, ICampaignService, LoyaltyService, ProgressBarFields, StampService } from '@perxtech/core';
-import { concatMap, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { concatMap, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { listAnimation } from '../home/games-collection/games-collection.animation';
 
 @Component({
@@ -118,7 +118,7 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
             const campaignsWithoutUltimateCampaign = campaigns.filter(campaign => campaign.name !== 'Ultimate Task');
             return [...campaignsWithoutUltimateCampaign, ultimateCampaign].map((campaign, index) =>
               // index skip over ultimateCampaign
-              ({ ...campaign, progress: progress[index > ultimateCampaignInd ? index + 1 : index] as ProgressBarFields }))
+              ({ ...campaign as ICampaign, progress: progress[index > ultimateCampaignInd ? index + 1 : index] as ProgressBarFields }))
           }
         ),
         // tap to see transformed
