@@ -116,7 +116,7 @@ export class V4CampaignService implements ICampaignService {
     const rewards =
       campaign.rewards &&
       campaign.rewards.map((reward: IV4Reward) =>
-        V4RewardsService.v4RewardToReward(reward)
+        V4RewardsService.v4RewardToReward(reward, campaign.campaign_type)
       );
     let displayProperties: CampaignDisplayProperties | undefined;
     const dp: DisplayProperties | null = campaign.display_properties || null;
