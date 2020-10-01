@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Data, Params, Router } from '@angular/router';
-import { IPoints, SecondsToStringPipe, NotificationService, IPopupConfig, IQuiz } from '@perxtech/core';
+import { IPoints, SecondsToStringPipe, NotificationService, IPopupConfig, IQuiz, LocaleIdFactory, TokenStorage } from '@perxtech/core';
 import { merge, Observable, of } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
@@ -20,11 +20,13 @@ export class QuizResultsComponent implements OnInit {
   private popup: IPopupConfig;
   public title: string;
   public subTitle: string;
+  public rewardsAcquired: boolean = false;
 
   constructor(
     private secondsToString: SecondsToStringPipe,
     private activatedRoute: ActivatedRoute,
     private router: Router,
+    private tokenStorage: TokenStorage,
     private notificationService: NotificationService,
     private translate: TranslateService
   ) { }
@@ -45,8 +47,9 @@ export class QuizResultsComponent implements OnInit {
           return res;
         }),
       )
-      .subscribe((res: { points: IPoints[], quiz?: IQuiz }) => {
+      .subscribe((res: { points: IPoints[], quiz?: IQuiz, rewardAcquired: boolean }) => {
         this.results = res.points;
+        this.rewardsAcquired = res.rewardAcquired;
         this.backgroundImgUrl = oc(res).quiz.backgroundImgUrl('');
         this.quiz = res.quiz;
         this.fetchTitle();
@@ -71,10 +74,14 @@ export class QuizResultsComponent implements OnInit {
     });
   }
 
+  public get currentLang(): string {
+    return LocaleIdFactory(this.tokenStorage) || 'en';
+  }
+
   public next(): void {
     const points = this.results.reduce((sum, p) => sum + oc(p).points(0), 0);
     let nextRoute: string;
-    if (this.correctAnswers !== this.results.length) {
+    if (!this.rewardsAcquired) {
       const noOutcome = oc(this.quiz).results.noOutcome(); // note: currently empty because not configured;
       this.translate.get([
         'QUIZ_TEMPLATE.NO_OUTCOME_SCORE',
@@ -83,10 +90,12 @@ export class QuizResultsComponent implements OnInit {
       ]).subscribe((res: any) => {
         const noOutcomeTitle = (res['QUIZ_TEMPLATE.NO_OUTCOME_SCORE']).replace('{{points}}', points);
         this.popup = {
-          title: oc(noOutcome).title(noOutcomeTitle),
-          text: oc(noOutcome).subTitle(res['QUIZ_TEMPLATE.NO_OUTCOME_TXT']),
+          /* eslint-disable */
+          title: oc(noOutcome).title[this.currentLang].text(noOutcomeTitle),
+          text: oc(noOutcome).subTitle[this.currentLang].text(res['QUIZ_TEMPLATE.NO_OUTCOME_TXT']),
           imageUrl: oc(noOutcome).image(),
-          buttonTxt: oc(noOutcome).button(res['QUIZ_TEMPLATE.NO_OUTCOME_CTA'])
+          buttonTxt: oc(noOutcome).button[this.currentLang].text(res['QUIZ_TEMPLATE.NO_OUTCOME_CTA'])
+          /* eslint-enable */
         };
         this.notificationService.addPopup(this.popup);
       });
@@ -101,9 +110,9 @@ export class QuizResultsComponent implements OnInit {
         const outcomeTitle = (res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_TXT']).replace('{{points}}', points);
         this.popup = {
           /* eslint-disable */
-          title: oc(outcome).title['en'].text(outcomeTitle),
-          text: oc(outcome).subTitle['en'].text(res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_REWARD']),
-          buttonTxt: oc(outcome).button['en'].text(res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_CTA']),
+          title: oc(outcome).title[this.currentLang].text(outcomeTitle),
+          text: oc(outcome).subTitle[this.currentLang].text(res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_REWARD']),
+          buttonTxt: oc(outcome).button[this.currentLang].text(res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_CTA']),
           imageUrl: 'assets/quiz/reward.png',
           ctaButtonClass: 'ga_game_completion'
           /* eslint-enable */

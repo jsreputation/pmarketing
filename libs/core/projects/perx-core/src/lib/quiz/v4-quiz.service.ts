@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
-  Observable,
+  Observable, of,
   ReplaySubject,
   Subject
 } from 'rxjs';
 import {
+  catchError,
   map,
   switchMap
 } from 'rxjs/operators';
@@ -250,7 +251,14 @@ export class V4QuizService implements QuizService {
     // idk what thing is returned yet, i will see and then maybe map it into IAnswerResult
     // dk what is returned bcz keep fail
     return this.baseUrl$.pipe(
-      switchMap(baseUrl => this.http.put<V4QuizAnswerResponse>(`${baseUrl}/v4/game_transactions/${moveId}/finish`, {}))
+      switchMap(baseUrl => this.http.put<V4QuizAnswerResponse>(`${baseUrl}/v4/game_transactions/${moveId}/finish`, {})),
+      map((answerResponse: V4QuizAnswerResponse) => {
+        if (answerResponse.data.outcomes && answerResponse.data.outcomes.length) {
+          return { rewardAcquired: true };
+        }
+        return { rewardAcquired: false };
+      }),
+      catchError(_ => of({ rewardAcquired: false }))
     );
   }
 

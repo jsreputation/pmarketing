@@ -35,6 +35,7 @@ export enum MaterialColor {
 }
 
 export interface IQuizOutcome {
+  // suppose to be { [lang: string]: {text: string} }, but leave it be first
   title: string;
   subTitle: string;
   image?: string;
