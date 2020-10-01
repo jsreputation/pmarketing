@@ -50,7 +50,6 @@ interface IV4SignUpData {
   last_name: string;
   middle_name?: string;
   phone: string;
-  identifier?: string;
   email?: string;
   birthday?: string;
   gender?: string;
@@ -265,8 +264,7 @@ export class V4AuthenticationService extends AuthenticationService implements Au
       middle_name: data.middleName,
       password: data.password,
       password_confirmation: data.passwordConfirmation,
-      phone: data.phone,
-      identifier: data.phone
+      phone: data.phone
     };
 
     if (data.email) {
