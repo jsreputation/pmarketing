@@ -50,6 +50,34 @@
         margin-top: 1rem;
       }
 
+      .reward {
+        display: flex;
+
+        .macaron-container {
+          margin-left: 1rem;
+          text-align: center;
+          padding: 0.5rem;
+          text-transform: lowercase;
+        
+          span {
+            display: inline-block;
+          }
+        
+          span::first-letter {
+            text-transform: uppercase;
+          }
+        }
+
+        .macaron {
+          text-align: center;
+          border-radius: 5rem;
+          padding: 0.5rem 1rem;
+          font-size: 1.2rem;
+          background-color: grey;
+          color: white;
+        }
+      }
+
       .price {
         color: rgb(0, 110, 255);
       }
