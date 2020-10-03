@@ -15,8 +15,8 @@
       <p class="in-progress" *ngIf="current" [ngStyle]="{
             'width': (
               current >= stageLabels[stageLabels?.length - 1]  ?
-              32 : ((32 / stages) * (currentRewardIndex + 1))
-             ) + 'rem'
+              100 : ((100 / stages) * (currentRewardIndex + 1))
+             ) + '%'
           }">
         hidden
       </p>
@@ -34,9 +34,12 @@
            [ngStyle]="{
             'left': i === 0 ? 0 :
             (stageLabels ? ((stageLabels[i] / stageLabels[stageLabels?.length - 1]) * 100) + ((i === stages - 1) ? - 4 : 0) : 0) + '%',
-            'background-image': 'url(' + ((current >= stageLabels[i] || i === 0) ? stampImgUrl : noStampImgUrl) + ')'
+            'background-image': 'url(' + ((current >= stageLabels[i] || i === 0) ? ((i !== 0 && i === currentRewardIndex) ? activeStampImgUrl : stampImgUrl) :
+              noStampImgUrl) + ')',
+            'border': (i !== 0 && i === currentRewardIndex) ? '1.4px solid #44D62C' : undefined,
+            'filter': (i !== 0 && i === currentRewardIndex) ? 'drop-shadow(0px 0px 2px #44D62D)' : undefined
            }">
-        <span class="stamp-label"
+        <div class="stamp-label"
               [ngStyle]="{
                 'margin-left': stageLabels[i] < 10 ? 0.8+'rem' : (
                  stageLabels[i] < 100 ? 0.5+'rem' : 0
@@ -44,7 +47,7 @@
               }"
               *ngIf="showProgressLabels && stageLabels && stageLabels[i]">
           {{stageLabels[i]}}
-        </span>
+        </div>
       </div>
     </div>
 </div>
