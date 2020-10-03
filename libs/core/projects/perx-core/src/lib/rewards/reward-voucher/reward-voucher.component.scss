@@ -18,6 +18,10 @@
       margin-right: 1rem;
     }
   }
+
+  .wrapper:not(:empty) + .default {
+    display: none;
+  }
 }
 
 .reward-image-container {

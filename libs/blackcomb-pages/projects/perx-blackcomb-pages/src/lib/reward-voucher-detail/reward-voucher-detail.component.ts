@@ -4,7 +4,7 @@ import {
   OnInit
 } from '@angular/core';
 import {
-  Observable,
+  Observable, of,
   Subject
 } from 'rxjs';
 import {
@@ -56,6 +56,7 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
   public maxRewardCost?: number;
   public rewardProgress: Partial<ProgressBarFields>; // stages always 2
   public rewardType: CampaignRewardMode;
+  public voucher$: Observable<Voucher & { securityNumber: string, cardNumber: string }>;
 
   constructor(
     private rewardsService: RewardsService,
@@ -113,6 +114,7 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
     } else {
       this.vouchersService.issueReward(this.rewardData.id, undefined, undefined, this.loyalty.cardId)
         .subscribe(
+          // below go to wallet or home why go to voucher-detail?
           (res: Voucher) => this.router.navigate([`/voucher-detail/${res.id}`]),
           (_) => this.waitForSubmission = false // allow user to retry again, re-enable button
         );
@@ -120,7 +122,7 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
   }
 
   private initTranslate(): void {
-    this.descriptionLabel = this.translate.get('REWARD.DESCRIPTION');
+    this.descriptionLabel = of('FAQs'); // this.translate.get('REWARD.DESCRIPTION')
     this.tncLabel = this.translate.get('REWARD.TNC');
     this.codeLabel = this.translate.get('REWARD.CODE');
     this.expiryLabel = this.translate.get('REWARD.EXPIRY');
@@ -147,7 +149,25 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
 
 
   public navToRedeem(): void {
-    this.router.navigate(['redeem', this.voucherId]);
+    this.voucher$ = this.vouchersService.get(this.voucherId).pipe(
+      map((voucher: Voucher) => {
+        const [ cardNumber = '', securityNumber = '' ] = (voucher.code && voucher.code.split('-')) || [];
+         return ({
+          ...voucher,
+          securityNumber,
+          cardNumber
+        })
+      })
+    );
+    // this.router.navigate(['redeem', this.voucherId]);
+  }
+
+  public copyCode(inputElement: any) {
+    inputElement.select();
+    document.execCommand('copy');
+    inputElement.setSelectionRange(0, 0);
+    // this.textMessageFunc('Text'); // notif
+    console.log('called')
   }
 
   public ngOnDestroy(): void {

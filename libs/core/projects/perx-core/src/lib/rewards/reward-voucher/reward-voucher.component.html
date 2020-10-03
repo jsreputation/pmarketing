@@ -15,7 +15,8 @@
         </div>
       </mat-card>
     </div>
-    <div>
+    <div class="wrapper"><ng-content select=".redeem-code"></ng-content></div>
+    <div class="default">
       <perx-progress-bar
         [accurateProg]="true"
         [stages]="rewardProgress?.stages"
@@ -23,50 +24,11 @@
         [stageLabels]="rewardProgress?.stageLabels"
         [showProgressLabels]="true"></perx-progress-bar>
     </div>
-    <div class="details">
-      <div *ngIf="reward.merchantName" class="merchant-name include-heart">
-        <div>{{reward.merchantName}}</div>
-        <mat-icon class="show-pointer"
-                  *ngIf="showRewardFavButton"
-                  (click)="rewardFavoriteHandler(reward)">
-          {{favoriteRewards | checkId: reward.id}}</mat-icon>
-      </div>
-      <div class="reward-expiry" *ngIf="showExpiry && reward.validTo !== null">
-        {{expiryLabel | async}}: {{reward.validTo | date: 'dd/MM/yyyy'}}
-      </div>
-      <div class="reward-price" *ngIf="reward.rewardPrice && reward.rewardPrice.length > 0">
-        <div class="points-cost" *ngFor="let rewardPrice of reward.rewardPrice; let i = index">
-          <div *ngIf="i > 0" class="or-label">or</div>
-          <span>{{displayPriceFn(rewardPrice) | async}}</span><span class="points-code"
-                                                                    *ngIf="showRewardIdentifier && rewardPrice.identifier"> ({{codeLabel | async}}: {{rewardPrice.identifier}})</span>
-        </div>
-      </div>
-      <div class="section-heading" *ngIf="reward.description">
-        {{descriptionLabel | async}}
-      </div>
-      <div class="section-content description" *ngIf="reward.description">
-        <div [innerHtml]="reward.description"></div>
-      </div>
-      <div class="section-heading" *ngIf="reward.termsAndConditions">
-        {{tncLabel | async}}
-      </div>
-      <div class="section-content" *ngIf="reward.termsAndConditions">
-        <div [innerHtml]="reward.termsAndConditions | safeHtml"></div>
-      </div>
-      <!--
-      <div class="section-heading" *ngIf="reward.howToRedeem">
-        {{'REWARD.HOW_TO_REDEEM' | translate}}
-      </div>
-      <div class="section-content" *ngIf="reward.howToRedeem">
-        <div [innerHtml]="reward.howToRedeem"></div>
-      </div>
-      -->
-    </div>
-    <mat-action-list *ngIf="reward.customProperties" class="external-link-list">
-      <a mat-list-item matRipple *ngIf="reward.customProperties.faqLink"
-         [href]="reward.customProperties.faqLink" target="_blank"><mat-icon class="link-icon">help_outline</mat-icon>FAQs</a>
-      <a mat-list-item matRipple *ngIf="reward.customProperties.tncLink"
-         [href]="reward.customProperties.tncLink" target="_blank"><mat-icon class="link-icon">help_outline</mat-icon>Terms and Conditions</a>
+    <mat-action-list *ngIf="reward.customFields" class="external-link-list">
+      <a mat-list-item matRipple *ngIf="reward.customFields.faqLink"
+         [href]="reward.customFields.faqLink" target="_blank"><mat-icon class="link-icon">help_outline</mat-icon>FAQs</a>
+      <a mat-list-item matRipple *ngIf="reward.customFields.tncLink"
+         [href]="reward.customFields.tncLink" target="_blank"><mat-icon class="link-icon">help_outline</mat-icon>Terms and Conditions</a>
     </mat-action-list>
   </div>
 </ng-container>

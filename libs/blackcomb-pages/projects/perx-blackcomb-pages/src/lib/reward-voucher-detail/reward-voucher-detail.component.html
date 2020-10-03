@@ -12,7 +12,11 @@
       [showRewardFavButton]="appConfig.showRewardFavButton"
       [showExpiry]="appConfig.showExpiryOnRewardDetail"
       [rewardProgress]="rewardProgress"
-    ></perx-core-reward-voucher>
+    ><div *ngIf="voucher$ | async as voucher" class="redeem-code">
+      <textarea readonly class="bcode" #cardCode>{{voucher?.cardNumber || ''}}</textarea>
+      <textarea [disabled]="true" class="bcode" #securityCode *ngIf="voucher.securityNumber">{{voucher.securityNumber}}</textarea>
+      <button *ngIf="cardCode" (click)="copyCode(cardCode)">copy</button>
+    </div></perx-core-reward-voucher>
   </div>
   <div class="actions-container mat-elevation-z2" *ngIf="appConfig">
     <button mat-raised-button color="primary" class="reward-buy ga_purchase_reward"
@@ -30,4 +34,5 @@
       <span *ngIf="!waitForSubmission">{{buttonLabel}}</span>
     </button>
   </div>
+<!-- how to find if a route is active //-->
 </div>

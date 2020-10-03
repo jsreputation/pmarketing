@@ -9,6 +9,22 @@
     flex: 1;
     overflow-y: auto;
     background-color: var(--background);
+
+    .bcode {
+      display: flex;
+      align-self: center;
+      background: #fff;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      border-radius: 2px;
+      text-align: center;
+      margin: 16px 16px 32px;
+      font-size: 1.6rem;
+      min-height: 4.5rem;
+      justify-content: center;
+      padding: 1.5rem;
+      resize: none; /* remove the resize handle on the bottom right */
+    }
   }
 
   .actions-container {

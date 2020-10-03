@@ -22,8 +22,6 @@ export class ProgressBarComponent implements OnInit {
   @Input()
   public showProgressLabels: boolean = false;
   @Input()
-  public customHeight: number = 26;
-  @Input()
   public accurateProg: boolean = false;
 
   public activeStampImgUrl: string = 'https://perx-cdn-staging.s3.amazonaws.com/razer-assets/activstamp.svg';
