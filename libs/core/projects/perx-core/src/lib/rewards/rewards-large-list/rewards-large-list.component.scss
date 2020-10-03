@@ -9,12 +9,14 @@
     display: flex;
     justify-content: center;
     overflow: hidden;
-    max-height: 10rem;
+    height: 11rem;
+    max-height: 11rem;
+    margin: auto;
 
     img {
       //margin: auto;
       object-position: center;
-      object-fit: cover;
+      width: 100%;
     }
 
     .no-image {
