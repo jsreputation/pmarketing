@@ -1,11 +1,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NearmeComponent } from './nearme.component';
+import { MatIconModule } from '@angular/material';
 import { of } from 'rxjs';
 import {
   RewardsService,
   IVoucherService,
-  GeoLocationService
+  GeoLocationService,
+  ConfigService,
+  TokenStorage,
+  UtilsModule
 } from '@perxtech/core';
 
 const coords: Position = {
@@ -33,6 +37,11 @@ const vouchersServiceStub: Partial<IVoucherService> = {
   getRewardLocations: () => of()
 };
 
+const tokenStorageStub = {
+  getAppInfoProperty: () => null,
+  setAppInfoProperty: () => { }
+};
+
 describe('NearmeComponent', () => {
   let component: NearmeComponent;
   let fixture: ComponentFixture<NearmeComponent>;
@@ -40,7 +49,18 @@ describe('NearmeComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ NearmeComponent ],
+      imports: [
+        UtilsModule,
+        MatIconModule
+      ],
       providers: [
+        {
+          provide: ConfigService,
+          useValue: {
+            readAppConfig: () => of()
+          }
+        },
+        { provide: TokenStorage, useValue: tokenStorageStub },
         { provide: GeoLocationService, useValue: geoLocationService },
         { provide: RewardsService, useValue: rewardsServiceStub },
         { provide: IVoucherService, useValue: vouchersServiceStub },
