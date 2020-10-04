@@ -1,7 +1,5 @@
 <div  *ngIf="stageLabels && stageLabels.length >= 1"  class="relative-container">
-  <div class="progress-bar-container" [ngStyle]="{
-    'height': customHeight + 'px'
-  }">
+  <div class="progress-bar-container">
     <p *ngIf="accurateProg; else inProgInAccurate"
       class="in-progress" [ngStyle]="{
       'width': ((current && stageLabels?.length) ? ((current / stageLabels[stageLabels?.length - 1]) * 100) : 0) + '%'
@@ -36,8 +34,7 @@
             (stageLabels ? ((stageLabels[i] / stageLabels[stageLabels?.length - 1]) * 100) + ((i === stages - 1) ? - 4 : 0) : 0) + '%',
             'background-image': 'url(' + ((current >= stageLabels[i] || i === 0) ? ((i !== 0 && i === currentRewardIndex) ? activeStampImgUrl : stampImgUrl) :
               noStampImgUrl) + ')',
-            'border': (i !== 0 && i === currentRewardIndex) ? '1.4px solid #44D62C' : undefined,
-            'filter': (i !== 0 && i === currentRewardIndex) ? 'drop-shadow(0px 0px 2px #44D62D)' : undefined
+            'border': (i !== 0 && i === currentRewardIndex) ? '2.4px solid #44D62C' : undefined
            }">
         <div class="stamp-label"
               [ngStyle]="{

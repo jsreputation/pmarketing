@@ -1,5 +1,5 @@
 import { RewardVoucherComponent } from './reward-voucher.component';
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { IReward } from '../models/reward.model';
 import { of } from 'rxjs';
@@ -69,15 +69,4 @@ describe('RewardVoucherComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  it('reward name should be displayed', fakeAsync(() => {
-      component.ngOnInit();
-      fixture.detectChanges();
-      tick();
-      expect(fixture.nativeElement.querySelector('.reward-name').textContent.trim()).toEqual(mockReward.name);
-      expect(fixture.nativeElement.querySelector('.merchant-name').textContent.trim()).toEqual(mockReward.merchantName);
-      expect(fixture.nativeElement.querySelector('.reward-image').src).toEqual(mockReward.rewardBanner);
-      expect(fixture.nativeElement.querySelector('.merchant-image').src).toEqual(mockReward.merchantImg);
-    }
-  ));
 });

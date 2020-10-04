@@ -16,7 +16,12 @@
 
     .link-icon {
       margin-right: 1rem;
+      color: var(--accent);
     }
+  }
+
+  .wrapper:not(:empty) + .default {
+    display: none;
   }
 }
 
