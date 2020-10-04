@@ -153,17 +153,17 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
     this.voucher$ = this.vouchersService.get(this.voucherId).pipe(
       map((voucher: Voucher) => {
         const [ cardNumber = '', securityNumber = '' ] = (voucher.code && voucher.code.split('-')) || [];
-         return ({
+        return ({
           ...voucher,
           securityNumber,
           cardNumber
-        })
+        });
       })
     );
     // this.router.navigate(['redeem', this.voucherId]);
   }
 
-  public copyCode(inputElement: any) {
+  public copyCode(inputElement: any): void {
     inputElement.select();
     document.execCommand('copy');
     inputElement.setSelectionRange(0, 0);
