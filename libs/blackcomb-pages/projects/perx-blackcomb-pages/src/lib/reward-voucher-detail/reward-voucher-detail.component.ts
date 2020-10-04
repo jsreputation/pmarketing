@@ -15,7 +15,7 @@ import {
   IPrice,
   IReward,
   IVoucherService,
-  LoyaltyService, ProgressBarFields,
+  LoyaltyService, NotificationService, ProgressBarFields,
   RewardsService,
   Voucher
 } from '@perxtech/core';
@@ -65,6 +65,7 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
     private activeRoute: ActivatedRoute,
     private translate: TranslateService,
     private configService: ConfigService,
+    private notificationService: NotificationService,
     private router: Router
   ) { }
 
@@ -166,8 +167,10 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
     inputElement.select();
     document.execCommand('copy');
     inputElement.setSelectionRange(0, 0);
-    // this.textMessageFunc('Text'); // notif
-    console.log('called')
+    this.notificationService.addPopup({
+      title: '',
+      text: 'Code copied.'
+    });
   }
 
   public ngOnDestroy(): void {
