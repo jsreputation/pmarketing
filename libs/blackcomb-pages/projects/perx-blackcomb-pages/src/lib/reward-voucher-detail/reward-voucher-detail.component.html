@@ -13,9 +13,17 @@
       [showExpiry]="appConfig.showExpiryOnRewardDetail"
       [rewardProgress]="rewardProgress"
     ><div *ngIf="voucher$ | async as voucher" class="redeem-code">
-      <textarea readonly class="bcode" #cardCode>{{voucher?.cardNumber || ''}}</textarea>
-      <textarea [disabled]="true" class="bcode" #securityCode *ngIf="voucher.securityNumber">{{voucher.securityNumber}}</textarea>
-      <button *ngIf="cardCode" (click)="copyCode(cardCode)">copy</button>
+      <div class="redeem-code-headline"><strong>Congratulations!</strong></div>
+      <div class="redeem-code-wrapper">
+        <div class="redeem-tag">19 digit card number</div>
+        <textarea readonly class="bcode" #cardCode>{{voucher?.cardNumber || ''}}</textarea>
+        <mat-icon *ngIf="cardCode" class="copy-span" (click)="copyCode(cardCode)">content_copy</mat-icon>
+      </div>
+      <div class="redeem-code-wrapper">
+        <div class="redeem-tag">4 digit security code</div>
+        <textarea readonly class="bcode" #securityCode >{{voucher?.securityNumber}}</textarea>
+        <mat-icon *ngIf="securityCode" class="copy-span" (click)="copyCode(securityCode)">content_copy</mat-icon>
+      </div>
     </div></perx-core-reward-voucher>
   </div>
   <div class="actions-container mat-elevation-z2" *ngIf="appConfig">

@@ -17,6 +17,7 @@ import {
   convertToParamMap
 } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material';
 
 const rewardsServiceStub: Partial<RewardsService> = {
   getRewards: () => of()
@@ -48,6 +49,7 @@ describe('RewardVoucherDetailComponent', () => {
         RewardsModule,
         UtilsModule,
         MatProgressSpinnerModule,
+        MatIconModule,
         TranslateModule.forRoot()
       ],
       providers: [

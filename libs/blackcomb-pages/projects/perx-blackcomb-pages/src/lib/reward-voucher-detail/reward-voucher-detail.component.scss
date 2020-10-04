@@ -10,20 +10,46 @@
     overflow-y: auto;
     background-color: var(--background);
 
+    .redeem-code {
+      position: relative;
+      font-size: 1.4rem;
+
+      &-headline {
+        position: relative;
+        width: 95%;
+        margin: 0 auto 1rem;
+      }
+
+      &-wrapper {
+        position: relative;
+        width: 95%;
+        margin: 0 auto 1rem;
+
+        .redeem-tag {
+          margin-bottom: 1rem;
+        }
+      }
+    }
+
     .bcode {
-      display: flex;
-      align-self: center;
+      width: 100%;
       background: #fff;
       border: 1px solid #ccc;
       box-sizing: border-box;
       border-radius: 2px;
       text-align: center;
-      margin: 16px 16px 32px;
       font-size: 1.6rem;
       min-height: 4.5rem;
       justify-content: center;
-      padding: 1.5rem;
+      padding-top: 1.5rem;
       resize: none; /* remove the resize handle on the bottom right */
+    }
+
+    .copy-span {
+      cursor: pointer;
+      position: absolute;
+      bottom: 15px;
+      right: 5%;
     }
   }
 
