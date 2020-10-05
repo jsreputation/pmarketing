@@ -7,9 +7,11 @@ import {
   IVoucherService,
   LoyaltyService,
   ProgressBarModule,
+  ProgressInfoPipe,
   RewardsModule,
   SettingsService,
-  StampService, UtilsModule
+  StampService,
+  UtilsModule
 } from '@perxtech/core';
 import {
   ActivatedRoute,
