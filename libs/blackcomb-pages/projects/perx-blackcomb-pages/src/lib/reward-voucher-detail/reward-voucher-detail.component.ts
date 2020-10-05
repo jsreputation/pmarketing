@@ -44,7 +44,7 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
   public reward$: Observable<IReward>;
   public displayPriceFn: (price: IPrice) => string;
   private destroy$: Subject<void> = new Subject();
-  public descriptionLabel: Observable<string>;qq
+  public descriptionLabel: Observable<string>;
   public tncLabel: Observable<string>;
   public codeLabel: Observable<string>;
   public expiryLabel: Observable<string>;
@@ -118,7 +118,7 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
   }
 
   public buyReward(): void {
-    this.waitForSubmission = true
+    this.waitForSubmission = true;
     this.showNoCodeReward.next(true);
     this.doneText = 'done';
   }
