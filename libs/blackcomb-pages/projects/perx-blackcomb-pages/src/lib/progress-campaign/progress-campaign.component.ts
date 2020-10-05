@@ -131,7 +131,8 @@ export class ProgressCampaignComponent implements OnInit {
                       progress,
                       barHeadLine: this.progressInfoPipe.transform(progress.current || 0, this.campaignRewardMode,
                         this.campaign.name)
-                  }});
+                    };
+                  });
                 }
               }
               return [];
@@ -218,7 +219,7 @@ export class ProgressCampaignComponent implements OnInit {
             // configured to be one single stampcard
             map((stampCards) => {
               if (stampCards && stampCards[0] && stampCards[0].displayProperties) {
-                let lengthOfRewardPos = oc(stampCards[0].displayProperties.rewardPositions)([]).length;
+                const lengthOfRewardPos = oc(stampCards[0].displayProperties.rewardPositions)([]).length;
                 return ({
                     stages: lengthOfRewardPos ?
                       (lengthOfRewardPos === 1 || lengthOfRewardPos === 2) ?
