@@ -21,12 +21,6 @@
       text-decoration: none;
     }
 
-    ::ng-deep {
-      .mat-list-item-content {
-        padding: 0;
-      }
-    }
-
     .link-icon {
       margin-right: 1rem;
       color: var(--accent);
@@ -35,6 +29,10 @@
 
   .wrapper:not(:empty) + .default {
     display: none;
+  }
+
+  .grats-msg {
+    font-size: 1.6rem;
   }
 }
 

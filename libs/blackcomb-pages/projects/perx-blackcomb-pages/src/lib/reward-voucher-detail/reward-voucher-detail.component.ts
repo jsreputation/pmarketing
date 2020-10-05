@@ -4,6 +4,7 @@ import {
   OnInit
 } from '@angular/core';
 import {
+  BehaviorSubject,
   Observable, of,
   Subject
 } from 'rxjs';
@@ -15,14 +16,15 @@ import {
   IPrice,
   IReward,
   IVoucherService,
-  LoyaltyService, NotificationService, ProgressBarFields,
+  LoyaltyService,
+  NotificationService,
+  ProgressBarFields,
   RewardsService,
   Voucher
 } from '@perxtech/core';
 import {
   ActivatedRoute,
   Params,
-  Router
 } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import {
@@ -42,11 +44,11 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
   public reward$: Observable<IReward>;
   public displayPriceFn: (price: IPrice) => string;
   private destroy$: Subject<void> = new Subject();
-  public descriptionLabel: Observable<string>;
+  public descriptionLabel: Observable<string>;qq
   public tncLabel: Observable<string>;
   public codeLabel: Observable<string>;
   public expiryLabel: Observable<string>;
-  public buttonLabel: string = 'Redeem';
+  public buttonLabel: string = 'Redeem Your Reward';
   public appConfig: IConfig<void>;
   public rewardData: IReward;
   public loyalty: ILoyalty;
@@ -58,6 +60,9 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
   public rewardType: CampaignRewardMode;
   public voucher$: Observable<Voucher & { securityNumber: string, cardNumber: string }>;
   public barHeadLine: string;
+  public doneText: string;
+  public showNoCodeReward: BehaviorSubject<boolean> =  new BehaviorSubject<boolean>(false);
+  public showNoCodeReward$: Observable<boolean>;
 
   constructor(
     private rewardsService: RewardsService,
@@ -67,10 +72,11 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private configService: ConfigService,
     private notificationService: NotificationService,
-    private router: Router
+    // private router: Router
   ) { }
 
   public ngOnInit(): void {
+    this.showNoCodeReward$ = this.showNoCodeReward.asObservable();
     const { current, stageLabels, rewardType, barHeadLine } = history.state;
     this.barHeadLine = barHeadLine;
 
@@ -112,17 +118,9 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
   }
 
   public buyReward(): void {
-    this.waitForSubmission = true;
-    if (this.appConfig && this.appConfig.showVoucherBookingFromRewardsPage) {
-      this.router.navigateByUrl(`booking/${this.rewardData.id}`);
-    } else {
-      this.vouchersService.issueReward(this.rewardData.id, undefined, undefined, this.loyalty.cardId)
-        .subscribe(
-          // below go to wallet or home why go to voucher-detail?
-          (res: Voucher) => this.router.navigate([`/voucher-detail/${res.id}`]),
-          (_) => this.waitForSubmission = false // allow user to retry again, re-enable button
-        );
-    }
+    this.waitForSubmission = true
+    this.showNoCodeReward.next(true);
+    this.doneText = 'done';
   }
 
   private initTranslate(): void {
@@ -161,7 +159,8 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
           securityNumber,
           cardNumber
         });
-      })
+      }),
+      tap(() => this.doneText = 'done')
     );
     // this.router.navigate(['redeem', this.voucherId]);
   }

@@ -56,6 +56,9 @@ export class RewardVoucherComponent implements OnInit {
   @Input()
   public showRewardFavButton?: boolean;
 
+  @Input()
+  public showNoCodeReward: Observable<boolean>;
+
   public favoriteRewards: IReward[];
 
   public constructor(

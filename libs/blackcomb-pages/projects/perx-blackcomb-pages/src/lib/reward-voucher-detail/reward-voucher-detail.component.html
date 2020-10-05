@@ -13,6 +13,7 @@
       [showRewardFavButton]="appConfig.showRewardFavButton"
       [showExpiry]="appConfig.showExpiryOnRewardDetail"
       [rewardProgress]="rewardProgress"
+      [showNoCodeReward]="showNoCodeReward$"
     ><div *ngIf="voucher$ | async as voucher" class="redeem-code">
       <div class="redeem-code-wrapper">
         <div class="redeem-code-headline"><strong>Congratulations!</strong></div>
@@ -25,10 +26,11 @@
         <textarea readonly class="bcode" #securityCode >{{voucher?.securityNumber}}</textarea>
         <mat-icon *ngIf="securityCode" class="copy-span" (click)="copyCode(securityCode)">content_copy</mat-icon>
       </div>
-    </div></perx-core-reward-voucher>
+    </div><!--
+    --></perx-core-reward-voucher>
   </div>
   <div class="actions-container mat-elevation-z2" *ngIf="appConfig">
-    <button mat-raised-button color="primary" class="reward-buy ga_purchase_reward"
+    <button *ngIf="!doneText" mat-raised-button color="primary" class="reward-buy ga_purchase_reward"
             [disabled]="maxRewardCost && maxRewardCost > 0 && (!loyalty || !loyalty.pointsBalance || (loyalty.pointsBalance < (maxRewardCost || 0))) || waitForSubmission"
             perxCoreAppDebounceClick
             [debounceTime]="400"
@@ -42,6 +44,8 @@
       </i>
       <span *ngIf="!waitForSubmission">{{buttonLabel}}</span>
     </button>
+    <button [routerLink]="'/home'" *ngIf="doneText" mat-raised-button color="primary" class="reward-buy ga_purchase_reward">
+     {{doneText}}
+    </button>
   </div>
-<!-- how to find if a route is active //-->
 </div>
