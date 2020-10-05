@@ -50,6 +50,7 @@ interface IV4CustomField {
   tnc_link: string;
   points_requirement: string; // to convert to number
   referrals_requirement: string;
+  reward_description: string;
 }
 
 export interface IV4Reward {
@@ -204,6 +205,7 @@ export class V4RewardsService extends RewardsService {
         requirement: campaignType ? V4RewardsService.custFieldRequirementSelector(campaignType, reward.custom_fields) : (
           reward.custom_fields.points_requirement || reward.custom_fields.referrals_requirement
         ),
+        requirementDescription: reward.custom_fields.reward_description || '',
         faqLink: reward.custom_fields.faq_link,
         tncLink: reward.custom_fields.tnc_link
       } : undefined

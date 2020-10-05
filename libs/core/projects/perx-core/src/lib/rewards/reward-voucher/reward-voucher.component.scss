@@ -9,7 +9,15 @@
   width: 100%;
   // max-width: $max-width;
 
+  .headline-progress {
+    font-size: 1.6rem;
+    margin-top: 1.6rem;
+  }
+
   .external-link-list {
+    margin-top: 1.6rem;
+    background-color: white;
+
     a {
       text-decoration: none;
     }
@@ -22,6 +30,10 @@
 
   .wrapper:not(:empty) + .default {
     display: none;
+  }
+
+  .grats-msg {
+    font-size: 1.6rem;
   }
 }
 

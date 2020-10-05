@@ -11,18 +11,17 @@
     background-color: var(--background);
 
     .redeem-code {
+      margin-top: 1.6rem;
       position: relative;
-      font-size: 1.4rem;
+      font-size: 1.6rem;
 
       &-headline {
         position: relative;
-        width: 95%;
         margin: 0 auto 1rem;
       }
 
       &-wrapper {
         position: relative;
-        width: 95%;
         margin: 0 auto 1rem;
 
         .redeem-tag {

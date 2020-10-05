@@ -11,24 +11,29 @@
           {{reward.name}}
         </div>
         <div class="reward-subtitle">
-          {{rewardProgress?.stageLabels[rewardProgress?.stageLabels.length -1] | progressRequire : rewardType}}
+          {{reward?.customFields?.requirementDescription || rewardProgress?.stageLabels[rewardProgress?.stageLabels.length -1] | progressRequire : rewardType}}
         </div>
       </mat-card>
     </div>
     <div class="wrapper"><ng-content select=".redeem-code"></ng-content></div>
-    <div class="default">
-      <perx-progress-bar
-        [accurateProg]="true"
-        [stages]="rewardProgress?.stages"
-        [current]="rewardProgress?.current"
-        [stageLabels]="rewardProgress?.stageLabels"
-        [showProgressLabels]="true"></perx-progress-bar>
-    </div>
-    <mat-action-list *ngIf="reward.customFields" class="external-link-list">
-      <a mat-list-item matRipple *ngIf="reward.customFields.faqLink"
-         href="{{'https://' + reward.customFields.faqLink}}" target="_blank"><mat-icon class="link-icon">help_outline</mat-icon>FAQs</a>
-      <a mat-list-item matRipple *ngIf="reward.customFields.tncLink"
-         href="{{'https://' + reward.customFields.tncLink}}"
+    <ng-template #defaultTemplate>
+      <div class="default">
+        <div [innerHTML]="reward?.customFields?.requirementDescription ?
+          (reward?.customFields?.requirementDescription | getStartInfo : (rewardProgress?.current >= rewardProgress?.stageLabels[rewardProgress?.stageLabels.length - 1])) : barHeadLine" class="headline-progress"></div>
+        <perx-progress-bar
+          [accurateProg]="true"
+          [stages]="rewardProgress?.stages"
+          [current]="rewardProgress?.current"
+          [stageLabels]="rewardProgress?.stageLabels"
+          [showProgressLabels]="true"></perx-progress-bar>
+      </div>
+    </ng-template>
+    <div *ngIf="showNoCodeReward | async; else defaultTemplate" class="grats-msg" [innerHTML]="reward?.howToRedeem"></div>
+    <mat-action-list *ngIf="reward?.customFields?.faqLink && reward.customFields.tncLink" class="external-link-list">
+      <a mat-list-item matRipple *ngIf="reward?.customFields?.faqLink"
+         href="{{'https://' + reward?.customFields?.faqLink}}" target="_blank"><mat-icon class="link-icon">help_outline</mat-icon>FAQs</a>
+      <a mat-list-item matRipple *ngIf="reward?.customFields?.tncLink"
+         href="{{'https://' + reward?.customFields?.tncLink}}"
          target="_blank"><mat-icon class="link-icon">description_outline</mat-icon>Terms and Conditions</a>
     </mat-action-list>
   </div>
