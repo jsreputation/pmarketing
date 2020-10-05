@@ -6,9 +6,12 @@ import { CampaignRewardMode } from '../../progress-campaign.component';
   pure: true
 })
 export class ProgressInfoPipe implements PipeTransform {
-  public transform(value: number, rewardMode: string): any {
+  public transform(value: number, rewardMode: string, campaignName: string): any {
     switch (rewardMode) {
       case CampaignRewardMode.TransactionQuantity:
+        if (campaignName === 'Getting Started Task') {
+          return `You've completed <strong>${value}</strong> mission`;
+        }
         return `You've made <strong>${value}</strong> transactions`;
       case CampaignRewardMode.TransactionAmount:
         return `You've transacted <strong>$${value}</strong>`;

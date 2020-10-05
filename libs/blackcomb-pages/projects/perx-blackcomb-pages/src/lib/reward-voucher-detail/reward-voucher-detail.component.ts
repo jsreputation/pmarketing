@@ -54,9 +54,10 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
   public voucherId: number;
   public rewardId: number;
   public maxRewardCost?: number;
-  public rewardProgress: Partial<ProgressBarFields>; // stages always 2
+  public rewardProgress: Partial<ProgressBarFields & { barHeadLine: string }>; // stages always 2
   public rewardType: CampaignRewardMode;
   public voucher$: Observable<Voucher & { securityNumber: string, cardNumber: string }>;
+  public barHeadLine: string;
 
   constructor(
     private rewardsService: RewardsService,
@@ -70,7 +71,9 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    const { current, stageLabels, rewardType } = history.state;
+    const { current, stageLabels, rewardType, barHeadLine } = history.state;
+    this.barHeadLine = barHeadLine;
+
     this.rewardType = rewardType;
     if (current !== (undefined) && stageLabels) {
       this.rewardProgress = {

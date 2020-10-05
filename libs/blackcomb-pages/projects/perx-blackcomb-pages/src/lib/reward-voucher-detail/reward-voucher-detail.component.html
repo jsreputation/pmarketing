@@ -1,6 +1,7 @@
 <div class="prize-wrapper">
   <div class="reward-container">
     <perx-core-reward-voucher
+      [barHeadLine]="barHeadLine"
       [rewardType]="rewardType"
       *ngIf="appConfig"
       [reward]="reward$"
@@ -13,8 +14,8 @@
       [showExpiry]="appConfig.showExpiryOnRewardDetail"
       [rewardProgress]="rewardProgress"
     ><div *ngIf="voucher$ | async as voucher" class="redeem-code">
-      <div class="redeem-code-headline"><strong>Congratulations!</strong></div>
       <div class="redeem-code-wrapper">
+        <div class="redeem-code-headline"><strong>Congratulations!</strong></div>
         <div class="redeem-tag">19 digit card number</div>
         <textarea readonly class="bcode" #cardCode>{{voucher?.cardNumber || ''}}</textarea>
         <mat-icon *ngIf="cardCode" class="copy-span" (click)="copyCode(cardCode)">content_copy</mat-icon>

@@ -9,9 +9,22 @@
   width: 100%;
   // max-width: $max-width;
 
+  .headline-progress {
+    font-size: 1.6rem;
+    margin-top: 1.6rem;
+  }
+
   .external-link-list {
+    background-color: white;
+
     a {
       text-decoration: none;
+    }
+
+    ::ng-deep {
+      .mat-list-item-content {
+        padding: 0;
+      }
     }
 
     .link-icon {

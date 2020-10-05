@@ -14,6 +14,9 @@ import { ProgressInfoPipe } from './progress-pipes/info/progress-info.pipe';
     ProgressInfoPipe,
     ProgressCampaignComponent
   ],
+  providers: [
+    ProgressInfoPipe
+  ],
   imports: [
     CommonModule,
     MatCardModule,

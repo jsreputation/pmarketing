@@ -22,6 +22,9 @@ export class RewardVoucherComponent implements OnInit {
   public rewardProgress: ProgressBarFields;
 
   @Input()
+  public barHeadLine: string;
+
+  @Input()
   public rewardType: CampaignRewardMode;
 
   @Input('reward')
