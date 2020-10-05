@@ -18,7 +18,8 @@
     <div class="wrapper"><ng-content select=".redeem-code"></ng-content></div>
     <ng-template #defaultTemplate>
       <div class="default">
-        <div [innerHTML]="barHeadLine" class="headline-progress"></div>
+        <div [innerHTML]="reward?.customFields?.requirementDescription ?
+          (reward?.customFields?.requirementDescription | getStartInfo : (rewardProgress?.current >= rewardProgress?.stageLabels[rewardProgress?.stageLabels.length - 1])) : barHeadLine" class="headline-progress"></div>
         <perx-progress-bar
           [accurateProg]="true"
           [stages]="rewardProgress?.stages"
