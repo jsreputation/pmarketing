@@ -36,6 +36,7 @@ import { PointsToCashPipe } from './directives/points-to-cash.pipe';
 import { TokenStorage } from './storage/token-storage.service';
 import { CheckIdExistsPipe } from './directives/check-id-exists-pipe';
 import { MatRippleModule } from '@angular/material/core';
+import { ProgressInfoPipe } from './progress-info/progress-info.pipe';
 
 export function themesServiceFactory(
   handler: HttpBackend,
@@ -72,7 +73,8 @@ const pipes = [
   SafeHtmlPipe,
   SafeUrlPipe,
   PointsToCashPipe,
-  CheckIdExistsPipe
+  CheckIdExistsPipe,
+  ProgressInfoPipe
 ];
 
 // make sure we have only one instance of the NotificationService

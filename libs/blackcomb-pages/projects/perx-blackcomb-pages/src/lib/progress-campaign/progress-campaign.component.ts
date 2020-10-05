@@ -35,7 +35,7 @@ import {
   throwError
 } from 'rxjs';
 import { oc } from 'ts-optchain';
-import { ProgressInfoPipe } from './progress-pipes/info/progress-info.pipe';
+import { ProgressInfoPipe } from '@perxtech/core';
 
 export enum CampaignRewardMode {
   TransactionAmount = 'trans-amount',

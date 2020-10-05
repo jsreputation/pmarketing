@@ -9,7 +9,7 @@ import {
   ProgressBarModule,
   RewardsModule,
   SettingsService,
-  StampService
+  StampService, UtilsModule
 } from '@perxtech/core';
 import {
   ActivatedRoute,
@@ -17,7 +17,6 @@ import {
 } from '@angular/router';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ProgressInfoPipe } from './progress-pipes/info/progress-info.pipe';
 
 const campaignServiceStub: Partial<ICampaignService> = {
   getCampaign: () => of(),
@@ -44,12 +43,13 @@ describe('ProgressCampaignComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProgressCampaignComponent, ProgressInfoPipe ],
+      declarations: [ ProgressCampaignComponent ],
       imports: [
 		    RouterTestingModule,
         RewardsModule,
         MatCardModule,
-        ProgressBarModule
+        ProgressBarModule,
+        UtilsModule
       ],
       providers: [
         {
@@ -63,6 +63,7 @@ describe('ProgressCampaignComponent', () => {
         { provide: StampService, value: stampServiceStub },
         { provide: LoyaltyService, value: loyaltyServiceStub },
         { provide: IVoucherService, useValue: voucherServiceStub },
+        ProgressInfoPipe
       ]
     })
     .compileComponents();

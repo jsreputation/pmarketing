@@ -11,13 +11,13 @@
           {{reward.name}}
         </div>
         <div class="reward-subtitle">
-          {{reward.customFields.requirementDescription || rewardProgress?.stageLabels[rewardProgress?.stageLabels.length -1] | progressRequire : rewardType}}
+          {{reward?.customFields?.requirementDescription || rewardProgress?.stageLabels[rewardProgress?.stageLabels.length -1] | progressRequire : rewardType}}
         </div>
       </mat-card>
     </div>
     <div class="wrapper"><ng-content select=".redeem-code"></ng-content></div>
-    <div [innerHTML]="barHeadLine" class="headline-progress"></div>
     <div class="default">
+      <div [innerHTML]="barHeadLine" class="headline-progress"></div>
       <perx-progress-bar
         [accurateProg]="true"
         [stages]="rewardProgress?.stages"

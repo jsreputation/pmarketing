@@ -1,5 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { CampaignRewardMode } from '../../progress-campaign.component';
+
+export enum CampaignRewardMode {
+  TransactionAmount = 'trans-amount',
+  TransactionQuantity = 'trans-qty',
+  Referral = 'referral'
+}
 
 @Pipe({
   name: 'progressInfo',

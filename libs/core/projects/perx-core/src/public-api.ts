@@ -190,6 +190,7 @@ export { SafeUrlPipe } from './lib/utils/safe-url.pipe';
 export { equalityValidator, emailValidator, inequalityValidator } from './lib/utils/validators';
 export { LocationFilterPopupComponent } from './lib/utils/location-filter-popup/location-filter-popup.component';
 export { PointsToCashPipe } from './lib/utils/directives/points-to-cash.pipe';
+export { ProgressInfoPipe } from './lib/utils/progress-info/progress-info.pipe';
 
 /**
  * Puzzles
