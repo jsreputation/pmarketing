@@ -154,13 +154,7 @@ export class V4QuizService implements QuizService {
     configService: ConfigService
   ) {
     configService.readAppConfig().subscribe(
-      (config: IConfig<any>) => {
-        if ( config && config.custom && (
-          (config.custom as any).languageOptions).includes(window.navigator.language) ) {
-          this.lang = window.navigator.language;
-        }
-        this.baseUrl$.next(config.apiHost);
-      });
+      (config: IConfig<any>) => this.baseUrl$.next(config.apiHost));
   }
 
   @Cacheable({})

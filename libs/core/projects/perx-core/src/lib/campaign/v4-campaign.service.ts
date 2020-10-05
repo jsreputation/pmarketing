@@ -92,13 +92,7 @@ export class V4CampaignService implements ICampaignService {
 
   constructor(private http: HttpClient, private configService: ConfigService) {
     this.configService.readAppConfig().subscribe(
-      (config: IConfig<any>) => {
-        if ( config && config.custom && (
-          (config.custom as any).languageOptions).includes(window.navigator.language) ) {
-          this.lang = window.navigator.language.substr(0, 2); // so en-Us etc becomes just en
-        }
-        this.baseUrl = config.apiHost as string;
-      });
+      (config: IConfig<any>) => this.baseUrl = config.apiHost as string);
   }
 
   public static v4CampaignToCampaign(campaign: IV4Campaign, lang: string = 'en'): ICampaign {
