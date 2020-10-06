@@ -11,7 +11,8 @@
           {{reward.name}}
         </div>
         <div class="reward-subtitle">
-          {{reward?.customFields?.requirementDescription || rewardProgress?.stageLabels[rewardProgress?.stageLabels.length -1] | progressRequire : rewardType}}
+          {{ useRewardDescription ?
+          reward?.customFields?.requirementDescription : (rewardProgress?.stageLabels[rewardProgress?.stageLabels.length -1] | progressRequire : rewardType)}}
         </div>
       </mat-card>
     </div>
@@ -33,7 +34,7 @@
     <div *ngIf="showNoCodeReward | async; else defaultTemplate" class="grats-msg" [innerHTML]="reward?.howToRedeem"></div>
     <div *ngIf="reward?.description" class="how-container">
       <mat-icon class="info-icon">info_outline</mat-icon>
-      <div class="how-msg" [innerHTML]="reward?.description"></div>
+      <div class="how-msg" [innerHTML]="reward?.description | safeHtml"></div>
     </div>
     <mat-action-list *ngIf="reward?.customFields?.faqLink && reward.customFields.tncLink" class="external-link-list">
       <a mat-list-item matRipple *ngIf="reward?.customFields?.faqLink"

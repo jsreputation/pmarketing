@@ -60,6 +60,7 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
   public rewardType: CampaignRewardMode;
   public voucher$: Observable<Voucher & { securityNumber: string, cardNumber: string }>;
   public barHeadLine: string;
+  public useRewardDescription: string;
   public doneText: string;
   public showNoCodeReward: BehaviorSubject<boolean> =  new BehaviorSubject<boolean>(false);
   public showNoCodeReward$: Observable<boolean>;
@@ -77,8 +78,9 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.showNoCodeReward$ = this.showNoCodeReward.asObservable();
-    const { current, stageLabels, rewardType, barHeadLine } = history.state;
+    const { current, stageLabels, rewardType, barHeadLine, useRewardDescription } = history.state;
     this.barHeadLine = barHeadLine;
+    this.useRewardDescription = useRewardDescription;
 
     this.rewardType = rewardType;
     if (current !== (undefined) && stageLabels) {

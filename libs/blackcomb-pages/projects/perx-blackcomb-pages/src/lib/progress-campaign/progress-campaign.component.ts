@@ -288,7 +288,8 @@ export class ProgressCampaignComponent implements OnInit {
               current: selectedRewardWithProgress.progress.current,
               stageLabels: selectedRewardWithProgress.progress.stageLabels,
               rewardType: this.campaignRewardMode,
-              barHeadLine: selectedRewardWithProgress.barHeadLine
+              barHeadLine: selectedRewardWithProgress.barHeadLine,
+              useRewardDescription: this.campaign.name === 'Getting Started' || this.campaign.name === 'Ultimate Reward'
             }
           };
         }
