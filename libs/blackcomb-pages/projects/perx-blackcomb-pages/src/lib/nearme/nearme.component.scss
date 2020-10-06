@@ -9,28 +9,35 @@
   height: 100%;
 }
 
-.search {
+.headers {
   width: 100%;
   position: absolute;
   margin-top: 6rem;
   z-index: 2;
   text-align: center;
   padding: 0.5rem;
+  display: flex;
+  justify-content: center;
 
   .search-button {
     background-color: #fff;
-    margin: 0 2rem 2rem;
+    margin-top: 1rem;
     border-radius: 5rem;
-    text-align: center;
-    border-radius: 5rem;
-    padding: 0.5rem 1rem;
     font-size: 1.2rem;
     color: rgb(0, 110, 255);
-    display: inline-block;
   }
 
-  .macaron {
- 
+  .filter-area {
+    padding: 1rem;
+    position: absolute;
+    right: 2%;
+    z-index: 1;
+  
+    button {
+      background-color: #ffffff;
+      font-size: 1.4rem;
+      color: #494953;
+    }
   }
 }
 
