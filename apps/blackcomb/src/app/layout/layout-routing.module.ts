@@ -8,7 +8,7 @@ const routes: Routes = [
     path: '',
     component: LayoutComponent,
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'home' },
+      { path: '', pathMatch: 'full', redirectTo: 'progress-campaigns' },
       {
         path: 'home', loadChildren: () => import('../home/home.module').then(mod => mod.HomeModule),
         canActivate: [ProtectedGuard]

@@ -14,7 +14,7 @@ export class ProgressInfoPipe implements PipeTransform {
   public transform(value: number, rewardMode: string, campaignName: string): any {
     switch (rewardMode) {
       case CampaignRewardMode.TransactionQuantity:
-        if (campaignName === 'Getting Started Task' || campaignName === 'Ultimate Task') {
+        if (campaignName === 'Getting Started' || campaignName === 'Ultimate Reward') {
           return `You've completed <strong>${value}</strong> mission${value > 1 ? 's' : ''}`;
         }
         return `You've made <strong>${value}</strong> Transaction${value > 1 ? 's' : ''}`;

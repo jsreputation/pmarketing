@@ -3,6 +3,7 @@ import { Observable, zip } from 'rxjs';
 import { CampaignType, ICampaign, ICampaignService, LoyaltyService, ProgressBarFields, StampService } from '@perxtech/core';
 import { concatMap, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { listAnimation } from '../home/games-collection/games-collection.animation';
+import { oc } from 'ts-optchain';
 
 @Component({
   selector: 'perx-blackcomb-pages-raz-adapted-campaigns-collection',
@@ -58,15 +59,16 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
                 // configured to be one single stampcard
                 map((stampCards) => {
                   if (stampCards && stampCards[0] && stampCards[0].displayProperties) {
+                    const lengthOfRewardPos = oc(stampCards[0].displayProperties.rewardPositions)([]).length;
                     return ({
-                      stages: stampCards[0].displayProperties.rewardPositions ?
-                        (stampCards[0].displayProperties.rewardPositions.length === 1 ?
-                          2 : stampCards[0].displayProperties.rewardPositions.length) : 2,
+                      stages: lengthOfRewardPos ?
+                        (lengthOfRewardPos === 1 || lengthOfRewardPos === 2) ?
+                          (lengthOfRewardPos + 1) : lengthOfRewardPos : 2,
                       current: (stampCards[0].stamps && stampCards[0].stamps.length) || 0,
                       stageLabels: stampCards[0].displayProperties.rewardPositions ?
-                        (stampCards[0].displayProperties.rewardPositions.length === 1 ?
-                          [ 0 , ...stampCards[0].displayProperties.rewardPositions ].sort(( a , b) => a - b)
-                          : [ 0 , ...stampCards[0].displayProperties.rewardPositions ].sort(( a , b) => a - b)) : // if len is only 1 add 0
+                        ((lengthOfRewardPos === 1 || lengthOfRewardPos === 2) ?
+                          [ 0 , ...stampCards[0].displayProperties.rewardPositions ].sort(( a, b) => a - b)
+                          : [ ...stampCards[0].displayProperties.rewardPositions ].sort(( a, b) => a - b)) : // if len is only 1 add 0
                         []
                     });
                   }
@@ -116,9 +118,9 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
         map(
           ([progress, campaigns]) => {
             // ASSUME guaranteed to have ultimate campaign
-            const ultimateCampaign = campaigns.find(campaign => campaign.name === 'Ultimate Task');
-            const ultimateCampaignInd = campaigns.findIndex(campaign => campaign.name === 'Ultimate Task');
-            const campaignsWithoutUltimateCampaign = campaigns.filter(campaign => campaign.name !== 'Ultimate Task');
+            const ultimateCampaign = campaigns.find(campaign => campaign.name === 'Ultimate Reward');
+            const ultimateCampaignInd = campaigns.findIndex(campaign => campaign.name === 'Ultimate Reward');
+            const campaignsWithoutUltimateCampaign = campaigns.filter(campaign => campaign.name !== 'Ultimate Reward');
             return [...campaignsWithoutUltimateCampaign, ultimateCampaign].map((campaign, index) =>
               // index skip over ultimateCampaign
               ({ ...campaign as ICampaign, progress: (
