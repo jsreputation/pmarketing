@@ -36,7 +36,8 @@
                 [showProgressLabels]="false"></perx-progress-bar>
               <div class="counter" *ngIf="reward?.progress?.stageLabels?.length">
                 <div>
-                  {{reward.customFields.requirementDescription || (reward.progress.stageLabels[reward.progress.stageLabels.length - 1]  | progressRequire: rewardMode)}}
+                  {{ useRewardDescription ?
+                  reward.customFields.requirementDescription : (reward.progress.stageLabels[reward.progress.stageLabels.length - 1]  | progressRequire: rewardMode)}}
                 </div>
 <!--                <div>-->
 <!--                  {{reward?.progress.current}}/{{reward.progress.stageLabels[reward.progress.stageLabels.length - 1]}} {{rewardType}}-->
