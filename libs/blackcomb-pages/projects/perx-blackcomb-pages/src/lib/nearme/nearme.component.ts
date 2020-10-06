@@ -17,7 +17,8 @@ import {
   GeoLocationService,
   TokenStorage,
   ConfigService,
-  IConfig
+  IConfig,
+  ITabConfigExtended
 } from '@perxtech/core';
 
 import {
@@ -25,6 +26,17 @@ import {
   from
 } from 'rxjs';
 import { takeUntil, mergeMap, filter, tap } from 'rxjs/operators';
+import { MatDialog } from '@angular/material';
+import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
+
+export interface IData {
+  categories: ICategories[];
+}
+
+export interface ICategories {
+  name: string;
+  isSelected: boolean;
+}
 
 @Component({
   selector: 'perx-blackcomb-pages-nearme',
@@ -45,16 +57,27 @@ export class NearmeComponent implements OnInit, OnDestroy {
   public position: Position;
   public favoriteRewards: IReward[];
   public showRewardFavButton?: boolean;
+  public categories: ICategories[] = [];
 
   constructor(
     private config: ConfigService,
     private tokenStorage: TokenStorage,
     private rewardsService: RewardsService,
     private vouchersService: IVoucherService,
-    private geoLocationService: GeoLocationService
+    private geoLocationService: GeoLocationService,
+    private dialog: MatDialog,
   ) { }
 
   public ngOnInit(): void {
+    this.rewardsService.getCategories().subscribe((catagories: ITabConfigExtended[]) => {
+      catagories.forEach(cat => {
+        const category: ICategories = {
+          name: cat.tabName,
+          isSelected: false
+        };
+        this.categories.push(category);
+      });
+    });
     this.favoriteRewards = (
       this.tokenStorage.getAppInfoProperty('favoriteRewards') as unknown as IReward[]
     ) || [];
@@ -234,6 +257,27 @@ export class NearmeComponent implements OnInit, OnDestroy {
     }
     this.favoriteRewards = rwdsArray;
     this.tokenStorage.setAppInfoProperty(rwdsArray, 'favoriteRewards');
+  }
+
+  public openDialog(): void {
+    const dialogRef = this.dialog.open(FilterDialogComponent, {
+      width: '35rem',
+      data: { categories: this.categories }
+    });
+
+    dialogRef.afterClosed().subscribe(res => {
+      if (typeof res !== 'object') {
+        return;
+      }
+      this.categories = res;
+      this.filterLocations();
+    });
+  }
+
+  public filterLocations(): void {
+    const filteredCategories = this.categories.filter(category => category.isSelected).map(category => category.name);
+    console.log(filteredCategories);
+    // this.locations = this.locationsService.getAllLocations(this.merchants, filteredTags);
   }
 
   public ngOnDestroy(): void {
