@@ -90,6 +90,7 @@ import { PageComponentsModule } from './page-components/page-components.module';
 import { ProgressCampaignModule } from './progress-campaign/progress-campaign.module';
 import { RewardVoucherDetailModule } from './reward-voucher-detail/reward-voucher-detail.module';
 import { RazAdaptedCampaignsCollectionModule } from './raz-adapted-campaigns-collection/raz-adapted-campaigns-collection.module';
+import { FilterDialogComponent } from './nearme/filter-dialog/filter-dialog.component';
 
 
 const comps: any[] = [
@@ -106,6 +107,7 @@ const comps: any[] = [
   NearmeComponent,
   RewardsPageComponent,
   FavoriteRewardsComponent,
+  FilterDialogComponent,
 ];
 
 @NgModule({
@@ -193,7 +195,8 @@ const comps: any[] = [
   ],
   providers: [
     SecondsToStringPipe
-  ]
+  ],
+  entryComponents: [FilterDialogComponent]
 })
 export class PerxBlackcombPagesModule {
 }
