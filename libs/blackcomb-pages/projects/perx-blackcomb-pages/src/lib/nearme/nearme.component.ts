@@ -25,7 +25,7 @@ import {
   Subject,
   from
 } from 'rxjs';
-import { takeUntil, mergeMap, filter, tap } from 'rxjs/operators';
+import { take, mergeMap, filter, tap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
 
@@ -58,6 +58,9 @@ export class NearmeComponent implements OnInit, OnDestroy {
   public categories: ICategories[] = [];
   public rad: number = 100000000;
   public firstLoad: boolean = true;
+  public lastLat: number;
+  public lastLng: number;
+  public lastRad: number;
 
   constructor(
     private config: ConfigService,
@@ -136,7 +139,11 @@ export class NearmeComponent implements OnInit, OnDestroy {
     });
   }
 
-  private updateMarkers(latitude: number, longitude: number, rad: number): void {
+  private updateMarkers(latitude: number, longitude: number, rad: number, filterCategories?: string[]): void {
+    this.lastLat = latitude;
+    this.lastLng = longitude;
+    this.lastRad = rad;
+
     this.rewardsService.nearMe(rad, latitude, longitude).pipe(
       take(1),
       mergeMap((rewards: IReward[]) =>
@@ -147,6 +154,16 @@ export class NearmeComponent implements OnInit, OnDestroy {
                 filter((location: IVoucherLocation) => {
                   const lat = location.latitude !== null ? parseFloat(location.latitude) : 0;
                   const lng = location.longitude !== null ? parseFloat(location.longitude) : 0;
+
+                  if (filterCategories && filterCategories.length > 0) {
+                    const tags = reward.categoryTags ? reward.categoryTags : [];
+                    for (let i = 0; i < tags.length; i++) {
+                      if (filterCategories.includes(tags[i].title)) {
+                        return lat === 0 || lng === 0 ? false : true;
+                      }
+                    }
+                    return false;
+                  }
                   return lat === 0 || lng === 0 ? false : true;
                 }),
                 tap((location: IVoucherLocation) => {
@@ -158,6 +175,7 @@ export class NearmeComponent implements OnInit, OnDestroy {
                     map: this.map,
                   });
                   marker.addListener('click', () => {
+                    console.log(reward);
                     this.current = reward;
                     this.currentPrice = reward.rewardPrice ? reward.rewardPrice[0] : null;
                   });
@@ -203,6 +221,7 @@ export class NearmeComponent implements OnInit, OnDestroy {
       const radius = Math.floor(google.maps.geometry.spherical.computeDistanceBetween(center, ne));
       this.updateMarkers(lat, lng, radius);
     }
+  }
 
   public rewardFavoriteHandler(rewardToggled: IReward): void {
     const favoriteRewards = this.tokenStorage.getAppInfoProperty('favoriteRewards');
@@ -240,9 +259,9 @@ export class NearmeComponent implements OnInit, OnDestroy {
   }
 
   public filterLocations(): void {
+    this.clearMarkers();
     const filteredCategories = this.categories.filter(category => category.isSelected).map(category => category.name);
-    console.log(filteredCategories);
-    // this.locations = this.locationsService.getAllLocations(this.merchants, filteredTags);
+    this.updateMarkers(this.lastLat, this.lastLng, this.lastRad, filteredCategories);
   }
 
   public ngOnDestroy(): void {
