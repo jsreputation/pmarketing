@@ -69,4 +69,12 @@ export class WhistlerConfigService extends ConfigService {
     }
     return this.appConfig$;
   }
+
+  public setAppStarted(): void {
+    console.log('not implemented');
+  }
+
+  public readAppStarted(): boolean {
+    return false;
+  }
 }

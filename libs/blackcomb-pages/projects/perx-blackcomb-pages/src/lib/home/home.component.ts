@@ -126,7 +126,8 @@ export class HomeComponent implements OnInit, OnDestroy {
           this.router.navigate(['/progress-campaigns']);
         } else {
           this.authService.isAuthorized().subscribe((isAuth: boolean) => {
-            if (isAuth) {
+            if (isAuth && !this.configService.readAppStarted()) {
+              this.configService.setAppStarted();
               this.fetchPopupCampaigns();
             }
           });

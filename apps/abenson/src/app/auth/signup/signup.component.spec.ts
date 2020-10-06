@@ -23,7 +23,7 @@ describe('SignupComponent', () => {
     getAppAccessToken: () => 'token'
   };
   const profileServiceStub: Partial<ProfileService> = { verifyCardNumber: () => of(true) };
-  const configServiceStub: ConfigService = { readAppConfig: () => of() };
+  const configServiceStub: Partial<ConfigService> = { readAppConfig: () => of() };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SignUpComponent],
