@@ -124,6 +124,13 @@ export class HomeComponent implements OnInit, OnDestroy {
       tap((config: IConfig<void>) => {
         if (config.homeAsProgressPage) {
           this.router.navigate(['/progress-campaigns']);
+        } else {
+          this.authService.isAuthorized().subscribe((isAuth: boolean) => {
+            if (isAuth && !this.configService.readAppStarted()) {
+              this.configService.setAppStarted();
+              this.fetchPopupCampaigns();
+            }
+          });
         }
         this.appConfig = config;
         this.initCampaign();
@@ -159,12 +166,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.titleService.setTitle(title);
       }
     );
-
-    this.authService.isAuthorized().subscribe((isAuth: boolean) => {
-      if (isAuth) {
-        this.fetchPopupCampaigns();
-      }
-    });
 
     this.initCatalogsScan();
   }

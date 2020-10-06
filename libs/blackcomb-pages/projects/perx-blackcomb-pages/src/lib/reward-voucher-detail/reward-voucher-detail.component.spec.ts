@@ -4,7 +4,7 @@ import { RewardVoucherDetailComponent } from './reward-voucher-detail.component'
 import {
   ConfigService,
   IVoucherService,
-  LoyaltyService,
+  LoyaltyService, NotificationService,
   RewardsModule,
   RewardsService,
   UtilsModule
@@ -17,6 +17,7 @@ import {
   convertToParamMap
 } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatIconModule } from '@angular/material';
 
 const rewardsServiceStub: Partial<RewardsService> = {
   getRewards: () => of()
@@ -28,6 +29,7 @@ const configServiceStub: Partial<ConfigService> = { readAppConfig: () => of() };
 const loyaltyServiceStub = {
   getLoyalties: () => of([{}])
 };
+const notificationServiceStub: Partial<NotificationService> = { addPopup: () => ({}) };
 const activatedRouteStub = {
   paramMap: of(convertToParamMap({ rewardId: 1 })),
   snapshot: {
@@ -48,6 +50,7 @@ describe('RewardVoucherDetailComponent', () => {
         RewardsModule,
         UtilsModule,
         MatProgressSpinnerModule,
+        MatIconModule,
         TranslateModule.forRoot()
       ],
       providers: [
@@ -56,6 +59,7 @@ describe('RewardVoucherDetailComponent', () => {
         { provide: ConfigService, useValue: configServiceStub },
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
         { provide: ActivatedRoute, useValue: activatedRouteStub },
+        { provide: NotificationService, useValue: notificationServiceStub },
       ]
     })
     .compileComponents();

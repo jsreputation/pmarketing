@@ -1,6 +1,7 @@
 <div class="page" *ngIf="campaign$ | async as campaign">
   <mat-card class="banner" *ngIf="campaignProgress$ | async as progress">
-    <div class="progress-info" [innerHTML]="(progress.current || 0) | progressInfo: campaignRewardMode"></div>
+    <div class="progress-info"
+         [innerHTML]="(progress.current || 0) | progressInfo: campaignRewardMode: campaign.name"></div>
     <perx-progress-bar
      [stages]="progress?.stages"
      [current]="progress?.current"

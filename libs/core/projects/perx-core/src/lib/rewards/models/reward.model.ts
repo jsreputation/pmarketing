@@ -26,6 +26,7 @@ export interface IReward {
   displayProperties?: IWRewardDisplayProperties;
   customFields?: {
     faqLink: string;
+    requirementDescription: string;
     tncLink: string;
     requirement: string; // note number in context of campaign type (RAZ)
   };

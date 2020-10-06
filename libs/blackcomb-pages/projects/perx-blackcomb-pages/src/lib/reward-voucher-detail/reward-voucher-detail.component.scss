@@ -9,6 +9,48 @@
     flex: 1;
     overflow-y: auto;
     background-color: var(--background);
+
+    .redeem-code {
+      padding: 2rem;
+      margin-top: 1.6rem;
+      position: relative;
+      font-size: 1.6rem;
+
+      &-headline {
+        position: relative;
+        margin: 0 auto 1rem;
+      }
+
+      &-wrapper {
+        position: relative;
+        margin: 0 auto 1rem;
+
+        .redeem-tag {
+          margin-bottom: 1rem;
+        }
+      }
+    }
+
+    .bcode {
+      width: 100%;
+      background: #fff;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      border-radius: 2px;
+      text-align: center;
+      font-size: 1.6rem;
+      min-height: 4.5rem;
+      justify-content: center;
+      padding-top: 1.5rem;
+      resize: none; /* remove the resize handle on the bottom right */
+    }
+
+    .copy-span {
+      cursor: pointer;
+      position: absolute;
+      bottom: 15px;
+      right: 5%;
+    }
   }
 
   .actions-container {

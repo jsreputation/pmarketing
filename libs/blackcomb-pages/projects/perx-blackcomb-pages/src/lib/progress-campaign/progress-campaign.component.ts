@@ -35,6 +35,7 @@ import {
   throwError
 } from 'rxjs';
 import { oc } from 'ts-optchain';
+import { ProgressInfoPipe } from '@perxtech/core';
 
 export enum CampaignRewardMode {
   TransactionAmount = 'trans-amount',
@@ -55,10 +56,11 @@ export class ProgressCampaignComponent implements OnInit {
   public appConfig: IConfig<void>;
   public appRemoteFlags: IFlags;
   public campaign$: Observable<ICampaign>;
+  public campaign: ICampaign;
   public campaignRewards$: Observable<IReward[]>;
   public campaignProgress$: Observable<Partial<ProgressBarFields>>;
   public campaignRewardMode!: CampaignRewardMode;
-  public campaignRewards: (IReward & {progress: ProgressBarFields})[];
+  public campaignRewards: (IReward & {progress: ProgressBarFields, barHeadLine: string})[];
 
 
   constructor(
@@ -70,6 +72,7 @@ export class ProgressCampaignComponent implements OnInit {
     protected settingsService: SettingsService,
     protected stampService: StampService,
     protected voucherService: IVoucherService,
+    private progressInfoPipe: ProgressInfoPipe,
     private cd: ChangeDetectorRef
   ) {
   }
@@ -90,8 +93,9 @@ export class ProgressCampaignComponent implements OnInit {
         }
         const idN = Number.parseInt(id, 10);
         return this.campaignService.getCampaign(idN);
-      })
-    );
+      }),
+      tap((campaign) => this.campaign = campaign),
+  );
 
 
     // different campaigns get rewards differently
@@ -121,7 +125,13 @@ export class ProgressCampaignComponent implements OnInit {
                         stageLabels
                       };
                     }
-                    return { ...reward, progress };
+
+                    return {
+                      ...reward,
+                      progress,
+                      barHeadLine: this.progressInfoPipe.transform(progress.current || 0, this.campaignRewardMode,
+                        this.campaign.name)
+                    };
                   });
                 }
               }
@@ -152,7 +162,9 @@ export class ProgressCampaignComponent implements OnInit {
                   }
                   return {
                     ...reward,
-                    progress
+                    progress,
+                    barHeadLine: this.progressInfoPipe.transform(progress.current || 0, this.campaignRewardMode,
+                      this.campaign.name)
                   };
                 });
               }
@@ -182,7 +194,9 @@ export class ProgressCampaignComponent implements OnInit {
                   }
                   return {
                     ...reward,
-                    progress
+                    progress,
+                    barHeadLine: this.progressInfoPipe.transform(progress.current || 0, this.campaignRewardMode,
+                      this.campaign.name)
                   };
                 });
               }
@@ -192,7 +206,9 @@ export class ProgressCampaignComponent implements OnInit {
         }
         return [];
       }),
-      tap((rewardsWithProgress: (IReward & {progress: ProgressBarFields})[]) => this.campaignRewards = rewardsWithProgress)
+      tap((rewardsWithProgress: (IReward & { progress: ProgressBarFields,
+        barHeadLine: string
+      })[]) => this.campaignRewards = rewardsWithProgress)
     );
 
     this.campaignProgress$ = this.campaign$.pipe(
@@ -203,15 +219,16 @@ export class ProgressCampaignComponent implements OnInit {
             // configured to be one single stampcard
             map((stampCards) => {
               if (stampCards && stampCards[0] && stampCards[0].displayProperties) {
+                const lengthOfRewardPos = oc(stampCards[0].displayProperties.rewardPositions)([]).length;
                 return ({
-                    stages: stampCards[0].displayProperties.rewardPositions ?
-                      (stampCards[0].displayProperties.rewardPositions.length === 1 ?
-                        2 : stampCards[0].displayProperties.rewardPositions.length) : 2,
+                    stages: lengthOfRewardPos ?
+                      (lengthOfRewardPos === 1 || lengthOfRewardPos === 2) ?
+                        (lengthOfRewardPos + 1) : lengthOfRewardPos : 2,
                     current: (stampCards[0].stamps && stampCards[0].stamps.length) || 0,
                     stageLabels: stampCards[0].displayProperties.rewardPositions ?
-                      (stampCards[0].displayProperties.rewardPositions.length === 1 ?
+                      ((lengthOfRewardPos === 1 || lengthOfRewardPos === 2) ?
                         [ 0 , ...stampCards[0].displayProperties.rewardPositions ].sort(( a, b) => a - b)
-                        : [ 0 , ...stampCards[0].displayProperties.rewardPositions ].sort(( a, b) => a - b)) : // if len is only 1 add 0
+                        : [ ...stampCards[0].displayProperties.rewardPositions ].sort(( a, b) => a - b)) : // if len is only 1 add 0
                       []
                   });
               }
@@ -270,7 +287,8 @@ export class ProgressCampaignComponent implements OnInit {
             state: {
               current: selectedRewardWithProgress.progress.current,
               stageLabels: selectedRewardWithProgress.progress.stageLabels,
-              rewardType: this.campaignRewardMode
+              rewardType: this.campaignRewardMode,
+              barHeadLine: selectedRewardWithProgress.barHeadLine
             }
           };
         }

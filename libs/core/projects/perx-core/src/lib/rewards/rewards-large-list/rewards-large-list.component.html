@@ -36,11 +36,11 @@
                 [showProgressLabels]="false"></perx-progress-bar>
               <div class="counter" *ngIf="reward?.progress?.stageLabels?.length">
                 <div>
-                  {{reward.progress.stageLabels[reward.progress.stageLabels.length - 1]  | progressRequire: rewardMode}}
+                  {{reward.customFields.requirementDescription || (reward.progress.stageLabels[reward.progress.stageLabels.length - 1]  | progressRequire: rewardMode)}}
                 </div>
-                <div>
-                  {{reward?.progress.current}}/{{reward.progress.stageLabels[reward.progress.stageLabels.length - 1]}} {{rewardType}}
-                </div>
+<!--                <div>-->
+<!--                  {{reward?.progress.current}}/{{reward.progress.stageLabels[reward.progress.stageLabels.length - 1]}} {{rewardType}}-->
+<!--                </div>-->
               </div>
             </mat-card-content>
           </div>
@@ -49,7 +49,7 @@
       <ng-template #noRewardsBlock>
         <div class="reward-content">
           <div class="no-rewards">
-            <h3>No rewards in this category!</h3>
+            <h3>No rewards</h3>
             <div class="img-container">
               <img src="assets/empty_list.svg" />
             </div>

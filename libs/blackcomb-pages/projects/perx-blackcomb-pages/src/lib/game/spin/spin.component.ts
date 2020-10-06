@@ -45,13 +45,13 @@ export class SpinComponent implements OnInit {
   }
 
   public gameCompleted(): void {
+    this.loaded.emit();
     this.broken.emit();
   }
 
   public startLoad(): void {
     this.isEnabled = true;
     this.buttonStyle.visibility = 'hidden';
-    this.loaded.emit();
   }
 
 }

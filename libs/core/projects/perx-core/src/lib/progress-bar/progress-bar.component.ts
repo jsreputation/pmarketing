@@ -22,9 +22,9 @@ export class ProgressBarComponent implements OnInit {
   @Input()
   public showProgressLabels: boolean = false;
   @Input()
-  public customHeight: number = 26;
-  @Input()
   public accurateProg: boolean = false;
+
+  public activeStampImgUrl: string = 'https://perx-cdn-staging.s3.amazonaws.com/razer-assets/activstamp.svg';
 
   public currentRewardIndex: number = 0;
   // helper function for rendering # slots using ngFor
@@ -34,6 +34,10 @@ export class ProgressBarComponent implements OnInit {
 
   public ngOnInit(): void {
     if (this.stageLabels) {
+      if (this.current >= this.stageLabels[this.stageLabels.length - 1]) {
+        this.currentRewardIndex = this.stageLabels.length - 1;
+        return;
+      }
       const oneTierAboveReward = this.stageLabels
         .findIndex((labelNum) => this.current < labelNum);
       this.currentRewardIndex = oneTierAboveReward === -1 ? 0 : oneTierAboveReward - 1;

@@ -4,7 +4,8 @@ import {
   OnInit
 } from '@angular/core';
 import {
-  Observable,
+  BehaviorSubject,
+  Observable, of,
   Subject
 } from 'rxjs';
 import {
@@ -15,14 +16,15 @@ import {
   IPrice,
   IReward,
   IVoucherService,
-  LoyaltyService, ProgressBarFields,
+  LoyaltyService,
+  NotificationService,
+  ProgressBarFields,
   RewardsService,
   Voucher
 } from '@perxtech/core';
 import {
   ActivatedRoute,
   Params,
-  Router
 } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import {
@@ -46,7 +48,7 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
   public tncLabel: Observable<string>;
   public codeLabel: Observable<string>;
   public expiryLabel: Observable<string>;
-  public buttonLabel: string = 'Redeem';
+  public buttonLabel: string = 'Redeem Your Reward';
   public appConfig: IConfig<void>;
   public rewardData: IReward;
   public loyalty: ILoyalty;
@@ -54,8 +56,13 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
   public voucherId: number;
   public rewardId: number;
   public maxRewardCost?: number;
-  public rewardProgress: Partial<ProgressBarFields>; // stages always 2
+  public rewardProgress: Partial<ProgressBarFields & { barHeadLine: string }>; // stages always 2
   public rewardType: CampaignRewardMode;
+  public voucher$: Observable<Voucher & { securityNumber: string, cardNumber: string }>;
+  public barHeadLine: string;
+  public doneText: string;
+  public showNoCodeReward: BehaviorSubject<boolean> =  new BehaviorSubject<boolean>(false);
+  public showNoCodeReward$: Observable<boolean>;
 
   constructor(
     private rewardsService: RewardsService,
@@ -64,11 +71,15 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
     private activeRoute: ActivatedRoute,
     private translate: TranslateService,
     private configService: ConfigService,
-    private router: Router
+    private notificationService: NotificationService,
+    // private router: Router
   ) { }
 
   public ngOnInit(): void {
-    const { current, stageLabels, rewardType } = history.state;
+    this.showNoCodeReward$ = this.showNoCodeReward.asObservable();
+    const { current, stageLabels, rewardType, barHeadLine } = history.state;
+    this.barHeadLine = barHeadLine;
+
     this.rewardType = rewardType;
     if (current !== (undefined) && stageLabels) {
       this.rewardProgress = {
@@ -108,19 +119,12 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
 
   public buyReward(): void {
     this.waitForSubmission = true;
-    if (this.appConfig && this.appConfig.showVoucherBookingFromRewardsPage) {
-      this.router.navigateByUrl(`booking/${this.rewardData.id}`);
-    } else {
-      this.vouchersService.issueReward(this.rewardData.id, undefined, undefined, this.loyalty.cardId)
-        .subscribe(
-          (res: Voucher) => this.router.navigate([`/voucher-detail/${res.id}`]),
-          (_) => this.waitForSubmission = false // allow user to retry again, re-enable button
-        );
-    }
+    this.showNoCodeReward.next(true);
+    this.doneText = 'done';
   }
 
   private initTranslate(): void {
-    this.descriptionLabel = this.translate.get('REWARD.DESCRIPTION');
+    this.descriptionLabel = of('FAQs'); // this.translate.get('REWARD.DESCRIPTION')
     this.tncLabel = this.translate.get('REWARD.TNC');
     this.codeLabel = this.translate.get('REWARD.CODE');
     this.expiryLabel = this.translate.get('REWARD.EXPIRY');
@@ -135,19 +139,34 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
               this.voucherId = Number.parseInt(ps.voucherId, 10);
             }
           }),
-          switchMap(() => this.translate.get('REWARD.GET_VOUCHER')),
-        ).subscribe((text: string) => {
-          if (!this.voucherId) {
-            this.buttonLabel = text;
-          }
-        }
-      );
+        ).subscribe();
     }
   }
 
 
   public navToRedeem(): void {
-    this.router.navigate(['redeem', this.voucherId]);
+    this.voucher$ = this.vouchersService.get(this.voucherId).pipe(
+      map((voucher: Voucher) => {
+        const [ cardNumber = '', securityNumber = '' ] = (voucher.code && voucher.code.split('-')) || [];
+        return ({
+          ...voucher,
+          securityNumber,
+          cardNumber
+        });
+      }),
+      tap(() => this.doneText = 'done')
+    );
+    // this.router.navigate(['redeem', this.voucherId]);
+  }
+
+  public copyCode(inputElement: any): void {
+    inputElement.select();
+    document.execCommand('copy');
+    inputElement.setSelectionRange(0, 0);
+    this.notificationService.addPopup({
+      title: '',
+      text: 'Code copied.'
+    });
   }
 
   public ngOnDestroy(): void {

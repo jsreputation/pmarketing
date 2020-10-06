@@ -4,10 +4,15 @@
       <div *ngIf="current && currentPrice" class="loc-card mat-elevation-z8">
         <div class="card-content">
           <div *ngIf="merchantImg" class="logo"><img [attr.src]="current.merchantImg"></div>
-          <div class="merchant"><p>{{current.merchantName}}</p></div>
+          <div class="merchant include-heart">
+            <p>{{current.merchantName}}</p>
+            <mat-icon class="show-pointer"
+                      *ngIf="showRewardFavButton"
+                      (click)="rewardFavoriteHandler(current)">
+              {{favoriteRewards | checkId: current.id}}</mat-icon>
+          </div>
           <div class="reward">
             <h1>{{current.name}}</h1>
-            
             <div *ngIf="upcoming" class="macaron-container">
               <span class="macaron">Upcoming</span>
             </div>
