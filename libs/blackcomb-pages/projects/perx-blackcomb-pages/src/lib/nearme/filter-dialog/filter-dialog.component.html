@@ -1,4 +1,4 @@
-<mat-toolbar>
+<div class="header">
     <div>
       <button mat-icon-button class="left-icon" [mat-dialog-close]="true">
         <mat-icon>close</mat-icon>
@@ -6,7 +6,7 @@
     </div>
     <div class="title">Filter</div>
     <div class="clear" (click)="onClearFilter()">Clear All</div>
-  </mat-toolbar>
+  </div>
   
   <mat-dialog-content>
     <p class="label">Categories</p>
@@ -15,6 +15,7 @@
       value="{{category.name}}"
       (change)="onRadioSelect($event, i)"
       [checked]="category.isSelected"
+      color="primary"
     >
     {{ category.name }}
     </mat-checkbox>

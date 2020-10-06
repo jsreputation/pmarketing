@@ -1,28 +1,25 @@
-mat-toolbar {
-    background-color: transparent;
+.header {
+    background-color: white;
     padding: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   
     button {
       background-color: transparent;
       color: #0f69af;
     }
   
-    div {
-      flex-grow: 1;
-      flex-basis: 0;
-    }
-  
     .title {
       text-align: center;
       font-size: 2.6rem;
       font-weight: 900;
-      color: white;
     }
   
     .clear {
-      text-align: right;
       font-size: 1.4rem;
       color: #0f69af;
+
     }
   }
   

@@ -16,7 +16,6 @@ export class FilterDialogComponent implements OnInit {
 
   public ngOnInit(): void {
     this.categories = this.data.categories;
-    console.log(this.categories);
   }
 
   public onRadioSelect(event: MatCheckboxChange, index: number): void {

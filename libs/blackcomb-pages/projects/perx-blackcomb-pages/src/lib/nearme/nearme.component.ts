@@ -175,7 +175,6 @@ export class NearmeComponent implements OnInit, OnDestroy {
                     map: this.map,
                   });
                   marker.addListener('click', () => {
-                    console.log(reward);
                     this.current = reward;
                     this.currentPrice = reward.rewardPrice ? reward.rewardPrice[0] : null;
                   });
