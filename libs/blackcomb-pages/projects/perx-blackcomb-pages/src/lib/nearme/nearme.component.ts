@@ -141,7 +141,7 @@ export class NearmeComponent implements OnInit, OnDestroy {
     if (!position) {
       return;
     }
-    
+
     const rad = 1000000000;
 
     this.rewardsService.nearMe(rad, position).pipe(
