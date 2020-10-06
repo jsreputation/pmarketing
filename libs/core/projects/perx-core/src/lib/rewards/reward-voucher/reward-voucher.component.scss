@@ -28,12 +28,17 @@
     }
   }
 
+  .progress-wrapper {
+    padding: 1.6rem;
+  }
+
   .wrapper:not(:empty) + .default {
     display: none;
   }
 
   .grats-msg {
     font-size: 1.6rem;
+    padding: 2rem;
   }
 
   .how-container {

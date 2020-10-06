@@ -18,14 +18,16 @@
     <div class="wrapper"><ng-content select=".redeem-code"></ng-content></div>
     <ng-template #defaultTemplate>
       <div class="default">
-        <div [innerHTML]="reward?.customFields?.requirementDescription ?
+        <div class="progress-wrapper">
+          <div [innerHTML]="reward?.customFields?.requirementDescription ?
           (reward?.customFields?.requirementDescription | getStartInfo : (rewardProgress?.current >= rewardProgress?.stageLabels[rewardProgress?.stageLabels.length - 1])) : barHeadLine" class="headline-progress"></div>
-        <perx-progress-bar
-          [accurateProg]="true"
-          [stages]="rewardProgress?.stages"
-          [current]="rewardProgress?.current"
-          [stageLabels]="rewardProgress?.stageLabels"
-          [showProgressLabels]="true"></perx-progress-bar>
+          <perx-progress-bar
+            [accurateProg]="true"
+            [stages]="rewardProgress?.stages"
+            [current]="rewardProgress?.current"
+            [stageLabels]="rewardProgress?.stageLabels"
+            [showProgressLabels]="true"></perx-progress-bar>
+        </div>
       </div>
     </ng-template>
     <div *ngIf="showNoCodeReward | async; else defaultTemplate" class="grats-msg" [innerHTML]="reward?.howToRedeem"></div>
