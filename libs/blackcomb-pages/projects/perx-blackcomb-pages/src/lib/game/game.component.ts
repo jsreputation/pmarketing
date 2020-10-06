@@ -256,6 +256,8 @@ export class GameComponent implements OnInit, OnDestroy {
   private fillSuccess(rewardCount?: string, pointsOutcome?: IPointsOutcome): void {
     this.willWin = true;
 
+    // if win and popup data is not changed, popup will wrongly show game lost
+    this.popupData = this.successPopUp;
     /*  todo:
     *    1. block is commented out because popup content is managed by dashboard.
     *    2. this block gets called twice and so unintentionally ends up doubling the text
