@@ -139,13 +139,7 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
               this.voucherId = Number.parseInt(ps.voucherId, 10);
             }
           }),
-          switchMap(() => this.translate.get('REWARD.GET_VOUCHER')),
-        ).subscribe((text: string) => {
-          if (!this.voucherId) {
-            this.buttonLabel = text;
-          }
-        }
-      );
+        ).subscribe();
     }
   }
 
