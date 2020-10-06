@@ -18,17 +18,23 @@
     <div class="wrapper"><ng-content select=".redeem-code"></ng-content></div>
     <ng-template #defaultTemplate>
       <div class="default">
-        <div [innerHTML]="reward?.customFields?.requirementDescription ?
+        <div class="progress-wrapper">
+          <div [innerHTML]="reward?.customFields?.requirementDescription ?
           (reward?.customFields?.requirementDescription | getStartInfo : (rewardProgress?.current >= rewardProgress?.stageLabels[rewardProgress?.stageLabels.length - 1])) : barHeadLine" class="headline-progress"></div>
-        <perx-progress-bar
-          [accurateProg]="true"
-          [stages]="rewardProgress?.stages"
-          [current]="rewardProgress?.current"
-          [stageLabels]="rewardProgress?.stageLabels"
-          [showProgressLabels]="true"></perx-progress-bar>
+          <perx-progress-bar
+            [accurateProg]="true"
+            [stages]="rewardProgress?.stages"
+            [current]="rewardProgress?.current"
+            [stageLabels]="rewardProgress?.stageLabels"
+            [showProgressLabels]="true"></perx-progress-bar>
+        </div>
       </div>
     </ng-template>
     <div *ngIf="showNoCodeReward | async; else defaultTemplate" class="grats-msg" [innerHTML]="reward?.howToRedeem"></div>
+    <div *ngIf="reward?.description" class="how-container">
+      <mat-icon class="info-icon">info_outline</mat-icon>
+      <div class="how-msg" [innerHTML]="reward?.description"></div>
+    </div>
     <mat-action-list *ngIf="reward?.customFields?.faqLink && reward.customFields.tncLink" class="external-link-list">
       <a mat-list-item matRipple *ngIf="reward?.customFields?.faqLink"
          href="{{'https://' + reward?.customFields?.faqLink}}" target="_blank"><mat-icon class="link-icon">help_outline</mat-icon>FAQs</a>
