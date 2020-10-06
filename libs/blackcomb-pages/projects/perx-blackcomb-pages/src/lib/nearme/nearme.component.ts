@@ -52,12 +52,12 @@ export class NearmeComponent implements OnInit, OnDestroy {
   public current: IReward | null;
   public currentPrice: IPrice | null;
   private destroy$: Subject<void> = new Subject();
-  public userLocation: Subject<Position> = new Subject();
-  public userMarker: google.maps.Marker;
   public position: Position;
   public favoriteRewards: IReward[];
   public showRewardFavButton?: boolean;
   public categories: ICategories[] = [];
+  public rad: number = 100000000;
+  public firstLoad: boolean = true;
 
   constructor(
     private config: ConfigService,
@@ -86,12 +86,6 @@ export class NearmeComponent implements OnInit, OnDestroy {
       this.showRewardFavButton = config.showRewardFavButton;
     });
 
-    this.userLocation
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-        this.updateMarkers(this.position);
-      });
-
     this.loadScript()
       .then(() => {
         const mapProp: google.maps.MapOptions = {
@@ -102,12 +96,11 @@ export class NearmeComponent implements OnInit, OnDestroy {
         this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
         this.map.addListener('click', () => this.current = null);
         this.geoLocationService.positions()
-          .pipe(takeUntil(this.destroy$))
+          .pipe(take(1))
           .subscribe((position: Position) => {
-            this.updateUserPosition(position);
             this.position = position;
+            this.updateMarkers(this.position.coords.latitude, this.position.coords.longitude, this.rad);
           });
-        this.updateMarkers(this.position);
       });
   }
 
@@ -127,7 +120,7 @@ export class NearmeComponent implements OnInit, OnDestroy {
     script.innerHTML = '';
     let url = 'https://maps.googleapis.com/maps/api/js';
     if (this.key) {
-      url += `?key=${this.key}`;
+      url += `?key=${this.key}&libraries=geometry`;
     }
 
     script.src = url;
@@ -137,35 +130,15 @@ export class NearmeComponent implements OnInit, OnDestroy {
     return p;
   }
 
-  private isNearMe(radius: number, latitude: number, longitude: number): boolean {
-    const earthRadius = 6378137;
-    const dLat = (this.position.coords.latitude - latitude) * Math.PI / 180;
-    const dLong = (this.position.coords.longitude - longitude) * Math.PI / 180;
-    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos((latitude) * Math.PI / 180) * Math.cos((this.position.coords.latitude) * Math.PI / 180) *
-      Math.sin(dLong / 2) * Math.sin(dLong / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    const d = earthRadius * c;
-    if (d <= radius) {
-      return true;
-    }
-    return false;
-  }
-
   public clearMarkers(): void {
     this.markersArray.forEach(item => {
       item.setMap(null);
     });
   }
 
-  private updateMarkers(position: Position): void {
-    if (!position) {
-      return;
-    }
-
-    const rad = 1000000000;
-    this.rewardsService.nearMe(rad, position).pipe(
-      takeUntil(this.destroy$),
+  private updateMarkers(latitude: number, longitude: number, rad: number): void {
+    this.rewardsService.nearMe(rad, latitude, longitude).pipe(
+      take(1),
       mergeMap((rewards: IReward[]) =>
         from(rewards).pipe(
           mergeMap(reward => this.vouchersService.getRewardLocations(reward.id).pipe(
@@ -174,10 +147,7 @@ export class NearmeComponent implements OnInit, OnDestroy {
                 filter((location: IVoucherLocation) => {
                   const lat = location.latitude !== null ? parseFloat(location.latitude) : 0;
                   const lng = location.longitude !== null ? parseFloat(location.longitude) : 0;
-                  if (lat === 0 || lng === 0) {
-                    return false;
-                  }
-                  return this.isNearMe(rad, lat, lng);
+                  return lat === 0 || lng === 0 ? false : true;
                 }),
                 tap((location: IVoucherLocation) => {
                   const lat = location.latitude !== null ? parseFloat(location.latitude) : 0;
@@ -192,34 +162,18 @@ export class NearmeComponent implements OnInit, OnDestroy {
                     this.currentPrice = reward.rewardPrice ? reward.rewardPrice[0] : null;
                   });
                   this.markersArray.push(marker);
-                  this.updateBoundingBox();
                 })
               )
             )
           ))
         )
       )
-    ).subscribe();
-  }
-
-  private updateUserPosition(position: Position | null): void {
-    if (position === null) {
-      return;
-    }
-    const location: google.maps.LatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-    this.map.panTo(location);
-    this.userLocation.next(position);
-
-    if (!this.userMarker) {
-      this.userMarker = new google.maps.Marker({
-        icon: 'https://maps.google.com/mapfiles/kml/paddle/blu-blank-lv.png',
-        position: location,
-        map: this.map,
-      });
-    } else {
-      this.userMarker.setPosition(location);
-    }
-    this.updateBoundingBox();
+    ).subscribe(() => {
+      if (this.firstLoad) {
+        this.firstLoad = false;
+        this.updateBoundingBox();
+      }
+    });
   }
 
   public updateBoundingBox(): void {
@@ -230,14 +184,25 @@ export class NearmeComponent implements OnInit, OnDestroy {
         bbox = bbox.extend(position);
       }
     });
-    if (this.userMarker) {
-      const position = this.userMarker.getPosition();
-      if (position) {
-        bbox.extend(position);
-      }
+    if (this.position) {
+      const position = new google.maps.LatLng(this.position.coords.latitude, this.position.coords.longitude);
+      bbox.extend(position);
     }
     this.map.fitBounds(bbox);
   }
+
+  public searchThisArea(): void {
+    this.clearMarkers();
+    const bounds = this.map.getBounds();
+    if (bounds) {
+      const center = bounds.getCenter();
+      const ne = bounds.getNorthEast();
+      const lat = center.lat();
+      const lng = center.lng();
+      // Calculate radius (in meters).
+      const radius = Math.floor(google.maps.geometry.spherical.computeDistanceBetween(center, ne));
+      this.updateMarkers(lat, lng, radius);
+    }
 
   public rewardFavoriteHandler(rewardToggled: IReward): void {
     const favoriteRewards = this.tokenStorage.getAppInfoProperty('favoriteRewards');
