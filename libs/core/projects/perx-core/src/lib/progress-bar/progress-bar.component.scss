@@ -44,15 +44,16 @@
   .stamp-img {
     //position: absolute;
     display: inline-block;
-    width: 24px;
-    height: 24px;
-    min-width: 24px;
-    background-size: auto;
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    background-size: contain;
     line-height: 7rem;
     border-radius: 50%;
   }
 
   .stamp-label {
     //margin-left: 0.4rem;
+    margin-top: 1.4rem;
   }
 }
