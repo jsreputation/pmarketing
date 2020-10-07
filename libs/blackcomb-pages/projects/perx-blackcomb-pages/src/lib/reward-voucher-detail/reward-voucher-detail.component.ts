@@ -34,6 +34,7 @@ import {
   takeUntil,
   tap
 } from 'rxjs/operators';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'perx-blackcomb-pages-reward-voucher-detail',
@@ -73,6 +74,7 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private configService: ConfigService,
     private notificationService: NotificationService,
+    private location: Location
     // private router: Router
   ) { }
 
@@ -89,6 +91,8 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
         stages: 2,
         stageLabels: history.state.stageLabels
       };
+    } else {
+      this.location.back();
     }
     this.configService.readAppConfig<void>()
       .subscribe((config: IConfig<void>) => this.appConfig = config);
