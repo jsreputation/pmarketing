@@ -32,7 +32,7 @@
   </div>
   <div class="actions-container mat-elevation-z2" *ngIf="appConfig">
     <button *ngIf="!doneText" mat-raised-button color="primary" class="reward-buy ga_purchase_reward"
-            [disabled]="(rewardProgress?.current < rewardProgress?.stageLabels[rewardProgress?.stageLabels.length - 1]) || waitForSubmission"
+
             perxCoreAppDebounceClick
             [debounceTime]="400"
             (debounceClick)="this.voucherId ? navToRedeem() : buyReward()">
@@ -45,8 +45,11 @@
       </i>
       <span *ngIf="!waitForSubmission">{{buttonLabel}}</span>
     </button>
-    <button [routerLink]="'/home'" *ngIf="doneText" mat-raised-button color="primary" class="reward-buy ga_purchase_reward">
-     {{doneText}}
+    <button [routerLink]="(rewardData?.subtitle && rewardData.name.includes('Card')) ? [] : ['home']" *ngIf="doneText" mat-raised-button color="primary" class="reward-buy ga_purchase_reward">
+     {{rewardData.name.includes('Card') ? '' : doneText}}
+      <a *ngIf="rewardData.name.includes('Card')" class="card-redirect" href="{{rewardData?.customFields?.cardLink}}" target="_blank">
+       {{'Get ' + rewardData.name}}
+      </a>
     </button>
   </div>
 </div>

@@ -51,6 +51,7 @@ interface IV4CustomField {
   points_requirement: string; // to convert to number
   referrals_requirement: string;
   reward_description: string;
+  card_link: string;
 }
 
 export interface IV4Reward {
@@ -207,7 +208,8 @@ export class V4RewardsService extends RewardsService {
         ),
         requirementDescription: reward.custom_fields.reward_description || '',
         faqLink: reward.custom_fields.faq_link,
-        tncLink: reward.custom_fields.tnc_link
+        tncLink: reward.custom_fields.tnc_link,
+        cardLink: reward.custom_fields.card_link
       } : undefined
     };
   }

@@ -8,7 +8,10 @@
       <mat-card class="title-card">
         <img *ngIf="reward.merchantImg" class="merchant-image" src="{{reward.merchantImg}}" [alt]="reward.merchantName">
         <div class="reward-name">
-          {{reward.name}}
+          {{reward?.name}}
+        </div>
+        <div *ngIf="reward?.subtitle" class="reward-subworth">
+          {{reward?.subtitle}}
         </div>
         <div class="reward-subtitle">
           {{ useRewardDescription ?

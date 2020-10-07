@@ -16,6 +16,7 @@
 
   .external-link-list {
     margin-top: 1.6rem;
+    margin-bottom: 1.6rem;
     background-color: white;
 
     a {
@@ -30,6 +31,7 @@
 
   .progress-wrapper {
     padding: 1.6rem;
+    margin-bottom: 1rem;
   }
 
   .wrapper:not(:empty) + .default {
@@ -96,9 +98,14 @@
       font-size: 2rem;
     }
 
+    .reward-subworth {
+      font-size: 1.6rem;
+      margin: 1rem auto;
+    }
+
     .reward-subtitle {
-      font-size: 1.4rem;
-      margin-top: 1.5rem;
+      font-size: 1.8rem;
+      margin-top: 1.2rem;
       color: var(--accent);
     }
   }
