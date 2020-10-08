@@ -86,7 +86,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
     if (this.appConfig && this.appConfig.showVoucherBookingFromRewardsPage) {
       this.router.navigateByUrl(`booking/${this.rewardData.id}`);
     } else {
-      this.vouchersService.issueReward(this.rewardData.id, undefined, undefined, this.loyalty.cardId)
+      this.vouchersService.issueReward(this.rewardData.id, undefined, undefined)
         .subscribe(
           (res: Voucher) => this.router.navigate([`/voucher-detail/${res.id}`]),
           (_) => this.waitForSubmission = false // allow user to retry again, re-enable button
