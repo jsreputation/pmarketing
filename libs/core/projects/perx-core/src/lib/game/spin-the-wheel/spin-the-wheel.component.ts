@@ -42,10 +42,16 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   public willWin: boolean = false;
 
   @Input()
+  public startSpin: boolean = false;
+
+  @Input()
   public rewardSlots: number[] = []; // to loop through for function below to find slot
 
   @Output()
   public completed: EventEmitter<void> = new EventEmitter<void>();
+
+  @Output()
+  public spinning: EventEmitter<void> = new EventEmitter<void>();
 
   // tslint:disable-next-line:variable-name
   private ctx_: CanvasRenderingContext2D | undefined;
@@ -89,6 +95,9 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
       || (changes.willWin)) {
       this.init();
     }
+    if (changes.startSpin  && this.startSpin) {
+      this.spin();
+    }
   }
 
   public ngAfterViewInit(): void {
@@ -120,7 +129,9 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
     const noRewardsSlots: number[] = [...Array(this.slices.length).keys()].filter(item => !this.rewardSlots.includes(item));
     let targetSlots: number[];
     if (this.willWin && this.rewardSlots.length > 0) {
+      console.log('i am gonnnnaaa winnn')
       targetSlots = this.rewardSlots;
+      console.log('take a look at the target slots.', targetSlots)
     } else {
       targetSlots = noRewardsSlots;
     }
@@ -278,6 +289,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   }
 
   private spin(): void {
+    this.init();
     this.spinTime = 0;
     this.lastTimeStamp = (new Date()).getTime();
     this.rotateWheel();
@@ -369,7 +381,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
 
     this.canvas.setAttribute('style', styleString);
 
-    this.spin();
+    this.spinning.emit();
   }
 
   private static findTop(element: HTMLElement): number {

@@ -71,6 +71,7 @@ export class GameComponent implements OnInit, OnDestroy {
     disableOverlayClose: true
   };
   public rewardsTxt: string;
+  public startGameAnimation: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -215,6 +216,7 @@ export class GameComponent implements OnInit, OnDestroy {
       this.gameId
     ).subscribe(
       (gameOutcome: IPlayOutcome) => {
+        this.startGameAnimation = true;
         if (gameOutcome.vouchers.length > 0) {
           // set this as a property
           this.rewardCount = gameOutcome.vouchers.length.toString();
