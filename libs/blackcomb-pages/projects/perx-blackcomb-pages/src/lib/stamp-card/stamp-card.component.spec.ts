@@ -16,11 +16,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 
 import {
-  IStampCard,
+  IStampCard, ITheme,
   NotificationService,
   PuzzlesModule,
   StampCardState,
-  StampService,
+  StampService, ThemesService
 } from '@perxtech/core';
 
 import { StampCardComponent } from './stamp-card.component';
@@ -29,6 +29,16 @@ import { stamps } from '../mock/stamp.mock';
 describe('StampCardComponent', () => {
   let component: StampCardComponent;
   let fixture: ComponentFixture<StampCardComponent>;
+  const mockTheme: ITheme = {
+    name: 'theme',
+    properties: {
+      '--background': 'red',
+      '--font_color': 'black'
+    }
+  };
+  const themesServiceStub: Partial<ThemesService> = {
+    getThemeSetting: () => of(mockTheme)
+  };
 
   const stampServiceStub: Partial<StampService> = {
     getCurrentCard: () => of(),
@@ -53,7 +63,8 @@ describe('StampCardComponent', () => {
       providers: [
         { provide: StampService, useValue: stampServiceStub },
         { provide: ActivatedRoute, useValue: { paramMap: of(convertToParamMap({ id: '1' })) } },
-        { provide: NotificationService, useValue: notificationStub }
+        { provide: NotificationService, useValue: notificationStub },
+        { provide: ThemesService, useValue: themesServiceStub }
       ]
     })
       .compileComponents();

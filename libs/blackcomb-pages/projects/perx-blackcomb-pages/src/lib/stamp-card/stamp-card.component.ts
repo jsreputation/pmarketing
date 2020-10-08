@@ -6,7 +6,7 @@ import {
   NotificationService,
   PuzzleCollectReward,
   IStamp,
-  StampState
+  StampState, ThemesService, ITheme
 } from '@perxtech/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { filter, switchMap, takeUntil, map, tap, pairwise } from 'rxjs/operators';
@@ -30,6 +30,7 @@ export interface PopUpClosedCallBack {
 })
 
 export class StampCardComponent implements OnInit, OnDestroy {
+  public buttonStyle: { [key: string]: string } = {};
   public title: string; // = 'Scratch & Win!'
   public subTitle?: string; //  = 'Collect all 10 stickers and win a reward!'
   public background: string | undefined | null;
@@ -61,6 +62,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private notificationService: NotificationService,
+    private themesService: ThemesService,
     private translate: TranslateService
   ) {
   }
@@ -82,6 +84,11 @@ export class StampCardComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
+    this.themesService.getThemeSetting().subscribe( (theme: ITheme) => {
+      this.buttonStyle['background-color'] = theme.properties['--button_background_color'] || '';
+      this.buttonStyle.color = theme.properties['--button_text_color'] || '';
+      this.buttonStyle.visibility = 'visible';
+    });
     this.initTranslate();
     this.route.paramMap
       .pipe(
