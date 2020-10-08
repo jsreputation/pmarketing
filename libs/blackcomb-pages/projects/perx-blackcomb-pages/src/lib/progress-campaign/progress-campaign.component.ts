@@ -163,7 +163,7 @@ export class ProgressCampaignComponent implements OnInit {
                   return {
                     ...reward,
                     progress,
-                    barHeadLine: this.progressInfoPipe.transform(progress.current || 0, this.campaignRewardMode,
+                    barHeadLine: this.progressInfoPipe.transform(`${progress.current || 0}`, this.campaignRewardMode,
                       this.campaign.name)
                   };
                 });
@@ -195,7 +195,7 @@ export class ProgressCampaignComponent implements OnInit {
                   return {
                     ...reward,
                     progress,
-                    barHeadLine: this.progressInfoPipe.transform(progress.current || 0, this.campaignRewardMode,
+                    barHeadLine: this.progressInfoPipe.transform(`${progress.current || 0}`, this.campaignRewardMode,
                       this.campaign.name)
                   };
                 });
