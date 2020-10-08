@@ -5,7 +5,7 @@
       <ng-container *ngIf="rewards$ | async as rewards">
       <div *ngIf="rewards.length > 0; then hasRewardsBlock else noRewardsBlock"></div>
       <ng-template #hasRewardsBlock>
-        <mat-card matRipple
+        <mat-card matRipple class="ga_view_reward"
           *ngFor="let reward of rewards" (click)="rewardClickedHandler(reward)">
           <div class="reward-img__wrapper">
             <img class="thumbnail-img"*ngIf="reward.rewardThumbnail || defaultImg"

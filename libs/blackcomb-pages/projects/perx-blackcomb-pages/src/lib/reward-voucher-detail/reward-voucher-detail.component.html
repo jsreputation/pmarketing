@@ -45,7 +45,8 @@
       </i>
       <span *ngIf="!waitForSubmission">{{buttonLabel}}</span>
     </button>
-    <button [routerLink]="(rewardData?.subtitle && rewardData.name.includes('Card')) ? [] : ['home']" *ngIf="doneText" mat-raised-button color="primary" class="reward-buy ga_purchase_reward">
+    <button [routerLink]="(rewardData?.subtitle && rewardData.name.includes('Card')) ? [] : ['home']" *ngIf="doneText" mat-raised-button color="primary"
+            class="reward-buy ga_done_reward">
      {{rewardData.name.includes('Card') ? '' : doneText}}
       <a *ngIf="rewardData.name.includes('Card')" class="card-redirect" href="{{rewardData?.customFields?.cardLink}}" target="_blank">
        {{'Get ' + rewardData.name}}
