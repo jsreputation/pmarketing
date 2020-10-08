@@ -4,10 +4,10 @@
       class="in-progress" [ngStyle]="{
       'width': ((current && stageLabels?.length) ? ((current / stageLabels[stageLabels?.length - 1]) * 100) : 0) + '%'
     }">
-      hidden
+      .
     </p>
     <p *ngIf="accurateProg; else progInAccurate" class="to-progress">
-      hidden
+      .
     </p>
     <ng-template #inProgInAccurate>
       <p class="in-progress" *ngIf="current" [ngStyle]="{

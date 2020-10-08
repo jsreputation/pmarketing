@@ -85,7 +85,7 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
                            stages: campaignRwd.rewards.length || 2, // if length 0 default to 2 stages
                            // biggest reward return last, test if really need
                            // find the highest point and see if balance >=, at final stage
-                           current: Math.ceil((loyalty.pointsBalance || 0) / 100) || 0,
+                           current: ((loyalty.pointsBalance || 0) / 100) || 0,
                            stageLabels: campaignRwd.rewards.reduce((acc, curr) => [...acc, (
                              curr && curr.customFields && curr.customFields.requirement
                            )], []).filter(v => v)

@@ -155,8 +155,8 @@ export class ProgressCampaignComponent implements OnInit {
                     const stageLabels = [ 0, completeStageLabels[index] ];
                     progress = {
                       stages: stageLabels.length || 2, // actually it's always going to be 2, can just hardcode 2
-                      current: Math.ceil((loyalty.pointsBalance || 0) / 100) >= completeStageLabels[index] ?
-                        completeStageLabels[index] : Math.ceil((loyalty.pointsBalance || 0) / 100),
+                      current: ((loyalty.pointsBalance || 0) / 100) >= completeStageLabels[index] ?
+                        completeStageLabels[index] : ((loyalty.pointsBalance || 0) / 100),
                       stageLabels
                     };
                   }
@@ -245,7 +245,7 @@ export class ProgressCampaignComponent implements OnInit {
                   stages: campaign.rewards.length || 2, // if length 0 default to 2 stages
                   // biggest reward return last, test if really need
                   // find the highest point and see if balance >=, at final stage
-                  current: Math.ceil((loyalty.pointsBalance || 0) / 100),
+                  current: (loyalty.pointsBalance || 0) / 100,
                   stageLabels: campaign.rewards.reduce((acc, curr) => [ ...acc, (
                     curr && curr.customFields && curr.customFields.requirement
                   ) ], []).filter(v => v)
