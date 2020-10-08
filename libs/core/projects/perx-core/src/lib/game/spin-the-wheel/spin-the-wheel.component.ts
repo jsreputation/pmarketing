@@ -129,9 +129,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
     const noRewardsSlots: number[] = [...Array(this.slices.length).keys()].filter(item => !this.rewardSlots.includes(item));
     let targetSlots: number[];
     if (this.willWin && this.rewardSlots.length > 0) {
-      console.log('i am gonnnnaaa winnn')
       targetSlots = this.rewardSlots;
-      console.log('take a look at the target slots.', targetSlots)
     } else {
       targetSlots = noRewardsSlots;
     }
