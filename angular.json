@@ -1706,12 +1706,10 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "fileReplacements": [
-                {
-                  "replace": "apps/blackcomb/src/index.html",
-                  "with": "apps/blackcomb/src/index.prod.html"
-                }
-              ],
+              "index": {
+                "input": "apps/blackcomb/src/index.prod.html",
+                "output": "index.html"
+              },
               "budgets": [
                 {
                   "type": "initial",
