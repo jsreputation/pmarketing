@@ -32,7 +32,7 @@
   </div>
   <div class="actions-container mat-elevation-z2" *ngIf="appConfig">
     <button *ngIf="!doneText" mat-raised-button color="primary" class="reward-buy ga_purchase_reward"
-
+            [disabled]="(rewardProgress?.current < rewardProgress?.stageLabels[rewardProgress?.stageLabels.length - 1]) || waitForSubmission"
             perxCoreAppDebounceClick
             [debounceTime]="400"
             (debounceClick)="this.voucherId ? navToRedeem() : buyReward()">
