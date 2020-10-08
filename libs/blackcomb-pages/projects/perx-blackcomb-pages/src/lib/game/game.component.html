@@ -20,6 +20,7 @@
     ></perx-blackcomb-pages-scratch>
     <perx-blackcomb-pages-spin
       *ngSwitchCase="gt.spin"
+      [startSpin]="startGameAnimation"
       [willWin]="willWin"
       [game]="game"
       (loaded)="loadPlay()"

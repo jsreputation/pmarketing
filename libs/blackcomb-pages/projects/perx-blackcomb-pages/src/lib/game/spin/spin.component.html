@@ -12,6 +12,8 @@
           [classPosition]="spinPosition"
           [pointerImg]="config.pointerImg"
           [wheelImg]="config.wheelImg"
+          (spinning)="emitLoaded()"
+          [startSpin]="startSpin"
           (completed)="gameCompleted()"
           [slices]="config.slices">
         </perx-core-spin-the-wheel>
