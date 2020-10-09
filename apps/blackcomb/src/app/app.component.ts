@@ -83,7 +83,8 @@ export class AppComponent implements OnInit {
       .subscribe(
         (msg: string) => {
           if (msg === 'LOGIN_SESSION_EXPIRED') {
-            this.router.navigate(['/login']);
+            // i wont be navigatec to login anymore test, it has nothing to do with preauth
+            this.router.navigate(['/loading']);
             this.translate.get('LOGIN_SESSION_EXPIRED').subscribe(txt => this.snack.open(txt, 'x', { duration: 2000 }));
           } else {
             this.snack.open(msg, 'x', { duration: 2000 });
