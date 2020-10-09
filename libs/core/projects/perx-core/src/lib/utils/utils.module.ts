@@ -38,6 +38,7 @@ import { CheckIdExistsPipe } from './directives/check-id-exists-pipe';
 import { MatRippleModule } from '@angular/material/core';
 import { ProgressInfoPipe } from './progress-info/progress-info.pipe';
 import { GettingStartedPipe } from './getting-started/getting-started.pipe';
+import { GettingStartedNearPicPipe } from './getting-started-near-pic/getting-started-near-pic.pipe';
 
 export function themesServiceFactory(
   handler: HttpBackend,
@@ -76,7 +77,8 @@ const pipes = [
   PointsToCashPipe,
   CheckIdExistsPipe,
   ProgressInfoPipe,
-  GettingStartedPipe
+  GettingStartedPipe,
+  GettingStartedNearPicPipe
 ];
 
 // make sure we have only one instance of the NotificationService

@@ -15,13 +15,13 @@ export class ProgressInfoPipe implements PipeTransform {
     switch (rewardMode) {
       case CampaignRewardMode.TransactionQuantity:
         if (campaignName === 'Getting Started' || campaignName === 'Ultimate Reward') {
-          return `You've completed <strong>${parseInt(value)}</strong> task${parseInt(value) > 1 ? 's' : ''}`;
+          return `You've completed <strong>${parseInt(value)}</strong> tasks`;
         }
-        return `You've made <strong>${parseInt(value)}</strong> Transaction${parseInt(value) > 1 ? 's' : ''}`;
+        return `You've made <strong>${parseInt(value)}</strong> transaction${(+value > 1 || +value === 0)? 's' : ''}`;
       case CampaignRewardMode.TransactionAmount:
         return `You've spent <strong>$${value}</strong>`;
       case CampaignRewardMode.Referral:
-        return `You've recruited <strong>${parseInt(value)} user${parseInt(value) > 1 ? 's' : ''}</strong>`;
+        return `You've recruited <strong>${parseInt(value)} users</strong>`;
       default:
         return `You have made ${parseInt(value)} point${+value > 1 ? 's' : ''}`;
 
