@@ -9,7 +9,7 @@ export class ProgressRequirePipe implements PipeTransform {
   public transform(value: number, rewardMode: string): any {
     switch (rewardMode) {
       case CampaignRewardMode.TransactionQuantity:
-        return `${value} Transaction${value > 1 ? 's' : ''}`;
+        return `${value} transaction${value > 1 ? 's' : ''}`;
       case CampaignRewardMode.TransactionAmount:
         return `Spend $${value}`;
       case CampaignRewardMode.Referral:
