@@ -16,7 +16,10 @@
           <span class="subtitle" *ngIf="profile.customProperties.SubMembershipType === 'Nominee'">
             {{profile.customProperties.SubMembershipDisplay}}
           </span>
-          <span class="subtitle" *ngIf="!profile.customProperties.MembershipType && !profile.customProperties.SubMembershipType">
+          <span class="subtitle" *ngIf="
+          profile.customProperties.membership !== 'Hub Club' &&
+          !profile.customProperties.MembershipType &&
+          !profile.customProperties.SubMembershipType">
             Regular
           </span>
         </div>
