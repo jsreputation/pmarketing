@@ -15,7 +15,7 @@ export class ProgressRequirePipe implements PipeTransform {
       case CampaignRewardMode.Referral:
         return `${value} referral${value > 1 ? 's' : ''}`;
       default:
-        return `Require: ${value} points`;
+        return '';
     }
   }
 
