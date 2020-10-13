@@ -173,7 +173,7 @@ export class SpinV4ToV4Mapper extends GameV4Mapper {
       if (slot.has_reward) {
         return slot.position;
       }
-    }).filter(slotPos => slotPos); // remove undefined
+    }).filter(slotPos => slotPos !== undefined); // remove undefined
     const slices = dpps.wedges && dpps.wedges.map(slot => ({
       id: slot.position,
       backgroundColor: slot.color,

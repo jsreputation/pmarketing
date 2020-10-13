@@ -20,7 +20,8 @@
       </perx-core-puzzle-collect-stamps>
     </div>
   <div class="game-footer">
-    <button mat-raised-button [routerLink]="['/wallet']">
+    <button mat-raised-button [routerLink]="['/wallet']"
+            [ngStyle]="buttonStyle">
       {{stampCard.buttonText || "View Wallet" }}
     </button>
   </div>

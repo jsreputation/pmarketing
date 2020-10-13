@@ -10,6 +10,7 @@ export class SpinComponent implements OnInit {
   @Input() public willWin: boolean = false;
 
   @Input() public game: IGame;
+  @Input() public startSpin: boolean;
 
   @Output() public broken: EventEmitter<void> = new EventEmitter();
 
@@ -45,8 +46,11 @@ export class SpinComponent implements OnInit {
   }
 
   public gameCompleted(): void {
-    this.loaded.emit();
     this.broken.emit();
+  }
+
+  public emitLoaded(): void {
+    this.loaded.emit();
   }
 
   public startLoad(): void {

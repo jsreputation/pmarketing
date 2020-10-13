@@ -53,6 +53,8 @@ export class NearmeComponent implements OnInit, OnDestroy {
   public currentPrice: IPrice | null;
   private destroy$: Subject<void> = new Subject();
   public position: Position;
+  public upcoming: boolean = true;
+  public merchantImg: boolean;
   public favoriteRewards: IReward[];
   public showRewardFavButton?: boolean;
   public categories: ICategories[] = [];
@@ -177,6 +179,11 @@ export class NearmeComponent implements OnInit, OnDestroy {
                   marker.addListener('click', () => {
                     this.current = reward;
                     this.currentPrice = reward.rewardPrice ? reward.rewardPrice[0] : null;
+                    this.merchantImg = this.current.merchantImg ? true : false;
+
+                    const sellingFrom = this.current.sellingFrom;
+                    const nowTime: number = (new Date()).getTime();
+                    this.upcoming = sellingFrom && sellingFrom.getTime() > nowTime ? true : false;
                   });
                   this.markersArray.push(marker);
                 })
