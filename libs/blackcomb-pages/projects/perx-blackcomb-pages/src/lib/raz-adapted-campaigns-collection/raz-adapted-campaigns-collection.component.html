@@ -1,20 +1,16 @@
-<div *ngIf="campaignsWithProgress$ | async as campaigns" [@listAnimation]="campaigns.length">
-  <mat-card
-    *ngFor="let campaign of campaigns"
-    matRipple
-    class="campaigns-card"
-    (click)="selectCampaign(campaign)">
-    <div class="img-wrapper">
-      <img class="campaign-img" src="{{getCampaignImage(campaign)}}" alt="Campaign image">
-    </div>
-    <mat-card-content class="card-content">
-      <p class="main-reward-title ellipsis-1-line">{{campaign.name}}</p>
-      <perx-progress-bar *ngIf="campaign.progress as progress"
-                         [stages]="progress?.stages"
-                         [current]="progress?.current"
-                         [stageLabels]="progress?.stageLabels"
-                         [showProgressLabels]="showProgressLabels"
-      ></perx-progress-bar>
-    </mat-card-content>
-  </mat-card>
-</div>
+<perx-core-raz-adapted-campaign-card
+  (clicked)="selectCampaign($event)"
+  [campaigns]="stampCampaignsProg | async"
+></perx-core-raz-adapted-campaign-card>
+<perx-core-raz-adapted-campaign-card
+  (clicked)="selectCampaign($event)"
+  [campaigns]="loyaltyCampaignsProg | async"
+></perx-core-raz-adapted-campaign-card>
+<perx-core-raz-adapted-campaign-card
+  (clicked)="selectCampaign($event)"
+  [campaigns]="referralCampaignsProg | async"
+></perx-core-raz-adapted-campaign-card>
+<perx-core-raz-adapted-campaign-card
+  (clicked)="selectCampaign($event)"
+  [campaigns]="ultimateCampaignsProg | async"
+></perx-core-raz-adapted-campaign-card>

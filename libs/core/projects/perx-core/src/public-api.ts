@@ -330,3 +330,9 @@ export { ITransaction, ITransactionProperties, TransactionState } from './lib/tr
 export { ProgressBarModule } from './lib/progress-bar/progress-bar.module';
 export { ProgressBarComponent } from './lib/progress-bar/progress-bar.component';
 export { CampaignRewardMode } from './lib/rewards/rewards-large-list/rewards-large-list.component';
+
+/**
+ * RazerCampaignCard
+ */
+export { RazAdaptedCampaignCardModule } from './lib/raz-adapted-campaign-card/raz-adapted-campaign-card.module';
+export { RazAdaptedCampaignCardComponent } from './lib/raz-adapted-campaign-card/raz-adapted-campaign-card.component';

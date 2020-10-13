@@ -1,7 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material';
-import { CampaignServiceModule, LoyaltyModule, ProgressBarModule, StampModule, SurveyModule } from '@perxtech/core';
+import {
+  CampaignServiceModule,
+  LoyaltyModule,
+  RazAdaptedCampaignCardModule,
+  StampModule,
+} from '@perxtech/core';
 import { RazAdaptedCampaignsCollectionComponent } from './raz-adapted-campaigns-collection.component';
 
 @NgModule({
@@ -10,11 +14,9 @@ import { RazAdaptedCampaignsCollectionComponent } from './raz-adapted-campaigns-
   ],
   imports: [
     CommonModule,
-    MatCardModule,
-    ProgressBarModule,
-    SurveyModule,
     StampModule,
     LoyaltyModule,
+    RazAdaptedCampaignCardModule,
     CampaignServiceModule.forChild(),
   ],
   exports: [

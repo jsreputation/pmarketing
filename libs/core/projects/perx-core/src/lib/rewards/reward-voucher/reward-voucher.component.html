@@ -45,9 +45,9 @@
 
     <mat-action-list *ngIf="reward?.customFields?.faqLink && reward.customFields.tncLink" class="external-link-list">
       <a mat-list-item matRipple *ngIf="reward?.customFields?.faqLink"
-         href="{{'https://' + reward?.customFields?.faqLink}}" target="_blank"><mat-icon class="link-icon">help_outline</mat-icon>FAQs</a>
+         href="{{reward?.customFields?.faqLink}}" target="_blank"><mat-icon class="link-icon">help_outline</mat-icon>FAQs</a>
       <a mat-list-item matRipple *ngIf="reward?.customFields?.tncLink"
-         href="{{'https://' + reward?.customFields?.tncLink}}"
+         href="{{ reward?.customFields?.tncLink}}"
          target="_blank"><mat-icon class="link-icon">description_outline</mat-icon>Terms and Conditions</a>
     </mat-action-list>
   </div>
