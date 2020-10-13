@@ -7,7 +7,7 @@
       <div class="reward">
         <h2>Explore your rewards,</h2>
         <span class="tier" *ngIf="loyalty">{{loyalty.membershipTierName | noRenewaleInName | titlecase}} Member!</span>
-        <div *ngIf="profile && profile.customProperties">
+        <div *ngIf="profile && profile.customProperties" (click)="membershipClicked()">
           <span class="subtitle"
                 *ngIf="
                 (profile.customProperties.membership === 'Hub Club' || profile.customProperties.MembershipType === 'Hubclub')">

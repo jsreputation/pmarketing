@@ -187,4 +187,13 @@ export class HomeComponent implements OnInit {
         );
     }
   }
+
+  public membershipClicked(): void {
+    const userCustomProps = this.profile.customProperties;
+    if (userCustomProps) {
+      const membershipType = userCustomProps.MembershipType ? userCustomProps.MembershipType : '';
+      const subMembershipType = userCustomProps.SubMemberShipType ? userCustomProps.SubMemberShipType : '';
+      document.location.href = `https://membershipclicked/?MembershipType=${membershipType}&SubMembershipType=${subMembershipType}`
+    }
+  }
 }
