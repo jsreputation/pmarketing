@@ -1,0 +1,3 @@
+APIHOST=https://api.perxtech.net
+LOGIN_METHOD=phone
+PRODUCTION=true
