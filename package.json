@@ -118,6 +118,7 @@
     "test:components-demo": "nx test components-demo -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
     "test:dbshk-agent": "nx test dbshk-agent -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
     "test:digi": "nx test digi -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
+    "test:globeone": "nx test globeone -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
     "test:hkbn": "nx test hkbn -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
     "test:hsbc": "nx test hsbc -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
     "test:hsbc-rewards": "nx test hsbc-rewards -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
