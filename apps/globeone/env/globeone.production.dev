@@ -1,2 +1,3 @@
 APIHOST=https://api.perxtech.net
 LOGIN_METHOD=phone
+IS_WHISTLER=false

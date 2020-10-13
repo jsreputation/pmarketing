@@ -49,7 +49,7 @@ const envConfigFile = `export const environment = {
   apiHost: '${process.env.APIHOST ? process.env.APIHOST : 'https://api.perxtech.io'}',
   production: ${process.env.PRODUCTION ? process.env.PRODUCTION : false},
   preAuth: ${process.env.PREAUTH ? process.env.PREAUTH : true},
-  isWhistler: ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : true},
+  isWhistler: ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : false},
   baseHref: '${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}',
   defaultLang: '${process.env.DEFAULT_LANG ? process.env.DEFAULT_LANG : 'en'}'
 };
@@ -60,7 +60,7 @@ const appConfigFile = `{
   "apiHost": "${process.env.APIHOST ? process.env.APIHOST : 'https://api.perxtech.io'}",
   "production": ${process.env.PRODUCTION ? process.env.PRODUCTION : false},
   "preAuth": ${process.env.PREAUTH ? process.env.PREAUTH : true},
-  "isWhistler": ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : true},
+  "isWhistler": ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : false},
   "baseHref": "${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}",
   "defaultLang": "${process.env.DEFAULT_LANG ? process.env.DEFAULT_LANG : 'en'}",
   "showSubtitleLogin": ${process.env.SHOW_LOGIN_SUBTITLE ? process.env.SHOW_LOGIN_SUBTITLE : false},
