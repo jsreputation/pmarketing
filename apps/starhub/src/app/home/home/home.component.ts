@@ -193,7 +193,7 @@ export class HomeComponent implements OnInit {
     if (userCustomProps) {
       const membershipType = userCustomProps.MembershipType ? userCustomProps.MembershipType : '';
       const subMembershipType = userCustomProps.SubMemberShipType ? userCustomProps.SubMemberShipType : '';
-      document.location.href = `https://membershipclicked/?MembershipType=${membershipType}&SubMembershipType=${subMembershipType}`
+      document.location.href = `https://membershipclicked/?MembershipType=${membershipType}&SubMembershipType=${subMembershipType}`;
     }
   }
 }
