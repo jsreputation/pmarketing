@@ -18,7 +18,8 @@ import {
   NotificationService,
   PopUpClosedCallBack,
   RewardsService,
-  SettingsService
+  SettingsService,
+  VoucherDistributionTypes
 } from '@perxtech/core';
 import {
   ActivatedRoute,
@@ -36,7 +37,6 @@ import {
   throwError
 } from 'rxjs';
 import { oc } from 'ts-optchain';
-import { VoucherDistributionTypes } from '../../../../../../core/projects/perx-core/src/lib/settings/models/settings.model';
 
 @Component({
   selector: 'perx-blackcomb-pages-rewards-booking',
