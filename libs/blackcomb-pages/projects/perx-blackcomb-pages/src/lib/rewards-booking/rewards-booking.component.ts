@@ -161,12 +161,21 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
     }
 
     forkJoin([...new Array(parseInt(this.bookingForm.value.quantity, 10))].map(() =>
-      this.vouchersService.issueReward(this.rewardId,
-        {
-          priceId: this.bookingForm.value.priceId,
-          locationId: this.bookingForm.value.location,
-          sourceType: ''
-        })
+      // there's currently only issue/reserve type so this simple iif will be sufficient
+      iif(() => this.distributionType === VoucherDistributionTypes.issue,
+        this.vouchersService.issueReward(this.rewardId,
+          {
+            priceId: this.bookingForm.value.priceId,
+            locationId: this.bookingForm.value.location,
+            sourceType: ''
+          }),
+        this.vouchersService.reserveReward(this.rewardId,
+          {
+            priceId: this.bookingForm.value.priceId,
+            locationId: this.bookingForm.value.location,
+            sourceType: ''
+          })
+        )
     )).subscribe(() => {
       this.notificationService.addPopup({
         text: 'You can access your voucher from the wallet',
