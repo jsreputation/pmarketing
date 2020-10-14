@@ -6,7 +6,8 @@ import {
   RewardsService,
   LocationsService,
   IVoucherService,
-  LoyaltyService
+  LoyaltyService,
+  SettingsService
 } from '@perxtech/core';
 
 import { of } from 'rxjs';
@@ -45,6 +46,10 @@ describe('RewardsBookingComponent', () => {
     open: (componentRef: any, config: any) => of({ componentRef, config })
   };
 
+  const settingsServiceStub: Partial<SettingsService> = {
+    getRemoteFlagsSettings: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RewardsBookingComponent],
@@ -64,6 +69,7 @@ describe('RewardsBookingComponent', () => {
         { provide: LocationsService, useValue: locationServiceStub },
         { provide: IVoucherService, useValue: voucherServiceStub },
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
+        { provide: SettingsService, useValue: settingsServiceStub },
         { provide: MatDialog, useValue: dialogServiceStub }
       ]
     })
