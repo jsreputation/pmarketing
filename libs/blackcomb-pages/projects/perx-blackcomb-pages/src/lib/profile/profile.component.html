@@ -19,7 +19,7 @@
     <mat-icon (click)="onEditEmailClicked()">edit</mat-icon>
   </mat-list-item>
 
-  <mat-divider></mat-divider>
+  <mat-divider *ngIf="loyalty && loyalty.membershipExpiry"></mat-divider>
 
   <mat-list-item *ngIf="loyalty && loyalty.membershipExpiry">
     <p matLine class="label">Membership Expiry Date</p>
