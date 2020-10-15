@@ -26,6 +26,15 @@
     <p matLine>{{loyaltyMembershipExpiry}}</p>
   </mat-list-item>
 
+  <mat-divider *ngIf="profile.customProperties && profile.customProperties.last_4"></mat-divider>
+
+  <mat-list-item *ngIf="profile.customProperties && profile.customProperties.last_4">
+    <p matLine class="label">Last 4 Digits</p>
+    <p matLine>
+      {{(profile.customProperties && profile.customProperties.last_4) ? profile.customProperties.last_4 : ''}}
+    </p>
+  </mat-list-item>
+
   <mat-divider *ngIf="profile.customProperties && profile.customProperties.postcode"></mat-divider>
 
   <mat-list-item *ngIf="profile.customProperties && profile.customProperties.postcode">
