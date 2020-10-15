@@ -10,6 +10,10 @@
     </perx-core-voucher>
   </div>
   <div class="actions-container mat-elevation-z2">
-    <button class="ga_redeem_reward" mat-flat-button color="primary" (click)="onRedeem()">{{'VOUCHER.REDEEM' | translate}}</button>
+    <button class="ga_redeem_reward" mat-flat-button
+            [color]="isRedeemable ? 'primary' : ''"
+            [disabled]="!isRedeemable"
+            (click)="onRedeem()">{{'VOUCHER.REDEEM' | translate}}
+    </button>
   </div>
 </div>

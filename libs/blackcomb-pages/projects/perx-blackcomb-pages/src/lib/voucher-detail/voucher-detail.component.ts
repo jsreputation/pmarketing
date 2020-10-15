@@ -1,8 +1,30 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { IVoucherService, Voucher } from '@perxtech/core';
-import { filter, switchMap, takeUntil, map } from 'rxjs/operators';
-import { Observable, Subject, of } from 'rxjs';
+import {
+  Component,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
+import {
+  ActivatedRoute,
+  ParamMap,
+  Router
+} from '@angular/router';
+import {
+  IVoucherService,
+  Voucher,
+  VoucherState
+} from '@perxtech/core';
+import {
+  filter,
+  map,
+  switchMap,
+  takeUntil,
+  tap
+} from 'rxjs/operators';
+import {
+  Observable,
+  of,
+  Subject
+} from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
 
@@ -16,6 +38,7 @@ export class VoucherDetailComponent implements OnInit, OnDestroy {
   public descriptionLabel: Observable<string> = of('Description');
   public tncLabel: Observable<string> = of('Terms and Conditions');
   public voucherId: number;
+  public isRedeemable: boolean = false;
 
   constructor(
     private router: Router,
@@ -36,6 +59,10 @@ export class VoucherDetailComponent implements OnInit, OnDestroy {
         switchMap((id: string) => {
           this.voucherId = Number.parseInt(id, 10);
           return this.vouchersService.get(this.voucherId);
+        }),
+        tap((voucher: Voucher) => {
+          console.log(voucher.state === VoucherState.issued);
+          this.isRedeemable = voucher.state === VoucherState.issued; // must be in issued state
         }),
         map((voucher: Voucher) => {
           const tncWithOlPadding = voucher && voucher.reward && voucher.reward.termsAndConditions.replace(/(ol>)/, 'ol' +
