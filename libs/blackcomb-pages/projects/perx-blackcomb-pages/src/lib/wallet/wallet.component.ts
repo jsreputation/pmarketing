@@ -55,7 +55,7 @@ export class WalletComponent implements OnInit, OnDestroy {
     this.translate.get('WALLET.MY_WALLET').subscribe(text => this.rewardsHeadline = text);
     this.vouchers$ = of([]);
     this.onScroll();
-    this.filter = [VoucherState.issued, VoucherState.released];
+    this.filter = [VoucherState.issued, VoucherState.released, VoucherState.reserved];
     this.initRssItems();
     this.translate.get('WALLET.REWARD_STATUS_EXPIRY')
       .subscribe((text: string) => {
