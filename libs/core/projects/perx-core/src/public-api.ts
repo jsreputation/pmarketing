@@ -272,7 +272,8 @@ export {
   PagesObject,
   AccountPageObject,
   RssFeedsPages,
-  IFlags
+  IFlags,
+  VoucherDistributionTypes
 } from './lib/settings/models/settings.model';
 
 /**

@@ -31,7 +31,8 @@ import {
   IRssFeeds,
   PagesObject,
   IFlags,
-  GatekeeperApis
+  GatekeeperApis,
+  VoucherDistributionTypes
 } from './models/settings.model';
 import { ConfigService } from '../config/config.service';
 import { oc } from 'ts-optchain';
@@ -60,6 +61,7 @@ interface IV4Flags {
     show_rssfeed_cta: boolean;
     show_nearme: boolean;
     show_progress_campaigns_nav_button: boolean;
+    voucher_distribution_type: VoucherDistributionTypes;
   };
 }
 
@@ -134,7 +136,8 @@ export class V4SettingsService extends SettingsService {
       gatekeeperUrl: data.json_value.gatekeeper_url,
       showRSSfeedCTA: data.json_value.show_rssfeed_cta,
       showNearMePage: data.json_value.show_nearme,
-      showProgressCampaignsNavButton: data.json_value.show_progress_campaigns_nav_button
+      showProgressCampaignsNavButton: data.json_value.show_progress_campaigns_nav_button,
+      voucherDistributionType: data.json_value.voucher_distribution_type
     };
   }
 
