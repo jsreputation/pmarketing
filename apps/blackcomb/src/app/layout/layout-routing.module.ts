@@ -1,13 +1,14 @@
 import { ProtectedGuard } from 'ngx-auth';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-// import { LayoutComponent } from '@perxtech/blackcomb-pages';
+import { LayoutComponent } from '@perxtech/blackcomb-pages';
 
 const routes: Routes = [
   {
     path: '',
+    component: LayoutComponent,
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'progress-campaigns' },
+      { path: '', pathMatch: 'full', redirectTo: 'home' },
       {
         path: 'home', loadChildren: () => import('../home/home.module').then(mod => mod.HomeModule),
         canActivate: [ProtectedGuard]

@@ -17,7 +17,7 @@ import { Location } from '@angular/common';
 import {
   filter,
   map,
-  switchMap,
+  switchMap, tap
 } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -49,6 +49,7 @@ export class AppComponent implements OnInit {
   public backArrowIcon: string = '';
   public preAuth: boolean;
   public translationLoaded: boolean = false;
+  public navigateToLoading: boolean = false;
 
   private initBackArrow(url: string): void {
     this.backArrowIcon = BACK_ARROW_URLS.some(test => url.startsWith(test)) ? 'arrow_backward' : '';
@@ -68,7 +69,15 @@ export class AppComponent implements OnInit {
 
   public ngOnInit(): void {
     this.config.readAppConfig()
-      .pipe(switchMap((conf) => this.translate.getTranslation(conf.defaultLang as string)))
+      .pipe(
+        tap((conf) => {
+          if (conf.homeAsProgressPage) {
+            this.navigateToLoading = conf.homeAsProgressPage;
+            document.title = 'Razer Pay';
+          }
+        }),
+        switchMap((conf) => this.translate.getTranslation(conf.defaultLang as string))
+      )
       .subscribe((config: IConfig<void>) => {
         this.translationLoaded = true;
         this.preAuth = config.preAuth as boolean;
@@ -84,7 +93,7 @@ export class AppComponent implements OnInit {
         (msg: string) => {
           if (msg === 'LOGIN_SESSION_EXPIRED') {
             // i wont be navigatec to login anymore test, it has nothing to do with preauth
-            this.router.navigate(['/loading']);
+            this.router.navigate([this.navigateToLoading ? '/loading' : '/login']);
             this.translate.get('LOGIN_SESSION_EXPIRED').subscribe(txt => this.snack.open(txt, 'x', { duration: 2000 }));
           } else {
             this.snack.open(msg, 'x', { duration: 2000 });
