@@ -30,7 +30,11 @@
                 </p>
             </div>
             <div class="redeem-container">
-                <button mat-flat-button type="submit" color="primary" [disabled]="bookingForm.invalid || loading">Submit</button>
+                <button mat-flat-button type="submit"
+                        [color]="!(bookingForm.invalid || loading) ? 'primary' : ''"
+                        [disabled]="bookingForm.invalid || loading">
+                  Submit
+                </button>
             </div>
         </form>
     </div>
