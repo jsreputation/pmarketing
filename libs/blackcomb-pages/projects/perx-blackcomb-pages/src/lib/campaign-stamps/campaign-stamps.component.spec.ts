@@ -8,6 +8,7 @@ import { of } from 'rxjs';
 
 const stampServiceStub: Partial<StampService> = {
   getCards: () => of(),
+  getCurrentCard: () => of()
 };
 const campaignServiceStub: Partial<ICampaignService> = {
   getCampaign: () => of(),

@@ -42,10 +42,16 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   public willWin: boolean = false;
 
   @Input()
+  public startSpin: boolean = false;
+
+  @Input()
   public rewardSlots: number[] = []; // to loop through for function below to find slot
 
   @Output()
   public completed: EventEmitter<void> = new EventEmitter<void>();
+
+  @Output()
+  public spinning: EventEmitter<void> = new EventEmitter<void>();
 
   // tslint:disable-next-line:variable-name
   private ctx_: CanvasRenderingContext2D | undefined;
@@ -88,6 +94,9 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
       || (changes.pointerImg && this.pointerImg)
       || (changes.willWin)) {
       this.init();
+    }
+    if (changes.startSpin  && this.startSpin) {
+      this.spin();
     }
   }
 
@@ -278,6 +287,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   }
 
   private spin(): void {
+    this.init();
     this.spinTime = 0;
     this.lastTimeStamp = (new Date()).getTime();
     this.rotateWheel();
@@ -369,7 +379,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
 
     this.canvas.setAttribute('style', styleString);
 
-    this.spin();
+    this.spinning.emit();
   }
 
   private static findTop(element: HTMLElement): number {

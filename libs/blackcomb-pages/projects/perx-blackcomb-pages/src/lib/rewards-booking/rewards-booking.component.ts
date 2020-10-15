@@ -1,19 +1,42 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {
-  RewardsService,
-  IVoucherLocation,
-  IReward,
-  NotificationService,
-  LoyaltyService,
+  Component,
+  OnInit
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators
+} from '@angular/forms';
+import {
+  IFlags,
   ILoyalty,
   IPrice,
+  IReward,
+  IVoucherLocation,
   IVoucherService,
-  PopUpClosedCallBack
+  LoyaltyService,
+  NotificationService,
+  PopUpClosedCallBack,
+  RewardsService,
+  SettingsService,
+  VoucherDistributionTypes
 } from '@perxtech/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap, flatMap, map } from 'rxjs/operators';
-import { forkJoin, of, throwError } from 'rxjs';
+import {
+  ActivatedRoute,
+  Router
+} from '@angular/router';
+import {
+  flatMap,
+  map,
+  switchMap
+} from 'rxjs/operators';
+import {
+  forkJoin,
+  iif,
+  of,
+  throwError
+} from 'rxjs';
+import { oc } from 'ts-optchain';
 
 @Component({
   selector: 'perx-blackcomb-pages-rewards-booking',
@@ -31,11 +54,13 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
   public loading: boolean = false;
   private loyalty: ILoyalty;
   public chooseQuantity: boolean = false;
+  private distributionType: VoucherDistributionTypes = VoucherDistributionTypes.issue;
 
   constructor(
     private rewardsService: RewardsService,
     private vouchersService: IVoucherService,
     private loyaltyService: LoyaltyService,
+    private settingsService: SettingsService,
     private route: ActivatedRoute,
     private build: FormBuilder,
     private notificationService: NotificationService,
@@ -43,12 +68,18 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
   ) { }
 
   public ngOnInit(): void {
+    this.settingsService.getRemoteFlagsSettings().subscribe(
+      (flags: IFlags) => {
+        this.distributionType = oc(flags).voucherDistributionType(VoucherDistributionTypes.issue);
+      }
+    );
     this.getData();
     this.getLoyalty();
     this.buildForm();
   }
 
   private getData(): void {
+
     this.route.data.subscribe(
       ((dataObj) => {
         if (dataObj.chooseQuantity) {
@@ -130,12 +161,21 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
     }
 
     forkJoin([...new Array(parseInt(this.bookingForm.value.quantity, 10))].map(() =>
-      this.vouchersService.issueReward(this.rewardId,
-        {
-          priceId: this.bookingForm.value.priceId,
-          locationId: this.bookingForm.value.location,
-          sourceType: ''
-        })
+      // there's currently only issue/reserve type so this simple iif will be sufficient
+      iif(() => this.distributionType === VoucherDistributionTypes.issue,
+        this.vouchersService.issueReward(this.rewardId,
+          {
+            priceId: this.bookingForm.value.priceId,
+            locationId: this.bookingForm.value.location,
+            sourceType: ''
+          }),
+        this.vouchersService.reserveReward(this.rewardId,
+          {
+            priceId: this.bookingForm.value.priceId,
+            locationId: this.bookingForm.value.location,
+            sourceType: ''
+          })
+        )
     )).subscribe(() => {
       this.notificationService.addPopup({
         text: 'You can access your voucher from the wallet',

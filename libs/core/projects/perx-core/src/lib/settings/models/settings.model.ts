@@ -19,6 +19,7 @@ export interface IFlags {
   showRSSfeedCTA?: boolean;
   showNearMePage?: boolean;
   showProgressCampaignsNavButton?: boolean;
+  voucherDistributionType?: VoucherDistributionTypes;
 }
 
 export interface IRssFeeds {
@@ -50,4 +51,9 @@ export enum RssFeedsPages {
 export enum GatekeeperApis {
   AWS = 'aws',
   PERX = 'perx'
+}
+
+export enum VoucherDistributionTypes {
+  issue = 'issue',
+  reserve = 'reserve'
 }

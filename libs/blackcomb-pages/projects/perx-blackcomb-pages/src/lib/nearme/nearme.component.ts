@@ -43,6 +43,8 @@ export class NearmeComponent implements OnInit, OnDestroy {
   public userLocation: Subject<Position> = new Subject();
   public userMarker: google.maps.Marker;
   public position: Position;
+  public upcoming: boolean = true;
+  public merchantImg: boolean;
   public favoriteRewards: IReward[];
   public showRewardFavButton?: boolean;
 
@@ -141,6 +143,7 @@ export class NearmeComponent implements OnInit, OnDestroy {
     }
 
     const rad = 1000000000;
+
     this.rewardsService.nearMe(rad, position).pipe(
       takeUntil(this.destroy$),
       mergeMap((rewards: IReward[]) =>
@@ -167,6 +170,11 @@ export class NearmeComponent implements OnInit, OnDestroy {
                   marker.addListener('click', () => {
                     this.current = reward;
                     this.currentPrice = reward.rewardPrice ? reward.rewardPrice[0] : null;
+                    this.merchantImg = this.current.merchantImg ? true : false;
+
+                    const sellingFrom = this.current.sellingFrom;
+                    const nowTime: number = (new Date()).getTime();
+                    this.upcoming = sellingFrom && sellingFrom.getTime() > nowTime ? true : false;
                   });
                   this.markersArray.push(marker);
                   this.updateBoundingBox();

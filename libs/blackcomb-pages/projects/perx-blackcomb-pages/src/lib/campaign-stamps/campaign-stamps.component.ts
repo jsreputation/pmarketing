@@ -63,6 +63,14 @@ export class CampaignStampsComponent implements OnInit {
           this.campaignService.getCampaign(campaignId)
         );
       }),
+      switchMap(([stampCards, campaign]: [IStampCard[], ICampaign]) => {
+        if (stampCards.length ===  0) {
+          return this.stampService.getCurrentCard(campaign.id).pipe(
+            map((stampCardCurr) => [[stampCardCurr], campaign])
+          );
+        }
+        return of([stampCards, campaign]);
+      }),
       takeUntil(this.destroy$)
     ).subscribe(
       ([stampCards, campaign]: [IStampCard[], ICampaign]) => {
