@@ -7,6 +7,7 @@ import {
   StampModule,
 } from '@perxtech/core';
 import { RazAdaptedCampaignsCollectionComponent } from './raz-adapted-campaigns-collection.component';
+import { MatCardModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { RazAdaptedCampaignsCollectionComponent } from './raz-adapted-campaigns-
     StampModule,
     LoyaltyModule,
     RazAdaptedCampaignCardModule,
+    MatCardModule,
     CampaignServiceModule.forChild(),
   ],
   exports: [

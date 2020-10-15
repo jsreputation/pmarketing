@@ -1,16 +1,30 @@
 <perx-core-raz-adapted-campaign-card
+  *ngIf="stampCampaignsProg | async as stampCamps; else ghost"
   (clicked)="selectCampaign($event)"
-  [campaigns]="stampCampaignsProg | async"
+  [campaigns]="stampCamps"
 ></perx-core-raz-adapted-campaign-card>
 <perx-core-raz-adapted-campaign-card
+  *ngIf="loyaltyCampaignsProg | async as loyaltyCamps; else ghost"
   (clicked)="selectCampaign($event)"
-  [campaigns]="loyaltyCampaignsProg | async"
+  [campaigns]="loyaltyCamps"
 ></perx-core-raz-adapted-campaign-card>
 <perx-core-raz-adapted-campaign-card
+  *ngIf="referralCampaignsProg | async as referralCamps; else ghost"
   (clicked)="selectCampaign($event)"
-  [campaigns]="referralCampaignsProg | async"
+  [campaigns]="referralCamps"
 ></perx-core-raz-adapted-campaign-card>
 <perx-core-raz-adapted-campaign-card
+  *ngIf="ultimateCampaignsProg  | async as ultimateCamps; else ghost"
   (clicked)="selectCampaign($event)"
-  [campaigns]="ultimateCampaignsProg | async"
+  [campaigns]="ultimateCamps"
 ></perx-core-raz-adapted-campaign-card>
+<ng-template #ghost>
+  <mat-card class="campaigns-wrap-ghost">
+    <div class="img-ghost">
+    </div>
+    <div class="card-content">
+      <div class="progress-ghost"></div>
+    </div>
+  </mat-card>
+</ng-template>
+

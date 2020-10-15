@@ -37,7 +37,6 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
   public rewardsLeft: string;
   public campaigns: ICampaign[];
   public campaignsWithRewards$: Observable<ICampaign[]>;
-  public gamesLoaded: boolean = false;
   public isCampaignDisabled: boolean[] = [];
 
   constructor(
