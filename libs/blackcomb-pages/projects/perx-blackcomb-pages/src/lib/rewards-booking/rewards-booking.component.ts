@@ -37,6 +37,7 @@ import {
   throwError
 } from 'rxjs';
 import { oc } from 'ts-optchain';
+import { globalCacheBusterNotifier } from 'ngx-cacheable';
 
 @Component({
   selector: 'perx-blackcomb-pages-rewards-booking',
@@ -184,6 +185,7 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
         imageUrl: 'assets/congrats_image.png',
         afterClosedCallBack: this
       });
+      globalCacheBusterNotifier.next();
       this.loading = false;
     }, (err) => {
       if (err.code === 40) {
