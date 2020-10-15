@@ -19,6 +19,7 @@ export interface IFlags {
   showRSSfeedCTA?: boolean;
   showNearMePage?: boolean;
   showProgressCampaignsNavButton?: boolean;
+  showVoucherStatusLabels?: boolean;
   voucherDistributionType?: VoucherDistributionTypes;
 }
 
