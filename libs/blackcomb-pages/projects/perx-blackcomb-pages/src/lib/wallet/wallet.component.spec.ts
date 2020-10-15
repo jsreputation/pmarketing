@@ -23,6 +23,7 @@ import { VoucherDetailComponent } from '../voucher-detail/voucher-detail.compone
 import { Router } from '@angular/router';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { HttpClientModule } from '@angular/common/http';
+import { MatButtonModule } from '@angular/material/button';
 
 describe('WalletComponent', () => {
   let component: WalletComponent;
@@ -72,6 +73,7 @@ describe('WalletComponent', () => {
         }]),
         MatRippleModule,
         MatIconModule,
+        MatButtonModule,
         PuzzlesModule,
         InfiniteScrollModule,
         UtilsModule,

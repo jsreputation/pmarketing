@@ -19,6 +19,7 @@ import {
   SettingsService,
   IRssFeeds,
   IRssFeedsData,
+  IFlags,
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
@@ -38,7 +39,14 @@ export class WalletComponent implements OnInit, OnDestroy {
   public rewardsHeadline: string;
   public expiryLabelFn: ((v: Voucher) => Observable<string>) | undefined;
   public newsFeedItems: Observable<FeedItem[] | undefined>;
-
+  public showVoucherStatusLabels: boolean = false;
+  public statusLabelMappings: {} = {
+      issued: 'Approved',
+      redeemed: 'Redeemed',
+      expired: 'Expired',
+      reserved: 'Pending',
+      released: 'Declined',
+  };
   public currentPage: number = 0;
   public completed: boolean = false;
 
@@ -55,7 +63,14 @@ export class WalletComponent implements OnInit, OnDestroy {
     this.translate.get('WALLET.MY_WALLET').subscribe(text => this.rewardsHeadline = text);
     this.vouchers$ = of([]);
     this.onScroll();
-    this.filter = [VoucherState.issued, VoucherState.released];
+    this.filter = [ VoucherState.issued, VoucherState.released, VoucherState.reserved ];
+    this.settingsService.getRemoteFlagsSettings().subscribe(
+      (flags: IFlags) => {
+        if (flags.showVoucherStatusLabels) {
+          this.showVoucherStatusLabels = flags.showVoucherStatusLabels;
+        }
+      }
+    );
     this.initRssItems();
     this.translate.get('WALLET.REWARD_STATUS_EXPIRY')
       .subscribe((text: string) => {

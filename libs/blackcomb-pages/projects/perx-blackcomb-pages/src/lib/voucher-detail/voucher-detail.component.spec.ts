@@ -7,6 +7,7 @@ import { DatePipe } from '@angular/common';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 
 describe('VoucherDetailComponent', () => {
   let component: VoucherDetailComponent;
@@ -41,7 +42,8 @@ describe('VoucherDetailComponent', () => {
       imports: [
         RouterTestingModule,
         VouchersModule,
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
+        MatButtonModule
       ],
       providers: [
         DatePipe,
