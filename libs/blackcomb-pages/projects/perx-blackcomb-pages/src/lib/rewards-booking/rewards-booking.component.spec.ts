@@ -20,6 +20,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialog } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 
 describe('RewardsBookingComponent', () => {
   let component: RewardsBookingComponent;
@@ -58,6 +59,7 @@ describe('RewardsBookingComponent', () => {
         MatRadioModule,
         MatCheckboxModule,
         MatSelectModule,
+        MatButtonModule,
         RouterTestingModule,
         ReactiveFormsModule,
         FormsModule,
