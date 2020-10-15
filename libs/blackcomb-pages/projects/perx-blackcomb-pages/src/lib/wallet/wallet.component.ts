@@ -40,7 +40,7 @@ export class WalletComponent implements OnInit, OnDestroy {
   public expiryLabelFn: ((v: Voucher) => Observable<string>) | undefined;
   public newsFeedItems: Observable<FeedItem[] | undefined>;
   public showVoucherStatusLabels: boolean = false;
-  public statusLabelMappings = {
+  public statusLabelMappings: {} = {
       issued: 'Approved',
       redeemed: 'Redeemed',
       expired: 'Expired',
