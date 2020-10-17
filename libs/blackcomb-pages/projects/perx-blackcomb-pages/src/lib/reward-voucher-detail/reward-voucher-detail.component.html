@@ -48,7 +48,7 @@
     <button [routerLink]="(rewardData?.subtitle && rewardData.name.includes('Card')) ? [] : ['home']" *ngIf="doneText" mat-raised-button color="primary"
             class="reward-buy ga_done_reward">
      {{rewardData.name.includes('Card') ? '' : doneText}}
-      <a *ngIf="rewardData.name.includes('Card')" class="card-redirect" href="{{rewardData?.customFields?.cardLink}}" target="_blank">
+      <a *ngIf="rewardData.name.includes('Card')" class="card-redirect" [href]="rewardData?.customFields?.cardLink | safeUrl" target="_blank">
        {{'Get ' + rewardData.name}}
       </a>
     </button>
