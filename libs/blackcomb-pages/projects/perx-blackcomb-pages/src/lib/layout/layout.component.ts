@@ -96,8 +96,10 @@ export class LayoutComponent implements OnInit {
       switchMap(() => this.themesService.getThemeSetting()),
       map(theme => {
         this.theme = theme;
-        const title = (theme.properties ? theme.properties['--title'] : undefined) || 'Blackcomb';
-        this.titleService.setTitle(title);
+        const title = (theme.properties ? theme.properties['--title'] : undefined) || '';
+        if (title.length > 0) {
+          this.titleService.setTitle(title);
+        }
       }),
       switchMap(() => this.settingsService.getRemoteFlagsSettings()),
     ).subscribe(

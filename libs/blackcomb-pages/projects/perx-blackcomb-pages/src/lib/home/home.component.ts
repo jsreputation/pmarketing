@@ -162,9 +162,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.themesService.getThemeSetting().subscribe(
       theme => {
         this.theme = theme;
-        const title = (theme.properties ? theme.properties['--title'] : undefined) || 'Blackcomb';
-        this.titleService.setTitle(title);
-      }
+        const title = (theme.properties ? theme.properties['--title'] : undefined) || '';
+        if (title.length > 0) {
+          this.titleService.setTitle(title);
+        }      }
     );
 
     this.initCatalogsScan();

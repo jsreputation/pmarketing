@@ -73,7 +73,6 @@ export class AppComponent implements OnInit {
         tap((conf) => {
           if (conf.homeAsProgressPage) {
             this.navigateToLoading = conf.homeAsProgressPage;
-            document.title = 'Razer Pay';
           }
         }),
         switchMap((conf) => this.translate.getTranslation(conf.defaultLang as string))
