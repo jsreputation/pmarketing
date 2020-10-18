@@ -151,6 +151,9 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
     this.voucher$ = this.vouchersService.get(this.voucherId).pipe(
       map((voucher: Voucher) => {
         const [ cardNumber = '', securityNumber = '' ] = (voucher.code && voucher.code.split('-')) || [];
+        if (cardNumber.length <= 0) {
+          this.showNoCodeReward = true;
+        }
         return ({
           ...voucher,
           securityNumber,
