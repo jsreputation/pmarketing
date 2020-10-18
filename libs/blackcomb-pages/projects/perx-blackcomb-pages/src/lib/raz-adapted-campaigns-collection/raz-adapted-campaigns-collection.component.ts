@@ -74,8 +74,7 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
       this.stampCampaignsProg = this.stampCampaigns.pipe(
         map(campaignsStamps => campaignsStamps.filter(campaign => campaign.name !== 'Ultimate Reward')),
         switchMap(
-          (campaigns: ICampaign[]) => zip(...campaigns.map(campaign => {
-            return this.stampService.getCards(campaign.id).pipe(
+          (campaigns: ICampaign[]) => zip(...campaigns.map(campaign => this.stampService.getCards(campaign.id).pipe(
               // there is only going to be one stamp. take first obj in array,
               // configured to be one single stampcard
               map((stampCards) => ({
@@ -83,30 +82,27 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
                 ...this.mapStampCampaign(stampCards)
               }))
             )
-          })))
+          )))
       );
 
       this.ultimateCampaignsProg = this.stampCampaigns.pipe(
         map(campaignsStamps => campaignsStamps.filter(campaign => campaign.name === 'Ultimate Reward')),
         switchMap(
-          (campaigns: ICampaign[]) => zip(...campaigns.map(campaign => {
-            return this.stampService.getCards(campaign.id).pipe(
+          (campaigns: ICampaign[]) => zip(...campaigns.map(campaign => this.stampService.getCards(campaign.id).pipe(
               // there is only going to be one stamp. take first obj in array,
               // configured to be one single stampcard
               map((stampCards) => ({
                 ...campaign as ICampaign,
                 ...this.mapStampCampaign(stampCards)
               }))
-            )
-          })))
+            ))))
       );
     }
 
     if (this.loyaltyCampaigns) {
       this.loyaltyCampaignsProg = this.loyaltyCampaigns.pipe(
         switchMap(
-          (campaigns: ICampaign[]) => zip(...campaigns.map(campaign => {
-            return this.campaignsService.getCampaign(campaign.id).pipe(
+          (campaigns: ICampaign[]) => zip(...campaigns.map(campaign => this.campaignsService.getCampaign(campaign.id).pipe(
               concatMap((campaignRwd) => this.loyaltyService.getLoyalty(1).pipe(
                 map((loyalty) => {
                   if (campaignRwd.rewards) {
@@ -126,8 +122,7 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
                   return {} as ICampaign;
                 })
                 )
-              ));
-          }))
+              ))))
         )
       );
     }
@@ -135,9 +130,9 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
     if (this.referralCampaigns) {
       this.referralCampaignsProg = this.referralCampaigns.pipe(
         switchMap(
-          (campaigns: ICampaign[]) => zip(...campaigns.map(campaign => {
+          (campaigns: ICampaign[]) => zip(...campaigns.map(campaign =>
             // only from detail referral details appears on campaign_config
-            return this.campaignsService.getCampaign(campaign.id).pipe(
+             this.campaignsService.getCampaign(campaign.id).pipe(
               map(campaignInv => {
                 if (campaignInv.rewards) {
                   return {
@@ -152,8 +147,8 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
                 }
                 return {} as ICampaign;
               })
-            );
-          }))
+            )
+          ))
         )
       );
     }

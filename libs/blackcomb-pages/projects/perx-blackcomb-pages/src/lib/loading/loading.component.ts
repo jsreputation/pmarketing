@@ -97,7 +97,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
       ).subscribe(
         () => this.getCampaignData(),
         () => {
-          this.router.navigate([this.appConfig.homeAsProgressPage ? '/loading' : 'login'])
+          this.router.navigate([this.appConfig.homeAsProgressPage ? '/loading' : 'login']);
         }
       );
     } else {

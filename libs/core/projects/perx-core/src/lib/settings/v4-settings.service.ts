@@ -206,9 +206,7 @@ export class V4SettingsService extends SettingsService {
 
   public isGatekeeperOpen(): Observable<boolean> {
     return this.getRemoteFlagsSettings().pipe(
-      map(() => {
-        return true;
-      }),
+      map(() => true),
       // expecting a HTTP 429 error to be handled by caller
     );
   }
