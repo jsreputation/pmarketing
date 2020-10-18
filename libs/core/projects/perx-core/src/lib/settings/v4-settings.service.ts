@@ -205,7 +205,6 @@ export class V4SettingsService extends SettingsService {
   }
 
   public isGatekeeperOpen(): Observable<boolean> {
-    console.log(this.httpBackend)
     return this.getRemoteFlagsSettings().pipe(
       map(() => {
         return true;
