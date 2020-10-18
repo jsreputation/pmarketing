@@ -35,7 +35,7 @@
         </div>
       </div>
     </ng-template>
-    <div *ngIf="showNoCodeReward | async; else defaultTemplate" class="grats-msg" [innerHTML]="reward?.howToRedeem"></div>
+    <div *ngIf="showNoCodeReward; else defaultTemplate" class="grats-msg" [innerHTML]="reward?.howToRedeem"></div>
     <div *ngIf="reward?.description">
       <div class="how-container">
         <mat-icon class="info-icon">info_outline</mat-icon>

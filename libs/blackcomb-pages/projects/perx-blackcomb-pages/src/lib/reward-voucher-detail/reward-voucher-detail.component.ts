@@ -4,7 +4,6 @@ import {
   OnInit
 } from '@angular/core';
 import {
-  BehaviorSubject,
   Observable, of,
   Subject
 } from 'rxjs';
@@ -63,8 +62,7 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
   public barHeadLine: string;
   public useRewardDescription: string;
   public doneText: string;
-  public showNoCodeReward: BehaviorSubject<boolean> =  new BehaviorSubject<boolean>(false);
-  public showNoCodeReward$: Observable<boolean>;
+  public showNoCodeReward: boolean = false;
 
   constructor(
     private rewardsService: RewardsService,
@@ -79,7 +77,6 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    this.showNoCodeReward$ = this.showNoCodeReward.asObservable();
     const { current, stageLabels, rewardType, barHeadLine, useRewardDescription } = history.state;
     this.barHeadLine = barHeadLine;
     this.useRewardDescription = useRewardDescription;
@@ -125,7 +122,7 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
 
   public buyReward(): void {
     this.waitForSubmission = true;
-    this.showNoCodeReward.next(true);
+    this.showNoCodeReward = true;
     this.doneText = 'done';
   }
 
