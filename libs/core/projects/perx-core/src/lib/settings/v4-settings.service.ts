@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import {
   HttpBackend,
   HttpClient,
-  // HttpHeaders
+  HttpHeaders
 } from '@angular/common/http';
 
 import {
-  // iif,
+  iif,
   Observable,
   of,
   throwError,
@@ -87,9 +87,9 @@ interface IV4MicrositeSettings {
   string_value: string;
   json_value: ICustomProperties;
 }
-// interface IV4GatekeeperResponse {
-//   message: string;
-// }
+interface IV4GatekeeperResponse {
+  message: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -205,8 +205,32 @@ export class V4SettingsService extends SettingsService {
   }
 
   public isGatekeeperOpen(): Observable<boolean> {
+    let gateKeeperURL = '';
+    // this will return a empty body and angular does not like it.
+    const perxGatekeeper = this.http.get<IV4GatekeeperResponse>(`${this.hostName}/v4/gatekeep_token`);
+    // currently only implemented for prod todo: auth and staging/prod versions
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this.getRemoteFlagsSettings().pipe(
-      map(() => true),
+      switchMap((flags: IFlags) => {
+        if (!flags.gatekeeperUrl) {
+          return throwError('Gate keeper URL is empty');
+        }
+        gateKeeperURL = flags.gatekeeperUrl;
+        return of(flags);
+      }),
+      switchMap((flags: IFlags) =>
+        iif(() => flags.gatekeeperApi === GatekeeperApis.AWS,
+          this.httpBackend.get<IV4GatekeeperResponse>(gateKeeperURL, { headers }),
+          perxGatekeeper
+        )
+      ),
+      map((res: IV4GatekeeperResponse) => {
+        if (res.message === 'go ahead') {
+          return true;
+        }
+        // false signals that the app should continue holding.
+        return false;
+      }),
       // expecting a HTTP 429 error to be handled by caller
     );
   }
