@@ -19,7 +19,7 @@
         </div>
       </mat-card>
     </div>
-    <div class="wrapper"><ng-content select=".redeem-code"></ng-content></div>
+    <div class="wrapper" *ngIf="!showNoCodeReward"><ng-content select=".redeem-code"></ng-content></div>
     <ng-template #defaultTemplate>
       <div class="default">
         <div class="progress-wrapper">
