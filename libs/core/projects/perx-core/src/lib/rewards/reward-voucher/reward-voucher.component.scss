@@ -31,7 +31,7 @@
 
   .progress-wrapper {
     padding: 1.6rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.4rem;
   }
 
   .wrapper:not(:empty) + .default {
@@ -44,6 +44,7 @@
   }
 
   .how-container {
+    margin-top: 1rem;
     background: white;
     display: flex;
 

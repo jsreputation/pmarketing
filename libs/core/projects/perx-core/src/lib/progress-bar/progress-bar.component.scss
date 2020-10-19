@@ -5,6 +5,7 @@
   align-items: center;
   display: flex;
   margin: 0 auto;
+  padding-top: 6px;
 }
 
 .progress-bar-container {
@@ -54,5 +55,6 @@
 
   .stamp-label {
     margin-top: 1.4rem;
+    color: #666666;
   }
 }

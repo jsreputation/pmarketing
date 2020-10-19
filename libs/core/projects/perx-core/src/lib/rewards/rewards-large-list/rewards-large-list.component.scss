@@ -42,17 +42,8 @@
         font-size: 1.6rem;
         line-height: 1.6rem;
         padding: 0;
-        font-weight: 500;
-        margin: 4px 0;
-      }
-
-      p {
-        font-size: 1.2rem;
-        line-height: 1.6rem;
-        min-height: 1.6rem;
-        //color: #e42713;
-        margin: 4px 0;
-        padding: 0;
+        color: #606060;
+        margin: 4px 0 4px 1rem;
       }
 
       .ellipse-2-lines {
@@ -61,7 +52,7 @@
 
       &.bottom-content {
         flex-direction: row;
-        font-size: 1.2rem;
+        font-size: 1.4rem;
 
         .description {
           align-self: flex-start;
@@ -78,6 +69,7 @@
           display: flex;
           justify-content: space-between;
           margin-top: 1rem;
+          margin-left: 1rem;
         }
       }
     }
