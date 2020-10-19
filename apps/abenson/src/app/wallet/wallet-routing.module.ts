@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { WalletComponent } from './wallet.component';
-import { VoucherDetailComponent } from './voucher-detail/voucher-detail.component';
+import {
+  WalletHistoryComponent,
+  WalletHistoryModule,
+} from '@perxtech/blackcomb-pages';
 
-const routes: Routes = [
-  { path: '', component: WalletComponent },
-  { path: 'details/:id', component: VoucherDetailComponent}
-];
+const routes: Routes = [{ path: '', component: WalletHistoryComponent }];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  imports: [WalletHistoryModule, RouterModule.forChild(routes)],
+  exports: [RouterModule],
 })
-export class WalletRoutingModule { }
+export class WalletRoutingModule {}
