@@ -7,6 +7,7 @@ module.exports = {
     browser: true,
     es6: true
   },
+  extends: ['eslint-config-prettier'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: 'tsconfig.json',
