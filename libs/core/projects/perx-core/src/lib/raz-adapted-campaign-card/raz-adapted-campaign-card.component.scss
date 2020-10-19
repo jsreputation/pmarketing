@@ -25,12 +25,11 @@ mat-card {
     min-height: 15rem;
 
     .campaign-img {
-      border-radius: 4px;
       bottom: 15rem;
       height: 100%;
       width: 100%;
       object-fit: cover;
-      // border-radius: 4px 4px 0 0;
+      border-radius: 4px 4px 0 0;
     }
   }
 
@@ -41,7 +40,7 @@ mat-card {
       font-size: 1.6rem;
       //line-height: 2rem;
       color: #212121;
-      margin: 0;
+      margin: 0 0 1rem 0.8rem;
     }
 
     .reward-subtitle {
