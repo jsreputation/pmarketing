@@ -132,7 +132,21 @@
     "test:appauth-server": "echo 'no tests'",
     "test:blackcomb-pages": "nx test blackcomb-pages -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
     "test:core": "nx test core -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
-    "test:whistler": "nx test whistler -- --no-watch --no-progress --browsers=ChromeHeadlessCI"
+    "test:whistler": "nx test whistler -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
+    "lint": "eslint --ext js,jsx src",
+    "prettier": "prettier --write src/**/*.{ts,js,css,html}"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": [
+        "lint-staged"
+      ]
+    }
+  },
+  "lint-staged": {
+    "*.{ts}": [
+      "eslint --fix"
+    ]
   },
   "private": true,
   "workspaces": [
@@ -165,13 +179,17 @@
     "codelyzer": "^5.0.0",
     "env-cmd": "^10.1.0",
     "eslint": "~6.4.0",
+    "eslint-config-prettier": "^6.13.0",
     "eslint-import-resolver-typescript": "^2.0.0",
     "eslint-plugin-import": "^2.19.1",
+    "husky": "^4.3.0",
     "jest": "^24.9.0",
     "jest-environment-jsdom-fourteen": "^1.0.1",
     "jest-preset-angular": "8.0.0",
+    "lint-staged": "^10.4.2",
     "ng-packagr": "^5.1.0",
     "ngx-barcode": "^0.2.4",
+    "prettier": "^2.1.2",
     "protractor": "~5.4.0",
     "rxjs-compat": "^6.5.4",
     "rxjs-tslint": "0.1.5",
