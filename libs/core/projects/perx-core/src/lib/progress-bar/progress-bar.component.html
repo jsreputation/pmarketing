@@ -42,7 +42,7 @@
                  stageLabels[i] < 100 ? 1.2+'rem' : 0.6+'rem'
                 )
               }"
-              *ngIf="showProgressLabels && stageLabels && stageLabels[i]">
+              *ngIf="showProgressLabels && stageLabels && stageLabels[i] !== undefined">
           {{stageLabels[i]}}
         </div>
       </div>
