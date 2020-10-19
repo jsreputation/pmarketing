@@ -16,39 +16,78 @@ const routes: Routes = [
       { path: '', pathMatch: 'full', redirectTo: 'home' },
       { path: 'home', component: HomeComponent },
       { path: 'promos', component: PromosComponent },
-      { path: 'wallet', loadChildren: (): any => import('./wallet/wallet.module').then((mod: any) => mod.WalletModule) },
+      {
+        path: 'wallet',
+        loadChildren: (): any =>
+          import('./wallet/wallet.module').then((mod: any) => mod.WalletModule),
+      },
       { path: 'history', component: HistoryComponent },
       {
         path: 'account',
-        loadChildren: (): any => import('./account/account.module').then((mod: any) => mod.AccountModule)
+        loadChildren: (): any =>
+          import('./account/account.module').then(
+            (mod: any) => mod.AccountModule
+          ),
       },
       {
-        path: 'redeem/:id', loadChildren: () => import('./redeem/redeem.module').then(mod => mod.RedeemModule),
+        path: 'redeem/:id',
+        loadChildren: () =>
+          import('./redeem/redeem.module').then((mod) => mod.RedeemModule),
       },
-      { path: 'game/:id', loadChildren: (): any => import('./game/game.module').then((mod: any) => mod.GameModule) },
-      { path: 'stamp/:id', loadChildren: (): any => import('./stamp/stamp.module').then((mod: any) => mod.StampModule) },
-      { path: 'survey/:id', loadChildren: (): any => import('./survey/survey.module').then((mod: any) => mod.SurveyModule) },
+      {
+        path: 'game/:id',
+        loadChildren: (): any =>
+          import('./game/game.module').then((mod: any) => mod.GameModule),
+      },
+      {
+        path: 'stamp/:id',
+        loadChildren: (): any =>
+          import('./stamp/stamp.module').then((mod: any) => mod.StampModule),
+      },
+      {
+        path: 'survey/:id',
+        loadChildren: (): any =>
+          import('./survey/survey.module').then((mod: any) => mod.SurveyModule),
+      },
       {
         path: 'reward',
-        loadChildren: (): any => import('./instant-reward/instant-reward.module').then((mod: any) => mod.InstantRewardModule),
+        loadChildren: (): any =>
+          import('./instant-reward/instant-reward.module').then(
+            (mod: any) => mod.InstantRewardModule
+          ),
       },
       {
         path: 'card',
-        loadChildren: () => import('./card/card.module').then(mod => mod.CardModule)
+        loadChildren: () =>
+          import('./card/card.module').then((mod) => mod.CardModule),
       },
-      { path: 'rewards', loadChildren: (): any => import('./rewards/rewards.module').then((mod: any) => mod.RewardsModule) }
+      {
+        path: 'rewards',
+        loadChildren: (): any =>
+          import('./rewards/rewards.module').then(
+            (mod: any) => mod.RewardsModule
+          ),
+      },
+      {
+        path: 'voucher-detail/:id',
+        loadChildren: () =>
+          import('./voucher-detail/voucher-detail.module').then(
+            (mod) => mod.VoucherDetailModule
+          ),
+        canActivate: [ProtectedGuard],
+      },
     ],
-    canActivate: [ProtectedGuard]
+    canActivate: [ProtectedGuard],
   },
   { path: 'forgot-pin', component: ForgotPinComponent },
   { path: 'sms-validation', component: SmsValidationComponent },
   { path: 'login', component: LoginComponent, canActivate: [PublicGuard] },
   { path: 'signup', component: SignUpComponent, canActivate: [PublicGuard] },
-  { path: '**', redirectTo: '/home' }
+  { path: '**', redirectTo: '/home' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

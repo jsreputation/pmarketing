@@ -146,6 +146,7 @@
     "SUBMIT_ERROR_TXT": "There was an issue when trying to submit your last answer."
   },
   "WALLET": {
+    "WALLET_TITLE": "My Wallet",
     "REWARDS_TITLE": "My Rewards",
     "HISTORY_TITLE": "My History",
     "MY_WALLET": "My Wallet",
