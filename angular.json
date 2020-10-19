@@ -301,10 +301,10 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": false,
-              "fileReplacements": [
+              "index": [
                 {
-                  "replace": "apps/starhub/src/index.html",
-                  "with": "apps/starhub/src/index.prod.html"
+                  "input": "apps/starhub/src/index.prod.html",
+                  "output": "index.html"
                 }
               ],
               "budgets": [
