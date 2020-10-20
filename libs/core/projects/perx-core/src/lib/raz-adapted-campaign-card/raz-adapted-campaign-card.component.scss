@@ -5,7 +5,11 @@ mat-card {
 }
 
 .campaigns-card {
-  margin: 0.8rem 1.6rem;
+  margin: 1.4rem 1.6rem;
+
+  &:first-child {
+    margin-top: 0;
+  }
 
   &.disabled {
     filter: grayscale(50%) opacity(40%);
@@ -40,7 +44,7 @@ mat-card {
       font-size: 1.6rem;
       //line-height: 2rem;
       color: #212121;
-      margin: 0 0 1rem 0.8rem;
+      margin: 0 0 0.4rem 0.8rem;
     }
 
     .reward-subtitle {
