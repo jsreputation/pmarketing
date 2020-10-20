@@ -248,7 +248,7 @@ export class WhistlerRewardsService implements RewardsService {
   }
 
   // @ts-ignore
-  public nearMe(rad: number, position: Position): Observable<IReward[]> {
+  public nearMe(rad: number, lat: number, lng: number): Observable<IReward[]> {
     throw new Error('Method not implemented.');
   }
 }

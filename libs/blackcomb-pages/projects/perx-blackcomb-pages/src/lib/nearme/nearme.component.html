@@ -1,4 +1,12 @@
 <div class="container">
+  <div class="headers">
+	  <button mat-button class="search-button" (click)="searchThisArea()">Search this area</button>
+    <div class="filter-area">
+      <button mat-button (click)="openDialog()">
+        <img src="assets/funnel.png" alt="">
+      </button>
+    </div>
+  </div>
   <div #gmap class="map"></div>
   <div class="loc-card-container">
       <div *ngIf="current && currentPrice" class="loc-card mat-elevation-z8">
