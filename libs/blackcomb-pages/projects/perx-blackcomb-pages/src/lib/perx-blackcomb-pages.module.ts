@@ -23,7 +23,8 @@ import {
   MatDialogModule,
   MatMenuModule,
   MatInputModule,
-  MatTableModule, MatAutocompleteModule
+  MatTableModule,
+  MatAutocompleteModule,
 } from '@angular/material';
 import { GameModule } from './game/game.module';
 import { HistoryModule } from './history/history.module';
@@ -40,7 +41,7 @@ import {
   RankModule,
   LocationModule,
   CampaignServiceModule,
-  ProgressBarModule
+  ProgressBarModule,
 } from '@perxtech/core';
 
 import { RewardComponent } from './reward/reward.component';
@@ -75,7 +76,6 @@ import { QuizResultsModule } from './quiz-results/quiz-results.module';
 import { LuckyDrawDetailsComponent } from './lucky-draw-details/lucky-draw-details.component';
 import { CampaignLandingPageModule } from './campaign-landing-page/campaign-landing-page.module';
 import { LandingPageModule } from './landing-page/landing-page.module';
-import { ReferralComponent } from './referral/referral.component';
 import { LeaderboardPageComponent } from './leaderboard-page/leaderboard-page.component';
 import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
 import { SignIn2Module } from './sign-in-2/sign-in-2.module';
@@ -92,7 +92,6 @@ import { RewardVoucherDetailModule } from './reward-voucher-detail/reward-vouche
 import { RazAdaptedCampaignsCollectionModule } from './raz-adapted-campaigns-collection/raz-adapted-campaigns-collection.module';
 import { FilterDialogComponent } from './nearme/filter-dialog/filter-dialog.component';
 
-
 const comps: any[] = [
   RewardComponent,
   LoadingComponent,
@@ -102,7 +101,6 @@ const comps: any[] = [
   ChangePasswordComponent,
   RewardsBookingComponent,
   LuckyDrawDetailsComponent,
-  ReferralComponent,
   LeaderboardPageComponent,
   NearmeComponent,
   RewardsPageComponent,
@@ -185,18 +183,11 @@ const comps: any[] = [
     ProgressCampaignModule,
     RewardVoucherDetailModule,
     ProgressBarModule,
-    RazAdaptedCampaignsCollectionModule
+    RazAdaptedCampaignsCollectionModule,
   ],
-  exports: [
-    ...comps,
-  ],
-  declarations: [
-    ...comps,
-  ],
-  providers: [
-    SecondsToStringPipe
-  ],
-  entryComponents: [FilterDialogComponent]
+  entryComponents: [FilterDialogComponent],
+  exports: [...comps],
+  declarations: [...comps],
+  providers: [SecondsToStringPipe],
 })
-export class PerxBlackcombPagesModule {
-}
+export class PerxBlackcombPagesModule {}
