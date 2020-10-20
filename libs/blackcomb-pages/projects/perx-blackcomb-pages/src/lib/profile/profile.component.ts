@@ -3,14 +3,17 @@ import {
   OnInit
 } from '@angular/core';
 import {
+  IFlags,
   ILoyalty,
   IProfile,
   LoyaltyService,
-  ProfileService
+  ProfileService,
+  SettingsService
 } from '@perxtech/core';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
+import { oc } from 'ts-optchain';
 
 // import { ShowTitleInHeader } from '../layout/layout.component';
 
@@ -23,10 +26,12 @@ export class ProfileComponent implements OnInit/*, ShowTitleInHeader*/ {
   public profile: IProfile;
   public loyalty: ILoyalty;
   public loyaltyMembershipExpiry: string | null;
+  public editablePassword: boolean = true;
 
   constructor(
     private profileService: ProfileService,
     private loyaltyService: LoyaltyService,
+    private settingsService: SettingsService,
     private router: Router,
     private datePipe: DatePipe
   ) { }
@@ -35,7 +40,11 @@ export class ProfileComponent implements OnInit/*, ShowTitleInHeader*/ {
     this.profileService.whoAmI().subscribe(res => {
       this.profile = res;
     });
-
+    this.settingsService.getRemoteFlagsSettings().subscribe(
+      (flags: IFlags) => {
+        this.editablePassword = !oc(flags).systemSetsPassword(false);
+      }
+    );
     this.loyaltyService.getLoyalties().pipe(
       map((loyalties: ILoyalty[]) => loyalties && loyalties.length && loyalties[0])
     ).subscribe((loyalty: ILoyalty) => {

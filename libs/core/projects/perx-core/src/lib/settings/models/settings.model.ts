@@ -21,6 +21,7 @@ export interface IFlags {
   showProgressCampaignsNavButton?: boolean;
   showVoucherStatusLabels?: boolean;
   voucherDistributionType?: VoucherDistributionTypes;
+  systemSetsPassword?: boolean;
 }
 
 export interface IRssFeeds {

@@ -6,7 +6,8 @@ import {
 import {
   ILoyalty,
   LoyaltyService,
-  ProfileService
+  ProfileService,
+  SettingsService
 } from '@perxtech/core';
 import { ProfileComponent } from './profile.component';
 import {
@@ -29,6 +30,10 @@ const loyaltyServiceStub: Partial<LoyaltyService> = {
   getLoyalty: (): Observable<ILoyalty> => of()
 };
 
+const settingsServiceStub: Partial<SettingsService> = {
+  getRemoteFlagsSettings: () => of()
+};
+
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
   let fixture: ComponentFixture<ProfileComponent>;
@@ -44,7 +49,8 @@ describe('ProfileComponent', () => {
       providers: [
         DatePipe,
         { provide: ProfileService, useValue: profileServiceStub },
-        { provide: LoyaltyService, useValue: loyaltyServiceStub }
+        { provide: LoyaltyService, useValue: loyaltyServiceStub },
+        { provide: SettingsService, useValue: settingsServiceStub }
       ]
     })
       .compileComponents();
