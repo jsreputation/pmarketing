@@ -92,3 +92,4 @@ export { RazAdaptedCampaignsCollectionComponent } from './lib/raz-adapted-campai
 export { RazAdaptedCampaignsCollectionModule } from './lib/raz-adapted-campaigns-collection/raz-adapted-campaigns-collection.module';
 export { CampaignsDetailComponent } from './lib/campaigns-detail/campaigns-detail.component';
 export { CampaignsDetailModule } from './lib/campaigns-detail/campaigns-detail.module';
+export { ReferralModule } from './lib/referral/referral.module';
