@@ -138,6 +138,7 @@ export const setLanguage = (
   imports: [
     ConfigModule.forRoot({ ...environment }),
     SettingsModule.forRoot({ ...environment }),
+    AuthenticationModule,
     PerxSvcGameModule.forRoot(),
     PerxGameModule,
     BrowserModule,
@@ -145,7 +146,6 @@ export const setLanguage = (
     PerxCoreModule,
     VouchersModule,
     OutcomeModule,
-    AuthenticationModule,
     SignUpModule,
     BrowserAnimationsModule,
     PerxMerchantsModule.forRoot(),
