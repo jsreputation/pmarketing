@@ -124,8 +124,12 @@ export class V4AuthenticationService extends AuthenticationService implements Au
   public refreshToken(): Observable<any> {
     if (this.preauth && this.retries < this.maxRetries) {
       this.retries++;
-      this.autoLogin().subscribe(() =>
-        console.log('finished refresh token')
+      this.autoLogin().subscribe(
+        () => console.log('finished refresh token'),
+        () => {
+          this.logout();
+          this.notificationService.addSnack('LOGIN_SESSION_EXPIRED');
+        }
       );
       return of(true);
     }
