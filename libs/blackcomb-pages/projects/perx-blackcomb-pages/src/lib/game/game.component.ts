@@ -185,7 +185,7 @@ export class GameComponent implements OnInit, OnDestroy {
             // null is recognised as infinite from dashboard
             this.notificationService.addPopup({
               title: 'No more tries',
-              text: "Come back when you've earned more tries!",
+              text: `Come back when you've earned more tries!`,
               buttonTxt: this.isEmbedded ? null : 'Close',
               afterClosedCallBack: this,
               disableOverlayClose: true,
