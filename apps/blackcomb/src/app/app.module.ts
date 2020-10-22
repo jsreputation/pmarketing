@@ -78,6 +78,7 @@ import { AppComponent } from './app.component';
 import { SignUpModule } from './sign-up/sign-up.module';
 import { environment } from '../environments/environment';
 import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
+import { ErrorComponent } from './error/error.component';
 
 // https://medium.com/angular-in-depth/gestures-in-an-angular-application-dde71804c0d0
 // to override default settings
@@ -131,11 +132,13 @@ export const setLanguage = (
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ErrorComponent
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
     SettingsModule.forRoot({ ...environment }),
+    AuthenticationModule,
     PerxSvcGameModule.forRoot(),
     PerxGameModule,
     BrowserModule,
@@ -143,7 +146,6 @@ export const setLanguage = (
     PerxCoreModule,
     VouchersModule,
     OutcomeModule,
-    AuthenticationModule,
     SignUpModule,
     BrowserAnimationsModule,
     PerxMerchantsModule.forRoot(),
