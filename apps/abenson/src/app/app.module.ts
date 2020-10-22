@@ -1,8 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import {
-  APP_INITIALIZER,
-  NgModule
-} from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   AuthenticationModule,
@@ -24,7 +21,7 @@ import {
   ThemesService,
   TokenStorage,
   UtilsModule,
-  VouchersModule
+  VouchersModule,
 } from '@perxtech/core';
 import {
   MatButtonModule,
@@ -44,17 +41,14 @@ import {
 import {
   HTTP_INTERCEPTORS,
   HttpClient,
-  HttpClientModule
+  HttpClientModule,
 } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
 import { HomeComponent } from './home/home.component';
 import { environment } from '../environments/environment';
-import {
-  FormsModule,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HistoryComponent } from './history/history.component';
 import { PromosComponent } from './promos/promos.component';
 import { PromosComponent as PromosProdComponent } from './promos/promos.component.prod';
@@ -69,12 +63,9 @@ import { registerLocaleData } from '@angular/common';
 import {
   TranslateLoader,
   TranslateModule,
-  TranslateService
+  TranslateService,
 } from '@ngx-translate/core';
-import {
-  switchMap,
-  tap
-} from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 
 import enGb from '@angular/common/locales/en-GB';
 import localesEnGbExtra from '@angular/common/locales/extra/en-GB';
@@ -88,6 +79,7 @@ import ko from '@angular/common/locales/ko';
 import localesKoExtra from '@angular/common/locales/extra/ko';
 import fr from '@angular/common/locales/fr';
 import localesFrExtra from '@angular/common/locales/extra/fr';
+import { WalletHistoryModule } from '@perxtech/blackcomb-pages';
 
 // use en-GB as the default english flavour
 registerLocaleData(enGb, 'en', localesEnGbExtra);
@@ -102,15 +94,21 @@ export const setLanguage = (
   translateService: TranslateService,
   configService: ConfigService,
   authService: AuthenticationService,
-  themesService: ThemesService) =>
-  () => new Promise((resolve) => {
-    configService.readAppConfig().pipe(
-      tap((config: IConfig<void>) => translateService.setDefaultLang(config.defaultLang || 'en')),
-      switchMap(() => authService.getAppToken()),
-      switchMap(() => themesService.getThemeSetting())
-    ).toPromise().then(() => resolve());
+  themesService: ThemesService
+) => () =>
+  new Promise((resolve) => {
+    configService
+      .readAppConfig()
+      .pipe(
+        tap((config: IConfig<void>) =>
+          translateService.setDefaultLang(config.defaultLang || 'en')
+        ),
+        switchMap(() => authService.getAppToken()),
+        switchMap(() => themesService.getThemeSetting())
+      )
+      .toPromise()
+      .then(() => resolve());
   });
-
 
 @NgModule({
   declarations: [
@@ -124,7 +122,7 @@ export const setLanguage = (
     ForgotPinComponent,
     SmsValidationComponent,
     QRCodeComponent,
-    PopupComponent
+    PopupComponent,
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
@@ -164,19 +162,30 @@ export const setLanguage = (
       loader: {
         provide: TranslateLoader,
         deps: [HttpClient, ConfigService, TokenStorage],
-        useClass: LanguageService
-      }
+        useClass: LanguageService,
+      },
     }),
+    WalletHistoryModule,
   ],
   providers: [
     {
       provide: APP_INITIALIZER,
       useFactory: setLanguage,
-      deps: [TranslateService, ConfigService, AuthenticationService, ThemesService], multi: true
+      deps: [
+        TranslateService,
+        ConfigService,
+        AuthenticationService,
+        ThemesService,
+      ],
+      multi: true,
     },
-    { provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true }
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: UnauthorizedInterceptor,
+      multi: true,
+    },
   ],
   entryComponents: [PopupComponent],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
