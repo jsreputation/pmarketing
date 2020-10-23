@@ -46,7 +46,6 @@ import {
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
-import { HomeComponent } from './home/home.component';
 import { environment } from '../environments/environment';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HistoryComponent } from './history/history.component';
@@ -114,7 +113,6 @@ export const setLanguage = (
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent,
     HistoryComponent,
     PromosComponent,
     PromosProdComponent,

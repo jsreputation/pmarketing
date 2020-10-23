@@ -11,7 +11,7 @@ import {
   IConfig,
 } from '@perxtech/core';
 import { LoginComponent } from './auth/login/login.component';
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from '@perxtech/blackcomb-pages';
 import { HistoryComponent } from './history/history.component';
 import { AccountComponent } from './account/account.component';
 import { PromosComponent } from './promos/promos.component';

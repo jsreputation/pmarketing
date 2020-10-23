@@ -179,6 +179,11 @@ const appConfigFile = `{
         ? process.env.REDIRECT_AFTER_LOGIN
         : '/wallet'
     }",
+    "redirectBeforeLogin": "${
+      process.env.REDIRECT_BEFORE_LOGIN
+        ? process.env.REDIRECT_BEFORE_LOGIN
+        : '/login'
+    }",
     "loginMethod": "${
       process.env.LOGIN_METHOD ? process.env.LOGIN_METHOD : 'phone'
     }",

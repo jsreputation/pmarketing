@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './auth/login/login.component';
 import { HistoryComponent } from './history/history.component';
 import { PromosComponent } from './promos/promos.component';
@@ -14,7 +13,12 @@ const routes: Routes = [
     path: '',
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'home' },
-      { path: 'home', component: HomeComponent },
+      {
+        path: 'home',
+        loadChildren: () =>
+          import('./home/home.module').then((mod) => mod.HomeModule),
+        canActivate: [ProtectedGuard],
+      },
       { path: 'promos', component: PromosComponent },
       {
         path: 'wallet',

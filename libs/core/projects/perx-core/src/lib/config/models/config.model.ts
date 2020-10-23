@@ -3,7 +3,7 @@ import { IWSetting } from '@perxtech/whistler';
 export enum LoginType {
   phone = 'phone',
   email = 'email',
-  username = 'username'
+  username = 'username',
 }
 
 export interface IConfig<T> {
@@ -35,6 +35,7 @@ export interface IConfig<T> {
   showRewardsOnHomepage?: boolean;
   showCampaignLandingPage?: boolean;
   showLeaderboardPage?: boolean;
+  hidePopupCampaign?: boolean;
 
   /* Misc */
   showQrPageSubtitle?: boolean;
