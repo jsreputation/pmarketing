@@ -235,7 +235,7 @@
     "REWARDS_LEFT": "獎勵剩餘",
     "READ_MORE": "查看更多",
     "YOU_HAVE": "積分餘額",
-    "POINTS_EXPITING": "積分餘額為 {{points}}，有效日期至 {{date}}",
+    "POINTS_EXPIRING": "積分餘額為 {{points}}，有效日期至 {{date}}",
     "POINT_EXPIRE": "{points}將於{date}過期",
     "ACCOUNT_EXPIRE": "賬戶過期於",
     "POINT_TO": "升級到{nextTierName}會員所需積分",

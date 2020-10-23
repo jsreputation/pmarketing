@@ -11,7 +11,7 @@ import { catchError, tap, map } from 'rxjs/operators';
 @Component({
   selector: 'perx-core-loyalty-summary',
   templateUrl: './loyalty-summary.component.html',
-  styleUrls: ['./loyalty-summary.component.scss']
+  styleUrls: ['./loyalty-summary.component.scss'],
 })
 export class LoyaltySummaryComponent implements OnInit {
   @Input()
@@ -53,12 +53,17 @@ export class LoyaltySummaryComponent implements OnInit {
     private profileService: ProfileService,
     private loyaltyService: LoyaltyService,
     private datePipe: DatePipe
-  ) {
-  }
+  ) {}
 
   public ngOnInit(): void {
     if (!this.subTitleFn) {
-      this.subTitleFn = () => of(`Your total points as of ${this.datePipe.transform(new Date(), 'mediumDate')}`);
+      this.subTitleFn = () =>
+        of(
+          `Your total points as of ${this.datePipe.transform(
+            new Date(),
+            'mediumDate'
+          )}`
+        );
     }
 
     if (!this.pointToFn) {
@@ -66,7 +71,8 @@ export class LoyaltySummaryComponent implements OnInit {
     }
 
     if (!this.memberFn) {
-      this.memberFn = (membershipTierName: string) => of(`${membershipTierName} member`);
+      this.memberFn = (membershipTierName: string) =>
+        of(`${membershipTierName} member`);
     }
 
     if (!this.titleFn) {
@@ -83,17 +89,36 @@ export class LoyaltySummaryComponent implements OnInit {
 
     if (!this.summaryExpiringFn) {
       this.summaryExpiringFn = (loyalty: ILoyalty): Observable<string> => {
-        const expiringPoints = loyalty && loyalty.expiringPoints && loyalty.expiringPoints.length ? loyalty.expiringPoints[0] : null;
-        return expiringPoints && expiringPoints.expireDate && expiringPoints.points && expiringPoints.points !== 0 ?
-          of(`${String(expiringPoints.points)} points will expire on ${this.datePipe.transform(expiringPoints.expireDate, 'mediumDate') || ''}`)
+        const expiringPoints =
+          loyalty && loyalty.expiringPoints && loyalty.expiringPoints.length
+            ? loyalty.expiringPoints[0]
+            : null;
+        return expiringPoints &&
+          expiringPoints.expireDate &&
+          expiringPoints.points &&
+          expiringPoints.points !== 0
+          ? of(
+              `${String(expiringPoints.points)} points will expire on ${
+                this.datePipe.transform(
+                  expiringPoints.expireDate,
+                  'mediumDate'
+                ) || ''
+              }`
+            )
           : of('');
       };
     }
 
     if (!this.membershipExpiryFn) {
-      this.membershipExpiryFn = (loyalty: ILoyalty): Observable<string> => loyalty && loyalty.membershipExpiry || loyalty.endDate ?
-        of(`Account Expiry: ${this.datePipe.transform(loyalty.membershipExpiry || loyalty.endDate, 'mediumDate')}`) :
-        of('');
+      this.membershipExpiryFn = (loyalty: ILoyalty): Observable<string> =>
+        (loyalty && loyalty.membershipExpiry) || loyalty.endDate
+          ? of(
+              `Account Expiry: ${this.datePipe.transform(
+                loyalty.membershipExpiry || loyalty.endDate,
+                'mediumDate'
+              )}`
+            )
+          : of('');
     }
 
     if (!this.profile$) {
@@ -101,37 +126,38 @@ export class LoyaltySummaryComponent implements OnInit {
     }
 
     if (!this.loyalty$) {
-      this.loyalty$ = this.loyaltyService.getLoyalty(this.loyaltyId)
-        .pipe(
-          catchError(val => {
-            if (val.status === 401) {
-              this.loyaltyProgramExists = true;
-            }
-            return of(val);
-          })
-        );
+      this.loyalty$ = this.loyaltyService.getLoyalty(this.loyaltyId).pipe(
+        catchError((val) => {
+          if (val.status === 401) {
+            this.loyaltyProgramExists = true;
+          }
+          return of(val);
+        })
+      );
     }
-    this.loyalty$.pipe(
-      tap((loyalty: ILoyalty) => {
-        if (loyalty && loyalty.nextTierName) {
-          // Todo variable neeed to be translated, but core don't have transalate service
-          this.nextTierName = loyalty.nextTierName;
-        }
-      })
-    ).subscribe(
-      (loyalty: ILoyalty) => {
+    this.loyalty$
+      .pipe(
+        tap((loyalty: ILoyalty) => {
+          if (loyalty && loyalty.nextTierName) {
+            // Todo variable neeed to be translated, but core don't have transalate service
+            this.nextTierName = loyalty.nextTierName;
+          }
+        })
+      )
+      .subscribe((loyalty: ILoyalty) => {
         this.loyalty = loyalty;
         if (this.nextTierName) {
           this.pointTo = this.pointToFn().pipe(
-            map(text => text.replace('{nextTierName}', this.nextTierName))
+            map((text) => text.replace('{nextTierName}', this.nextTierName))
           );
         }
-      }
-    );
-
+      });
   }
 
-  public getPercentageToNext(currentPoints: number, nextPoints: number | undefined): number {
+  public getPercentageToNext(
+    currentPoints: number,
+    nextPoints: number | undefined
+  ): number {
     if (currentPoints && nextPoints) {
       return Math.round((currentPoints / nextPoints) * 100);
     }
