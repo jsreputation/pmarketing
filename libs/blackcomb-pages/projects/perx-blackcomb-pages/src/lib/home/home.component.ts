@@ -55,8 +55,7 @@ import {
 import { TranslateService } from '@ngx-translate/core';
 import { Title } from '@angular/platform-browser';
 import { MatDialog, MatTabChangeEvent } from '@angular/material';
-import { DatePipe } from '@angular/common';
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, DatePipe } from '@angular/common';
 
 @Component({
   selector: 'perx-blackcomb-home',
@@ -113,28 +112,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     protected feedService: FeedReaderService,
     protected settingsService: SettingsService,
     protected profileService: ProfileService,
-    protected datePipe: DatePipe,
-    private currencyPipe: CurrencyPipe
+    protected currencyPipe: CurrencyPipe,
+    protected datePipe: DatePipe
   ) {}
 
   public ngOnInit(): void {
-    this.subTitleFn = (loyalty: ILoyalty) =>
-      of(
-        `Equivalent to ${this.currencyPipe.transform(
-          loyalty.currencyBalance,
-          loyalty.currency,
-          'symbol-narrow',
-          '1.0-0',
-          'en-PH'
-        )} e-Cash`
-      );
-    this.summaryExpiringFn = () =>
-      of(
-        `Your total points as of ${this.datePipe.transform(
-          new Date(),
-          'mediumDate'
-        )}`
-      );
     this.configService
       .readAppConfig<void>()
       .pipe(
@@ -145,7 +127,17 @@ export class HomeComponent implements OnInit, OnDestroy {
             this.authService.isAuthorized().subscribe((isAuth: boolean) => {
               if (isAuth && !this.configService.readAppStarted()) {
                 this.configService.setAppStarted();
-                if (config.hidePopupCampaign) {
+                if (config.app === 'abenson') {
+                  this.subTitleFn = (loyalty: ILoyalty) =>
+                    of(
+                      `Equivalent to ${this.currencyPipe.transform(
+                        loyalty.currencyBalance,
+                        loyalty.currency,
+                        'symbol-narrow',
+                        '1.0-0',
+                        'en-PH'
+                      )} e-Cash`
+                    );
                   return;
                 }
                 this.fetchPopupCampaigns();
@@ -470,36 +462,40 @@ export class HomeComponent implements OnInit, OnDestroy {
         })
       );
     this.summaryExpiringFn = (loyalty: ILoyalty) =>
-      this.translate.get('HOME.POINTS_EXPIRING').pipe(
-        map((res) => {
-          return loyalty &&
+      this.translate
+        .get('HOME.POINTS_EXPIRING')
+        .pipe(
+          map((res) =>
+            loyalty &&
             loyalty.expiringPoints &&
             loyalty.expiringPoints.length &&
             loyalty.expiringPoints[0].points &&
             loyalty.expiringPoints[0].points !== 0
-            ? res
-                .replace(
-                  '{{points}}',
-                  (loyalty.expiringPoints[0].points
-                    ? loyalty.expiringPoints[0].points
-                    : 0
-                  ).toString()
-                )
-                .replace(
-                  '{{date}}',
-                  loyalty.expiringPoints[0].expireDate
-                    ? this.datePipe.transform(
-                        loyalty.expiringPoints[0].expireDate,
-                        'd MMM y'
-                      )
-                    : ''
-                )
-            : `Your total points as of ${this.datePipe.transform(
-                new Date(),
-                'mediumDate'
-              )}`;
-        })
-      );
+              ? res
+                  .replace(
+                    '{{points}}',
+                    (loyalty.expiringPoints[0].points
+                      ? loyalty.expiringPoints[0].points
+                      : 0
+                    ).toString()
+                  )
+                  .replace(
+                    '{{date}}',
+                    loyalty.expiringPoints[0].expireDate
+                      ? this.datePipe.transform(
+                          loyalty.expiringPoints[0].expireDate,
+                          'd MMM y'
+                        )
+                      : ''
+                  )
+              : this.appConfig.app === 'abenson'
+              ? `Your total points as of ${this.datePipe.transform(
+                  new Date(),
+                  'mediumDate'
+                )}`
+              : ''
+          )
+        );
     this.pointToFn = () => this.translate.get('HOME.POINT_TO');
     this.memberFn = (membershipTierName: string) =>
       this.translate
