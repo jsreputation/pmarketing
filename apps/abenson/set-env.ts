@@ -7,19 +7,25 @@ const path = require('path');
 require('dotenv').config();
 
 // Configure Angular `environment.ts` file path
-const angularTargetPath = path.resolve(__dirname, './src/environments/environment.ts');
-const appConfigPath = path.resolve(__dirname, './src/assets/config/app-config.json');
+const angularTargetPath = path.resolve(
+  __dirname,
+  './src/environments/environment.ts'
+);
+const appConfigPath = path.resolve(
+  __dirname,
+  './src/assets/config/app-config.json'
+);
 
 // create environment folders
 ['./src/environments', './src/assets/config']
-  .map(relativePath => path.resolve(__dirname, relativePath))
-  .filter(fullPath => !fs.existsSync(fullPath))
-  .forEach(fullPath => fs.mkdirSync(fullPath));
+  .map((relativePath) => path.resolve(__dirname, relativePath))
+  .filter((fullPath) => !fs.existsSync(fullPath))
+  .forEach((fullPath) => fs.mkdirSync(fullPath));
 
 // `environment.ts` file structure that uses the environment variables
 const envConfigFile = `export const environment = {
   apiHost: '${
-  process.env.APIHOST ? process.env.APIHOST : 'https://api.perxtech.io'
+    process.env.APIHOST ? process.env.APIHOST : 'https://api.perxtech.io'
   }',
   production: ${process.env.PRODUCTION ? process.env.PRODUCTION : false},
   preAuth: ${process.env.PREAUTH ? process.env.PREAUTH : false},
@@ -31,22 +37,74 @@ const envConfigFile = `export const environment = {
 const appConfigFile = `{
   "app": "abenson",
   "apiHost": "${
-  process.env.APIHOST ? process.env.APIHOST : 'https://api.perxtech.io'
+    process.env.APIHOST ? process.env.APIHOST : 'https://api.perxtech.io'
   }",
   "production": ${process.env.PRODUCTION ? process.env.PRODUCTION : false},
   "preAuth": ${process.env.PREAUTH ? process.env.PREAUTH : false},
   "isWhistler": ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : false},
   "baseHref": "${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}",
   "sourceType": "${process.env.SOURCE_TYPE ? process.env.SOURCE_TYPE : ''}",
-  "redirectAfterLogin": "${process.env.redirectAfterLogin ? process.env.redirectAfterLogin : '/wallet'}",
+  "redirectAfterLogin": "${
+    process.env.redirectAfterLogin ? process.env.redirectAfterLogin : '/wallet'
+  }",
+
+  "showNewsfeedOnHomepage": ${
+    process.env.SHOW_NEWSFEED_HOMEPAGE
+      ? process.env.SHOW_NEWSFEED_HOMEPAGE
+      : false
+  },
+  "showLoyaltyBlockOnHomePage": ${
+    process.env.SHOW_LOYALTY_BLOCK_ON_HOMEPAGE
+      ? process.env.SHOW_LOYALTY_BLOCK_ON_HOMEPAGE
+      : true
+  },
+  "showLoyaltyProgress": ${
+    process.env.SHOW_LOYALTY_PROGRESS ? process.env.SHOW_LOYALTY_PROGRESS : true
+  },
+  "showCatalogOnHomePage": ${
+    process.env.SHOW_CATALOG_ON_HOMEPAGE
+      ? process.env.SHOW_CATALOG_ON_HOMEPAGE
+      : false
+  },
+  "showQuizOnHomePage" : ${
+    process.env.SHOW_QUIZ_ON_HOMEPAGE
+      ? process.env.SHOW_QUIZ_ON_HOMEPAGE
+      : false
+  },
+  "showSurveyOnHomePage" : ${
+    process.env.SHOW_SURVEY_ON_HOMEPAGE
+      ? process.env.SHOW_SURVEY_ON_HOMEPAGE
+      : false
+  },
+  "showCampaignRewardsCounterOnHomepage": ${
+    process.env.SHOW_CAMPAIGN_REWARDS_COUNTER_ON_HOMEPAGE
+      ? process.env.SHOW_CAMPAIGN_REWARDS_COUNTER_ON_HOMEPAGE
+      : false
+  },
+  "showRewardsOnHomepage": ${
+    process.env.SHOW_REWARDS_ON_HOMEPAGE
+      ? process.env.SHOW_REWARDS_ON_HOMEPAGE
+      : true
+  },
+  "showCampaignLandingPage": ${
+    process.env.SHOW_CAMPAIGN_LANDING_PAGE
+      ? process.env.SHOW_CAMPAIGN_LANDING_PAGE
+      : false
+  },
+  "hidePopupCampaign": ${
+    process.env.HIDE_POPUP_HOMEPAGE ? process.env.HIDE_POPUP_HOMEPAGE : false
+  },
+
   "custom": {
-    "loginMethod": "${process.env.LOGIN_METHOD ? process.env.LOGIN_METHOD : 'phone'}",
+    "loginMethod": "${
+      process.env.LOGIN_METHOD ? process.env.LOGIN_METHOD : 'phone'
+    }",
     "comingSoon": ${process.env.COMING_SOON ? process.env.COMING_SOON : false},
     "cardBrandingImage": "${
-  process.env.CARD_BRANDING_IMG
-    ? process.env.CARD_BRANDING_IMG
-    : 'assets/abenson_plus_banner.png'
-  }"
+      process.env.CARD_BRANDING_IMG
+        ? process.env.CARD_BRANDING_IMG
+        : 'assets/abenson_plus_banner.png'
+    }"
   }
 }
 `;
@@ -61,7 +119,7 @@ console.log(colors.grey(envConfigFile));
 async.each(
   [
     [angularTargetPath, envConfigFile],
-    [appConfigPath, appConfigFile]
+    [appConfigPath, appConfigFile],
   ],
   (item: [[string, string], [string, string]], callback: any) => {
     console.log(
