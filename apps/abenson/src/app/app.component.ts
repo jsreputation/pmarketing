@@ -17,7 +17,6 @@ import { AccountComponent } from './account/account.component';
 import { PromosComponent } from './promos/promos.component';
 import { CardComponent } from './card/containers/card/card.component';
 import { SignUpComponent } from './auth/signup/signup.component';
-import { WalletComponent } from './wallet/wallet.component';
 import { ProfileComponent } from './account/profile/profile.component';
 import { ChangeBarangayComponent } from './account/profile/change-barangay/change-barangay.component';
 import { ChangePasswordComponent } from './account/change-password/change-password.component';
@@ -30,6 +29,7 @@ import { TermsAndConditionComponent } from './account/profile-additions/containe
 import { CustomerSupportComponent } from './account/customer-support/customer-support.component';
 import { flatMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { WalletHistoryComponent } from '@perxtech/blackcomb-pages';
 
 @Component({
   selector: 'app-root',
@@ -87,7 +87,7 @@ export class AppComponent implements OnInit {
       ref instanceof HistoryComponent ||
       ref instanceof PromosComponent ||
       ref instanceof AccountComponent ||
-      ref instanceof WalletComponent ||
+      ref instanceof WalletHistoryComponent ||
       ref instanceof CardComponent;
     this.showBackArrow = !this.showHeader || !this.showToolbar;
     this.showLogo = !(

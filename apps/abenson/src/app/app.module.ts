@@ -78,6 +78,7 @@ import ko from '@angular/common/locales/ko';
 import localesKoExtra from '@angular/common/locales/extra/ko';
 import fr from '@angular/common/locales/fr';
 import localesFrExtra from '@angular/common/locales/extra/fr';
+import { WalletHistoryModule } from '@perxtech/blackcomb-pages';
 
 // use en-GB as the default english flavour
 registerLocaleData(enGb, 'en', localesEnGbExtra);
@@ -162,6 +163,7 @@ export const setLanguage = (
         useClass: LanguageService,
       },
     }),
+    WalletHistoryModule,
   ],
   providers: [
     {
