@@ -16,6 +16,25 @@ const appConfigPath = path.resolve(
   './src/assets/config/app-config.json'
 );
 
+const displayProperties = `"displayProperties": {
+  "account": {
+      "pages": [
+          {
+              "key": "tnc",
+              "title": "Terms and Conditions"
+          },
+          {
+              "key": "privacy-policy",
+              "title": "Privacy Policy"
+          },
+          {
+              "key": "faq",
+              "title": "FAQ"
+          }
+      ]
+  }
+}`;
+
 // create environment folders
 ['./src/environments', './src/assets/config']
   .map((relativePath) => path.resolve(__dirname, relativePath))
@@ -94,6 +113,11 @@ const appConfigFile = `{
   "hidePopupCampaign": ${
     process.env.HIDE_POPUP_HOMEPAGE ? process.env.HIDE_POPUP_HOMEPAGE : false
   },
+  "showUserInfoOnAccountsPage": ${
+    process.env.SHOW_USERINFO_ACCOUNTS
+      ? process.env.SHOW_USERINFO_ACCOUNTS
+      : true
+  },
 
   "custom": {
     "loginMethod": "${
@@ -105,7 +129,8 @@ const appConfigFile = `{
         ? process.env.CARD_BRANDING_IMG
         : 'assets/abenson_plus_banner.png'
     }"
-  }
+  },
+  ${displayProperties}
 }
 `;
 

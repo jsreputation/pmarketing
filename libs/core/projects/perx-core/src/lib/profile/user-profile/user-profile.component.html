@@ -1,5 +1,5 @@
 <ng-container *ngIf="profile">
-    <perx-core-micro-profile [profile]="profile"></perx-core-micro-profile>
+    <perx-core-micro-profile [profile$]="profile"></perx-core-micro-profile>
     <div class="profile-item" *ngIf="profile.customProperties && profile.customProperties['code']">
         <div class="profile-item_label">
             {{playerCodeFn() | async}}
