@@ -4,16 +4,19 @@ import {
   CampaignLandingPage,
   ConfigService,
   ICampaign,
-  ICampaignService, ITheme, ThemesService
+  ICampaignService,
+  IConfig,
+  ITheme,
+  ThemesService,
 } from '@perxtech/core';
 import { Subject } from 'rxjs';
-import { filter, map, switchMap } from 'rxjs/operators';
+import { filter, flatMap, map, switchMap, tap } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 
 @Component({
   selector: 'perx-blackcomb-pages-campaign-landing-page',
   templateUrl: './campaign-landing-page.component.html',
-  styleUrls: ['./campaign-landing-page.component.scss']
+  styleUrls: ['./campaign-landing-page.component.scss'],
 })
 export class CampaignLandingPageComponent implements OnInit, OnDestroy {
   public campaign: ICampaign | undefined;
@@ -28,17 +31,37 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
     private configService: ConfigService,
     private themesService: ThemesService,
     private router: Router
-  ) { }
+  ) {}
 
   public ngOnInit(): void {
-    this.themesService.getThemeSetting().subscribe( (theme: ITheme) => {
-      this.buttonStyle['background-color'] = theme.properties['--button_background_color'] ?
-        theme.properties['--button_background_color'] : '';
-      this.buttonStyle.color = theme.properties['--button_text_color'] ?
-        theme.properties['--button_text_color'] : '';
+    this.themesService.getThemeSetting().subscribe((theme: ITheme) => {
+      console.log(theme);
+      this.buttonStyle['background-color'] = theme.properties[
+        '--button_background_color'
+      ]
+        ? theme.properties['--button_background_color']
+        : '';
+      this.buttonStyle.color = theme.properties['--button_text_color']
+        ? theme.properties['--button_text_color']
+        : '';
     });
-    this.configService.readAppConfig()
+    this.configService
+      .readAppConfig<ITheme>()
       .pipe(
+        flatMap((config: IConfig<ITheme>) =>
+          this.themesService.getThemeSetting(config)
+        ),
+        tap((theme: ITheme) => {
+          console.log(theme);
+          this.buttonStyle['background-color'] = theme.properties[
+            '--button_background_color'
+          ]
+            ? theme.properties['--button_background_color']
+            : '';
+          this.buttonStyle.color = theme.properties['--button_text_color']
+            ? theme.properties['--button_text_color']
+            : '';
+        }),
         switchMap(() => this.activatedRoute.params),
         filter((params: Params) => params.cid),
         map((params: Params) => Number.parseInt(params.cid, 10)),
