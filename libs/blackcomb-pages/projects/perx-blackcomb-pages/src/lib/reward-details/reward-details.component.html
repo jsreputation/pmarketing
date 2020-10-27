@@ -16,7 +16,7 @@
     <!-- old disable logic-->
     <!--    [disabled]="(!loyalty || !loyalty.pointsBalance || (loyalty.pointsBalance < (maxRewardCost || 0))) || waitForSubmission"-->
     <button mat-raised-button color="primary" class="reward-buy ga_purchase_reward"
-            [disabled]="(loyalty ?  (!loyalty.pointsBalance || loyalty.pointsBalance < (maxRewardCost || 0)) : false)  || waitForSubmission"
+            [disabled]="(loyalty ?  (loyalty.pointsBalance <  0 || loyalty.pointsBalance < (maxRewardCost || 0)) : false)  || waitForSubmission"
             perxCoreAppDebounceClick
             [debounceTime]="400"
             (debounceClick)="buyReward()">
