@@ -9,15 +9,19 @@
         <span class="tier" *ngIf="loyalty">{{loyalty.membershipTierName | noRenewaleInName | titlecase}} Member!</span>
         <div *ngIf="profile && profile.customProperties">
           <a class="membership-link" (click)="membershipClicked()">
-            <span class="subtitle" *ngIf="profile.customProperties.membership === 'Hub Club' &&
-            !profile.customProperties.MembershipType">
-              + Hub Club
+            <span class="subtitle"
+                  *ngIf="
+                  (profile.customProperties.membership === 'Hub Club' || profile.customProperties.membership_type)">
+              {{profile.customProperties.membership_display || '+ Hub Club'}}
             </span>
-            <span class="subtitle" *ngIf="profile.customProperties.MembershipType">
-              {{profile.customProperties.MembershipDisplay}}
+            <span class="subtitle" *ngIf="profile.customProperties.sub_membership_type && !profile.customProperties.membership_type">
+              {{profile.customProperties.sub_membership_display}}
             </span>
-            <span class="subtitle" *ngIf="profile.customProperties.SubMembershipType">
-              {{profile.customProperties.SubMembershipDisplay}}
+            <span class="subtitle" *ngIf="
+            profile.customProperties.membership !== 'Hub Club' &&
+            !profile.customProperties.membership_type &&
+            !profile.customProperties.sub_membership_type">
+              Regular
             </span>
           </a>
         </div>
