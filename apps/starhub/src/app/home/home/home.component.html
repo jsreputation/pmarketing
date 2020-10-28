@@ -11,10 +11,10 @@
           <a class="membership-link" (click)="membershipClicked()">
             <span class="subtitle"
                   *ngIf="
-                  (profile.customProperties.membership === 'Hub Club' || profile.customProperties.MembershipType === 'Hubclub')">
+                  (profile.customProperties.membership === 'Hub Club' || profile.customProperties.MembershipType)">
               {{profile.customProperties.MembershipDisplay || '+ Hub Club'}}
             </span>
-            <span class="subtitle" *ngIf="profile.customProperties.SubMembershipType === 'Nominee'">
+            <span class="subtitle" *ngIf="profile.customProperties.SubMembershipType">
               {{profile.customProperties.SubMembershipDisplay}}
             </span>
             <span class="subtitle" *ngIf="
