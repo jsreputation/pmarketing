@@ -14,7 +14,7 @@
                   (profile.customProperties.membership === 'Hub Club' || profile.customProperties.MembershipType)">
               {{profile.customProperties.MembershipDisplay || '+ Hub Club'}}
             </span>
-            <span class="subtitle" *ngIf="profile.customProperties.SubMembershipType">
+            <span class="subtitle" *ngIf="profile.customProperties.SubMembershipType && !profile.customProperties.MembershipType">
               {{profile.customProperties.SubMembershipDisplay}}
             </span>
             <span class="subtitle" *ngIf="
