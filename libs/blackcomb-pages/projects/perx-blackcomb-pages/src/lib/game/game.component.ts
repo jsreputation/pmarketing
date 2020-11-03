@@ -252,11 +252,11 @@ export class GameComponent implements OnInit, OnDestroy {
     this.gameService.play(this.gameId).subscribe(
       (gameOutcome: IPlayOutcome) => {
         this.startGameAnimation = true;
-        if (gameOutcome.vouchers.length > 0) {
+        if (gameOutcome.vouchers.length > 0 || gameOutcome.points) {
           // set this as a property
           this.rewardCount = gameOutcome.vouchers.length.toString();
         }
-        if (gameOutcome.points) {
+        if (gameOutcome && gameOutcome.points) {
           const pointsGained = {
             points: gameOutcome.points.reduce(
               (totalPoints, currPoints) => currPoints.points + totalPoints,
@@ -268,7 +268,7 @@ export class GameComponent implements OnInit, OnDestroy {
           };
           this.points = pointsGained;
         }
-        this.fillSuccess(this.rewardCount, this.points);
+        this.checkFailureOrSuccess();
       },
       () => {
         this.popupData = this.noRewardsPopUp;
@@ -362,7 +362,16 @@ export class GameComponent implements OnInit, OnDestroy {
           this.rewardCount = gameOutcome.vouchers.length.toString();
         }
         if (gameOutcome && gameOutcome.points) {
-          this.points = gameOutcome.points[0];
+          const pointsGained = {
+            points: gameOutcome.points.reduce(
+              (totalPoints, currPoints) => currPoints.points + totalPoints,
+              0
+            ),
+            id: gameOutcome.points[0].id,
+            outcomeType: gameOutcome.points[0].outcomeType,
+            properties: gameOutcome.points[0].properties,
+          };
+          this.points = pointsGained;
         }
         this.checkFailureOrSuccess();
       }),
