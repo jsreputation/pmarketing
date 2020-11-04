@@ -20,6 +20,7 @@ import {
   NotificationService,
   ThemesService
 } from '@perxtech/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('SignupComponent', () => {
   let component: SignupComponent;
@@ -55,7 +56,8 @@ describe('SignupComponent', () => {
         ReactiveFormsModule,
         FormsModule,
         RouterTestingModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        TranslateModule
       ],
       providers: [
         { provide: AuthenticationService, useValue: authServiceStub },
