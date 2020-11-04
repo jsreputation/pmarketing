@@ -155,8 +155,8 @@ export class SignupComponent implements OnInit {
 
     if (referralCode.length > 0 && this.appConfig.showReferralOnAccountsPage) {
       signUpData.customProperties = {
-        referralCode: referralCode
-      }
+        referralCode
+      };
     }
 
     this.authService.signup(signUpData)
