@@ -14,8 +14,7 @@ import { map, switchMap, takeLast, tap } from 'rxjs/operators';
   styleUrls: ['./referral.component.scss'],
 })
 export class ReferralComponent {
-  // todo to be replaced with the proper content when api is available
-  public tnc: string;
+  public campaignDescription: string = '';
   // todo to be replaced with the proper content when api is available
   public code: string = '';
   // todo to be replaced with the proper content when api is available
@@ -44,6 +43,8 @@ export class ReferralComponent {
               ? campaign.referralCodes[0]
               : this.code;
             this.shareText = this.shareText.replace('{{code}}', this.code);
+            // set to campaign or do nothing
+            this.campaignDescription = campaign.description ? campaign.description : this.campaignDescription;
           }
         }),
         takeLast(1)
@@ -84,13 +85,11 @@ export class ReferralComponent {
     this.translate
       .get([
         'REFERRAL.SHARE_COPY_TITLE',
-        'REFERRAL.CONTENT',
         'REFERRAL.SHARE_COPY_TXT',
         'REFERRAL.COPY_TO_CLIPBOARD',
         'REFERRAL.CLIPBOARD_ERROR_TXT',
       ])
       .subscribe((res: any) => {
-        this.tnc = res['REFERRAL.CONTENT'];
         this.shareTitle = res['REFERRAL.SHARE_COPY_TITLE'];
         this.shareText = res['REFERRAL.SHARE_COPY_TXT'].replace(
           '[URL]',

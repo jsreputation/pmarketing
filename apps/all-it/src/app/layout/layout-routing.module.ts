@@ -84,7 +84,11 @@ const routes: Routes = [
       {
         path: 'favorite-rewards',
         loadChildren: () => import('../favorite-rewards/favorite-rewards.module').then((mod) => mod.FavoriteRewardsModule)
-      }
+      },
+      {
+        path: 'referral',
+        loadChildren: () => import('../referral/referral.module').then(mod => mod.ReferralModule)
+      },
     ]
   }
 ];
