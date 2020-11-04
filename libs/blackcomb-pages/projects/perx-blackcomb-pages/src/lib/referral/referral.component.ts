@@ -43,7 +43,8 @@ export class ReferralComponent {
               ? campaign.referralCodes[0]
               : this.code;
             this.shareText = this.shareText.replace('{{code}}', this.code);
-            this.campaignDescription = campaign.description ? campaign.description : this.campaignDescription; // set to campaign or do nothing
+            // set to campaign or do nothing
+            this.campaignDescription = campaign.description ? campaign.description : this.campaignDescription;
           }
         }),
         takeLast(1)
