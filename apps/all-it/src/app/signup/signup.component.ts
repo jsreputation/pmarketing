@@ -153,7 +153,7 @@ export class SignupComponent implements OnInit {
       // postcode: postcodeString
     };
 
-    if (referralCode.length > 0) {
+    if (referralCode.length > 0 && this.appConfig.showReferralOnAccountsPage) {
       signUpData.customProperties = {
         referralCode: referralCode
       }
