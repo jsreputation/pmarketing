@@ -93,6 +93,11 @@
                         <span>Passwords should match</span>
                     </mat-error>
                 </mat-form-field>
+              <mat-form-field appearance="fill" class="full-width__input">
+                <mat-label>{{'SIGN_UP_PAGE.REFERRAL_FIELD' | translate}}</mat-label>
+                <input matInput [placeholder]="'SIGN_UP_PAGE.REFERRAL_FIELD' | translate"
+                       formControlName="referralCode">
+              </mat-form-field>
                 <div class="checkbox-container">
                     <mat-checkbox formControlName="accept_terms"></mat-checkbox>
                     <span class="wrap-checkbox-text">* I agree to the <a class="terms" [routerLink]="['/c/tnc']">terms and conditions.</a></span>

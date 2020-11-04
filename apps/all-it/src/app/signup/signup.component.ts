@@ -91,6 +91,7 @@ export class SignupComponent implements OnInit {
       email: ['', Validators.email],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],
+      referralCode: [''],
       accept_terms: [false, Validators.requiredTrue],
       accept_marketing: [false, Validators.required]
     }, {validator: this.matchingPasswords('password', 'confirmPassword')});
@@ -128,6 +129,7 @@ export class SignupComponent implements OnInit {
     const titleString = this.signupForm.value.title;
     const genderString = this.signupForm.value.gender;
     // const postcodeString = this.signupForm.value.postcode;
+    const referralCode = this.signupForm.value.referralCode;
 
     const signUpData: ISignUpData = {
       lastName: name,
@@ -138,8 +140,11 @@ export class SignupComponent implements OnInit {
       passwordConfirmation: confirmPassword,
       email: emailValue,
       title: titleString,
-      gender: genderString
+      gender: genderString,
       // postcode: postcodeString
+      customProperties: {
+        referralCode,
+      }
     };
 
     this.authService.signup(signUpData)
