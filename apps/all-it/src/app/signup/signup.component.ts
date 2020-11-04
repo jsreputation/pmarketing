@@ -142,10 +142,13 @@ export class SignupComponent implements OnInit {
       title: titleString,
       gender: genderString,
       // postcode: postcodeString
-      customProperties: {
-        referralCode,
-      }
     };
+
+    if (referralCode.length > 0) {
+      signUpData.customProperties = {
+        referralCode: referralCode
+      }
+    }
 
     this.authService.signup(signUpData)
       .subscribe(
