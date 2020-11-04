@@ -4,6 +4,7 @@ import { MatToolbarModule } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
 import { CampaignServiceModule, UtilsModule } from '@perxtech/core';
 import { ReferralComponent } from './referral.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [ReferralComponent],
@@ -12,6 +13,7 @@ import { ReferralComponent } from './referral.component';
     CommonModule,
     TranslateModule.forChild(),
     MatToolbarModule,
+    MatButtonModule,
     UtilsModule,
     CampaignServiceModule.forChild(),
   ],
