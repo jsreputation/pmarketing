@@ -14,7 +14,12 @@ import {
 import { of } from 'rxjs';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AuthenticationService, NotificationService, ThemesService } from '@perxtech/core';
+import {
+  AuthenticationService,
+  ConfigService,
+  NotificationService,
+  ThemesService
+} from '@perxtech/core';
 
 describe('SignupComponent', () => {
   let component: SignupComponent;
@@ -32,6 +37,8 @@ describe('SignupComponent', () => {
     getActiveTheme: () => of(),
     getThemeSetting: () => of()
   };
+
+  const configServiceStub: Partial<ConfigService> = { readAppConfig: () => of() };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -54,7 +61,8 @@ describe('SignupComponent', () => {
         { provide: AuthenticationService, useValue: authServiceStub },
         { provide: NotificationService, useValue: notificationServiceStub },
         { provide: MatDatepickerModule },
-        { provide: ThemesService, useValue: themeServiceStub }
+        { provide: ThemesService, useValue: themeServiceStub },
+        { provide: ConfigService, useValue: configServiceStub}
       ]
     })
       .compileComponents();
