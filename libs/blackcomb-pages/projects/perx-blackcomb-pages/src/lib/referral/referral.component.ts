@@ -84,13 +84,11 @@ export class ReferralComponent {
     this.translate
       .get([
         'REFERRAL.SHARE_COPY_TITLE',
-        'REFERRAL.CONTENT',
         'REFERRAL.SHARE_COPY_TXT',
         'REFERRAL.COPY_TO_CLIPBOARD',
         'REFERRAL.CLIPBOARD_ERROR_TXT',
       ])
       .subscribe((res: any) => {
-        // this.campaignDescription = res['REFERRAL.CONTENT'];
         this.shareTitle = res['REFERRAL.SHARE_COPY_TITLE'];
         this.shareText = res['REFERRAL.SHARE_COPY_TXT'].replace(
           '[URL]',
