@@ -67,7 +67,6 @@ export class AccountComponent implements OnInit {
         this.pages.forEach((page) => (page.title = translations[page.title]))
       );
     this.appConfig$ = this.configService.readAppConfig();
-    this.configService.readAppConfig().subscribe((re) => console.log(re));
     this.profile$ = this.profileService.whoAmI().pipe(take(1));
     this.loyalty$ = this.loyaltyService.getLoyalty();
     this.memberFn = (membershipTierName: string) =>
