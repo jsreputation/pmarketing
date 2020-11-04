@@ -15,7 +15,9 @@ import {
   ICountryCode,
   GeneralStaticDataService,
   ThemesService,
-  ITheme
+  ITheme,
+  ConfigService,
+  IConfig
 } from '@perxtech/core';
 import {
   map,
@@ -42,12 +44,14 @@ export class SignupComponent implements OnInit {
   public countriesList$: Observable<ICountryCode[]>;
   private destroy$: Subject<void> = new Subject();
   public maxDobDate: Date = new Date(); // today
+  public appConfig: IConfig<void>;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
     private authService: AuthenticationService,
+    private configService: ConfigService,
     private notificationService: NotificationService,
     public generalStaticDataService: GeneralStaticDataService,
     private dateAdapter: DateAdapter<Date>,
@@ -55,6 +59,11 @@ export class SignupComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig<void>) => {
+        this.appConfig = config;
+      }
+    );
     this.theme = this.themesService.getThemeSetting();
     this.countriesList$ = this.route.data.pipe(
       map((dataObj) => dataObj.countryList),
@@ -91,6 +100,7 @@ export class SignupComponent implements OnInit {
       email: ['', Validators.email],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],
+      referralCode: [''],
       accept_terms: [false, Validators.requiredTrue],
       accept_marketing: [false, Validators.required]
     }, {validator: this.matchingPasswords('password', 'confirmPassword')});
@@ -128,6 +138,7 @@ export class SignupComponent implements OnInit {
     const titleString = this.signupForm.value.title;
     const genderString = this.signupForm.value.gender;
     // const postcodeString = this.signupForm.value.postcode;
+    const referralCode = this.signupForm.value.referralCode;
 
     const signUpData: ISignUpData = {
       lastName: name,
@@ -138,9 +149,15 @@ export class SignupComponent implements OnInit {
       passwordConfirmation: confirmPassword,
       email: emailValue,
       title: titleString,
-      gender: genderString
+      gender: genderString,
       // postcode: postcodeString
     };
+
+    if (referralCode.length > 0 && this.appConfig.showReferralOnAccountsPage) {
+      signUpData.customProperties = {
+        referralCode
+      };
+    }
 
     this.authService.signup(signUpData)
       .subscribe(

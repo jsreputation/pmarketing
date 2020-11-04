@@ -14,6 +14,7 @@ import {
 } from '@angular/material';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [SignupComponent],
@@ -29,7 +30,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     MatNativeDateModule,
     MatDatepickerModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    TranslateModule
   ],
   providers: [
   ]
