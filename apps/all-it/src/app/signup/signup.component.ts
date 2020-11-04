@@ -44,7 +44,7 @@ export class SignupComponent implements OnInit {
   public countriesList$: Observable<ICountryCode[]>;
   private destroy$: Subject<void> = new Subject();
   public maxDobDate: Date = new Date(); // today
-  public appConfig$: Observable<IConfig<void>>;
+  public appConfig: IConfig<void>;
 
   constructor(
     private fb: FormBuilder,
@@ -59,7 +59,11 @@ export class SignupComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.appConfig$ = this.configService.readAppConfig();
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig<void>) => {
+        this.appConfig = config;
+      }
+    );
     this.theme = this.themesService.getThemeSetting();
     this.countriesList$ = this.route.data.pipe(
       map((dataObj) => dataObj.countryList),
