@@ -125,7 +125,7 @@ export class HomeComponent implements OnInit, PageAppearence {
       })
     );
     this.summaryExpiringFn = (loyalty: ILoyalty) =>
-      this.translate.get('HOME.POINTS_EXPITING').pipe(
+      this.translate.get('HOME.POINTS_EXPIRING').pipe(
         map(res => loyalty && loyalty.expiringPoints && loyalty.expiringPoints.length && loyalty.expiringPoints[0].points &&
           loyalty.expiringPoints[0].points !== 0 ?
           res
