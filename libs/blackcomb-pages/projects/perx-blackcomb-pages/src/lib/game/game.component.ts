@@ -357,11 +357,11 @@ export class GameComponent implements OnInit, OnDestroy {
   public gameCompleted(): void {
     const gameOutcome$ = this.gameService.play(this.gameId).pipe(
       tap((gameOutcome: IPlayOutcome) => {
-        if (gameOutcome.vouchers.length > 0 || gameOutcome.points) {
+        if (gameOutcome.vouchers.length > 0 || (gameOutcome.points && gameOutcome.points.length > 0)) {
           // set this as a property
           this.rewardCount = gameOutcome.vouchers.length.toString();
         }
-        if (gameOutcome && gameOutcome.points) {
+        if (gameOutcome && (gameOutcome.points && gameOutcome.points.length > 0)) {
           const pointsGained = {
             points: gameOutcome.points.reduce(
               (totalPoints, currPoints) => currPoints.points + totalPoints,
