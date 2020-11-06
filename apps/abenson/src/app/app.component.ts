@@ -13,7 +13,6 @@ import {
 import { LoginComponent } from './auth/login/login.component';
 import { HomeComponent } from '@perxtech/blackcomb-pages';
 import { HistoryComponent } from './history/history.component';
-import { AccountComponent } from './account/account.component';
 import { PromosComponent } from './promos/promos.component';
 import { CardComponent } from './card/containers/card/card.component';
 import { SignUpComponent } from './auth/signup/signup.component';
@@ -29,7 +28,10 @@ import { TermsAndConditionComponent } from './account/profile-additions/containe
 import { CustomerSupportComponent } from './account/customer-support/customer-support.component';
 import { flatMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { WalletHistoryComponent } from '@perxtech/blackcomb-pages';
+import {
+  WalletHistoryComponent,
+  AccountComponent,
+} from '@perxtech/blackcomb-pages';
 
 @Component({
   selector: 'app-root',

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService, IProfile, ProfileService } from '@perxtech/core';
 import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-account',
@@ -9,7 +10,7 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./account.component.scss']
 })
 export class AccountComponent implements OnInit {
-  public profile: IProfile;
+  public profile: Observable<IProfile>;
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -18,13 +19,10 @@ export class AccountComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.profileService.whoAmI()
+    this.profile = this.profileService.whoAmI()
       .pipe(
         take(1)
-      )
-      .subscribe(profile => {
-        this.profile = profile;
-      });
+      );
   }
 
   public logout(): void {

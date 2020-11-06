@@ -80,6 +80,13 @@ const routes: Routes = [
           ),
         canActivate: [ProtectedGuard],
       },
+      {
+        path: 'c',
+        loadChildren: () =>
+          import('./account/profile-additions/profile-additions.module').then(
+            (mod) => mod.ProfileAdditionsModule
+          ),
+      },
     ],
     canActivate: [ProtectedGuard],
   },

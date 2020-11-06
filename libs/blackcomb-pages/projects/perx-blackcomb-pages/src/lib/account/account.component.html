@@ -3,11 +3,14 @@
     [ngStyle]="{'background-color': th?.properties['--account_background_color']}">
     <div *ngIf="appConfig$ | async as aConfig">
       <div *ngIf="aConfig.showUserInfoOnAccountsPage">
-        <perx-core-profile-summary
-          [profile$]="profile$"
-          [loyalty$]="loyalty$"
-          [memberFn]="memberFn"
-        ></perx-core-profile-summary>
+        <perx-core-micro-profile *ngIf="aConfig.app === 'abenson' else fullProfileComp" [profile$]="profile$"></perx-core-micro-profile>
+        <ng-template #fullProfileComp>
+          <perx-core-profile-summary
+            [profile$]="profile$"
+            [loyalty$]="loyalty$"
+            [memberFn]="memberFn"
+          ></perx-core-profile-summary>
+        </ng-template>
       </div>
       <div class="section profile">
         <mat-nav-list>
@@ -20,6 +23,11 @@
           <mat-list-item *ngIf="aConfig.showRewardFavButton" routerLink="/favorite-rewards">
             <mat-icon>favorite</mat-icon>&nbsp;&nbsp;{{'ACCOUNT_PAGE.FAVORITE_REWARD' | translate}}
           </mat-list-item>
+          <ng-container *ngIf="aConfig.app === 'abenson'">
+            <mat-list-item [routerLink]="[ 'change-password' ]">Change PIN code</mat-list-item>
+            <mat-list-item [routerLink]="[ 'profile', 'edit-mobile' ]">Change Mobile Number</mat-list-item>
+            <mat-list-item [routerLink]="[ 'support' ]">Customer Support</mat-list-item>
+          </ng-container>
         </mat-nav-list>
       </div>
 

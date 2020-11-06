@@ -22,6 +22,8 @@ describe('AccountComponent', () => {
   let component: AccountComponent;
   let fixture: ComponentFixture<AccountComponent>;
   let auth: AuthenticationService;
+  let profileSvc: ProfileService;
+
   let router: Router;
   const authenticationServiceStub: Partial<AuthenticationService> = {
     logout: () => {},
@@ -57,6 +59,9 @@ describe('AccountComponent', () => {
     auth = TestBed.get<AuthenticationService>(
       AuthenticationService as Type<AuthenticationService>
     );
+    profileSvc = TestBed.get<ProfileService>(
+      ProfileService as Type<ProfileService>
+    );
     fixture.detectChanges();
   });
 
@@ -66,8 +71,10 @@ describe('AccountComponent', () => {
 
   it('expect recive profile', fakeAsync(() => {
     component.ngOnInit();
+    profileSvc.whoAmI().subscribe( result => {
+      expect(result).toBe(profile);
+    });
     tick();
-    expect(component.profile).toBe(profile);
   }));
 
   it('should navigate /login after log out', () => {

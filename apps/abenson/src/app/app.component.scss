@@ -48,10 +48,14 @@
 }
 
 .game-container {
+  //background-color: #F2F2F2;
   flex: 1;
   width: 100%;
-  overflow-y: auto;
-  background-color: #F2F2F2;
+  max-width: 41.5rem;
+  height: 100%;
+  display: block;
+  margin: 0 auto;
+  overflow-y: hidden;
 }
 
 .active-img {

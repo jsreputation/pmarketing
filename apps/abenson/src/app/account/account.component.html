@@ -1,5 +1,5 @@
 <div class="section">
-  <perx-core-micro-profile [profile]="profile"></perx-core-micro-profile>
+  <perx-core-micro-profile [profile$]="profile"></perx-core-micro-profile>
 </div>
 <div class="section">
   <a [routerLink]="[ 'profile' ]">Profile</a>
@@ -8,9 +8,9 @@
   <a [routerLink]="[ 'support' ]">Customer Support</a>
 </div>
 <div class="section">
-  <a [routerLink]="[ 'additions', 'terms-and-condition' ]">Terms & Conditions</a>
-  <a [routerLink]="[ 'additions', 'privacy-policy' ]">Privacy Policy</a>
-  <a [routerLink]="[ 'additions', 'faq' ]">FAQ</a>
+  <a [routerLink]="[ 'c', 'terms-and-condition' ]">Terms & Conditions</a>
+  <a [routerLink]="[ 'c', 'privacy-policy' ]">Privacy Policy</a>
+  <a [routerLink]="[ 'c', 'faq' ]">FAQ</a>
 </div>
 <div class="section">
   <span (click)="logout()">Log Out</span>
