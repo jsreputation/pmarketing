@@ -289,47 +289,40 @@ export class GameComponent implements OnInit, OnDestroy {
 
   // mutates willWin property, succespopup text and popup data
   // @ts-ignore
-  private fillSuccess(
-    rewardCount?: string,
-    pointsOutcome?: IPointsOutcome
-  ): void {
+  private fillSuccess(rewardCount?: string, pointsOutcome?: IPointsOutcome): void {
     this.willWin = true;
 
     // if win and popup data is not changed, popup will wrongly show game lost
     this.popupData = this.successPopUp;
     /*  todo:
      *    1. block is commented out because popup content is managed by dashboard.
-     *    2. this block gets called twice and so unintentionally ends up doubling the text
      */
     // if (rewardCount && parseInt(rewardCount, 10) > 0) {
-    //   this.successPopUp.text += this.rewardsTxt.replace('{{rewards}}', rewardCount);
+    //   this.successPopUp.text += this.rewardsTxt.replace(
+    //     '{{rewards}}',
+    //     rewardCount
+    //   );
     // }
-    if (rewardCount && parseInt(rewardCount, 10) > 0) {
-      this.successPopUp.text += this.rewardsTxt.replace(
-        '{{rewards}}',
-        rewardCount
-      );
-    }
-    if (pointsOutcome) {
-      if (pointsOutcome.points === 1) {
-        this.translate
-          .get('GAME_PAGE.GAME_SUCCESS_TEXT_POINT')
-          .subscribe((text) => {
-            this.successPopUp.text += `\n ${text}`;
-            this.popupData = this.successPopUp;
-          });
-      } else {
-        this.translate
-          .get('GAME_PAGE.GAME_SUCCESS_TEXT_POINTS')
-          .subscribe((text) => {
-            this.successPopUp.text += `\n ${text.replace(
-              '{{points}}',
-              pointsOutcome.points.toString()
-            )}`;
-            this.popupData = this.successPopUp;
-          });
-      }
-    }
+    // if (pointsOutcome) {
+    //   if (pointsOutcome.points === 1) {
+    //     this.translate
+    //       .get('GAME_PAGE.GAME_SUCCESS_TEXT_POINT')
+    //       .subscribe((text) => {
+    //         this.successPopUp.text += `\n ${text}`;
+    //         this.popupData = this.successPopUp;
+    //       });
+    //   } else {
+    //     this.translate
+    //       .get('GAME_PAGE.GAME_SUCCESS_TEXT_POINTS')
+    //       .subscribe((text) => {
+    //         this.successPopUp.text += `\n ${text.replace(
+    //           '{{points}}',
+    //           pointsOutcome.points.toString()
+    //         )}`;
+    //         this.popupData = this.successPopUp;
+    //       });
+    //   }
+    // }
   }
 
   private fillFailure(): void {
