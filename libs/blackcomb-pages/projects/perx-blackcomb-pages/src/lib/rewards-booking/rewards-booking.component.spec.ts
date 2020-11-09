@@ -21,6 +21,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 describe('RewardsBookingComponent', () => {
   let component: RewardsBookingComponent;
@@ -64,7 +65,8 @@ describe('RewardsBookingComponent', () => {
         ReactiveFormsModule,
         FormsModule,
         NoopAnimationsModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        MatProgressSpinnerModule
       ],
       providers: [
         { provide: RewardsService, useValue: rewardServiceStub },
