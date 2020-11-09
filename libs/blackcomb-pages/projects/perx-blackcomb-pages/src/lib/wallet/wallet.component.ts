@@ -20,10 +20,15 @@ import {
   IRssFeeds,
   IRssFeedsData,
   IFlags,
+  IConfig,
+  ConfigService,
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
-import { map, switchMap } from 'rxjs/operators';
+import {
+  map,
+  switchMap
+} from 'rxjs/operators';
 
 const REQ_PAGE_SIZE: number = 10;
 @Component({
@@ -49,6 +54,7 @@ export class WalletComponent implements OnInit, OnDestroy {
   };
   public currentPage: number = 0;
   public completed: boolean = false;
+  public sourceType: string | undefined = undefined;
 
   constructor(
     private router: Router,
@@ -56,10 +62,15 @@ export class WalletComponent implements OnInit, OnDestroy {
     private datePipe: DatePipe,
     private translate: TranslateService,
     private feedService: FeedReaderService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private configService: ConfigService
   ) { }
 
   public ngOnInit(): void {
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig<void>) => {
+        this.sourceType = config.sourceType ? config.sourceType.toString() : undefined;
+      });
     this.translate.get('WALLET.MY_WALLET').subscribe(text => this.rewardsHeadline = text);
     this.vouchers$ = of([]);
     this.onScroll();
@@ -97,7 +108,7 @@ export class WalletComponent implements OnInit, OnDestroy {
     }
     forkJoin(
       this.vouchers$,
-      this.vouchersService.getFromPage(this.currentPage, { type: 'active' })
+      this.vouchersService.getFromPage(this.currentPage, { type: 'active', sourceType: this.sourceType })
     ).subscribe((val) => {
       if (!val[1].length && val[1].length < REQ_PAGE_SIZE) {
         this.completed = true;
