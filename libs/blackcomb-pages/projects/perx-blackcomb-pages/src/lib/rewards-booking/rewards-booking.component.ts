@@ -187,6 +187,7 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
       });
       globalCacheBusterNotifier.next();
       this.loading = false;
+      this.router.navigateByUrl('wallet');
     }, (err) => {
       if (err.code === 40) {
         this.notificationService.addPopup({
