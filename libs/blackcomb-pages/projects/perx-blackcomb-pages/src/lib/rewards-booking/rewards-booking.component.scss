@@ -74,6 +74,11 @@
 
         button {
           width: 100%;
+
+          .loading-spin {
+            display: inline-block;
+            margin: auto;
+          }
         }
       }
     }
