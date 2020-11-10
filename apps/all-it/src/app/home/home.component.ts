@@ -17,7 +17,6 @@ import {
   ThemesService,
 } from '@perxtech/core';
 import { Router } from '@angular/router';
-import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material';
 import { switchMap, map } from 'rxjs/operators';
@@ -36,7 +35,6 @@ export class HomeComponent extends BCHomeComponent implements OnInit {
     rewardsService: RewardsService,
     gamesService: IGameService,
     router: Router,
-    titleService: Title,
     translate: TranslateService,
     themesService: ThemesService,
     configService: ConfigService,
@@ -55,7 +53,6 @@ export class HomeComponent extends BCHomeComponent implements OnInit {
       rewardsService,
       gamesService,
       router,
-      titleService,
       translate,
       themesService,
       configService,
@@ -97,10 +94,6 @@ export class HomeComponent extends BCHomeComponent implements OnInit {
 
     this.themesService.getThemeSetting().subscribe((theme) => {
       this.theme = theme;
-      const title =
-        (theme.properties ? theme.properties['--title'] : undefined) ||
-        'Blackcomb';
-      this.titleService.setTitle(title);
     });
 
     this.configService
