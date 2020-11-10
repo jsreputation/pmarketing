@@ -32,6 +32,7 @@ import {
   WalletHistoryComponent,
   AccountComponent,
 } from '@perxtech/blackcomb-pages';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -53,7 +54,8 @@ export class AppComponent implements OnInit {
     private router: Router,
     private snackBar: MatSnackBar,
     private themeService: ThemesService,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private titleService: Title,
   ) {}
 
   public ngOnInit(): void {
@@ -64,7 +66,11 @@ export class AppComponent implements OnInit {
           this.themeService.getThemeSetting(config)
         )
       )
-      .subscribe((theme) => (this.theme = theme));
+      .subscribe((theme) => {
+        this.theme = theme;
+        const title: string = theme.properties['--title'] ? theme.properties['--title'] : 'HSBC Collect 2.0';
+        this.titleService.setTitle(title);
+      });
     this.notificationService.$popup.subscribe((data: IPopupConfig) =>
       this.dialog.open(PopupComponent, { data })
     );
