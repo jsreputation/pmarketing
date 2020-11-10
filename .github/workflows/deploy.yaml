@@ -82,6 +82,9 @@ jobs:
           elif [ $APP == 'hsbc-xmas' ]
           then
             SOURCE_TYPE="hsbc-xmas"
+          elif [ $APP == 'hsbcph-blackcomb' ]
+          then
+            SOURCE_TYPE="hsbc-rewards"
           fi
           echo SOURCE_TYPE is ${SOURCE_TYPE}
           echo ::set-env name=SOURCE_TYPE::${SOURCE_TYPE}
