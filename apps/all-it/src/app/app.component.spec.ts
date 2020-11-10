@@ -1,4 +1,8 @@
-import { AuthenticationService, ConfigService } from '@perxtech/core';
+import {
+  AuthenticationService,
+  ConfigService,
+  ThemesService
+} from '@perxtech/core';
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
@@ -7,6 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
 
 const authServiceStub: Partial<AuthenticationService> = {};
+const themesServiceStub: Partial<ThemesService> = { getThemeSetting: () => of() };
 
 describe('AppComponent', () => {
 
@@ -39,7 +44,8 @@ describe('AppComponent', () => {
           useValue: {
             readAppConfig: () => of()
           }
-        }
+        },
+        { provide: ThemesService, useValue: themesServiceStub },
       ]
     }).compileComponents();
   }));

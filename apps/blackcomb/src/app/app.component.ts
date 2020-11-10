@@ -18,6 +18,7 @@ import {
   filter,
   map,
   switchMap,
+  tap,
 } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -27,6 +28,8 @@ import {
   IPopupConfig,
   ConfigService,
   IConfig,
+  ITheme,
+  ThemesService,
 } from '@perxtech/core';
 import {
   HomeComponent,
@@ -37,6 +40,7 @@ import {
 } from '@perxtech/blackcomb-pages';
 
 import { BACK_ARROW_URLS } from './app.constants';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -62,16 +66,25 @@ export class AppComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private snack: MatSnackBar,
     private config: ConfigService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private themesService: ThemesService,
+    private titleService: Title,
   ) {
   }
 
   public ngOnInit(): void {
-    this.config.readAppConfig()
-      .pipe(switchMap((conf) => this.translate.getTranslation(conf.defaultLang as string)))
-      .subscribe((config: IConfig<void>) => {
-        this.translationLoaded = true;
-        this.preAuth = config.preAuth as boolean;
+    this.config.readAppConfig<ITheme>()
+      .pipe(
+        switchMap((conf) => this.translate.getTranslation(conf.defaultLang as string)),
+        tap((config: IConfig<ITheme>) => {
+          this.translationLoaded = true;
+          this.preAuth = config.preAuth as boolean;
+        }),
+        switchMap((config: IConfig<ITheme>) => this.themesService.getThemeSetting(config))
+      )
+      .subscribe((res: ITheme) => {
+        const title: string = res.properties['--title'] ? res.properties['--title'] : 'HSBC Collect 2.0';
+        this.titleService.setTitle(title);
       });
 
     this.notificationService.$popup

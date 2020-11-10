@@ -79,7 +79,6 @@ describe('AppComponent', () => {
   let rewardsService: RewardsService;
   let gamesService: IGameService;
   let translate: TranslateService;
-  let titleService: Title;
   let themesService: ThemesService;
   let authService: AuthenticationService;
   let instantOutcomeService: InstantOutcomeService;
@@ -137,7 +136,6 @@ describe('AppComponent', () => {
     gamesService = TestBed.get<IGameService>(
       IGameService as Type<IGameService>
     );
-    titleService = TestBed.get<Title>(Title as Type<Title>);
     translate = TestBed.get<TranslateService>(
       TranslateService as Type<TranslateService>
     );
@@ -202,7 +200,6 @@ describe('AppComponent', () => {
         rewardsService,
         gamesService,
         router,
-        titleService,
         translate,
         themesService,
         configService,
