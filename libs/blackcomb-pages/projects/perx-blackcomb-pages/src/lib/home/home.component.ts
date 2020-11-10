@@ -53,7 +53,6 @@ import {
   IPrice,
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Title } from '@angular/platform-browser';
 import { MatDialog, MatTabChangeEvent } from '@angular/material';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 
@@ -101,7 +100,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     protected rewardsService: RewardsService,
     protected gamesService: IGameService,
     protected router: Router,
-    protected titleService: Title,
     protected translate: TranslateService,
     protected themesService: ThemesService,
     protected configService: ConfigService,
@@ -177,10 +175,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.themesService.getThemeSetting().subscribe((theme) => {
       this.theme = theme;
-      const title =
-        (theme.properties ? theme.properties['--title'] : undefined) ||
-        'Blackcomb';
-      this.titleService.setTitle(title);
     });
 
     this.initCatalogsScan();
