@@ -1,4 +1,10 @@
-import { AuthenticationService, ConfigService, ICampaignService, TokenStorage } from '@perxtech/core';
+import {
+  AuthenticationService,
+  ConfigService,
+  ICampaignService,
+  ThemesService,
+  TokenStorage
+} from '@perxtech/core';
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
@@ -15,6 +21,7 @@ const tokenStorageStub: Partial<TokenStorage> = {
   getAppInfoProperty: () => undefined,
   setAppInfoProperty: () => { }
 };
+const themesServiceStub: Partial<ThemesService> = { getThemeSetting: () => of() };
 
 describe('AppComponent', () => {
 
@@ -51,6 +58,7 @@ describe('AppComponent', () => {
         },
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: TokenStorage, useValue: tokenStorageStub },
+        { provide: ThemesService, useValue: themesServiceStub },
 
       ]
     }).compileComponents();
