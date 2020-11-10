@@ -76,7 +76,6 @@ const appConfigFile = `{
   "defaultLang": "${
     process.env.DEFAULT_LANG ? process.env.DEFAULT_LANG : 'en'
   }",
-  "sourceType": "${process.env.SOURCE_TYPE ? process.env.SOURCE_TYPE : ''}",
   "showSubtitleLogin": ${
     process.env.SHOW_LOGIN_SUBTITLE ? process.env.SHOW_LOGIN_SUBTITLE : false
   },
