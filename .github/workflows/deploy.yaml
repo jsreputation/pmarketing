@@ -130,7 +130,8 @@ jobs:
           [ $APP == 'perx-demo' ] || \
           [ $APP == 'zeal' ] || \
           [ $APP == 'razer' ] || \
-          [ $APP == 'hsbcph-blackcomb' ]
+          [ $APP == 'hsbcph-blackcomb' ] || \
+          [ $APP == 'hsbcvn' ]
           then
             APP_BASE="blackcomb"
           else
