@@ -83,7 +83,7 @@ export class AppComponent implements OnInit {
         switchMap((config: IConfig<ITheme>) => this.themesService.getThemeSetting(config))
       )
       .subscribe((res: ITheme) => {
-        const title: string = res.properties['--title'] ? res.properties['--title'] : 'HSBC Collect 2.0';
+        const title: string = res.properties['--title'] ? res.properties['--title'] : '\u00A0';
         this.titleService.setTitle(title);
       });
 

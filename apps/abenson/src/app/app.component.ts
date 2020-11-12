@@ -68,7 +68,7 @@ export class AppComponent implements OnInit {
       )
       .subscribe((theme) => {
         this.theme = theme;
-        const title: string = theme.properties['--title'] ? theme.properties['--title'] : 'HSBC Collect 2.0';
+        const title: string = theme.properties['--title'] ? theme.properties['--title'] : 'Abenson';
         this.titleService.setTitle(title);
       });
     this.notificationService.$popup.subscribe((data: IPopupConfig) =>
