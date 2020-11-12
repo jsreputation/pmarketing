@@ -45,7 +45,7 @@ import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: [ './app.component.scss' ]
 })
 export class AppComponent implements OnInit {
   public showHeader: boolean;
@@ -70,8 +70,7 @@ export class AppComponent implements OnInit {
     private config: ConfigService,
     private themesService: ThemesService,
     private titleService: Title,
-
-) {
+  ) {
   }
 
   public ngOnInit(): void {
@@ -84,7 +83,8 @@ export class AppComponent implements OnInit {
         }),
         switchMap((config: IConfig<ITheme>) => this.themesService.getThemeSetting(config))
       )
-      .subscribe((res: ITheme) => {const title: string = res.properties['--title'] ? res.properties['--title'] : 'All IT';
+      .subscribe((res: ITheme) => {
+        const title: string = res.properties['--title'] ? res.properties['--title'] : 'All IT';
         this.titleService.setTitle(title);
       });
 
@@ -94,7 +94,7 @@ export class AppComponent implements OnInit {
       .subscribe(
         (msg: string) => {
           if (msg === 'LOGIN_SESSION_EXPIRED') {
-            this.router.navigate(['/login']);
+            this.router.navigate([ '/login' ]);
             msg = 'Login Session Expired';
           }
           this.snackBar.open(msg, 'x', { duration: 2000 });
@@ -109,8 +109,9 @@ export class AppComponent implements OnInit {
       .subscribe(url => this.initBackArrow(url));
     this.initBackArrow(this.router.url);
   }
+
   public onActivate(ref: any): void {
-    this.showHeader = !(ref instanceof SignIn2Component);
+    this.showHeader = ! (ref instanceof SignIn2Component);
     this.showToolbar = ref instanceof HomeComponent ||
       ref instanceof HistoryComponent ||
       ref instanceof AccountComponent ||
