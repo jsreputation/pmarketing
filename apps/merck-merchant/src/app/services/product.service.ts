@@ -21,7 +21,7 @@ export class ProductService {
       {
         name: 'Glucophage XR Tab',
         description: '1000mg 60\'s',
-        imageUrl: 'https://perx-cdn.s3-ap-southeast-1.amazonaws.com/content/merck/product-images/rsz_glucophage_xr_1000_front.png',
+        imageUrl: 'https://perx-cdn.s3-ap-southeast-1.amazonaws.com/content/merck/product-images-10-nov-2020/Glucophage+XR+1000mg.JPG',
         pointsPerUnit: 1200,
         price: 0,
         currency: 'HKD',
@@ -29,7 +29,7 @@ export class ProductService {
       {
         name: 'Glucophage XR Tab',
         description: '500mg 60\'s',
-        imageUrl: 'https://perx-cdn.s3-ap-southeast-1.amazonaws.com/content/merck/product-images/rsz_glucophage_xr_500_front.png',
+        imageUrl: 'https://perx-cdn.s3-ap-southeast-1.amazonaws.com/content/merck/product-images-10-nov-2020/Glucophage+XR+500mg.JPG',
         pointsPerUnit: 600,
         price: 0,
         currency: 'HKD',
@@ -37,7 +37,7 @@ export class ProductService {
       {
         name: 'Glucophage XR Tab',
         description: '750mg 30\'s',
-        imageUrl: 'https://perx-cdn.s3-ap-southeast-1.amazonaws.com/content/merck/product-images/rsz_glucophage_xr_750_front.png',
+        imageUrl: 'https://perx-cdn.s3-ap-southeast-1.amazonaws.com/content/merck/product-images-10-nov-2020/Glucophage+XR+750mg.JPG',
         pointsPerUnit: 450,
         price: 0,
         currency: 'HKD',
@@ -45,7 +45,7 @@ export class ProductService {
       {
         name: 'Glucovance',
         description: '5mg 30\'s',
-        imageUrl: 'https://perx-cdn.s3-ap-southeast-1.amazonaws.com/content/merck/product-images/rsz_glucophage_xr_750_front.png',
+        imageUrl: 'https://perx-cdn.s3-ap-southeast-1.amazonaws.com/content/merck/product-images-10-nov-2020/Glucovance+5mg.JPG',
         pointsPerUnit: 250,
         price: 0,
         currency: 'HKD',
@@ -53,7 +53,7 @@ export class ProductService {
       {
         name: 'Concor Tab',
         description: '2.5mg 30\'s',
-        imageUrl: 'https://perx-cdn.s3-ap-southeast-1.amazonaws.com/content/merck/product-images/rsz_1concor_25_hi.jpg',
+        imageUrl: 'https://perx-cdn.s3-ap-southeast-1.amazonaws.com/content/merck/product-images-10-nov-2020/Concor+2.5mg.JPG',
         pointsPerUnit: 350,
         price: 0,
         currency: 'HKD',
@@ -61,7 +61,7 @@ export class ProductService {
       {
         name: 'Concor Tab',
         description: '5mg 100\'s',
-        imageUrl: 'https://perx-cdn.s3-ap-southeast-1.amazonaws.com/content/merck/product-images/rsz_concor_5_hi.jpg',
+        imageUrl: 'https://perx-cdn.s3-ap-southeast-1.amazonaws.com/content/merck/product-images-10-nov-2020/Concor+5mg.JPG',
         pointsPerUnit: 1000,
         price: 0,
         currency: 'HKD',
@@ -69,7 +69,7 @@ export class ProductService {
       {
         name: 'Lodoz',
         description: '2.5mg 100\'s',
-        imageUrl: 'https://perx-cdn.s3-ap-southeast-1.amazonaws.com/content/merck/product-images/Lodoz_2.5_6.25.jpg',
+        imageUrl: 'https://perx-cdn.s3-ap-southeast-1.amazonaws.com/content/merck/product-images-10-nov-2020/Lodoz+2.5mg.JPG',
         pointsPerUnit: 1200,
         price: 0,
         currency: 'HKD',
@@ -77,7 +77,7 @@ export class ProductService {
       {
         name: 'Lodoz',
         description: '5mg 100\'s',
-        imageUrl: 'https://perx-cdn.s3-ap-southeast-1.amazonaws.com/content/merck/product-images/Lodoz_5_6.25.jpg',
+        imageUrl: 'https://perx-cdn.s3-ap-southeast-1.amazonaws.com/content/merck/product-images-10-nov-2020/Lodoz+5mg.JPG',
         pointsPerUnit: 1200,
         price: 0,
         currency: 'HKD',
