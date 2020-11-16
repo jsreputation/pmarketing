@@ -186,7 +186,7 @@ export class GameComponent implements OnInit, OnDestroy {
             this.notificationService.addPopup({
               title: 'No more tries',
               // prettier-ignore
-              text: 'Come back when you\'ve earned more tries!',
+              text: 'Come back when you have more tries!',
               buttonTxt: this.isEmbedded ? null : 'Close',
               afterClosedCallBack: this,
               disableOverlayClose: true,
