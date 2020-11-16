@@ -108,7 +108,7 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
     } else {
       this.notificationService.addPopup({
         title: 'No more tries',
-        text: 'Come back when you\'ve earned more tries!',
+        text: 'Come back when you have more tries!',
         buttonTxt: '',
         disableOverlayClose: true
       });
@@ -213,7 +213,7 @@ export class GameComponent implements OnInit, PopUpClosedCallBack {
           this.disableBtn = true;
           this.notificationService.addPopup({
             title: 'No more tries',
-            text: 'Come back when you\'ve earned more tries!',
+            text: 'Come back when you have more tries!',
             buttonTxt: null,
             disableOverlayClose: true
           });
