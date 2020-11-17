@@ -107,7 +107,7 @@ export class NearmeComponent implements OnInit, OnDestroy {
             this.updateMarkers(this.position.coords.latitude, this.position.coords.longitude, this.rad);
           });
         // get user location and add marker
-        this.drawCurrentLocation()
+        this.drawCurrentLocation();
         // show button
         this.showCurrentLocationButton();
       });
@@ -145,24 +145,24 @@ export class NearmeComponent implements OnInit, OnDestroy {
     });
   }
 
-  private showCurrentLocationButton() {
+  private showCurrentLocationButton(): void {
     // Set CSS & image for button
-    const controlButton = document.createElement("div");
-    controlButton.style.backgroundColor = "#fff";
-    controlButton.style.border = "2px solid #fff";
-    controlButton.style.boxShadow = "0 2px 3px rgba(0,0,0,.3)";
-    controlButton.innerHTML = `<img src="assets/aim.svg" />`;
-    controlButton.style.padding = "5px";
-    controlButton.style.height = "28px";
-    controlButton.style.width = "28px";
-    controlButton.style.marginRight = "10px";
+    const controlButton = document.createElement('div');
+    controlButton.style.backgroundColor = '#fff';
+    controlButton.style.border = '2px solid #fff';
+    controlButton.style.boxShadow = '0 2px 3px rgba(0,0,0,.3)';
+    controlButton.innerHTML = '<img src="assets/aim.svg" />';
+    controlButton.style.padding = '5px';
+    controlButton.style.height = '28px';
+    controlButton.style.width = '28px';
+    controlButton.style.marginRight = '10px';
     // Setup the click event listener
-    controlButton.addEventListener("click", () => this.drawCurrentLocation());
+    controlButton.addEventListener('click', () => this.drawCurrentLocation());
     // pass custom contrl to map
     this.map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(controlButton);
   }
 
-  private drawCurrentLocation() {
+  private drawCurrentLocation(): void {
     // location from html5
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -173,19 +173,19 @@ export class NearmeComponent implements OnInit, OnDestroy {
             lng: position.coords.longitude,
           };
           // define and place marker
-          new google.maps.Marker({
+          const marker = new google.maps.Marker({
             position: pos,
-            map: this.map,
-            icon: {
-              path: google.maps.SymbolPath.CIRCLE,
-              scale: 10,
-              fillOpacity: 1,
-              strokeWeight: 2,
-              fillColor: '#5384ED',
-              strokeColor: '#ffffff'
-            }
+            map: this.map
           });
-          // center map to user location so nearby 
+          marker.setIcon({
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 10,
+            fillOpacity: 1,
+            strokeWeight: 2,
+            fillColor: '#5384ED',
+            strokeColor: '#ffffff'
+          });
+          // center map to user location so nearby
           this.map.setCenter(pos);
         }
       );
