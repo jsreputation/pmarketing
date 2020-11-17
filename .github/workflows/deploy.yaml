@@ -173,7 +173,7 @@ jobs:
           if [[ "${GITHUB_REF}" =~ $REGEX ]]; then
             echo "APP=${BASH_REMATCH[1]}" >> "${GITHUB_ENV}"
             echo "TARGET_ENV=${BASH_REMATCH[2]}" >> "${GITHUB_ENV}"
-            echo "SEM_VER=${BASH_REMATCH[]}" >> "${GITHUB_ENV}"
+            echo "SEM_VER=${BASH_REMATCH[4]}" >> "${GITHUB_ENV}"
             echo "DOCKER_TAG=${GITHUB_REF##*/}" >> "${GITHUB_ENV}"
           else
             echo "Error! Unrecognized tag"
