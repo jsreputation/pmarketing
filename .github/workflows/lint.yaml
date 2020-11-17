@@ -24,7 +24,6 @@ jobs:
         run: |
           curl -L https://github.com/tektoncd/cli/releases/download/v${TEKTON_CLI_VERSION}/tkn_${TEKTON_CLI_VERSION}_Linux_x86_64.tar.gz \
           | sudo tar xzv -C /usr/local/bin tkn
-          # sudo apt-get --allow-releaseinfo-change update &&
           sudo apt-get install -y parallel
 
           # Set tekton label
