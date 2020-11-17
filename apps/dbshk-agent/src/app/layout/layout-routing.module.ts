@@ -1,7 +1,7 @@
 import { ProtectedGuard } from 'ngx-auth';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LayoutComponent } from '@perxtech/blackcomb-pages';
+import { LayoutComponent } from './layout.component';
 
 const routes: Routes = [
   {
