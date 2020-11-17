@@ -106,6 +106,10 @@ export class NearmeComponent implements OnInit, OnDestroy {
             this.position = position;
             this.updateMarkers(this.position.coords.latitude, this.position.coords.longitude, this.rad);
           });
+        // get user location and add marker
+        this.drawCurrentLocation()
+        // show button
+        this.showCurrentLocationButton();
       });
   }
 
@@ -139,6 +143,53 @@ export class NearmeComponent implements OnInit, OnDestroy {
     this.markersArray.forEach(item => {
       item.setMap(null);
     });
+  }
+
+  private showCurrentLocationButton() {
+    // Set CSS & image for button
+    const controlButton = document.createElement("div");
+    controlButton.style.backgroundColor = "#fff";
+    controlButton.style.border = "2px solid #fff";
+    controlButton.style.boxShadow = "0 2px 3px rgba(0,0,0,.3)";
+    controlButton.innerHTML = `<img src="assets/aim.svg" />`;
+    controlButton.style.padding = "5px";
+    controlButton.style.height = "28px";
+    controlButton.style.width = "28px";
+    controlButton.style.marginRight = "10px";
+    // Setup the click event listener
+    controlButton.addEventListener("click", () => this.drawCurrentLocation());
+    // pass custom contrl to map
+    this.map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(controlButton);
+  }
+
+  private drawCurrentLocation() {
+    // location from html5
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position: Position) => {
+          // build postion obj
+          const pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          // define and place marker
+          new google.maps.Marker({
+            position: pos,
+            map: this.map,
+            icon: {
+              path: google.maps.SymbolPath.CIRCLE,
+              scale: 10,
+              fillOpacity: 1,
+              strokeWeight: 2,
+              fillColor: '#5384ED',
+              strokeColor: '#ffffff'
+            }
+          });
+          // center map to user location so nearby 
+          this.map.setCenter(pos);
+        }
+      );
+    }
   }
 
   private updateMarkers(latitude: number, longitude: number, rad: number, filterCategories?: string[]): void {
