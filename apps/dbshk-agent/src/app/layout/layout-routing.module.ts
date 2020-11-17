@@ -131,6 +131,12 @@ const routes: Routes = [
         loadChildren: () => import('../locations/locations.module')
           .then(mod => mod.LocationsModule),
         canActivate: [ProtectedGuard]
+      },
+      {
+        path: 'performance',
+        loadChildren: () => import('../performance/performance.module')
+          .then(mod => mod.PerformanceModule),
+        canActivate: [ProtectedGuard]
       }
     ]
   }
