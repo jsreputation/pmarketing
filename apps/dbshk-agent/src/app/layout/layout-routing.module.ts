@@ -14,10 +14,6 @@ const routes: Routes = [
         canActivate: [ProtectedGuard]
       },
       {
-        path: 'wallet', loadChildren: () => import('../wallet/wallet.module').then(mod => mod.WalletModule),
-        canActivate: [ProtectedGuard]
-      },
-      {
         path: 'history', loadChildren: () => import('../history/history.module').then(mod => mod.HistoryModule),
         canActivate: [ProtectedGuard]
       },

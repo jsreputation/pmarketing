@@ -40,12 +40,6 @@
           <span translate>NAVIGATION.REWARDS</span>
         </div>
       </a>
-      <a matRipple [routerLink]="[ '/wallet' ]" routerLinkActive="active">
-        <div class="nav-item">
-          <mat-icon aria-hidden="false">account_balance_wallet</mat-icon>
-          <span translate>NAVIGATION.WALLET</span>
-        </div>
-      </a>
       <a matRipple [routerLink]="[ '/history' ]" routerLinkActive="active" *ngIf="appConfig.showHistoryPage">
         <div class="nav-item">
           <mat-icon aria-hidden="false">list</mat-icon>
