@@ -27,22 +27,23 @@ import {
   SettingsService,
   IFlags
 } from '@perxtech/core';
-
-import { SignIn2Component } from '../sign-in-2/sign-in-2.component';
+import { BACK_ARROW_URLS } from '../app.constants';
 import { HomeComponent } from '../home/home.component';
-import { HistoryComponent } from '../history/history.component';
-import { AccountComponent } from '../account/account.component';
-import { WalletComponent } from '../wallet/wallet.component';
-import { WalletHistoryComponent } from '../wallet-history/wallet-history.component';
-import { ProfileComponent } from '../profile/profile.component';
-import { BACK_ARROW_URLS } from '../perx-blackcomb-pages.constants';
-import { TransactionHistoryComponent } from '../transaction-history/transaction-history.component';
-import { CampaignStampsComponent } from '../campaign-stamps/campaign-stamps.component';
-import { LeaderboardPageComponent } from '../leaderboard-page/leaderboard-page.component';
-import { FindLocationComponent } from '../find-location/find-location.component';
-import { RebatesWalletComponent } from '../rebates/rebates-wallet/rebates-wallet.component';
-import { NearmeComponent } from '../nearme/nearme.component';
-import { RewardsPageComponent } from '../rewards-page/rewards-page.component';
+import {
+  AccountComponent,
+  CampaignStampsComponent,
+  FindLocationComponent,
+  HistoryComponent,
+  LeaderboardPageComponent,
+  NearmeComponent,
+  ProfileComponent,
+  RebatesWalletComponent,
+  RewardsPageComponent,
+  SignIn2Component,
+  TransactionHistoryComponent,
+  WalletComponent,
+  WalletHistoryComponent
+} from '@perxtech/blackcomb-pages';
 
 export interface ShowTitleInHeader {
   getTitle(): string;
