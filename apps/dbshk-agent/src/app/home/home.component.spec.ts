@@ -19,19 +19,62 @@ import {
   IReward,
   AuthenticationService,
   TokenStorage,
-  SettingsService
+  SettingsService,
+  IProfile
 } from '@perxtech/core';
 import { of } from 'rxjs';
 import { MatCardModule, MatDialogModule } from '@angular/material';
-import { GamesCollectionComponent } from './games-collection/games-collection.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { profile } from '../mock/profile.mock';
 import { HttpClientModule } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { CampaignsCollectionComponent } from './campaigns-collection/campaigns-collection.component';
-import { CatalogsComponent } from './catalogs/catalogs.component';
+import {
+  CampaignsCollectionComponent,
+  CatalogsComponent,
+  GamesCollectionComponent
+} from '@perxtech/blackcomb-pages';
 
+const profile: IProfile = {
+  id: 952,
+  state: 'active',
+  firstName: 'Lucas',
+  lastName: 'Xavier',
+  middleName: 'Catherine',
+  phone: '1111111111',
+  email: 'lucas@perxtech.com',
+  birthDate: undefined,
+  gender: 'male',
+  joinedDate: '2018-10-31T00:00:00.000Z',
+  passwordExpiryDate: '2019-09-01T08:35:13.801Z',
+  customProperties: {
+    mi: 'A',
+    city: 'PASIG CITY',
+    home: '',
+    work: '',
+    addr1: 'Blk 1A street 13',
+    gender: 'Female',
+    company: '',
+    barangay: 'CHRISTINE VILL',
+    birthday: '19900317',
+    lastname: 'Xavier',
+    mobileno: '1111111111',
+    firstname: 'ARTEMIO',
+    spouse_mi: '',
+    cardnumber: '123123123123',
+    last_visit: '20181031',
+    branch_code: '11008',
+    branch_name: 'CAINTA 1',
+    customer_id: '8010111109440',
+    total_visit: '2',
+    civil_status: 'SINGLE',
+    company_code: '2',
+    spouse_first: '',
+    email_address: '',
+    spouse_lastname: '',
+    application_date: '20181031',
+    digital_cardnumber: '8720561141910783'
+  }
+};
 const rewardsServiceStub: Partial<RewardsService> = {
   getAllRewards: () => of([]),
   getRewards: () => of([]),
