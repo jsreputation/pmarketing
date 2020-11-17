@@ -18,10 +18,10 @@ jobs:
           REGEX="([[:alnum:]-]+)-(staging|production)-?([[:alnum:]-]*)-([0-9]+\.[0-9]+\.[0-9]+-?[0-9]*)"
           echo "GITHUB_REF: ${GITHUB_REF}"
           if [[ "${GITHUB_REF}" =~ $REGEX ]]; then
-            echo ::set-env name=APP::${BASH_REMATCH[1]}
-            echo ::set-env name=TARGET_ENV::${BASH_REMATCH[2]}
-            echo ::set-env name=SEM_VER::${BASH_REMATCH[4]}
-            echo ::set-env name=DOCKER_TAG::${GITHUB_REF##*/}
+            echo "APP=${BASH_REMATCH[1]}" >> "${GITHUB_ENV}"
+            echo "TARGET_ENV=${BASH_REMATCH[2]}" >> "${GITHUB_ENV}"
+            echo "SEM_VER=${BASH_REMATCH[]}" >> "${GITHUB_ENV}"
+            echo "DOCKER_TAG=${GITHUB_REF##*/}" >> "${GITHUB_ENV}"
           else
             echo "Error! Unrecognized tag"
             exit 1
@@ -41,7 +41,7 @@ jobs:
             fi
           fi
           echo APIHOST is ${APIHOST}
-          echo ::set-env name=APIHOST::${APIHOST}
+          echo "APIHOST=${APIHOST}" >> "${GITHUB_ENV}"
       - name: Set env PREAUTH
         run: |
           if [ $APP == 'prudential' ] || [ $APP == 'digi' ] || [ $APP == 'blackcomb' ] || [ $APP == 'bpi' ]
@@ -51,7 +51,7 @@ jobs:
             PREAUTH="false"
           fi
           echo PREAUTH is ${PREAUTH}
-          echo ::set-env name=PREAUTH::${PREAUTH}
+          echo "PREAUTH=${PREAUTH}" >> "${GITHUB_ENV}"
       - name: Set env BASE_HREF
         run: |
           if [ $APP == 'hsbc' ]
@@ -67,10 +67,9 @@ jobs:
             BASE_HREF="/"
           fi
           echo BASE_HREF is ${BASE_HREF}
-          echo ::set-env name=BASE_HREF::${BASE_HREF}
+          echo "BASE_HREF=${BASE_HREF}" >> "${GITHUB_ENV}"
       - name: Set IS_WHISTLER to false
-        run: |
-          echo ::set-env name=IS_WHISTLER::false
+        run: echo "IS_WHISTLER=false" >> "${GITHUB_ENV}"
       - name: Set env SOURCE_TYPE
         run: |
           if [ $APP == 'hsbc' ]
@@ -87,7 +86,7 @@ jobs:
             SOURCE_TYPE="hsbc-rewards"
           fi
           echo SOURCE_TYPE is ${SOURCE_TYPE}
-          echo ::set-env name=SOURCE_TYPE::${SOURCE_TYPE}
+          echo "SOURCE_TYPE=${SOURCE_TYPE}" >> "${GITHUB_ENV}"
       - name: Set env REDIRECT_AFTER_LOGIN
         run: |
           if [ $APP == 'petron-demo' ] || \
@@ -107,7 +106,7 @@ jobs:
             REDIRECT_AFTER_LOGIN="/wallet"
           fi
           echo REDIRECT_AFTER_LOGIN is ${REDIRECT_AFTER_LOGIN}
-          echo ::set-env name=REDIRECT_AFTER_LOGIN::${REDIRECT_AFTER_LOGIN}
+          echo "REDIRECT_AFTER_LOGIN=${REDIRECT_AFTER_LOGIN}" >> "${GITHUB_ENV}"
       - name: Transform env APP
         run: |
           if [ $APP == 'hsbc-xmas' ]
@@ -118,7 +117,7 @@ jobs:
             APP="perx-demo"
           fi
           echo Final APP is ${APP}
-          echo ::set-env name=APP::${APP}
+          echo "APP=${APP}" >> "${GITHUB_ENV}"
       - name: Set env APP_BASE
         run: |
           if [ $APP == 'petron-demo' ] || \
@@ -138,12 +137,12 @@ jobs:
             APP_BASE=$APP
           fi
           echo APP_BASE is ${APP_BASE}
-          echo ::set-env name=APP_BASE::${APP_BASE}
+          echo "APP_BASE=${APP_BASE}" >> "${GITHUB_ENV}"
       - name: Set env APP_ENV
         run: |
           APP_ENV=$TARGET_ENV
           echo APP_ENV is ${APP_ENV}
-          echo ::set-env name=APP_ENV::${APP_ENV}
+          echo "APP_ENV=${APP_ENV}" >> "${GITHUB_ENV}"
       - name: Install skaffold
         env:
           SKAFFOLD_VERSION: 1.12.0
@@ -172,10 +171,10 @@ jobs:
           REGEX="([[:alnum:]-]+)-(staging|production)-?([[:alnum:]-]*)-([0-9]+\.[0-9]+\.[0-9]+-?[0-9]*)"
           echo "GITHUB_REF: ${GITHUB_REF}"
           if [[ "${GITHUB_REF}" =~ $REGEX ]]; then
-            echo ::set-env name=APP::${BASH_REMATCH[1]}
-            echo ::set-env name=TARGET_ENV::${BASH_REMATCH[2]}
-            echo ::set-env name=SEM_VER::${BASH_REMATCH[4]}
-            echo ::set-env name=DOCKER_TAG::${GITHUB_REF##*/}
+            echo "APP=${BASH_REMATCH[1]}" >> "${GITHUB_ENV}"
+            echo "TARGET_ENV=${BASH_REMATCH[2]}" >> "${GITHUB_ENV}"
+            echo "SEM_VER=${BASH_REMATCH[]}" >> "${GITHUB_ENV}"
+            echo "DOCKER_TAG=${GITHUB_REF##*/}" >> "${GITHUB_ENV}"
           else
             echo "Error! Unrecognized tag"
             exit 1

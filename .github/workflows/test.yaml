@@ -25,15 +25,23 @@ jobs:
           LIBS_FOLDERS=$(ls -d libs/*)
           BACKEND_FOLDERS=$(ls -d backend/*)
 
-          echo ::set-env name=APP_FOLDERS::${APP_FOLDERS[@]}
-          echo ::set-env name=LIBS_FOLDERS::${LIBS_FOLDERS[@]}
-          echo ::set-env name=BACKEND_FOLDERS::${BACKEND_FOLDERS[@]}
+          echo 'APP_FOLDERS<<EOF' >> "${GITHUB_ENV}"
+          echo ${APP_FOLDERS[@]} >> "${GITHUB_ENV}"
+          echo 'EOF' >> "${GITHUB_ENV}"
+
+          echo 'LIBS_FOLDERS<<EOF' >> "${GITHUB_ENV}"
+          echo ${LIBS_FOLDERS[@]} >> "${GITHUB_ENV}"
+          echo 'EOF' >> "${GITHUB_ENV}"
+
+          echo 'BACKEND_FOLDERS<<EOF' >> "${GITHUB_ENV}"
+          echo ${BACKEND_FOLDERS[@]} >> "${GITHUB_ENV}"
+          echo 'EOF' >> "${GITHUB_ENV}"
 
           # Set tekton label
           LABEL=$(echo ${GITHUB_REF//[^0-9a-zA-Z-_\.]/-} | cut -c-60)
           # Workaround to ensure label name ended with alphanumeric char
           LABEL+=0
-          echo ::set-env name=TEKTON_LABEL::${LABEL}
+          echo "TEKTON_LABEL=${LABEL}" >> "${GITHUB_ENV}"
       - name: Download tekton cli and install parallel
         env:
           TEKTON_CLI_VERSION: 0.11.0
@@ -104,10 +112,16 @@ jobs:
           TEKTON_TASKS+=(${TEKTON_TASK})
           done
           echo "Tasks: ${TEKTON_TASKS[@]}"
-          echo ::set-env name=TEKTON_TASKS::${TEKTON_TASKS[@]}
+
+          echo 'TEKTON_TASKS<<EOF' >> "${GITHUB_ENV}"
+          echo "${TEKTON_TASKS[@]}" >> "${GITHUB_ENV}"
+          echo 'EOF' >> "${GITHUB_ENV}"
+
       - name: Check task result
         run: |
           start=$SECONDS
+          FAILED=false
+          FAILED_TASKS=""
           declare -a RUNNING_TASKS
           for TASK in ${TEKTON_TASKS[@]}; do
             RUNNING_TASKS+=(${TASK})
@@ -128,14 +142,27 @@ jobs:
                 continue
               fi
               if [[ "${REASON}" = "Failed" ]] && [[ "${STATUS}" = "False" ]]; then
+                FAILED_TASKS+="Taskrun ${TASKRUN_NAME} is failed \n"
+                FAILED=true
                 echo "Taskrun ${TASKRUN_NAME} is failed, fail the job"
-                exit 1
+                for i in "${!RUNNING_TASKS[@]}"; do
+                  if [[ ${RUNNING_TASKS[i]} = $TASKRUN_NAME ]]; then
+                    unset 'RUNNING_TASKS[i]'
+                  fi
+                done
+                echo "TaskRun $TASKRUN_NAME got failed and deleted from TaskRuns array"
+                continue
+                # exit 1
               fi
               echo "Taskrun ${TASKRUN_NAME} reason is ${REASON}, status is ${STATUS}"
             done
             sleep 20
             echo "Running for $(( SECONDS - start )) seconds"
           done
+          if [[ "${FAILED}"=true]]; then
+            echo "${FAILED_TASKS}"
+            exit 1
+          fi
       - name: Display dashboard link ang generate error logs
         if: always()
         run: |

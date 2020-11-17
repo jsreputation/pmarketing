@@ -31,7 +31,7 @@ jobs:
           LABEL=$(echo ${GITHUB_REF//[^0-9a-zA-Z-_\.]/-} | cut -c-60)
           # Workaround to ensure label name ended with alphanumeric char
           LABEL+=0
-          echo ::set-env name=TEKTON_LABEL::${LABEL}
+          echo "TEKTON_LABEL=${LABEL}" >> "${GITHUB_ENV}"
       - name: Remove existing tasks
         run: |
           EXISTING_TASKS=$(kubectl -n build get taskrun -l github.ref=${TEKTON_LABEL},tekton.dev/task=microsite-apps-ng-lint -o=name)
@@ -79,7 +79,7 @@ jobs:
           EOT
           )
           echo "Task: ${TEKTON_TASK}"
-          echo ::set-env name=TASKRUN_NAME::${TEKTON_TASK}
+          echo "TASKRUN_NAME=${TEKTON_TASK}" >> "${GITHUB_ENV}"
       - name: Check task result
         run: |
           start=$SECONDS
