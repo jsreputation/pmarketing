@@ -11,6 +11,7 @@ import {
   Router,
   NavigationEnd,
   Event,
+  ActivatedRoute,
 } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -18,6 +19,7 @@ import {
   filter,
   map,
   switchMap,
+  tap,
 } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -27,16 +29,28 @@ import {
   IPopupConfig,
   ConfigService,
   IConfig,
+  ITheme,
+  ThemesService,
 } from '@perxtech/core';
 import {
   HomeComponent,
   HistoryComponent,
   AccountComponent,
   SignIn2Component,
-  WalletComponent
+  WalletComponent,
+  WalletHistoryComponent,
+  ProfileComponent,
+  CampaignStampsComponent,
+  LeaderboardPageComponent,
+  FindLocationComponent,
+  TransactionHistoryComponent,
+  RebatesWalletComponent,
+  RewardsPageComponent,
+  NearmeComponent
 } from '@perxtech/blackcomb-pages';
 
 import { BACK_ARROW_URLS } from './app.constants';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -62,16 +76,26 @@ export class AppComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private snack: MatSnackBar,
     private config: ConfigService,
-    private translate: TranslateService
+    private route: ActivatedRoute,
+    private translate: TranslateService,
+    private themesService: ThemesService,
+    private titleService: Title,
   ) {
   }
 
   public ngOnInit(): void {
-    this.config.readAppConfig()
-      .pipe(switchMap((conf) => this.translate.getTranslation(conf.defaultLang as string)))
-      .subscribe((config: IConfig<void>) => {
-        this.translationLoaded = true;
-        this.preAuth = config.preAuth as boolean;
+    this.config.readAppConfig<ITheme>()
+      .pipe(
+        switchMap((conf) => this.translate.getTranslation(conf.defaultLang as string)),
+        tap((config: IConfig<ITheme>) => {
+          this.translationLoaded = true;
+          this.preAuth = config.preAuth as boolean;
+        }),
+        switchMap((config: IConfig<ITheme>) => this.themesService.getThemeSetting(config))
+      )
+      .subscribe((res: ITheme) => {
+        const title: string = res.properties['--title'] ? res.properties['--title'] : '\u00A0';
+        this.titleService.setTitle(title);
       });
 
     this.notificationService.$popup
@@ -102,11 +126,23 @@ export class AppComponent implements OnInit {
   }
 
   public onActivate(ref: any): void {
-    this.showHeader = !(ref instanceof SignIn2Component);
+    this.route.queryParams.subscribe((params) => {
+      const paramArr: string[] = params.flags && params.flags.split(',');
+      this.showHeader = paramArr && paramArr.includes('chromeless') ? false : !(ref instanceof SignIn2Component);
+    });
     this.showToolbar = ref instanceof HomeComponent ||
       ref instanceof HistoryComponent ||
       ref instanceof AccountComponent ||
-      ref instanceof WalletComponent;
+      ref instanceof WalletComponent ||
+      ref instanceof WalletHistoryComponent ||
+      ref instanceof ProfileComponent ||
+      ref instanceof CampaignStampsComponent ||
+      ref instanceof LeaderboardPageComponent ||
+      ref instanceof FindLocationComponent ||
+      ref instanceof TransactionHistoryComponent ||
+      ref instanceof RebatesWalletComponent ||
+      ref instanceof RewardsPageComponent ||
+      ref instanceof NearmeComponent;
     this.cd.detectChanges();
   }
 
