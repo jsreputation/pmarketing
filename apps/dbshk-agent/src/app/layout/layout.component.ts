@@ -4,16 +4,12 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 import {
-  MatDialog,
-  MatSnackBar,
-} from '@angular/material';
-import {
   Router,
   NavigationEnd,
-  Event,
-  ActivatedRoute,
+  Event, ActivatedRoute
 } from '@angular/router';
 import { Location } from '@angular/common';
+import { Title } from '@angular/platform-browser';
 
 import {
   filter,
@@ -21,101 +17,94 @@ import {
   switchMap,
   tap,
 } from 'rxjs/operators';
-import { TranslateService } from '@ngx-translate/core';
 
 import {
-  PopupComponent,
-  NotificationService,
-  IPopupConfig,
+  ThemesService,
+  ITheme,
+  Config,
   ConfigService,
   IConfig,
-  ITheme,
-  ThemesService,
+  SettingsService,
+  IFlags
 } from '@perxtech/core';
+import { BACK_ARROW_URLS } from '../app.constants';
+import { HomeComponent } from '../home/home.component';
 import {
-  HomeComponent,
-  HistoryComponent,
   AccountComponent,
-  SignIn2Component,
-  WalletComponent,
-  WalletHistoryComponent,
-  ProfileComponent,
   CampaignStampsComponent,
-  LeaderboardPageComponent,
   FindLocationComponent,
-  TransactionHistoryComponent,
+  HistoryComponent,
+  LeaderboardPageComponent,
+  NearmeComponent,
+  ProfileComponent,
   RebatesWalletComponent,
   RewardsPageComponent,
-  NearmeComponent
+  SignIn2Component,
+  TransactionHistoryComponent,
+  WalletComponent,
+  WalletHistoryComponent
 } from '@perxtech/blackcomb-pages';
+import { PerformanceComponent } from '../performance/performance.component';
 
-import { BACK_ARROW_URLS } from './app.constants';
-import { Title } from '@angular/platform-browser';
-import { PerformanceComponent } from './performance/performance.component';
+export interface ShowTitleInHeader {
+  getTitle(): string;
+}
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: 'perx-blackcomb-games-layout',
+  templateUrl: './layout.component.html',
+  styleUrls: ['./layout.component.scss']
 })
-export class AppComponent implements OnInit {
+export class LayoutComponent implements OnInit {
+
   public showHeader: boolean;
+  public headerTitle: string;
   public showToolbar: boolean;
   public backArrowIcon: string = '';
   public preAuth: boolean;
-  public translationLoaded: boolean = false;
+  public theme: ITheme;
+  public appConfig: IConfig<void>;
+  public appRemoteFlags: IFlags;
+  public tenant: string;
 
   private initBackArrow(url: string): void {
     this.backArrowIcon = BACK_ARROW_URLS.some(test => url.startsWith(test)) ? 'arrow_backward' : '';
   }
 
   constructor(
-    private notificationService: NotificationService,
-    private dialog: MatDialog,
     private location: Location,
     private router: Router,
-    private cd: ChangeDetectorRef,
-    private snack: MatSnackBar,
-    private config: ConfigService,
     private route: ActivatedRoute,
-    private translate: TranslateService,
     private themesService: ThemesService,
     private titleService: Title,
+    private cd: ChangeDetectorRef,
+    private config: Config,
+    private configService: ConfigService,
+    private settingsService: SettingsService
   ) {
+    if (config) {
+      this.preAuth = this.config.preAuth || false;
+    }
   }
 
   public ngOnInit(): void {
-    this.config.readAppConfig<ITheme>()
-      .pipe(
-        switchMap((conf) => this.translate.getTranslation(conf.defaultLang as string)),
-        tap((config: IConfig<ITheme>) => {
-          this.translationLoaded = true;
-          this.preAuth = config.preAuth as boolean;
-        }),
-        switchMap((config: IConfig<ITheme>) => this.themesService.getThemeSetting(config))
-      )
-      .subscribe((res: ITheme) => {
-        const title: string = res.properties['--title'] ? res.properties['--title'] : '\u00A0';
+    this.route.data.subscribe(
+      (dataObj) => {
+        this.tenant = dataObj.tenant;
+      }
+    );
+    this.configService.readAppConfig().pipe(
+      tap((config: IConfig<void>) => this.appConfig = config),
+      switchMap(() => this.themesService.getThemeSetting()),
+      map(theme => {
+        this.theme = theme;
+        const title = (theme.properties ? theme.properties['--title'] : undefined) || 'Blackcomb';
         this.titleService.setTitle(title);
-      });
-
-    this.notificationService.$popup
-      .subscribe(
-        (data: IPopupConfig) => this.dialog.open(PopupComponent, { data }),
-        (err) => console.error(err)
-      );
-    this.notificationService.$snack
-      .subscribe(
-        (msg: string) => {
-          if (msg === 'LOGIN_SESSION_EXPIRED') {
-            this.router.navigate(['/login']);
-            this.translate.get('LOGIN_SESSION_EXPIRED').subscribe(txt => this.snack.open(txt, 'x', { duration: 2000 }));
-          } else {
-            this.snack.open(msg, 'x', { duration: 2000 });
-          }
-        },
-        (err) => console.error(err)
-      );
+      }),
+      switchMap(() => this.settingsService.getRemoteFlagsSettings()),
+    ).subscribe(
+      (flags: IFlags) => this.appRemoteFlags = flags
+    );
 
     this.router.events
       .pipe(

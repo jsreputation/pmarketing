@@ -56,7 +56,7 @@ const envConfigFile = `export const environment = {
 `;
 
 const appConfigFile = `{
-  "app": "blackcomb",
+  "app": "dbshk-agent",
   "apiHost": "${process.env.APIHOST ? process.env.APIHOST : 'https://api.perxtech.io'}",
   "production": ${process.env.PRODUCTION ? process.env.PRODUCTION : false},
   "preAuth": ${process.env.PREAUTH ? process.env.PREAUTH : true},
