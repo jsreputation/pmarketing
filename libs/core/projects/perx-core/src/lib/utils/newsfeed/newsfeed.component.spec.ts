@@ -1,7 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule, MatCardModule, MatDialogModule, MatDialog } from '@angular/material';
 import { NewsfeedComponent } from './newsfeed.component';
-import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 import { TranslateModule } from '@ngx-translate/core';
 import { SettingsService } from '../../settings/settings.service';
 import { of } from 'rxjs';
@@ -42,7 +41,6 @@ describe('NewsfeedComponent', () => {
       imports: [
         MatCardModule,
         MatButtonModule,
-        NgxMultiLineEllipsisModule,
         MatDialogModule,
         TranslateModule.forRoot()
       ],

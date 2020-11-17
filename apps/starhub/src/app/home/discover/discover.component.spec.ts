@@ -16,7 +16,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { of } from 'rxjs';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 
 import {
   GameModule,
@@ -98,7 +97,6 @@ describe('DiscoverComponent', () => {
         MatIconModule,
         MatDialogModule,
         RouterTestingModule,
-        NgxMultiLineEllipsisModule,
         ScrollingModule,
         GameModule,
         InfiniteScrollModule,

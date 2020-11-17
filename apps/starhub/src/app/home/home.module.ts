@@ -12,7 +12,6 @@ import {
 } from '@angular/material';
 
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 
 import {
   CampaignModule,
@@ -65,7 +64,6 @@ import { QuizSurveyCampaignsComponent } from './quiz-campaigns/quiz-survey-campa
     MatRippleModule,
     MatDialogModule,
     HomeRoutingModule,
-    NgxMultiLineEllipsisModule,
     UtilsModule,
     ScrollingModule,
     LoyaltyModule,

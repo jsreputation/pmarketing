@@ -5,7 +5,6 @@ import { MatAutocompleteModule, MatIconModule, MatInputModule, MatTabsModule } f
 import { ReactiveFormsModule } from '@angular/forms';
 import { RewardsModule, RewardsService } from '@perxtech/core';
 import { of } from 'rxjs';
-import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -30,7 +29,6 @@ describe('RewardsPageComponent', () => {
         MatInputModule,
         MatTabsModule,
         InfiniteScrollModule,
-        NgxMultiLineEllipsisModule,
         RouterTestingModule,
       ],
       providers: [{ provide: RewardsService, useValue: rewardsServiceStub }],

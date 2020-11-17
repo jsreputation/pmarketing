@@ -3545,11 +3545,6 @@ base@^0.11.1:
     mixin-deep "^1.2.0"
     pascalcase "^0.1.1"
 
-batch-processor@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/batch-processor/-/batch-processor-1.0.0.tgz#75c95c32b748e0850d10c2b168f6bdbe9891ace8"
-  integrity sha1-dclcMrdI4IUNEMKxaPa9vpiRrOg=
-
 batch@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/batch/-/batch-0.6.1.tgz#dc34314f4e679318093fc760272525f94bf25c16"
@@ -5318,13 +5313,6 @@ electron-to-chromium@^1.3.390:
   version "1.3.403"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.403.tgz#c8bab4e2e72bf78bc28bad1cc355c061f9cc1918"
   integrity sha512-JaoxV4RzdBAZOnsF4dAlZ2ijJW72MbqO5lNfOBHUWiBQl3Rwe+mk2RCUMrRI3rSClLJ8HSNQNqcry12H+0ZjFw==
-
-element-resize-detector@^1.1.15:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/element-resize-detector/-/element-resize-detector-1.2.1.tgz#b0305194447a4863155e58f13323a0aef30851d1"
-  integrity sha512-BdFsPepnQr9fznNPF9nF4vQ457U/ZJXQDSNF1zBe7yaga8v9AdZf3/NElYxFdUh7SitSGt040QygiTo6dtatIw==
-  dependencies:
-    batch-processor "1.0.0"
 
 elliptic@^6.0.0:
   version "6.5.2"
@@ -9288,14 +9276,6 @@ ngx-drag-scroll@^9.0.0-beta.4:
   dependencies:
     tslib "^1.10.0"
 
-ngx-ellipsis@^2.0.9:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/ngx-ellipsis/-/ngx-ellipsis-2.1.2.tgz#dad1a4bdeeaab005740c7eaaf1d4aca40cffdadf"
-  integrity sha512-zw+E3lVjKSHAqZLSPLUXW+tnvIAoZRjmvMTVMbReYivdoRWcxPjACfbgoxehJqCp4ezapG8A93AAxoxzQCxVpw==
-  dependencies:
-    element-resize-detector "^1.1.15"
-    tslib "^1.9.0"
-
 ngx-infinite-scroll@^8.0.1:
   version "8.0.2"
   resolved "https://registry.yarnpkg.com/ngx-infinite-scroll/-/ngx-infinite-scroll-8.0.2.tgz#ab527962f179b00f7b57c37cc0c8aba1bf88b131"
@@ -9303,11 +9283,6 @@ ngx-infinite-scroll@^8.0.1:
   dependencies:
     "@scarf/scarf" "0.1.5"
     opencollective-postinstall "^2.0.2"
-
-ngx-multi-line-ellipsis@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/ngx-multi-line-ellipsis/-/ngx-multi-line-ellipsis-1.0.4.tgz#1354237469d757d8d2e4c320d3cfd516b4b3a271"
-  integrity sha1-E1QjdGnXV9jS5MMg08/VFrSzonE=
 
 ngx-pinch-zoom@^2.4.4:
   version "2.4.4"

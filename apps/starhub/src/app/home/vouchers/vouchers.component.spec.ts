@@ -11,7 +11,6 @@ import { MatCardModule, MatIconModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { IVoucherService } from '@perxtech/core';
 import { of } from 'rxjs';
-import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 import { Router } from '@angular/router';
 import { Type } from '@angular/core';
 import { vouchers } from '../../vouchers.mock';
@@ -41,7 +40,6 @@ describe('VouchersComponent', () => {
             component: VouchersComponent
           }
         ]),
-        NgxMultiLineEllipsisModule,
         InfiniteScrollModule
       ],
       providers: [{ provide: IVoucherService, useValue: vouchersServiceStub }]
