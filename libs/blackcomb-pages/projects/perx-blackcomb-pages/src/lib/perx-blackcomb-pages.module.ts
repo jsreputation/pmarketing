@@ -45,7 +45,6 @@ import {
 } from '@perxtech/core';
 
 import { RewardComponent } from './reward/reward.component';
-import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 import { LoadingComponent } from './loading/loading.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { QRCodeModule } from 'angularx-qrcode';
@@ -128,7 +127,6 @@ const comps: any[] = [
     MatRippleModule,
     MatGridListModule,
     MatTabsModule,
-    NgxMultiLineEllipsisModule,
     MatProgressSpinnerModule,
     FormsModule,
     ReactiveFormsModule,
