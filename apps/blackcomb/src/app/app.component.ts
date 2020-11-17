@@ -11,6 +11,7 @@ import {
   Router,
   NavigationEnd,
   Event,
+  ActivatedRoute,
 } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -36,7 +37,16 @@ import {
   HistoryComponent,
   AccountComponent,
   SignIn2Component,
-  WalletComponent
+  WalletComponent,
+  WalletHistoryComponent,
+  ProfileComponent,
+  CampaignStampsComponent,
+  LeaderboardPageComponent,
+  FindLocationComponent,
+  TransactionHistoryComponent,
+  RebatesWalletComponent,
+  RewardsPageComponent,
+  NearmeComponent
 } from '@perxtech/blackcomb-pages';
 
 import { BACK_ARROW_URLS } from './app.constants';
@@ -66,6 +76,7 @@ export class AppComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private snack: MatSnackBar,
     private config: ConfigService,
+    private route: ActivatedRoute,
     private translate: TranslateService,
     private themesService: ThemesService,
     private titleService: Title,
@@ -115,11 +126,23 @@ export class AppComponent implements OnInit {
   }
 
   public onActivate(ref: any): void {
-    this.showHeader = !(ref instanceof SignIn2Component);
+    this.route.queryParams.subscribe((params) => {
+      const paramArr: string[] = params.flags && params.flags.split(',');
+      this.showHeader = paramArr && paramArr.includes('chromeless') ? false : !(ref instanceof SignIn2Component);
+    });
     this.showToolbar = ref instanceof HomeComponent ||
       ref instanceof HistoryComponent ||
       ref instanceof AccountComponent ||
-      ref instanceof WalletComponent;
+      ref instanceof WalletComponent ||
+      ref instanceof WalletHistoryComponent ||
+      ref instanceof ProfileComponent ||
+      ref instanceof CampaignStampsComponent ||
+      ref instanceof LeaderboardPageComponent ||
+      ref instanceof FindLocationComponent ||
+      ref instanceof TransactionHistoryComponent ||
+      ref instanceof RebatesWalletComponent ||
+      ref instanceof RewardsPageComponent ||
+      ref instanceof NearmeComponent;
     this.cd.detectChanges();
   }
 
