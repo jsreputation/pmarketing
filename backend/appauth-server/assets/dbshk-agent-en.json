@@ -127,7 +127,8 @@
     "ACCOUNT": "Account",
     "PAY": "Pay",
     "NEARME": "Near Me",
-    "STAMPS": "Stamps"
+    "STAMPS": "Stamps",
+    "PERFORMANCE": "Performance"
   },
   "QUIZ_TEMPLATE": {
     "CTA_START_TXT": "Take the quiz",
