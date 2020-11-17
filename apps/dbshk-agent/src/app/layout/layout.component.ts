@@ -44,6 +44,7 @@ import {
   WalletComponent,
   WalletHistoryComponent
 } from '@perxtech/blackcomb-pages';
+import { PerformanceComponent } from '../performance/performance.component';
 
 export interface ShowTitleInHeader {
   getTitle(): string;
@@ -131,6 +132,7 @@ export class LayoutComponent implements OnInit {
       ref instanceof TransactionHistoryComponent ||
       ref instanceof RebatesWalletComponent ||
       ref instanceof RewardsPageComponent ||
+      ref instanceof PerformanceComponent ||
       ref instanceof NearmeComponent;
     this.cd.detectChanges();
   }

@@ -51,6 +51,7 @@ import {
 
 import { BACK_ARROW_URLS } from './app.constants';
 import { Title } from '@angular/platform-browser';
+import { PerformanceComponent } from './performance/performance.component';
 
 @Component({
   selector: 'app-root',
@@ -142,6 +143,7 @@ export class AppComponent implements OnInit {
       ref instanceof TransactionHistoryComponent ||
       ref instanceof RebatesWalletComponent ||
       ref instanceof RewardsPageComponent ||
+      ref instanceof PerformanceComponent ||
       ref instanceof NearmeComponent;
     this.cd.detectChanges();
   }
