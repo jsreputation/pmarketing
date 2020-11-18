@@ -339,6 +339,10 @@
     "GAME_NOT_VALID_TEXT": "This game is not available for you at the moment.",
     "VIEW_REWARD": "View reward"
   },
+  "PERFORMANCE": {
+    "OVERVIEW_TITLE": "Overview",
+    "ACTIVITY_TITLE": "Activity"
+  },
   "Gold": "Gold",
   "Silver": "Silver",
   "Green": "Green",
