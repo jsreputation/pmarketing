@@ -5,6 +5,8 @@ import {
   RouterModule,
   Routes
 } from '@angular/router';
+import { OverviewComponent } from './overview/overview.component';
+import { ActivityComponent } from './activity/activity.component';
 
 const routes: Routes = [{
   path: '',
@@ -12,7 +14,9 @@ const routes: Routes = [{
 }];
 @NgModule({
   declarations: [
-    PerformanceComponent
+    PerformanceComponent,
+    OverviewComponent,
+    ActivityComponent
   ],
   imports: [
     CommonModule,
