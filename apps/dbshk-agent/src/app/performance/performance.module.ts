@@ -5,8 +5,11 @@ import {
   RouterModule,
   Routes
 } from '@angular/router';
+import { MatTabsModule } from '@angular/material/tabs';
+import { TranslateModule } from '@ngx-translate/core';
 import { OverviewComponent } from './overview/overview.component';
 import { ActivityComponent } from './activity/activity.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 const routes: Routes = [{
   path: '',
@@ -21,6 +24,9 @@ const routes: Routes = [{
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
+    TranslateModule.forChild(),
+    MatTabsModule,
+    InfiniteScrollModule,
   ]
 })
 export class PerformanceModule { }

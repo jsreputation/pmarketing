@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-activity',
+  selector: 'dbshk-agent-activity',
   templateUrl: './activity.component.html',
   styleUrls: ['./activity.component.scss']
 })
@@ -9,7 +9,10 @@ export class ActivityComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit(): void {
   }
 
+  public onScroll(): void {
+
+  }
 }
