@@ -1,1 +1,10 @@
-<p>performance works!</p>
+<div class="page">
+  <mat-tab-group mat-stretch-tabs>
+    <mat-tab [label]="'PERFORMANCE.OVERVIEW_TITLE' | translate">
+      <dbshk-agent-overview></dbshk-agent-overview>
+    </mat-tab>
+    <mat-tab [label]="'PERFORMANCE.ACTIVITY_TITLE' | translate">
+      <dbshk-agent-activity></dbshk-agent-activity>
+    </mat-tab>
+  </mat-tab-group>
+</div>

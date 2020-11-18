@@ -11,5 +11,4 @@ export class PerformanceComponent implements OnInit {
 
   public ngOnInit(): void {
   }
-
 }
