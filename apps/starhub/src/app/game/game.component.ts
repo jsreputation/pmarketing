@@ -91,6 +91,7 @@ export class GameComponent implements OnInit {
             text: game.results.noOutcome && game.results.noOutcome.subTitle,
             buttonTxt: game.results.noOutcome && game.results.noOutcome.button,
             afterClosedCallBack: this,
+            disableOverlayClose: true,
             panelClass: 'custom-class'
           });
         }
@@ -120,6 +121,7 @@ export class GameComponent implements OnInit {
     this.notificationService.addPopup({
       title: 'Oooops!',
       text: 'Something is wrong, game cannot be played at the moment!',
+      disableOverlayClose: true,
       panelClass: 'custom-class'
     });
   }
@@ -157,6 +159,7 @@ export class GameComponent implements OnInit {
               this.notificationService.addPopup({
                 title: 'Oooops!',
                 text: 'No more rewards available',
+                disableOverlayClose: true,
                 panelClass: 'custom-class'
               });
             } else {
