@@ -18,7 +18,7 @@
       <div *ngIf="loyalty.membershipTierName !== loyalty.highestTier" class="progress-bar">
         <mat-progress-bar mode="determinate" [value]="getPercentageToNext(loyalty.pointsBalance, loyalty.nextTierPoints)"></mat-progress-bar>
         <div class="points-to">
-          {{pointTo | async}}: {{loyalty.nextTierPointsDiff}}
+          {{pointTo | async}}<ng-container *ngIf="showLoyaltyNextTierPointsDiff">: {{loyalty.nextTierPointsDiff}}</ng-container>
         </div>
       </div>
     </ng-container>

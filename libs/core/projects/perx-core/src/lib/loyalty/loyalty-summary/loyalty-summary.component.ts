@@ -45,6 +45,9 @@ export class LoyaltySummaryComponent implements OnInit {
   @Input()
   public showLoyaltyProgress: boolean = true;
 
+  @Input()
+  public showLoyaltyNextTierPointsDiff: boolean = true;
+
   public loyaltyProgramExists: boolean = true;
   public pointTo: Observable<string>;
   private nextTierName: string;
