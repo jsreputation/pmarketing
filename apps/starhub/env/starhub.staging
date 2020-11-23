@@ -1,2 +1,2 @@
 PRODUCTION=true
-HUBCLUB_CR=false
+HUBCLUB_CR=true
