@@ -251,6 +251,9 @@
     "CLOSE": "Close",
     "REWARDS": "Rewards"
   },
+  "BOOKING_PAGE": {
+    "TNC": "I have read, understood and agree to HSBC’s Rewards Program General Terms and Conditions"
+  },
   "NEWS_FEED": {
     "BTN_1": "Play now",
     "CONTENT_1": "A small text description for the card followed by a call to action button."
