@@ -4,6 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule, Routes } from '@angular/router';
 import { ReferralComponent } from './referral.component';
+import { CommonModule } from '@angular/common';
 
 const routes: Routes = [{ path: '', component: ReferralComponent }];
 
@@ -13,6 +14,7 @@ const routes: Routes = [{ path: '', component: ReferralComponent }];
   TranslateModule.forChild(),
     MatToolbarModule,
     MatButtonModule,
+    CommonModule
   ]
 })
 export class ReferralModule { }

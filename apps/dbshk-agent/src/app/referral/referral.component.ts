@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import {
-  CampaignType,
   ICampaign,
   ICampaignService,
   NotificationService,
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
-import { map, switchMap, takeLast, tap } from 'rxjs/operators';
+import { filter, map, switchMap, tap } from 'rxjs/operators';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'perx-blackcomb-pages-referral',
@@ -16,6 +16,7 @@ import { map, switchMap, takeLast, tap } from 'rxjs/operators';
 export class ReferralComponent {
   public campaignName: string = '';
   public campaignDescription: string = '';
+  public campaignEndsAt: Date;
   // todo to be replaced with the proper content when api is available
   public code: string = '';
   // todo to be replaced with the proper content when api is available
@@ -30,14 +31,15 @@ export class ReferralComponent {
   constructor(
     private campaignService: ICampaignService,
     private notificationService: NotificationService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private activeRoute: ActivatedRoute,
   ) {
     this.initTranslate();
-    this.campaignService
-      .getCampaigns({ type: CampaignType.invite })
+    this.activeRoute.params
       .pipe(
-        map((campaigns: ICampaign[]) => campaigns[0].id),
-        switchMap((cid: number) => this.campaignService.getCampaign(cid)),
+        filter((ps: Params) => ps.id),
+        map((ps: Params) => Number.parseInt(ps.id, 10)),
+        switchMap((id: number) => this.campaignService.getCampaign(id)),
         tap((campaign: ICampaign) => {
           if (campaign) {
             this.code = campaign.referralCodes
@@ -47,11 +49,10 @@ export class ReferralComponent {
             // set to campaign or do nothing
             this.campaignDescription = campaign.description ? campaign.description : this.campaignDescription;
             this.campaignName = campaign.name ? campaign.name : this.campaignName;
+            this.campaignEndsAt = campaign.endsAt ? campaign.endsAt : null;
           }
-        }),
-        takeLast(1)
-      )
-      .subscribe();
+        })
+      ).subscribe();
   }
 
   public share(): void {

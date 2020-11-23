@@ -1,15 +1,10 @@
-@import "../custom-theme.scss";
-// @import "../quiz/_mixins";
+@import '../custom-theme.scss';
 
 .referral-main-container {
-  // @include quizContainer();
-
   background-color: white;
 }
 
 .referral-page {
-  // @include quizPage();
-
   padding: 2.8rem;
   align-items: stretch;
 
@@ -39,13 +34,33 @@
     padding: 1.6rem;
     margin-block-end: 1.6rem;
   }
-
-  img {
-    object-fit: scale-down;
-    flex: 1;
+  .referral-image {
+    display: flex;
+    img {
+      object-fit: scale-down;
+      flex: 1;
+    }
   }
 }
 
 .bottom-nav-container {
-  // @include quizBottomBar();
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex: 0 0 7rem;
+  background: var(--surface_colour, #fff) !important;
+  font-size: 1rem;
+  line-height: 1.6rem;
+
+  button,
+  a {
+    text-decoration: none;
+    text-align: center;
+    height: 4rem;
+    flex: 1;
+
+    &:not(:last-child) {
+      margin-right: 1.6rem;
+    }
+  }
 }

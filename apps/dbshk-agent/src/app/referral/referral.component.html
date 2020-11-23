@@ -1,8 +1,13 @@
 <div class="referral-main-container">
   <div class="referral-page">
-    <img src="assets/referral/referral.png">
+    <div class="referral-image">
+      <img src="assets/referral/referral.png" />
+    </div>
     <h1>{{campaignName}}</h1>
-    <p [innerHTML]="campaignDescription"></p>
+    <p *ngIf="campaignEndsAt">{{'REFERRAL.ENDS_ON' | translate}}{{campaignEndsAt| date:'shortDate'}}</p>
+    <div>
+      <p [innerHTML]="campaignDescription"></p>
+    </div>
     <div class="code" (click)="copy()">
       <span>{{code}}</span>
       <span class="material-icons">share</span>
