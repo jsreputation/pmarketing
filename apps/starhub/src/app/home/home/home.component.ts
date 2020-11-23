@@ -5,6 +5,7 @@ import {
   ConfigService,
   ICampaign,
   ICampaignService,
+  IConfig,
   IGame,
   ILoyalty,
   InstantOutcomeService,
@@ -21,6 +22,12 @@ import { combineLatest, of } from 'rxjs';
 import { IdataLayerSH } from '../../app.component';
 
 declare var dataLayerSH: IdataLayerSH; // eslint-disable-line
+
+export interface IStarhubConfig {
+  hubclubCR: boolean;
+}
+
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -39,6 +46,8 @@ export class HomeComponent implements OnInit {
   private firstComefirstServeCampaign: ICampaign;
   private token: string;
   public game?: IGame;
+  public hubclubCR: boolean;
+
   constructor(
     private noRenewalePipe: NoRenewaleInNamePipe,
     private loyaltyService: LoyaltyService,
@@ -52,15 +61,20 @@ export class HomeComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.configService.readAppConfig().subscribe(() => {
-      this.loyaltyService
-        .getLoyalty()
-        .subscribe((loyalty: ILoyalty) => (this.loyalty = loyalty));
-      this.profileService
-        .whoAmI()
-        .subscribe((p: IProfile) => (this.profile = p));
-      this.getAccessToken();
-    });
+    this.configService.readAppConfig<IStarhubConfig>().subscribe(
+      (config: IConfig<IStarhubConfig>) => {
+        //@ts-ignore
+        console.log(config.custom.hubclubCR);
+        this.hubclubCR = config.custom ? config.custom.hubclubCR : false;
+        this.loyaltyService
+          .getLoyalty()
+          .subscribe((loyalty: ILoyalty) => (this.loyalty = loyalty));
+        this.profileService
+          .whoAmI()
+          .subscribe((p: IProfile) => (this.profile = p));
+        this.getAccessToken();
+      }
+    );
   }
 
   private getAccessToken(): void {
