@@ -115,6 +115,9 @@
   "WELCOME_PAGE": {
     "LOG_IN": "Log in"
   },
+  "BOOKING_PAGE": {
+    "TNC": "I have read, understood and agree to HSBC’s Rewards Program General Terms and Conditions"
+  },
   "HOME": {
     "HELLO": "Welcome",
     "GAMES": "Games",

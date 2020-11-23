@@ -33,6 +33,7 @@ import {
 import {
   forkJoin,
   iif,
+  Observable,
   of,
   throwError
 } from 'rxjs';
@@ -56,7 +57,7 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
   public loading: boolean = false;
   private loyalty: ILoyalty;
   public chooseQuantity: boolean = false;
-  public tncHTML = of('I have read, understood the Voucher Terms & Conditions stated in the previous page and agree to all clauses stated therein');
+  public tncHTML: Observable<string>;
   private distributionType: VoucherDistributionTypes = VoucherDistributionTypes.issue;
 
   constructor(

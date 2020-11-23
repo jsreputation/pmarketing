@@ -1,4 +1,7 @@
 {
+  "BOOKING_PAGE": {
+    "TNC": "I have read, understood and agree to HSBC’s Rewards Program General Terms and Conditions"
+  },
   "LOGIN": "Login",
   "REGISTER_FOR_AN_ACCOUNT": "Register for an account",
   "MOBILE_NUMBER_OR_EMAIL": "Mobile Number or email address",
