@@ -79,7 +79,7 @@
     "MOBILE_NOTFOUND_TXT": "Account not found",
     "MOBILE_INVALID_TXT": "Please input a valid mobile number",
     "MOBILE_REQUIRED_TXT": "Please enter your mobile number",
-    "USERNAME_FIELD": "Player Code",
+    "USERNAME_FIELD": "User Code",
     "USERNAME_REQUIRED_TXT": "Please enter your player code",
     "OTP_SEND_TO": "OTP send to ",
     "CHECK_YOUR_SMS": "Check your sms",
