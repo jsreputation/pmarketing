@@ -133,6 +133,10 @@ const routes: Routes = [
         loadChildren: () => import('../performance/performance.module')
           .then(mod => mod.PerformanceModule),
         canActivate: [ProtectedGuard]
+      },
+      {
+        path: 'invite/:id',
+        loadChildren: () => import('../referral/referral.module').then(mod => mod.ReferralModule)
       }
     ]
   }
