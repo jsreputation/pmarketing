@@ -63,8 +63,6 @@ export class HomeComponent implements OnInit {
   public ngOnInit(): void {
     this.configService.readAppConfig<IStarhubConfig>().subscribe(
       (config: IConfig<IStarhubConfig>) => {
-        //@ts-ignore
-        console.log(config.custom.hubclubCR);
         this.hubclubCR = config.custom ? config.custom.hubclubCR : false;
         this.loyaltyService
           .getLoyalty()
