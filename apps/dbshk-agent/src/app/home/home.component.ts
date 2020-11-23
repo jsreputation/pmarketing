@@ -72,6 +72,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public rewards$: Observable<IReward[]>;
   public games$: Observable<IGame[]>;
   public stampCampaigns$: Observable<ICampaign[]>;
+  public referralCampaigns$: Observable<ICampaign[]>;
   public tabs$: BehaviorSubject<ITabConfigExtended[]> = new BehaviorSubject<
     ITabConfigExtended[]
   >([]);
@@ -357,6 +358,19 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
     this.stampCampaigns$ = this.campaignService
       .getCampaigns({ type: CampaignType.stamp })
+      .pipe(
+        tap(
+          (campaigns: ICampaign[]) =>
+            (this.showCampaigns = campaigns.length > 0)
+        ),
+        switchMap((campaigns: ICampaign[]) =>
+          of(campaigns).pipe(catchError((err) => of(err)))
+        ),
+        takeLast(1)
+      );
+
+    this.referralCampaigns$ = this.campaignService
+      .getCampaigns({ type: CampaignType.invite })
       .pipe(
         tap(
           (campaigns: ICampaign[]) =>

@@ -45,7 +45,7 @@
     <perx-core-rewards-collection [showRewardFavButton]="appConfig.showRewardFavButton" [rewardsList]="rewards$" (tapped)="goToReward($event)"></perx-core-rewards-collection>
   </div>
   <!-- Stamp card campaigns-->
-  <div class="campaigns">
+  <div class="campaigns" *ngIf="appConfig.showStampCampaignsOnHomePage">
     <div *ngIf="showCampaigns" class="title" translate>HOME.STAMP_CAMPAIGNS</div>
     <perx-blackcomb-pages-campaigns-collection [campaigns]="stampCampaigns$" (selected)="goToCampaignPage($event)">
     </perx-blackcomb-pages-campaigns-collection>
@@ -73,6 +73,13 @@
       [gameType]="gameType.survey"
       [campaigns]="surveyCampaigns$" (selected)="goToCampaignPage($event)">
     </perx-blackcomb-pages-campaigns-collection>
+  </div>
+  <!-- Referral campaigns -->
+  <div class="campaigns" *ngIf="appConfig.showReferralCampaignsOnHomePage">
+     <perx-blackcomb-pages-campaigns-collection
+       [gameType]="gameType.invite"
+       [campaigns]="referralCampaigns$" (selected)="goToCampaignPage($event)">
+     </perx-blackcomb-pages-campaigns-collection>
   </div>
   <div class="catalogs" *ngIf="appConfig.showCatalogOnHomePage">
     <div *ngIf="(catalogs$ | async)?.length > 0" class="title" translate>HOME.CATALOG</div>
