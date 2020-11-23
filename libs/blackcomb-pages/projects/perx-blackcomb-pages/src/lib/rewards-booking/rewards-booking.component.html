@@ -16,8 +16,8 @@
                   <p id="price-point-info">
                     Use
                     <span *ngIf="price.points">{{price.points}} points</span>
-                    <span *ngIf="price.points && price.price"> + </span>
-                    <span *ngIf="price.price">{{price.currencyCode}} {{price.price | number: '1.0-0'}}</span>
+                    <span *ngIf="price.points && +price.price"> + </span>
+                    <span *ngIf="+price.price">{{price.currencyCode}} {{price.price | number: '1.0-0'}}</span>
                     <span *ngIf="price.identifier"> (code: {{price.identifier}})</span>
                   </p>
                 </mat-radio-button>
