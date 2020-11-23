@@ -43,13 +43,18 @@ const envConfigFile = `export const environment = {
 `;
 
 const appConfigFile = `{
+  "app": "starhub",
+  "appVersion": "${version}",
   "apiHost": "${
   process.env.APIHOST ? process.env.APIHOST : 'https://api.perxtech.io'
   }",
   "production": ${process.env.PRODUCTION ? process.env.PRODUCTION : false},
   "preAuth": ${process.env.PREAUTH ? process.env.PREAUTH : false},
   "isWhistler": ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : false},
-  "baseHref": "${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}"
+  "baseHref": "${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}",
+  "custom": {
+    "hubclubCR": ${process.env.HUBCLUB_CR ? process.env.HUBCLUB_CR : false}
+  }
 }
 `;
 
