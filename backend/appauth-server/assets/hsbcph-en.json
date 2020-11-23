@@ -301,7 +301,7 @@
     "EXPIRY": "Expires on: {{date}}"
   },
   "REWARD": {
-    "GET_VOUCHER": "Get Voucher",
+    "GET_VOUCHER": "Get Reward",
     "DESCRIPTION": "Description",
     "TNC": "Terms and Conditions",
     "EXPIRY": "Expiry",
