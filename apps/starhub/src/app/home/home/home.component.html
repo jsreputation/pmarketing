@@ -14,16 +14,12 @@
         </div>
         <div *ngIf="hubclubCR && profile && profile.customProperties">
           <a class="membership-link" (click)="membershipClicked()">
-            <span class="subtitle"
-                  *ngIf="
-                  (profile.customProperties.membership === 'Hub Club' || profile.customProperties.membership_type)">
-              {{profile.customProperties.membership_display || '+ Hub Club'}}
-            </span>
-            <span class="subtitle" *ngIf="profile.customProperties.sub_membership_type && !profile.customProperties.membership_type">
-              {{profile.customProperties.sub_membership_display}}
+            <span class="subtitle" *ngIf="
+                  profile.customProperties.membership_type ||
+                  profile.customProperties.sub_membership_type">
+              {{hubClubDisplay}}
             </span>
             <span class="subtitle" *ngIf="
-            profile.customProperties.membership !== 'Hub Club' &&
             !profile.customProperties.membership_type &&
             !profile.customProperties.sub_membership_type">
               Regular
