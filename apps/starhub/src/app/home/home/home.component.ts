@@ -47,7 +47,7 @@ export class HomeComponent implements OnInit {
   private token: string;
   public game?: IGame;
   public hubclubCR: boolean;
-  public hubClubDisplay: string = ''
+  public hubClubDisplay: string = '';
 
   constructor(
     private noRenewalePipe: NoRenewaleInNamePipe,
@@ -73,7 +73,7 @@ export class HomeComponent implements OnInit {
           .subscribe((p: IProfile) => {
             this.profile = p;
             const customProperties = p.customProperties;
-            if (customProperties){
+            if (customProperties) {
               this.hubClubDisplay = customProperties.sub_membership_type.toString().toLowerCase() === 'nominee' &&
                 customProperties.membership_type.toString().toLowerCase() !== 'hubclub' ?
                 customProperties.sub_membership_display.toString() : customProperties.membership_display.toString();
