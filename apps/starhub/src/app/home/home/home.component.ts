@@ -212,8 +212,8 @@ export class HomeComponent implements OnInit {
   public membershipClicked(): void {
     const userCustomProps = this.profile.customProperties;
     if (userCustomProps) {
-      const membershipType = userCustomProps.MembershipType ? userCustomProps.MembershipType : '';
-      const subMembershipType = userCustomProps.SubMemberShipType ? userCustomProps.SubMemberShipType : '';
+      const membershipType = userCustomProps.membership_type ? userCustomProps.membership_type : '';
+      const subMembershipType = userCustomProps.sub_membership_type ? userCustomProps.sub_membership_type : '';
       document.location.href = `https://membershipclicked/?MembershipType=${membershipType}&SubMembershipType=${subMembershipType}`;
     }
   }
