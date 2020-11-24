@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 import { oc } from 'ts-optchain';
+import { globalCacheBusterNotifier } from 'ngx-cacheable';
 
 // import { ShowTitleInHeader } from '../layout/layout.component';
 
@@ -85,6 +86,7 @@ export class ProfileComponent implements OnInit/*, ShowTitleInHeader*/ {
         this.notificationService.addSnack('Marketing preferences updated');
       }
     );
+    globalCacheBusterNotifier.next();
   }
   // public getTitle(): string {
   //   return 'Profile';
