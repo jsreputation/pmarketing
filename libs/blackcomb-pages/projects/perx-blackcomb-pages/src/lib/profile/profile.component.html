@@ -66,5 +66,13 @@
     <mat-icon (click)="onEditPasswordClicked()">edit</mat-icon>
   </mat-list-item>
 
+  <mat-divider *ngIf="profile.customProperties && profile.customProperties.hasOwnProperty('allow_marketing')"></mat-divider>
+
+  <mat-list-item *ngIf="profile.customProperties && profile.customProperties.hasOwnProperty('allow_marketing')">
+    <div class="checkbox-container">
+      <p matLine>I would like to receive marketing notifications</p>
+      <mat-checkbox [checked]="marketingAccepted" (change)="marketingUpdated(marketingAccepted)"></mat-checkbox>
+    </div>
+  </mat-list-item>
   <mat-divider></mat-divider>
 </mat-list>

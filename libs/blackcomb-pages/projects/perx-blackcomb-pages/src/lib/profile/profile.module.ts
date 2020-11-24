@@ -4,6 +4,7 @@ import { MatIconModule, MatListModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { ProfileComponent } from './profile.component';
 import { LoyaltyModule, ProfileModule as PerxCoreProfileModule, ProfileServiceModule  } from '@perxtech/core';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [ProfileComponent],
@@ -15,7 +16,8 @@ import { LoyaltyModule, ProfileModule as PerxCoreProfileModule, ProfileServiceMo
     RouterModule,
     PerxCoreProfileModule,
     ProfileServiceModule.forChild(),
-    LoyaltyModule
+    LoyaltyModule,
+    MatCheckboxModule
   ]
 })
 export class ProfileModule { }

@@ -6,6 +6,7 @@ import {
 import {
   ILoyalty,
   LoyaltyService,
+  NotificationService,
   ProfileService,
   SettingsService
 } from '@perxtech/core';
@@ -20,6 +21,7 @@ import {
 } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DatePipe } from '@angular/common';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 const profileServiceStub: Partial<ProfileService> = {
   whoAmI: () => of()
@@ -34,6 +36,10 @@ const settingsServiceStub: Partial<SettingsService> = {
   getRemoteFlagsSettings: () => of()
 };
 
+const notificationServiceStub: Partial<NotificationService> = {
+  addSnack: () => { }
+};
+
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
   let fixture: ComponentFixture<ProfileComponent>;
@@ -44,13 +50,15 @@ describe('ProfileComponent', () => {
       imports: [
         MatListModule,
         MatIconModule,
-        RouterTestingModule
+        RouterTestingModule,
+        MatCheckboxModule
       ],
       providers: [
         DatePipe,
         { provide: ProfileService, useValue: profileServiceStub },
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
-        { provide: SettingsService, useValue: settingsServiceStub }
+        { provide: SettingsService, useValue: settingsServiceStub },
+        { provide: NotificationService, useValue: notificationServiceStub }
       ]
     })
       .compileComponents();
