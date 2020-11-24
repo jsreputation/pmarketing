@@ -22,6 +22,7 @@ import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform
 import { MatDialog } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('RewardsBookingComponent', () => {
   let component: RewardsBookingComponent;
@@ -66,7 +67,8 @@ describe('RewardsBookingComponent', () => {
         FormsModule,
         NoopAnimationsModule,
         BrowserAnimationsModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: RewardsService, useValue: rewardServiceStub },

@@ -33,11 +33,13 @@ import {
 import {
   forkJoin,
   iif,
+  Observable,
   of,
   throwError
 } from 'rxjs';
 import { oc } from 'ts-optchain';
 import { globalCacheBusterNotifier } from 'ngx-cacheable';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'perx-blackcomb-pages-rewards-booking',
@@ -55,6 +57,7 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
   public loading: boolean = false;
   private loyalty: ILoyalty;
   public chooseQuantity: boolean = false;
+  public tncHTML: Observable<string>;
   private distributionType: VoucherDistributionTypes = VoucherDistributionTypes.issue;
 
   constructor(
@@ -65,6 +68,7 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
     private route: ActivatedRoute,
     private build: FormBuilder,
     private notificationService: NotificationService,
+    private translate: TranslateService,
     private router: Router
   ) { }
 
@@ -98,6 +102,7 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
       })).pipe(
       flatMap((result) => {
         [this.reward, this.prices] = result;
+        this.tncHTML = this.translate.get('BOOKING_PAGE.TNC');
         if (!this.reward.merchantId) {
           return throwError({ message: 'merchantId is required' });
         }
