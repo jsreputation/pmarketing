@@ -46,7 +46,7 @@ export class ProfileComponent implements OnInit/*, ShowTitleInHeader*/ {
       this.profile = res;
       if (res.customProperties && res.customProperties.allow_marketing) {
         console.log(res.customProperties.allow_marketing);
-        this.marketingAccepted = res.customProperties.allow_marketing as boolean
+        this.marketingAccepted = res.customProperties.allow_marketing as boolean;
       }
     });
     this.settingsService.getRemoteFlagsSettings().subscribe(
