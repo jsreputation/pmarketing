@@ -70,7 +70,7 @@
 
   <mat-list-item *ngIf="profile.customProperties && profile.customProperties.hasOwnProperty('allow_marketing')">
     <div class="checkbox-container">
-      <span class="wrap-checkbox-text">I would like to receive marketing notifications</span>
+      <p matLine>I would like to receive marketing notifications</p>
       <mat-checkbox [checked]="marketingAccepted" (change)="marketingUpdated(marketingAccepted)"></mat-checkbox>
     </div>
   </mat-list-item>

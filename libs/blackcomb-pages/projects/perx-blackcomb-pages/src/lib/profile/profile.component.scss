@@ -23,6 +23,21 @@ mat-list {
   .mat-icon {
     font-size: 1.8rem;
   }
+
+  .checkbox-container {
+    width: 100%;
+    display: flex;
+
+    p {
+      flex-grow: 1;
+    }
+
+    .mat-checkbox {
+      flex: 0;
+      align-self: center;
+      justify-self: end;
+    }
+  }
 }
 
 .capitalize {
