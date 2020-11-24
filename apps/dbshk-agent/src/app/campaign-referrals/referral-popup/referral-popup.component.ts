@@ -1,17 +1,20 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { IPopupConfig } from '@perxtech/core';
 
 export interface IReferralPopupConfig extends IPopupConfig {
   description: string;
-}
-export interface TimerCallBack {
-  timerExpired(): void;
-  timerExpiring(): void;
+  addButtonTxt: string;
+  namePlaceholder: string;
 }
 
 export interface PopUpClosedCallBack {
   closeAndRedirect(url: string): void;
+}
+
+interface IReferralName {
+  name: string;
 }
 
 @Component({
@@ -19,16 +22,20 @@ export interface PopUpClosedCallBack {
   templateUrl: './referral-popup.component.html',
   styleUrls: ['./referral-popup.component.scss']
 })
-export class ReferralPopupComponent {
+export class ReferralPopupComponent implements OnInit {
 
   public title: string;
   public description: string;
   public buttonTxt: string;
-  public validTo: Date;
+  public addButtonTxt: string;
+  public namePlaceholder: string;
+  public referralNames: IReferralName[];
+  public addRefferalNameForm: FormGroup;
 
   constructor(
     public dialogRef: MatDialogRef<ReferralPopupComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: IReferralPopupConfig
+    @Inject(MAT_DIALOG_DATA) public data: IReferralPopupConfig,
+    private fb: FormBuilder,
   ) {
     if (data.disableOverlayClose) {
       dialogRef.disableClose = data.disableOverlayClose;
@@ -42,7 +49,23 @@ export class ReferralPopupComponent {
     if (data.buttonTxt) {
       this.buttonTxt = data.buttonTxt;
     }
+    if (data.addButtonTxt) {
+      this.addButtonTxt = data.addButtonTxt;
+    }
+    if (data.namePlaceholder) {
+      this.namePlaceholder = data.namePlaceholder;
+    }
+    this.referralNames = [];
+  }
 
+  public ngOnInit(): void {
+    this.initForm();
+  }
+
+  public initForm(): void {
+    this.addRefferalNameForm = this.fb.group({
+      referralName: ['', Validators.required],
+    });
   }
 
   public onClose(): void {
@@ -58,5 +81,15 @@ export class ReferralPopupComponent {
     // if (this.data.afterClosedCallBackRedirect && this.data.url) {
     //   this.data.afterClosedCallBackRedirect.closeAndRedirect(this.data.url);
     // }
+  }
+
+  public addName(): void {
+    const referral: IReferralName = { name: this.addRefferalNameForm.value.referralName };
+    this.addRefferalNameForm.setValue({referralName: ''});
+    this.referralNames.push(referral);
+  }
+
+  public removeName(name: string): void {
+    this.referralNames = this.referralNames.filter((el) => el.name !== name);
   }
 }

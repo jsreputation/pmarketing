@@ -16,6 +16,7 @@ import {
 } from '@angular/common/http';
 import {
   MatDialogModule,
+  MatInputModule,
   MatSnackBarModule
 } from '@angular/material';
 import { MatButtonModule } from '@angular/material/button';
@@ -80,6 +81,7 @@ import { environment } from '../environments/environment';
 import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
 import { ErrorComponent } from './error/error.component';
 import { ReferralPopupComponent } from './campaign-referrals/referral-popup/referral-popup.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // https://medium.com/angular-in-depth/gestures-in-an-angular-application-dde71804c0d0
 // to override default settings
@@ -160,6 +162,8 @@ export const setLanguage = (
     HttpClientModule,
     MatDialogModule,
     MatButtonModule,
+    MatButtonModule,
+    MatInputModule,
     MatSnackBarModule,
     LoyaltyModule.forRoot(),
     RewardsModule.forRoot(),
@@ -171,7 +175,9 @@ export const setLanguage = (
       }
     }),
     // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    ForgotPasswordModule
+    ForgotPasswordModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   bootstrap: [AppComponent],
   providers: [

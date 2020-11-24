@@ -32,6 +32,8 @@ export class ReferralComponent {
   public popupTitle: string;
   public popupDescription: string;
   public popupButton: string;
+  public addButtonTxt: string;
+  public namePlaceholder: string;
 
   constructor(
     private campaignService: ICampaignService,
@@ -66,6 +68,8 @@ export class ReferralComponent {
       title: this.popupTitle,
       description: this.popupDescription,
       buttonTxt: this.popupButton,
+      addButtonTxt: this.addButtonTxt,
+      namePlaceholder: this.namePlaceholder,
       afterClosedCallBack: this
     };
     this.dialog.open(ReferralPopupComponent, { data, width: '80vw' });
@@ -110,7 +114,9 @@ export class ReferralComponent {
         'REFERRAL.CLIPBOARD_ERROR_TXT',
         'REFERRAL_POPUP.TITLE',
         'REFERRAL_POPUP.DESCRIPTION',
-        'REFERRAL_POPUP.CTA_BUTTON'
+        'REFERRAL_POPUP.CTA_BUTTON',
+        'REFERRAL_POPUP.ADD_BUTTON',
+        'REFERRAL_POPUP.NAME_PLACEHOLDER'
       ])
       .subscribe((res: any) => {
         this.shareTitle = res['REFERRAL.SHARE_COPY_TITLE'];
@@ -123,6 +129,8 @@ export class ReferralComponent {
         this.popupTitle = res['REFERRAL_POPUP.TITLE'];
         this.popupDescription = res['REFERRAL_POPUP.DESCRIPTION'];
         this.popupButton = res['REFERRAL_POPUP.CTA_BUTTON'];
+        this.addButtonTxt = res['REFERRAL_POPUP.ADD_BUTTON'];
+        this.namePlaceholder = res['REFERRAL_POPUP.NAME_PLACEHOLDER'];
       });
   }
 }

@@ -236,7 +236,9 @@
   "REFERRAL_POPUP": {
     "TITLE": "Share the referral Code",
     "DESCRIPTION": "Enter names of recipients you'd share the code with",
-    "CTA_BUTTON": "Continue"
+    "CTA_BUTTON": "Continue",
+    "ADD_BUTTON": "Add Recipient",
+    "NAME_PLACEHOLDER": "Recipient name"
   },
   "HOME": {
     "HELLO": "Hello",
