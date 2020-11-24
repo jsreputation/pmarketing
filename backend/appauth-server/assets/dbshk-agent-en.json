@@ -228,19 +228,28 @@
   "REFERRAL": {
     "TITLE": "Refer a friend",
     "CONTENT": "For each successful sign up* using your referral code, you earn extra 5X lucky draw chance. Your referee will earn 3X lucky draw chances.<br/><br/>Share your referral code with a friend today!<br/>*Both you and your referee will have to complete at least 1 quiz to earn your lucky draw chances.",
-    "CTA_BUTTON": "Share referral code",
+    "CTA_BUTTON": "Share code",
     "SHARE_COPY_TITLE": "Join me in this game",
     "SHARE_COPY_TXT": "Join me in the HSBC LIFE Dojo challenge. Watch a video and answer the quiz questions correctly and stand to win rewards each week, as well as a chance for the grand lucky draw.\n[URL]\nUse referral code {{code}} when signing up and earn 3x lucky draw chances.\n",
     "COPY_TO_CLIPBOARD": "Copied to your clipboard!",
-    "CLIPBOARD_ERROR_TXT": "Could not access your clipboard"
+    "CLIPBOARD_ERROR_TXT": "Could not access your clipboard",
+    "ENDS_ON": "Ends on",
+    "TNC": "Terms & Conditions"
+  },
+  "REFERRAL_POPUP": {
+    "TITLE": "Share the referral Code",
+    "DESCRIPTION": "Enter names of recipients you'd share the code with",
+    "CTA_BUTTON": "Continue",
+    "ADD_BUTTON": "Add Recipient",
+    "NAME_PLACEHOLDER": "Recipient name"
   },
   "HOME": {
-    "HELLO": "Welcome",
+    "HELLO": "Hello",
     "MY_QR": "My QR",
     "MY_BAR_CODE": "My Barcode",
     "STAMP_CAMPAIGNS": "Stamp Card Campaigns",
     "CATALOG": "Catalog",
-    "MEMBER": " member",
+    "MEMBER": "You've Earned",
     "GAMES": "Games",
     "QUIZ": "Quiz",
     "FEATURED_REWARDS": "Featured Rewards",
@@ -252,7 +261,7 @@
     "POINTS_EXPIRING": "{{points}} points will expire on {{date}}",
     "POINT_EXPIRE": "{points} points will expire on {date}",
     "ACCOUNT_EXPIRE": "Account Expiry",
-    "POINT_TO": "Points to {nextTierName}",
+    "POINT_TO": "{points} DBS$ / COMPASS Dollars",
     "ALL": "All",
     "HUNG_FOOK_TONG": "Hung Fook Tong",
     "BIG_BIG_SHOP": "big big shop",

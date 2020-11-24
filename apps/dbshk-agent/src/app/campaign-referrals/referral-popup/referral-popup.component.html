@@ -1,0 +1,25 @@
+<div class="content">
+	<div mat-dialog-title>{{title}}</div>
+	<mat-dialog-content *ngIf="description">
+		<p [innerHtml]="description"></p>
+		<div *ngFor="let referral of referralNames">
+			<mat-form-field appearance="standard" class="full-width__input">
+				<input matInput [placeholder]="namePlaceholder" disabled [value]="referral.name" type="text">
+				<mat-icon matSuffix (click)="removeName(referral.name)">delete</mat-icon>
+			</mat-form-field>
+		</div>
+		<div>
+			<form [formGroup]="addRefferalNameForm" class="form" (ngSubmit)="addName()">
+				<mat-form-field appearance="standard" class="full-width__input">
+					<input matInput [placeholder]="namePlaceholder" formControlName="referralName" type="text">
+				</mat-form-field>
+				<div class="add-button">
+					<button mat-flat-button type="submit">{{addButtonTxt}}</button>
+				</div>
+			</form>
+		</div>
+	</mat-dialog-content>
+	<mat-dialog-actions>
+		<button mat-flat-button color="primary" mat-dialog-close (click)="buttonPressed()">{{buttonTxt}}</button>
+	</mat-dialog-actions>
+</div>

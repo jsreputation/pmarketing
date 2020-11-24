@@ -117,6 +117,12 @@ const appConfigFile = `{
       ? process.env.SHOW_SURVEY_ON_HOMEPAGE
       : false
   },
+  "showStampCampaignsOnHomePage" : ${process.env.SHOW_STAMP_CAMPAIGNS_ON_HOMEPAGE
+      ? process.env.SHOW_STAMP_CAMPAIGNS_ON_HOMEPAGE
+      : false},
+  "showReferralCampaignsOnHomePage" : ${process.env.SHOW_REFERRAL_CAMPAIGNS_ON_HOMEPAGE
+      ? process.env.SHOW_REFERRAL_CAMPAIGNS_ON_HOMEPAGE
+      : false},
   "showCampaignRewardsCounterOnHomepage": ${
     process.env.SHOW_CAMPAIGN_REWARDS_COUNTER_ON_HOMEPAGE
       ? process.env.SHOW_CAMPAIGN_REWARDS_COUNTER_ON_HOMEPAGE

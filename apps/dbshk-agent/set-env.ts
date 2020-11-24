@@ -76,6 +76,8 @@ const appConfigFile = `{
   "showCampaignRewardsCounterOnHomepage": ${process.env.SHOW_CAMPAIGN_REWARDS_COUNTER_ON_HOMEPAGE ? process.env.SHOW_CAMPAIGN_REWARDS_COUNTER_ON_HOMEPAGE : false},
   "showRewardsOnHomepage": ${process.env.SHOW_REWARDS_ON_HOMEPAGE ? process.env.SHOW_REWARDS_ON_HOMEPAGE : true},
   "showCampaignLandingPage": ${process.env.SHOW_CAMPAIGN_LANDING_PAGE ? process.env.SHOW_CAMPAIGN_LANDING_PAGE : false},
+  "showStampCampaignsOnHomePage" : ${process.env.SHOW_STAMP_CAMPAIGNS_ON_HOMEPAGE ? process.env.SHOW_STAMP_CAMPAIGNS_ON_HOMEPAGE : false},
+  "showReferralCampaignsOnHomePage" : ${process.env.SHOW_REFERRAL_CAMPAIGNS_ON_HOMEPAGE ? process.env.SHOW_REFERRAL_CAMPAIGNS_ON_HOMEPAGE : false},
 
   "showQrPageSubtitle": ${process.env.SHOW_QRPAGE_SUBTITLE ? process.env.SHOW_QRPAGE_SUBTITLE : false},
   "showUserQR": ${process.env.SHOW_USER_QR ? process.env.SHOW_USER_QR : true},

@@ -72,6 +72,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public rewards$: Observable<IReward[]>;
   public games$: Observable<IGame[]>;
   public stampCampaigns$: Observable<ICampaign[]>;
+  public referralCampaigns$: Observable<ICampaign[]>;
   public tabs$: BehaviorSubject<ITabConfigExtended[]> = new BehaviorSubject<
     ITabConfigExtended[]
   >([]);
@@ -79,9 +80,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   public displayPriceFn: (rewardPrice: IPrice) => Observable<string>;
   public subTitleFn: (loyalty: ILoyalty) => Observable<string>;
   public titleFn: (profile: IProfile) => Observable<string>;
-  public summaryExpiringFn: (loyalty: ILoyalty) => Observable<string>;
+  public summaryExpiringFn: () => Observable<string>;
   public pointToFn: () => Observable<string>;
-  public memberFn: (membershipTierName: string) => Observable<string>;
+  public memberFn: () => Observable<string>;
   public membershipExpiryFn: (loyalty: ILoyalty) => Observable<string>;
   public showGames: boolean = false;
   public showCampaigns: boolean = false;
@@ -125,20 +126,11 @@ export class HomeComponent implements OnInit, OnDestroy {
             this.authService.isAuthorized().subscribe((isAuth: boolean) => {
               if (isAuth && !this.configService.readAppStarted()) {
                 this.configService.setAppStarted();
-                if (config.app === 'abenson') {
-                  this.subTitleFn = (loyalty: ILoyalty) =>
-                    of(
-                      `Equivalent to ${this.currencyPipe.transform(
-                        loyalty.currencyBalance,
-                        loyalty.currency,
-                        'symbol-narrow',
-                        '1.0-0',
-                        'en-PH'
-                      )} e-Cash`
-                    );
-                  return;
-                }
-                this.fetchPopupCampaigns();
+                this.subTitleFn = (loyalty: ILoyalty) =>
+                  of(`${this.datePipe.transform(
+                    loyalty.endDate,
+                    'mediumDate'
+                  )}`);
               }
             });
           }
@@ -377,6 +369,19 @@ export class HomeComponent implements OnInit, OnDestroy {
         takeLast(1)
       );
 
+    this.referralCampaigns$ = this.campaignService
+      .getCampaigns({ type: CampaignType.invite })
+      .pipe(
+        tap(
+          (campaigns: ICampaign[]) =>
+            (this.showCampaigns = campaigns.length > 0)
+        ),
+        switchMap((campaigns: ICampaign[]) =>
+          of(campaigns).pipe(catchError((err) => of(err)))
+        ),
+        takeLast(1)
+      );
+
     this.surveyCampaigns$ = this.campaignService
       .getCampaigns({ gameType: GameType.survey })
       .pipe(
@@ -455,59 +460,22 @@ export class HomeComponent implements OnInit, OnDestroy {
           return returnString;
         })
       );
-    this.summaryExpiringFn = (loyalty: ILoyalty) =>
-      this.translate
-        .get('HOME.POINTS_EXPIRING')
-        .pipe(
-          map((res) =>
-            loyalty &&
-            loyalty.expiringPoints &&
-            loyalty.expiringPoints.length &&
-            loyalty.expiringPoints[0].points &&
-            loyalty.expiringPoints[0].points !== 0
-              ? res
-                  .replace(
-                    '{{points}}',
-                    (loyalty.expiringPoints[0].points
-                      ? loyalty.expiringPoints[0].points
-                      : 0
-                    ).toString()
-                  )
-                  .replace(
-                    '{{date}}',
-                    loyalty.expiringPoints[0].expireDate
-                      ? this.datePipe.transform(
-                          loyalty.expiringPoints[0].expireDate,
-                          'd MMM y'
-                        )
-                      : ''
-                  )
-              : this.appConfig.app === 'abenson'
-              ? `Your total points as of ${this.datePipe.transform(
-                  new Date(),
-                  'mediumDate'
-                )}`
-              : ''
-          )
-        );
+    this.summaryExpiringFn = () => of('');
     this.pointToFn = () => this.translate.get('HOME.POINT_TO');
-    this.memberFn = (membershipTierName: string) =>
-      this.translate
-        .get([membershipTierName, 'HOME.MEMBER'])
-        .pipe(map((res) => `${res[membershipTierName]}${res['HOME.MEMBER']}`));
+    this.memberFn = () => this.translate.get('HOME.MEMBER');
     this.membershipExpiryFn = (loyalty: ILoyalty) =>
       loyalty && loyalty.membershipExpiry
         ? this.translate
-            .get('HOME.ACCOUNT_EXPIRE')
-            .pipe(
-              map(
-                (res) =>
-                  `${res}: ${this.datePipe.transform(
-                    loyalty.membershipExpiry,
-                    'mediumDate'
-                  )}`
-              )
+          .get('HOME.ACCOUNT_EXPIRE')
+          .pipe(
+            map(
+              (res) =>
+                `${res}: ${this.datePipe.transform(
+                  loyalty.membershipExpiry,
+                  'mediumDate'
+                )}`
             )
+          )
         : of('');
 
     this.displayPriceFn = (rewardPrice: IPrice) =>
