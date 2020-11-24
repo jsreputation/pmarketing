@@ -136,7 +136,7 @@ const routes: Routes = [
       },
       {
         path: 'invite/:id',
-        loadChildren: () => import('../referral/referral.module').then(mod => mod.ReferralModule)
+        loadChildren: () => import('../campaign-referrals/referral.module').then(mod => mod.ReferralModule)
       }
     ]
   }

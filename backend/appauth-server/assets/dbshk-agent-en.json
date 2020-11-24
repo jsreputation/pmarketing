@@ -233,6 +233,11 @@
     "ENDS_ON": "Ends on",
     "TNC": "Terms & Conditions"
   },
+  "REFERRAL_POPUP": {
+    "TITLE": "Share the referral Code",
+    "DESCRIPTION": "Enter names of recipients you'd share the code with",
+    "CTA_BUTTON": "Continue"
+  },
   "HOME": {
     "HELLO": "Hello",
     "MY_QR": "My QR",

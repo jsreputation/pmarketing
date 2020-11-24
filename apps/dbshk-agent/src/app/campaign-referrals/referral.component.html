@@ -10,14 +10,13 @@
     </div>
     <div class="code" (click)="copy()">
       <span>{{code}}</span>
-      <span class="material-icons">share</span>
     </div>
   </div>
   <mat-toolbar class="bottom-nav-container mat-elevation-z2">
     <button
       mat-flat-button
       color="primary"
-      (click)="share()"
+      (click)="addRecipients()"
       >
       {{'REFERRAL.CTA_BUTTON' | translate}}</button>
   </mat-toolbar>

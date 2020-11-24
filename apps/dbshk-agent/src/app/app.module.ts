@@ -16,7 +16,7 @@ import {
 } from '@angular/common/http';
 import {
   MatDialogModule,
-  MatSnackBarModule,
+  MatSnackBarModule
 } from '@angular/material';
 import { MatButtonModule } from '@angular/material/button';
 // import { ServiceWorkerModule } from '@angular/service-worker';
@@ -79,6 +79,7 @@ import { SignUpModule } from './sign-up/sign-up.module';
 import { environment } from '../environments/environment';
 import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
 import { ErrorComponent } from './error/error.component';
+import { ReferralPopupComponent } from './campaign-referrals/referral-popup/referral-popup.component';
 
 // https://medium.com/angular-in-depth/gestures-in-an-angular-application-dde71804c0d0
 // to override default settings
@@ -133,7 +134,8 @@ export const setLanguage = (
 @NgModule({
   declarations: [
     AppComponent,
-    ErrorComponent
+    ErrorComponent,
+    ReferralPopupComponent
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
@@ -189,6 +191,9 @@ export const setLanguage = (
       provide: HAMMER_GESTURE_CONFIG,
       useClass: MyHammerConfig,
     }
+  ],
+  entryComponents: [
+    ReferralPopupComponent
   ]
 })
 export class AppModule { }

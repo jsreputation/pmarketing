@@ -7,6 +7,8 @@ import {
 import { TranslateService } from '@ngx-translate/core';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { ActivatedRoute, Params } from '@angular/router';
+import { MatDialog } from '@angular/material';
+import { ReferralPopupComponent } from './referral-popup/referral-popup.component';
 
 @Component({
   selector: 'perx-blackcomb-pages-referral',
@@ -27,12 +29,16 @@ export class ReferralComponent {
   public shareUrl: string = 'https://retailbank.hsbc.com.hk/ins/';
   public copyToClipboardTxt: string;
   public clipboardErrorTxt: string;
+  public popupTitle: string;
+  public popupDescription: string;
+  public popupButton: string;
 
   constructor(
     private campaignService: ICampaignService,
     private notificationService: NotificationService,
     private translate: TranslateService,
     private activeRoute: ActivatedRoute,
+    private dialog: MatDialog
   ) {
     this.initTranslate();
     this.activeRoute.params
@@ -55,27 +61,38 @@ export class ReferralComponent {
       ).subscribe();
   }
 
-  public share(): void {
-    // @ts-ignore
-    if (navigator.share) {
-      const data = {
-        url: this.shareUrl,
-        text: this.shareText,
-        title: this.shareTitle,
-      };
-      // @ts-ignore
-      (navigator as any)
-        .share(data)
-        .then(() => { })
-        .catch(() => {
-          console.log('failed to use share, falling back to clipboard');
-          this.copy();
-        });
-    } else {
-      console.log('no access to share api, falling back to clipboard');
-      this.copy();
-    }
+  public addRecipients(): void {
+    const data = {
+      title: this.popupTitle,
+      description: this.popupDescription,
+      buttonTxt: this.popupButton,
+      afterClosedCallBack: this
+    };
+    this.dialog.open(ReferralPopupComponent, { data, width: '80vw' });
+    // this.share()
   }
+
+  // private share(): void {
+  //   // @ts-ignore
+  //   if (navigator.share) {
+  //     const data = {
+  //       url: this.shareUrl,
+  //       text: this.shareText,
+  //       title: this.shareTitle,
+  //     };
+  //     // @ts-ignore
+  //     (navigator as any)
+  //       .share(data)
+  //       .then(() => { })
+  //       .catch(() => {
+  //         console.log('failed to use share, falling back to clipboard');
+  //         this.copy();
+  //       });
+  //   } else {
+  //     console.log('no access to share api, falling back to clipboard');
+  //     this.copy();
+  //   }
+  // }
 
   public copy(): void {
     navigator.clipboard
@@ -91,6 +108,9 @@ export class ReferralComponent {
         'REFERRAL.SHARE_COPY_TXT',
         'REFERRAL.COPY_TO_CLIPBOARD',
         'REFERRAL.CLIPBOARD_ERROR_TXT',
+        'REFERRAL_POPUP.TITLE',
+        'REFERRAL_POPUP.DESCRIPTION',
+        'REFERRAL_POPUP.CTA_BUTTON'
       ])
       .subscribe((res: any) => {
         this.shareTitle = res['REFERRAL.SHARE_COPY_TITLE'];
@@ -100,6 +120,9 @@ export class ReferralComponent {
         );
         this.copyToClipboardTxt = res['REFERRAL.COPY_TO_CLIPBOARD'];
         this.clipboardErrorTxt = res['REFERRAL.CLIPBOARD_ERROR_TXT'];
+        this.popupTitle = res['REFERRAL_POPUP.TITLE'];
+        this.popupDescription = res['REFERRAL_POPUP.DESCRIPTION'];
+        this.popupButton = res['REFERRAL_POPUP.CTA_BUTTON'];
       });
   }
 }

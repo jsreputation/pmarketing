@@ -1,0 +1,9 @@
+<div class="content">
+	<div mat-dialog-title>{{title}}</div>
+	<mat-dialog-content *ngIf="description">
+		<p [innerHtml]="description"></p>
+	</mat-dialog-content>
+	<mat-dialog-actions>
+		<button mat-flat-button color="primary" mat-dialog-close (click)="buttonPressed()">{{buttonTxt}}</button>
+	</mat-dialog-actions>
+</div>

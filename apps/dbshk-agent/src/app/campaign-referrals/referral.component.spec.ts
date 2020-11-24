@@ -5,6 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ICampaignService } from '@perxtech/core';
 import { BehaviorSubject, of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { MatDialogModule } from '@angular/material';
 
 const campaignServiceStub: Partial<ICampaignService> = {
   getCampaigns: () => of([])
@@ -26,6 +27,7 @@ describe('ReferralComponent', () => {
       declarations: [ReferralComponent],
       imports: [
         MatToolbarModule,
+        MatDialogModule,
         TranslateModule.forRoot()
       ],
       providers: [
