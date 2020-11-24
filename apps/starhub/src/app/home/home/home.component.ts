@@ -75,7 +75,7 @@ export class HomeComponent implements OnInit {
             const customProperties = p.customProperties;
             if (customProperties) {
               this.hubClubDisplay = customProperties.sub_membership_type.toString().toLowerCase() === 'nominee' &&
-                customProperties.membership_type.toString().toLowerCase() !== 'hubclub' ?
+                customProperties.membership.toString().toLowerCase() !== 'hubclub' ?
                 customProperties.sub_membership_display.toString() : customProperties.membership_display.toString();
             }
           });
@@ -212,9 +212,9 @@ export class HomeComponent implements OnInit {
   public membershipClicked(): void {
     const userCustomProps = this.profile.customProperties;
     if (userCustomProps) {
-      const membershipType = userCustomProps.membership_type ? userCustomProps.membership_type : '';
+      const membershipType = userCustomProps.membership ? userCustomProps.membership : '';
       const subMembershipType = userCustomProps.sub_membership_type ? userCustomProps.sub_membership_type : '';
-      document.location.href = `https://membershipclicked/?MembershipType=${membershipType}&SubMembershipType=${subMembershipType}`;
+      document.location.href = `https://membershipclicked/?Membership=${membershipType}&SubMembershipType=${subMembershipType}`;
     }
   }
 }
