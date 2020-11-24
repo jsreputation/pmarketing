@@ -3,10 +3,12 @@ import {
   OnInit
 } from '@angular/core';
 import {
+  ICustomProperties,
   IFlags,
   ILoyalty,
   IProfile,
   LoyaltyService,
+  NotificationService,
   ProfileService,
   SettingsService
 } from '@perxtech/core';
@@ -27,11 +29,13 @@ export class ProfileComponent implements OnInit/*, ShowTitleInHeader*/ {
   public loyalty: ILoyalty;
   public loyaltyMembershipExpiry: string | null;
   public editablePassword: boolean = true;
+  public marketingAccepted: boolean = false;
 
   constructor(
     private profileService: ProfileService,
     private loyaltyService: LoyaltyService,
     private settingsService: SettingsService,
+    private notificationService: NotificationService,
     private router: Router,
     private datePipe: DatePipe
   ) { }
@@ -39,6 +43,10 @@ export class ProfileComponent implements OnInit/*, ShowTitleInHeader*/ {
   public ngOnInit(): void {
     this.profileService.whoAmI().subscribe(res => {
       this.profile = res;
+      if (res.customProperties && res.customProperties.allow_marketing) {
+        console.log(res.customProperties.allow_marketing);
+        this.marketingAccepted = res.customProperties.allow_marketing as boolean
+      }
     });
     this.settingsService.getRemoteFlagsSettings().subscribe(
       (flags: IFlags) => {
@@ -67,6 +75,17 @@ export class ProfileComponent implements OnInit/*, ShowTitleInHeader*/ {
     this.router.navigateByUrl('edit-profile/postcode');
   }
 
+  public marketingUpdated(isChecked: boolean): void {
+    this.marketingAccepted = !isChecked;
+    const customProperties: ICustomProperties = {
+        allow_marketing: this.marketingAccepted
+    };
+    this.profileService.setCustomProperties(customProperties).subscribe(
+      () => {
+        this.notificationService.addSnack('Marketing preferences updated');
+      }
+    );
+  }
   // public getTitle(): string {
   //   return 'Profile';
   // }
