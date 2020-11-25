@@ -1,5 +1,10 @@
 import { TranslateLoader } from '@ngx-translate/core';
-import { HttpHeaders, HttpClient, HttpResponse } from '@angular/common/http';
+import {
+  HttpHeaders,
+  HttpClient,
+  HttpResponse,
+  HttpBackend
+} from '@angular/common/http';
 import { Observable, ReplaySubject } from 'rxjs';
 import { catchError, tap, map, switchMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
@@ -19,9 +24,11 @@ export class LanguageService implements TranslateLoader {
   // hostUrl is an observable to make sure we do not start fetching translation before finishing fetching the url
   private hostUrl: ReplaySubject<string> = new ReplaySubject();
   private app: string;
+  private httpBackend: HttpClient;
 
   constructor(
     private httpClient: HttpClient,
+    handler: HttpBackend,
     private configService: ConfigService,
     private tokenStorage: TokenStorage
   ) {
@@ -30,6 +37,7 @@ export class LanguageService implements TranslateLoader {
         this.app = config.app ? config.app : '';
         this.hostUrl.next(config.production ? `${config.baseHref}` : 'http://localhost:4000/');
       });
+    this.httpBackend = new HttpClient(handler);
   }
 
   public getTranslation(lang: string): Observable<IDictionary> {
@@ -43,7 +51,7 @@ export class LanguageService implements TranslateLoader {
         }
         return url;
       }),
-      switchMap((apiAddress: string) => this.httpClient.get<IDictionary>(apiAddress, { headers: this.contentHeader, observe: 'response' })),
+      switchMap((apiAddress: string) => this.httpBackend.get<IDictionary>(apiAddress, { headers: this.contentHeader, observe: 'response' })),
       tap((res: HttpResponse<IDictionary>) => {
         const l: string | null = res.headers.get('content-language') || lang;
         this.tokenStorage.setAppInfoProperty(l, 'lang');
