@@ -65,7 +65,12 @@ import { PrivacyPolicyComponent } from './account/privacy-policy/privacy-policy.
 import { ConditionComponent } from './account/condition/condition.component';
 import { TransactionPipe } from './account/transaction-history/transaction.pipe';
 import { TransactionHistoryPipe } from './account/transaction-history/transaction-history.pipe';
-import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {
+  HttpClientModule,
+  HttpClient,
+  HTTP_INTERCEPTORS,
+  HttpBackend
+} from '@angular/common/http';
 import { PerxTranslateLoader } from './custom-translate.service';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { tap, switchMap } from 'rxjs/operators';
@@ -149,7 +154,7 @@ export const setLanguage = (
       loader: {
         provide: TranslateLoader,
         useClass: PerxTranslateLoader,
-        deps: [HttpClient, ConfigService, TokenStorage]
+        deps: [HttpClient, HttpBackend, ConfigService, TokenStorage]
       }
     })
   ],

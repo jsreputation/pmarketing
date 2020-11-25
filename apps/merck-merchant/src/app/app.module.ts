@@ -47,7 +47,12 @@ import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.compo
 import { OrderComponent } from './order/order.component';
 import { OrderQuantityComponent } from './order/order-quantity/order-quantity.component';
 import { RedeemComponent } from './redeem/redeem.component';
-import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
+import {
+  HttpClientModule,
+  HTTP_INTERCEPTORS,
+  HttpClient,
+  HttpBackend
+} from '@angular/common/http';
 import { RegisterComponent } from './register/register.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslateService, TranslateModule, TranslateLoader } from '@ngx-translate/core';
@@ -123,7 +128,7 @@ export const setLanguage = (
       loader: {
         provide: TranslateLoader,
         useClass: PerxTranslateLoader,
-        deps: [HttpClient, ConfigService, TokenStorage]
+        deps: [HttpClient, HttpBackend, ConfigService, TokenStorage]
       }
     })
   ],

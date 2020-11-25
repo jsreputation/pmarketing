@@ -19,7 +19,12 @@ import {
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HTTP_INTERCEPTORS, HttpClientModule, HttpClient } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  HttpClientModule,
+  HttpClient,
+  HttpBackend
+} from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { APP_BASE_HREF } from '@angular/common';
 import { UnauthorizedInterceptor } from './login/unauthorized.interceptor';
@@ -59,7 +64,7 @@ export const setLanguage = (
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        deps: [HttpClient, ConfigService, TokenStorage],
+        deps: [HttpClient, HttpBackend, ConfigService, TokenStorage],
         useClass: LanguageService
       }
     })

@@ -46,7 +46,11 @@ import { LoginComponent } from './login/login.component';
 import { environment } from '../environments/environment';
 import { FormsModule } from '@angular/forms';
 import { ResultComponent } from './result/result.component';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import {
+  HttpClientModule,
+  HttpClient,
+  HttpBackend
+} from '@angular/common/http';
 import { TranslateService, TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { tap, switchMap } from 'rxjs/operators';
 
@@ -106,7 +110,7 @@ export const setLanguage = (
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        deps: [HttpClient, ConfigService, TokenStorage],
+        deps: [HttpClient, HttpBackend, ConfigService, TokenStorage],
         useClass: LanguageService
       }
     }),

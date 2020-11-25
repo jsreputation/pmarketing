@@ -2,6 +2,7 @@ import { APP_INITIALIZER, ErrorHandler, Injectable, LOCALE_ID, NgModule, } from 
 import { BrowserModule, HAMMER_GESTURE_CONFIG, HammerGestureConfig, } from '@angular/platform-browser';
 import {
   HTTP_INTERCEPTORS,
+  HttpBackend,
   HttpClient,
   HttpClientModule,
 } from '@angular/common/http';
@@ -143,7 +144,7 @@ export const setLanguage = (
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        deps: [HttpClient, ConfigService, TokenStorage],
+        deps: [HttpClient, HttpBackend, ConfigService, TokenStorage],
         useClass: LanguageService
       }
     }),

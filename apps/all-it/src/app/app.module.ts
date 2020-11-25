@@ -43,7 +43,8 @@ import { environment } from '../environments/environment';
 import {
   HttpClientModule,
   HttpClient,
-  HTTP_INTERCEPTORS
+  HTTP_INTERCEPTORS,
+  HttpBackend
 } from '@angular/common/http';
 import { MatDialogModule, MatSnackBarModule } from '@angular/material';
 import { tap, switchMap } from 'rxjs/operators';
@@ -115,7 +116,7 @@ registerLocaleData(localeENMY);
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        deps: [HttpClient, ConfigService, TokenStorage],
+        deps: [HttpClient, HttpBackend, ConfigService, TokenStorage],
         useClass: LanguageService
       }
     }),

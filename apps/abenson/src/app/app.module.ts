@@ -41,6 +41,7 @@ import {
 
 import {
   HTTP_INTERCEPTORS,
+  HttpBackend,
   HttpClient,
   HttpClientModule,
 } from '@angular/common/http';
@@ -160,7 +161,7 @@ export const setLanguage = (
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        deps: [HttpClient, ConfigService, TokenStorage],
+        deps: [HttpClient, HttpBackend, ConfigService, TokenStorage],
         useClass: LanguageService,
       },
     }),

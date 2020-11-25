@@ -6,6 +6,7 @@ import {
 } from '@angular/core';
 import {
   HTTP_INTERCEPTORS,
+  HttpBackend,
   HttpClient,
   HttpClientModule,
 } from '@angular/common/http';
@@ -122,7 +123,7 @@ const PROVIDERS = [
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        deps: [HttpClient, ConfigService, TokenStorage],
+        deps: [HttpClient, HttpBackend, ConfigService, TokenStorage],
         useClass: LanguageService
       }
     }),
