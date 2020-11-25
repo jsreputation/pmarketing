@@ -1,0 +1,14 @@
+<mat-card class="statistic-card">
+	<mat-card-title class="card-title">{{data.cardTitle}}</mat-card-title>
+	<mat-card-content>
+		<div class="stat" *ngFor="let stat of data.statistics">
+			<div class="stat-title">{{stat.statisticTitle}}</div>
+			<div *ngIf="stat.unitBeforeValue; else valBeforeUnit">
+				{{stat.unit}} <b>{{stat.value}}</b>
+			</div>
+			<ng-template #valBeforeUnit>
+				<b>{{stat.value}}</b> {{stat.unit}}
+			</ng-template>
+		</div>
+	</mat-card-content>
+</mat-card>

@@ -38,6 +38,7 @@ import { CheckIdExistsPipe } from './directives/check-id-exists-pipe';
 import { MatRippleModule } from '@angular/material/core';
 import { ProgressInfoPipe } from './progress-info/progress-info.pipe';
 import { GettingStartedPipe } from './getting-started/getting-started.pipe';
+import { StatisticCardComponent } from './statistic-card/statistic-card.component';
 
 export function themesServiceFactory(
   handler: HttpBackend,
@@ -64,7 +65,8 @@ const components = [
   NewsfeedComponent,
   FeedItemPopupComponent,
   TimerComponent,
-  LocationFilterPopupComponent
+  LocationFilterPopupComponent,
+  StatisticCardComponent
 ];
 
 const pipes = [

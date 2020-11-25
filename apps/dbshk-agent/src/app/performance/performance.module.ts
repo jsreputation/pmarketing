@@ -10,6 +10,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { OverviewComponent } from './overview/overview.component';
 import { ActivityComponent } from './activity/activity.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { LoyaltyModule, UtilsModule } from '@perxtech/core';
 
 const routes: Routes = [{
   path: '',
@@ -27,6 +28,8 @@ const routes: Routes = [{
     TranslateModule.forChild(),
     MatTabsModule,
     InfiniteScrollModule,
+    LoyaltyModule,
+    UtilsModule
   ]
 })
 export class PerformanceModule { }
