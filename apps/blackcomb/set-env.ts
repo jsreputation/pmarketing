@@ -43,6 +43,13 @@ const displayProperties = `"displayProperties": {
               }"
           },
           {
+            "key": "faqs",
+            "title": "FAQs",
+            "content_url": "${
+              process.env.FAQSURL ? process.env.FAQSURL : ''
+            }"
+          },
+          {
               "key": "tnc",
               "title": "Terms and Conditions",
               "content_url": "${process.env.TNCURL ? process.env.TNCURL : ''}"
