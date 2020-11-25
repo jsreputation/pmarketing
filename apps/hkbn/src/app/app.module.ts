@@ -39,6 +39,7 @@ import {
   TokenStorage,
   LanguageService,
   ProfileServiceModule,
+  LanguageInterceptor,
 } from '@perxtech/core';
 
 import { environment } from '../environments/environment';
@@ -79,6 +80,7 @@ const PROVIDERS = [
     useFactory: setLanguage,
     deps: [TranslateService, ConfigService, AuthenticationService, ThemesService], multi: true
   },
+  { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true },
 ];
 
 @NgModule({

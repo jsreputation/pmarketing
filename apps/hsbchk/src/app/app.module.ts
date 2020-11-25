@@ -1,6 +1,10 @@
 import { APP_INITIALIZER, ErrorHandler, Injectable, LOCALE_ID, NgModule, } from '@angular/core';
 import { BrowserModule, HAMMER_GESTURE_CONFIG, HammerGestureConfig, } from '@angular/platform-browser';
-import { HttpClient, HttpClientModule, } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  HttpClient,
+  HttpClientModule,
+} from '@angular/common/http';
 import { MatDialogModule, MatSnackBarModule, } from '@angular/material';
 import { MatButtonModule } from '@angular/material/button';
 // import { ServiceWorkerModule } from '@angular/service-worker';
@@ -44,7 +48,9 @@ import {
   ThemesService,
   TokenStorage,
   UtilsModule,
-  VouchersModule, LoyaltyModule
+  VouchersModule,
+  LoyaltyModule,
+  LanguageInterceptor
 } from '@perxtech/core';
 
 import * as Hammer from 'hammerjs';
@@ -162,7 +168,8 @@ export const setLanguage = (
     {
       provide: HAMMER_GESTURE_CONFIG,
       useClass: MyHammerConfig,
-    }
+    },
+    { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true },
   ]
 })
 export class AppModule { }

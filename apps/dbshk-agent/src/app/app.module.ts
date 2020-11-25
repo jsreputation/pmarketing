@@ -13,6 +13,7 @@ import {
 import {
   HttpClientModule,
   HttpClient,
+  HTTP_INTERCEPTORS,
 } from '@angular/common/http';
 import {
   MatDialogModule,
@@ -67,7 +68,8 @@ import {
   AuthenticationService,
   ThemesService,
   IConfig,
-  LoyaltyModule
+  LoyaltyModule,
+  LanguageInterceptor
 } from '@perxtech/core';
 
 import * as Hammer from 'hammerjs';
@@ -196,7 +198,8 @@ export const setLanguage = (
     {
       provide: HAMMER_GESTURE_CONFIG,
       useClass: MyHammerConfig,
-    }
+    },
+    { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true },
   ],
   entryComponents: [
     ReferralPopupComponent
