@@ -82,11 +82,9 @@ export class ExistingCardComponent implements OnInit {
               this.notificationService.addSnack('Invalid card number.');
             } else if (err.status === 404) {
               this.notificationService.addSnack('Card number not found.');
+            } else if (err.error && err.error.message) {
+              this.notificationService.addSnack(err.error.message);
             } else {
-              if (err.error && err.error.message) {
-                this.notificationService.addSnack(err.error.message);
-                return;
-              }
               this.notificationService.addSnack(err.statusText);
             }
           }
