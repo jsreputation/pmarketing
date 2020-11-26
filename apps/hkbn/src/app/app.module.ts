@@ -6,6 +6,7 @@ import {
 } from '@angular/core';
 import {
   HTTP_INTERCEPTORS,
+  HttpBackend,
   HttpClient,
   HttpClientModule,
 } from '@angular/common/http';
@@ -39,6 +40,7 @@ import {
   TokenStorage,
   LanguageService,
   ProfileServiceModule,
+  LanguageInterceptor,
 } from '@perxtech/core';
 
 import { environment } from '../environments/environment';
@@ -79,6 +81,7 @@ const PROVIDERS = [
     useFactory: setLanguage,
     deps: [TranslateService, ConfigService, AuthenticationService, ThemesService], multi: true
   },
+  { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true },
 ];
 
 @NgModule({
@@ -120,7 +123,7 @@ const PROVIDERS = [
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        deps: [HttpClient, ConfigService, TokenStorage],
+        deps: [HttpClient, HttpBackend, ConfigService, TokenStorage],
         useClass: LanguageService
       }
     }),

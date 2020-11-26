@@ -1,5 +1,9 @@
 import { registerLocaleData } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {
+  HttpBackend,
+  HttpClient,
+  HttpClientModule
+} from '@angular/common/http';
 import enGb from '@angular/common/locales/en-GB';
 import localesEnGbExtra from '@angular/common/locales/extra/en-GB';
 import localesFrExtra from '@angular/common/locales/extra/fr';
@@ -104,7 +108,7 @@ export const setLanguage = (
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        deps: [HttpClient, ConfigService, TokenStorage],
+        deps: [HttpClient, HttpBackend, ConfigService, TokenStorage],
         useClass: LanguageService
       }
     }),

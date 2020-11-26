@@ -33,13 +33,19 @@ import {
   GameServiceModule,
   LoyaltyModule,
   TransactionsServiceModule as PerxTransactionsServiceModule,
+  LanguageInterceptor,
 } from '@perxtech/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 
 // import { ServiceWorkerModule } from '@angular/service-worker';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import {
+  HttpClientModule,
+  HttpClient,
+  HTTP_INTERCEPTORS,
+  HttpBackend
+} from '@angular/common/http';
 import { MatDialogModule, MatSnackBarModule } from '@angular/material';
 import { tap, switchMap } from 'rxjs/operators';
 import { MatButtonModule } from '@angular/material/button';
@@ -110,7 +116,7 @@ registerLocaleData(localeENMY);
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        deps: [HttpClient, ConfigService, TokenStorage],
+        deps: [HttpClient, HttpBackend, ConfigService, TokenStorage],
         useClass: LanguageService
       }
     }),
@@ -124,7 +130,8 @@ registerLocaleData(localeENMY);
       useFactory: setLanguage,
       deps: [TranslateService, ConfigService, AuthenticationService, ThemesService],
       multi: true
-    }
+    },
+    { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true },
   ],
 })
 export class AppModule { }

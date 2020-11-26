@@ -13,6 +13,8 @@ import {
 import {
   HttpClientModule,
   HttpClient,
+  HTTP_INTERCEPTORS,
+  HttpBackend,
 } from '@angular/common/http';
 import {
   MatDialogModule,
@@ -66,7 +68,8 @@ import {
   AuthenticationService,
   ThemesService,
   IConfig,
-  LoyaltyModule
+  LoyaltyModule,
+  LanguageInterceptor
 } from '@perxtech/core';
 
 import * as Hammer from 'hammerjs';
@@ -164,7 +167,7 @@ export const setLanguage = (
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        deps: [HttpClient, ConfigService, TokenStorage],
+        deps: [HttpClient, HttpBackend, ConfigService, TokenStorage],
         useClass: LanguageService
       }
     }),
@@ -184,6 +187,7 @@ export const setLanguage = (
       deps: [TokenStorage],
       useFactory: LocaleIdFactory
     },
+    { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true },
     { provide: ErrorHandler, useClass: SentryErrorHandler },
     {
       provide: HAMMER_GESTURE_CONFIG,

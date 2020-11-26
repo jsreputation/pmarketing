@@ -11,6 +11,7 @@ import {
   GameModule,
   GameServiceModule,
   IConfig,
+  LanguageInterceptor,
   LanguageService,
   LoyaltyModule,
   MerchantsModule,
@@ -40,6 +41,7 @@ import {
 
 import {
   HTTP_INTERCEPTORS,
+  HttpBackend,
   HttpClient,
   HttpClientModule,
 } from '@angular/common/http';
@@ -159,7 +161,7 @@ export const setLanguage = (
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        deps: [HttpClient, ConfigService, TokenStorage],
+        deps: [HttpClient, HttpBackend, ConfigService, TokenStorage],
         useClass: LanguageService,
       },
     }),
@@ -182,6 +184,7 @@ export const setLanguage = (
       useClass: UnauthorizedInterceptor,
       multi: true,
     },
+    { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true },
   ],
   entryComponents: [PopupComponent],
   bootstrap: [AppComponent],

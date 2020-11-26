@@ -2,9 +2,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import {
   HTTP_INTERCEPTORS,
+  HttpBackend,
   HttpClient,
-  HttpClientModule, HttpEvent, HttpHandler,
-  HttpInterceptor, HttpRequest
+  HttpClientModule,
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest
 } from '@angular/common/http';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
@@ -200,7 +204,7 @@ export const appInit =
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        deps: [HttpClient, ConfigService, TokenStorage],
+        deps: [HttpClient, HttpBackend, ConfigService, TokenStorage],
         useClass: LanguageService
       }
     })
