@@ -78,7 +78,7 @@
   <div class="campaigns" *ngIf="appConfig.showReferralCampaignsOnHomePage">
      <perx-blackcomb-pages-campaigns-collection
        [gameType]="gameType.invite"
-       [campaigns]="referralCampaigns$" (selected)="goToCampaignPage($event)">
+       [campaigns]="referralCampaigns$" (selected)="goToCampaignPage($event)" [defaultNbCampaigns]="6">
      </perx-blackcomb-pages-campaigns-collection>
   </div>
   <div class="catalogs" *ngIf="appConfig.showCatalogOnHomePage">
