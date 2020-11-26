@@ -4,7 +4,7 @@ APIHOST=https://api.perxtech.net
 IS_WHISTLER=false
 SHOW_QUIZ_ON_HOMEPAGE=true
 SHOW_CAMPAIGN_LANDING_PAGE=false
-SHOW_USER_QR=true
+SHOW_USER_QR=false
 SHOW_ACCOUNTS_PAGE=true
 SHOW_HOME_PAGE=true
 SHOW_HISTORY_PAGE=true
@@ -16,4 +16,6 @@ SHOW_FORGET_PASSWORD_ON_LOGIN=false
 SHOW_VOUCHER_BOOKING_FROM_REWARDS=true
 REDIRECT_AFTER_LOGIN=/home
 LOGIN_METHOD=username
-
+FAQSURL=https://perx-cdn.s3-ap-southeast-1.amazonaws.com/content/hsbcph/faq.html
+TNCURL=https://perx-cdn.s3-ap-southeast-1.amazonaws.com/content/hsbcph/tnc.html
+CONTACTUSURL=https://perx-cdn.s3-ap-southeast-1.amazonaws.com/content/hsbcph/contactus.html
