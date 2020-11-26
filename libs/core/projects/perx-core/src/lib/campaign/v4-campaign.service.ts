@@ -62,6 +62,7 @@ export interface IV4Campaign {
   display_properties?: DisplayProperties | null;
   campaign_referral_type?: string;
   campaign_config?: CampaignConfig;
+  referral_code: string;
 }
 
 type CountObject = {
@@ -144,9 +145,10 @@ export class V4CampaignService implements ICampaignService {
       );
     }
     let referralCodes, refersAttained;
+    referralCodes = [campaign.referral_code];
     if (campaign.campaign_config) {
       if (campaign.campaign_config.referral_codes) {
-        referralCodes = [...campaign.campaign_config.referral_codes];
+        referralCodes = [...referralCodes, ...campaign.campaign_config.referral_codes];
       }
       if (campaign.campaign_config.referees_attained !== null || undefined) {
         refersAttained = campaign.campaign_config.referees_attained;
