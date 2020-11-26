@@ -126,7 +126,8 @@ describe('V4CampaignService', () => {
       custom_fields: {},
       category_tags: [],
       tags: [],
-      state: CampaignState.active
+      state: CampaignState.active,
+      referral_code: ''
     });
     expect(mapCampaign.id).toBe(1);
     expect(mapCampaign.name).toBe('UAT GAME');
