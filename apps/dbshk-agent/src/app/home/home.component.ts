@@ -49,8 +49,7 @@ import {
   SettingsService,
   ThemesService,
   ILoyalty,
-  IFlags,
-  IPrice,
+  IFlags
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialog, MatTabChangeEvent } from '@angular/material';
@@ -77,13 +76,13 @@ export class HomeComponent implements OnInit, OnDestroy {
     ITabConfigExtended[]
   >([]);
   public staticTab: ITabConfigExtended[];
-  public displayPriceFn: (rewardPrice: IPrice) => Observable<string>;
-  public subTitleFn: (loyalty: ILoyalty) => Observable<string>;
+  public displayPriceFn: () => Observable<string>;
+  public subTitleFn: () => Observable<string>;
   public titleFn: (profile: IProfile) => Observable<string>;
-  public summaryExpiringFn: () => Observable<string>;
+  public summaryExpiringFn: (loyalty: ILoyalty) => Observable<string>;
   public pointToFn: () => Observable<string>;
   public memberFn: () => Observable<string>;
-  public membershipExpiryFn: (loyalty: ILoyalty) => Observable<string>;
+  public membershipExpiryFn: () => Observable<string>;
   public showGames: boolean = false;
   public showCampaigns: boolean = false;
   private firstComefirstServeCampaign: ICampaign;
@@ -113,7 +112,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     protected profileService: ProfileService,
     protected currencyPipe: CurrencyPipe,
     protected datePipe: DatePipe
-  ) {}
+  ) { }
 
   public ngOnInit(): void {
     this.configService
@@ -126,11 +125,6 @@ export class HomeComponent implements OnInit, OnDestroy {
             this.authService.isAuthorized().subscribe((isAuth: boolean) => {
               if (isAuth && !this.configService.readAppStarted()) {
                 this.configService.setAppStarted();
-                this.subTitleFn = (loyalty: ILoyalty) =>
-                  of(`${this.datePipe.transform(
-                    loyalty.endDate,
-                    'mediumDate'
-                  )}`);
               }
             });
           }
@@ -460,40 +454,14 @@ export class HomeComponent implements OnInit, OnDestroy {
           return returnString;
         })
       );
-    this.summaryExpiringFn = () => of('');
-    this.pointToFn = () => this.translate.get('HOME.POINT_TO');
+    this.summaryExpiringFn = (loyalty: ILoyalty) => of(`(${this.datePipe.transform(
+      loyalty.endDate,
+      'mediumDate'
+    )})`);
+    this.pointToFn = () => of('');
+    this.subTitleFn = () => this.translate.get('HOME.POINT_TO');
     this.memberFn = () => this.translate.get('HOME.MEMBER');
-    this.membershipExpiryFn = (loyalty: ILoyalty) =>
-      loyalty && loyalty.membershipExpiry
-        ? this.translate
-          .get('HOME.ACCOUNT_EXPIRE')
-          .pipe(
-            map(
-              (res) =>
-                `${res}: ${this.datePipe.transform(
-                  loyalty.membershipExpiry,
-                  'mediumDate'
-                )}`
-            )
-          )
-        : of('');
-
-    this.displayPriceFn = (rewardPrice: IPrice) =>
-      this.translate.get('REWARD.POINT').pipe(
-        mergeMap((text) => {
-          if (rewardPrice.price && parseFloat(rewardPrice.price) > 0) {
-            return of(
-              `${rewardPrice.currencyCode} ${Math.floor(
-                parseFloat(rewardPrice.price)
-              )}`
-            );
-          }
-
-          if (rewardPrice.points && rewardPrice.points > 0) {
-            return of(`${rewardPrice.points} ${text}`);
-          }
-          return of(''); // is actually 0 or invalid value default
-        })
-      );
+    this.membershipExpiryFn = () => of('');
+    this.displayPriceFn = () => of('');
   }
 }

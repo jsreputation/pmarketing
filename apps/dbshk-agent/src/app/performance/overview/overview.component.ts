@@ -1,8 +1,8 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService, ConfigService, IConfig, IFlags, ILoyalty, IProfile, IStatisticCardConfig } from '@perxtech/core';
+import { TranslateService } from '@ngx-translate/core';
+import { ILoyalty, IStatisticCardConfig } from '@perxtech/core';
 import { Observable, of } from 'rxjs';
-import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'dbshk-agent-overview',
@@ -10,18 +10,20 @@ import { tap } from 'rxjs/operators';
   styleUrls: ['./overview.component.scss']
 })
 export class OverviewComponent implements OnInit {
-  public appConfig: IConfig<void>;
-  public appRemoteFlags: IFlags;
-  public subTitleFn: (loyalty: ILoyalty) => Observable<string>;
-  public titleFn: (profile: IProfile) => Observable<string>;
-  public summaryExpiringFn: () => Observable<string>;
+  public displayPriceFn: () => Observable<string>;
+  public subTitleFn: () => Observable<string>;
+  public titleFn: () => Observable<string>;
+  public summaryExpiringFn: (loyalty: ILoyalty) => Observable<string>;
   public pointToFn: () => Observable<string>;
   public memberFn: () => Observable<string>;
-  public membershipExpiryFn: (loyalty: ILoyalty) => Observable<string>;
+  public membershipExpiryFn: () => Observable<string>;
   public inviteStatistics: IStatisticCardConfig;
   public performanceStatistics: IStatisticCardConfig;
 
-  constructor(protected authService: AuthenticationService, protected configService: ConfigService, protected datePipe: DatePipe) {
+  constructor(
+    protected datePipe: DatePipe,
+    protected translate: TranslateService) {
+
 
     this.inviteStatistics = {
       cardTitle: 'Your invites', statistics: [{
@@ -47,31 +49,19 @@ export class OverviewComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.configService
-      .readAppConfig<void>()
-      .pipe(
-        tap((config: IConfig<void>) => {
-          this.authService.isAuthorized().subscribe((isAuth: boolean) => {
-            if (isAuth && !this.configService.readAppStarted()) {
-              this.configService.setAppStarted();
-              this.subTitleFn = (loyalty: ILoyalty) =>
-                of(`${this.datePipe.transform(
-                  loyalty.endDate,
-                  'mediumDate'
-                )}`);
-            }
-          });
-          this.appConfig = config;
-        })
-      )
-      .subscribe(
-        (flags: IFlags) => {
-          // todo: create a function to wrap all the rest of the init calls
-          this.appRemoteFlags = flags;
-        },
-        (error) => {
-          console.error(error);
-        }
-      );
+    this.initTranslate();
+  }
+
+  private initTranslate(): void {
+    this.titleFn = () => this.translate.get('PERFORMANCE.OVERALL_PERFORMANCE');
+    this.summaryExpiringFn = (loyalty: ILoyalty) => of(`(${this.datePipe.transform(
+      loyalty.endDate,
+      'mediumDate'
+    )})`);
+    this.pointToFn = () => of('');
+    this.subTitleFn = () => this.translate.get('PERFORMANCE.LOYALTY_POINT_UNIT'); // DBS$ / COMPASS Dollars
+    this.memberFn = () => this.translate.get('PERFORMANCE.OVERVIEW_SUB_TITLE'); // you've earned
+    this.membershipExpiryFn = () => of('');
+    this.displayPriceFn = () => of('');
   }
 }
