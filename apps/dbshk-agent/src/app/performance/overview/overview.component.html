@@ -1,1 +1,10 @@
-<p>overview works!</p>
+<div class="overview-container">
+    <perx-core-loyalty-summary [showLoyaltyProgress]="true" class="loyalty-item" [subTitleFn]="subTitleFn"
+        [titleFn]="titleFn" [summaryExpiringFn]="summaryExpiringFn" [pointToFn]="pointToFn" [memberFn]="memberFn"
+        [membershipExpiryFn]="membershipExpiryFn" [showLoyaltyNextTierPointsDiff]="false" [showReferralProgress]="true"
+        [topScoreProgressFn]="topScoreProgressFn"></perx-core-loyalty-summary>
+    <div class="overview-page">
+        <perx-statistic-card [data]="inviteStatistics"></perx-statistic-card>
+        <perx-statistic-card [data]="performanceStatistics"></perx-statistic-card>
+    </div>
+</div>

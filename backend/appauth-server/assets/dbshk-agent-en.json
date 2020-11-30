@@ -261,7 +261,7 @@
     "POINTS_EXPIRING": "{{points}} points will expire on {{date}}",
     "POINT_EXPIRE": "{points} points will expire on {date}",
     "ACCOUNT_EXPIRE": "Account Expiry",
-    "POINT_TO": "{points} DBS$ / COMPASS Dollars",
+    "POINT_TO": "DBS$ / COMPASS Dollars",
     "ALL": "All",
     "HUNG_FOOK_TONG": "Hung Fook Tong",
     "BIG_BIG_SHOP": "big big shop",
@@ -353,7 +353,11 @@
   },
   "PERFORMANCE": {
     "OVERVIEW_TITLE": "Overview",
-    "ACTIVITY_TITLE": "Activity"
+    "ACTIVITY_TITLE": "Activity",
+    "OVERALL_PERFORMANCE": "Overall Performance",
+    "LOYALTY_POINT_UNIT": "DBS$ / COMPASS Dollars",
+    "OVERVIEW_SUB_TITLE": "You've Earned",
+    "GLOBAL_TOP_SCORE": "Global top score"
   },
   "Gold": "Gold",
   "Silver": "Silver",

@@ -192,6 +192,7 @@ export { LocationFilterPopupComponent } from './lib/utils/location-filter-popup/
 export { PointsToCashPipe } from './lib/utils/directives/points-to-cash.pipe';
 export { ProgressInfoPipe } from './lib/utils/progress-info/progress-info.pipe';
 export { GettingStartedPipe } from './lib/utils/getting-started/getting-started.pipe';
+export { IStatisticCardConfig, StatisticCardComponent } from './lib/utils/statistic-card/statistic-card.component';
 
 /**
  * Puzzles
