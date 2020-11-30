@@ -31,14 +31,14 @@ const displayProperties = `"displayProperties": {
   "account": {
       "pages": [
           {
-              "key": "contact-us",
-              "title": "Contact Us",
-              "content_url": "${process.env.CONTACTUSURL ? process.env.CONTACTUSURL : ''}"
-          },
-          {
               "key": "tnc",
               "title": "Terms and Conditions",
               "content_url": "${process.env.TNCURL ? process.env.TNCURL : ''}"
+          },
+          {
+              "key": "disclaimer",
+              "title": "Disclaimer",
+              "content_url": "${process.env.DISCLAIMERURL ? process.env.DISCLAIMERURL : ''}"
           }
       ]
   }
