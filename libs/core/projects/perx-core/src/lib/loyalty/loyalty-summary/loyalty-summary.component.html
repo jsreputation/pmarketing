@@ -8,17 +8,21 @@
   </ng-container>
   <ng-container *ngIf="loyalty; else elseBlockLoyalty">
     <div *ngIf="loyalty.membershipExpiry" class="member-expiry-date">{{membershipExpiryFn(loyalty) | async}}</div>
-    <p *ngIf="showLoyaltyProgress && loyalty.membershipTierName" class="tier-description">{{memberFn(loyalty.membershipTierName) | async}}</p>
+    <p *ngIf="showLoyaltyProgress && loyalty.membershipTierName" class="tier-description">
+      {{memberFn(loyalty.membershipTierName) | async}}</p>
 
     <div class="points">
       {{loyalty.pointsBalance | number}}
     </div>
 
-    <ng-container *ngIf="showLoyaltyProgress && loyalty.membershipTierName && loyalty.highestTier && loyalty.nextTierName">
+    <ng-container
+      *ngIf="showLoyaltyProgress && loyalty.membershipTierName && loyalty.highestTier && loyalty.nextTierName">
       <div *ngIf="loyalty.membershipTierName !== loyalty.highestTier" class="progress-bar">
-        <mat-progress-bar mode="determinate" [value]="getPercentageToNext(loyalty.pointsBalance, loyalty.nextTierPoints)"></mat-progress-bar>
+        <mat-progress-bar mode="determinate"
+          [value]="getPercentageToNext(loyalty.pointsBalance, loyalty.nextTierPoints)"></mat-progress-bar>
         <div class="points-to">
-          {{pointTo | async}}<ng-container *ngIf="showLoyaltyNextTierPointsDiff">: {{loyalty.nextTierPointsDiff}}</ng-container>
+          {{pointTo | async}}<ng-container *ngIf="showLoyaltyNextTierPointsDiff">: {{loyalty.nextTierPointsDiff}}
+          </ng-container>
         </div>
       </div>
     </ng-container>
@@ -28,6 +32,16 @@
     <div class="expiring-points">
       {{summaryExpiringFn(loyalty) | async}}
     </div>
+
+    <ng-container *ngIf="showReferralProgress">
+      <div class="progress-bar top-score-progress">
+        <mat-progress-bar mode="determinate"
+          [value]="getPercentageToNext(loyalty.pointsBalance, loyalty.nextTierPoints)"></mat-progress-bar>
+        <div class="points-to">
+          {{topScoreProgressFn() | async}} <b>{{loyalty.nextTierPoints}}</b>
+        </div>
+      </div>
+    </ng-container>
   </ng-container>
 
   <ng-template #elseBlockProfile>
@@ -36,7 +50,7 @@
 
   <ng-template #elseBlockLoyalty>
     <div class="points ghost">
-      <mat-spinner *ngIf="!loyaltyProgramExists"  diameter="50" color="primary"></mat-spinner>
+      <mat-spinner *ngIf="!loyaltyProgramExists" diameter="50" color="primary"></mat-spinner>
     </div>
     <div class="expiring-points ghost"></div>
   </ng-template>

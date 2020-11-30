@@ -43,7 +43,13 @@ export class LoyaltySummaryComponent implements OnInit {
   public membershipExpiryFn: (loyalty: ILoyalty) => Observable<string>;
 
   @Input()
+  public topScoreProgressFn: () => Observable<string>;
+
+  @Input()
   public showLoyaltyProgress: boolean = true;
+
+  @Input()
+  public showReferralProgress: boolean = false;
 
   @Input()
   public showLoyaltyNextTierPointsDiff: boolean = true;
@@ -56,7 +62,7 @@ export class LoyaltySummaryComponent implements OnInit {
     private profileService: ProfileService,
     private loyaltyService: LoyaltyService,
     private datePipe: DatePipe
-  ) {}
+  ) { }
 
   public ngOnInit(): void {
     if (!this.subTitleFn) {
@@ -101,13 +107,12 @@ export class LoyaltySummaryComponent implements OnInit {
           expiringPoints.points &&
           expiringPoints.points !== 0
           ? of(
-              `${String(expiringPoints.points)} points will expire on ${
-                this.datePipe.transform(
-                  expiringPoints.expireDate,
-                  'mediumDate'
-                ) || ''
-              }`
-            )
+            `${String(expiringPoints.points)} points will expire on ${this.datePipe.transform(
+              expiringPoints.expireDate,
+              'mediumDate'
+            ) || ''
+            }`
+          )
           : of('');
       };
     }
@@ -116,12 +121,16 @@ export class LoyaltySummaryComponent implements OnInit {
       this.membershipExpiryFn = (loyalty: ILoyalty): Observable<string> =>
         (loyalty && loyalty.membershipExpiry) || loyalty.endDate
           ? of(
-              `Account Expiry: ${this.datePipe.transform(
-                loyalty.membershipExpiry || loyalty.endDate,
-                'mediumDate'
-              )}`
-            )
+            `Account Expiry: ${this.datePipe.transform(
+              loyalty.membershipExpiry || loyalty.endDate,
+              'mediumDate'
+            )}`
+          )
           : of('');
+    }
+
+    if (this.showReferralProgress && !this.topScoreProgressFn) {
+      this.topScoreProgressFn = () => of('');
     }
 
     if (!this.profile$) {

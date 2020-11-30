@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { ILoyalty, IStatisticCardConfig } from '@perxtech/core';
+import { IStatisticCardConfig } from '@perxtech/core';
 import { Observable, of } from 'rxjs';
 
 @Component({
@@ -13,10 +13,11 @@ export class OverviewComponent implements OnInit {
   public displayPriceFn: () => Observable<string>;
   public subTitleFn: () => Observable<string>;
   public titleFn: () => Observable<string>;
-  public summaryExpiringFn: (loyalty: ILoyalty) => Observable<string>;
+  public summaryExpiringFn: () => Observable<string>;
   public pointToFn: () => Observable<string>;
   public memberFn: () => Observable<string>;
   public membershipExpiryFn: () => Observable<string>;
+  public topScoreProgressFn: () => Observable<string>;
   public inviteStatistics: IStatisticCardConfig;
   public performanceStatistics: IStatisticCardConfig;
 
@@ -54,14 +55,12 @@ export class OverviewComponent implements OnInit {
 
   private initTranslate(): void {
     this.titleFn = () => this.translate.get('PERFORMANCE.OVERALL_PERFORMANCE');
-    this.summaryExpiringFn = (loyalty: ILoyalty) => of(`(${this.datePipe.transform(
-      loyalty.endDate,
-      'mediumDate'
-    )})`);
+    this.summaryExpiringFn = () => of('');
     this.pointToFn = () => of('');
     this.subTitleFn = () => this.translate.get('PERFORMANCE.LOYALTY_POINT_UNIT'); // DBS$ / COMPASS Dollars
     this.memberFn = () => this.translate.get('PERFORMANCE.OVERVIEW_SUB_TITLE'); // you've earned
     this.membershipExpiryFn = () => of('');
     this.displayPriceFn = () => of('');
+    this.topScoreProgressFn = () => this.translate.get('PERFORMANCE.GLOBAL_TOP_SCORE'); // global top score
   }
 }
