@@ -113,6 +113,7 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
         if (locations.length > 0) {
           this.locationData = locations;
           this.bookingForm.controls.location.setValidators([Validators.required]);
+          this.bookingForm.controls.location.updateValueAndValidity();
         }
       },
       () => {
