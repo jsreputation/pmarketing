@@ -10,7 +10,7 @@
     </div>
     <mat-card-content class="card-content">
       <p class="main-reward-title ellipsis-1-line">{{game.campaignName | striphtml}}</p>
-      <p class="reward-subtitle">{{game.campaignDescription | striphtml}}</p>
+      <p class="reward-subtitle" [innerHTML]="game.campaignDescription"></p>
     </mat-card-content>
   </mat-card>
   <div class="flex-for-button">
