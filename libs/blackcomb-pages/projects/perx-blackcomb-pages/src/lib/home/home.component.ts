@@ -120,7 +120,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       .readAppConfig<void>()
       .pipe(
         tap((config: IConfig<void>) => {
-          console.log(config.app)
+          console.log(config.app, 'dasdas')
           if (config.homeAsProgressPage) {
             this.router.navigate(['/progress-campaigns']);
           } else {
