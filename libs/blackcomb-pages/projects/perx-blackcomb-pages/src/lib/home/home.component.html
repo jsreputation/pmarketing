@@ -17,6 +17,7 @@
       [pointToFn]="pointToFn"
       [memberFn]="memberFn"
       [membershipExpiryFn]="membershipExpiryFn"
+      [hideAdditionalLoyaltyInfo]="appConfig.app === 'hsbcph'"
       (showRwdsList)="showRwdsList($event)"
      ></perx-core-loyalty-summary>
     <div class="loyalty-item loyalty-item-qr" *ngIf="appConfig.showUserQR">
