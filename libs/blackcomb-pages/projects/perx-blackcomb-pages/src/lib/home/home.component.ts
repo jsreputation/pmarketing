@@ -245,10 +245,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.router.navigate([`/reward-detail/${reward.id}`]);
   }
 
-  public showRwdsList(bool: boolean): void {
-    this.showRewardsBasedOnPoints = bool;
-  }
-
   public catalogSelected(catalog: ICatalog): void {
     this.router.navigate(['/catalogs'], {
       queryParams: { catalog: catalog.id },
