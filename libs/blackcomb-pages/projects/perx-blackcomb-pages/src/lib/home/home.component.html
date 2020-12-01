@@ -17,6 +17,7 @@
       [pointToFn]="pointToFn"
       [memberFn]="memberFn"
       [membershipExpiryFn]="membershipExpiryFn"
+      (showRwdsList)="showRwdsList($event)"
      ></perx-core-loyalty-summary>
     <div class="loyalty-item loyalty-item-qr" *ngIf="appConfig.showUserQR">
       <a
@@ -82,7 +83,9 @@
       (loadCatalogs)="loadCatalogs($event)"
     ></perx-blackcomb-pages-catalogs>
   </div>
-  <div class="rewards-collection" *ngIf="appConfig.showRewardsOnHomepage">
+  <div class="rewards-collection" *ngIf="
+  appConfig.app === 'hsbcph' ?
+  (appConfig.showRewardsOnHomepage && showRewardsBasedOnPoints) : appConfig.showRewardsOnHomepage">
     <div class="title" translate>HOME.REWARDS</div>
     <perx-core-rewards-list-tabbed [tabs$]="tabs$" [displayPriceFn]="displayPriceFn" (tapped)="goToReward($event)" (tabChanged)="tabChanged($event)">
     </perx-core-rewards-list-tabbed>

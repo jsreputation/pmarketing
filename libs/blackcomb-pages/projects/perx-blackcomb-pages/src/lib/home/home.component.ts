@@ -95,6 +95,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public catalogs$: Observable<ICatalog[]>;
   public catalogsEnded: boolean = false;
   public surveyCampaigns$: Observable<ICampaign[]>;
+  public showRewardsBasedOnPoints: boolean;
 
   public constructor(
     protected rewardsService: RewardsService,
@@ -243,6 +244,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   public goToReward(reward: IReward): void {
     this.router.navigate([`/reward-detail/${reward.id}`]);
+  }
+
+  public showRwdsList(bool: boolean): void {
+    this.showRewardsBasedOnPoints = bool;
   }
 
   public catalogSelected(catalog: ICatalog): void {
