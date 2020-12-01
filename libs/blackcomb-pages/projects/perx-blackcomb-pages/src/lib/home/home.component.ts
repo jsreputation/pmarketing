@@ -95,7 +95,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   public catalogs$: Observable<ICatalog[]>;
   public catalogsEnded: boolean = false;
   public surveyCampaigns$: Observable<ICampaign[]>;
-  public showRewardsBasedOnPoints: boolean;
 
   public constructor(
     protected rewardsService: RewardsService,
