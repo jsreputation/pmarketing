@@ -48,7 +48,14 @@ export class ExistingCardComponent implements OnInit {
 
   private initForm(): void {
     this.existingCardForm = this.fb.group({
-      cardNumber: ['', Validators.required]
+      cardNumber: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(18),
+          Validators.pattern('^[0-9]*$')
+        ]
+      ]
     });
   }
 
