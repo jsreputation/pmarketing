@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
 import { LoyaltyService } from '../loyalty.service';
@@ -56,9 +56,6 @@ export class LoyaltySummaryComponent implements OnInit {
 
   @Input()
   public showLoyaltyNextTierPointsDiff: boolean = true;
-
-  @Output()
-  public showRwdsList: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public loyaltyProgramExists: boolean = true;
   public pointTo: Observable<string>;
@@ -164,11 +161,6 @@ export class LoyaltySummaryComponent implements OnInit {
       )
       .subscribe((loyalty: ILoyalty) => {
         this.loyalty = loyalty;
-        if (this.loyalty.pointsBalance === 0) {
-          this.showRwdsList.emit(false);
-        } else {
-          this.showRwdsList.emit(true);
-        }
         if (this.nextTierName) {
           this.pointTo = this.pointToFn().pipe(
             map((text) => text.replace('{nextTierName}', this.nextTierName))
