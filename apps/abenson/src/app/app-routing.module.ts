@@ -87,6 +87,11 @@ const routes: Routes = [
             (mod) => mod.ProfileAdditionsModule
           ),
       },
+      {
+        path: 'profile',
+        loadChildren: () =>
+          import('./profile/profile.module').then((mod) => mod.ProfileModule),
+      },
     ],
     canActivate: [ProtectedGuard],
   },

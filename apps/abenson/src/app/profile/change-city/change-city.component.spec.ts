@@ -7,7 +7,7 @@ import {
 } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { SharedModule } from '../../../shared/shared.module';
+import { SharedModule } from '../../shared/shared.module';
 import { ChangeCityComponent } from './change-city.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ProfileService } from '@perxtech/core';
