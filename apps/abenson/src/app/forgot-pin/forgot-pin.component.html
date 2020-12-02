@@ -16,6 +16,9 @@
       <mat-error *ngIf="mobileNumber && mobileNumber.hasError('required')">
         Mobile number is <strong>required</strong>
       </mat-error>
+      <mat-error *ngIf="mobileNumber && mobileNumber.hasError('pattern')">
+        <strong>Numbers</strong> only
+      </mat-error>
     </mat-form-field>
     <button
       mat-flat-button
