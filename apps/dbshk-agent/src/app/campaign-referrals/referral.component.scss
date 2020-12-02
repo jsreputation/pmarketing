@@ -1,7 +1,10 @@
-@import '../custom-theme.scss';
+@import "../custom-theme.scss";
 
 .referral-main-container {
-  background-color: white;
+  background-color: var(--surface_colour);
+  min-height: 100%;
+  overflow-y: auto;
+  height: 100%;
 }
 
 .referral-page {
