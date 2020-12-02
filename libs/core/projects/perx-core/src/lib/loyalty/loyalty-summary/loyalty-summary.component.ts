@@ -49,6 +49,9 @@ export class LoyaltySummaryComponent implements OnInit {
   public showLoyaltyProgress: boolean = true;
 
   @Input()
+  public hideAdditionalLoyaltyInfo: boolean = false;
+
+  @Input()
   public showReferralProgress: boolean = false;
 
   @Input()
