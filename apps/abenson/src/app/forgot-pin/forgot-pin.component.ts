@@ -41,7 +41,13 @@ export class ForgotPinComponent implements OnInit {
 
   private initForm(): void {
     this.forgotPinForm = this.fb.group({
-      mobileNumber: ['', Validators.required]
+      mobileNumber: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('^[0-9]*$')
+        ]
+      ]
     });
   }
 
