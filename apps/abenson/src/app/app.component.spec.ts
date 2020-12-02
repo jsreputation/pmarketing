@@ -30,12 +30,12 @@ import {
 } from '@perxtech/core';
 import { HomeComponent } from '@perxtech/blackcomb-pages';
 import { TermsAndConditionComponent } from './account/profile-additions/containers/terms-and-condition/terms-and-condition.component';
-import { ProfileComponent } from './account/profile/profile.component';
-import { ChangeBarangayComponent } from './account/profile/change-barangay/change-barangay.component';
+import { ProfileComponent } from './profile/profile.component';
+import { ChangeBarangayComponent } from './profile/change-barangay/change-barangay.component';
 import { ChangePasswordComponent } from './account/change-password/change-password.component';
-import { ChangeEmailComponent } from './account/profile/change-email/change-email.component';
-import { ChangeCityComponent } from './account/profile/change-city/change-city.component';
-import { ChangeStreetAddressComponent } from './account/profile/change-street-address/change-street-address.component';
+import { ChangeEmailComponent } from './profile/change-email/change-email.component';
+import { ChangeCityComponent } from './profile/change-city/change-city.component';
+import { ChangeStreetAddressComponent } from './profile/change-street-address/change-street-address.component';
 import { FaqComponent } from './account/profile-additions/containers/faq/faq.component';
 import { PrivacyPolicyComponent } from './account/profile-additions/containers/privacy-policy/privacy-policy.component';
 import { CurrencyPipe, DatePipe, Location } from '@angular/common';
