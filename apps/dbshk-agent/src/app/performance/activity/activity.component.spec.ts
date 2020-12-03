@@ -2,6 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ActivityComponent } from './activity.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { MatFormFieldModule, MatSelectModule, MatListModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('ActivityComponent', () => {
   let component: ActivityComponent;
@@ -11,7 +13,11 @@ describe('ActivityComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ActivityComponent ],
       imports: [
-        InfiniteScrollModule
+        InfiniteScrollModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatListModule,
+        BrowserAnimationsModule
       ]
     })
     .compileComponents();

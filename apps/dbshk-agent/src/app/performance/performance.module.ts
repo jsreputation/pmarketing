@@ -11,6 +11,7 @@ import { OverviewComponent } from './overview/overview.component';
 import { ActivityComponent } from './activity/activity.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { LoyaltyModule, UtilsModule } from '@perxtech/core';
+import { MatFormFieldModule, MatListModule, MatSelectModule } from '@angular/material';
 
 const routes: Routes = [{
   path: '',
@@ -29,7 +30,10 @@ const routes: Routes = [{
     MatTabsModule,
     InfiniteScrollModule,
     LoyaltyModule,
-    UtilsModule
+    UtilsModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatListModule
   ]
 })
 export class PerformanceModule { }

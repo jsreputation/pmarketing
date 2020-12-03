@@ -1,8 +1,23 @@
-<div class="activity-container"
-     infiniteScroll
-     [infiniteScrollDistance]="2"
-     [infiniteScrollThrottle]="500"
-     (scrolled)="onScroll()"
-     [scrollWindow]="false">
-<p>Activity works!</p>
+<div class="activity-container" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="500"
+     (scrolled)="onScroll()" [scrollWindow]="false">
+     <div>
+          <mat-form-field appearance="fill" class="full-width__input">
+               <mat-label>Referral Type</mat-label>
+               <mat-select placeholder="Referral Type" formControlName="referralType">
+                    <mat-option value="all">All</mat-option>
+                    <mat-option value="deposit">Deposit referral</mat-option>
+                    <mat-option value="insurance">Insurance referral</mat-option>
+                    <mat-option value="investment">Investment referral</mat-option>
+               </mat-select>
+          </mat-form-field>
+     </div>
+     <div class="event-list">
+          <mat-list role="list">
+               <mat-list-item role="listitem">
+                    <div class="time-stamp">2 DEC</div>
+                    <h3 matLine>Invited Awad, Ryane and Reynard</h3>
+                    <p matLine> Deposit referral </p>
+               </mat-list-item>
+          </mat-list>
+     </div>
 </div>
