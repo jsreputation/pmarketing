@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterModule, Routes } from '@angular/router';
 import { ReferralComponent } from './referral.component';
 import { CommonModule } from '@angular/common';
+import { CampaignInviteService } from './campaign-invite.service';
 
 const routes: Routes = [{ path: '', component: ReferralComponent }];
 
@@ -15,6 +16,7 @@ const routes: Routes = [{ path: '', component: ReferralComponent }];
     MatToolbarModule,
     MatButtonModule,
     CommonModule
-  ]
+  ],
+  providers: [CampaignInviteService]
 })
 export class ReferralModule { }

@@ -1,20 +1,19 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { IPopupConfig } from '@perxtech/core';
+import { IPopupConfig, NotificationService } from '@perxtech/core';
+import { CampaignInviteService } from '../campaign-invite.service';
+import { IInvite } from '../models/campaign-referral.model';
 
 export interface IReferralPopupConfig extends IPopupConfig {
   description: string;
   addButtonTxt: string;
   namePlaceholder: string;
+  campaignId: number;
 }
 
 export interface PopUpClosedCallBack {
   closeAndRedirect(url: string): void;
-}
-
-interface IReferralName {
-  name: string;
 }
 
 @Component({
@@ -29,13 +28,15 @@ export class ReferralPopupComponent implements OnInit {
   public buttonTxt: string;
   public addButtonTxt: string;
   public namePlaceholder: string;
-  public referralNames: IReferralName[];
+  public referralNames: string[];
   public addRefferalNameForm: FormGroup;
 
   constructor(
     public dialogRef: MatDialogRef<ReferralPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: IReferralPopupConfig,
     private fb: FormBuilder,
+    private campaignInviteService: CampaignInviteService,
+    private notificationService: NotificationService
   ) {
     if (data.disableOverlayClose) {
       dialogRef.disableClose = data.disableOverlayClose;
@@ -73,23 +74,19 @@ export class ReferralPopupComponent implements OnInit {
   }
 
   public buttonPressed(): void {
-    // debugger
-    // this.dialogRef.close();
-    // if (this.data.afterClosedCallBack) {
-    //   this.data.afterClosedCallBack.dialogClosed();
-    // }
-    // if (this.data.afterClosedCallBackRedirect && this.data.url) {
-    //   this.data.afterClosedCallBackRedirect.closeAndRedirect(this.data.url);
-    // }
+    // build IInvite obj with campaign id + this.referralNames
+    const invite: IInvite = { campaign_id: this.data.campaignId, invitee_names: this.referralNames };
+    this.campaignInviteService.sendInvite(invite).subscribe(() => this.notificationService.addSnack('Code shared successfully!'),
+      (error) => { this.notificationService.addSnack('Something went wrong'); console.error(error); }
+    );
   }
 
   public addName(): void {
-    const referral: IReferralName = { name: this.addRefferalNameForm.value.referralName };
-    this.addRefferalNameForm.setValue({referralName: ''});
-    this.referralNames.push(referral);
+    this.referralNames.push(this.addRefferalNameForm.value.referralName);
+    this.addRefferalNameForm.setValue({ referralName: '' });
   }
 
-  public removeName(name: string): void {
-    this.referralNames = this.referralNames.filter((el) => el.name !== name);
+  public removeName(nametoRemove: string): void {
+    this.referralNames = this.referralNames.filter((name) => name !== nametoRemove);
   }
 }

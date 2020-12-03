@@ -19,6 +19,7 @@ export class ReferralComponent {
   public campaignName: string = '';
   public campaignDescription: string = '';
   public campaignEndsAt: Date;
+  public campaignId: number;
   // todo to be replaced with the proper content when api is available
   public code: string = '';
   // todo to be replaced with the proper content when api is available
@@ -58,6 +59,7 @@ export class ReferralComponent {
             this.campaignDescription = campaign.description ? campaign.description : this.campaignDescription;
             this.campaignName = campaign.name ? campaign.name : this.campaignName;
             this.campaignEndsAt = campaign.endsAt ? campaign.endsAt : null;
+            this.campaignId = campaign.id;
           }
         })
       ).subscribe();
@@ -70,6 +72,7 @@ export class ReferralComponent {
       buttonTxt: this.popupButton,
       addButtonTxt: this.addButtonTxt,
       namePlaceholder: this.namePlaceholder,
+      campaignId: this.campaignId,
       afterClosedCallBack: this
     };
     this.dialog.open(ReferralPopupComponent, { data, width: '80vw' });
