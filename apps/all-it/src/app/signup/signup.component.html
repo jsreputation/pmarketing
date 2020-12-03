@@ -65,6 +65,9 @@
                     <mat-error *ngIf="signupForm.get('mobileNo').hasError('required')">
                         <span>Mobile No is </span><strong>REQUIRED</strong>
                     </mat-error>
+                    <mat-error *ngIf="signupForm.get('mobileNo').hasError('pattern')">
+                        <strong>Numbers</strong> only
+                    </mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="full-width__input">
                     <mat-label>Email Address</mat-label>

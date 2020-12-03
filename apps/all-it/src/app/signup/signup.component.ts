@@ -96,7 +96,7 @@ export class SignupComponent implements OnInit {
       gender: ['', Validators.required],
       // postcode: ['', Validators.required],
       countryCode: ['60', Validators.required],
-      mobileNo: ['', Validators.required],
+      mobileNo: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
       email: ['', Validators.email],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],
