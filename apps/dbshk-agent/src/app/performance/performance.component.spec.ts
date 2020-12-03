@@ -12,7 +12,7 @@ import {
 import { OverviewComponent } from './overview/overview.component';
 import { ActivityComponent } from './activity/activity.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Observable, of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { EventEmitter } from '@angular/core';
@@ -20,7 +20,7 @@ import {
   AuthenticationService, ConfigService, IConfig, IProfile,
   LoyaltyService, LoyaltySummaryComponent, ProfileService, StatisticCardComponent
 } from '@perxtech/core';
-import { MatCardModule, MatProgressBarModule, MatProgressSpinnerModule } from '@angular/material';
+import { MatCardModule, MatFormFieldModule, MatListModule, MatProgressBarModule, MatProgressSpinnerModule, MatSelectModule } from '@angular/material';
 import { DatePipe } from '@angular/common';
 
 const translateServiceStub: Partial<TranslateService> = {
@@ -72,7 +72,11 @@ describe('PerformanceComponent', () => {
         TranslateModule.forRoot(),
         InfiniteScrollModule,
         MatProgressBarModule,
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatFormFieldModule,
+        MatListModule,
+        MatSelectModule,
+        BrowserAnimationsModule
       ],
       providers: [
         { provide: TranslateService, useValue: translateServiceStub },
