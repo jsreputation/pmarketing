@@ -35,6 +35,8 @@ export class ReferralComponent {
   public popupButton: string;
   public addButtonTxt: string;
   public namePlaceholder: string;
+  public inviteSuccessMessage: string;
+  public inviteFailureMessage: string;
 
   constructor(
     private campaignService: ICampaignService,
@@ -72,6 +74,8 @@ export class ReferralComponent {
       buttonTxt: this.popupButton,
       addButtonTxt: this.addButtonTxt,
       namePlaceholder: this.namePlaceholder,
+      inviteSuccessMessage: this.inviteSuccessMessage,
+      inviteFailureMessage: this.inviteFailureMessage,
       campaignId: this.campaignId,
       afterClosedCallBack: this
     };
@@ -119,7 +123,9 @@ export class ReferralComponent {
         'REFERRAL_POPUP.DESCRIPTION',
         'REFERRAL_POPUP.CTA_BUTTON',
         'REFERRAL_POPUP.ADD_BUTTON',
-        'REFERRAL_POPUP.NAME_PLACEHOLDER'
+        'REFERRAL_POPUP.NAME_PLACEHOLDER',
+        'REFERRAL_POPUP.INVITE_SUCCESS',
+        'REFERRAL_POPUP.INVITE_FAILURE'
       ])
       .subscribe((res: any) => {
         this.shareTitle = res['REFERRAL.SHARE_COPY_TITLE'];
@@ -134,6 +140,8 @@ export class ReferralComponent {
         this.popupButton = res['REFERRAL_POPUP.CTA_BUTTON'];
         this.addButtonTxt = res['REFERRAL_POPUP.ADD_BUTTON'];
         this.namePlaceholder = res['REFERRAL_POPUP.NAME_PLACEHOLDER'];
+        this.inviteSuccessMessage = res['REFERRAL_POPUP.INVITE_SUCCESS'];
+        this.inviteFailureMessage = res['REFERRAL_POPUP.INVITE_FAILURE'];
       });
   }
 }

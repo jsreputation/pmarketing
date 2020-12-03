@@ -9,6 +9,8 @@ export interface IReferralPopupConfig extends IPopupConfig {
   description: string;
   addButtonTxt: string;
   namePlaceholder: string;
+  inviteSuccessMessage: string;
+  inviteFailureMessage: string;
   campaignId: number;
 }
 
@@ -30,6 +32,8 @@ export class ReferralPopupComponent implements OnInit {
   public namePlaceholder: string;
   public referralNames: string[];
   public addRefferalNameForm: FormGroup;
+  public inviteSuccessMessage: string;
+  public inviteFailureMessage: string;
 
   constructor(
     public dialogRef: MatDialogRef<ReferralPopupComponent>,
@@ -56,6 +60,8 @@ export class ReferralPopupComponent implements OnInit {
     if (data.namePlaceholder) {
       this.namePlaceholder = data.namePlaceholder;
     }
+    this.inviteSuccessMessage = data.inviteSuccessMessage;
+    this.inviteFailureMessage = data.inviteFailureMessage;
     this.referralNames = [];
   }
 
@@ -76,8 +82,8 @@ export class ReferralPopupComponent implements OnInit {
   public buttonPressed(): void {
     // build IInvite obj with campaign id + this.referralNames
     const invite: IInvite = { campaign_id: this.data.campaignId, invitee_names: this.referralNames };
-    this.campaignInviteService.sendInvite(invite).subscribe(() => this.notificationService.addSnack('Code shared successfully!'),
-      (error) => { this.notificationService.addSnack('Something went wrong'); console.error(error); }
+    this.campaignInviteService.sendInvite(invite).subscribe(() => this.notificationService.addSnack(this.inviteSuccessMessage),
+      (error) => { this.notificationService.addSnack(this.inviteFailureMessage); console.error(error); }
     );
   }
 
