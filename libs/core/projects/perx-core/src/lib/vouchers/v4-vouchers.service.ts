@@ -360,8 +360,11 @@ export class V4VouchersService implements IVoucherService {
       );
   }
 
-  public getRewardLocations(rewardId: number): Observable<IVoucherLocation[]> {
-    return this.http.get<IV4VoucherLocationsResponse >(`${this.apiHost}/v4/rewards/${rewardId}/locations`)
+  public getRewardLocations(rewardId: number, page?: number): Observable<IVoucherLocation[]> {
+    if (page === undefined) {
+      page = 1;
+    }
+    return this.http.get<IV4VoucherLocationsResponse >(`${this.apiHost}/v4/rewards/${rewardId}/locations/?page=${page}`)
       .pipe(
         map((res: IV4VoucherLocationsResponse) => res.data.map(location => V4VouchersService.v4LocationToLocation(location)))
       );
