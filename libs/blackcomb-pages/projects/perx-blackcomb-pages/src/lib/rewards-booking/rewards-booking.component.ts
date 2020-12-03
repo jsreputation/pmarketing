@@ -31,6 +31,7 @@ import {
   switchMap
 } from 'rxjs/operators';
 import {
+  BehaviorSubject,
   forkJoin,
   iif,
   Observable,
@@ -50,7 +51,9 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
 
   public rewardId: number;
   public prices: IPrice[];
-  public locationData: IVoucherLocation[];
+  public locationData: BehaviorSubject<IVoucherLocation[]> = new BehaviorSubject([]);
+  private lastLocationPage: number = 1;
+  private isCurrentLocationPageLoaded: boolean = false;
   public reward: IReward;
   public quantities: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   public bookingForm: FormGroup;
@@ -107,11 +110,11 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
           return throwError({ message: 'merchantId is required' });
         }
         // merchantId can be null if reward is set up incorrectly on dashboard
-        return this.vouchersService.getRewardLocations(this.rewardId);
+        return this.vouchersService.getRewardLocations(this.rewardId, this.lastLocationPage);
       })).subscribe(
       (locations: IVoucherLocation[] ) => {
         if (locations.length > 0) {
-          this.locationData = locations;
+          this.updateRewardLocations(locations);
           this.bookingForm.controls.location.setValidators([Validators.required]);
           this.bookingForm.controls.location.updateValueAndValidity();
         }
@@ -124,6 +127,35 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
         });
       }
     );
+  }
+
+  // to get first set of locations
+  public getRewardLocationsData(): void {
+    if (!this.isCurrentLocationPageLoaded) {
+      return;
+    }
+
+    this.isCurrentLocationPageLoaded = false;
+    this.vouchersService.getRewardLocations(this.rewardId, this.lastLocationPage).subscribe(
+      (rewardLocations: IVoucherLocation[]) => {
+        if (rewardLocations && rewardLocations.length) {
+          this.updateRewardLocations(rewardLocations);
+        }
+      },
+      () => {
+        // validators will prevent form submission
+        this.notificationService.addPopup({
+          title: 'Sorry',
+          text: 'We\'re unable to perform this transaction at this time'
+        });
+      }
+    );
+  }
+
+  private updateRewardLocations(rewardLocations: IVoucherLocation[]): void {
+    this.locationData.next([...this.locationData.getValue(), ...rewardLocations]);
+    this.lastLocationPage++;
+    this.isCurrentLocationPageLoaded = true;
   }
 
   private getLoyalty(): void {

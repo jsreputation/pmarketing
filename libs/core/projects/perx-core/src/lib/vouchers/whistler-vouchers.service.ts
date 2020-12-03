@@ -121,7 +121,7 @@ export class WhistlerVouchersService implements IVoucherService {
   }
 
   // @ts-ignore
-  public getRewardLocations(rewardId: number): Observable<IVoucherLocation[]> {
+  public getRewardLocations(rewardId: number, page: number): Observable<IVoucherLocation[]> {
     throw new Error('Method not implemented');
   }
 
