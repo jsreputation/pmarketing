@@ -64,10 +64,11 @@
         }
 
         .counter {
-          width: 94%;
+          width: 98%;
           color: #666666;
           display: flex;
           justify-content: space-between;
+          flex-direction: row-reverse;
           margin-top: 1rem;
           margin-left: 1rem;
         }
