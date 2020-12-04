@@ -73,9 +73,10 @@
         }
 
         .counter {
-          width: 94%;
+          width: 98%;
           color: #666666;
           display: flex;
+          flex-direction: row-reverse;
           justify-content: space-between;
         }
       }
