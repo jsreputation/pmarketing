@@ -51,6 +51,7 @@ import {
   ILoyalty,
   IFlags,
   IPrice,
+  TokenStorage,
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialog, MatTabChangeEvent } from '@angular/material';
@@ -111,6 +112,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     protected settingsService: SettingsService,
     protected profileService: ProfileService,
     protected currencyPipe: CurrencyPipe,
+    protected tokenService: TokenStorage,
     protected datePipe: DatePipe
   ) {}
 
@@ -435,6 +437,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   private initTranslate(): void {
     // this.subTitleFn = () => this.translate.get('HOME.YOU_HAVE');
+    this.tokenService.setAppInfoProperty(this.translate.currentLang, 'lang');
     this.titleFn = (profile: IProfile) =>
       this.translate.get('HOME.HELLO').pipe(
         map((msg) => {
