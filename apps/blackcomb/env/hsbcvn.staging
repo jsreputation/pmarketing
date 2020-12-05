@@ -21,3 +21,4 @@ SHOW_LOYALTY_BLOCK_ON_HOMEPAGE=false
 REDIRECT_AFTER_LOGIN=/home
 LOGIN_METHOD=username
 PRODUCTION=true
+CONTACTUSURL=https://perx-cdn.s3-ap-southeast-1.amazonaws.com/content/hsbcvn/contactus.html

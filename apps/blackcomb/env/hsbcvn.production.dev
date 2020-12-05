@@ -20,6 +20,4 @@ SHOW_REWARDS_ON_HOMEPAGE=false
 SHOW_LOYALTY_BLOCK_ON_HOMEPAGE=false
 REDIRECT_AFTER_LOGIN=/home
 LOGIN_METHOD=username
-FAQSURL=https://perx-cdn.s3-ap-southeast-1.amazonaws.com/content/hsbcph/faq.html
-TNCURL=https://perx-cdn.s3-ap-southeast-1.amazonaws.com/content/hsbcph/tnc.html
-CONTACTUSURL=https://perx-cdn.s3-ap-southeast-1.amazonaws.com/content/hsbcph/contactus.html
+CONTACTUSURL=https://perx-cdn.s3-ap-southeast-1.amazonaws.com/content/hsbcvn/contactus.html
