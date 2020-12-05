@@ -1,8 +1,9 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LanguageComponent } from './language.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { MatListModule, MatCardModule } from '@angular/material';
+import { MatListModule, MatCardModule, MatSelectModule, MatOptionModule } from '@angular/material';
 import { of } from 'rxjs';
 
 describe('LanguageComponent', () => {
@@ -20,6 +21,9 @@ describe('LanguageComponent', () => {
       imports: [
         MatListModule,
         MatCardModule,
+        MatOptionModule,
+        MatSelectModule,
+        NoopAnimationsModule,
         TranslateModule.forRoot()
       ],
       providers: [ { provide: TranslateService, useValue: translateServiceStub } ]
@@ -35,21 +39,5 @@ describe('LanguageComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should retrieve the current selected language on init', fakeAsync(() => {
-    component.ngOnInit();
-    tick();
-    expect(component.currentSelectedLanguage).toBe('en');
-  }));
-
-  it('should change language to english', () => {
-    component.switchLanguage('en');
-    expect(component.currentSelectedLanguage).toBe('en');
-  });
-
-  it('should change language to chinese', () => {
-    component.switchLanguage('zh');
-    expect(component.currentSelectedLanguage).toBe('zh');
   });
 });
