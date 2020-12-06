@@ -15,6 +15,7 @@ import {
   RewardsService,
   SettingsService,
   ThemesService,
+  TokenStorage,
 } from '@perxtech/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -46,6 +47,7 @@ export class HomeComponent extends BCHomeComponent implements OnInit {
     settingsService: SettingsService,
     profileService: ProfileService,
     currencyPipe: CurrencyPipe,
+    tokenService: TokenStorage,
     datePipe: DatePipe,
     private loyaltyService: LoyaltyService
   ) {
@@ -64,6 +66,7 @@ export class HomeComponent extends BCHomeComponent implements OnInit {
       settingsService,
       profileService,
       currencyPipe,
+      tokenService,
       datePipe
     );
   }
