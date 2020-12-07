@@ -1,0 +1,22 @@
+.translate-switch {
+  color: white;
+
+  ::ng-deep {
+    mat-form-field {
+      width: 4rem;
+    }
+
+    .mat-select-value {
+      font-size: 1.5rem;
+      color: black;
+    }
+
+    .mat-select-arrow {
+      color: black;
+    }
+
+    .mat-form-field-underline {
+      display: none;
+    }
+  }
+}

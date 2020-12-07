@@ -27,6 +27,7 @@ import {
   InstantOutcomeService,
   FeedReaderService,
   SettingsService,
+  TokenStorage,
 } from '@perxtech/core';
 import { HomeComponent } from '@perxtech/blackcomb-pages';
 import { TermsAndConditionComponent } from './account/profile-additions/containers/terms-and-condition/terms-and-condition.component';
@@ -186,6 +187,7 @@ describe('AppComponent', () => {
     const form = {} as FormBuilder;
     const notifi = {} as NotificationService;
     const campaingService = {} as ICampaignService;
+    const tokenService = {} as TokenStorage;
     const profile = {} as ProfileService;
     const locationTest = {} as Location;
     const shared = {} as SharedDataService;
@@ -211,6 +213,7 @@ describe('AppComponent', () => {
         settingsService,
         profileService,
         currencyPipe,
+        tokenService,
         datePipe
       )
     );

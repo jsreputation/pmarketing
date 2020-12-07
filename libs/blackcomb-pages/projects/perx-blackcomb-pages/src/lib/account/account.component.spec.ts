@@ -1,3 +1,4 @@
+import { LanguageModule } from './../language/language.module';
 import {
   async,
   fakeAsync,
@@ -7,6 +8,7 @@ import {
 import { Type } from '@angular/core';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import {
   Observable,
@@ -82,6 +84,8 @@ describe('AccountComponent', () => {
         MatCardModule,
         MatListModule,
         MatIconModule,
+        LanguageModule,
+        NoopAnimationsModule,
         TranslateModule.forRoot(),
         ConfigModule.forRoot({ ...environment })
       ],

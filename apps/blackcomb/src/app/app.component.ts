@@ -21,7 +21,7 @@ import {
   switchMap,
   tap,
 } from 'rxjs/operators';
-import { TranslateService } from '@ngx-translate/core';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 
 import {
   PopupComponent,
@@ -31,6 +31,7 @@ import {
   IConfig,
   ITheme,
   ThemesService,
+  TokenStorage,
 } from '@perxtech/core';
 import {
   HomeComponent,
@@ -80,14 +81,29 @@ export class AppComponent implements OnInit {
     private translate: TranslateService,
     private themesService: ThemesService,
     private titleService: Title,
+    private storage: TokenStorage
   ) {
   }
 
   public ngOnInit(): void {
+    // to store so that it works with interceptor
+    this.translate.onLangChange.pipe(
+      // tap((change: LangChangeEvent) => console.info(change, 'a lang change occured')),
+      tap((change: LangChangeEvent) => this.storage.setAppInfoProperty(change.lang, 'lang')),
+    ).subscribe();
     this.config.readAppConfig<ITheme>()
       .pipe(
-        switchMap((conf) => this.translate.getTranslation(conf.defaultLang as string)),
+        tap((conf) => this.storage.setAppInfoProperty(conf.defaultLang, 'lang')),
+        // any avail languages needs to be 'gotten' first for lang toggle after to be responsive
+        switchMap(() =>
+          // getTranslation fetches the translation and registers the language
+          // for when default lang is not 'en'
+          // only after fetching the translations do you .use() it
+          this.translate.getTranslation('en')
+        ),
         tap((config: IConfig<ITheme>) => {
+          // this.translate.getLangs() to get langs avail, in future pass array of langs
+          // loop thru each lang string and .getTranslation it
           this.translationLoaded = true;
           this.preAuth = config.preAuth as boolean;
         }),
