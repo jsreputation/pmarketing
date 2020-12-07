@@ -234,7 +234,9 @@
     "COPY_TO_CLIPBOARD": "Copied to your clipboard!",
     "CLIPBOARD_ERROR_TXT": "Could not access your clipboard",
     "ENDS_ON": "Ends on",
-    "TNC": "Terms & Conditions"
+    "TNC": "Terms & Conditions",
+    "INVITE_SUCCESS": "Code shared successfully!",
+    "INVITE_FAILURE": "Something went wrong"
   },
   "REFERRAL_POPUP": {
     "TITLE": "Share the referral Code",
