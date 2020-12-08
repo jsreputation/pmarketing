@@ -1,10 +1,10 @@
 <!-- tentatively position here until confirmed -->
-<mc-language></mc-language>
 <ng-container *ngIf="profile$ | async; else ghostBlock">
   <div class="page-container" *ngIf="theme | async as th"
     [ngStyle]="{'background-color': th?.properties['--account_background_color']}">
+    <mc-language></mc-language>
     <div *ngIf="appConfig$ | async as aConfig">
-      <div *ngIf="aConfig.showUserInfoOnAccountsPage">
+      <div *ngIf="aConfig.showUserInfoOnAccountsPage">  
         <perx-core-micro-profile *ngIf="aConfig.app === 'abenson' else fullProfileComp" [profile$]="profile$"></perx-core-micro-profile>
         <ng-template #fullProfileComp>
           <perx-core-profile-summary
@@ -39,7 +39,7 @@
             {{'ACCOUNT_PAGE.TRANSACTION_HISTORY' | translate}}
           </mat-list-item>
           <mat-list-item (click)="goToPage(page)" *ngFor="let page of pages">
-            {{page.title | translate}}
+            {{'ACCOUNT_PAGE.' + page.title | translate}}
           </mat-list-item>
         </mat-nav-list>
       </div>

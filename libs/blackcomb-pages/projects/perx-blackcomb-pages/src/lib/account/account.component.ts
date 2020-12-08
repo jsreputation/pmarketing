@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { take, tap, flatMap, map, filter } from 'rxjs/operators';
+import { take, tap, map, filter } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 import { TranslateService } from '@ngx-translate/core';
@@ -58,14 +58,9 @@ export class AccountComponent implements OnInit {
       .pipe(
         map((settings: PagesObject) => settings.pages),
         tap((pages: AccountPageObject[]) => (this.pages = pages)),
-        filter((pages: AccountPageObject[]) => pages.length > 0),
-        flatMap((pages: AccountPageObject[]) =>
-          this.translate.get(pages.map((page: AccountPageObject) => page.title))
-        )
+        filter((pages: AccountPageObject[]) => pages.length > 0)
       )
-      .subscribe((translations) =>
-        this.pages.forEach((page) => (page.title = translations[page.title]))
-      );
+      .subscribe();
     this.appConfig$ = this.configService.readAppConfig();
     this.profile$ = this.profileService.whoAmI().pipe(take(1));
     this.loyalty$ = this.loyaltyService.getLoyalty();
