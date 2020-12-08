@@ -17,7 +17,8 @@ import {
   RewardPopupComponent,
   SettingsService,
   TokenStorage,
-  IFlags
+  IFlags,
+  AuthenticationService
 } from '@perxtech/core';
 import {
   MatDialog,
@@ -86,7 +87,8 @@ export class AppComponent implements OnInit {
     private loyaltyService: LoyaltyService,
     private profileService: ProfileService,
     private configService: ConfigService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private authenticationService: AuthenticationService,
   ) {
     this.data.pageName = '';
     this.data.channel = 'msa';
@@ -107,6 +109,12 @@ export class AppComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.authenticationService.isAuthorized().subscribe((isAuth: boolean) => {
+      if (!isAuth) {
+        this.loading = false;
+        this.router.navigateByUrl('/error', { state : {errorType: 'unauthorized'}});
+      }
+    });
     this.notificationService.$popup
       .subscribe((data: IPopupConfig) =>
         this.dialog.open(PopupComponent, {
