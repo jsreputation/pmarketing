@@ -48,12 +48,11 @@ import {
   RssFeedsPages,
   SettingsService,
   ThemesService,
-  ILoyalty,
   IFlags
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialog, MatTabChangeEvent } from '@angular/material';
-import { CurrencyPipe, DatePipe } from '@angular/common';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
   selector: 'perx-blackcomb-home',
@@ -79,7 +78,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public displayPriceFn: () => Observable<string>;
   public subTitleFn: () => Observable<string>;
   public titleFn: (profile: IProfile) => Observable<string>;
-  public summaryExpiringFn: (loyalty: ILoyalty) => Observable<string>;
+  public summaryExpiringFn: () => Observable<string>;
   public pointToFn: () => Observable<string>;
   public memberFn: () => Observable<string>;
   public membershipExpiryFn: () => Observable<string>;
@@ -110,8 +109,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     protected feedService: FeedReaderService,
     protected settingsService: SettingsService,
     protected profileService: ProfileService,
-    protected currencyPipe: CurrencyPipe,
-    protected datePipe: DatePipe
+    protected currencyPipe: CurrencyPipe
   ) { }
 
   public ngOnInit(): void {
@@ -454,10 +452,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           return returnString;
         })
       );
-    this.summaryExpiringFn = (loyalty: ILoyalty) => of(`(${this.datePipe.transform(
-      loyalty.endDate,
-      'mediumDate'
-    )})`);
+    this.summaryExpiringFn = () => of('');
     this.pointToFn = () => of('');
     this.subTitleFn = () => this.translate.get('HOME.POINT_TO');
     this.memberFn = () => this.translate.get('HOME.MEMBER');
