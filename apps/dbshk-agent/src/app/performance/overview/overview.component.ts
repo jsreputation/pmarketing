@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { IStatisticCardConfig } from '@perxtech/core';
 import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { CampaignInviteService } from '../../campaign-referrals/campaign-invite.service';
+import { IInviteResponse } from '../../campaign-referrals/models/campaign-referral.model';
 
 @Component({
   selector: 'dbshk-agent-overview',
@@ -18,39 +21,32 @@ export class OverviewComponent implements OnInit {
   public memberFn: () => Observable<string>;
   public membershipExpiryFn: () => Observable<string>;
   public topScoreProgressFn: () => Observable<string>;
+  public inviteStatCardTitle: () => Observable<string>;
+  public inviteStatTitle: () => Observable<string>;
+  public inviteStatUnit: () => Observable<string>;
   public inviteStatistics: IStatisticCardConfig;
   public performanceStatistics: IStatisticCardConfig;
 
   constructor(
     protected datePipe: DatePipe,
-    protected translate: TranslateService) {
-
-
-    this.inviteStatistics = {
-      cardTitle: 'Your invites', statistics: [{
-        statisticTitle: 'Total Invites',
-        value: 123,
-        unit: 'invites'
-      }]
-    };
-
-    this.performanceStatistics = {
-      cardTitle: 'Performance by Campaign', statistics: [{
-        statisticTitle: 'Mission 1',
-        value: 456,
-        unit: 'completed units',
-        unitBeforeValue: true
-      },
-      {
-        statisticTitle: 'Mission 2',
-        value: 789,
-        unit: 'completed units'
-      }]
-    };
+    protected translate: TranslateService,
+    protected campaignInviteService: CampaignInviteService) {
   }
 
   public ngOnInit(): void {
     this.initTranslate();
+    this.getInviteStatistics();
+  }
+
+  private getInviteStatistics(): void {
+    this.inviteStatistics = {
+      cardTitle: this.inviteStatCardTitle(),
+      statistics: [{
+        statisticTitle: this.inviteStatTitle(),
+        value: this.campaignInviteService.getAllInvites().pipe(map((invites: IInviteResponse) => invites.data.length)),
+        unit: this.inviteStatUnit()
+      }]
+    };
   }
 
   private initTranslate(): void {
@@ -62,5 +58,8 @@ export class OverviewComponent implements OnInit {
     this.membershipExpiryFn = () => of('');
     this.displayPriceFn = () => of('');
     this.topScoreProgressFn = () => this.translate.get('PERFORMANCE.GLOBAL_TOP_SCORE'); // global top score
+    this.inviteStatCardTitle = () => this.translate.get('PERFORMANCE.INVITE_STAT_CARD_TITLE');
+    this.inviteStatTitle = () => this.translate.get('PERFORMANCE.INVITE_STAT_SUB_TITLE');
+    this.inviteStatUnit = () => this.translate.get('PERFORMANCE.INVITE_STAT_UNIT');
   }
 }
