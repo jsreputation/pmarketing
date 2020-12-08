@@ -234,16 +234,16 @@
     "COPY_TO_CLIPBOARD": "Copied to your clipboard!",
     "CLIPBOARD_ERROR_TXT": "Could not access your clipboard",
     "ENDS_ON": "Ends on",
-    "TNC": "Terms & Conditions",
-    "INVITE_SUCCESS": "Code shared successfully!",
-    "INVITE_FAILURE": "Something went wrong"
+    "TNC": "Terms & Conditions"
   },
   "REFERRAL_POPUP": {
     "TITLE": "Share the referral Code",
     "DESCRIPTION": "Enter names of recipients you'd share the code with",
     "CTA_BUTTON": "Continue",
     "ADD_BUTTON": "Add Recipient",
-    "NAME_PLACEHOLDER": "Recipient name"
+    "NAME_PLACEHOLDER": "Recipient name",
+    "INVITE_SUCCESS": "Code shared successfully!",
+    "INVITE_FAILURE": "Something went wrong"
   },
   "HOME": {
     "HELLO": "Hello",
