@@ -17,11 +17,12 @@ import { Observable, of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { EventEmitter } from '@angular/core';
 import {
-  AuthenticationService, ConfigService, IConfig, IProfile,
+  AuthenticationService, Config, ConfigService, IProfile,
   LoyaltyService, LoyaltySummaryComponent, ProfileService, StatisticCardComponent
 } from '@perxtech/core';
 import { MatCardModule, MatFormFieldModule, MatListModule, MatProgressBarModule, MatProgressSpinnerModule, MatSelectModule } from '@angular/material';
 import { DatePipe } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 const translateServiceStub: Partial<TranslateService> = {
   get: () => of(),
@@ -41,7 +42,13 @@ describe('PerformanceComponent', () => {
   };
 
   const configServiceStub: Partial<ConfigService> = {
-    readAppConfig: <T>(): Observable<IConfig<T>> => of()
+    readAppConfig: () => of({
+      apiHost: '',
+      production: false,
+      preAuth: false,
+      isWhistler: false,
+      baseHref: ''
+    })
   };
 
   const profileServiceStub: Partial<ProfileService> = {
@@ -53,7 +60,6 @@ describe('PerformanceComponent', () => {
     getLoyalty: () => of(),
     getTransactions: () => of([])
   };
-
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -76,12 +82,13 @@ describe('PerformanceComponent', () => {
         MatFormFieldModule,
         MatListModule,
         MatSelectModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        HttpClientModule
       ],
       providers: [
         { provide: TranslateService, useValue: translateServiceStub },
         { provide: AuthenticationService, useValue: authenticationService },
-        { provide: ConfigService, useValue: configServiceStub },
+        { provide: Config, useValue: configServiceStub },
         { provide: ProfileService, useValue: profileServiceStub },
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
         DatePipe

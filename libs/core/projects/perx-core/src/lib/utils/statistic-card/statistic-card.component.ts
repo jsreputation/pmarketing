@@ -1,14 +1,15 @@
 import { Component, Input } from '@angular/core';
+import { Observable } from 'rxjs';
 
 export interface IStatisticCardConfig {
-  cardTitle: string;
+  cardTitle: Observable<string>;
   statistics: IStatistic[];
 }
 
 interface IStatistic {
-  statisticTitle: string;
-  value: number | string;
-  unit?: string;
+  statisticTitle: Observable<string>;
+  value: Observable<number> | Observable<string>;
+  unit?: Observable<string>;
   unitBeforeValue?: boolean;
 }
 
