@@ -24,7 +24,6 @@ import {
   IVoucherService,
   Voucher,
   TransactionsService,
-  IStamp
 } from '@perxtech/core';
 import {
   ActivatedRoute,

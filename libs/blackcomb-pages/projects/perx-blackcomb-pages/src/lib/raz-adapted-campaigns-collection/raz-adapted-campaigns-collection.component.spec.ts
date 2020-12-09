@@ -7,7 +7,8 @@ import {
   LoyaltyService,
   ProgressBarModule,
   RazAdaptedCampaignCardModule,
-  StampService
+  StampService,
+  TransactionsService
 } from '@perxtech/core';
 import { of } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
@@ -24,6 +25,9 @@ describe('RazAdaptedCampaignsCollectionComponent', () => {
   const campaignServiceStub: Partial<ICampaignService> = {
     getCampaign: () => of()
   };
+  const transactionServiceStub: Partial<TransactionsService> = {
+    getTransactions: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -37,7 +41,8 @@ describe('RazAdaptedCampaignsCollectionComponent', () => {
       providers: [
         { provide: StampService, value: stampServiceStub },
         { provide: LoyaltyService, value: loyaltyServiceStub },
-        { provide: ICampaignService, value: campaignServiceStub }
+        { provide: ICampaignService, value: campaignServiceStub },
+        { provide: TransactionsService, useValue: transactionServiceStub },
       ]
     })
     .compileComponents();

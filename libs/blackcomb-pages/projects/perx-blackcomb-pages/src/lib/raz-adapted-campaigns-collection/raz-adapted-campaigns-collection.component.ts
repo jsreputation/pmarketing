@@ -1,8 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable, zip } from 'rxjs';
-import { ICampaign, ICampaignService, IStampCard, LoyaltyService, ProgressBarFields, StampService } from '@perxtech/core';
+import { ICampaign, ICampaignService, IStampCard, LoyaltyService, ProgressBarFields, StampService, TransactionsService } from '@perxtech/core';
 import { concatMap, map, switchMap } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
+
+const DEFAULT_PAGE_SIZE = 25;
 
 @Component({
   selector: 'perx-blackcomb-pages-raz-adapted-campaigns-collection',
@@ -29,10 +31,10 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
   @Output()
   public selected: EventEmitter<ICampaign> = new EventEmitter<ICampaign>();
 
-  public stampCampaignsProg: Observable<(ICampaign & {progress?: ProgressBarFields})[]>;
-  public loyaltyCampaignsProg: Observable<(ICampaign & {progress?: ProgressBarFields})[]>;
-  public referralCampaignsProg: Observable<(ICampaign & {progress?: ProgressBarFields})[]>;
-  public ultimateCampaignsProg: Observable<(ICampaign & {progress?: ProgressBarFields})[]>;
+  public stampCampaignsProg: Observable<(ICampaign & { progress?: ProgressBarFields })[]>;
+  public loyaltyCampaignsProg: Observable<(ICampaign & { progress?: ProgressBarFields })[]>;
+  public referralCampaignsProg: Observable<(ICampaign & { progress?: ProgressBarFields })[]>;
+  public ultimateCampaignsProg: Observable<(ICampaign & { progress?: ProgressBarFields })[]>;
 
   public rewardsLeft: string;
   public campaigns: ICampaign[];
@@ -42,14 +44,15 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
   constructor(
     private stampService: StampService,
     private loyaltyService: LoyaltyService,
-    private campaignsService: ICampaignService
+    private campaignsService: ICampaignService,
+    private transactionsService: TransactionsService
   ) { }
   // differentiate by the campaign_type
   // if stamps call the /stamp_cards api
   // if loyalty call /loyalty
   // if referral call as is but map the referral fields
 
-  public mapStampCampaign(stampCards: IStampCard[]): ({progress: ProgressBarFields} | {}) {
+  public mapStampCampaign(stampCards: IStampCard[], current?: number): ({ progress: ProgressBarFields } | {}) {
     if (stampCards && stampCards[0] && stampCards[0].displayProperties) {
       const lengthOfRewardPos = oc(stampCards[0].displayProperties.rewardPositions)([]).length;
       return {
@@ -57,7 +60,7 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
           stages: lengthOfRewardPos ?
             (lengthOfRewardPos === 1 || lengthOfRewardPos === 2) ?
               (lengthOfRewardPos + 1) : lengthOfRewardPos : 2,
-          current: (stampCards[0].stamps && stampCards[0].stamps.length) || 0,
+          current: current || 0,
           stageLabels: stampCards[0].displayProperties.rewardPositions ?
             ((lengthOfRewardPos === 1 || lengthOfRewardPos === 2) ?
               [0, ...stampCards[0].displayProperties.rewardPositions].sort((a, b) => a - b)
@@ -75,13 +78,16 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
         map(campaignsStamps => campaignsStamps.filter(campaign => campaign.name !== 'Ultimate Reward')),
         switchMap(
           (campaigns: ICampaign[]) => zip(...campaigns.map(campaign => this.stampService.getCards(campaign.id).pipe(
-              // there is only going to be one stamp. take first obj in array,
-              // configured to be one single stampcard
-              map((stampCards) => ({
-                ...campaign as ICampaign,
-                ...this.mapStampCampaign(stampCards)
-              }))
-            )
+            // there is only going to be one stamp. take first obj in array,
+            // configured to be one single stampcard
+            switchMap((stampCards) => this.transactionsService.getTransactions(
+              campaign.id, DEFAULT_PAGE_SIZE, campaign.customFields.min_spend || 0).pipe(
+                map(transactionData => ({
+                  ...campaign as ICampaign,
+                  ...this.mapStampCampaign(stampCards, transactionData.length || 0)
+                }))
+              ))
+          )
           )))
       );
 
@@ -89,13 +95,17 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
         map(campaignsStamps => campaignsStamps.filter(campaign => campaign.name === 'Ultimate Reward')),
         switchMap(
           (campaigns: ICampaign[]) => zip(...campaigns.map(campaign => this.stampService.getCards(campaign.id).pipe(
-              // there is only going to be one stamp. take first obj in array,
-              // configured to be one single stampcard
-              map((stampCards) => ({
-                ...campaign as ICampaign,
-                ...this.mapStampCampaign(stampCards)
-              }))
-            ))))
+            // there is only going to be one stamp. take first obj in array,
+            // configured to be one single stampcard
+            switchMap((stampCards) => this.transactionsService.getTransactions(
+              campaign.id, DEFAULT_PAGE_SIZE, campaign.customFields.min_spend || 0).pipe(
+                map(transactionData => ({
+                  ...campaign as ICampaign,
+                  ...this.mapStampCampaign(stampCards, transactionData.length || 0)
+                }))
+              ))
+          )
+          )))
       );
     }
 
@@ -103,26 +113,26 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
       this.loyaltyCampaignsProg = this.loyaltyCampaigns.pipe(
         switchMap(
           (campaigns: ICampaign[]) => zip(...campaigns.map(campaign => this.campaignsService.getCampaign(campaign.id).pipe(
-              concatMap((campaignRwd) => this.loyaltyService.getLoyalty(1).pipe(
-                map((loyalty) => {
-                  if (campaignRwd.rewards) {
-                    return {
-                      ...campaign,
-                      progress: {
-                        stages: campaignRwd.rewards.length || 2, // if length 0 default to 2 stages
-                        // biggest reward return last, test if really need
-                        // find the highest point and see if balance >=, at final stage
-                        current: ((loyalty.pointsBalance || 0) / 100) || 0,
-                        stageLabels: campaignRwd.rewards.reduce((acc, curr) => [...acc, (
-                          curr && curr.customFields && curr.customFields.requirement
-                        )], []).filter(v => v) as unknown as number[]
-                      }
-                    };
-                  }
-                  return {} as ICampaign;
-                })
-                )
-              ))))
+            concatMap((campaignRwd) => this.loyaltyService.getLoyalty(1).pipe(
+              map((loyalty) => {
+                if (campaignRwd.rewards) {
+                  return {
+                    ...campaign,
+                    progress: {
+                      stages: campaignRwd.rewards.length || 2, // if length 0 default to 2 stages
+                      // biggest reward return last, test if really need
+                      // find the highest point and see if balance >=, at final stage
+                      current: ((loyalty.pointsBalance || 0) / 100) || 0,
+                      stageLabels: campaignRwd.rewards.reduce((acc, curr) => [...acc, (
+                        curr && curr.customFields && curr.customFields.requirement
+                      )], []).filter(v => v) as unknown as number[]
+                    }
+                  };
+                }
+                return {} as ICampaign;
+              })
+            )
+            ))))
         )
       );
     }
@@ -132,12 +142,12 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
         switchMap(
           (campaigns: ICampaign[]) => zip(...campaigns.map(campaign =>
             // only from detail referral details appears on campaign_config
-             this.campaignsService.getCampaign(campaign.id).pipe(
+            this.campaignsService.getCampaign(campaign.id).pipe(
               map(campaignInv => {
                 if (campaignInv.rewards) {
                   return {
                     ...campaign,
-                    progress : {
+                    progress: {
                       stages: campaignInv.rewards.length || 2,
                       current: campaignInv.refersAttained || 0, // reached
                       stageLabels: campaignInv.rewards.map(reward => reward.customFields && +reward.customFields.requirement)

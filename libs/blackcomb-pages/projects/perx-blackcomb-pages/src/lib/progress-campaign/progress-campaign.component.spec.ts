@@ -11,6 +11,7 @@ import {
   RewardsModule,
   SettingsService,
   StampService,
+  TransactionsService,
   UtilsModule
 } from '@perxtech/core';
 import {
@@ -42,6 +43,9 @@ const voucherServiceStub: Partial<IVoucherService> = {
 const translateServiceStub: Partial<TranslateService> = {
   get: () => of()
 };
+const transactionServiceStub: Partial<TransactionsService> = {
+  getTransactions: () => of()
+};
 
 describe('ProgressCampaignComponent', () => {
   let component: ProgressCampaignComponent;
@@ -70,6 +74,7 @@ describe('ProgressCampaignComponent', () => {
         { provide: LoyaltyService, value: loyaltyServiceStub },
         { provide: TranslateService, useValue: translateServiceStub },
         { provide: IVoucherService, useValue: voucherServiceStub },
+        { provide: TransactionsService, useValue: transactionServiceStub },
         ProgressInfoPipe
       ]
     })

@@ -90,6 +90,7 @@ export class WhistlerCampaignService implements ICampaignService {
       engagementId: cAttributes.engagement_id,
       rawPayload: cAttributes,
       displayProperties: cAttributes.display_properties,
+      customFields: {}
     };
   }
 
