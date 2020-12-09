@@ -80,30 +80,29 @@ export class ReferralComponent {
       afterClosedCallBack: this
     };
     this.dialog.open(ReferralPopupComponent, { data, width: '80vw' });
-    // this.share()
   }
 
-  // private share(): void {
-  //   // @ts-ignore
-  //   if (navigator.share) {
-  //     const data = {
-  //       url: this.shareUrl,
-  //       text: this.shareText,
-  //       title: this.shareTitle,
-  //     };
-  //     // @ts-ignore
-  //     (navigator as any)
-  //       .share(data)
-  //       .then(() => { })
-  //       .catch(() => {
-  //         console.log('failed to use share, falling back to clipboard');
-  //         this.copy();
-  //       });
-  //   } else {
-  //     console.log('no access to share api, falling back to clipboard');
-  //     this.copy();
-  //   }
-  // }
+  public dialogClosed(): void {
+    // @ts-ignore
+    if (navigator.share) {
+      const data = {
+        url: this.shareUrl,
+        text: this.shareText,
+        title: this.shareTitle,
+      };
+      // @ts-ignore
+      (navigator as any)
+        .share(data)
+        .then(() => { })
+        .catch(() => {
+          console.log('failed to use share, falling back to clipboard');
+          this.copy();
+        });
+    } else {
+      console.log('no access to share api, falling back to clipboard');
+      this.copy();
+    }
+  }
 
   public copy(): void {
     navigator.clipboard
