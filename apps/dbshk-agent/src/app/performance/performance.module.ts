@@ -9,9 +9,9 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { TranslateModule } from '@ngx-translate/core';
 import { OverviewComponent } from './overview/overview.component';
 import { ActivityComponent } from './activity/activity.component';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { LoyaltyModule, UtilsModule } from '@perxtech/core';
 import { MatFormFieldModule, MatListModule, MatSelectModule } from '@angular/material';
+import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [{
   path: '',
@@ -28,12 +28,12 @@ const routes: Routes = [{
     RouterModule.forChild(routes),
     TranslateModule.forChild(),
     MatTabsModule,
-    InfiniteScrollModule,
     LoyaltyModule,
     UtilsModule,
     MatFormFieldModule,
     MatSelectModule,
-    MatListModule
+    MatListModule,
+    HttpClientModule
   ]
 })
 export class PerformanceModule { }

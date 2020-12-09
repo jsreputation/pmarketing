@@ -10,12 +10,19 @@
         margin-top: 0;
     }
     .event-list {
-        .time-stamp {
-            position: relative;
-            float: right;
-            top: -10px;
-            width: 30px;
-            font-size: 1rem;
+        .list-item {
+            .time-stamp {
+                position: relative;
+                float: right;
+                top: -10px;
+                width: 30px;
+                font-size: 1rem;
+                color: var(--disabled_text_color);
+            }
+            .campaign-name {
+                font-size: 1.2rem;
+                color: var(--disabled_text_color);
+            }
         }
     }
 }

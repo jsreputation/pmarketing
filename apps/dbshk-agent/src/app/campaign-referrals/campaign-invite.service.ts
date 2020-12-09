@@ -16,6 +16,15 @@ export class CampaignInviteService implements ICampaignInviteService {
         );
     }
 
+    public getInvitesById(id: number): Observable<IInviteResponse> {
+        if (id) {
+            return this.http.get<IInviteResponse>(
+                `${this.config.apiHost}/v4/campaign_invitations?campaign_id=${id}`
+            );
+        }
+        return this.getAllInvites();
+    }
+
     public sendInvite(invite: IInvite): Observable<IInviteResponse> {
         return this.http.post<IInviteResponse>(`${this.config.apiHost}/v4/campaign_invitations/`, invite);
     }
