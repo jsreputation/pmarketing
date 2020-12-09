@@ -96,6 +96,7 @@ export class V4CampaignService implements ICampaignService {
   }
 
   public static v4CampaignToCampaign(campaign: IV4Campaign, lang: string = 'en'): ICampaign {
+    const customFields = campaign.custom_fields;
     const thumbnail = campaign.images.find(image =>
       ['catalog_thumbnail', 'campaign_thumbnail'].some(ty => ty === image.type)
     );
@@ -166,7 +167,8 @@ export class V4CampaignService implements ICampaignService {
       rewards,
       thumbnailUrl,
       campaignBannerUrl,
-      displayProperties
+      displayProperties,
+      customFields
     };
   }
 

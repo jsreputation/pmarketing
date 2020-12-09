@@ -23,7 +23,8 @@ import {
   StampService,
   IVoucherService,
   Voucher,
-  TransactionsService
+  TransactionsService,
+  IStamp
 } from '@perxtech/core';
 import {
   ActivatedRoute,
@@ -47,6 +48,8 @@ export enum CampaignRewardMode {
 // helper function for Ts to detect removed undefined
 const isNumber = (obj: any): obj is number => typeof obj === 'number';
 
+const DEFAULT_PAGE_SIZE = 25;
+
 
 @Component({
   selector: 'perx-blackcomb-pages-progress-campaign',
@@ -62,7 +65,6 @@ export class ProgressCampaignComponent implements OnInit {
   public campaignProgress$: Observable<Partial<ProgressBarFields>>;
   public campaignRewardMode!: CampaignRewardMode;
   public campaignRewards: (IReward & {progress: ProgressBarFields, barHeadLine: string})[];
-
 
   constructor(
     private route: ActivatedRoute,
@@ -106,40 +108,46 @@ export class ProgressCampaignComponent implements OnInit {
         if (campaign.type === CampaignType.stamp) {
           this.campaignRewardMode = CampaignRewardMode.TransactionQuantity;
           this.cd.detectChanges();
+          // start
           return this.stampService.getCards(campaign.id).pipe(
-            map(stampCardData => {
-              const stampCard = stampCardData[0];
-              if (stampCard) {
-                let progress: Partial<ProgressBarFields> = {};
-                // ASSUMING Rewards are SORTED according to increasing amount of points_required
-                const rewardPositionsSorted = stampCard.displayProperties.rewardPositions ?
-                  stampCard.displayProperties.rewardPositions.sort((a, b) => a - b) : [];
+            switchMap(
+              stampCardData =>  this.transactionsService.getTransactions(
+                campaign.id, DEFAULT_PAGE_SIZE, campaign.customFields.min_spend || 0).pipe(
+                  map(transactionData => {
+                    const stampCard = stampCardData[0];
+                    if (stampCard) {
+                      let progress: Partial<ProgressBarFields> = {};
+                      // ASSUMING Rewards are SORTED according to increasing amount of points_required
+                      const rewardPositionsSorted = stampCard.displayProperties.rewardPositions ?
+                        stampCard.displayProperties.rewardPositions.sort((a, b) => a - b) : [];
+                      // only stamps issued will be inside stamps property(use it to get progress)
+                      if (campaign && campaign.rewards) {
+                        return campaign.rewards.map((reward, index) => {
+                          if (rewardPositionsSorted.length && rewardPositionsSorted[index]) {
+                            const stageLabels = [ 0, rewardPositionsSorted[index] ];
+                            progress = {
+                              stages: stageLabels.length,
+                              current: oc(transactionData).length(0) >= rewardPositionsSorted[index] ?
+                                rewardPositionsSorted[index] : oc(transactionData).length(0),
+                              stageLabels
+                            };
+                          }
 
-                // only stamps issued will be inside stamps property(use it to get progress)
-                if (campaign && campaign.rewards) {
-                  return campaign.rewards.map((reward, index) => {
-                    if (rewardPositionsSorted.length && rewardPositionsSorted[index]) {
-                      const stageLabels = [ 0, rewardPositionsSorted[index] ];
-                      progress = {
-                        stages: stageLabels.length,
-                        current: oc(stampCard).stamps.length(0) >= rewardPositionsSorted[index] ?
-                          rewardPositionsSorted[index] : oc(stampCard).stamps.length(0),
-                        stageLabels
-                      };
+                          return {
+                            ...reward,
+                            progress,
+                            barHeadLine: this.progressInfoPipe.transform(`${progress.current || 0}`, this.campaignRewardMode,
+                              this.campaign.name)
+                          };
+                        });
+                      }
                     }
-
-                    return {
-                      ...reward,
-                      progress,
-                      barHeadLine: this.progressInfoPipe.transform(`${progress.current || 0}`, this.campaignRewardMode,
-                        this.campaign.name)
-                    };
-                  });
-                }
-              }
-              return [];
-            })
+                    return [];
+                  })
+                )
+            )
           );
+          // end
         }
         // for referrals
         if (campaign.type === CampaignType.give_reward) {
