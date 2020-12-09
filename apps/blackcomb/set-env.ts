@@ -207,6 +207,9 @@ const appConfigFile = `{
   "homeAsProgressPage": ${
     process.env.PROGRESS_PAGE_HOME ? process.env.PROGRESS_PAGE_HOME : false
   },
+  "hideExtraLoyaltyOnHomePage": ${
+    process.env.HIDE_EXTRA_LOYALTY_ON_HOMEPAGE ? process.env.HIDE_EXTRA_LOYALTY_ON_HOMEPAGE : false
+  },
   ${displayProperties}
 }
 `;
