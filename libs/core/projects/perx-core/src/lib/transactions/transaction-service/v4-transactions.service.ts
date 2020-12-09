@@ -35,6 +35,9 @@ interface IV4Transaction {
   transaction_reference: string;
   points_earned: number;
   merchant_user_account_id?: number;
+  meta? : {
+    count: number;
+  }
 }
 
 export interface IV4TransactionPropertiesAbenson {
@@ -114,6 +117,7 @@ export class V4TransactionsService extends TransactionsService {
   }
 
   private static v4TransactionsToTransactions(transaction: IV4Transaction): ITransaction {
+    const razerStampsCount = transaction.meta ? transaction.meta.count : {};
     return {
       id: transaction.id,
       transactionType: transaction.transaction_type,
@@ -122,7 +126,8 @@ export class V4TransactionsService extends TransactionsService {
       currency: transaction.currency,
       properties: V4TransactionsService.v4TransactionPropertiesToTransactionProperties(transaction.properties),
       transactionReference: transaction.transaction_reference,
-      pointsEarned: transaction.points_earned
+      pointsEarned: transaction.points_earned,
+      ...razerStampsCount
     };
   }
 
@@ -171,14 +176,24 @@ export class V4TransactionsService extends TransactionsService {
     return data;
   }
 
-  public getTransactions(page: number = 1, pageSize: number = DEFAULT_PAGE_COUNT): Observable<ITransaction[]> {
+  public getTransactions(
+    page: number = 1,
+    pageSize: number = DEFAULT_PAGE_COUNT,
+    startAmount?: number
+  ): Observable<ITransaction[]> {
+    const razerParams: {} = startAmount !== undefined ? {
+      start_amount: `${startAmount}`,
+      state: 'pending|processed'
+    } : {};
+    const queryParams = {
+      params: {
+        page: `${page}`,
+        size: `${pageSize}`,
+        ...razerParams
+      }
+    };
     return this.http.get(`${this.apiHost}/v4/transactions`,
-      {
-        params: {
-          page: `${page}`,
-          size: `${pageSize}`
-        }
-      }).pipe(
+      queryParams).pipe(
       map((res: IV4TransactionsResponse) => res.data),
       map((transactions: IV4Transaction[]) =>
         transactions.map(transaction => V4TransactionsService.v4TransactionsToTransactions(transaction))

@@ -22,7 +22,8 @@ import {
   SettingsService,
   StampService,
   IVoucherService,
-  Voucher
+  Voucher,
+  TransactionsService
 } from '@perxtech/core';
 import {
   ActivatedRoute,
@@ -72,6 +73,7 @@ export class ProgressCampaignComponent implements OnInit {
     protected settingsService: SettingsService,
     protected stampService: StampService,
     protected voucherService: IVoucherService,
+    protected transactionsService: TransactionsService,
     private progressInfoPipe: ProgressInfoPipe,
     private cd: ChangeDetectorRef
   ) {

@@ -19,6 +19,7 @@ import {
 } from '@angular/router';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateService } from '@ngx-translate/core';
 
 const campaignServiceStub: Partial<ICampaignService> = {
   getCampaign: () => of(),
@@ -37,6 +38,9 @@ const stampServiceStub: Partial<StampService> = {
 };
 const voucherServiceStub: Partial<IVoucherService> = {
   getAll: () => of([])
+};
+const translateServiceStub: Partial<TranslateService> = {
+  get: () => of()
 };
 
 describe('ProgressCampaignComponent', () => {
@@ -64,6 +68,7 @@ describe('ProgressCampaignComponent', () => {
         { provide: SettingsService, useValue: settingsServiceStub },
         { provide: StampService, value: stampServiceStub },
         { provide: LoyaltyService, value: loyaltyServiceStub },
+        { provide: TranslateService, useValue: translateServiceStub },
         { provide: IVoucherService, useValue: voucherServiceStub },
         ProgressInfoPipe
       ]
