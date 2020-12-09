@@ -22,6 +22,7 @@ import { Config } from '../config/config';
 import { RewardsService } from '../rewards/rewards.service';
 import { ConfigService } from '../config/config.service';
 import { SafeHtmlPipe } from '../utils/safe-html.pipe';
+import { TranslateModule } from '@ngx-translate/core';
 
 export function vouchersServiceFactory(
   http: HttpClient,
@@ -55,7 +56,8 @@ const components = [
     NgxBarcodeModule,
     ReactiveFormsModule,
     MaterialModule,
-    UtilsModule
+    UtilsModule,
+    TranslateModule.forChild(),
   ],
   exports: [
     ...components
