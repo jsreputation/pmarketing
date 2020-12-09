@@ -82,9 +82,17 @@ export class ReferralPopupComponent implements OnInit {
   public buttonPressed(): void {
     // build IInvite obj with campaign id + this.referralNames
     const invite: IInvite = { campaign_id: this.data.campaignId, invitee_names: this.referralNames };
-    this.campaignInviteService.sendInvite(invite).subscribe(() => this.notificationService.addSnack(this.inviteSuccessMessage),
-      (error) => { this.notificationService.addSnack(this.inviteFailureMessage); console.error(error); }
-    );
+    this.campaignInviteService.sendInvite(invite)
+      .subscribe(
+        () => {
+          this.notificationService.addSnack(this.inviteSuccessMessage);
+          // trigger share modal
+          if (this.data.afterClosedCallBack) {
+            this.data.afterClosedCallBack.dialogClosed();
+          }
+        },
+        (error) => { this.notificationService.addSnack(this.inviteFailureMessage); console.error(error); }
+      );
   }
 
   public addName(): void {
