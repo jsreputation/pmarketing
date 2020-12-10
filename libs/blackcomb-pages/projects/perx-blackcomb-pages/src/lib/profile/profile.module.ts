@@ -1,3 +1,4 @@
+import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatIconModule, MatListModule } from '@angular/material';
@@ -16,6 +17,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     RouterModule,
     PerxCoreProfileModule,
     ProfileServiceModule.forChild(),
+    TranslateModule.forChild(),
     LoyaltyModule,
     MatCheckboxModule
   ]

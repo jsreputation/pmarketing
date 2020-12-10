@@ -296,6 +296,7 @@
     "LUCKY_DRAW_INFO": "Lucky Draw Info"
   },
   "PROFILE": {
+    "ALLOW_MARKETING": "I would like to receive marketing notifications",
     "TITLE": "Profile",
     "ACCOUNT_LABEL": "Account / Registration Number",
     "MOBILE_LABEL": "Mobile",

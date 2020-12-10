@@ -1,3 +1,4 @@
+import { TranslateModule } from '@ngx-translate/core';
 import {
   async,
   ComponentFixture,
@@ -51,7 +52,8 @@ describe('ProfileComponent', () => {
         MatListModule,
         MatIconModule,
         RouterTestingModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        TranslateModule
       ],
       providers: [
         DatePipe,
