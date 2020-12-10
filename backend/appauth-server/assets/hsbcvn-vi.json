@@ -169,6 +169,13 @@
     "FAQs": "FAQs",
     "LOGOUT": "Đăng xuất"
   },
+  "STATUS_LABELS": {
+    "ISSUED": "Approved",
+    "REDEEMED": "Redeemed",
+    "EXPIRED": "Expired",
+    "RESERVED": "Pending",
+    "RELEASED": "Declined"
+  },
   "PROFILE": {
     "TITLE": "Hồ sơ",
     "ACCOUNT_LABEL": "Tài khoản / Số đăng ký",

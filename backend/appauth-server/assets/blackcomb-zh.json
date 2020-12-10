@@ -216,6 +216,13 @@
     "ENTER_NICKNAME": "輸入用戶名稱",
     "ALLOW_MARKETING": "我想收到行销通知"
   },
+  "STATUS_LABELS": {
+    "ISSUED": "Approved",
+    "REDEEMED": "Redeemed",
+    "EXPIRED": "Expired",
+    "RESERVED": "Pending",
+    "RELEASED": "Declined"
+  },
   "REFERRAL": {
     "TITLE": "推薦朋友",
     "CONTENT": "每位利用您的推薦號碼成功登記的用戶都會令您額外獲得5次參加抽獎機會。而被您推薦的用戶也會令您額外獲得3次參加抽獎機會。<br/><br/>推薦朋友，立即行動！<br/>*您和被您推薦的用戶必須完成最少一次問答遊戲，才可參加抽獎。",

@@ -21,6 +21,13 @@
   "WELCOME_PAGE":{
     "LOG_IN": "Connexion"
   },
+  "STATUS_LABELS": {
+    "ISSUED": "Approved",
+    "REDEEMED": "Redeemed",
+    "EXPIRED": "Expired",
+    "RESERVED": "Pending",
+    "RELEASED": "Declined"
+  },
   "SIGN_UP_PAGE":{
     "TITLE":"Inscription",
     "HAVE_AN_ACCOUNT":"Déjà membre",

@@ -325,6 +325,13 @@
     "FILTER": "Filter",
     "VIEW_LOCATION": "View location"
   },
+  "STATUS_LABELS": {
+    "ISSUED": "Approved",
+    "REDEEMED": "Redeemed",
+    "EXPIRED": "Expired",
+    "RESERVED": "Pending",
+    "RELEASED": "Declined"
+  },
   "GAME_PAGE": {
     "STAMPS_LABEL_TXT": " new stamps",
     "GAME_NO_REWARDS_TITLE": "Cảm ơn vi đa chơi",

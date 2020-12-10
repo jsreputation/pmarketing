@@ -9,6 +9,13 @@
       "MINUTES": "Minutes",
       "SECONDS": "Seconds"
     },
+    "STATUS_LABELS": {
+      "ISSUED": "Approved",
+      "REDEEMED": "Redeemed",
+      "EXPIRED": "Expired",
+      "RESERVED": "Pending",
+      "RELEASED": "Declined"
+    },
     "LOGIN_TXT": "Log in now!",
     "HOW_TO_PLAY": "How to play",
     "TERMS_CONDITIONS": "Terms and Conditions",

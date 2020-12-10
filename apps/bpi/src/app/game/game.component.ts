@@ -236,7 +236,7 @@ export class GameComponent implements OnInit {
     const totalSlots = cardSelected.displayProperties.totalSlots;
     const index = this.cards.findIndex(card => card.id === id);
 
-    const redeemedStamps = cardSelected.stamps.map(stamp => ({ ...stamp, state: StampState.redeemed }));
+    const redeemedStamps = cardSelected.stamps.map(stamp => ({ ...stamp, state: S tampState.redeemed }));
 
     this.cards[index].stamps = redeemedStamps;
     this.checkKeys(cardSelected);

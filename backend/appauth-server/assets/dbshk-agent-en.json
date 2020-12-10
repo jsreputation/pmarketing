@@ -226,6 +226,13 @@
     "ENTER_NICKNAME": "Enter Nickname",
     "ALLOW_MARKETING": "I would like to receive marketing notifications"
   },
+  "STATUS_LABELS": {
+    "ISSUED": "Approved",
+    "REDEEMED": "Redeemed",
+    "EXPIRED": "Expired",
+    "RESERVED": "Pending",
+    "RELEASED": "Declined"
+  },
   "REFERRAL": {
     "TITLE": "Refer a friend",
     "CONTENT": "For each successful sign up* using your referral code, you earn extra 5X lucky draw chance. Your referee will earn 3X lucky draw chances.<br/><br/>Share your referral code with a friend today!<br/>*Both you and your referee will have to complete at least 1 quiz to earn your lucky draw chances.",

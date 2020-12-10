@@ -199,6 +199,13 @@
     "LOGOUT": "Log Out",
     "FAVORITE_REWARD": "Favorite Rewards"
   },
+  "STATUS_LABELS": {
+    "ISSUED": "Approved",
+    "REDEEMED": "Redeemed",
+    "EXPIRED": "Expired",
+    "RESERVED": "Pending",
+    "RELEASED": "Declined"
+  },
   "PROFILE": {
     "TITLE": "Profile",
     "ACCOUNT_LABEL": "Account / Registration Number",

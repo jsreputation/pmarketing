@@ -191,6 +191,13 @@
     "LABEL_NICKNAME": "Nickname",
     "LABEL_SCORE": "Score"
   },
+  "STATUS_LABELS": {
+    "ISSUED": "Approved",
+    "REDEEMED": "Redeemed",
+    "EXPIRED": "Expired",
+    "RESERVED": "Pending",
+    "RELEASED": "Declined"
+  },
   "ACCOUNT_PAGE": {
     "LUCKY_DRAW_INFO": "Lucky Draw Info",
     "TRANSACTION_HISTORY": "Transaction History",
