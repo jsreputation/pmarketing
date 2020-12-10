@@ -1,4 +1,3 @@
-import { LanguageModule } from './../language/language.module';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatCardModule, MatListModule, MatIconModule } from '@angular/material';
@@ -17,7 +16,6 @@ import { AccountComponent } from './account.component';
     MatCardModule,
     ProfileModule,
     MatIconModule,
-    LanguageModule,
     TranslateModule.forChild(),
     LoyaltyModule.forChild(),
     RouterModule
