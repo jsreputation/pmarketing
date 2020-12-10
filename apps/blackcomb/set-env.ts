@@ -58,7 +58,7 @@ const displayProperties = `{
   }
 }`;
 
-const displayPropertiesWithoutFAQ = `{
+const displayPropertiesWithoutFaq = `{
   "account": {
       "pages": [
         {
@@ -232,7 +232,7 @@ const appConfigFile = `{
   },
   ${displayProperties}
   "displayProperties" : ${
-    process.env.APP === 'hsbcvn' ? displayPropertiesWithoutFAQ : displayProperties
+    process.env.APP === 'hsbcvn' ? displayPropertiesWithoutFaq : displayProperties
   }
 }
 `;
