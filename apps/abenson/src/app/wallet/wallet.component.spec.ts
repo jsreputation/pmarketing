@@ -6,6 +6,7 @@ import { MatTabsModule } from '@angular/material';
 import { IVoucherService, Voucher, VouchersModule, ConfigService } from '@perxtech/core';
 import { Observable, of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('WalletComponent', () => {
   let component: WalletComponent;
@@ -29,7 +30,8 @@ describe('WalletComponent', () => {
         NoopAnimationsModule,
         MatTabsModule,
         VouchersModule,
-        RouterTestingModule
+        RouterTestingModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: IVoucherService, useValue: vouchersServiceStub },

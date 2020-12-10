@@ -5,6 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ListComponent } from './list.component';
 import { of } from 'rxjs';
 import { IReward } from '@perxtech/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ListComponent', () => {
   let component: ListComponent;
@@ -33,7 +34,8 @@ describe('ListComponent', () => {
       declarations: [ListComponent],
       imports: [
         VouchersModule,
-        RouterTestingModule
+        RouterTestingModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: IVoucherService, useValue: voucherServiceStub },

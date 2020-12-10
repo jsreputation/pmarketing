@@ -234,7 +234,8 @@
   },
   "VOUCHER": {
     "REDEEM": "Quy đổi",
-    "EXPIRY": "Hết hạn vào: {{date}}"
+    "EXPIRY": "Hết hạn vào: {{date}}",
+    "NO_VOUCHERS": "No vouchers here yet!"
   },
   "REWARD": {
     "GET_VOUCHER": "Nhận phiếu thưởng",

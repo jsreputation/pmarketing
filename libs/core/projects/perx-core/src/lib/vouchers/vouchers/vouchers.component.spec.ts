@@ -13,6 +13,7 @@ import { RewardsService } from '../../rewards/rewards.service';
 import { By } from '@angular/platform-browser';
 import { DatePipe } from '@angular/common';
 import { RedemptionType } from '../../perx-core.models';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('VouchersComponent', () => {
   let component: VouchersComponent;
@@ -89,7 +90,8 @@ describe('VouchersComponent', () => {
         MatRippleModule,
         RouterTestingModule,
         VouchersModule,
-        ConfigModule.forRoot({})
+        ConfigModule.forRoot({}),
+        TranslateModule.forRoot()
       ],
       providers: [
         DatePipe,
