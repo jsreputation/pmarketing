@@ -1,4 +1,3 @@
-import { LanguageModule } from './../language/language.module';
 import {
   async,
   fakeAsync,
@@ -84,7 +83,6 @@ describe('AccountComponent', () => {
         MatCardModule,
         MatListModule,
         MatIconModule,
-        LanguageModule,
         NoopAnimationsModule,
         TranslateModule.forRoot(),
         ConfigModule.forRoot({ ...environment })
