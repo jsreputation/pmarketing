@@ -32,7 +32,7 @@ const rssFeeds = `{
   ]
 }`;
 
-const displayProperties = `"displayProperties": {
+const displayProperties = `{
   "account": {
       "pages": [
           {
@@ -58,6 +58,26 @@ const displayProperties = `"displayProperties": {
   }
 }`;
 
+const displayPropertiesWithoutFaq = `{
+  "account": {
+      "pages": [
+        {
+          "key": "contact-us",
+          "title": "Contact Us",
+          "content_url": "${
+            process.env.CONTACTUSURL ? process.env.CONTACTUSURL : ''
+          }"
+      },
+      {
+          "key": "tnc",
+          "title": "Terms and Conditions",
+          "content_url": "${process.env.TNCURL ? process.env.TNCURL : ''}"
+      }
+      ]
+  }
+}`;
+
+
 // `environment.ts` file structure that uses the environment variables
 const envConfigFile = `export const environment = {
   apiHost: '${
@@ -70,6 +90,7 @@ const envConfigFile = `export const environment = {
   defaultLang: '${process.env.DEFAULT_LANG ? process.env.DEFAULT_LANG : 'en'}'
 };
 `;
+
 
 const appConfigFile = `{
   "app": "${process.env.APP ? process.env.APP : 'blackcomb'}",
@@ -100,7 +121,6 @@ const appConfigFile = `{
       ? process.env.SHOW_FORGET_PASSWORD_ON_LOGIN
       : true
   },
-
   "showLoyaltyBlockOnHomePage": ${
     process.env.SHOW_LOYALTY_BLOCK_ON_HOMEPAGE
       ? process.env.SHOW_LOYALTY_BLOCK_ON_HOMEPAGE
@@ -211,6 +231,9 @@ const appConfigFile = `{
     process.env.SHOW_EXTRA_LOYALTY_ON_HOMEPAGE ? process.env.SHOW_EXTRA_LOYALTY_ON_HOMEPAGE : true
   },
   ${displayProperties}
+  "displayProperties" : ${
+    process.env.APP === 'hsbcvn' ? displayPropertiesWithoutFaq : displayProperties
+  }
 }
 `;
 
