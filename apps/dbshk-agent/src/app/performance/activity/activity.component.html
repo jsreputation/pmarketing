@@ -1,8 +1,8 @@
 <div class="activity-container">
      <div *ngIf="referralCampaigns">
           <mat-form-field appearance="fill" class="full-width__input">
-               <mat-label>Referral Type</mat-label>
-               <mat-select [value]="selectedFilterValue" placeholder="Referral Type"
+               <mat-label>Filter by campaign</mat-label>
+               <mat-select [value]="selectedFilterValue" placeholder="Click to filter by campaign"
                     (selectionChange)="onFilterChange($event.value)">
                     <mat-option value="-1">All</mat-option>
                     <ng-container *ngFor="let campaign of referralCampaigns">
