@@ -6,6 +6,9 @@
     <div class="merchant-image-container" *ngIf="reward.merchantImg">
       <img class="merchant-image" src="{{reward.merchantImg}}" [alt]="reward.merchantName">
     </div>
+    <div class="reward-image-container" *ngIf="reward.rewardThumbnail">
+      <img class="reward-image" src="{{reward.rewardThumbnail}}" [alt]="reward.merchantName">
+    </div>
     <div class="details">
       <div *ngIf="reward.merchantName" class="merchant-name include-heart">
         <div>{{reward.merchantName}}</div>

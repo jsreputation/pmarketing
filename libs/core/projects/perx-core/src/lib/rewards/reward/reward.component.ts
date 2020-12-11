@@ -56,6 +56,12 @@ export class RewardComponent implements OnInit {
         return {...reward, termsAndConditions: tncWithOlPadding};
       })
     );
+    this.rewardInitial$.pipe(
+      map(reward => {
+        const tncWithOlPadding = reward.termsAndConditions.replace(/(ol>)/, 'ol style="padding-inline-start: 1em;">');
+        return {...reward, termsAndConditions: tncWithOlPadding};
+      })
+    ).subscribe(res => console.log(res, 'what res i got'));
     if (!this.displayPriceFn) {
       this.displayPriceFn = (rewardPrice: IPrice) => {
         if (rewardPrice.price && parseFloat(rewardPrice.price) > 0) {

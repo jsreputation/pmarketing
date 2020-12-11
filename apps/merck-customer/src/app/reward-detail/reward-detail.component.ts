@@ -67,7 +67,7 @@ export class RewardDetailComponent implements OnInit, PageAppearence {
         }
 
         if (rewardPrice.points && rewardPrice.points > 0) {
-          return of(`${rewardPrice.points}${res.REWARD && res.REWARD.POINT}`);
+          return of(`${rewardPrice.points}${res['REWARD.POINT'] || ''}`);
         }
         return of(''); // is actually 0 or invalid value default
       })
