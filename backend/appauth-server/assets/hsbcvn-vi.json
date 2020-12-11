@@ -170,11 +170,11 @@
     "LOGOUT": "Đăng xuất"
   },
   "STATUS_LABELS": {
-    "ISSUED": "Approved",
-    "REDEEMED": "Redeemed",
-    "EXPIRED": "Expired",
-    "RESERVED": "Pending",
-    "RELEASED": "Declined"
+    "ISSUED": "Tán thành",
+    "REDEEMED": "Đã đổi",
+    "EXPIRED": "Đã hết hạn",
+    "RESERVED": "Đang chờ xử lý",
+    "RELEASED": "Suy giảm"
   },
   "PROFILE": {
     "TITLE": "Hồ sơ",
@@ -197,7 +197,7 @@
     "ENTER_EMAIL": "Nhập Email",
     "ENTER_POSTCODE": "Nhập mã bưu điện",
     "ENTER_NICKNAME": "",
-    "ALLOW_MARKETING": "I would like to receive marketing notifications"
+    "ALLOW_MARKETING": "Tôi muốn nhận thông báo tiếp thị"
   },
   "REFERRAL": {
     "TITLE": "Tham khảo một người bạn",
@@ -243,7 +243,7 @@
   "VOUCHER": {
     "REDEEM": "Quy đổi",
     "EXPIRY": "Hết hạn vào: {{date}}",
-    "NO_VOUCHERS": "No vouchers here yet!"
+    "NO_VOUCHERS": "Chưa có chứng từ nào ở đây!"
   },
   "REWARD": {
     "GET_VOUCHER": "Nhận phiếu thưởng",
