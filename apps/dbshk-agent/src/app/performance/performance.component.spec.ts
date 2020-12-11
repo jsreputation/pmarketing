@@ -17,7 +17,7 @@ import { Observable, of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { EventEmitter } from '@angular/core';
 import {
-  AuthenticationService, Config, ConfigService, ICampaignService, IProfile,
+  AuthenticationService, ConfigService, ICampaignService, IProfile,
   LoyaltyService, LoyaltySummaryComponent, ProfileService, StatisticCardComponent
 } from '@perxtech/core';
 import { MatCardModule, MatFormFieldModule, MatListModule, MatProgressBarModule, MatProgressSpinnerModule, MatSelectModule } from '@angular/material';
@@ -93,7 +93,7 @@ describe('PerformanceComponent', () => {
       providers: [
         { provide: TranslateService, useValue: translateServiceStub },
         { provide: AuthenticationService, useValue: authenticationService },
-        { provide: Config, useValue: configServiceStub },
+        { provide: ConfigService, useValue: configServiceStub },
         { provide: ProfileService, useValue: profileServiceStub },
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
         DatePipe,

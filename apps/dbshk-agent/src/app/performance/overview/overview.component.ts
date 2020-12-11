@@ -43,7 +43,7 @@ export class OverviewComponent implements OnInit {
       cardTitle: this.inviteStatCardTitle(),
       statistics: [{
         statisticTitle: this.inviteStatTitle(),
-        value: this.campaignInviteService.getAllInvites().pipe(map((invites: IInviteResponse) => invites.data.length)),
+        value: this.campaignInviteService.getAllInvites().pipe(map((invites: IInviteResponse) => invites.data.length || 0)),
         unit: this.inviteStatUnit()
       }]
     };
