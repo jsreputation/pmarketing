@@ -37,7 +37,8 @@ interface IV4Transaction {
   merchant_user_account_id?: number;
   meta? : {
     count: number;
-  }
+    total_count: number;
+  };
 }
 
 export interface IV4TransactionPropertiesAbenson {
@@ -117,7 +118,7 @@ export class V4TransactionsService extends TransactionsService {
   }
 
   private static v4TransactionsToTransactions(transaction: IV4Transaction): ITransaction {
-    const razerStampsCount = transaction.meta ? transaction.meta.count : {};
+    const razerStampsCount = transaction.meta ? transaction.meta.total_count : 0;
     return {
       id: transaction.id,
       transactionType: transaction.transaction_type,
@@ -127,7 +128,7 @@ export class V4TransactionsService extends TransactionsService {
       properties: V4TransactionsService.v4TransactionPropertiesToTransactionProperties(transaction.properties),
       transactionReference: transaction.transaction_reference,
       pointsEarned: transaction.points_earned,
-      ...razerStampsCount
+      razerStampsCount
     };
   }
 

@@ -81,10 +81,10 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
             // there is only going to be one stamp. take first obj in array,
             // configured to be one single stampcard
             switchMap((stampCards) => this.transactionsService.getTransactions(
-              campaign.id, DEFAULT_PAGE_SIZE, campaign.customFields.min_spend || 0).pipe(
+              1, DEFAULT_PAGE_SIZE, campaign.customFields.min_spend || 0).pipe(
                 map(transactionData => ({
                   ...campaign as ICampaign,
-                  ...this.mapStampCampaign(stampCards, transactionData.length || 0)
+                  ...this.mapStampCampaign(stampCards, (transactionData.length ? transactionData[0].razerStampsCount : 0))
                 }))
               ))
           )
@@ -98,10 +98,10 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
             // there is only going to be one stamp. take first obj in array,
             // configured to be one single stampcard
             switchMap((stampCards) => this.transactionsService.getTransactions(
-              campaign.id, DEFAULT_PAGE_SIZE, campaign.customFields.min_spend || 0).pipe(
+              1, DEFAULT_PAGE_SIZE, campaign.customFields.min_spend || 0).pipe(
                 map(transactionData => ({
                   ...campaign as ICampaign,
-                  ...this.mapStampCampaign(stampCards, transactionData.length || 0)
+                  ...this.mapStampCampaign(stampCards, (transactionData.length ? transactionData[0].razerStampsCount : 0) || 0)
                 }))
               ))
           )
