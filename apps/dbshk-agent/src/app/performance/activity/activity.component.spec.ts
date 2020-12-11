@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivityComponent } from './activity.component';
 import { MatFormFieldModule, MatSelectModule, MatListModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Config, ConfigService, ICampaignService } from '@perxtech/core';
+import { ConfigService, ICampaignService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { CampaignInviteService } from '../../campaign-referrals/campaign-invite.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -39,7 +39,7 @@ describe('ActivityComponent', () => {
       providers: [
         { provide: ICampaignService, useValue: campaignServiceStub },
         CampaignInviteService,
-        { provide: Config, useValue: configServiceStub },
+        { provide: ConfigService, useValue: configServiceStub },
       ]
     })
       .compileComponents();
