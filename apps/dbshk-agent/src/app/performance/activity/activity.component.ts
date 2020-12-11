@@ -20,13 +20,13 @@ interface ICampaignListItem { name: string; value: number; }
 export class ActivityComponent implements OnInit {
   public referralCampaigns: ICampaignListItem[];
   public invites: CustomInvite[];
-  public selectedFilterValue: number;
+  public selectedFilterValue: string;
   constructor(
     protected campaignService: ICampaignService,
     protected campaignInviteService: CampaignInviteService) { }
 
   public ngOnInit(): void {
-    this.selectedFilterValue = -1;
+    this.selectedFilterValue = '-1';
     this.getCampaigns();
   }
 
