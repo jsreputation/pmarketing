@@ -213,7 +213,15 @@
     "CTA_SAVE_TXT": "儲存",
     "ENTER_EMAIL": "輸入電郵",
     "ENTER_POSTCODE": "輸入郵政編碼",
-    "ENTER_NICKNAME": "輸入用戶名稱"
+    "ENTER_NICKNAME": "輸入用戶名稱",
+    "ALLOW_MARKETING": "我想收到行销通知"
+  },
+  "STATUS_LABELS": {
+    "ISSUED": "Approved",
+    "REDEEMED": "Redeemed",
+    "EXPIRED": "Expired",
+    "RESERVED": "Pending",
+    "RELEASED": "Declined"
   },
   "REFERRAL": {
     "TITLE": "推薦朋友",

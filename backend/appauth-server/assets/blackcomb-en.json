@@ -191,6 +191,13 @@
     "LABEL_NICKNAME": "Nickname",
     "LABEL_SCORE": "Score"
   },
+  "STATUS_LABELS": {
+    "ISSUED": "Approved",
+    "REDEEMED": "Redeemed",
+    "EXPIRED": "Expired",
+    "RESERVED": "Pending",
+    "RELEASED": "Declined"
+  },
   "ACCOUNT_PAGE": {
     "LUCKY_DRAW_INFO": "Lucky Draw Info",
     "TRANSACTION_HISTORY": "Transaction History",
@@ -200,7 +207,8 @@
     "TNC": "Terms and Conditions",
     "PRIVACY_POLICY": "Privacy Policy",
     "LOGOUT": "Log Out",
-    "FAVORITE_REWARD": "Favorite Rewards"
+    "FAVORITE_REWARD": "Favorite Rewards",
+    "ALLOW_MARKETING": "I would like to receive marketing notifications"
   },
   "PROFILE": {
     "TITLE": "Profile",

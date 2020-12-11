@@ -11,5 +11,12 @@
   "VOUCHER_EXPIRY": "만기: {{date}}",
   "WALLET": "지갑",
   "MY_WALLET": "내 지갑",
-  "ALL": "모두"
+  "ALL": "모두",
+  "STATUS_LABELS": {
+    "ISSUED": "Approved",
+    "REDEEMED": "Redeemed",
+    "EXPIRED": "Expired",
+    "RESERVED": "Pending",
+    "RELEASED": "Declined"
+  },
 }

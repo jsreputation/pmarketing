@@ -175,7 +175,15 @@
     "CTA_SAVE_TXT": "Save",
     "ENTER_EMAIL": "Enter Email",
     "ENTER_POSTCODE": "Enter Postcode",
-    "ENTER_NICKNAME": "Enter Nickname"
+    "ENTER_NICKNAME": "Enter Nickname",
+    "ALLOW_MARKETING": "I would like to receive marketing notifications"
+  },
+  "STATUS_LABELS": {
+    "ISSUED": "Approved",
+    "REDEEMED": "Redeemed",
+    "EXPIRED": "Expired",
+    "RESERVED": "Pending",
+    "RELEASED": "Declined"
   },
   "REFERRAL": {
     "TITLE": "Refer a friend",

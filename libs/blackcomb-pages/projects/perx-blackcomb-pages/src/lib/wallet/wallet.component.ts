@@ -45,7 +45,7 @@ export class WalletComponent implements OnInit, OnDestroy {
   public expiryLabelFn: ((v: Voucher) => Observable<string>) | undefined;
   public newsFeedItems: Observable<FeedItem[] | undefined>;
   public showVoucherStatusLabels: boolean = false;
-  public statusLabelMappings: {} = {
+  public statusLabelMappings: Record<string, string> = {
       issued: 'Approved',
       redeemed: 'Redeemed',
       expired: 'Expired',
@@ -71,6 +71,19 @@ export class WalletComponent implements OnInit, OnDestroy {
       (config: IConfig<void>) => {
         this.sourceType = config.sourceType ? config.sourceType.toString() : undefined;
       });
+    this.translate.get('STATUS_LABELS').subscribe(statusLabelsTranslated => {
+      Object.entries(this.statusLabelMappings).forEach(
+        ([key, value]) => {
+          if (
+            statusLabelsTranslated[key.toUpperCase()] &&
+            statusLabelsTranslated[key.toUpperCase()] !== value
+          ) {
+            this.statusLabelMappings[key] = statusLabelsTranslated[key.toUpperCase()];
+          }
+        }
+      );
+    });
+
     this.translate.get('WALLET.MY_WALLET').subscribe(text => this.rewardsHeadline = text);
     this.vouchers$ = of([]);
     this.onScroll();
