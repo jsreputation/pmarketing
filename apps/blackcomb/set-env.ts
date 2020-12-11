@@ -230,7 +230,6 @@ const appConfigFile = `{
   "showExtraLoyaltyOnHomePage": ${
     process.env.SHOW_EXTRA_LOYALTY_ON_HOMEPAGE ? process.env.SHOW_EXTRA_LOYALTY_ON_HOMEPAGE : true
   },
-  ${displayProperties}
   "displayProperties" : ${
     process.env.APP === 'hsbcvn' ? displayPropertiesWithoutFaq : displayProperties
   }
