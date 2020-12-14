@@ -182,7 +182,7 @@ describe('VouchersComponent', () => {
         }
       }
     ];
-    component.vouchers$ = of(vouchers);
+    component.vouchers = vouchers;
     fixture.detectChanges();
     const voucher = fixture.debugElement.queryAll(By.css('.voucher-content'));
     expect(voucher.length).toBe(2);
@@ -241,7 +241,7 @@ describe('VouchersComponent', () => {
         }
       }
     ];
-    component.vouchers$ = of(vouchers);
+    component.vouchers = vouchers;
     fixture.detectChanges();
     const voucher = fixture.debugElement.queryAll(By.css('.voucher-details'))[0];
     expect(voucher.query(By.css('h1')).nativeElement.textContent.trim()).toBe('First Voucher');
@@ -300,7 +300,7 @@ describe('VouchersComponent', () => {
         }
       }
     ];
-    component.vouchers$ = of(vouchers);
+    component.vouchers = vouchers;
     fixture.detectChanges();
     const voucher = fixture.debugElement.queryAll(By.css('.voucher-details'))[0];
     expect(voucher.queryAll(By.css('p'))[0].nativeElement.textContent.trim()).toBe('Perx');
@@ -423,7 +423,7 @@ describe('VouchersComponent', () => {
         }
       }
     ];
-    component.vouchers$ = of(vouchers);
+    component.vouchers = vouchers;
     component.mapping = {
       issued: 'Approved',
       redeemed: 'Redeemed',
@@ -493,7 +493,7 @@ describe('VouchersComponent', () => {
         }
       }
     ];
-    component.vouchers$ = of(vouchers);
+    component.vouchers = vouchers;
     component.mapping = {
       issued: 'Approved',
       redeemed: 'Redeemed',
