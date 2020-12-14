@@ -27,10 +27,10 @@ export class VouchersComponent implements OnInit, OnChanges {
   @Output() public tapped: EventEmitter<IVoucher> = new EventEmitter<IVoucher>();
 
   @Input('data') public vouchers$: Observable<IVoucher[]>;
+  public vouchers: IVoucher[];
 
   @Input() public set filter(filter: string[]) {
     this.privateFilter = filter;
-    this.vouchers$ = this.filterVoucher(this.vouchers$);
   }
   public get filter(): string[] {
     return this.privateFilter;
@@ -64,6 +64,10 @@ export class VouchersComponent implements OnInit, OnChanges {
     if (!this.vouchers$) {
       this.vouchers$ = this.vouchersService.getAll({ sourceType: this.sourceType, type: null });
     }
+
+    this.filterVoucher(this.vouchers$).subscribe(
+      (vouchers: IVoucher[]) => this.vouchers = vouchers
+    );
   }
 
   public isVoucherQueryComplete(vouchers: IVoucher[] | null): boolean {
