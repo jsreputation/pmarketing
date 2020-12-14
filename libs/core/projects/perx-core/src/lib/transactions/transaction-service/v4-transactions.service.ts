@@ -1,3 +1,4 @@
+import { oc } from 'ts-optchain';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ConfigService } from '../../config/config.service';
@@ -20,6 +21,10 @@ export type V4TenantTransactionProperties =
 
 interface IV4TransactionsResponse {
   data: IV4Transaction[];
+  meta?: {
+    count: number;
+    total_count: number;
+  };
 }
 interface IV4Transaction {
   id: number;
@@ -35,7 +40,7 @@ interface IV4Transaction {
   transaction_reference: string;
   points_earned: number;
   merchant_user_account_id?: number;
-  meta? : {
+  meta?: {
     count: number;
     total_count: number;
   };
@@ -117,8 +122,7 @@ export class V4TransactionsService extends TransactionsService {
       });
   }
 
-  private static v4TransactionsToTransactions(transaction: IV4Transaction): ITransaction {
-    const razerStampsCount = transaction.meta ? transaction.meta.total_count : 0;
+  private static v4TransactionsToTransactions(transaction: IV4Transaction, razerStampsCount: number): ITransaction {
     return {
       id: transaction.id,
       transactionType: transaction.transaction_type,
@@ -195,16 +199,20 @@ export class V4TransactionsService extends TransactionsService {
     };
     return this.http.get(`${this.apiHost}/v4/transactions`,
       queryParams).pipe(
-      map((res: IV4TransactionsResponse) => res.data),
-      map((transactions: IV4Transaction[]) =>
-        transactions.map(transaction => V4TransactionsService.v4TransactionsToTransactions(transaction))
+      map((res: IV4TransactionsResponse) => ({transactions: res.data, totalCount: oc(res).meta.total_count(0)})),
+      map((transactionsObj: {transactions: IV4Transaction[], totalCount: number}) => (
+        transactionsObj.transactions.map(transaction => V4TransactionsService.v4TransactionsToTransactions(transaction,
+          transactionsObj.totalCount)))
       )
     );
   }
 
   public getTransactionSummary(): Observable<{totalAmount: number}> {
-    return this.http.get(`${this.apiHost}/v4/transaction_summary`).pipe(
-      map((res: {data: {total_amount: number}}) => ({totalAmount: res.data.total_amount || 0}))
+    const params = {
+      state: 'pending|processed'
+    };
+    return this.http.get(`${this.apiHost}/v4/transaction_summary`, {params}).pipe(
+      map((res: {data: {total_amount: number}}) => ({totalAmount: +res.data.total_amount || 0}))
     );
   }
 }
