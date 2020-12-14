@@ -90,6 +90,8 @@ export class VouchersComponent implements OnInit, OnChanges {
 
   private filterVoucher(vouchers: Observable<IVoucher[]>): Observable<IVoucher[]> {
     return vouchers ? vouchers.pipe(
-      map(voucher => voucher.filter((el) => this.filter.includes(el.state)))) : vouchers;
+      map(voucher => voucher.filter((el) =>
+        this.filter ? this.filter.includes(el.state) : el // include null check for test suite
+      ))) : vouchers;
   }
 }
