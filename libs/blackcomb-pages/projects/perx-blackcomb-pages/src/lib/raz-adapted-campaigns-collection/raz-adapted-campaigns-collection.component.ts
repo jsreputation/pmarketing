@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable, zip } from 'rxjs';
-import { ICampaign, ICampaignService, IStampCard, LoyaltyService, ProgressBarFields, StampService, TransactionsService } from '@perxtech/core';
+import { ICampaign, ICampaignService, IStampCard, ProgressBarFields, StampService, TransactionsService } from '@perxtech/core';
 import { concatMap, map, switchMap } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 
@@ -43,7 +43,6 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
 
   constructor(
     private stampService: StampService,
-    private loyaltyService: LoyaltyService,
     private campaignsService: ICampaignService,
     private transactionsService: TransactionsService
   ) { }
@@ -113,16 +112,16 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
       this.loyaltyCampaignsProg = this.loyaltyCampaigns.pipe(
         switchMap(
           (campaigns: ICampaign[]) => zip(...campaigns.map(campaign => this.campaignsService.getCampaign(campaign.id).pipe(
-            concatMap((campaignRwd) => this.loyaltyService.getLoyalty(1).pipe(
-              map((loyalty) => {
-                if (campaignRwd.rewards) {
+            concatMap((campaignRwd) => this.transactionsService.getTransactionSummary().pipe(
+              map((summary) => {
+                if (summary && campaignRwd.rewards) {
                   return {
                     ...campaign,
                     progress: {
                       stages: campaignRwd.rewards.length || 2, // if length 0 default to 2 stages
                       // biggest reward return last, test if really need
                       // find the highest point and see if balance >=, at final stage
-                      current: ((loyalty.pointsBalance || 0) / 100) || 0,
+                      current: ((summary.totalAmount || 0) / 100) || 0,
                       stageLabels: campaignRwd.rewards.reduce((acc, curr) => [...acc, (
                         curr && curr.customFields && curr.customFields.requirement
                       )], []).filter(v => v) as unknown as number[]

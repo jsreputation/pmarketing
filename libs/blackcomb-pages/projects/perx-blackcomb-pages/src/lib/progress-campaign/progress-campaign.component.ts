@@ -34,7 +34,6 @@ import {
 } from '@angular/router';
 import {
   Observable,
-  ObservableInput,
   of,
   throwError
 } from 'rxjs';
@@ -154,8 +153,8 @@ export class ProgressCampaignComponent implements OnInit {
         if (campaign.type === CampaignType.give_reward) {
           this.campaignRewardMode = CampaignRewardMode.TransactionAmount;
           this.cd.detectChanges();
-          return this.loyaltyService.getLoyalty(1).pipe(
-            map((loyalty) => {
+          return this.transactionsService.getTransactionSummary().pipe(
+            map((summary) => {
               if (campaign.rewards) {
                 const completeStageLabels: number[] = campaign.rewards.reduce((acc, curr) => [...acc, (
                   curr && curr.customFields && +curr.customFields.requirement
@@ -166,8 +165,8 @@ export class ProgressCampaignComponent implements OnInit {
                     const stageLabels = [0, completeStageLabels[index]];
                     progress = {
                       stages: stageLabels.length || 2, // actually it's always going to be 2, can just hardcode 2
-                      current: ((loyalty.pointsBalance || 0) / 100) >= completeStageLabels[index] ?
-                        completeStageLabels[index] : ((loyalty.pointsBalance || 0) / 100),
+                      current: ((summary.totalAmount || 0) / 100) >= completeStageLabels[index] ?
+                        completeStageLabels[index] : ((summary.totalAmount || 0) / 100),
                       stageLabels
                     };
                   }
@@ -240,14 +239,14 @@ export class ProgressCampaignComponent implements OnInit {
         }
         if (campaign.type === CampaignType.give_reward) {
           // only supports one loyalty prgm, hardcode default
-          return this.loyaltyService.getLoyalty(1).pipe(
-            map((loyalty) => {
+          return this.transactionsService.getTransactionSummary().pipe(
+            map((summary) => {
               if (campaign.rewards) {
                 return {
                   stages: campaign.rewards.length || 2, // if length 0 default to 2 stages
                   // biggest reward return last, test if really need
                   // find the highest point and see if balance >=, at final stage
-                  current: (loyalty.pointsBalance || 0) / 100,
+                  current: (summary.totalAmount || 0) / 100,
                   stageLabels: campaign.rewards.reduce((acc, curr) => [...acc, (
                     curr && curr.customFields && curr.customFields.requirement
                   )], []).filter(v => v)

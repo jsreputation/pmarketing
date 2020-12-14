@@ -201,4 +201,10 @@ export class V4TransactionsService extends TransactionsService {
       )
     );
   }
+
+  public getTransactionSummary(): Observable<{totalAmount: number}> {
+    return this.http.get(`${this.apiHost}/v4/transaction_summary`).pipe(
+      map((res: {data: {total_amount: number}}) => ({totalAmount: res.data.total_amount || 0}))
+    );
+  }
 }
