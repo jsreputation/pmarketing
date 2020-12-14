@@ -154,7 +154,7 @@ export const setLanguage = (
       loader: {
         provide: TranslateLoader,
         useClass: PerxTranslateLoader,
-        deps: [HttpClient, HttpBackend, ConfigService, TokenStorage]
+        deps: [HttpClient, ConfigService, TokenStorage, HttpBackend]
       }
     })
   ],
