@@ -26,7 +26,9 @@
         "FORGOT_PASSWORD": "忘記密碼?",
         "LEARN_MORE": "詳細了解默糖心",
         "SERVER_NOT_AVAILABLE": "無法連接服務器",
-        "INVALID_CREDENTIALS": "身份信息錯誤"
+        "INVALID_CREDENTIALS": "身份信息錯誤",
+        "MOBILE_NO_IS": "請輸入手機號碼",
+        "PASSWORD_IS": "請輸入密碼"
     },
     "ACCOUNT_PAGE": {
         "THANKYOU_PARTICIPATING": "感謝您參與默糖心",
@@ -63,7 +65,7 @@
         "COUNTRY_SINGAPORE": "新加坡",
         "MOBILE_NO": "手機號碼",
         "MOBILE": "手機號碼",
-        "MOBILE_IS": "請輸入手機號碼",
+        "MOBILE_NO_IS": "請輸入手機號碼",
         "PASSWORD": "密碼",
         "PASSWORD_IS": "請輸入密碼",
         "PASSWORD_SIX_CHARS": "密碼至少含6個字符",
@@ -83,7 +85,7 @@
         "RESET_PASSWORD": "重設你的密碼",
         "MOBILE_NO": "手機號碼",
         "MOBILE": "手機號碼",
-        "MOBILE_IS": "請輸入手機號碼",
+        "MOBILE_NO_IS": "請輸入手機號碼",
         "ENTER_NUMBER": "輸入你的手機號碼",
         "GET_OPT": "取得一次性密碼"
     },
