@@ -109,45 +109,70 @@ export class ProgressCampaignComponent implements OnInit {
         if (campaign.type === CampaignType.stamp) {
           this.campaignRewardMode = CampaignRewardMode.TransactionQuantity;
           this.cd.detectChanges();
-          // start
           return this.stampService.getCards(campaign.id).pipe(
             switchMap(
-              stampCardData => this.transactionsService.getTransactions(
-                1, DEFAULT_PAGE_SIZE, campaign.customFields.min_spend || 0).pipe(
-                  map(transactionData => {
-                    const stampCard = stampCardData[0];
-                    if (stampCard) {
-                      let progress: Partial<ProgressBarFields> = {};
-                      // ASSUMING Rewards are SORTED according to increasing amount of points_required
-                      const rewardPositionsSorted = stampCard.displayProperties.rewardPositions ?
-                        stampCard.displayProperties.rewardPositions.sort((a, b) => a - b) : [];
-                      // only stamps issued will be inside stamps property(use it to get progress)
-                      if (campaign && campaign.rewards) {
-                        return campaign.rewards.map((reward, index) => {
-                          if (rewardPositionsSorted.length && rewardPositionsSorted[index]) {
-                            const stageLabels = [0, rewardPositionsSorted[index]];
-                            progress = {
-                              stages: stageLabels.length,
-                              current: (transactionData.length ? transactionData[0].razerStampsCount : 0) >= rewardPositionsSorted[index] ?
-                                rewardPositionsSorted[index] : (transactionData.length ? transactionData[0].razerStampsCount : 0),
-                              stageLabels
-                            };
-                          }
-                          return {
-                            ...reward,
-                            progress,
-                            barHeadLine: this.progressInfoPipe.transform(`${progress.current || 0}`, this.campaignRewardMode,
-                              this.campaign.name)
-                          };
-                        });
+              stampCardData => {
+                const stampCard = stampCardData[0];
+                if (stampCard && campaign && campaign.rewards) {
+                  let progress: Partial<ProgressBarFields> = {};
+                  // ASSUMING Rewards are SORTED according to increasing amount of points_required
+                  const rewardPositionsSorted = stampCard.displayProperties.rewardPositions ?
+                    stampCard.displayProperties.rewardPositions.sort((a, b) => a - b) : [];
+
+                  if (oc(campaign).customFields.transaction_based(false)) {
+                    return this.transactionsService.getTransactions(
+                      1, DEFAULT_PAGE_SIZE, campaign.customFields.min_spend || 0).pipe(
+                        map(transactionData => {
+                            if (campaign && campaign.rewards) {
+                              return campaign.rewards.map((reward, index) => {
+                                if (rewardPositionsSorted.length && rewardPositionsSorted[index]) {
+                                  const stageLabels = [0, rewardPositionsSorted[index]];
+                                  progress = {
+                                    stages: stageLabels.length,
+                                    current: (transactionData.length ?
+                                      transactionData[0].razerStampsCount : 0) >= rewardPositionsSorted[index] ?
+                                      rewardPositionsSorted[index] : (transactionData.length ? transactionData[0].razerStampsCount : 0),
+                                    stageLabels
+                                  };
+                                }
+                                return {
+                                  ...reward,
+                                  progress,
+                                  barHeadLine: this.progressInfoPipe.transform(+`${progress.current || 0}`, this.campaignRewardMode,
+                                    this.campaign.name)
+                                };
+                              });
+                            }
+                        })
+                      );
+                  }// note end here
+
+                  // only stamps issued will be inside stamps property(use it to get progress)
+                  if (campaign && campaign.rewards) {
+                    return of(campaign.rewards.map((reward, index) => {
+                      if (rewardPositionsSorted.length && rewardPositionsSorted[index]) {
+                        const stageLabels = [0, rewardPositionsSorted[index]];
+                        progress = {
+                          stages: stageLabels.length,
+                          current: oc(stampCard).stamps.length(0) >= rewardPositionsSorted[index] ?
+                            rewardPositionsSorted[index] : oc(stampCard).stamps.length(0),
+                          stageLabels
+                        };
                       }
-                    }
-                    return [];
-                  })
-                )
+
+                      return {
+                        ...reward,
+                        progress,
+                        barHeadLine: this.progressInfoPipe.transform(progress.current || 0, this.campaignRewardMode,
+                          this.campaign.name)
+                      };
+                    }));
+                  }
+                }
+                return [];
+              }
             )
           );
-          // end
         }
         // for referrals
         if (campaign.type === CampaignType.give_reward) {
@@ -173,7 +198,7 @@ export class ProgressCampaignComponent implements OnInit {
                   return {
                     ...reward,
                     progress,
-                    barHeadLine: this.progressInfoPipe.transform(`${progress.current || 0}`, this.campaignRewardMode,
+                    barHeadLine: this.progressInfoPipe.transform(+`${progress.current || 0}`, this.campaignRewardMode,
                       this.campaign.name)
                   };
                 });
@@ -205,7 +230,7 @@ export class ProgressCampaignComponent implements OnInit {
                   return {
                     ...reward,
                     progress,
-                    barHeadLine: this.progressInfoPipe.transform(`${progress.current || 0}`, this.campaignRewardMode,
+                    barHeadLine: this.progressInfoPipe.transform(+`${progress.current || 0}`, this.campaignRewardMode,
                       this.campaign.name)
                   };
                 });
@@ -228,12 +253,20 @@ export class ProgressCampaignComponent implements OnInit {
           return this.stampService.getCards(campaign.id).pipe(
             // there is only going to be one stamp. take first obj in array,
             // configured to be one single stampcard
-            switchMap((stampCards) => this.transactionsService.getTransactions(
-                1, DEFAULT_PAGE_SIZE, campaign.customFields.min_spend || 0).pipe(
-                  map(transactionData => ({
-                    ...this.mapStampCampaign(stampCards, (transactionData.length ? transactionData[0].razerStampsCount : 0) || 0)
-                  }))
-                )
+            switchMap((stampCards) => {
+              if (oc(campaign).customFields.transaction_based(false)) {
+                return this.transactionsService.getTransactions(
+                  1, DEFAULT_PAGE_SIZE, campaign.customFields.min_spend || 0).pipe(
+                    map(transactionData => ({
+                      ...this.mapStampCampaign(stampCards, (transactionData.length ? transactionData[0].razerStampsCount : 0) || 0)
+                    }))
+                  );
+              }
+              return of({
+                ...campaign as ICampaign,
+                ...this.mapStampCampaign(stampCards)
+              });
+            }
             )
           );
         }
@@ -284,7 +317,7 @@ export class ProgressCampaignComponent implements OnInit {
         stages: lengthOfRewardPos ?
           (lengthOfRewardPos === 1 || lengthOfRewardPos === 2) ?
             (lengthOfRewardPos + 1) : lengthOfRewardPos : 2,
-        current: current || 0,
+        current: (current !== undefined ? current : (stampCards[0].stamps && stampCards[0].stamps.length) || 0),
         stageLabels: stampCards[0].displayProperties.rewardPositions ?
           ((lengthOfRewardPos === 1 || lengthOfRewardPos === 2) ?
             [0, ...stampCards[0].displayProperties.rewardPositions].sort((a, b) => a - b)

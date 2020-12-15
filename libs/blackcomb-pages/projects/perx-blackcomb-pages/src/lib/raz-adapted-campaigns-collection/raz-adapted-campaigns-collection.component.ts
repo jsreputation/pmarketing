@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Observable, zip } from 'rxjs';
+import { Observable, of, zip } from 'rxjs';
 import { ICampaign, ICampaignService, IStampCard, ProgressBarFields, StampService, TransactionsService } from '@perxtech/core';
 import { concatMap, map, switchMap } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
@@ -59,7 +59,7 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
           stages: lengthOfRewardPos ?
             (lengthOfRewardPos === 1 || lengthOfRewardPos === 2) ?
               (lengthOfRewardPos + 1) : lengthOfRewardPos : 2,
-          current: current || 0,
+          current: (current !== undefined ? current : (stampCards[0].stamps && stampCards[0].stamps.length) || 0),
           stageLabels: stampCards[0].displayProperties.rewardPositions ?
             ((lengthOfRewardPos === 1 || lengthOfRewardPos === 2) ?
               [0, ...stampCards[0].displayProperties.rewardPositions].sort((a, b) => a - b)
@@ -79,13 +79,22 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
           (campaigns: ICampaign[]) => zip(...campaigns.map(campaign => this.stampService.getCards(campaign.id).pipe(
             // there is only going to be one stamp. take first obj in array,
             // configured to be one single stampcard
-            switchMap((stampCards) => this.transactionsService.getTransactions(
-              1, DEFAULT_PAGE_SIZE, campaign.customFields.min_spend || 0).pipe(
-                map(transactionData => ({
-                  ...campaign as ICampaign,
-                  ...this.mapStampCampaign(stampCards, (transactionData.length ? transactionData[0].razerStampsCount : 0))
-                }))
-              ))
+            switchMap((stampCards) => {
+              if (oc(campaign).customFields.transaction_based(false)) {
+                return this.transactionsService.getTransactions(
+                  1, DEFAULT_PAGE_SIZE, campaign.customFields.min_spend || 0).pipe(
+                    map(transactionData => ({
+                      ...campaign as ICampaign,
+                      ...this.mapStampCampaign(stampCards, (transactionData.length ? transactionData[0].razerStampsCount : 0))
+                    }))
+                  );
+              }
+              return of({
+                ...campaign as ICampaign,
+                ...this.mapStampCampaign(stampCards)
+              });
+              }
+            )
           )
           )))
       );
@@ -96,13 +105,10 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
           (campaigns: ICampaign[]) => zip(...campaigns.map(campaign => this.stampService.getCards(campaign.id).pipe(
             // there is only going to be one stamp. take first obj in array,
             // configured to be one single stampcard
-            switchMap((stampCards) => this.transactionsService.getTransactions(
-              1, DEFAULT_PAGE_SIZE, campaign.customFields.min_spend || 0).pipe(
-                map(transactionData => ({
-                  ...campaign as ICampaign,
-                  ...this.mapStampCampaign(stampCards, (transactionData.length ? transactionData[0].razerStampsCount : 0) || 0)
-                }))
-              ))
+            map((stampCards) => ({
+              ...campaign as ICampaign,
+              ...this.mapStampCampaign(stampCards)
+            }))
           )
           )))
       );
