@@ -26,7 +26,9 @@
     "FORGOT_PASSWORD": "Forgot password?",
     "LEARN_MORE": "Learn more about M Gear",
     "SERVER_NOT_AVAILABLE": "We could not reach the server",
-    "INVALID_CREDENTIALS": "Invalid credentials"
+    "INVALID_CREDENTIALS": "Invalid credentials",
+    "MOBILE_NO_IS": "Mobile No. is required",
+    "PASSWORD_IS": "Password is required"
   },
   "ACCOUNT_PAGE": {
     "THANKYOU_PARTICIPATING": "Thank you for participating in M Gear.",
