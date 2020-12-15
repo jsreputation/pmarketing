@@ -50,8 +50,7 @@ import { RedeemComponent } from './redeem/redeem.component';
 import {
   HttpClientModule,
   HTTP_INTERCEPTORS,
-  HttpClient,
-  HttpBackend
+  HttpClient
 } from '@angular/common/http';
 import { RegisterComponent } from './register/register.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -128,7 +127,7 @@ export const setLanguage = (
       loader: {
         provide: TranslateLoader,
         useClass: PerxTranslateLoader,
-        deps: [HttpClient, HttpBackend, ConfigService, TokenStorage]
+        deps: [HttpClient, ConfigService, TokenStorage]
       }
     })
   ],
