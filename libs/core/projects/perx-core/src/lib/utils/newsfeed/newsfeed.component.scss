@@ -18,12 +18,14 @@
 
 .mat-card-content {
   padding: 1rem;
-  min-height: 5rem;
+  height: 4rem;
   margin-bottom: 0;
 
   .description {
     font-size: 1.6rem;
     white-space: pre-line;
+    height: inherit;
+    line-height: 1.2;
 
     &.ellipsis-2-lines {
       @include ellipse-lines(2);
