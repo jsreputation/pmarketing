@@ -1,12 +1,21 @@
 .statistic-card {
     margin: 1.6rem 0;
     .card-title {
-        font-size: 1.6rem;
+        font-size: 1.4rem;
+        font-weight: 500;
+        margin-bottom: 1.6rem;
+        color: rgba(0, 0, 0, 0.6);
     }
     .stat {
         margin-bottom: 1.2rem;
+        font-size: 1.2rem;
         .stat-title {
-            color: var(--accent);
+            font-size: 1rem;
+            color:rgba(0, 0, 0, 0.38);
+            margin-bottom: 0.5rem;
+        }
+        b {
+            font-size: 1.6rem;
         }
     }
 }
