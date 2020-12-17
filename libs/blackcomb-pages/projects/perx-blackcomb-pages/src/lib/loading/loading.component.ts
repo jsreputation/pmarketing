@@ -96,7 +96,9 @@ export class LoadingComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       ).subscribe(
         () => this.getCampaignData(),
-        () => this.router.navigate(['/login'])
+        () => {
+          this.router.navigate([this.appConfig.homeAsProgressPage ? '/loading' : 'login']);
+        }
       );
     } else {
       this.authService.getAccessToken().pipe(
@@ -105,7 +107,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
       )
         .subscribe(
           () => this.getCampaignData(),
-          () => this.router.navigate(['/login'])
+          () => this.router.navigate([this.appConfig.homeAsProgressPage ? '/loading' : 'login'])
         );
     }
   }
