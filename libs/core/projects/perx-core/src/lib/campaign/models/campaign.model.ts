@@ -37,6 +37,7 @@ export interface ProgressBarFields {
   stages: number;
   current: number;
   stageLabels: string|number[];
+  lightStage?: number;
 }
 
 export interface ICampaign {
