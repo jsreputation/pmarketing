@@ -284,7 +284,7 @@ export class ProgressCampaignComponent implements OnInit {
         }
         if (campaign.type === CampaignType.give_reward) {
           // only supports one loyalty prgm, hardcode default
-          return this.transactionsService.getTransactionSummary(TransactionState.processed).pipe(
+          return this.transactionsService.getTransactionSummary().pipe(
             map((summary) => {
               if (campaign.rewards) {
                 return {
