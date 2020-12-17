@@ -60,7 +60,7 @@
     "MOBILE_NOTFOUND_TXT": "Tài khoản không được tìm thấy",
     "MOBILE_INVALID_TXT": "Vui lòng nhập một số điện thoại di động hợp lệ",
     "MOBILE_REQUIRED_TXT": "Vui lòng nhập số điện thoại di động của bạn",
-    "USERNAME_FIELD": "tên tài khoản",
+    "USERNAME_FIELD": "Mã Khách Hàng",
     "USERNAME_REQUIRED_TXT": "Xin hãy điền tên đăng nhập",
     "OTP_SEND_TO": "OTP gửi tới",
     "CHECK_YOUR_SMS": "Kiểm tra sms của bạn",
@@ -94,9 +94,9 @@
     "PASSWORD_TOO_SHORT_TXT": "Mật khẩu quá ngắn"
   },
   "NAVIGATION": {
-    "HOME": "trang chủ",
+    "HOME": "Trang chủ",
     "REWARDS": "Phần thưởng",
-    "WALLET": "Ví tiền",
+    "WALLET": "Giỏ quà tặng",
     "HISTORY": "Lịch sử",
     "LEADER_BOARD": "Bảng xếp hạng",
     "DEALS": "Ưu đãi",
@@ -159,7 +159,7 @@
   "ACCOUNT_PAGE": {
     "LUCKY_DRAW_INFO": "",
     "TRANSACTION_HISTORY": "Lịch sử giao dịch",
-    "PROFILE": "Thông tin của tôi",
+    "PROFILE": "Tài khoản của tôi",
     "REFER_FRIEND": "Tham khảo một người bạn",
     "LIFE_TALK": "",
     "TNC": "Các điều khoản và điều kiện",
@@ -282,5 +282,7 @@
     "FILTER": "Bộ lọc",
     "VIEW_LOCATION": "Xem vị trí"
   },
-  "CONTENT_PAGE": "Không tìm thấy nội dung"
+  "CONTENT_PAGE": "Không tìm thấy nội dung",
+  "Terms and Conditions": "Điều kiện & Điều khoản",
+  "DESCRIPTION": "Miêu tả"
 }
