@@ -302,8 +302,7 @@ export class ProgressCampaignComponent implements OnInit {
                 }
                 return {}; // return an empty obj
               })
-          )
-
+          );
         }
         if (campaign.type === CampaignType.invite) {
           // only from detail referral details appears on campaign_config

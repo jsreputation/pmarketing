@@ -45,9 +45,9 @@ export class ProgressBarComponent implements OnInit {
           return;
         }
         // i alrdy checked it is not undefined, so it is safe to assert
-        const oneTierAboveReward = this.stageLabels
+        const oneTierAboveRewardLight = this.stageLabels
           .findIndex((labelNum) => (this.actualProcessedProg as number) < labelNum);
-        this.actualLightIndex = oneTierAboveReward === -1 ? 0 : oneTierAboveReward - 1;
+        this.actualLightIndex = oneTierAboveRewardLight === -1 ? 0 : oneTierAboveRewardLight - 1;
       }
       if (this.current >= this.stageLabels[this.stageLabels.length - 1]) {
         this.currentRewardIndex = this.stageLabels.length - 1;
