@@ -79,6 +79,15 @@ export class GameComponent implements OnInit, OnDestroy {
     imageUrl: '',
     disableOverlayClose: true,
   };
+
+  public outOfTriesPopup: IPopupConfig = {
+    title: 'GAME_PAGE.OUT_OF_TRIES_TITLE',
+    text: 'GAME_PAGE.OUT_OF_TRIES_TEXT',
+    buttonTxt: this.isEmbedded ? null : 'GAME_PAGE.OUT_OF_TRIES_CTA',
+    afterClosedCallBack: this,
+    disableOverlayClose: true,
+  };
+
   public rewardsTxt: string;
   public startGameAnimation: boolean = false;
 
@@ -183,14 +192,7 @@ export class GameComponent implements OnInit, OnDestroy {
             game.remainingNumberOfTries !== null
           ) {
             // null is recognised as infinite from dashboard
-            this.notificationService.addPopup({
-              title: 'No more tries',
-              // prettier-ignore
-              text: 'Come back when you have more tries!',
-              buttonTxt: this.isEmbedded ? null : 'Close',
-              afterClosedCallBack: this,
-              disableOverlayClose: true,
-            });
+            this.notificationService.addPopup(this.outOfTriesPopup);
           }
         }
       })
@@ -501,6 +503,22 @@ export class GameComponent implements OnInit, OnDestroy {
         .get(this.gameNotAvailablePopUp.buttonTxt)
         .subscribe((text) => (this.gameNotAvailablePopUp.buttonTxt = text));
     }
+    if (this.outOfTriesPopup.title) {
+      this.translate
+        .get(this.outOfTriesPopup.title)
+        .subscribe((text) => (this.outOfTriesPopup.title = text));
+    }
+    if (this.outOfTriesPopup.text) {
+      this.translate
+        .get(this.outOfTriesPopup.text)
+        .subscribe((text) => (this.outOfTriesPopup.text = text));
+    }
+    if (this.outOfTriesPopup.buttonTxt) {
+      this.translate
+        .get(this.outOfTriesPopup.buttonTxt)
+        .subscribe((text) => (this.outOfTriesPopup.buttonTxt = text));
+    }
+
     this.translate
       .get('GAME_PAGE.GAME_SUCCESS_TEXT_REWARDS')
       .subscribe((text) => (this.rewardsTxt = text));

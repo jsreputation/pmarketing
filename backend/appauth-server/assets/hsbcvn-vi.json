@@ -270,7 +270,10 @@
     "LOGIN_SESSION_EXPIRED": "Phiên đăng nhập đã hết hạn",
     "Contact Us": "Liên hệ chúng tôi",
     "Terms and Conditions": "Các điều khoản và điều kiện",
-    "TRY_AGAIN": "Thử lại"
+    "TRY_AGAIN": "Thử lại",
+    "OUT_OF_TRIES_TITLE": "No more tries",
+    "OUT_OF_TRIES_TEXT": "Come back when you have more tries!",
+    "OUT_OF_TRIES_CTA": "Close"
   },
   "LOCATION_PAGE": {
     "FILTER_BY": "Lọc bởi",
