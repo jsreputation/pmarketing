@@ -30,7 +30,7 @@ export class ProgressBarComponent implements OnInit {
 
   public activeStampImgUrl: string = 'https://perx-cdn-staging.s3.amazonaws.com/razer-assets/activstamp.png';
 
-  public currentRewardIndex: number = 0;
+  public currentRewardIndex?: number;
   // helper function for rendering # slots using ngFor
   public arrayFromNumber(n: number): any[] {
     return Array(n);
@@ -47,7 +47,7 @@ export class ProgressBarComponent implements OnInit {
         // i alrdy checked it is not undefined, so it is safe to assert
         const oneTierAboveRewardLight = this.stageLabels
           .findIndex((labelNum) => (this.actualProcessedProg as number) < labelNum);
-        this.actualLightIndex = oneTierAboveRewardLight === -1 ? 0 : oneTierAboveRewardLight - 1;
+        this.actualLightIndex = oneTierAboveRewardLight === -1 ? undefined : oneTierAboveRewardLight - 1;
       }
       if (this.current >= this.stageLabels[this.stageLabels.length - 1]) {
         this.currentRewardIndex = this.stageLabels.length - 1;

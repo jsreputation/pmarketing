@@ -26,6 +26,7 @@ import {
   TransactionsService,
   TransactionState,
   IStampCard,
+  IStamp,
 } from '@perxtech/core';
 import {
   ActivatedRoute,
@@ -64,10 +65,11 @@ export class ProgressCampaignComponent implements OnInit {
   public appRemoteFlags: IFlags;
   public campaign$: Observable<ICampaign>;
   public campaign: ICampaign;
+  public campaignProgress: Partial<ProgressBarFields>;
   public campaignRewards$: Observable<IReward[]>;
   public campaignProgress$: Observable<Partial<ProgressBarFields>>;
   public campaignRewardMode!: CampaignRewardMode;
-  public campaignRewards: (IReward & { progress: ProgressBarFields, barHeadLine: string })[];
+  public campaignRewards: (IReward & { progress: ProgressBarFields, barHeadLine: string, meetShowVoucherRequirement: boolean })[];
   public meetShowVoucherRequirement: boolean = true; // only pay and spend take and adjusts this
 
   constructor(
@@ -105,156 +107,6 @@ export class ProgressCampaignComponent implements OnInit {
       tap((campaign) => this.campaign = campaign),
     );
 
-
-    // different campaigns get rewards differently
-    this.campaignRewards$ = this.campaign$.pipe(
-      switchMap((campaign) => {
-        if (campaign.type === CampaignType.stamp) {
-          this.campaignRewardMode = CampaignRewardMode.TransactionQuantity;
-          this.cd.detectChanges();
-          return this.stampService.getCards(campaign.id).pipe(
-            switchMap(
-              stampCardData => {
-                const stampCard = stampCardData[0];
-                if (stampCard && campaign && campaign.rewards) {
-                  let progress: Partial<ProgressBarFields> = {};
-                  // ASSUMING Rewards are SORTED according to increasing amount of points_required
-                  const rewardPositionsSorted = stampCard.displayProperties.rewardPositions ?
-                    stampCard.displayProperties.rewardPositions.sort((a, b) => a - b) : [];
-
-                  if (oc(campaign).customFields.transaction_based(false)) {
-                    return this.transactionsService.getTransactions(
-                      1, DEFAULT_PAGE_SIZE, campaign.customFields.min_spend || 0).pipe(
-                        map(transactionData => {
-                          if (campaign && campaign.rewards) {
-                            return campaign.rewards.map((reward, index) => {
-                              if (rewardPositionsSorted.length && rewardPositionsSorted[index]) {
-                                const stageLabels = [0, rewardPositionsSorted[index]];
-                                if (stampCard && stampCard.stamps) {
-                                  this.meetShowVoucherRequirement = stampCard.stamps.length >= rewardPositionsSorted[index];
-                                }
-                                progress = {
-                                  stages: stageLabels.length,
-                                  current: (transactionData.length ?
-                                    transactionData[0].razerStampsCount : 0) >= rewardPositionsSorted[index] ?
-                                    rewardPositionsSorted[index] : (transactionData.length ? transactionData[0].razerStampsCount : 0),
-                                  stageLabels
-                                };
-                              }
-                              return {
-                                ...reward,
-                                progress,
-                                barHeadLine: this.progressInfoPipe.transform(`${progress.current || 0}`, this.campaignRewardMode,
-                                  this.campaign.name)
-                              };
-                            });
-                          }
-                        })
-                      );
-                  }// note end here
-
-                  // only stamps issued will be inside stamps property(use it to get progress)
-                  if (campaign && campaign.rewards) {
-                    return of(campaign.rewards.map((reward, index) => {
-                      if (rewardPositionsSorted.length && rewardPositionsSorted[index]) {
-                        const stageLabels = [0, rewardPositionsSorted[index]];
-                        progress = {
-                          stages: stageLabels.length,
-                          current: oc(stampCard).stamps.length(0) >= rewardPositionsSorted[index] ?
-                            rewardPositionsSorted[index] : oc(stampCard).stamps.length(0),
-                          stageLabels
-                        };
-                      }
-
-                      return {
-                        ...reward,
-                        progress,
-                        barHeadLine: this.progressInfoPipe.transform(`${progress.current || 0}`, this.campaignRewardMode,
-                          this.campaign.name)
-                      };
-                    }));
-                  }
-                }
-                return [];
-              }
-            )
-          );
-        }
-        // for referrals
-        if (campaign.type === CampaignType.give_reward) {
-          this.campaignRewardMode = CampaignRewardMode.TransactionAmount;
-          this.cd.detectChanges();
-          return this.transactionsService.getTransactionSummary(TransactionState.processed).pipe(
-            map((summary) => {
-              if (campaign.rewards) {
-                const completeStageLabels: number[] = campaign.rewards.reduce((acc, curr) => [...acc, (
-                  curr && curr.customFields && +curr.customFields.requirement
-                )], []).filter(isNumber);
-                let progress: Partial<ProgressBarFields> = {};
-                return campaign.rewards.map((reward, index) => {
-                  if (completeStageLabels && completeStageLabels[index]) {
-                    const stageLabels = [0, completeStageLabels[index]];
-                    if (summary && summary.totalAmount !== undefined) {
-                      this.meetShowVoucherRequirement = summary.totalAmount >= completeStageLabels[index];
-                    }
-                    progress = {
-                      stages: stageLabels.length || 2, // actually it's always going to be 2, can just hardcode 2
-                      current: ((summary.totalAmount || 0) / 100) >= completeStageLabels[index] ?
-                        completeStageLabels[index] : ((summary.totalAmount || 0) / 100),
-                      stageLabels
-                    };
-                  }
-                  return {
-                    ...reward,
-                    progress,
-                    barHeadLine: this.progressInfoPipe.transform(`${progress.current || 0}`, this.campaignRewardMode,
-                      this.campaign.name)
-                  };
-                });
-              }
-              return [];
-            })
-          );
-        }
-        if (campaign.type === CampaignType.invite) {
-          this.campaignRewardMode = CampaignRewardMode.Referral;
-          this.cd.detectChanges();
-          return this.campaignService.getCampaign(campaign.id).pipe(
-            map(campaignInv => {
-              if (campaignInv.rewards) {
-                const completeStageLabels: number[] = campaignInv.rewards.reduce((acc, curr) => [...acc, (
-                  curr && curr.customFields && +curr.customFields.requirement
-                )], []).filter(isNumber);
-                let progress: Partial<ProgressBarFields> = {};
-                return campaignInv.rewards.map((reward, index) => {
-                  if (completeStageLabels && completeStageLabels[index]) {
-                    const stageLabels = [0, completeStageLabels[index]];
-                    progress = {
-                      stages: stageLabels.length || 2, // actually it's always going to be 2, can just hardcode 2
-                      current: (campaignInv.refersAttained || 0) >= completeStageLabels[index] ?
-                        completeStageLabels[index] : (campaignInv.refersAttained || 0),
-                      stageLabels
-                    };
-                  }
-                  return {
-                    ...reward,
-                    progress,
-                    barHeadLine: this.progressInfoPipe.transform(`${progress.current || 0}`, this.campaignRewardMode,
-                      this.campaign.name)
-                  };
-                });
-              }
-              return [];
-            })
-          );
-        }
-        return [];
-      }),
-      tap((rewardsWithProgress: (IReward & {
-        progress: ProgressBarFields,
-        barHeadLine: string
-      })[]) => this.campaignRewards = rewardsWithProgress)
-    );
 
     this.campaignProgress$ = this.campaign$.pipe(
       switchMap((campaign) => {
@@ -321,7 +173,157 @@ export class ProgressCampaignComponent implements OnInit {
           );
         }
         return {} as Iterable<any>;
-      })
+      }),
+      tap((campaignProgress) => this.campaignProgress = campaignProgress)
+    );
+
+    // different campaigns get rewards differently
+    this.campaignRewards$ = this.campaign$.pipe(
+      switchMap((campaign) => {
+        if (campaign.type === CampaignType.stamp) {
+          this.campaignRewardMode = CampaignRewardMode.TransactionQuantity;
+          this.cd.detectChanges();
+          return this.stampService.getCards(campaign.id).pipe(
+            switchMap(
+              stampCardData => {
+                const stampCard = stampCardData[0];
+                if (stampCard && campaign && campaign.rewards) {
+                  let progress: Partial<ProgressBarFields> = {};
+                  // ASSUMING Rewards are SORTED according to increasing amount of points_required
+                  const rewardPositionsSorted = stampCard.displayProperties.rewardPositions ?
+                    stampCard.displayProperties.rewardPositions.sort((a, b) => a - b) : [];
+
+                  if (oc(campaign).customFields.transaction_based(false)) {
+                    return this.transactionsService.getTransactions(
+                      1, DEFAULT_PAGE_SIZE, campaign.customFields.min_spend || 0, TransactionState.processed).pipe(
+                        map(transactionData => {
+                          if (campaign && campaign.rewards) {
+                            return campaign.rewards.map((reward, index) => {
+                              if (rewardPositionsSorted.length && rewardPositionsSorted[index]) {
+                                const stageLabels = [0, rewardPositionsSorted[index]];
+                                progress = {
+                                  stages: stageLabels.length,
+                                  current: (transactionData.length ?
+                                    transactionData[0].razerStampsCount : 0) >= rewardPositionsSorted[index] ?
+                                    rewardPositionsSorted[index] : (transactionData.length ? transactionData[0].razerStampsCount : 0),
+                                  stageLabels
+                                };
+                              }
+                              return {
+                                ...reward,
+                                meetShowVoucherRequirement: (stampCard.stamps as IStamp[]).length >= rewardPositionsSorted[index],
+                                progress,
+                                barHeadLine: this.progressInfoPipe.transform(`${this.campaignProgress.current || 0}`, this.campaignRewardMode,
+                                  this.campaign.name)
+                              };
+                            });
+                          }
+                        })
+                      );
+                  }// note end here
+
+                  // only stamps issued will be inside stamps property(use it to get progress)
+                  if (campaign && campaign.rewards) {
+                    return of(campaign.rewards.map((reward, index) => {
+                      if (rewardPositionsSorted.length && rewardPositionsSorted[index]) {
+                        const stageLabels = [0, rewardPositionsSorted[index]];
+                        progress = {
+                          stages: stageLabels.length,
+                          current: oc(stampCard).stamps.length(0) >= rewardPositionsSorted[index] ?
+                            rewardPositionsSorted[index] : oc(stampCard).stamps.length(0),
+                          stageLabels
+                        };
+                      }
+
+                      return {
+                        ...reward,
+                        meetShowVoucherRequirement: true,
+                        progress,
+                        barHeadLine: this.progressInfoPipe.transform(`${this.campaignProgress.current || 0}`, this.campaignRewardMode,
+                          this.campaign.name)
+                      };
+                    }));
+                  }
+                }
+                return [];
+              }
+            )
+          );
+        }
+        // for referrals
+        if (campaign.type === CampaignType.give_reward) {
+          this.campaignRewardMode = CampaignRewardMode.TransactionAmount;
+          this.cd.detectChanges();
+          return this.transactionsService.getTransactionSummary(TransactionState.processed).pipe(
+            map((summary) => {
+              if (campaign.rewards) {
+                const completeStageLabels: number[] = campaign.rewards.reduce((acc, curr) => [...acc, (
+                  curr && curr.customFields && +curr.customFields.requirement
+                )], []).filter(isNumber);
+                let progress: Partial<ProgressBarFields> = {};
+                return campaign.rewards.map((reward, index) => {
+                  if (completeStageLabels && completeStageLabels[index]) {
+                    const stageLabels = [0, completeStageLabels[index]];
+                    progress = {
+                      stages: stageLabels.length || 2, // actually it's always going to be 2, can just hardcode 2
+                      current: ((summary.totalAmount || 0) / 100) >= completeStageLabels[index] ?
+                        completeStageLabels[index] : ((summary.totalAmount || 0) / 100),
+                      stageLabels
+                    };
+                  }
+                  return {
+                    ...reward,
+                    meetShowVoucherRequirement: summary.totalAmount >= completeStageLabels[index],
+                    progress,
+                    barHeadLine: this.progressInfoPipe.transform(`${this.campaignProgress.current || 0}`, this.campaignRewardMode,
+                      this.campaign.name)
+                  };
+                });
+              }
+              return [];
+            })
+          );
+        }
+        if (campaign.type === CampaignType.invite) {
+          this.campaignRewardMode = CampaignRewardMode.Referral;
+          this.cd.detectChanges();
+          return this.campaignService.getCampaign(campaign.id).pipe(
+            map(campaignInv => {
+              if (campaignInv.rewards) {
+                const completeStageLabels: number[] = campaignInv.rewards.reduce((acc, curr) => [...acc, (
+                  curr && curr.customFields && +curr.customFields.requirement
+                )], []).filter(isNumber);
+                let progress: Partial<ProgressBarFields> = {};
+                return campaignInv.rewards.map((reward, index) => {
+                  if (completeStageLabels && completeStageLabels[index]) {
+                    const stageLabels = [0, completeStageLabels[index]];
+                    progress = {
+                      stages: stageLabels.length || 2, // actually it's always going to be 2, can just hardcode 2
+                      current: (campaignInv.refersAttained || 0) >= completeStageLabels[index] ?
+                        completeStageLabels[index] : (campaignInv.refersAttained || 0),
+                      stageLabels
+                    };
+                  }
+                  return {
+                    ...reward,
+                    meetShowVoucherRequirement: true,
+                    progress,
+                    barHeadLine: this.progressInfoPipe.transform(`${this.campaignProgress.current || 0}`, this.campaignRewardMode,
+                      this.campaign.name)
+                  };
+                });
+              }
+              return [];
+            })
+          );
+        }
+        return [];
+      }),
+      tap((rewardsWithProgress: (IReward & {
+        meetShowVoucherRequirement: boolean,
+        progress: ProgressBarFields,
+        barHeadLine: string
+      })[]) => this.campaignRewards = rewardsWithProgress)
     );
   }
 
@@ -357,13 +359,13 @@ export class ProgressCampaignComponent implements OnInit {
               rewardType: this.campaignRewardMode,
               barHeadLine: selectedRewardWithProgress.barHeadLine,
               useRewardDescription: this.campaign.name === 'Getting Started' || this.campaign.name === 'Ultimate Reward',
-              enableRedeemButton: this.meetShowVoucherRequirement
+              enableRedeemButton: selectedRewardWithProgress.meetShowVoucherRequirement
             }
           };
         }
         let voucherId;
         for (const v of vouchers) {
-          if (v.reward && v.reward.id === reward.id && this.meetShowVoucherRequirement) {
+          if (v.reward && v.reward.id === reward.id) {
             voucherId = v.id;
           }
         }

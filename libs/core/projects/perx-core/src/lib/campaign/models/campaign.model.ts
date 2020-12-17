@@ -38,6 +38,8 @@ export interface ProgressBarFields {
   current: number;
   stageLabels: string|number[];
   lightStage?: number;
+  // for pay and spend include pending and processed
+  totalCurrent?: number;
 }
 
 export interface ICampaign {
