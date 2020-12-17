@@ -101,6 +101,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     protected rewardsService: RewardsService,
     protected gamesService: IGameService,
     protected router: Router,
+    protected titleService: Title,
     protected translate: TranslateService,
     protected themesService: ThemesService,
     protected configService: ConfigService,
@@ -114,7 +115,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     protected currencyPipe: CurrencyPipe,
     protected tokenService: TokenStorage,
     protected datePipe: DatePipe
-  ) {}
+  ) { }
 
   public ngOnInit(): void {
     this.configService
@@ -175,9 +176,15 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.rewards$ = this.rewardsService.getAllRewards(['featured']);
     this.getTabbedList();
 
-    this.themesService.getThemeSetting().subscribe((theme) => {
-      this.theme = theme;
-    });
+    this.themesService.getThemeSetting().subscribe(
+      theme => {
+        this.theme = theme;
+        const title = (theme.properties ? theme.properties['--title'] : undefined) || '';
+        if (title.length > 0) {
+          this.titleService.setTitle(title);
+        }
+      }
+    );
 
     this.initCatalogsScan();
   }
@@ -464,33 +471,33 @@ export class HomeComponent implements OnInit, OnDestroy {
         .pipe(
           map((res) =>
             loyalty &&
-            loyalty.expiringPoints &&
-            loyalty.expiringPoints.length &&
-            loyalty.expiringPoints[0].points &&
-            loyalty.expiringPoints[0].points !== 0
+              loyalty.expiringPoints &&
+              loyalty.expiringPoints.length &&
+              loyalty.expiringPoints[0].points &&
+              loyalty.expiringPoints[0].points !== 0
               ? res
-                  .replace(
-                    '{{points}}',
-                    (loyalty.expiringPoints[0].points
-                      ? loyalty.expiringPoints[0].points
-                      : 0
-                    ).toString()
-                  )
-                  .replace(
-                    '{{date}}',
-                    loyalty.expiringPoints[0].expireDate
-                      ? this.datePipe.transform(
-                          loyalty.expiringPoints[0].expireDate,
-                          'd MMM y'
-                        )
-                      : ''
-                  )
+                .replace(
+                  '{{points}}',
+                  (loyalty.expiringPoints[0].points
+                    ? loyalty.expiringPoints[0].points
+                    : 0
+                  ).toString()
+                )
+                .replace(
+                  '{{date}}',
+                  loyalty.expiringPoints[0].expireDate
+                    ? this.datePipe.transform(
+                      loyalty.expiringPoints[0].expireDate,
+                      'd MMM y'
+                    )
+                    : ''
+                )
               : this.appConfig.app === 'abenson'
-              ? `Your total points as of ${this.datePipe.transform(
+                ? `Your total points as of ${this.datePipe.transform(
                   new Date(),
                   'mediumDate'
                 )}`
-              : ''
+                : ''
           )
         );
     this.pointToFn = () => this.translate.get('HOME.POINT_TO');
@@ -501,16 +508,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.membershipExpiryFn = (loyalty: ILoyalty) =>
       loyalty && loyalty.membershipExpiry
         ? this.translate
-            .get('HOME.ACCOUNT_EXPIRE')
-            .pipe(
-              map(
-                (res) =>
-                  `${res}: ${this.datePipe.transform(
-                    loyalty.membershipExpiry,
-                    'mediumDate'
-                  )}`
-              )
+          .get('HOME.ACCOUNT_EXPIRE')
+          .pipe(
+            map(
+              (res) =>
+                `${res}: ${this.datePipe.transform(
+                  loyalty.membershipExpiry,
+                  'mediumDate'
+                )}`
             )
+          )
         : of('');
 
     this.displayPriceFn = (rewardPrice: IPrice) =>
