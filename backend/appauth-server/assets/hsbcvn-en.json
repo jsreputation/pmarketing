@@ -159,7 +159,8 @@
     "POINT_EARNED": "{points} Points earned",
     "POINT_SPENT": "{points} Points spent",
     "CASHBACK_EARNED": "{points} cashback earned",
-    "CASHBACK_SPENT": "{points} cashback spent"
+    "CASHBACK_SPENT": "{points} cashback spent",
+    "REWARD_STATUS_REDEEMED_ON": "Redeemed on {{date}}"
   },
   "REDEMPTION": {
     "TITLE": "Input PIN",

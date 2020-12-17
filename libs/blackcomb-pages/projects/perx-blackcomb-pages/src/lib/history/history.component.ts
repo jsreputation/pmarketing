@@ -18,6 +18,7 @@ export class HistoryComponent implements OnInit, OnDestroy {
   public currentPage: number = 0;
   public completed: boolean = false;
   public expiryLabelFn: ((v: Voucher) => Observable<string>) | undefined;
+  public redeemedOnLabelFn: ((v: Voucher) => Observable<string>) | undefined;
 
   public mapping: StatusLabelMapping = {
     issued: 'Approved',
@@ -52,6 +53,14 @@ export class HistoryComponent implements OnInit, OnDestroy {
       .subscribe((text: string) => {
         this.expiryLabelFn = (v: Voucher) => {
           const dateStr = this.datePipe.transform(v.expiry, 'shortDate');
+          return of(text.replace('{{date}}', dateStr || '~'));
+        };
+      });
+
+    this.translate.get('WALLET.REWARD_STATUS_REDEEMED_ON')
+      .subscribe((text: string) => {
+        this.redeemedOnLabelFn = (v: Voucher) => {
+          const dateStr = this.datePipe.transform(v.redemptionDate, 'shortDate');
           return of(text.replace('{{date}}', dateStr || '~'));
         };
       });
