@@ -56,6 +56,7 @@ import {
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialog, MatTabChangeEvent } from '@angular/material';
 import { CurrencyPipe, DatePipe } from '@angular/common';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'perx-blackcomb-home',
