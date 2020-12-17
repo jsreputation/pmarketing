@@ -4,10 +4,10 @@
       class="in-progress" [ngStyle]="{
       'width': ((current && stageLabels?.length) ? ((current / stageLabels[stageLabels?.length - 1]) * 100) : 0) + '%'
     }">
-      hidden
+      .
     </p>
     <p *ngIf="accurateProg; else progInAccurate" class="to-progress">
-      hidden
+      .
     </p>
     <ng-template #inProgInAccurate>
       <p class="in-progress" *ngIf="current" [ngStyle]="{
@@ -16,12 +16,12 @@
               100 : ((100 / stages) * (currentRewardIndex + 1))
              ) + '%'
           }">
-        hidden
+        .
       </p>
     </ng-template>
     <ng-template #progInAccurate>
       <p class="to-progress">
-        hidden
+        .
       </p>
     </ng-template>
   </div>
@@ -38,11 +38,11 @@
            }">
         <div class="stamp-label"
               [ngStyle]="{
-                'margin-left': stageLabels[i] < 10 ? 0.8+'rem' : (
-                 stageLabels[i] < 100 ? 0.5+'rem' : 0
+                'margin-left': stageLabels[i] < 10 ? 1.5+'rem' : (
+                 stageLabels[i] < 100 ? 1.2+'rem' : 0.6+'rem'
                 )
               }"
-              *ngIf="showProgressLabels && stageLabels && stageLabels[i]">
+              *ngIf="showProgressLabels && stageLabels && stageLabels[i] !== undefined">
           {{stageLabels[i]}}
         </div>
       </div>
