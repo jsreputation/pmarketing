@@ -4,7 +4,6 @@ import {
   OnInit
 } from '@angular/core';
 import {
-  BehaviorSubject,
   Observable, of,
   Subject
 } from 'rxjs';
@@ -34,6 +33,7 @@ import {
   takeUntil,
   tap
 } from 'rxjs/operators';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'perx-blackcomb-pages-reward-voucher-detail',
@@ -60,9 +60,9 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
   public rewardType: CampaignRewardMode;
   public voucher$: Observable<Voucher & { securityNumber: string, cardNumber: string }>;
   public barHeadLine: string;
+  public useRewardDescription: string;
   public doneText: string;
-  public showNoCodeReward: BehaviorSubject<boolean> =  new BehaviorSubject<boolean>(false);
-  public showNoCodeReward$: Observable<boolean>;
+  public showNoCodeReward: boolean = false;
 
   constructor(
     private rewardsService: RewardsService,
@@ -72,13 +72,14 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private configService: ConfigService,
     private notificationService: NotificationService,
+    private location: Location
     // private router: Router
   ) { }
 
   public ngOnInit(): void {
-    this.showNoCodeReward$ = this.showNoCodeReward.asObservable();
-    const { current, stageLabels, rewardType, barHeadLine } = history.state;
+    const { current, stageLabels, rewardType, barHeadLine, useRewardDescription } = history.state;
     this.barHeadLine = barHeadLine;
+    this.useRewardDescription = useRewardDescription;
 
     this.rewardType = rewardType;
     if (current !== (undefined) && stageLabels) {
@@ -87,6 +88,8 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
         stages: 2,
         stageLabels: history.state.stageLabels
       };
+    } else {
+      this.location.back();
     }
     this.configService.readAppConfig<void>()
       .subscribe((config: IConfig<void>) => this.appConfig = config);
@@ -119,7 +122,7 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
 
   public buyReward(): void {
     this.waitForSubmission = true;
-    this.showNoCodeReward.next(true);
+    this.showNoCodeReward = true;
     this.doneText = 'done';
   }
 
@@ -148,6 +151,9 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
     this.voucher$ = this.vouchersService.get(this.voucherId).pipe(
       map((voucher: Voucher) => {
         const [ cardNumber = '', securityNumber = '' ] = (voucher.code && voucher.code.split('-')) || [];
+        if (cardNumber.length <= 0) {
+          this.showNoCodeReward = true;
+        }
         return ({
           ...voucher,
           securityNumber,

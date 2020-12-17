@@ -1,21 +1,24 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Observable, zip } from 'rxjs';
-import { CampaignType, ICampaign, ICampaignService, LoyaltyService, ProgressBarFields, StampService } from '@perxtech/core';
-import { concatMap, map, switchMap, withLatestFrom } from 'rxjs/operators';
-import { listAnimation } from '../home/games-collection/games-collection.animation';
+import { Observable, of, zip } from 'rxjs';
+import { ICampaign, ICampaignService, IStampCard, ProgressBarFields, StampService, TransactionsService } from '@perxtech/core';
+import { concatMap, map, switchMap } from 'rxjs/operators';
+import { oc } from 'ts-optchain';
+
+const DEFAULT_PAGE_SIZE = 25;
 
 @Component({
   selector: 'perx-blackcomb-pages-raz-adapted-campaigns-collection',
   templateUrl: './raz-adapted-campaigns-collection.component.html',
   styleUrls: ['./raz-adapted-campaigns-collection.component.scss'],
-  animations: [listAnimation]
-
 })
 export class RazAdaptedCampaignsCollectionComponent implements OnInit {
-  @Input('campaigns')
-  public campaigns$: Observable<ICampaign[]>;
   @Input()
-  public defaultNbCampaigns: number = 2;
+  public stampCampaigns: Observable<ICampaign[]>;
+  @Input()
+  public loyaltyCampaigns: Observable<ICampaign[]>;
+  @Input()
+  public referralCampaigns: Observable<ICampaign[]>;
+
   @Input()
   public withRewardsCounter: boolean = false;
   @Input()
@@ -28,114 +31,145 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
   @Output()
   public selected: EventEmitter<ICampaign> = new EventEmitter<ICampaign>();
 
+  public stampCampaignsProg: Observable<(ICampaign & { progress?: ProgressBarFields })[]>;
+  public loyaltyCampaignsProg: Observable<(ICampaign & { progress?: ProgressBarFields })[]>;
+  public referralCampaignsProg: Observable<(ICampaign & { progress?: ProgressBarFields })[]>;
+  public ultimateCampaignsProg: Observable<(ICampaign & { progress?: ProgressBarFields })[]>;
+
   public rewardsLeft: string;
   public campaigns: ICampaign[];
   public campaignsWithRewards$: Observable<ICampaign[]>;
-  public campaignsWithProgress$: Observable<(ICampaign & {progress?: Partial<ProgressBarFields>})[]>;
-  public gamesLoaded: boolean = false;
   public isCampaignDisabled: boolean[] = [];
 
   constructor(
     private stampService: StampService,
-    private loyaltyService: LoyaltyService,
-    private campaignsService: ICampaignService
+    private campaignsService: ICampaignService,
+    private transactionsService: TransactionsService
   ) { }
-
   // differentiate by the campaign_type
   // if stamps call the /stamp_cards api
   // if loyalty call /loyalty
   // if referral call as is but map the referral fields
 
+  public mapStampCampaign(stampCards: IStampCard[], current?: number): ({ progress: ProgressBarFields } | {}) {
+    if (stampCards && stampCards[0] && stampCards[0].displayProperties) {
+      const lengthOfRewardPos = oc(stampCards[0].displayProperties.rewardPositions)([]).length;
+      return {
+        progress: {
+          stages: lengthOfRewardPos ?
+            (lengthOfRewardPos === 1 || lengthOfRewardPos === 2) ?
+              (lengthOfRewardPos + 1) : lengthOfRewardPos : 2,
+          current: (current !== undefined ? current : (stampCards[0].stamps && stampCards[0].stamps.length) || 0),
+          stageLabels: stampCards[0].displayProperties.rewardPositions ?
+            ((lengthOfRewardPos === 1 || lengthOfRewardPos === 2) ?
+              [0, ...stampCards[0].displayProperties.rewardPositions].sort((a, b) => a - b)
+              : [...stampCards[0].displayProperties.rewardPositions].sort((a, b) => a - b)) : // if len is only 1 add 0
+            []
+        }
+      };
+    }
+    return {};
+  }
+
   public ngOnInit(): void {
-    if (this.campaigns$) {
-      this.campaignsWithProgress$ = this.campaigns$.pipe(
-        // call the mapperService here, have it as a method here first, priority: do stamps first
+    if (this.stampCampaigns) {
+      this.stampCampaignsProg = this.stampCampaigns.pipe(
+        map(campaignsStamps => campaignsStamps.filter(campaign => campaign.name !== 'Ultimate Reward')),
         switchMap(
-          (campaigns: ICampaign[]) => zip(...campaigns.map(campaign => {
-            if (campaign.type === CampaignType.stamp) {
-              return this.stampService.getCards(campaign.id).pipe(
-                // there is only going to be one stamp. take first obj in array,
-                // configured to be one single stampcard
-                map((stampCards) => {
-                  if (stampCards && stampCards[0] && stampCards[0].displayProperties) {
-                    return ({
-                      stages: stampCards[0].displayProperties.rewardPositions ?
-                        (stampCards[0].displayProperties.rewardPositions.length === 1 ?
-                          2 : stampCards[0].displayProperties.rewardPositions.length) : 2,
-                      current: (stampCards[0].stamps && stampCards[0].stamps.length) || 0,
-                      stageLabels: stampCards[0].displayProperties.rewardPositions ?
-                        (stampCards[0].displayProperties.rewardPositions.length === 1 ?
-                          [ 0 , ...stampCards[0].displayProperties.rewardPositions ].sort(( a , b) => a - b)
-                          : [ 0 , ...stampCards[0].displayProperties.rewardPositions ].sort(( a , b) => a - b)) : // if len is only 1 add 0
-                        []
-                    });
-                  }
-                  return {};
-                })
-              ) as any;
-            }
-            if (campaign.type === CampaignType.give_reward) {
-               return this.campaignsService.getCampaign(campaign.id).pipe(
-                 concatMap((campaignRwd) => this.loyaltyService.getLoyalty(1).pipe(
-                     map((loyalty) => {
-                       if (campaignRwd.rewards) {
-                         return {
-                           stages: campaignRwd.rewards.length || 2, // if length 0 default to 2 stages
-                           // biggest reward return last, test if really need
-                           // find the highest point and see if balance >=, at final stage
-                           current: loyalty.pointsBalance || 0,
-                           stageLabels: campaignRwd.rewards.reduce((acc, curr) => [...acc, (
-                             curr && curr.customFields && curr.customFields.requirement
-                           )], []).filter(v => v)
-                         };
-                       }
-                       return {};
-                     })
-                   )
-               ));
-            }
-            if (campaign.type === CampaignType.invite) {
-              // only from detail referral details appears on campaign_config
-              return this.campaignsService.getCampaign(campaign.id).pipe(
-                map(campaignInv => {
-                  if (campaignInv.rewards) {
-                    return {
+          (campaigns: ICampaign[]) => zip(...campaigns.map(campaign => this.stampService.getCards(campaign.id).pipe(
+            // there is only going to be one stamp. take first obj in array,
+            // configured to be one single stampcard
+            switchMap((stampCards) => {
+              if (oc(campaign).customFields.transaction_based(false)) {
+                return this.transactionsService.getTransactions(
+                  1, DEFAULT_PAGE_SIZE, campaign.customFields.min_spend || 0).pipe(
+                    map(transactionData => ({
+                      ...campaign as ICampaign,
+                      ...this.mapStampCampaign(stampCards, (transactionData.length ? transactionData[0].razerStampsCount : 0))
+                    }))
+                  );
+              }
+              return of({
+                ...campaign as ICampaign,
+                ...this.mapStampCampaign(stampCards)
+              });
+              }
+            )
+          )
+          )))
+      );
+
+      this.ultimateCampaignsProg = this.stampCampaigns.pipe(
+        map(campaignsStamps => campaignsStamps.filter(campaign => campaign.name === 'Ultimate Reward')),
+        switchMap(
+          (campaigns: ICampaign[]) => zip(...campaigns.map(campaign => this.stampService.getCards(campaign.id).pipe(
+            // there is only going to be one stamp. take first obj in array,
+            // configured to be one single stampcard
+            map((stampCards) => ({
+              ...campaign as ICampaign,
+              ...this.mapStampCampaign(stampCards)
+            }))
+          )
+          )))
+      );
+    }
+
+    if (this.loyaltyCampaigns) {
+      this.loyaltyCampaignsProg = this.loyaltyCampaigns.pipe(
+        switchMap(
+          (campaigns: ICampaign[]) => zip(...campaigns.map(campaign => this.campaignsService.getCampaign(campaign.id).pipe(
+            concatMap((campaignRwd) => this.transactionsService.getTransactionSummary().pipe(
+              map((summary) => {
+                if (summary && campaignRwd.rewards) {
+                  return {
+                    ...campaign,
+                    progress: {
+                      stages: campaignRwd.rewards.length || 2, // if length 0 default to 2 stages
+                      // biggest reward return last, test if really need
+                      // find the highest point and see if balance >=, at final stage
+                      current: ((summary.totalAmount || 0) / 100) || 0,
+                      stageLabels: campaignRwd.rewards.reduce((acc, curr) => [...acc, (
+                        curr && curr.customFields && curr.customFields.requirement
+                      )], []).filter(v => v) as unknown as number[]
+                    }
+                  };
+                }
+                return {} as ICampaign;
+              })
+            )
+            ))))
+        )
+      );
+    }
+
+    if (this.referralCampaigns) {
+      this.referralCampaignsProg = this.referralCampaigns.pipe(
+        switchMap(
+          (campaigns: ICampaign[]) => zip(...campaigns.map(campaign =>
+            // only from detail referral details appears on campaign_config
+            this.campaignsService.getCampaign(campaign.id).pipe(
+              map(campaignInv => {
+                if (campaignInv.rewards) {
+                  return {
+                    ...campaign,
+                    progress: {
                       stages: campaignInv.rewards.length || 2,
-                      current: campaignInv.refersAttained, // reached
+                      current: campaignInv.refersAttained || 0, // reached
                       stageLabels: campaignInv.rewards.map(reward => reward.customFields && +reward.customFields.requirement)
-                        .sort((a: number, b: number) => a - b)
-                    };
-                  }
-                  return {};
-                })
-              );
-            }
-          }))
-        ),
-        withLatestFrom(this.campaigns$),
-        map(
-          ([progress, campaigns]) => {
-            // ASSUME guaranteed to have ultimate campaign
-            const ultimateCampaign = campaigns.find(campaign => campaign.name === 'Ultimate Task');
-            const ultimateCampaignInd = campaigns.findIndex(campaign => campaign.name === 'Ultimate Task');
-            const campaignsWithoutUltimateCampaign = campaigns.filter(campaign => campaign.name !== 'Ultimate Task');
-            return [...campaignsWithoutUltimateCampaign, ultimateCampaign].map((campaign, index) =>
-              // index skip over ultimateCampaign
-              ({ ...campaign as ICampaign, progress: (
-                index === campaigns.length - 1 ? progress[ultimateCampaignInd] : progress[index >= ultimateCampaignInd ? index + 1 : index]
-              ) as ProgressBarFields }));
-          }
-        ),
-        // tap to see transformed
+                        .sort((a: number, b: number) => a - b) as unknown as number[]
+                    }
+                  };
+                }
+                return {} as ICampaign;
+              })
+            )
+          ))
+        )
       );
     }
   }
 
   public selectCampaign(campaign: ICampaign): void {
     this.selected.emit(campaign);
-  }
-
-  public getCampaignImage(campaign: ICampaign): string {
-    return campaign.campaignBannerUrl ? campaign.campaignBannerUrl : 'https://perx-cdn-staging.s3.amazonaws.com/reward/item/images/35/580b585b2edbce24c47b2415-48075171-3595-4e55-b630-8a00b412dcc4.png';
   }
 }
