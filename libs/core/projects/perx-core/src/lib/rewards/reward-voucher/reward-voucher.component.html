@@ -8,19 +8,24 @@
       <mat-card class="title-card">
         <img *ngIf="reward.merchantImg" class="merchant-image" src="{{reward.merchantImg}}" [alt]="reward.merchantName">
         <div class="reward-name">
-          {{reward.name}}
+          {{reward?.name}}
+        </div>
+        <div *ngIf="reward?.subtitle" class="reward-subworth">
+          {{reward?.subtitle}}
         </div>
         <div class="reward-subtitle">
-          {{reward?.customFields?.requirementDescription || rewardProgress?.stageLabels[rewardProgress?.stageLabels.length -1] | progressRequire : rewardType}}
+          {{ useRewardDescription ?
+          (reward?.customFields?.requirementDescription | getStartNear) : (rewardProgress?.stageLabels[rewardProgress?.stageLabels.length -1] | progressRequire : rewardType)}}
         </div>
       </mat-card>
     </div>
-    <div class="wrapper"><ng-content select=".redeem-code"></ng-content></div>
+    <div class="wrapper" *ngIf="!showNoCodeReward"><ng-content select=".redeem-code"></ng-content></div>
     <ng-template #defaultTemplate>
       <div class="default">
         <div class="progress-wrapper">
-          <div [innerHTML]="reward?.customFields?.requirementDescription ?
-          (reward?.customFields?.requirementDescription | getStartInfo : (rewardProgress?.current >= rewardProgress?.stageLabels[rewardProgress?.stageLabels.length - 1])) : barHeadLine" class="headline-progress"></div>
+          <div [innerHTML]="useRewardDescription ?
+            (reward?.customFields?.requirementDescription | getStartInfo : (rewardProgress?.current >= rewardProgress?.stageLabels[rewardProgress?.stageLabels.length - 1]))
+            : barHeadLine" class="headline-progress"></div>
           <perx-progress-bar
             [accurateProg]="true"
             [stages]="rewardProgress?.stages"
@@ -30,16 +35,19 @@
         </div>
       </div>
     </ng-template>
-    <div *ngIf="showNoCodeReward | async; else defaultTemplate" class="grats-msg" [innerHTML]="reward?.howToRedeem"></div>
-    <div *ngIf="reward?.description" class="how-container">
-      <mat-icon class="info-icon">info_outline</mat-icon>
-      <div class="how-msg" [innerHTML]="reward?.description"></div>
+    <div *ngIf="showNoCodeReward; else defaultTemplate" class="grats-msg" [innerHTML]="reward?.howToRedeem"></div>
+    <div *ngIf="reward?.description">
+      <div class="how-container">
+        <mat-icon class="info-icon">info_outline</mat-icon>
+        <div class="how-msg" [innerHTML]="reward?.description | safeHtml"></div>
+      </div>
     </div>
+
     <mat-action-list *ngIf="reward?.customFields?.faqLink && reward.customFields.tncLink" class="external-link-list">
       <a mat-list-item matRipple *ngIf="reward?.customFields?.faqLink"
-         href="{{'https://' + reward?.customFields?.faqLink}}" target="_blank"><mat-icon class="link-icon">help_outline</mat-icon>FAQs</a>
+         href="{{reward?.customFields?.faqLink}}" target="_blank"><mat-icon class="link-icon">help_outline</mat-icon>FAQs</a>
       <a mat-list-item matRipple *ngIf="reward?.customFields?.tncLink"
-         href="{{'https://' + reward?.customFields?.tncLink}}"
+         href="{{ reward?.customFields?.tncLink}}"
          target="_blank"><mat-icon class="link-icon">description_outline</mat-icon>Terms and Conditions</a>
     </mat-action-list>
   </div>
