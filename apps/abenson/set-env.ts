@@ -21,15 +21,15 @@ const displayProperties = `"displayProperties": {
       "pages": [
           {
               "key": "tnc",
-              "title": "Terms and Conditions"
+              "title": "TNC"
           },
           {
               "key": "privacy-policy",
-              "title": "Privacy Policy"
+              "title": "CONTACT_US"
           },
           {
-              "key": "faq",
-              "title": "FAQ"
+              "key": "faqs",
+              "title": "FAQS"
           }
       ]
   }

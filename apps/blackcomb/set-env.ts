@@ -37,21 +37,21 @@ const displayProperties = `{
       "pages": [
           {
               "key": "contact-us",
-              "title": "Contact Us",
+              "title": "CONTACT_US",
               "content_url": "${
                 process.env.CONTACTUSURL ? process.env.CONTACTUSURL : ''
               }"
           },
           {
             "key": "faqs",
-            "title": "FAQs",
+            "title": "FAQS",
             "content_url": "${
               process.env.FAQSURL ? process.env.FAQSURL : ''
             }"
           },
           {
               "key": "tnc",
-              "title": "Terms and Conditions",
+              "title": "TNC",
               "content_url": "${process.env.TNCURL ? process.env.TNCURL : ''}"
           }
       ]
