@@ -25,6 +25,7 @@ import {
   Voucher,
   TransactionsService,
   IStampCard,
+  TransactionState,
 } from '@perxtech/core';
 import {
   ActivatedRoute,
@@ -184,7 +185,7 @@ export class ProgressCampaignComponent implements OnInit {
           this.cd.detectChanges();
           return this.loyaltyService.getLoyalty(1).pipe(
             switchMap((loyalty) => {
-              return this.transactionsService.getTransactionSummary().pipe(
+              return this.transactionsService.getTransactionSummary(TransactionState.processed).pipe(
                 map((summary) => {
                   if (campaign.rewards) {
                     const completeStageLabels: number[] = campaign.rewards.reduce((acc, curr) => [...acc, (
@@ -283,7 +284,7 @@ export class ProgressCampaignComponent implements OnInit {
         }
         if (campaign.type === CampaignType.give_reward) {
           // only supports one loyalty prgm, hardcode default
-          return this.transactionsService.getTransactionSummary().pipe(
+          return this.transactionsService.getTransactionSummary(TransactionState.processed).pipe(
             map((summary) => {
               if (campaign.rewards) {
                 return {
