@@ -86,7 +86,7 @@ export class GameComponent implements OnInit, OnDestroy {
     buttonTxt: this.isEmbedded ? null : 'GAME_PAGE.OUT_OF_TRIES_CTA',
     afterClosedCallBack: this,
     disableOverlayClose: true,
-  }
+  };
 
   public rewardsTxt: string;
   public startGameAnimation: boolean = false;
