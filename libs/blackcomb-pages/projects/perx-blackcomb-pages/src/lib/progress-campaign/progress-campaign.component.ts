@@ -66,6 +66,7 @@ export class ProgressCampaignComponent implements OnInit {
   public campaignProgress$: Observable<Partial<ProgressBarFields>>;
   public campaignRewardMode!: CampaignRewardMode;
   public campaignRewards: (IReward & { progress: ProgressBarFields, barHeadLine: string })[];
+  public meetShowVoucherRequirement: boolean = true; // only pay and spend take and adjusts this
 
   constructor(
     private route: ActivatedRoute,
@@ -127,6 +128,9 @@ export class ProgressCampaignComponent implements OnInit {
                               return campaign.rewards.map((reward, index) => {
                                 if (rewardPositionsSorted.length && rewardPositionsSorted[index]) {
                                   const stageLabels = [0, rewardPositionsSorted[index]];
+                                  if (stampCard && stampCard.stamps) {
+                                    this.meetShowVoucherRequirement = stampCard.stamps.length >= rewardPositionsSorted[index];
+                                  }
                                   progress = {
                                     stages: stageLabels.length,
                                     current: (transactionData.length ?
@@ -178,34 +182,41 @@ export class ProgressCampaignComponent implements OnInit {
         if (campaign.type === CampaignType.give_reward) {
           this.campaignRewardMode = CampaignRewardMode.TransactionAmount;
           this.cd.detectChanges();
-          return this.transactionsService.getTransactionSummary().pipe(
-            map((summary) => {
-              if (campaign.rewards) {
-                const completeStageLabels: number[] = campaign.rewards.reduce((acc, curr) => [...acc, (
-                  curr && curr.customFields && +curr.customFields.requirement
-                )], []).filter(isNumber);
-                let progress: Partial<ProgressBarFields> = {};
-                return campaign.rewards.map((reward, index) => {
-                  if (completeStageLabels && completeStageLabels[index]) {
-                    const stageLabels = [0, completeStageLabels[index]];
-                    progress = {
-                      stages: stageLabels.length || 2, // actually it's always going to be 2, can just hardcode 2
-                      current: ((summary.totalAmount || 0) / 100) >= completeStageLabels[index] ?
-                        completeStageLabels[index] : ((summary.totalAmount || 0) / 100),
-                      stageLabels
-                    };
+          return this.loyaltyService.getLoyalty(1).pipe(
+            switchMap((loyalty) => {
+              return this.transactionsService.getTransactionSummary().pipe(
+                map((summary) => {
+                  if (campaign.rewards) {
+                    const completeStageLabels: number[] = campaign.rewards.reduce((acc, curr) => [...acc, (
+                      curr && curr.customFields && +curr.customFields.requirement
+                    )], []).filter(isNumber);
+                    let progress: Partial<ProgressBarFields> = {};
+                    return campaign.rewards.map((reward, index) => {
+                      if (completeStageLabels && completeStageLabels[index]) {
+                        const stageLabels = [0, completeStageLabels[index]];
+                        if (loyalty && loyalty.pointsBalance !== undefined) {
+                          this.meetShowVoucherRequirement = loyalty.pointsBalance >= completeStageLabels[index];
+                        }
+                        progress = {
+                          stages: stageLabels.length || 2, // actually it's always going to be 2, can just hardcode 2
+                          current: ((summary.totalAmount || 0) / 100) >= completeStageLabels[index] ?
+                            completeStageLabels[index] : ((summary.totalAmount || 0) / 100),
+                          stageLabels
+                        };
+                      }
+                      return {
+                        ...reward,
+                        progress,
+                        barHeadLine: this.progressInfoPipe.transform(`${progress.current || 0}`, this.campaignRewardMode,
+                          this.campaign.name)
+                      };
+                    });
                   }
-                  return {
-                    ...reward,
-                    progress,
-                    barHeadLine: this.progressInfoPipe.transform(`${progress.current || 0}`, this.campaignRewardMode,
-                      this.campaign.name)
-                  };
-                });
-              }
-              return [];
+                  return [];
+                })
+              );
             })
-          );
+          )
         }
         if (campaign.type === CampaignType.invite) {
           this.campaignRewardMode = CampaignRewardMode.Referral;
@@ -340,13 +351,14 @@ export class ProgressCampaignComponent implements OnInit {
               stageLabels: selectedRewardWithProgress.progress.stageLabels,
               rewardType: this.campaignRewardMode,
               barHeadLine: selectedRewardWithProgress.barHeadLine,
-              useRewardDescription: this.campaign.name === 'Getting Started' || this.campaign.name === 'Ultimate Reward'
+              useRewardDescription: this.campaign.name === 'Getting Started' || this.campaign.name === 'Ultimate Reward',
+              enableRedeemButton: this.meetShowVoucherRequirement
             }
           };
         }
         let voucherId;
         for (const v of vouchers) {
-          if (v.reward && v.reward.id === reward.id) {
+          if (v.reward && v.reward.id === reward.id && this.meetShowVoucherRequirement) {
             voucherId = v.id;
           }
         }
