@@ -89,7 +89,8 @@ const appConfigFile = `{
   "custom": {
     "stampsType": "${process.env.STAMPS_TYPE ? process.env.STAMPS_TYPE : 'stamp_card'}",
     "redirectAfterLogin": "${process.env.REDIRECT_AFTER_LOGIN ? process.env.REDIRECT_AFTER_LOGIN : '/wallet'}",
-    "loginMethod": "${process.env.LOGIN_METHOD ? process.env.LOGIN_METHOD : 'phone'}"
+    "loginMethod": "${process.env.LOGIN_METHOD ? process.env.LOGIN_METHOD : 'phone'}",
+    "showPerformanceOverview": ${process.env.SHOW_PERFORMANCE_OVERVIEW ? process.env.SHOW_PERFORMANCE_OVERVIEW : false}
   },
   ${displayProperties}
 }
