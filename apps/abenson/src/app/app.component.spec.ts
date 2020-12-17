@@ -192,6 +192,7 @@ describe('AppComponent', () => {
     const locationTest = {} as Location;
     const shared = {} as SharedDataService;
     const matDialog = {} as MatDialog;
+    const titleService = {} as Title;
     app.onActivate(new LoginComponent(router, form, auth, notifi));
     expect(app.showHeader).toBeFalsy();
     // , profile, ntfs //for below signupcomponent but remove temp on disable card section
@@ -202,6 +203,7 @@ describe('AppComponent', () => {
         rewardsService,
         gamesService,
         router,
+        titleService,
         translate,
         themesService,
         configService,
