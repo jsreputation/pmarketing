@@ -354,5 +354,6 @@
   "LOGIN_SESSION_EXPIRED": "Login Session Expired",
   "Contact Us": "Contact Us",
   "Terms and Conditions": "Terms and Conditions",
-  "TRY_AGAIN": "Try again"
+  "TRY_AGAIN": "Try again",
+  "DESCRIPTION": "Description"
 }
