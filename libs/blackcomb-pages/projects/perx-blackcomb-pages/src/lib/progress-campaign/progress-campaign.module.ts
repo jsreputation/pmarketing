@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProgressBarModule, ProgressInfoPipe, RewardsModule, UtilsModule } from '@perxtech/core';
+import { ProgressBarModule, ProgressInfoPipe, RewardsModule, TransactionsServiceModule, UtilsModule } from '@perxtech/core';
 import { ProgressCampaignComponent } from './progress-campaign.component';
 import { MatCardModule } from '@angular/material/card';
 
@@ -18,6 +18,7 @@ import { MatCardModule } from '@angular/material/card';
     CommonModule,
     MatCardModule,
     ProgressBarModule,
+    TransactionsServiceModule.forRoot(),
     UtilsModule,
     RewardsModule.forChild()
   ]
