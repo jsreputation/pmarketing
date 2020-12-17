@@ -1,11 +1,12 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { IStatisticCardConfig } from '@perxtech/core';
+import { IStatisticCardConfig, IConfig, ConfigService } from '@perxtech/core';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CampaignInviteService } from '../../campaign-referrals/campaign-invite.service';
 import { IInviteResponse } from '../../campaign-referrals/models/campaign-referral.model';
+import { IDbshkConfig } from '../../model/IDbshk.model';
 
 @Component({
   selector: 'dbshk-agent-overview',
@@ -26,16 +27,24 @@ export class OverviewComponent implements OnInit {
   public inviteStatUnit: () => Observable<string>;
   public inviteStatistics: IStatisticCardConfig;
   public performanceStatistics: IStatisticCardConfig;
-
+  public showPerformanceOverview: boolean;
   constructor(
     protected datePipe: DatePipe,
     protected translate: TranslateService,
-    protected campaignInviteService: CampaignInviteService) {
+    protected campaignInviteService: CampaignInviteService,
+    private configService: ConfigService) {
   }
 
   public ngOnInit(): void {
     this.initTranslate();
     this.getInviteStatistics();
+
+    this.configService.readAppConfig<IDbshkConfig>().subscribe(
+      (config: IConfig<IDbshkConfig>) => {
+        this.showPerformanceOverview = config.custom && config.custom.showPerformanceOverview ?
+                  config.custom.showPerformanceOverview : false;
+      }
+    );
   }
 
   private getInviteStatistics(): void {
