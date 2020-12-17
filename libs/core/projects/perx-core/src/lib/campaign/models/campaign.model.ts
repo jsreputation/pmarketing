@@ -59,6 +59,7 @@ export interface ICampaign {
   referralCodes?: string[];
   refersAttained?: number;
   progress?: ProgressBarFields;
+  customFields?: any;
 }
 
 export enum CommChannel {

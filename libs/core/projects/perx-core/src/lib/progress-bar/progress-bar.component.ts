@@ -10,9 +10,9 @@ import { Component, Input, OnInit } from '@angular/core';
 
 export class ProgressBarComponent implements OnInit {
   @Input()
-  public stampImgUrl: string = 'https://perx-cdn-staging.s3.amazonaws.com/razer-assets/stamp.svg';
+  public stampImgUrl: string = 'https://perx-cdn-staging.s3.amazonaws.com/razer-assets/stamp.png';
   @Input()
-  public noStampImgUrl: string = 'https://perx-cdn-staging.s3.amazonaws.com/razer-assets/unstamp.svg';
+  public noStampImgUrl: string = 'https://perx-cdn-staging.s3.amazonaws.com/razer-assets/unstamp.png';
   @Input()
   public stages: number = 3;
   @Input()
@@ -24,7 +24,7 @@ export class ProgressBarComponent implements OnInit {
   @Input()
   public accurateProg: boolean = false;
 
-  public activeStampImgUrl: string = 'https://perx-cdn-staging.s3.amazonaws.com/razer-assets/activstamp.svg';
+  public activeStampImgUrl: string = 'https://perx-cdn-staging.s3.amazonaws.com/razer-assets/activstamp.png';
 
   public currentRewardIndex: number = 0;
   // helper function for rendering # slots using ngFor

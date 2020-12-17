@@ -22,6 +22,9 @@ export class RewardVoucherComponent implements OnInit {
   public rewardProgress: ProgressBarFields;
 
   @Input()
+  public useRewardDescription: boolean = false;
+
+  @Input()
   public barHeadLine: string;
 
   @Input()
@@ -57,7 +60,7 @@ export class RewardVoucherComponent implements OnInit {
   public showRewardFavButton?: boolean;
 
   @Input()
-  public showNoCodeReward: Observable<boolean>;
+  public showNoCodeReward: boolean;
 
   public favoriteRewards: IReward[];
 

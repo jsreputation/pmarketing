@@ -7,6 +7,7 @@ export interface ITransaction {
   properties: ITransactionProperties;
   transactionReference: string;
   pointsEarned: number;
+  razerStampsCount: number;
 }
 
 export interface ITransactionProperties {

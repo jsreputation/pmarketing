@@ -1,20 +1,30 @@
-<div *ngIf="campaignsWithProgress$ | async as campaigns" [@listAnimation]="campaigns.length">
-  <mat-card
-    *ngFor="let campaign of campaigns"
-    matRipple
-    class="campaigns-card"
-    (click)="selectCampaign(campaign)">
-    <div class="img-wrapper">
-      <img class="campaign-img" src="{{getCampaignImage(campaign)}}" alt="Campaign image">
+<perx-core-raz-adapted-campaign-card
+  *ngIf="stampCampaignsProg | async as stampCamps; else ghost"
+  (clicked)="selectCampaign($event)"
+  [campaigns]="stampCamps"
+></perx-core-raz-adapted-campaign-card>
+<perx-core-raz-adapted-campaign-card
+  *ngIf="loyaltyCampaignsProg | async as loyaltyCamps; else ghost"
+  (clicked)="selectCampaign($event)"
+  [campaigns]="loyaltyCamps"
+></perx-core-raz-adapted-campaign-card>
+<perx-core-raz-adapted-campaign-card
+  *ngIf="referralCampaignsProg | async as referralCamps; else ghost"
+  (clicked)="selectCampaign($event)"
+  [campaigns]="referralCamps"
+></perx-core-raz-adapted-campaign-card>
+<perx-core-raz-adapted-campaign-card
+  *ngIf="ultimateCampaignsProg  | async as ultimateCamps; else ghost"
+  (clicked)="selectCampaign($event)"
+  [campaigns]="ultimateCamps"
+></perx-core-raz-adapted-campaign-card>
+<ng-template #ghost>
+  <mat-card class="campaigns-wrap-ghost">
+    <div class="img-ghost">
     </div>
-    <mat-card-content class="card-content">
-      <p class="main-reward-title ellipsis-1-line">{{campaign.name}}</p>
-      <perx-progress-bar *ngIf="campaign.progress as progress"
-                         [stages]="progress?.stages"
-                         [current]="progress?.current"
-                         [stageLabels]="progress?.stageLabels"
-                         [showProgressLabels]="showProgressLabels"
-      ></perx-progress-bar>
-    </mat-card-content>
+    <div class="card-content">
+      <div class="progress-ghost"></div>
+    </div>
   </mat-card>
-</div>
+</ng-template>
+

@@ -10,7 +10,8 @@ import {
   IGameService, LoyaltyService,
   QuizService,
   SettingsService, StampService,
-  SurveyService
+  SurveyService,
+  TransactionsService
 } from '@perxtech/core';
 import { of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';
@@ -45,6 +46,9 @@ describe('ProgressCampaignHomeComponent', () => {
   const loyaltyServiceStub: Partial<LoyaltyService> = {
     getLoyalty: () => of()
   };
+  const transactionServiceStub: Partial<TransactionsService> = {
+    getTransactions: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -66,6 +70,7 @@ describe('ProgressCampaignHomeComponent', () => {
         { provide: SurveyService, useValue: surveyServiceStub },
         { provide: StampService, value: stampServiceStub },
         { provide: LoyaltyService, value: loyaltyServiceStub },
+        { provide: TransactionsService, value: transactionServiceStub }
       ]
     })
     .compileComponents();

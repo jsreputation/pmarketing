@@ -25,6 +25,9 @@ export class RewardsLargeListComponent implements OnInit {
   public ghostTimeOut: boolean;
 
   @Input()
+  public useRewardDescription: boolean = false;
+
+  @Input()
   public rewardMode?: CampaignRewardMode;
 
   @Input('rewardsList')

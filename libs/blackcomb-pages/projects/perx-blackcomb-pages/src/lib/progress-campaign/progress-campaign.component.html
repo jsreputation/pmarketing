@@ -1,15 +1,19 @@
 <div class="page" *ngIf="campaign$ | async as campaign">
   <mat-card class="banner" *ngIf="campaignProgress$ | async as progress">
     <div class="progress-info"
-         [innerHTML]="(progress.current || 0) | progressInfo: campaignRewardMode: campaign.name"></div>
+         [innerHTML]="(progress.current || 0) | number:'1.2-2' | progressInfo: campaignRewardMode: campaign.name"></div>
+    <div
+      class="progress-bar-campaign">
     <perx-progress-bar
      [stages]="progress?.stages"
      [current]="progress?.current"
      [showProgressLabels]="true"
      [stageLabels]="progress?.stageLabels"></perx-progress-bar>
+    </div>
   </mat-card>
   <div class="rewards" *ngIf="campaignRewards$">
     <perx-core-rewards-large-list
+      [useRewardDescription]="campaign.name === 'Getting Started' || campaign.name === 'Ultimate Reward'"
       (tapped)="goToReward($event)"
       [rewardMode]="campaignRewardMode"
       [rewardsList]="campaignRewards$">

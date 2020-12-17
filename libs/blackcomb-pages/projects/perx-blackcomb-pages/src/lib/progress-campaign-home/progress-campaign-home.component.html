@@ -8,8 +8,11 @@
 <!--    </map>-->
     <!--    todo: update the collection to support infinite scrolling without the see more button   -->
     <perx-blackcomb-pages-raz-adapted-campaigns-collection
+      [stampCampaigns]="stampCampaigns$"
+      [loyaltyCampaigns]="loyaltyCampaigns$"
+      [referralCampaigns]="referralCampaigns$"
       [showProgressLabels]="false"
-      [campaigns]="campaigns$" (selected)="goToCampaignPage($event)" [defaultNbCampaigns]="4">
+      (selected)="goToCampaignPage($event)">
     </perx-blackcomb-pages-raz-adapted-campaigns-collection>
   </div>
 </div>

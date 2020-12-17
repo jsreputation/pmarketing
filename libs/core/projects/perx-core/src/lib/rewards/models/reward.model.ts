@@ -28,6 +28,7 @@ export interface IReward {
     faqLink: string;
     requirementDescription: string;
     tncLink: string;
+    cardLink: string;
     requirement: string; // note number in context of campaign type (RAZ)
   };
 }

@@ -5,10 +5,10 @@
       <ng-container *ngIf="rewards$ | async as rewards">
       <div *ngIf="rewards.length > 0; then hasRewardsBlock else noRewardsBlock"></div>
       <ng-template #hasRewardsBlock>
-        <mat-card matRipple
+        <mat-card matRipple class="ga_view_reward"
           *ngFor="let reward of rewards" (click)="rewardClickedHandler(reward)">
           <div class="reward-img__wrapper">
-            <img class="thumbnail-img"*ngIf="reward.rewardThumbnail || defaultImg"
+            <img class="ga_view_reward thumbnail-img"*ngIf="reward.rewardThumbnail || defaultImg"
                  [class.no-image]="!reward.rewardThumbnail"
                  [src]="reward.rewardThumbnail || defaultImg"
                  [alt]="reward.name" />
@@ -23,7 +23,7 @@
           </div>
           <div class="reward-preview-details">
             <mat-card-content class="top-content">
-              <h1 class="main-reward-title ellipsis-1-line">{{reward.name}}</h1>
+              <h1 class="main-reward-title ellipsis-1-line">{{reward.name}} {{reward?.subtitle && '(' + reward?.subtitle + ')'}}</h1>
               <!-- todo: progress bar goes here -->
             </mat-card-content>
             <mat-card-content class="bottom-content">
@@ -36,7 +36,8 @@
                 [showProgressLabels]="false"></perx-progress-bar>
               <div class="counter" *ngIf="reward?.progress?.stageLabels?.length">
                 <div>
-                  {{reward.customFields.requirementDescription || (reward.progress.stageLabels[reward.progress.stageLabels.length - 1]  | progressRequire: rewardMode)}}
+                  {{ useRewardDescription ?
+                  (reward?.customFields?.requirementDescription | getStartNear) : (reward.progress.stageLabels[reward.progress.stageLabels.length - 1]  | progressRequire: rewardMode)}}
                 </div>
 <!--                <div>-->
 <!--                  {{reward?.progress.current}}/{{reward.progress.stageLabels[reward.progress.stageLabels.length - 1]}} {{rewardType}}-->
