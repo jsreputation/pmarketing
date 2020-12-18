@@ -151,7 +151,7 @@
     "UNKNOWN_ERROR_TXT": "Đã xảy ra lỗi không xác định, vui lòng thử lại sau",
     "FAIL_REDEMPTION_TXT": "Lấy làm tiếc! Đổi phiếu thưởng không thành công.",
     "BACK_TO_WALLET": "Quay lại ví",
-    "CTA_TXT": "Huỷ bỏ"
+    "CTA_TXT": "Quay lại"
   },
   "PROMO_CODE": {
     "DESCRIPTION": "Vui lòng nhập mã này trong quá trình thanh toán",
