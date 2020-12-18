@@ -196,7 +196,9 @@
     "TNC": "Terms and Conditions",
     "PRIVACY_POLICY": "Privacy Policy",
     "LOGOUT": "Log Out",
-    "FAVORITE_REWARD": "Favorite Rewards"
+    "FAVORITE_REWARD": "Favorite Rewards",
+    "FAQS": "FAQs",
+    "CONTACT_US": "Contact Us"
   },
   "STATUS_LABELS": {
     "ISSUED": "Approved",
@@ -342,7 +344,10 @@
     "GAME_NOT_VALID": "Oops!",
     "BACK_TO_WALLET": "Back to wallet",
     "GAME_NOT_VALID_TEXT": "This game is not available for you at the moment.",
-    "VIEW_REWARD": "View reward"
+    "VIEW_REWARD": "View reward",
+    "OUT_OF_TRIES_TITLE": "No more tries",
+    "OUT_OF_TRIES_TEXT": "Come back when you have more tries!",
+    "OUT_OF_TRIES_CTA": "Close"
   },
   "Gold": "Gold",
   "Silver": "Silver",

@@ -1,6 +1,7 @@
 <div class="prize-wrapper">
   <div class="reward-container">
     <perx-core-reward-voucher
+      [useRewardDescription]="useRewardDescription"
       [barHeadLine]="barHeadLine"
       [rewardType]="rewardType"
       *ngIf="appConfig"
@@ -13,7 +14,7 @@
       [showRewardFavButton]="appConfig.showRewardFavButton"
       [showExpiry]="appConfig.showExpiryOnRewardDetail"
       [rewardProgress]="rewardProgress"
-      [showNoCodeReward]="showNoCodeReward$"
+      [showNoCodeReward]="showNoCodeReward"
     ><div *ngIf="voucher$ | async as voucher" class="redeem-code">
       <div class="redeem-code-wrapper">
         <div class="redeem-code-headline"><strong>Congratulations!</strong></div>
@@ -44,8 +45,12 @@
       </i>
       <span *ngIf="!waitForSubmission">{{buttonLabel}}</span>
     </button>
-    <button [routerLink]="'/home'" *ngIf="doneText" mat-raised-button color="primary" class="reward-buy ga_purchase_reward">
-     {{doneText}}
+    <button [routerLink]="(rewardData?.subtitle && rewardData.name.includes('Card')) ? [] : ['home']" *ngIf="doneText" mat-raised-button color="primary"
+            class="reward-buy ga_done_reward">
+     {{rewardData.name.includes('Card') ? '' : doneText}}
+      <a *ngIf="rewardData.name.includes('Card')" class="card-redirect" [href]="rewardData?.customFields?.cardLink | safeUrl" target="_blank">
+       {{'Get ' + rewardData.name}}
+      </a>
     </button>
   </div>
 </div>

@@ -121,6 +121,7 @@ const campaign: ICampaign = {
   endsAt: null,
   rewards: [],
   thumbnailUrl: '',
+  customFields: {}
 };
 
 const mockTheme: ITheme = {

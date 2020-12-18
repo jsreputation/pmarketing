@@ -64,6 +64,7 @@ export class AppComponent implements OnInit {
   public backArrowIcon: string = '';
   public preAuth: boolean;
   public translationLoaded: boolean = false;
+  public navigateToLoading: boolean = false;
 
   private initBackArrow(url: string): void {
     this.backArrowIcon = BACK_ARROW_URLS.some(test => url.startsWith(test)) ? 'arrow_backward' : '';
@@ -93,7 +94,12 @@ export class AppComponent implements OnInit {
     ).subscribe();
     this.config.readAppConfig<ITheme>()
       .pipe(
-        tap((conf) => this.storage.setAppInfoProperty(conf.defaultLang, 'lang')),
+        tap((conf) => {
+          if (conf.homeAsProgressPage) {
+            this.navigateToLoading = conf.homeAsProgressPage;
+          }
+          this.storage.setAppInfoProperty(conf.defaultLang, 'lang');
+        }),
         // any avail languages needs to be 'gotten' first for lang toggle after to be responsive
         switchMap(() =>
           // getTranslation fetches the translation and registers the language
@@ -123,7 +129,7 @@ export class AppComponent implements OnInit {
       .subscribe(
         (msg: string) => {
           if (msg === 'LOGIN_SESSION_EXPIRED') {
-            this.router.navigate(['/login']);
+            this.router.navigate([this.navigateToLoading ? '/loading' : '/login']);
             this.translate.get('LOGIN_SESSION_EXPIRED').subscribe(txt => this.snack.open(txt, 'x', { duration: 2000 }));
           } else {
             this.snack.open(msg, 'x', { duration: 2000 });

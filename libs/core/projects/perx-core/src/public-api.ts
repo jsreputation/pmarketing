@@ -194,6 +194,7 @@ export { ProgressInfoPipe } from './lib/utils/progress-info/progress-info.pipe';
 export { GettingStartedPipe } from './lib/utils/getting-started/getting-started.pipe';
 export { IStatisticCardConfig, StatisticCardComponent } from './lib/utils/statistic-card/statistic-card.component';
 export { FlagLocalStorageService } from './lib/utils/flags/flag-local-storage.service';
+export { GettingStartedNearPicPipe } from './lib/utils/getting-started-near-pic/getting-started-near-pic.pipe';
 
 /**
  * Puzzles
@@ -332,3 +333,9 @@ export { ITransaction, ITransactionProperties, TransactionState } from './lib/tr
 export { ProgressBarModule } from './lib/progress-bar/progress-bar.module';
 export { ProgressBarComponent } from './lib/progress-bar/progress-bar.component';
 export { CampaignRewardMode } from './lib/rewards/rewards-large-list/rewards-large-list.component';
+
+/**
+ * RazerCampaignCard
+ */
+export { RazAdaptedCampaignCardModule } from './lib/raz-adapted-campaign-card/raz-adapted-campaign-card.module';
+export { RazAdaptedCampaignCardComponent } from './lib/raz-adapted-campaign-card/raz-adapted-campaign-card.component';

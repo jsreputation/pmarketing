@@ -187,11 +187,11 @@ export class SignIn2Component implements OnInit, OnDestroy {
           this.loading = false;
           if (err instanceof HttpErrorResponse) {
             if (err.status === 0) {
-              this.translate.get(['LOGIN_PAGE.POPUP_TITLE', 'LOGIN_PAGE.POPUP.TXT'])
+              this.translate.get(['LOGIN_PAGE.POPUP_TITLE', 'LOGIN_PAGE.POPUP_TXT'])
                 .subscribe(res => {
                   this.notificationService.addPopup({
                     title: res['LOGIN_PAGE.POPUP_TITLE'],
-                    text: res['LOGIN_PAGE.POPUP.TXT']
+                    text: res['LOGIN_PAGE.POPUP_TXT']
                   });
                 });
             } else if (err.status === 401 || err.status === 403) {

@@ -206,7 +206,9 @@
     "LIFE_TALK": "LIFE Talk",
     "TNC": "Terms and Conditions",
     "PRIVACY_POLICY": "Privacy Policy",
+    "FAQS": "FAQs",
     "LOGOUT": "Log Out",
+    "CONTACT_US": "Contact Us",
     "FAVORITE_REWARD": "Favorite Rewards",
     "ALLOW_MARKETING": "I would like to receive marketing notifications"
   },
@@ -347,7 +349,10 @@
     "GAME_NOT_VALID": "Oops!",
     "BACK_TO_WALLET": "Back to wallet",
     "GAME_NOT_VALID_TEXT": "This game is not available for you at the moment.",
-    "VIEW_REWARD": "View reward"
+    "VIEW_REWARD": "View reward",
+    "OUT_OF_TRIES_TITLE": "No more tries",
+    "OUT_OF_TRIES_TEXT": "Come back when you have more tries!",
+    "OUT_OF_TRIES_CTA": "Close"
   },
   "Gold": "Gold",
   "Silver": "Silver",

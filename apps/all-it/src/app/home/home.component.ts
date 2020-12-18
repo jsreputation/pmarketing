@@ -23,6 +23,7 @@ import { MatDialog } from '@angular/material';
 import { switchMap, map } from 'rxjs/operators';
 import { EMPTY } from 'rxjs';
 import { CurrencyPipe, DatePipe } from '@angular/common';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home',
@@ -36,6 +37,7 @@ export class HomeComponent extends BCHomeComponent implements OnInit {
     rewardsService: RewardsService,
     gamesService: IGameService,
     router: Router,
+    protected titleService: Title,
     translate: TranslateService,
     themesService: ThemesService,
     configService: ConfigService,
@@ -49,12 +51,14 @@ export class HomeComponent extends BCHomeComponent implements OnInit {
     currencyPipe: CurrencyPipe,
     tokenService: TokenStorage,
     datePipe: DatePipe,
+
     private loyaltyService: LoyaltyService
   ) {
     super(
       rewardsService,
       gamesService,
       router,
+      titleService,
       translate,
       themesService,
       configService,

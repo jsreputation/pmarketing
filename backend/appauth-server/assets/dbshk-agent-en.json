@@ -201,7 +201,9 @@
     "TNC": "Terms and Conditions",
     "PRIVACY_POLICY": "Privacy Policy",
     "LOGOUT": "Log Out",
-    "FAVORITE_REWARD": "Favorite Rewards"
+    "FAVORITE_REWARD": "Favorite Rewards",
+    "Terms and Conditions": "Terms & Conditions",
+    "Disclaimer": "Disclaimer"
   },
   "PROFILE": {
     "TITLE": "Profile",
@@ -259,7 +261,7 @@
     "MY_BAR_CODE": "My Barcode",
     "STAMP_CAMPAIGNS": "Stamp Card Campaigns",
     "CATALOG": "Catalog",
-    "MEMBER": "You've Earned",
+    "MEMBER": "",
     "GAMES": "Games",
     "QUIZ": "Quiz",
     "FEATURED_REWARDS": "Featured Rewards",
@@ -359,7 +361,10 @@
     "GAME_NOT_VALID": "Oops!",
     "BACK_TO_WALLET": "Back to wallet",
     "GAME_NOT_VALID_TEXT": "This game is not available for you at the moment.",
-    "VIEW_REWARD": "View reward"
+    "VIEW_REWARD": "View reward",
+    "OUT_OF_TRIES_TITLE": "No more tries",
+    "OUT_OF_TRIES_TEXT": "Come back when you have more tries!",
+    "OUT_OF_TRIES_CTA": "Close"
   },
   "PERFORMANCE": {
     "OVERVIEW_TITLE": "Overview",
@@ -368,8 +373,8 @@
     "LOYALTY_POINT_UNIT": "DBS$ / COMPASS Dollars",
     "OVERVIEW_SUB_TITLE": "You've Earned",
     "GLOBAL_TOP_SCORE": "Global top score",
-    "INVITE_STAT_CARD_TITLE": "Your invites",
-    "INVITE_STAT_SUB_TITLE": "Total Invites",
+    "INVITE_STAT_CARD_TITLE": "Your Invites",
+    "INVITE_STAT_SUB_TITLE": "TOTAL INVITES",
     "INVITE_STAT_UNIT": "Invites"
   },
   "Gold": "Gold",

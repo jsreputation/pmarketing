@@ -22,7 +22,9 @@ import {
   SettingsService,
   StampService,
   IVoucherService,
-  Voucher
+  Voucher,
+  TransactionsService,
+  IStampCard,
 } from '@perxtech/core';
 import {
   ActivatedRoute,
@@ -32,10 +34,11 @@ import {
 } from '@angular/router';
 import {
   Observable,
+  of,
   throwError
 } from 'rxjs';
-import { oc } from 'ts-optchain';
 import { ProgressInfoPipe } from '@perxtech/core';
+import { oc } from 'ts-optchain';
 
 export enum CampaignRewardMode {
   TransactionAmount = 'trans-amount',
@@ -46,11 +49,13 @@ export enum CampaignRewardMode {
 // helper function for Ts to detect removed undefined
 const isNumber = (obj: any): obj is number => typeof obj === 'number';
 
+const DEFAULT_PAGE_SIZE = 25;
+
 
 @Component({
   selector: 'perx-blackcomb-pages-progress-campaign',
   templateUrl: './progress-campaign.component.html',
-  styleUrls: [ './progress-campaign.component.scss' ]
+  styleUrls: ['./progress-campaign.component.scss']
 })
 export class ProgressCampaignComponent implements OnInit {
   public appConfig: IConfig<void>;
@@ -60,8 +65,7 @@ export class ProgressCampaignComponent implements OnInit {
   public campaignRewards$: Observable<IReward[]>;
   public campaignProgress$: Observable<Partial<ProgressBarFields>>;
   public campaignRewardMode!: CampaignRewardMode;
-  public campaignRewards: (IReward & {progress: ProgressBarFields, barHeadLine: string})[];
-
+  public campaignRewards: (IReward & { progress: ProgressBarFields, barHeadLine: string })[];
 
   constructor(
     private route: ActivatedRoute,
@@ -72,6 +76,7 @@ export class ProgressCampaignComponent implements OnInit {
     protected settingsService: SettingsService,
     protected stampService: StampService,
     protected voucherService: IVoucherService,
+    protected transactionsService: TransactionsService,
     private progressInfoPipe: ProgressInfoPipe,
     private cd: ChangeDetectorRef
   ) {
@@ -88,14 +93,14 @@ export class ProgressCampaignComponent implements OnInit {
       filter((params: ParamMap) => params.has('id')),
       switchMap((params: ParamMap) => {
         const id: string | null = params.get('id');
-        if (! id) {
+        if (!id) {
           return throwError({ message: 'campaign id is required' });
         }
         const idN = Number.parseInt(id, 10);
         return this.campaignService.getCampaign(idN);
       }),
       tap((campaign) => this.campaign = campaign),
-  );
+    );
 
 
     // different campaigns get rewards differently
@@ -105,65 +110,95 @@ export class ProgressCampaignComponent implements OnInit {
           this.campaignRewardMode = CampaignRewardMode.TransactionQuantity;
           this.cd.detectChanges();
           return this.stampService.getCards(campaign.id).pipe(
-            map(stampCardData => {
-              const stampCard = stampCardData[0];
-              if (stampCard) {
-                let progress: Partial<ProgressBarFields> = {};
-                // ASSUMING Rewards are SORTED according to increasing amount of points_required
-                const rewardPositionsSorted = stampCard.displayProperties.rewardPositions ?
-                  stampCard.displayProperties.rewardPositions.sort((a, b) => a - b) : [];
+            switchMap(
+              stampCardData => {
+                const stampCard = stampCardData[0];
+                if (stampCard && campaign && campaign.rewards) {
+                  let progress: Partial<ProgressBarFields> = {};
+                  // ASSUMING Rewards are SORTED according to increasing amount of points_required
+                  const rewardPositionsSorted = stampCard.displayProperties.rewardPositions ?
+                    stampCard.displayProperties.rewardPositions.sort((a, b) => a - b) : [];
 
-                // only stamps issued will be inside stamps property(use it to get progress)
-                if (campaign && campaign.rewards) {
-                  return campaign.rewards.map((reward, index) => {
-                    if (rewardPositionsSorted.length && rewardPositionsSorted[index]) {
-                      const stageLabels = [ 0, rewardPositionsSorted[index] ];
-                      progress = {
-                        stages: stageLabels.length,
-                        current: oc(stampCard).stamps.length(0) >= rewardPositionsSorted[index] ?
-                          rewardPositionsSorted[index] : oc(stampCard).stamps.length(0),
-                        stageLabels
+                  if (oc(campaign).customFields.transaction_based(false)) {
+                    return this.transactionsService.getTransactions(
+                      1, DEFAULT_PAGE_SIZE, campaign.customFields.min_spend || 0).pipe(
+                        map(transactionData => {
+                            if (campaign && campaign.rewards) {
+                              return campaign.rewards.map((reward, index) => {
+                                if (rewardPositionsSorted.length && rewardPositionsSorted[index]) {
+                                  const stageLabels = [0, rewardPositionsSorted[index]];
+                                  progress = {
+                                    stages: stageLabels.length,
+                                    current: (transactionData.length ?
+                                      transactionData[0].razerStampsCount : 0) >= rewardPositionsSorted[index] ?
+                                      rewardPositionsSorted[index] : (transactionData.length ? transactionData[0].razerStampsCount : 0),
+                                    stageLabels
+                                  };
+                                }
+                                return {
+                                  ...reward,
+                                  progress,
+                                  barHeadLine: this.progressInfoPipe.transform(`${progress.current || 0}`, this.campaignRewardMode,
+                                    this.campaign.name)
+                                };
+                              });
+                            }
+                        })
+                      );
+                  }// note end here
+
+                  // only stamps issued will be inside stamps property(use it to get progress)
+                  if (campaign && campaign.rewards) {
+                    return of(campaign.rewards.map((reward, index) => {
+                      if (rewardPositionsSorted.length && rewardPositionsSorted[index]) {
+                        const stageLabels = [0, rewardPositionsSorted[index]];
+                        progress = {
+                          stages: stageLabels.length,
+                          current: oc(stampCard).stamps.length(0) >= rewardPositionsSorted[index] ?
+                            rewardPositionsSorted[index] : oc(stampCard).stamps.length(0),
+                          stageLabels
+                        };
+                      }
+
+                      return {
+                        ...reward,
+                        progress,
+                        barHeadLine: this.progressInfoPipe.transform(`${progress.current || 0}`, this.campaignRewardMode,
+                          this.campaign.name)
                       };
-                    }
-
-                    return {
-                      ...reward,
-                      progress,
-                      barHeadLine: this.progressInfoPipe.transform(progress.current || 0, this.campaignRewardMode,
-                        this.campaign.name)
-                    };
-                  });
+                    }));
+                  }
                 }
+                return [];
               }
-              return [];
-            })
+            )
           );
         }
         // for referrals
         if (campaign.type === CampaignType.give_reward) {
           this.campaignRewardMode = CampaignRewardMode.TransactionAmount;
           this.cd.detectChanges();
-          return this.loyaltyService.getLoyalty(1).pipe(
-            map((loyalty) => {
+          return this.transactionsService.getTransactionSummary().pipe(
+            map((summary) => {
               if (campaign.rewards) {
-                const completeStageLabels: number[] = campaign.rewards.reduce((acc, curr) => [ ...acc, (
+                const completeStageLabels: number[] = campaign.rewards.reduce((acc, curr) => [...acc, (
                   curr && curr.customFields && +curr.customFields.requirement
-                ) ], []).filter(isNumber);
+                )], []).filter(isNumber);
                 let progress: Partial<ProgressBarFields> = {};
                 return campaign.rewards.map((reward, index) => {
                   if (completeStageLabels && completeStageLabels[index]) {
-                    const stageLabels = [ 0, completeStageLabels[index] ];
+                    const stageLabels = [0, completeStageLabels[index]];
                     progress = {
                       stages: stageLabels.length || 2, // actually it's always going to be 2, can just hardcode 2
-                      current: (loyalty.pointsBalance || 0) >= completeStageLabels[index] ?
-                        completeStageLabels[index] : (loyalty.pointsBalance || 0),
+                      current: ((summary.totalAmount || 0) / 100) >= completeStageLabels[index] ?
+                        completeStageLabels[index] : ((summary.totalAmount || 0) / 100),
                       stageLabels
                     };
                   }
                   return {
                     ...reward,
                     progress,
-                    barHeadLine: this.progressInfoPipe.transform(progress.current || 0, this.campaignRewardMode,
+                    barHeadLine: this.progressInfoPipe.transform(`${progress.current || 0}`, this.campaignRewardMode,
                       this.campaign.name)
                   };
                 });
@@ -178,13 +213,13 @@ export class ProgressCampaignComponent implements OnInit {
           return this.campaignService.getCampaign(campaign.id).pipe(
             map(campaignInv => {
               if (campaignInv.rewards) {
-                const completeStageLabels: number[] = campaignInv.rewards.reduce((acc, curr) => [ ...acc, (
+                const completeStageLabels: number[] = campaignInv.rewards.reduce((acc, curr) => [...acc, (
                   curr && curr.customFields && +curr.customFields.requirement
-                ) ], []).filter(isNumber);
+                )], []).filter(isNumber);
                 let progress: Partial<ProgressBarFields> = {};
                 return campaignInv.rewards.map((reward, index) => {
                   if (completeStageLabels && completeStageLabels[index]) {
-                    const stageLabels = [ 0, completeStageLabels[index] ];
+                    const stageLabels = [0, completeStageLabels[index]];
                     progress = {
                       stages: stageLabels.length || 2, // actually it's always going to be 2, can just hardcode 2
                       current: (campaignInv.refersAttained || 0) >= completeStageLabels[index] ?
@@ -195,7 +230,7 @@ export class ProgressCampaignComponent implements OnInit {
                   return {
                     ...reward,
                     progress,
-                    barHeadLine: this.progressInfoPipe.transform(progress.current || 0, this.campaignRewardMode,
+                    barHeadLine: this.progressInfoPipe.transform(`${progress.current || 0}`, this.campaignRewardMode,
                       this.campaign.name)
                   };
                 });
@@ -206,7 +241,8 @@ export class ProgressCampaignComponent implements OnInit {
         }
         return [];
       }),
-      tap((rewardsWithProgress: (IReward & { progress: ProgressBarFields,
+      tap((rewardsWithProgress: (IReward & {
+        progress: ProgressBarFields,
         barHeadLine: string
       })[]) => this.campaignRewards = rewardsWithProgress)
     );
@@ -217,38 +253,36 @@ export class ProgressCampaignComponent implements OnInit {
           return this.stampService.getCards(campaign.id).pipe(
             // there is only going to be one stamp. take first obj in array,
             // configured to be one single stampcard
-            map((stampCards) => {
-              if (stampCards && stampCards[0] && stampCards[0].displayProperties) {
-                const lengthOfRewardPos = oc(stampCards[0].displayProperties.rewardPositions)([]).length;
-                return ({
-                    stages: lengthOfRewardPos ?
-                      (lengthOfRewardPos === 1 || lengthOfRewardPos === 2) ?
-                        (lengthOfRewardPos + 1) : lengthOfRewardPos : 2,
-                    current: (stampCards[0].stamps && stampCards[0].stamps.length) || 0,
-                    stageLabels: stampCards[0].displayProperties.rewardPositions ?
-                      ((lengthOfRewardPos === 1 || lengthOfRewardPos === 2) ?
-                        [ 0 , ...stampCards[0].displayProperties.rewardPositions ].sort(( a, b) => a - b)
-                        : [ ...stampCards[0].displayProperties.rewardPositions ].sort(( a, b) => a - b)) : // if len is only 1 add 0
-                      []
-                  });
+            switchMap((stampCards) => {
+              if (oc(campaign).customFields.transaction_based(false)) {
+                return this.transactionsService.getTransactions(
+                  1, DEFAULT_PAGE_SIZE, campaign.customFields.min_spend || 0).pipe(
+                    map(transactionData => ({
+                      ...this.mapStampCampaign(stampCards, (transactionData.length ? transactionData[0].razerStampsCount : 0) || 0)
+                    }))
+                  );
               }
-              return {};
-            })
-          ) as any;
+              return of({
+                ...campaign as ICampaign,
+                ...this.mapStampCampaign(stampCards)
+              });
+            }
+            )
+          );
         }
         if (campaign.type === CampaignType.give_reward) {
           // only supports one loyalty prgm, hardcode default
-          return this.loyaltyService.getLoyalty(1).pipe(
-            map((loyalty) => {
+          return this.transactionsService.getTransactionSummary().pipe(
+            map((summary) => {
               if (campaign.rewards) {
                 return {
                   stages: campaign.rewards.length || 2, // if length 0 default to 2 stages
                   // biggest reward return last, test if really need
                   // find the highest point and see if balance >=, at final stage
-                  current: loyalty.pointsBalance || 0,
-                  stageLabels: campaign.rewards.reduce((acc, curr) => [ ...acc, (
+                  current: (summary.totalAmount || 0) / 100,
+                  stageLabels: campaign.rewards.reduce((acc, curr) => [...acc, (
                     curr && curr.customFields && curr.customFields.requirement
-                  ) ], []).filter(v => v)
+                  )], []).filter(v => v)
                 };
               }
               return {}; // return an empty obj
@@ -271,10 +305,27 @@ export class ProgressCampaignComponent implements OnInit {
             })
           );
         }
+        return {} as Iterable<any>;
       })
     );
+  }
 
-
+  public mapStampCampaign(stampCards: IStampCard[], current?: number): (ProgressBarFields | {}) {
+    if (stampCards && stampCards[0] && stampCards[0].displayProperties) {
+      const lengthOfRewardPos = oc(stampCards[0].displayProperties.rewardPositions)([]).length;
+      return {
+        stages: lengthOfRewardPos ?
+          (lengthOfRewardPos === 1 || lengthOfRewardPos === 2) ?
+            (lengthOfRewardPos + 1) : lengthOfRewardPos : 2,
+        current: (current !== undefined ? current : (stampCards[0].stamps && stampCards[0].stamps.length) || 0),
+        stageLabels: stampCards[0].displayProperties.rewardPositions ?
+          ((lengthOfRewardPos === 1 || lengthOfRewardPos === 2) ?
+            [0, ...stampCards[0].displayProperties.rewardPositions].sort((a, b) => a - b)
+            : [...stampCards[0].displayProperties.rewardPositions].sort((a, b) => a - b)) : // if len is only 1 add 0
+          []
+      };
+    }
+    return of({});
   }
 
   public goToReward(reward: IReward): void {
@@ -288,7 +339,8 @@ export class ProgressCampaignComponent implements OnInit {
               current: selectedRewardWithProgress.progress.current,
               stageLabels: selectedRewardWithProgress.progress.stageLabels,
               rewardType: this.campaignRewardMode,
-              barHeadLine: selectedRewardWithProgress.barHeadLine
+              barHeadLine: selectedRewardWithProgress.barHeadLine,
+              useRewardDescription: this.campaign.name === 'Getting Started' || this.campaign.name === 'Ultimate Reward'
             }
           };
         }
@@ -299,9 +351,9 @@ export class ProgressCampaignComponent implements OnInit {
           }
         }
         this.router.navigate(voucherId ?
-          [ `/reward-voucher-detail/${reward.id}/${voucherId}` ] :
-          [ `/reward-voucher-detail/${reward.id}` ]
-        , navigationExtras);
+          [`/reward-voucher-detail/${reward.id}/${voucherId}`] :
+          [`/reward-voucher-detail/${reward.id}`]
+          , navigationExtras);
       }
     );
   }

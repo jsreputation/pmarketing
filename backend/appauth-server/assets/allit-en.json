@@ -225,7 +225,8 @@
     "ACCOUNT": "Account",
     "PAY": "Pay",
     "NEARME": "Near Me",
-    "STAMPS": "Stamps"
+    "STAMPS": "Stamps",
+    "DEALS": "Deals"
   },
   "QUIZ_TEMPLATE": {
     "CTA_START_TXT": "Take the quiz",
@@ -395,6 +396,9 @@
     "GAME_NOT_VALID": "Oops!",
     "BACK_TO_WALLET": "Back to wallet",
     "GAME_NOT_VALID_TEXT": "This game is not available for you at the moment.",
-    "View Reward": "This game is not available for you at the moment."
+    "View Reward": "This game is not available for you at the moment.",
+    "OUT_OF_TRIES_TITLE": "No more tries",
+    "OUT_OF_TRIES_TEXT": "Come back when you have more tries!",
+    "OUT_OF_TRIES_CTA": "Close"
   }
 }

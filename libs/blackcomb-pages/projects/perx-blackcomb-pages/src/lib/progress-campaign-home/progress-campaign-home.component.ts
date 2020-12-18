@@ -10,7 +10,7 @@ import {
   SettingsService
 } from '@perxtech/core';
 import { catchError, map, switchMap, takeLast, tap } from 'rxjs/operators';
-import { Observable, of, zip } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
@@ -20,10 +20,12 @@ import { Router } from '@angular/router';
 })
 export class ProgressCampaignHomeComponent implements OnInit {
   public appConfig: IConfig<void>;
-  public campaigns$: Observable<ICampaign[]>;
   public appRemoteFlags: IFlags;
   public showPageTitle: boolean = false;
   public bannerImg: string;
+  public stampCampaigns$: Observable<ICampaign[]>;
+  public loyaltyCampaigns$: Observable<ICampaign[]>;
+  public referralCampaigns$: Observable<ICampaign[]>;
 
   constructor(
     protected router: Router,
@@ -59,25 +61,17 @@ export class ProgressCampaignHomeComponent implements OnInit {
 
   private initCampaign(): void {
     // get targeted campaigns to prevent zip within raz-adapted-collection from returning undefined
-    const stampCampaigns: Observable<ICampaign[]> = this.campaignService.getCampaigns({ type: CampaignType.stamp }).pipe(
+    this.stampCampaigns$ = this.campaignService.getCampaigns({ type: CampaignType.stamp }).pipe(
       switchMap((campaigns: ICampaign[]) => of(campaigns).pipe(catchError(err => of(err)))),
       takeLast(1)
     );
-    const loyaltyCampaigns: Observable<ICampaign[]> = this.campaignService.getCampaigns({ type: CampaignType.give_reward }).pipe(
+    this.loyaltyCampaigns$ = this.campaignService.getCampaigns({ type: CampaignType.give_reward }).pipe(
       switchMap((campaigns: ICampaign[]) => of(campaigns).pipe(catchError(err => of(err)))),
       takeLast(1)
     );
-    const referralCampaigns: Observable<ICampaign[]> = this.campaignService.getCampaigns({ type: CampaignType.invite }).pipe(
+    this.referralCampaigns$ = this.campaignService.getCampaigns({ type: CampaignType.invite }).pipe(
       switchMap((campaigns: ICampaign[]) => of(campaigns).pipe(catchError(err => of(err)))),
       takeLast(1)
-    );
-    // ordered by fetching stamp campaigns firstly
-    this.campaigns$ = zip(
-      stampCampaigns,
-      loyaltyCampaigns,
-      referralCampaigns
-    ).pipe(
-      map(([stamp, loyalty, referral]) => [...stamp, ...loyalty, ...referral])
     );
   }
 
@@ -86,6 +80,4 @@ export class ProgressCampaignHomeComponent implements OnInit {
     this.router.navigate([`progress-campaign/${campaign.id}`]);
   }
 
-//  START CUSTOM RAZER THROWAWAY CODE
-//  END CUSTOM RAZER THROWAWAY CODE
 }

@@ -344,7 +344,10 @@
     "GAME_NOT_VALID": "Oops!",
     "BACK_TO_WALLET": "Back to wallet",
     "GAME_NOT_VALID_TEXT": "This game is not available for you at the moment.",
-    "VIEW_REWARD": "View reward"
+    "VIEW_REWARD": "View reward",
+    "OUT_OF_TRIES_TITLE": "No more tries",
+    "OUT_OF_TRIES_TEXT": "Come back when you have more tries!",
+    "OUT_OF_TRIES_CTA": "Close"
   },
   "Gold": "Gold",
   "Silver": "Silver",
@@ -354,5 +357,6 @@
   "LOGIN_SESSION_EXPIRED": "Login Session Expired",
   "Contact Us": "Contact Us",
   "Terms and Conditions": "Terms and Conditions",
-  "TRY_AGAIN": "Try again"
+  "TRY_AGAIN": "Try again",
+  "DESCRIPTION": "Description"
 }

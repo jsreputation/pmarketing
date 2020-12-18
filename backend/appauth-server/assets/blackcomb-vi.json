@@ -344,7 +344,10 @@
     "GAME_NOT_VALID": "Oops!",
     "BACK_TO_WALLET": "Quay lại ví",
     "GAME_NOT_VALID_TEXT": "This game is not available for you at the moment.",
-    "VIEW_REWARD": "Xem phần thưởng"
+    "VIEW_REWARD": "Xem phần thưởng",
+    "OUT_OF_TRIES_TITLE": "No more tries",
+    "OUT_OF_TRIES_TEXT": "Come back when you have more tries!",
+    "OUT_OF_TRIES_CTA": "Close"
   },
   "DLVN_CAMPAIGNS": {
     "INSTANT_REWARD": {
