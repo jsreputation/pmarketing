@@ -34,7 +34,11 @@
             (stageLabels ? ((stageLabels[i] / stageLabels[stageLabels?.length - 1]) * 100) + ((i === stages - 1) ? - 4 : 0) : 0) + '%',
             'background-image': 'url(' + ((current >= stageLabels[i] || i === 0) ? ((i !== 0 && i === currentRewardIndex) ? activeStampImgUrl : stampImgUrl) :
               noStampImgUrl) + ')',
-            'border': (i !== 0 && i === currentRewardIndex) ? '2.4px solid #44D62C' : undefined
+            'border': (actualLightIndex !== undefined) ? (
+              !accurateProg ?
+              (i === actualLightIndex ? '2.4px solid #44D62C' : undefined) :
+              (i !== 0 && i === actualLightIndex ? '2.4px solid #44D62C' : undefined))
+            : (i !== 0 && i === currentRewardIndex) ? '2.4px solid #44D62C' : undefined
            }">
         <div class="stamp-label"
               [ngStyle]="{
@@ -48,4 +52,3 @@
       </div>
     </div>
 </div>
-

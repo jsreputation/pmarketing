@@ -184,11 +184,12 @@ export class V4TransactionsService extends TransactionsService {
   public getTransactions(
     page: number = 1,
     pageSize: number = DEFAULT_PAGE_COUNT,
-    startAmount?: number
+    startAmount?: number,
+    state?: string
   ): Observable<ITransaction[]> {
     const razerParams: {} = startAmount !== undefined ? {
       start_amount: `${startAmount}`,
-      state: 'pending|processed'
+      state: state || 'pending|processed'
     } : {};
     const queryParams = {
       params: {
@@ -207,9 +208,9 @@ export class V4TransactionsService extends TransactionsService {
     );
   }
 
-  public getTransactionSummary(): Observable<{totalAmount: number}> {
+  public getTransactionSummary(state?: string): Observable<{totalAmount: number}> {
     const params = {
-      state: 'pending|processed'
+      state: state || 'pending|processed'
     };
     return this.http.get(`${this.apiHost}/v4/transaction_summary`, {params}).pipe(
       map((res: {data: {total_amount: number}}) => ({totalAmount: +res.data.total_amount || 0}))

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Observable, of, zip } from 'rxjs';
-import { ICampaign, ICampaignService, IStampCard, ProgressBarFields, StampService, TransactionsService } from '@perxtech/core';
+import { combineLatest, Observable, of, zip } from 'rxjs';
+import { ICampaign, ICampaignService, IStampCard, ProgressBarFields, StampService, TransactionsService, TransactionState } from '@perxtech/core';
 import { concatMap, map, switchMap } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 
@@ -51,20 +51,24 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
   // if loyalty call /loyalty
   // if referral call as is but map the referral fields
 
-  public mapStampCampaign(stampCards: IStampCard[], current?: number): ({ progress: ProgressBarFields } | {}) {
+  public mapStampCampaign(stampCards: IStampCard[], current?: number): (ProgressBarFields | {}) {
     if (stampCards && stampCards[0] && stampCards[0].displayProperties) {
       const lengthOfRewardPos = oc(stampCards[0].displayProperties.rewardPositions)([]).length;
+      const intemProgress = {
+        stages: lengthOfRewardPos ?
+          (lengthOfRewardPos === 1 || lengthOfRewardPos === 2) ?
+            (lengthOfRewardPos + 1) : lengthOfRewardPos : 2,
+        current: (current !== undefined ? current : (stampCards[0].stamps && stampCards[0].stamps.length) || 0),
+        stageLabels: stampCards[0].displayProperties.rewardPositions ?
+          ((lengthOfRewardPos === 1 || lengthOfRewardPos === 2) ?
+            [0, ...stampCards[0].displayProperties.rewardPositions].sort((a, b) => a - b)
+            : [...stampCards[0].displayProperties.rewardPositions].sort((a, b) => a - b)) : // if len is only 1 add 0
+          []
+      };
       return {
         progress: {
-          stages: lengthOfRewardPos ?
-            (lengthOfRewardPos === 1 || lengthOfRewardPos === 2) ?
-              (lengthOfRewardPos + 1) : lengthOfRewardPos : 2,
-          current: (current !== undefined ? current : (stampCards[0].stamps && stampCards[0].stamps.length) || 0),
-          stageLabels: stampCards[0].displayProperties.rewardPositions ?
-            ((lengthOfRewardPos === 1 || lengthOfRewardPos === 2) ?
-              [0, ...stampCards[0].displayProperties.rewardPositions].sort((a, b) => a - b)
-              : [...stampCards[0].displayProperties.rewardPositions].sort((a, b) => a - b)) : // if len is only 1 add 0
-            []
+          ...current ?
+          ({...intemProgress, lightStage: (stampCards[0].stamps && stampCards[0].stamps.length)}) : intemProgress
         }
       };
     }
@@ -85,7 +89,7 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
                   1, DEFAULT_PAGE_SIZE, campaign.customFields.min_spend || 0).pipe(
                     map(transactionData => ({
                       ...campaign as ICampaign,
-                      ...this.mapStampCampaign(stampCards, (transactionData.length ? transactionData[0].razerStampsCount : 0))
+                      ...this.mapStampCampaign(stampCards, (transactionData.length ? transactionData[0].razerStampsCount : 0) || 0)
                     }))
                   );
               }
@@ -115,19 +119,22 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
     }
 
     if (this.loyaltyCampaigns) {
+      const transactionSummaryProcessed$ = this.transactionsService.getTransactionSummary(TransactionState.processed);
+      const transactionSummary$ = this.transactionsService.getTransactionSummary();
       this.loyaltyCampaignsProg = this.loyaltyCampaigns.pipe(
         switchMap(
           (campaigns: ICampaign[]) => zip(...campaigns.map(campaign => this.campaignsService.getCampaign(campaign.id).pipe(
-            concatMap((campaignRwd) => this.transactionsService.getTransactionSummary().pipe(
-              map((summary) => {
-                if (summary && campaignRwd.rewards) {
+            concatMap((campaignRwd) => combineLatest(transactionSummary$, transactionSummaryProcessed$).pipe(
+              map(([summaryFull, summaryProcessed]) => {
+                if (summaryFull && summaryProcessed && campaignRwd.rewards) {
                   return {
                     ...campaign,
                     progress: {
                       stages: campaignRwd.rewards.length || 2, // if length 0 default to 2 stages
                       // biggest reward return last, test if really need
                       // find the highest point and see if balance >=, at final stage
-                      current: ((summary.totalAmount || 0) / 100) || 0,
+                      lightStage: summaryProcessed.totalAmount ? (summaryProcessed.totalAmount / 100) : 0,
+                      current: ((summaryFull.totalAmount || 0) / 100) || 0,
                       stageLabels: campaignRwd.rewards.reduce((acc, curr) => [...acc, (
                         curr && curr.customFields && curr.customFields.requirement
                       )], []).filter(v => v) as unknown as number[]
@@ -136,10 +143,9 @@ export class RazAdaptedCampaignsCollectionComponent implements OnInit {
                 }
                 return {} as ICampaign;
               })
-            )
+            ))
             ))))
-        )
-      );
+        );
     }
 
     if (this.referralCampaigns) {
