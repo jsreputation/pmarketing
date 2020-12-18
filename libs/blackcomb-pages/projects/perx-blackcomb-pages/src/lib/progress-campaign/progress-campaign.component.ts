@@ -70,7 +70,6 @@ export class ProgressCampaignComponent implements OnInit {
   public campaignProgress$: Observable<Partial<ProgressBarFields>>;
   public campaignRewardMode!: CampaignRewardMode;
   public campaignRewards: (IReward & { progress: ProgressBarFields, barHeadLine: string, meetShowVoucherRequirement: boolean })[];
-  public meetShowVoucherRequirement: boolean = true; // only pay and spend take and adjusts this
 
   constructor(
     private route: ActivatedRoute,
@@ -145,7 +144,7 @@ export class ProgressCampaignComponent implements OnInit {
                     stages: campaign.rewards.length || 2, // if length 0 default to 2 stages
                     // biggest reward return last, test if really need
                     // find the highest point and see if balance >=, at final stage
-                    lightStage: summaryProcessed.totalAmount ? (summaryProcessed.totalAmount / 100) : undefined,
+                    lightStage: summaryProcessed.totalAmount ? (summaryProcessed.totalAmount / 100) : 0,
                     current: (summaryFull.totalAmount || 0) / 100,
                     stageLabels: campaign.rewards.reduce((acc, curr) => [...acc, (
                       curr && curr.customFields && curr.customFields.requirement
@@ -199,19 +198,21 @@ export class ProgressCampaignComponent implements OnInit {
                         map(transactionData => {
                           if (campaign && campaign.rewards) {
                             return campaign.rewards.map((reward, index) => {
+                              const meetShowVoucherRequirement = (stampCard.stamps as IStamp[]).length >= rewardPositionsSorted[index];
                               if (rewardPositionsSorted.length && rewardPositionsSorted[index]) {
                                 const stageLabels = [0, rewardPositionsSorted[index]];
                                 progress = {
                                   stages: stageLabels.length,
-                                  current: (transactionData.length ?
-                                    transactionData[0].razerStampsCount : 0) >= rewardPositionsSorted[index] ?
-                                    rewardPositionsSorted[index] : (transactionData.length ? transactionData[0].razerStampsCount : 0),
+                                  current: ((this.campaignProgress && this.campaignProgress.current) ?
+                                  this.campaignProgress.current : 0) >= rewardPositionsSorted[index] ?
+                                  rewardPositionsSorted[index] : (transactionData.length ? transactionData[0].razerStampsCount : 0),
+                                  lightStage: meetShowVoucherRequirement ? rewardPositionsSorted[rewardPositionsSorted.length - 1] : 0,
                                   stageLabels
                                 };
                               }
                               return {
                                 ...reward,
-                                meetShowVoucherRequirement: (stampCard.stamps as IStamp[]).length >= rewardPositionsSorted[index],
+                                meetShowVoucherRequirement,
                                 progress,
                                 barHeadLine: this.progressInfoPipe
                                 .transform(`${this.campaignProgress.current || 0}`, this.campaignRewardMode,
@@ -268,7 +269,8 @@ export class ProgressCampaignComponent implements OnInit {
                     const stageLabels = [0, completeStageLabels[index]];
                     progress = {
                       stages: stageLabels.length || 2, // actually it's always going to be 2, can just hardcode 2
-                      current: (this.campaignProgress.current ? this.campaignProgress.current : 0) >= completeStageLabels[index] ?
+                      current: ((this.campaignProgress && this.campaignProgress.current) ?
+                      this.campaignProgress.current : 0) >= completeStageLabels[index] ?
                         completeStageLabels[index] : (this.campaignProgress.current ? this.campaignProgress.current : 0),
                       lightStage: meetShowVoucherRequirement ? completeStageLabels[completeStageLabels.length - 1] : 0,
                       stageLabels
@@ -346,7 +348,7 @@ export class ProgressCampaignComponent implements OnInit {
       };
       return current ? ({...intemProgress, lightStage: (stampCards[0].stamps && stampCards[0].stamps.length)}) : intemProgress;
     }
-    return of({});
+    return {};
   }
 
   public goToReward(reward: IReward): void {

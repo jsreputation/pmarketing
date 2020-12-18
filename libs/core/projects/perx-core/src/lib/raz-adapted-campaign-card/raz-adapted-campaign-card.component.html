@@ -1,20 +1,13 @@
 <div *ngIf="campaigns">
-  <mat-card
-    *ngFor="let campaign of campaigns"
-    matRipple
-    class="campaigns-card"
-    (click)="emitValue(campaign)">
+  <mat-card *ngFor="let campaign of campaigns" matRipple class="campaigns-card" (click)="emitValue(campaign)">
     <div class="img-wrapper">
       <img class="campaign-img" src="{{getCampaignImage(campaign)}}" alt="Campaign image">
     </div>
     <mat-card-content class="card-content">
       <p class="main-reward-title ellipsis-1-line">{{campaign.name}}</p>
-      <perx-progress-bar *ngIf="campaign.progress as progress"
-                         [stages]="progress?.stages"
-                         [current]="progress?.current"
-                         [stageLabels]="progress?.stageLabels"
-                         [showProgressLabels]="showProgressLabels"
-      ></perx-progress-bar>
+      <perx-progress-bar *ngIf="campaign.progress as progress" [stages]="progress?.stages" [current]="progress?.current"
+        [stageLabels]="progress?.stageLabels" [showProgressLabels]="showProgressLabels"
+        [actualProcessedProg]="progress?.lightStage"></perx-progress-bar>
     </mat-card-content>
   </mat-card>
 </div>

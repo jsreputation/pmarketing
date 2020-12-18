@@ -22,7 +22,7 @@ export class ProgressBarComponent implements OnInit {
   @Input()
   public showProgressLabels: boolean = false;
   @Input()
-  public accurateProg: boolean = false;
+  public accurateProg: boolean = false; // can use to identify is a reward progress or not
   @Input()
   public actualProcessedProg?: number;
 
