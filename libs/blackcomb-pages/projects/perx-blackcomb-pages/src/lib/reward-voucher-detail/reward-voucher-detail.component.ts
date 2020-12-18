@@ -86,9 +86,10 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
     this.rewardType = rewardType;
     if (current !== (undefined) && stageLabels) {
       this.rewardProgress = {
-        current: history.state.current,
+        current,
+        lightStage: enableRedeemButton ? stageLabels[stageLabels.length - 1] : 0,
         stages: 2,
-        stageLabels: history.state.stageLabels
+        stageLabels
       };
     } else {
       this.location.back();

@@ -213,7 +213,8 @@ export class ProgressCampaignComponent implements OnInit {
                                 ...reward,
                                 meetShowVoucherRequirement: (stampCard.stamps as IStamp[]).length >= rewardPositionsSorted[index],
                                 progress,
-                                barHeadLine: this.progressInfoPipe.transform(`${this.campaignProgress.current || 0}`, this.campaignRewardMode,
+                                barHeadLine: this.progressInfoPipe
+                                .transform(`${this.campaignProgress.current || 0}`, this.campaignRewardMode,
                                   this.campaign.name)
                               };
                             });
@@ -262,18 +263,20 @@ export class ProgressCampaignComponent implements OnInit {
                 )], []).filter(isNumber);
                 let progress: Partial<ProgressBarFields> = {};
                 return campaign.rewards.map((reward, index) => {
+                  const meetShowVoucherRequirement = ((summary.totalAmount || 0) / 100) >= completeStageLabels[index];
                   if (completeStageLabels && completeStageLabels[index]) {
                     const stageLabels = [0, completeStageLabels[index]];
                     progress = {
                       stages: stageLabels.length || 2, // actually it's always going to be 2, can just hardcode 2
-                      current: ((summary.totalAmount || 0) / 100) >= completeStageLabels[index] ?
-                        completeStageLabels[index] : ((summary.totalAmount || 0) / 100),
+                      current: (this.campaignProgress.current ? this.campaignProgress.current : 0) >= completeStageLabels[index] ?
+                        completeStageLabels[index] : (this.campaignProgress.current ? this.campaignProgress.current : 0),
+                      lightStage: meetShowVoucherRequirement ? completeStageLabels[completeStageLabels.length - 1] : 0,
                       stageLabels
                     };
                   }
                   return {
                     ...reward,
-                    meetShowVoucherRequirement: summary.totalAmount >= completeStageLabels[index],
+                    meetShowVoucherRequirement,
                     progress,
                     barHeadLine: this.progressInfoPipe.transform(`${this.campaignProgress.current || 0}`, this.campaignRewardMode,
                       this.campaign.name)

@@ -33,6 +33,7 @@
                 [stages]="reward?.progress?.stages"
                 [current]="reward?.progress?.current"
                 [stageLabels]="reward?.progress?.stageLabels"
+                [actualProcessedProg]="reward?.progress?.lightStage"
                 [showProgressLabels]="false"></perx-progress-bar>
               <div class="counter" *ngIf="reward?.progress?.stageLabels?.length">
                 <div>
