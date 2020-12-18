@@ -26,9 +26,11 @@ import {
   Router
 } from '@angular/router';
 import {
+  catchError,
   flatMap,
   map,
-  switchMap
+  switchMap,
+  tap
 } from 'rxjs/operators';
 import {
   BehaviorSubject,
@@ -82,7 +84,7 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
       }
     );
     this.getData();
-    this.getLoyalty();
+    this.getLoyalty().subscribe(() => {}, () => console.error('Can\'t find loyalty'));
     this.buildForm();
   }
 
@@ -158,8 +160,8 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
     this.isCurrentLocationPageLoaded = true;
   }
 
-  private getLoyalty(): void {
-    this.loyaltyService.getLoyalties().pipe(
+  private getLoyalty(): Observable<ILoyalty> {
+    return this.loyaltyService.getLoyalties().pipe(
       switchMap((loyaltyes) => !loyaltyes || !loyaltyes.length ? of(null) : this.loyaltyService.getLoyalty(loyaltyes[0].id)
       ),
       map((loyalty) => {
@@ -167,9 +169,9 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
           return loyalty;
         }
         throw new Error();
-      })).subscribe((loyalty) => {
-      this.loyalty = loyalty;
-    }, () => console.error('Can\'t find loyalty'));
+      }),
+      tap((loyalty) => this.loyalty = loyalty)
+    );
   }
 
   public buildForm(): void {
@@ -182,8 +184,11 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
   }
 
   public submitForm(): void {
+    if (!this.loyalty) {
+      return;
+    }
     this.loading = true;
-    const currentPrice = this.prices.find((price) => price.id === this.bookingForm.value.priceId);
+    const currentPrice = this.prices.find((price) => price.id === this.bookingForm.value.priceId) || 0;
     // allow free rewards to go through
     if (!currentPrice || currentPrice.points === undefined || null) {
       this.loading =  false;
@@ -198,6 +203,7 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
       this.loading =  false;
       return;
     }
+    let failedIssuesOrRewards = 0;
 
     forkJoin([...new Array(parseInt(this.bookingForm.value.quantity, 10))].map(() =>
       // there's currently only issue/reserve type so this simple iif will be sufficient
@@ -207,15 +213,30 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
             priceId: this.bookingForm.value.priceId,
             locationId: this.bookingForm.value.location,
             sourceType: ''
-          }),
+          }).pipe(
+            catchError(error => {
+              failedIssuesOrRewards += 1;
+              return of(error);
+            })
+          ),
         this.vouchersService.reserveReward(this.rewardId,
           {
             priceId: this.bookingForm.value.priceId,
             locationId: this.bookingForm.value.location,
             sourceType: ''
-          })
+          }).pipe(
+            catchError(error => {
+              failedIssuesOrRewards += 1;
+              return of(error);
+            })
+          )
         )
     )).subscribe(() => {
+      // update loyalty according to number of passes
+      // console.info(result.find(res => res instanceof HttpErrorResponse), 'see fails');
+      this.loyalty.pointsBalance -= (this.bookingForm.value.quantity - failedIssuesOrRewards) * (currentPrice.points as number);
+      // rather than call the service again and update loyalty, this is better
+      // dynamically adjust local loyalty pointsBalance
       this.notificationService.addPopup({
         text: 'You can access your voucher from the wallet',
         title: 'Successfully collected!',
