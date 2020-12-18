@@ -44,7 +44,7 @@ import { FindLocationComponent } from '../find-location/find-location.component'
 import { RebatesWalletComponent } from '../rebates/rebates-wallet/rebates-wallet.component';
 import { NearmeComponent } from '../nearme/nearme.component';
 import { RewardsPageComponent } from '../rewards-page/rewards-page.component';
-  
+
 export interface ShowTitleInHeader {
   getTitle(): string;
 }

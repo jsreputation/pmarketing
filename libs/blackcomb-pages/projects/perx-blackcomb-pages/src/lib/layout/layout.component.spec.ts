@@ -36,7 +36,8 @@ describe('LayoutComponent', () => {
   };
 
   const activatedRouteStub: Partial<ActivatedRoute> = {
-    data: of()
+    data: of(),
+    queryParams: of({ params: { flags: 'chromeless' } })
   };
 
   beforeEach(async(() => {
