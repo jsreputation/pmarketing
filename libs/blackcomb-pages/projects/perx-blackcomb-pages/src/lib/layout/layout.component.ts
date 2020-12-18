@@ -25,7 +25,8 @@ import {
   ConfigService,
   IConfig,
   SettingsService,
-  IFlags
+  IFlags,
+  FlagLocalStorageService
 } from '@perxtech/core';
 
 import { SignIn2Component } from '../sign-in-2/sign-in-2.component';
@@ -43,7 +44,6 @@ import { FindLocationComponent } from '../find-location/find-location.component'
 import { RebatesWalletComponent } from '../rebates/rebates-wallet/rebates-wallet.component';
 import { NearmeComponent } from '../nearme/nearme.component';
 import { RewardsPageComponent } from '../rewards-page/rewards-page.component';
-import { FlagLocalStorageService } from '../../../../../../core/projects/perx-core/src/lib/utils/flags/flag-local-storage.service';
   
 export interface ShowTitleInHeader {
   getTitle(): string;
@@ -127,7 +127,7 @@ export class LayoutComponent implements OnInit {
 
   public onActivate(ref: any): void {
 
-    const chromeless = Boolean(localStorage.getItem('chromeless'));
+    const chromeless = Boolean(this.flagLocalStorageService.getFlagInLocalStroage('chromeless'));
     this.showHeader = chromeless ? false : !(ref instanceof SignIn2Component);
 
     this.showToolbar = ref instanceof HomeComponent ||

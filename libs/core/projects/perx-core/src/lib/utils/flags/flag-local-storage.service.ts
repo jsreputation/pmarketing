@@ -11,6 +11,10 @@ export class FlagLocalStorageService {
       localStorage.setItem(flag, value);
   }
 
+  public getFlagInLocalStroage(flag: string): string | null {
+    return localStorage.getItem(flag);
+  }
+
   public resetFlagInLocalStroage(flag: string): void {
     if (localStorage.getItem(flag)) {
       localStorage.removeItem(flag);
