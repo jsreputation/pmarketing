@@ -138,7 +138,8 @@
     "POINT_EARNED": "{points} Điểm kiếm được",
     "POINT_SPENT": "{points} Điểm đã tiêu",
     "CASHBACK_EARNED": "{points} hoàn tiền kiếm được",
-    "CASHBACK_SPENT": "{points} hoàn lại tiền đã chi tiêu"
+    "CASHBACK_SPENT": "{points} hoàn lại tiền đã chi tiêu",
+    "REWARD_STATUS_REDEEMED_ON": "Đã quy đổi {{date}}"
   },
   "REDEMPTION": {
     "TITLE": "Nhập mã PIN",
