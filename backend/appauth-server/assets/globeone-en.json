@@ -314,7 +314,8 @@
   },
   "VOUCHER": {
     "REDEEM": "Redeem",
-    "EXPIRY": "Expires on: {{date}}"
+    "EXPIRY": "Expires on: {{date}}",
+    "NO_VOUCHERS": "No vouchers here yet!"
   },
   "REWARD": {
     "GET_VOUCHER": "Get Voucher",
