@@ -10,8 +10,12 @@
 
 .progress-bar-container {
   display: grid;
-  width: 99%;
-  margin-left: 2.5px;
+  // 2*36px where 36px is size of stamp
+  // minus 1 to balance out look
+  width: -webkit-calc(100% - 71px);
+  width:    -moz-calc(100% - 71px);
+  width:         calc(100% - 71px);
+  margin-left: 35px;
 }
 
 .in-progress, .to-progress {

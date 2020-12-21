@@ -163,6 +163,7 @@ export class ProgressCampaignComponent implements OnInit {
                 return {
                   stages: campaignInv.rewards.length || 2,
                   current: campaignInv.refersAttained, // reached
+                  lightStage: campaignInv.refersAttained,
                   stageLabels: campaignInv.rewards.map(reward => reward.customFields && (+reward.customFields.requirement || 0))
                     .sort((a: number, b: number) => a - b)
                 };
@@ -311,7 +312,7 @@ export class ProgressCampaignComponent implements OnInit {
                   }
                   return {
                     ...reward,
-                    meetShowVoucherRequirement: true,
+                    meetShowVoucherRequirement: (campaignInv.refersAttained || 0) >= completeStageLabels[index],
                     progress,
                     barHeadLine: this.progressInfoPipe.transform(`${this.campaignProgress.current || 0}`, this.campaignRewardMode,
                       this.campaign.name)
