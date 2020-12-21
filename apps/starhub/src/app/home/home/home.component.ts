@@ -74,7 +74,9 @@ export class HomeComponent implements OnInit {
             this.profile = p;
             const customProperties = p.customProperties;
             if (customProperties) {
-              this.hubClubDisplay = customProperties.sub_membership_type.toString().toLowerCase() === 'nominee' &&
+              this.hubClubDisplay = customProperties.sub_membership_type &&
+                customProperties.sub_membership_type.toString().toLowerCase() === 'nominee' &&
+                customProperties.membership &&
                 customProperties.membership.toString().toLowerCase() !== 'hubclub' ?
                 customProperties.sub_membership_display.toString() : customProperties.membership_display.toString();
             }
