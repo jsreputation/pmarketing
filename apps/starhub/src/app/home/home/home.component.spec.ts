@@ -20,6 +20,7 @@ import { loyalty } from '../../loyalty.mock';
 import { Type } from '@angular/core';
 import { campaigns } from '../../campaigns.mock';
 import { Router } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 
 const authServiceStub: Partial<AuthenticationService> = {
   isAuthorized: () => of(true),
@@ -73,7 +74,8 @@ describe('HomeComponent', () => {
         RouterTestingModule.withRoutes([{
           path: 'error', component: HomeComponent,
         }]),
-        MatDialogModule
+        MatDialogModule,
+        MatIconModule
       ],
       providers: [
         NoRenewaleInNamePipe,
