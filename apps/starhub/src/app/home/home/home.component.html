@@ -17,7 +17,7 @@
             <span class="subtitle" *ngIf="
                   profile.customProperties.membership ||
                   profile.customProperties.sub_membership_type">
-              {{hubClubDisplay}}
+              {{hubClubDisplay}} <span class="accessory-icon"><mat-icon>keyboard_arrow_right</mat-icon></span>
             </span>
             <span class="subtitle" *ngIf="
             !profile.customProperties.membership &&
