@@ -42,12 +42,17 @@ export class VouchersComponent implements OnInit, OnChanges {
   @Input()
   public expiryLabelFn: (tr: IVoucher) => Observable<string>;
 
+  @Input()
+  public redeemedOnLabelFn: (tr: IVoucher) => Observable<string>;
+
   public repeatGhostCount: number = 10;
 
   public ghostTimeOut: boolean;
 
   constructor(private vouchersService: IVoucherService, private datePipe: DatePipe) {
     this.expiryLabelFn = (v: IVoucher) => of(v.expiry ? `Expiry: ${this.datePipe.transform(v.expiry, 'shortDate')}` : '');
+    this.redeemedOnLabelFn = (v: IVoucher) => of(v.redemptionDate ?
+            `Redeemed on: ${this.datePipe.transform(v.redemptionDate, 'shortDate')}` : '');
   }
 
   public ngOnInit(): void {

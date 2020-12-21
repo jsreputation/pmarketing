@@ -24,5 +24,7 @@ export enum TransactionState {
   redeemed = 'redeemed',
   expired = 'expired',
   reserved = 'reserved',
-  released = 'released'
+  released = 'released',
+  pending = 'pending',
+  processed = 'processed'
 }

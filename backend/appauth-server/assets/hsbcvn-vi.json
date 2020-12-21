@@ -129,7 +129,7 @@
   "WALLET": {
     "REWARDS_TITLE": "Giải thưởng của tôi",
     "HISTORY_TITLE": "Lịch sử của tôi",
-    "MY_WALLET": "Ví của tôi",
+    "MY_WALLET": "Giỏ quà tặng",
     "REDEEMED": "Đã đổi",
     "REWARD_STATUS_EXPIRY": "Hết hạn vào {{date}}",
     "REWARD_STATUS_REDEEMED": "Đã đổi",
@@ -138,7 +138,8 @@
     "POINT_EARNED": "{points} Điểm kiếm được",
     "POINT_SPENT": "{points} Điểm đã tiêu",
     "CASHBACK_EARNED": "{points} hoàn tiền kiếm được",
-    "CASHBACK_SPENT": "{points} hoàn lại tiền đã chi tiêu"
+    "CASHBACK_SPENT": "{points} hoàn lại tiền đã chi tiêu",
+    "REWARD_STATUS_REDEEMED_ON": "Đã quy đổi {{date}}"
   },
   "REDEMPTION": {
     "TITLE": "Nhập mã PIN",
@@ -150,7 +151,7 @@
     "UNKNOWN_ERROR_TXT": "Đã xảy ra lỗi không xác định, vui lòng thử lại sau",
     "FAIL_REDEMPTION_TXT": "Lấy làm tiếc! Đổi phiếu thưởng không thành công.",
     "BACK_TO_WALLET": "Quay lại ví",
-    "CTA_TXT": "Huỷ bỏ"
+    "CTA_TXT": "Quay lại"
   },
   "PROMO_CODE": {
     "DESCRIPTION": "Vui lòng nhập mã này trong quá trình thanh toán",

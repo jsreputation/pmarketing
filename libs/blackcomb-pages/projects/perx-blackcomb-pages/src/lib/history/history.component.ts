@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Voucher, IVoucherService, VoucherState, StatusLabelMapping } from '@perxtech/core';
 import { forkJoin, Observable, of, Subject } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
+import { DatePipe } from '@angular/common';
 
 const REQ_PAGE_SIZE: number = 10;
 @Component({
@@ -15,6 +17,8 @@ export class HistoryComponent implements OnInit, OnDestroy {
   public filter: string[];
   public currentPage: number = 0;
   public completed: boolean = false;
+  public expiryLabelFn: ((v: Voucher) => Observable<string>) | undefined;
+  public redeemedOnLabelFn: ((v: Voucher) => Observable<string>) | undefined;
 
   public mapping: StatusLabelMapping = {
     issued: 'Approved',
@@ -24,12 +28,42 @@ export class HistoryComponent implements OnInit, OnDestroy {
     released: 'Declined',
   };
 
-  constructor(private vouchersService: IVoucherService) { }
+  constructor(private vouchersService: IVoucherService,
+              private translate: TranslateService,
+              private datePipe: DatePipe) { }
 
   public ngOnInit(): void {
     this.vouchers$ = of([]);
     this.onScroll();
     this.filter = [VoucherState.redeemed, VoucherState.expired];
+    this.translate.get('STATUS_LABELS').subscribe(statusLabelsTranslated => {
+      Object.entries(this.mapping).forEach(
+        ([key, value]) => {
+          if (
+            statusLabelsTranslated[key.toUpperCase()] &&
+            statusLabelsTranslated[key.toUpperCase()] !== value
+          ) {
+            this.mapping[key] = statusLabelsTranslated[key.toUpperCase()];
+          }
+        }
+      );
+    });
+
+    this.translate.get('WALLET.REWARD_STATUS_EXPIRY')
+      .subscribe((text: string) => {
+        this.expiryLabelFn = (v: Voucher) => {
+          const dateStr = this.datePipe.transform(v.expiry, 'shortDate');
+          return of(text.replace('{{date}}', dateStr || '~'));
+        };
+      });
+
+    this.translate.get('WALLET.REWARD_STATUS_REDEEMED_ON')
+      .subscribe((text: string) => {
+        this.redeemedOnLabelFn = (v: Voucher) => {
+          const dateStr = this.datePipe.transform(v.redemptionDate, 'shortDate');
+          return of(text.replace('{{date}}', dateStr || '~'));
+        };
+      });
   }
 
   public ngOnDestroy(): void {

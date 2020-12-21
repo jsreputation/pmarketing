@@ -20,7 +20,7 @@
                 {{expiryLabelFn(voucher) | async}}
               </p>
               <p *ngIf="showRedeemedDate && voucher.redemptionDate">
-                Redeemed on {{voucher.redemptionDate | date: 'shortDate'}}
+                {{redeemedOnLabelFn(voucher) | async}}
               </p>
               <div [ngClass]="'ribbon ' + voucher.state" *ngIf="showRedeemedIcon && mapping && mapping[voucher.state]">
                 {{mapping[voucher.state]}}</div>

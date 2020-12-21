@@ -61,4 +61,19 @@
   white-space: inherit;
   margin: 0 0.5rem;
   color: #666666;
+
+  ::ng-deep {
+    figure {
+      width: 100%;
+      margin: 0;
+      img {
+        width: 100%;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+    }
+  }
 }
+

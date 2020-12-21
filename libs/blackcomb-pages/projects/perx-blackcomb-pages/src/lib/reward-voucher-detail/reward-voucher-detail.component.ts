@@ -63,6 +63,7 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
   public useRewardDescription: string;
   public doneText: string;
   public showNoCodeReward: boolean = false;
+  public enableRedeemButton: boolean = false;
 
   constructor(
     private rewardsService: RewardsService,
@@ -77,16 +78,18 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    const { current, stageLabels, rewardType, barHeadLine, useRewardDescription } = history.state;
+    const { current, stageLabels, rewardType, barHeadLine, useRewardDescription, enableRedeemButton } = history.state;
     this.barHeadLine = barHeadLine;
     this.useRewardDescription = useRewardDescription;
+    this.enableRedeemButton = enableRedeemButton;
 
     this.rewardType = rewardType;
     if (current !== (undefined) && stageLabels) {
       this.rewardProgress = {
-        current: history.state.current,
+        current,
+        lightStage: enableRedeemButton ? stageLabels[stageLabels.length - 1] : 0,
         stages: 2,
-        stageLabels: history.state.stageLabels
+        stageLabels
       };
     } else {
       this.location.back();
