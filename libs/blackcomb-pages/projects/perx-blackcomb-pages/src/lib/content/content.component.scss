@@ -11,6 +11,9 @@
 .game-container {
   flex: 1;
   overflow-y: auto;
+  width: 100%;
+  max-width: 41.5rem;
+  margin: 0 auto;
 
   .content {
     padding: 2.4rem;
