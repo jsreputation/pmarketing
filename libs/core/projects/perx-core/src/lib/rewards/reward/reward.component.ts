@@ -54,26 +54,6 @@ export class RewardComponent implements OnInit {
       map(reward => {
         const tncWithOlPadding = reward.termsAndConditions.replace(/(ol>)/, 'ol style="padding-inline-start: 1em;">');
         return {...reward, termsAndConditions: tncWithOlPadding};
-      }),
-      map((reward) => {
-        const parser = new DOMParser();
-        if (reward.description) {
-          const rewardHTML = parser.parseFromString(reward.description, 'text/html');
-          const body = rewardHTML.querySelector('body');
-          if (body) {
-            // body.childNodes
-            const allChildContainsText = Array.from(body.childNodes).every(element => {
-              if (element.childNodes.length) {
-                return Array.from(body.childNodes).every(childEl => Boolean(childEl.textContent) === true);
-              }
-              return Boolean(element.textContent) === true;
-            });
-            if (!allChildContainsText) {
-              reward.description = '';
-            }
-          }
-        }
-        return reward;
       })
     );
     if (!this.displayPriceFn) {
