@@ -1,0 +1,17 @@
+name: Slack Release Notification
+on:
+  release:
+    types:
+      - published
+jobs:
+  slack_notification:
+    name: Slack Notification
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Notify Slack
+        uses: docker://perxtech/github-notify-slack-action:latest
+        with:
+          slack_webhook: ${{ secrets.SLACK_RELEASEME_WEBHOOK }}
+          notification_type: release
