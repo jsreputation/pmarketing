@@ -54,6 +54,7 @@ describe('ChangeMobileComponent', () => {
   });
 
   it('should request otp', fakeAsync(() => {
+    component.phoneForm.controls.phone.setValue(123);
     spyOn(auth, 'requestVerificationToken').and.callThrough();
     const routerSpy = spyOn(router, 'navigate');
     component.requestOtp();
