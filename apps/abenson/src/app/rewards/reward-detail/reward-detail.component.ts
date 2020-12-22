@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {
   ActivatedRoute,
+  Router
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import {
@@ -37,6 +38,7 @@ export class RewardDetailComponent implements OnInit {
   public loyalty: ILoyalty;
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private rewardsService: RewardsService,
     private loyaltyService: LoyaltyService,
     private dialog: MatDialog,
@@ -65,6 +67,7 @@ export class RewardDetailComponent implements OnInit {
       )
       .subscribe(
         () => {
+          this.router.navigateByUrl('wallet');
         },
         (err) => {
           // borrow not enough points logic from rewards booking component
