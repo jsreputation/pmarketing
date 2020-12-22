@@ -15,5 +15,6 @@ LOGIN_METHOD=phone
 SHOW_REWARDS_ON_HOMEPAGE=false
 SHOW_CATALOG_ON_HOMEPAGE=false
 SHOW_REFERRAL_CAMPAIGNS_ON_HOMEPAGE=true
-DISCLAIMERURL=https://www.google.com/
+DISCLAIMERURL=https://cdn.perxtech.io/content/dbs-hk/disclaimer.html
+TNCURL=https://cdn.perxtech.io/content/dbs-hk/tnc.html
 SHOW_PERFORMANCE_OVERVIEW=false
