@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AuthenticationService } from '@perxtech/core';
+import {
+  AuthenticationService,
+  NotificationService
+} from '@perxtech/core';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-change-mobile',
@@ -13,7 +17,8 @@ export class ChangeMobileComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private auth: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService
   ) { }
 
   public ngOnInit(): void {
@@ -23,10 +28,26 @@ export class ChangeMobileComponent implements OnInit {
   }
 
   public requestOtp(): void {
-    if(this.phoneForm.valid){
-      this.auth.requestVerificationToken(this.phoneForm.value.phone).subscribe(() => {
-        this.router.navigate(['/profile', 'verify-otp', 'phone'], { queryParams: this.phoneForm.value });
-      });
+    if (this.phoneForm.valid) {
+      this.auth.requestVerificationToken(this.phoneForm.value.phone).subscribe(
+        () => {
+          this.router.navigate([ '/profile', 'verify-otp', 'phone' ], { queryParams: this.phoneForm.value });
+        },
+        (err) => {
+          if (err instanceof HttpErrorResponse) {
+            if (err.status === 0) {
+              this.notificationService.addPopup({
+                title: 'We could not reach the server',
+                text: 'Please try again soon'
+              });
+            // } else if (err.status === 409 && err.error && err.error.message) {
+            //   this.notificationService.addSnack(err.error.message);
+            } else {
+              this.notificationService.addSnack(err.error.message);
+            }
+          }
+        }
+      );
     }
   }
 }

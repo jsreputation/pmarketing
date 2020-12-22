@@ -3,7 +3,10 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { ChangeMobileComponent } from './change-mobile.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule, MatButtonModule } from '@angular/material';
-import { AuthenticationService } from '@perxtech/core';
+import {
+  AuthenticationService,
+  NotificationService
+} from '@perxtech/core';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -12,6 +15,10 @@ import { Router } from '@angular/router';
 
 const authenticationService = {
   requestVerificationToken: () => of(null)
+};
+const notificationServiceStub: Partial<NotificationService> = {
+  addPopup: () => void 0,
+  addSnack: () => void 0
 };
 
 describe('ChangeMobileComponent', () => {
@@ -33,9 +40,8 @@ describe('ChangeMobileComponent', () => {
         }])
       ],
       providers: [
-        {
-          provide: AuthenticationService, useValue: authenticationService
-        }
+        { provide: AuthenticationService, useValue: authenticationService },
+        { provide: NotificationService, useValue: notificationServiceStub }
       ]
     })
       .compileComponents();
