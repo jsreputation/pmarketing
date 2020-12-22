@@ -25,7 +25,7 @@ const displayProperties = `"displayProperties": {
           },
           {
               "key": "privacy-policy",
-              "title": "CONTACT_US"
+              "title": "PRIVACY_POLICY"
           },
           {
               "key": "faqs",
