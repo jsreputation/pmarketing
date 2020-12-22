@@ -305,7 +305,8 @@
   },
   "VOUCHER": {
     "REDEEM": "Redeem",
-    "EXPIRY": "Expires on: {{date}}"
+    "EXPIRY": "Expires on: {{date}}",
+    "NO_VOUCHERS": "Chưa có chứng từ nào ở đây!"
   },
   "REWARD": {
     "GET_VOUCHER": "Get Voucher",
