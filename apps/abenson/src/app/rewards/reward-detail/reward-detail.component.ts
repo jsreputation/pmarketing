@@ -8,8 +8,6 @@ import {
   ILoyalty,
   IVoucherService,
   NotificationService,
-  IPopupConfig,
-  PopupComponent,
   Voucher
 } from '@perxtech/core';
 import { switchMap, mergeMap, tap } from 'rxjs/operators';
@@ -40,8 +38,6 @@ export class RewardDetailComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.ntfcService.$popup
-      .subscribe((data: IPopupConfig) => this.dialog.open(PopupComponent, { data }));
     this.reward$ = this.route.params
       .pipe(mergeMap((param) => this.rewardsService.getReward(parseInt(param.id, 10))),
         tap((reward) => this.rewardData = reward));
