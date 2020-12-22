@@ -57,7 +57,6 @@ export class ReferralComponent {
               ? campaign.referralCodes[0]
               : this.code;
             this.shareText = this.shareText.replace('{{code}}', this.code);
-            this.shareText = this.shareText.replace('{{url}}', this.shareUrl);
             // set to campaign or do nothing
             this.campaignDescription = campaign.description ? campaign.description : this.campaignDescription;
             this.campaignName = campaign.name ? campaign.name : this.campaignName;
@@ -130,7 +129,7 @@ export class ReferralComponent {
       .subscribe((res: any) => {
         this.shareTitle = res['REFERRAL.SHARE_COPY_TITLE'];
         this.shareText = res['REFERRAL.SHARE_COPY_TXT'].replace(
-          '[URL]',
+          '{{url}}',
           this.shareUrl
         );
         this.copyToClipboardTxt = res['REFERRAL.COPY_TO_CLIPBOARD'];
