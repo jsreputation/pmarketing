@@ -214,7 +214,8 @@
   "CONTENT_PAGE": "",
   "VOUCHER": {
     "REDEEM": "Utiliser",
-    "EXPIRY": "Expire le {{date}}"
+    "EXPIRY": "Expire le {{date}}",
+    "NO_VOUCHERS": "No vouchers here yet!"
   },
   "REWARD": {
     "GET_VOUCHER": "Obtenir",
