@@ -16,6 +16,7 @@ import {
   switchMap,
   mergeMap,
   tap,
+  catchError,
 } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { RewardConfirmComponent } from '../reward-confirm/reward-confirm.component';
@@ -64,6 +65,15 @@ export class RewardDetailComponent implements OnInit {
       )
       .subscribe(
         () => {
+        },
+        (err) => {
+          // borrow not enough points logic from rewards booking component
+          if (err.code === 40) {
+            this.ntfcService.addPopup({
+              title: 'Sorry',
+              text: 'You do not have enough points for this transaction'
+            });
+          }
         }
       );
   }
@@ -78,6 +88,9 @@ export class RewardDetailComponent implements OnInit {
             buttonTxt: 'Got it'
           });
         }
+      }),
+      catchError((err) => {
+        return of(err);
       })
     );
   }
