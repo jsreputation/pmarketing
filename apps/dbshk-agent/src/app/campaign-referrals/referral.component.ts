@@ -57,6 +57,7 @@ export class ReferralComponent {
               ? campaign.referralCodes[0]
               : this.code;
             this.shareText = this.shareText.replace('{{code}}', this.code);
+            this.shareText = this.shareText.replace('{{url}}', this.shareUrl);
             // set to campaign or do nothing
             this.campaignDescription = campaign.description ? campaign.description : this.campaignDescription;
             this.campaignName = campaign.name ? campaign.name : this.campaignName;
