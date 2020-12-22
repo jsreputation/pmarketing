@@ -66,8 +66,8 @@ export class SignUpComponent implements OnInit, OnDestroy {
   public loadingSubmit: boolean = false;
   public signupForm: FormGroup = this.fb.group(
     {
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
+      firstName: [''],
+      lastName: [''],
       countryCode: ['', Validators.required],
       primary_identifier: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]],
