@@ -92,9 +92,7 @@ export class RewardDetailComponent implements OnInit {
           });
         }
       }),
-      catchError((err) => {
-        return of(err);
-      })
+      catchError((err) => of(err))
     );
   }
 
