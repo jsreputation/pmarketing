@@ -129,7 +129,7 @@ export class ReferralComponent {
       .subscribe((res: any) => {
         this.shareTitle = res['REFERRAL.SHARE_COPY_TITLE'];
         this.shareText = res['REFERRAL.SHARE_COPY_TXT'].replace(
-          '[URL]',
+          '{{url}}',
           this.shareUrl
         );
         this.copyToClipboardTxt = res['REFERRAL.COPY_TO_CLIPBOARD'];
