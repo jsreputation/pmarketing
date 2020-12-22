@@ -11,13 +11,13 @@ import { Router } from '@angular/router';
 export class ChangeMobileComponent implements OnInit {
   public phoneForm: FormGroup;
   constructor(
-    private bf: FormBuilder,
+    private fb: FormBuilder,
     private auth: AuthenticationService,
     private router: Router
   ) { }
 
   public ngOnInit(): void {
-    this.phoneForm = this.bf.group({
+    this.phoneForm = this.fb.group({
       phone: [ '', [ Validators.required, Validators.pattern('^[0-9]*$') ]]
     });
   }
