@@ -36,7 +36,7 @@ interface ISignupAttributes {
   [key: string]: any;
 }
 
-enum PinMode {
+const enum PinMode {
   password = 'password',
   register = 'register'
 }
