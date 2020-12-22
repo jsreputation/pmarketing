@@ -28,7 +28,7 @@ const displayProperties = `"displayProperties": {
               "title": "PRIVACY_POLICY"
           },
           {
-              "key": "faqs",
+              "key": "faq",
               "title": "FAQS"
           }
       ]
