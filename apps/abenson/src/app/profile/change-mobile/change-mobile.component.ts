@@ -18,7 +18,7 @@ export class ChangeMobileComponent implements OnInit {
 
   public ngOnInit(): void {
     this.phoneForm = this.bf.group({
-      phone: ['', [Validators.required]]
+      phone: [ '', [ Validators.required, Validators.pattern('^[0-9]*$') ]]
     });
   }
 
