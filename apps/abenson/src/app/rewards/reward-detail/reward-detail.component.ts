@@ -43,7 +43,7 @@ export class RewardDetailComponent implements OnInit {
     this.ntfcService.$popup
       .subscribe((data: IPopupConfig) => this.dialog.open(PopupComponent, { data }));
     this.reward$ = this.route.params
-      .pipe(mergeMap((param) => this.rewardsService.getReward(parseInt(param.id, 19))),
+      .pipe(mergeMap((param) => this.rewardsService.getReward(parseInt(param.id, 10))),
         tap((reward) => this.rewardData = reward));
     this.loyaltyService.getLoyalty().subscribe((loyalty) => this.loyalty = loyalty);
   }

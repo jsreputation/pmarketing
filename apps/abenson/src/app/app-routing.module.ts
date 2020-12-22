@@ -66,7 +66,7 @@ const routes: Routes = [
           import('./card/card.module').then((mod) => mod.CardModule),
       },
       {
-        path: 'rewards',
+        path: 'reward-detail/:id',
         loadChildren: (): any =>
           import('./rewards/rewards.module').then(
             (mod: any) => mod.RewardsModule
