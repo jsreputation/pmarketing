@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router
+} from '@angular/router';
 import { Observable, of } from 'rxjs';
 import {
   RewardsService,
@@ -8,11 +11,14 @@ import {
   ILoyalty,
   IVoucherService,
   NotificationService,
-  IPopupConfig,
-  PopupComponent,
   Voucher
 } from '@perxtech/core';
-import { switchMap, mergeMap, tap } from 'rxjs/operators';
+import {
+  switchMap,
+  mergeMap,
+  tap,
+  catchError,
+} from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { RewardConfirmComponent } from '../reward-confirm/reward-confirm.component';
 
@@ -32,6 +38,7 @@ export class RewardDetailComponent implements OnInit {
   public loyalty: ILoyalty;
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private rewardsService: RewardsService,
     private loyaltyService: LoyaltyService,
     private dialog: MatDialog,
@@ -40,8 +47,6 @@ export class RewardDetailComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.ntfcService.$popup
-      .subscribe((data: IPopupConfig) => this.dialog.open(PopupComponent, { data }));
     this.reward$ = this.route.params
       .pipe(mergeMap((param) => this.rewardsService.getReward(parseInt(param.id, 10))),
         tap((reward) => this.rewardData = reward));
@@ -57,17 +62,38 @@ export class RewardDetailComponent implements OnInit {
         && this.rewardData.rewardPrice[0].points ? this.rewardData.rewardPrice[0].points : 0
     };
     return this.dialog.open(RewardConfirmComponent, { width: '30rem', data }).afterClosed()
-      .pipe(switchMap((result) => result ? this.exchangePoints() : of(null)))
-      .subscribe(() => {
-        this.ntfcService.addPopup({
-          title: `Successfully purchased ${this.rewardData.name}.`,
-          buttonTxt: 'Got it'
-        });
-      });
+      .pipe(
+        switchMap((result) => result ? this.exchangePoints() : of(null))
+      )
+      .subscribe(
+        () => {
+          this.router.navigateByUrl('wallet');
+        },
+        (err) => {
+          // borrow not enough points logic from rewards booking component
+          if (err.code === 40) {
+            this.ntfcService.addPopup({
+              title: 'Sorry',
+              text: 'You do not have enough points for this transaction'
+            });
+          }
+        }
+      );
   }
 
   private exchangePoints(): Observable<Voucher> {
-    return this.voucherService.issueReward(this.rewardData.id);
+    return this.voucherService.issueReward(this.rewardData.id).pipe(
+      tap((voucher: Voucher) => {
+        // check if there's a valid voucher
+        if (voucher && voucher.id > 0) {
+          this.ntfcService.addPopup({
+            title: `Successfully purchased ${this.rewardData.name}.`,
+            buttonTxt: 'Got it'
+          });
+        }
+      }),
+      catchError((err) => of(err))
+    );
   }
 
 }
