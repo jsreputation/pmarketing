@@ -54,7 +54,12 @@ describe('VerificationOtpComponent', () => {
         { provide: ProfileService, useValue: profileServiceStub },
         { provide: AuthenticationService, useValue: authenticationServiceStub },
         { provide: ActivatedRoute, useValue: activatedRouteStub },
-        { provide: Router, useValue: { navigate: () => { } } },
+        {
+          provide: Router, useValue: {
+            navigate: () => {},
+            getCurrentNavigation: () => null
+          }
+        },
         { provide: NotificationService, useValue: notificationServiceStub }
       ]
     })
