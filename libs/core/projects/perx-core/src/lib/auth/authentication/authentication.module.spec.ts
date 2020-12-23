@@ -1,7 +1,10 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { AuthServiceFactory, FormsServiceFactory } from './authentication.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { HttpClient } from '@angular/common/http';
+import {
+  HttpBackend,
+  HttpClient
+} from '@angular/common/http';
 import { ProfileService } from '../../profile/profile.service';
 import { WhistlerAuthenticationService } from './whistler-authentication.service';
 import { V4AuthenticationService } from './v4-authentication.service';
@@ -47,17 +50,18 @@ describe('AuthenticationModule', () => {
       { provide: ConfigService, useValue: configServiceStub }
     ]
   }));
-  it('should create AuthService', inject([HttpClient, TokenStorage, ProfileService, ConfigService, NotificationService],
+  it('should create AuthService', inject([HttpClient, TokenStorage, ProfileService, ConfigService, NotificationService, HttpBackend],
     (
       http: HttpClient,
       token: TokenStorage,
       profile: ProfileService,
       configService: ConfigService,
-      notificationService: NotificationService
+      notificationService: NotificationService,
+      httpBackend: HttpBackend
     ) => {
-      let service = AuthServiceFactory(http, { isWhistler: true }, token, profile, configService, notificationService);
+      let service = AuthServiceFactory(http, { isWhistler: true }, token, profile, configService, notificationService, httpBackend);
       expect(service instanceof WhistlerAuthenticationService);
-      service = AuthServiceFactory(http, { isWhistler: false }, token, profile, configService, notificationService);
+      service = AuthServiceFactory(http,{ isWhistler: false }, token, profile, configService, notificationService, httpBackend);
       expect(service instanceof V4AuthenticationService);
     }));
 

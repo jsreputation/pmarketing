@@ -2,7 +2,11 @@ import { AuthService } from 'ngx-auth';
 import { Injectable } from '@angular/core';
 import { catchError, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { iif, Observable, of, throwError } from 'rxjs';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpBackend,
+  HttpClient,
+  HttpErrorResponse
+} from '@angular/common/http';
 import {
   AuthenticationService,
   RequiresOtpError,
@@ -72,12 +76,15 @@ export class V4AuthenticationService
   public preauth: boolean = false;
   public isRazer: boolean = false;
 
+  private httpBackend: HttpClient;
+
   constructor(
     private configService: ConfigService,
     private http: HttpClient,
     private tokenStorage: TokenStorage,
     private profileService: ProfileService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    externalBackend: HttpBackend
   ) {
     super();
     this.configService.readAppConfig().subscribe((config: IConfig<void>) => {
@@ -96,6 +103,8 @@ export class V4AuthenticationService
         this.preauth = config.preAuth;
       }
       this.customersEndPoint = `${config.apiHost}/v4/customers`;
+      this.httpBackend = new HttpClient(externalBackend);
+
     });
   }
 
@@ -140,9 +149,10 @@ export class V4AuthenticationService
     pass: string,
     mechId?: string,
     campaignId?: string,
-    scope?: string
+    scope?: string,
+    pokeCheck?: boolean
   ): Observable<void> {
-    return this.authenticateUser(user, pass, mechId, campaignId, scope).pipe(
+    return this.authenticateUser(user, pass, mechId, campaignId, scope, pokeCheck).pipe(
       tap((res: IWLoginResponse) => {
         const userBearer = res && res.bearer_token;
         if (!userBearer) {
@@ -160,7 +170,8 @@ export class V4AuthenticationService
     pass: string,
     mechId?: string,
     campaignId?: string,
-    scope?: string
+    scope?: string,
+    pokeCheck?: boolean
   ): Observable<IWLoginResponse> {
     const authenticateBody: IV4AuthenticateUserRequest = {
       url: location.host,
@@ -170,6 +181,16 @@ export class V4AuthenticationService
       ...(campaignId && { campaign_id: campaignId }),
       ...(scope && { scope }),
     };
+
+    // if it is a checking request we don't want the auth interceptors to log the user out
+    // in checking if current password is correct scenarios
+    if (pokeCheck) {
+      return this.httpBackend.post<IWLoginResponse>(
+        `${this.userAuthEndPoint}/token`,
+        authenticateBody
+      );
+    }
+
     return this.http.post<IWLoginResponse>(
       `${this.userAuthEndPoint}/token`,
       authenticateBody

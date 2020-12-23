@@ -171,7 +171,7 @@ describe('V4AuthenticationService', () => {
   it('should check authenticateUser', fakeAsync(inject([V4AuthenticationService, HttpClient],
     (authService: V4AuthenticationService, http: HttpClient) => {
       const spy = jest.spyOn(http, 'post');
-      authService.authenticateUser('test', 'test', 'test', 'test', 'test');
+      authService.authenticateUser('test', 'test', 'test', 'test', 'test', false);
       expect(spy).toHaveBeenCalled();
 
     })));
