@@ -81,6 +81,7 @@ import localesKoExtra from '@angular/common/locales/extra/ko';
 import fr from '@angular/common/locales/fr';
 import localesFrExtra from '@angular/common/locales/extra/fr';
 import { WalletHistoryModule } from '@perxtech/blackcomb-pages';
+import { VerificationOtpComponent } from './profile/verification-otp/verification-otp.component';
 
 // use en-GB as the default english flavour
 registerLocaleData(enGb, 'en', localesEnGbExtra);
@@ -123,6 +124,7 @@ export const setLanguage = (
     SmsValidationComponent,
     QRCodeComponent,
     PopupComponent,
+    VerificationOtpComponent
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
