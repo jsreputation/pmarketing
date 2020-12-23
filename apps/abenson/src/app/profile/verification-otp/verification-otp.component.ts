@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router
+} from '@angular/router';
 import { of, Observable } from 'rxjs';
-import { switchMap, tap, flatMap } from 'rxjs/operators';
-import { AuthenticationService, NotificationService, IChangePasswordData, ProfileService, PopupComponent, IChangePhoneData } from '@perxtech/core';
-import { SharedDataService } from '../../services/shared-data.service';
+import {
+  switchMap,
+  tap,
+} from 'rxjs/operators';
+import { AuthenticationService, NotificationService, IChangePasswordData, ProfileService, IChangePhoneData } from '@perxtech/core';
 
 @Component({
   selector: 'app-verification-otp',
@@ -20,12 +25,12 @@ export class VerificationOtpComponent implements OnInit {
     private ntfcService: NotificationService,
     private router: Router,
     private profileService: ProfileService,
-    private sharedData: SharedDataService,
-  ) { }
-
-  public ngOnInit(): void {
+  ) {
     this.route.params.pipe(switchMap((params) => this.switchType(params.type)))
       .subscribe((data: IChangePhoneData | IChangePasswordData) => this.data = { ...data, otp: '' });
+  }
+
+  public ngOnInit(): void {
   }
   public get phoneDisplay(): string | undefined {
     return this.userPhone && '*'.repeat(this.userPhone.length - 4) + this.userPhone.substr(this.userPhone.length - 4);
@@ -36,8 +41,16 @@ export class VerificationOtpComponent implements OnInit {
       case 'phone':
         return this.route.queryParams.pipe(tap((param) => this.userPhone = param.phone));
       case 'password':
-        return this.profileService.whoAmI().pipe(tap((profile) => this.userPhone = profile.phone),
-          flatMap(() => this.sharedData.data));
+        const currentNavigation = this.router.getCurrentNavigation();
+        let changePasswordData;
+        if (currentNavigation && currentNavigation.extras.state) {
+          changePasswordData = currentNavigation.extras.state as IChangePasswordData;
+        }
+        this.profileService.whoAmI().subscribe(
+          (profile) => this.userPhone = profile.phone,
+        );
+
+        return of(changePasswordData);
       default:
         return of(null);
     }
