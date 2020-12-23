@@ -16,7 +16,6 @@ import { ChangeBarangayComponent } from './change-barangay/change-barangay.compo
 import { ChangeStreetAddressComponent } from './change-street-address/change-street-address.component';
 import { ChangeEmailComponent } from './change-email/change-email.component';
 import { ChangeCityComponent } from './change-city/change-city.component';
-import { VerificationOtpComponent } from './verification-otp/verification-otp.component';
 import { UtilsModule } from '@perxtech/core';
 
 @NgModule({
@@ -26,7 +25,6 @@ import { UtilsModule } from '@perxtech/core';
     ChangeStreetAddressComponent,
     ChangeEmailComponent,
     ChangeCityComponent,
-    VerificationOtpComponent,
   ],
   imports: [
     CommonModule,

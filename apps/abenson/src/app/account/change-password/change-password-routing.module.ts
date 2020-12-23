@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ChangePasswordComponent } from './change-password.component';
+import { ChangePasswordComponent } from '@perxtech/blackcomb-pages';
 
 const routes: Routes = [{
   path: '',

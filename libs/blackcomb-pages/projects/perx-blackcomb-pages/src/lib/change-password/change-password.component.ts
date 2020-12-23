@@ -70,7 +70,7 @@ export class ChangePasswordComponent {
     const oldPasswordString = oldPasswordField ? oldPasswordField.value : '';
 
     this.loading = true;
-    this.authService.login(this.profile.phone as string, oldPasswordString)
+    this.authService.login(this.profile.phone as string, oldPasswordString, undefined, undefined, undefined, true)
       .pipe(
         switchMap(() => this.authService.requestVerificationToken()),
         tap( () => this.loading = false, () => this.loading = false)

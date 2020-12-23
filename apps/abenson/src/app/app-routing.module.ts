@@ -7,6 +7,7 @@ import { SignUpComponent } from './auth/signup/signup.component';
 import { ForgotPinComponent } from './forgot-pin/forgot-pin.component';
 import { ProtectedGuard, PublicGuard } from 'ngx-auth';
 import { SmsValidationComponent } from './auth/sms-validation/sms-validation.component';
+import { VerificationOtpComponent } from './profile/verification-otp/verification-otp.component';
 
 const routes: Routes = [
   {
@@ -91,6 +92,10 @@ const routes: Routes = [
         path: 'profile',
         loadChildren: () =>
           import('./profile/profile.module').then((mod) => mod.ProfileModule),
+      },
+      {
+        path: 'otp/:type',
+        component: VerificationOtpComponent
       },
     ],
     canActivate: [ProtectedGuard],

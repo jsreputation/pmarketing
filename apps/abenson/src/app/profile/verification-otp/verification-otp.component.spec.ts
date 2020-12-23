@@ -54,7 +54,12 @@ describe('VerificationOtpComponent', () => {
         { provide: ProfileService, useValue: profileServiceStub },
         { provide: AuthenticationService, useValue: authenticationServiceStub },
         { provide: ActivatedRoute, useValue: activatedRouteStub },
-        { provide: Router, useValue: { navigate: () => { } } },
+        {
+          provide: Router, useValue: {
+            navigate: () => {},
+            getCurrentNavigation: () => null
+          }
+        },
         { provide: NotificationService, useValue: notificationServiceStub }
       ]
     })
@@ -130,7 +135,7 @@ describe('VerificationOtpComponent', () => {
 
     it('should handle passowrd flow', fakeAsync(() => {
       const spy = spyOn(profileService, 'whoAmI').and.returnValue(of({ phone: '18888' } as IProfile));
-      component.ngOnInit();
+      component.switchType('password');
       tick();
       expect(spy).toHaveBeenCalled();
     }));

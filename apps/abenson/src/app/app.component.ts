@@ -18,7 +18,6 @@ import { CardComponent } from './card/containers/card/card.component';
 import { SignUpComponent } from './auth/signup/signup.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ChangeBarangayComponent } from './profile/change-barangay/change-barangay.component';
-import { ChangePasswordComponent } from './account/change-password/change-password.component';
 import { ChangeEmailComponent } from './profile/change-email/change-email.component';
 import { ChangeCityComponent } from './profile/change-city/change-city.component';
 import { ChangeStreetAddressComponent } from './profile/change-street-address/change-street-address.component';
@@ -101,7 +100,6 @@ export class AppComponent implements OnInit {
     this.showLogo = !(
       ref instanceof ProfileComponent ||
       ref instanceof ChangeBarangayComponent ||
-      ref instanceof ChangePasswordComponent ||
       ref instanceof ChangeEmailComponent ||
       ref instanceof ChangeCityComponent ||
       ref instanceof ChangeStreetAddressComponent ||
@@ -116,8 +114,6 @@ export class AppComponent implements OnInit {
         ? 'Profile'
         : ref instanceof ChangeBarangayComponent
         ? 'Change Barangay'
-        : ref instanceof ChangePasswordComponent
-        ? 'Change PIN Code'
         : ref instanceof ChangeEmailComponent
         ? 'Change Email'
         : ref instanceof ChangeCityComponent

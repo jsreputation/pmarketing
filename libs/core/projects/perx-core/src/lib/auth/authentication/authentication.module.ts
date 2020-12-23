@@ -7,7 +7,10 @@ import {
 } from 'ngx-auth';
 import { AuthenticationService } from './authentication.service';
 import { V4AuthenticationService } from './v4-authentication.service';
-import { HttpClient } from '@angular/common/http';
+import {
+  HttpBackend,
+  HttpClient
+} from '@angular/common/http';
 import { Config } from '../../config/config';
 import { ProfileService } from '../../profile/profile.service';
 import { WhistlerAuthenticationService } from './whistler-authentication.service';
@@ -28,13 +31,14 @@ export function AuthServiceFactory(
   tokenStorage: TokenStorage,
   profileService: ProfileService,
   configService: ConfigService,
-  notificationService: NotificationService
+  notificationService: NotificationService,
+  httpBackend: HttpBackend
 ): AuthenticationService {
   // Make decision on what to instantiate based on config
   if (config.isWhistler) {
     return new WhistlerAuthenticationService(config, http, tokenStorage);
   }
-  return new V4AuthenticationService(configService, http, tokenStorage, profileService, notificationService);
+  return new V4AuthenticationService(configService, http, tokenStorage, profileService, notificationService,  httpBackend);
 }
 
 export function FormsServiceFactory(config: Config, http: HttpClient): IFormsService {
@@ -55,12 +59,12 @@ export function FormsServiceFactory(config: Config, http: HttpClient): IFormsSer
     {
       provide: AuthenticationService,
       useFactory: AuthServiceFactory,
-      deps: [HttpClient, Config, TokenStorage, ProfileService, ConfigService, NotificationService]
+      deps: [HttpClient, Config, TokenStorage, ProfileService, ConfigService, NotificationService, HttpBackend]
     },
     {
       provide: AUTH_SERVICE,
       useFactory: AuthServiceFactory,
-      deps: [HttpClient, Config, TokenStorage, ProfileService, ConfigService, NotificationService]
+      deps: [HttpClient, Config, TokenStorage, ProfileService, ConfigService, NotificationService, HttpBackend]
     },
     { provide: IFormsService, useFactory: FormsServiceFactory, deps: [Config, ConfigService, HttpClient] }
   ]
