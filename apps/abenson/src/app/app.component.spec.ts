@@ -33,7 +33,6 @@ import { HomeComponent } from '@perxtech/blackcomb-pages';
 import { TermsAndConditionComponent } from './account/profile-additions/containers/terms-and-condition/terms-and-condition.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ChangeBarangayComponent } from './profile/change-barangay/change-barangay.component';
-import { ChangePasswordComponent } from './account/change-password/change-password.component';
 import { ChangeEmailComponent } from './profile/change-email/change-email.component';
 import { ChangeCityComponent } from './profile/change-city/change-city.component';
 import { ChangeStreetAddressComponent } from './profile/change-street-address/change-street-address.component';
@@ -226,8 +225,6 @@ describe('AppComponent', () => {
     expect(app.headerTitle).toBe('Profile');
     app.onActivate(new ChangeBarangayComponent(form, profile, locationTest));
     expect(app.headerTitle).toBe('Change Barangay');
-    app.onActivate(new ChangePasswordComponent(form, shared, router, auth));
-    expect(app.headerTitle).toBe('Change PIN Code');
     app.onActivate(new ChangeEmailComponent(form, profile, router));
     expect(app.headerTitle).toBe('Change Email');
     app.onActivate(new ChangeCityComponent(form, profile, locationTest));
