@@ -4,7 +4,6 @@ import { of, Observable } from 'rxjs';
 import { switchMap, tap, flatMap } from 'rxjs/operators';
 import { AuthenticationService, NotificationService, IChangePasswordData, ProfileService, PopupComponent, IChangePhoneData } from '@perxtech/core';
 import { SharedDataService } from '../../services/shared-data.service';
-import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-verification-otp',
@@ -22,11 +21,9 @@ export class VerificationOtpComponent implements OnInit {
     private router: Router,
     private profileService: ProfileService,
     private sharedData: SharedDataService,
-    private dialog: MatDialog
   ) { }
 
   public ngOnInit(): void {
-    this.ntfcService.$popup.subscribe((data) => this.dialog.open(PopupComponent, { data }));
     this.route.params.pipe(switchMap((params) => this.switchType(params.type)))
       .subscribe((data: IChangePhoneData | IChangePasswordData) => this.data = { ...data, otp: '' });
   }
