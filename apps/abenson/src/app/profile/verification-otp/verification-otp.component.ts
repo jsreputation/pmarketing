@@ -35,7 +35,7 @@ export class VerificationOtpComponent implements OnInit {
   public get phoneDisplay(): string | undefined {
     return this.userPhone && '*'.repeat(this.userPhone.length - 4) + this.userPhone.substr(this.userPhone.length - 4);
   }
-  private switchType(type: string): Observable<any> {
+  public switchType(type: string): Observable<any> {
     this.type = type;
     switch (this.type) {
       case 'phone':

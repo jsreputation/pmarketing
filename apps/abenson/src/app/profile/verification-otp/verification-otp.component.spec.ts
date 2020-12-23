@@ -135,7 +135,7 @@ describe('VerificationOtpComponent', () => {
 
     it('should handle passowrd flow', fakeAsync(() => {
       const spy = spyOn(profileService, 'whoAmI').and.returnValue(of({ phone: '18888' } as IProfile));
-      component.ngOnInit();
+      component.switchType('password');
       tick();
       expect(spy).toHaveBeenCalled();
     }));
