@@ -4,12 +4,13 @@ import { CommonModule } from '@angular/common';
 import { ChangePasswordRoutingModule } from './change-password-routing.module';
 import { MatInputModule, MatButtonModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ChangePasswordComponent } from '@perxtech/blackcomb-pages';
+import {
+  PerxBlackcombPagesModule
+} from '@perxtech/blackcomb-pages';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
-  declarations: [ChangePasswordComponent],
   imports: [
     CommonModule,
     ChangePasswordRoutingModule,
@@ -19,7 +20,8 @@ import { TranslateModule } from '@ngx-translate/core';
     ReactiveFormsModule,
     // for change password BCPcomponent
     MatProgressSpinnerModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    PerxBlackcombPagesModule
   ]
 })
 export class ChangePasswordModule { }
