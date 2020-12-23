@@ -61,7 +61,7 @@ describe('AuthenticationModule', () => {
     ) => {
       let service = AuthServiceFactory(http, { isWhistler: true }, token, profile, configService, notificationService, httpBackend);
       expect(service instanceof WhistlerAuthenticationService);
-      service = AuthServiceFactory(http,{ isWhistler: false }, token, profile, configService, notificationService, httpBackend);
+      service = AuthServiceFactory(http, { isWhistler: false }, token, profile, configService, notificationService, httpBackend);
       expect(service instanceof V4AuthenticationService);
     }));
 
