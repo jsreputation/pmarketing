@@ -45,7 +45,6 @@ import { SignUpComponent } from './auth/signup/signup.component';
 import { CustomerSupportComponent } from './account/customer-support/customer-support.component';
 import { Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
-import { SharedDataService } from './services/shared-data.service';
 import { of } from 'rxjs';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
@@ -189,7 +188,6 @@ describe('AppComponent', () => {
     const tokenService = {} as TokenStorage;
     const profile = {} as ProfileService;
     const locationTest = {} as Location;
-    const shared = {} as SharedDataService;
     const matDialog = {} as MatDialog;
     const titleService = {} as Title;
     app.onActivate(new LoginComponent(router, form, auth, notifi));
