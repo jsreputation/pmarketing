@@ -1,0 +1,31 @@
+<div *ngIf="(itemsSnapping$ | async) as itemsSnapping" class="main-container">
+    <h1 *ngIf="itemsSnapping.length">Snapping saturday</h1>
+    <div [@fadeIn]="itemsSnapping.length" *ngIf="itemsSnapping.length > 0"
+    infiniteScroll
+    [infiniteScrollDistance]="3"
+    [infiniteScrollThrottle]="500"
+    [horizontal]="true"
+    (scrolled)="onTaggedItemsScroll()"
+    [alwaysCallback]="true"
+    [scrollWindow]="false"
+    class="cards">
+      <mat-card
+        class="ga_reward"
+        *ngFor="let itemSnapping of itemsSnapping"
+        matRipple (click)="selected(itemSnapping)">
+        <div class="featured-image">
+          <img mat-card-image [src]="itemSnapping.rewardBanner">
+        </div>
+        <mat-card-content>
+          <div class="card-description">
+            <h1>{{itemSnapping.name}}</h1>
+            <h2>{{itemSnapping.merchantName}}</h2>
+          </div>
+          <div class="icon">
+            <img src="assets/forward-arrow.svg" alt="">
+          </div>
+        </mat-card-content>
+        <mat-card-footer></mat-card-footer>
+      </mat-card>
+    </div>
+  </div>

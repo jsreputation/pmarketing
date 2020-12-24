@@ -74,3 +74,8 @@ export interface IReferral {
   // no empty interface rule
   success?: string;
 }
+
+export interface ITaggedItem {
+  itemType: string;
+  itemVal: ICampaign | IReward | number;
+}

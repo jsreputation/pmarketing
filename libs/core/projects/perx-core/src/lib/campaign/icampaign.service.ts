@@ -6,6 +6,8 @@ export interface ICampaignFilterOptions {
   type?: CampaignType;
   page?: number;
   gameType?: GameType;
+  tagged_with?: string;
+  size?: number;
 }
 
 export abstract class ICampaignService {

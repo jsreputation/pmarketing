@@ -40,6 +40,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { GhostCardComponent } from '../../ghosts/card-ghost.component';
 import { StampCardsComponent } from '../stamp-cards/stamp-cards.component';
 import { QuizSurveyCampaignsComponent } from '../quiz-campaigns/quiz-survey-campaigns.component';
+import { TaggedItemsComponent } from '../tagged-items/tagged-items.component';
 
 describe('DiscoverComponent', () => {
   let component: DiscoverComponent;
@@ -90,7 +91,8 @@ describe('DiscoverComponent', () => {
         CampaignsComponent,
         StampCardsComponent,
         GhostCardComponent,
-        QuizSurveyCampaignsComponent
+        QuizSurveyCampaignsComponent,
+        TaggedItemsComponent
       ],
       imports: [
         MatCardModule,

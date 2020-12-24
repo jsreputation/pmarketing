@@ -53,7 +53,8 @@ const appConfigFile = `{
   "isWhistler": ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : false},
   "baseHref": "${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}",
   "custom": {
-    "hubclubCR": ${process.env.HUBCLUB_CR ? process.env.HUBCLUB_CR : false}
+    "hubclubCR": ${process.env.HUBCLUB_CR ? process.env.HUBCLUB_CR : false},
+    "showAllSnappingSaturdayItems": ${process.env.SHOW_ALL_SNAPPING_SATURDAY_ITEMS ? process.env.SHOW_ALL_SNAPPING_SATURDAY_ITEMS : false}
   }
 }
 `;
