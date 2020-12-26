@@ -90,9 +90,6 @@ export class TaggedItemsComponent implements OnInit {
     this.configService.readAppConfig().subscribe(() => {
       this.getTaggedRewards().subscribe((rewards: IReward[]) => {
         this.taggedItemsSubj.next(rewards);
-        if (this.rewardsSnappingCompleted) {
-          this.getTaggedCampaigns();
-        }
       });
     });
   }
@@ -137,26 +134,25 @@ export class TaggedItemsComponent implements OnInit {
         if (val.length < REQ_PAGE_SIZE) {
           this.rewardsSnappingCompleted = true;
           if (!this.campaignsEnded) {
-            this.getTaggedCampaigns();
+            this.getTaggedCampaigns(REQ_PAGE_SIZE - val.length);
           }
         }
       });
-      ++this.currentRewardsSnappingPage;
     } else {
         this.onTaggedCampaignsScroll();
     }
   }
 
-  public getTaggedCampaigns(): void {
+  public getTaggedCampaigns(campaignPageSize: number = REQ_PAGE_SIZE): void {
     let tempCampaigns;
     let gameCampaigns: ICampaign[] = [];
     let stampCampaigns: ICampaign[] = [];
     this.campaignService
-      .getCampaigns({ page: this.campaignsPageId, tagged_with: 'snapping', size: 2})
+      .getCampaigns({ page: this.campaignsPageId, tagged_with: 'snapping', size: campaignPageSize})
       .pipe(
         tap((campaigns) => {
            this.ghostItems = [];
-           if (campaigns.length < REQ_PAGE_SIZE) {
+           if (campaigns.length < campaignPageSize) {
               // actual check here if no more campaigns then end -> ensure all pages combed
                this.campaignsEnded = true;
             }
