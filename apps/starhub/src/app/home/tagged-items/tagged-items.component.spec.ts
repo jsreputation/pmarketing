@@ -15,6 +15,7 @@ import { rewards } from '../../rewards.mock';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { MatCardModule, MatIconModule, MatRippleModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { GhostCardComponent } from '../../ghosts/card-ghost.component';
 
 
 describe('TaggedItemsComponent', () => {
@@ -50,7 +51,7 @@ describe('TaggedItemsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TaggedItemsComponent ],
+      declarations: [ TaggedItemsComponent, GhostCardComponent ],
       imports: [
         MatCardModule,
         MatIconModule,

@@ -12,10 +12,17 @@
       <mat-card
         class="ga_reward"
         *ngFor="let itemSnapping of itemsSnapping"
-        matRipple (click)="selected(itemSnapping)">
-        <div class="featured-image">
-          <img mat-card-image [src]="itemSnapping.rewardBanner">
-        </div>
+        matRipple [matRippleDisabled]="itemSnapping?.macaron?.class === 'coming-soon'" 
+        (click)="selected(itemSnapping)">
+        <div class="featured-image" >
+          <img mat-card-image [src]="itemSnapping.rewardBanner" *ngIf="itemSnapping?.rewardBanner; else campaignThumbnailTemplate">      
+          <ng-template #campaignThumbnailTemplate>
+            <img mat-card-image [src]="itemSnapping?.thumbnailUrl ? itemSnapping.thumbnailUrl: ''" >
+          </ng-template>
+          <div *ngIf="itemSnapping?.macaron as macaron" class="macaron-container">
+            <span [ngClass]="macaron.class">{{macaron.label}}</span>
+          </div>
+        </div>      
         <mat-card-content>
           <div class="card-description">
             <h1>{{itemSnapping.name}}</h1>
@@ -28,4 +35,5 @@
         <mat-card-footer></mat-card-footer>
       </mat-card>
     </div>
+  <!--  <ghost-cards class="cards" [@fadeOut]="!ghostItems.length" [ghosts]="ghostItems"></ghost-cards>-->
   </div>
