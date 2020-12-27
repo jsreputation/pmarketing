@@ -1,6 +1,6 @@
 <app-news-feed></app-news-feed>
 <app-categories (tapped)="categorySelected($event)"></app-categories>
-<app-tagged-items (tapped)="taggedItemSelected($event)" *ngIf="showAllSnappingSaturdayItems else rewardsTemplate"></app-tagged-items>
+<app-tagged-items [tagName]="'snapping'" (tapped)="taggedItemSelected($event)" *ngIf="showAllSnappingSaturdayItems else rewardsTemplate"></app-tagged-items>
 <ng-template #rewardsTemplate>
     <app-rewards-cards (tapped)="rewardSelected($event)"></app-rewards-cards>
 </ng-template>

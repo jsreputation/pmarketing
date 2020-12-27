@@ -1,6 +1,7 @@
 import {
   Component,
   EventEmitter,
+  Input,
   OnInit,
   Output
 } from '@angular/core';
@@ -19,7 +20,9 @@ import {
   catchError,
   switchMap,
   startWith,
-  scan} from 'rxjs/operators';
+  finalize,
+  scan
+ } from 'rxjs/operators';
 
 import { trigger } from '@angular/animations';
 
@@ -74,6 +77,8 @@ export class TaggedItemsComponent implements OnInit {
   public games: IGame[];
   public stampCards: IStampCard[];
 
+  @Input() public tagName: string;
+
   @Output()
   public tapped: EventEmitter<(ITaggedItem)> = new EventEmitter();
 
@@ -117,13 +122,13 @@ export class TaggedItemsComponent implements OnInit {
       return of([]);
     }
     this.currentRewardsSnappingPage++;
-    return this.rewardsService.getRewards(this.currentRewardsSnappingPage, REQ_PAGE_SIZE, ['snapping'], undefined)
+    return this.rewardsService.getRewards(this.currentRewardsSnappingPage, REQ_PAGE_SIZE, [this.tagName], undefined)
       .pipe(
         tap((rewards: IReward[]) => {
           this.rewardsSnappingCompleted = rewards.length < REQ_PAGE_SIZE;
         }),
         map((rewards: IReward[]) => this.sortRewards(rewards)),
-       // finalize(() => this.ghostItemsSnapping = [])
+       finalize(() => this.ghostItems = [])
       );
   }
 
@@ -148,10 +153,9 @@ export class TaggedItemsComponent implements OnInit {
     let gameCampaigns: ICampaign[] = [];
     let stampCampaigns: ICampaign[] = [];
     this.campaignService
-      .getCampaigns({ page: this.campaignsPageId, tagged_with: 'snapping', size: campaignPageSize})
+      .getCampaigns({ page: this.campaignsPageId, tagged_with: this.tagName, size: campaignPageSize})
       .pipe(
         tap((campaigns) => {
-           this.ghostItems = [];
            if (campaigns.length < campaignPageSize) {
               // actual check here if no more campaigns then end -> ensure all pages combed
                this.campaignsEnded = true;
@@ -185,16 +189,9 @@ export class TaggedItemsComponent implements OnInit {
                 ( campaign.type === CampaignType.game && games.filter((game) => game.campaignId === campaign.id).length > 0) ||
                 ( campaign.type === CampaignType.stamp && stampCards.filter((stampCard) => stampCard.campaignId === campaign.id).length > 0)
               );
-            }).map((campaign) => {
-              if (campaign.type === CampaignType.game || campaign.type === CampaignType.stamp) {
-                campaign.macaron = this.getCampaignMacaron(campaign);
-              }
-              return campaign;
             });
           this.taggedItemsSubj.next(filteredAndMacoronedCampaigns);
-          this.ghostItems = [];
-        },
-        () => (this.ghostItems = [])
+        }
       );
   }
 
@@ -207,13 +204,17 @@ export class TaggedItemsComponent implements OnInit {
     this.getTaggedCampaigns();
   }
 
-  public getCampaignMacaron(campaign: ICampaign): IMacaron | null {
-    return this.macaronService.getCampaignMacaron(campaign);
+  public getMacaron(taggedItem: ICampaign | IReward): IMacaron | null {
+
+    if ('type' in taggedItem  &&  (taggedItem.type in CampaignType)) {
+      return this.macaronService.getCampaignMacaron(<ICampaign> taggedItem);
+    }
+    return this.macaronService.getMacaron(<IReward> taggedItem);
   }
 
   public selected(taggedItem: (ICampaign | IReward)): void {
-    if ('type' in taggedItem) {
-      if (taggedItem.type === 'game') {
+    if ('type' in taggedItem &&  (taggedItem.type in CampaignType)) {
+      if (taggedItem.type === CampaignType.game) {
         this.gameSelected(taggedItem);
       } else {
         this.tapped.emit({ itemType: taggedItem.type, itemVal: taggedItem });
@@ -232,7 +233,7 @@ export class TaggedItemsComponent implements OnInit {
     );
 
     if (gameWithCampaign) {
-      this.tapped.emit({ itemType: 'game', itemVal: gameWithCampaign.id});
+      this.tapped.emit({ itemType: CampaignType.game, itemVal: gameWithCampaign.id});
     }
   }
 
