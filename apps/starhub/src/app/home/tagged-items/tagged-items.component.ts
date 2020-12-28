@@ -42,7 +42,8 @@ import {
   ICampaignService,
   IGame,
   IGameService,
-  ITaggedItem
+  ITaggedItem,
+  GameType
 } from '@perxtech/core';
 
 import {
@@ -198,7 +199,8 @@ export class TaggedItemsComponent implements OnInit {
                 campaign.beginsAt &&
                 campaign.beginsAt.getTime() > currentDate.getTime();
               return (
-                 !([CampaignType.game, CampaignType.stamp].includes(campaign.type)) || isComingSoon ||
+                 !([CampaignType.game, CampaignType.stamp].includes(campaign.type)) ||
+                campaign.subType === GameType.survey || campaign.subType === GameType.quiz || isComingSoon ||
                 ( campaign.type === CampaignType.game && games.filter((game) => game.campaignId === campaign.id).length > 0) ||
                 ( campaign.type === CampaignType.stamp && stampCards.filter((stampCard) => stampCard.campaignId === campaign.id).length > 0)
               );
@@ -229,8 +231,11 @@ export class TaggedItemsComponent implements OnInit {
 
   public selected(taggedItem: (ICampaign | IReward)): void {
     if ('type' in taggedItem &&  (taggedItem.type in CampaignType)) {
-      if (taggedItem.type === CampaignType.game) {
+      if (taggedItem.type === CampaignType.game && taggedItem.subType !== GameType.quiz && taggedItem.subType !== GameType.survey) {
         this.gameSelected(taggedItem);
+      } else if (taggedItem.subType === GameType.quiz || taggedItem.subType === GameType.survey) {
+          const campaignSubType: string = taggedItem.subType ? taggedItem.subType : '';
+          this.tapped.emit({ itemType: campaignSubType, itemVal: taggedItem });
       } else {
         this.tapped.emit({ itemType: taggedItem.type, itemVal: taggedItem });
       }
