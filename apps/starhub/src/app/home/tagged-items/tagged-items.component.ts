@@ -56,6 +56,10 @@ interface ICampaignWithMacaron extends ICampaign {
   macaron?: IMacaron | null;
 }
 
+interface IRewardWithMacaron extends IReward {
+  macaron?: IMacaron | null;
+}
+
 @Component({
   selector: 'app-tagged-items',
   animations: [
@@ -68,14 +72,14 @@ interface ICampaignWithMacaron extends ICampaign {
 export class TaggedItemsComponent implements OnInit {
 
   public rewardsSnappingCompleted: boolean = false;
-  public itemsSnapping$: Observable<(IReward | ICampaign)[]>;
+  public itemsSnapping$: Observable<(IRewardWithMacaron | ICampaignWithMacaron)[]>;
   private currentRewardsSnappingPage: number = 0;
   public ghostItems: any[] = new Array(3);
-  public taggedItemsSubj: BehaviorSubject<(IReward |ICampaign)[]> = new BehaviorSubject([]);
+  public taggedItemsSubj: BehaviorSubject<(IRewardWithMacaron | ICampaignWithMacaron)[]> = new BehaviorSubject([]);
   public campaignsPageId: number = 1;
   public campaignsEnded: boolean = false;
-  public games: IGame[];
-  public stampCards: IStampCard[];
+  public games: IGame[] = [];
+  public stampCards: IStampCard[] = [];
 
   @Input() public tagName: string;
 
@@ -93,9 +97,7 @@ export class TaggedItemsComponent implements OnInit {
 
   public ngOnInit(): void {
     this.configService.readAppConfig().subscribe(() => {
-      this.getTaggedRewards().subscribe((rewards: IReward[]) => {
-        this.taggedItemsSubj.next(rewards);
-      });
+      this.initRewards();
     });
   }
 
@@ -105,7 +107,13 @@ export class TaggedItemsComponent implements OnInit {
       .pipe(scan((acc, curr) => [...acc, ...(curr ? curr : [])], []));
   }
 
-  public sortRewards(rewards: IReward[]): IReward[] {
+  private initRewards(): void {
+    this.getTaggedRewards().subscribe((rewards: IReward[]) => {
+      this.taggedItemsSubj.next(rewards);
+    });
+  }
+
+  private sortRewards(rewards: IReward[]): IReward[] {
     return rewards.sort((a: IReward, b: IReward) => {
       if (! a.sellingFrom) {
         return 1;
@@ -117,7 +125,7 @@ export class TaggedItemsComponent implements OnInit {
     });
   }
 
-  public getTaggedRewards(): Observable<IReward[]> {
+  public getTaggedRewards(): Observable<IRewardWithMacaron[]> {
     if (this.rewardsSnappingCompleted) {
       return of([]);
     }
@@ -127,7 +135,11 @@ export class TaggedItemsComponent implements OnInit {
         tap((rewards: IReward[]) => {
           this.rewardsSnappingCompleted = rewards.length < REQ_PAGE_SIZE;
         }),
-        map((rewards: IReward[]) => this.sortRewards(rewards)),
+        map((rewards: IReward[]) => {
+          const rewardswithMacaron: IRewardWithMacaron[]  = this.sortRewards(rewards);
+          rewardswithMacaron.map((reward) => reward.macaron = this.getMacaron(reward));
+          return rewardswithMacaron;
+        }),
        finalize(() => this.ghostItems = [])
       );
   }
@@ -157,7 +169,6 @@ export class TaggedItemsComponent implements OnInit {
       .pipe(
         tap((campaigns) => {
            if (campaigns.length < campaignPageSize) {
-              // actual check here if no more campaigns then end -> ensure all pages combed
                this.campaignsEnded = true;
             }
            tempCampaigns = campaigns;
@@ -176,8 +187,8 @@ export class TaggedItemsComponent implements OnInit {
               )).pipe( startWith([]), map((stampCards: IStampCard[][]) => [].concat(...(stampCards as [])) as IStampCard[]))
             ))
         ).subscribe(([games, stampCards]) => {
-          this.games = games;
-          this.stampCards = stampCards;
+          this.games = this.games.concat(games);
+          this.stampCards = this.stampCards.concat(stampCards);
           const filteredAndMacoronedCampaigns = tempCampaigns
             .filter((campaign) => {
               const currentDate = new Date();
@@ -189,6 +200,9 @@ export class TaggedItemsComponent implements OnInit {
                 ( campaign.type === CampaignType.game && games.filter((game) => game.campaignId === campaign.id).length > 0) ||
                 ( campaign.type === CampaignType.stamp && stampCards.filter((stampCard) => stampCard.campaignId === campaign.id).length > 0)
               );
+            }).map((campaign) => {
+              campaign.macaron = this.getMacaron(campaign);
+              return campaign;
             });
           this.taggedItemsSubj.next(filteredAndMacoronedCampaigns);
         }
@@ -233,7 +247,7 @@ export class TaggedItemsComponent implements OnInit {
     );
 
     if (gameWithCampaign) {
-      this.tapped.emit({ itemType: CampaignType.game, itemVal: gameWithCampaign.id});
+      this.tapped.emit({ itemType: CampaignType.game, itemVal: gameWithCampaign.id });
     }
   }
 
