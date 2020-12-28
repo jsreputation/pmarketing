@@ -50,7 +50,7 @@ import {
   MacaronService,
 } from '../../services/macaron.service';
 
-const REQ_PAGE_SIZE: number = 2;
+const REQ_PAGE_SIZE: number = 20;
 
 interface ICampaignWithMacaron extends ICampaign {
   macaron?: IMacaron | null;
@@ -73,13 +73,14 @@ export class TaggedItemsComponent implements OnInit {
 
   public rewardsSnappingCompleted: boolean = false;
   public itemsSnapping$: Observable<(IRewardWithMacaron | ICampaignWithMacaron)[]>;
-  private currentRewardsSnappingPage: number = 0;
+  private rewardsPageId: number = 0;
   public ghostItems: any[] = new Array(3);
   public taggedItemsSubj: BehaviorSubject<(IRewardWithMacaron | ICampaignWithMacaron)[]> = new BehaviorSubject([]);
-  public campaignsPageId: number = 1;
+  public campaignsPageId: number = 0;
   public campaignsEnded: boolean = false;
   public games: IGame[] = [];
   public stampCards: IStampCard[] = [];
+
 
   @Input() public tagName: string;
 
@@ -129,8 +130,8 @@ export class TaggedItemsComponent implements OnInit {
     if (this.rewardsSnappingCompleted) {
       return of([]);
     }
-    this.currentRewardsSnappingPage++;
-    return this.rewardsService.getRewards(this.currentRewardsSnappingPage, REQ_PAGE_SIZE, [this.tagName], undefined)
+    this.rewardsPageId++;
+    return this.rewardsService.getRewards(this.rewardsPageId, REQ_PAGE_SIZE, [this.tagName], undefined)
       .pipe(
         tap((rewards: IReward[]) => {
           this.rewardsSnappingCompleted = rewards.length < REQ_PAGE_SIZE;
@@ -151,7 +152,7 @@ export class TaggedItemsComponent implements OnInit {
         if (val.length < REQ_PAGE_SIZE) {
           this.rewardsSnappingCompleted = true;
           if (!this.campaignsEnded) {
-            this.getTaggedCampaigns(REQ_PAGE_SIZE - val.length);
+            this.getTaggedCampaigns();
           }
         }
       });
@@ -164,6 +165,7 @@ export class TaggedItemsComponent implements OnInit {
     let tempCampaigns;
     let gameCampaigns: ICampaign[] = [];
     let stampCampaigns: ICampaign[] = [];
+    this.campaignsPageId++;
     this.campaignService
       .getCampaigns({ page: this.campaignsPageId, tagged_with: this.tagName, size: campaignPageSize})
       .pipe(
@@ -214,7 +216,6 @@ export class TaggedItemsComponent implements OnInit {
     if (this.campaignsEnded) {
       return;
     }
-    this.campaignsPageId++;
     this.getTaggedCampaigns();
   }
 
