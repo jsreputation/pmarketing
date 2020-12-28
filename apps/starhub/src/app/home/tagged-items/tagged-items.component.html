@@ -13,10 +13,7 @@
         *ngFor="let itemSnapping of itemsSnapping"
         matRipple [matRippleDisabled]="itemSnapping?.macaron?.class === 'coming-soon'" (click)="selected(itemSnapping)">
         <div class="featured-image" >
-          <img mat-card-image [src]="itemSnapping.rewardBanner" *ngIf="itemSnapping?.rewardBanner; else campaignThumbnailTemplate">      
-          <ng-template #campaignThumbnailTemplate>
-            <img mat-card-image [src]="itemSnapping?.thumbnailUrl ? itemSnapping.thumbnailUrl: ''" >
-          </ng-template>
+          <img mat-card-image [src]="itemSnapping.rewardBanner ? itemSnapping.rewardBanner : (itemSnapping.thumbnailUrl ? itemSnapping.thumbnailUrl: '')">      
           <div *ngIf="itemSnapping?.macaron as macaron" class="macaron-container">
             <span [ngClass]="macaron.class">{{macaron.label}}</span>
           </div>
@@ -24,7 +21,7 @@
         <mat-card-content>
           <div class="card-description">
             <h1>{{itemSnapping.name}}</h1>
-            <h2>{{itemSnapping.merchantName}}</h2>
+            <h2 *ngIf="itemSnapping.merchantName">{{itemSnapping.merchantName}}</h2>
           </div>
           <div class="icon">
             <img src="assets/forward-arrow.svg" alt="">
