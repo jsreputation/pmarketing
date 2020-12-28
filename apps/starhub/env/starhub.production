@@ -2,3 +2,4 @@ RSS_FEEDS=https://cdn.perxtech.net/content/starhub/rss.xml
 PRODUCTION=true
 APIHOST=https://api-starhub.perxtech.net
 HUBCLUB_CR=false
+SHOW_ALL_SNAPPING_SATURDAY_ITEMS=true
