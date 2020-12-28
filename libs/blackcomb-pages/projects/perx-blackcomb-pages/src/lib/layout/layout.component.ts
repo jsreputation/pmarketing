@@ -120,16 +120,16 @@ export class LayoutComponent implements OnInit {
       const chromelessFlag: boolean = paramArr && paramArr.includes('chromeless');
 
       if (chromelessFlag) {
-          this.flagLocalStorageService.setFlagInLocalStroage('chromeless', 'true');
+          this.flagLocalStorageService.setFlagInLocalStorage('chromeless', 'true');
       } else if (params && params.flags === '') {
-          this.flagLocalStorageService.resetFlagInLocalStroage('chromeless');
+          this.flagLocalStorageService.resetFlagInLocalStorage('chromeless');
       }
     });
   }
 
   public onActivate(ref: any): void {
 
-    const chromeless = Boolean(this.flagLocalStorageService.getFlagInLocalStroage('chromeless'));
+    const chromeless = Boolean(this.flagLocalStorageService.getFlagInLocalStorage('chromeless'));
     this.showHeader = chromeless ? false : !(ref instanceof SignIn2Component);
 
     this.showToolbar = ref instanceof HomeComponent ||

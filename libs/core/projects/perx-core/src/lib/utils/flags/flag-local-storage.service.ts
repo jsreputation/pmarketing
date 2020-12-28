@@ -7,15 +7,15 @@ export class FlagLocalStorageService {
 
   constructor() { }
 
-  public setFlagInLocalStroage(flag: string, value: string): void {
+  public setFlagInLocalStorage(flag: string, value: string): void {
       localStorage.setItem(flag, value);
   }
 
-  public getFlagInLocalStroage(flag: string): string | null {
+  public getFlagInLocalStorage(flag: string): string | null {
     return localStorage.getItem(flag);
   }
 
-  public resetFlagInLocalStroage(flag: string): void {
+  public resetFlagInLocalStorage(flag: string): void {
     if (localStorage.getItem(flag)) {
       localStorage.removeItem(flag);
     }
