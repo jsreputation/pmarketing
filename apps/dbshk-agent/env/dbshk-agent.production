@@ -20,4 +20,5 @@ DISCLAIMERURL=https://cdn.perxtech.net/content/dbs-hk/disclaimer.html
 TNCURL=https://cdn.perxtech.net/content/dbs-hk/tnc.html
 SHOW_PERFORMANCE_OVERVIEW=false
 COUNTRY_CODE_PREFIX=852
+BASE_HREF=/treasures/emgm-poc/
 PRODUCTION=true
