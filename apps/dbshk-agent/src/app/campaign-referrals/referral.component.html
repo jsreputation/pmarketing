@@ -1,7 +1,7 @@
 <div class="referral-main-container">
   <div class="referral-page">
-    <div class="referral-image">
-      <img src="assets/referral/referral.png" />
+    <div class="referral-image" *ngIf="campaign">
+      <img [src]="campaign.campaignBannerUrl ? campaign.campaignBannerUrl : 'assets/referral/referral.png'"/>
     </div>
     <h1>{{campaignName}}</h1>
     <p *ngIf="campaignEndsAt">{{'REFERRAL.ENDS_ON' | translate}}{{campaignEndsAt| date:'shortDate'}}</p>
