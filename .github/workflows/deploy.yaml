@@ -63,6 +63,9 @@ jobs:
           elif [ $APP == 'hsbc-xmas' ]
           then
             BASE_HREF="/site/hsbc/xmas/"
+          elif [ $APP == 'dbshk-agent' ]
+          then
+            BASE_HREF="/treasures/emgm-poc/"
           else
             BASE_HREF="/"
           fi
