@@ -20,6 +20,8 @@ export class ReferralComponent {
   public campaignDescription: string = '';
   public campaignEndsAt: Date;
   public campaignId: number;
+  public campaign: ICampaign;
+
   // todo to be replaced with the proper content when api is available
   public code: string = '';
   // todo to be replaced with the proper content when api is available
@@ -53,6 +55,7 @@ export class ReferralComponent {
         switchMap((id: number) => this.campaignService.getCampaign(id)),
         tap((campaign: ICampaign) => {
           if (campaign) {
+            this.campaign = campaign;
             this.code = campaign.referralCodes
               ? campaign.referralCodes[0]
               : this.code;
