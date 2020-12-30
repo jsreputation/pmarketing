@@ -73,6 +73,8 @@ jobs:
           echo "BASE_HREF=${BASE_HREF}" >> "${GITHUB_ENV}"
       - name: Set IS_WHISTLER to false
         run: echo "IS_WHISTLER=false" >> "${GITHUB_ENV}"
+      - name: Set PERX_APP_VERSION
+        run: echo "PERX_APP_VERSION=${APP}@${SEM_VER}" >> "${GITHUB_ENV}"
       - name: Set env SOURCE_TYPE
         run: |
           if [ $APP == 'hsbc' ]

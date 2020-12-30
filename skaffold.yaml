@@ -17,6 +17,7 @@ build:
           env: "{{.APP_ENV}}"
           appbase: "{{.APP_BASE}}"
           redirectdest: "{{.REDIRECT_AFTER_LOGIN}}"
+          perx_app_version: "{{.PERX_APP_VERSION}}"
   local:
     push: true
     useBuildkit: true
