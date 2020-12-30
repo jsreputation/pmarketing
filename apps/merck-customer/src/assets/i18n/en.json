@@ -10,7 +10,7 @@
     "TRANSACTION_HISTORY": "Transaction History"
   },
   "LOGIN_PAGE": {
-    "LOGIN_SUBTITLE": "M Gear",
+    "LOGIN_SUBTITLE": "M Gear Discount Program",
     "LOGIN": "Sign in",
     "REGISTER_BTN": "Register",
     "NOT_MEMBER": "Not a member",
@@ -24,7 +24,7 @@
     "MOBILE": "Mobile",
     "PASSWORD": "Password",
     "FORGOT_PASSWORD": "Forgot password?",
-    "LEARN_MORE": "Learn more about M Gear",
+    "LEARN_MORE": "Learn more about M Gear Discount Program",
     "SERVER_NOT_AVAILABLE": "We could not reach the server",
     "INVALID_CREDENTIALS": "Invalid credentials",
     "MOBILE_NO_IS": "Mobile No. is required",

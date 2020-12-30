@@ -11,10 +11,11 @@
     <p *ngIf="showLoyaltyProgress && loyalty.membershipTierName" class="tier-description">
       {{memberFn(loyalty.membershipTierName) | async}}</p>
 
+    <div class="pre-points-text">{{pointPretextFn() | async}}</div>
     <div class="points">
       {{loyalty.pointsBalance | number}}
     </div>
-
+    <div class="points-denomination">{{pointDenominationFn() | async}}</div>
     <ng-container
       *ngIf="showLoyaltyProgress && loyalty.membershipTierName && loyalty.highestTier && loyalty.nextTierName">
       <div *ngIf="loyalty.membershipTierName !== loyalty.highestTier" class="progress-bar">

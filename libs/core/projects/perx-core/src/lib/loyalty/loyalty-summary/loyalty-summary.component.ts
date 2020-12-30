@@ -46,6 +46,12 @@ export class LoyaltySummaryComponent implements OnInit {
   public topScoreProgressFn: () => Observable<string>;
 
   @Input()
+  public pointDenominationFn: () => Observable<string>;
+
+  @Input()
+  public pointPretextFn: () => Observable<string>;
+
+  @Input()
   public showLoyaltyProgress: boolean = true;
 
   @Input()
@@ -134,6 +140,16 @@ export class LoyaltySummaryComponent implements OnInit {
 
     if (this.showReferralProgress && !this.topScoreProgressFn) {
       this.topScoreProgressFn = () => of('');
+    }
+
+
+    if (!this.pointDenominationFn) {
+      this.pointDenominationFn = () => of('');
+    }
+
+
+    if (!this.pointPretextFn) {
+      this.pointPretextFn = () => of('');
     }
 
     if (!this.profile$) {

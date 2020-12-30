@@ -37,13 +37,17 @@
     font-weight: normal;
     font-size: 1.6rem;
     padding: 1.6rem;
-    
   }
+
   .referral-image {
     display: flex;
+    justify-content: center;
+    overflow: hidden;
+    max-height: 25rem;
+
     img {
       object-fit: scale-down;
-      flex: 1;
+      max-height: 100%;
     }
   }
 }
@@ -59,7 +63,7 @@
   align-items: flex-end;
   padding: 0 2.8rem;
   margin-bottom: 3rem;
-  
+
   button,
   a {
     text-decoration: none;
