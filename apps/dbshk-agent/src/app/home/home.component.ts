@@ -52,7 +52,10 @@ import {
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialog, MatTabChangeEvent } from '@angular/material';
-import { CurrencyPipe } from '@angular/common';
+import {
+  CurrencyPipe,
+  DatePipe
+} from '@angular/common';
 
 @Component({
   selector: 'perx-blackcomb-home',
@@ -82,6 +85,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   public pointToFn: () => Observable<string>;
   public memberFn: () => Observable<string>;
   public membershipExpiryFn: () => Observable<string>;
+  public pointDenominationFn: () => Observable<string>;
+  public pointPretextFn: () => Observable<string>;
   public showGames: boolean = false;
   public showCampaigns: boolean = false;
   private firstComefirstServeCampaign: ICampaign;
@@ -109,7 +114,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     protected feedService: FeedReaderService,
     protected settingsService: SettingsService,
     protected profileService: ProfileService,
-    protected currencyPipe: CurrencyPipe
+    protected currencyPipe: CurrencyPipe,
+    private datePipe: DatePipe
   ) { }
 
   public ngOnInit(): void {
@@ -431,7 +437,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   private initTranslate(): void {
-    // this.subTitleFn = () => this.translate.get('HOME.YOU_HAVE');
     this.titleFn = (profile: IProfile) =>
       this.translate.get('HOME.HELLO').pipe(
         map((msg) => {
@@ -454,9 +459,11 @@ export class HomeComponent implements OnInit, OnDestroy {
       );
     this.summaryExpiringFn = () => of('');
     this.pointToFn = () => of('');
-    this.subTitleFn = () => this.translate.get('HOME.POINT_TO');
+    this.subTitleFn = () => of(`as of ${this.datePipe.transform(new Date(), 'mediumDate')}`);
     this.memberFn = () => this.translate.get('HOME.MEMBER');
     this.membershipExpiryFn = () => of('');
-    this.displayPriceFn = () => of('');
+    this.displayPriceFn = () => this.translate.get('HOME.POINT_TO');
+    this.pointDenominationFn = () => this.translate.get('HOME.POINT_DENOMINATION');
+    this.pointPretextFn = () => this.translate.get('HOME.POINT_PRETEXT');
   }
 }
