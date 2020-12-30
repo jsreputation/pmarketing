@@ -73,6 +73,8 @@ export class SignUpComponent implements OnInit, OnDestroy {
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],
       referralCode: [''],
+      acceptTerms: [false, Validators.requiredTrue],
+      disclaimer: [false, Validators.requiredTrue]
     },
     { validator: this.matchingPasswords('password', 'confirmPassword') }
   ) as FormGroup;

@@ -63,7 +63,11 @@
     "HKID_DIGITS_INVALID_TXT": "Invalid id. It should be 4 alphanumeric digits",
     "CHECKBOX_LUCK_TXT": "I agree HSBC Life to save my personal information for the Lucky Draw and future direct marketing purpose. For details, please refer to the",
     "CHECKBOX_LUCK_POPUP_TXT": "If you do not agree with this term, you will not be eligible to join the LIFE Dojo lucky draw. Do you want to confirm?",
-    "BUTTON_SUBMIT": "Submit"
+    "BUTTON_SUBMIT": "Submit",
+    "TNC": "Terms & Conditions",
+    "DISCLAIMER": "Disclaimer",
+    "TNC_ACCEPT_REQUIRED": "Please accept the terms and conditions",
+    "DISCLAIMER_READ_REQUIRED": "Please read the disclaimer"
   },
   "OTP_PAGE": {
     "TITLE": "Input OTP",
