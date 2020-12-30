@@ -17,13 +17,13 @@ ARG app
 ARG env='production'
 # redirectdest is used only for blackcomb
 ARG redirectdest
-
+ARG perx_app_version
 RUN echo -e "\n--- Build Args ---\napihost: ${apihost}\nbasehref: ${basehref}\npreauth: ${preauth}\n" \
     "iswhistler: ${iswhistler}\nsourcetype: ${sourcetype}\napp: ${app}\nenv: ${env}\n" \
     "redirectdest: ${redirectdest}\n"
 
 RUN SOURCE_TYPE=${sourcetype} APIHOST=${apihost} BASE_HREF=${basehref} PREAUTH=${preauth} \
-    IS_WHISTLER=${iswhistler} REDIRECT_AFTER_LOGIN=${redirectdest} \
+    IS_WHISTLER=${iswhistler} REDIRECT_AFTER_LOGIN=${redirectdest} PERX_APP_VERSION=${perx_app_version}\
     yarn build:${app}:${env} --base-href ${basehref} --rebase-root-relative-css-urls=true
 
 RUN BASE_HREF=${basehref} yarn build:backend
