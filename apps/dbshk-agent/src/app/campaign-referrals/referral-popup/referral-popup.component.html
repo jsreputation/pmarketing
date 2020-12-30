@@ -14,7 +14,7 @@
 					<input matInput [placeholder]="namePlaceholder" formControlName="referralName" type="text">
 				</mat-form-field>
 				<div class="add-button">
-					<button mat-flat-button type="submit">{{addButtonTxt}}</button>
+					<button mat-flat-button type="submit" [disabled]="addRefferalNameForm.invalid">{{addButtonTxt}}</button>
 				</div>
 			</form>
 		</div>
