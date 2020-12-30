@@ -21,6 +21,8 @@ import {
   SurveyModule,
   UtilsModule
 } from '@perxtech/core';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: SignUpComponent,  data: {countryList: ['Hong Kong', 'Singapore']} },
@@ -48,6 +50,7 @@ const routes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatProgressSpinnerModule,  ]
+    MatProgressSpinnerModule,
+    MatCheckboxModule, ]
 })
 export class SignUpModule { }

@@ -81,6 +81,26 @@
 <!--        <mat-label translate>SIGN_UP_PAGE.REFERRAL_FIELD</mat-label>-->
 <!--        <input matInput formControlName="referralCode">-->
 <!--      </mat-form-field>-->
+    <div class="checkbox-container">
+      <div class="checkbox-content">
+          <mat-checkbox formControlName="acceptTerms"></mat-checkbox>
+          <span>Accept&nbsp;<a class="links" [routerLink]="['/c/tnc']" translate>SIGN_UP_PAGE.TNC</a></span>
+      </div>
+      <mat-error translate
+          *ngIf="signupForm?.get('acceptTerms') && signupForm?.get('acceptTerms').hasError('required') && (signupForm?.get('acceptTerms').touched || signupForm.submitted)" class="checkbox-error">
+          SIGN_UP_PAGE.TNC_ACCEPT_REQUIRED
+      </mat-error>
+    </div>
+    <div class="checkbox-container">
+      <div class="checkbox-content">
+          <mat-checkbox formControlName="disclaimer"></mat-checkbox>
+          <span>Read&nbsp;<a class="links" [routerLink]="['/c/disclaimer']" translate>SIGN_UP_PAGE.DISCLAIMER</a></span>
+      </div>
+      <mat-error translate
+      *ngIf="signupForm?.get('disclaimer') && signupForm?.get('disclaimer').hasError('required') && (signupForm?.get('disclaimer').touched || signupForm.submitted)" class="checkbox-error">
+        SIGN_UP_PAGE.DISCLAIMER_READ_REQUIRED
+      </mat-error>
+    </div>
     </form>
     <button
       [disabled]="!signupForm.valid || loadingSubmit"

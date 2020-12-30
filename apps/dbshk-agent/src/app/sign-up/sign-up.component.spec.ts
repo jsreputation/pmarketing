@@ -13,7 +13,7 @@ import {
 } from '@perxtech/core';
 import { SignUpComponent } from './sign-up.component';
 import { of, Observable, throwError } from 'rxjs';
-import {MatSnackBar, MatInputModule, MatProgressSpinnerModule, MatSelectModule} from '@angular/material';
+import {MatSnackBar, MatInputModule, MatProgressSpinnerModule, MatSelectModule, MatCheckboxModule} from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Location } from '@angular/common';
@@ -22,6 +22,7 @@ import { IWAppAccessTokenResponse } from '@perxtech/whistler';
 import { Type } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+
 
 const configStub: Partial<Config> = {
   preAuth: false
@@ -98,7 +99,8 @@ describe('SignUpComponent', () => {
           { path: 'wallet', redirectTo: '/' },
           { path: 'login', redirectTo: '/' }
         ]),
-        MatProgressSpinnerModule
+        MatProgressSpinnerModule,
+        MatCheckboxModule
       ],
       providers: [
         { provide: MatSnackBar, useValue: matSnackStub },

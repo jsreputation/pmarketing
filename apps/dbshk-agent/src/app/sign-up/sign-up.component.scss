@@ -24,6 +24,10 @@
     width: 100%;
     box-sizing: border-box;
     background: var(--button_background_color);
+    margin-top: 3rem;
+    &:disabled {
+      opacity: 45%;
+    }
   }
 
   form {
@@ -64,5 +68,36 @@
   .loading-spin {
     display: inline-block;
     margin: auto;
+  }
+}
+.checkbox-container {
+  position: relative;
+  margin: 1.5rem 0;
+  .checkbox-content {
+    display: flex;
+    align-items: center;
+  }
+
+  .mat-checkbox {
+    position: relative;
+    bottom: 0.2rem;
+    margin-right: 1.5rem;
+  }
+
+  ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+    background-color: #2664ED !important;
+  }
+
+  span {
+    font-size: 1.4rem; 
+  }
+  .links {
+    text-decoration : none!important;
+    color: #2664ED;
+  }
+
+  .checkbox-error {
+    position: absolute;
+    font-size: 75%;
   }
 }
