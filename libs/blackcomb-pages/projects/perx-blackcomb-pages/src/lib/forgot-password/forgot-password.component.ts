@@ -10,7 +10,10 @@ import {
   GeneralStaticDataService,
   ICountryCode,
   LoyaltyService,
-  NotificationService
+  NotificationService,
+  ITheme,
+  ThemesService,
+  IConfig
 } from '@perxtech/core';
 import { Observable, Subject } from 'rxjs';
 import { filter, map, mergeMap, switchMap, takeUntil, tap } from 'rxjs/operators';
@@ -47,6 +50,8 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   private otp: string;
   public identifier: string;
   private destroy$: Subject<void> = new Subject<void>();
+  public theme: Observable<ITheme>;
+  public appConfig: IConfig<void>;
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -57,6 +62,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     private configService: ConfigService,
     private translate: TranslateService,
     private loyaltyService: LoyaltyService,
+    private themesService: ThemesService
   ) {
   }
 
@@ -92,6 +98,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     )();
 
     this.configService.readAppConfig<void>().subscribe((conf) => {
+      this.appConfig = conf;
       if (conf.countryCodePrefix) {
         this.countryCodePrefix = conf.countryCodePrefix;
         this.phoneStepForm.controls.countryCode.patchValue(conf.countryCodePrefix);
@@ -102,6 +109,8 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
       switchMap((countryList) => matchRouteCountry$(countryList)),
       filter(([phoneNumber, countryCode]) => phoneNumber !== undefined && countryCode !== undefined)
     ).subscribe(([phoneNumber, countryCode]) => this.phoneStepForm.patchValue({ countryCode, phoneNumber }));
+
+    this.theme = this.themesService.getThemeSetting();
   }
 
   public compareCtryFn(c1: ICountryCode, c2: ICountryCode): boolean {

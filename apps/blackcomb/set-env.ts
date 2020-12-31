@@ -233,6 +233,9 @@ const appConfigFile = `{
   },
   "displayProperties" : ${
     process.env.APP === 'hsbcvn' ? displayPropertiesWithoutFaq : displayProperties
+  },
+  "showLogo":  ${
+    process.env.SHOW_LOGO ? process.env.SHOW_LOGO : false
   }
 }
 `;
