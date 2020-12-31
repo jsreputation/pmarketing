@@ -3,8 +3,23 @@ import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MatSnackBarModule } from '@angular/material';
+import {
+  ConfigService,
+  TokenStorage
+} from '@perxtech/core';
+import { of } from 'rxjs';
+
 
 describe('AppComponent', () => {
+  const tokenStorageStub = {
+    getAppInfoProperty: () => null,
+    setAppInfoProperty: () => { }
+  };
+
+  const configServiceStub: Partial<ConfigService> = {
+    readAppConfig: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -18,6 +33,10 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent
       ],
+      providers: [
+        { provide: ConfigService, useValue: configServiceStub },
+        { provide: TokenStorage, useValue: tokenStorageStub }
+      ]
     }).compileComponents();
   }));
 
