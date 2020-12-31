@@ -29,7 +29,7 @@ export class ReferralComponent {
   // todo to be replaced with the proper content when api is available
   public shareTitle: string;
   // todo to be replaced with the proper content when api is available
-  public shareUrl: string = 'https://landing.dbshk.static.perxtech.net';
+  public shareUrl: string = 'https://www.dbs.com.hk/treasures/emgm-poc/referee';
   public copyToClipboardTxt: string;
   public clipboardErrorTxt: string;
   public popupTitle: string;
