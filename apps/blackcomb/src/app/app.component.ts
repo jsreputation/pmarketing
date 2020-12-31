@@ -94,6 +94,11 @@ export class AppComponent implements OnInit {
     ).subscribe();
     this.config.readAppConfig<ITheme>()
       .pipe(
+        tap((config: IConfig<ITheme>) => {
+          if (config.appVersion) {
+            (window as any).PERX_APP_VERSION = config.appVersion;
+          }
+        }),
         tap((conf) => {
           if (conf.homeAsProgressPage) {
             this.navigateToLoading = conf.homeAsProgressPage;

@@ -1,5 +1,10 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { NotificationService, IConfig, ConfigService, TokenStorage } from '@perxtech/core';
+import {
+  NotificationService,
+  IConfig,
+  ConfigService,
+  TokenStorage,
+} from '@perxtech/core';
 import {
   PageProperties,
   BarSelectedItem,
@@ -76,6 +81,9 @@ export class AppComponent implements OnInit {
     this.configService.readAppConfig().subscribe(
       (config: IConfig<void>) => {
         this.preAuth = config.preAuth as boolean;
+        if (config.appVersion) {
+          (window as any).PERX_APP_VERSION = config.appVersion;
+        }
       }
     );
     if (!this.preAuth) {

@@ -18,7 +18,8 @@ import {
   SettingsService,
   TokenStorage,
   IFlags,
-  AuthenticationService
+  AuthenticationService,
+  IConfig
 } from '@perxtech/core';
 import {
   MatDialog,
@@ -30,6 +31,7 @@ import {
   first,
   map,
   switchMap,
+  tap,
 } from 'rxjs/operators';
 import {
   AnalyticsService,
@@ -160,6 +162,11 @@ export class AppComponent implements OnInit {
 
     // init holding
     this.configService.readAppConfig().pipe(
+      tap((config: IConfig<void>) => {
+        if (config.appVersion) {
+          (window as any).PERX_APP_VERSION = config.appVersion;
+        }
+      }),
       switchMap(() => this.settingsService.getRemoteFlagsSettings()),
       switchMap((flags: IFlags) => timer(0, flags && flags.gatekeeperPollingInterval || 2000)
         .pipe(

@@ -26,6 +26,9 @@ export class AppComponent implements OnInit {
 
     this.configService.readAppConfig().subscribe(
       (config: IConfig<void>) => {
+        if (config.appVersion) {
+          (window as any).PERX_APP_VERSION = config.appVersion;
+        }
         this.preAuth = config.preAuth as boolean;
 
         if (this.preAuth && isPlatformBrowser(this.platformId) && !((window as any).primaryIdentifier)) {

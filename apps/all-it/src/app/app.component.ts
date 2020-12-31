@@ -76,6 +76,11 @@ export class AppComponent implements OnInit {
   public ngOnInit(): void {
     this.config.readAppConfig<ITheme>()
       .pipe(
+        tap((config: IConfig<ITheme>) => {
+          if (config.appVersion) {
+            (window as any).PERX_APP_VERSION = config.appVersion;
+          }
+        }),
         switchMap((conf) => this.translate.getTranslation(conf.defaultLang as string)),
         tap((config: IConfig<ITheme>) => {
           this.translationLoaded = true;
