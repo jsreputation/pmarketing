@@ -65,4 +65,7 @@ export interface IConfig<T> {
 
   /* For Razer */
   homeAsProgressPage?: boolean;
+
+  /* Sign up page*/
+  showLogo?: boolean;
 }

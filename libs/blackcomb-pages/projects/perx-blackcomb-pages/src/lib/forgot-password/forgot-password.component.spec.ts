@@ -16,7 +16,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import {
   AuthenticationService,
   ConfigService, ILoyalty, LoyaltyService,
-  UtilsModule
+  UtilsModule, ThemesService
 } from '@perxtech/core';
 import { Observable, of } from 'rxjs';
 import { ForgotPasswordComponent } from './forgot-password.component';
@@ -43,6 +43,10 @@ const configServiceStub: Partial<ConfigService> = {
 const loyaltyServiceStub: Partial<LoyaltyService> = {
   getLoyalty: (): Observable<ILoyalty> => of(),
   getLoyalties: (): Observable<ILoyalty[]> => of([])
+};
+
+const themeServiceStub: Partial<ThemesService> = {
+  getThemeSetting: () => of()
 };
 
 describe('ForgotPasswordComponent', () => {
@@ -81,6 +85,7 @@ describe('ForgotPasswordComponent', () => {
         },
         { provide: ConfigService, useValue: configServiceStub },
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
+        { provide: ThemesService, useValue: themeServiceStub },
       ]
     })
       .compileComponents();
