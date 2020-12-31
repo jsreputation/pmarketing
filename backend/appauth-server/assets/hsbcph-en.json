@@ -158,6 +158,7 @@
     "REDEEMED": "Redeemed",
     "REWARD_STATUS_EXPIRY": "Expires on {{date}}",
     "REWARD_STATUS_REDEEMED": "Redeemed",
+    "REWARD_STATUS_REDEEMED_ON": "Redeemed on {{date}}",
     "REWARD_STATUS_EXPIRED": "Expired",
     "CTA_TXT": "Redeem",
     "POINT_EARNED": "{points} Points earned",

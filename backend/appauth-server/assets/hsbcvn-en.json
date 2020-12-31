@@ -154,13 +154,13 @@
     "REDEEMED": "Redeemed",
     "REWARD_STATUS_EXPIRY": "Expires on {{date}}",
     "REWARD_STATUS_REDEEMED": "Redeemed",
+    "REWARD_STATUS_REDEEMED_ON": "Redeemed on {{date}}",
     "REWARD_STATUS_EXPIRED": "Expired",
     "CTA_TXT": "Redeem",
     "POINT_EARNED": "{points} Points earned",
     "POINT_SPENT": "{points} Points spent",
     "CASHBACK_EARNED": "{points} cashback earned",
-    "CASHBACK_SPENT": "{points} cashback spent",
-    "REWARD_STATUS_REDEEMED_ON": "Redeemed on {{date}}"
+    "CASHBACK_SPENT": "{points} cashback spent"
   },
   "REDEMPTION": {
     "TITLE": "Input PIN",
