@@ -80,6 +80,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   ) as FormGroup;
   public countriesList$: Observable<ICountryCode[]>;
   public moveId: number;
+  public countryCodePrefix: string | undefined;
 
   constructor(
     protected fb: FormBuilder,
@@ -107,7 +108,15 @@ export class SignUpComponent implements OnInit, OnDestroy {
     );
     this.configService
       .readAppConfig<void>()
-      .subscribe((conf: IConfig<void>) => (this.appConfig = conf));
+      .subscribe((conf: IConfig<void>) => {
+        this.countryCodePrefix = conf.countryCodePrefix;
+        if (this.countryCodePrefix) {
+          this.signupForm.controls.countryCode.setValue(this.countryCodePrefix);
+          this.signupForm.controls.countryCode.clearValidators();
+          this.signupForm.controls.countryCode.updateValueAndValidity();
+        }
+        this.appConfig = conf;
+      });
     this.theme = this.themesService.getThemeSetting();
     this.oldPI = this.authService.getPI();
     this.oldToken = this.authService.getUserAccessToken();
