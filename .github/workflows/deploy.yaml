@@ -44,7 +44,7 @@ jobs:
           echo "APIHOST=${APIHOST}" >> "${GITHUB_ENV}"
       - name: Set env PREAUTH
         run: |
-          if [ $APP == 'prudential' ] || [ $APP == 'digi' ] || [ $APP == 'blackcomb' ] || [ $APP == 'bpi' ]
+          if [ $APP == 'prudential' ] || [ $APP == 'blackcomb' ] || [ $APP == 'bpi' ]
           then
             PREAUTH="true"
           else
