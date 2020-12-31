@@ -57,6 +57,7 @@ const envConfigFile = `export const environment = {
 
 const appConfigFile = `{
   "app": "${process.env.APP ? process.env.APP : 'globeone'}",
+  "appVersion": "${process.env.PERX_APP_VERSION ? process.env.PERX_APP_VERSION : 'dev-build'}",
   "apiHost": "${process.env.APIHOST ? process.env.APIHOST : 'https://api.perxtech.io'}",
   "production": ${process.env.PRODUCTION ? process.env.PRODUCTION : false},
   "preAuth": ${process.env.PREAUTH ? process.env.PREAUTH : true},

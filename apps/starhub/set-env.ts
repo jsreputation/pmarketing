@@ -38,13 +38,13 @@ const envConfigFile = `export const environment = {
   preAuth: ${ process.env.PREAUTH ? process.env.PREAUTH : false},
   isWhistler: ${ process.env.IS_WHISTLER ? process.env.IS_WHISTLER : false},
   baseHref: '${ process.env.BASE_HREF ? process.env.BASE_HREF : '/'}',
-  appVersion: '${version}'
+  "appVersion": '${process.env.PERX_APP_VERSION ? process.env.PERX_APP_VERSION : 'dev-build'}',
 };
 `;
 
 const appConfigFile = `{
   "app": "starhub",
-  "appVersion": "${version}",
+  "appVersion": "${process.env.PERX_APP_VERSION ? process.env.PERX_APP_VERSION : 'dev-build'}",
   "apiHost": "${
   process.env.APIHOST ? process.env.APIHOST : 'https://api.perxtech.io'
   }",
