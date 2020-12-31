@@ -4,7 +4,6 @@ import {
   IConfig,
   ConfigService,
   TokenStorage,
-  ITheme
 } from '@perxtech/core';
 import {
   PageProperties,
@@ -17,7 +16,6 @@ import { MatSnackBar } from '@angular/material';
 import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
 import { Location } from '@angular/common';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
-import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'mc-root',
