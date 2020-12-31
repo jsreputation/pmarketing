@@ -157,6 +157,7 @@
     "REDEEMED": "已換領",
     "REWARD_STATUS_EXPIRY": "將於{{date}}過期",
     "REWARD_STATUS_REDEEMED": "換領日期",
+    "REWARD_STATUS_REDEEMED_ON": "換領日期 {{date}}",
     "REWARD_STATUS_EXPIRED": "已失效",
     "CTA_TXT": "換領",
     "POINT_EARNED": "獲得積分{points}",

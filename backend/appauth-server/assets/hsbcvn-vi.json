@@ -133,13 +133,13 @@
     "REDEEMED": "Đã đổi",
     "REWARD_STATUS_EXPIRY": "Hết hạn vào {{date}}",
     "REWARD_STATUS_REDEEMED": "Đã đổi",
+    "REWARD_STATUS_REDEEMED_ON": "Đã quy đổi {{date}}",
     "REWARD_STATUS_EXPIRED": "Đã hết hạn",
     "CTA_TXT": "Quy đổi",
     "POINT_EARNED": "{points} Điểm kiếm được",
     "POINT_SPENT": "{points} Điểm đã tiêu",
     "CASHBACK_EARNED": "{points} hoàn tiền kiếm được",
-    "CASHBACK_SPENT": "{points} hoàn lại tiền đã chi tiêu",
-    "REWARD_STATUS_REDEEMED_ON": "Đã quy đổi {{date}}"
+    "CASHBACK_SPENT": "{points} hoàn lại tiền đã chi tiêu"
   },
   "REDEMPTION": {
     "TITLE": "Nhập mã PIN",
