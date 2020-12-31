@@ -5,7 +5,7 @@ import {
   NotificationService,
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
-import { filter, map, switchMap, tap } from 'rxjs/operators';
+import { filter, map, switchMap } from 'rxjs/operators';
 import { ActivatedRoute, Params } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { ReferralPopupComponent } from './referral-popup/referral-popup.component';
@@ -52,22 +52,22 @@ export class ReferralComponent {
       .pipe(
         filter((ps: Params) => ps.id),
         map((ps: Params) => Number.parseInt(ps.id, 10)),
-        switchMap((id: number) => this.campaignService.getCampaign(id)),
-        tap((campaign: ICampaign) => {
-          if (campaign) {
-            this.campaign = campaign;
-            this.code = campaign.referralCodes
-              ? campaign.referralCodes[0]
-              : this.code;
-            this.shareText = this.shareText.replace('{{code}}', this.code);
-            // set to campaign or do nothing
-            this.campaignDescription = campaign.description ? campaign.description : this.campaignDescription;
-            this.campaignName = campaign.name ? campaign.name : this.campaignName;
-            this.campaignEndsAt = campaign.endsAt ? campaign.endsAt : null;
-            this.campaignId = campaign.id;
-          }
-        })
-      ).subscribe();
+        switchMap((id: number) => this.campaignService.getCampaign(id))
+      ).subscribe(
+      (campaign: ICampaign) => {
+        if (campaign) {
+          this.campaign = campaign;
+          this.code = campaign.referralCodes
+            ? campaign.referralCodes[0]
+            : this.code;
+          // set to campaign or do nothing
+          this.campaignDescription = campaign.description ? campaign.description : this.campaignDescription;
+          this.campaignName = campaign.name ? campaign.name : this.campaignName;
+          this.campaignEndsAt = campaign.endsAt ? campaign.endsAt : null;
+          this.campaignId = campaign.id;
+        }
+      }
+    );
   }
 
   public addRecipients(): void {
