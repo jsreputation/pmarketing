@@ -1,4 +1,0 @@
-APIHOST=https://api.perxtech.io
-IS_WHISTLER=false
-LOGIN_METHOD=phone
-PRODUCTION=true
