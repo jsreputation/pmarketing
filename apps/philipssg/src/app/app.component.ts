@@ -18,6 +18,7 @@ import {
   filter,
   map,
   switchMap,
+  tap,
 } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -68,7 +69,13 @@ export class AppComponent implements OnInit {
 
   public ngOnInit(): void {
     this.config.readAppConfig()
-      .pipe(switchMap((conf) => this.translate.getTranslation(conf.defaultLang as string)))
+      .pipe(
+        tap((config: IConfig<void>) => {
+          if(config.appVersion){
+            (window as any).PERX_APP_VERSION = config.appVersion;
+          }
+        }),
+        switchMap((conf) => this.translate.getTranslation(conf.defaultLang as string)))
       .subscribe((config: IConfig<void>) => {
         this.translationLoaded = true;
         this.preAuth = config.preAuth as boolean;

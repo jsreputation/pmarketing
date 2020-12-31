@@ -3,7 +3,7 @@ import { MatDialog, MatSnackBar } from '@angular/material';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthenticationService, ConfigService, IConfig, IPopupConfig, NotificationService, PopupComponent } from '@perxtech/core';
-import { filter, map, switchMap } from 'rxjs/operators';
+import { filter, map, switchMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -35,7 +35,13 @@ export class AppComponent implements OnInit {
       .subscribe((token: string) => this.authenticationService.saveUserAccessToken(token));
 
     this.config.readAppConfig()
-      .pipe(switchMap((conf) => this.translate.getTranslation(conf.defaultLang as string)))
+      .pipe(
+        tap((config: IConfig<void>) => {
+          if(config.appVersion){
+            (window as any).PERX_APP_VERSION = config.appVersion;
+          }
+        }),
+        switchMap((conf) => this.translate.getTranslation(conf.defaultLang as string)))
       .subscribe((config: IConfig<void>) => {
         this.translationLoaded = true;
         this.preAuth = config.preAuth as boolean;

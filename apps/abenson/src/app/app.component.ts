@@ -25,7 +25,10 @@ import { FaqComponent } from './account/profile-additions/containers/faq/faq.com
 import { PrivacyPolicyComponent } from './account/profile-additions/containers/privacy-policy/privacy-policy.component';
 import { TermsAndConditionComponent } from './account/profile-additions/containers/terms-and-condition/terms-and-condition.component';
 import { CustomerSupportComponent } from './account/customer-support/customer-support.component';
-import { flatMap } from 'rxjs/operators';
+import {
+  flatMap,
+  tap
+} from 'rxjs/operators';
 import { Router } from '@angular/router';
 import {
   WalletHistoryComponent,
@@ -61,6 +64,11 @@ export class AppComponent implements OnInit {
     this.configService
       .readAppConfig<ITheme>()
       .pipe(
+        tap((config: IConfig<ITheme>) => {
+          if(config.appVersion){
+            (window as any).PERX_APP_VERSION = config.appVersion;
+          }
+        }),
         flatMap((config: IConfig<ITheme>) =>
           this.themeService.getThemeSetting(config)
         )

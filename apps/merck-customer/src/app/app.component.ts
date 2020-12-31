@@ -1,5 +1,11 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { NotificationService, IConfig, ConfigService, TokenStorage } from '@perxtech/core';
+import {
+  NotificationService,
+  IConfig,
+  ConfigService,
+  TokenStorage,
+  ITheme
+} from '@perxtech/core';
 import {
   PageProperties,
   BarSelectedItem,
@@ -11,6 +17,7 @@ import { MatSnackBar } from '@angular/material';
 import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
 import { Location } from '@angular/common';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'mc-root',
@@ -76,6 +83,9 @@ export class AppComponent implements OnInit {
     this.configService.readAppConfig().subscribe(
       (config: IConfig<void>) => {
         this.preAuth = config.preAuth as boolean;
+        if(config.appVersion){
+          (window as any).PERX_APP_VERSION = config.appVersion;
+        }
       }
     );
     if (!this.preAuth) {

@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material';
 import { PopupComponent, NotificationService, AuthenticationService, ConfigService, IConfig } from '@perxtech/core';
 import { Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -26,6 +27,11 @@ export class AppComponent implements OnInit {
 
     this.configService.readAppConfig().subscribe(
       (config: IConfig<void>) => {
+        tap((config: IConfig<void>) => {
+          if(config.appVersion){
+            (window as any).PERX_APP_VERSION = config.appVersion;
+          }
+        }),
         this.preAuth = config.preAuth as boolean;
 
         if (this.preAuth && isPlatformBrowser(this.platformId) && !((window as any).primaryIdentifier)) {
