@@ -29,17 +29,25 @@
 <!--      </mat-form-field>-->
 
       <div class="mobile-group">
-        <div class="country-code">
-          <mat-form-field floatLabel="always" appearance="standard" class="full-width__input">
-            <mat-label>Country Code</mat-label>
-            <mat-select formControlName="countryCode">
-              <mat-option *ngFor="let country of countriesList$ | async" [value]="country.code">
-                <span>{{country.name}}&nbsp;</span>
-                <span>+{{country.code}}</span>
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
+          <div *ngIf="countryCodePrefix; then withPrefixBlock else elseBlock"></div>
+          <ng-template #elseBlock>
+            <div class="country-code">
+                <mat-form-field floatLabel="always" appearance="standard" class="full-width__input">
+                  <mat-label>Country Code</mat-label>
+                      <mat-select formControlName="countryCode">
+                        <mat-option *ngFor="let country of countriesList$ | async" [value]="country.code">
+                          <span>{{country.name}}&nbsp;</span>
+                          <span>+{{country.code}}</span>
+                        </mat-option>
+                      </mat-select>
+                </mat-form-field>
+              </div>
+            </ng-template>
+            <ng-template #withPrefixBlock>
+              <div class="country-code-fixed">
+                <div>+{{countryCodePrefix}}&nbsp;</div>
+              </div>
+            </ng-template>
         <div class="mobile-number">
           <mat-form-field floatLabel="always" appearance="standard" class="full-width__input">
             <mat-label translate>SIGN_UP_PAGE.MOBILE_FIELD</mat-label>
