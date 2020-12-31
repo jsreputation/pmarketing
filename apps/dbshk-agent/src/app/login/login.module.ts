@@ -6,7 +6,8 @@ const routes: Routes = [{
   path: '',
   component: SignIn2Component,
   data: {
-    countryList: ['Hong Kong', 'Singapore']
+    countryList: ['Hong Kong', 'Singapore'],
+    countryCodePrefix: '852'
   }
 }];
 
