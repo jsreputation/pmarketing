@@ -83,7 +83,7 @@ export class AppComponent implements OnInit {
     this.configService.readAppConfig().subscribe(
       (config: IConfig<void>) => {
         this.preAuth = config.preAuth as boolean;
-        if(config.appVersion){
+        if (config.appVersion) {
           (window as any).PERX_APP_VERSION = config.appVersion;
         }
       }

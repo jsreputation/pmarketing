@@ -65,7 +65,7 @@ export class AppComponent implements OnInit {
       .readAppConfig<ITheme>()
       .pipe(
         tap((config: IConfig<ITheme>) => {
-          if(config.appVersion){
+          if (config.appVersion) {
             (window as any).PERX_APP_VERSION = config.appVersion;
           }
         }),

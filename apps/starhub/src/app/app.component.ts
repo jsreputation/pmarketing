@@ -163,7 +163,7 @@ export class AppComponent implements OnInit {
     // init holding
     this.configService.readAppConfig().pipe(
       tap((config: IConfig<void>) => {
-        if(config.appVersion){
+        if (config.appVersion) {
           (window as any).PERX_APP_VERSION = config.appVersion;
         }
       }),
