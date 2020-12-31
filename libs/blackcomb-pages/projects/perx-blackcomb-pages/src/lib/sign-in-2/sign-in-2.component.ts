@@ -87,7 +87,6 @@ export class SignIn2Component implements OnInit, OnDestroy {
   public ngOnInit(): void {
     this.countriesList$ = this.route.data.pipe(
       tap((dataObj) => this.validateMembership = dataObj.validateMembership),
-      tap((dataObj) => this.countryCodePrefix = dataObj.countryCodePrefix),
       map((dataObj) => dataObj.countryList),
       switchMap((countriesList) =>
         this.generalStaticDataService.getCountriesList(countriesList),
