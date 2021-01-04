@@ -27,6 +27,9 @@
         </mat-form-field>
         <a [routerLink]="[ '/forgot-pin' ]" class="link forgot-pin">Forgot Pin Code?</a>
         <button mat-flat-button type="submit" color="primary" class="full-width__button">Log In</button>
+        <div class="error_msg">
+          <span>{{errorMessage}}</span>
+        </div>
         <div *ngIf="useSignUpButton" class="sign-up-block-container">
           <p class="sign-up-block-msg">No account?</p>
           <button routerLink="/signup" mat-stroked-button class="full-width_sign_button" color="primary">Sign Up</button>
@@ -38,4 +41,3 @@
     </div>
   </div>
 </div>
-
