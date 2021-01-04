@@ -37,6 +37,8 @@ export interface IConfig<T> {
   showLeaderboardPage?: boolean;
   hidePopupCampaign?: boolean;
   showReferralCampaignsOnHomePage?: boolean;
+  showStampCampaignsOnHomePage?: boolean;
+  showExtraLoyaltyOnHomePage?: boolean;
 
   /* Misc */
   showQrPageSubtitle?: boolean;
