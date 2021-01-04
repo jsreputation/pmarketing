@@ -32,12 +32,12 @@ const displayProperties = `"displayProperties": {
       "pages": [
           {
               "key": "contact-us",
-              "title": "Contact Us",
+              "title": "CONTACT_US",
               "content_url": "${process.env.CONTACTUSURL ? process.env.CONTACTUSURL : ''}"
           },
           {
               "key": "tnc",
-              "title": "Terms and Conditions",
+              "title": "TNC",
               "content_url": "${process.env.TNCURL ? process.env.TNCURL : ''}"
           }
       ]

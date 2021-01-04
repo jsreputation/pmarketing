@@ -195,10 +195,11 @@
     "PROFILE": "My Profile",
     "REFER_FRIEND": "Refer a friend",
     "LIFE_TALK": "LIFE Talk",
-    "TNC": "Terms and Conditions",
+    "TNC": "Điều khoản và Điều kiện áp dụng",
     "PRIVACY_POLICY": "Privacy Policy",
     "LOGOUT": "Log Out",
-    "FAVORITE_REWARD": "Phần thưởng yêu thích"
+    "FAVORITE_REWARD": "Phần thưởng yêu thích",
+    "CONTACT_US": "Liên hệ"
   },
   "PROFILE": {
     "TITLE": "Profile",
