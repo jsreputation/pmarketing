@@ -32,7 +32,7 @@
     <perx-core-rewards-collection [rewardsList]="rewards$" (tapped)="goToReward($event)"></perx-core-rewards-collection>
   </div>
   <!-- Stamp card campaigns-->
-  <div class="campaigns">
+  <div class="campaigns" *ngIf="appConfig.showStampCampaignsOnHomePage">
     <div *ngIf="!restrictedView && showCampaigns" class="title" translate>HOME.STAMP_CAMPAIGNS</div>
     <perx-blackcomb-pages-campaigns-collection *ngIf="!restrictedView" [campaigns]="stampCampaigns$" (selected)="goToCampaignPage($event)">
     </perx-blackcomb-pages-campaigns-collection>
