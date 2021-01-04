@@ -101,6 +101,10 @@ const routes: Routes = [
     canActivate: [ProtectedGuard],
   },
   { path: 'forgot-pin', component: ForgotPinComponent },
+  {
+    path: 'enter-pin', loadChildren: () =>
+      import('./enter-pin/enter-pin.module').then((mod) => mod.OtpModule),
+  },
   { path: 'sms-validation', component: SmsValidationComponent },
   { path: 'login', component: LoginComponent, canActivate: [PublicGuard] },
   { path: 'signup', component: SignUpComponent, canActivate: [PublicGuard] },
@@ -111,4 +115,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
