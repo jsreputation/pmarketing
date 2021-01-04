@@ -295,7 +295,8 @@
     "TNC": "Terms and Conditions",
     "PRIVACY_POLICY": "Privacy Policy",
     "LOGOUT": "Log Out",
-    "LUCKY_DRAW_INFO": "Lucky Draw Info"
+    "LUCKY_DRAW_INFO": "Lucky Draw Info",
+    "CONTACT_US": "Contact Us"
   },
   "STATUS_LABELS": {
     "ISSUED": "Approved",

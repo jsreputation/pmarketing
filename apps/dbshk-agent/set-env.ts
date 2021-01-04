@@ -32,12 +32,12 @@ const displayProperties = `"displayProperties": {
       "pages": [
           {
               "key": "tnc",
-              "title": "Terms and Conditions",
+              "title": "TNC",
               "content_url": "${process.env.TNCURL ? process.env.TNCURL : ''}"
           },
           {
               "key": "disclaimer",
-              "title": "Disclaimer",
+              "title": "DISCLAIMER",
               "content_url": "${process.env.DISCLAIMERURL ? process.env.DISCLAIMERURL : ''}"
           }
       ]
