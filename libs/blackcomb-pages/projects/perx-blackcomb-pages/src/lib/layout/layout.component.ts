@@ -25,7 +25,8 @@ import {
   ConfigService,
   IConfig,
   SettingsService,
-  IFlags
+  IFlags,
+  FlagLocalStorageService
 } from '@perxtech/core';
 
 import { SignIn2Component } from '../sign-in-2/sign-in-2.component';
@@ -78,7 +79,8 @@ export class LayoutComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private config: Config,
     private configService: ConfigService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private flagLocalStorageService: FlagLocalStorageService
   ) {
     if (config) {
       this.preAuth = this.config.preAuth || false;
@@ -113,13 +115,23 @@ export class LayoutComponent implements OnInit {
       )
       .subscribe(url => this.initBackArrow(url));
     this.initBackArrow(this.router.url);
+    this.route.queryParams.subscribe((params) => {
+      const paramArr: string[] = params.flags && params.flags.split(',');
+      const chromelessFlag: boolean = paramArr && paramArr.includes('chromeless');
+
+      if (chromelessFlag) {
+          this.flagLocalStorageService.setFlagInLocalStorage('chromeless', 'true');
+      } else if (params && params.flags === '') {
+          this.flagLocalStorageService.resetFlagInLocalStorage('chromeless');
+      }
+    });
   }
 
   public onActivate(ref: any): void {
-    this.route.queryParams.subscribe((params) => {
-      const paramArr: string[] = params.flags && params.flags.split(',');
-      this.showHeader = paramArr && paramArr.includes('chromeless') ? false : !(ref instanceof SignIn2Component);
-    });
+
+    const chromeless = Boolean(this.flagLocalStorageService.getFlagInLocalStorage('chromeless'));
+    this.showHeader = chromeless ? false : !(ref instanceof SignIn2Component);
+
     this.showToolbar = ref instanceof HomeComponent ||
       ref instanceof HistoryComponent ||
       ref instanceof AccountComponent ||
