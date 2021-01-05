@@ -55,15 +55,14 @@ export class RewardComponent implements OnInit {
         this.favoriteRewards = rewards ||  [];
       }
     );
-    // this.favoriteRewards = (
-    //   this.tokenStorage.getAppInfoProperty('favoriteRewards') as unknown as IReward[]
-    // ) || [];
+
     this.reward$ = this.rewardInitial$.pipe(
       map(reward => {
         const tncWithOlPadding = reward.termsAndConditions.replace(/(ol>)/, 'ol style="padding-inline-start: 1em;">');
         return {...reward, termsAndConditions: tncWithOlPadding};
       })
     );
+
     if (!this.displayPriceFn) {
       this.displayPriceFn = (rewardPrice: IPrice) => {
         if (rewardPrice.price && parseFloat(rewardPrice.price) > 0) {

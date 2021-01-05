@@ -32,6 +32,7 @@ describe('RewardsCollectionComponent', () => {
     {
       id: 1,
       name: 'First Reward',
+      favorite: false,
       description: 'First Reward Description',
       subtitle: 'First Reward Subtitle',
       validFrom: new Date(),
@@ -65,6 +66,7 @@ describe('RewardsCollectionComponent', () => {
     {
       id: 2,
       name: 'Second Reward',
+      favorite: false,
       description: 'Second Reward Description',
       subtitle: 'Second Reward Subtitle',
       validFrom: new Date(),

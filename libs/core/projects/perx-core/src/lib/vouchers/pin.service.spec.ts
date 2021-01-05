@@ -59,6 +59,7 @@ describe('PinService', () => {
       id: 1,
       reward: {
         id: 52,
+        favorite: false,
         name: 'Get a Free Coke',
         description: '',
         subtitle: '',

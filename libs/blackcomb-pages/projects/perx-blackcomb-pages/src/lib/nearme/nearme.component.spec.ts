@@ -31,7 +31,10 @@ const geoLocationService: Partial<GeoLocationService> = {
 
 const rewardsServiceStub: Partial<RewardsService> = {
   nearMe: () => of(),
-  getCategories: () => of()
+  getCategories: () => of(),
+  getAllFavoriteRewards: () => of([]),
+  favoriteReward: () => of(),
+  unfavoriteReward: () => of(),
 };
 
 const vouchersServiceStub: Partial<IVoucherService> = {

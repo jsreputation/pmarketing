@@ -36,6 +36,7 @@ describe('WhistlerVouchersService', () => {
     name: 'string;',
     description: 'string;',
     subtitle: 'string;',
+    favorite: false,
     validFrom: new Date(),
     validTo: new Date(),
     rewardBanner: 'string;',
