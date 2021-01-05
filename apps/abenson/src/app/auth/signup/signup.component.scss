@@ -4,9 +4,10 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  justify-content: center;
   align-items: center;
-  background: linear-gradient(0deg, #3DBFFF 0%, #A1F3F3 100%);
+  background: linear-gradient(0deg, #3dbfff 0%, #a1f3f3 100%);
+  height: 100%;
+  overflow: auto;
 
   ::ng-deep {
     .mat-form-field-appearance-fill {
