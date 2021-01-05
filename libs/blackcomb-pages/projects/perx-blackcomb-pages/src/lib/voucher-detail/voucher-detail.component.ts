@@ -61,7 +61,6 @@ export class VoucherDetailComponent implements OnInit, OnDestroy {
           return this.vouchersService.get(this.voucherId);
         }),
         tap((voucher: Voucher) => {
-          console.log(voucher.state === VoucherState.issued);
           this.isRedeemable = voucher.state === VoucherState.issued; // must be in issued state
         }),
         map((voucher: Voucher) => {
