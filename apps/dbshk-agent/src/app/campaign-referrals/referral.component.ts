@@ -168,6 +168,7 @@ export class ReferralComponent {
   }
 
   public copy(): void {
+    this.addRecipients();
     navigator.clipboard
       .writeText(this.shareText)
       .then(() => this.notificationService.addSnack(this.copyToClipboardTxt))
