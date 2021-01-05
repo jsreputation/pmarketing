@@ -76,6 +76,7 @@ const reward: IReward = {
   subtitle: 'string',
   validFrom: new Date('2018-12-16T03:24:00'),
   validTo: new Date('2019-11-17T03:24:00'),
+  favorite: false,
   rewardBanner: '',
   termsAndConditions: '',
 };
