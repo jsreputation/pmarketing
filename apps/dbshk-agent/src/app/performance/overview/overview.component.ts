@@ -42,9 +42,25 @@ export class OverviewComponent implements OnInit {
     this.configService.readAppConfig<IDbshkConfig>().subscribe(
       (config: IConfig<IDbshkConfig>) => {
         this.showPerformanceOverview = config.custom && config.custom.showPerformanceOverview ?
-                  config.custom.showPerformanceOverview : false;
+          config.custom.showPerformanceOverview : false;
       }
     );
+
+    // DH-37
+    this.performanceStatistics = {
+      cardTitle: of('Performance by Campaign'),
+      statistics: [{
+        statisticTitle: of('MISSION 1'),
+        value: of(456),
+        unit: of('completed units'),
+        unitBeforeValue: true
+      },
+      {
+        statisticTitle: of('MISSION 2'),
+        value: of(789),
+        unit: of('completed units')
+      }]
+    };
   }
 
   private getInviteStatistics(): void {
