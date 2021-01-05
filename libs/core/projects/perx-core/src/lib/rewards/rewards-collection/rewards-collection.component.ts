@@ -1,3 +1,4 @@
+import { RewardsService } from '../rewards.service';
 import {
   Component,
   EventEmitter,
@@ -17,7 +18,7 @@ import {
 } from '../../perx-core.constants';
 import { ITheme } from '../../utils/themes/themes.model';
 import { ThemesService } from '../../utils/themes/themes.service';
-import { TokenStorage } from '../../utils/storage/token-storage.service';
+import { tap, finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-core-rewards-collection',
@@ -29,9 +30,9 @@ export class RewardsCollectionComponent implements OnInit {
   public repeatGhostCount: number = 10;
   public colorPrimary: Colors = Colors.Primary;
   public theme: ITheme | null = null;
-  public favoriteRewards: IReward[] = (
-    this.tokenStorage.getAppInfoProperty('favoriteRewards') as unknown as IReward[]
-  ) || [];
+  public favoriteRewards: IReward[] = [];
+  // to debounce fav button
+  public favDisabled: boolean  = false;
 
   @Input('rewardsList')
   public rewards$: Observable<IReward[]>;
@@ -60,11 +61,17 @@ export class RewardsCollectionComponent implements OnInit {
 
   constructor(
     private themesService: ThemesService,
-    private tokenStorage: TokenStorage
+    private rewardsService: RewardsService
   ) { }
 
   public ngOnInit(): void {
     this.initTheme();
+
+    this.rewardsService.getAllFavoriteRewards().subscribe(
+      rewards => {
+        this.favoriteRewards = rewards ||  [];
+      }
+    );
 
     if (!this.displayPriceFn) {
       this.displayPriceFn = (rewardPrice: IPrice) => {
@@ -88,22 +95,42 @@ export class RewardsCollectionComponent implements OnInit {
   }
 
   public rewardFavoriteHandler(rewardToggled: IReward): void {
-    const favoriteRewards = this.tokenStorage.getAppInfoProperty('favoriteRewards');
-    let rwdsArray;
-    if (favoriteRewards) {
-      // if found id remove it, if cant find add it
-      const foundIndex = (favoriteRewards as unknown as IReward[]).findIndex(
-        reward => reward.id === rewardToggled.id);
-      if (foundIndex >= 0) {
-        (favoriteRewards as unknown as IReward[]).splice(foundIndex, 1);
-        rwdsArray = favoriteRewards;
-      } else {
-        rwdsArray = [...favoriteRewards, rewardToggled];
-      }
-    } else {
-      rwdsArray = [rewardToggled];
+    if (this.favDisabled) {
+      return;
     }
-    this.favoriteRewards = rwdsArray;
-    this.tokenStorage.setAppInfoProperty(rwdsArray, 'favoriteRewards');
+
+    this.favDisabled = true;
+
+    const foundIndex = this.favoriteRewards.findIndex(reward => reward.id === rewardToggled.id);
+
+    if (foundIndex >= 0) {
+      // currently changed from favorite to not favorited
+      this.rewardsService.unfavoriteReward(rewardToggled.id).pipe(
+        tap(
+          reward => {
+            if (!reward.favorite) {
+              this.favoriteRewards.splice(foundIndex, 1);
+              this.favoriteRewards = [...this.favoriteRewards];
+            }
+          }
+        ),
+        finalize(() => setTimeout(() => {
+          this.favDisabled = false;
+        }, 500))
+      ).subscribe();
+    } else {
+      this.rewardsService.favoriteReward(rewardToggled.id).pipe(
+        tap(
+          reward => {
+            if (reward.favorite) {
+              this.favoriteRewards = [...this.favoriteRewards, reward];
+            }
+          }
+        ),
+        finalize(() => setTimeout(() => {
+          this.favDisabled = false;
+        }, 500))
+      ).subscribe();
+    }
   }
 }

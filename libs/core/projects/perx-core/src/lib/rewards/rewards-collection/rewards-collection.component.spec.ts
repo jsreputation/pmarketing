@@ -11,9 +11,9 @@ import { MaterialModule } from '../../shared/material.module';
 import { UtilsModule } from '../../utils/utils.module';
 import { ThemesService } from '../../utils/themes/themes.service';
 import { MatIconModule } from '@angular/material';
-import { TokenStorage } from '../../utils/storage/token-storage.service';
 import { Config } from '../../config/config';
 import { DragScrollModule } from 'ngx-drag-scroll';
+import { RewardsService } from '../rewards.service';
 
 describe('RewardsCollectionComponent', () => {
   let component: RewardsCollectionComponent;
@@ -23,9 +23,9 @@ describe('RewardsCollectionComponent', () => {
     getThemeSetting: () => of()
   };
 
-  const tokenStorageStub = {
-    getAppInfoProperty: () => null,
-    setAppInfoProperty: () => { }
+  const rewardsServiceStub: Partial<RewardsService> = {
+    getReward: () => of(),
+    getAllFavoriteRewards: () => of([])
   };
 
   const rewards: IReward[] = [
@@ -112,7 +112,7 @@ describe('RewardsCollectionComponent', () => {
       ],
       providers: [
         { provide: ThemesService, useValue: themesServiceStub },
-        { provide: TokenStorage, useValue: tokenStorageStub },
+        { provide: RewardsService, useValue: rewardsServiceStub },
         { provide: Config }
       ]
     })
