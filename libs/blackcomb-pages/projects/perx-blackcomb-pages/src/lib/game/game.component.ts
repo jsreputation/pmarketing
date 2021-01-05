@@ -228,7 +228,7 @@ export class GameComponent implements OnInit, OnDestroy {
             this.popupData = {
               title: err.errorState,
               text: '',
-              buttonTxt: this.isEmbedded ? null : 'BACK_TO_WALLET',
+              buttonTxt: this.isEmbedded ? null : this.gameNotAvailablePopUp.buttonTxt,
               imageUrl: '',
             };
           } else if (
@@ -238,8 +238,8 @@ export class GameComponent implements OnInit, OnDestroy {
             console.log(`Error ${err.error.code}: ${err.error.message}`);
             this.popupData = {
               title: `Error ${err.error.code}`,
-              text: 'No rewards available',
-              buttonTxt: this.isEmbedded ? null : 'Back to wallet',
+              text: this.noRewardsPopUp.title,
+              buttonTxt: this.isEmbedded ? null : this.noRewardsPopUp.buttonTxt,
               imageUrl: '',
             };
           } else {
