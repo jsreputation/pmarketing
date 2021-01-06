@@ -52,6 +52,7 @@ import {
 } from '../../services/macaron.service';
 
 const REQ_PAGE_SIZE: number = 20;
+const MIN_REWARD_LEN_LOAD_CAMPAIGN: number = 5;
 
 interface ICampaignWithMacaron extends ICampaign {
   macaron?: IMacaron | null;
@@ -112,6 +113,9 @@ export class TaggedItemsComponent implements OnInit {
   private initRewards(): void {
     this.getTaggedRewards().subscribe((rewards: IReward[]) => {
       this.taggedItemsSubj.next(rewards);
+      if (rewards.length < MIN_REWARD_LEN_LOAD_CAMPAIGN) {
+        this.getTaggedCampaigns();
+      }
     });
   }
 
