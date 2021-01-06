@@ -1,6 +1,6 @@
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, of, Subject, combineLatest, throwError } from 'rxjs';
+import { Observable, of, Subject, combineLatest, throwError, iif } from 'rxjs';
 import {
   InstantOutcomeService,
   IReward,
@@ -19,7 +19,7 @@ import {
   IRssFeedsData,
   FeedItem
 } from '@perxtech/core';
-import { map, switchMap, catchError, tap, takeUntil, mergeMap, } from 'rxjs/operators';
+import { map, switchMap, catchError, tap, takeUntil, mergeMap, finalize, } from 'rxjs/operators';
 
 import { TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -61,6 +61,8 @@ export class RewardComponent implements OnInit, OnDestroy {
   };
 
   private destroy$: Subject<void> = new Subject();
+
+  public favDisabled: boolean  = false;
 
   constructor(
     private outcomeService: InstantOutcomeService,
@@ -230,5 +232,32 @@ export class RewardComponent implements OnInit, OnDestroy {
         return this.feedService.getFromUrl(feedData.url);
       })
     );
+  }
+
+  public rewardFavoriteHandler(rewardToggled: IReward): void {
+    if (this.favDisabled) {
+      return;
+    }
+
+    this.favDisabled = true;
+
+    iif(() => (rewardToggled && (rewardToggled.favorite || false)),
+    this.rewardService.unfavoriteReward(rewardToggled.id),
+    this.rewardService.favoriteReward(rewardToggled.id)).pipe(
+      tap(
+        rewardChanged => {
+          this.rewards$ = this.rewards$.pipe(
+            map(rewards => {
+              const foundIndex = rewards.findIndex(reward => reward.id === rewardToggled.id);
+              rewards[foundIndex] = rewardChanged;
+              return rewards;
+            })
+          );
+        }
+      ),
+      finalize(() => setTimeout(() => {
+        this.favDisabled = false;
+      }, 500))
+    ).subscribe();
   }
 }

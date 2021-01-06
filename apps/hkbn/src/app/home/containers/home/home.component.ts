@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IReward, ILoyalty, LoyaltyService, RewardsService, IProfile, ITabConfigExtended } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable, of, forkJoin, BehaviorSubject } from 'rxjs';
-import { map, flatMap, finalize } from 'rxjs/operators';
+import { Observable, of, forkJoin, BehaviorSubject, iif } from 'rxjs';
+import { map, flatMap, finalize, tap } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 
 const stubTabs: ITabConfigExtended[] = [
@@ -58,6 +58,7 @@ export class HomeComponent implements OnInit {
 
   public tabs$: BehaviorSubject<ITabConfigExtended[]> = new BehaviorSubject<ITabConfigExtended[]>([]);
   public staticTab: ITabConfigExtended[];
+  public favDisabled: boolean  = false;
   constructor(
     private router: Router,
     private loyaltyService: LoyaltyService,
@@ -133,5 +134,32 @@ export class HomeComponent implements OnInit {
       this.translate.get('HOME.ACCOUNT_EXPIRE').pipe(
         map(res => `${res}: ${this.datePipe.transform(loyalty.membershipExpiry, 'mediumDate')}`)
       ) : of('');
+  }
+
+  public rewardFavoriteHandler(rewardToggled: IReward): void {
+    if (this.favDisabled) {
+      return;
+    }
+
+    this.favDisabled = true;
+
+    iif(() => (rewardToggled && (rewardToggled.favorite || false)),
+    this.rewardsService.unfavoriteReward(rewardToggled.id),
+    this.rewardsService.favoriteReward(rewardToggled.id)).pipe(
+      tap(
+        rewardChanged => {
+          this.rewards$ = this.rewards$.pipe(
+            map(rewards => {
+              const foundIndex = rewards.findIndex(reward => reward.id === rewardToggled.id);
+              rewards[foundIndex] = rewardChanged;
+              return rewards;
+            })
+          );
+        }
+      ),
+      finalize(() => setTimeout(() => {
+        this.favDisabled = false;
+      }, 500))
+    ).subscribe();
   }
 }

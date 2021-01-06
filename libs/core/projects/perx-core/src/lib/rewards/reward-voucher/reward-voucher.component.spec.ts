@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material';
 import { MatCardModule } from '@angular/material/card';
 import { MatRippleModule } from '@angular/material/core';
 import { MatListModule } from '@angular/material/list';
-import { ProgressBarModule, RewardsService } from '@perxtech/core';
+import { ProgressBarModule } from '@perxtech/core';
 import { ProgressRequirePipe } from '../rewards-large-list/reward-requirement.pipe';
 
 describe('RewardVoucherComponent', () => {
@@ -33,14 +33,6 @@ describe('RewardVoucherComponent', () => {
     merchantId: 2
   };
 
-  const rewardsServiceStub: Partial<RewardsService> = {
-    nearMe: () => of(),
-    getCategories: () => of(),
-    getAllFavoriteRewards: () => of([]),
-    favoriteReward: () => of(),
-    unfavoriteReward: () => of(),
-  };
-
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -55,9 +47,6 @@ describe('RewardVoucherComponent', () => {
         MatListModule,
         ProgressBarModule
       ],
-      providers: [
-        { provide: RewardsService, useValue: rewardsServiceStub },
-      ]
     })
       .compileComponents();
   }));

@@ -1,16 +1,17 @@
 import {
   Component,
+  EventEmitter,
   Input,
-  OnInit
+  OnInit,
+  Output
 } from '@angular/core';
 import {
   Observable,
   of
 } from 'rxjs';
 import { IPrice, IReward } from '../models/reward.model';
-import { finalize, map, tap } from 'rxjs/operators';
-import { RewardsService } from '../rewards.service';
 import { CampaignRewardMode, ProgressBarFields } from '@perxtech/core';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-core-reward-voucher',
@@ -18,6 +19,7 @@ import { CampaignRewardMode, ProgressBarFields } from '@perxtech/core';
   styleUrls: ['./reward-voucher.component.scss']
 })
 export class RewardVoucherComponent implements OnInit {
+  // note: fav icon not implemented yet
   @Input()
   public rewardProgress: ProgressBarFields;
 
@@ -64,20 +66,11 @@ export class RewardVoucherComponent implements OnInit {
 
   public favoriteRewards: IReward[];
 
-  // to debounce fav button
-  public favDisabled: boolean  = false;
+  @Output()
+  public favoriteRewardEvent: EventEmitter<IReward> = new EventEmitter<IReward>();
 
-  public constructor(
-    private rewardsService: RewardsService
-  ) {
-  }
 
   public ngOnInit(): void {
-    this.rewardsService.getAllFavoriteRewards().subscribe(
-      rewards => {
-        this.favoriteRewards = rewards ||  [];
-      }
-    );
     this.reward$ = this.rewardInitial$.pipe(
       map(reward => {
         const tncWithOlPadding = reward.termsAndConditions.replace(/(ol>)/, 'ol style="padding-inline-start: 1em;">');
@@ -102,42 +95,6 @@ export class RewardVoucherComponent implements OnInit {
   }
 
   public rewardFavoriteHandler(rewardToggled: IReward): void {
-    if (this.favDisabled) {
-      return;
-    }
-
-    this.favDisabled = true;
-
-    const foundIndex = this.favoriteRewards.findIndex(reward => reward.id === rewardToggled.id);
-
-    if (foundIndex >= 0) {
-      // currently changed from favorite to not favorited
-      this.rewardsService.unfavoriteReward(rewardToggled.id).pipe(
-        tap(
-          reward => {
-            if (!reward.favorite) {
-              this.favoriteRewards.splice(foundIndex, 1);
-              this.favoriteRewards = [...this.favoriteRewards];
-            }
-          }
-        ),
-        finalize(() => setTimeout(() => {
-          this.favDisabled = false;
-        }, 500))
-      ).subscribe();
-    } else {
-      this.rewardsService.favoriteReward(rewardToggled.id).pipe(
-        tap(
-          reward => {
-            if (reward.favorite) {
-              this.favoriteRewards = [...this.favoriteRewards, reward];
-            }
-          }
-        ),
-        finalize(() => setTimeout(() => {
-          this.favDisabled = false;
-        }, 500))
-      ).subscribe();
-    }
+    this.favoriteRewardEvent.emit(rewardToggled);
   }
 }

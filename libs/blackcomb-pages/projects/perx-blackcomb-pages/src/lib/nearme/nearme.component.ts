@@ -24,9 +24,10 @@ import {
 
 import {
   Subject,
-  from
+  from,
+  iif
 } from 'rxjs';
-import { take, mergeMap, filter, tap } from 'rxjs/operators';
+import { take, mergeMap, filter, tap, finalize } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
 
@@ -64,6 +65,7 @@ export class NearmeComponent implements OnInit, OnDestroy {
   public lastLat: number;
   public lastLng: number;
   public lastRad: number;
+  public favDisabled: boolean  = false;
   @Output()
   public favoriteRewardEvent: EventEmitter<IReward> = new EventEmitter<IReward>();
 
@@ -285,7 +287,24 @@ export class NearmeComponent implements OnInit, OnDestroy {
   }
 
   public rewardFavoriteHandler(rewardToggled: IReward): void {
-    this.favoriteRewardEvent.emit(rewardToggled);
+    if (this.favDisabled) {
+      return;
+    }
+
+    this.favDisabled = true;
+
+    iif(() => (rewardToggled && (rewardToggled.favorite || false)),
+    this.rewardsService.unfavoriteReward(rewardToggled.id),
+    this.rewardsService.favoriteReward(rewardToggled.id)).pipe(
+      tap(
+        reward => {
+          this.current = reward;
+        }
+      ),
+      finalize(() => setTimeout(() => {
+        this.favDisabled = false;
+      }, 500))
+    ).subscribe();
   }
 
   public openDialog(): void {

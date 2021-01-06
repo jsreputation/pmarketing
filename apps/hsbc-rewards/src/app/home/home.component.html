@@ -13,7 +13,7 @@
     <div class="reward-title">
       Featured Rewards
     </div>
-    <perx-core-rewards-collection [displayPriceFn]="displayPriceFn" [rewardsList]="rewardsCollection" (tapped)="openRewardDetails($event)">
+    <perx-core-rewards-collection (favoriteRewardEvent)="rewardFavoriteHandler($event)" [displayPriceFn]="displayPriceFn" [rewardsList]="rewardsCollection" (tapped)="openRewardDetails($event)">
     </perx-core-rewards-collection>
   </div>
   <perx-core-rewards-list-tabbed [displayPriceFn]="displayPriceFn" [tabs$]="tabs" (tapped)="openRewardDetails($event)" (tabChanged)="tabChanged($event)"></perx-core-rewards-list-tabbed>

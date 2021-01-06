@@ -5,6 +5,7 @@ import {
   combineLatest,
   EMPTY,
   forkJoin,
+  iif,
   Observable,
   of,
   Subject,
@@ -12,6 +13,7 @@ import {
 import {
   catchError,
   filter,
+  finalize,
   map,
   mergeMap,
   scan,
@@ -97,6 +99,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public catalogs$: Observable<ICatalog[]>;
   public catalogsEnded: boolean = false;
   public surveyCampaigns$: Observable<ICampaign[]>;
+  public favDisabled: boolean  = false;
 
   public constructor(
     protected rewardsService: RewardsService,
@@ -538,5 +541,32 @@ export class HomeComponent implements OnInit, OnDestroy {
           return of(''); // is actually 0 or invalid value default
         })
       );
+  }
+
+  public rewardFavoriteHandler(rewardToggled: IReward): void {
+    if (this.favDisabled) {
+      return;
+    }
+
+    this.favDisabled = true;
+
+    iif(() => (rewardToggled && (rewardToggled.favorite || false)),
+    this.rewardsService.unfavoriteReward(rewardToggled.id),
+    this.rewardsService.favoriteReward(rewardToggled.id)).pipe(
+      tap(
+        rewardChanged => {
+          this.rewards$ = this.rewards$.pipe(
+            map(rewards => {
+              const foundIndex = rewards.findIndex(reward => reward.id === rewardToggled.id);
+              rewards[foundIndex] = rewardChanged;
+              return rewards;
+            })
+          );
+        }
+      ),
+      finalize(() => setTimeout(() => {
+        this.favDisabled = false;
+      }, 500))
+    ).subscribe();
   }
 }

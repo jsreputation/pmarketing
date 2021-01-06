@@ -10,6 +10,7 @@ import {
   IGameService,
   ILoyalty,
   InstantOutcomeService,
+  IReward,
   LoyaltyService,
   ProfileService,
   RewardsService,
@@ -20,8 +21,8 @@ import {
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material';
-import { switchMap, map } from 'rxjs/operators';
-import { EMPTY } from 'rxjs';
+import { switchMap, map, finalize, tap } from 'rxjs/operators';
+import { EMPTY, iif } from 'rxjs';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Title } from '@angular/platform-browser';
 
@@ -32,6 +33,7 @@ import { Title } from '@angular/platform-browser';
 })
 export class HomeComponent extends BCHomeComponent implements OnInit {
   public restrictedView: boolean = false;
+  public favDisabled: boolean  = false;
 
   public constructor(
     rewardsService: RewardsService,
@@ -135,5 +137,32 @@ export class HomeComponent extends BCHomeComponent implements OnInit {
     });
 
     this.initCatalogsScan();
+  }
+
+  public rewardFavoriteHandler(rewardToggled: IReward): void {
+    if (this.favDisabled) {
+      return;
+    }
+
+    this.favDisabled = true;
+
+    iif(() => (rewardToggled && (rewardToggled.favorite || false)),
+    this.rewardsService.unfavoriteReward(rewardToggled.id),
+    this.rewardsService.favoriteReward(rewardToggled.id)).pipe(
+      tap(
+        rewardChanged => {
+          this.rewards$ = this.rewards$.pipe(
+            map(rewards => {
+              const foundIndex = rewards.findIndex(reward => reward.id === rewardToggled.id);
+              rewards[foundIndex] = rewardChanged;
+              return rewards;
+            })
+          );
+        }
+      ),
+      finalize(() => setTimeout(() => {
+        this.favDisabled = false;
+      }, 500))
+    ).subscribe();
   }
 }
