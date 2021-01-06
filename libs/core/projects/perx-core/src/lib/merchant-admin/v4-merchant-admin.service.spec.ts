@@ -140,7 +140,7 @@ const reward: IV4Reward = {
   subtitle: 'test',
   valid_from: new Date(),
   valid_to: new Date(),
-  favourite: false,
+  is_favorite: false,
   reward_price: [],
   images: [],
   merchant_id: 2,

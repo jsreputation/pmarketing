@@ -1,15 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output, OnChanges } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { IPrice, IReward } from '../models/reward.model';
 import { map } from 'rxjs/operators';
-import { TokenStorage } from '../../utils/storage/token-storage.service';
 
 @Component({
   selector: 'perx-core-reward',
   templateUrl: './reward.component.html',
   styleUrls: ['./reward.component.scss']
 })
-export class RewardComponent implements OnInit {
+export class RewardComponent implements OnInit, OnChanges {
   @Input('reward')
   public rewardInitial$: Observable<IReward>;
 
@@ -39,23 +38,17 @@ export class RewardComponent implements OnInit {
   @Input()
   public showRewardFavButton?: boolean;
 
-  public favoriteRewards: IReward[];
-
-  public constructor(
-    private tokenStorage: TokenStorage
-  ) {
-  }
+  @Output()
+  public favoriteRewardEvent: EventEmitter<IReward> = new EventEmitter<IReward>();
 
   public ngOnInit(): void {
-    this.favoriteRewards = (
-      this.tokenStorage.getAppInfoProperty('favoriteRewards') as unknown as IReward[]
-    ) || [];
     this.reward$ = this.rewardInitial$.pipe(
       map(reward => {
         const tncWithOlPadding = reward.termsAndConditions.replace(/(ol>)/, 'ol style="padding-inline-start: 1em;">');
         return {...reward, termsAndConditions: tncWithOlPadding};
       })
     );
+
     if (!this.displayPriceFn) {
       this.displayPriceFn = (rewardPrice: IPrice) => {
         if (rewardPrice.price && parseFloat(rewardPrice.price) > 0) {
@@ -73,24 +66,17 @@ export class RewardComponent implements OnInit {
     }
   }
 
+  public ngOnChanges(): void {
+    this.reward$ = this.rewardInitial$.pipe(
+      map(reward => {
+        const tncWithOlPadding = reward.termsAndConditions.replace(/(ol>)/, 'ol style="padding-inline-start: 1em;">');
+        return {...reward, termsAndConditions: tncWithOlPadding};
+      })
+    );
+  }
+
   public rewardFavoriteHandler(rewardToggled: IReward): void {
-    const favoriteRewards = this.tokenStorage.getAppInfoProperty('favoriteRewards');
-    let rwdsArray;
-    if (favoriteRewards) {
-      // if found id remove it, if cant find add it
-      const foundIndex = (favoriteRewards as unknown as IReward[]).findIndex(
-        reward => reward.id === rewardToggled.id);
-      if (foundIndex >= 0) {
-        (favoriteRewards as unknown as IReward[]).splice(foundIndex, 1);
-        rwdsArray = favoriteRewards;
-      } else {
-        rwdsArray = [...favoriteRewards, rewardToggled];
-      }
-    } else {
-      rwdsArray = [rewardToggled];
-    }
-    this.favoriteRewards = rwdsArray;
-    this.tokenStorage.setAppInfoProperty(rwdsArray, 'favoriteRewards');
+    this.favoriteRewardEvent.emit(rewardToggled);
   }
 
 }

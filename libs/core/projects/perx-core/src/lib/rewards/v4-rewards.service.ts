@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { formatNumber } from '@angular/common';
-import { Observable } from 'rxjs';
+import { Observable, EMPTY } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 
@@ -61,7 +61,7 @@ export interface IV4Reward {
   subtitle: string;
   valid_from: Date;
   valid_to: Date;
-  favourite: boolean;
+  is_favorite: boolean;
   reward_price?: IV4RewardPrice[];
   images?: IV4Image[];
   merchant_id?: number;
@@ -179,6 +179,7 @@ export class V4RewardsService extends RewardsService {
       name: reward.name,
       subtitle: reward.subtitle,
       description: reward.description,
+      favorite: reward.is_favorite,
       rewardPrice: reward.reward_price ? reward.reward_price.map(price => ({
         id: price.id,
         currencyCode: price.currency_code,
@@ -268,7 +269,12 @@ export class V4RewardsService extends RewardsService {
     };
   }
 
-  public getAllRewards(tags?: string[] | null, categories?: string[], locale: string = 'en'): Observable<IReward[]> {
+  public getAllFavoriteRewards(tags?: string[] | null, categories?: string[], locale: string = 'en'): Observable<IReward[]> {
+    return this.getAllRewards(tags, categories, locale, true);
+  }
+
+  public getAllRewards(
+    tags?: string[] | null, categories?: string[], locale: string = 'en', filterFavorites?: boolean): Observable<IReward[]> {
     return new Observable(subject => {
       const pageSize = 10;
       let current: IReward[] = [];
@@ -283,12 +289,12 @@ export class V4RewardsService extends RewardsService {
         } else {
           // otherwise get next page
           page++;
-          this.getRewards(page, undefined, tags, categories, locale)
+          this.getRewards(page, undefined, tags, categories, locale, filterFavorites)
             .subscribe(process);
         }
       };
       // do the first query
-      return this.getRewards(1, undefined, tags, categories, locale).subscribe(process);
+      return this.getRewards(1, undefined, tags, categories, locale, filterFavorites).subscribe(process);
     });
   }
 
@@ -297,7 +303,8 @@ export class V4RewardsService extends RewardsService {
     pageSize: number = 10,
     tags?: string[] | null,
     categories?: string[],
-    locale: string = 'en'
+    locale: string = 'en',
+    filterFavorites?: boolean
   ): Observable<IReward[]> {
     const headers = new HttpHeaders().set('Accept-Language', locale);
     let params = new HttpParams()
@@ -309,6 +316,10 @@ export class V4RewardsService extends RewardsService {
 
     if (categories) {
       params = params.set('categories', categories.join());
+    }
+
+    if (filterFavorites) {
+      params = params.set('favorite', 'true');
     }
 
     return this.http.get<IV4GetRewardsResponse>(`${this.apiHost}/v4/rewards`, { headers, params })
@@ -414,5 +425,29 @@ export class V4RewardsService extends RewardsService {
         (reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward)
       ))
     );
+  }
+
+  public favoriteReward(rewardId: number): Observable<IReward> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    if (rewardId !== undefined) {
+      return this.http.post<IV4GetRewardResponse>(`${this.apiHost}/v4/rewards/${rewardId}/favorite`, {headers}).pipe(
+        map(res => res.data),
+        map((reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward))
+      );
+    }
+    return EMPTY;
+  }
+
+  public unfavoriteReward(rewardId: number): Observable<IReward> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    if (rewardId !== undefined) {
+      return this.http.delete<IV4GetRewardResponse>(`${this.apiHost}/v4/rewards/${rewardId}/favorite`, {headers}).pipe(
+        map(res => res.data),
+        map((reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward))
+      );
+    }
+    return EMPTY;
   }
 }

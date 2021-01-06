@@ -60,6 +60,7 @@ describe('RewardComponent', () => {
 
   const rewardsServiceStub: Partial<RewardsService> = {
     nearMe: () => of(),
+    getAllFavoriteRewards: () => of([])
   };
 
   const instantOutStub: Partial<InstantOutcomeService> = {

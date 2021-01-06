@@ -1,15 +1,15 @@
 <div class="cover"></div>
-<div class="main-container" 
-  infiniteScroll 
-  [infiniteScrollDistance]="2" 
+<div class="main-container"
+  infiniteScroll
+  [infiniteScrollDistance]="2"
   [infiniteScrollThrottle]="50"
-  (scrolled)="onScroll()" 
+  (scrolled)="onScroll()"
   [scrollWindow]="false">
   <div class="loyalty-section">
-    <perx-core-loyalty-summary 
-        class="loyalty-item" 
-        [subTitleFn]="subTitleFn" 
-        [titleFn]="titleFn" 
+    <perx-core-loyalty-summary
+        class="loyalty-item"
+        [subTitleFn]="subTitleFn"
+        [titleFn]="titleFn"
         [summaryExpiringFn]="summaryExpiringFn"
         [pointToFn]="pointToFn"
         [memberFn]="memberFn"
@@ -21,14 +21,14 @@
     <h4 translate>HOME.FEATURED_REWARDS</h4>
   </div>
   <div class="rewards-carousel">
-    <perx-core-rewards-collection [rewardsList]="rewards" [displayPriceFn]="displayPriceFn" (tapped)="rewardClicked($event)">
+    <perx-core-rewards-collection (favoriteRewardEvent)="rewardFavoriteHandler($event)" [rewardsList]="rewards" [displayPriceFn]="displayPriceFn" (tapped)="rewardClicked($event)">
     </perx-core-rewards-collection>
   </div>
   <div class="rewards-tabbed">
-    <perx-core-rewards-list-tabbed 
-      [tabs$]="tabs" 
+    <perx-core-rewards-list-tabbed
+      [tabs$]="tabs"
       [displayPriceFn]="displayPriceFn"
-      (tapped)="rewardClicked($event)" 
+      (tapped)="rewardClicked($event)"
       (tabChanged)="tabChanged($event)">
     </perx-core-rewards-list-tabbed>
   </div>

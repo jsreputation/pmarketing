@@ -10,6 +10,7 @@
       [expiryLabel]="expiryLabel"
       [showRewardFavButton]="appConfig.showRewardFavButton"
       [showExpiry]="appConfig.showExpiryOnRewardDetail"
+      (favoriteRewardEvent)="rewardFavoriteHandler($event)"
       ></perx-core-reward>
   </div>
   <div class="actions-container mat-elevation-z2" *ngIf="appConfig">

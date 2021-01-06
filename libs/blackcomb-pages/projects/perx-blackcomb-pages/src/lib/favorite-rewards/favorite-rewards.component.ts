@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IPrice, IReward, TokenStorage } from '@perxtech/core';
+import { IPrice, IReward, RewardsService } from '@perxtech/core';
 import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -14,11 +14,11 @@ export class FavoriteRewardsComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private tokenStorage: TokenStorage
+    private rewardsService: RewardsService
   ) { }
 
   public ngOnInit(): void {
-    this.rewardsList$ = of(this.tokenStorage.getAppInfoProperty('favoriteRewards') as unknown as IReward[]);
+    this.rewardsList$ = this.rewardsService.getAllFavoriteRewards().pipe();
   }
 
   public displayPriceFn: (rewardPrice: IPrice) => Observable<string> = (

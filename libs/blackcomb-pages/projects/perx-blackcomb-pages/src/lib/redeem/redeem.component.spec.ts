@@ -27,6 +27,7 @@ const mockVoucher: Voucher = {
     validTo: new Date(),
     rewardBanner: 'https://picsum.photos/50/50?random=1',
     termsAndConditions: '',
+    favorite: false,
     displayProperties: {
       merchantPinText: {
         headLine: 'test headline',

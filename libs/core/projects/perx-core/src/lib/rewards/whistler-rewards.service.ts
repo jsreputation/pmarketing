@@ -251,4 +251,19 @@ export class WhistlerRewardsService implements RewardsService {
   public nearMe(rad: number, lat: number, lng: number): Observable<IReward[]> {
     throw new Error('Method not implemented.');
   }
+
+   // @ts-ignore
+   public getAllFavoriteRewards(): Observable<IReward[]> {
+    throw new Error('Method not implemented.');
+  }
+
+  // @ts-ignore
+  public favoriteReward(rewardId: number): Observable<IReward> {
+    throw new Error('Method not implemented.');
+  }
+
+  // @ts-ignore
+  public unfavoriteReward(rewardId: number): Observable<IReward> {
+    throw new Error('Method not implemented.');
+  }
 }

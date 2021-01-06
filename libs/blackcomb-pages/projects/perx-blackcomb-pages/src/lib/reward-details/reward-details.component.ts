@@ -11,8 +11,8 @@ import {
   IConfig
 } from '@perxtech/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
-import { Observable, Subject } from 'rxjs';
+import { filter, finalize, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { iif, Observable, of, Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -33,6 +33,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   public rewardData: IReward;
   public loyalty: ILoyalty;
   public waitForSubmission: boolean = false;
+  public favDisabled: boolean = false;
 
   public maxRewardCost?: number;
   private initTranslate(): void {
@@ -92,6 +93,27 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
           (_) => this.waitForSubmission = false // allow user to retry again, re-enable button
         );
     }
+  }
+
+  public rewardFavoriteHandler(rewardToggled: IReward): void {
+    if (this.favDisabled) {
+      return;
+    }
+
+    this.favDisabled = true;
+
+    iif(() => (rewardToggled && (rewardToggled.favorite || false)),
+    this.rewardsService.unfavoriteReward(rewardToggled.id),
+    this.rewardsService.favoriteReward(rewardToggled.id)).pipe(
+      tap(
+        reward => {
+          this.reward$ = of(reward);
+        }
+      ),
+      finalize(() => setTimeout(() => {
+        this.favDisabled = false;
+      }, 500))
+    ).subscribe();
   }
 
   public ngOnDestroy(): void {

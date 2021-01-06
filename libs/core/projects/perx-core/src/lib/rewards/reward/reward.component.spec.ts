@@ -5,7 +5,6 @@ import { IReward } from '../models/reward.model';
 import { of } from 'rxjs';
 import { UtilsModule } from '../../utils/utils.module';
 import { MatIconModule } from '@angular/material';
-import { TokenStorage } from '../../utils/storage/token-storage.service';
 
 describe('RewardComponent', () => {
   let component: RewardComponent;
@@ -14,6 +13,7 @@ describe('RewardComponent', () => {
   const mockReward: IReward = {
     id: 1,
     name: 'Get a Free Coke',
+    favorite: false,
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
     subtitle: 'string',
     validFrom: new Date('2018-12-16T03:24:00'),
@@ -28,11 +28,6 @@ describe('RewardComponent', () => {
     merchantId: 2
   };
 
-  const tokenStorageStub = {
-    getAppInfoProperty: () => null,
-    setAppInfoProperty: () => { }
-  };
-
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RewardComponent],
@@ -40,9 +35,6 @@ describe('RewardComponent', () => {
         UtilsModule,
         MatIconModule
       ],
-      providers: [
-        { provide: TokenStorage, useValue: tokenStorageStub },
-      ]
     })
       .compileComponents();
   }));

@@ -1,9 +1,9 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
 import { IReward, RewardsService, IProfile, ILoyalty, ITabConfigExtended, IPrice } from '@perxtech/core';
-import { Observable, of, Subject, forkJoin } from 'rxjs';
+import { Observable, of, Subject, forkJoin, iif } from 'rxjs';
 import { Router } from '@angular/router';
-import { flatMap, map, tap, mergeMap } from 'rxjs/operators';
+import { flatMap, map, tap, mergeMap, finalize } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { MatTabChangeEvent } from '@angular/material';
 import { DatePipe } from '@angular/common';
@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit, PageAppearence {
   public membershipExpiryFn: (loyalty: ILoyalty) => Observable<string>;
   public currentTabIndex: number = 0;
   private pageSize: number = 10;
+  public favDisabled: boolean  = false;
   public constructor(
     private rewardsService: RewardsService,
     private router: Router,
@@ -155,6 +156,33 @@ export class HomeComponent implements OnInit, PageAppearence {
         return of(''); // is actually 0 or invalid value default
       })
     );
+  }
+
+  public rewardFavoriteHandler(rewardToggled: IReward): void {
+    if (this.favDisabled) {
+      return;
+    }
+
+    this.favDisabled = true;
+
+    iif(() => (rewardToggled && (rewardToggled.favorite || false)),
+    this.rewardsService.unfavoriteReward(rewardToggled.id),
+    this.rewardsService.favoriteReward(rewardToggled.id)).pipe(
+      tap(
+        rewardChanged => {
+          this.rewards = this.rewards.pipe(
+            map(rewards => {
+              const foundIndex = rewards.findIndex(reward => reward.id === rewardToggled.id);
+              rewards[foundIndex] = rewardChanged;
+              return rewards;
+            })
+          );
+        }
+      ),
+      finalize(() => setTimeout(() => {
+        this.favDisabled = false;
+      }, 500))
+    ).subscribe();
   }
 
 }

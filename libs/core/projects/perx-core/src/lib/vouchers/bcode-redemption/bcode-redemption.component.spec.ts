@@ -19,6 +19,7 @@ describe('BcodeRedemptionComponent', () => {
     reward: {
       id: 1,
       name: 'reward name',
+      favorite: false,
       description: 'reward description',
       subtitle: 'sub title',
       validFrom: new Date(),

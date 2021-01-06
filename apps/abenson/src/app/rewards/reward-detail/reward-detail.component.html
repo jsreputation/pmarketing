@@ -1,5 +1,5 @@
 <div class="page">
-  <perx-core-reward [reward]="reward$"></perx-core-reward>
+  <perx-core-reward (favoriteRewardEvent)="rewardFavoriteHandler($event)" [reward]="reward$"></perx-core-reward>
   <div class="action">
       <button class="w-100" mat-raised-button color="primary" (click)="buyReward()">Purchase</button>
   </div>

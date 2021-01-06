@@ -5,7 +5,9 @@ import {
   OnInit,
   OnDestroy,
   ViewChild,
-  ElementRef
+  ElementRef,
+  EventEmitter,
+  Output
 } from '@angular/core';
 
 import {
@@ -15,7 +17,6 @@ import {
   IVoucherLocation,
   IVoucherService,
   GeoLocationService,
-  TokenStorage,
   ConfigService,
   IConfig,
   ITabConfigExtended
@@ -23,9 +24,10 @@ import {
 
 import {
   Subject,
-  from
+  from,
+  iif
 } from 'rxjs';
-import { take, mergeMap, filter, tap } from 'rxjs/operators';
+import { take, mergeMap, filter, tap, finalize } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
 
@@ -63,10 +65,12 @@ export class NearmeComponent implements OnInit, OnDestroy {
   public lastLat: number;
   public lastLng: number;
   public lastRad: number;
+  public favDisabled: boolean  = false;
+  @Output()
+  public favoriteRewardEvent: EventEmitter<IReward> = new EventEmitter<IReward>();
 
   constructor(
     private config: ConfigService,
-    private tokenStorage: TokenStorage,
     private rewardsService: RewardsService,
     private vouchersService: IVoucherService,
     private geoLocationService: GeoLocationService,
@@ -83,9 +87,11 @@ export class NearmeComponent implements OnInit, OnDestroy {
         this.categories.push(category);
       });
     });
-    this.favoriteRewards = (
-      this.tokenStorage.getAppInfoProperty('favoriteRewards') as unknown as IReward[]
-    ) || [];
+    this.rewardsService.getAllFavoriteRewards().subscribe(
+      rewards => {
+        this.favoriteRewards = rewards ||  [];
+      }
+    );
 
     this.config.readAppConfig().subscribe((config: IConfig<void>) => {
       this.showRewardFavButton = config.showRewardFavButton;
@@ -281,23 +287,24 @@ export class NearmeComponent implements OnInit, OnDestroy {
   }
 
   public rewardFavoriteHandler(rewardToggled: IReward): void {
-    const favoriteRewards = this.tokenStorage.getAppInfoProperty('favoriteRewards');
-    let rwdsArray;
-    if (favoriteRewards) {
-      // if found id remove it, if cant find add it
-      const foundIndex = (favoriteRewards as unknown as IReward[]).findIndex(
-        reward => reward.id === rewardToggled.id);
-      if (foundIndex >= 0) {
-        (favoriteRewards as unknown as IReward[]).splice(foundIndex, 1);
-        rwdsArray = favoriteRewards;
-      } else {
-        rwdsArray = [...favoriteRewards, rewardToggled];
-      }
-    } else {
-      rwdsArray = [rewardToggled];
+    if (this.favDisabled) {
+      return;
     }
-    this.favoriteRewards = rwdsArray;
-    this.tokenStorage.setAppInfoProperty(rwdsArray, 'favoriteRewards');
+
+    this.favDisabled = true;
+
+    iif(() => (rewardToggled && (rewardToggled.favorite || false)),
+    this.rewardsService.unfavoriteReward(rewardToggled.id),
+    this.rewardsService.favoriteReward(rewardToggled.id)).pipe(
+      tap(
+        reward => {
+          this.current = reward;
+        }
+      ),
+      finalize(() => setTimeout(() => {
+        this.favDisabled = false;
+      }, 500))
+    ).subscribe();
   }
 
   public openDialog(): void {

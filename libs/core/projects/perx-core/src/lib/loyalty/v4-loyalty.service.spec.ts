@@ -106,6 +106,7 @@ const transactionRaw: IV4LoyaltyTransactionPropertiesHistory = {
       voucher_expires_at: new Date(),
       reward: {
         id: 1,
+        is_favorite: false,
         name: 'test',
         description: 'test',
         subtitle: 'test',

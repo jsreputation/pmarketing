@@ -25,6 +25,7 @@ describe('VoucherComponent', () => {
       name: 'reward name',
       description: 'reward descriptiomn',
       subtitle: '',
+      favorite: false,
       validFrom: new Date(),
       validTo: new Date(),
       sellingFrom: new Date(),

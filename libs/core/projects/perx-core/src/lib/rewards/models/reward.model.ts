@@ -4,6 +4,7 @@ export interface IReward {
   id: number;
   name: string;
   description: string;
+  favorite?: boolean;
   subtitle: string;
   validFrom: Date | null;
   validTo: Date | null;

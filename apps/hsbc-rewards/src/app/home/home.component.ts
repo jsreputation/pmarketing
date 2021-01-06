@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IReward, RewardsService, LoyaltyService, ILoyalty, IProfile } from '@perxtech/core';
 import { ITabConfig, IPrice } from '@perxtech/core';
-import { Observable, of, Subject, throwError } from 'rxjs';
-import { flatMap, map, filter } from 'rxjs/operators';
+import { iif, Observable, of, Subject, throwError } from 'rxjs';
+import { flatMap, map, filter, finalize, tap } from 'rxjs/operators';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { DatePipe } from '@angular/common';
 
@@ -64,6 +64,7 @@ export class HomeComponent implements OnInit {
   public currentTab: string;
   private rewardMultiPageMetaTracker: PageTracker = {};
   private requestPageSize: number = 10;
+  public favDisabled: boolean  = false;
 
   constructor(
     private rewardsService: RewardsService,
@@ -175,5 +176,32 @@ export class HomeComponent implements OnInit {
         (err) => console.log(err)
       );
     }
+  }
+
+  public rewardFavoriteHandler(rewardToggled: IReward): void {
+    if (this.favDisabled) {
+      return;
+    }
+
+    this.favDisabled = true;
+
+    iif(() => (rewardToggled && (rewardToggled.favorite || false)),
+    this.rewardsService.unfavoriteReward(rewardToggled.id),
+    this.rewardsService.favoriteReward(rewardToggled.id)).pipe(
+      tap(
+        rewardChanged => {
+          this.rewards = this.rewards.pipe(
+            map(rewards => {
+              const foundIndex = rewards.findIndex(reward => reward.id === rewardToggled.id);
+              rewards[foundIndex] = rewardChanged;
+              return rewards;
+            })
+          );
+        }
+      ),
+      finalize(() => setTimeout(() => {
+        this.favDisabled = false;
+      }, 500))
+    ).subscribe();
   }
 }

@@ -5,7 +5,6 @@ import { IReward } from '../models/reward.model';
 import { of } from 'rxjs';
 import { UtilsModule } from '../../utils/utils.module';
 import { MatIconModule } from '@angular/material';
-import { TokenStorage } from '../../utils/storage/token-storage.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatRippleModule } from '@angular/material/core';
 import { MatListModule } from '@angular/material/list';
@@ -19,6 +18,7 @@ describe('RewardVoucherComponent', () => {
   const mockReward: IReward = {
     id: 1,
     name: 'Get a Free Coke',
+    favorite: true,
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
     subtitle: 'string',
     validFrom: new Date('2018-12-16T03:24:00'),
@@ -31,11 +31,6 @@ describe('RewardVoucherComponent', () => {
     termsAndConditions: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
     howToRedeem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
     merchantId: 2
-  };
-
-  const tokenStorageStub = {
-    getAppInfoProperty: () => null,
-    setAppInfoProperty: () => { }
   };
 
   beforeEach(async(() => {
@@ -52,9 +47,6 @@ describe('RewardVoucherComponent', () => {
         MatListModule,
         ProgressBarModule
       ],
-      providers: [
-        { provide: TokenStorage, useValue: tokenStorageStub },
-      ]
     })
       .compileComponents();
   }));

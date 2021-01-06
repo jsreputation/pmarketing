@@ -16,6 +16,7 @@ describe('VoucherDetailComponent', () => {
     id: 1,
     reward: {
       id: 1,
+      favorite: false,
       name: 'Reward',
       description: 'Reward',
       subtitle: 'Test',

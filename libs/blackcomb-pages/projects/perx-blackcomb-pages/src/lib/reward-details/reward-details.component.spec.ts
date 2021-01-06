@@ -26,6 +26,7 @@ const mockReward: IReward = {
   description: 'string;',
   subtitle: 'string;',
   validFrom: new Date(),
+  favorite: false,
   validTo: new Date(),
   rewardBanner: 'string;',
   merchantImg: 'string;',
@@ -53,7 +54,8 @@ describe('RewardComponent', () => {
   };
 
   const rewardsServiceStub: Partial<RewardsService> = {
-    getReward: () => of(mockReward)
+    getReward: () => of(mockReward),
+    getAllFavoriteRewards: () => of([])
   };
 
   const loyaltyServiceStub: Partial<LoyaltyService> = {
