@@ -340,6 +340,8 @@ export class ProgressCampaignComponent implements OnInit {
         stages: lengthOfRewardPos ?
           (lengthOfRewardPos === 1 || lengthOfRewardPos === 2) ?
             (lengthOfRewardPos + 1) : lengthOfRewardPos : 2,
+        // stamps and transaction-processed assumed to be in sync, current always NOT undefined when campaignProgress transactions-based
+        // if not in sync, may show progress bar lighting up in advance stages as reference from stamp api takes precedence
         current: (current !== undefined ? current : (stampCards[0].stamps && stampCards[0].stamps.length) || 0),
         stageLabels: stampCards[0].displayProperties.rewardPositions ?
           ((lengthOfRewardPos === 1 || lengthOfRewardPos === 2) ?
