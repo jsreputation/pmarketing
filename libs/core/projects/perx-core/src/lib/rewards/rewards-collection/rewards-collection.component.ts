@@ -1,4 +1,3 @@
-import { RewardsService } from '../rewards.service';
 import {
   Component,
   EventEmitter,

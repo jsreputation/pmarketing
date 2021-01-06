@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output, OnChanges } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { IPrice, IReward } from '../models/reward.model';
 import { map } from 'rxjs/operators';
@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
   templateUrl: './reward.component.html',
   styleUrls: ['./reward.component.scss']
 })
-export class RewardComponent implements OnInit {
+export class RewardComponent implements OnInit, OnChanges {
   @Input('reward')
   public rewardInitial$: Observable<IReward>;
 
@@ -64,6 +64,15 @@ export class RewardComponent implements OnInit {
         return of(''); // is actually 0 or invalid value default
       };
     }
+  }
+
+  public ngOnChanges(): void {
+    this.reward$ = this.rewardInitial$.pipe(
+      map(reward => {
+        const tncWithOlPadding = reward.termsAndConditions.replace(/(ol>)/, 'ol style="padding-inline-start: 1em;">');
+        return {...reward, termsAndConditions: tncWithOlPadding};
+      })
+    );
   }
 
   public rewardFavoriteHandler(rewardToggled: IReward): void {
