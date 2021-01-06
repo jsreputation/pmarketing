@@ -46,7 +46,7 @@ export class QuizQuestionComponent {
     const questionId = this.question.id;
     this.updateNonGroupPoint();
     this.updateAnswers.emit({ questionId, content });
-    this.questionValidation();
+    this.questionValidation(true);
   }
 
   public updateNonGroupPoint(): void {
@@ -57,11 +57,13 @@ export class QuizQuestionComponent {
     this.updatePoints.emit({ questionId: this.question.id, points: this.point, question: this.question.question.text });
   }
 
-  public questionValidation(): boolean {
+  public questionValidation(stateUpdate?: boolean): boolean {
     this.errorState = {};
     if (this.question && this.question.required && this.point !== 1) {
-      this.errorState.isRequired = true;
-      this.errorState.hasError = true;
+      if (stateUpdate) {
+        this.errorState.isRequired = true;
+        this.errorState.hasError = true;
+      }
       return false;
     }
     if (
@@ -69,12 +71,16 @@ export class QuizQuestionComponent {
       && typeof this.question.answer === 'string'
       && this.question.payload['max-length'] < this.question.answer.length
     ) {
-      this.errorState.exceedMaxLength = true;
-      this.errorState.hasError = true;
+      if (stateUpdate) {
+        this.errorState.exceedMaxLength = true;
+        this.errorState.hasError = true;
+      }
       return false;
     }
     if (this.question.id === 'email_address' && !this.validateEmail(this.question.answer)) {
-      this.errorState.isInvalidEmail = true;
+      if (stateUpdate) {
+        this.errorState.isInvalidEmail = true;
+      }
       return false;
     }
     return true;
