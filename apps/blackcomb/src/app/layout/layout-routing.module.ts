@@ -238,6 +238,12 @@ const routes: Routes = [
           import('../referral/referral.module').then((m) => m.ReferralModule),
         canActivate: [ProtectedGuard],
       },
+      {
+        path: 'favorite-rewards',
+        loadChildren: () =>
+        import('../favorite-rewards/favorite-rewards.module').then((mod) => mod.FavoriteRewardsModule),
+        canActivate: [ProtectedGuard],
+      },
     ],
   },
 ];
