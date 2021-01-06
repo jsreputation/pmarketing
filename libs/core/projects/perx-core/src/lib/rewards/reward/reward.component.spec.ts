@@ -29,14 +29,6 @@ describe('RewardComponent', () => {
     merchantId: 2
   };
 
-  const rewardsServiceStub: Partial<RewardsService> = {
-    nearMe: () => of(),
-    getCategories: () => of(),
-    getAllFavoriteRewards: () => of([]),
-    favoriteReward: () => of(),
-    unfavoriteReward: () => of(),
-  };
-
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RewardComponent],
@@ -44,9 +36,6 @@ describe('RewardComponent', () => {
         UtilsModule,
         MatIconModule
       ],
-      providers: [
-        { provide: RewardsService, useValue: rewardsServiceStub },
-      ]
     })
       .compileComponents();
   }));

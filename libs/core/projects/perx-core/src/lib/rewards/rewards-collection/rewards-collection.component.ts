@@ -18,7 +18,6 @@ import {
 } from '../../perx-core.constants';
 import { ITheme } from '../../utils/themes/themes.model';
 import { ThemesService } from '../../utils/themes/themes.service';
-import { tap, finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-core-rewards-collection',
@@ -49,6 +48,9 @@ export class RewardsCollectionComponent implements OnInit {
   @Output()
   public tapped: EventEmitter<IReward> = new EventEmitter<IReward>();
 
+  @Output()
+  public favoriteRewardEvent: EventEmitter<IReward> = new EventEmitter<IReward>();
+
   public get themeFontColor(): string | null {
     return this.theme ? this.theme.properties['--font_color'] : null;
   }
@@ -61,17 +63,10 @@ export class RewardsCollectionComponent implements OnInit {
 
   constructor(
     private themesService: ThemesService,
-    private rewardsService: RewardsService
   ) { }
 
   public ngOnInit(): void {
     this.initTheme();
-
-    this.rewardsService.getAllFavoriteRewards().subscribe(
-      rewards => {
-        this.favoriteRewards = rewards ||  [];
-      }
-    );
 
     if (!this.displayPriceFn) {
       this.displayPriceFn = (rewardPrice: IPrice) => {
@@ -95,42 +90,7 @@ export class RewardsCollectionComponent implements OnInit {
   }
 
   public rewardFavoriteHandler(rewardToggled: IReward): void {
-    if (this.favDisabled) {
-      return;
-    }
-
-    this.favDisabled = true;
-
-    const foundIndex = this.favoriteRewards.findIndex(reward => reward.id === rewardToggled.id);
-
-    if (foundIndex >= 0) {
-      // currently changed from favorite to not favorited
-      this.rewardsService.unfavoriteReward(rewardToggled.id).pipe(
-        tap(
-          reward => {
-            if (!reward.favorite) {
-              this.favoriteRewards.splice(foundIndex, 1);
-              this.favoriteRewards = [...this.favoriteRewards];
-            }
-          }
-        ),
-        finalize(() => setTimeout(() => {
-          this.favDisabled = false;
-        }, 500))
-      ).subscribe();
-    } else {
-      this.rewardsService.favoriteReward(rewardToggled.id).pipe(
-        tap(
-          reward => {
-            if (reward.favorite) {
-              this.favoriteRewards = [...this.favoriteRewards, reward];
-            }
-          }
-        ),
-        finalize(() => setTimeout(() => {
-          this.favDisabled = false;
-        }, 500))
-      ).subscribe();
-    }
+    this.favoriteRewardEvent.emit(rewardToggled);
   }
+
 }

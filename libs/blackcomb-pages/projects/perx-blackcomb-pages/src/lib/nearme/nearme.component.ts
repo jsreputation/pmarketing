@@ -5,7 +5,9 @@ import {
   OnInit,
   OnDestroy,
   ViewChild,
-  ElementRef
+  ElementRef,
+  EventEmitter,
+  Output
 } from '@angular/core';
 
 import {
@@ -24,7 +26,7 @@ import {
   Subject,
   from
 } from 'rxjs';
-import { take, mergeMap, filter, tap, finalize } from 'rxjs/operators';
+import { take, mergeMap, filter, tap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
 
@@ -62,8 +64,8 @@ export class NearmeComponent implements OnInit, OnDestroy {
   public lastLat: number;
   public lastLng: number;
   public lastRad: number;
-  // to debounce fav button
-  public favDisabled: boolean  = false;
+  @Output()
+  public favoriteRewardEvent: EventEmitter<IReward> = new EventEmitter<IReward>();
 
   constructor(
     private config: ConfigService,
@@ -283,43 +285,7 @@ export class NearmeComponent implements OnInit, OnDestroy {
   }
 
   public rewardFavoriteHandler(rewardToggled: IReward): void {
-    if (this.favDisabled) {
-      return;
-    }
-
-    this.favDisabled = true;
-
-    const foundIndex = this.favoriteRewards.findIndex(reward => reward.id === rewardToggled.id);
-
-    if (foundIndex >= 0) {
-      // currently changed from favorite to not favorited
-      this.rewardsService.unfavoriteReward(rewardToggled.id).pipe(
-        tap(
-          reward => {
-            if (!reward.favorite) {
-              this.favoriteRewards.splice(foundIndex, 1);
-              this.favoriteRewards = [...this.favoriteRewards];
-            }
-          }
-        ),
-        finalize(() => setTimeout(() => {
-          this.favDisabled = false;
-        }, 500))
-      ).subscribe();
-    } else {
-      this.rewardsService.favoriteReward(rewardToggled.id).pipe(
-        tap(
-          reward => {
-            if (reward.favorite) {
-              this.favoriteRewards = [...this.favoriteRewards, reward];
-            }
-          }
-        ),
-        finalize(() => setTimeout(() => {
-          this.favDisabled = false;
-        }, 500))
-      ).subscribe();
-    }
+    this.favoriteRewardEvent.emit(rewardToggled);
   }
 
   public openDialog(): void {

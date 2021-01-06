@@ -34,7 +34,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { LocationFilterPopupComponent } from './location-filter-popup/location-filter-popup.component';
 import { PointsToCashPipe } from './directives/points-to-cash.pipe';
 import { TokenStorage } from './storage/token-storage.service';
-import { CheckIdExistsPipe } from './directives/check-id-exists-pipe';
 import { MatRippleModule } from '@angular/material/core';
 import { ProgressInfoPipe } from './progress-info/progress-info.pipe';
 import { GettingStartedPipe } from './getting-started/getting-started.pipe';
@@ -77,7 +76,6 @@ const pipes = [
   SafeHtmlPipe,
   SafeUrlPipe,
   PointsToCashPipe,
-  CheckIdExistsPipe,
   ProgressInfoPipe,
   GettingStartedPipe,
   GettingStartedNearPicPipe

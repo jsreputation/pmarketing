@@ -12,7 +12,7 @@
         <mat-icon class="show-pointer"
                   *ngIf="showRewardFavButton"
                   (click)="rewardFavoriteHandler(reward)">
-          {{favoriteRewards | checkId: reward.id}}</mat-icon>
+          {{reward?.favorite ? 'favorite' : 'favorite_border'}}</mat-icon>
       </div>
       <div class="reward-name">
         {{reward.name}}
