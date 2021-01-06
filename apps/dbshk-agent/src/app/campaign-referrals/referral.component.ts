@@ -149,7 +149,7 @@ export class ReferralComponent {
     // @ts-ignore
     if (navigator.share) {
       const data = {
-        url: this.shareUrl,
+        // url: this.shareUrl,
         text: this.shareText,
         title: this.shareTitle,
       };
