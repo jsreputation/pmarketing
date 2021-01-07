@@ -130,6 +130,7 @@ jobs:
           [ $APP == 'daiichi-dlvn' ] || \
           [ $APP == 'feature-demo' ] || \
           [ $APP == 'globeathome' ] || \
+          [ $APP == 'hoolah' ] || \
           [ $APP == 'partners-demo' ] || \
           [ $APP == 'perx-demo' ] || \
           [ $APP == 'zeal' ] || \
