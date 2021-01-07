@@ -11,3 +11,7 @@ export interface IInvite {
 export interface IInviteResponse {
     data: IInvite[];
 }
+
+export interface IGlobalTopScoreResponse {
+    top_score: number;
+}

@@ -95,7 +95,8 @@ const appConfigFile = `{
     "stampsType": "${process.env.STAMPS_TYPE ? process.env.STAMPS_TYPE : 'stamp_card'}",
     "redirectAfterLogin": "${process.env.REDIRECT_AFTER_LOGIN ? process.env.REDIRECT_AFTER_LOGIN : '/wallet'}",
     "loginMethod": "${process.env.LOGIN_METHOD ? process.env.LOGIN_METHOD : 'phone'}",
-    "showPerformanceOverview": ${process.env.SHOW_PERFORMANCE_OVERVIEW ? process.env.SHOW_PERFORMANCE_OVERVIEW : false}
+    "showPerformanceOverview": ${process.env.SHOW_PERFORMANCE_OVERVIEW ? process.env.SHOW_PERFORMANCE_OVERVIEW : false},
+    "showReferralProgressBar": ${process.env.SHOW_REFERRAL_PROGRESS ? process.env.SHOW_REFERRAL_PROGRESS : false}
   },
   ${displayProperties}
 }
