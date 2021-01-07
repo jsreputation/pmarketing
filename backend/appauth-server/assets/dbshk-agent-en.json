@@ -383,7 +383,8 @@
     "INVITE_STAT_CARD_TITLE": "Your Invites",
     "INVITE_STAT_SUB_TITLE": "TOTAL INVITES",
     "INVITE_STAT_UNIT": "Invites",
-    "TOP_SCORE_UNIT": "DBS$"
+    "TOP_SCORE_UNIT": "DBS$",
+    "PERFORMANCE_BY_CAMPAIGN": "Performance by Campaign"
   },
   "Gold": "Gold",
   "Silver": "Silver",
