@@ -52,13 +52,12 @@ export class OverviewComponent implements OnInit {
       statistics: [{
         statisticTitle: of('MISSION 1'),
         value: of(456),
-        unit: of('completed units'),
-        unitBeforeValue: true
+        unit: of('completed')
       },
       {
         statisticTitle: of('MISSION 2'),
         value: of(789),
-        unit: of('completed units')
+        unit: of('completed')
       }]
     };
   }
