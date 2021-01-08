@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ConfigService, IConfig } from '@perxtech/core';
 import { Observable } from 'rxjs';
 import { ICampaignInviteService } from './icampaign-invite.service';
-import { IInvite, IInviteResponse } from './models/campaign-referral.model';
+import { IGlobalTopScoreResponse, IInvite, IInviteResponse } from './models/campaign-referral.model';
 
 @Injectable({ providedIn: 'root' })
 export class CampaignInviteService implements ICampaignInviteService {
@@ -32,5 +32,9 @@ export class CampaignInviteService implements ICampaignInviteService {
 
     public sendInvite(invite: IInvite): Observable<IInviteResponse> {
         return this.http.post<IInviteResponse>(`${this.apiHost}/v4/campaign_invitations/`, invite);
+    }
+
+    public getGlobalTopScore(): Observable<IGlobalTopScoreResponse> {
+        return this.http.get<IGlobalTopScoreResponse>(`${this.apiHost}/v4/dbshk/top_score`);
     }
 }

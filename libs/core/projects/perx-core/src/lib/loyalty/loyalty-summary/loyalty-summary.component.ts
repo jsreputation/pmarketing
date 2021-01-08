@@ -1,12 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { DatePipe } from '@angular/common';
+import { catchError, tap, map } from 'rxjs/operators';
 
 import { LoyaltyService } from '../loyalty.service';
 import { ProfileService } from '../../profile/profile.service';
 import { IProfile } from '../../profile/profile.model';
 import { ILoyalty } from '../models/loyalty.model';
-import { DatePipe } from '@angular/common';
-import { catchError, tap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-core-loyalty-summary',
@@ -43,7 +43,13 @@ export class LoyaltySummaryComponent implements OnInit {
   public membershipExpiryFn: (loyalty: ILoyalty) => Observable<string>;
 
   @Input()
-  public topScoreProgressFn: () => Observable<string>;
+  public topScoreMessageFn: () => Observable<string>;
+
+  @Input()
+  public topScoreUnitFn: () => Observable<string>;
+
+  @Input()
+  public topScoreValueFn: () => Observable<number>;
 
   @Input()
   public pointDenominationFn: () => Observable<string>;
@@ -66,6 +72,7 @@ export class LoyaltySummaryComponent implements OnInit {
   public loyaltyProgramExists: boolean = true;
   public pointTo: Observable<string>;
   private nextTierName: string;
+  public topScorePercentage: Observable<number>;
 
   constructor(
     private profileService: ProfileService,
@@ -138,15 +145,21 @@ export class LoyaltySummaryComponent implements OnInit {
           : of('');
     }
 
-    if (this.showReferralProgress && !this.topScoreProgressFn) {
-      this.topScoreProgressFn = () => of('');
+    if (this.showReferralProgress) {
+      if (!this.topScoreMessageFn) {
+        this.topScoreMessageFn = () => of('');
+      }
+      if (!this.topScoreUnitFn) {
+        this.topScoreUnitFn = () => of('');
+      }
+      if (!this.topScoreValueFn) {
+        this.topScoreValueFn = () => of(0);
+      }
     }
-
 
     if (!this.pointDenominationFn) {
       this.pointDenominationFn = () => of('');
     }
-
 
     if (!this.pointPretextFn) {
       this.pointPretextFn = () => of('');
@@ -177,6 +190,9 @@ export class LoyaltySummaryComponent implements OnInit {
       )
       .subscribe((loyalty: ILoyalty) => {
         this.loyalty = loyalty;
+        if (this.showReferralProgress) {
+          this.calculateGlobalTopScorePercentage(loyalty.pointsBalance, this.topScoreValueFn);
+        }
         if (this.nextTierName) {
           this.pointTo = this.pointToFn().pipe(
             map((text) => text.replace('{nextTierName}', this.nextTierName))
@@ -193,5 +209,19 @@ export class LoyaltySummaryComponent implements OnInit {
       return Math.round((currentPoints / nextPoints) * 100);
     }
     return 0;
+  }
+
+  private calculateGlobalTopScorePercentage(
+    currentScore: number | undefined,
+    topScore$: () => Observable<number>
+  ): void {
+    if (currentScore && topScore$) {
+      topScore$()
+        .subscribe(topScore =>
+          this.topScorePercentage = of(Math.round((currentScore / topScore) * 100))
+        );
+    } else {
+      this.topScorePercentage = of(0);
+    }
   }
 }
