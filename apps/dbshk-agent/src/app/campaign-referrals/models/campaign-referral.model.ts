@@ -10,6 +10,9 @@ export interface IInvite {
 
 export interface IInviteResponse {
     data: IInvite[];
+    meta: {
+        total_pages: number;
+    };
 }
 
 export interface IGlobalTopScoreResponse {

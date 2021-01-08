@@ -15,19 +15,19 @@ export class CampaignInviteService implements ICampaignInviteService {
             });
     }
 
-    public getAllInvites(): Observable<IInviteResponse> {
+    public getAllInvites(page: number = 1, size: number = 25): Observable<IInviteResponse> {
         return this.http.get<IInviteResponse>(
-            `${this.apiHost}/v4/campaign_invitations/`
+            `${this.apiHost}/v4/campaign_invitations?page=${page}&size=${size}`
         );
     }
 
-    public getInvitesById(id: number): Observable<IInviteResponse> {
+    public getInvitesByCampaignId(id: number, page: number = 1, size: number = 25): Observable<IInviteResponse> {
         if (id) {
             return this.http.get<IInviteResponse>(
-                `${this.apiHost}/v4/campaign_invitations?campaign_id=${id}`
+                `${this.apiHost}/v4/campaign_invitations?campaign_id=${id}&page=${page}&size=${size}`
             );
         }
-        return this.getAllInvites();
+        return this.getAllInvites(page, size);
     }
 
     public sendInvite(invite: IInvite): Observable<IInviteResponse> {

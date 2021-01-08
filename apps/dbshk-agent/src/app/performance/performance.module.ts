@@ -12,6 +12,7 @@ import { ActivityComponent } from './activity/activity.component';
 import { LoyaltyModule, UtilsModule } from '@perxtech/core';
 import { MatFormFieldModule, MatListModule, MatSelectModule } from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 const routes: Routes = [{
   path: '',
@@ -33,7 +34,8 @@ const routes: Routes = [{
     MatFormFieldModule,
     MatSelectModule,
     MatListModule,
-    HttpClientModule
+    HttpClientModule,
+    InfiniteScrollModule
   ]
 })
 export class PerformanceModule { }
