@@ -12,6 +12,7 @@ export interface IInviteResponse {
     data: IInvite[];
     meta: {
         total_pages: number;
+        count: number;
     };
 }
 

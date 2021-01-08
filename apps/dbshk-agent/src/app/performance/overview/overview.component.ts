@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { IStatisticCardConfig, IConfig, ConfigService } from '@perxtech/core';
+import { IStatisticCardConfig, IConfig, ConfigService, ICampaignService, CampaignType, ICampaign } from '@perxtech/core';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CampaignInviteService } from '../../campaign-referrals/campaign-invite.service';
@@ -35,12 +35,14 @@ export class OverviewComponent implements OnInit {
     protected datePipe: DatePipe,
     protected translate: TranslateService,
     protected campaignInviteService: CampaignInviteService,
-    private configService: ConfigService) {
+    private configService: ConfigService,
+    protected campaignService: ICampaignService) {
   }
 
   public ngOnInit(): void {
     this.initTranslate();
     this.getInviteStatistics();
+    this.getCampaignPerformanceStatistics();
 
     this.configService.readAppConfig<IDbshkConfig>().subscribe(
       (config: IConfig<IDbshkConfig>) => {
@@ -52,21 +54,6 @@ export class OverviewComponent implements OnInit {
         }
       }
     );
-
-    // DH-37
-    this.performanceStatistics = {
-      cardTitle: of('Performance by Campaign'),
-      statistics: [{
-        statisticTitle: of('MISSION 1'),
-        value: of(456),
-        unit: of('completed')
-      },
-      {
-        statisticTitle: of('MISSION 2'),
-        value: of(789),
-        unit: of('completed')
-      }]
-    };
   }
 
   private getInviteStatistics(): void {
@@ -74,7 +61,7 @@ export class OverviewComponent implements OnInit {
       cardTitle: this.inviteStatCardTitle(),
       statistics: [{
         statisticTitle: this.inviteStatTitle(),
-        value: this.campaignInviteService.getAllInvites().pipe(map((invites: IInviteResponse) => invites.data.length || 0)),
+        value: this.campaignInviteService.getAllInvites().pipe(map((invites: IInviteResponse) => invites.meta.count || 0)),
         unit: this.inviteStatUnit()
       }]
     };
@@ -82,6 +69,27 @@ export class OverviewComponent implements OnInit {
 
   private getGlobalTopScore(): Observable<IGlobalTopScoreResponse> {
     return this.campaignInviteService.getGlobalTopScore();
+  }
+
+  private getCampaignPerformanceStatistics(): void {
+    this.performanceStatistics = {
+      cardTitle: this.translate.get('PERFORMANCE.PERFORMANCE_BY_CAMPAIGN'),
+      statistics: []
+    };
+    // get all campaigns
+    this.campaignService.getCampaigns({ type: CampaignType.invite }).subscribe((campaignList: ICampaign[]) => {
+      // for each campaign, get the number of invites
+      campaignList.map((campaign) => this.campaignInviteService.getInvitesByCampaignId(campaign.id.toString())
+        .subscribe((invites) => {
+          // build IStastic obj and push to performance stats
+          this.performanceStatistics.statistics.push(
+            {
+              statisticTitle: of(campaign.name),
+              value: of(invites.meta.count),
+              unit: this.translate.get('PERFORMANCE.INVITE_STAT_UNIT')
+            });
+        }));
+    });
   }
 
   private initTranslate(): void {
