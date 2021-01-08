@@ -99,8 +99,8 @@ export class AppComponent implements OnInit {
       .pipe(
         // temporary tracking to validate if there are users on HSBCPH for low GA triggers using a 3rd party service
         switchMap((config: IConfig<ITheme>) => of(config).pipe(
-          tap((config: IConfig<ITheme>) => {
-            if (config.app === 'hsbcph') {
+          tap((conf: IConfig<ITheme>) => {
+            if (conf.app === 'hsbcph') {
               Sentry.captureException(new Error('HSBCPH app is running'));
             }
           }),
