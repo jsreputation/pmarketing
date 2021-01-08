@@ -7,6 +7,7 @@ import { ConfigService, ICampaignService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { CampaignInviteService } from '../../campaign-referrals/campaign-invite.service';
 import { HttpClientModule } from '@angular/common/http';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 describe('ActivityComponent', () => {
   let component: ActivityComponent;
@@ -34,7 +35,8 @@ describe('ActivityComponent', () => {
         MatSelectModule,
         MatListModule,
         BrowserAnimationsModule,
-        HttpClientModule
+        HttpClientModule,
+        InfiniteScrollModule
       ],
       providers: [
         { provide: ICampaignService, useValue: campaignServiceStub },
