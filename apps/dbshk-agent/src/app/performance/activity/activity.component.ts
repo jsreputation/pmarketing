@@ -20,7 +20,7 @@ interface ICampaignListItem { name: string; value: number; }
 export class ActivityComponent implements OnInit {
   public referralCampaigns: ICampaignListItem[];
   public invites: CustomInvite[] = [];
-  public selectedFilterValue: number;
+  public selectedFilterValue: string | number;
   public defaultFilterValue: string;
   public isLastPage: boolean = false;
   private pageNumber: number = 1;
@@ -31,7 +31,7 @@ export class ActivityComponent implements OnInit {
     protected campaignInviteService: CampaignInviteService) { }
 
   public ngOnInit(): void {
-    this.defaultFilterValue = '-1';
+    this.defaultFilterValue = 'all';
     this.selectedFilterValue = -1;
     this.getCampaigns();
   }
@@ -42,7 +42,7 @@ export class ActivityComponent implements OnInit {
         map((campaigns: ICampaign[]) => campaigns.map((campaign) => ({ name: campaign.name, value: campaign.id })))),
       // -1 filter val is 'All' so pass null as campaign ID
       this.campaignInviteService.getInvitesByCampaignId(
-        this.selectedFilterValue > 0 ? this.selectedFilterValue : 0,
+        this.selectedFilterValue === 'all' ? this.selectedFilterValue : null,
         this.pageNumber,
         this.pageSize)
         .pipe(
@@ -63,7 +63,7 @@ export class ActivityComponent implements OnInit {
     return match.name;
   }
 
-  public onFilterChange(value: number): void {
+  public onFilterChange(value: string): void {
     // clear existing list, filters and page data since we are about to build a fresh list
     this.invites = [];
     this.isLastPage = false;

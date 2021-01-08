@@ -21,7 +21,7 @@ export class CampaignInviteService implements ICampaignInviteService {
         );
     }
 
-    public getInvitesByCampaignId(id: number, page: number = 1, size: number = 25): Observable<IInviteResponse> {
+    public getInvitesByCampaignId(id: string, page: number = 1, size: number = 25): Observable<IInviteResponse> {
         if (id) {
             return this.http.get<IInviteResponse>(
                 `${this.apiHost}/v4/campaign_invitations?campaign_id=${id}&page=${page}&size=${size}`

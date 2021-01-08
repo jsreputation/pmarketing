@@ -4,7 +4,7 @@
           <mat-form-field appearance="fill" class="full-width__input">
                <mat-select [value]="defaultFilterValue" placeholder="Click to filter by campaign"
                     (selectionChange)="onFilterChange($event.value)">
-                    <mat-option value="-1">All campaigns</mat-option>
+                    <mat-option value="all">All campaigns</mat-option>
                     <ng-container *ngFor="let campaign of referralCampaigns">
                          <mat-option [value]="campaign.value">{{campaign.name}}</mat-option>
                     </ng-container>
