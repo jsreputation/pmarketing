@@ -79,7 +79,7 @@ export class OverviewComponent implements OnInit {
     // get all campaigns
     this.campaignService.getCampaigns({ type: CampaignType.invite }).subscribe((campaignList: ICampaign[]) => {
       // for each campaign, get the number of invites
-      campaignList.map((campaign) => this.campaignInviteService.getInvitesById(campaign.id)
+      campaignList.map((campaign) => this.campaignInviteService.getInvitesByCampaignId(campaign.id.toString())
         .subscribe((invites) => {
           // build IStastic obj and push to performance stats
           this.performanceStatistics.statistics.push(
