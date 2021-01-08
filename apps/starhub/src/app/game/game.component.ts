@@ -39,6 +39,7 @@ export class GameComponent implements OnInit {
   private destroy$: Subject<void> = new Subject();
   public willWin: boolean = false;
   private hasNoRewardsPopup: boolean = false;
+  public startGameAnimation: boolean = false;
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -228,6 +229,7 @@ export class GameComponent implements OnInit {
         map((game: IPlayOutcome) => game.vouchers)
       ).subscribe(
         (vouchs: Voucher[]) => {
+          this.startGameAnimation = true;
           if (vouchs.length > 0) {
             this.hasNoRewardsPopup = false;
             this.willWin = true;
