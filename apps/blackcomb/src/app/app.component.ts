@@ -101,7 +101,7 @@ export class AppComponent implements OnInit {
         switchMap((config: IConfig<ITheme>) => of(config).pipe(
           tap((config: IConfig<ITheme>) => {
             if (config.app === 'hsbcph') {
-              Sentry.captureException(new Error("HSBCPH app is running"));
+              Sentry.captureException(new Error('HSBCPH app is running'));
             }
           }),
           catchError(_ => of(config))
