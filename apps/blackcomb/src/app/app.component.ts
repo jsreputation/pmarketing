@@ -16,12 +16,14 @@ import {
 import { Location } from '@angular/common';
 
 import {
+  catchError,
   filter,
   map,
   switchMap,
   tap,
 } from 'rxjs/operators';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import * as Sentry from '@sentry/browser';
 
 import {
   PopupComponent,
@@ -52,6 +54,7 @@ import {
 
 import { BACK_ARROW_URLS } from './app.constants';
 import { Title } from '@angular/platform-browser';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -94,6 +97,15 @@ export class AppComponent implements OnInit {
     ).subscribe();
     this.config.readAppConfig<ITheme>()
       .pipe(
+        // temporary tracking to validate if there are users on HSBCPH for low GA triggers using a 3rd party service
+        switchMap((config: IConfig<ITheme>) => of(config).pipe(
+          tap((config: IConfig<ITheme>) => {
+            if (config.app === 'hsbcph') {
+              Sentry.captureException(new Error("HSBCPH app is running"));
+            }
+          }),
+          catchError(_ => of(config))
+        )),
         tap((config: IConfig<ITheme>) => {
           if (config.appVersion) {
             (window as any).PERX_APP_VERSION = config.appVersion;
