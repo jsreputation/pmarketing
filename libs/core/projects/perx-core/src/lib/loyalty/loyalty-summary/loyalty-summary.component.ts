@@ -217,8 +217,13 @@ export class LoyaltySummaryComponent implements OnInit {
   ): void {
     if (currentScore && topScore$) {
       topScore$()
-        .subscribe(topScore =>
-          this.topScorePercentage = of(Math.round((currentScore / topScore) * 100))
+        .subscribe(topScore => {
+          // VS-5164: handle edge case
+          // if currentScore / topScore results in a value less than .5
+          // Math.round rounds it off to 0 and causes progress bar to show no progress
+          const percentage = Math.round((currentScore / topScore) * 100);
+          this.topScorePercentage = of(percentage > 1 ? percentage : 1);
+        }
         );
     } else {
       this.topScorePercentage = of(0);
