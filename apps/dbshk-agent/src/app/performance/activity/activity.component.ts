@@ -32,7 +32,7 @@ export class ActivityComponent implements OnInit {
 
   public ngOnInit(): void {
     this.defaultFilterValue = 'all';
-    this.selectedFilterValue = -1;
+    this.selectedFilterValue = 'all';
     this.getCampaigns();
   }
 
@@ -42,7 +42,7 @@ export class ActivityComponent implements OnInit {
         map((campaigns: ICampaign[]) => campaigns.map((campaign) => ({ name: campaign.name, value: campaign.id })))),
       // -1 filter val is 'All' so pass null as campaign ID
       this.campaignInviteService.getInvitesByCampaignId(
-        this.selectedFilterValue === 'all' ? this.selectedFilterValue : null,
+        this.selectedFilterValue === 'all' ? null : this.selectedFilterValue.toString(),
         this.pageNumber,
         this.pageSize)
         .pipe(
