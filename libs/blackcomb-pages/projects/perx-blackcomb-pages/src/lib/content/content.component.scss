@@ -19,8 +19,9 @@
     padding: 2.4rem;
     font-size: 1.4rem;
     line-height: 2.5rem;
-    height: 100%;
-    overflow-y: auto;
+    // VS-5162
+    // height: 100%;
+    // overflow-y: auto;
 
     ::ng-deep {
       @include typography();

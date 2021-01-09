@@ -1,6 +1,7 @@
 .activity-container {
     background-color: var(--background);
     min-height: 100%;
+    // overflow at container level because we disabled overflow at tab content level for VS-5162
     overflow-y: auto;
     height: 100%;
     padding: 1.6rem;
