@@ -73,7 +73,7 @@ export class ReferralComponent {
                   'You can now earn up to HK$13,500 cash rewards by opening a DBS Treasure account.\n' +
                   'Simply sign up for an account on DBS iWealth app with my invitation code now.\n' +
                   '1. Download the DBS iWealth app via Apple Apple Store or Google Play Store.\n' +
-                  '2. Enter my invitation code {{code}} and join DBS Treasure.\n' +
+                  '2. Enter my invitation code [{{code}}] and join DBS Treasure.\n' +
                   '3. Transfer-in or make an investment transaction of your liking to gross up additional cash rewards\n' +
                   'Terms and Conditions apply, visit https://www.dbs.com.hk/treasures/emgm-poc/referee for more details.';
                 break;
@@ -82,7 +82,7 @@ export class ReferralComponent {
                   'You can now earn HK$200 cash rewards for every aggregate transfer-in securities investment of HK$200,000, and up to HK$20,000 cash reward is waiting for you.\n' +
                   'Simply sign up for an account on DBS iWealth app with my invitation code now.\n' +
                   '1. Download the DBS iWealth app via Apple Apple Store or Google Play Store.\n' +
-                  '2. Enter my invitation code {{code}} and join DBS Treasure to earn up to HK$13,500 cash reward.\n' +
+                  '2. Enter my invitation code [{{code}}] and join DBS Treasure to earn up to HK$13,500 cash reward.\n' +
                   '3. Transfer-in or make an investment transaction of your liking to gross up additional cash reward.\n' +
                   'Terms and Conditions apply, visit https://www.dbs.com.hk/treasures/emgm-poc/referee for more details.';
                 break;
@@ -91,7 +91,7 @@ export class ReferralComponent {
                   'You can now earn up to HK$9,250 cash rewards for your investment transaction via DBS. \n' +
                   'Simply sign up for an account on DBS iWealth app with my invitation code now.\n' +
                   '1. Download the DBS iWealth app via Apple Apple Store or Google Play Store.\n' +
-                  '2. Enter my invitation code {{code}} and join DBS Treasure to earn up to HK$13,500 cash reward.\n' +
+                  '2. Enter my invitation code [{{code}}] and join DBS Treasure to earn up to HK$13,500 cash reward.\n' +
                   '3. Transfer-in or make an investment transaction of your liking to gross up additional cash reward.\n' +
                   'Terms and Conditions apply, visit https://www.dbs.com.hk/treasures/emgm-poc/referee for more details.';
                 break;
@@ -100,7 +100,7 @@ export class ReferralComponent {
                   'You can now earn HK$200 cash rewards for every aggregate transfer-in securities investment of HK$200,000, and up to HK$20,000 cash reward is waiting for you. \n' +
                   'Simply sign up for an account on DBS iWealth app with my invitation code now.\n' +
                   '1. Download the DBS iWealth app via Apple Apple Store or Google Play Store.\n' +
-                  '2. Enter my invitation code {{code}} and join DBS Treasure to earn up to HK$13,500 cash reward.\n' +
+                  '2. Enter my invitation code [{{code}}] and join DBS Treasure to earn up to HK$13,500 cash reward.\n' +
                   '3. Transfer-in or make an investment transaction of your liking to gross up additional cash reward.\n' +
                   'Terms and Conditions apply, visit https://www.dbs.com.hk/treasures/emgm-poc/referee for more details.';
                 break;
@@ -109,7 +109,7 @@ export class ReferralComponent {
                   'You can now earn HK$200 cash rewards for every aggregate transfer-in securities investment of HK$200,000, and up to HK$20,000 cash reward is waiting for you.\n' +
                   'Simply sign up for an account on DBS iWealth app with my invitation code now.\n' +
                   '1. Download the DBS iWealth app via Apple Apple Store or Google Play Store.\n' +
-                  '2. Enter my invitation code {{code}} and join DBS Treasure to earn up to HK$13,500 cash reward.\n' +
+                  '2. Enter my invitation code [{{code}}] and join DBS Treasure to earn up to HK$13,500 cash reward.\n' +
                   '3. Transfer-in or make an investment transaction of your liking to gross up additional cash reward.\n' +
                   'Terms and Conditions apply, visit https://www.dbs.com.hk/treasures/emgm-poc/referee for more details.';
                 break;
@@ -118,7 +118,7 @@ export class ReferralComponent {
                   'You can now earn up to HK$13,500 cash rewards by opening a DBS Treasure account.\n' +
                   'Simply sign up for an account on DBS iWealth app with my invitation code now.\n' +
                   '1. Download the DBS iWealth app via Apple Apple Store or Google Play Store.\n' +
-                  '2. Enter my invitation code {{code}} and join DBS Treasure.\n' +
+                  '2. Enter my invitation code [{{code}}] and join DBS Treasure.\n' +
                   '3. Transfer-in or make an investment transaction of your liking to gross up additional cash rewards\n' +
                   'Terms and Conditions apply, visit https://www.dbs.com.hk/treasures/emgm-poc/referee for more details.';
                 break;
