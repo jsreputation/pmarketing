@@ -96,7 +96,7 @@
                         <span>Passwords should match</span>
                     </mat-error>
                 </mat-form-field>
-                <mat-form-field *ngIf="appConfig.showReferralOnAccountsPage" appearance="fill" class="full-width__input">
+                <mat-form-field *ngIf="appConfig.showReferralDetails" appearance="fill" class="full-width__input">
                   <mat-label>{{'SIGN_UP_PAGE.REFERRAL_FIELD' | translate}}</mat-label>
                   <input matInput [placeholder]="'SIGN_UP_PAGE.REFERRAL_FIELD' | translate"
                          formControlName="referralCode">

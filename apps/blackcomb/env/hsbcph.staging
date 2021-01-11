@@ -21,3 +21,4 @@ FAQSURL=https://perx-cdn.s3-ap-southeast-1.amazonaws.com/content/hsbcph/faq.html
 TNCURL=https://perx-cdn.s3-ap-southeast-1.amazonaws.com/content/hsbcph/tnc.html
 CONTACTUSURL=https://perx-cdn.s3-ap-southeast-1.amazonaws.com/content/hsbcph/contactus.html
 SHOW_EXTRA_LOYALTY_ON_HOMEPAGE=false
+SHOW_REFERRAL_DETAILS=false

@@ -191,9 +191,9 @@ const appConfigFile = `{
       ? process.env.SHOW_TRANSANCTION_HISTORY_ACCOUNTS
       : false
   },
-  "showReferralOnAccountsPage": ${
-    process.env.SHOW_REFER_ON_ACCOUNTPAGE
-      ? process.env.SHOW_REFER_ON_ACCOUNTPAGE
+  "showReferralDetails": ${
+    process.env.SHOW_REFERRAL_DETAILS
+      ? process.env.SHOW_REFERRAL_DETAILS
       : false
   },
   "showVoucherBookingFromRewardsPage":  ${

@@ -52,6 +52,7 @@ const appConfigFile = `{
   "preAuth": ${process.env.PREAUTH ? process.env.PREAUTH : false},
   "isWhistler": ${process.env.IS_WHISTLER ? process.env.IS_WHISTLER : false},
   "baseHref": "${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}",
+  "showReferralDetails": ${process.env.SHOW_REFERRAL_DETAILS ? process.env.SHOW_REFERRAL_DETAILS : false},
   "custom": {
     "hubclubCR": ${process.env.HUBCLUB_CR ? process.env.HUBCLUB_CR : false},
     "showAllSnappingSaturdayItems": ${process.env.SHOW_ALL_SNAPPING_SATURDAY_ITEMS ? process.env.SHOW_ALL_SNAPPING_SATURDAY_ITEMS : false}

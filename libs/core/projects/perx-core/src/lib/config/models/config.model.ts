@@ -58,7 +58,6 @@ export interface IConfig<T> {
   showUserInfoOnAccountsPage?: boolean;
   showLuckyDrawDetailsOnAccountsPage?: boolean;
   showTransactionHistoryOnAccountsPage?: boolean;
-  showReferralOnAccountsPage?: boolean;
 
   /* Reward page */
   showVoucherBookingFromRewardsPage?: boolean;
@@ -70,4 +69,7 @@ export interface IConfig<T> {
 
   /* Sign up page*/
   showLogo?: boolean;
+
+  /* Referral*/
+  showReferralDetails?: boolean;
 }
