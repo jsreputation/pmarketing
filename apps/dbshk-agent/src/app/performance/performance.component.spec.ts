@@ -18,7 +18,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { EventEmitter } from '@angular/core';
 import {
   AuthenticationService, ConfigService, ICampaignService, IProfile,
-  LoyaltyService, LoyaltySummaryComponent, ProfileService, StatisticCardComponent
+  LoyaltyService, LoyaltySummaryComponent, ProfileService, StatisticCardComponent, TransactionsService
 } from '@perxtech/core';
 import { MatCardModule, MatFormFieldModule, MatListModule, MatProgressBarModule, MatProgressSpinnerModule, MatSelectModule } from '@angular/material';
 import { DatePipe } from '@angular/common';
@@ -66,6 +66,10 @@ describe('PerformanceComponent', () => {
     applyReferral: () => of()
   };
 
+  const transactionServiceStub: Partial<TransactionsService> = {
+    getTransactionsCountByType: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -97,7 +101,8 @@ describe('PerformanceComponent', () => {
         { provide: ProfileService, useValue: profileServiceStub },
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
         DatePipe,
-        { provide: ICampaignService, useValue: campaignServiceStub }
+        { provide: ICampaignService, useValue: campaignServiceStub },
+        { provide: TransactionsService, useValue: transactionServiceStub }
       ]
     })
       .compileComponents();

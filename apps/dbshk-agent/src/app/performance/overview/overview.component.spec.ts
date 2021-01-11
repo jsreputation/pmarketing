@@ -3,7 +3,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatProgressBarModule, MatProgressSpinnerModule } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
-import { ConfigService, ICampaignService, LoyaltyService, LoyaltySummaryComponent, ProfileService, StatisticCardComponent } from '@perxtech/core';
+import {
+  ConfigService, ICampaignService, LoyaltyService,
+  LoyaltySummaryComponent, ProfileService, StatisticCardComponent, TransactionsService
+} from '@perxtech/core';
 import { MaterialModule } from 'libs/core/projects/perx-core/src/lib/shared/material.module';
 import { of } from 'rxjs';
 import { CampaignInviteService } from '../../campaign-referrals/campaign-invite.service';
@@ -38,6 +41,10 @@ describe('OverviewComponent', () => {
     applyReferral: () => of()
   };
 
+  const transactionServiceStub: Partial<TransactionsService> = {
+    getTransactionsCountByType: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [OverviewComponent, StatisticCardComponent, LoyaltySummaryComponent],
@@ -59,6 +66,7 @@ describe('OverviewComponent', () => {
         CampaignInviteService,
         { provide: ConfigService, useValue: configServiceStub },
         { provide: ICampaignService, useValue: campaignServiceStub },
+        { provide: TransactionsService, useValue: transactionServiceStub }
       ]
     })
       .compileComponents();
