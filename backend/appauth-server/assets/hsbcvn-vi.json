@@ -285,6 +285,18 @@
     "FILTER": "Bộ lọc",
     "VIEW_LOCATION": "Xem vị trí"
   },
+  "STAMP_CAMPAIGN": {
+    "STAMP_CARD": "Thẻ tem",
+    "OF": "của",
+    "NEW_STAMPS": "tem mới",
+    "NEW_STAMP": "tem mới",
+    "VIEW_WALLET": "Xem ví"
+  },
+  "PUZZLE": {
+    "PUZZLE": "Câu đố",
+    "PLAY_NOW": "Bắt đầu chơi!",
+    "NEW_PIECES": "Miếng mới"
+  },
   "CONTENT_PAGE": "Không tìm thấy nội dung",
   "Terms and Conditions": "Điều kiện & Điều khoản",
   "DESCRIPTION": "Miêu tả"

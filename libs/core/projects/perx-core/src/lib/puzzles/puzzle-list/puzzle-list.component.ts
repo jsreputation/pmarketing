@@ -3,6 +3,7 @@ import { StampService } from '../../stamp/stamp.service';
 import { IStampCard, StampCardState, StampState } from '../../stamp/models/stamp.model';
 import { Subject, Observable, of } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'perx-core-puzzle-list',
@@ -44,20 +45,23 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
 
   private destroy$: Subject<void> = new Subject();
 
-  constructor(private stampService: StampService) {
+  constructor(
+    private stampService: StampService,
+    private translate: TranslateService) {
   }
 
   public ngOnInit(): void {
     if (!this.titleFn) {
-      this.titleFn = (index: number) => of(`Puzzle #${this.indexToLetter(index)}`);
+      this.translate.get('PUZZLE.PUZZLE')
+      .subscribe((translation) => this.titleFn = (index: number) => of(`${translation} #${this.indexToLetter(index)}`));
     }
 
     if (!this.puzzleTextFn) {
-      this.puzzleTextFn = () => of('new pieces');
+      this.puzzleTextFn = () => this.translate.get('PUZZLE.NEW_PIECES');
     }
 
     if (!this.playBtnTextFn) {
-      this.playBtnTextFn = () => of('play now!');
+      this.playBtnTextFn = () => this.translate.get('PUZZLE.PLAY_NOW');
     }
 
     if (this.puzzles) {
