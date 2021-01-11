@@ -18,6 +18,7 @@ import {
   iif,
   Subject,
   throwError,
+  EMPTY
 } from 'rxjs';
 
 import {
@@ -91,13 +92,26 @@ export class LoadingComponent implements OnInit, OnDestroy {
 
       getPI$.pipe(
         switchMap(
-          queryParams => iif(() => !!queryParams.pi, PIHandler$, noPIHandler$)
+          queryParams => {
+            if (queryParams.token) {
+              this.authService.saveUserAccessToken(queryParams.token);
+            }
+            if (!this.authService.getUserAccessToken() && !queryParams.pi) {
+              this.router.navigate(['error']);
+              return EMPTY;
+            }
+            return iif(() => !!queryParams.pi, PIHandler$, noPIHandler$);
+          }
         ),
         takeUntil(this.destroy$)
       ).subscribe(
         () => this.getCampaignData(),
-        () => {
-          this.router.navigate([this.appConfig.homeAsProgressPage ? '/loading' : 'login']);
+        (err) => {
+          if (err.status === 401) {
+            this.router.navigate(['error']);
+          } else {
+            this.router.navigate([this.appConfig.homeAsProgressPage ? '/loading' : 'login']);
+          }
         }
       );
     } else {
@@ -176,7 +190,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
   }
 
   private redirectToEngagementPage(type: string): void {
-    if (type === ('quiz' || 'survey')) {
+    if (type === 'quiz' || type === 'survey') {
       this.router.navigateByUrl(
         this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : `campaign-welcome/${this.campaignId}`
       );
