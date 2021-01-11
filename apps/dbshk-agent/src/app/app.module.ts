@@ -70,7 +70,8 @@ import {
   ThemesService,
   IConfig,
   LoyaltyModule,
-  LanguageInterceptor
+  LanguageInterceptor,
+  TransactionsServiceModule as PerxTransactionsServiceModule,
 } from '@perxtech/core';
 
 import * as Hammer from 'hammerjs';
@@ -168,6 +169,7 @@ export const setLanguage = (
     MatButtonModule,
     MatInputModule,
     MatSnackBarModule,
+    PerxTransactionsServiceModule.forRoot(),
     LoyaltyModule.forRoot(),
     RewardsModule.forRoot(),
     TranslateModule.forRoot({

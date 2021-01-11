@@ -382,9 +382,12 @@
     "GLOBAL_TOP_SCORE": "Global top score",
     "INVITE_STAT_CARD_TITLE": "Your Invites",
     "INVITE_STAT_SUB_TITLE": "TOTAL INVITES",
-    "INVITE_STAT_UNIT": "Invites",
+    "INVITE_STAT_UNIT": "completed units",
     "TOP_SCORE_UNIT": "DBS$",
-    "PERFORMANCE_BY_CAMPAIGN": "Performance by Campaign"
+    "PERFORMANCE_BY_CAMPAIGN": "Performance by Campaign",
+    "MISSION_1": "MISSION 1",
+    "MISSION_2": "MISSION 2",
+    "MISSION_3": "MISSION 3"
   },
   "Gold": "Gold",
   "Silver": "Silver",

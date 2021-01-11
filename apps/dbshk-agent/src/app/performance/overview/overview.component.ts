@@ -1,8 +1,8 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { IStatisticCardConfig, IConfig, ConfigService, ICampaignService, CampaignType, ICampaign } from '@perxtech/core';
-import { Observable, of } from 'rxjs';
+import { IStatisticCardConfig, IConfig, ConfigService, ICampaignService, TransactionsService } from '@perxtech/core';
+import { forkJoin, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CampaignInviteService } from '../../campaign-referrals/campaign-invite.service';
 import { IGlobalTopScoreResponse, IInviteResponse } from '../../campaign-referrals/models/campaign-referral.model';
@@ -36,7 +36,8 @@ export class OverviewComponent implements OnInit {
     protected translate: TranslateService,
     protected campaignInviteService: CampaignInviteService,
     private configService: ConfigService,
-    protected campaignService: ICampaignService) {
+    protected campaignService: ICampaignService,
+    private transactionService: TransactionsService) {
   }
 
   public ngOnInit(): void {
@@ -76,20 +77,21 @@ export class OverviewComponent implements OnInit {
       cardTitle: this.translate.get('PERFORMANCE.PERFORMANCE_BY_CAMPAIGN'),
       statistics: []
     };
-    // get all campaigns
-    this.campaignService.getCampaigns({ type: CampaignType.invite }).subscribe((campaignList: ICampaign[]) => {
-      // for each campaign, get the number of invites
-      campaignList.map((campaign) => this.campaignInviteService.getInvitesByCampaignId(campaign.id.toString())
-        .subscribe((invites) => {
-          // build IStastic obj and push to performance stats
+
+    // fetch the 3 types of transactions and map count to card
+    forkJoin([this.transactionService.getTransactionsCountByType('open_account'),
+    this.transactionService.getTransactionsCountByType('maintain_account_01'),
+    this.transactionService.getTransactionsCountByType('maintain_account_02')])
+      .subscribe((missions: [number, number, number]) => {
+        missions.map((count, index) => {
           this.performanceStatistics.statistics.push(
             {
-              statisticTitle: of(campaign.name),
-              value: of(invites.meta.count),
+              statisticTitle: this.translate.get(`PERFORMANCE.MISSION_${index + 1}`),
+              value: of(count),
               unit: this.translate.get('PERFORMANCE.INVITE_STAT_UNIT')
             });
-        }));
-    });
+        });
+      });
   }
 
   private initTranslate(): void {

@@ -21,7 +21,7 @@ export type V4TenantTransactionProperties =
 
 interface IV4TransactionsResponse {
   data: IV4Transaction[];
-  meta?: {
+  meta: {
     count: number;
     total_count: number;
   };
@@ -200,20 +200,30 @@ export class V4TransactionsService extends TransactionsService {
     };
     return this.http.get(`${this.apiHost}/v4/transactions`,
       queryParams).pipe(
-      map((res: IV4TransactionsResponse) => ({transactions: res.data, totalCount: oc(res).meta.total_count(0)})),
-      map((transactionsObj: {transactions: IV4Transaction[], totalCount: number}) => (
-        transactionsObj.transactions.map(transaction => V4TransactionsService.v4TransactionsToTransactions(transaction,
-          transactionsObj.totalCount)))
-      )
-    );
+        map((res: IV4TransactionsResponse) => ({ transactions: res.data, totalCount: oc(res).meta.total_count(0) })),
+        map((transactionsObj: { transactions: IV4Transaction[], totalCount: number }) => (
+          transactionsObj.transactions.map(transaction => V4TransactionsService.v4TransactionsToTransactions(transaction,
+            transactionsObj.totalCount)))
+        )
+      );
   }
 
-  public getTransactionSummary(state?: string): Observable<{totalAmount: number}> {
+  public getTransactionSummary(state?: string): Observable<{ totalAmount: number }> {
     const params = {
       state: state || 'pending|processed'
     };
-    return this.http.get(`${this.apiHost}/v4/transaction_summary`, {params}).pipe(
-      map((res: {data: {total_amount: number}}) => ({totalAmount: +res.data.total_amount || 0}))
+    return this.http.get(`${this.apiHost}/v4/transaction_summary`, { params }).pipe(
+      map((res: { data: { total_amount: number } }) => ({ totalAmount: +res.data.total_amount || 0 }))
     );
+  }
+
+  public getTransactionsCountByType(transactionType: string): Observable<number> {
+    const queryParams = {
+      params: {
+        transaction_type: `${transactionType}`
+      }
+    };
+    return this.http.get(`${this.apiHost}/v4/transactions`, queryParams).pipe(
+      map((transactions: IV4TransactionsResponse) => transactions.meta.count));
   }
 }
