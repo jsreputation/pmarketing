@@ -386,6 +386,18 @@
     "TOP_SCORE_UNIT": "DBS$",
     "PERFORMANCE_BY_CAMPAIGN": "Performance by Campaign"
   },
+  "STAMP_CAMPAIGN": {
+    "STAMP_CARD": "Stamp Card",
+    "OF": "of",
+    "NEW_STAMPS": "new stamps",
+    "NEW_STAMP": "new stamp",
+    "VIEW_WALLET": "View Wallet"
+  },
+  "PUZZLE": {
+    "PUZZLE": "Puzzle",
+    "PLAY_NOW": "Play now!",
+    "NEW_PIECES": "New pieces"
+  },
   "Gold": "Gold",
   "Silver": "Silver",
   "Green": "Green",

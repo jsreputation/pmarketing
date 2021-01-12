@@ -241,5 +241,17 @@
     "VIEW_LOCATION": "View location"
   },
   "CONTENT_PAGE": "Content Not Found",
-  "LOGIN_SESSION_EXPIRED": "Login Session Expired"
+  "LOGIN_SESSION_EXPIRED": "Login Session Expired",
+  "STAMP_CAMPAIGN": {
+    "STAMP_CARD": "Stamp Card",
+    "OF": "of",
+    "NEW_STAMPS": "new stamps",
+    "NEW_STAMP": "new stamp",
+    "VIEW_WALLET": "View Wallet"
+  },
+  "PUZZLE": {
+    "PUZZLE": "Puzzle",
+    "PLAY_NOW": "Play now!",
+    "NEW_PIECES": "New pieces"
+  }
 }

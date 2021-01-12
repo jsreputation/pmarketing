@@ -296,6 +296,18 @@
     "DESCRIPTION": "Description",
     "TNC": "Terms and Conditions"
   },
+  "STAMP_CAMPAIGN": {
+    "STAMP_CARD": "Stamp Card",
+    "OF": "of",
+    "NEW_STAMPS": "new stamps",
+    "NEW_STAMP": "new stamp",
+    "VIEW_WALLET": "View Wallet"
+  },
+  "PUZZLE": {
+    "PUZZLE": "Puzzle",
+    "PLAY_NOW": "Play now!",
+    "NEW_PIECES": "New pieces"
+  },
   "CONTENT_PAGE": "Content Not Found",
   "Gold": "Gold",
   "Silver": "Silver",
