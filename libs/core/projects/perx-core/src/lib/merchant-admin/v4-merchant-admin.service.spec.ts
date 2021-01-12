@@ -150,7 +150,12 @@ const reward: IV4Reward = {
   steps_to_redeem: 'test',
   tags: [],
   category_tags: [],
-  inventory: { reward_limit_per_user: 1, reward_limit_per_user_balance: null },
+  inventory: {
+    reward_limit_per_user: 1,
+    reward_limit_per_user_balance: null,
+    reward_limit_per_user_per_period: null,
+    reward_limit_per_user_per_period_balance: null
+  },
   selling_from: 'test',
   merchant_logo_url: 'test',
   display_properties: undefined,
