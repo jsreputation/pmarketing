@@ -76,4 +76,5 @@ export interface Inventory {
   rewardTotalBalance?: number | null;
   rewardTotalLimit?: number | null;
   rewardLimitPerUserBalance?: number | null;
+  rewardLimitPerUserPerPeriodBalance?: number | null;
 }
