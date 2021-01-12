@@ -364,6 +364,18 @@
       "NO_REWARDS_TEXT": "Tuy nhiên, chúng tôi đã thêm bạn vào danh sách chờ sự kiện của chúng tôi và sẽ gọi cho bạn khi các địa điểm có sẵn vào ngày 07 tháng 10 năm 2019"
     }
   },
+  "STAMP_CAMPAIGN": {
+    "STAMP_CARD": "Thẻ tem",
+    "OF": "của",
+    "NEW_STAMPS": "tem mới",
+    "NEW_STAMP": "tem mới",
+    "VIEW_WALLET": "Xem ví"
+  },
+  "PUZZLE": {
+    "PUZZLE": "Câu đố",
+    "PLAY_NOW": "Bắt đầu chơi!",
+    "NEW_PIECES": "Miếng mới"
+  },
   "Gold": "Gold",
   "Silver": "Silver",
   "Green": "Green",

@@ -9,6 +9,18 @@
     "RESERVED": "Pending",
     "RELEASED": "Declined"
   },
+  "STAMP_CAMPAIGN": {
+    "STAMP_CARD": "Stamp Card",
+    "OF": "of",
+    "NEW_STAMPS": "new stamps",
+    "NEW_STAMP": "new stamp",
+    "VIEW_WALLET": "View Wallet"
+  },
+  "PUZZLE": {
+    "PUZZLE": "Puzzle",
+    "PLAY_NOW": "Play now!",
+    "NEW_PIECES": "New pieces"
+  },
   "LOGIN": "Login",
   "REGISTER_FOR_AN_ACCOUNT": "Register for an account",
   "MOBILE_NUMBER_OR_EMAIL": "Mobile Number or email address",

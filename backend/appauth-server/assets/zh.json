@@ -222,5 +222,17 @@
     "BARCODE_TO_MERCHANT": "向商家出示此條形碼",
     "CTA": "取消"
   },
-  "CONTENT_PAGE": "找不到內容"
+  "CONTENT_PAGE": "找不到內容",
+  "STAMP_CAMPAIGN": {
+    "STAMP_CARD": "Stamp Card",
+    "OF": "of",
+    "NEW_STAMPS": "new stamps",
+    "NEW_STAMP": "new stamp",
+    "VIEW_WALLET": "View Wallet"
+  },
+  "PUZZLE": {
+    "PUZZLE": "Puzzle",
+    "PLAY_NOW": "Play now!",
+    "NEW_PIECES": "New pieces"
+  }
 }

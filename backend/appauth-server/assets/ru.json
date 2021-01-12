@@ -58,5 +58,17 @@
   "SURVEY_SUCCESS_TITLE": "Ваш RSVP успешен!",
   "SURVEY_SUCCESS_TEXT": "До встречи на нашем мероприятии!",
   "SURVEY_NO_REWARDS_TITLE": "Спасибо за Ваш интерес. К сожалению, все места заняты.",
-  "SURVEY_NO_REWARDS_TEXT": "Тем не менее, мы добавили вас в наш лист ожидания на мероприятие и позвоним вам, когда места будут доступны до 07 октября 2019 г."
+  "SURVEY_NO_REWARDS_TEXT": "Тем не менее, мы добавили вас в наш лист ожидания на мероприятие и позвоним вам, когда места будут доступны до 07 октября 2019 г.",
+  "STAMP_CAMPAIGN": {
+    "STAMP_CARD": "Stamp Card",
+    "OF": "of",
+    "NEW_STAMPS": "new stamps",
+    "NEW_STAMP": "new stamp",
+    "VIEW_WALLET": "View Wallet"
+  },
+  "PUZZLE": {
+    "PUZZLE": "Puzzle",
+    "PLAY_NOW": "Play now!",
+    "NEW_PIECES": "New pieces"
+  }
 }

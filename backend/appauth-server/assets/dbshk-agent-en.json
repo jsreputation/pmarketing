@@ -389,6 +389,18 @@
     "MISSION_2": "MISSION 2",
     "MISSION_3": "MISSION 3"
   },
+  "STAMP_CAMPAIGN": {
+    "STAMP_CARD": "Stamp Card",
+    "OF": "of",
+    "NEW_STAMPS": "new stamps",
+    "NEW_STAMP": "new stamp",
+    "VIEW_WALLET": "View Wallet"
+  },
+  "PUZZLE": {
+    "PUZZLE": "Puzzle",
+    "PLAY_NOW": "Play now!",
+    "NEW_PIECES": "New pieces"
+  },
   "Gold": "Gold",
   "Silver": "Silver",
   "Green": "Green",

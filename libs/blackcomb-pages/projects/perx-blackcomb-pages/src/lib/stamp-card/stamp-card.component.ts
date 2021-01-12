@@ -10,7 +10,7 @@ import {
 } from '@perxtech/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { filter, switchMap, takeUntil, map, tap, pairwise } from 'rxjs/operators';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, of } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { oc } from 'ts-optchain';
 
@@ -38,6 +38,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
   public isEnabled: boolean = false;
   public stamps: IStamp[] | undefined;
   public stampCard: IStampCard | null;
+  public buttonText: Observable<string>;
   public newStampsLabelFn: () => Observable<string>;
   private idN: number;
   private destroy$: Subject<void> = new Subject();
@@ -84,7 +85,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.themesService.getThemeSetting().subscribe( (theme: ITheme) => {
+    this.themesService.getThemeSetting().subscribe((theme: ITheme) => {
       this.buttonStyle['background-color'] = theme.properties['--button_background_color'] || '';
       this.buttonStyle.color = theme.properties['--button_text_color'] || '';
       this.buttonStyle.visibility = 'visible';
@@ -108,6 +109,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
               oc(stampCard).displayProperties.cardImage.value.imageUrl('')
             );
             this.cardBackground = stampCard.displayProperties.cardBgImage || '';
+            this.buttonText = stampCard.buttonText ? of(stampCard.buttonText) : this.translate.get('STAMP_CAMPAIGN.VIEW_WALLET');
             const successOutcome = stampCard.results.outcome;
             const noOutcome = stampCard.results.noOutcome;
             if (noOutcome) {
