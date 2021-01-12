@@ -113,6 +113,8 @@ describe('V4VouchersService', () => {
         reward_total_balance: null,
         reward_limit_per_user: null,
         reward_limit_per_user_balance: null,
+        reward_limit_per_user_per_period: null,
+        reward_limit_per_user_per_period_balance: null,
       },
       reward_price: [],
       terms_and_conditions: 'Up to 5 pax',

@@ -43,6 +43,12 @@ interface IV4Inventory {
     limit_error_klass: null;
     limit_type: string;
   } | null;
+  reward_limit_per_user_per_period?: number | null;
+  reward_limit_per_user_per_period_balance: {
+    available_amount: number;
+    limit_error_klass: null;
+    limit_type: string;
+  } | null;
 }
 
 interface IV4CustomField {
@@ -172,7 +178,11 @@ export class V4RewardsService extends RewardsService {
       rewardTotalBalance: v4Invent.reward_total_balance !== undefined ? v4Invent.reward_total_balance : null,
       rewardTotalLimit: v4Invent.reward_total_limit !== undefined ? v4Invent.reward_total_limit : null,
       rewardLimitPerUserBalance: v4Invent.reward_limit_per_user_balance !== undefined && v4Invent.reward_limit_per_user_balance !== null ?
-        v4Invent.reward_limit_per_user_balance.available_amount : null
+        v4Invent.reward_limit_per_user_balance.available_amount : null,
+      rewardLimitPerUserPerPeriodBalance:
+        v4Invent.reward_limit_per_user_per_period !== undefined &&
+        v4Invent.reward_limit_per_user_per_period_balance !== null ?
+        v4Invent.reward_limit_per_user_per_period_balance.available_amount : null,
     } : undefined;
     return {
       id: reward.id,
