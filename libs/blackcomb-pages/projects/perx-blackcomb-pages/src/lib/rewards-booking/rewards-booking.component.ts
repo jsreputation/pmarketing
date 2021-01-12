@@ -111,6 +111,20 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
         if (!this.reward.merchantId) {
           return throwError({ message: 'merchantId is required' });
         }
+
+        // override the default 10 options if there are invetory limits
+        if (this.reward.inventory &&
+          this.reward.inventory.rewardLimitPerUserBalance &&
+          this.reward.inventory.rewardTotalBalance &&
+          this.reward.inventory.rewardLimitPerUserPerPeriodBalance) {
+          let lowestBalance = Math.min(
+            this.reward.inventory.rewardLimitPerUserBalance,
+            this.reward.inventory.rewardTotalBalance,
+            this.reward.inventory.rewardLimitPerUserPerPeriodBalance,
+            10);
+          // copy paste https://stackoverflow.com/a/33352604
+          this.quantities = Array.from({length: lowestBalance}, (_, i) => i + 1)
+        }
         // merchantId can be null if reward is set up incorrectly on dashboard
         return this.vouchersService.getRewardLocations(this.rewardId, this.lastLocationPage);
       })).subscribe(
