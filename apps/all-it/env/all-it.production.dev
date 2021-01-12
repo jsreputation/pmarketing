@@ -4,3 +4,5 @@ SHOW_CATALOG_ON_HOMEPAGE=true
 LOGIN_METHOD=phone
 SHOW_NEWSFEED_HOMEPAGE=false
 SHOW_REFERRAL_DETAILS=false
+CONTACTUSURL=https://cdn.perxtech.net/content/all-it/contact-us.html
+TNCURL=https://cdn.perxtech.net/content/all-it/tnc.html
