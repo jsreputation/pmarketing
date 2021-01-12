@@ -126,7 +126,7 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
             return throwError('Reward limits reached');
           }
           // copy paste https://stackoverflow.com/a/33352604
-          this.quantities = Array.from({length: lowestBalance}, (_, i) => i + 1)
+          this.quantities = Array.from({length: lowestBalance}, (_, i) => i + 1);
         }
         // merchantId can be null if reward is set up incorrectly on dashboard
         return this.vouchersService.getRewardLocations(this.rewardId, this.lastLocationPage);
