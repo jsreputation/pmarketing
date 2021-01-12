@@ -52,6 +52,8 @@ export class PuzzleListComponent implements OnInit, OnChanges, OnDestroy {
 
   public ngOnInit(): void {
     if (!this.titleFn) {
+      // set empty function with index for unit tests
+      this.titleFn = (index: number) => of(`${this.indexToLetter(index)}`);
       this.translate.get('PUZZLE.PUZZLE')
       .subscribe((translation) => this.titleFn = (index: number) => of(`${translation} #${this.indexToLetter(index)}`));
     }

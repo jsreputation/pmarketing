@@ -28,7 +28,7 @@ describe('PuzzleListComponent', () => {
   };
 
   const translateServiceStub: Partial<TranslateService> = {
-    get: () => of()
+    get: (translation: string) => translation === 'PUZZLE.NEW_PIECES' ? of('new pieces') : of()
   };
 
   beforeEach(async(() => {
@@ -110,7 +110,7 @@ describe('PuzzleListComponent', () => {
     let title;
     let puzzle;
     component.titleFn(1).subscribe(text => title = text);
-    expect(title).toBe(`Puzzle #${component.indexToLetter(1)}`);
+    expect(title).toBe(`${component.indexToLetter(1)}`);
     component.puzzleTextFn().subscribe(text => puzzle = text);
     expect(puzzle).toBe('new pieces');
   });
