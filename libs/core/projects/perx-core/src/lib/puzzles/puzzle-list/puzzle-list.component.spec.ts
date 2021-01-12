@@ -1,6 +1,7 @@
 import { SimpleChanges, Type } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { MatCardModule, MatIconModule, MatRippleModule } from '@angular/material';
+import { TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { EnvConfig } from '../../shared/env-config';
 import { IStampCard, StampState } from '../../stamp/models/stamp.model';
@@ -25,6 +26,11 @@ describe('PuzzleListComponent', () => {
   const stampServiceMock: Partial<StampService> = {
     getCards: () => of([])
   };
+
+  const translateServiceStub: Partial<TranslateService> = {
+    get: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [PuzzleListComponent],
@@ -36,7 +42,8 @@ describe('PuzzleListComponent', () => {
       ],
       providers: [
         EnvConfig,
-        { provide: StampService, useValue: stampServiceMock }
+        { provide: StampService, useValue: stampServiceMock },
+        { provide: TranslateService, useValue: translateServiceStub },
       ],
     })
       .compileComponents();
