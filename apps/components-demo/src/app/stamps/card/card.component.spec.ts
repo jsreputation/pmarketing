@@ -4,6 +4,7 @@ import { PuzzlesModule, ConfigService, ThemesService, ICampaignService, StampSer
 import { MatSliderModule, MatCheckboxModule, MatIconModule } from '@angular/material';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateService } from '@ngx-translate/core';
 
 describe('CardComponent', () => {
   let component: CardComponent;
@@ -36,7 +37,8 @@ describe('CardComponent', () => {
         { provide: ConfigService, useValue: configServiceStub },
         { provide: ThemesService, useValue: themesServiceStub },
         { provide: ICampaignService, useValue: campaignServiceStub },
-        { provide: StampService, useValue: stampServiceStub }
+        { provide: StampService, useValue: stampServiceStub },
+        { provide: TranslateService, useValue: { get: () => of() }}
       ]
     })
       .compileComponents();
