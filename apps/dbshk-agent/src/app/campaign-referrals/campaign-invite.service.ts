@@ -2,8 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ConfigService, IConfig } from '@perxtech/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { ICampaignInviteService } from './icampaign-invite.service';
-import { IGlobalTopScoreResponse, IInvite, IInviteResponse } from './models/campaign-referral.model';
+import { IInvite, IInviteResponse } from './models/campaign-referral.model';
 
 @Injectable({ providedIn: 'root' })
 export class CampaignInviteService implements ICampaignInviteService {
@@ -34,7 +35,7 @@ export class CampaignInviteService implements ICampaignInviteService {
         return this.http.post<IInviteResponse>(`${this.apiHost}/v4/campaign_invitations/`, invite);
     }
 
-    public getGlobalTopScore(): Observable<IGlobalTopScoreResponse> {
-        return this.http.get<IGlobalTopScoreResponse>(`${this.apiHost}/v4/dbshk/top_score`);
+    public getGlobalTopScore(): Observable<number> {
+        return this.http.get<{ top_score: number }>(`${this.apiHost}/v4/dbshk/top_score`).pipe(map(score => score.top_score));
     }
 }

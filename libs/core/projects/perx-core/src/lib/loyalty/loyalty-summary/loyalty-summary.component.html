@@ -36,11 +36,10 @@
 
     <ng-container *ngIf="showReferralProgress">
       <div class="progress-bar top-score-progress">
-        <mat-progress-bar mode="determinate"
-          [value]="topScorePercentage | async"></mat-progress-bar>
+        <mat-progress-bar mode="determinate" [value]="topScorePercentage | async"></mat-progress-bar>
         <div class="points-to">
           {{topScoreMessageFn() | async}}
-          <b>{{topScoreUnitFn() | async}}{{topScoreValueFn() | async | number}}</b>
+          <b>{{topScoreUnitFn() | async}}{{globalTopScore | number}}</b>
         </div>
       </div>
     </ng-container>

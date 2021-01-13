@@ -5,7 +5,7 @@ import { IStatisticCardConfig, IConfig, ConfigService, ICampaignService, Transac
 import { forkJoin, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CampaignInviteService } from '../../campaign-referrals/campaign-invite.service';
-import { IGlobalTopScoreResponse, IInviteResponse } from '../../campaign-referrals/models/campaign-referral.model';
+import { IInviteResponse } from '../../campaign-referrals/models/campaign-referral.model';
 import { IDbshkConfig } from '../../model/IDbshk.model';
 
 @Component({
@@ -68,10 +68,6 @@ export class OverviewComponent implements OnInit {
     };
   }
 
-  private getGlobalTopScore(): Observable<IGlobalTopScoreResponse> {
-    return this.campaignInviteService.getGlobalTopScore();
-  }
-
   private getCampaignPerformanceStatistics(): void {
     this.performanceStatistics = {
       cardTitle: this.translate.get('PERFORMANCE.PERFORMANCE_BY_CAMPAIGN'),
@@ -103,7 +99,7 @@ export class OverviewComponent implements OnInit {
     this.membershipExpiryFn = () => of('');
     this.displayPriceFn = () => of('');
     this.topScoreMessageFn = () => this.translate.get('PERFORMANCE.GLOBAL_TOP_SCORE');
-    this.getGlobalTopScore().subscribe(score => this.topScoreValueFn = () => of(score.top_score));
+    this.topScoreValueFn = () => this.campaignInviteService.getGlobalTopScore();
     this.topScoreUnitFn = () => this.translate.get('PERFORMANCE.TOP_SCORE_UNIT');
     this.inviteStatCardTitle = () => this.translate.get('PERFORMANCE.INVITE_STAT_CARD_TITLE');
     this.inviteStatTitle = () => this.translate.get('PERFORMANCE.INVITE_STAT_SUB_TITLE');
