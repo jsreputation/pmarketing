@@ -12,7 +12,12 @@ import {
   IRssFeeds,
   IRssFeedsData
 } from '@perxtech/core';
-import { map, scan, switchMap } from 'rxjs/operators';
+import {
+  catchError,
+  map,
+  scan,
+  switchMap
+} from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 
 interface ISortMenuOption {
@@ -130,7 +135,8 @@ export class CatalogComponent implements OnInit {
           return of([] as FeedItem[]);
         }
         return this.feedService.getFromUrl(feedData.url);
-      })
+      }),
+      catchError(() => of([] as FeedItem[]))
     );
   }
 }
