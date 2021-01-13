@@ -170,15 +170,16 @@ export class StampCardComponent implements OnInit, OnDestroy {
                 this.translate.get('STAMP_CAMPAIGN.REWARD_POPUP_TEXT'),
                 this.translate.get('STAMP_CAMPAIGN.REWARD_POPUP_BUTTON_TEXT')
               ]).subscribe(translations => {
+                const [title, text, buttonTxt] = translations;
                 const data: IRewardPopupConfig = {
-                  title: translations[0],
-                  text: translations[1],
+                  title,
+                  text,
                   imageUrl: 'assets/prize.png',
                   disableOverlayClose: true,
                   ctaButtonClass: 'ga_game_completion',
                   url: `/voucher/${voucherId}`,
                   afterClosedCallBackRedirect: this,
-                  buttonTxt: translations[2],
+                  buttonTxt
                 };
                 this.notificationService.addPopup(data);
               });
@@ -196,13 +197,14 @@ export class StampCardComponent implements OnInit, OnDestroy {
                 this.translate.get('STAMP_CAMPAIGN.NO_REWARD_POPUP_TEXT'),
                 this.translate.get('STAMP_CAMPAIGN.NO_REWARD_POPUP_BUTTON_TEXT')
               ]).subscribe(translations => {
+                const [title, text, buttonTxt] = translations;
                 // all redeemed but no voucher
                 const data: IPopupConfig = {
-                  title: translations[0],
-                  text: translations[1],
+                  title,
+                  text,
                   disableOverlayClose: true,
                   afterClosedCallBack: this,
-                  buttonTxt: translations[2],
+                  buttonTxt
                 };
                 this.notificationService.addPopup(data);
               });
@@ -215,9 +217,10 @@ export class StampCardComponent implements OnInit, OnDestroy {
             this.translate.get('STAMP_CAMPAIGN.ERROR_TITLE'),
             this.translate.get('STAMP_CAMPAIGN.ERROR_TEXT')
           ]).subscribe(translations => {
+            const [title, text] = translations;
             this.notificationService.addPopup({
-              title: translations[0],
-              text: translations[1]
+              title,
+              text
             });
             this.router.navigateByUrl('/home');
           });
