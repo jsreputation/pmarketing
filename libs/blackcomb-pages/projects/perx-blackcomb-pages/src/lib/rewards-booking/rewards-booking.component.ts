@@ -114,13 +114,20 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
 
         // override the default 10 options if there are invetory limits
         if (this.reward.inventory &&
-          this.reward.inventory.rewardLimitPerUserBalance &&
-          this.reward.inventory.rewardTotalBalance &&
-          this.reward.inventory.rewardLimitPerUserPerPeriodBalance) {
+          (this.reward.inventory.rewardLimitPerUserBalance ||
+          this.reward.inventory.rewardTotalBalance ||
+          this.reward.inventory.rewardLimitPerUserPerPeriodBalance)) {
+          // isInteger returns false when provided with null/undef so we force the compiler to ignore
           const lowestBalance = Math.min(
-            this.reward.inventory.rewardLimitPerUserBalance,
-            this.reward.inventory.rewardTotalBalance,
-            this.reward.inventory.rewardLimitPerUserPerPeriodBalance,
+            // @ts-ignore
+            Number.isInteger(this.reward.inventory.rewardLimitPerUserBalance) ?
+              this.reward.inventory.rewardLimitPerUserBalance : Infinity,
+            // @ts-ignore
+            Number.isInteger(this.reward.inventory.rewardTotalBalance) ?
+              this.reward.inventory.rewardTotalBalance : Infinity,
+            // @ts-ignore
+            Number.isInteger(this.reward.inventory.rewardLimitPerUserPerPeriodBalance) ?
+              this.reward.inventory.rewardLimitPerUserPerPeriodBalance : Infinity,
             10);
           if (lowestBalance <= 0) {
             return throwError('Reward limits reached');
