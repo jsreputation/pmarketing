@@ -118,13 +118,10 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
           this.reward.inventory.rewardTotalBalance ||
           this.reward.inventory.rewardLimitPerUserPerPeriodBalance)) {
           const lowestBalance = Math.min(
-            this.reward.inventory.rewardLimitPerUserBalance &&
             Number.isInteger(this.reward.inventory.rewardLimitPerUserBalance) ?
               this.reward.inventory.rewardLimitPerUserBalance : Infinity,
-            this.reward.inventory.rewardTotalBalance &&
             Number.isInteger(this.reward.inventory.rewardTotalBalance) ?
               this.reward.inventory.rewardTotalBalance : Infinity,
-            this.reward.inventory.rewardLimitPerUserPerPeriodBalance &&
             Number.isInteger(this.reward.inventory.rewardLimitPerUserPerPeriodBalance) ?
               this.reward.inventory.rewardLimitPerUserPerPeriodBalance : Infinity,
             10);
