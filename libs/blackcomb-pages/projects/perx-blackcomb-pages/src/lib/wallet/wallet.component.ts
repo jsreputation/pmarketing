@@ -26,6 +26,7 @@ import {
 import { TranslateService } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
 import {
+  catchError,
   map,
   switchMap
 } from 'rxjs/operators';
@@ -138,7 +139,8 @@ export class WalletComponent implements OnInit, OnDestroy {
           return of([] as FeedItem[]);
         }
         return this.feedService.getFromUrl(feedData.url);
-      })
+      }),
+      catchError(() => of([] as FeedItem[]))
     );
   }
 }
