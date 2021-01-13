@@ -73,6 +73,7 @@ export class LoyaltySummaryComponent implements OnInit {
   public pointTo: Observable<string>;
   private nextTierName: string;
   public topScorePercentage: Observable<number>;
+  public globalTopScore: number = 0;
 
   constructor(
     private profileService: ProfileService,
@@ -215,9 +216,10 @@ export class LoyaltySummaryComponent implements OnInit {
     currentScore: number | undefined,
     topScore$: () => Observable<number>
   ): void {
-    if (currentScore && topScore$) {
+    if (currentScore) {
       topScore$()
         .subscribe(topScore => {
+          this.globalTopScore = topScore;
           // VS-5164: handle edge case
           // if currentScore / topScore results in a value less than .5
           // Math.round rounds it off to 0 and causes progress bar to show no progress
