@@ -117,11 +117,15 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
           (this.reward.inventory.rewardLimitPerUserBalance ||
           this.reward.inventory.rewardTotalBalance ||
           this.reward.inventory.rewardLimitPerUserPerPeriodBalance)) {
+          // isInteger returns false when provided with null/undef so we force the compiler to ignore
           const lowestBalance = Math.min(
+            // @ts-ignore
             Number.isInteger(this.reward.inventory.rewardLimitPerUserBalance) ?
               this.reward.inventory.rewardLimitPerUserBalance : Infinity,
+            // @ts-ignore
             Number.isInteger(this.reward.inventory.rewardTotalBalance) ?
               this.reward.inventory.rewardTotalBalance : Infinity,
+            // @ts-ignore
             Number.isInteger(this.reward.inventory.rewardLimitPerUserPerPeriodBalance) ?
               this.reward.inventory.rewardLimitPerUserPerPeriodBalance : Infinity,
             10);
