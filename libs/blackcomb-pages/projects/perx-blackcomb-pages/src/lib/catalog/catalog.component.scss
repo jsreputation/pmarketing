@@ -22,8 +22,16 @@
     height: 100%;
   }
 
-  h1.catergory-title {
-    font-size: 3rem;
+.catergory-title-container {
+    h1 {
+      font-size: 3rem;
+      margin: 0 0 1rem 0;
+    }
+    h2 {
+      font-size: 1.8rem;
+      font-weight: normal;
+      margin: 0;
+    } 
     margin: 2.7rem 0;
   }
 }

@@ -9,7 +9,10 @@
   [scrollWindow]="false"
 >
   <span id="subhead-category">
-    <h1 class="catergory-title">{{selectedCategory}}</h1>
+    <div class="catergory-title-container">
+      <h1>{{selectedCategory}}</h1>
+      <h2 *ngIf="selectedCategoryDesc">{{selectedCategoryDesc}}</h2>
+    </div>
     <mat-menu #sortMenu>
       <div *ngFor="let option of sortOptions" mat-menu-item (click)="sortChoice(option)">{{option.label}}</div>
     </mat-menu>

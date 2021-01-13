@@ -46,6 +46,7 @@ export class CatalogComponent implements OnInit {
   public selectedCategory: string;
   public selectedSortingCriteria: SortingMode = SortingMode.endingSoon;
   public showToolbarTitle: boolean = false;
+  public selectedCategoryDesc: string;
 
   private rewards: BehaviorSubject<IReward[]> = new BehaviorSubject<IReward[]>([]);
 
@@ -96,6 +97,7 @@ export class CatalogComponent implements OnInit {
       this.rewards$ = this.rewardsService.getCatalog(parseInt(catalogId, 10)).pipe(
         map((catalog: ICatalog) => {
           this.selectedCategory = catalog.name;
+          this.selectedCategoryDesc = catalog.description;
           return catalog.rewards || [];
         })
       );
