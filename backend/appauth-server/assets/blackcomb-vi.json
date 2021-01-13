@@ -348,9 +348,9 @@
     "BACK_TO_WALLET": "Quay lại ví",
     "GAME_NOT_VALID_TEXT": "This game is not available for you at the moment.",
     "VIEW_REWARD": "Xem phần thưởng",
-    "OUT_OF_TRIES_TITLE": "No more tries",
-    "OUT_OF_TRIES_TEXT": "Come back when you have more tries!",
-    "OUT_OF_TRIES_CTA": "Close"
+    "OUT_OF_TRIES_TITLE": "Không cần cố gắng nữa",
+    "OUT_OF_TRIES_TEXT": "Hãy quay lại khi bạn có thêm nhiều lần thử!",
+    "OUT_OF_TRIES_CTA": "Đóng"
   },
   "DLVN_CAMPAIGNS": {
     "INSTANT_REWARD": {
@@ -369,12 +369,23 @@
     "OF": "của",
     "NEW_STAMPS": "tem mới",
     "NEW_STAMP": "tem mới",
-    "VIEW_WALLET": "Xem ví"
+    "VIEW_WALLET": "Xem ví",
+    "YOU_GOT_A_NEW_STAMP": "Bạn có một con tem mới!",
+    "THANK_YOU_FOR_PLAYING": "Cảm ơn vì đã chơi! Bạn đã nhận được số lượng tem tối đa. Đừng quên đổi phần thưởng đã kiếm được của bạn!",
+    "REWARD_POPUP_TITLE": "Xin chúc mừng!",
+    "REWARD_POPUP_TEXT": "Đây là một phần thưởng cho bạn.",
+    "REWARD_POPUP_BUTTON_TEXT": "Xem phần thưởng",
+    "NO_REWARD_POPUP_TITLE": "Không nhận được phần thưởng",
+    "NO_REWARD_POPUP_TEXT": "Thử lại lần sau",
+    "NO_REWARD_POPUP_BUTTON_TEXT": "Đóng",
+    "ERROR_TITLE": "Đã xảy ra sự cố với máy chủ của chúng tôi",
+    "ERROR_TEXT": "Chúng tôi đã thông báo cho nhóm của chúng tôi. Xin lỗi vì sự bất tiện."
   },
   "PUZZLE": {
     "PUZZLE": "Câu đố",
     "PLAY_NOW": "Bắt đầu chơi!",
-    "NEW_PIECES": "Miếng mới"
+    "NEW_PIECES": "Miếng mới",
+    "NEW_STAMPS": " tem mới"
   },
   "Gold": "Gold",
   "Silver": "Silver",

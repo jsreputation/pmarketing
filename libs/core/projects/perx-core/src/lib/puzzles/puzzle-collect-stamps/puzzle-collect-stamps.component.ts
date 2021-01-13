@@ -3,7 +3,7 @@ import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges, OnIni
 import { IStamp, StampState } from '../../stamp/models/stamp.model';
 import { PuzzleCollectReward } from '../models/puzzle-stamp.model';
 import { Observable } from 'rxjs/internal/Observable';
-import { of } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'perx-core-puzzle-collect-stamps',
@@ -72,12 +72,16 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
   public stampCardImage: string | null = null;
   public availableStampCount: number = 0;
 
+  constructor(
+    private translate: TranslateService) {
+  }
+
   public ngOnInit(): void {
     if (!Array.isArray(this.stamps)) {
       this.stamps = [];
     }
     if (!this.newStampsLabelFn) {
-      this.newStampsLabelFn = () => of(' new stamps');
+      this.newStampsLabelFn = () => this.translate.get('PUZZLE.NEW_STAMPS');
     }
     const availableStamps = this.stamps.filter(stamp => stamp.state === StampState.issued);
     this.availableStampCount = availableStamps.length;
