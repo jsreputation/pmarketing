@@ -372,8 +372,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.games$ = this.gamesService.getActiveGames().pipe(
         tap((games: IGame[]) => (this.showGames = games.length > 0)),
         switchMap((games: IGame[]) =>
-        of(games).pipe(
-          catchError((err) => of(err)))
+        of(games).pipe(catchError((err) => of(err)))
         ),
         takeLast(1)
       );
