@@ -349,7 +349,11 @@ export class V4GameService implements IGameService {
       // for each campaign, fetch associated games
       switchMap((cs: ICampaign[]) => combineLatest([
         ...cs.map(c => of(c)),
-        ...cs.map(c => this.getGamesFromCampaign(c).pipe(catchError(() => of([]))))
+        ...cs.map(c => this.getGamesFromCampaign(c).pipe(
+          catchError((err) => {
+            console.log(err);
+            return of([]);
+          })))
       ])),
       map((s: (ICampaign | IGame[])[]) => {
         // split again the campaigns from the games
