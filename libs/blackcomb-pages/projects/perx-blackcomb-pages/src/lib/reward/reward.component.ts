@@ -230,7 +230,8 @@ export class RewardComponent implements OnInit, OnDestroy {
           return of([] as FeedItem[]);
         }
         return this.feedService.getFromUrl(feedData.url);
-      })
+      }),
+      catchError(() => of([] as FeedItem[]))
     );
   }
 
