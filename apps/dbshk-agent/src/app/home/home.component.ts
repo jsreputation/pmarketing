@@ -413,7 +413,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         }
         return this.feedService.getFromUrl(feedData && feedData.url);
       }),
-      catchError(() => of([] as FeedItem[])
+      catchError(() => of([] as FeedItem[]))
     );
   }
 
