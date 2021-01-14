@@ -349,7 +349,7 @@ export class V4GameService implements IGameService {
       // for each campaign, fetch associated games
       switchMap((cs: ICampaign[]) => combineLatest([
         ...cs.map(c => of(c)),
-        ...cs.map(c => this.getGamesFromCampaign(c).pipe(catchError((err) => of([err]))))
+        ...cs.map(c => this.getGamesFromCampaign(c).pipe(catchError(() => of([]))))
       ])),
       map((s: (ICampaign | IGame[])[]) => {
         // split again the campaigns from the games
@@ -360,20 +360,15 @@ export class V4GameService implements IGameService {
         const res: IGame[] = [];
         // eslint-disable-next-line guard-for-in
         for (const i in games) {
-          const err = games[i].filter(game => ('error' in  game));
-          if (err.length > 0) {
-            res.push(err[0]);
-          } else {
-            const gs = games[i].filter(game => game.type !== TYPE.quiz && game.type !== TYPE.survey);
-            // if there is no underlying game, move on to next campaign
-            if (gs.length === 0) {
-              continue;
-            }
-            const g = gs[0];
-            const c = campaigns[i];
-            g.imgUrl = oc(c).thumbnailUrl();
-            res.push(g);
+          const gs = games[i].filter(game => game.type !== TYPE.quiz && game.type !== TYPE.survey);
+          // if there is no underlying game, move on to next campaign
+          if (gs.length === 0) {
+            continue;
           }
+          const g = gs[0];
+          const c = campaigns[i];
+          g.imgUrl = oc(c).thumbnailUrl();
+          res.push(g);
         }
         return res;
       })
