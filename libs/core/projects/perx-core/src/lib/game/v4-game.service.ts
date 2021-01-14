@@ -267,8 +267,7 @@ export class V4GameService implements IGameService {
       .pipe(
         map(res => res.data),
         map((games: Game[]) => games.filter((game: Game) => game.game_type !== GameType.quiz && game.game_type !== GameType.survey)),
-        map((games: Game[]) => games.map((game: Game): IGame => V4GameService.v4GameToGame(game, campaign))),
-        catchError(_ => EMPTY)
+        map((games: Game[]) => games.map((game: Game): IGame => V4GameService.v4GameToGame(game, campaign)))
       );
   }
 
@@ -350,7 +349,11 @@ export class V4GameService implements IGameService {
       // for each campaign, fetch associated games
       switchMap((cs: ICampaign[]) => combineLatest([
         ...cs.map(c => of(c)),
-        ...cs.map(c => this.getGamesFromCampaign(c))
+        ...cs.map(c => this.getGamesFromCampaign(c).pipe(
+          catchError((err) => {
+            console.log(err);
+            return of([]);
+          })))
       ])),
       map((s: (ICampaign | IGame[])[]) => {
         // split again the campaigns from the games

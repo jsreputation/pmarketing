@@ -371,9 +371,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       // prevent calling unnecessarily (i.e. duped when perx-blackcomb-pages-campaigns-collection quiz present)
       this.games$ = this.gamesService.getActiveGames().pipe(
         tap((games: IGame[]) => (this.showGames = games.length > 0)),
-        switchMap((games: IGame[]) =>
-          of(games).pipe(catchError((err) => of(err)))
-        ),
         takeLast(1)
       );
     }
