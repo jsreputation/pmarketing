@@ -240,6 +240,16 @@ export class GameComponent implements OnInit {
             this.hasNoRewardsPopup = true;
           }
         },
+        (response: HttpErrorResponse) => {
+          let message = 'Sorry, something went wrong';
+          // response.status !== to error status
+          if (response.error.code === 4103) {
+            message = 'Sorry, rewards have run out';
+          } else if (response.error.code === 4121) {
+            message = 'Sorry, you do not have any more moves available';
+          }
+          this.notificationService.addSnack(message);
+        },
         () => {
           this.willWin = false;
           this.hasNoRewardsPopup = true;

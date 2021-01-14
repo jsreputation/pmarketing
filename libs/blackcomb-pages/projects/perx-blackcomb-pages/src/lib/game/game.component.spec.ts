@@ -21,7 +21,8 @@ import {
   ICampaignService,
   ICampaign,
   CampaignType,
-  CampaignState
+  CampaignState,
+  ErrorMessageService
 } from '@perxtech/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -194,7 +195,12 @@ describe('GameComponent', () => {
         { provide: NotificationService, useValue: notificationServiceStub },
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: ConfigService, useValue: configServiceStub },
-        { provide: ThemesService, useValue: themesServiceStub }
+        { provide: ThemesService, useValue: themesServiceStub },
+        {
+          provide: ErrorMessageService, useValue: {
+            getErrorMessageByErrorCode: () => of('')
+          }
+        }
       ]
     })
       // .overrideModule(BrowserDynamicTestingModule, { set: { entryComponents: [PopupComponent] } })

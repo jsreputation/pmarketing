@@ -196,6 +196,7 @@ export { GettingStartedPipe } from './lib/utils/getting-started/getting-started.
 export { IStatisticCardConfig, StatisticCardComponent } from './lib/utils/statistic-card/statistic-card.component';
 export { FlagLocalStorageService } from './lib/utils/flags/flag-local-storage.service';
 export { GettingStartedNearPicPipe } from './lib/utils/getting-started-near-pic/getting-started-near-pic.pipe';
+export { ErrorMessageService } from './lib/utils/error-message/error-message.service';
 
 /**
  * Puzzles

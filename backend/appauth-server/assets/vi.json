@@ -92,5 +92,10 @@
     "PLAY_NOW": "Bắt đầu chơi!",
     "NEW_PIECES": "Miếng mới",
     "NEW_STAMPS": " tem mới"
+  },
+  "ERRORS": {
+    "GENERIC": "Sorry, something went wrong",
+    "REWARDS_RUN_OUT": "Sorry, rewards have run out",
+    "NO_UNUSED_MOVES": "Sorry, you do not have any more moves available"
   }
 }
