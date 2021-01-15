@@ -11,7 +11,6 @@ import {
   NotificationService,
   Voucher
 } from '@perxtech/core';
-import { Location } from '@angular/common';
 import {
   catchError,
   map,
@@ -44,7 +43,6 @@ export class GameComponent implements OnInit {
   constructor(
     private activeRoute: ActivatedRoute,
     private gameService: IGameService,
-    private location: Location,
     private notificationService: NotificationService,
     private router: Router,
     private analytics: AnalyticsService,
@@ -184,7 +182,7 @@ export class GameComponent implements OnInit {
   }
 
   public dialogClosed(): void {
-    this.location.back();
+    this.router.navigate(['/home']);
   }
 
   public gameCompleted(): void {
@@ -248,7 +246,14 @@ export class GameComponent implements OnInit {
           } else if (response.error.code === 4121) {
             message = 'Sorry, you do not have any more moves available';
           }
-          this.notificationService.addSnack(message);
+          this.notificationService.addPopup({
+            title: 'Sorry!',
+            text: message,
+            buttonTxt: 'back home',
+            afterClosedCallBack: this,
+            disableOverlayClose: true,
+            panelClass: 'custom-class'
+          });
         },
         () => {
           this.willWin = false;
