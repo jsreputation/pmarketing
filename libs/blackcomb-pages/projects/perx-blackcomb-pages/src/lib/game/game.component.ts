@@ -12,6 +12,7 @@ import {
   IPointsOutcome,
   ICampaignService,
   ICampaign,
+  ErrorMessageService,
 } from '@perxtech/core';
 import {
   map,
@@ -98,8 +99,9 @@ export class GameComponent implements OnInit, OnDestroy {
     private notificationService: NotificationService,
     private auth: AuthenticationService,
     private translate: TranslateService,
-    private campaignService: ICampaignService
-  ) {}
+    private campaignService: ICampaignService,
+    private errorMessageService: ErrorMessageService
+  ) { }
 
   public ngOnInit(): void {
     this.initTranslate();
@@ -262,6 +264,10 @@ export class GameComponent implements OnInit, OnDestroy {
           this.points = gameOutcome.points[0];
         }
         this.checkFailureOrSuccess();
+      },
+      (response: HttpErrorResponse) => {
+        this.errorMessageService.getErrorMessageByErrorCode(response.error.code)
+          .subscribe(this.notificationService.addSnack);
       },
       () => {
         this.popupData = this.noRewardsPopUp;

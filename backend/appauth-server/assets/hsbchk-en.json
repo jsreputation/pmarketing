@@ -319,6 +319,11 @@
     "NEW_PIECES": "New pieces",
     "NEW_STAMPS": " new stamps"
   },
+  "ERRORS": {
+    "GENERIC": "Sorry, something went wrong",
+    "REWARDS_RUN_OUT": "Sorry, rewards have run out",
+    "NO_UNUSED_MOVES": "Sorry, you do not have any more moves available"
+  },
   "CONTENT_PAGE": "Content Not Found",
   "Gold": "Gold",
   "Silver": "Silver",

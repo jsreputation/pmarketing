@@ -32,6 +32,11 @@
     "NEW_PIECES": "New pieces",
     "NEW_STAMPS": " new stamps"
   },
+  "ERRORS": {
+    "GENERIC": "Sorry, something went wrong",
+    "REWARDS_RUN_OUT": "Sorry, rewards have run out",
+    "NO_UNUSED_MOVES": "Sorry, you do not have any more moves available"
+  },
   "LOGIN": "登入",
   "REGISTER_FOR_AN_ACCOUNT": "立即登記會員賬戶",
   "MOBILE_NUMBER_OR_EMAIL": "電話號碼或電郵地址",
