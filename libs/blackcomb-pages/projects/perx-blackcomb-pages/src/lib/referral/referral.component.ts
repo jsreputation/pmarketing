@@ -40,7 +40,7 @@ export class ReferralComponent {
         tap((campaign: ICampaign) => {
           if (campaign) {
             if (campaign.referralCodes) {
-              // first code is supposedly a configurable code, and the second code is campaign generated
+              // first code is supposedly a configurable code, and the second code onwards is campaign generated
               const [ configuredReferralCode, generatedReferralCode ] = campaign.referralCodes;
               this.code = configuredReferralCode ? configuredReferralCode : generatedReferralCode;
             }
