@@ -22,7 +22,7 @@ export class ReferralComponent {
   // todo to be replaced with the proper content when api is available
   public shareTitle: string;
   // todo to be replaced with the proper content when api is available
-  public shareUrl: string = 'https://retailbank.hsbc.com.hk/ins/';
+  public shareUrl: string = '';
   public copyToClipboardTxt: string;
   public clipboardErrorTxt: string;
 
