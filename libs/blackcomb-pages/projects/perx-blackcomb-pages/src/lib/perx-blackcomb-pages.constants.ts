@@ -24,5 +24,6 @@ export const BACK_ARROW_URLS: string[] = [
   '/rebates/transaction',
   '/rebates/complete',
   '/reward-voucher-detail',
-  '/progress-campaign/'
+  '/progress-campaign/',
+  '/favorite-rewards'
 ];
