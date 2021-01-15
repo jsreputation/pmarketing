@@ -43,7 +43,7 @@
   <perx-core-newsfeed [items$]="newsFeedItems"></perx-core-newsfeed>
   <div class="rewards-collection" *ngIf="(appRemoteFlags?.rewardsCarousel || appConfig.showRewardsOnHomepage) && (rewards$ | async)?.length > 0">
     <div class="title" translate>HOME.FEATURED_REWARDS</div>
-    <perx-core-rewards-collection (favoriteRewardEvent)="rewardFavoriteHandler($event)" [showRewardFavButton]="appConfig.showRewardFavButton" [rewardsList]="rewards$" (tapped)="goToReward($event)"></perx-core-rewards-collection>
+    <perx-core-rewards-collection (favoriteRewardEvent)="rewardFavoriteHandler($event)" [showRewardFavButton]="false" [rewardsList]="rewards$" (tapped)="goToReward($event)"></perx-core-rewards-collection>
   </div>
   <!-- Stamp card campaigns-->
   <div class="campaigns" *ngIf="appConfig.showStampCampaignsOnHomePage">
