@@ -95,7 +95,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
       || (changes.willWin)) {
       this.init();
     }
-    if (changes.startSpin  && this.startSpin) {
+    if (changes.startSpin && this.startSpin) {
       this.spin();
     }
   }
@@ -113,16 +113,19 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
 
   private attachListeners(): void {
     this.canvas.style.cursor = 'move';
-    this.canvas.addEventListener('touchstart', this.handleStart.bind(this), { once: true });
-    this.canvas.addEventListener('mousedown', this.handleStart.bind(this), { once: true });
-
-    // listen while dragging
-    this.canvas.addEventListener('touchend', this.handleEnd.bind(this), { once: true });
-    this.canvas.addEventListener('mouseup', this.handleEnd.bind(this), { once: true });
-
-    // listen after dragging is complete
-    this.canvas.addEventListener('touchmove', this.handleMove.bind(this), { once: true });
-    this.canvas.addEventListener('mousemove', this.handleMove.bind(this), { once: true });
+    // prevent binding multiple listners by checking if browser has touch support
+    // https://stackoverflow.com/a/2915912/1179865
+    if ('ontouchstart' in document.documentElement) {
+      this.canvas.addEventListener('touchstart', this.handleStart.bind(this), { once: true });
+      // listen while dragging
+      this.canvas.addEventListener('touchend', this.handleEnd.bind(this), { once: true });
+      // listen after dragging is complete
+      this.canvas.addEventListener('touchmove', this.handleMove.bind(this), { once: true });
+    } else {
+      this.canvas.addEventListener('mousedown', this.handleStart.bind(this), { once: true });
+      this.canvas.addEventListener('mouseup', this.handleEnd.bind(this), { once: true });
+      this.canvas.addEventListener('mousemove', this.handleMove.bind(this), { once: true });
+    }
   }
 
   private determineSlot(): number {
