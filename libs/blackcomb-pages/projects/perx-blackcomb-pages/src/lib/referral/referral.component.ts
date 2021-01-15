@@ -45,7 +45,6 @@ export class ReferralComponent {
               [ configedReferralCode, generatedReferralCode ] = campaign.referralCodes;
               this.code = configedReferralCode ? configedReferralCode : generatedReferralCode;
             }
-            console.log(campaign);
             this.shareText = this.shareText.replace('{{code}}', this.code);
             // set to campaign or do nothing
             this.campaignDescription = campaign.description ? campaign.description : this.campaignDescription;
