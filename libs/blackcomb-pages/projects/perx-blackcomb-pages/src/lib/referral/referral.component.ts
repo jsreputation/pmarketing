@@ -41,8 +41,8 @@ export class ReferralComponent {
           if (campaign) {
             if (campaign.referralCodes) {
               // first code is supposedly a configurable code, and the second code is campaign generated
-              let [ configedReferralCode, generatedReferralCode ] = campaign.referralCodes;
-              this.code = configedReferralCode ? configedReferralCode : generatedReferralCode;
+              let [ configuredReferralCode, generatedReferralCode ] = campaign.referralCodes;
+              this.code = configuredReferralCode ? configuredReferralCode : generatedReferralCode;
             }
             this.shareText = this.shareText.replace('{{code}}', this.code);
             // set to campaign or do nothing
