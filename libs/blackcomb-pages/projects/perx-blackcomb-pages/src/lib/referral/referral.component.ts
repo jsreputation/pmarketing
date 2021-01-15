@@ -39,9 +39,13 @@ export class ReferralComponent {
         switchMap((cid: number) => this.campaignService.getCampaign(cid)),
         tap((campaign: ICampaign) => {
           if (campaign) {
-            this.code = campaign.referralCodes
-              ? campaign.referralCodes[0]
-              : this.code;
+            // first code is supposedly a configurable code, and the second code is campaign generated
+            let configedReferralCode, generatedReferralCode;
+            if (campaign.referralCodes) {
+              [ configedReferralCode, generatedReferralCode ] = campaign.referralCodes;
+              this.code = configedReferralCode ? configedReferralCode : generatedReferralCode;
+            }
+            console.log(campaign);
             this.shareText = this.shareText.replace('{{code}}', this.code);
             // set to campaign or do nothing
             this.campaignDescription = campaign.description ? campaign.description : this.campaignDescription;
