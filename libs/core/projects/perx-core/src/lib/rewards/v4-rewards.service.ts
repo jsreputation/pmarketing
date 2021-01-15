@@ -177,11 +177,13 @@ export class V4RewardsService extends RewardsService {
     const inventory = v4Invent ? {
       rewardTotalBalance: v4Invent.reward_total_balance !== undefined ? v4Invent.reward_total_balance : null,
       rewardTotalLimit: v4Invent.reward_total_limit !== undefined ? v4Invent.reward_total_limit : null,
-      rewardLimitPerUserBalance: v4Invent.reward_limit_per_user_balance !== undefined && v4Invent.reward_limit_per_user_balance !== null ?
+      rewardLimitPerUserBalance:
+        v4Invent.reward_limit_per_user_balance !== undefined &&
+        v4Invent.reward_limit_per_user_balance ?
         v4Invent.reward_limit_per_user_balance.available_amount : null,
       rewardLimitPerUserPerPeriodBalance:
         v4Invent.reward_limit_per_user_per_period !== undefined &&
-        v4Invent.reward_limit_per_user_per_period_balance !== null ?
+        v4Invent.reward_limit_per_user_per_period_balance ?
         v4Invent.reward_limit_per_user_per_period_balance.available_amount : null,
     } : undefined;
     return {
