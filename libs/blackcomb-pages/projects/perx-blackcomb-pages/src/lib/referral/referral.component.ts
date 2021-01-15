@@ -40,9 +40,8 @@ export class ReferralComponent {
         tap((campaign: ICampaign) => {
           if (campaign) {
             if (campaign.referralCodes) {
-              let configedReferralCode, generatedReferralCode;
               // first code is supposedly a configurable code, and the second code is campaign generated
-              [ configedReferralCode, generatedReferralCode ] = campaign.referralCodes;
+              let [ configedReferralCode, generatedReferralCode ] = campaign.referralCodes;
               this.code = configedReferralCode ? configedReferralCode : generatedReferralCode;
             }
             this.shareText = this.shareText.replace('{{code}}', this.code);
