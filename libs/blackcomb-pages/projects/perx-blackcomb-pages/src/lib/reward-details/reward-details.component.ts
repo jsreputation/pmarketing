@@ -102,7 +102,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
 
     this.favDisabled = true;
 
-    iif(() => (rewardToggled && (rewardToggled.favorite || false)),
+    iif(() => (rewardToggled && (rewardToggled.favorite || false)),
     this.rewardsService.unfavoriteReward(rewardToggled.id),
     this.rewardsService.favoriteReward(rewardToggled.id)).pipe(
       tap(
