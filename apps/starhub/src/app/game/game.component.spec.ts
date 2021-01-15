@@ -114,10 +114,10 @@ describe('GameComponent', () => {
   }));
 
   it('should go back on dialogClosed', () => {
-    const location = TestBed.get<Location>(Location as Type<Location>);
-    const locationSpy = spyOn(location, 'back');
+    const router: Router = fixture.debugElement.injector.get(Router);
+    spyOn(router, 'navigate').and.callThrough();
     component.dialogClosed();
-    expect(locationSpy).toHaveBeenCalled();
+    expect(router.navigate).toHaveBeenCalledWith(['/home']);
   });
 
   it('should call play on game completed', fakeAsync(() => {
