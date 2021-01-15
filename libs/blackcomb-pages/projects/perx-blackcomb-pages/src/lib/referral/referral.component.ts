@@ -22,7 +22,7 @@ export class ReferralComponent {
   // todo to be replaced with the proper content when api is available
   public shareTitle: string;
   // todo to be replaced with the proper content when api is available
-  public shareUrl: string = 'https://retailbank.hsbc.com.hk/ins/';
+  public shareUrl: string = '';
   public copyToClipboardTxt: string;
   public clipboardErrorTxt: string;
 
@@ -39,9 +39,11 @@ export class ReferralComponent {
         switchMap((cid: number) => this.campaignService.getCampaign(cid)),
         tap((campaign: ICampaign) => {
           if (campaign) {
-            this.code = campaign.referralCodes
-              ? campaign.referralCodes[0]
-              : this.code;
+            if (campaign.referralCodes) {
+              // first code is supposedly a configurable code, and the second code onwards is campaign generated
+              const [ configuredReferralCode, generatedReferralCode ] = campaign.referralCodes;
+              this.code = configuredReferralCode ? configuredReferralCode : generatedReferralCode;
+            }
             this.shareText = this.shareText.replace('{{code}}', this.code);
             // set to campaign or do nothing
             this.campaignDescription = campaign.description ? campaign.description : this.campaignDescription;
