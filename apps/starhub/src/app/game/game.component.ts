@@ -247,7 +247,7 @@ export class GameComponent implements OnInit {
             message = 'Sorry, you do not have any more moves available';
           }
           this.notificationService.addPopup({
-            title: 'Oooops!',
+            title: 'Sorry!',
             text: message,
             buttonTxt: 'back home',
             afterClosedCallBack: this,
