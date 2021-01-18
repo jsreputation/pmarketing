@@ -88,11 +88,11 @@ export class RewardsPageComponent implements OnInit, OnDestroy {
                 tab.rewardsType ? [tab.rewardsType] : undefined,
               )
               .pipe(
-                map((reward) => {
+                map((rewards) => {
                   tab.currentPage = 1;
-                  tab.rewardsList = of(reward);
-                  tab.rewardNames = reward
-                    ? reward.reduce(
+                  tab.rewardsList = of(rewards);
+                  tab.rewardNames = rewards
+                    ? rewards.reduce(
                       (accumulatedNames: string[], rewardIdv: IReward) => [
                         ...accumulatedNames,
                         rewardIdv.name,
@@ -100,8 +100,8 @@ export class RewardsPageComponent implements OnInit, OnDestroy {
                       [],
                     )
                     : [];
-                  tab.merchantNames = reward
-                    ? reward.reduce(
+                  tab.merchantNames = rewards
+                    ? rewards.reduce(
                       (accumulatedNames: string[], rewardIdv: IReward) => [
                         ...accumulatedNames,
                         rewardIdv.merchantName || '',
