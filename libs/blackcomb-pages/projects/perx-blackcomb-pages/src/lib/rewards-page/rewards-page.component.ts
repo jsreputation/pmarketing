@@ -138,7 +138,7 @@ export class RewardsPageComponent implements OnInit, OnDestroy {
     // );
 
     this.searchControl.valueChanges.pipe(
-      debounceTime(300),
+      debounceTime(500),
       tap((value) => value && value !== '' ? this.userSearching = true : this.userSearching = false),
       mergeMap((value) =>
         forkJoin(
