@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import {
   BehaviorSubject,
-  combineLatest,
   forkJoin,
   Observable,
   of,
@@ -16,6 +15,7 @@ import {
   startWith,
   switchMap,
   takeUntil,
+  tap,
   withLatestFrom,
 } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -65,10 +65,11 @@ export class RewardsPageComponent implements OnInit, OnDestroy {
   public currentTabIndex: number = 0;
   private pageSize: number = 10;
   public searchControl: FormControl = new FormControl();
-  public filteredRwdRewardNames: Observable<string[]>;
-  public filteredRwdMerchantNames: Observable<string[]>;
-  public currentTabRewardsList?: Observable<IReward[]>;
+  public filteredRwdRewardNames: BehaviorSubject<string[]>;
+  public filteredRwdMerchantNames: BehaviorSubject<string[]>;
+  // public currentTabRewardsList?: Observable<IReward[]>;
   public filteredRewards?: Observable<IReward[]>;
+  public userSearching: boolean = false;
 
   public ngOnDestroy(): void {
     this.destroy$.next();
@@ -124,47 +125,81 @@ export class RewardsPageComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.getTabbedList();
+    //
+    // this.filteredRwdRewardNames = this.searchControl.valueChanges.pipe(
+    //   startWith(''),
+    //   debounceTime(300),
+    //   switchMap((value) => this.filterRewardsNamesSearch(value)),
+    // );
+    //
+    // this.filteredRwdMerchantNames = this.searchControl.valueChanges.pipe(
+    //   startWith(''),
+    //   debounceTime(300),
+    //   switchMap((value) => this.filterMerchantNamesSearch(value)),
+    // );
 
-    this.filteredRwdRewardNames = this.searchControl.valueChanges.pipe(
+    this.searchControl.valueChanges.pipe(
       startWith(''),
       debounceTime(300),
-      switchMap((value) => this.filterRewardsNamesSearch(value)),
-    );
-
-    this.filteredRwdMerchantNames = this.searchControl.valueChanges.pipe(
-      startWith(''),
-      debounceTime(300),
-      switchMap((value) => this.filterMerchantNamesSearch(value)),
-    );
-
-    this.currentTabRewardsList = this.tabs$.pipe(
-      map((tabs) => tabs[this.currentTabIndex]),
-      switchMap((tab) => {
-        if (tab && tab.rewardsList) {
-          return tab.rewardsList as Observable<IReward[]>;
-        }
-        return of([]) as Observable<IReward[]>;
-      }),
-    );
-
-    this.filteredRewards = combineLatest(
-      this.currentTabRewardsList,
-      this.filteredRwdRewardNames,
-      this.filteredRwdMerchantNames,
-    ).pipe(
-      map(
-        ([rewards, rewardNames, merchantNames]: [
-          IReward[],
-          string[],
-          string[],
-        ]) => rewards.filter(
-          (reward: IReward) =>
-            rewardNames.includes(reward.name) ||
-              (reward.merchantName &&
-                merchantNames.includes(reward.merchantName)),
-        ),
+      tap((value) => value && value !== '' ? this.userSearching = true : this.userSearching = false),
+      // mergeMap((value) =>
+      //   forkJoin(
+      //     this.filterRewardsNamesSearch(value),
+      //     this.filterMerchantNamesSearch(value)
+      //   )
+      // ),
+      switchMap((value) =>
+        this.rewardsService.getAllRewards().pipe(
+          map((rewards: IReward[]) => rewards.filter(
+              (reward: IReward) =>
+                reward.name.includes(value) ||
+                (reward.merchantName && reward.merchantName.includes(value))
+            )
+          ),
+        )
       ),
+      tap(() => console.log('finish trigger')),
+    ).subscribe(
+      (rewards: IReward[]) => {
+        this.filteredRewards = of(rewards);
+      }
     );
+    // ).subscribe(([filteredRewards, filteredMerchants]) => {
+    //   console.log(filteredMerchants);
+    //   debugger;
+    //   this.filteredRwdMerchantNames.next(filteredMerchants);
+    //   this.filteredRwdRewardNames.next(filteredRewards);
+    // })
+    //
+    // this.currentTabRewardsList = this.tabs$.pipe(
+    //   map((tabs) => tabs[this.currentTabIndex]),
+    //   switchMap((tab) => {
+    //     if (tab && tab.rewardsList) {
+    //       return tab.rewardsList as Observable<IReward[]>;
+    //     }
+    //     return of([]) as Observable<IReward[]>;
+    //   }),
+    // );
+    //
+    // this.filteredRewards = combineLatest(
+    //   this.currentTabRewardsList,
+    //   this.filteredRwdRewardNames,
+    //   this.filteredRwdMerchantNames,
+    // ).pipe(
+    //   tap(() => console.log('triggering filtered rewards')),
+    //   map(
+    //     ([rewards, rewardNames, merchantNames]: [
+    //       IReward[],
+    //       string[],
+    //       string[],
+    //     ]) => rewards.filter(
+    //       (reward: IReward) =>
+    //         rewardNames.includes(reward.name) ||
+    //           (reward.merchantName &&
+    //             merchantNames.includes(reward.merchantName)),
+    //     ),
+    //   ),
+    // );
   }
 
   public filterMerchantNamesSearch(name: string): Observable<string[]> {
