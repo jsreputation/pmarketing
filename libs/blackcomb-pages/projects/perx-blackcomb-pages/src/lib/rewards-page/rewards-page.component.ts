@@ -61,7 +61,7 @@ export class RewardsPageComponent implements OnInit, OnDestroy {
   @Output()
   public tapped: EventEmitter<IReward> = new EventEmitter<IReward>();
 
-  public staticTab: ITabConfigExtended[];
+  public staticTabs: ITabConfigExtended[];
   public currentTabIndex: number = 0;
   private pageSize: number = 10;
   public searchControl: FormControl = new FormControl();
@@ -116,9 +116,9 @@ export class RewardsPageComponent implements OnInit, OnDestroy {
           )
         )
       )
-    ).subscribe((tab) => {
-      this.staticTab = tab;
-      this.tabs$.next(this.staticTab);
+    ).subscribe((tabs) => {
+      this.staticTabs = tabs;
+      this.tabs$.next(this.staticTabs);
     });
   }
 
@@ -205,10 +205,10 @@ export class RewardsPageComponent implements OnInit, OnDestroy {
   }
 
   public onScroll(): void {
-    if (!this.staticTab) {
+    if (!this.staticTabs) {
       return;
     }
-    const stTab = this.staticTab[this.currentTabIndex];
+    const stTab = this.staticTabs[this.currentTabIndex];
     if (!stTab || !stTab.rewardsList || stTab.completePagination) {
       return;
     }
