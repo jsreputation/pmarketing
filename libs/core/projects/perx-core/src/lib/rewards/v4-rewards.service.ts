@@ -288,7 +288,7 @@ export class V4RewardsService extends RewardsService {
   public getAllRewards(
     tags?: string[] | null, categories?: string[], locale: string = 'en', filterFavorites?: boolean): Observable<IReward[]> {
     return new Observable(subject => {
-      const pageSize = 10;
+      const pageSize = 100;
       let current: IReward[] = [];
       let page: number = 1;
       // we do not want to get all pages in parallel, so we get pages one after the other in order not to dos the server
