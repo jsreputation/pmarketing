@@ -12,8 +12,7 @@ import {
   debounceTime,
   map,
   mergeMap,
-  startWith,
-  switchMap,
+  share,
   takeUntil,
   tap,
   withLatestFrom,
@@ -141,23 +140,19 @@ export class RewardsPageComponent implements OnInit, OnDestroy {
     this.searchControl.valueChanges.pipe(
       debounceTime(300),
       tap((value) => value && value !== '' ? this.userSearching = true : this.userSearching = false),
-      // mergeMap((value) =>
-      //   forkJoin(
-      //     this.filterRewardsNamesSearch(value),
-      //     this.filterMerchantNamesSearch(value)
-      //   )
-      // ),
-      switchMap((value) =>
-        this.rewardsService.getAllRewards().pipe(
-          map((rewards: IReward[]) => rewards.filter(
-              (reward: IReward) =>
-                reward.name.includes(value) ||
-                (reward.merchantName && reward.merchantName.includes(value))
-            )
-          ),
+      mergeMap((value) =>
+        forkJoin(
+          of(value),
+          this.rewardsService.getAllRewards().pipe(share())
         )
       ),
-      tap(() => console.log('finish trigger')),
+      map(([ value, rewards ]) =>
+        rewards.filter(
+          (reward: IReward) =>
+            reward.name.includes(value) ||
+            (reward.merchantName && reward.merchantName.includes(value))
+        )
+      )
     ).subscribe(
       (rewards: IReward[]) => {
         this.filteredRewards = of(rewards);
