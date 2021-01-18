@@ -158,12 +158,7 @@ export class RewardsPageComponent implements OnInit, OnDestroy {
         this.filteredRewards = of(rewards);
       }
     );
-    // ).subscribe(([filteredRewards, filteredMerchants]) => {
-    //   console.log(filteredMerchants);
-    //   debugger;
-    //   this.filteredRwdMerchantNames.next(filteredMerchants);
-    //   this.filteredRwdRewardNames.next(filteredRewards);
-    // })
+
     //
     // this.currentTabRewardsList = this.tabs$.pipe(
     //   map((tabs) => tabs[this.currentTabIndex]),
