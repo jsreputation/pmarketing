@@ -7,6 +7,7 @@ import { RewardsModule, RewardsService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { RouterTestingModule } from '@angular/router/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 const rewardsServiceStub: Partial<RewardsService> = {
   getAllRewards: () => of([]),
@@ -30,6 +31,7 @@ describe('RewardsPageComponent', () => {
         MatTabsModule,
         InfiniteScrollModule,
         RouterTestingModule,
+        NoopAnimationsModule
       ],
       providers: [{ provide: RewardsService, useValue: rewardsServiceStub }],
     }).compileComponents();

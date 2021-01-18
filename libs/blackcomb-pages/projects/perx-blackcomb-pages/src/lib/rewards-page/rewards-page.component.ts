@@ -12,7 +12,6 @@ import {
   debounceTime,
   map,
   mergeMap,
-  share,
   takeUntil,
   tap,
   withLatestFrom,
