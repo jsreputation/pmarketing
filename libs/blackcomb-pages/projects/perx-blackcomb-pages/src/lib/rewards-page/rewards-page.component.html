@@ -1,36 +1,28 @@
+<mat-form-field appearance="standard" class="full-width__input">
+  <span matPrefix><mat-icon>search</mat-icon></span>
+  <input matInput type="search" [formControl]="searchControl" [matAutocomplete]="auto" placeholder="Search reward or merchant" class="search-input">
+  <mat-autocomplete #auto="matAutocomplete">
+    <mat-option *ngFor="let rewardOption of filteredRwdRewardNames | async" [value]="rewardOption">
+      {{rewardOption}}
+    </mat-option>
+    <mat-option *ngFor="let merchantOption of filteredRwdMerchantNames | async" [value]="merchantOption">
+      {{merchantOption}}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
 <div
   infiniteScroll [infiniteScrollDistance]="2"
   [infiniteScrollThrottle]="50"
   (scrolled)="onScroll()"
-  [scrollWindow]="false"
-  class="mat-tab-group-wrapper">
-  <mat-tab-group [selectedIndex]="selectedIndex"
-                 >
-    <mat-tab *ngFor="let tab of tabs$ | async; let index = index" [label]="tab.tabName">
-      <div *ngIf="tab.rewardsList || rewards; then showRewards; else ghostRewards"></div>
-      <ng-template #showRewards>
-        <mat-form-field appearance="standard" class="full-width__input">
-          <span matPrefix><mat-icon>search</mat-icon></span>
-          <input matInput type="search" [formControl]="searchControl" [matAutocomplete]="auto" placeholder="Search reward or merchant" class="search-input">
-          <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let rewardOption of filteredRwdRewardNames | async" [value]="rewardOption">
-              {{rewardOption}}
-            </mat-option>
-            <mat-option *ngFor="let merchantOption of filteredRwdMerchantNames | async" [value]="merchantOption">
-              {{merchantOption}}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
-        <perx-core-rewards-list
-          [rewardsList]="filteredRewards"
-          [displayPriceFn]="displayPriceFn"
-          (tapped)="rewardTappedHandler($event)"
-        >
-        </perx-core-rewards-list>
-      </ng-template>
-      <ng-template #ghostRewards>
-        <perx-core-rewards-list></perx-core-rewards-list>
-      </ng-template>
-    </mat-tab>
-  </mat-tab-group>
+  [scrollWindow]="false">
+  <perx-core-rewards-list-tabbed *ngIf="!userSearching; else userSearchingBlock"
+    [tabs$]="tabs$" [displayPriceFn]="displayPriceFn" (tapped)="rewardTappedHandler($event)" (tabChanged)="tabChanged($event)">
+  </perx-core-rewards-list-tabbed>
+  <ng-template #userSearchingBlock>
+    <perx-core-rewards-list
+      [rewardsList]="filteredRewards"
+      [displayPriceFn]="displayPriceFn"
+      (tapped)="rewardTappedHandler($event)"
+    ></perx-core-rewards-list>
+  </ng-template>
 </div>
