@@ -214,6 +214,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   public nextWithoutValidation(): void {
     const questionPointer = this.questionPointer;
     if (this.quiz.questions.length - 1 === questionPointer) {
+      this.complete = true;
       this.submit();
     } else {
       this.pushAnswer(questionPointer).subscribe(() => { });
