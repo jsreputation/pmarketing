@@ -1,5 +1,12 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { combineLatest, forkJoin, Observable, of, Subject } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  forkJoin,
+  Observable,
+  of,
+  Subject
+} from 'rxjs';
 import { IPrice, IReward, ITabConfig, ITabConfigExtended, RewardsService } from '@perxtech/core';
 import { FormControl } from '@angular/forms';
 import {
@@ -9,7 +16,6 @@ import {
   startWith,
   switchMap,
   takeUntil,
-  tap,
   withLatestFrom,
 } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -29,16 +35,9 @@ export class RewardsPageComponent implements OnInit, OnDestroy {
   @Input()
   public rewards?: Observable<IReward[]>;
 
-  public tabs$: Observable<ITabConfig[]> = of([
-    {
-      filterKey: null,
-      filterValue: null,
-      tabName: 'All Rewards',
-      merchantNames: [],
-      rewardNames: [],
-      // rewardsList: null
-    },
-  ]);
+  public tabs$: BehaviorSubject<ITabConfigExtended[]> = new BehaviorSubject<
+    ITabConfigExtended[]
+    >([]);
 
   public displayPriceFn: (rewardPrice: IPrice) => Observable<string> = (
     rewardPrice: IPrice,
@@ -75,8 +74,8 @@ export class RewardsPageComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  public ngOnInit(): void {
-    this.tabs$ = this.rewardsService.getCategories().pipe(
+  public getTabbedList(): void {
+    this.rewardsService.getCategories().pipe(
       mergeMap((tabs) =>
         forkJoin(
           tabs.map((tab) =>
@@ -115,9 +114,15 @@ export class RewardsPageComponent implements OnInit, OnDestroy {
               ),
           )
         )
-      ),
-      tap((tabs: ITabConfigExtended[]) => this.staticTab = tabs)
-    );
+      )
+    ).subscribe((tab) => {
+      this.staticTab = tab;
+      this.tabs$.next(this.staticTab);
+    });
+  }
+
+  public ngOnInit(): void {
+    this.getTabbedList();
 
     this.filteredRwdRewardNames = this.searchControl.valueChanges.pipe(
       startWith(''),
