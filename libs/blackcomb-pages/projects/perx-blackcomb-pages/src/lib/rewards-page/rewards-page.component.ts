@@ -143,7 +143,7 @@ export class RewardsPageComponent implements OnInit, OnDestroy {
       mergeMap((value) =>
         forkJoin(
           of(value),
-          this.rewardsService.getAllRewards().pipe(share())
+          this.rewardsService.getAllRewards().pipe()
         )
       ),
       map(([ value, rewards ]) =>
