@@ -149,8 +149,8 @@ export class RewardsPageComponent implements OnInit, OnDestroy {
       map(([ value, rewards ]) =>
         rewards.filter(
           (reward: IReward) =>
-            reward.name.includes(value) ||
-            (reward.merchantName && reward.merchantName.includes(value))
+            reward.name.toLowerCase().includes(value.toLowerCase()) ||
+            (reward.merchantName && reward.merchantName.toLowerCase().includes(value.toLowerCase()))
         )
       )
     ).subscribe(
