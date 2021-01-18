@@ -1,3 +1,15 @@
+<mat-form-field appearance="standard" class="full-width__input">
+  <span matPrefix><mat-icon>search</mat-icon></span>
+  <input matInput type="search" [formControl]="searchControl" [matAutocomplete]="auto" placeholder="Search reward or merchant" class="search-input">
+  <mat-autocomplete #auto="matAutocomplete">
+    <mat-option *ngFor="let rewardOption of filteredRwdRewardNames | async" [value]="rewardOption">
+      {{rewardOption}}
+    </mat-option>
+    <mat-option *ngFor="let merchantOption of filteredRwdMerchantNames | async" [value]="merchantOption">
+      {{merchantOption}}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
 <div
   infiniteScroll [infiniteScrollDistance]="2"
   [infiniteScrollThrottle]="50"
@@ -9,18 +21,6 @@
     <mat-tab *ngFor="let tab of tabs$ | async; let index = index" [label]="tab.tabName">
       <div *ngIf="tab.rewardsList || rewards; then showRewards; else ghostRewards"></div>
       <ng-template #showRewards>
-        <mat-form-field appearance="standard" class="full-width__input">
-          <span matPrefix><mat-icon>search</mat-icon></span>
-          <input matInput type="search" [formControl]="searchControl" [matAutocomplete]="auto" placeholder="Search reward or merchant" class="search-input">
-          <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let rewardOption of filteredRwdRewardNames | async" [value]="rewardOption">
-              {{rewardOption}}
-            </mat-option>
-            <mat-option *ngFor="let merchantOption of filteredRwdMerchantNames | async" [value]="merchantOption">
-              {{merchantOption}}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
         <perx-core-rewards-list
           [rewardsList]="filteredRewards"
           [displayPriceFn]="displayPriceFn"
