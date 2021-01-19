@@ -1,3 +1,4 @@
+<div class="page-container">
 <mat-form-field appearance="standard" class="full-width__input">
   <span matPrefix><mat-icon>search</mat-icon></span>
   <input matInput type="search" [formControl]="searchControl" [matAutocomplete]="auto" placeholder="Search reward or merchant" class="search-input">
@@ -10,7 +11,7 @@
     </mat-option>
   </mat-autocomplete>
 </mat-form-field>
-<div
+<div class="reward-list-container"
   infiniteScroll [infiniteScrollDistance]="2"
   [infiniteScrollThrottle]="50"
   (scrolled)="onScroll()"
@@ -25,4 +26,5 @@
       (tapped)="rewardTappedHandler($event)"
     ></perx-core-rewards-list>
   </ng-template>
+</div>
 </div>
