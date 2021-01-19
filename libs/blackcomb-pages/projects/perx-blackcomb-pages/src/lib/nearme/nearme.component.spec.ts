@@ -7,9 +7,9 @@ import {
   RewardsService,
   IVoucherService,
   GeoLocationService,
-  ConfigService,
   TokenStorage,
-  UtilsModule
+  UtilsModule,
+  SettingsService
 } from '@perxtech/core';
 
 const coords: Position = {
@@ -46,6 +46,10 @@ const tokenStorageStub = {
   setAppInfoProperty: () => { }
 };
 
+const settingsServiceStub: Partial<SettingsService> = {
+  getRemoteFlagsSettings: () => of()
+};
+
 describe('NearmeComponent', () => {
   let component: NearmeComponent;
   let fixture: ComponentFixture<NearmeComponent>;
@@ -58,16 +62,11 @@ describe('NearmeComponent', () => {
         MatIconModule
       ],
       providers: [
-        {
-          provide: ConfigService,
-          useValue: {
-            readAppConfig: () => of()
-          }
-        },
         { provide: TokenStorage, useValue: tokenStorageStub },
         { provide: GeoLocationService, useValue: geoLocationService },
         { provide: RewardsService, useValue: rewardsServiceStub },
         { provide: IVoucherService, useValue: vouchersServiceStub },
+        { provide: SettingsService, useValue: settingsServiceStub },
       ]
     })
       .compileComponents();

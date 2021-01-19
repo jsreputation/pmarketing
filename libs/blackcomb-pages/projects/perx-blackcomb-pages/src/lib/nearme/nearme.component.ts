@@ -17,9 +17,9 @@ import {
   IVoucherLocation,
   IVoucherService,
   GeoLocationService,
-  ConfigService,
-  IConfig,
-  ITabConfigExtended
+  ITabConfigExtended,
+  SettingsService,
+  IFlags
 } from '@perxtech/core';
 
 import {
@@ -70,10 +70,10 @@ export class NearmeComponent implements OnInit, OnDestroy {
   public favoriteRewardEvent: EventEmitter<IReward> = new EventEmitter<IReward>();
 
   constructor(
-    private config: ConfigService,
     private rewardsService: RewardsService,
     private vouchersService: IVoucherService,
     private geoLocationService: GeoLocationService,
+    private settingsService: SettingsService,
     private dialog: MatDialog,
   ) { }
 
@@ -93,8 +93,8 @@ export class NearmeComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.config.readAppConfig().subscribe((config: IConfig<void>) => {
-      this.showRewardFavButton = config.showRewardFavButton;
+    this.settingsService.getRemoteFlagsSettings().subscribe((flags: IFlags) => {
+      this.showRewardFavButton = flags.showRewardFavButton;
     });
 
     this.loadScript()
