@@ -58,6 +58,7 @@ describe('AccountComponent', () => {
   };
   const settingsServiceStub: Partial<SettingsService> = {
     getAccountSettings: (): Observable<PagesObject> => of(pagesObject),
+    getRemoteFlagsSettings: () => of()
   };
   const authenticationServiceStub: Partial<AuthenticationService> = {
     logout: () => { }

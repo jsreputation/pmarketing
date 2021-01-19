@@ -64,6 +64,7 @@ interface IV4Flags {
     show_voucher_status_labels: boolean;
     voucher_distribution_type: VoucherDistributionTypes;
     system_sets_password: boolean;
+    show_reward_favourite_button: boolean;
   };
 }
 
@@ -139,6 +140,7 @@ export class V4SettingsService extends SettingsService {
       showRSSfeedCTA: data.json_value.show_rssfeed_cta,
       showNearMePage: data.json_value.show_nearme,
       showProgressCampaignsNavButton: data.json_value.show_progress_campaigns_nav_button,
+      showRewardFavButton: data.json_value.show_reward_favourite_button,
       showVoucherStatusLabels: data.json_value.show_voucher_status_labels,
       voucherDistributionType: data.json_value.voucher_distribution_type,
       systemSetsPassword: data.json_value.system_sets_password

@@ -11,6 +11,7 @@ import {
   CampaignRewardMode,
   ConfigService,
   IConfig,
+  IFlags,
   ILoyalty,
   IPrice,
   IReward,
@@ -19,6 +20,7 @@ import {
   NotificationService,
   ProgressBarFields,
   RewardsService,
+  SettingsService,
   Voucher
 } from '@perxtech/core';
 import {
@@ -64,6 +66,7 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
   public doneText: string;
   public showNoCodeReward: boolean = false;
   public enableRedeemButton: boolean = false;
+  public remoteFlags: IFlags;
 
   constructor(
     private rewardsService: RewardsService,
@@ -73,7 +76,8 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private configService: ConfigService,
     private notificationService: NotificationService,
-    private location: Location
+    private location: Location,
+    private settingsService: SettingsService,
     // private router: Router
   ) { }
 
@@ -96,6 +100,9 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
     }
     this.configService.readAppConfig<void>()
       .subscribe((config: IConfig<void>) => this.appConfig = config);
+    this.settingsService.getRemoteFlagsSettings().subscribe((flags: IFlags) => {
+      this.remoteFlags = flags;
+    });
 
     this.loyaltyService.getLoyalties().pipe(
       map(loyalties => loyalties[0])

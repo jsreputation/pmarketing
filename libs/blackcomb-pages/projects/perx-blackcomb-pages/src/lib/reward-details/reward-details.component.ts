@@ -8,7 +8,9 @@ import {
   ILoyalty,
   Voucher,
   ConfigService,
-  IConfig
+  IConfig,
+  SettingsService,
+  IFlags
 } from '@perxtech/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { filter, finalize, map, switchMap, takeUntil, tap } from 'rxjs/operators';
@@ -30,6 +32,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   public expiryLabel: Observable<string>;
   public buttonLabel: string = 'Redeem';
   public appConfig: IConfig<void>;
+  public remoteFlags: IFlags;
   public rewardData: IReward;
   public loyalty: ILoyalty;
   public waitForSubmission: boolean = false;
@@ -51,12 +54,17 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
     private activeRoute: ActivatedRoute,
     private translate: TranslateService,
     private configService: ConfigService,
+    private settingsService: SettingsService,
     private router: Router
   ) { }
 
   public ngOnInit(): void {
     this.configService.readAppConfig<void>()
       .subscribe((config: IConfig<void>) => this.appConfig = config);
+
+    this.settingsService.getRemoteFlagsSettings().subscribe((flags: IFlags) => {
+      this.remoteFlags = flags;
+    });
 
     this.initTranslate();
     this.loyaltyService.getLoyalties().pipe(

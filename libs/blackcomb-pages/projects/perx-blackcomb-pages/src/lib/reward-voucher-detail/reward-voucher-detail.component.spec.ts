@@ -4,9 +4,11 @@ import { RewardVoucherDetailComponent } from './reward-voucher-detail.component'
 import {
   ConfigService,
   IVoucherService,
-  LoyaltyService, NotificationService,
+  LoyaltyService,
+  NotificationService,
   RewardsModule,
   RewardsService,
+  SettingsService,
   UtilsModule
 } from '@perxtech/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -37,6 +39,10 @@ const activatedRouteStub = {
   }
 };
 
+const settingsServiceStub: Partial<SettingsService> = {
+  getRemoteFlagsSettings: () => of()
+};
+
 describe('RewardVoucherDetailComponent', () => {
   let component: RewardVoucherDetailComponent;
   let fixture: ComponentFixture<RewardVoucherDetailComponent>;
@@ -60,6 +66,7 @@ describe('RewardVoucherDetailComponent', () => {
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
         { provide: ActivatedRoute, useValue: activatedRouteStub },
         { provide: NotificationService, useValue: notificationServiceStub },
+        { provide: SettingsService, useValue: settingsServiceStub },
       ]
     })
     .compileComponents();
