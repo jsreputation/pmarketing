@@ -11,7 +11,9 @@ import {
   ILoyalty,
   ThemesService,
   IReward,
-  UtilsModule, TokenStorage
+  UtilsModule,
+  TokenStorage,
+  SettingsService
 } from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
@@ -72,6 +74,10 @@ describe('RewardComponent', () => {
     setAppInfoProperty: () => { }
   };
 
+  const settingsServiceStub: Partial<SettingsService> = {
+    getRemoteFlagsSettings: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RewardDetailsComponent],
@@ -93,7 +99,8 @@ describe('RewardComponent', () => {
         { provide: ConfigService, useValue: configServiceStub },
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
         { provide: ThemesService, useValue: themeServiceStub },
-        { provide: TokenStorage, useValue: tokenStorageStub }
+        { provide: TokenStorage, useValue: tokenStorageStub },
+        { provide: SettingsService, useValue: settingsServiceStub },
       ]
     })
       .compileComponents();
