@@ -78,3 +78,5 @@ export interface Inventory {
   rewardLimitPerUserBalance?: number | null;
   rewardLimitPerUserPerPeriodBalance?: number | null;
 }
+
+export type Sort = 'asc' | 'desc';
