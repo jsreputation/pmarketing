@@ -171,11 +171,6 @@ const appConfigFile = `{
     process.env.SHOW_QRPAGE_SUBTITLE ? process.env.SHOW_QRPAGE_SUBTITLE : false
   },
   "showUserQR": ${process.env.SHOW_USER_QR ? process.env.SHOW_USER_QR : true},
-  "showRewardFavButton": ${
-    process.env.SHOW_FAVORITE_REWARD_BUTTON
-      ? process.env.SHOW_FAVORITE_REWARD_BUTTON
-      : false
-  },
   "showExpiryOnRewardDetail": ${
     process.env.SHOW_EXPIRY_REWARD_DETAIL
       ? process.env.SHOW_EXPIRY_REWARD_DETAIL
