@@ -16,6 +16,7 @@ export interface IFlags {
   showStampCampaigns?: boolean;
   showLoyaltyBlockOnHomePage?: boolean;
   gatekeeperUrl?: string;
+  showRewardFavButton?: boolean;
   showRSSfeedCTA?: boolean;
   showNearMePage?: boolean;
   showProgressCampaignsNavButton?: boolean;
