@@ -20,6 +20,7 @@ import {
   LoyaltyService,
   ILoyalty,
   SettingsService,
+  IFlags,
 } from '@perxtech/core';
 
 @Component({
@@ -36,6 +37,7 @@ export class AccountComponent implements OnInit {
   public theme: Observable<ITheme>;
   public appConfig$: Observable<IConfig<void>>;
   public memberFn: (membershipTierName: string) => Observable<string>;
+  public remoteFlags: IFlags;
 
   constructor(
     public config: Config,
@@ -61,6 +63,9 @@ export class AccountComponent implements OnInit {
         filter((pages: AccountPageObject[]) => pages.length > 0)
       )
       .subscribe();
+    this.settingsService.getRemoteFlagsSettings().subscribe((flags: IFlags) => {
+      this.remoteFlags = flags;
+    });
     this.appConfig$ = this.configService.readAppConfig();
     this.profile$ = this.profileService.whoAmI().pipe(take(1));
     this.loyalty$ = this.loyaltyService.getLoyalty();
