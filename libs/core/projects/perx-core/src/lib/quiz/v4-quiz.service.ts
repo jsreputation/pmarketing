@@ -68,6 +68,11 @@ export interface QuizDisplayProperties {
   timer_count: number;
   timer_enabled: boolean;
   timer_type: TimerType;
+  nooutcome?: {
+    title?: string;
+    description?: string;
+    button_text?: string;
+  };
 }
 
 interface V4NextMoveResponse {
@@ -204,6 +209,16 @@ export class V4QuizService implements QuizService {
             button: oc(game).display_properties.button_text('')
           };
         }
+        let noOutcome: IQuizOutcome | undefined;
+        if (oc(game).display_properties.nooutcome.title() ||
+          oc(game).display_properties.nooutcome.description() ||
+          oc(game).display_properties.nooutcome.button_text()) {
+          noOutcome = {
+            title: oc(game).display_properties.nooutcome.title(''),
+            subTitle: oc(game).display_properties.nooutcome.description(''),
+            button: oc(game).display_properties.nooutcome.button_text('')
+          };
+        }
         const timeConfig: ITimeConfig = {};
         if (oc(game).display_properties.timer_enabled()) {
           // set defaults if timer_enabled and for some case cant fetch the type and count property (unlikely)
@@ -221,7 +236,8 @@ export class V4QuizService implements QuizService {
             oc(game).display_properties.header.value.description[lang]() :
             oc(game).display_properties.header.value.description.en()) as {text: string},
           results: {
-            outcome
+            outcome,
+            noOutcome
           },
           questions,
           mode,
