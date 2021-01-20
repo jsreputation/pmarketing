@@ -5,6 +5,7 @@ import { RewardsListComponent, TokenStorage, UtilsModule, ThemesService, Rewards
 import { MatCardModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('FavoriteRewardsComponent', () => {
   let component: FavoriteRewardsComponent;
@@ -31,7 +32,8 @@ describe('FavoriteRewardsComponent', () => {
       imports: [
         MatCardModule,
         UtilsModule,
-        RouterTestingModule
+        RouterTestingModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         {
