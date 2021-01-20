@@ -79,4 +79,7 @@ export interface Inventory {
   rewardLimitPerUserPerPeriodBalance?: number | null;
 }
 
-export type Sort = 'asc' | 'desc';
+export enum Sort {
+  ascending = 'asc',
+  descending = 'desc'
+}
