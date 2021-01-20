@@ -87,6 +87,9 @@
     "ERROR_TITLE": "Đã xảy ra sự cố với máy chủ của chúng tôi",
     "ERROR_TEXT": "Chúng tôi đã thông báo cho nhóm của chúng tôi. Xin lỗi vì sự bất tiện."
   },
+  "FAVOURITES_PAGE": {
+    "TITLE": "Favourite Rewards"
+  },
   "PUZZLE": {
     "PUZZLE": "Câu đố",
     "PLAY_NOW": "Bắt đầu chơi!",
