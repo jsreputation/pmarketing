@@ -228,7 +228,7 @@ export class RewardsPageComponent implements OnInit, OnDestroy {
   }
 
   public onScroll(): void {
-    if (!this.staticTabs) {
+    if (!this.staticTabs || this.userSearching) {
       return;
     }
     const stTab = this.staticTabs[this.currentTabIndex];

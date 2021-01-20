@@ -301,12 +301,12 @@ export class V4RewardsService extends RewardsService {
         } else {
           // otherwise get next page
           page++;
-          this.getRewards(page, undefined, tags, categories, locale, filterFavorites)
+          this.getRewards(page, pageSize, tags, categories, locale, filterFavorites)
             .subscribe(process);
         }
       };
       // do the first query
-      return this.getRewards(1, undefined, tags, categories, locale, filterFavorites).subscribe(process);
+      return this.getRewards(1, pageSize, tags, categories, locale, filterFavorites).subscribe(process);
     });
   }
 
