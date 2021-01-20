@@ -8,7 +8,7 @@ import { oc } from 'ts-optchain';
 import { IWRewardDisplayProperties } from '@perxtech/whistler';
 
 import { RewardsService } from './rewards.service';
-import { ICatalog, ICategoryTags, IPrice, IReward } from './models/reward.model';
+import { ICatalog, ICategoryTags, IPrice, IReward, Sort } from './models/reward.model';
 
 import { RewardStateHelper } from './reward-state-helper';
 import { ITabConfigExtended } from './rewards-list-tabbed/rewards-list-tabbed.component';
@@ -179,12 +179,12 @@ export class V4RewardsService extends RewardsService {
       rewardTotalLimit: v4Invent.reward_total_limit !== undefined ? v4Invent.reward_total_limit : null,
       rewardLimitPerUserBalance:
         v4Invent.reward_limit_per_user_balance !== undefined &&
-        v4Invent.reward_limit_per_user_balance ?
-        v4Invent.reward_limit_per_user_balance.available_amount : null,
+          v4Invent.reward_limit_per_user_balance ?
+          v4Invent.reward_limit_per_user_balance.available_amount : null,
       rewardLimitPerUserPerPeriodBalance:
         v4Invent.reward_limit_per_user_per_period !== undefined &&
-        v4Invent.reward_limit_per_user_per_period_balance ?
-        v4Invent.reward_limit_per_user_per_period_balance.available_amount : null,
+          v4Invent.reward_limit_per_user_per_period_balance ?
+          v4Invent.reward_limit_per_user_per_period_balance.available_amount : null,
     } : undefined;
     return {
       id: reward.id,
@@ -316,7 +316,9 @@ export class V4RewardsService extends RewardsService {
     tags?: string[] | null,
     categories?: string[],
     locale: string = 'en',
-    filterFavorites?: boolean
+    filterFavorites?: boolean,
+    sort?: Sort,
+    sortBy?: string | null,
   ): Observable<IReward[]> {
     const headers = new HttpHeaders().set('Accept-Language', locale);
     let params = new HttpParams()
@@ -332,6 +334,12 @@ export class V4RewardsService extends RewardsService {
 
     if (filterFavorites) {
       params = params.set('favorite', 'true');
+    }
+
+    if (sort && sortBy) {
+      // order & sort_by required. supported fields: id, ends_at, begins_at, state, name
+      params = params.set('order', sort);
+      params = params.set('sort_by', sortBy);
     }
 
     return this.http.get<IV4GetRewardsResponse>(`${this.apiHost}/v4/rewards`, { headers, params })
@@ -378,16 +386,27 @@ export class V4RewardsService extends RewardsService {
     });
   }
 
-  public getCatalogs(page: number = 1, pageSize: number = 10, locale: string = 'en'): Observable<ICatalog[]> {
+  public getCatalogs(
+    page: number = 1,
+    pageSize: number = 10,
+    locale: string = 'en',
+    sort?: Sort,
+    sortBy?: string | null): Observable<ICatalog[]> {
     const headers = new HttpHeaders().set('Accept-Language', locale);
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', pageSize.toString());
+
+    // VS-5212
+    if (sort && sortBy) {
+      params = params.set('order_by', sort).set('sort_by', sortBy);
+    }
+
     return this.http.get<IV4GetCatalogsResponse>(
       `${this.apiHost}/v4/catalogs`,
       {
         headers,
-        params: {
-          page: `${page}`,
-          size: `${pageSize}`
-        }
+        params
       }
     ).pipe(
       map((res: IV4GetCatalogsResponse) => res.data),
@@ -443,7 +462,7 @@ export class V4RewardsService extends RewardsService {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
     if (rewardId !== undefined) {
-      return this.http.post<IV4GetRewardResponse>(`${this.apiHost}/v4/rewards/${rewardId}/favorite`, {headers}).pipe(
+      return this.http.post<IV4GetRewardResponse>(`${this.apiHost}/v4/rewards/${rewardId}/favorite`, { headers }).pipe(
         map(res => res.data),
         map((reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward))
       );
@@ -455,7 +474,7 @@ export class V4RewardsService extends RewardsService {
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
     if (rewardId !== undefined) {
-      return this.http.delete<IV4GetRewardResponse>(`${this.apiHost}/v4/rewards/${rewardId}/favorite`, {headers}).pipe(
+      return this.http.delete<IV4GetRewardResponse>(`${this.apiHost}/v4/rewards/${rewardId}/favorite`, { headers }).pipe(
         map(res => res.data),
         map((reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward))
       );

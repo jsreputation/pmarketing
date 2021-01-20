@@ -78,3 +78,8 @@ export interface Inventory {
   rewardLimitPerUserBalance?: number | null;
   rewardLimitPerUserPerPeriodBalance?: number | null;
 }
+
+export enum Sort {
+  ascending = 'asc',
+  descending = 'desc'
+}
