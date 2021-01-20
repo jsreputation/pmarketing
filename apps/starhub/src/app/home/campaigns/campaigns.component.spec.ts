@@ -116,6 +116,7 @@ describe('CampaignsComponent', () => {
               howToRedeem: '',
               categoryTags: [],
               inventory: undefined,
+              loyalty: []
             }
           ],
           thumbnailUrl: '',

@@ -30,6 +30,7 @@ describe('CategoryRewardCardComponent', () => {
       merchantImg: '',
       termsAndConditions: '',
       howToRedeem: '',
+      loyalty: []
     };
     fixture.detectChanges();
   });

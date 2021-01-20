@@ -79,6 +79,7 @@ const reward: IReward = {
   favorite: false,
   rewardBanner: '',
   termsAndConditions: '',
+  loyalty: []
 };
 
 const translateServiceStub: Partial<TranslateService> = {

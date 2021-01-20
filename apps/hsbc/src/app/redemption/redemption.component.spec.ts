@@ -43,6 +43,7 @@ describe('RedemptionComponent', () => {
       howToRedeem: '',
       categoryTags: [],
       inventory: null,
+      loyalty: []
     },
     state: VoucherState.issued,
     redemptionType: RedemptionType.none,

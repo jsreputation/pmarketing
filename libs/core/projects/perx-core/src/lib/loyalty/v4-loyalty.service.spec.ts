@@ -112,7 +112,8 @@ const transactionRaw: IV4LoyaltyTransactionPropertiesHistory = {
         subtitle: 'test',
         valid_from: new Date(),
         valid_to: new Date(),
-        favourite: false
+        favourite: false,
+        loyalty: []
       } as IV4Reward,
       user_account: { identifier: '3' },
       user_account_id: 33

@@ -43,6 +43,7 @@ describe('WhistlerVouchersService', () => {
     merchantImg: 'string;',
     termsAndConditions: 'string;',
     howToRedeem: 'string;',
+    loyalty: []
   };
 
   const rewardsServiceStub: Partial<RewardsService> = {

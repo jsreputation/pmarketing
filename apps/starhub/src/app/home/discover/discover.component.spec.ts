@@ -162,6 +162,7 @@ describe('DiscoverComponent', () => {
       howToRedeem: '',
       categoryTags: [],
       inventory: undefined,
+      loyalty: []
     };
     component.rewardSelected(reward);
     expect(routerSpy).toHaveBeenCalledWith(['/reward'], { queryParams: { id: 1 } });

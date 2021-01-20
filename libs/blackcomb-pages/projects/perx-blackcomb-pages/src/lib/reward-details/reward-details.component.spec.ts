@@ -36,7 +36,8 @@ const mockReward: IReward = {
   howToRedeem: 'string;',
   displayProperties: {
     CTAButtonTxt: 'btnTxt'
-  }
+  },
+  loyalty: []
 };
 
 describe('RewardComponent', () => {

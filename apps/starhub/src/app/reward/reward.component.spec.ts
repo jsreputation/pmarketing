@@ -49,7 +49,8 @@ const rewardStub = {
   merchantId: 2,
   inventory: {
     rewardLimitPerUserBalance: 0
-  }
+  },
+  loyalty: []
 };
 
 const macaronFalseStub: IMacaron = {
@@ -234,6 +235,7 @@ describe('RewardComponent', () => {
           redemptionType: undefined,
           categoryTags: [],
           inventory: undefined,
+          loyalty: []
         },
         state: VoucherState.issued,
         code: 'GFY2019',

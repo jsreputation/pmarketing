@@ -24,6 +24,7 @@ describe('ListComponent', () => {
     merchantImg: '',
     termsAndConditions: '',
     howToRedeem: '',
+    loyalty: []
   };
   const rewardServiceStub: Partial<RewardsService> = {
     getReward: () => of(mockReward)

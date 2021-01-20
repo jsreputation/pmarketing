@@ -13,7 +13,8 @@ describe('RewardComponent', () => {
   const mockReward: IReward = {
     id: 1, name: '',
     description: '', subtitle: '', validFrom: null,
-    validTo: null, rewardThumbnail: '', rewardBanner: '', merchantImg: '', termsAndConditions: '', howToRedeem: ''
+    validTo: null, rewardThumbnail: '', rewardBanner: '', merchantImg: '', termsAndConditions: '', howToRedeem: '',
+    loyalty: []
   };
   const rewardsServiceStub: Partial<RewardsService> = {
     getReward: () => of(mockReward)

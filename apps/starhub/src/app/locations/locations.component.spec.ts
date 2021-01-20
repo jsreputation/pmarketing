@@ -85,6 +85,7 @@ describe('LocationsComponent', () => {
         parent: '',
       }],
       inventory: null,
+      loyalty: []
     })
   };
 

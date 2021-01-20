@@ -70,6 +70,7 @@ export interface IV4Reward {
   is_favorite: boolean;
   reward_price?: IV4RewardPrice[];
   images?: IV4Image[];
+  loyalty: IV4LoyaltyTierInfo[];
   merchant_id?: number;
   merchant_name?: string;
   merchant_website?: string;
@@ -142,6 +143,13 @@ interface IV4CatalogResults {
   first_result_id?: number;
 }
 
+interface IV4LoyaltyTierInfo {
+  attained: boolean;
+  loyalty_id: number;
+  loyalty_name: string;
+  loyalty_points_required_for_redemption: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -172,6 +180,12 @@ export class V4RewardsService extends RewardsService {
     const merchantImg = oc(reward).merchant_logo_url();
     const sellingFrom = reward.selling_from ? new Date(reward.selling_from) : undefined;
     const sellingTo = reward.selling_to ? new Date(reward.selling_to) : undefined;
+    const loyaltyTierInfo = reward.loyalty ? reward.loyalty.map((tier) => ({
+      attained: tier.attained,
+      id: tier.loyalty_id,
+      loyaltyName: tier.loyalty_name,
+      loyaltyPointsRequiredForRedemption: tier.loyalty_points_required_for_redemption
+    })) : [];
 
     const v4Invent = reward.inventory;
     const inventory = v4Invent ? {
@@ -192,6 +206,7 @@ export class V4RewardsService extends RewardsService {
       subtitle: reward.subtitle,
       description: reward.description,
       favorite: reward.is_favorite,
+      loyalty: loyaltyTierInfo,
       rewardPrice: reward.reward_price ? reward.reward_price.map(price => ({
         id: price.id,
         currencyCode: price.currency_code,

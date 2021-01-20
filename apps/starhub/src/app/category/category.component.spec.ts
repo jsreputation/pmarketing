@@ -107,6 +107,7 @@ describe('CategoryComponent', () => {
       termsAndConditions: '',
       howToRedeem: '',
       categoryTags: undefined,
+      loyalty: []
     };
 
     const router = TestBed.get<Router>(Router as Type<Router>);

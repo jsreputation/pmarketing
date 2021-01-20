@@ -56,6 +56,7 @@ describe('RewardsCollectionComponent', () => {
         rewardTotalLimit: 1,
         rewardLimitPerUserBalance: 1,
       },
+      loyalty: []
     },
     {
       id: 2,
@@ -90,6 +91,7 @@ describe('RewardsCollectionComponent', () => {
         rewardTotalLimit: 2,
         rewardLimitPerUserBalance: 2,
       },
+      loyalty: []
     }
   ];
 

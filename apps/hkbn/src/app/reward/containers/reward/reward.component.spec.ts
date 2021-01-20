@@ -44,7 +44,8 @@ describe('RewardComponent', () => {
     rewardBanner: 'banner',
     merchantImg: 'image',
     termsAndConditions: 'terms and conditions',
-    howToRedeem: 'string'
+    howToRedeem: 'string',
+    loyalty: []
   };
 
   const mockVoucher: Voucher = {
@@ -68,6 +69,7 @@ describe('RewardComponent', () => {
       howToRedeem: '',
       categoryTags: [],
       inventory: null,
+      loyalty: []
     },
     state: VoucherState.issued,
     redemptionType: RedemptionType.none,

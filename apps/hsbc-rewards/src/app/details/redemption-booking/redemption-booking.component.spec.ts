@@ -46,6 +46,7 @@ describe('RedemptionBookingComponent', () => {
     merchantImg: '',
     termsAndConditions: '',
     howToRedeem: '',
+    loyalty: []
   };
   const rewardsServiceStub: Partial<RewardsService> = {
     getReward: () => of(mockReward)

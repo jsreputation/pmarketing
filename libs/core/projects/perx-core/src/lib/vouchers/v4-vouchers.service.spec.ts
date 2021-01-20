@@ -46,6 +46,7 @@ describe('V4VouchersService', () => {
         termsAndConditions: '',
         howToRedeem: '',
         categoryTags: [],
+        loyalty: []
       },
       state: VoucherState.issued,
       redemptionType: RedemptionType.none,
@@ -119,7 +120,8 @@ describe('V4VouchersService', () => {
       reward_price: [],
       terms_and_conditions: 'Up to 5 pax',
       tags: [],
-      category_tags: []
+      category_tags: [],
+      loyalty: []
     },
     custom_fields: {}
   };

@@ -46,7 +46,8 @@ describe('VoucherComponent', () => {
         id: 1,
         title: 'test'
       }],
-      inventory: undefined
+      inventory: undefined,
+      loyalty: []
     },
     state: VoucherState.issued,
     code: '',

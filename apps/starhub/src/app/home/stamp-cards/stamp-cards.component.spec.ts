@@ -111,6 +111,7 @@ describe('StampCardsComponent', () => {
               howToRedeem: '',
               categoryTags: [],
               inventory: undefined,
+              loyalty: []
             }
           ],
           thumbnailUrl: '',

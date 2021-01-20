@@ -48,6 +48,7 @@ const mockVoucher: Voucher = {
         buttonTxt: 'error btnText',
       }
     },
+    loyalty: []
   },
   redemptionType: RedemptionType.qr,
   state: VoucherState.issued,

@@ -23,7 +23,8 @@ describe('VoucherDetailComponent', () => {
       validFrom: new Date(),
       validTo: new Date(),
       rewardBanner: 'TEST',
-      termsAndConditions: 'Test'
+      termsAndConditions: 'Test',
+      loyalty: []
     },
     state: VoucherState.expired,
     expiry: new Date()

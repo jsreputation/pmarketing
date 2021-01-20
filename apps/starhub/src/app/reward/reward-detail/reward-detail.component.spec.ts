@@ -80,7 +80,8 @@ describe('RewardDetailComponent', () => {
       inventory: {
         rewardTotalBalance: 5000,
         rewardTotalLimit: 5000,
-      }
+      },
+      loyalty: []
     };
     component.reward = expiringReward;
     component.onExpiring();
@@ -124,7 +125,8 @@ describe('RewardDetailComponent', () => {
         inventory: {
           rewardTotalBalance: 5000,
           rewardTotalLimit: 5000,
-        }
+        },
+        loyalty: []
       };
       component.reward = expiringReward;
 

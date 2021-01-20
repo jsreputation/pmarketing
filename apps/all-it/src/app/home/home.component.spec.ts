@@ -81,6 +81,7 @@ const reward: IReward = {
   validTo: new Date('2019-11-17T03:24:00'),
   rewardBanner: '',
   termsAndConditions: '',
+  loyalty: []
 };
 
 const translateServiceStub: Partial<TranslateService> = {

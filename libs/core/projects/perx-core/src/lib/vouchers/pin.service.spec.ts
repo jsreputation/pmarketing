@@ -69,6 +69,7 @@ describe('PinService', () => {
         merchantImg: '',
         termsAndConditions: '',
         howToRedeem: '',
+        loyalty: []
       },
       state: VoucherState.expired,
       expiry: new Date('2019-04-30T15:59:59.999Z'),

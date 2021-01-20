@@ -35,6 +35,7 @@ describe('BcodeRedemptionComponent', () => {
       termsAndConditions: '',
       howToRedeem: '',
       categoryTags: [],
+      loyalty: []
     },
     state: VoucherState.issued,
     redemptionType: RedemptionType.none,

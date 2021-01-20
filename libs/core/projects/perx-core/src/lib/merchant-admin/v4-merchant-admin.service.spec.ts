@@ -159,6 +159,7 @@ const reward: IV4Reward = {
   selling_from: 'test',
   merchant_logo_url: 'test',
   display_properties: undefined,
+  loyalty: []
 };
 
 describe('V4MerchantsService', () => {

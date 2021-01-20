@@ -71,13 +71,14 @@ describe('HomeComponent', () => {
         id: 23,
         currencyCode: 'MYR',
         price: '0.00'
-      }
+      },
     ],
     merchantId: undefined,
     merchantName: undefined,
     merchantWebsite: undefined,
     termsAndConditions: '',
-    howToRedeem: ''
+    howToRedeem: '',
+    loyalty: []
   };
 
   const mockLoyalty: ILoyalty = {

@@ -15,6 +15,7 @@ export interface IReward {
   merchantImg?: string;
   rewardPrice?: IPrice[];
   rewardState?: IRewardState | null;
+  loyalty: ILoyaltyTierInfo[] | [];
   merchantId?: number;
   merchantName?: string;
   merchantWebsite?: string;
@@ -82,4 +83,11 @@ export interface Inventory {
 export enum Sort {
   ascending = 'asc',
   descending = 'desc'
+}
+
+export interface ILoyaltyTierInfo {
+  attained: boolean;
+  id: number;
+  loyaltyName: string;
+  loyaltyPointsRequiredForRedemption: number;
 }

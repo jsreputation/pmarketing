@@ -49,6 +49,7 @@ describe('RedemptionComponent', () => {
         title: 'test'
       }],
       inventory: undefined,
+      loyalty: []
     },
     state: VoucherState.expired,
     redemptionType: RedemptionType.none,

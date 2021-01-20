@@ -42,6 +42,7 @@ const iVoucherServiceStub: Partial<IVoucherService> = {
       termsAndConditions: '',
       howToRedeem: '',
       categoryTags: [],
+      loyalty: []
     }
   })
 };
