@@ -73,7 +73,6 @@ import { VoucherComponent } from './voucher/voucher.component';
 import { RedemptionComponent } from './redemption/redemption.component';
 import { CategorySelectComponent } from './category/category-select/category-select.component';
 import { CategorySortComponent } from './category/category-sort/category-sort.component';
-import { RewardsSortPipe } from './category/rewards-sort.pipe';
 import { LocationShortFormatComponent } from './location-short-format/location-short-format.component';
 import { RewardDetailComponent } from './reward/reward-detail/reward-detail.component';
 import { StampCardComponent } from './stamp/stamp-card.component';
@@ -156,7 +155,6 @@ export const appInit =
     RedemptionComponent,
     CategorySelectComponent,
     CategorySortComponent,
-    RewardsSortPipe,
     LocationShortFormatComponent,
     RewardDetailComponent,
     StampCardComponent,
