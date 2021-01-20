@@ -70,7 +70,7 @@ export class ReferralComponent {
             switch (this.campaign.customFields.campaignType) {
               case 'newReferral':
                 this.shareText = 'Hey there! Open DBS Bank account now to enjoy the fabulous offer! 😉\n' +
-                  'You can now earn up to HK$13,500 cash rewards by opening a DBS Treasure account.\n' +
+                  'You can now earn up to HK$13,500 cash rewards by opening a DBS Treasures account.\n' +
                   'Simply sign up for an account on DBS iWealth® app with my invitation code now.\n' +
                   '1. Download the DBS iWealth® app via Apple Apple Store or Google Play Store.\n' +
                   '2. Enter my invitation code [{{code}}] and join DBS Treasures.\n' +
@@ -115,7 +115,7 @@ export class ReferralComponent {
                 break;
               default:
                 this.shareText = 'Hey there! Open DBS Bank account now to enjoy the fabulous offer! \uD83D\uDE09\n' +
-                  'You can now earn up to HK$13,500 cash rewards by opening a DBS Treasure account.\n' +
+                  'You can now earn up to HK$13,500 cash rewards by opening a DBS Treasures account.\n' +
                   'Simply sign up for an account on DBS iWealth® app with my invitation code now.\n' +
                   '1. Download the DBS iWealth® app via Apple Apple Store or Google Play Store.\n' +
                   '2. Enter my invitation code [{{code}}] and join DBS Treasures.\n' +
