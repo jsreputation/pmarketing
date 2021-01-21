@@ -7,6 +7,7 @@ import { LoyaltyService } from '../loyalty.service';
 import { ProfileService } from '../../profile/profile.service';
 import { IProfile } from '../../profile/profile.model';
 import { ILoyalty } from '../models/loyalty.model';
+import { oc } from 'ts-optchain';
 
 @Component({
   selector: 'perx-core-loyalty-summary',
@@ -86,7 +87,7 @@ export class LoyaltySummaryComponent implements OnInit {
       this.subTitleFn = () =>
         of(
           `Your total points as of ${this.datePipe.transform(
-            new Date(),
+            oc(this.loyalty).lastPointTransactedAt(new Date()),
             'mediumDate'
           )}`
         );
