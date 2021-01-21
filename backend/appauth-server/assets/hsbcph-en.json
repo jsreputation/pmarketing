@@ -13,7 +13,7 @@
       "ISSUED": "Approved",
       "REDEEMED": "Redeemed",
       "EXPIRED": "Expired",
-      "RESERVED": "Pending",
+      "RESERVED": "For Processing",
       "RELEASED": "Declined"
     },
     "LOGIN_TXT": "Log in now!",
