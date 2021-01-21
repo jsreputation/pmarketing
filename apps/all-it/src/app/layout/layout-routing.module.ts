@@ -89,6 +89,16 @@ const routes: Routes = [
         path: 'referral',
         loadChildren: () => import('../referral/referral.module').then(mod => mod.ReferralModule)
       },
+      {
+        path: 'campaign-welcome/:cid',
+        loadChildren: () => import('../campaign-landing/campaign-landing.module').then(mod => mod.CampaignLandingModule)
+      },
+      { path: 'quiz/:cid',
+        loadChildren: () => import('../quiz/quiz.module').then(m => m.QuizModule)
+      },
+      { path: 'quiz-results',
+        loadChildren: () => import('../quiz-result/quiz-result.module').then(m => m.QuizResultModule)
+      },
     ]
   }
 ];

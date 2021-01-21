@@ -5,3 +5,5 @@ SHOW_NEWSFEED_HOMEPAGE=false
 SHOW_REFERRAL_DETAILS=true
 CONTACTUSURL=https://cdn.perxtech.io/content/all-it/contact-us.html
 TNCURL=https://cdn.perxtech.io/content/all-it/tnc.html
+SHOW_QUIZ_ON_HOMEPAGE=true
+SHOW_CAMPAIGN_LANDING_PAGE=true
