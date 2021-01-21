@@ -64,7 +64,7 @@ export class QuizResultsComponent implements OnInit {
   }
 
   public fetchSubTitle(): void {
-    const total = this.results.reduce((sum, q) => sum + oc(q).time(0), 0);
+    const total = this.results.reduce((sum, q) => sum + Math.floor(oc(q).time(0)), 0);
     if (total === 0) {
       this.subTitle = '';
     }

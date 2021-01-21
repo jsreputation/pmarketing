@@ -8,9 +8,9 @@ export class SecondsToStringPipe implements PipeTransform {
     if (d < 0) {
       return '';
     }
-    const minutes: number = Math.round(d / 60);
+    const minutes: number = Math.floor(d / 60);
     const minutesStr = `${minutes}`.padStart(2, '0');
-    const seconds = Math.round(d - minutes * 60);
+    const seconds = Math.floor(d - minutes * 60);
     const secondsStr = `${seconds}`.padStart(2, '0');
     return `${minutesStr}:${secondsStr}`;
   }
