@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { RewardDetailComponent } from './reward-detail.component';
 import { MatIconModule, MatListModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
-import { RewardsService, LocationsService } from '@perxtech/core';
+import { ConfigService, LocationsService } from '@perxtech/core';
 import { LocationShortFormatComponent } from '../../location-short-format/location-short-format.component';
 import { of } from 'rxjs';
 import { ExpireTimerComponent } from '../expire-timer/expire-timer.component';
@@ -20,12 +20,13 @@ describe('RewardDetailComponent', () => {
   let component: RewardDetailComponent;
   let fixture: ComponentFixture<RewardDetailComponent>;
   let location: Location;
-  const rewardsServiceStub: Partial<RewardsService> = {
-    getReward: () => of()
-  };
 
   const locationStub: Partial<Location> = {
     back: () => { }
+  };
+
+  const configServiceStub: Partial<ConfigService> = {
+    readAppConfig: () => of()
   };
 
   beforeEach(async(() => {
@@ -39,7 +40,7 @@ describe('RewardDetailComponent', () => {
       providers: [
         { provide: Location, useValue: locationStub },
         { provide: LocationsService, useValue: locationsServiceStub },
-        { provide: RewardsService, useValue: rewardsServiceStub }
+        { provide: ConfigService, useValue: configServiceStub }
       ]
     })
       .compileComponents();

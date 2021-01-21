@@ -24,7 +24,7 @@
           left</span>
       </div>
 
-      <div class="content tier-info">
+      <div *ngIf="showLoyaltyTierInfo" class="content tier-info">
         <div *ngIf="reward.loyalty && reward.loyalty.length; else allTiers">
           <div class="tier-list">Reached required tier:
             <mat-list role="list">

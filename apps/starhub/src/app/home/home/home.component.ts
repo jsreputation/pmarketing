@@ -25,6 +25,8 @@ declare var dataLayerSH: IdataLayerSH; // eslint-disable-line
 
 export interface IStarhubConfig {
   hubclubCR: boolean;
+  showAllSnappingSaturdayItems: boolean;
+  mobileIdCR: boolean;
 }
 
 

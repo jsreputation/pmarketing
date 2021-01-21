@@ -1,14 +1,15 @@
-import { Component, Input, EventEmitter, Output, OnChanges, SimpleChanges } from '@angular/core';
-import { ILoyaltyTierInfo, IReward } from '@perxtech/core';
+import { Component, Input, EventEmitter, Output, OnChanges, SimpleChanges, OnInit } from '@angular/core';
+import { ConfigService, IConfig, ILoyaltyTierInfo, IReward } from '@perxtech/core';
 import { Location } from '@angular/common';
 import { IMacaron } from '../../services/macaron.service';
+import { IStarhubConfig } from '../../home/home/home.component';
 
 @Component({
   selector: 'app-reward-detail',
   templateUrl: './reward-detail.component.html',
   styleUrls: ['./reward-detail.component.scss']
 })
-export class RewardDetailComponent implements OnChanges {
+export class RewardDetailComponent implements OnChanges, OnInit {
   public isExpired: boolean = false;
   @Input()
   public macaron?: IMacaron;
@@ -36,13 +37,23 @@ export class RewardDetailComponent implements OnChanges {
 
   public attainedTiers: ILoyaltyTierInfo[] = [];
   public unAttainedTiers: ILoyaltyTierInfo[] = [];
+  public showLoyaltyTierInfo: boolean = false;
 
   constructor(
-    private location: Location
+    private location: Location,
+    private configService: ConfigService
   ) { }
 
+  public ngOnInit(): void {
+    this.configService.readAppConfig<IStarhubConfig>().subscribe(
+      (config: IConfig<IStarhubConfig>) => {
+        this.showLoyaltyTierInfo = config.custom ? config.custom.mobileIdCR : false;
+      }
+    );
+  }
+
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes.reward && changes.reward.currentValue) {
+    if (this.showLoyaltyTierInfo && changes.reward && changes.reward.currentValue) {
       this.buildTierList();
     }
   }
