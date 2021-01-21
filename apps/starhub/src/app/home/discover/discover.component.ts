@@ -3,10 +3,8 @@ import { ICategory } from '../../category.model';
 import { Router } from '@angular/router';
 import { IReward, ICatalog, SettingsService, IFlags, ICampaign, CampaignType, ITaggedItem, ConfigService, IConfig } from '@perxtech/core';
 import { AnalyticsService, PageType } from '../../analytics.service';
+import { IStarhubConfig } from '../home/home.component';
 
-export interface IStarhubConfig {
-  showAllSnappingSaturdayItems: boolean;
-}
 @Component({
   selector: 'app-discover',
   templateUrl: './discover.component.html',

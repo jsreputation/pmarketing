@@ -46,3 +46,13 @@ app-expire-timer,
   white-space: inherit;
   line-height: 2.5rem;
 }
+
+.tier-info {
+  font-size: 1.4rem;
+  .tier-list {
+    margin-bottom: 1rem;
+  }
+  .mat-list-base .mat-list-item {
+    font-size: 1rem;
+  }
+}

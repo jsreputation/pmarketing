@@ -28,7 +28,8 @@ import {
   MatRippleModule,
   MatSnackBarModule,
   MatToolbarModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatListModule
 } from '@angular/material';
 
 import { QRCodeModule } from 'angularx-qrcode';
@@ -201,6 +202,7 @@ export const appInit =
     LoyaltyModule.forRoot(),
     GhostsModule,
     MatProgressSpinnerModule,
+    MatListModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

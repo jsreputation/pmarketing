@@ -3,3 +3,4 @@ APIHOST=https://api-starhub.perxtech.net
 PREAUTH=true
 HUBCLUB_CR=false
 SHOW_ALL_SNAPPING_SATURDAY_ITEMS=true
+MOBILE_ID_CR=false

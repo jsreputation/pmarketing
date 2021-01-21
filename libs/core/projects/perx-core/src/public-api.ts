@@ -155,7 +155,8 @@ export {
   ICatalog,
   ICategoryTags,
   IPrice,
-  IRewardState
+  IRewardState,
+  ILoyaltyTierInfo
 } from './lib/rewards/models/reward.model';
 export { ITabConfig, ITabConfigExtended } from './lib/rewards/rewards-list-tabbed/rewards-list-tabbed.component';
 export { RewardsCollectionComponent } from './lib/rewards/rewards-collection/rewards-collection.component';
