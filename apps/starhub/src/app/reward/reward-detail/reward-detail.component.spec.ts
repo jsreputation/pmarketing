@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { RewardDetailComponent } from './reward-detail.component';
-import { MatIconModule } from '@angular/material';
+import { MatIconModule, MatListModule } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { RewardsService, LocationsService } from '@perxtech/core';
 import { LocationShortFormatComponent } from '../../location-short-format/location-short-format.component';
@@ -33,7 +33,8 @@ describe('RewardDetailComponent', () => {
       declarations: [RewardDetailComponent, LocationShortFormatComponent, ExpireTimerComponent],
       imports: [
         MatIconModule,
-        RouterTestingModule
+        RouterTestingModule,
+        MatListModule
       ],
       providers: [
         { provide: Location, useValue: locationStub },

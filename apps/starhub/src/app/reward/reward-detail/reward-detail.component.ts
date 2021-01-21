@@ -1,5 +1,5 @@
-import { Component, Input, EventEmitter, Output } from '@angular/core';
-import { IReward } from '@perxtech/core';
+import { Component, Input, EventEmitter, Output, OnChanges, SimpleChanges } from '@angular/core';
+import { ILoyaltyTierInfo, IReward } from '@perxtech/core';
 import { Location } from '@angular/common';
 import { IMacaron } from '../../services/macaron.service';
 
@@ -8,7 +8,7 @@ import { IMacaron } from '../../services/macaron.service';
   templateUrl: './reward-detail.component.html',
   styleUrls: ['./reward-detail.component.scss']
 })
-export class RewardDetailComponent {
+export class RewardDetailComponent implements OnChanges {
   public isExpired: boolean = false;
   @Input()
   public macaron?: IMacaron;
@@ -34,9 +34,28 @@ export class RewardDetailComponent {
   @Input()
   public voucherId?: number;
 
+  public attainedTiers: ILoyaltyTierInfo[] = [];
+  public unAttainedTiers: ILoyaltyTierInfo[] = [];
+
   constructor(
     private location: Location
   ) { }
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes.reward && changes.reward.currentValue) {
+      this.buildTierList();
+    }
+  }
+
+  private buildTierList(): void {
+    for (const tierInfo of this.reward.loyalty) {
+      if (tierInfo.attained) {
+        this.attainedTiers.push(tierInfo);
+      } else {
+        this.unAttainedTiers.push(tierInfo);
+      }
+    }
+  }
 
   public setToExpired(): void {
     setTimeout(
