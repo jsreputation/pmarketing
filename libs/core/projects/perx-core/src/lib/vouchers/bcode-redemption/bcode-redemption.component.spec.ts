@@ -10,6 +10,8 @@ import { IVoucher, VoucherState } from '../models/voucher.model';
 import { Type, SimpleChange } from '@angular/core';
 import { oc } from 'ts-optchain';
 import { RedemptionType } from '../../perx-core.models';
+import { TranslateModule } from '@ngx-translate/core';
+import { NotificationService } from '@perxtech/core';
 
 describe('BcodeRedemptionComponent', () => {
   let component: BcodeRedemptionComponent;
@@ -47,15 +49,21 @@ describe('BcodeRedemptionComponent', () => {
     get: () => of(mockVoucher)
   };
 
+  const notificationServiceStub: Partial<NotificationService> = {
+    addSnack: () => {}
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
         VouchersModule,
-        ConfigModule.forRoot({})
+        ConfigModule.forRoot({}),
+        TranslateModule.forRoot()
       ],
       providers: [
-        { provide: IVoucherService, useValue: voucherServiceStub }
+        { provide: IVoucherService, useValue: voucherServiceStub },
+        { provide: NotificationService, useValue: notificationServiceStub },
       ]
     })
       .compileComponents();
