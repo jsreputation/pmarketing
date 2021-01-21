@@ -138,6 +138,10 @@
   animation: anim 3s infinite;
 }
 
+button:disabled {
+  opacity: 45%;
+}
+
 @keyframes anim {
   0% {
     transform: translateY(0);
