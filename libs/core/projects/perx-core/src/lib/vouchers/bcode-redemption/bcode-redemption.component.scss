@@ -62,8 +62,6 @@ h1 {
     }
 
     .bcode {
-      display: flex;
-      align-self: center;
       background: #fff;
       border: 1px solid #ccc;
       box-sizing: border-box;
@@ -72,8 +70,9 @@ h1 {
       margin: 16px 16px 32px;
       font-size: 1.6rem;
       min-height: 4.5rem;
-      justify-content: center;
       padding: 1.5rem;
+      overflow-x: auto;
+      white-space: nowrap;
     }
   }
 }
