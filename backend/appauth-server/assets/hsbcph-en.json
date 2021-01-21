@@ -156,7 +156,7 @@
     "HISTORY_TITLE": "My History",
     "MY_WALLET": "My Wallet",
     "REDEEMED": "Redeemed",
-    "REWARD_STATUS_EXPIRY": "Expires on {{date}}",
+    "REWARD_STATUS_EXPIRY": "",
     "REWARD_STATUS_REDEEMED": "Redeemed",
     "REWARD_STATUS_REDEEMED_ON": "Redeemed on {{date}}",
     "REWARD_STATUS_EXPIRED": "Expired",
