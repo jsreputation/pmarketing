@@ -76,14 +76,13 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
     ).subscribe(
       (loyalty: ILoyalty) => this.loyalty = loyalty
     );
-    this.reward$ = this.activeRoute.params
+    this.activeRoute.params
       .pipe(
         filter((ps: Params) => ps.id),
         map((ps: Params) => Number.parseInt(ps.id, 10)),
         switchMap((id: number) => this.rewardsService.getReward(id)),
         tap((reward: IReward) => {
-          this.rewardData = reward;
-          this.macaron = this.macaronService.getMacaron(reward);
+
           if (reward.displayProperties) {
             this.buttonLabel = reward.displayProperties.CTAButtonTxt || this.buttonLabel;
           }
@@ -92,7 +91,11 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
             .reduce((acc = 0, points) => acc >= (points || 0) ? acc : points) : 0;
         }),
         takeUntil(this.destroy$)
-      );
+      ).subscribe((reward: IReward) => {
+        this.rewardData = reward;
+        this.macaron = this.macaronService.getMacaron(reward);
+        this.reward$ = of(reward);
+      });
   }
 
   public buyReward(): void {
