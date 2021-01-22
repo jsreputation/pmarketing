@@ -10,7 +10,9 @@ import {
   ConfigService,
   IConfig,
   SettingsService,
-  IFlags
+  IFlags,
+  IMacaron,
+  MacaronService
 } from '@perxtech/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { filter, finalize, map, switchMap, takeUntil, tap } from 'rxjs/operators';
@@ -37,6 +39,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   public loyalty: ILoyalty;
   public waitForSubmission: boolean = false;
   public favDisabled: boolean = false;
+  public macaron?: IMacaron | null;
 
   public maxRewardCost?: number;
   private initTranslate(): void {
@@ -55,6 +58,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private configService: ConfigService,
     private settingsService: SettingsService,
+    private macaronService: MacaronService,
     private router: Router
   ) { }
 
@@ -79,6 +83,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
         switchMap((id: number) => this.rewardsService.getReward(id)),
         tap((reward: IReward) => {
           this.rewardData = reward;
+          this.macaron = this.macaronService.getMacaron(reward);
           if (reward.displayProperties) {
             this.buttonLabel = reward.displayProperties.CTAButtonTxt || this.buttonLabel;
           }
