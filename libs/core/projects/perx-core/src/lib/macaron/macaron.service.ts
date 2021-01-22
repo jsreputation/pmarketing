@@ -77,7 +77,7 @@ export class MacaronService {
 
       if (lowestBalance === 0) {
         return {
-          label: 'Fully redeemed1',
+          label: 'Fully redeemed',
           class: 'fully-redeemed',
           isButtonEnabled: false
         };
