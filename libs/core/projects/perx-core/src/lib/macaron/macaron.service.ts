@@ -59,6 +59,40 @@ export class MacaronService {
     //   };
     // }
 
+    // show the inventory count
+    if (reward.inventory &&
+      (reward.inventory.rewardTotalBalance ||
+        reward.inventory.rewardLimitPerUserBalance ||
+        reward.inventory.rewardLimitPerUserPerPeriodBalance)) {
+
+      // isInteger returns false when provided with null/undef so we force the compiler to ignore
+      const lowestBalance = Math.min(
+        // @ts-ignore
+        Number.isInteger(reward.inventory.rewardLimitPerUserBalance) ?
+          reward.inventory.rewardLimitPerUserBalance : Infinity,
+        // @ts-ignore
+        Number.isInteger(reward.inventory.rewardTotalBalance) ?
+          reward.inventory.rewardTotalBalance : Infinity,
+        // @ts-ignore
+        Number.isInteger(reward.inventory.rewardLimitPerUserPerPeriodBalance) ?
+          reward.inventory.rewardLimitPerUserPerPeriodBalance : Infinity);
+
+      if (lowestBalance === 0) {
+        return {
+          label: 'Fully redeemed',
+          class: 'fully-redeemed',
+          isButtonEnabled: false
+        };
+      }
+
+      return {
+        label: `${lowestBalance} left`,
+        class: 'balance',
+        isButtonEnabled: true
+      };
+    }
+
+
     const thirtySixHours = 36 * 60 * 60 * 1000;
     if (validToDate && (validToDate.getTime() - nowTime) < thirtySixHours) {
       return {
