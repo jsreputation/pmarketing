@@ -23,6 +23,7 @@ import {
   IReward,
   RewardsService,
   ICatalog,
+  Sort,
 } from '@perxtech/core';
 
 import {
@@ -45,7 +46,6 @@ import {
 } from '../analytics.service';
 import { trigger } from '@angular/animations';
 import { fadeIn, fadeOut } from '../utils/fade-animations';
-import { Sort } from 'libs/core/projects/perx-core/src/lib/rewards/models/reward.model';
 
 const REQ_PAGE_SIZE: number = 10;
 
