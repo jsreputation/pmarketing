@@ -63,6 +63,7 @@ export interface IConfig<T> {
   showVoucherBookingFromRewardsPage?: boolean;
   showExpiryOnRewardDetail?: boolean;
   showRewardFavButton?: boolean;
+  showMacaronOnRewardDetails?: boolean;
 
   /* For Razer */
   homeAsProgressPage?: boolean;
