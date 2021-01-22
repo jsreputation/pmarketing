@@ -20,7 +20,7 @@ import {
   MacaronService
 } from '@perxtech/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { filter, finalize, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { filter, finalize, map, switchMap, takeUntil, tap, shareReplay } from 'rxjs/operators';
 import { iif, Observable, of, Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -95,7 +95,8 @@ export class RewardDetailsComponent implements OnInit, OnDestroy, AfterViewInit 
             .map((price) => price.points)
             .reduce((acc = 0, points) => acc >= (points || 0) ? acc : points) : 0;
         }),
-        takeUntil(this.destroy$)
+        takeUntil(this.destroy$),
+        shareReplay(1)
       );
   }
 
