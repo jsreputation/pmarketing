@@ -82,7 +82,7 @@ describe('RewardComponent', () => {
 
   const macaronServiceStub: Partial<MacaronService> = {
     getMacaron: () => null
-  }
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
