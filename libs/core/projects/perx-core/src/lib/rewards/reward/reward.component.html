@@ -22,9 +22,6 @@
       </div>
       <div *ngIf="showMacaron && macaron" class="macaron-container">
         <span [ngClass]="macaron.class">{{macaron.label}}</span>
-        <span *ngIf="macaron && macaron.class === 'running-out'"
-            class="reward-balance">{{macaron.rewardBalance}}
-        left</span>
       </div>
       <div class="reward-expiry" *ngIf="showExpiry && reward.validTo !== null">
         {{expiryLabel | async}}: {{reward.validTo | date: 'dd/MM/yyyy'}}
