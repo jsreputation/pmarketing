@@ -18,6 +18,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('RedemptionComponent', () => {
   let component: RedemptionComponent;
@@ -77,6 +78,7 @@ describe('RedemptionComponent', () => {
         HttpClientTestingModule,
         RouterTestingModule,
         NoopAnimationsModule,
+        TranslateModule.forRoot(),
         VouchersModule
       ],
       providers: [
