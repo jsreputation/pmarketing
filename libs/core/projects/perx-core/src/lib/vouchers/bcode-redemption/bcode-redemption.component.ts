@@ -46,7 +46,7 @@ export class BcodeRedemptionComponent implements OnChanges, OnInit {
     private translateService: TranslateService,
   ) { }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.initTranslate();
   }
 
