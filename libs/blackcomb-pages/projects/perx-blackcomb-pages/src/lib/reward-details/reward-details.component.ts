@@ -102,7 +102,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy, AfterViewInit 
   public ngAfterViewInit(): void {
     this.reward$.subscribe((reward: IReward) => {
       this.macaron = this.macaronService.getMacaron(reward);
-    })
+    });
   }
 
   public buyReward(): void {
