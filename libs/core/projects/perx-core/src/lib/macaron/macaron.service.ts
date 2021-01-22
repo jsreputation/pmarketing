@@ -50,14 +50,14 @@ export class MacaronService {
     }
 
     // Low inventory (<10%)
-    if (ratio !== null && ratio <= 0.1) {
-      return {
-        label: 'Running out',
-        class: 'running-out',
-        rewardBalance: reward.inventory && reward.inventory.rewardTotalBalance || undefined,
-        isButtonEnabled: true
-      };
-    }
+    // if (ratio !== null && ratio <= 0.1) {
+    //   return {
+    //     label: 'Running out',
+    //     class: 'running-out',
+    //     rewardBalance: reward.inventory && reward.inventory.rewardTotalBalance || undefined,
+    //     isButtonEnabled: true
+    //   };
+    // }
 
     const thirtySixHours = 36 * 60 * 60 * 1000;
     if (validToDate && (validToDate.getTime() - nowTime) < thirtySixHours) {
