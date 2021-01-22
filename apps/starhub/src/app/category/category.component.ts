@@ -15,19 +15,15 @@ import {
 import { MatBottomSheet } from '@angular/material';
 
 import {
-  BehaviorSubject,
-  Observable,
-} from 'rxjs';
-import {
   finalize,
-  map,
-  scan,
+  map
 } from 'rxjs/operators';
 
 import {
   IReward,
   RewardsService,
   ICatalog,
+  Sort,
 } from '@perxtech/core';
 
 import {
@@ -48,8 +44,8 @@ import {
   AnalyticsService,
   PageType,
 } from '../analytics.service';
-import {trigger} from '@angular/animations';
-import {fadeIn, fadeOut} from '../utils/fade-animations';
+import { trigger } from '@angular/animations';
+import { fadeIn, fadeOut } from '../utils/fade-animations';
 
 const REQ_PAGE_SIZE: number = 10;
 
@@ -65,11 +61,9 @@ const REQ_PAGE_SIZE: number = 10;
 export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallBack, SortBottomSheetClosedCallBack, AfterViewInit {
   @ViewChild('contentScroll', { static: false })
   public contentScroll: ElementRef;
-  public rewards$: Observable<IReward[]>;
-  public rewardsLoaded: boolean = false;
+  public rewardsList: IReward[] = [];
   public rewardsEnded: boolean = false;
   public rewardsPageId: number = 1;
-  private rewards: BehaviorSubject<IReward[]> = new BehaviorSubject<IReward[]>([]);
   public ghostRewards: any[] = new Array(3); // 3 is also enough for above the fold height
 
   public selectedCategory: string;
@@ -77,31 +71,24 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
   public showToolbarTitle: boolean = false;
 
   private fetchRewards(): void {
-    this.rewardsLoaded = false;
     const categories: string[] | null = this.selectedCategory === 'All' ? null : [this.selectedCategory];
+    const orderBy = this.selectedSortingCraeteria === SortingMode.latest ? 'begins_at' : 'ends_at';
 
-    this.rewardsService.getRewards(this.rewardsPageId, REQ_PAGE_SIZE, null, categories)
+    this.rewardsService.getRewards(this.rewardsPageId, REQ_PAGE_SIZE, null, categories, undefined, undefined, Sort.ascending, orderBy)
       .subscribe((rewards: IReward[]) => {
         if (!rewards) {
           return;
         }
-
-        this.rewards.next(rewards);
-        this.rewardsLoaded = true;
+        // merge newly fetched rewards with the old list
+        this.rewardsList = [...this.rewardsList, ...rewards];
         if (rewards.length < REQ_PAGE_SIZE) {
           this.rewardsEnded = true;
           this.ghostRewards = [];
-        }},
-      (_) => {
-        this.ghostRewards = [];
-      });
-  }
-
-  private initRewardsScan(): void {
-    this.rewards$ = this.rewards.asObservable().pipe(
-      scan((acc, curr) => [...acc, ...curr ? curr : []], []),
-      finalize(() => this.ghostRewards = [])
-    );
+        }
+      },
+        (_) => {
+          this.ghostRewards = [];
+        });
   }
 
   constructor(
@@ -113,9 +100,7 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
     private macaronService: MacaronService,
     private analytics: AnalyticsService,
     private renderer: Renderer2
-  ) {
-    this.initRewardsScan();
-  }
+  ) { }
 
   public ngOnInit(): void {
     const categoryName = this.activeRoute.snapshot.queryParamMap.get('category');
@@ -134,7 +119,7 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
       if (!catalogId) {
         return;
       }
-      this.rewards$ = this.rewardsService.getCatalog(parseInt(catalogId, 10)).pipe(
+      this.rewardsService.getCatalog(parseInt(catalogId, 10)).pipe(
         map((catalog: ICatalog) => {
           this.selectedCategory = catalog.name;
           this.analytics.addEvent({
@@ -146,7 +131,7 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
           return catalog.rewards || [];
         }),
         finalize(() => this.ghostRewards = [])
-      );
+      ).subscribe(rewards => this.rewardsList = rewards);
     }
   }
 
@@ -176,8 +161,12 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
 
   public categorySelectedCallback(updatedValue: string): void {
     this.selectedCategory = updatedValue;
+    // reset rewardsPageId, rewardsEnded and rewardsList before changing category
+    this.rewardsPageId = 1;
+    this.rewardsList = [];
+    this.rewardsEnded = false;
+    this.ghostRewards = new Array(3);
     this.fetchRewards();
-    this.rewards.subscribe(() => this.initRewardsScan());
   }
 
   public getCurrentSelectedCategory(): string {
@@ -189,9 +178,14 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
   }
 
   // SortBottomSheetClosedCallBack methods
-
   public sortOrderSelectedCallback(updatedValue: SortingMode): void {
     this.selectedSortingCraeteria = updatedValue;
+    // reset rewardsPageId, rewardsEnded and rewardsList before changing sort
+    this.rewardsPageId = 1;
+    this.rewardsList = [];
+    this.rewardsEnded = false;
+    this.ghostRewards = new Array(3);
+    this.fetchRewards();
   }
 
   public getCurrentSelectedOrder(): SortingMode {
