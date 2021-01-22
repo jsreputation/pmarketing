@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RewardPopupComponent } from './reward-popup.component';
 import { ExpireTimerComponent } from './expire-timer/expire-timer.component';
-import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA, MatIconModule } from '@angular/material';
 // import { Type } from '@angular/core';
 import { IPopupConfig } from '../../utils/popup/popup.component';
 
@@ -30,7 +30,7 @@ describe('RewardPopupComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RewardPopupComponent, ExpireTimerComponent],
-      imports: [MatDialogModule],
+      imports: [MatDialogModule, MatIconModule],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: dataMock },
         { provide: MatDialogRef, useValue: dialogRef }
@@ -96,7 +96,7 @@ describe('RewardPopupComponent', () => {
 
     TestBed.configureTestingModule({
       declarations: [RewardPopupComponent, ExpireTimerComponent],
-      imports: [MatDialogModule],
+      imports: [MatDialogModule, MatIconModule],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: dataStub },
         { provide: MatDialogRef, useValue: { close: () => { } } }
