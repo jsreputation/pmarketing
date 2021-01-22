@@ -9,7 +9,10 @@
         {{voucher.reward.subtitle}}
       </div>
       <div *ngIf="!showAfterInstruction">
-        <pre class="bcode" *ngIf="voucher?.code">{{voucher.code}}</pre>
+        <div class="bcode-container" *ngIf="voucher?.code">
+          <span class="bcode">{{voucher.code}}</span>
+          <mat-icon class="copy-icon" (click)="copy(voucher.code)">content_copy</mat-icon>
+        </div>
       </div>
       <div class="instruction" [innerHtml]="(voucher?.reward?.redemptionText || instructions) | safeHtml"></div>
       <div *ngIf="showAfterInstruction">
