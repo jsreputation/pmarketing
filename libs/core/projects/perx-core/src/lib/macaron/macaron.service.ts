@@ -68,14 +68,15 @@ export class MacaronService {
       };
     }
 
-    const seventyTwoHours = 72 * 60 * 60 * 1000;
-    if (sellingFrom && (nowTime - sellingFrom.getTime()) < seventyTwoHours) {
-      return {
-        label: 'Just added',
-        class: 'just-added',
-        isButtonEnabled: true
-      };
-    }
+    // currently have no requirement for showing newly added rewards
+    // const seventyTwoHours = 72 * 60 * 60 * 1000;
+    // if (sellingFrom && (nowTime - sellingFrom.getTime()) < seventyTwoHours) {
+    //   return {
+    //     label: 'Just added',
+    //     class: 'just-added',
+    //     isButtonEnabled: true
+    //   };
+    // }
     return null;
   }
 
