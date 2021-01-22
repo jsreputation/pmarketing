@@ -72,10 +72,9 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
 
   private fetchRewards(): void {
     const categories: string[] | null = this.selectedCategory === 'All' ? null : [this.selectedCategory];
-    const orderBy = this.selectedSortingCraeteria === SortingMode.latest ? 'valid_from' : 'valid_to';
-    const sorting = this.selectedSortingCraeteria === SortingMode.latest ? Sort.descending : Sort.ascending;
+    const orderBy = this.selectedSortingCraeteria === SortingMode.latest ? 'begins_at' : 'ends_at';
 
-    this.rewardsService.getRewards(this.rewardsPageId, REQ_PAGE_SIZE, null, categories, undefined, undefined, sorting, orderBy)
+    this.rewardsService.getRewards(this.rewardsPageId, REQ_PAGE_SIZE, null, categories, undefined, undefined, Sort.ascending, orderBy)
       .subscribe((rewards: IReward[]) => {
         if (!rewards) {
           return;
