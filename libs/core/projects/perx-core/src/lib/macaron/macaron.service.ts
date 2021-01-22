@@ -24,10 +24,8 @@ export class MacaronService {
     // some of the reward balance is negative value
     let ratio: number | null = null;
     if (reward.inventory &&
-      reward.inventory.rewardTotalBalance !== undefined &&
-      reward.inventory.rewardTotalBalance !== null &&
-      reward.inventory.rewardTotalLimit !== undefined &&
-      reward.inventory.rewardTotalLimit !== null &&
+      (reward.inventory.rewardTotalBalance &&
+        reward.inventory.rewardTotalLimit) &&
       reward.inventory.rewardTotalLimit !== 0) {
       ratio = reward.inventory.rewardTotalBalance / reward.inventory.rewardTotalLimit;
     }
@@ -79,7 +77,7 @@ export class MacaronService {
 
       if (lowestBalance === 0) {
         return {
-          label: 'Fully redeemed',
+          label: 'Fully redeemed1',
           class: 'fully-redeemed',
           isButtonEnabled: false
         };
