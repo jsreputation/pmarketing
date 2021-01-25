@@ -189,13 +189,6 @@ export class GameComponent implements OnInit, OnDestroy {
               ? null
               : successOutcome.button || this.successPopUp.buttonTxt;
           }
-          if (
-            game.remainingNumberOfTries <= 0 &&
-            game.remainingNumberOfTries !== null
-          ) {
-            // null is recognised as infinite from dashboard
-            this.notificationService.addPopup(this.outOfTriesPopup);
-          }
         }
       })
     );
