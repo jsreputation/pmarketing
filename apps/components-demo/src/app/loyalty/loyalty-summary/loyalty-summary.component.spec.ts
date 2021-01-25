@@ -16,7 +16,8 @@ describe('SummaryComponent', () => {
   let component: LoyaltySummaryComponent;
   let fixture: ComponentFixture<LoyaltySummaryComponent>;
   const loyaltyServiceStub: Partial<LoyaltyService> = {
-    getLoyalties: () => of([])
+    getLoyalties: () => of([]),
+    getTransactionHistory: () => of()
   };
   const mockProfile: IProfile = {
     id: 1,
