@@ -41,7 +41,6 @@ export interface ILoyalty {
   pointsBalance: number;
   currencyBalance?: number;
   currency?: string;
-  lastPointTransactedAt?: Date;
   nextTierPoints?: number;
   nextTierPointsDiff?: number;
   nextTierName?: string;
