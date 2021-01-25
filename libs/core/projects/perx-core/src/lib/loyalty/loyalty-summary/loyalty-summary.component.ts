@@ -6,8 +6,10 @@ import { catchError, tap, map } from 'rxjs/operators';
 import { LoyaltyService } from '../loyalty.service';
 import { ProfileService } from '../../profile/profile.service';
 import { IProfile } from '../../profile/profile.model';
-import { ILoyalty } from '../models/loyalty.model';
-import { oc } from 'ts-optchain';
+import {
+  ILoyalty,
+  ILoyaltyTransactionHistory
+} from '../models/loyalty.model';
 
 @Component({
   selector: 'perx-core-loyalty-summary',
@@ -83,14 +85,15 @@ export class LoyaltySummaryComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    if (!this.subTitleFn) {
-      this.subTitleFn = () =>
-        of(
-          `Your total points as of ${this.datePipe.transform(
-            oc(this.loyalty).lastPointTransactedAt(new Date()),
-            'mediumDate'
-          )}`
-        );
+    if (! this.subTitleFn) {
+      this.loyaltyService.getTransactionHistory(1, 1, undefined, 'transacted_at', 'desc').pipe(
+        map((transactions: ILoyaltyTransactionHistory[]) =>
+          transactions.length > 0 ? transactions[0].transactedAt : new Date()
+        )
+      ).subscribe(
+        (lastTransactionDate: Date) =>
+          this.subTitleFn = () => of(`Your total points as of ${this.datePipe.transform(lastTransactionDate, 'mediumDate')}`)
+      );
     }
 
     if (!this.pointToFn) {
