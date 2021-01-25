@@ -85,14 +85,15 @@ export class LoyaltySummaryComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    if (! this.subTitleFn) {
+    if (!this.subTitleFn) {
       this.loyaltyService.getTransactionHistory(1, 1, undefined, 'transacted_at', 'desc').pipe(
         map((transactions: ILoyaltyTransactionHistory[]) =>
           transactions.length > 0 ? transactions[0].transactedAt : new Date()
         )
       ).subscribe(
-        (lastTransactionDate: Date) =>
-          this.subTitleFn = () => of(`Your total points as of ${this.datePipe.transform(lastTransactionDate, 'mediumDate')}`)
+        (lastTransactionDate: Date) => {
+          this.subTitleFn = () => of(`Your total points as of ${this.datePipe.transform(lastTransactionDate, 'mediumDate')}`);
+        }
       );
     }
 
