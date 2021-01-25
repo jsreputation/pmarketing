@@ -64,8 +64,12 @@ app-expire-timer {
   .mat-icon {
     color: #606060;
   }
+  ::ng-deep .mat-button-focus-overlay {
+    background: transparent!important;
+  }
 }
 
 .close-btn-container {
   position: relative;
 }
+
