@@ -15,6 +15,13 @@ export {
 } from './lib/perx-core.models';
 
 /**
+ * Macarons
+ */
+export { IMacaron } from './lib/macaron/models/macaron.model';
+export { MacaronModule } from './lib/macaron/macaron.module';
+export { MacaronService } from './lib/macaron/macaron.service';
+
+/**
  * Merchants
  */
 export {

@@ -2,6 +2,7 @@ import { Component, Input, OnInit, EventEmitter, Output, OnChanges } from '@angu
 import { Observable, of } from 'rxjs';
 import { IPrice, IReward } from '../models/reward.model';
 import { map } from 'rxjs/operators';
+import { IMacaron } from '../../macaron/models/macaron.model';
 
 @Component({
   selector: 'perx-core-reward',
@@ -37,6 +38,12 @@ export class RewardComponent implements OnInit, OnChanges {
 
   @Input()
   public showRewardFavButton?: boolean;
+
+  @Input()
+  public macaron?: IMacaron;
+
+  @Input()
+  public showMacaron: boolean = true;
 
   @Output()
   public favoriteRewardEvent: EventEmitter<IReward> = new EventEmitter<IReward>();

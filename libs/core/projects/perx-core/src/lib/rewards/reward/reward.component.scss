@@ -1,4 +1,5 @@
 // $max-width: 60rem;
+@import "../../mixins/macaron.scss";
 
 .reward-container {
   margin: 0 auto;
@@ -73,11 +74,35 @@
     }
   }
 
-  .reward-expiry {
-    margin-top: 1rem;
-    font-size: 1.6rem;
-    color: #858585;
+  .horizontal-flex-block {
+    display: flex;
+    flex-direction: row;
+
+    .reward-expiry {
+      flex: 1;
+      margin-top: 1.5rem;
+      font-size: 1.2rem;
+      color: #858585;
+    }
+
+    .macaron-container {
+      @include macaronStyles();
+      flex: 0;
+      text-align: center;
+      padding: 1rem;
+      text-transform: lowercase;
+      white-space: nowrap;
+
+      span {
+        display: inline-block;
+      }
+
+      span::first-letter {
+        text-transform: uppercase;
+      }
+    }
   }
+
 
   .section-heading {
     margin-top: 3rem;

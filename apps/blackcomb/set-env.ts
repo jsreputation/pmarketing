@@ -161,6 +161,11 @@ const appConfigFile = `{
       ? process.env.SHOW_REWARDS_ON_HOMEPAGE
       : true
   },
+  "showMacaronOnRewardDetails": ${
+    process.env.SHOW_MACARON_ON_REWARD_DETAILS
+      ? process.env.SHOW_MACARON_ON_REWARD_DETAILS
+      : false
+  },
   "showCampaignLandingPage": ${
     process.env.SHOW_CAMPAIGN_LANDING_PAGE
       ? process.env.SHOW_CAMPAIGN_LANDING_PAGE

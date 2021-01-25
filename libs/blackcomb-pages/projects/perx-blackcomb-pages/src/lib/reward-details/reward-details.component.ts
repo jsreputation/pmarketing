@@ -1,4 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  AfterViewInit
+} from '@angular/core';
 import {
   RewardsService,
   IReward,
@@ -10,10 +15,12 @@ import {
   ConfigService,
   IConfig,
   SettingsService,
-  IFlags
+  IFlags,
+  IMacaron,
+  MacaronService
 } from '@perxtech/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { filter, finalize, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { filter, finalize, map, switchMap, takeUntil, tap, shareReplay } from 'rxjs/operators';
 import { iif, Observable, of, Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -22,7 +29,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './reward-details.component.html',
   styleUrls: ['./reward-details.component.scss']
 })
-export class RewardDetailsComponent implements OnInit, OnDestroy {
+export class RewardDetailsComponent implements OnInit, OnDestroy, AfterViewInit {
   public reward$: Observable<IReward>;
   public displayPriceFn: (price: IPrice) => string;
   private destroy$: Subject<void> = new Subject();
@@ -37,6 +44,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
   public loyalty: ILoyalty;
   public waitForSubmission: boolean = false;
   public favDisabled: boolean = false;
+  public macaron?: IMacaron | null = null;
 
   public maxRewardCost?: number;
   private initTranslate(): void {
@@ -55,6 +63,7 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private configService: ConfigService,
     private settingsService: SettingsService,
+    private macaronService: MacaronService,
     private router: Router
   ) { }
 
@@ -86,8 +95,15 @@ export class RewardDetailsComponent implements OnInit, OnDestroy {
             .map((price) => price.points)
             .reduce((acc = 0, points) => acc >= (points || 0) ? acc : points) : 0;
         }),
-        takeUntil(this.destroy$)
+        takeUntil(this.destroy$),
+        shareReplay(1)
       );
+  }
+
+  public ngAfterViewInit(): void {
+    this.reward$.subscribe((reward: IReward) => {
+      this.macaron = this.macaronService.getMacaron(reward);
+    });
   }
 
   public buyReward(): void {

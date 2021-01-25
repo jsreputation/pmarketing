@@ -13,7 +13,8 @@ import {
   IReward,
   UtilsModule,
   TokenStorage,
-  SettingsService
+  SettingsService,
+  MacaronService
 } from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
@@ -79,6 +80,10 @@ describe('RewardComponent', () => {
     getRemoteFlagsSettings: () => of()
   };
 
+  const macaronServiceStub: Partial<MacaronService> = {
+    getMacaron: () => null
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RewardDetailsComponent],
@@ -102,6 +107,7 @@ describe('RewardComponent', () => {
         { provide: ThemesService, useValue: themeServiceStub },
         { provide: TokenStorage, useValue: tokenStorageStub },
         { provide: SettingsService, useValue: settingsServiceStub },
+        { provide: MacaronService, useValue: macaronServiceStub },
       ]
     })
       .compileComponents();
