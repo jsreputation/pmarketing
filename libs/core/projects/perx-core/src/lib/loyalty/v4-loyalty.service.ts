@@ -86,7 +86,6 @@ interface IV4Loyalty {
   points_balance_converted_to_currency: number;
   points_currency: string;
   points_to_currency_rate: number;
-  last_point_transacted_at?: Date;
   aging_points?: IV4AgingPoints[];
   tiers: IV4LoyaltyTiers[]; // will do proper mapping later on
   points_history?: IV4PointHistory[];
@@ -216,7 +215,6 @@ export class V4LoyaltyService extends LoyaltyService {
       pointsBalance: loyalty.points_balance,
       currencyBalance: loyalty.points_balance_converted_to_currency,
       currency: loyalty.points_currency,
-      lastPointTransactedAt: loyalty.last_point_transacted_at,
       nextTierPoints: nextTier ? nextTier.points_requirement : 0,
       nextTierPointsDiff: nextTier ? nextTier.points_difference : 0,
       nextTierName: nextTier ? nextTier.name : '',

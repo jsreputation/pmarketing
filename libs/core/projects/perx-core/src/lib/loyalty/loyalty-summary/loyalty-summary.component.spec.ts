@@ -21,7 +21,8 @@ describe('LoyaltySummaryComponent', () => {
   };
   const loyaltyServiceStub: Partial<LoyaltyService> = {
     getLoyalties: () => of([mockLoyalty]),
-    getLoyalty: () => of(mockLoyalty)
+    getLoyalty: () => of(mockLoyalty),
+    getTransactionHistory: () => of()
   };
   const profileServiceStub: Partial<ProfileService> = {
     whoAmI: () => of({
@@ -50,6 +51,7 @@ describe('LoyaltySummaryComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(LoyaltySummaryComponent);
     component = fixture.componentInstance;
+    component.subTitleFn = () => of('');
     fixture.detectChanges();
   });
 
