@@ -51,6 +51,7 @@ describe('LoyaltySummaryComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(LoyaltySummaryComponent);
     component = fixture.componentInstance;
+    component.subTitleFn = () => of('');
     fixture.detectChanges();
   });
 
