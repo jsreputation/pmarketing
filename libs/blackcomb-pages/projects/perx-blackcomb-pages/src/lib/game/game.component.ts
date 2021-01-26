@@ -189,13 +189,6 @@ export class GameComponent implements OnInit, OnDestroy {
               ? null
               : successOutcome.button || this.successPopUp.buttonTxt;
           }
-          if (
-            game.remainingNumberOfTries <= 0 &&
-            game.remainingNumberOfTries !== null
-          ) {
-            // null is recognised as infinite from dashboard
-            this.notificationService.addPopup(this.outOfTriesPopup);
-          }
         }
       })
     );
@@ -228,8 +221,8 @@ export class GameComponent implements OnInit, OnDestroy {
         (err: { errorState: string } | HttpErrorResponse) => {
           if (!(err instanceof HttpErrorResponse) && err.errorState) {
             this.popupData = {
-              title: err.errorState,
-              text: '',
+              title: 'Sorry!',
+              text: err.errorState,
               buttonTxt: this.isEmbedded ? null : this.gameNotAvailablePopUp.buttonTxt,
               imageUrl: '',
             };
