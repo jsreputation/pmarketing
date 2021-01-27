@@ -62,7 +62,7 @@ export class RewardDetailComponent implements OnChanges, OnInit {
     for (const tierInfo of this.reward.loyalty) {
       if (tierInfo.attained) {
         this.attainedTiers.push(tierInfo);
-      } else {
+      } else if (!tierInfo.attained && !tierInfo.sneakPeek) {
         this.unAttainedTiers.push(tierInfo);
       }
     }
