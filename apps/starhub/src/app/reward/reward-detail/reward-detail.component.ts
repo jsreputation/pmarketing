@@ -37,6 +37,7 @@ export class RewardDetailComponent implements OnChanges, OnInit {
 
   public attainedTiers: ILoyaltyTierInfo[] = [];
   public unAttainedTiers: ILoyaltyTierInfo[] = [];
+  public sneakPeekTiers: ILoyaltyTierInfo[] = [];
   public showLoyaltyTierInfo: boolean = false;
 
   constructor(
@@ -64,6 +65,8 @@ export class RewardDetailComponent implements OnChanges, OnInit {
         this.attainedTiers.push(tierInfo);
       } else if (!tierInfo.attained && !tierInfo.sneakPeek) {
         this.unAttainedTiers.push(tierInfo);
+      } else if (tierInfo.sneakPeek) {
+        this.sneakPeekTiers.push(tierInfo);
       }
     }
   }

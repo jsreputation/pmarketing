@@ -36,6 +36,11 @@
               <mat-list-item role="listitem" *ngFor="let tier of unAttainedTiers">{{tier.loyaltyName}}</mat-list-item>
             </mat-list>
           </div>
+          <div *ngIf="sneakPeekTiers.length" class="tier-list">Sneak Peek tiers:
+            <mat-list role="list">
+              <mat-list-item role="listitem" *ngFor="let tier of sneakPeekTiers">{{tier.loyaltyName}}</mat-list-item>
+            </mat-list>
+          </div>
         </div>
         <ng-template #allTiers>Available to all loyalty tiers.</ng-template>
       </div>
