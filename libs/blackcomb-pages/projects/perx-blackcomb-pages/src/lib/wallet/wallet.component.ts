@@ -72,7 +72,7 @@ export class WalletComponent implements OnInit, OnDestroy {
       (config: IConfig<void>) => {
         this.sourceType = config.sourceType ? config.sourceType.toString() : undefined;
       });
-    this.translate.get('STATUS_LABELS').subscribe(statusLabelsTranslated => {
+    this.translate.get('LANDING.STATUS_LABELS').subscribe(statusLabelsTranslated => {
       Object.entries(this.statusLabelMappings).forEach(
         ([key, value]) => {
           if (
