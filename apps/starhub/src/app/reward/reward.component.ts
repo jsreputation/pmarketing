@@ -78,7 +78,7 @@ export class RewardComponent implements OnInit {
 
         if (reward.loyalty && reward.loyalty.length) {
           // STAR-429 disable save to my rewards if at least one tier is not reached
-          this.hasUnAttainedTiers = reward.loyalty.some(tier => !tier.attained);
+          this.hasUnAttainedTiers = reward.loyalty.some(tier => !tier.attained || tier.sneakPeek);
         }
       });
   }
