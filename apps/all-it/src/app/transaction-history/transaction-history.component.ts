@@ -6,6 +6,8 @@ import {
   LoyaltyService,
   ILoyaltyTransactionHistory,
   IRewardTransactionHistory,
+  IGameTransactionHistory,
+  TransactionDetailType,
   // IPurchaseTransactionHistory,
   TransactionPipe,
   ILoyalty,
@@ -77,10 +79,10 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
         this.descFn = (tr: ILoyaltyTransactionHistory) => {
           let text = '';
           const properties = oc(tr).transactionDetails.data.properties();
-          const rewardData = (oc(tr).transactionDetails.data() as IRewardTransactionHistory);
+          const transactionType = oc(tr).transactionDetails.type();
           if (properties) {
             text = properties.invoiceNumber ? `Invoice: ${properties.invoiceNumber}` : '';
-          } else if (rewardData) {
+          } else if (transactionType === TransactionDetailType.reward) {
             // if there is a reward in this transaction it means that it has a associated voucher
             text = 'Obtained voucher';
           }
@@ -89,12 +91,17 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
         this.purchasesTitleFn = (tr: ILoyaltyTransactionHistory) => {
           let text = '';
           const properties = oc(tr).transactionDetails.data.properties();
-          const rewardData = (oc(tr).transactionDetails.data() as IRewardTransactionHistory);
+          const transactionType = oc(tr).transactionDetails.type();
+
           if (properties) {
             text = properties.productName ? properties.productName : '';
-          } else if (rewardData) {
+          } else if (transactionType === TransactionDetailType.reward) {
             // if there is a reward in this transaction it means that it has a associated voucher
+            const rewardData = (oc(tr).transactionDetails.data() as IRewardTransactionHistory);
             text = rewardData.rewardName ? rewardData.rewardName : '';
+          } else if (transactionType === TransactionDetailType.game) {
+            const gameData = (oc(tr).transactionDetails.data() as IGameTransactionHistory);
+            text = gameData.gameName ? gameData.gameName : '';
           }
           return of(text);
         };
