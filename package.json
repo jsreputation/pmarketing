@@ -120,7 +120,7 @@
     "test:dbshk-agent": "nx test dbshk-agent -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
     "test:globeone": "nx test globeone -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
     "test:hkbn": "echo 'skipping hkbn tests'",
-    "test:hsbc": "nx test hsbc -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
+    "test:hsbc": "echo 'skipping old-hsbc tests'",
     "test:hsbc-rewards": "nx test hsbc-rewards -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
     "test:hsbchk": "nx test hsbchk -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
     "test:merck-customer": "nx test merck-customer -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
