@@ -323,10 +323,12 @@ export class V4GameService implements IGameService {
 
   private generatePlayReturn(res: IV4PlayResponse): IPlayOutcome {
     const rewards: IV4Voucher[] = res.data.outcomes.filter((out) => out.outcome_type === OutcomeType.reward) as IV4Voucher[];
-    const points: IV4PointsOutcome[] = res.data.outcomes.filter((out) => out.outcome_type === OutcomeType.points) as IV4PointsOutcome[];
+    const v4Points: IV4PointsOutcome[] = res.data.outcomes.filter((out) => out.outcome_type === OutcomeType.points) as IV4PointsOutcome[];
+    const vouchers = rewards.map(v => V4VouchersService.v4VoucherToVoucher(v));
+    const points = v4Points.map(p => V4GameService.v4PointsToPoints(p));
     return {
-      vouchers: rewards.map(v => V4VouchersService.v4VoucherToVoucher(v)),
-      points: points.map(p => V4GameService.v4PointsToPoints(p)),
+      ...(vouchers && vouchers.length && {vouchers}),
+      ...(points && {points}),
       rawPayload: res
     };
   }

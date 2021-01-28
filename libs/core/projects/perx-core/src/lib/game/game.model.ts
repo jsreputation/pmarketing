@@ -161,7 +161,7 @@ export interface IPointsOutcome {
 }
 
 export interface IPlayOutcome {
-  vouchers: IVoucher[];
+  vouchers?: IVoucher[];
   points?: IPointsOutcome[];
   rawPayload: any;
 }

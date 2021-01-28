@@ -249,7 +249,7 @@ export class GameComponent implements OnInit, OnDestroy {
     this.gameService.play(this.gameId).subscribe(
       (gameOutcome: IPlayOutcome) => {
         this.startGameAnimation = true;
-        if (gameOutcome.vouchers.length > 0) {
+        if (gameOutcome.vouchers && gameOutcome.vouchers.length > 0) {
           // set this as a property
           this.rewardCount = gameOutcome.vouchers.length.toString();
         }
@@ -338,7 +338,7 @@ export class GameComponent implements OnInit, OnDestroy {
   public gameCompleted(): void {
     const gameOutcome$ = this.gameService.play(this.gameId).pipe(
       tap((gameOutcome: IPlayOutcome) => {
-        if (gameOutcome.vouchers.length > 0 || (gameOutcome.points && gameOutcome.points.length)) {
+        if (gameOutcome && gameOutcome.vouchers && gameOutcome.vouchers.length > 0) {
           // set this as a property
           this.rewardCount = gameOutcome.vouchers.length.toString();
         }
@@ -387,7 +387,7 @@ export class GameComponent implements OnInit, OnDestroy {
             }
           } else if (this.isIPlayOutcome(response)) {
             const vouchers = response.vouchers;
-            if (vouchers.length > 0) {
+            if (vouchers && vouchers.length > 0) {
               this.rewardCount = vouchers.length.toString();
             }
             if (response.points) {

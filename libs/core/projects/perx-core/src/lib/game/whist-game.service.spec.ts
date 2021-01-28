@@ -289,7 +289,7 @@ describe('WhistlerGameService', () => {
       }));
       // spyOn(voucherService, 'getVoucher').and.returnValue(of());
       gameService.play(1, 1).subscribe((val) => {
-        if (val) { expect(val.vouchers.length).toBe(1); }
+        if (val && val.vouchers) { expect(val.vouchers.length).toBe(1); }
       });
       tick();
     })));
