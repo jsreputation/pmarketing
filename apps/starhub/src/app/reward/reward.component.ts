@@ -69,15 +69,15 @@ export class RewardComponent implements OnInit {
           this.isButtonEnable = this.macaron.isButtonEnabled;
         }
 
+        if (reward.loyalty && reward.loyalty.length) {
+          this.isButtonEnable = reward.loyalty.some(tier => tier.attained && !tier.sneakPeek);
+        }
+
         if (
           reward.inventory &&
           reward.inventory.rewardLimitPerUserBalance === 0
         ) {
           this.isButtonEnable = false;
-        }
-
-        if (reward.loyalty && reward.loyalty.length) {
-          this.isButtonEnable = reward.loyalty.some(tier => tier.attained && !tier.sneakPeek)
         }
       });
   }
