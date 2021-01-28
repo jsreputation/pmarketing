@@ -286,10 +286,10 @@
     "VIEW_LOCATION": "Xem vị trí"
   },
   "STAMP_CAMPAIGN": {
-    "STAMP_CARD": "Thẻ tem",
-    "OF": "của",
-    "NEW_STAMPS": "tem mới",
-    "NEW_STAMP": "tem mới",
+    "STAMP_CARD": "Tem đã tích lũy",
+    "OF": "/",
+    "NEW_STAMPS": "tem mới được tích lũy",
+    "NEW_STAMP": "tem mới được tích lũy",
     "VIEW_WALLET": "Xem ví",
     "YOU_GOT_A_NEW_STAMP": "Bạn có một con tem mới!",
     "THANK_YOU_FOR_PLAYING": "Cảm ơn vì đã chơi! Bạn đã nhận được số lượng tem tối đa. Đừng quên đổi phần thưởng đã kiếm được của bạn!",
@@ -307,9 +307,9 @@
   },
   "PUZZLE": {
     "PUZZLE": "Câu đố",
-    "PLAY_NOW": "Bắt đầu chơi!",
+    "PLAY_NOW": "",
     "NEW_PIECES": "Miếng mới",
-    "NEW_STAMPS": " tem mới"
+    "NEW_STAMPS": " tem mới được tích lũy"
   },
   "ERRORS": {
     "GENERIC": "Sorry, something went wrong",
