@@ -70,7 +70,7 @@ export class RewardComponent implements OnInit {
         }
 
         if (reward.loyalty && reward.loyalty.length) {
-          this.isButtonEnable = reward.loyalty.some(tier => tier.attained && !tier.sneakPeek);
+          this.isButtonEnable = reward.loyalty.some(tier => tier.attained || !tier.sneakPeek);
         }
 
         if (
