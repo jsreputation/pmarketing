@@ -35,7 +35,7 @@ export class RewardDetailComponent implements OnChanges, OnInit {
   @Input()
   public voucherId?: number;
 
-  public attainedTiers: ILoyaltyTierInfo[] = [];
+  public reachedSneakPeakTiers: ILoyaltyTierInfo[] = [];
   public unAttainedTiers: ILoyaltyTierInfo[] = [];
   public showLoyaltyTierInfo: boolean = false;
 
@@ -60,9 +60,9 @@ export class RewardDetailComponent implements OnChanges, OnInit {
 
   private buildTierList(): void {
     for (const tierInfo of this.reward.loyalty) {
-      if (tierInfo.attained) {
-        this.attainedTiers.push(tierInfo);
-      } else {
+      if (tierInfo.sneakPeek || tierInfo.attained) {
+        this.reachedSneakPeakTiers.push(tierInfo);
+      } else if (!tierInfo.sneakPeek && !tierInfo.attained) {
         this.unAttainedTiers.push(tierInfo);
       }
     }

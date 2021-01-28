@@ -148,6 +148,7 @@ interface IV4LoyaltyTierInfo {
   loyalty_id: number;
   loyalty_name: string;
   loyalty_points_required_for_redemption: number;
+  sneak_peek: boolean;
 }
 
 @Injectable({
@@ -184,7 +185,8 @@ export class V4RewardsService extends RewardsService {
       attained: tier.attained,
       id: tier.loyalty_id,
       loyaltyName: tier.loyalty_name,
-      loyaltyPointsRequiredForRedemption: tier.loyalty_points_required_for_redemption
+      loyaltyPointsRequiredForRedemption: tier.loyalty_points_required_for_redemption,
+      sneakPeek: tier.sneak_peek
     })) : [];
 
     const v4Invent = reward.inventory;

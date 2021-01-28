@@ -90,4 +90,5 @@ export interface ILoyaltyTierInfo {
   id: number;
   loyaltyName: string;
   loyaltyPointsRequiredForRedemption: number;
+  sneakPeek: boolean;
 }
