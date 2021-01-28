@@ -23,6 +23,7 @@ import { AnalyticsService, PageType } from '../analytics.service';
 import { GameOutcomeService } from '../congrats/game-outcome/game-outcome.service';
 import { Observable, Subject, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorMessageService } from '../utils/error-message/error-message.service';
 
 @Component({
   selector: 'app-game',
@@ -48,7 +49,8 @@ export class GameComponent implements OnInit {
     private analytics: AnalyticsService,
     private gameOutcomeService: GameOutcomeService,
     private configService: ConfigService,
-    private campaignService: ICampaignService
+    private campaignService: ICampaignService,
+    private errorMessageServce: ErrorMessageService
   ) { }
 
   public ngOnInit(): void {
@@ -154,13 +156,16 @@ export class GameComponent implements OnInit {
             }
           },
           (err: { errorState: string } | HttpErrorResponse) => {
-            if (err instanceof HttpErrorResponse && err.error.code === 4103) {
-              this.notificationService.addPopup({
-                title: 'Oooops!',
-                text: 'No more rewards available',
-                disableOverlayClose: true,
-                panelClass: 'custom-class'
-              });
+            if (err instanceof HttpErrorResponse) {
+              this.errorMessageServce.getErrorMessageByErrorCode(err.error.code)
+                .subscribe((message) => {
+                  this.notificationService.addPopup({
+                    title: 'Sorry!',
+                    text: message,
+                    disableOverlayClose: true,
+                    panelClass: 'custom-class'
+                  });
+                });
             } else {
               this.showErrorPopup();
             }
@@ -239,21 +244,17 @@ export class GameComponent implements OnInit {
           }
         },
         (response: HttpErrorResponse) => {
-          let message = 'Sorry, something went wrong';
-          // response.status !== to error status
-          if (response.error.code === 4103) {
-            message = 'Sorry, rewards have run out';
-          } else if (response.error.code === 4121) {
-            message = 'Sorry, you do not have any more moves available';
-          }
-          this.notificationService.addPopup({
-            title: 'Sorry!',
-            text: message,
-            buttonTxt: 'back home',
-            afterClosedCallBack: this,
-            disableOverlayClose: true,
-            panelClass: 'custom-class'
-          });
+          this.errorMessageServce.getErrorMessageByErrorCode(response.error.code)
+            .subscribe((message) => {
+              this.notificationService.addPopup({
+                title: 'Sorry!',
+                text: message,
+                buttonTxt: 'back home',
+                afterClosedCallBack: this,
+                disableOverlayClose: true,
+                panelClass: 'custom-class'
+              });
+            });
         },
         () => {
           this.willWin = false;
