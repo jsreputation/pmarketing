@@ -23,7 +23,7 @@ export class RewardComponent implements OnInit {
   public loadingSubmit: boolean = false;
   public isRewardsDetailsFetched: boolean = false;
   public macaron: IMacaron | null;
-  public hasUnAttainedTiers: boolean = false;
+
   constructor(
     private location: Location,
     private router: Router,
@@ -77,8 +77,7 @@ export class RewardComponent implements OnInit {
         }
 
         if (reward.loyalty && reward.loyalty.length) {
-          // STAR-429 disable save to my rewards if at least one tier is not reached
-          this.hasUnAttainedTiers = reward.loyalty.some(tier => !tier.attained || tier.sneakPeek);
+          this.isButtonEnable = reward.loyalty.some(tier => tier.attained && !tier.sneakPeek)
         }
       });
   }
