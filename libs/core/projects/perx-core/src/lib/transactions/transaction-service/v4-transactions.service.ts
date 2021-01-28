@@ -185,7 +185,8 @@ export class V4TransactionsService extends TransactionsService {
     page: number = 1,
     pageSize: number = DEFAULT_PAGE_COUNT,
     startAmount?: number,
-    state?: string
+    state?: string,
+    endDate?: Date
   ): Observable<ITransaction[]> {
     const razerParams: {} = startAmount !== undefined ? {
       start_amount: `${startAmount}`,
@@ -198,6 +199,9 @@ export class V4TransactionsService extends TransactionsService {
         ...razerParams
       }
     };
+    if (endDate) {
+      queryParams.params = {...queryParams.params, ...{'end_date': endDate.toISOString()}};
+    }
     return this.http.get(`${this.apiHost}/v4/transactions`,
       queryParams).pipe(
         map((res: IV4TransactionsResponse) => ({ transactions: res.data, totalCount: oc(res).meta.total_count(0) })),
@@ -208,21 +212,27 @@ export class V4TransactionsService extends TransactionsService {
       );
   }
 
-  public getTransactionSummary(state?: string): Observable<{ totalAmount: number }> {
-    const params = {
+  public getTransactionSummary(state?: string, endDate?: Date): Observable<{ totalAmount: number }> {
+    let params = {
       state: state || 'pending|processed'
     };
+    if (endDate) {
+      params = {...params, ...{'end_date': endDate.toISOString()}};
+    }
     return this.http.get(`${this.apiHost}/v4/transaction_summary`, { params }).pipe(
       map((res: { data: { total_amount: number } }) => ({ totalAmount: +res.data.total_amount || 0 }))
     );
   }
 
-  public getTransactionsCountByType(transactionType: string): Observable<number> {
+  public getTransactionsCountByType(transactionType: string, endDate?: Date): Observable<number> {
     const queryParams = {
       params: {
         transaction_type: `${transactionType}`
       }
     };
+    if (endDate) {
+      queryParams.params = {...queryParams.params, ...{'end_date': endDate.toISOString()}};
+    }
     return this.http.get(`${this.apiHost}/v4/transactions`, queryParams).pipe(
       map((transactions: IV4TransactionsResponse) => transactions.meta.count));
   }
