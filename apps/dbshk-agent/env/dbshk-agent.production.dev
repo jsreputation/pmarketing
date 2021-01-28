@@ -18,5 +18,5 @@ SHOW_CATALOG_ON_HOMEPAGE=false
 SHOW_REFERRAL_CAMPAIGNS_ON_HOMEPAGE=true
 DISCLAIMERURL=https://cdn.perxtech.net/content/hsbc-hk/disclaimer.html
 TNCURL=https://cdn.perxtech.net/content/hsbc-hk/tnc.html?c=1
-SHOW_PERFORMANCE_OVERVIEW=false
+SHOW_PERFORMANCE_OVERVIEW=true
 SHOW_REFERRAL_PROGRESS = true

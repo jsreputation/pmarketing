@@ -18,7 +18,7 @@ SHOW_CATALOG_ON_HOMEPAGE=false
 SHOW_REFERRAL_CAMPAIGNS_ON_HOMEPAGE=true
 DISCLAIMERURL=https://cdn.perxtech.net/content/dbs-hk/disclaimer.html
 TNCURL=https://cdn.perxtech.net/content/dbs-hk/tnc.html?c=1
-SHOW_PERFORMANCE_OVERVIEW=false
+SHOW_PERFORMANCE_OVERVIEW=true
 SHOW_REFERRAL_PROGRESS = true
 COUNTRY_CODE_PREFIX=852
 BASE_HREF=/treasures/emgm-poc/
