@@ -58,7 +58,7 @@ export class ReferralComponent {
         if (campaign) {
           this.campaign = campaign;
           this.code = campaign.referralCodes
-            ? campaign.referralCodes[0]
+            ? campaign.referralCodes.find(code => code !== undefined)
             : this.code;
           // set to campaign or do nothing
           this.campaignDescription = campaign.description ? campaign.description : this.campaignDescription;
