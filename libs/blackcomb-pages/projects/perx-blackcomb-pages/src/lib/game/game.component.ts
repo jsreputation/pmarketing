@@ -261,10 +261,6 @@ export class GameComponent implements OnInit, OnDestroy {
       (response: HttpErrorResponse) => {
         this.errorMessageService.getErrorMessageByErrorCode(response.error.code)
           .subscribe(this.notificationService.addSnack);
-      },
-      () => {
-        this.popupData = this.noRewardsPopUp;
-        this.redirectUrlAndPopUp(); // wont call preplayConfirm direct away if preplay fail
       }
     );
   }
