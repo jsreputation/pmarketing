@@ -189,6 +189,15 @@ export class GameComponent implements OnInit, OnDestroy {
               ? null
               : successOutcome.button || this.successPopUp.buttonTxt;
           }
+          if (
+            // GLOB-29: Let scratch card tries error be handled by the game service
+            game.type !== GameType.scratch &&
+            game.remainingNumberOfTries <= 0 &&
+            game.remainingNumberOfTries !== null
+          ) {
+            // null is recognised as infinite from dashboard
+            this.notificationService.addPopup(this.outOfTriesPopup);
+          }
         }
       })
     );
