@@ -6,7 +6,8 @@ export abstract class TransactionsService {
     page: number,
     pageSize: number,
     startAmount?: number,
-    state?: string): Observable<ITransaction[]>;
-  public abstract getTransactionSummary(state?: string): Observable<{ totalAmount: number }>;
-  public abstract getTransactionsCountByType(type: string): Observable<number>;
+    state?: string,
+    endDate?: Date): Observable<ITransaction[]>;
+  public abstract getTransactionSummary(state?: string, endDate?: Date): Observable<{ totalAmount: number }>;
+  public abstract getTransactionsCountByType(type: string, endDate?: Date): Observable<number>;
 }
