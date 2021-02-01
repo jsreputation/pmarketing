@@ -1,0 +1,11 @@
+<div class="card-list-container"
+  infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="500"
+  (scrolled)="onScroll()"
+  [scrollWindow]="false">
+    <perx-core-rewards-large-list  
+    (tapped)="onClick($event)"
+    [rewardsList]="rewards$">
+  </perx-core-rewards-large-list>
+</div>

@@ -244,6 +244,12 @@ const routes: Routes = [
         import('../favorite-rewards/favorite-rewards.module').then((mod) => mod.FavoriteRewardsModule),
         canActivate: [ProtectedGuard],
       },
+      {
+        path: 'large-vouchers',
+        loadChildren: () =>
+          import('../large-vouchers/large-vouchers.module').then((mod) => mod.LargeVouchersModule),
+        canActivate: [ProtectedGuard],
+      },
     ],
   },
 ];

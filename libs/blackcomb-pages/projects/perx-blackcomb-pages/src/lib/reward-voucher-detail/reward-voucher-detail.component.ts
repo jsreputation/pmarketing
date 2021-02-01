@@ -67,6 +67,7 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
   public showNoCodeReward: boolean = false;
   public enableRedeemButton: boolean = false;
   public remoteFlags: IFlags;
+  public showVoucherSummary: boolean = false;
 
   constructor(
     private rewardsService: RewardsService,
@@ -82,10 +83,11 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
-    const { current, stageLabels, rewardType, barHeadLine, useRewardDescription, enableRedeemButton } = history.state;
+    const { current, stageLabels, rewardType, barHeadLine, useRewardDescription, enableRedeemButton, showVoucherSummary } = history.state;
     this.barHeadLine = barHeadLine;
     this.useRewardDescription = useRewardDescription;
     this.enableRedeemButton = enableRedeemButton;
+    this.showVoucherSummary = showVoucherSummary;
 
     this.rewardType = rewardType;
     if (current !== (undefined) && stageLabels) {
@@ -95,9 +97,10 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
         stages: 2,
         stageLabels
       };
-    } else {
+    } else if (!this.showVoucherSummary) {
       this.location.back();
     }
+
     this.configService.readAppConfig<void>()
       .subscribe((config: IConfig<void>) => this.appConfig = config);
     this.settingsService.getRemoteFlagsSettings().subscribe((flags: IFlags) => {
@@ -150,6 +153,9 @@ export class RewardVoucherDetailComponent implements OnInit, OnDestroy {
             }
             if (ps.voucherId) {
               this.voucherId = Number.parseInt(ps.voucherId, 10);
+              if (this.showVoucherSummary) {
+                this.navToRedeem();
+              }
             }
           }),
         ).subscribe();
