@@ -237,6 +237,7 @@ export class GameComponent implements OnInit, OnDestroy {
             };
           } else if (
             err instanceof HttpErrorResponse &&
+            err.error &&
             err.error.code === 4103
           ) {
             console.log(`Error ${err.error.code}: ${err.error.message}`);
