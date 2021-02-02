@@ -138,21 +138,21 @@ export class ProgressCampaignComponent implements OnInit {
           // to do actual light up of stamps, campaign progress bar is | async to campaignprogress and only updates from here
           const transactionSummaryProcessed$ = this.transactionsService.getTransactionSummary(TransactionState.processed);
           return combineLatest(transactionSummary$, transactionSummaryProcessed$).pipe(
-              map(([summaryFull, summaryProcessed]) => {
-                if (campaign.rewards) {
-                  return {
-                    stages: campaign.rewards.length || 2, // if length 0 default to 2 stages
-                    // biggest reward return last, test if really need
-                    // find the highest point and see if balance >=, at final stage
-                    lightStage: summaryProcessed.totalAmount ? (summaryProcessed.totalAmount / 100) : 0,
-                    current: (summaryFull.totalAmount || 0) / 100,
-                    stageLabels: campaign.rewards.reduce((acc, curr) => [...acc, (
-                      curr && curr.customFields && curr.customFields.requirement
-                    )], []).filter(v => v)
-                  };
-                }
-                return {}; // return an empty obj
-              })
+            map(([summaryFull, summaryProcessed]) => {
+              if (campaign.rewards) {
+                return {
+                  stages: campaign.rewards.length || 2, // if length 0 default to 2 stages
+                  // biggest reward return last, test if really need
+                  // find the highest point and see if balance >=, at final stage
+                  lightStage: summaryProcessed.totalAmount ? (summaryProcessed.totalAmount / 100) : 0,
+                  current: (summaryFull.totalAmount || 0) / 100,
+                  stageLabels: campaign.rewards.reduce((acc, curr) => [...acc, (
+                    curr && curr.customFields && curr.customFields.requirement
+                  )], []).filter(v => v)
+                };
+              }
+              return {}; // return an empty obj
+            })
           );
         }
         if (campaign.type === CampaignType.invite) {
@@ -205,8 +205,8 @@ export class ProgressCampaignComponent implements OnInit {
                                 progress = {
                                   stages: stageLabels.length,
                                   current: ((this.campaignProgress && this.campaignProgress.current) ?
-                                  this.campaignProgress.current : 0) >= rewardPositionsSorted[index] ?
-                                  rewardPositionsSorted[index] : (transactionData.length ? transactionData[0].razerStampsCount : 0),
+                                    this.campaignProgress.current : 0) >= rewardPositionsSorted[index] ?
+                                    rewardPositionsSorted[index] : (transactionData.length ? transactionData[0].razerStampsCount : 0),
                                   lightStage: meetShowVoucherRequirement ? rewardPositionsSorted[rewardPositionsSorted.length - 1] : 0,
                                   stageLabels
                                 };
@@ -216,8 +216,8 @@ export class ProgressCampaignComponent implements OnInit {
                                 meetShowVoucherRequirement,
                                 progress,
                                 barHeadLine: this.progressInfoPipe
-                                .transform(`${this.campaignProgress.current || 0}`, this.campaignRewardMode,
-                                  this.campaign.name)
+                                  .transform(`${this.campaignProgress && this.campaignProgress.current || 0}`, this.campaignRewardMode,
+                                    this.campaign.name)
                               };
                             });
                           }
@@ -242,7 +242,8 @@ export class ProgressCampaignComponent implements OnInit {
                         ...reward,
                         meetShowVoucherRequirement: true,
                         progress,
-                        barHeadLine: this.progressInfoPipe.transform(`${this.campaignProgress.current || 0}`, this.campaignRewardMode,
+                        barHeadLine: this.progressInfoPipe.transform(
+                          `${this.campaignProgress && this.campaignProgress.current || 0}`, this.campaignRewardMode,
                           this.campaign.name)
                       };
                     }));
@@ -271,7 +272,7 @@ export class ProgressCampaignComponent implements OnInit {
                     progress = {
                       stages: stageLabels.length || 2, // actually it's always going to be 2, can just hardcode 2
                       current: ((this.campaignProgress && this.campaignProgress.current) ?
-                      this.campaignProgress.current : 0) >= completeStageLabels[index] ?
+                        this.campaignProgress.current : 0) >= completeStageLabels[index] ?
                         completeStageLabels[index] : (this.campaignProgress.current ? this.campaignProgress.current : 0),
                       lightStage: meetShowVoucherRequirement ? completeStageLabels[completeStageLabels.length - 1] : 0,
                       stageLabels
@@ -281,7 +282,8 @@ export class ProgressCampaignComponent implements OnInit {
                     ...reward,
                     meetShowVoucherRequirement,
                     progress,
-                    barHeadLine: this.progressInfoPipe.transform(`${this.campaignProgress.current || 0}`, this.campaignRewardMode,
+                    barHeadLine: this.progressInfoPipe.transform(
+                      `${this.campaignProgress && this.campaignProgress.current || 0}`, this.campaignRewardMode,
                       this.campaign.name)
                   };
                 });
@@ -314,7 +316,8 @@ export class ProgressCampaignComponent implements OnInit {
                     ...reward,
                     meetShowVoucherRequirement: (campaignInv.refersAttained || 0) >= completeStageLabels[index],
                     progress,
-                    barHeadLine: this.progressInfoPipe.transform(`${this.campaignProgress.current || 0}`, this.campaignRewardMode,
+                    barHeadLine: this.progressInfoPipe.transform(
+                      `${this.campaignProgress && this.campaignProgress.current || 0}`, this.campaignRewardMode,
                       this.campaign.name)
                   };
                 });
@@ -349,7 +352,7 @@ export class ProgressCampaignComponent implements OnInit {
             : [...stampCards[0].displayProperties.rewardPositions].sort((a, b) => a - b)) : // if len is only 1 add 0
           []
       };
-      return current ? ({...intemProgress, lightStage: (stampCards[0].stamps && stampCards[0].stamps.length)}) : intemProgress;
+      return current ? ({ ...intemProgress, lightStage: (stampCards[0].stamps && stampCards[0].stamps.length) }) : intemProgress;
     }
     return {};
   }
