@@ -60,14 +60,10 @@ export class MacaronService {
     // show the inventory count
     if (reward.inventory &&
       (reward.inventory.rewardTotalBalance ||
-        reward.inventory.rewardLimitPerUserBalance ||
         reward.inventory.rewardLimitPerUserPerPeriodBalance)) {
 
       // isInteger returns false when provided with null/undef so we force the compiler to ignore
       const lowestBalance = Math.min(
-        // @ts-ignore
-        Number.isInteger(reward.inventory.rewardLimitPerUserBalance) ?
-          reward.inventory.rewardLimitPerUserBalance : Infinity,
         // @ts-ignore
         Number.isInteger(reward.inventory.rewardTotalBalance) ?
           reward.inventory.rewardTotalBalance : Infinity,
