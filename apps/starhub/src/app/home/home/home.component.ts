@@ -70,19 +70,21 @@ export class HomeComponent implements OnInit {
         this.loyaltyService
           .getLoyalty()
           .subscribe((loyalty: ILoyalty) => (this.loyalty = loyalty));
-        this.profileService
-          .whoAmI()
-          .subscribe((p: IProfile) => {
-            this.profile = p;
-            const customProperties = p.customProperties;
-            if (customProperties) {
-              this.hubClubDisplay = customProperties.sub_membership_type &&
-                customProperties.sub_membership_type.toString().toLowerCase() === 'nominee' &&
-                customProperties.membership &&
-                customProperties.membership.toString().toLowerCase() !== 'hubclub' ?
-                customProperties.sub_membership_display.toString() : customProperties.membership_display.toString();
-            }
-          });
+        if (this.hubclubCR) {
+          this.profileService
+            .whoAmI()
+            .subscribe((p: IProfile) => {
+              this.profile = p;
+              const customProperties = p.customProperties;
+              if (customProperties) {
+                this.hubClubDisplay = customProperties.sub_membership_type &&
+                  customProperties.sub_membership_type.toString().toLowerCase() === 'nominee' &&
+                  customProperties.membership &&
+                  customProperties.membership.toString().toLowerCase() !== 'hubclub' ?
+                  customProperties.sub_membership_display.toString() : customProperties.membership_display.toString();
+              }
+            });
+        }
         this.getAccessToken();
       }
     );
