@@ -197,7 +197,7 @@ export class LoyaltySummaryComponent implements OnInit {
       .subscribe((loyalty: ILoyalty) => {
         this.loyalty = loyalty;
         if (this.showReferralProgress) {
-          this.calculateGlobalTopScorePercentage(loyalty.pointsBalance, this.topScoreValueFn);
+          this.calculateGlobalTopScorePercentage(loyalty.tierPoints, this.topScoreValueFn);
         }
         if (this.nextTierName) {
           this.pointTo = this.pointToFn().pipe(

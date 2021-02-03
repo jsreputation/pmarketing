@@ -52,6 +52,7 @@ export interface ILoyalty {
   tiers?: LoyaltyTiers[];
   membershipState?: 'active' | 'pending' | 'inactive' | 'expire';
   images?: LoyaltyImages;
+  tierPoints?: number;
 }
 
 export interface ILoyaltyTransaction {
