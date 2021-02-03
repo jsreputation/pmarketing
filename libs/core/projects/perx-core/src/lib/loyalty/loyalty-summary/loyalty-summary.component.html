@@ -27,10 +27,10 @@
         </div>
       </div>
     </ng-container>
-    <div>
+    <div *ngIf="subTitleFn">
       {{subTitleFn(loyalty) | async}}
     </div>
-    <div class="expiring-points">
+    <div *ngIf="summaryExpiringFn" class="expiring-points">
       {{summaryExpiringFn(loyalty) | async}}
     </div>
 
