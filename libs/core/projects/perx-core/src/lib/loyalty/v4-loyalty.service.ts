@@ -94,6 +94,7 @@ interface IV4Loyalty {
   membership_expiry: Date;
   membership_state?: 'active' | 'pending' | 'inactive' | 'expire';
   images?: IV4Image[];
+  tier_points?: number;
 }
 
 interface IV4GetLoyaltiesResponse {
@@ -225,6 +226,7 @@ export class V4LoyaltyService extends LoyaltyService {
       nextTierPoints: nextTier ? nextTier.points_requirement : 0,
       nextTierPointsDiff: nextTier ? nextTier.points_difference : 0,
       nextTierName: nextTier ? nextTier.name : '',
+      tierPoints: loyalty.tier_points,
       highestTier,
       expiringPoints: loyalty.aging_points && loyalty.aging_points.map(aging => ({
         expireDate: aging.expiring_on_date,
