@@ -99,6 +99,7 @@ interface IV4StampCard {
     rewards: IV4Outcome[];
   };
   display_properties: {
+    button_text?: string;
     cols?: number;
     rows?: number;
     header?: {
@@ -273,7 +274,8 @@ export class V4StampService implements StampService {
         rewardPositions: stampCard.display_properties.reward_positions,
         thumbnailImg: oc(stampCard).display_properties.thumbnail_image.value.image_url()
       },
-      stamps: stampCard.stamps ? stampCard.stamps.map((stamp: IV4Stamp) => V4StampService.v4StampToStamp(stamp)) : undefined
+      stamps: stampCard.stamps ? stampCard.stamps.map((stamp: IV4Stamp) => V4StampService.v4StampToStamp(stamp)) : undefined,
+      buttonText: stampCard.display_properties.button_text
     };
   }
 
