@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
-  Observable, forkJoin, of, Subject
+  Observable, of
 } from 'rxjs';
 import { Router, NavigationExtras } from '@angular/router';
 import {
@@ -17,16 +17,13 @@ const REQ_PAGE_SIZE: number = 10;
   templateUrl: './large-vouchers.component.html',
   styleUrls: ['./large-vouchers.component.scss']
 })
-export class LargeVouchersComponent implements OnInit, OnDestroy {
+export class LargeVouchersComponent implements OnInit {
 
-  private destroy$: Subject<void> = new Subject<void>();
-
-  public vouchers$: Observable<Voucher[]>;
   public currentPage: number = 0;
   public completed: boolean = false;
   public sourceType: string | undefined = undefined;
   public rewards$: Observable<IReward[]>;
-  public voucherList: Voucher[] = [];
+  public vouchers: Voucher[] = [];
 
   constructor(
     private vouchersService: IVoucherService,
@@ -40,36 +37,27 @@ export class LargeVouchersComponent implements OnInit, OnDestroy {
         this.sourceType = config.sourceType ? config.sourceType.toString() : undefined;
       });
 
-    this.vouchers$ = of([]);
     this.onScroll();
   }
-
-  public ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
 
   public onScroll(): void {
     this.currentPage = this.currentPage + 1;
     if (this.completed) {
       return;
     }
-    forkJoin(
-      this.vouchers$,
-      this.vouchersService.getFromPage(this.currentPage, { type: 'all', sourceType: this.sourceType })
-    ).subscribe((val) => {
-      if (val[1].length && val[1].length < REQ_PAGE_SIZE) {
+
+    this.vouchersService.getFromPage(this.currentPage, { type: 'all', sourceType: this.sourceType })
+    .subscribe((val) => {
+      if (val.length < REQ_PAGE_SIZE) {
         this.completed = true;
       }
-      this.voucherList = [...val[0], ...val[1]];
+      this.vouchers.push(...val);
       const rewardList: IReward[] = [];
-      this.voucherList.forEach((obj: Voucher) => {
+      this.vouchers.forEach((obj: Voucher) => {
         if (obj.reward) {
           rewardList.push(obj.reward);
         }
       });
-      this.vouchers$ = of(this.voucherList);
       this.rewards$ = of(rewardList);
     });
   }
@@ -83,7 +71,7 @@ export class LargeVouchersComponent implements OnInit, OnDestroy {
       }};
 
     let voucherId;
-    for (const v of this.voucherList) {
+    for (const v of this.vouchers) {
       if (v.reward && v.reward.id === reward.id) {
         voucherId = v.id;
       }
