@@ -101,7 +101,7 @@ describe('ContentComponent', () => {
       flushMicrotasks();
       expect(getAccountSettingsSpy).toHaveBeenCalledTimes(1);
       // expect(getSpy).toHaveBeenCalledTimes(2);
-      expect(getSpy).toHaveBeenCalledWith('https://cors-proxy.perxtech.io/?url=http://failingStuff', { responseType: 'text' });
+      expect(getSpy).toHaveBeenCalledWith('http://failingStuff', { responseType: 'text' });
       const compiled = fixture.debugElement.nativeElement;
       expect(compiled.querySelector('.content')).toBeNull();
       expect(compiled.querySelector('.error')).toBeDefined();
@@ -126,7 +126,7 @@ describe('ContentComponent', () => {
       // expect(getSpy).toHaveBeenCalledWith('/assets/content/test.html', { responseType: 'text' });
       expect(getAccountSettingsSpy).toHaveBeenCalledTimes(1);
       // expect(getSpy).toHaveBeenCalledTimes(2);
-      expect(getSpy).toHaveBeenCalledWith('https://cors-proxy.perxtech.io/?url=http://goodStuff', { responseType: 'text' });
+      expect(getSpy).toHaveBeenCalledWith('http://goodStuff', { responseType: 'text' });
       const compiled = fixture.debugElement.nativeElement;
       // expect(compiled.querySelector('.content')).not.toBeNull();
       expect(compiled.querySelector('.error')).toBeNull();
@@ -151,7 +151,7 @@ describe('ContentComponent', () => {
       // expect(getSpy).toHaveBeenCalledWith('/assets/content/test.html', { responseType: 'text' });
       expect(getAccountSettingsSpy).toHaveBeenCalledTimes(1);
       // expect(getSpy).toHaveBeenCalledTimes(2);
-      expect(getSpy).toHaveBeenCalledWith('https://cors-proxy.perxtech.io/?url=http://goodStuff', { responseType: 'text' });
+      expect(getSpy).toHaveBeenCalledWith('http://goodStuff', { responseType: 'text' });
       const compiled = fixture.debugElement.nativeElement;
       expect(compiled.querySelector('.content')).toBeNull();
       expect(compiled.querySelector('.error')).toBeNull();
