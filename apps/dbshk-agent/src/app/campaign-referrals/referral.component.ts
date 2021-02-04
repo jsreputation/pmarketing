@@ -29,7 +29,7 @@ export class ReferralComponent {
   // todo to be replaced with the proper content when api is available
   public shareTitle: string;
   // todo to be replaced with the proper content when api is available
-  public shareUrl: string = 'https://www.dbs.com.hk/treasures/emgm-poc/referee';
+  public shareUrl: string = 'https://www.dbs.com.hk/treasures/emgm-poc/referee/en';
   public copyToClipboardTxt: string;
   public clipboardErrorTxt: string;
   public popupTitle: string;
@@ -75,7 +75,7 @@ export class ReferralComponent {
                   '1. Download the DBS iWealth® app via Apple Apple Store or Google Play Store.\n' +
                   '2. Enter my invitation code [{{code}}] and join DBS Treasures.\n' +
                   '3. Transfer-in or make an investment transaction of your liking to gross up additional cash rewards\n' +
-                  'Terms and Conditions apply, visit https://www.dbs.com.hk/treasures/emgm-poc/referee for more details.';
+                  'Terms and Conditions apply, visit https://www.dbs.com.hk/treasures/emgm-poc/referee/en for more details.';
                 break;
               case 'funds':
                 this.shareText = 'Hey there! Open DBS Bank account now to enjoy the fabulous offer!\n' +
@@ -84,7 +84,7 @@ export class ReferralComponent {
                   '1. Download the DBS iWealth® app via Apple Apple Store or Google Play Store.\n' +
                   '2. Enter my invitation code [{{code}}] and join DBS Treasures to earn up to HK$13,500 cash reward.\n' +
                   '3. Transfer-in or make an investment transaction of your liking to gross up additional cash reward.\n' +
-                  'Terms and Conditions apply, visit https://www.dbs.com.hk/treasures/emgm-poc/referee for more details.';
+                  'Terms and Conditions apply, visit https://www.dbs.com.hk/treasures/emgm-poc/referee/en for more details.';
                 break;
               case 'equity':
                 this.shareText = 'Hey there! Open DBS Bank account now to enjoy the fabulous offer! \n' +
@@ -93,7 +93,7 @@ export class ReferralComponent {
                   '1. Download the DBS iWealth® app via Apple Apple Store or Google Play Store.\n' +
                   '2. Enter my invitation code [{{code}}] and join DBS Treasures to earn up to HK$13,500 cash reward.\n' +
                   '3. Transfer-in or make an investment transaction of your liking to gross up additional cash reward.\n' +
-                  'Terms and Conditions apply, visit https://www.dbs.com.hk/treasures/emgm-poc/referee for more details.';
+                  'Terms and Conditions apply, visit https://www.dbs.com.hk/treasures/emgm-poc/referee/en for more details.';
                 break;
               case 'securities':
                 this.shareText = 'Hey there! Open DBS Bank account now to enjoy the fabulous offer! \n' +
@@ -102,7 +102,7 @@ export class ReferralComponent {
                   '1. Download the DBS iWealth® app via Apple Apple Store or Google Play Store.\n' +
                   '2. Enter my invitation code [{{code}}] and join DBS Treasures to earn up to HK$13,500 cash reward.\n' +
                   '3. Transfer-in or make an investment transaction of your liking to gross up additional cash reward.\n' +
-                  'Terms and Conditions apply, visit https://www.dbs.com.hk/treasures/emgm-poc/referee for more details.';
+                  'Terms and Conditions apply, visit https://www.dbs.com.hk/treasures/emgm-poc/referee/en for more details.';
                 break;
               case 'bonds':
                 this.shareText = 'Hey there! Open DBS Bank account now to enjoy the fabulous offer! \n' +
@@ -111,7 +111,7 @@ export class ReferralComponent {
                   '1. Download the DBS iWealth® app via Apple Apple Store or Google Play Store.\n' +
                   '2. Enter my invitation code [{{code}}] and join DBS Treasures to earn up to HK$13,500 cash reward.\n' +
                   '3. Transfer-in or make an investment transaction of your liking to gross up additional cash reward.\n' +
-                  'Terms and Conditions apply, visit https://www.dbs.com.hk/treasures/emgm-poc/referee for more details.';
+                  'Terms and Conditions apply, visit https://www.dbs.com.hk/treasures/emgm-poc/referee/en for more details.';
                 break;
               default:
                 this.shareText = 'Hey there! Open DBS Bank account now to enjoy the fabulous offer! \uD83D\uDE09\n' +
@@ -120,7 +120,7 @@ export class ReferralComponent {
                   '1. Download the DBS iWealth® app via Apple Apple Store or Google Play Store.\n' +
                   '2. Enter my invitation code [{{code}}] and join DBS Treasures.\n' +
                   '3. Transfer-in or make an investment transaction of your liking to gross up additional cash rewards\n' +
-                  'Terms and Conditions apply, visit https://www.dbs.com.hk/treasures/emgm-poc/referee for more details.';
+                  'Terms and Conditions apply, visit https://www.dbs.com.hk/treasures/emgm-poc/referee/en for more details.';
                 break;
             }
             this.shareText = this.shareText.replace('{{code}}', this.code);
