@@ -10,6 +10,7 @@ import {
   IGameService,
   QuizService,
   SafeHtmlPipe,
+  StripHtmlPipe,
   SurveyService
 } from '@perxtech/core';
 
@@ -37,7 +38,8 @@ describe('CampaignsCollectionComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         CampaignsCollectionComponent,
-        SafeHtmlPipe
+        SafeHtmlPipe,
+        StripHtmlPipe
       ],
       imports: [
         MatCardModule,

@@ -10,6 +10,7 @@
     </div>
     <mat-card-content class="card-content">
       <p class="main-reward-title ellipsis-1-line">{{game.campaignName | striphtml}}</p>
+<!--  todo: apply stripHtml and safeHtml once campaign landing pages are implemented on dashboard and enabled on BC -->
       <p class="reward-subtitle" [innerHTML]="game.campaignDescription"></p>
     </mat-card-content>
   </mat-card>

@@ -10,7 +10,8 @@ export enum GameType {
   spin = 'spin',
   snake = 'snake',
   quiz = 'quiz',
-  survey = 'survey'
+  survey = 'survey',
+  invite = 'invite'
 }
 
 export interface IEngagementTransaction {
