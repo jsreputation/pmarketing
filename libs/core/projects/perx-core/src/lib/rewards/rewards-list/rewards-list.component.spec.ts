@@ -8,10 +8,6 @@ import { of } from 'rxjs';
 import { RewardsListComponent } from './rewards-list.component';
 import { UtilsModule } from '../../utils/utils.module';
 import { ThemesService } from '../../utils/themes/themes.service';
-import {
-  SafeHtmlPipe,
-  StripHtmlPipe
-} from '@perxtech/core';
 
 describe('RewardsListComponent', () => {
   let component: RewardsListComponent;
@@ -24,9 +20,7 @@ describe('RewardsListComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        RewardsListComponent,
-        SafeHtmlPipe,
-        StripHtmlPipe
+        RewardsListComponent
       ],
       imports: [
         MatCardModule,
