@@ -9,7 +9,8 @@ import {
   ICampaign,
   IPlayOutcome,
   NotificationService,
-  Voucher
+  Voucher,
+  GameType
 } from '@perxtech/core';
 import {
   catchError,
@@ -84,6 +85,8 @@ export class GameComponent implements OnInit {
           this.numberOfTaps = game.config && game.config.nbTaps;
         }
         if (
+          // GLOB-29: Let scratch card tries error be handled by the game service
+          game.type !== GameType.scratch &&
           game.remainingNumberOfTries !== null &&
           game.remainingNumberOfTries <= 0
         ) {
@@ -120,7 +123,7 @@ export class GameComponent implements OnInit {
 
   private showErrorPopup(): void {
     this.notificationService.addPopup({
-      title: 'Oooops!',
+      title: 'Sorry!',
       text: 'Something is wrong, game cannot be played at the moment!',
       disableOverlayClose: true,
       panelClass: 'custom-class'
@@ -255,10 +258,6 @@ export class GameComponent implements OnInit {
                 panelClass: 'custom-class'
               });
             });
-        },
-        () => {
-          this.willWin = false;
-          this.hasNoRewardsPopup = true;
         }
       );
   }
