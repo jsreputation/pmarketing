@@ -267,7 +267,6 @@
     "GAME_NOT_VALID_TEXT": "Trò chơi này không có sẵn cho bạn vào lúc này.",
     "VIEW_REWARD": "Xem phần thưởng",
     "CONTENT_PAGE": "Không tìm thấy nội dung",
-    "LOGIN_SESSION_EXPIRED": "Phiên đăng nhập đã hết hạn",
     "Contact Us": "Liên hệ chúng tôi",
     "Terms and Conditions": "Các điều khoản và điều kiện",
     "TRY_AGAIN": "Thử lại",
@@ -318,5 +317,6 @@
   },
   "CONTENT_PAGE": "Không tìm thấy nội dung",
   "Terms and Conditions": "Điều kiện & Điều khoản",
+  "LOGIN_SESSION_EXPIRED": "Phiên đăng nhập đã hết hạn",
   "DESCRIPTION": "Miêu tả"
 }
