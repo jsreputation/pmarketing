@@ -212,7 +212,7 @@ export class GameComponent implements OnInit {
         campaign_id: this.game.campaignId
       });
     }
-    if (vouchs.length === 0) {
+    if (!vouchs || vouchs.length === 0) {
       // This params is specially for spin the wheel, load play first process
       this.hasNoRewardsPopup = true;
       if (withRedirectAndPopup) {
