@@ -72,6 +72,9 @@ export class VerificationOtpComponent implements OnInit {
         this.auth.changePassword(this.data as IChangePasswordData).subscribe(() => {
           this.ntfcService.addPopup({ title: 'Success', text: 'You password was update' });
           this.router.navigate(['account']);
+        },
+        (err) => {
+          this.ntfcService.addSnack(err.error.message);
         });
         break;
     }

@@ -54,15 +54,15 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   public appConfig: IConfig<void>;
 
   constructor(
-    private authenticationService: AuthenticationService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private notificationService: NotificationService,
-    private generalStaticDataService: GeneralStaticDataService,
-    private configService: ConfigService,
-    private translate: TranslateService,
-    private loyaltyService: LoyaltyService,
-    private themesService: ThemesService
+    protected authenticationService: AuthenticationService,
+    protected router: Router,
+    protected route: ActivatedRoute,
+    protected notificationService: NotificationService,
+    protected generalStaticDataService: GeneralStaticDataService,
+    protected configService: ConfigService,
+    protected translate: TranslateService,
+    protected loyaltyService: LoyaltyService,
+    protected themesService: ThemesService
   ) {
   }
 
@@ -205,7 +205,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     }
   }
 
-  private handleError(err: any): void {
+  public handleError(err: any): void {
     if (err instanceof HttpErrorResponse) {
       if (err.status === 0) {
         this.translate.get('FORGET_PW_PAGE.SERVER_ERROR_TXT').subscribe(text =>

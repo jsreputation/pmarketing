@@ -63,7 +63,10 @@ export class SmsValidationComponent implements OnInit {
       .pipe(
         mergeMap(() => this.sharedDataService.data),
         mergeMap((data) => this.setCardNumber(data)))
-      .subscribe((result) => this.redirectToLogin(result));
+      .subscribe((result) => this.redirectToLogin(result),
+        (err) => {
+          this.notification.addSnack(err.error.message);
+        });
   }
 
   public resendSms(): void {
