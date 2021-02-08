@@ -236,7 +236,7 @@ export class GameComponent implements OnInit {
       ).subscribe(
         (vouchs: Voucher[]) => {
           this.startGameAnimation = true;
-          if (vouchs.length > 0) {
+          if (vouchs && vouchs.length > 0) {
             this.hasNoRewardsPopup = false;
             this.willWin = true;
             this.gameCompletedHandler(vouchs, false);
