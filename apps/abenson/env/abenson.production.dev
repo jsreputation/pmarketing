@@ -1,4 +1,3 @@
 APIHOST=https://api.perxtech.net
 COMING_SOON=true
 LOGIN_METHOD=phone
-HIDE_POPUP_HOMEPAGE=true
