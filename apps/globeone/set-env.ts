@@ -81,8 +81,8 @@ const appConfigFile = `{
   "showStampCampaignsOnHomePage" : ${process.env.SHOW_STAMP_CAMPAIGNS_ON_HOMEPAGE
     ? process.env.SHOW_STAMP_CAMPAIGNS_ON_HOMEPAGE
     : false},
-  "hidePopupCampaign": ${
-    process.env.HIDE_POPUP_HOMEPAGE ? process.env.HIDE_POPUP_HOMEPAGE : false
+  "showPopupCampaign": ${
+    process.env.SHOW_POPUP_HOMEPAGE ? process.env.SHOW_POPUP_HOMEPAGE : false
   },
 
   "showQrPageSubtitle": ${process.env.SHOW_QRPAGE_SUBTITLE ? process.env.SHOW_QRPAGE_SUBTITLE : false},

@@ -117,8 +117,8 @@ const appConfigFile = `{
       ? process.env.SHOW_CAMPAIGN_LANDING_PAGE
       : false
   },
-  "hidePopupCampaign": ${
-    process.env.HIDE_POPUP_HOMEPAGE ? process.env.HIDE_POPUP_HOMEPAGE : false
+  "showPopupCampaign": ${
+    process.env.SHOW_POPUP_HOMEPAGE ? process.env.SHOW_POPUP_HOMEPAGE : false
   },
   "showUserInfoOnAccountsPage": ${
     process.env.SHOW_USERINFO_ACCOUNTS

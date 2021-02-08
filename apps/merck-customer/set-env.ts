@@ -38,7 +38,7 @@ const appConfigFile = `{
   "baseHref": "${process.env.BASE_HREF ? process.env.BASE_HREF : '/'}",
   "defaultLang": "${process.env.DEFAULT_LANG ? process.env.DEFAULT_LANG : 'en'}",
   "sourceType": "${process.env.SOURCE_TYPE ? process.env.SOURCE_TYPE : ''}",
-  "hidePopupCampaign": ${process.env.HIDE_POPUP_HOMEPAGE ? process.env.HIDE_POPUP_HOMEPAGE : false},
+  "showPopupCampaign": ${process.env.SHOW_POPUP_HOMEPAGE ? process.env.SHOW_POPUP_HOMEPAGE : false},
   "custom": {
     "showConditions": ${process.env.SHOW_CONDITIONS ? process.env.SHOW_CONDITIONS : false},
     "loginMethod": "${process.env.LOGIN_METHOD ? process.env.LOGIN_METHOD : 'phone'}"
