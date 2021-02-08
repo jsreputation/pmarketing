@@ -171,6 +171,9 @@ const appConfigFile = `{
       ? process.env.SHOW_CAMPAIGN_LANDING_PAGE
       : false
   },
+  "hidePopupCampaign": ${
+    process.env.HIDE_POPUP_HOMEPAGE ? process.env.HIDE_POPUP_HOMEPAGE : false
+  },
 
   "showQrPageSubtitle": ${
     process.env.SHOW_QRPAGE_SUBTITLE ? process.env.SHOW_QRPAGE_SUBTITLE : false
