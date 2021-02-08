@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
 import { HomeComponent as BCHomeComponent } from '@perxtech/blackcomb-pages';
 import {
   AuthenticationService,
@@ -21,9 +24,20 @@ import {
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialog } from '@angular/material';
-import { switchMap, map, finalize, tap } from 'rxjs/operators';
-import { EMPTY, iif } from 'rxjs';
-import { CurrencyPipe, DatePipe } from '@angular/common';
+import {
+  finalize,
+  map,
+  switchMap,
+  tap
+} from 'rxjs/operators';
+import {
+  EMPTY,
+  iif
+} from 'rxjs';
+import {
+  CurrencyPipe,
+  DatePipe
+} from '@angular/common';
 import { Title } from '@angular/platform-browser';
 
 @Component({
@@ -108,7 +122,15 @@ export class HomeComponent extends BCHomeComponent implements OnInit {
     this.configService
       .readAppConfig<void>()
       .pipe(
-        map((config: IConfig<void>) => {
+        tap((config: IConfig<void>) => {
+          this.authService.isAuthorized().subscribe((isAuth: boolean) => {
+            if (isAuth && !this.configService.readAppStarted()) {
+              this.configService.setAppStarted();
+              if (config.showPopupCampaign) {
+                this.fetchPopupCampaigns();
+              }
+            }
+          });
           this.appConfig = config;
           this.initCampaign();
         }),
@@ -129,12 +151,6 @@ export class HomeComponent extends BCHomeComponent implements OnInit {
             loyalty.tiers.filter((tier) => tier.name === 'Premium').length > 0;
         }
       });
-
-    this.authService.isAuthorized().subscribe((isAuth: boolean) => {
-      if (isAuth) {
-        this.fetchPopupCampaigns();
-      }
-    });
 
     this.initCatalogsScan();
   }
