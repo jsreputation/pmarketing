@@ -1,4 +1,9 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import {
   AuthenticationService,
   CampaignType,
@@ -15,10 +20,22 @@ import {
   RewardPopupComponent
 } from '@perxtech/core';
 import { NoRenewaleInNamePipe } from '../no-renewale-in-name.pipe';
-import { MatDialog, MatToolbar } from '@angular/material';
-import { catchError, switchMap } from 'rxjs/operators';
+import {
+  MatDialog,
+  MatToolbar
+} from '@angular/material';
+import {
+  catchError,
+  map,
+  switchMap,
+  tap
+} from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { combineLatest, of } from 'rxjs';
+import {
+  combineLatest,
+  iif,
+  of
+} from 'rxjs';
 import { IdataLayerSH } from '../../app.component';
 
 declare var dataLayerSH: IdataLayerSH; // eslint-disable-line
@@ -50,6 +67,7 @@ export class HomeComponent implements OnInit {
   public game?: IGame;
   public hubclubCR: boolean;
   public hubClubDisplay: string = '';
+  public appConfig: IConfig<IStarhubConfig>;
 
   constructor(
     private noRenewalePipe: NoRenewaleInNamePipe,
@@ -64,9 +82,27 @@ export class HomeComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.configService.readAppConfig<IStarhubConfig>().subscribe(
-      (config: IConfig<IStarhubConfig>) => {
+    this.configService.readAppConfig<IStarhubConfig>().pipe(
+      tap((config: IConfig<IStarhubConfig>) => {
         this.hubclubCR = config.custom ? config.custom.hubclubCR : false;
+        this.appConfig = config;
+      }),
+      switchMap(() => this.authenticationService.getAccessToken()),
+      tap((token: string) => {
+        this.token = token;
+        this.data.perxID = this.token;
+      }),
+      switchMap((token: string) => iif(() => token !== null, this.authenticationService.isAuthorized(), of(false))),
+      map((isAuth: boolean) => {
+        if (isAuth && !this.configService.readAppStarted()) {
+          this.configService.setAppStarted();
+          if (this.appConfig.showPopupCampaign) {
+            this.fetchPopupCampaigns();
+          }
+        }
+      })
+    ).subscribe(
+      () => {
         this.loyaltyService
           .getLoyalty()
           .subscribe((loyalty: ILoyalty) => (this.loyalty = loyalty));
@@ -85,19 +121,8 @@ export class HomeComponent implements OnInit {
               }
             });
         }
-        this.getAccessToken();
       }
     );
-  }
-
-  private getAccessToken(): void {
-    this.authenticationService.getAccessToken().subscribe((token: string) => {
-      this.token = token;
-      if (this.token) {
-        this.checkAuth();
-      }
-      this.data.perxID = this.token;
-    });
   }
 
   private get data(): Partial<IdataLayerSH> {
@@ -137,14 +162,6 @@ export class HomeComponent implements OnInit {
         this.top = this.top + delta;
       }
       this.toolBar._elementRef.nativeElement.style.transform = `translateY(${this.top}px)`;
-    });
-  }
-
-  private checkAuth(): void {
-    this.authenticationService.isAuthorized().subscribe((isAuth: boolean) => {
-      if (isAuth) {
-        this.fetchPopupCampaigns();
-      }
     });
   }
 
