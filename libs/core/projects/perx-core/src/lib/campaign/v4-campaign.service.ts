@@ -121,8 +121,6 @@ export class V4CampaignService implements ICampaignService {
       displayProperties = {
         landingPage: {
           body: lp.body[lang],
-          heading: lp.heading[lang],
-          subHeading: lp.sub_heading[lang],
           buttonText: lp.button_text[lang]
         }
       };

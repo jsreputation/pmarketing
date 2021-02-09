@@ -49,9 +49,7 @@ export interface QuizDisplayProperties {
   landing_page: {
     body: { en: { text: string } };
     media?: { youtube?: string; };
-    heading: { en: { text: string } };
     button_text: { en: { text: string } };
-    sub_heading: { en: { text: string } };
   };
   background_image?: Asset;
   card_image?: Asset;
