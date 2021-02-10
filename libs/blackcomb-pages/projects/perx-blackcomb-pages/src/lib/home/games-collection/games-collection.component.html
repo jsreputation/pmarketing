@@ -10,10 +10,10 @@
     </div>
     <mat-card-content class="card-content">
       <div class="title-row">
-        <div class="left-content">
+        <div [class]="appConfig.showGameTriesOnCampaignCard ? 'left-content' : ''">
           <p class="main-reward-title ellipsis-1-line">{{game.campaignName | striphtml}}</p>
         </div>
-        <div class="right-content">
+        <div class="right-content" *ngIf="appConfig.showGameTriesOnCampaignCard">
           <span class="game-tries-count">{{game.remainingNumberOfTries ? game.remainingNumberOfTries : '&infin;'}}</span>
           <!-- intentional en space before translated content -->
           <span>&ensp;{{'HOME.GAME_TRIES_LEFT' | translate}}</span>

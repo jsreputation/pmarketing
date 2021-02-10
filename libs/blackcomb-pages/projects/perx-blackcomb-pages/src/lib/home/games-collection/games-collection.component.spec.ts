@@ -8,7 +8,12 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { GamesCollectionComponent } from './games-collection.component';
 import { MatCardModule } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
-import { ThemesService, ITheme, StripHtmlPipe } from '@perxtech/core';
+import {
+  ConfigService,
+  ITheme,
+  StripHtmlPipe,
+  ThemesService
+} from '@perxtech/core';
 import { of } from 'rxjs';
 
 describe('GamesCollectionComponent', () => {
@@ -27,6 +32,10 @@ describe('GamesCollectionComponent', () => {
     getThemeSetting: () => of(mockTheme)
   };
 
+  const configServiceStub: Partial<ConfigService> = {
+    readAppConfig: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ GamesCollectionComponent, StripHtmlPipe ],
@@ -39,6 +48,10 @@ describe('GamesCollectionComponent', () => {
         {
           provide: ThemesService,
           useValue: themesServiceStub
+        },
+        {
+          provide: ConfigService,
+          useValue: configServiceStub
         }
       ]
     })
