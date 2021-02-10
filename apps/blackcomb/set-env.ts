@@ -244,6 +244,9 @@ const appConfigFile = `{
   },
   "showLogo":  ${
     process.env.SHOW_LOGO ? process.env.SHOW_LOGO : false
+  },
+  "showGameTriesOnCampaignCard": ${
+    process.env.SHOW_GAME_TRIES_ON_CAMPAIGN_CARD ? process.env.SHOW_GAME_TRIES_ON_CAMPAIGN_CARD : false
   }
 }
 `;
