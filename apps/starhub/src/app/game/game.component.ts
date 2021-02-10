@@ -1,16 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
+import {
+  ActivatedRoute,
+  Params,
+  Router
+} from '@angular/router';
 import {
   ConfigService,
+  GameType,
+  ICampaign,
+  ICampaignService,
   IEngagementTransaction,
   IGame,
   IGameService,
-  ICampaignService,
-  ICampaign,
   IPlayOutcome,
   NotificationService,
-  Voucher,
-  GameType
+  Voucher
 } from '@perxtech/core';
 import {
   catchError,
@@ -20,9 +27,18 @@ import {
   takeUntil,
   tap
 } from 'rxjs/operators';
-import { AnalyticsService, PageType } from '../analytics.service';
+import {
+  AnalyticsService,
+  PageType
+} from '../analytics.service';
 import { GameOutcomeService } from '../congrats/game-outcome/game-outcome.service';
-import { EMPTY, iif, Observable, of, Subject, throwError } from 'rxjs';
+import {
+  iif,
+  Observable,
+  of,
+  Subject,
+  throwError
+} from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorMessageService } from '../utils/error-message/error-message.service';
 
@@ -183,7 +199,7 @@ export class GameComponent implements OnInit {
     // STAR-446: sometimes preplayGameCompleted is called before gameTransaction is set
     // check if gameTransaction is available
     iif(() => this.gameTransaction && this.gameTransaction.id !== null,
-      EMPTY,
+      of({}),
       this.isGameTransactionSet
         .pipe(takeUntil(this.destroy$)) // if gameTransaction is unavailable, start wating for it to be set
     ).subscribe(() => this.confirmPrePlay());
