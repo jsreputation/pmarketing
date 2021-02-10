@@ -109,13 +109,11 @@ export class QuizResultsComponent implements OnInit {
       ]).subscribe((res: any) => {
         const outcomeTitle = (res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_TXT']).replace('{{points}}', points);
         this.popup = {
-          /* eslint-disable */
           title: oc(outcome).title[this.currentLang].text(outcomeTitle),
           text: oc(outcome).subTitle[this.currentLang].text(res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_REWARD']),
           buttonTxt: oc(outcome).button[this.currentLang].text(res['QUIZ_TEMPLATE.POSITIVE_OUTCOME_CTA']),
-          imageUrl: 'assets/quiz/reward.png',
+          imageUrl: oc(outcome).image('assets/quiz/reward.png'),
           ctaButtonClass: 'ga_game_completion'
-          /* eslint-enable */
         };
         this.notificationService.addPopup(this.popup);
       });
