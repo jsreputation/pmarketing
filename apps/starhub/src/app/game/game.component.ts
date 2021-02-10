@@ -22,7 +22,7 @@ import {
 } from 'rxjs/operators';
 import { AnalyticsService, PageType } from '../analytics.service';
 import { GameOutcomeService } from '../congrats/game-outcome/game-outcome.service';
-import { Observable, Subject, throwError } from 'rxjs';
+import { EMPTY, iif, Observable, of, Subject, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorMessageService } from '../utils/error-message/error-message.service';
 
@@ -41,6 +41,7 @@ export class GameComponent implements OnInit {
   public willWin: boolean = false;
   private hasNoRewardsPopup: boolean = false;
   public startGameAnimation: boolean = false;
+  private isGameTransactionSet: Observable<boolean> = of(false);
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -145,6 +146,7 @@ export class GameComponent implements OnInit {
         .subscribe(
           (gameTransaction: IEngagementTransaction) => {
             this.gameTransaction = gameTransaction;
+            this.isGameTransactionSet = of(true);
             if (
               gameTransaction.voucherIds &&
               gameTransaction.voucherIds.length > 0
@@ -178,6 +180,16 @@ export class GameComponent implements OnInit {
   }
 
   public preplayGameCompleted(): void {
+    // STAR-446: sometimes preplayGameCompleted is called before gameTransaction is set
+    // check if gameTransaction is available
+    iif(() => this.gameTransaction && this.gameTransaction.id !== null,
+      EMPTY,
+      this.isGameTransactionSet
+        .pipe(takeUntil(this.destroy$)) // if gameTransaction is unavailable, start wating for it to be set
+    ).subscribe(() => this.confirmPrePlay());
+  }
+
+  private confirmPrePlay(): void {
     this.gameService
       .prePlayConfirm(this.gameTransaction.id)
       .pipe(map((game: IPlayOutcome) => game.vouchers))
