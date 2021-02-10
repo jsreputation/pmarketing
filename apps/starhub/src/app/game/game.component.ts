@@ -22,7 +22,7 @@ import {
 } from 'rxjs/operators';
 import { AnalyticsService, PageType } from '../analytics.service';
 import { GameOutcomeService } from '../congrats/game-outcome/game-outcome.service';
-import { Observable, of, Subject, throwError } from 'rxjs';
+import { EMPTY, iif, Observable, of, Subject, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorMessageService } from '../utils/error-message/error-message.service';
 
@@ -180,17 +180,13 @@ export class GameComponent implements OnInit {
   }
 
   public preplayGameCompleted(): void {
-    // sometimes preplayGameCompleted is called before gameTransaction is set
+    // STAR-446: sometimes preplayGameCompleted is called before gameTransaction is set
     // check if gameTransaction is available
-    if (this.gameTransaction) {
-      this.confirmPrePlay();
-    } else {
-      // if gameTransaction is unavailable, start wating for it to be set
+    iif(() => this.gameTransaction && this.gameTransaction.id !== null,
+      EMPTY,
       this.isGameTransactionSet
-        .pipe(
-          takeUntil(this.destroy$)
-        ).subscribe(() => this.confirmPrePlay());
-    }
+        .pipe(takeUntil(this.destroy$)) // if gameTransaction is unavailable, start wating for it to be set
+    ).subscribe(() => this.confirmPrePlay());
   }
 
   private confirmPrePlay(): void {
