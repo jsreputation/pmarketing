@@ -12,6 +12,7 @@
       <p class="main-reward-title ellipsis-1-line">{{game.campaignName | striphtml}}</p>
 <!--  todo: apply stripHtml and safeHtml once campaign landing pages are implemented on dashboard and enabled on BC -->
       <p class="reward-subtitle" [innerHTML]="game.campaignDescription"></p>
+      <span>{{'HOME.GAME_TRIES_LEFT' | translate}}</span>
     </mat-card-content>
   </mat-card>
   <div class="flex-for-button">
