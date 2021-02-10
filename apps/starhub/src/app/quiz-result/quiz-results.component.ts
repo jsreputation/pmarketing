@@ -52,10 +52,12 @@ export class QuizResultsComponent implements OnInit {
     if (this.correctAnswers !== this.results.length) {
       const noOutcome = oc(this.quiz).results.noOutcome(); // note: currently empty because not configured;
       this.popup = {
-        title: oc(noOutcome).title(''),
-        text: oc(noOutcome).subTitle('Sorry try again'),
+        /* eslint-disable */
+        title: oc(noOutcome).title['en'].text(''),
+        text: oc(noOutcome).subTitle['en'].text('Sorry try again'),
         imageUrl: oc(noOutcome).image(),
-        buttonTxt: oc(noOutcome).button('NEXT')
+        buttonTxt: oc(noOutcome).button['en'].text('NEXT')
+        /* eslint-enable */
       };
       this.notificationService.addPopup(this.popup);
       nextRoute = '/home';
