@@ -9,10 +9,18 @@
       <img class="puzzle-img" src="{{game.imgUrl || game.backgroundImg}}" alt="Game image">
     </div>
     <mat-card-content class="card-content">
-      <p class="main-reward-title ellipsis-1-line">{{game.campaignName | striphtml}}</p>
+      <div class="title-row">
+        <div class="left-content">
+          <p class="main-reward-title ellipsis-1-line">{{game.campaignName | striphtml}}</p>
+        </div>
+        <div class="right-content">
+          <span class="game-tries-count">{{game.remainingNumberOfTries ? game.remainingNumberOfTries : '&infin;'}}</span>
+          <!-- intentional en space before translated content -->
+          <span>&ensp;{{'HOME.GAME_TRIES_LEFT' | translate}}</span>
+        </div>
+      </div>
 <!--  todo: apply stripHtml and safeHtml once campaign landing pages are implemented on dashboard and enabled on BC -->
       <p class="reward-subtitle" [innerHTML]="game.campaignDescription"></p>
-      <span>{{'HOME.GAME_TRIES_LEFT' | translate}}</span>
     </mat-card-content>
   </mat-card>
   <div class="flex-for-button">
