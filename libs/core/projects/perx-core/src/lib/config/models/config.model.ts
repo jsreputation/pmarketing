@@ -39,6 +39,7 @@ export interface IConfig<T> {
   showReferralCampaignsOnHomePage?: boolean;
   showStampCampaignsOnHomePage?: boolean;
   showExtraLoyaltyOnHomePage?: boolean;
+  showRewardNavButton?: boolean;
 
   /* Misc */
   showQrPageSubtitle?: boolean;
