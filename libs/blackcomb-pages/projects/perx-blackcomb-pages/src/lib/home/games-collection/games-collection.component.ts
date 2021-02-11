@@ -42,6 +42,6 @@ export class GamesCollectionComponent implements OnInit {
       (config: IConfig<void>) => {
         this.appConfig = config;
       }
-    )
+    );
   }
 }
