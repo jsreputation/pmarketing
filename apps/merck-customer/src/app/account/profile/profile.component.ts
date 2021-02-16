@@ -1,9 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ProfileService, IProfile, LoyaltyService, ILoyalty, ICustomProperties } from '@perxtech/core';
+import {
+  ProfileService,
+  IProfile,
+  LoyaltyService,
+  ILoyalty,
+  ICustomProperties,
+  ConfigService,
+  IConfig
+} from '@perxtech/core';
 import { Router } from '@angular/router';
 import { PageAppearence, PageProperties, BarSelectedItem } from '../../page-properties';
 import { TranslateService } from '@ngx-translate/core';
+import { IMerckConfig } from '../../model/IMerck.model';
 
 @Component({
   selector: 'mc-profile',
@@ -14,19 +23,30 @@ export class ProfileComponent implements OnInit, PageAppearence {
   public profile: IProfile;
   public conditions: string[];
   public tier?: string;
+  public currentSelectedLanguage: string;
+  public selectedLanguage: string;
+  public showConditions: boolean;
 
   constructor(
     private profileService: ProfileService,
+    private configService: ConfigService,
     private router: Router,
     private loyaltyService: LoyaltyService,
     private translate: TranslateService
   ) { }
 
   public ngOnInit(): void {
+    this.currentSelectedLanguage = this.translate.currentLang || this.translate.defaultLang;
+    this.selectedLanguage = this.currentSelectedLanguage === 'zh' ? '中文' : 'English';
     this.profileService.whoAmI().subscribe(res => {
       this.profile = res;
       this.conditions = this.getConditionsFromProfile(res);
     });
+    this.configService.readAppConfig<IMerckConfig>().subscribe(
+      (config: IConfig<IMerckConfig>) => {
+        this.showConditions = config.custom ? config.custom.showConditions as boolean : false;
+      }
+    );
 
     this.loyaltyService.getLoyalty().subscribe((loyalty: ILoyalty) => this.tier = loyalty.membershipTierName);
   }
@@ -42,14 +62,14 @@ export class ProfileComponent implements OnInit, PageAppearence {
         const diabetesState = customProperties[property];
         if (diabetesState && typeof diabetesState === 'string') {
           if (diabetesState === 'pre_diabetes') {
-            this.translate.get('STATIC_PRE_DIABETES').subscribe((text) => filteredConditions.push(text));
+            this.translate.get('ACCOUNT_PAGE.PRE_DIABETES').subscribe((text) => filteredConditions.push(text));
           } else if (diabetesState === 'diabetes') {
-            this.translate.get('STATIC_DIABETES').subscribe((text) => filteredConditions.push(text));
+            this.translate.get('ACCOUNT_PAGE.DIABETES').subscribe((text) => filteredConditions.push(text));
           }
         }
       }
       if (property === 'hypertension' && customProperties[property] === 'true') {
-        this.translate.get('STATIC_HYPERTENSION').subscribe((text) => filteredConditions.push(text));
+        this.translate.get('ACCOUNT_PAGE.HYPERTENSION').subscribe((text) => filteredConditions.push(text));
       }
     });
     return filteredConditions.filter(condition => condition !== '');
@@ -60,7 +80,7 @@ export class ProfileComponent implements OnInit, PageAppearence {
       header: true,
       backButtonEnabled: true,
       bottomSelectedItem: BarSelectedItem.ACCOUNT,
-      pageTitle: 'STATIC_PROFILE'
+      pageTitle: 'NAVIGATION.PROFILE'
     };
   }
 

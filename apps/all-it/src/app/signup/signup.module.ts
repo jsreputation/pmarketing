@@ -11,10 +11,10 @@ import {
   MatIconModule,
   MatNativeDateModule,
   MatDatepickerModule,
-  MAT_DATE_LOCALE
 } from '@angular/material';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [SignupComponent],
@@ -30,10 +30,10 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     MatNativeDateModule,
     MatDatepickerModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    TranslateModule
   ],
   providers: [
-    {provide: MAT_DATE_LOCALE, useValue: 'en-MY'}
   ]
 })
 export class SignupModule { }

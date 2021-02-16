@@ -45,6 +45,11 @@
         font-size: 1.4rem;
       }
 
+      .error-field {
+        display: block;
+        margin-top: 1rem;
+      }
+
       .radio-button {
         color: #000000 !important;
         margin-bottom: 1.6rem;
@@ -74,6 +79,11 @@
 
         button {
           width: 100%;
+
+          .loading-spin {
+            display: inline-block;
+            margin: auto;
+          }
         }
       }
     }

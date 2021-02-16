@@ -1,0 +1,33 @@
+:host {
+  margin-top: 2rem;
+  font-size: 1.4rem;
+}
+
+.selection-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+}
+
+.selection-radio-button {
+  margin: 5px;
+}
+
+.choice-box {
+  display: block;
+  width: 100%;
+  height: 56px;
+  background: white;
+  margin-bottom: 2rem;
+}
+
+.select-wrapper {
+  ::ng-deep .mat-checkbox-layout,
+  ::ng-deep .mat-radio-label {
+    width: 100%;
+    height: 100%;
+    display: block !important;
+    color: #212121 !important;
+    padding: 1.6rem !important;
+  }
+}

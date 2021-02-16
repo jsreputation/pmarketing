@@ -48,7 +48,14 @@ export class ExistingCardComponent implements OnInit {
 
   private initForm(): void {
     this.existingCardForm = this.fb.group({
-      cardNumber: ['', Validators.required]
+      cardNumber: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(18),
+          Validators.pattern('^[0-9]*$')
+        ]
+      ]
     });
   }
 
@@ -82,6 +89,8 @@ export class ExistingCardComponent implements OnInit {
               this.notificationService.addSnack('Invalid card number.');
             } else if (err.status === 404) {
               this.notificationService.addSnack('Card number not found.');
+            } else if (err.error && err.error.message) {
+              this.notificationService.addSnack(err.error.message);
             } else {
               this.notificationService.addSnack(err.statusText);
             }

@@ -13,6 +13,7 @@ import {
 import {
   HttpClientModule,
   HttpClient,
+  HttpBackend,
 } from '@angular/common/http';
 import {
   MatDialogModule,
@@ -126,7 +127,8 @@ export const appInit = (
     if (cid) {
       localStorage.setItem('cid', cid);
     } else {
-      console.error('Could not retrieve campaign id');
+      console.error('Could not retrieve campaign id from URL');
+      localStorage.removeItem('cid');
     }
     configService.readAppConfig().pipe(
       tap((config: IConfig<void>) => translateService.setDefaultLang(config.defaultLang || 'en')),
@@ -168,7 +170,7 @@ export const appInit = (
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        deps: [HttpClient, ConfigService, TokenStorage],
+        deps: [HttpClient, HttpBackend, ConfigService, TokenStorage],
         useClass: LanguageService
       }
     }),

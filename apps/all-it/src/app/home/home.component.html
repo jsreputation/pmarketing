@@ -26,13 +26,13 @@
 
     </div>
   </div>
-  <perx-core-newsfeed [items$]="newsFeedItems"></perx-core-newsfeed>
-  <div class="rewards-collection" *ngIf="!restrictedView && appRemoteFlags?.rewardsCarousel || appConfig.showRewardsOnHomepage">
-    <div *ngIf="(rewards$ | async)?.length > 0" class="title" translate>HOME.FEATURED_REWARDS</div>
-    <perx-core-rewards-collection [rewardsList]="rewards$" (tapped)="goToReward($event)"></perx-core-rewards-collection>
+  <perx-core-newsfeed *ngIf="appConfig.showNewsfeedOnHomepage" [items$]="newsFeedItems"></perx-core-newsfeed>
+  <div class="rewards-collection" *ngIf="(appRemoteFlags?.rewardsCarousel || appConfig.showRewardsOnHomepage) && (rewards$ | async)?.length > 0">
+    <div class="title" translate>HOME.FEATURED_REWARDS</div>
+    <perx-core-rewards-collection (favoriteRewardEvent)="rewardFavoriteHandler($event)" [rewardsList]="rewards$" (tapped)="goToReward($event)"></perx-core-rewards-collection>
   </div>
   <!-- Stamp card campaigns-->
-  <div class="campaigns">
+  <div class="campaigns" *ngIf="appConfig.showStampCampaignsOnHomePage">
     <div *ngIf="!restrictedView && showCampaigns" class="title" translate>HOME.STAMP_CAMPAIGNS</div>
     <perx-blackcomb-pages-campaigns-collection *ngIf="!restrictedView" [campaigns]="stampCampaigns$" (selected)="goToCampaignPage($event)">
     </perx-blackcomb-pages-campaigns-collection>

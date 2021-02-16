@@ -1,25 +1,48 @@
 import {
   AuthenticationService,
-  NotificationService,
-  ITheme,
-  ThemesService,
   ConfigService,
-  IConfig,
   GeneralStaticDataService,
+  IConfig,
   ICountryCode,
+  ITheme,
+  LoginType,
   LoyaltyService,
+  NotificationService,
+  ThemesService,
 } from '@perxtech/core';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Navigation, Router } from '@angular/router';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import {
+  Component,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
+import {
+  ActivatedRoute,
+  Navigation,
+  Router
+} from '@angular/router';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators
+} from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Subject, Observable } from 'rxjs';
-import { map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import {
+  Observable,
+  Subject
+} from 'rxjs';
+import {
+  map,
+  switchMap,
+  takeUntil,
+  tap
+} from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { oc } from 'ts-optchain';
 
+
 interface ISigninConfig {
   redirectAfterLogin: string;
+  loginMethod: LoginType;
 }
 
 @Component({
@@ -37,7 +60,9 @@ export class SignIn2Component implements OnInit, OnDestroy {
   public countryCodePrefix: string;
   public countriesList$: Observable<ICountryCode[]>;
   public loading: boolean = false;
-
+  public loginMethod: LoginType;
+  // @ts-ignore for using the enum within the template
+  public loginTypes: typeof LoginType = LoginType;
   private validateMembership: boolean = false;
   private custId: string = '';
   private destroy$: Subject<void> = new Subject();
@@ -76,6 +101,9 @@ export class SignIn2Component implements OnInit, OnDestroy {
         if (conf.countryCodePrefix) {
           this.countryCodePrefix = conf.countryCodePrefix;
         }
+        if (conf.custom && conf.custom.loginMethod) {
+          this.loginMethod = conf.custom.loginMethod;
+        }
         this.initForm();
       });
     // todo: make this a input
@@ -104,16 +132,33 @@ export class SignIn2Component implements OnInit, OnDestroy {
 
   public get identifier(): string {
     const customerIdField = this.loginForm.get('customerID');
-    const countryCode = this.loginForm.get('countryCode');
-    if (
-      customerIdField &&
-      customerIdField.value &&
-      countryCode &&
-      countryCode.value
-    ) {
-      return `${countryCode.value}${customerIdField.value}`;
+    let result = '';
+    switch (this.loginMethod) {
+      case LoginType.phone:
+        const countryCode = this.loginForm.get('countryCode');
+        if (
+          customerIdField &&
+          customerIdField.value &&
+          countryCode &&
+          countryCode.value
+        ) {
+          let sanitizedId: string = customerIdField.value;
+          // converting to Number will strip leading 0s
+          const numberedId = Number(sanitizedId);
+          if (! isNaN(numberedId)) {
+            sanitizedId = numberedId.toString();
+          }
+          result = `${countryCode.value}${sanitizedId}`;
+        }
+        break;
+      case LoginType.username:
+      case LoginType.email:
+        result = customerIdField && customerIdField.value ? customerIdField.value : '';
+        break;
+      default:
+        result = '';
     }
-    return '';
+    return result;
   }
 
   public onSubmit(): void {
@@ -142,7 +187,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
           this.loading = false;
           if (err instanceof HttpErrorResponse) {
             if (err.status === 0) {
-              this.translate.get(['LOGIN_PAGE.POPUP_TITLE', 'LOGIN_PAGE.POPUP.TXT'])
+              this.translate.get(['LOGIN_PAGE.POPUP_TITLE', 'LOGIN_PAGE.POPUP_TXT'])
                 .subscribe(res => {
                   this.notificationService.addPopup({
                     title: res['LOGIN_PAGE.POPUP_TITLE'],
@@ -180,6 +225,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
           );
         } else {
           this.loading = false;
+          this.authService.logout();
           this.notificationService.addPopup({
             title: 'Membership required',
             text: 'Please purchase a valid membership before logging in',
@@ -203,7 +249,7 @@ export class SignIn2Component implements OnInit, OnDestroy {
       password: ['', Validators.required],
       countryCode: [this.countryCodePrefix]
     });
-    if (!this.countryCodePrefix) {
+    if (!this.countryCodePrefix && this.loginMethod === LoginType.phone) {
       this.loginForm.controls.countryCode.setValidators([Validators.required]);
     }
   }

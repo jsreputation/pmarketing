@@ -28,7 +28,8 @@ describe('GameOutcomeService', () => {
         rewardTotalBalance: 10,
         rewardTotalLimit: 100,
         rewardLimitPerUserBalance: 100
-      }
+      },
+      loyalty: []
     };
     const macaron = macaronService.getMacaron(reward);
     if (macaron) {
@@ -54,7 +55,8 @@ describe('GameOutcomeService', () => {
         rewardTotalBalance: 0,
         rewardTotalLimit: 100,
         rewardLimitPerUserBalance: 100
-      }
+      },
+      loyalty: []
     };
     const macaron = macaronService.getMacaron(reward);
     if (macaron) {
@@ -80,7 +82,8 @@ describe('GameOutcomeService', () => {
         rewardTotalBalance: 100,
         rewardTotalLimit: 100,
         rewardLimitPerUserBalance: 100
-      }
+      },
+      loyalty: []
     };
     const macaron = macaronService.getMacaron(reward);
     if (macaron) {
@@ -107,7 +110,8 @@ describe('GameOutcomeService', () => {
         rewardTotalBalance: 100,
         rewardTotalLimit: 100,
         rewardLimitPerUserBalance: 100
-      }
+      },
+      loyalty: []
     };
     const macaron = macaronService.getMacaron(reward);
     if (macaron) {

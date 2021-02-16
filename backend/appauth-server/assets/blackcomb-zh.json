@@ -1,4 +1,7 @@
 {
+  "BOOKING_PAGE": {
+    "TNC": "I have read, understood the Voucher Terms & Conditions stated in the previous page and agree to all clauses stated therein"
+  },
   "LANDING": {
     "CAMPAIGN_TITLE": "LIFE之道場每星期等您來挑戰！",
     "CAMPAIGN_INTRO": "LIFE之道場強勢回歸, 每星期為您呈獻問答遊戲, 贏取參加大抽獎的機會。接受挑戰，就可得分參加大抽獎。先選擇難度，選擇最佳答案 ，在15秒內回答每條問題。開始！",
@@ -33,6 +36,12 @@
     "PASSWORD_REQUIRED_TXT": "請輸入密碼",
     "CONFIRM_PASSWORD_FIELD": "再次輸入密碼",
     "CONFIRM_PASSWORD_INVALID_TXT": "密碼不符",
+    "UNKNOWN_ERROR_TXT": "發生未知錯誤。",
+    "INFORMATION_UPDATE": "用戶信息更新成功。",
+    "INFORMATION_UPDATE_FAIL": "用戶信息更新失敗，請再試一次。",
+    "ALERT_TITLE": "提醒：如果您不同意此條款，則您將沒有資格參加LIFE Dojo幸運抽獎。",
+    "ALERT_BTN_TXT": "確認",
+    "ALERT_BTN_TXT2": "取消",
     "NICKNAME_FIELD": "用戶名稱",
     "NICKNAME_REQUIRED_TXT": "請輸入用戶名稱",
     "REFERRAL_FIELD": "推薦號碼（如適用）",
@@ -41,6 +50,14 @@
     "CHECKBOX_AND": "以及",
     "CHECKBOX_PIC": "個人資料收集聲明。",
     "CHECKBOX_TNC_POPUP_TXT": "參與遊戲前，您必須同意以上各項。",
+    "LUCKY_DRAW_DESCRIPTION": "請輸入您的個人資料，以參加抽獎",
+    "FULL_NAME_HKID_FIELD": "姓名（如身份證所示）",
+    "FULL_NAME_HKID_REQUIRED_TXT": "請輸入姓名",
+    "HKID_DIGITS_TXT": "身份證號碼頭四位",
+    "HKID_DIGITS_REQUIRED_TXT": "請輸入身份證號碼",
+    "HKID_DIGITS_INVALID_TXT": "無效的身份證號碼。應該是4位字母数字",
+    "CHECKBOX_LUCK_TXT": "本人同意滙豐保險儲存本人的個人資料作未來的直接巿場推廣用途。詳情請參閱",
+    "CHECKBOX_LUCK_POPUP_TXT": "如果您不同意這項條款，您將不會符合參加抽獎的資格。 您是否確認繼續？",
     "BUTTON_SUBMIT": "遞交"
   },
   "OTP_PAGE": {
@@ -49,6 +66,10 @@
     "ERROR_TXT": "確認密碼錯誤",
     "ERROR_LINK": "重新傳送確認密碼",
     "CTA_TXT": "繼續",
+    "RESEND_TXT": "確認密碼已重新發送",
+    "POPUP_TITLE": "密碼已更改！",
+    "POPUP_TXT": "您可以使用新密碼登錄",
+    "POPUP_BTN_TXT": "返回主頁",
     "CTA_TXT_SUCCESS": "成功登記用戶"
   },
   "LOGIN_PAGE": {
@@ -61,13 +82,15 @@
     "MOBILE_NOTFOUND_TXT": "並無登記用戶記錄",
     "MOBILE_INVALID_TXT": "請輸入有效手機號碼",
     "MOBILE_REQUIRED_TXT": "請輸入您的手機號碼",
+    "OTP_SEND_TO": "確認密碼已發送至",
+    "CHECK_YOUR_SMS": "查看你的短信",
     "PASSWORD_FIELD": "密碼",
     "PASSWORD_INVALID_TXT": "密碼錯誤",
     "PASSWORD_REQUIRED_TXT": "請輸入密碼",
     "FORGET_PASSWORD_TXT": "忘記密碼？",
-    "CTA_TXT": "登入",
-    "OTP_SEND_TO": "",
-    "CHECK_YOUR_SMS": ""
+    "POPUP_TITLE": "無法連接服務器",
+    "POPUP_TXT": "請稍後再試",
+    "CTA_TXT": "登入"
   },
   "FORGET_PW_PAGE": {
     "TITLE": "忘記密碼",
@@ -87,8 +110,10 @@
     "CONFIRM_PASSWORD_INVALID_TXT": "密碼不符",
     "CTA_SAVE_TXT": "儲存",
     "CTA_SUCCESS_TXT": "成功更新密碼",
+    "SERVER_ERROR_TXT": "無法連接服務器",
     "PASSWORD_TOO_SHORT_TXT": "密碼太短"
   },
+  "QUIZ_TITLE": "問答遊戲",
   "NAVIGATION": {
     "HOME": "主頁",
     "WALLET": "錢包",
@@ -126,8 +151,13 @@
     "REDEEMED": "已換領",
     "REWARD_STATUS_EXPIRY": "將於{{date}}過期",
     "REWARD_STATUS_REDEEMED": "換領日期",
+    "REWARD_STATUS_REDEEMED_ON": "換領日期 {{date}}",
     "REWARD_STATUS_EXPIRED": "已失效",
-    "CTA_TXT": "換領"
+    "CTA_TXT": "換領",
+    "POINT_EARNED": "獲得積分{points}",
+    "POINT_SPENT": "使用積分{points}",
+    "CASHBACK_EARNED": "獲得返現{points}",
+    "CASHBACK_SPENT": "使用返現{points}"
   },
   "REDEMPTION": {
     "TITLE": "輸入密碼",
@@ -158,9 +188,12 @@
     "TRANSACTION_HISTORY": "交易記錄",
     "PROFILE": "我的資料",
     "REFER_FRIEND": "推薦朋友",
+    "LIFE_TALK": "LIFE Talk",
     "TNC": "條款與細則",
     "PRIVACY_POLICY": "私隱政策",
-    "LOGOUT": "登出"
+    "LOGOUT": "登出",
+    "FAVORITE_REWARD": "最喜欢的奖励",
+    "CONTACT_US": "聯繫我們"
   },
   "PROFILE": {
     "TITLE": "個人資料",
@@ -176,42 +209,106 @@
     "PASSWORD_CONFIRM_NEW": "重新輸入新密碼",
     "PASSWORD_CTA_TXT": "儲存",
     "LUCKY_DRAW_TITLE": "參與抽獎",
+    "LUCKY_DRAW_NAME_FIELD": "姓名（如身份證所示）",
+    "LUCKY_DRAW_HKID_FIELD": "身份證號碼頭四位",
+    "CHECKBOX_LUCK_TXT": "本人同意滙豐保險儲存本人的個人資料作未來的直接巿場推廣用途（詳情請參閱個人資料收集聲明）",
     "CTA_SAVE_TXT": "儲存",
-    "ENTER_EMAIL": "",
-    "ENTER_POSTCODE": "",
-    "ENTER_NICKNAME": ""
+    "ENTER_EMAIL": "輸入電郵",
+    "ENTER_POSTCODE": "輸入郵政編碼",
+    "ENTER_NICKNAME": "輸入用戶名稱",
+    "ALLOW_MARKETING": "我想收到行销通知"
+  },
+  "STATUS_LABELS": {
+    "ISSUED": "Approved",
+    "REDEEMED": "Redeemed",
+    "EXPIRED": "Expired",
+    "RESERVED": "Pending",
+    "RELEASED": "Declined"
   },
   "REFERRAL": {
     "TITLE": "推薦朋友",
     "CONTENT": "每位利用您的推薦號碼成功登記的用戶都會令您額外獲得5次參加抽獎機會。而被您推薦的用戶也會令您額外獲得3次參加抽獎機會。<br/><br/>推薦朋友，立即行動！<br/>*您和被您推薦的用戶必須完成最少一次問答遊戲，才可參加抽獎。",
     "CTA_BUTTON": "分享推薦號碼",
     "SHARE_COPY_TITLE": "跟我一起接受挑戰",
-    "SHARE_COPY_TXT": "跟我一起接受滙豐LIFE Dojo挑戰。只要觀看短片並正確回答問題就有機會贏取每週豐富的獎品，也有機會參加大抽獎。登記時使用推薦號碼就可享有額外3次參加抽獎的機會。",
+    "SHARE_COPY_TXT": "跟我一起接受滙豐LIFE Dojo挑戰。只要觀看短片並正確回答問題就有機會贏取每週豐富的獎品，也有機會參加大抽獎。登記時使用推薦號碼{{code}}就可享有額外3次參加抽獎的機會。",
     "COPY_TO_CLIPBOARD": "複製到剪貼板!",
     "CLIPBOARD_ERROR_TXT": "無法訪問剪貼板"
   },
   "HOME": {
+    "HELLO": "歡迎",
     "MY_QR": "我的二維碼",
-    "HELLO": "你好",
     "MY_BAR_CODE": "我的條形碼",
     "STAMP_CAMPAIGNS": "郵票卡活動",
     "CATALOG": "目錄",
+    "MEMBER": "會員",
     "GAMES": "遊戲",
     "QUIZ": "問答遊戲",
     "FEATURED_REWARDS": "特色獎勵",
     "SEE_MORE": "查看更多",
     "SEE_LESS": "關閉查看",
-    "REWARDS_LEFT": "剩餘{{rewardsCount}}獎勵",
-    "READ_MORE": "查看更多"
+    "REWARDS_LEFT": "獎勵剩餘",
+    "READ_MORE": "查看更多",
+    "YOU_HAVE": "積分餘額",
+    "POINTS_EXPIRING": "積分餘額為 {{points}}，有效日期至 {{date}}",
+    "POINT_EXPIRE": "{points}將於{date}過期",
+    "ACCOUNT_EXPIRE": "賬戶過期於",
+    "POINT_TO": "升級到{nextTierName}會員所需積分",
+    "ALL": "所有",
+    "CLOSE": "完成",
+    "REWARDS": "獎勵"
+  },
+  "NEWS_FEED": {
+    "BTN_1": "開始遊戲",
+    "CONTENT_1": "卡片的簡短文字說明，然後是號召性用語按鈕。"
+  },
+  "WEEK1_CAMPAIGN_EASY": {
+    "TITLE": "",
+    "LANDING_CONTENT": "",
+    "QUESTION1": "",
+    "ANSWERS1": ""
+  },
+  "WEEK1_CAMPAIGN_MEDIUM": {
+    "TITLE": "",
+    "LANDING_CONTENT": "",
+    "QUESTION1": "",
+    "ANSWERS1": ""
+  },
+  "WEEK1_CAMPAIGN_HARD": {
+    "TITLE": "",
+    "LANDING_CONTENT": "",
+    "QUESTION1": "",
+    "ANSWERS1": ""
+  },
+  "WEEK2_CAMPAIGN_EASY": {
+    "TITLE": "",
+    "LANDING_CONTENT": "",
+    "QUESTION1": "",
+    "ANSWERS1": ""
+  },
+  "WEEK2_CAMPAIGN_MEDIUM": {
+    "TITLE": "",
+    "LANDING_CONTENT": "",
+    "QUESTION1": "",
+    "ANSWERS1": ""
+  },
+  "WEEK2_CAMPAIGN_HARD": {
+    "TITLE": "",
+    "LANDING_CONTENT": "",
+    "QUESTION1": "",
+    "ANSWERS1": ""
   },
   "VOUCHER": {
     "REDEEM": "換領",
-    "EXPIRY": "將於{{date}}過期"
+    "EXPIRY": "將於{{date}}過期",
+    "NO_VOUCHERS": "No vouchers here yet!"
   },
   "REWARD": {
     "GET_VOUCHER": "獲得優惠券",
     "DESCRIPTION": "獎勵詳情",
-    "TNC": "條款與細則"
+    "TNC": "條款與細則",
+    "EXPIRY": "過期",
+    "CODE": "代碼",
+    "POINT": "點積分"
   },
   "QR": {
     "QR_TO_MERCHANT": "向商家出示此二維碼",
@@ -229,8 +326,60 @@
     "VIEW_LOCATION": "查看位置"
   },
   "GAME_PAGE": {
-    "STAMPS_LABEL_TXT": "個新的印章"
+    "STAMPS_LABEL_TXT": "個新的印章",
+    "GAME_NO_REWARDS_TITLE": "感謝參與",
+    "GAME_NO_REWARDS_TEXT": "很遺憾，這次您沒有贏得任何獎金",
+    "GAME_SUCCESS_TITLE": "恭喜!",
+    "GAME_SUCCESS_TEXT": "您獲得了",
+    "GAME_SUCCESS_TEXT_REWARDS": "{{rewards}}份獎勵",
+    "GAME_SUCCESS_TEXT_POINT": "1積分",
+    "GAME_SUCCESS_TEXT_POINTS": "{{points}}積分",
+    "BACK_TO_WALLET": "回到錢包頁面",
+    "GAME_NOT_VALID": "哎呀!",
+    "GAME_NOT_VALID_TEXT": "您目前無法使用該遊戲.",
+    "VIEW_REWARD": "查看奖励",
+    "OUT_OF_TRIES_TITLE": "No more tries",
+    "OUT_OF_TRIES_TEXT": "Come back when you have more tries!",
+    "OUT_OF_TRIES_CTA": "Close"
   },
+  "STAMP_CAMPAIGN": {
+    "STAMP_CARD": "Stamp Card",
+    "OF": "of",
+    "NEW_STAMPS": "new stamps",
+    "NEW_STAMP": "new stamp",
+    "VIEW_WALLET": "View Wallet",
+    "YOU_GOT_A_NEW_STAMP": "You got a new stamp!",
+    "THANK_YOU_FOR_PLAYING": "Thank you for playing! You have already received the maximum number of stamps. Don't forget to redeem your earned rewards!",
+    "REWARD_POPUP_TITLE": "Congratulations!",
+    "REWARD_POPUP_TEXT": "Here is a reward for you.",
+    "REWARD_POPUP_BUTTON_TEXT": "View Reward",
+    "NO_REWARD_POPUP_TITLE": "No Reward Received",
+    "NO_REWARD_POPUP_TEXT": "Try again next time",
+    "NO_REWARD_POPUP_BUTTON_TEXT": "Close",
+    "ERROR_TITLE": "Something went wrong with our server",
+    "ERROR_TEXT": "We notified our team. Sorry for the inconvenience."
+  },
+  "FAVOURITES_PAGE": {
+    "TITLE": "Favourite Rewards"
+  },
+  "PUZZLE": {
+    "PUZZLE": "Puzzle",
+    "PLAY_NOW": "Play now!",
+    "NEW_PIECES": "New pieces",
+    "NEW_STAMPS": " new stamps"
+  },
+  "ERRORS": {
+    "GENERIC": "Sorry, something went wrong",
+    "REWARDS_RUN_OUT": "Sorry, rewards have run out",
+    "NO_UNUSED_MOVES": "Sorry, you do not have any more moves available"
+  },
+  "Gold": "黃金",
+  "Silver": "銀卡",
+  "Green": "綠色",
+  "Basic": "基礎",
   "CONTENT_PAGE": "找不到內容",
-  "LOGIN_SESSION_EXPIRED": "登錄時間超時"
+  "LOGIN_SESSION_EXPIRED": "登錄時間超時",
+  "Contact Us": "聯繫我們",
+  "Terms and Conditions": "條款與細則",
+  "TRY_AGAIN": "再试一次"
 }

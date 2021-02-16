@@ -2,8 +2,6 @@ import {
   async,
   ComponentFixture,
   TestBed,
-  fakeAsync,
-  tick,
 } from '@angular/core/testing';
 import { Type } from '@angular/core';
 import { Router } from '@angular/router';
@@ -29,25 +27,17 @@ import {
   RewardsModule,
   VouchersModule,
   ILoyalty,
-  RewardsService, ThemesService
+  RewardsService, ThemesService, TokenStorage
 } from '@perxtech/core';
 
 import { HomeComponent } from './home.component';
 
 import { mockLoyalty } from '../loyalty.mock';
 
-const user = {
-  id: 5,
-  state: 'active',
-  firstName: 'test',
-  lastName: 'test'
-};
-
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
   let rewardsService: RewardsService;
-  let translateService: TranslateService;
 
   const themesServiceStub: Partial<ThemesService> = {
     getThemeSetting: () => of()
@@ -58,6 +48,10 @@ describe('HomeComponent', () => {
   };
   const rewardServiceStub: Partial<RewardsService> = {
     getAllRewards: (): Observable<IReward[]> => of([])
+  };
+  const tokenStorageStub = {
+    getAppInfoProperty: () => null,
+    setAppInfoProperty: () => { }
   };
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -88,6 +82,9 @@ describe('HomeComponent', () => {
           provide: ThemesService,
           useValue: themesServiceStub,
         },
+        { provide: TokenStorage,
+          useValue: tokenStorageStub
+        }
       ],
       declarations: [HomeComponent]
     })
@@ -97,7 +94,6 @@ describe('HomeComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
-    translateService = TestBed.get(TranslateService);
     rewardsService = fixture.debugElement.injector.get<RewardsService>(RewardsService as Type<RewardsService>);
     fixture.detectChanges();
   });
@@ -119,13 +115,4 @@ describe('HomeComponent', () => {
     component.ngOnInit();
     expect(spy).toHaveBeenCalled();
   });
-
-  it('should call translate service', fakeAsync(() => {
-    const spy = spyOn(translateService, 'get');
-    spy.and.returnValue(of({ YOU_HAVE: 'YOU_HAVE', HELLO: 'HELLO', POINTS_EXPITING: 'POINTS_EXPITING' }));
-    component.ngOnInit();
-    expect(spy).toHaveBeenCalledWith(['YOU_HAVE', 'HELLO', 'POINTS_EXPITING']);
-    tick();
-    expect(component.titleFn(user)).toBe('HELLO' + ` ${user.lastName},`);
-  }));
 });

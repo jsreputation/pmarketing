@@ -8,13 +8,15 @@ import {
 import {
   iif,
   Observable,
-  of
+  of,
+  throwError,
 } from 'rxjs';
 import {
   map,
   share,
   switchMap,
   tap,
+  catchError
 } from 'rxjs/operators';
 
 import { IWSetting } from '@perxtech/whistler';
@@ -29,9 +31,11 @@ import {
   IRssFeeds,
   PagesObject,
   IFlags,
-  GatekeeperApis
+  GatekeeperApis,
+  VoucherDistributionTypes
 } from './models/settings.model';
 import { ConfigService } from '../config/config.service';
+import { oc } from 'ts-optchain';
 
 interface IV4FlagsResponse {
   data: IV4Flags;
@@ -53,6 +57,14 @@ interface IV4Flags {
     show_stamp_campaigns: boolean;
     gatekeeper_api: GatekeeperApis;
     show_loyalty_on_home: boolean;
+    gatekeeper_url: string;
+    show_rssfeed_cta: boolean;
+    show_nearme: boolean;
+    show_progress_campaigns_nav_button: boolean;
+    show_voucher_status_labels: boolean;
+    voucher_distribution_type: VoucherDistributionTypes;
+    system_sets_password: boolean;
+    show_reward_favourite_button: boolean;
   };
 }
 
@@ -123,19 +135,29 @@ export class V4SettingsService extends SettingsService {
       gatekeeperPollingInterval: data.json_value.gatekeeper_polling_interval,
       showStampCampaigns: data.json_value.show_stamp_campaigns,
       gatekeeperApi: data.json_value.gatekeeper_api,
-      showLoyaltyBlockOnHomePage: data.json_value.show_loyalty_on_home
+      showLoyaltyBlockOnHomePage: data.json_value.show_loyalty_on_home,
+      gatekeeperUrl: data.json_value.gatekeeper_url,
+      showRSSfeedCTA: data.json_value.show_rssfeed_cta,
+      showNearMePage: data.json_value.show_nearme,
+      showProgressCampaignsNavButton: data.json_value.show_progress_campaigns_nav_button,
+      showRewardFavButton: data.json_value.show_reward_favourite_button,
+      showVoucherStatusLabels: data.json_value.show_voucher_status_labels,
+      voucherDistributionType: data.json_value.voucher_distribution_type,
+      systemSetsPassword: data.json_value.system_sets_password
     };
   }
 
 
   public static v4WordPressRssToRss(data: IV4WordPressRss): IRssFeeds {
     const newIRssFeeds: IRssFeeds = { data: [] };
-    data.json_value.blog_section.forEach(rssSection => {
-      newIRssFeeds.data.push({
-        url: rssSection.url,
-        page: rssSection.section
+    if (oc(data).json_value.blog_section()) {
+      data.json_value.blog_section.forEach(rssSection => {
+        newIRssFeeds.data.push({
+          url: rssSection.url,
+          page: rssSection.section
+        });
       });
-    });
+    }
     return newIRssFeeds;
   }
 
@@ -161,7 +183,8 @@ export class V4SettingsService extends SettingsService {
     return this.http.get<IV4FlagsResponse>(`${this.hostName}/v4/settings/microsite_feature_flags`).pipe(
       map((res: IV4FlagsResponse) => res.data),
       map((data: IV4Flags) => V4SettingsService.v4FlagsToFlags(data)),
-      tap((data: IFlags) => this.flags = data)
+      tap((data: IFlags) => this.flags = data),
+      catchError(err => throwError(err))
     );
   }
 
@@ -188,19 +211,24 @@ export class V4SettingsService extends SettingsService {
   }
 
   public isGatekeeperOpen(): Observable<boolean> {
+    let gateKeeperURL = '';
     // this will return a empty body and angular does not like it.
-    const perxGatekeeper = this.http.post<IV4GatekeeperResponse>(`${this.hostName}/v4/gatekeep_token`, null);
-
+    const perxGatekeeper = this.http.get<IV4GatekeeperResponse>(`${this.hostName}/v4/gatekeep_token`);
     // currently only implemented for prod todo: auth and staging/prod versions
     const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    const awsGatekeeper = this.httpBackend.get<IV4GatekeeperResponse>(
-      'https://80ixbz8jt8.execute-api.ap-southeast-1.amazonaws.com/Prod/gatekeep_token',
-      {
-        headers
-      });
     return this.getRemoteFlagsSettings().pipe(
+      switchMap((flags: IFlags) => {
+        if (!flags.gatekeeperUrl) {
+          return throwError('Gate keeper URL is empty');
+        }
+        gateKeeperURL = flags.gatekeeperUrl;
+        return of(flags);
+      }),
       switchMap((flags: IFlags) =>
-        iif(() => flags.gatekeeperApi === GatekeeperApis.AWS, awsGatekeeper, perxGatekeeper)
+        iif(() => flags.gatekeeperApi === GatekeeperApis.AWS,
+          this.httpBackend.get<IV4GatekeeperResponse>(gateKeeperURL, { headers }),
+          perxGatekeeper
+        )
       ),
       map((res: IV4GatekeeperResponse) => {
         if (res.message === 'go ahead') {

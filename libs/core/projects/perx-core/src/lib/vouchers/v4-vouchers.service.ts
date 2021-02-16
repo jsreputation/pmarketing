@@ -56,6 +56,7 @@ export interface IV4Voucher {
   given_to: any;
   id: number;
   issued_date: string;
+  merchant_location: IV4MerchantLocation;
   name: string;
   redemption_date: any;
   redemption_type: {
@@ -73,6 +74,20 @@ export interface IV4Voucher {
   voucher_type: RedemptionType;
   redemption_image?: any;
   redemption_text?: any;
+}
+
+export interface IV4MerchantLocation {
+  address1: string;
+  address2: string;
+  city: string;
+  country: string;
+  id: number;
+  latitude: number | null;
+  loc: string | null;
+  longitude: number | null;
+  name: string;
+  phone_number: string;
+  postal_code: string;
 }
 
 export interface IV4VoucherLocationsResponse {
@@ -118,6 +133,7 @@ export class V4VouchersService implements IVoucherService {
 
   public static v4VoucherToVoucher(v: IV4Voucher): IVoucher {
     const reward: IV4Reward | null = v.reward ? v.reward : null;
+    const merchantLocation: IV4MerchantLocation | null = v.merchant_location ? v.merchant_location : null;
     const accessoryImage = reward && reward.images && reward.images.length ?
       reward.images.find((image) => image.type === 'accessory_image') : null;
     return {
@@ -125,20 +141,31 @@ export class V4VouchersService implements IVoucherService {
       reward: reward ? V4RewardsService.v4RewardToReward(reward) : null,
       state: v.state,
       code: (typeof v.voucher_code === 'string') ? v.voucher_code : undefined,
-      expiry: reward && reward.valid_to !== null ? new Date(reward.valid_to) : null,
+      expiry: v.valid_to !== null ? new Date(v.valid_to) : null,
       redemptionDate: v.redemption_date !== null ? new Date(v.redemption_date) : null,
       redemptionType:
         v.redemption_type !== null &&
           (v.redemption_type.type !== null && v.redemption_type.type !== 'offline') ? v.redemption_type.type :
           v.voucher_type.toString() === 'code' ? RedemptionType.txtCode : v.voucher_type,
-      accessoryImage: oc(accessoryImage).url('')
+      accessoryImage: oc(accessoryImage).url(''),
+      merchantLocation: merchantLocation ? {
+        id: v.merchant_location.id,
+        address1: v.merchant_location.address1,
+        address2: v.merchant_location.address2,
+        city: v.merchant_location.city,
+        country: v.merchant_location.country,
+        name: v.merchant_location.name,
+        postalCode: v.merchant_location.postal_code
+      } : null,
     };
   }
 
   public static v4LocationToLocation(v: IV4VoucherLocation): IVoucherLocation {
     return {
       id: v.id,
-      name: v.name
+      name: v.name,
+      latitude: v.latitude,
+      longitude: v.longitude
     };
   }
 
@@ -333,8 +360,11 @@ export class V4VouchersService implements IVoucherService {
       );
   }
 
-  public getRewardLocations(rewardId: number): Observable<IVoucherLocation[]> {
-    return this.http.get<IV4VoucherLocationsResponse >(`${this.apiHost}/v4/rewards/${rewardId}/locations`)
+  public getRewardLocations(rewardId: number, page?: number): Observable<IVoucherLocation[]> {
+    if (page === undefined) {
+      page = 1;
+    }
+    return this.http.get<IV4VoucherLocationsResponse >(`${this.apiHost}/v4/rewards/${rewardId}/locations/?page=${page}`)
       .pipe(
         map((res: IV4VoucherLocationsResponse) => res.data.map(location => V4VouchersService.v4LocationToLocation(location)))
       );

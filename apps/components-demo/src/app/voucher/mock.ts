@@ -22,6 +22,7 @@ export const mock: Voucher[] = [
       howToRedeem: '',
       categoryTags: [],
       inventory: null,
+      loyalty: []
     },
     state: VoucherState.issued,
     redemptionType: RedemptionType.none,
@@ -48,6 +49,7 @@ export const mock: Voucher[] = [
       howToRedeem: '',
       categoryTags: [],
       inventory: null,
+      loyalty: []
     },
     state: VoucherState.issued,
     redemptionType: RedemptionType.none,
@@ -74,6 +76,7 @@ export const mock: Voucher[] = [
       howToRedeem: '',
       categoryTags: [],
       inventory: null,
+      loyalty: []
     },
     state: VoucherState.issued,
     redemptionType: RedemptionType.none,

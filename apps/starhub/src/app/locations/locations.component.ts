@@ -29,11 +29,9 @@ export class LocationsComponent implements OnInit {
         filter((params: Params) => params.merchantId),
         map((params: Params) => params.merchantId)
       )
-      .subscribe(
-        (merchantId: number) => {
-          this.locations$ = this.locationService.getFromMerchant(merchantId).pipe(map(filterDuplicateLocations));
-        }
-      );
+      .subscribe((merchantId: number) => {
+        this.locations$ = this.locationService.getFromMerchant(merchantId).pipe(map(filterDuplicateLocations));
+      });
     this.activeRoute.queryParams
       .pipe(
         filter((params: Params) => params.voucherId),
@@ -51,8 +49,7 @@ export class LocationsComponent implements OnInit {
             siteSectionLevel2: 'rewards:discover',
             siteSectionLevel3: 'rewards:discover:locations'
           });
-        }
-      );
+        });
   }
 
   public back(): void {

@@ -42,10 +42,16 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   public willWin: boolean = false;
 
   @Input()
+  public startSpin: boolean = false;
+
+  @Input()
   public rewardSlots: number[] = []; // to loop through for function below to find slot
 
   @Output()
   public completed: EventEmitter<void> = new EventEmitter<void>();
+
+  @Output()
+  public spinning: EventEmitter<void> = new EventEmitter<void>();
 
   // tslint:disable-next-line:variable-name
   private ctx_: CanvasRenderingContext2D | undefined;
@@ -89,6 +95,9 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
       || (changes.willWin)) {
       this.init();
     }
+    if (changes.startSpin && this.startSpin) {
+      this.spin();
+    }
   }
 
   public ngAfterViewInit(): void {
@@ -104,16 +113,19 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
 
   private attachListeners(): void {
     this.canvas.style.cursor = 'move';
-    this.canvas.addEventListener('touchstart', this.handleStart.bind(this), { once: true });
-    this.canvas.addEventListener('mousedown', this.handleStart.bind(this), { once: true });
-
-    // listen while dragging
-    this.canvas.addEventListener('touchend', this.handleEnd.bind(this), { once: true });
-    this.canvas.addEventListener('mouseup', this.handleEnd.bind(this), { once: true });
-
-    // listen after dragging is complete
-    this.canvas.addEventListener('touchmove', this.handleMove.bind(this), { once: true });
-    this.canvas.addEventListener('mousemove', this.handleMove.bind(this), { once: true });
+    // prevent binding multiple listners by checking if browser has touch support
+    // https://stackoverflow.com/a/2915912/1179865
+    if ('ontouchstart' in document.documentElement) {
+      this.canvas.addEventListener('touchstart', this.handleStart.bind(this), { once: true });
+      // listen while dragging
+      this.canvas.addEventListener('touchend', this.handleEnd.bind(this), { once: true });
+      // listen after dragging is complete
+      this.canvas.addEventListener('touchmove', this.handleMove.bind(this), { once: true });
+    } else {
+      this.canvas.addEventListener('mousedown', this.handleStart.bind(this), { once: true });
+      this.canvas.addEventListener('mouseup', this.handleEnd.bind(this), { once: true });
+      this.canvas.addEventListener('mousemove', this.handleMove.bind(this), { once: true });
+    }
   }
 
   private determineSlot(): number {
@@ -278,6 +290,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
   }
 
   private spin(): void {
+    this.init();
     this.spinTime = 0;
     this.lastTimeStamp = (new Date()).getTime();
     this.rotateWheel();
@@ -369,7 +382,7 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
 
     this.canvas.setAttribute('style', styleString);
 
-    this.spin();
+    this.spinning.emit();
   }
 
   private static findTop(element: HTMLElement): number {

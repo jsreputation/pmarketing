@@ -6,7 +6,8 @@ import {
   RewardsService,
   LocationsService,
   IVoucherService,
-  LoyaltyService
+  LoyaltyService,
+  SettingsService
 } from '@perxtech/core';
 
 import { of } from 'rxjs';
@@ -19,6 +20,9 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialog } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('RewardsBookingComponent', () => {
   let component: RewardsBookingComponent;
@@ -45,6 +49,10 @@ describe('RewardsBookingComponent', () => {
     open: (componentRef: any, config: any) => of({ componentRef, config })
   };
 
+  const settingsServiceStub: Partial<SettingsService> = {
+    getRemoteFlagsSettings: () => of()
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RewardsBookingComponent],
@@ -53,17 +61,21 @@ describe('RewardsBookingComponent', () => {
         MatRadioModule,
         MatCheckboxModule,
         MatSelectModule,
+        MatButtonModule,
         RouterTestingModule,
         ReactiveFormsModule,
         FormsModule,
         NoopAnimationsModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        MatProgressSpinnerModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: RewardsService, useValue: rewardServiceStub },
         { provide: LocationsService, useValue: locationServiceStub },
         { provide: IVoucherService, useValue: voucherServiceStub },
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
+        { provide: SettingsService, useValue: settingsServiceStub },
         { provide: MatDialog, useValue: dialogServiceStub }
       ]
     })

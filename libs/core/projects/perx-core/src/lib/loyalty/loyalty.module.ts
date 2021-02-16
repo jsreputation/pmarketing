@@ -31,7 +31,7 @@ export function loyaltyServiceFactory(http: HttpClient, config: Config, configSe
   imports: [
     CommonModule,
     MatProgressSpinnerModule,
-    MatProgressBarModule
+    MatProgressBarModule,
   ],
   exports: [
     LoyaltySummaryComponent,

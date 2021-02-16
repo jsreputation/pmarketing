@@ -24,6 +24,12 @@ export class QuizComponent implements OnChanges, OnDestroy {
   public data$: Observable<IQuiz>;
 
   @Input()
+  public customTitleColor: ('black' | 'white');
+
+  @Input()
+  public allowPicZoom: boolean = true;
+
+  @Input()
   public hideIndex: boolean = false;
 
   @Input()

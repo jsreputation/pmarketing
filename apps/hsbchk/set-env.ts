@@ -21,18 +21,14 @@ const displayProperties = `"displayProperties": {
   "account": {
     "pages": [
       {
-        "title": "ACCOUNT_PAGE.LIFE_TALK",
-        "content_url": "https://retailbank.hsbc.com.hk/ins/en/lifetalk/blog/"
-      },
-      {
         "key": "tnc",
-        "title": "ACCOUNT_PAGE.TNC",
+        "title": "TNC",
         "content_url": "https://cdn.perxtech.io/content/hsbc-hk/tnc.html"
       },
       {
-        "key": "privacy-policy",
-        "title": "ACCOUNT_PAGE.PRIVACY_POLICY",
-        "content_url": "https://cdn.perxtech.io/content/hsbc-hk/ppolicy.html"
+        "key": "disclaimer",
+        "title": "DISCLAIMER",
+        "content_url": "https://cdn.perxtech.io/content/hsbc-hk/disclaimer.html"
       }
     ]
   }
@@ -72,6 +68,7 @@ const appConfigFile = `{
   "showLoyaltyProgress": ${process.env.SHOW_LOYALTY_PROGRESS ? process.env.SHOW_LOYALTY_PROGRESS : false},
   "showCatalogOnHomePage": ${process.env.SHOW_CATALOG_ON_HOMEPAGE ? process.env.SHOW_CATALOG_ON_HOMEPAGE : true},
   "showQuizOnHomePage" : ${process.env.SHOW_QUIZ_ON_HOMEPAGE ? process.env.SHOW_QUIZ_ON_HOMEPAGE : false},
+  "showSurveyOnHomePage" : ${process.env.SHOW_SURVEY_ON_HOMEPAGE ? process.env.SHOW_SURVEY_ON_HOMEPAGE : false},
   "showCampaignRewardsCounterOnHomepage": ${process.env.SHOW_CAMPAIGN_REWARDS_COUNTER_ON_HOMEPAGE ? process.env.SHOW_CAMPAIGN_REWARDS_COUNTER_ON_HOMEPAGE : false},
   "showRewardsOnHomepage": ${process.env.SHOW_REWARDS_ON_HOMEPAGE ? process.env.SHOW_REWARDS_ON_HOMEPAGE : false},
   "showCampaignLandingPage": ${process.env.SHOW_CAMPAIGN_LANDING_PAGE ? process.env.SHOW_CAMPAIGN_LANDING_PAGE : false},
@@ -81,11 +78,12 @@ const appConfigFile = `{
   "showExpiryOnRewardDetail": ${process.env.SHOW_EXPIRY_REWARD_DETAIL ? process.env.SHOW_EXPIRY_REWARD_DETAIL : true},
   "showUserInfoOnAccountsPage": ${process.env.SHOW_USERINFO_ACCOUNTS ? process.env.SHOW_USERINFO_ACCOUNTS : false},
   "showTransactionHistoryOnAccountsPage": ${process.env.SHOW_TRANSANCTION_HISTORY_ACCOUNTS ? process.env.SHOW_TRANSANCTION_HISTORY_ACCOUNTS : false},
-  "showReferralOnAccountsPage": ${process.env.SHOW_REFER_ON_ACCOUNTPAGE ? process.env.SHOW_REFER_ON_ACCOUNTPAGE : false},
+  "showReferralDetails": ${process.env.SHOW_REFER_ON_ACCOUNTPAGE ? process.env.SHOW_REFER_ON_ACCOUNTPAGE : false},
   "showVoucherBookingFromRewardsPage":  ${process.env.SHOW_VOUCHER_BOOKING_FROM_REWARDS ? process.env.SHOW_VOUCHER_BOOKING_FROM_REWARDS : false},
   "custom": {
     "stampsType": "${process.env.STAMPS_TYPE ? process.env.STAMPS_TYPE : 'stamp_card'}",
-    "redirectAfterLogin": "${process.env.REDIRECT_AFTER_LOGIN ? process.env.REDIRECT_AFTER_LOGIN : '/wallet'}"
+    "redirectAfterLogin": "${process.env.REDIRECT_AFTER_LOGIN ? process.env.REDIRECT_AFTER_LOGIN : '/wallet'}",
+    "loginMethod": "${process.env.LOGIN_METHOD ? process.env.LOGIN_METHOD : 'phone'}"
   },
   ${displayProperties}
 }

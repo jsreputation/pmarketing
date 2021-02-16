@@ -4,7 +4,7 @@ import { ITracker, QuizQuestionType } from '../../models/quiz.model';
 export interface ISelectPayload {
   type: QuizQuestionType.multipleChoice;
   multiple: boolean;
-  choices: { title: string; id: string; }[];
+  choices: { title: { text: string; }; id: string; }[];
 }
 
 @Component({

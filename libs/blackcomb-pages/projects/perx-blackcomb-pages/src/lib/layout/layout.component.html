@@ -1,5 +1,5 @@
 <div class="main-app-container" *ngIf="theme && theme.properties && appConfig && appRemoteFlags">
-  <mat-toolbar class="toolbar mat-elevation-z3" *ngIf="showHeader">
+  <mat-toolbar class="toolbar mat-elevation-z3" *ngIf="showHeader && !appConfig.homeAsProgressPage">
     <mat-icon
       class="backArrow"
       (click)="backArrowClick()">
@@ -28,6 +28,18 @@
           <span translate>NAVIGATION.HOME</span>
         </div>
       </a>
+      <a matRipple [routerLink]="[ '/progress-campaigns' ]" routerLinkActive="active" *ngIf="appRemoteFlags?.showProgressCampaignsNavButton">
+        <div class="nav-item">
+          <mat-icon aria-hidden="false">local_activity</mat-icon>
+          <span translate>NAVIGATION.STAMPS</span>
+        </div>
+      </a>
+      <a matRipple [routerLink]="[ '/rewards' ]" routerLinkActive="active" *ngIf="tenant !== 'all-it' && appConfig.showRewardNavButton">
+        <div class="nav-item">
+          <mat-icon aria-hidden="false">card_giftcard</mat-icon>
+          <span translate>NAVIGATION.REWARDS</span>
+        </div>
+      </a>
       <a matRipple [routerLink]="[ '/wallet' ]" routerLinkActive="active">
         <div class="nav-item">
           <mat-icon aria-hidden="false">account_balance_wallet</mat-icon>
@@ -44,6 +56,12 @@
         <div class="nav-item">
           <mat-icon aria-hidden="false">location_on</mat-icon>
           <span translate>NAVIGATION.DEALS</span>
+        </div>
+      </a>
+      <a matRipple [routerLink]="[ '/nearme' ]" routerLinkActive="active" *ngIf="appConfig.showNearMePage && appRemoteFlags?.showNearMePage">
+        <div class="nav-item">
+          <mat-icon aria-hidden="false">location_on</mat-icon>
+          <span translate>NAVIGATION.NEARME</span>
         </div>
       </a>
       <a matRipple [routerLink]="[ '/leaderboard' ]" routerLinkActive="active" *ngIf="appConfig.showLeaderboardPage">

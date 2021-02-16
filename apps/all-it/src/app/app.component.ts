@@ -18,6 +18,7 @@ import {
   filter,
   map,
   switchMap,
+  tap,
 } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -28,6 +29,7 @@ import {
   ITheme,
   ConfigService,
   IConfig,
+  ThemesService,
 } from '@perxtech/core';
 import {
   HomeComponent,
@@ -38,11 +40,12 @@ import {
 } from '@perxtech/blackcomb-pages';
 
 import { BACK_ARROW_URLS } from './app.constants';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: [ './app.component.scss' ]
 })
 export class AppComponent implements OnInit {
   public showHeader: boolean;
@@ -64,16 +67,30 @@ export class AppComponent implements OnInit {
     private router: Router,
     private cd: ChangeDetectorRef,
     private translate: TranslateService,
-    private config: ConfigService
+    private config: ConfigService,
+    private themesService: ThemesService,
+    private titleService: Title,
   ) {
   }
 
   public ngOnInit(): void {
-    this.config.readAppConfig()
-      .pipe(switchMap((conf) => this.translate.getTranslation(conf.defaultLang as string)))
-      .subscribe((config: IConfig<void>) => {
-        this.translationLoaded = true;
-        this.preAuth = config.preAuth as boolean;
+    this.config.readAppConfig<ITheme>()
+      .pipe(
+        tap((config: IConfig<ITheme>) => {
+          if (config.appVersion) {
+            (window as any).PERX_APP_VERSION = config.appVersion;
+          }
+        }),
+        switchMap((conf) => this.translate.getTranslation(conf.defaultLang as string)),
+        tap((config: IConfig<ITheme>) => {
+          this.translationLoaded = true;
+          this.preAuth = config.preAuth as boolean;
+        }),
+        switchMap((config: IConfig<ITheme>) => this.themesService.getThemeSetting(config))
+      )
+      .subscribe((res: ITheme) => {
+        const title: string = res.properties['--title'] ? res.properties['--title'] : 'All IT';
+        this.titleService.setTitle(title);
       });
 
     this.notificationService.$popup
@@ -82,7 +99,7 @@ export class AppComponent implements OnInit {
       .subscribe(
         (msg: string) => {
           if (msg === 'LOGIN_SESSION_EXPIRED') {
-            this.router.navigate(['/login']);
+            this.router.navigate([ '/login' ]);
             msg = 'Login Session Expired';
           }
           this.snackBar.open(msg, 'x', { duration: 2000 });
@@ -97,8 +114,9 @@ export class AppComponent implements OnInit {
       .subscribe(url => this.initBackArrow(url));
     this.initBackArrow(this.router.url);
   }
+
   public onActivate(ref: any): void {
-    this.showHeader = !(ref instanceof SignIn2Component);
+    this.showHeader = ! (ref instanceof SignIn2Component);
     this.showToolbar = ref instanceof HomeComponent ||
       ref instanceof HistoryComponent ||
       ref instanceof AccountComponent ||

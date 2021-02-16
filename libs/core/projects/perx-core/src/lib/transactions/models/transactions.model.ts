@@ -7,6 +7,7 @@ export interface ITransaction {
   properties: ITransactionProperties;
   transactionReference: string;
   pointsEarned: number;
+  razerStampsCount: number;
 }
 
 export interface ITransactionProperties {
@@ -16,4 +17,14 @@ export interface ITransactionProperties {
   storeCode?: string;
   storeName?: string;
   invoiceNumber?: number;
+}
+
+export enum TransactionState {
+  issued = 'issued',
+  redeemed = 'redeemed',
+  expired = 'expired',
+  reserved = 'reserved',
+  released = 'released',
+  pending = 'pending',
+  processed = 'processed'
 }

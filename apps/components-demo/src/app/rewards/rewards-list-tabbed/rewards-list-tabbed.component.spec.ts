@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { TranslateModule } from '@ngx-translate/core';
 import { RewardsListTabbedComponent } from './rewards-list-tabbed.component';
 import { RewardsModule as PerxRewardsModule, RewardsService } from '@perxtech/core';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -19,7 +19,8 @@ describe('RewardsListTabbedComponent', () => {
       validFrom: new Date('2018-12-16T03:24:00'),
       validTo: new Date('2019-11-17T03:24:00'),
       rewardBanner: '',
-      termsAndConditions: ''
+      termsAndConditions: '',
+      loyalty: []
     }))
   };
 
@@ -27,7 +28,8 @@ describe('RewardsListTabbedComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         PerxRewardsModule,
-        NoopAnimationsModule
+        NoopAnimationsModule,
+        TranslateModule.forRoot()
       ],
       declarations: [RewardsListTabbedComponent],
       providers: [

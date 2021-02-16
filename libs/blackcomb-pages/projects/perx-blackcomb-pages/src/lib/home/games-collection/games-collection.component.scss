@@ -1,3 +1,5 @@
+@import "../../mixins";
+
 mat-card {
   display: flex;
   flex-direction: column;
@@ -33,6 +35,12 @@ mat-card {
   font-size: 1rem;
   line-height: 1.6rem;
   margin: 0;
+
+  ::ng-deep {
+    ol, ul {
+      padding-inline-start: 1.1em;
+    }
+  }
 }
 
 .games-card {
@@ -47,4 +55,8 @@ mat-card {
 .see-button {
   margin: 0.8rem 1.6rem;
   flex-grow: 1;
+}
+
+.ellipsis-1-line {
+  @include ellipse-lines(1);
 }

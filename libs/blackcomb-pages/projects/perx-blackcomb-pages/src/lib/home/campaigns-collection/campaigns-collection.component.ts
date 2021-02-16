@@ -21,7 +21,8 @@ import {
   IGame,
   IGameService,
   IQuiz,
-  QuizService
+  QuizService,
+  SurveyService
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import {
@@ -66,6 +67,7 @@ export class CampaignsCollectionComponent implements OnInit {
     private gamesService: IGameService,
     private campaignService: ICampaignService,
     private quizService: QuizService,
+    private surveyService: SurveyService
   ) { }
 
 
@@ -74,26 +76,27 @@ export class CampaignsCollectionComponent implements OnInit {
       this.rewardsLeft = text;
     });
 
-    this.campaignsWithRewards$ = this.campaigns$.pipe(
-      switchMap(
-        (campaigns: ICampaign[]) => zip(...campaigns.map(campaign => this.campaignService.getVoucherLeftCount(campaign.id))
-        )),
-      tap(rewardsArr => {
-        rewardsArr.forEach((reward) => {
-          this.rewardsCountBvrSubjects[reward.campaignId] = new BehaviorSubject(0);
-          this.rewardsCountBvrSubjects[reward.campaignId].next(reward.count);
-        });
-      }),
-      withLatestFrom(this.campaigns$),
-      map(
-        ([rewardsArr, campaigns]) => {
-          const rewardsCampaignIndexedObj = rewardsArr.reduce((acc, curr) => ({
-            ...acc, [curr.campaignId]: curr.count
-          }), {});
-          return campaigns.map(campaign => ({...campaign, rewardsCount: rewardsCampaignIndexedObj[campaign.id]}));
-        }
-      ));
-
+    if (this.campaigns$) {
+      this.campaignsWithRewards$ = this.campaigns$.pipe(
+        switchMap(
+          (campaigns: ICampaign[]) => zip(...campaigns.map(campaign => this.campaignService.getVoucherLeftCount(campaign.id))
+          )),
+        tap(rewardsArr => {
+          rewardsArr.forEach((reward) => {
+            this.rewardsCountBvrSubjects[reward.campaignId] = new BehaviorSubject(0);
+            this.rewardsCountBvrSubjects[reward.campaignId].next(reward.count);
+          });
+        }),
+        withLatestFrom(this.campaigns$),
+        map(
+          ([ rewardsArr, campaigns ]) => {
+            const rewardsCampaignIndexedObj = rewardsArr.reduce((acc, curr) => ({
+              ...acc, [curr.campaignId]: curr.count
+            }), {});
+            return campaigns.map(campaign => ({ ...campaign, rewardsCount: rewardsCampaignIndexedObj[campaign.id] }));
+          }
+        ));
+    }
     iif(
       () => this.withRewardsCounter,
       this.campaignsWithRewards$,
@@ -108,7 +111,12 @@ export class CampaignsCollectionComponent implements OnInit {
               catchError(( () => of([])))
             );
           }
-          return this.gamesService.getGamesFromCampaign(campaign.id);
+          if (this.gameType === GameType.survey) {
+            return this.surveyService.getSurveyFromCampaign(campaign.id).pipe(
+              catchError(( () => of([])))
+            );
+          }
+          return this.gamesService.getGamesFromCampaign(campaign);
         })
       ]))
     ).subscribe(
@@ -142,7 +150,11 @@ export class CampaignsCollectionComponent implements OnInit {
   }
 
   public selectCampaign(campaign: ICampaign): void {
-    if (!this.isCampaignComplete(campaign.id)) {
+    if (
+      !this.isCampaignComplete(campaign.id) &&
+      (this.isCampaignDisabled[campaign.id] === undefined ||
+      !this.isCampaignDisabled[campaign.id])
+    ) {
       this.selected.emit(campaign);
     }
   }
@@ -163,6 +175,10 @@ export class CampaignsCollectionComponent implements OnInit {
   }
 
   public isQuizRewardsEmpty(campaignId: number): boolean {
+    if (!this.withRewardsCounter) {
+      return false;
+    }
+
     if (this.quizzes && this.quizzes.length > 0 && this.gameType === GameType.quiz) {
       const matchingCampaign = this.campaigns.find((campaign: ICampaign) =>
         campaign.id === campaignId

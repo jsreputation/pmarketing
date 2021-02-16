@@ -20,6 +20,8 @@ import { ConfigService } from './config.service';
 })
 export class V4ConfigService extends ConfigService {
   private appConfig: IConfig<any> | undefined;
+  private appStarted: boolean = false;
+  public APP_STARTED: boolean = false;
 
   private appConfig$: Observable<IConfig<any>> | undefined;
 
@@ -40,5 +42,14 @@ export class V4ConfigService extends ConfigService {
       );
     }
     return this.appConfig$;
+  }
+
+  public setAppStarted(): void {
+    this.appStarted = true;
+    this.APP_STARTED = this.appStarted;
+  }
+
+  public readAppStarted(): boolean {
+    return this.appStarted;
   }
 }

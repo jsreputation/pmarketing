@@ -11,9 +11,14 @@
         flex-grow: 1;
       }
 
-      .mat-ink-bar {
-        background-color: var(--accent) !important;
+      .mat-tab-header {
+        background-color: #FFFFFF;
       }
+
+      //.mat-ink-bar {
+      //  background-color: var(--primary) !important;
+      //  //background-color: var(--accent) !important;
+      //}
 
       .mat-tab-label-active {
         color: var(--accent) !important;

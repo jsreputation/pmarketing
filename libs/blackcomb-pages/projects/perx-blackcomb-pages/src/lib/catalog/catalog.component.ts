@@ -12,7 +12,12 @@ import {
   IRssFeeds,
   IRssFeedsData
 } from '@perxtech/core';
-import { map, scan, switchMap } from 'rxjs/operators';
+import {
+  catchError,
+  map,
+  scan,
+  switchMap
+} from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 
 interface ISortMenuOption {
@@ -46,6 +51,7 @@ export class CatalogComponent implements OnInit {
   public selectedCategory: string;
   public selectedSortingCriteria: SortingMode = SortingMode.endingSoon;
   public showToolbarTitle: boolean = false;
+  public selectedCategoryDesc: string;
 
   private rewards: BehaviorSubject<IReward[]> = new BehaviorSubject<IReward[]>([]);
 
@@ -96,6 +102,7 @@ export class CatalogComponent implements OnInit {
       this.rewards$ = this.rewardsService.getCatalog(parseInt(catalogId, 10)).pipe(
         map((catalog: ICatalog) => {
           this.selectedCategory = catalog.name;
+          this.selectedCategoryDesc = catalog.description;
           return catalog.rewards || [];
         })
       );
@@ -130,7 +137,8 @@ export class CatalogComponent implements OnInit {
           return of([] as FeedItem[]);
         }
         return this.feedService.getFromUrl(feedData.url);
-      })
+      }),
+      catchError(() => of([] as FeedItem[]))
     );
   }
 }

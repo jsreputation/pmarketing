@@ -7,7 +7,6 @@ import { RewardsService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { rewards } from '../rewards.mock';
 import { catalogs } from '../catalogs.mock';
-import { RewardsSortPipe } from './rewards-sort.pipe';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Type } from '@angular/core';
 import { SortingMode } from './category.model';
@@ -45,7 +44,6 @@ describe('CategoryComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         CategoryComponent,
-        RewardsSortPipe,
         CategorySelectComponent,
         CategorySortComponent,
         GhostCardComponent
@@ -107,6 +105,7 @@ describe('CategoryComponent', () => {
       termsAndConditions: '',
       howToRedeem: '',
       categoryTags: undefined,
+      loyalty: []
     };
 
     const router = TestBed.get<Router>(Router as Type<Router>);
@@ -134,33 +133,6 @@ describe('CategoryComponent', () => {
     const sortingMode = component.getCurrentSelectedOrder();
     expect(sortingMode).toBe('Ending Soon');
   });
-
-  it('should create pipe', () => {
-    const sortPipe = new RewardsSortPipe();
-    expect(sortPipe).toBeTruthy();
-  });
-
-  it('should sort rewards on SortingMode.latest using valid from', fakeAsync(() => {
-    const sortPipe = new RewardsSortPipe();
-    const returnValue = sortPipe.transform(of(rewards), SortingMode.latest);
-    tick();
-    returnValue.subscribe(
-      (values) => {
-        expect(values[0].id).toBe(2);
-      }
-    );
-  }));
-
-  it('should sort rewards on SortingMode.ending_soon using valid from', fakeAsync(() => {
-    const sortPipe = new RewardsSortPipe();
-    const returnValue = sortPipe.transform(of(rewards), SortingMode.ending_soon);
-    tick();
-    returnValue.subscribe(
-      (values) => {
-        expect(values[0].id).toBe(3);
-      }
-    );
-  }));
 
   it('should call bottomSheet on selectCategory', fakeAsync(() => {
     const bottomSheet = TestBed.get<MatBottomSheet>(MatBottomSheet as Type<MatBottomSheet>);

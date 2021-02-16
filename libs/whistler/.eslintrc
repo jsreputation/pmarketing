@@ -1,26 +1,4 @@
 {
   "extends": "../../.eslintrc.js",
-  "rules": {
-    "@typescript-eslint/naming-convention": [
-      "error",
-      {
-        "selector": "enum",
-        "format": [
-          "PascalCase"
-        ],
-        "prefix": [
-          "W"
-        ]
-      },
-      {
-        "selector": "interface",
-        "format": [
-          "PascalCase"
-        ],
-        "prefix": [
-          "IW"
-        ]
-      }
-    ]
-  }
+  "rules": {}
 }

@@ -1,0 +1,32 @@
+.mat-tab-group-wrapper {
+  width: 96%;
+  margin-right: auto;
+  margin-left: auto;
+  height: 100%;
+  overflow: auto;
+}
+
+.page-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .full-width__input {
+    flex: 0;
+    width: 95%;
+    display: block;
+    margin: 1.3rem auto;
+
+    .search-input {
+      font-size: 1.5rem;
+    }
+  }
+
+  .reward-list-container {
+    flex: 1;
+    height: 100%;
+    overflow-y: auto;
+  }
+}
+

@@ -13,6 +13,7 @@ import {
 } from '@angular/core';
 import { interval, merge, NEVER, Observable, Subject } from 'rxjs';
 import { map, scan, startWith, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { TimerType } from '../../quiz/models/quiz.model';
 
 @Pipe({
   name: 'lengthForce',
@@ -51,6 +52,9 @@ export class TimerComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
   @Input('reset')
   public reset$: Observable<void>; // when ticking, the timer will reset and restart
 
+  @Input()
+  public countType: TimerType;
+
   // stream of formatted time values
   public timer$: Observable<string>;
   private destroy$: Subject<void> = new Subject();
@@ -69,8 +73,9 @@ export class TimerComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
   }
 
   public ngOnInit(): void {
+    const timerStartValue = this.countType === TimerType.countUp ? 0 : this.timeToRun / this.INTERVAL;
     const reset: Observable<Partial<TimerState>> = this.resetSubject$.pipe(
-      map(() => ({ value: this.timeToRun / this.INTERVAL, count: true }))
+      map(() => ({ value: timerStartValue, count: true }))
     );
     const start: Observable<Partial<TimerState>> = this.startSubject$.pipe(map(() => ({ count: true })));
     const stop: Observable<Partial<TimerState>> = this.stopSubject$.pipe(map(() => ({ count: false })));
@@ -78,8 +83,8 @@ export class TimerComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
     const initState: TimerState = {
       count: false,
       speed: this.INTERVAL,
-      value: this.timeToRun / this.INTERVAL,
-      countup: false,
+      value: timerStartValue,
+      countup: this.countType === TimerType.countUp ? true : false,
       increase: 1
     };
     this.timer$ = merge(
@@ -100,7 +105,10 @@ export class TimerComponent implements OnInit, OnDestroy, AfterViewInit, OnChang
             : NEVER
       ),
       tap((ticks: number) => {
-        if (ticks <= 0) {
+        if (this.countType === TimerType.countDown && ticks <= 0) {
+          this.stopSubject$.next();
+          this.done.emit();
+        } else if (this.countType === TimerType.countUp && ticks >= this.timeToRun / this.INTERVAL) {
           this.stopSubject$.next();
           this.done.emit();
         }

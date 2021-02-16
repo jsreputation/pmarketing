@@ -1,3 +1,4 @@
+import { oc } from 'ts-optchain';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ConfigService } from '../../config/config.service';
@@ -20,6 +21,10 @@ export type V4TenantTransactionProperties =
 
 interface IV4TransactionsResponse {
   data: IV4Transaction[];
+  meta: {
+    count: number;
+    total_count: number;
+  };
 }
 interface IV4Transaction {
   id: number;
@@ -35,6 +40,10 @@ interface IV4Transaction {
   transaction_reference: string;
   points_earned: number;
   merchant_user_account_id?: number;
+  meta?: {
+    count: number;
+    total_count: number;
+  };
 }
 
 export interface IV4TransactionPropertiesAbenson {
@@ -113,7 +122,7 @@ export class V4TransactionsService extends TransactionsService {
       });
   }
 
-  private static v4TransactionsToTransactions(transaction: IV4Transaction): ITransaction {
+  private static v4TransactionsToTransactions(transaction: IV4Transaction, razerStampsCount: number): ITransaction {
     return {
       id: transaction.id,
       transactionType: transaction.transaction_type,
@@ -122,7 +131,8 @@ export class V4TransactionsService extends TransactionsService {
       currency: transaction.currency,
       properties: V4TransactionsService.v4TransactionPropertiesToTransactionProperties(transaction.properties),
       transactionReference: transaction.transaction_reference,
-      pointsEarned: transaction.points_earned
+      pointsEarned: transaction.points_earned,
+      razerStampsCount
     };
   }
 
@@ -171,18 +181,59 @@ export class V4TransactionsService extends TransactionsService {
     return data;
   }
 
-  public getTransactions(page: number = 1, pageSize: number = DEFAULT_PAGE_COUNT): Observable<ITransaction[]> {
+  public getTransactions(
+    page: number = 1,
+    pageSize: number = DEFAULT_PAGE_COUNT,
+    startAmount?: number,
+    state?: string,
+    endDate?: Date
+  ): Observable<ITransaction[]> {
+    const razerParams: {} = startAmount !== undefined ? {
+      start_amount: `${startAmount}`,
+      state: state || 'pending|processed'
+    } : {};
+    const queryParams = {
+      params: {
+        page: `${page}`,
+        size: `${pageSize}`,
+        ...razerParams
+      }
+    };
+    if (endDate) {
+      queryParams.params = {...queryParams.params, ...{end_date: endDate.toISOString()}};
+    }
     return this.http.get(`${this.apiHost}/v4/transactions`,
-      {
-        params: {
-          page: `${page}`,
-          size: `${pageSize}`
-        }
-      }).pipe(
-      map((res: IV4TransactionsResponse) => res.data),
-      map((transactions: IV4Transaction[]) =>
-        transactions.map(transaction => V4TransactionsService.v4TransactionsToTransactions(transaction))
-      )
+      queryParams).pipe(
+        map((res: IV4TransactionsResponse) => ({ transactions: res.data, totalCount: oc(res).meta.total_count(0) })),
+        map((transactionsObj: { transactions: IV4Transaction[], totalCount: number }) => (
+          transactionsObj.transactions.map(transaction => V4TransactionsService.v4TransactionsToTransactions(transaction,
+            transactionsObj.totalCount)))
+        )
+      );
+  }
+
+  public getTransactionSummary(state?: string, endDate?: Date): Observable<{ totalAmount: number }> {
+    let params = {
+      state: state || 'pending|processed'
+    };
+    if (endDate) {
+      params = {...params, ...{end_date: endDate.toISOString()}};
+    }
+    return this.http.get(`${this.apiHost}/v4/transaction_summary`, { params }).pipe(
+      map((res: { data: { total_amount: number } }) => ({ totalAmount: +res.data.total_amount || 0 }))
     );
+  }
+
+  public getTransactionsCountByType(transactionType: string, endDate?: Date): Observable<number> {
+    const queryParams = {
+      params: {
+        transaction_type: `${transactionType}`
+      }
+    };
+    if (endDate) {
+      queryParams.params = {...queryParams.params, ...{end_date: endDate.toISOString()}};
+    }
+    return this.http.get(`${this.apiHost}/v4/transactions`, queryParams).pipe(
+      map((transactions: IV4TransactionsResponse) => transactions.meta.count));
   }
 }

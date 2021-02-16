@@ -56,7 +56,12 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { APP_BASE_HREF, DatePipe } from '@angular/common';
 import { SoundModule } from './sound/sound.module';
 import { ProfileComponent } from './profile/profile.component';
-import { HTTP_INTERCEPTORS, HttpClientModule, HttpClient } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  HttpClientModule,
+  HttpClient,
+  HttpBackend
+} from '@angular/common/http';
 import { NavigateToolbarComponent } from './navigate-toolbar/navigate-toolbar.component';
 import { WalletComponent } from './wallet/wallet.component';
 import { AccountComponent } from './account/account.component';
@@ -131,7 +136,7 @@ export const setLanguage = (
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        deps: [HttpClient, ConfigService, TokenStorage],
+        deps: [HttpClient, HttpBackend, ConfigService, TokenStorage],
         useClass: LanguageService
       }
     }),

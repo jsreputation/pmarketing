@@ -17,11 +17,11 @@
   </div>
   <div class="btn-container">
     <div *ngIf="!didProceed && payload else proceeded">
-      <button mat-flat-button (click)="onProceed()" class="full-width__button btn-blue">{{"PROCEED"|translate}}</button>
-      <button mat-flat-button (click)="onClose()" class="full-width__button btn-transparent">{{"CANCEL"|translate}}</button>
+      <button mat-flat-button (click)="onProceed()" class="full-width__button btn-blue">{{"REDEEM.PROCEED"|translate}}</button>
+      <button mat-flat-button (click)="onClose()" class="full-width__button btn-transparent">{{"REDEEM.CANCEL"|translate}}</button>
     </div>
     <ng-template #proceeded>
-      <button mat-flat-button (click)="onClose()" class="full-width__button btn-blue">{{"CLOSE"|translate}}</button>
+      <button mat-flat-button (click)="onClose()" class="full-width__button btn-blue">{{"REDEEM.CLOSE"|translate}}</button>
     </ng-template>
   </div>
 </div>

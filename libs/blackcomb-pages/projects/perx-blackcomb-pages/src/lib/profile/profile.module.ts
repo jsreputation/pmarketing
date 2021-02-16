@@ -1,9 +1,11 @@
+import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatIconModule, MatListModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { ProfileComponent } from './profile.component';
 import { LoyaltyModule, ProfileModule as PerxCoreProfileModule, ProfileServiceModule  } from '@perxtech/core';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [ProfileComponent],
@@ -15,7 +17,9 @@ import { LoyaltyModule, ProfileModule as PerxCoreProfileModule, ProfileServiceMo
     RouterModule,
     PerxCoreProfileModule,
     ProfileServiceModule.forChild(),
-    LoyaltyModule
+    TranslateModule.forChild(),
+    LoyaltyModule,
+    MatCheckboxModule
   ]
 })
 export class ProfileModule { }

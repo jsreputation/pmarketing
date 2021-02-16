@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import {
@@ -62,7 +63,8 @@ export class SignupComponent implements PageAppearence {
     private fb: FormBuilder,
     private router: Router,
     private authService: AuthenticationService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private translate: TranslateService
   ) {
     this.initForm();
     this.getAppToken();
@@ -84,11 +86,22 @@ export class SignupComponent implements PageAppearence {
       name: ['', Validators.required],
       mobileNo: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', Validators.required],
       accept_terms: [false, Validators.required],
       accept_marketing: [false, Validators.required],
       countryCode: ['852', Validators.required]
-    });
+    }, {validator: this.matchingPasswords('password', 'confirmPassword')});
+  }
+
+  public matchingPasswords(passwordKey: string, passwordConfirmationKey: string): (group: FormGroup) => void {
+    return (group: FormGroup) => {
+        const password = group.controls[passwordKey];
+        const passwordConfirmation = group.controls[passwordConfirmationKey];
+        if (password.value !== passwordConfirmation.value) {
+            return passwordConfirmation.setErrors({mismatchedPasswords: true});
+        }
+        passwordConfirmation.setErrors(null);
+    };
   }
 
   public getPageProperties(): PageProperties {
@@ -104,19 +117,19 @@ export class SignupComponent implements PageAppearence {
     try {
       const passwordString = this.signupForm.value.password as string;
       const confirmPassword = this.signupForm.value.confirmPassword as string;
-      if (passwordString !== confirmPassword) {
-        this.notificationService.addSnack('Passwords do not match.');
-        return;
-      }
       const termsConditions = this.signupForm.value.accept_terms as boolean;
       if (!termsConditions) {
-        this.notificationService.addSnack('Please accept terms & conditions.');
+        this.translate.get('SIGN_UP_PAGE.ACCEPT_TNC').subscribe(text =>
+          this.notificationService.addSnack(text)
+        );
         return;
       }
 
       const marketingCommunication = this.signupForm.value.accept_marketing as boolean;
       if (!marketingCommunication) {
-        this.notificationService.addSnack('Please agree to receive marketing communications from Merck Group hk.');
+        this.translate.get('SIGN_UP_PAGE.ACCEPT_MARKETING').subscribe(text =>
+          this.notificationService.addSnack(text)
+        );
         return;
       }
 
@@ -144,7 +157,14 @@ export class SignupComponent implements PageAppearence {
             return;
           }
 
-          this.router.navigate(['enter-pin/register'], { state: { mobileNo: cleanedMobileNo } });
+          this.router.navigate(['enter-pin/register'],
+            { state:
+              {
+                mobileNo: cleanedMobileNo,
+                countryCode: countryCode.toString()
+              }
+            }
+          );
         },
         err => {
           this.notificationService.addSnack(err.error.message);

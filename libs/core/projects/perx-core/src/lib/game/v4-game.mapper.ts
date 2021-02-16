@@ -13,9 +13,21 @@ export abstract class GameV4Mapper {
     if (game.display_properties.header) {
       texts.title = game.display_properties.header.value.title;
       texts.subTitle = game.display_properties.header.value.description;
+      if (game.display_properties.header.header_colour) {
+        texts.headerColour = game.display_properties.header.header_colour;
+      }
+      if (game.display_properties.header.subheader_colour) {
+        texts.subheaderColour = game.display_properties.header.subheader_colour;
+      }
     }
     if (game.display_properties.play_button_text) {
       texts.button = game.display_properties.play_button_text;
+    }
+    if (game.display_properties.play_button_text_colour) {
+      texts.buttonTextColour = game.display_properties.play_button_text_colour;
+    }
+    if (game.display_properties.play_button_colour) {
+      texts.buttonColour = game.display_properties.play_button_colour;
     }
 
     const results: { [key: string]: IGameOutcome } = {};
@@ -161,7 +173,7 @@ export class SpinV4ToV4Mapper extends GameV4Mapper {
       if (slot.has_reward) {
         return slot.position;
       }
-    });
+    }).filter(slotPos => slotPos !== undefined); // remove undefined
     const slices = dpps.wedges && dpps.wedges.map(slot => ({
       id: slot.position,
       backgroundColor: slot.color,

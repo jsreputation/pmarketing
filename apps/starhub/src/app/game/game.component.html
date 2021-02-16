@@ -19,6 +19,7 @@
       (broken)=preplayGameCompleted()
       ></perx-blackcomb-pages-scratch>
     <perx-blackcomb-pages-spin
+      [startSpin]="startGameAnimation"
       *ngSwitchCase="'spin'"
       [game]="game"
       [willWin]="willWin"

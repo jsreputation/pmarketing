@@ -4,6 +4,7 @@ export interface IReward {
   id: number;
   name: string;
   description: string;
+  favorite?: boolean;
   subtitle: string;
   validFrom: Date | null;
   validTo: Date | null;
@@ -14,6 +15,7 @@ export interface IReward {
   merchantImg?: string;
   rewardPrice?: IPrice[];
   rewardState?: IRewardState | null;
+  loyalty: ILoyaltyTierInfo[] | [];
   merchantId?: number;
   merchantName?: string;
   merchantWebsite?: string;
@@ -24,6 +26,13 @@ export interface IReward {
   redemptionText?: string;
   rawPayload?: any;
   displayProperties?: IWRewardDisplayProperties;
+  customFields?: {
+    faqLink: string;
+    requirementDescription: string;
+    tncLink: string;
+    cardLink: string;
+    requirement: string; // note number in context of campaign type (RAZ)
+  };
 }
 
 export interface IRewardState {
@@ -68,4 +77,18 @@ export interface Inventory {
   rewardTotalBalance?: number | null;
   rewardTotalLimit?: number | null;
   rewardLimitPerUserBalance?: number | null;
+  rewardLimitPerUserPerPeriodBalance?: number | null;
+}
+
+export enum Sort {
+  ascending = 'asc',
+  descending = 'desc'
+}
+
+export interface ILoyaltyTierInfo {
+  attained: boolean;
+  id: number;
+  loyaltyName: string;
+  loyaltyPointsRequiredForRedemption: number;
+  sneakPeek: boolean;
 }

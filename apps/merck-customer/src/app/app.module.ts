@@ -28,6 +28,7 @@ import {
 import {
   AuthenticationModule,
   ProfileModule,
+  ProfileServiceModule,
   UtilsModule,
   LoyaltyModule,
   RewardsModule,
@@ -40,7 +41,7 @@ import {
   LanguageInterceptor,
   AuthenticationService,
   ThemesService,
-  IConfig, ProfileServiceModule
+  IConfig
 } from '@perxtech/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -64,10 +65,16 @@ import { PrivacyPolicyComponent } from './account/privacy-policy/privacy-policy.
 import { ConditionComponent } from './account/condition/condition.component';
 import { TransactionPipe } from './account/transaction-history/transaction.pipe';
 import { TransactionHistoryPipe } from './account/transaction-history/transaction-history.pipe';
-import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
+import {
+  HttpClientModule,
+  HttpClient,
+  HTTP_INTERCEPTORS,
+  HttpBackend
+} from '@angular/common/http';
 import { PerxTranslateLoader } from './custom-translate.service';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { tap, switchMap } from 'rxjs/operators';
+import { LanguageComponent } from './account/language/language.component';
 
 export const setLanguage = (
   translateService: TranslateService,
@@ -105,6 +112,7 @@ export const setLanguage = (
     ConditionComponent,
     TransactionPipe,
     TransactionHistoryPipe,
+    LanguageComponent,
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
@@ -146,7 +154,7 @@ export const setLanguage = (
       loader: {
         provide: TranslateLoader,
         useClass: PerxTranslateLoader,
-        deps: [HttpClient, ConfigService, TokenStorage]
+        deps: [HttpClient, ConfigService, TokenStorage, HttpBackend]
       }
     })
   ],

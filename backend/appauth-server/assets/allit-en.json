@@ -70,8 +70,8 @@
   "ENTER_NEW_PASSWORD": "Enter new password",
   "CONFIRM_NEW_PASSWORD": "Confirm new password",
   "SAVE": "Save",
-  "STATIC_RESET_PASSWORD": "Reset your password",
-  "STATIC_RESET_PASSWORD_SUBHEADING": "Enter the 6-digit One-Time Password (OTP) sent to your mobile number ",
+  "RESET_PASSWORD": "Reset your password",
+  "RESET_PASSWORD_SUBHEADING": "Enter the 6-digit One-Time Password (OTP) sent to your mobile number ",
   "REDEND_OTP": "Resend OTP",
   "STATIC_NEW_REGISTER": "Thank you for registering",
   "GET_VOUCHER": "Get Voucher",
@@ -115,9 +115,13 @@
   "WELCOME_PAGE": {
     "LOG_IN": "Log in"
   },
+  "BOOKING_PAGE": {
+    "TNC": "I have read, understood the Voucher Terms & Conditions stated in the previous page and agree to all clauses stated therein"
+  },
   "HOME": {
     "HELLO": "Welcome",
     "GAMES": "Games",
+    "MEMBER": " member",
     "MY_BAR_CODE": "My Barcode",
     "MY_QR": "My QR",
     "STAMP_CAMPAIGNS": "Stamp Card Campaigns",
@@ -126,6 +130,7 @@
     "FEATURED_REWARDS": "Featured Rewards",
     "SEE_MORE": "See more",
     "SEE_LESS": "See less",
+    "ACCOUNT_EXPIRE": "Account Expiry",
     "REWARDS_LEFT": "{{rewardsCount}} Rewards Left",
     "READ_MORE": "Read More"
   },
@@ -167,6 +172,10 @@
     "ERROR_TXT": "Incorrect OTP",
     "ERROR_LINK": "Resend OTP",
     "CTA_TXT": "Next",
+    "RESEND_TXT": "Verification code has been resent",
+    "POPUP_TITLE": "Password Changed!",
+    "POPUP_TXT": "You can log in with new password",
+    "POPUP_BTN_TXT": "Back to Home",
     "CTA_TXT_SUCCESS": "Account successfully created"
   },
   "LOGIN_PAGE": {
@@ -209,22 +218,27 @@
   },
   "NAVIGATION": {
     "HOME": "Home",
+    "REWARDS": "Rewards",
     "WALLET": "Wallet",
     "HISTORY": "History",
     "LEADER_BOARD": "Leaderboard",
-    "ACCOUNT": "Account"
+    "ACCOUNT": "Account",
+    "PAY": "Pay",
+    "NEARME": "Near Me",
+    "STAMPS": "Stamps",
+    "DEALS": "Deals"
   },
   "QUIZ_TEMPLATE": {
     "CTA_START_TXT": "Take the quiz",
     "PROGRESS_BAR": "Question {{questionId + 1}} out of {{questions.length}}",
     "CTA_NEXT_TXT": "Next",
-    "SUMMARY_CORRECT": "You got {{total_correct}} out of {{questions.length}} questions correct!",
-    "SUMMARY_TIME_TAKEN": "You took a total of {{time_taken}}",
+    "SUMMARY_CORRECT": "You got {{total_correct}} out of {{total_length}} questions correct!",
+    "SUMMARY_TIME_TAKEN": "You took a total of ",
     "POSITIVE_OUTCOME_TXT": "Congratulations!",
-    "POSITIVE_OUTCOME_SCORE": "You scored [x] points",
+    "POSITIVE_OUTCOME_SCORE": "You scored {{points}} points",
     "POSITIVE_OUTCOME_REWARD": "Here’s a reward for you",
     "POSITIVE_OUTCOME_CTA": "View Reward",
-    "NO_OUTCOME_SCORE": "You scored xx points for this round",
+    "NO_OUTCOME_SCORE": "You scored {{points}} points for this round",
     "NO_OUTCOME_CTA": "Try another quiz",
     "QUESTION": "Question ",
     "OUT_OF": " out of ",
@@ -242,6 +256,7 @@
     "WALLET_TITLE": "My Wallet",
     "REWARD_STATUS_EXPIRY": "Expires on [date]",
     "REWARD_STATUS_REDEEMED": "Redeemed",
+    "REWARD_STATUS_REDEEMED_ON": "Redeemed on {{date}}",
     "REWARD_STATUS_EXPIRED": "Expired",
     "CTA_TXT": "Redeem",
     "MY_WALLET": "My Wallet",
@@ -255,6 +270,7 @@
     "SUCCESSFUL_REDEMPTION_TITLE": "Reward successfully redeemed",
     "SUCCESSFUL_REDEMPTION_TXT": "You have redeemed {{reward}}",
     "CTA_TXT": "Cancel",
+    "FAIL_REDEMPTION_TXT": "Sorry! Voucher redemption failed.",
     "BACK_TO_WALLET": "Back To Wallet",
     "UNKNOWN_ERROR_TXT": "Unknown error occurred, please try again later"
   },
@@ -272,15 +288,25 @@
   },
   "ACCOUNT_PAGE": {
     "PROFILE": "My Profile",
+    "FAVORITE_REWARD": "Favorite Rewards",
     "TRANSACTION_HISTORY": "Transaction History",
     "REFER_FRIEND": "Refer a friend",
     "LIFE_TALK": "LIFE Talk",
     "TNC": "Terms and Conditions",
     "PRIVACY_POLICY": "Privacy Policy",
     "LOGOUT": "Log Out",
-    "LUCKY_DRAW_INFO": "Lucky Draw Info"
+    "LUCKY_DRAW_INFO": "Lucky Draw Info",
+    "CONTACT_US": "Contact Us"
+  },
+  "STATUS_LABELS": {
+    "ISSUED": "Approved",
+    "REDEEMED": "Redeemed",
+    "EXPIRED": "Expired",
+    "RESERVED": "Pending",
+    "RELEASED": "Declined"
   },
   "PROFILE": {
+    "ALLOW_MARKETING": "I would like to receive marketing notifications",
     "TITLE": "Profile",
     "ACCOUNT_LABEL": "Account / Registration Number",
     "MOBILE_LABEL": "Mobile",
@@ -304,10 +330,9 @@
   },
   "REFERRAL": {
     "TITLE": "Refer a friend",
-    "CONTENT": "For each successful sign up* using your referral code, you earn extra 5X lucky draw chance. Your referee will earn 3X lucky draw chances.\nShare your referral code with a friend today!\n*Both you and your referee will have to complete at least 1 quiz to earn your lucky draw chances.",
     "CTA_BUTTON": "Share referral code",
-    "SHARE_COPY_TXT": "Join me in. Stand to win rewards each week, as well as a chance for the grand lucky draw.\n[URL]\nUse referral code {{code}} when signing up and earn 3x lucky draw chances.\n",
-    "SHARE_COPY_TITLE": "Join me in this game",
+    "SHARE_COPY_TXT": "Use referral code {{code}} when signing up to get bonus points.",
+    "SHARE_COPY_TITLE": "Use my referral code to sign up!",
     "COPY_TO_CLIPBOARD": "Copied to your clipboard!",
     "CLIPBOARD_ERROR_TXT": "Could not access your clipboard"
   },
@@ -354,11 +379,60 @@
   },
   "VOUCHER": {
     "REDEEM": "Redeem",
-    "EXPIRY": "Expires on: {{date}}"
+    "EXPIRY": "Expires on: {{date}}",
+    "NO_VOUCHERS": "No vouchers here yet!"
   },
   "REWARD": {
     "GET_VOUCHER": "Get Voucher",
     "DESCRIPTION": "Description",
-    "TNC": "Terms and Conditions"
+    "TNC": "Terms and Conditions",
+    "POINT": "Points"
+  },
+  "GAME_PAGE": {
+    "STAMPS_LABEL_TXT": " new stamps",
+    "GAME_NO_REWARDS_TITLE": "Thanks for playing",
+    "GAME_NO_REWARDS_TEXT": "Unfortunately, you did not win anything this time",
+    "GAME_SUCCESS_TITLE": "Congratulations!",
+    "GAME_SUCCESS_TEXT": "You earned",
+    "GAME_SUCCESS_TEXT_REWARDS": " {{rewards}} rewards",
+    "GAME_SUCCESS_TEXT_POINTS": " {{points}} points",
+    "GAME_NOT_VALID": "Oops!",
+    "BACK_TO_WALLET": "Back to wallet",
+    "GAME_NOT_VALID_TEXT": "This game is not available for you at the moment.",
+    "View Reward": "This game is not available for you at the moment.",
+    "OUT_OF_TRIES_TITLE": "No more tries",
+    "OUT_OF_TRIES_TEXT": "Come back when you have more tries!",
+    "OUT_OF_TRIES_CTA": "Close"
+  },
+  "STAMP_CAMPAIGN": {
+    "STAMP_CARD": "Stamp Card",
+    "OF": "of",
+    "NEW_STAMPS": "new stamps",
+    "NEW_STAMP": "new stamp",
+    "VIEW_WALLET": "View Wallet",
+    "YOU_GOT_A_NEW_STAMP": "You got a new stamp!",
+    "THANK_YOU_FOR_PLAYING": "Thank you for playing! You have already received the maximum number of stamps. Don't forget to redeem your earned rewards!",
+    "REWARD_POPUP_TITLE": "Congratulations!",
+    "REWARD_POPUP_TEXT": "Here is a reward for you.",
+    "REWARD_POPUP_BUTTON_TEXT": "View Reward",
+    "NO_REWARD_POPUP_TITLE": "No Reward Received",
+    "NO_REWARD_POPUP_TEXT": "Try again next time",
+    "NO_REWARD_POPUP_BUTTON_TEXT": "Close",
+    "ERROR_TITLE": "Something went wrong with our server",
+    "ERROR_TEXT": "We notified our team. Sorry for the inconvenience."
+  },
+  "FAVOURITES_PAGE": {
+    "TITLE": "Favourite Rewards"
+  },
+  "PUZZLE": {
+    "PUZZLE": "Puzzle",
+    "PLAY_NOW": "Play now!",
+    "NEW_PIECES": "New pieces",
+    "NEW_STAMPS": " new stamps"
+  },
+  "ERRORS": {
+    "GENERIC": "Sorry, something went wrong",
+    "REWARDS_RUN_OUT": "Sorry, rewards have run out",
+    "NO_UNUSED_MOVES": "Sorry, you do not have any more moves available"
   }
 }

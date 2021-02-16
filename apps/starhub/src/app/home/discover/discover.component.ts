@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ICategory } from '../../category.model';
 import { Router } from '@angular/router';
-import { IReward, ICatalog, SettingsService, IFlags } from '@perxtech/core';
+import { IReward, ICatalog, SettingsService, IFlags, ICampaign, CampaignType, ITaggedItem, ConfigService, IConfig } from '@perxtech/core';
 import { AnalyticsService, PageType } from '../../analytics.service';
+import { IStarhubConfig } from '../home/home.component';
 
 @Component({
   selector: 'app-discover',
@@ -11,11 +12,13 @@ import { AnalyticsService, PageType } from '../../analytics.service';
 })
 export class DiscoverComponent implements OnInit {
   public showStampCampaigns: boolean;
+  public showAllSnappingSaturdayItems: boolean;
 
   constructor(
     private router: Router,
     private analytics: AnalyticsService,
-    private settingService: SettingsService
+    private settingService: SettingsService,
+    private configService: ConfigService
   ) { }
 
   public ngOnInit(): void {
@@ -27,7 +30,10 @@ export class DiscoverComponent implements OnInit {
     });
     this.settingService.getRemoteFlagsSettings()
       .subscribe((flags: IFlags) => this.showStampCampaigns = flags && flags.showStampCampaigns || false);
-  }
+    this.configService.readAppConfig<IStarhubConfig>().subscribe(
+      (config: IConfig<IStarhubConfig>) => {
+      this.showAllSnappingSaturdayItems = config.custom ? config.custom.showAllSnappingSaturdayItems : false; });
+    }
 
   public categorySelected(category: ICategory): void {
     this.router.navigate(['/category'], { queryParams: { category: category.name } });
@@ -45,7 +51,38 @@ export class DiscoverComponent implements OnInit {
     this.router.navigate(['/game'], { queryParams: { id: gameId } });
   }
 
+  public sqCampaignSelected(campaignId: number): void {
+    this.router.navigate([`campaign-welcome/${campaignId}`]);
+  }
+
   public stampSelected(campaignId: number): void {
     this.router.navigate([`/stamp/${campaignId}`]);
   }
+
+  public taggedItemSelected(taggedItem: ITaggedItem): void {
+
+    switch (taggedItem.itemType) {
+      case 'reward': {
+         this.rewardSelected(<IReward> taggedItem.itemVal);
+         break;
+      }
+      case CampaignType.stamp: {
+        this.stampSelected((<ICampaign> taggedItem.itemVal).id);
+        break;
+      }
+      case CampaignType.game: {
+        this.campaignSelected(<number> taggedItem.itemVal);
+        break;
+      }
+      case CampaignType.survey: {
+        this.sqCampaignSelected((<ICampaign> taggedItem.itemVal).id);
+        break;
+      }
+      default: {
+        this.sqCampaignSelected((<ICampaign> taggedItem.itemVal).id);
+        break;
+     }
+    }
+  }
 }
+

@@ -1,7 +1,10 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick, discardPeriodicTasks } from '@angular/core/testing';
 
 import { GameComponent } from './game.component';
-import { of, throwError } from 'rxjs';
+import {
+  of,
+  throwError
+} from 'rxjs';
 import { ShakeComponent } from './shake/shake.component';
 import { TapComponent } from './tap/tap.component';
 import { ScratchComponent } from './scratch/scratch.component';
@@ -12,7 +15,14 @@ import {
   IGame,
   AuthenticationService,
   NotificationService,
-  ConfigService
+  ConfigService,
+  ThemesService,
+  ITheme,
+  ICampaignService,
+  ICampaign,
+  CampaignType,
+  CampaignState,
+  ErrorMessageService
 } from '@perxtech/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -23,7 +33,7 @@ import { SpinComponent } from './spin/spin.component';
 import { WInformationCollectionSettingType } from '@perxtech/whistler';
 import { SnakeComponent } from './snake/snake.component';
 
-const gamePi: IGame = {
+const game: IGame = {
   id: 1,
   campaignId: 1,
   type: GameType.pinata,
@@ -36,7 +46,6 @@ const gamePi: IGame = {
   texts: {},
   results: {},
   displayProperties: {
-    informationCollectionSetting: WInformationCollectionSettingType.pi_required,
     noRewardsPopUp: {
       headLine: 'test headline',
       subHeadLine: 'test subHeadline',
@@ -49,6 +58,33 @@ const gamePi: IGame = {
     },
   },
 };
+//
+// const gamePi: IGame = {
+//   id: 1,
+//   campaignId: 1,
+//   type: GameType.pinata,
+//   remainingNumberOfTries: 1,
+//   config: {
+//     stillImg: '',
+//     brokenImg: '',
+//     nbTaps: 1,
+//   },
+//   texts: {},
+//   results: {},
+//   displayProperties: {
+//     informationCollectionSetting: WInformationCollectionSettingType.pi_required,
+//     noRewardsPopUp: {
+//       headLine: 'test headline',
+//       subHeadLine: 'test subHeadline',
+//       buttonTxt: 'btnText',
+//     },
+//     successPopUp: {
+//       headLine: 'test headline',
+//       subHeadLine: 'test subHeadline',
+//       buttonTxt: 'btnText',
+//     },
+//   },
+// };
 
 const gameSignup: IGame = {
   id: 1,
@@ -77,19 +113,44 @@ const gameSignup: IGame = {
   },
 };
 
+const campaign: ICampaign = {
+  id: 1,
+  name: 'abc',
+  description: 'abc',
+  type: CampaignType.game,
+  state: CampaignState.active,
+  endsAt: null,
+  rewards: [],
+  thumbnailUrl: '',
+  customFields: {}
+};
+
+const mockTheme: ITheme = {
+  name: 'theme',
+  properties: {
+    '--background': 'red',
+    '--font_color': 'black'
+  }
+};
+
 describe('GameComponent', () => {
   let component: GameComponent;
   let fixture: ComponentFixture<GameComponent>;
 
+  const themesServiceStub: Partial<ThemesService> = {
+    getThemeSetting: () => of(mockTheme)
+  };
   const gameServiceStub: Partial<IGameService> = {
-    getGamesFromCampaign: () => of([gamePi]),
+    getGamesFromCampaign: () => of([game]),
     prePlay: () => of(),
     prePlayConfirm: () => of(),
   };
   const routerStub: Partial<Router> = {
     navigate: () => Promise.resolve(true)
   };
-
+  const campaignServiceStub: Partial<ICampaignService> = {
+    getCampaign: () => of(campaign)
+  };
   const authServiceStub: Partial<AuthenticationService> = {
     getAnonymous: () => true,
   };
@@ -104,6 +165,10 @@ describe('GameComponent', () => {
       isWhistler: false,
       baseHref: '',
     })
+  };
+  const activatedRouteStub: Partial<ActivatedRoute> = {
+    queryParams: of({ params: { flags: 'nonav, chromeless' } }),
+    params: of({ id: 1 })
   };
 
   beforeEach(async(() => {
@@ -124,11 +189,18 @@ describe('GameComponent', () => {
       ],
       providers: [
         { provide: IGameService, useValue: gameServiceStub },
-        { provide: ActivatedRoute, useValue: { params: of({ id: 1 }) } },
         { provide: Router, useValue: routerStub },
+        { provide: ActivatedRoute, useValue: activatedRouteStub },
         { provide: AuthenticationService, useValue: authServiceStub },
         { provide: NotificationService, useValue: notificationServiceStub },
-        { provide: ConfigService, useValue: configServiceStub }
+        { provide: ICampaignService, useValue: campaignServiceStub },
+        { provide: ConfigService, useValue: configServiceStub },
+        { provide: ThemesService, useValue: themesServiceStub },
+        {
+          provide: ErrorMessageService, useValue: {
+            getErrorMessageByErrorCode: () => of('')
+          }
+        }
       ]
     })
       // .overrideModule(BrowserDynamicTestingModule, { set: { entryComponents: [PopupComponent] } })
@@ -188,6 +260,7 @@ describe('GameComponent', () => {
 
   it('should set willWin true value', () => {
     const gameService: IGameService = fixture.debugElement.injector.get<IGameService>(IGameService as Type<IGameService>);
+    spyOn(gameService, 'getGamesFromCampaign').and.returnValue(of([game]));
     const spy = spyOn(gameService, 'prePlay').and.returnValue(of({ id: 3, voucherIds: [1, 2, 3] }));
     component.ngOnInit();
     component.loadPreplay();
@@ -197,6 +270,7 @@ describe('GameComponent', () => {
 
   it('should set willWin false value', () => {
     const gameService: IGameService = fixture.debugElement.injector.get<IGameService>(IGameService as Type<IGameService>);
+    spyOn(gameService, 'getGamesFromCampaign').and.returnValue(of([game]));
     const spy = spyOn(gameService, 'prePlay').and.returnValue(of({ id: 3, voucherIds: [] }));
     component.ngOnInit();
     component.loadPreplay();

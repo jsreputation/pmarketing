@@ -7,16 +7,30 @@
       <div class="reward">
         <h2>Explore your rewards,</h2>
         <span class="tier" *ngIf="loyalty">{{loyalty.membershipTierName | noRenewaleInName | titlecase}} Member!</span>
-        <div>
+        <div *ngIf="!hubclubCR">
           <span class="subtitle"
-            *ngIf="profile && profile.customProperties && profile.customProperties.membership === 'Hub Club'">+ Hub
+                *ngIf="profile && profile.customProperties && profile.customProperties.membership === 'Hub Club'">+ Hub
             Club</span>
+        </div>
+        <div *ngIf="hubclubCR && profile && profile.customProperties">
+          <a class="membership-link" (click)="membershipClicked()">
+            <span class="subtitle" *ngIf="
+                  profile.customProperties.membership ||
+                  profile.customProperties.sub_membership_type">
+              {{hubClubDisplay}} <span class="accessory-icon"><mat-icon>keyboard_arrow_right</mat-icon></span>
+            </span>
+            <span class="subtitle" *ngIf="
+            !profile.customProperties.membership &&
+            !profile.customProperties.sub_membership_type">
+              Regular <span class="accessory-icon"><mat-icon>keyboard_arrow_right</mat-icon></span>
+            </span>
+          </a>
         </div>
       </div>
     </mat-toolbar-row>
     <mat-toolbar-row mat-tab-nav-bar>
       <a mat-tab-link routerLink="discover" routerLinkActive #disco="routerLinkActive"
-        [active]="disco.isActive">Discover</a>
+         [active]="disco.isActive">Discover</a>
       <a mat-tab-link routerLink="vouchers" routerLinkActive #vouch="routerLinkActive" [active]="vouch.isActive">My
         Rewards</a>
     </mat-toolbar-row>

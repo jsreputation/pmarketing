@@ -1,0 +1,14 @@
+<mat-card *ngIf="data" class="statistic-card">
+	<mat-card-title class="card-title">{{data.cardTitle | async}}</mat-card-title>
+	<mat-card-content>
+		<div class="stat" *ngFor="let stat of data.statistics">
+			<div class="stat-title">{{stat.statisticTitle| async}}</div>
+			<div *ngIf="stat.unitBeforeValue; else valBeforeUnit">
+				{{stat.unit | async}} <b>{{stat.value | async}}</b>
+			</div>
+			<ng-template #valBeforeUnit>
+				<b>{{stat.value | async}}</b> {{stat.unit | async}}
+			</ng-template>
+		</div>
+	</mat-card-content>
+</mat-card>

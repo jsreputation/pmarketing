@@ -62,13 +62,14 @@ describe('RedeemComponent', () => {
         state: 'active',
         firstName: 'Jane',
         lastName: 'Doe',
+        identifier: '1'
       })
     );
     component.ngOnInit();
     tick();
     expect(profileSpy).toHaveBeenCalled();
     expect(component.rewardId).toBe(1);
-    expect(component.rewardDetails).toBe('{"id":1,"name":"Doe","rewardId":1}');
+    expect(component.rewardDetails).toBe('{"id":1,"name":"Doe","identifier":"1","rewardId":1}');
   }));
 
   it('should go back onCancel', () => {

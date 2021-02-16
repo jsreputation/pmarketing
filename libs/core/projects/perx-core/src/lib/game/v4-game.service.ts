@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import {Observable, of, combineLatest, throwError, EMPTY, Subject} from 'rxjs';
+import { Observable, of, combineLatest, throwError, EMPTY, Subject } from 'rxjs';
 import { IGameService } from './igame.service';
 import {
   IGame,
@@ -8,12 +8,15 @@ import {
   IPlayOutcome,
   IEngagementTransaction,
   Error400States,
+  IPointsOutcome,
 } from './game.model';
 import {
   catchError,
   map,
   switchMap,
-  tap
+  tap,
+  expand,
+  reduce
 } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 import { IV4Voucher, V4VouchersService } from '../vouchers/v4-vouchers.service';
@@ -26,13 +29,21 @@ import {
   SpinV4ToV4Mapper,
   TapV4ToV4Mapper
 } from './v4-game.mapper';
+import { TransactionState } from '../transactions/models/transactions.model';
+import { OutcomeType } from '../outcome/models/outcome.model';
+import { ICampaignService } from '../campaign/icampaign.service';
+import {
+  CampaignType,
+  ICampaign
+} from '../campaign/models/campaign.model';
 
 const enum GameType {
   shakeTheTree = 'shake_the_tree',
   pinata = 'hit_the_pinata',
   scratch = 'scratch_card',
   spin = 'spin_the_wheel',
-  quiz = 'quiz'
+  quiz = 'quiz',
+  survey = 'survey'
 }
 
 export interface Asset {
@@ -48,6 +59,10 @@ export interface Asset {
 export interface Outcome {
   button_text: string;
   description: string;
+  // intentionally not mapped to IGame
+  button_colour?: string;
+  // intentionally not mapped to IGame
+  button_text_colour?: string;
   title: string;
   type?: string;
   value?: {
@@ -61,12 +76,16 @@ export interface Outcome {
 export interface GameProperties {
   header?: {
     type: string;
+    header_colour?: string;
+    subheader_colour?: string;
     value: {
       title: string;
       description: string;
     }
   };
   play_button_text?: string;
+  play_button_text_colour?: string;
+  play_button_colour?: string;
   nooutcome?: Outcome;
   outcome?: Outcome;
   background_image?: Asset;
@@ -130,30 +149,43 @@ interface GameResponse {
   data: Game;
 }
 
-interface IV4PlayResponse {
-  data: {
-    campaign_id: number;
-    game_id: number;
-    id: number;
-    outcomes: IV4Voucher[];
-    state: 'reserved' | 'issued';
-    use_account_id: number;
-  };
+interface IV4RewardOutcome extends IV4Voucher {
+  outcome_type: OutcomeType.reward;
 }
 
-interface IV4LightGameCampaign {
+interface IV4PointsOutcome {
   id: number;
-  name: string;
-  begins_at: string;
-  images: {
-    url: string;
-    type: string;
-  }[];
+  outcome_type: OutcomeType.points;
+  points: number;
+  properties: any;
 }
 
-interface IV4GameCampaigns {
-  data: IV4LightGameCampaign[];
+interface IV4PlayGeneral {
+  campaign_id: number;
+  game_id: number;
+  id: number;
+  use_account_id: number;
+  state: TransactionState;
+  outcomes: (IV4RewardOutcome | IV4PointsOutcome)[];
 }
+
+interface IV4PlayResponse {
+  data: IV4PlayGeneral;
+}
+
+// interface IV4LightGameCampaign {
+//   id: number;
+//   name: string;
+//   begins_at: string;
+//   images: {
+//     url: string;
+//     type: string;
+//   }[];
+// }
+
+// interface IV4GameCampaigns {
+//   data: IV4LightGameCampaign[];
+// }
 
 const gamesCacheBuster: Subject<boolean> = new Subject();
 const gamesCacheDecider: (response: any) => boolean = res => res && !(res instanceof HttpErrorResponse); // don't cache if empty/error
@@ -167,7 +199,8 @@ export class V4GameService implements IGameService {
 
   constructor(
     private httpClient: HttpClient,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private campaignService: ICampaignService
   ) {
     this.configService.readAppConfig().subscribe(
       (config: IConfig<void>) => {
@@ -175,7 +208,16 @@ export class V4GameService implements IGameService {
       });
   }
 
-  private static v4GameToGame(game: Game): IGame {
+  private static v4PointsToPoints(points: IV4PointsOutcome): IPointsOutcome {
+    return {
+      id: points.id,
+      outcomeType: points.outcome_type,
+      points: points.points,
+      properties: points.properties
+    };
+  }
+
+  private static v4GameToGame(game: Game, campaign?: ICampaign): IGame {
     const gameMapperFetcher = {
       shake_the_tree: new ShakeV4ToV4Mapper(),
       hit_the_pinata: new TapV4ToV4Mapper(),
@@ -187,21 +229,18 @@ export class V4GameService implements IGameService {
     if (!gameMapper) {
       throw new Error(`${game.game_type} is not mapped yet`);
     }
-    return gameMapper.v4MapToMap(game);
+    return {
+      ...gameMapper.v4MapToMap(game),
+      campaignName: campaign ? campaign.name : '',
+      campaignDescription: campaign ? campaign.description : ''
+    };
   }
 
   public play(gameId: number): Observable<IPlayOutcome> {
     return this.httpClient.put<IV4PlayResponse>(`${this.hostName}/v4/games/${gameId}/play`, null)
       .pipe(
         tap(() => gamesCacheBuster.next(true)), // bust the cache if games has been updated
-        map((res: IV4PlayResponse) => {
-          // @ts-ignore
-          const vs: IV4Voucher[] = res.data.outcomes.filter((out) => out.outcome_type === 'reward');
-          return {
-            vouchers: vs.map(v => V4VouchersService.v4VoucherToVoucher(v)),
-            rawPayload: res
-          };
-        })
+        map((res: IV4PlayResponse) => this.generatePlayReturn(res))
       );
   }
 
@@ -223,13 +262,12 @@ export class V4GameService implements IGameService {
     shouldCacheDecider: gamesCacheDecider,
     maxCacheCount: 50
   })
-  public getGamesFromCampaign(campaignId: number): Observable<IGame[]> {
-    return this.httpClient.get<GamesResponse>(`${this.hostName}/v4/campaigns/${campaignId}/games`)
+  public getGamesFromCampaign(campaign: ICampaign): Observable<IGame[]> {
+    return this.httpClient.get<GamesResponse>(`${this.hostName}/v4/campaigns/${campaign.id}/games`)
       .pipe(
         map(res => res.data),
-        map((games: Game[]) => games.filter((game: Game) => game.game_type !== GameType.quiz)),
-        map((games: Game[]) => games.map((game: Game): IGame => V4GameService.v4GameToGame(game))),
-        catchError(_ => EMPTY)
+        map((games: Game[]) => games.filter((game: Game) => game.game_type !== GameType.quiz && game.game_type !== GameType.survey)),
+        map((games: Game[]) => games.map((game: Game): IGame => V4GameService.v4GameToGame(game, campaign)))
       );
   }
 
@@ -239,18 +277,24 @@ export class V4GameService implements IGameService {
       .put<IV4PlayResponse>(`${this.hostName}/v4/games/${gameId}/reserve`, null)
       .pipe(
         tap(() => gamesCacheBuster.next(true)),
-        map(res => ({
-          id: res.data.id,
-          voucherIds: res.data.outcomes.map(
-            outcome => outcome.id
-          ).filter(id => id),
-          rewardIds: res.data.outcomes.reduce((accRewardIds, currVouch) => {
-            if (currVouch.reward) {
-              return accRewardIds.concat(currVouch.reward.id);
-            }
-            return accRewardIds;
-          }, [] as number[])
-        })),
+        map(res => {
+          const rewards = res.data.outcomes.filter(outcome => outcome.id && outcome.outcome_type === OutcomeType.reward) as IV4Voucher[];
+          const points = res.data.outcomes.filter(outcome =>
+            outcome.id && outcome.outcome_type === OutcomeType.points) as IV4PointsOutcome[];
+          return {
+            id: res.data.id,
+            voucherIds: rewards.map(
+              outcome => outcome.id
+            ),
+            rewardIds: rewards.reduce((accRewardIds, currVouch) => {
+              if (currVouch.reward) {
+                return accRewardIds.concat(currVouch.reward.id);
+              }
+              return accRewardIds;
+            }, [] as number[]),
+            points: points.map(p => V4GameService.v4PointsToPoints(p))
+          };
+        }),
         catchError((err: HttpErrorResponse) => {
           let errorStateObj: { errorState: string };
           if (err.error && err.error.message && err.error.code && err.error.code === 40) {
@@ -273,57 +317,67 @@ export class V4GameService implements IGameService {
       .put<IV4PlayResponse>(`${this.hostName}/v4/game_transactions/${gameId}/confirm`, null)
       .pipe(
         tap(() => gamesCacheBuster.next(true)), // bust the cache if games has been updated
-        map((res: IV4PlayResponse) => {
-          // @ts-ignore
-          const vs: IV4Voucher[] = res.data.outcomes.filter((out) => out.outcome_type === 'reward');
-          return {
-            vouchers: vs.map(v => V4VouchersService.v4VoucherToVoucher(v)),
-            rawPayload: res
-          };
-        })
+        map((res: IV4PlayResponse) => this.generatePlayReturn(res))
       );
   }
 
+  private generatePlayReturn(res: IV4PlayResponse): IPlayOutcome {
+    const rewards: IV4Voucher[] = res.data.outcomes.filter((out) => out.outcome_type === OutcomeType.reward) as IV4Voucher[];
+    const v4Points: IV4PointsOutcome[] = res.data.outcomes.filter((out) => out.outcome_type === OutcomeType.points) as IV4PointsOutcome[];
+    const vouchers = rewards.map(v => V4VouchersService.v4VoucherToVoucher(v));
+    const points = v4Points.map(p => V4GameService.v4PointsToPoints(p));
+    return {
+      ...(vouchers && vouchers.length && {vouchers}),
+      ...(points && {points}),
+      rawPayload: res
+    };
+  }
+
   public getActiveGames(): Observable<IGame[]> {
-    return this.httpClient.get<IV4GameCampaigns>(`${this.hostName}/v4/campaigns?campaign_type=game`)
-      .pipe(
-        map(res => res.data),
-        map(cs => {
-          const now = (new Date()).getTime();
-          return cs.filter(c => {
-            if (c.begins_at === null) {
-              return true;
-            }
-            const beginsAt = new Date(c.begins_at);
-            return beginsAt.getTime() <= now;
-          });
-        }),
-        // for each campaign, fetch associated games
-        switchMap((cs: IV4LightGameCampaign[]) => combineLatest([
-          ...cs.map(c => of(c)),
-          ...cs.map(c => this.getGamesFromCampaign(c.id))
-        ])),
-        map((s: (IV4LightGameCampaign | IGame[])[]) => {
-          // split again the campaigns from the games
-          // @ts-ignore
-          const campaigns: IV4LightGameCampaign[] = s.splice(0, s.length / 2);
-          // @ts-ignore
-          const games: IGame[][] = s;
-          const res: IGame[] = [];
-          // eslint-disable-next-line guard-for-in
-          for (const i in games) {
-            const gs = games[i].filter(game => game.type !== TYPE.quiz);
-            // if there is no underlying game, move on to next campaign
-            if (gs.length === 0) {
-              continue;
-            }
-            const g = gs[0];
-            const c = campaigns[i];
-            g.imgUrl = oc(c).images[0].url();
-            res.push(g);
+    return this.campaignService.getCampaigns({page: 1, type: CampaignType.game })
+    .pipe(
+      // i + 2 because index starts at 0, but for the next call, page 2 needs to load.
+      expand((cs, i) => cs.length !== 0 ? this.campaignService.getCampaigns({page: i + 2, type: CampaignType.game}) : EMPTY),
+      reduce((acc, cs) => acc.concat(cs)),
+      map(cs => {
+        const now = (new Date()).getTime();
+        return cs.filter(c => {
+          if (c.beginsAt === null) {
+            return true;
           }
-          return res;
-        })
-      );
+          return !! (c.beginsAt && c.beginsAt.getTime() <= now);
+        });
+      }),
+      // for each campaign, fetch associated games
+      switchMap((cs: ICampaign[]) => combineLatest([
+        ...cs.map(c => of(c)),
+        ...cs.map(c => this.getGamesFromCampaign(c).pipe(
+          catchError((err) => {
+            console.log(err);
+            return of([]);
+          })))
+      ])),
+      map((s: (ICampaign | IGame[])[]) => {
+        // split again the campaigns from the games
+        // @ts-ignore
+        const campaigns: ICampaign[] = s.splice(0, s.length / 2);
+        // @ts-ignore
+        const games: IGame[][] = s;
+        const res: IGame[] = [];
+        // eslint-disable-next-line guard-for-in
+        for (const i in games) {
+          const gs = games[i].filter(game => game.type !== TYPE.quiz && game.type !== TYPE.survey);
+          // if there is no underlying game, move on to next campaign
+          if (gs.length === 0) {
+            continue;
+          }
+          const g = gs[0];
+          const c = campaigns[i];
+          g.imgUrl = oc(c).thumbnailUrl();
+          res.push(g);
+        }
+        return res;
+      })
+    );
   }
 }

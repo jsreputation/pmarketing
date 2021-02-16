@@ -3,6 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PuzzleCollectStampsComponent } from './puzzle-collect-stamps.component';
 import { IStamp, StampState } from '../../stamp/models/stamp.model';
+import { TranslateService } from '@ngx-translate/core';
+import { of } from 'rxjs';
 
 describe('PuzzleCollectStampsComponent', () => {
   let component: PuzzleCollectStampsComponent;
@@ -11,7 +13,10 @@ describe('PuzzleCollectStampsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [PuzzleCollectStampsComponent],
-      imports: [MatIconModule]
+      imports: [MatIconModule],
+      providers: [
+        { provide: TranslateService, useValue: { get: () => of() }}
+      ]
     })
       .compileComponents();
   }));

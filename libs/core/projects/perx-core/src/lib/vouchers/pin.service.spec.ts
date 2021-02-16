@@ -59,6 +59,7 @@ describe('PinService', () => {
       id: 1,
       reward: {
         id: 52,
+        favorite: false,
         name: 'Get a Free Coke',
         description: '',
         subtitle: '',
@@ -68,6 +69,7 @@ describe('PinService', () => {
         merchantImg: '',
         termsAndConditions: '',
         howToRedeem: '',
+        loyalty: []
       },
       state: VoucherState.expired,
       expiry: new Date('2019-04-30T15:59:59.999Z'),

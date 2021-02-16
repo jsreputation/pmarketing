@@ -8,7 +8,20 @@ export interface IPictureSelectPayload {
 }
 
 interface IPictureChoice {
-  'img_url': string;
+  answer: {
+    [langKey: string]: INestedChoice
+  };
+  answer_id: string;
+}
+
+interface INestedChoice {
+  image: {
+    type: string;
+    value: {
+      filename: string;
+      image_url: string;
+    }
+  };
   text: string;
 }
 
@@ -28,7 +41,7 @@ export class QuizPictureSelectComponent implements OnChanges {
   public updateAnswers: EventEmitter<string[]> = new EventEmitter<string[]>();
 
   public selectedChoices: ITracker = {};
-  public selectedChoice: number;
+  public selectedChoice: string;
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.flush && changes.flush.currentValue !== undefined) {
@@ -36,18 +49,18 @@ export class QuizPictureSelectComponent implements OnChanges {
     }
   }
 
-  public onSelect(index: number): void {
+  public onSelect(answerId: string): void {
     if (this.payload.multiple) {
-      this.selectedChoices[index] = !this.selectedChoices[index];
+      this.selectedChoices[answerId] = !this.selectedChoices[answerId];
     } else {
-      this.selectedChoice = index;
+      this.selectedChoice = answerId;
     }
     this.emitValue();
   }
 
   public emitValue(): void {
     let result: string[] = [];
-    if (this.payload.multiple && this.selectedChoices) {
+    if (this.payload && this.payload.multiple && this.selectedChoices) {
       result = Object.entries(this.selectedChoices)
         .filter(([key, value]) => key !== undefined && value !== undefined && value !== false)
         .map(data => data[0]);
@@ -57,7 +70,7 @@ export class QuizPictureSelectComponent implements OnChanges {
     this.updateAnswers.emit(result);
   }
 
-  public isSelected(index: number): boolean {
-    return this.payload.multiple ? this.selectedChoices && this.selectedChoices[index] : this.selectedChoice === index;
+  public isSelected(index: string): boolean {
+    return (this.payload && this.payload.multiple) ? this.selectedChoices && this.selectedChoices[index] : this.selectedChoice === index;
   }
 }

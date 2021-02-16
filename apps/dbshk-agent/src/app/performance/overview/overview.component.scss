@@ -1,0 +1,25 @@
+.overview-container {
+    // overflow at container level because we disabled overflow at tab content level for VS-5162
+    overflow-y: auto;
+    height: 100%;
+    .loyalty-block {
+        box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+    }
+    .overview-page {
+        padding: 1.6rem;
+        align-items: stretch;
+    }
+
+    ::ng-deep .mat-progress-bar-fill::after {
+        background-color: var(--accent);
+    }
+}
+.coming-soon-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 1.4rem;
+}

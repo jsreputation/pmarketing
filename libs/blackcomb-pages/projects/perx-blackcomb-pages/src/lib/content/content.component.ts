@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
@@ -16,6 +17,8 @@ export class ContentComponent implements OnInit, OnDestroy {
   public error$: Subject<boolean> = new Subject<boolean>();
   private destroy$: Subject<void> = new Subject();
   public theme: ITheme;
+  public baseHref: string;
+  public lang: string;
 
   constructor(
     private settingsService: SettingsService,
@@ -23,10 +26,34 @@ export class ContentComponent implements OnInit, OnDestroy {
     private http: HttpClient,
     private themeService: ThemesService,
     private location: Location,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
+    // private configService: ConfigService
   ) { }
 
   public ngOnInit(): void {
+    // this.content$ = this.configService.readAppConfig().pipe(
+    //   tap(config => this.baseHref = config.baseHref),
+    //   switchMap(() => this.route.params),
+    //   filter((params: Params) => params.key),
+    //   map((params: Params) => params.key),
+    //   switchMap(key => this.http.get(`${this.baseHref}assets/content/${key}.html`, { responseType: 'text' }).pipe(
+    //     catchError(() => combineLatest(of(key), this.settingsService.getAccountSettings()).pipe(
+    //       map(([k, settings]: [string, PagesObject]) => settings.pages.find(s => s.key === k)),
+    //       map((page: AccountPageObject) => page.content_url),
+    //       switchMap((url) => this.http.get(`https://cors-proxy.perxtech.io/?url=${url}`, { responseType: 'text' })),
+    //     ))
+    //   )),
+    //   catchError(() => {
+    //     this.error$.next(true);
+    //     return of(void 0);
+    //   }),
+    //   takeUntil(this.destroy$)
+    // );
+
+    // default to 'en' to fetch normal links
+    const currentLang = this.translate.currentLang || 'en';
+
     this.content$ = this.route.params
       .pipe(
         filter((params: Params) => params.key),
@@ -34,7 +61,9 @@ export class ContentComponent implements OnInit, OnDestroy {
         switchMap(k => combineLatest(of(k), this.settingsService.getAccountSettings())),
         map(([k, settings]: [string, PagesObject]) => settings.pages.find(s => s.key === k)),
         map((page: AccountPageObject) => page.content_url),
-        switchMap((url) => this.http.get(`https://cors-proxy.perxtech.io/?url=${url}`, { responseType: 'text' })),
+        map((url: string) => currentLang === 'en' ? url : url.replace('.html', `-${currentLang}.html`)),
+        // if we require a cors proxy we need to build it in the express server to avoid any CSP whitelist issues
+        switchMap((url) => this.http.get(url, { responseType: 'text' })),
         catchError(() => {
           this.error$.next(true);
           return of(void 0);

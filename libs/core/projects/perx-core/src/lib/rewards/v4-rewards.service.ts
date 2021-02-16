@@ -1,32 +1,20 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-  HttpHeaders,
-  HttpParams,
-} from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { formatNumber } from '@angular/common';
-import {
-  Observable,
-} from 'rxjs';
-import {
-  map
-} from 'rxjs/operators';
+import { Observable, EMPTY } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 
 import { IWRewardDisplayProperties } from '@perxtech/whistler';
 
 import { RewardsService } from './rewards.service';
-import {
-  IReward,
-  ICatalog,
-  IPrice,
-  ICategoryTags,
-} from './models/reward.model';
+import { ICatalog, ICategoryTags, IPrice, IReward, Sort } from './models/reward.model';
 
 import { RewardStateHelper } from './reward-state-helper';
 import { ITabConfigExtended } from './rewards-list-tabbed/rewards-list-tabbed.component';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
+import { CampaignType } from '../campaign/models/campaign.model';
 
 export interface IV4Tag {
   id: number;
@@ -55,6 +43,21 @@ interface IV4Inventory {
     limit_error_klass: null;
     limit_type: string;
   } | null;
+  reward_limit_per_user_per_period?: number | null;
+  reward_limit_per_user_per_period_balance: {
+    available_amount: number;
+    limit_error_klass: null;
+    limit_type: string;
+  } | null;
+}
+
+interface IV4CustomField {
+  faq_link: string;
+  tnc_link: string;
+  points_requirement: string; // to convert to number
+  referrals_requirement: string;
+  reward_description: string;
+  card_link: string;
 }
 
 export interface IV4Reward {
@@ -64,9 +67,10 @@ export interface IV4Reward {
   subtitle: string;
   valid_from: Date;
   valid_to: Date;
-  favourite: boolean;
+  is_favorite: boolean;
   reward_price?: IV4RewardPrice[];
   images?: IV4Image[];
+  loyalty: IV4LoyaltyTierInfo[];
   merchant_id?: number;
   merchant_name?: string;
   merchant_website?: string;
@@ -79,6 +83,9 @@ export interface IV4Reward {
   selling_to?: string;
   merchant_logo_url?: string;
   display_properties?: IWRewardDisplayProperties;
+  custom_fields?: IV4CustomField;
+  referee_required_for_reward?: number;
+  referee_balance_to_next_reward?: number;
 }
 
 interface IV4Price {
@@ -136,6 +143,14 @@ interface IV4CatalogResults {
   first_result_id?: number;
 }
 
+interface IV4LoyaltyTierInfo {
+  attained: boolean;
+  loyalty_id: number;
+  loyalty_name: string;
+  loyalty_points_required_for_redemption: number;
+  sneak_peek: boolean;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -154,7 +169,7 @@ export class V4RewardsService extends RewardsService {
   }
 
 
-  public static v4RewardToReward(reward: IV4Reward): IReward {
+  public static v4RewardToReward(reward: IV4Reward, campaignType?: CampaignType): IReward {
     const images = reward.images || [];
     let thumbnail = images.find((image: IV4Image) => image.type === 'reward_thumbnail');
     if (thumbnail === undefined) {
@@ -166,19 +181,34 @@ export class V4RewardsService extends RewardsService {
     const merchantImg = oc(reward).merchant_logo_url();
     const sellingFrom = reward.selling_from ? new Date(reward.selling_from) : undefined;
     const sellingTo = reward.selling_to ? new Date(reward.selling_to) : undefined;
+    const loyaltyTierInfo = reward.loyalty ? reward.loyalty.map((tier) => ({
+      attained: tier.attained,
+      id: tier.loyalty_id,
+      loyaltyName: tier.loyalty_name,
+      loyaltyPointsRequiredForRedemption: tier.loyalty_points_required_for_redemption,
+      sneakPeek: tier.sneak_peek
+    })) : [];
 
     const v4Invent = reward.inventory;
     const inventory = v4Invent ? {
       rewardTotalBalance: v4Invent.reward_total_balance !== undefined ? v4Invent.reward_total_balance : null,
       rewardTotalLimit: v4Invent.reward_total_limit !== undefined ? v4Invent.reward_total_limit : null,
-      rewardLimitPerUserBalance: v4Invent.reward_limit_per_user_balance !== undefined && v4Invent.reward_limit_per_user_balance !== null ?
-        v4Invent.reward_limit_per_user_balance.available_amount : null
+      rewardLimitPerUserBalance:
+        v4Invent.reward_limit_per_user_balance !== undefined &&
+          v4Invent.reward_limit_per_user_balance ?
+          v4Invent.reward_limit_per_user_balance.available_amount : null,
+      rewardLimitPerUserPerPeriodBalance:
+        v4Invent.reward_limit_per_user_per_period !== undefined &&
+          v4Invent.reward_limit_per_user_per_period_balance ?
+          v4Invent.reward_limit_per_user_per_period_balance.available_amount : null,
     } : undefined;
     return {
       id: reward.id,
       name: reward.name,
       subtitle: reward.subtitle,
       description: reward.description,
+      favorite: reward.is_favorite,
+      loyalty: loyaltyTierInfo,
       rewardPrice: reward.reward_price ? reward.reward_price.map(price => ({
         id: price.id,
         currencyCode: price.currency_code,
@@ -202,7 +232,27 @@ export class V4RewardsService extends RewardsService {
       categoryTags: reward.category_tags,
       inventory,
       displayProperties: reward.display_properties,
+      customFields: reward.custom_fields ? {
+        requirement: campaignType ? V4RewardsService.custFieldRequirementSelector(campaignType, reward.custom_fields) : (
+          reward.custom_fields.points_requirement || reward.custom_fields.referrals_requirement
+        ),
+        requirementDescription: reward.custom_fields.reward_description || '',
+        faqLink: reward.custom_fields.faq_link,
+        tncLink: reward.custom_fields.tnc_link,
+        cardLink: reward.custom_fields.card_link
+      } : undefined
     };
+  }
+
+  public static custFieldRequirementSelector(campaignType: CampaignType, customField: IV4CustomField): string {
+    switch (campaignType) {
+      case CampaignType.give_reward:
+        return customField.points_requirement;
+      case CampaignType.invite:
+        return customField.referrals_requirement;
+      default:
+        return customField.points_requirement;
+    }
   }
 
   private static v4CatalogToCatalog(catalog: IV4Catalog): ICatalog {
@@ -248,9 +298,14 @@ export class V4RewardsService extends RewardsService {
     };
   }
 
-  public getAllRewards(tags?: string[] | null, categories?: string[], locale: string = 'en'): Observable<IReward[]> {
+  public getAllFavoriteRewards(tags?: string[] | null, categories?: string[], locale: string = 'en'): Observable<IReward[]> {
+    return this.getAllRewards(tags, categories, locale, true);
+  }
+
+  public getAllRewards(
+    tags?: string[] | null, categories?: string[], locale: string = 'en', filterFavorites?: boolean): Observable<IReward[]> {
     return new Observable(subject => {
-      const pageSize = 10;
+      const pageSize = 100;
       let current: IReward[] = [];
       let page: number = 1;
       // we do not want to get all pages in parallel, so we get pages one after the other in order not to dos the server
@@ -263,12 +318,12 @@ export class V4RewardsService extends RewardsService {
         } else {
           // otherwise get next page
           page++;
-          this.getRewards(page, undefined, tags, categories, locale)
+          this.getRewards(page, pageSize, tags, categories, locale, filterFavorites)
             .subscribe(process);
         }
       };
       // do the first query
-      return this.getRewards(1, undefined, tags, categories, locale).subscribe(process);
+      return this.getRewards(1, pageSize, tags, categories, locale, filterFavorites).subscribe(process);
     });
   }
 
@@ -277,7 +332,10 @@ export class V4RewardsService extends RewardsService {
     pageSize: number = 10,
     tags?: string[] | null,
     categories?: string[],
-    locale: string = 'en'
+    locale: string = 'en',
+    filterFavorites?: boolean,
+    sort?: Sort,
+    sortBy?: string | null,
   ): Observable<IReward[]> {
     const headers = new HttpHeaders().set('Accept-Language', locale);
     let params = new HttpParams()
@@ -289,6 +347,16 @@ export class V4RewardsService extends RewardsService {
 
     if (categories) {
       params = params.set('categories', categories.join());
+    }
+
+    if (filterFavorites) {
+      params = params.set('favorite', 'true');
+    }
+
+    if (sort && sortBy) {
+      // order & sort_by required. supported fields: id, ends_at, begins_at, state, name
+      params = params.set('order', sort);
+      params = params.set('sort_by', sortBy);
     }
 
     return this.http.get<IV4GetRewardsResponse>(`${this.apiHost}/v4/rewards`, { headers, params })
@@ -335,16 +403,27 @@ export class V4RewardsService extends RewardsService {
     });
   }
 
-  public getCatalogs(page: number = 1, pageSize: number = 10, locale: string = 'en'): Observable<ICatalog[]> {
+  public getCatalogs(
+    page: number = 1,
+    pageSize: number = 10,
+    locale: string = 'en',
+    sort?: Sort,
+    sortBy?: string | null): Observable<ICatalog[]> {
     const headers = new HttpHeaders().set('Accept-Language', locale);
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', pageSize.toString());
+
+    // VS-5212
+    if (sort && sortBy) {
+      params = params.set('order_by', sort).set('sort_by', sortBy);
+    }
+
     return this.http.get<IV4GetCatalogsResponse>(
       `${this.apiHost}/v4/catalogs`,
       {
         headers,
-        params: {
-          page: `${page}`,
-          size: `${pageSize}`
-        }
+        params
       }
     ).pipe(
       map((res: IV4GetCatalogsResponse) => res.data),
@@ -385,5 +464,38 @@ export class V4RewardsService extends RewardsService {
         (price: IV4Price) => V4RewardsService.v4PriceToPrice(price)
       ))
     );
+  }
+
+  public nearMe(rad: number = 20, lat: number, lng: number): Observable<IReward[]> {
+    return this.http.get<IV4GetRewardsResponse>(`${this.apiHost}/v4/rewards?radius=${rad}&lat=${lat}&lng=${lng}`).pipe(
+      map((res: IV4GetRewardsResponse) => res.data),
+      map((rewards: IV4Reward[]) => rewards.map(
+        (reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward)
+      ))
+    );
+  }
+
+  public favoriteReward(rewardId: number): Observable<IReward> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    if (rewardId !== undefined) {
+      return this.http.post<IV4GetRewardResponse>(`${this.apiHost}/v4/rewards/${rewardId}/favorite`, { headers }).pipe(
+        map(res => res.data),
+        map((reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward))
+      );
+    }
+    return EMPTY;
+  }
+
+  public unfavoriteReward(rewardId: number): Observable<IReward> {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    if (rewardId !== undefined) {
+      return this.http.delete<IV4GetRewardResponse>(`${this.apiHost}/v4/rewards/${rewardId}/favorite`, { headers }).pipe(
+        map(res => res.data),
+        map((reward: IV4Reward) => V4RewardsService.v4RewardToReward(reward))
+      );
+    }
+    return EMPTY;
   }
 }

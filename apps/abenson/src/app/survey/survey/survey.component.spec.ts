@@ -10,9 +10,11 @@ describe('SurveyComponent', () => {
   let component: SurveyComponent;
   let fixture: ComponentFixture<SurveyComponent>;
   const mockSurvey: ISurvey = {
+    id: 1,
     results: {},
-    title: '',
-    questions: []
+    title: {
+      text: ''
+    }
   };
   const surveyServiceStub: Partial<SurveyService> = {};
 

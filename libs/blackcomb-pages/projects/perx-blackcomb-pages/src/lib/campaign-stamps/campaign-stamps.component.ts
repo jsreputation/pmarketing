@@ -4,6 +4,7 @@ import { ConfigService, IConfig, IStampCard, StampService, StampState, Voucher, 
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
+import { TranslateService } from '@ngx-translate/core';
 
 interface IStampCardConfig {
   stampsType: string;
@@ -23,21 +24,22 @@ export class CampaignStampsComponent implements OnInit {
   public config: CampaignLandingPage | undefined;
   public filter: string[];
   public rewardsHeadline: string;
-  public expiryLabelFn: ((v: Voucher) => string) | undefined;
+  public expiryLabelFn: ((v: Voucher) => Observable<string>) | undefined;
 
   public currentPage: number = 0;
   public completed: boolean = false;
 
   // public stampsType: string;
-  public puzzleTextFn: (puzzle: IStampCard) => string;
-  public titleFn: (index?: number) => string;
+  public puzzleTextFn: (puzzle: IStampCard) => Observable<string>;
+  public titleFn: (index?: number) => Observable<string>;
 
   constructor(
     private router: Router,
     private activeRoute: ActivatedRoute,
     private stampService: StampService,
     private campaignService: ICampaignService,
-    private configService: ConfigService) {
+    private configService: ConfigService,
+    private translate: TranslateService) {
   }
 
   public ngOnInit(): void {
@@ -47,9 +49,13 @@ export class CampaignStampsComponent implements OnInit {
     ).subscribe((stampsType: string) => {
       if (stampsType === 'stamp_card') {
         this.puzzleTextFn = (puzzle: IStampCard) => !puzzle.stamps ||
-          puzzle.stamps.filter(st => st.state === StampState.issued).length > 1 ? 'new stamps' : 'new stamp';
-        this.titleFn = (index?: number, totalCount?: number) => index !== undefined ?
-          `Stamp Card ${this.cardIndex(index)} out of ${totalCount}` : '';
+          puzzle.stamps.filter(st => st.state === StampState.issued).length > 1 ?
+          this.translate.get('STAMP_CAMPAIGN.NEW_STAMPS') : this.translate.get('STAMP_CAMPAIGN.NEW_STAMP');
+        forkJoin(this.translate.get('STAMP_CAMPAIGN.STAMP_CARD'), this.translate.get('STAMP_CAMPAIGN.OF'))
+          .subscribe((translations) => {
+            this.titleFn = (index?: number, totalCount?: number) => of(index !== undefined ?
+              `${translations[0]} ${this.cardIndex(index)} ${translations[1]} ${totalCount}` : '');
+          });
       }
     });
 
@@ -62,6 +68,14 @@ export class CampaignStampsComponent implements OnInit {
           this.stampService.getCards(campaignId),
           this.campaignService.getCampaign(campaignId)
         );
+      }),
+      switchMap(([stampCards, campaign]: [IStampCard[], ICampaign]) => {
+        if (stampCards.length === 0) {
+          return this.stampService.getCurrentCard(campaign.id).pipe(
+            map((stampCardCurr) => [[stampCardCurr], campaign])
+          );
+        }
+        return of([stampCards, campaign]);
       }),
       takeUntil(this.destroy$)
     ).subscribe(

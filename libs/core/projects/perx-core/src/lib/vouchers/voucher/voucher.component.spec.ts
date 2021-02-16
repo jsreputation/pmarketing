@@ -12,6 +12,7 @@ import { IVoucher, VoucherState } from '../models/voucher.model';
 import { Type, SimpleChange } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { RedemptionType } from '../../perx-core.models';
+import { UtilsModule } from '../../utils/utils.module';
 
 describe('VoucherComponent', () => {
   let component: VoucherComponent;
@@ -24,6 +25,7 @@ describe('VoucherComponent', () => {
       name: 'reward name',
       description: 'reward descriptiomn',
       subtitle: '',
+      favorite: false,
       validFrom: new Date(),
       validTo: new Date(),
       sellingFrom: new Date(),
@@ -37,6 +39,7 @@ describe('VoucherComponent', () => {
       termsAndConditions: '',
       howToRedeem: '',
       categoryTags: [],
+      loyalty: []
     },
     state: VoucherState.issued,
     redemptionType: RedemptionType.none,
@@ -61,6 +64,7 @@ describe('VoucherComponent', () => {
       imports: [
         MatCardModule,
         VouchersModule,
+        UtilsModule,
         ConfigModule.forRoot({})
       ],
       providers: [
@@ -76,6 +80,7 @@ describe('VoucherComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(VoucherComponent);
     component = fixture.componentInstance;
+    component.voucher$ = of(mockVoucher);
     fixture.detectChanges();
   });
 

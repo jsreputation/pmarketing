@@ -4,6 +4,7 @@ import { IPictureSelectPayload } from '../question/picture-select/picture-select
 import { IRatingPayload } from '../question/rating/rating.component';
 import { ISelectPayload } from '../question/select/select.component';
 import { ISwipePayload } from '../question/swipe-list/swipe-list.component';
+import { IQQuestion } from '../quiz.service';
 
 export interface IQAnswer {
   questionId: string;
@@ -27,16 +28,6 @@ export interface ITracker<T = any> {
   [key: string]: T;
 }
 
-export interface IQQuestion<T = any> {
-  id: string;
-  question: string;
-  description?: string;
-  required: boolean;
-  payload: IPayload;
-  answer?: any;
-  meta?: T;
-}
-
 export enum MaterialColor {
   primary = 'primary',
   accent = 'accent',
@@ -44,6 +35,7 @@ export enum MaterialColor {
 }
 
 export interface IQuizOutcome {
+  // suppose to be { [lang: string]: {text: string} }, but leave it be first
   title: string;
   subTitle: string;
   image?: string;
@@ -59,8 +51,8 @@ export enum QuizMode {
 export interface IQuiz {
   id?: number;
   campaignId?: number;
-  title: string;
-  subTitle?: string;
+  title?: {text: string};
+  subTitle?: {text: string};
   progressBarColor?: MaterialColor;
   cardBackgroundImgUrl?: string;
   backgroundImgUrl?: string;
@@ -72,6 +64,17 @@ export interface IQuiz {
   };
   remainingNumberOfTries?: number;
   displayProperties?: IWCampaignDisplayProperties;
+  timeConfig: ITimeConfig;
+}
+
+export interface ITimeConfig {
+  timerCountSeconds?: number;
+  timerType?: TimerType;
+}
+
+export enum TimerType {
+  countDown = 'count_down',
+  countUp = 'count_up'
 }
 
 export enum QuizQuestionType {

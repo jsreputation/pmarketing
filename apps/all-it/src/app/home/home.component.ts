@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
 import { HomeComponent as BCHomeComponent } from '@perxtech/blackcomb-pages';
 import {
   AuthenticationService,
@@ -10,44 +13,61 @@ import {
   IGameService,
   ILoyalty,
   InstantOutcomeService,
+  IReward,
   LoyaltyService,
   ProfileService,
   RewardsService,
   SettingsService,
-  ThemesService
+  ThemesService,
+  TokenStorage,
 } from '@perxtech/core';
 import { Router } from '@angular/router';
-import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
+import { MatDialog } from '@angular/material';
 import {
-  MatDialog
-} from '@angular/material';
-import { switchMap, map } from 'rxjs/operators';
-import { EMPTY } from 'rxjs';
+  finalize,
+  map,
+  switchMap,
+  tap
+} from 'rxjs/operators';
+import {
+  EMPTY,
+  iif
+} from 'rxjs';
+import {
+  CurrencyPipe,
+  DatePipe
+} from '@angular/common';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent extends BCHomeComponent implements OnInit {
   public restrictedView: boolean = false;
+  public favDisabled: boolean  = false;
 
   public constructor(
-    public rewardsService: RewardsService,
-    public gamesService: IGameService,
-    public router: Router,
-    public titleService: Title,
-    public translate: TranslateService,
-    public themesService: ThemesService,
-    public configService: ConfigService,
-    public authService: AuthenticationService,
-    public campaignService: ICampaignService,
-    public instantOutcomeService: InstantOutcomeService,
-    public dialog: MatDialog,
-    public feedService: FeedReaderService,
-    public settingsService: SettingsService,
-    public profileService: ProfileService,
+    rewardsService: RewardsService,
+    gamesService: IGameService,
+    router: Router,
+    protected titleService: Title,
+    translate: TranslateService,
+    themesService: ThemesService,
+    configService: ConfigService,
+    authService: AuthenticationService,
+    campaignService: ICampaignService,
+    instantOutcomeService: InstantOutcomeService,
+    dialog: MatDialog,
+    feedService: FeedReaderService,
+    settingsService: SettingsService,
+    profileService: ProfileService,
+    currencyPipe: CurrencyPipe,
+    tokenService: TokenStorage,
+    datePipe: DatePipe,
+
     private loyaltyService: LoyaltyService
   ) {
     super(
@@ -64,88 +84,101 @@ export class HomeComponent extends BCHomeComponent implements OnInit {
       dialog,
       feedService,
       settingsService,
-      profileService
+      profileService,
+      currencyPipe,
+      tokenService,
+      datePipe
     );
   }
 
   public ngOnInit(): void {
     this.loyaltyService.getLoyalty().subscribe((loyalty) => {
-      if (
-        loyalty &&
-        !loyalty.membershipState
-      ) {
+      if (loyalty && !loyalty.membershipState) {
         this.authService.logout();
         this.router.navigate(['/login']);
       }
     });
-    this.profileService.getCustomProperties()
+    this.profileService
+      .getCustomProperties()
       .pipe(
-        switchMap(
-          res => {
-            if (res.referralCode) {
-              return this.campaignService.applyReferral(res.referralCode as string);
-            }
-            return EMPTY;
-          })
-      ).subscribe();
-    this.translate.get('HOME.HELLO').subscribe(
-      (msg: string) => this.titleFn = (profile) => {
-        let returnString = msg;
-        if (profile &&
-          profile.firstName && profile.firstName !== '' &&
-          profile.lastName && profile.lastName !== '') {
-          returnString = `${returnString}, ${profile.firstName} ${profile.lastName}`;
-        } else if (profile && profile.firstName && profile.firstName !== '') {
-          returnString = `${returnString}, ${profile.firstName}`;
-        } else if (profile && profile.lastName && profile.lastName !== '') {
-          returnString = `${returnString}, ${profile.lastName}`;
-        }
-        return returnString;
-      }
-    );
+        switchMap((res) => {
+          if (res.referralCode) {
+            return this.campaignService.applyReferral(
+              res.referralCode as string
+            );
+          }
+          return EMPTY;
+        })
+      )
+      .subscribe();
+
     this.rewards$ = this.rewardsService.getAllRewards(['featured']);
     this.getTabbedList();
 
-    this.themesService.getThemeSetting().subscribe(
-      theme => {
-        this.theme = theme;
-        const title = (theme.properties ? theme.properties['--title'] : undefined) || 'Blackcomb';
-        this.titleService.setTitle(title);
-      }
-    );
-
-    this.configService.readAppConfig<void>().pipe(
-      map((config: IConfig<void>) => {
-        this.appConfig = config;
-        this.initCampaign();
-      }),
-      switchMap(() => this.settingsService.getRemoteFlagsSettings())
-    ).subscribe(
-      (flags: IFlags) => {
-        // todo: create a function to wrap all the rest of the init calls
-        this.appRemoteFlags = flags;
-      }
-    );
-
-    // if premium member hide stuff.
-    this.loyaltyService.getLoyalties().pipe(
-      map( (loyalties: ILoyalty[]) => loyalties[0]),
-    ).subscribe(
-      (loyalty: ILoyalty) => {
-        if (loyalty) {
-          this.restrictedView = loyalty.tiers.filter((tier) => tier.name === 'Premium').length > 0;
-          console.log(this.restrictedView);
-        }
-      }
-    );
-
-    this.authService.isAuthorized().subscribe((isAuth: boolean) => {
-      if (isAuth) {
-        this.fetchPopupCampaigns();
-      }
+    this.themesService.getThemeSetting().subscribe((theme) => {
+      this.theme = theme;
     });
 
+    this.configService
+      .readAppConfig<void>()
+      .pipe(
+        tap((config: IConfig<void>) => {
+          this.authService.isAuthorized().subscribe((isAuth: boolean) => {
+            if (isAuth && !this.configService.readAppStarted()) {
+              this.configService.setAppStarted();
+              if (config.showPopupCampaign) {
+                this.fetchPopupCampaigns();
+              }
+            }
+          });
+          this.appConfig = config;
+          this.initCampaign();
+        }),
+        switchMap(() => this.settingsService.getRemoteFlagsSettings())
+      )
+      .subscribe((flags: IFlags) => {
+        // todo: create a function to wrap all the rest of the init calls
+        this.appRemoteFlags = flags;
+      });
+
+    // if premium member hide stuff.
+    this.loyaltyService
+      .getLoyalties()
+      .pipe(map((loyalties: ILoyalty[]) => loyalties[0]))
+      .subscribe((loyalty: ILoyalty) => {
+        if (loyalty) {
+          this.restrictedView =
+            loyalty.tiers.filter((tier) => tier.name === 'Premium').length > 0;
+        }
+      });
 
     this.initCatalogsScan();
+  }
+
+  public rewardFavoriteHandler(rewardToggled: IReward): void {
+    if (this.favDisabled) {
+      return;
+    }
+
+    this.favDisabled = true;
+
+    iif(() => (rewardToggled && (rewardToggled.favorite || false)),
+    this.rewardsService.unfavoriteReward(rewardToggled.id),
+    this.rewardsService.favoriteReward(rewardToggled.id)).pipe(
+      tap(
+        rewardChanged => {
+          this.rewards$ = this.rewards$.pipe(
+            map(rewards => {
+              const foundIndex = rewards.findIndex(reward => reward.id === rewardToggled.id);
+              rewards[foundIndex] = rewardChanged;
+              return rewards;
+            })
+          );
+        }
+      ),
+      finalize(() => setTimeout(() => {
+        this.favDisabled = false;
+      }, 500))
+    ).subscribe();
   }
 }

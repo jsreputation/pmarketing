@@ -15,16 +15,31 @@
           <span [ngClass]="macaron.class">{{macaron.label}}</span>
         </div>
         <div *ngIf="!isExpired && macaron">
-          <app-expire-timer
-            *ngIf="macaron.class === 'expiring'"
-            [timerEndDate]="reward.sellingTo"
-            (hasExpired)="setToExpired()"
-            (isExpiring)="onExpiring()">
+          <app-expire-timer *ngIf="macaron.class === 'expiring'" [timerEndDate]="reward.sellingTo"
+            (hasExpired)="setToExpired()" (isExpiring)="onExpiring()">
           </app-expire-timer>
         </div>
-        <span *ngIf="showBalance && macaron && macaron.class === 'running-out'" class="reward-balance">{{macaron.rewardBalance}}
+        <span *ngIf="showBalance && macaron && macaron.class === 'running-out'"
+          class="reward-balance">{{macaron.rewardBalance}}
           left</span>
       </div>
+
+      <div *ngIf="showLoyaltyTierInfo" class="content tier-info">
+        <div *ngIf="reward.loyalty && reward.loyalty.length; else allTiers">
+          <div *ngIf="reachedSneakPeakTiers.length" class="tier-list">Reached sneak peak tier:
+            <mat-list role="list">
+              <mat-list-item role="listitem" *ngFor="let tier of reachedSneakPeakTiers">{{tier.loyaltyName}}</mat-list-item>
+            </mat-list>
+          </div>
+          <div *ngIf="unAttainedTiers.length" class="tier-list">Requires tier:
+            <mat-list role="list">
+              <mat-list-item role="listitem" *ngFor="let tier of unAttainedTiers">{{tier.loyaltyName}}</mat-list-item>
+            </mat-list>
+          </div>
+        </div>
+        <ng-template #allTiers>Available to all loyalty tiers.</ng-template>
+      </div>
+
 
       <div class="content">
         <div class="description" [innerHtml]="reward.description"></div>

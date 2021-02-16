@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { RedemptionComponent } from './redemption.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatIconModule, MatDividerModule } from '@angular/material';
+import { MatIconModule, MatDividerModule, MatListModule } from '@angular/material';
 import { VouchersModule, IVoucherService, VoucherState, UtilsModule, RewardsService, Voucher, RedemptionType, NotificationService } from '@perxtech/core';
 import { RewardDetailComponent } from '../reward/reward-detail/reward-detail.component';
 import { LocationShortFormatComponent } from '../location-short-format/location-short-format.component';
@@ -49,6 +49,7 @@ describe('RedemptionComponent', () => {
         title: 'test'
       }],
       inventory: undefined,
+      loyalty: []
     },
     state: VoucherState.expired,
     redemptionType: RedemptionType.none,
@@ -89,7 +90,8 @@ describe('RedemptionComponent', () => {
         VouchersModule,
         UtilsModule,
         QRCodeModule,
-        NgxBarcodeModule
+        NgxBarcodeModule,
+        MatListModule
       ],
       providers: [
         { provide: IVoucherService, useValue: vouchersServiceStub },

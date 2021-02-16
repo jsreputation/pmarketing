@@ -1,0 +1,48 @@
+{
+  "app": "hkbn",
+  "apiHost": "https://api.perxtech.io",
+  "production": false,
+  "preAuth": false,
+  "isWhistler": false,
+  "baseHref": "/",
+  "defaultLang": "en",
+  "showSubtitleLogin": true,
+  "showHomePage": true,
+  "showHistoryPage": true,
+  "showAccountsPage": true,
+
+  "showLoyaltyBlockOnHomePage": true,
+  "showLoyaltyProgress": true,
+  "showCatalogOnHomePage": true,
+  "showQuizOnHomePage" : false,
+  "showCampaignRewardsCounterOnHomepage": false,
+  "showRewardsOnHomepage": true,
+  "showCampaignLandingPage": false,
+
+  "showQrPageSubtitle": false,
+  "showUserQR": true,
+  "showExpiryOnRewardDetail": true,
+  "showUserInfoOnAccountsPage": true,
+  "showTransactionHistoryOnAccountsPage": true,
+  "showVoucherBookingFromRewardsPage":  false,
+  "custom": {
+    "stampsType": "stamp_card",
+    "redirectAfterLogin": "/home"
+  },
+  "displayProperties": {
+  "account": {
+      "pages": [
+          {
+              "key": "contact-us",
+              "title": "Contact Us",
+              "content_url": ""
+          },
+          {
+              "key": "tnc",
+              "title": "Terms and Conditions",
+              "content_url": ""
+          }
+      ]
+  }
+}
+}

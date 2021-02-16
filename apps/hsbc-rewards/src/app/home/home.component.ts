@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IReward, RewardsService, LoyaltyService, ILoyalty, IProfile } from '@perxtech/core';
 import { ITabConfig, IPrice } from '@perxtech/core';
-import { Observable, of, Subject, throwError } from 'rxjs';
-import { flatMap, map, filter } from 'rxjs/operators';
+import { iif, Observable, of, Subject, throwError } from 'rxjs';
+import { flatMap, map, filter, finalize, tap } from 'rxjs/operators';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { DatePipe } from '@angular/common';
 
@@ -57,13 +57,14 @@ export class HomeComponent implements OnInit {
   public tabs: Subject<ITabConfig[]> = new Subject<ITabConfig[]>();
   public staticTab: ITabConfig[] = tabs;
   public rewardsCollection: Observable<IReward[]>;
-  public displayPriceFn: (price: IPrice) => string;
-  public titleFn: (profile: IProfile) => string;
-  public subTitleFn: (loyalty: ILoyalty) => string;
-  public summaryExpiringFn: (loyalty: ILoyalty) => string;
+  public displayPriceFn: (price: IPrice) => Observable<string>;
+  public titleFn: (profile: IProfile) => Observable<string>;
+  public subTitleFn: (loyalty: ILoyalty) => Observable<string>;
+  public summaryExpiringFn: (loyalty: ILoyalty) => Observable<string>;
   public currentTab: string;
   private rewardMultiPageMetaTracker: PageTracker = {};
   private requestPageSize: number = 10;
+  public favDisabled: boolean  = false;
 
   constructor(
     private rewardsService: RewardsService,
@@ -78,27 +79,27 @@ export class HomeComponent implements OnInit {
     this.getRewardsCollection();
     this.getLoyalty();
     this.displayPriceFn = (rewardPrice: IPrice) => {
-      if (rewardPrice.points && rewardPrice.points > 0 && rewardPrice.price && parseInt(rewardPrice.price, 10) > 0) {
-        return `Fast Track: ${rewardPrice.points} points + ${rewardPrice.currencyCode} ${parseInt(rewardPrice.price, 10)}`;
+      if (rewardPrice.points && rewardPrice.points > 0 && rewardPrice.price && parseFloat(rewardPrice.price) > 0) {
+        return of(`Fast Track: ${rewardPrice.points} points + ${rewardPrice.currencyCode} ${parseInt((rewardPrice.price).toString(), 10)}`);
       }
 
-      if (rewardPrice.price && parseInt(rewardPrice.price, 10) > 0) {
-        return `${rewardPrice.currencyCode} ${parseInt(rewardPrice.price, 10)}`;
+      if (rewardPrice.price && parseFloat(rewardPrice.price) > 0) {
+        return of(`${rewardPrice.currencyCode} ${parseInt((rewardPrice.price).toString(), 10)}`);
       }
 
       if (rewardPrice.points && rewardPrice.points > 0) {
-        return `${rewardPrice.points} points`;
+        return of(`${rewardPrice.points} points`);
       }
-      return ''; // is actually 0 or invalid value default
+      return of(''); // is actually 0 or invalid value default
     };
     this.titleFn = (profile: IProfile) => {
       if (profile && profile.lastName) {
-        return `Welcome ${profile.lastName},`;
+        return of(`Welcome ${profile.lastName},`);
       }
-      return 'Welcome';
+      return of('Welcome');
     };
-    this.subTitleFn = () => `Your total points as of ${this.datePipe.transform(new Date(), 'ddMMMyy')}`;
-    this.summaryExpiringFn = (): string => '';
+    this.subTitleFn = () => of(`Your total points as of ${this.datePipe.transform(new Date(), 'ddMMMyy')}`);
+    this.summaryExpiringFn = (): Observable<string> => of('');
     this.loadCurrentTabRewards(this.staticTab[0].tabName);
   }
 
@@ -175,5 +176,32 @@ export class HomeComponent implements OnInit {
         (err) => console.log(err)
       );
     }
+  }
+
+  public rewardFavoriteHandler(rewardToggled: IReward): void {
+    if (this.favDisabled) {
+      return;
+    }
+
+    this.favDisabled = true;
+
+    iif(() => (rewardToggled && (rewardToggled.favorite || false)),
+    this.rewardsService.unfavoriteReward(rewardToggled.id),
+    this.rewardsService.favoriteReward(rewardToggled.id)).pipe(
+      tap(
+        rewardChanged => {
+          this.rewards = this.rewards.pipe(
+            map(rewards => {
+              const foundIndex = rewards.findIndex(reward => reward.id === rewardToggled.id);
+              rewards[foundIndex] = rewardChanged;
+              return rewards;
+            })
+          );
+        }
+      ),
+      finalize(() => setTimeout(() => {
+        this.favDisabled = false;
+      }, 500))
+    ).subscribe();
   }
 }

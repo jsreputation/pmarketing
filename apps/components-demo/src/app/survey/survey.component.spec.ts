@@ -22,7 +22,7 @@ describe('SurveyComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SurveyComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    // fixture.detectChanges();
   });
 
   it('should create', () => {

@@ -1,0 +1,54 @@
+<div  *ngIf="stageLabels && stageLabels.length >= 1"  class="relative-container">
+  <div class="progress-bar-container">
+    <p *ngIf="accurateProg; else inProgInAccurate"
+      class="in-progress" [ngStyle]="{
+      'width': ((current && stageLabels?.length) ? ((current / stageLabels[stageLabels?.length - 1]) * 100) : 0) + '%'
+    }">
+      .
+    </p>
+    <p *ngIf="accurateProg; else progInAccurate" class="to-progress">
+      .
+    </p>
+    <ng-template #inProgInAccurate>
+      <p class="in-progress" *ngIf="current" [ngStyle]="{
+            'width': (
+              current >= stageLabels[stageLabels?.length - 1]  ?
+              100 : ((100 / stages) * (currentRewardIndex + 1))
+             ) + '%'
+          }">
+        .
+      </p>
+    </ng-template>
+    <ng-template #progInAccurate>
+      <p class="to-progress">
+        .
+      </p>
+    </ng-template>
+  </div>
+
+  <div id="stepProgressBar">
+      <div *ngFor="let stamp of arrayFromNumber(stages); let i = index"
+           class="stamp-img"
+           [ngStyle]="{
+            'left': i === 0 ? 0 :
+            (stageLabels ? ((stageLabels[i] / stageLabels[stageLabels?.length - 1]) * 100) + ((i === stages - 1) ? - 4 : 0) : 0) + '%',
+            'background-image': 'url(' + ((current >= stageLabels[i] || i === 0) ? ((i !== 0 && i === currentRewardIndex) ? activeStampImgUrl : stampImgUrl) :
+              noStampImgUrl) + ')',
+            'border': (actualLightIndex !== undefined) ? (
+              !accurateProg ?
+              (i === actualLightIndex ? '2.4px solid #44D62C' : undefined) :
+              (i !== 0 && i === actualLightIndex ? '2.4px solid #44D62C' : undefined))
+            : (i !== 0 && i === currentRewardIndex) ? '2.4px solid #44D62C' : undefined
+           }">
+        <div class="stamp-label"
+              [ngStyle]="{
+                'margin-left': stageLabels[i] < 10 ? 1.5+'rem' : (
+                 stageLabels[i] < 100 ? 1.2+'rem' : 0.6+'rem'
+                )
+              }"
+              *ngIf="showProgressLabels && stageLabels && stageLabels[i] !== undefined">
+          {{stageLabels[i]}}
+        </div>
+      </div>
+    </div>
+</div>

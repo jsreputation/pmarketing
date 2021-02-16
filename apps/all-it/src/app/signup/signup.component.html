@@ -1,5 +1,5 @@
-<div class="main-container">
-        <img src="assets/header_logo.png">
+<div class="main-container"  *ngIf="theme | async as th">
+        <img [attr.src]="th?.properties['--logo']">
         <div class="content-container">
             <div class="main-heading">Sign Up</div>
             <div class="subtitle"><ng-container>Have an account? </ng-container><span class="link" (click)="goToLogin()">Sign In</span></div>
@@ -25,17 +25,30 @@
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="full-width__input">
                     <mat-label>Date of Birth</mat-label>
-                    <input matInput [matDatepicker]="picker" placeholder="Date of Birth" formControlName="dob">
+                    <input matInput [matDatepicker]="picker" [max]='maxDobDate' placeholder="Date of Birth" formControlName="dob" required>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker color="primary" #picker></mat-datepicker>
-                </mat-form-field>
-                <mat-form-field appearance="fill" class="full-width__input">
-                    <mat-label>Postcode</mat-label>
-                    <input matInput placeholder="Postcode" formControlName="postcode" type="number" required>
-                    <mat-error *ngIf="signupForm.get('postcode').hasError('required')">
-                        <span>Postcode is </span><strong>REQUIRED</strong>
+                    <mat-error *ngIf="signupForm.get('dob').hasError('required')">
+                      <span>Date of Birth is </span><strong>REQUIRED</strong>
                     </mat-error>
                 </mat-form-field>
+                <mat-form-field appearance="fill" class="full-width__input">
+                    <mat-label>Gender</mat-label>
+                    <mat-select placeholder="Gender" formControlName="gender">
+                        <mat-option value="Male">Male</mat-option>
+                        <mat-option value="Female">Female</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="signupForm.get('gender').hasError('required')">
+                        <span>Gender is </span><strong>REQUIRED</strong>
+                    </mat-error>
+                </mat-form-field>
+<!--                <mat-form-field appearance="fill" class="full-width__input">-->
+<!--                    <mat-label>Postcode</mat-label>-->
+<!--                    <input matInput placeholder="Postcode" formControlName="postcode" type="number" required>-->
+<!--                    <mat-error *ngIf="signupForm.get('postcode').hasError('required')">-->
+<!--                        <span>Postcode is </span><strong>REQUIRED</strong>-->
+<!--                    </mat-error>-->
+<!--                </mat-form-field>-->
                 <mat-form-field appearance="fill" class="full-width__input">
                     <mat-label>Country code</mat-label>
                     <mat-select formControlName="countryCode">
@@ -48,16 +61,19 @@
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="full-width__input">
                     <mat-label>Mobile No</mat-label>
-                    <input matInput placeholder="Mobile No" formControlName="mobileNo" type="number" required>
+                    <input matInput placeholder="Mobile No" formControlName="mobileNo" type="tel" autocomplete="tel-national" required>
                     <mat-error *ngIf="signupForm.get('mobileNo').hasError('required')">
                         <span>Mobile No is </span><strong>REQUIRED</strong>
+                    </mat-error>
+                    <mat-error *ngIf="signupForm.get('mobileNo').hasError('pattern')">
+                        <strong>Numbers</strong> only
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="full-width__input">
                     <mat-label>Email Address</mat-label>
                     <input matInput placeholder="Email Address" formControlName="email" required>
                     <mat-error *ngIf="signupForm.get('email').hasError('required')">
-                        <span>Email is</span><strong>REQUIRED</strong>
+                        <span>Email is </span><strong>REQUIRED</strong>
                     </mat-error>
                     <mat-error *ngIf="signupForm.get('email').hasError('email')">
                         <span>Incorrect email format</span>
@@ -76,21 +92,23 @@
                 <mat-form-field appearance="fill" class="full-width__input">
                     <mat-label>Confirm Password</mat-label>
                     <input matInput placeholder="Confirm Password" formControlName="confirmPassword" type="password" autocomplete="on" required>
-                    <mat-error *ngIf="signupForm.get('confirmPassword').hasError('required')">
-                        <span>Confirm Password is </span><strong>REQUIRED</strong>
+                    <mat-error *ngIf="signupForm?.get('confirmPassword')!.hasError('mismatchedPasswords')">
+                        <span>Passwords should match</span>
                     </mat-error>
-                    <mat-error *ngIf="signupForm.get('confirmPassword').hasError('minlength')">
-                        <span>Password should be atleast six characters long</span>
-                    </mat-error>
+                </mat-form-field>
+                <mat-form-field *ngIf="appConfig.showReferralDetails" appearance="fill" class="full-width__input">
+                  <mat-label>{{'SIGN_UP_PAGE.REFERRAL_FIELD' | translate}}</mat-label>
+                  <input matInput [placeholder]="'SIGN_UP_PAGE.REFERRAL_FIELD' | translate"
+                         formControlName="referralCode">
                 </mat-form-field>
                 <div class="checkbox-container">
                     <mat-checkbox formControlName="accept_terms"></mat-checkbox>
-                    <span class="wrap-checkbox-text">* I agree to the <span class="terms">terms and conditions.</span></span>
+                    <span class="wrap-checkbox-text">* I agree to the <a class="terms" target="_blank" [routerLink]="['/c/tnc']">terms and conditions.</a></span>
                 </div>
-                <div class="checkbox-container">
-                    <mat-checkbox formControlName="accept_marketing"></mat-checkbox>
-                     <span class="wrap-checkbox-text">I agree to receive marketing materials.</span>
-                </div>
+<!--                <div class="checkbox-container">-->
+<!--                    <mat-checkbox formControlName="accept_marketing"></mat-checkbox>-->
+<!--                     <span class="wrap-checkbox-text">I agree to receive marketing materials.</span>-->
+<!--                </div>-->
                 <button mat-flat-button type="submit" class="full-width__button" [disabled]="!signupForm.valid" [ngClass]="{'button-bg-color' : signupForm.valid}">Sign Up</button>
             </form>
         </div>

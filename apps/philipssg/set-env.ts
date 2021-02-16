@@ -1,28 +1,21 @@
-// https://github.com/angular/angular-cli/issues/4318#issuecomment-464160213
-const fs = require('fs');
-const async = require('async');
-
-// Configure Angular `environment.ts` file path
-const targetPath = `./src/environments/environment.ts`;
-const appConfigPath = `./src/assets/config/app-config.json`;
-const rssFeedsPath = `./src/assets/config/RSS_FEEDS.json`;
-
 // Load node modules
+// https://github.com/angular/angular-cli/issues/4318#issuecomment-464160213
+const { writeFile, existsSync, mkdirSync } = require('fs');
+const async = require('async');
+const path = require('path');
 const colors = require('colors');
 require('dotenv').config();
 
-// Debug environment variables
+// Configure Angular `environment.ts` file path
+const targetPath = path.resolve(__dirname, './src/environments/environment.ts');
+const appConfigPath = path.resolve(__dirname, './src/assets/config/app-config.json');
+const rssFeedsPath = path.resolve(__dirname, './src/assets/config/RSS_FEEDS.json');
 
-// create environment folder
-let envFolderPath ='./src/environments';
-if (!fs.existsSync(envFolderPath)){
-  fs.mkdirSync(envFolderPath);
-}
-// create config folder
-let configFolderPath ='./src/assets/config';
-if (!fs.existsSync(configFolderPath)){
-  fs.mkdirSync(configFolderPath);
-}
+// create environment folders
+['./src/environments', './src/assets/config']
+  .map(relativePath => path.resolve(__dirname, relativePath))
+  .filter(fullPath => !existsSync(fullPath))
+  .forEach(fullPath => mkdirSync(fullPath));
 
 
 const rssFeeds = `{
@@ -79,6 +72,7 @@ const appConfigFile = `{
   "showLoyaltyProgress": ${process.env.SHOW_LOYALTY_PROGRESS ? process.env.SHOW_LOYALTY_PROGRESS : true},
   "showCatalogOnHomePage": ${process.env.SHOW_CATALOG_ON_HOMEPAGE ? process.env.SHOW_CATALOG_ON_HOMEPAGE : true},
   "showQuizOnHomePage" : ${process.env.SHOW_QUIZ_ON_HOMEPAGE ? process.env.SHOW_QUIZ_ON_HOMEPAGE : false},
+  "showSurveyOnHomePage" : ${process.env.SHOW_SURVEY_ON_HOMEPAGE ? process.env.SHOW_SURVEY_ON_HOMEPAGE : false},
   "showCampaignRewardsCounterOnHomepage": ${process.env.SHOW_CAMPAIGN_REWARDS_COUNTER_ON_HOMEPAGE ? process.env.SHOW_CAMPAIGN_REWARDS_COUNTER_ON_HOMEPAGE : false},
   "showRewardsOnHomepage": ${process.env.SHOW_REWARDS_ON_HOMEPAGE ? process.env.SHOW_REWARDS_ON_HOMEPAGE : true},
   "showCampaignLandingPage": ${process.env.SHOW_CAMPAIGN_LANDING_PAGE ? process.env.SHOW_CAMPAIGN_LANDING_PAGE : false},
@@ -91,7 +85,8 @@ const appConfigFile = `{
   "showVoucherBookingFromRewardsPage":  ${process.env.SHOW_VOUCHER_BOOKING_FROM_REWARDS ? process.env.SHOW_VOUCHER_BOOKING_FROM_REWARDS : false},
   "custom": {
     "stampsType": "${process.env.STAMPS_TYPE ? process.env.STAMPS_TYPE : 'stamp_card'}",
-    "redirectAfterLogin": "${process.env.REDIRECT_AFTER_LOGIN ? process.env.REDIRECT_AFTER_LOGIN : '/wallet'}"
+    "redirectAfterLogin": "${process.env.REDIRECT_AFTER_LOGIN ? process.env.REDIRECT_AFTER_LOGIN : '/wallet'}",
+    "loginMethod": "${process.env.LOGIN_METHOD ? process.env.LOGIN_METHOD : 'phone'}"
   },
   ${displayProperties}
 }
@@ -103,7 +98,7 @@ async.each([[targetPath, envConfigFile], [appConfigPath, appConfigFile], [rssFee
     console.log(colors.magenta(`The file '${item[0]}' will be written with the following content: \n`));
     console.log(colors.grey(item[1]));
 
-    fs.writeFile(item[0], item[1], (err: any) => {
+    writeFile(item[0], item[1], (err: any) => {
       if (err) {
         throw console.error(err);
       }

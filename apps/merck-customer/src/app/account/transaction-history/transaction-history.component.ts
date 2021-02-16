@@ -4,12 +4,13 @@ import { Observable, of, forkJoin } from 'rxjs';
 import {
   LoyaltyService,
   ILoyaltyTransactionHistory,
-  TransactionPipe,
   IRewardTransactionHistory,
   IPurchaseTransactionHistory
 } from '@perxtech/core';
 import { DatePipe } from '@angular/common';
 import { MatTabChangeEvent } from '@angular/material';
+import { TranslateService } from '@ngx-translate/core';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'mc-transaction-history',
@@ -19,35 +20,44 @@ import { MatTabChangeEvent } from '@angular/material';
 export class TransactionHistoryComponent implements OnInit, PageAppearence {
 
   public transactions: Observable<ILoyaltyTransactionHistory[]>;
-  public purchasesTitleFn: (tr: ILoyaltyTransactionHistory) => string;
-  public redemptionsTitleFn: (tr: ILoyaltyTransactionHistory) => string;
-  public descFn: (tr: ILoyaltyTransactionHistory) => string;
-  public subTitleFn: (tr: ILoyaltyTransactionHistory) => string;
-  public priceLabelFn: (tr: ILoyaltyTransactionHistory) => string;
+  public purchasesTitleFn: (tr: ILoyaltyTransactionHistory) => Observable<string>;
+  public redemptionsTitleFn: (tr: ILoyaltyTransactionHistory) => Observable<string>;
+  public descFn: (tr: ILoyaltyTransactionHistory) => Observable<string>;
+  public subTitleFn: (tr: ILoyaltyTransactionHistory) => Observable<string>;
+  public priceLabelFn: (tr: ILoyaltyTransactionHistory) => Observable<string>;
 
   private pageNumber: number = 1;
   private pageSize: number = 10;
   private complitePagination: boolean = false;
+  public purchasesTxt: string;
+  public rewardsTxt: string;
+  public triggerTxt: string;
   // @ts-ignore
   private labelIndex: number = 0;
   constructor(
     private loyaltyService: LoyaltyService,
     private datePipe: DatePipe,
-    private transactionPipe: TransactionPipe) {
+    private translate: TranslateService
+  ) {
   }
 
   public ngOnInit(): void {
+    this.initTranslate();
+    this.descFn = (tr: ILoyaltyTransactionHistory) =>
+      of(`${tr.transactionDetails && tr.transactionDetails.data ? (tr.transactionDetails.data as IPurchaseTransactionHistory).productName : ''}`);
+
     this.purchasesTitleFn = (tr: ILoyaltyTransactionHistory) =>
-      `${tr.transactionDetails && tr.transactionDetails.data ? (tr.transactionDetails.data as IPurchaseTransactionHistory).pharmacyName : 'no-name'}`;
+      of(`${tr.transactionDetails && tr.transactionDetails.data ? (tr.transactionDetails.data as IPurchaseTransactionHistory).pharmacyName : ''}`);
 
     this.redemptionsTitleFn = (tr: ILoyaltyTransactionHistory) =>
-      `${tr.transactionDetails && (tr.transactionDetails.data as IRewardTransactionHistory).rewardName}`;
+      of(`${tr.transactionDetails && tr.transactionDetails.data && (tr.transactionDetails.data as IRewardTransactionHistory).rewardName ? (tr.transactionDetails.data as IRewardTransactionHistory).rewardName : this.triggerTxt}`);
 
-    this.descFn = (tr: ILoyaltyTransactionHistory) =>
-      `${tr.transactionDetails && tr.transactionDetails.data ? (tr.transactionDetails.data as IPurchaseTransactionHistory).productName : ''}`;
-
-    this.subTitleFn = (tr: ILoyaltyTransactionHistory) => `${this.datePipe.transform(tr.transactedAt, 'dd/MM/yyyy')}`;
-    this.priceLabelFn = (tr: ILoyaltyTransactionHistory) => `${this.transactionPipe.transform(tr.pointsAmount || 0)}`;
+    this.subTitleFn = (tr: ILoyaltyTransactionHistory) => of(`${this.datePipe.transform(tr.transactedAt, 'dd/MM/yyyy')}`);
+    this.translate.get(['PURCHASES_TXT', 'REWARDS_TXT', 'UPDATED_PROFILE_INFORMATION_TXT']).subscribe((res: any) => {
+      this.purchasesTxt = res.PURCHASES_TXT;
+      this.rewardsTxt = res.REWARDS_TXT;
+      this.triggerTxt = res.UPDATED_PROFILE_INFORMATION_TXT;
+    });
 
     this.loyaltyService.getTransactionHistory(this.pageNumber, this.pageSize).subscribe(
       (transactions: ILoyaltyTransactionHistory[]) => this.transactions = of(transactions),
@@ -61,7 +71,7 @@ export class TransactionHistoryComponent implements OnInit, PageAppearence {
       header: true,
       backButtonEnabled: true,
       bottomSelectedItem: BarSelectedItem.ACCOUNT,
-      pageTitle: 'STATIC_TRANSACTION_HISTORY'
+      pageTitle: 'NAVIGATION.TRANSACTION_HISTORY'
     };
   }
 
@@ -81,5 +91,17 @@ export class TransactionHistoryComponent implements OnInit, PageAppearence {
 
   public tabChanged(event: MatTabChangeEvent): void {
     this.labelIndex = event.index;
+  }
+
+  private initTranslate(): void {
+    this.priceLabelFn = (tr: ILoyaltyTransactionHistory) => this.translate.get(['TRANSACTION_HISTORY.POINT_EARNED', 'TRANSACTION_HISTORY.POINT_SPENT']).pipe(
+      map(res => {
+        const pointsSpentTxt = res['TRANSACTION_HISTORY.POINT_SPENT'];
+        const pointsEarnedTxt = res['TRANSACTION_HISTORY.POINT_EARNED'];
+        const value = tr.pointsAmount || 0;
+        const absVal = String(Math.abs(value));
+        return value < 0 ? pointsSpentTxt.replace('{points}', absVal) : pointsEarnedTxt.replace('{points}', absVal);
+      })
+    );
   }
 }

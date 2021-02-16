@@ -64,6 +64,7 @@ describe('RedeemComponent', () => {
     merchantWebsite: undefined,
     termsAndConditions: 'test',
     howToRedeem: 'test',
+    loyalty: []
   };
 
   const rewardsServiceStub: Partial<RewardsService> = {
@@ -163,6 +164,7 @@ describe('RedeemComponent', () => {
         howToRedeem: '',
         categoryTags: [],
         inventory: undefined,
+        loyalty: []
       },
       state: VoucherState.issued,
       redemptionType: RedemptionType.none,
@@ -190,6 +192,7 @@ describe('RedeemComponent', () => {
         howToRedeem: '',
         categoryTags: [],
         inventory: undefined,
+        loyalty: []
       },
       state: VoucherState.redeemed,
       redemptionType: RedemptionType.none,

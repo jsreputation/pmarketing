@@ -15,6 +15,13 @@ export {
 } from './lib/perx-core.models';
 
 /**
+ * Macarons
+ */
+export { IMacaron } from './lib/macaron/models/macaron.model';
+export { MacaronModule } from './lib/macaron/macaron.module';
+export { MacaronService } from './lib/macaron/macaron.service';
+
+/**
  * Merchants
  */
 export {
@@ -66,7 +73,9 @@ export {
   CampaignState,
   ICampaign,
   CampaignLandingPage,
-  IReferral
+  IReferral,
+  ProgressBarFields,
+  ITaggedItem
 } from './lib/campaign/models/campaign.model';
 export { ExpireTimerComponent } from './lib/campaign/reward-popup/expire-timer/expire-timer.component';
 export { RewardPopupComponent } from './lib/campaign/reward-popup/reward-popup.component';
@@ -100,6 +109,7 @@ export {
   ISnake,
   defaultTree,
   IPlayOutcome,
+  IPointsOutcome,
   ISlice,
   IEngagementTransaction
 } from './lib/game/game.model';
@@ -136,7 +146,8 @@ export {
   IRewardTransactionHistory,
   IPurchaseTransactionHistory,
   TransactionDetailType,
-  IJoinMethod
+  IJoinMethod,
+  IGameTransactionHistory
 } from './lib/loyalty/models/loyalty.model';
 export { TransactionPipe } from './lib/loyalty/loyalty-transactions-list/transaction.pipe';
 export { CashbackTransactionPipe } from './lib/loyalty/loyalty-transactions-list/cashback-transaction.pipe';
@@ -152,13 +163,16 @@ export {
   ICatalog,
   ICategoryTags,
   IPrice,
-  IRewardState
+  IRewardState,
+  ILoyaltyTierInfo,
+  Sort
 } from './lib/rewards/models/reward.model';
 export { ITabConfig, ITabConfigExtended } from './lib/rewards/rewards-list-tabbed/rewards-list-tabbed.component';
 export { RewardsCollectionComponent } from './lib/rewards/rewards-collection/rewards-collection.component';
 export { RewardComponent } from './lib/rewards/reward/reward.component';
 export { RewardsListTabbedComponent } from './lib/rewards/rewards-list-tabbed/rewards-list-tabbed.component';
 export { RewardsListComponent } from './lib/rewards/rewards-list/rewards-list.component';
+export { RewardsLargeListComponent } from './lib/rewards/rewards-large-list/rewards-large-list.component';
 /**
  * Utils
  */
@@ -187,6 +201,12 @@ export { SafeUrlPipe } from './lib/utils/safe-url.pipe';
 export { equalityValidator, emailValidator, inequalityValidator } from './lib/utils/validators';
 export { LocationFilterPopupComponent } from './lib/utils/location-filter-popup/location-filter-popup.component';
 export { PointsToCashPipe } from './lib/utils/directives/points-to-cash.pipe';
+export { ProgressInfoPipe } from './lib/utils/progress-info/progress-info.pipe';
+export { GettingStartedPipe } from './lib/utils/getting-started/getting-started.pipe';
+export { IStatisticCardConfig, StatisticCardComponent } from './lib/utils/statistic-card/statistic-card.component';
+export { FlagLocalStorageService } from './lib/utils/flags/flag-local-storage.service';
+export { GettingStartedNearPicPipe } from './lib/utils/getting-started-near-pic/getting-started-near-pic.pipe';
+export { ErrorMessageService } from './lib/utils/error-message/error-message.service';
 
 /**
  * Puzzles
@@ -232,8 +252,8 @@ export { PasswordComponent } from './lib/survey/question/password/password.compo
  * Quiz
  */
 export { QuizModule } from './lib/quiz/quiz.module';
-export { QuizService, IAnswerResult } from './lib/quiz/quiz.service';
-export { IQuiz, QuizQuestionType, IQQuestion, IQAnswer, ITracker, IPoints, QuizMode } from './lib/quiz/models/quiz.model';
+export { QuizService, IAnswerResult, IQQuestion } from './lib/quiz/quiz.service';
+export { IQuiz, QuizQuestionType, IQAnswer, ITracker, IPoints, QuizMode } from './lib/quiz/models/quiz.model';
 export { QuizComponent } from './lib/quiz/quiz/quiz.component';
 export { QuizQuestionComponent } from './lib/quiz/question/question.component';
 export { QuizSelectComponent } from './lib/quiz/question/select/select.component';
@@ -251,7 +271,8 @@ export { ConfigModule } from './lib/config/config.module';
 export { Config } from './lib/config/config';
 export { ConfigService } from './lib/config/config.service';
 export {
-  IConfig
+  IConfig,
+  LoginType
 } from './lib/config/models/config.model';
 
 /**
@@ -266,7 +287,8 @@ export {
   PagesObject,
   AccountPageObject,
   RssFeedsPages,
-  IFlags
+  IFlags,
+  VoucherDistributionTypes
 } from './lib/settings/models/settings.model';
 
 /**
@@ -284,7 +306,7 @@ export { ThemesService } from './lib/utils/themes/themes.service';
  * Outcome
  */
 export { InstantOutcomeService } from './lib/outcome/instant-outcome.service';
-export { IOutcome } from './lib/outcome/models/outcome.model';
+export { IOutcome, OutcomeType } from './lib/outcome/models/outcome.model';
 export { OutcomeModule } from './lib/outcome/outcome.module';
 /**
  * Rank / Leaderboard
@@ -315,4 +337,17 @@ export { PosService } from './lib/pos/pos.service';
  */
 export { TransactionsServiceModule } from './lib/transactions/transaction-service/transactions.service.module';
 export { TransactionsService } from './lib/transactions/transaction-service/transactions.service';
-export { ITransaction, ITransactionProperties } from './lib/transactions/models/transactions.model';
+export { ITransaction, ITransactionProperties, TransactionState } from './lib/transactions/models/transactions.model';
+
+/**
+ * ProgressBar
+ */
+export { ProgressBarModule } from './lib/progress-bar/progress-bar.module';
+export { ProgressBarComponent } from './lib/progress-bar/progress-bar.component';
+export { CampaignRewardMode } from './lib/rewards/rewards-large-list/rewards-large-list.component';
+
+/**
+ * RazerCampaignCard
+ */
+export { RazAdaptedCampaignCardModule } from './lib/raz-adapted-campaign-card/raz-adapted-campaign-card.module';
+export { RazAdaptedCampaignCardComponent } from './lib/raz-adapted-campaign-card/raz-adapted-campaign-card.component';

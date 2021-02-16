@@ -23,12 +23,14 @@ describe('CategoryRewardCardComponent', () => {
       name: '',
       description: '',
       subtitle: '',
+      favorite: false,
       validFrom: new Date(),
       validTo: new Date(),
       rewardBanner: '',
       merchantImg: '',
       termsAndConditions: '',
       howToRedeem: '',
+      loyalty: []
     };
     fixture.detectChanges();
   });

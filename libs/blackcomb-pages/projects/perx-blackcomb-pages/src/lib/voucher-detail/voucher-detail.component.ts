@@ -1,8 +1,30 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { IVoucherService, Voucher } from '@perxtech/core';
-import { filter, switchMap, takeUntil, map } from 'rxjs/operators';
-import { Observable, Subject } from 'rxjs';
+import {
+  Component,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
+import {
+  ActivatedRoute,
+  ParamMap,
+  Router
+} from '@angular/router';
+import {
+  IVoucherService,
+  Voucher,
+  VoucherState
+} from '@perxtech/core';
+import {
+  filter,
+  map,
+  switchMap,
+  takeUntil,
+  tap
+} from 'rxjs/operators';
+import {
+  Observable,
+  of,
+  Subject
+} from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
 
@@ -12,10 +34,11 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./voucher-detail.component.scss']
 })
 export class VoucherDetailComponent implements OnInit, OnDestroy {
-  public expiryLabelFn: (v: Voucher) => string;
-  public descriptionLabel: string = 'Description';
-  public tncLabel: string = 'Terms and Conditions';
+  public expiryLabelFn: (v: Voucher) => Observable<string>;
+  public descriptionLabel: Observable<string> = of('Description');
+  public tncLabel: Observable<string> = of('Terms and Conditions');
   public voucherId: number;
+  public isRedeemable: boolean = false;
 
   constructor(
     private router: Router,
@@ -37,6 +60,15 @@ export class VoucherDetailComponent implements OnInit, OnDestroy {
           this.voucherId = Number.parseInt(id, 10);
           return this.vouchersService.get(this.voucherId);
         }),
+        tap((voucher: Voucher) => {
+          this.isRedeemable = voucher.state === VoucherState.issued; // must be in issued state
+        }),
+        map((voucher: Voucher) => {
+          const tncWithOlPadding = voucher && voucher.reward && voucher.reward.termsAndConditions.replace(/(ol>)/, 'ol' +
+            ' style="padding-inline-start:' +
+            ' 1em;">');
+          return {...voucher, reward: {...voucher.reward, termsAndConditions: tncWithOlPadding }} as Voucher;
+        }),
         takeUntil(this.destroy$)
       );
 
@@ -44,16 +76,16 @@ export class VoucherDetailComponent implements OnInit, OnDestroy {
       .subscribe((text: string) => {
         this.expiryLabelFn = (v: Voucher) => {
           const dateStr = this.datePipe.transform(v.expiry, 'shortDate');
-          return text.replace('{{date}}', dateStr || '~');
+          return of(text.replace('{{date}}', dateStr || '~'));
         };
       });
     this.translate.get('DESCRIPTION')
       .subscribe((desc: string) => {
-        this.descriptionLabel = desc;
+        this.descriptionLabel = of(desc);
       });
     this.translate.get('Terms and Conditions')
       .subscribe((tnc: string) => {
-        this.tncLabel = tnc;
+        this.tncLabel = of(tnc);
       });
   }
 

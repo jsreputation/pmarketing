@@ -18,7 +18,7 @@ import {
   TokenStorage,
   IPopupConfig,
 } from '@perxtech/core';
-import { Observable, Subject, throwError } from 'rxjs';
+import { BehaviorSubject, EMPTY, iif, Observable, Subject, throwError } from 'rxjs';
 import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -35,6 +35,8 @@ export class QuizComponent implements OnInit, OnDestroy {
   public questionPointer: number = 0;
   public complete: boolean = false;
   public resetTimer$: Subject<void> = new Subject<void>();
+  public progress$: BehaviorSubject<number> = new BehaviorSubject(0);
+  public allowPicZoom$!: Observable<boolean>;
 
   private destroy$: Subject<void> = new Subject();
   @ViewChild('overflowContainer', { static: false })
@@ -75,7 +77,10 @@ export class QuizComponent implements OnInit, OnDestroy {
     // reuse the factory to resolve current language so that we make sure, we use the same logic
     this.initTranslate();
 
-    const lang = LocaleIdFactory(this.tokenStorage);
+    const lang = LocaleIdFactory(this.tokenStorage) || 'en';
+    this.allowPicZoom$ = this.route.data.pipe(
+      map((dataObj) => dataObj.allowPicZoom)
+    );
     this.data$ = this.route.paramMap.pipe(
       filter((params: ParamMap) => params.has('cid')),
       map((params: ParamMap) => params.get('cid')),
@@ -150,10 +155,6 @@ export class QuizComponent implements OnInit, OnDestroy {
     }
   }
 
-  public get progressBarValue(): number {
-    return ((this.questionPointer + 1) / this.totalLength) * 100 || 0;
-  }
-
   private questionChanged(): void {
     this.cd.detectChanges();
 
@@ -176,7 +177,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   public submit(): void {
     this.pushAnswer(this.questionPointer)
       .subscribe(
-        () => this.redirectUrlAndPopUp(),
+        (finishPayload: { rewardAcquired: boolean }) => this.redirectUrlAndPopUp(finishPayload),
         (err) => {
           console.log(err);
           this.notificationService.addSnack(this.submitErrorTxt);
@@ -201,6 +202,7 @@ export class QuizComponent implements OnInit, OnDestroy {
         );
       this.resetTimer();
       this.questionPointer++;
+      this.progress$.next(((this.questionPointer + 1) / this.totalLength) * 100 || 0);
       this.questionChanged();
     }
   }
@@ -212,6 +214,7 @@ export class QuizComponent implements OnInit, OnDestroy {
   public nextWithoutValidation(): void {
     const questionPointer = this.questionPointer;
     if (this.quiz.questions.length - 1 === questionPointer) {
+      this.complete = true;
       this.submit();
     } else {
       this.pushAnswer(questionPointer).subscribe(() => { });
@@ -221,7 +224,7 @@ export class QuizComponent implements OnInit, OnDestroy {
     }
   }
 
-  private pushAnswer(questionPointer: number): Observable<void> {
+  private pushAnswer(questionPointer: number): Observable<{ rewardAcquired: boolean }> {
     if (!this.moveId) {
       return throwError('Cannot push answer without move id');
     }
@@ -236,22 +239,29 @@ export class QuizComponent implements OnInit, OnDestroy {
       tap((res: IAnswerResult) => {
         this.points[questionPointer] = {
           questionId: answer.questionId,
-          question: this.quiz.questions[questionPointer].question,
+          question: this.quiz.questions[questionPointer].question.text,
           points: res.points,
           time
         };
       }),
+      switchMap(
+        () => iif(
+          () => this.complete,
+          this.quizService.postFinalQuizAnswer(this.moveId as number),
+          EMPTY
+        )
+      ),
       catchError(err => {
         // save the fact the broken submission for next page
         this.points[questionPointer] = {
           questionId: answer.questionId,
-          question: this.quiz.questions[questionPointer].question,
+          question: this.quiz.questions[questionPointer].question.text,
           points: undefined,
           time
         };
         return throwError(err);
       }),
-      map(() => (void 0))
+      // map(() => (void 0))
     );
   }
 
@@ -291,8 +301,9 @@ export class QuizComponent implements OnInit, OnDestroy {
     }
   }
 
-  private redirectUrlAndPopUp(): void {
-    const resultsStr = JSON.stringify({ points: Object.values(this.points), quiz: this.quiz });
+  private redirectUrlAndPopUp(payload?: { rewardAcquired: boolean }): void {
+    const resultsStr = JSON.stringify({ points: Object.values(this.points), quiz: this.quiz,
+      rewardAcquired: (payload ? payload.rewardAcquired : false) });
     this.router.navigate(['/quiz-results', { results: resultsStr }], { skipLocationChange: true });
   }
 

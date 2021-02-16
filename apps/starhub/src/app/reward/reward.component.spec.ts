@@ -7,7 +7,7 @@ import {
 } from '@angular/core/testing';
 
 import { RewardComponent } from './reward.component';
-import {MatIconModule, MatProgressSpinnerModule} from '@angular/material';
+import {MatIconModule, MatListModule, MatProgressSpinnerModule} from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
   ConfigService,
@@ -49,7 +49,8 @@ const rewardStub = {
   merchantId: 2,
   inventory: {
     rewardLimitPerUserBalance: 0
-  }
+  },
+  loyalty: []
 };
 
 const macaronFalseStub: IMacaron = {
@@ -98,7 +99,8 @@ describe('RewardComponent', () => {
         MatIconModule,
         UtilsModule,
         MatProgressSpinnerModule,
-        RouterTestingModule
+        RouterTestingModule,
+        MatListModule
       ],
       providers: [
         { provide: RewardsService, useValue: rewardsServiceStub },
@@ -234,6 +236,7 @@ describe('RewardComponent', () => {
           redemptionType: undefined,
           categoryTags: [],
           inventory: undefined,
+          loyalty: []
         },
         state: VoucherState.issued,
         code: 'GFY2019',

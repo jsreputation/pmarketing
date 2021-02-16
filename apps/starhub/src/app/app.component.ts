@@ -17,7 +17,9 @@ import {
   RewardPopupComponent,
   SettingsService,
   TokenStorage,
-  IFlags
+  IFlags,
+  AuthenticationService,
+  IConfig
 } from '@perxtech/core';
 import {
   MatDialog,
@@ -29,6 +31,7 @@ import {
   first,
   map,
   switchMap,
+  tap,
 } from 'rxjs/operators';
 import {
   AnalyticsService,
@@ -37,7 +40,8 @@ import {
 } from './analytics.service';
 import {
   EMPTY,
-  timer
+  timer,
+  throwError
 } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -85,7 +89,8 @@ export class AppComponent implements OnInit {
     private loyaltyService: LoyaltyService,
     private profileService: ProfileService,
     private configService: ConfigService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private authenticationService: AuthenticationService,
   ) {
     this.data.pageName = '';
     this.data.channel = 'msa';
@@ -106,6 +111,12 @@ export class AppComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.authenticationService.isAuthorized().subscribe((isAuth: boolean) => {
+      if (!isAuth) {
+        this.loading = false;
+        this.router.navigateByUrl('/error', { state : {errorType: 'unauthorized'}});
+      }
+    });
     this.notificationService.$popup
       .subscribe((data: IPopupConfig) =>
         this.dialog.open(PopupComponent, {
@@ -116,7 +127,7 @@ export class AppComponent implements OnInit {
       .subscribe(
         (msg: string) => {
           if (msg === 'LOGIN_SESSION_EXPIRED') {
-            this.router.navigate(['/login']);
+            this.router.navigate(['/error']);
             msg = 'Login Session Expired';
           }
           this.snackBar.open(msg, 'x', { duration: 2000 });
@@ -151,11 +162,18 @@ export class AppComponent implements OnInit {
 
     // init holding
     this.configService.readAppConfig().pipe(
+      tap((config: IConfig<void>) => {
+        if (config.appVersion) {
+          (window as any).PERX_APP_VERSION = config.appVersion;
+        }
+      }),
       switchMap(() => this.settingsService.getRemoteFlagsSettings()),
       switchMap((flags: IFlags) => timer(0, flags && flags.gatekeeperPollingInterval || 2000)
         .pipe(
           switchMap(() => this.settingsService.isGatekeeperOpen().pipe(
-            catchError(() => {
+            catchError((err: string) => {
+              throwError(err);
+              console.error(err);
               this.holdingGateOpened = false;
               return EMPTY;
             })
@@ -184,7 +202,7 @@ export class AppComponent implements OnInit {
   }
 
   protected checkGame(campaign: ICampaign): void {
-    this.gameService.getGamesFromCampaign(campaign.id)
+    this.gameService.getGamesFromCampaign(campaign)
       .pipe(
         filter(games => games.length > 0),
         map(games => games[0])
@@ -205,7 +223,8 @@ export class AppComponent implements OnInit {
           this.putIdInStorage(campaign.id);
           this.dialog.open(RewardPopupComponent, { data });
         },
-        () => { /* nothing to do here, just fail silently */
+        () => {
+          // nothing to do here, just fail silently
         }
       );
   }

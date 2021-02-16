@@ -30,6 +30,7 @@ import {
   PageProperties,
   BarSelectedItem,
 } from '../page-properties';
+import { IMerckConfig } from '../model/IMerck.model';
 
 @Component({
   selector: 'mc-login',
@@ -37,6 +38,8 @@ import {
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, PageAppearence {
+  private serverErrorTxt: string;
+  private invalidCredentials: string;
 
   public selectedCountry: string = '852';
 
@@ -45,6 +48,8 @@ export class LoginComponent implements OnInit, PageAppearence {
   public currentSelectedLanguage: string = 'en';
 
   public preAuth: boolean;
+
+  public showConditions: boolean;
 
   public get mobileNo(): AbstractControl | null {
     return this.loginForm.get('mobileNo');
@@ -70,6 +75,7 @@ export class LoginComponent implements OnInit, PageAppearence {
     private cd: ChangeDetectorRef
   ) {
     this.initForm();
+    this.initTranslate();
   }
 
   private initForm(): void {
@@ -82,9 +88,10 @@ export class LoginComponent implements OnInit, PageAppearence {
 
   public ngOnInit(): void {
     this.currentSelectedLanguage = this.translateService.currentLang || this.translateService.defaultLang;
-    this.configService.readAppConfig().subscribe(
-      (config: IConfig<void>) => {
+    this.configService.readAppConfig<IMerckConfig>().subscribe(
+      (config: IConfig<IMerckConfig>) => {
         this.preAuth = config.preAuth as boolean;
+        this.showConditions = config.custom ? config.custom.showConditions as boolean : false;
       }
     );
 
@@ -133,10 +140,11 @@ export class LoginComponent implements OnInit, PageAppearence {
       },
       (err) => {
         if (err instanceof HttpErrorResponse) {
+          console.log(err);
           if (err.status === 0) {
-            this.notificationService.addSnack('We could not reach the server');
-          } else if (err.status === 401) {
-            this.notificationService.addSnack('Invalid credentials');
+            this.notificationService.addSnack(this.serverErrorTxt);
+          } else if (err.status === 401 || err.status === 403) {
+            this.notificationService.addSnack(this.invalidCredentials);
           }
         }
       }
@@ -146,7 +154,7 @@ export class LoginComponent implements OnInit, PageAppearence {
   public navigateToNextPageAfterLogin(): void {
     this.profileService.getCustomProperties().subscribe(
       (res) => {
-        if (res.hasOwnProperty('questionaire_answered') && res.questionaire_answered) {
+        if ((res.hasOwnProperty('questionaire_answered') && res.questionaire_answered) || !this.showConditions) {
           this.router.navigateByUrl('/home');
         } else {
           this.router.navigateByUrl('/user-info');
@@ -167,5 +175,10 @@ export class LoginComponent implements OnInit, PageAppearence {
   public switchLanguage(): void {
     this.translateService.use(this.currentSelectedLanguage);
     this.cd.detectChanges();
+  }
+
+  private initTranslate(): void {
+    this.translateService.get('LOGIN_PAGE.SERVER_NOT_AVAILABLE').subscribe(text => this.serverErrorTxt = text);
+    this.translateService.get('LOGIN_PAGE.INVALID_CREDENTIALS').subscribe(text => this.invalidCredentials = text);
   }
 }

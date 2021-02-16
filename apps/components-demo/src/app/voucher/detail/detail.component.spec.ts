@@ -28,6 +28,7 @@ describe('DetailComponent', () => {
       howToRedeem: '',
       categoryTags: [],
       inventory: null,
+      loyalty: []
     },
     state: VoucherState.expired,
     redemptionType: RedemptionType.none,

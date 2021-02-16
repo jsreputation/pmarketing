@@ -9,8 +9,9 @@
       <img class="puzzle-img" src="{{game.imgUrl || game.backgroundImg}}" alt="Game image">
     </div>
     <mat-card-content class="card-content">
-      <p class="main-reward-title">{{game.texts.title}}</p>
-      <p class="reward-subtitle">{{game.texts.subTitle}}</p>
+      <p class="main-reward-title ellipsis-1-line">{{game.campaignName | striphtml}}</p>
+<!--  todo: apply stripHtml and safeHtml once campaign landing pages are implemented on dashboard and enabled on BC -->
+      <p class="reward-subtitle" [innerHTML]="game.campaignDescription"></p>
     </mat-card-content>
   </mat-card>
   <div class="flex-for-button">
@@ -18,7 +19,8 @@
       *ngIf="!(games.length <= defaultNbGames)"
       mat-flat-button
       class="see-button"
-      (click)="showAllGames = !showAllGames">
+      (click)="showAllGames = !showAllGames"
+      [ngStyle]="buttonStyle">
       {{ (showAllGames ? "HOME.SEE_LESS" : "HOME.SEE_MORE" ) | translate}}
     </button>
   </div>

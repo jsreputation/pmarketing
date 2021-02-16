@@ -16,8 +16,8 @@ export class WalletHistoryComponent implements OnInit {
   public redeemedVouchers$: Observable<Voucher[]>;
   private currentPageIssued: number = 1;
   private currentPageRedeemed: number = 1;
-  private complitedIssued: boolean = false;
-  private complitedRedeemed: boolean = false;
+  private completedIssued: boolean = false;
+  private completedRedeemed: boolean = false;
   private currentTabIndex: number = 0;
   public mapping: StatusLabelMapping = {
     issued: 'Approved',
@@ -44,7 +44,8 @@ export class WalletHistoryComponent implements OnInit {
   }
 
   public onScroll(): void {
-    if (this.complitedIssued && this.currentTabIndex === 0 || this.complitedRedeemed && this.currentTabIndex === 1) {
+    // check tab and completed status
+    if ((this.completedIssued && this.currentTabIndex === 0) || (this.completedRedeemed && this.currentTabIndex === 1)) {
       return;
     }
     let updatedVoucher$ = this.issuedVoucher$;
@@ -56,19 +57,19 @@ export class WalletHistoryComponent implements OnInit {
     } else {
       ++this.currentPageIssued;
       currentPage = this.currentPageIssued;
-      updatedVoucher$ = this.issuedVoucher$;
     }
 
     forkJoin(
       updatedVoucher$,
-      this.vouchersService.getFromPage(currentPage, { type: 'active' })
+      this.vouchersService.getFromPage(currentPage, { type: this.currentTabIndex ? 'redeemed' : 'active' })
     )
       .subscribe(val => {
+        // assume we reached end of records if 0 or less than 10 records are returned
         if (!val[1].length && val[1].length < REQ_PAGE_SIZE) {
           if (this.currentTabIndex === 1) {
-            this.complitedRedeemed = true;
+            this.completedRedeemed = true;
           } else {
-            this.complitedIssued = true;
+            this.completedIssued = true;
           }
         }
         if (this.currentTabIndex === 1) {

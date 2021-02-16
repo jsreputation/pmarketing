@@ -7,7 +7,7 @@ import {
   MatButtonModule,
   MatDatepickerModule,
   MatSelectModule,
-  MatNativeDateModule
+  MatNativeDateModule, MatProgressBarModule, MatStepperModule
 } from '@angular/material';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
@@ -23,10 +23,15 @@ import { PhoneComponent } from '../question/phone/phone.component';
 import { PasswordComponent } from '../question/password/password.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormlyModule } from '@ngx-formly/core';
+import { FormlyFieldStepperComponent } from '../formly-stepper/formly-stepper';
+import { SurveyService } from '@perxtech/core';
+import { PinchZoomModule } from 'ngx-pinch-zoom';
 
 describe('SurveyComponent', () => {
   let component: SurveyComponent;
   let fixture: ComponentFixture<SurveyComponent>;
+  const surveyServiceStub: Partial<SurveyService> = {};
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -40,7 +45,8 @@ describe('SurveyComponent', () => {
         LongTextComponent,
         DateComponent,
         PasswordComponent,
-        PhoneComponent
+        PhoneComponent,
+        FormlyFieldStepperComponent
       ],
       imports: [
         MatFormFieldModule,
@@ -53,7 +59,21 @@ describe('SurveyComponent', () => {
         MatCheckboxModule,
         MatRadioModule,
         FormsModule,
+        MatProgressBarModule,
+        MatStepperModule,
         ReactiveFormsModule,
+        PinchZoomModule,
+        FormlyModule.forRoot({
+          types: [
+            {
+              name: 'stepper',
+              component: FormlyFieldStepperComponent
+            }
+          ]
+        })
+      ],
+      providers: [
+        { provide: SurveyService, useValue: surveyServiceStub }
       ]
     })
       .compileComponents();

@@ -70,24 +70,13 @@ describe('SignupComponent', () => {
   });
 
   describe('onSubmit', () => {
-
-    it('should fail password matching and call addSnack', () => {
-      component.signupForm.controls.password.setValue(1234);
-      component.signupForm.controls.confirmPassword.setValue(123);
-      const notificationService: NotificationService = fixture.debugElement.injector.get<NotificationService>
-      (NotificationService as Type<NotificationService>);
-      const notificationServiceSpy = spyOn(notificationService, 'addSnack');
-      component.onSubmit();
-      expect(notificationServiceSpy).toHaveBeenCalledWith('Passwords do not match.');
-    });
-
     it('should call addSnack if terms and conditions not accepted', () => {
       component.signupForm.controls.accept_terms.setValue(false);
       const notificationService: NotificationService = fixture.debugElement.injector.get<NotificationService>
       (NotificationService as Type<NotificationService>);
       const notificationServiceSpy = spyOn(notificationService, 'addSnack');
       component.onSubmit();
-      expect(notificationServiceSpy).toHaveBeenCalledWith('Please accept terms & conditions.');
+      expect(notificationServiceSpy).toHaveBeenCalledWith('SIGN_UP_PAGE.ACCEPT_TNC');
     });
 
     it('should call addSnack if terms and conditions is accepted and receive marketing communications NOT accepted', () => {
@@ -97,7 +86,7 @@ describe('SignupComponent', () => {
       (NotificationService as Type<NotificationService>);
       const notificationServiceSpy = spyOn(notificationService, 'addSnack');
       component.onSubmit();
-      expect(notificationServiceSpy).toHaveBeenCalledWith('Please agree to receive marketing communications from Merck Group hk.');
+      expect(notificationServiceSpy).toHaveBeenCalledWith('SIGN_UP_PAGE.ACCEPT_MARKETING');
     });
 
     it('should able to signup', fakeAsync(() => {
@@ -131,7 +120,14 @@ describe('SignupComponent', () => {
       component.onSubmit();
       tick();
       expect(authenticationSpy).toHaveBeenCalled();
-      expect(routerSpy).toHaveBeenCalledWith(['enter-pin/register'], { state: { mobileNo: '8521234' } });
+      expect(routerSpy).toHaveBeenCalledWith(['enter-pin/register'],
+        { state:
+          {
+            mobileNo: '8521234',
+            countryCode: '852'
+          }
+        }
+      );
     }));
 
   });

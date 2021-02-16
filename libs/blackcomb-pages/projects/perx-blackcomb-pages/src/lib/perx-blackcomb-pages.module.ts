@@ -23,7 +23,8 @@ import {
   MatDialogModule,
   MatMenuModule,
   MatInputModule,
-  MatTableModule
+  MatTableModule,
+  MatAutocompleteModule,
 } from '@angular/material';
 import { GameModule } from './game/game.module';
 import { HistoryModule } from './history/history.module';
@@ -38,11 +39,12 @@ import {
   QuizModule,
   SecondsToStringPipe,
   RankModule,
-  LocationModule
+  LocationModule,
+  CampaignServiceModule,
+  ProgressBarModule,
 } from '@perxtech/core';
 
 import { RewardComponent } from './reward/reward.component';
-import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 import { LoadingComponent } from './loading/loading.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { QRCodeModule } from 'angularx-qrcode';
@@ -73,13 +75,22 @@ import { QuizResultsModule } from './quiz-results/quiz-results.module';
 import { LuckyDrawDetailsComponent } from './lucky-draw-details/lucky-draw-details.component';
 import { CampaignLandingPageModule } from './campaign-landing-page/campaign-landing-page.module';
 import { LandingPageModule } from './landing-page/landing-page.module';
-import { ReferralComponent } from './referral/referral.component';
 import { LeaderboardPageComponent } from './leaderboard-page/leaderboard-page.component';
 import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
 import { SignIn2Module } from './sign-in-2/sign-in-2.module';
 import { ProfileModule as BCPProfileModule } from './profile/profile.module';
 import { FindLocationModule } from './find-location/find-location.module';
 import { MatSelectInfiniteScrollModule } from 'ng-mat-select-infinite-scroll';
+import { NearmeComponent } from './nearme/nearme.component';
+import { RewardsPageComponent } from './rewards-page/rewards-page.component';
+import { FavoriteRewardsComponent } from './favorite-rewards/favorite-rewards.component';
+import { ProgressCampaignHomeModule } from './progress-campaign-home/progress-campaign-home.module';
+import { PageComponentsModule } from './page-components/page-components.module';
+import { ProgressCampaignModule } from './progress-campaign/progress-campaign.module';
+import { RewardVoucherDetailModule } from './reward-voucher-detail/reward-voucher-detail.module';
+import { RazAdaptedCampaignsCollectionModule } from './raz-adapted-campaigns-collection/raz-adapted-campaigns-collection.module';
+import { FilterDialogComponent } from './nearme/filter-dialog/filter-dialog.component';
+import { LargeVouchersModule } from './large-vouchers/large-vouchers.module';
 
 const comps: any[] = [
   RewardComponent,
@@ -90,8 +101,11 @@ const comps: any[] = [
   ChangePasswordComponent,
   RewardsBookingComponent,
   LuckyDrawDetailsComponent,
-  ReferralComponent,
-  LeaderboardPageComponent
+  LeaderboardPageComponent,
+  NearmeComponent,
+  RewardsPageComponent,
+  FavoriteRewardsComponent,
+  FilterDialogComponent,
 ];
 
 @NgModule({
@@ -114,7 +128,6 @@ const comps: any[] = [
     MatRippleModule,
     MatGridListModule,
     MatTabsModule,
-    NgxMultiLineEllipsisModule,
     MatProgressSpinnerModule,
     FormsModule,
     ReactiveFormsModule,
@@ -161,17 +174,20 @@ const comps: any[] = [
     CampaignLandingPageModule,
     LocationModule,
     FindLocationModule,
-    MatSelectInfiniteScrollModule
+    MatSelectInfiniteScrollModule,
+    MatAutocompleteModule,
+    CampaignServiceModule.forRoot(),
+    ProgressCampaignHomeModule,
+    PageComponentsModule,
+    ProgressCampaignModule,
+    RewardVoucherDetailModule,
+    ProgressBarModule,
+    RazAdaptedCampaignsCollectionModule,
+    LargeVouchersModule,
   ],
-  exports: [
-    ...comps,
-  ],
-  declarations: [
-    ...comps
-  ],
-  providers: [
-    SecondsToStringPipe
-  ]
+  entryComponents: [FilterDialogComponent],
+  exports: [...comps],
+  declarations: [...comps],
+  providers: [SecondsToStringPipe],
 })
-export class PerxBlackcombPagesModule {
-}
+export class PerxBlackcombPagesModule {}

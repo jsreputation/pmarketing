@@ -1,17 +1,11 @@
 {
   "preset": "jest-preset-angular",
-  "roots": [
-    "src"
-  ],
-  "transformIgnorePatterns": [
-    "node_modules/(?!ngx-barcode)"
-  ],
+  "roots": ["src"],
+  "transformIgnorePatterns": ["node_modules/(?!ngx-barcode)"],
   "transform": {
     "^.+\\.(ts|js|html)$": "ts-jest"
   },
-  "setupFilesAfterEnv": [
-    "<rootDir>/src/setup-jest.ts"
-  ],
+  "setupFilesAfterEnv": ["<rootDir>/src/setup-jest.ts"],
   "moduleNameMapper": {},
   "resolver": "@nrwl/jest/plugins/resolver",
   "globals": {

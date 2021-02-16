@@ -3,7 +3,8 @@ import {
   NgModule,
   APP_INITIALIZER,
   Injectable,
-  ErrorHandler
+  ErrorHandler,
+  LOCALE_ID
 } from '@angular/core';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -32,18 +33,26 @@ import {
   GameServiceModule,
   LoyaltyModule,
   TransactionsServiceModule as PerxTransactionsServiceModule,
+  LanguageInterceptor,
 } from '@perxtech/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 
 // import { ServiceWorkerModule } from '@angular/service-worker';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import {
+  HttpClientModule,
+  HttpClient,
+  HTTP_INTERCEPTORS,
+  HttpBackend
+} from '@angular/common/http';
 import { MatDialogModule, MatSnackBarModule } from '@angular/material';
 import { tap, switchMap } from 'rxjs/operators';
 import { MatButtonModule } from '@angular/material/button';
 import { SignupModule } from './signup/signup.module';
 import * as Sentry from '@sentry/browser';
+import { registerLocaleData } from '@angular/common';
+import localeENMY from '@angular/common/locales/en-MY';
 
 Sentry.init({
   dsn: 'https://813ab4ad94c94d5eb4370961b9e31e81@o225970.ingest.sentry.io/5276501'
@@ -72,6 +81,7 @@ export const setLanguage = (
       switchMap(() => themesService.getThemeSetting())
     ).toPromise().then(() => resolve());
   });
+registerLocaleData(localeENMY);
 
 @NgModule({
   declarations: [AppComponent],
@@ -106,7 +116,7 @@ export const setLanguage = (
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        deps: [HttpClient, ConfigService, TokenStorage],
+        deps: [HttpClient, HttpBackend, ConfigService, TokenStorage],
         useClass: LanguageService
       }
     }),
@@ -114,12 +124,14 @@ export const setLanguage = (
   ],
   bootstrap: [AppComponent],
   providers: [
+    { provide: LOCALE_ID, useValue: 'en-MY' },
     {
       provide: APP_INITIALIZER,
       useFactory: setLanguage,
       deps: [TranslateService, ConfigService, AuthenticationService, ThemesService],
       multi: true
-    }
+    },
+    { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true },
   ],
 })
 export class AppModule { }

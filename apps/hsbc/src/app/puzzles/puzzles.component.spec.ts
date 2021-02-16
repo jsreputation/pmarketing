@@ -15,6 +15,7 @@ import { of } from 'rxjs';
 import { NavigateToolbarComponent } from '../navigate-toolbar/navigate-toolbar.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 describe('PuzzlesComponent', () => {
   let component: PuzzlesComponent;
@@ -33,6 +34,10 @@ describe('PuzzlesComponent', () => {
         return '1';
       }
     }),
+  };
+
+  const translateServiceStub: Partial<TranslateService> = {
+    get: () => of()
   };
 
   beforeEach(async(() => {
@@ -55,6 +60,7 @@ describe('PuzzlesComponent', () => {
         { provide: StampService, useValue: stampsServiceStub },
         { provide: ConfigService, useValue: configServiceStub },
         { provide: ActivatedRoute, useValue: activatedRouteStub },
+        { provide: TranslateService, useValue: translateServiceStub }
       ]
     })
       .compileComponents();

@@ -35,6 +35,7 @@ describe('V4VouchersService', () => {
         validFrom: new Date(),
         validTo: new Date(),
         sellingFrom: new Date(),
+        favorite: false,
         rewardThumbnail: '',
         rewardBanner: '',
         merchantImg: '',
@@ -45,6 +46,7 @@ describe('V4VouchersService', () => {
         termsAndConditions: '',
         howToRedeem: '',
         categoryTags: [],
+        loyalty: []
       },
       state: VoucherState.issued,
       redemptionType: RedemptionType.none,
@@ -65,6 +67,19 @@ describe('V4VouchersService', () => {
     given_to: null,
     given_date: null,
     issued_date: '2019-06-27T03:47:53.315Z',
+    merchant_location: {
+      address1: '',
+      address2: '',
+      city: 'Wilayah Persekutuan',
+      country: 'Malaysia',
+      id: 2,
+      latitude: null,
+      loc: null,
+      longitude: null,
+      name: 'Low Yat Plaza',
+      phone_number: '60321446878',
+      postal_code: '55100',
+    },
     redemption_date: null,
     reservation_expires_at: null,
     redemption_type: {
@@ -76,7 +91,7 @@ describe('V4VouchersService', () => {
       id: 5,
       name: 'General Indoor Studio package @ $99',
       description: 'Please visit',
-      favourite: false,
+      is_favorite: false,
       merchant_id: 5,
       merchant_name: 'Lumiere Photography',
       merchant_website: 'https://www.lumierephotographysg.com',
@@ -99,11 +114,14 @@ describe('V4VouchersService', () => {
         reward_total_balance: null,
         reward_limit_per_user: null,
         reward_limit_per_user_balance: null,
+        reward_limit_per_user_per_period: null,
+        reward_limit_per_user_per_period_balance: null,
       },
       reward_price: [],
       terms_and_conditions: 'Up to 5 pax',
       tags: [],
-      category_tags: []
+      category_tags: [],
+      loyalty: []
     },
     custom_fields: {}
   };

@@ -11,7 +11,10 @@ import {
   ILoyalty,
   ThemesService,
   IReward,
-  UtilsModule
+  UtilsModule,
+  TokenStorage,
+  SettingsService,
+  MacaronService
 } from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
@@ -26,6 +29,7 @@ const mockReward: IReward = {
   description: 'string;',
   subtitle: 'string;',
   validFrom: new Date(),
+  favorite: false,
   validTo: new Date(),
   rewardBanner: 'string;',
   merchantImg: 'string;',
@@ -33,7 +37,8 @@ const mockReward: IReward = {
   howToRedeem: 'string;',
   displayProperties: {
     CTAButtonTxt: 'btnTxt'
-  }
+  },
+  loyalty: []
 };
 
 describe('RewardComponent', () => {
@@ -53,7 +58,8 @@ describe('RewardComponent', () => {
   };
 
   const rewardsServiceStub: Partial<RewardsService> = {
-    getReward: () => of(mockReward)
+    getReward: () => of(mockReward),
+    getAllFavoriteRewards: () => of([])
   };
 
   const loyaltyServiceStub: Partial<LoyaltyService> = {
@@ -63,6 +69,19 @@ describe('RewardComponent', () => {
 
   const themeServiceStub: Partial<ThemesService> = {
     getThemeSetting: () => of()
+  };
+
+  const tokenStorageStub = {
+    getAppInfoProperty: () => null,
+    setAppInfoProperty: () => { }
+  };
+
+  const settingsServiceStub: Partial<SettingsService> = {
+    getRemoteFlagsSettings: () => of()
+  };
+
+  const macaronServiceStub: Partial<MacaronService> = {
+    getMacaron: () => null
   };
 
   beforeEach(async(() => {
@@ -85,7 +104,10 @@ describe('RewardComponent', () => {
         { provide: RewardsService, useValue: rewardsServiceStub },
         { provide: ConfigService, useValue: configServiceStub },
         { provide: LoyaltyService, useValue: loyaltyServiceStub },
-        { provide: ThemesService, useValue: themeServiceStub }
+        { provide: ThemesService, useValue: themeServiceStub },
+        { provide: TokenStorage, useValue: tokenStorageStub },
+        { provide: SettingsService, useValue: settingsServiceStub },
+        { provide: MacaronService, useValue: macaronServiceStub },
       ]
     })
       .compileComponents();

@@ -56,7 +56,8 @@ export abstract class AuthenticationService implements AuthService {
    * EXTRA AUTH FUNCTIONS
    */
 
-  public abstract login(user: string, pass: string, mechId?: string, campaignId?: string, scope?: string): Observable<void>;
+  public abstract login(user: string, pass: string, mechId?: string,
+                        campaignId?: string, scope?: string, pokeCheck?: boolean): Observable<void>;
 
   public abstract autoLogin(): Observable<void>;
 

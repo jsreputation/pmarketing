@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { RewardsService, RewardsModule } from '@perxtech/core';
+import { RewardsService, RewardsModule, ThemesService, TokenStorage } from '@perxtech/core';
 import { RewardDetailComponent } from './reward-detail.component';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
 import { of } from 'rxjs';
@@ -12,6 +12,10 @@ describe('RewardDetailComponent', () => {
   let fixture: ComponentFixture<RewardDetailComponent>;
   const routerStub = {
     navigateByUrl: () => { }
+  };
+  const tokenStorageStub = {
+    getAppInfoProperty: () => null,
+    setAppInfoProperty: () => { }
   };
 
   beforeEach(async(() => {
@@ -30,7 +34,9 @@ describe('RewardDetailComponent', () => {
             paramMap: of(convertToParamMap({ rewardId: 1 }))
           }
         },
-        { provide: Router, useValue: routerStub }
+        { provide: Router, useValue: routerStub },
+        { provide: ThemesService, useValue: { } },
+        { provide: TokenStorage, useValue: tokenStorageStub }
       ]
     })
       .compileComponents();

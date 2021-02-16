@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterTestingModule } from '@angular/router/testing';
-import { QuizModule, SecondsToStringPipe } from '@perxtech/core';
+import { QuizModule, SecondsToStringPipe, TokenStorage, UtilsModule } from '@perxtech/core';
 import { QuizResultsComponent } from './quiz-results.component';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -18,9 +18,13 @@ describe('QuizResultsComponent', () => {
         MatCardModule,
         MatToolbarModule,
         RouterTestingModule,
+        UtilsModule,
         TranslateModule.forRoot()
       ],
-      providers: [SecondsToStringPipe]
+      providers: [
+        { provide: TokenStorage, useValue: {} },
+        SecondsToStringPipe
+      ]
     })
       .compileComponents();
   }));

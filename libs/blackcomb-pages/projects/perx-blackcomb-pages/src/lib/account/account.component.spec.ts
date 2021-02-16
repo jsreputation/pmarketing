@@ -7,6 +7,7 @@ import {
 import { Type } from '@angular/core';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import {
   Observable,
@@ -33,7 +34,7 @@ import { AccountComponent } from './account.component';
 import { profile } from '../mock/profile.mock';
 import { pagesObject } from '../mock/pages.mock';
 
-import { MatCardModule, MatListModule } from '@angular/material';
+import { MatCardModule, MatIconModule, MatListModule } from '@angular/material';
 
 describe('AccountComponent', () => {
   const notificationServiceStub: Partial<NotificationService> = {};
@@ -57,6 +58,7 @@ describe('AccountComponent', () => {
   };
   const settingsServiceStub: Partial<SettingsService> = {
     getAccountSettings: (): Observable<PagesObject> => of(pagesObject),
+    getRemoteFlagsSettings: () => of()
   };
   const authenticationServiceStub: Partial<AuthenticationService> = {
     logout: () => { }
@@ -81,6 +83,8 @@ describe('AccountComponent', () => {
         ProfileModule,
         MatCardModule,
         MatListModule,
+        MatIconModule,
+        NoopAnimationsModule,
         TranslateModule.forRoot(),
         ConfigModule.forRoot({ ...environment })
       ],

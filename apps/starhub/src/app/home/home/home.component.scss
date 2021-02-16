@@ -40,6 +40,23 @@ mat-toolbar {
         font-weight: bold;
       }
 
+      .membership-link{
+        cursor: pointer;
+
+        .subtitle {
+          font-size: 1.2rem;
+          color: #73c20e;
+          display: flex;
+          flex-direction: row;
+          align-content: center;
+
+          span.accessory-icon {
+            display: flex;
+            align-self: center;
+          }
+        }
+      }
+
       .subtitle {
         font-size: 1.2rem;
         color: #73c20e;

@@ -19,31 +19,15 @@ import { WInformationCollectionSettingType } from '@perxtech/whistler';
 import { of } from 'rxjs';
 import { SurveyComponent } from './survey.component';
 
-interface IAnswer {
-  questionId: string;
-  content: any;
-}
-
 describe('SurveyComponent', () => {
   let component: SurveyComponent;
   let fixture: ComponentFixture<SurveyComponent>;
   const iCampaignServiceStub: Partial<ICampaignService> = {};
   const survey: ISurvey = {
-    id: '1',
-    title: 'Survey Test',
-    subTitle: 'Test',
+    id: 1,
+    title: {text: 'Survey Test'},
+    subTitle: {text: 'Test'},
     results: {},
-    questions: [
-      {
-        id: '1',
-        question: 'Password',
-        required: false,
-        payload: {
-          type: SurveyQuestionType.password,
-          // test: 'test'
-        }
-      }
-    ],
     displayProperties: {
       informationCollectionSetting: WInformationCollectionSettingType.signup_required,
       noRewardsPopUp: {
@@ -181,29 +165,6 @@ describe('SurveyComponent', () => {
       expect(component.survey.displayProperties).toBe(undefined);
     }));
 
-    it('should set totalLength', () => {
-      component.setTotalLength(1);
-      expect(component.totalLength).toBe(1);
-    });
-
-    it('should set currentPointer', () => {
-      component.setCurrentPointer(1);
-      expect(component.currentPointer).toBe(1);
-    });
-
-    it('should updateSurveyStatus', () => {
-      const answers: IAnswer[] = [
-        {
-          questionId: '1',
-          content: 'test'
-        }
-      ];
-      component.updateSurveyStatus(answers);
-      expect(component.answers.length).toBe(1);
-      expect(component.answers[0].questionId).toBe('1');
-      expect(component.answers[0].content).toBe('test');
-    });
-
     describe('onSubmit', () => {
       it('should navigate to signup if informationCollectionSetting is signup_required', fakeAsync(() => {
         component.survey = survey;
@@ -229,12 +190,14 @@ describe('SurveyComponent', () => {
           engagementType: 'survey',
           surveyId: 1,
           collectInfo: true,
-          campaignId: 1,
-          answers: []
+          campaignId: 1
         };
 
         component.ngOnInit();
-        component.onSubmit();
+        component.onSubmit({
+          questionId: 'test',
+          content: 'msg'
+        });
         tick();
         expect(routerSpy).toHaveBeenCalledWith(['/signup'], { state });
       }));
@@ -271,11 +234,13 @@ describe('SurveyComponent', () => {
           surveyId: 1,
           collectInfo: true,
           campaignId: 1,
-          answers: []
         };
 
         component.ngOnInit();
-        component.onSubmit();
+        component.onSubmit({
+          questionId: 'test',
+          content: 'msg'
+        });
         tick();
         expect(routerSpy).toHaveBeenCalledWith(['/pi'], { state });
       }));

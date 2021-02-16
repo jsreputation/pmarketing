@@ -5,9 +5,11 @@ import { ConfigService, PuzzlesModule, StampService, UtilsModule, ICampaignServi
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 const stampServiceStub: Partial<StampService> = {
   getCards: () => of(),
+  getCurrentCard: () => of()
 };
 const campaignServiceStub: Partial<ICampaignService> = {
   getCampaign: () => of(),
@@ -39,6 +41,7 @@ describe('CampaignStampsComponent', () => {
         { provide: StampService, useValue: stampServiceStub },
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: ConfigService, useValue: configServiceStub },
+        { provide: TranslateService, useValue: { get: () => of() }}
       ]
     })
       .compileComponents();

@@ -18,6 +18,7 @@ import {
   iif,
   Subject,
   throwError,
+  EMPTY
 } from 'rxjs';
 
 import {
@@ -91,12 +92,27 @@ export class LoadingComponent implements OnInit, OnDestroy {
 
       getPI$.pipe(
         switchMap(
-          queryParams => iif(() => !!queryParams.pi, PIHandler$, noPIHandler$)
+          queryParams => {
+            if (queryParams.token) {
+              this.authService.saveUserAccessToken(queryParams.token);
+            }
+            if (!this.authService.getUserAccessToken() && !queryParams.pi) {
+              this.router.navigate(['error']);
+              return EMPTY;
+            }
+            return iif(() => !!queryParams.pi, PIHandler$, noPIHandler$);
+          }
         ),
         takeUntil(this.destroy$)
       ).subscribe(
         () => this.getCampaignData(),
-        () => this.router.navigate(['/login'])
+        (err) => {
+          if (err.status === 401) {
+            this.router.navigate(['error']);
+          } else {
+            this.router.navigate([this.appConfig.homeAsProgressPage ? '/loading' : 'login']);
+          }
+        }
       );
     } else {
       this.authService.getAccessToken().pipe(
@@ -105,7 +121,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
       )
         .subscribe(
           () => this.getCampaignData(),
-          () => this.router.navigate(['/login'])
+          () => this.router.navigate([this.appConfig.homeAsProgressPage ? '/loading' : 'login'])
         );
     }
   }
@@ -158,7 +174,14 @@ export class LoadingComponent implements OnInit, OnDestroy {
 
   private redirectAfterLogin(): void {
     if (this.campaignData && !this.isCampaignEnded) {
-      this.redirectToEngagementPage(this.campaignData.type);
+      let path = this.campaignData.type.toString();
+      if (this.campaignData.subType === 'quiz') {
+        path = 'quiz';
+      }
+      if (this.campaignData.subType === 'survey') {
+        path = 'survey';
+      }
+      this.redirectToEngagementPage(path);
     } else if (this.campaignId && this.isCampaignEnded) {
       this.initCampaignEndedPopup();
     } else {
@@ -167,8 +190,16 @@ export class LoadingComponent implements OnInit, OnDestroy {
   }
 
   private redirectToEngagementPage(type: string): void {
-    this.router.navigateByUrl(
-      this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : `${type}/${this.campaignId}`
-    );
+    if (type === 'quiz' || type === 'survey') {
+      this.router.navigateByUrl(
+        this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : `campaign-welcome/${this.campaignId}`
+      );
+    } else {
+      this.router.navigateByUrl(
+        this.authService.getInterruptedUrl() ? this.authService.getInterruptedUrl() : `type/${this.campaignId}` // placehold might be
+        // updated
+      );
+    }
+
   }
 }

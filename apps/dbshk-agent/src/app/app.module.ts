@@ -13,10 +13,13 @@ import {
 import {
   HttpClientModule,
   HttpClient,
+  HTTP_INTERCEPTORS,
+  HttpBackend,
 } from '@angular/common/http';
 import {
   MatDialogModule,
-  MatSnackBarModule,
+  MatInputModule,
+  MatSnackBarModule
 } from '@angular/material';
 import { MatButtonModule } from '@angular/material/button';
 // import { ServiceWorkerModule } from '@angular/service-worker';
@@ -66,7 +69,9 @@ import {
   AuthenticationService,
   ThemesService,
   IConfig,
-  LoyaltyModule
+  LoyaltyModule,
+  LanguageInterceptor,
+  TransactionsServiceModule as PerxTransactionsServiceModule,
 } from '@perxtech/core';
 
 import * as Hammer from 'hammerjs';
@@ -78,6 +83,9 @@ import { AppComponent } from './app.component';
 import { SignUpModule } from './sign-up/sign-up.module';
 import { environment } from '../environments/environment';
 import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
+import { ErrorComponent } from './error/error.component';
+import { ReferralPopupComponent } from './campaign-referrals/referral-popup/referral-popup.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // https://medium.com/angular-in-depth/gestures-in-an-angular-application-dde71804c0d0
 // to override default settings
@@ -131,11 +139,14 @@ export const setLanguage = (
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ErrorComponent,
+    ReferralPopupComponent
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
     SettingsModule.forRoot({ ...environment }),
+    AuthenticationModule,
     PerxSvcGameModule.forRoot(),
     PerxGameModule,
     BrowserModule,
@@ -143,7 +154,6 @@ export const setLanguage = (
     PerxCoreModule,
     VouchersModule,
     OutcomeModule,
-    AuthenticationModule,
     SignUpModule,
     BrowserAnimationsModule,
     PerxMerchantsModule.forRoot(),
@@ -156,18 +166,23 @@ export const setLanguage = (
     HttpClientModule,
     MatDialogModule,
     MatButtonModule,
+    MatButtonModule,
+    MatInputModule,
     MatSnackBarModule,
+    PerxTransactionsServiceModule.forRoot(),
     LoyaltyModule.forRoot(),
     RewardsModule.forRoot(),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        deps: [HttpClient, ConfigService, TokenStorage],
+        deps: [HttpClient, HttpBackend, ConfigService, TokenStorage],
         useClass: LanguageService
       }
     }),
     // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    ForgotPasswordModule
+    ForgotPasswordModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   bootstrap: [AppComponent],
   providers: [
@@ -186,7 +201,11 @@ export const setLanguage = (
     {
       provide: HAMMER_GESTURE_CONFIG,
       useClass: MyHammerConfig,
-    }
+    },
+    { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true },
+  ],
+  entryComponents: [
+    ReferralPopupComponent
   ]
 })
 export class AppModule { }

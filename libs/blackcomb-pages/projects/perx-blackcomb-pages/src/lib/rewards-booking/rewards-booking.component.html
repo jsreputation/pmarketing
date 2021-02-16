@@ -7,30 +7,47 @@
                 </mat-select>
             </div>
             <div class="mat-select-wrap">
-                <mat-select [disabled]="!locationData"  [placeholder]="locationData ? 'Location' : 'All locations'" formControlName="location">
-                    <mat-option *ngFor="let location of locationData" [value]="location.id">{{location.name}}</mat-option>
+                <mat-select [disabled]="!locationData"  [placeholder]="locationData ? 'Location' : 'All locations'"
+                msInfiniteScroll
+                formControlName="location"
+                (infiniteScroll)="getRewardLocationsData()"
+                >
+                    <mat-option *ngFor="let location of locationData | async" [value]="location.id">{{location.name}}</mat-option>
                 </mat-select>
+                <mat-error class="error-field" *ngIf="bookingForm?.dirty && bookingForm?.controls?.location?.errors">This field is required</mat-error>
             </div>
             <mat-radio-group class="radio-group" formControlName="priceId">
                 <mat-radio-button *ngFor="let price of prices" class="radio-button" [value]="price.id">
                   <p id="price-point-info">
                     Use
+                    <span *ngIf="price.points === 0 && price.price === '0.00'">0 points</span>
                     <span *ngIf="price.points">{{price.points}} points</span>
-                    <span *ngIf="price.points && price.price"> + </span>
-                    <span *ngIf="price.price">{{price.currencyCode}} {{price.price | number: '1.0-0'}}</span>
+                    <span *ngIf="price.points && price.price !== '0.00'"> + </span>
+                    <span *ngIf="price.price !== '0.00'">{{price.currencyCode}} {{price.price}}</span>
+                    <br>
                     <span *ngIf="price.identifier"> (code: {{price.identifier}})</span>
                   </p>
                 </mat-radio-button>
             </mat-radio-group>
-            <div class="agreement">
+            <div *ngIf="tncHTML | async as tnc" class="agreement">
                 <mat-checkbox formControlName="agreement"></mat-checkbox>
                 <p>
-                I have read, understood the <a [routerLink]="[ '/terms-and-conditions']"> ALL IT Hypermarket Terms of Service</a>
-                and agree to all clauses stated therein*
+                  {{tnc}}
                 </p>
             </div>
             <div class="redeem-container">
-                <button mat-flat-button type="submit" color="primary" [disabled]="bookingForm.invalid || loading">Submit</button>
+                <button mat-flat-button type="submit"
+                        [color]="!(bookingForm.invalid || loading) ? 'primary' : ''"
+                        [disabled]="bookingForm.invalid || loading">
+                  <span *ngIf="!loading">Submit</span>
+                  <i class="loading-spin"
+                     *ngIf="loading">
+                    <mat-progress-spinner
+                      [diameter]="30"
+                      mode="indeterminate">
+                    </mat-progress-spinner>
+                  </i>
+                </button>
             </div>
         </form>
     </div>

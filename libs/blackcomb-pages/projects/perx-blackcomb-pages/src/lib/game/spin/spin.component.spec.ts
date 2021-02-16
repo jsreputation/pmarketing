@@ -6,12 +6,15 @@ import {
 
 import {
   GameModule,
-  GameType
+  GameType,
+  ThemesService,
+  ITheme
 } from '@perxtech/core';
 
 import {
   SpinComponent,
 } from './spin.component';
+import { of } from 'rxjs';
 
 const dummyIGame = {
   id: 1,
@@ -40,6 +43,18 @@ describe('SpinComponent', () => {
   let component: SpinComponent;
   let fixture: ComponentFixture<SpinComponent>;
 
+  const mockTheme: ITheme = {
+    name: 'theme',
+    properties: {
+      '--background': 'red',
+      '--font_color': 'black'
+    }
+  };
+
+  const themesServiceStub: Partial<ThemesService> = {
+    getThemeSetting: () => of(mockTheme)
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -48,6 +63,9 @@ describe('SpinComponent', () => {
       imports: [
         GameModule,
       ],
+      providers: [
+        { provide: ThemesService, useValue: themesServiceStub }
+      ]
     }).compileComponents();
   }));
 

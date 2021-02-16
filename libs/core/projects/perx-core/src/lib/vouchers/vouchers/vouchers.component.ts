@@ -27,10 +27,10 @@ export class VouchersComponent implements OnInit, OnChanges {
   @Output() public tapped: EventEmitter<IVoucher> = new EventEmitter<IVoucher>();
 
   @Input('data') public vouchers$: Observable<IVoucher[]>;
+  public vouchers: IVoucher[];
 
   @Input() public set filter(filter: string[]) {
     this.privateFilter = filter;
-    this.vouchers$ = this.filterVoucher(this.vouchers$);
   }
   public get filter(): string[] {
     return this.privateFilter;
@@ -40,14 +40,19 @@ export class VouchersComponent implements OnInit, OnChanges {
   public mapping?: StatusLabelMapping;
 
   @Input()
-  public expiryLabelFn: ((tr: IVoucher) => string);
+  public expiryLabelFn: (tr: IVoucher) => Observable<string>;
+
+  @Input()
+  public redeemedOnLabelFn: (tr: IVoucher) => Observable<string>;
 
   public repeatGhostCount: number = 10;
 
   public ghostTimeOut: boolean;
 
   constructor(private vouchersService: IVoucherService, private datePipe: DatePipe) {
-    this.expiryLabelFn = (v: IVoucher) => v.expiry ? `Expiry: ${this.datePipe.transform(v.expiry, 'shortDate')}` : '';
+    this.expiryLabelFn = (v: IVoucher) => of(v.expiry ? `Expiry: ${this.datePipe.transform(v.expiry, 'shortDate')}` : '');
+    this.redeemedOnLabelFn = (v: IVoucher) => of(v.redemptionDate ?
+            `Redeemed on: ${this.datePipe.transform(v.redemptionDate, 'shortDate')}` : '');
   }
 
   public ngOnInit(): void {
@@ -64,6 +69,10 @@ export class VouchersComponent implements OnInit, OnChanges {
     if (!this.vouchers$) {
       this.vouchers$ = this.vouchersService.getAll({ sourceType: this.sourceType, type: null });
     }
+
+    this.filterVoucher(this.vouchers$).subscribe(
+      (vouchers: IVoucher[]) => this.vouchers = vouchers
+    );
   }
 
   public isVoucherQueryComplete(vouchers: IVoucher[] | null): boolean {
@@ -86,6 +95,8 @@ export class VouchersComponent implements OnInit, OnChanges {
 
   private filterVoucher(vouchers: Observable<IVoucher[]>): Observable<IVoucher[]> {
     return vouchers ? vouchers.pipe(
-      map(voucher => voucher.filter((el) => this.filter.includes(el.state)))) : vouchers;
+      map(voucher => voucher.filter((el) =>
+        this.filter ? this.filter.includes(el.state) : el // include null check for test suite
+      ))) : vouchers;
   }
 }

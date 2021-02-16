@@ -1,4 +1,7 @@
 {
+  "BOOKING_PAGE": {
+    "TNC": "I have read, understood the Voucher Terms & Conditions stated in the previous page and agree to all clauses stated therein"
+  },
   "STAMP_CAMPAIGNS": "Stamp Card Campaigns",
   "TRAVEL": "여행",
   "VIEW_REWARD": "보상보기",
@@ -8,5 +11,43 @@
   "VOUCHER_EXPIRY": "만기: {{date}}",
   "WALLET": "지갑",
   "MY_WALLET": "내 지갑",
-  "ALL": "모두"
+  "ALL": "모두",
+  "STATUS_LABELS": {
+    "ISSUED": "Approved",
+    "REDEEMED": "Redeemed",
+    "EXPIRED": "Expired",
+    "RESERVED": "Pending",
+    "RELEASED": "Declined"
+  },
+  "STAMP_CAMPAIGN": {
+    "STAMP_CARD": "Stamp Card",
+    "OF": "of",
+    "NEW_STAMPS": "new stamps",
+    "NEW_STAMP": "new stamp",
+    "VIEW_WALLET": "View Wallet",
+    "YOU_GOT_A_NEW_STAMP": "You got a new stamp!",
+    "THANK_YOU_FOR_PLAYING": "Thank you for playing! You have already received the maximum number of stamps. Don't forget to redeem your earned rewards!",
+    "REWARD_POPUP_TITLE": "Congratulations!",
+    "REWARD_POPUP_TEXT": "Here is a reward for you.",
+    "REWARD_POPUP_BUTTON_TEXT": "View Reward",
+    "NO_REWARD_POPUP_TITLE": "No Reward Received",
+    "NO_REWARD_POPUP_TEXT": "Try again next time",
+    "NO_REWARD_POPUP_BUTTON_TEXT": "Close",
+    "ERROR_TITLE": "Something went wrong with our server",
+    "ERROR_TEXT": "We notified our team. Sorry for the inconvenience."
+  },
+  "FAVOURITES_PAGE": {
+    "TITLE": "Favourite Rewards"
+  },
+  "PUZZLE": {
+    "PUZZLE": "Puzzle",
+    "PLAY_NOW": "Play now!",
+    "NEW_PIECES": "New pieces",
+    "NEW_STAMPS": " new stamps"
+  },
+  "ERRORS": {
+    "GENERIC": "Sorry, something went wrong",
+    "REWARDS_RUN_OUT": "Sorry, rewards have run out",
+    "NO_UNUSED_MOVES": "Sorry, you do not have any more moves available"
+  }
 }

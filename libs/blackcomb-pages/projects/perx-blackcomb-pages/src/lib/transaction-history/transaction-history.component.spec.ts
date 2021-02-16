@@ -12,6 +12,7 @@ import {
 } from '@perxtech/core';
 import { of } from 'rxjs';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('TransactionHistoryComponent', () => {
   let component: TransactionHistoryComponent;
@@ -24,9 +25,10 @@ describe('TransactionHistoryComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         LoyaltyModule,
-        InfiniteScrollModule
+        InfiniteScrollModule,
+        TranslateModule.forRoot()
       ],
-      declarations: [ TransactionHistoryComponent ],
+      declarations: [TransactionHistoryComponent],
       providers: [
         {
           provide: LoyaltyService,

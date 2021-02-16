@@ -1,0 +1,120 @@
+@import "../mixins";
+
+.content-container {
+  @include loginContentContainer;
+}
+
+.sign-up {
+  @include loginCard;
+
+  .red-text {
+    color: red;
+  }
+
+  .error_msg {
+    padding-bottom: 1rem;
+
+    span {
+      //color: #eb202f;
+      font-size: 1.5rem;
+    }
+  }
+
+  button {
+    width: 100%;
+    box-sizing: border-box;
+    background: var(--button_background_color);
+    margin-top: 3rem;
+    &:disabled {
+      opacity: 45%;
+    }
+  }
+
+  form {
+    .full-width__input {
+      width: 100%;
+      margin-top: 0;
+    }
+
+    .mobile-group {
+      display: flex;
+      flex-direction: row;
+
+      .country-code {
+        width: 10rem;
+        margin-right: 1rem;
+
+        .mat-form-field {
+          width: 100%;
+        }
+      }
+
+      .country-code-fixed {
+        margin-right: 1rem;
+        margin-top: 3.3rem;
+      }
+
+      .mobile-number {
+        width: 100%;
+
+        .mat-form-field {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .subtitle {
+    margin-top: 1rem;
+
+    @include form-subtitle;
+  }
+
+  .loading-spin {
+    display: inline-block;
+    margin: auto;
+  }
+}
+.checkbox-container {
+  position: relative;
+  margin: 1.5rem 0;
+  .checkbox-content {
+    display: flex;
+    align-items: center;
+  }
+
+  .mat-checkbox {
+    position: relative;
+    bottom: 0.2rem;
+    margin-right: 1.5rem;
+  }
+
+  ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+    background-color: #2664ED !important;
+  }
+
+  span {
+    font-size: 1.4rem; 
+  }
+  .links {
+    text-decoration : none!important;
+    color: #2664ED;
+  }
+
+  .checkbox-error {
+    position: absolute;
+    font-size: 75%;
+  }
+}
+
+.login-image {
+  margin-bottom: 1rem;
+
+  .logo {
+    width: 100%;
+    max-width: 30rem;
+    max-height: 10rem;
+    height: 100%;
+    object-fit: contain;
+  }
+}

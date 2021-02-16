@@ -1,4 +1,14 @@
 {
+  "BOOKING_PAGE": {
+    "TNC": "I have read, understood the Voucher Terms & Conditions stated in the previous page and agree to all clauses stated therein"
+  },
+  "STATUS_LABELS": {
+    "ISSUED": "Approved",
+    "REDEEMED": "Redeemed",
+    "EXPIRED": "Expired",
+    "RESERVED": "Pending",
+    "RELEASED": "Declined"
+  },
   "LANDING": {
     "CAMPAIGN_TITLE": "Weekly LIFE Dojo Winners Wanted! ",
     "CAMPAIGN_INTRO": "LIFE Dojo returns with weekly quizzes and a grand lucky draw. \nTest your knowledge and earn points to enter the lucky draw. Choose from three difficulty levels, and answer each question within 15 seconds by choosing the best answer. It’s time to play!",
@@ -145,8 +155,11 @@
     "REDEEMED": "Redeemed",
     "REWARD_STATUS_EXPIRY": "Expires on {{date}}",
     "REWARD_STATUS_REDEEMED": "Redeemed",
+    "REWARD_STATUS_REDEEMED_ON": "Redeemed on {{date}}",
     "REWARD_STATUS_EXPIRED": "Expired",
-    "CTA_TXT": "Redeem"
+    "CTA_TXT": "Redeem",
+    "POINT_EARNED": "{points} Points earned",
+    "POINT_SPENT": "{points} Points spent"
   },
   "REDEMPTION": {
     "TITLE": "Input PIN",
@@ -179,6 +192,7 @@
     "REFER_FRIEND": "Refer a friend",
     "LIFE_TALK": "LIFE Talk",
     "TNC": "Terms and Conditions",
+    "DISCLAIMER": "Disclaimer",
     "PRIVACY_POLICY": "Privacy Policy",
     "LOGOUT": "Log Out"
   },
@@ -215,6 +229,7 @@
   },
   "HOME": {
     "MY_QR": "My QR",
+    "HELLO": "Welcome",
     "MY_BAR_CODE": "My Barcode",
     "STAMP_CAMPAIGNS": "Stamp Card Campaigns",
     "CATALOG": "Catalog",
@@ -273,13 +288,48 @@
   },
   "VOUCHER": {
     "REDEEM": "Redeem",
-    "EXPIRY": "Expires on: {{date}}"
+    "EXPIRY": "Expires on: {{date}}",
+    "NO_VOUCHERS": "No vouchers here yet!"
   },
   "REWARD": {
     "GET_VOUCHER": "Get Voucher",
     "DESCRIPTION": "Description",
     "TNC": "Terms and Conditions"
   },
+  "STAMP_CAMPAIGN": {
+    "STAMP_CARD": "Stamp Card",
+    "OF": "of",
+    "NEW_STAMPS": "new stamps",
+    "NEW_STAMP": "new stamp",
+    "VIEW_WALLET": "View Wallet",
+    "YOU_GOT_A_NEW_STAMP": "You got a new stamp!",
+    "THANK_YOU_FOR_PLAYING": "Thank you for playing! You have already received the maximum number of stamps. Don't forget to redeem your earned rewards!",
+    "REWARD_POPUP_TITLE": "Congratulations!",
+    "REWARD_POPUP_TEXT": "Here is a reward for you.",
+    "REWARD_POPUP_BUTTON_TEXT": "View Reward",
+    "NO_REWARD_POPUP_TITLE": "No Reward Received",
+    "NO_REWARD_POPUP_TEXT": "Try again next time",
+    "NO_REWARD_POPUP_BUTTON_TEXT": "Close",
+    "ERROR_TITLE": "Something went wrong with our server",
+    "ERROR_TEXT": "We notified our team. Sorry for the inconvenience."
+  },
+  "FAVOURITES_PAGE": {
+    "TITLE": "Favourite Rewards"
+  },
+  "PUZZLE": {
+    "PUZZLE": "Puzzle",
+    "PLAY_NOW": "Play now!",
+    "NEW_PIECES": "New pieces",
+    "NEW_STAMPS": " new stamps"
+  },
+  "ERRORS": {
+    "GENERIC": "Sorry, something went wrong",
+    "REWARDS_RUN_OUT": "Sorry, rewards have run out",
+    "NO_UNUSED_MOVES": "Sorry, you do not have any more moves available"
+  },
   "CONTENT_PAGE": "Content Not Found",
+  "Gold": "Gold",
+  "Silver": "Silver",
+  "Green": "Green",
   "LOGIN_SESSION_EXPIRED": "Login Session Expired"
 }

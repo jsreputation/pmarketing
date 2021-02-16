@@ -1,4 +1,14 @@
 {
+  "BOOKING_PAGE": {
+    "TNC": "I have read, understood the Voucher Terms & Conditions stated in the previous page and agree to all clauses stated therein"
+  },
+  "STATUS_LABELS": {
+    "ISSUED": "Approved",
+    "REDEEMED": "Redeemed",
+    "EXPIRED": "Expired",
+    "RESERVED": "Pending",
+    "RELEASED": "Declined"
+  },
   "MY_QR": "My QR",
   "GAMES": "Games",
   "STAMP_CAMPAIGNS": "Stamp Card Campaigns",
@@ -59,5 +69,36 @@
   "SURVEY_SUCCESS_TITLE": "RSVP của bạn thành công!",
   "SURVEY_SUCCESS_TEXT": "Hẹn gặp bạn tại sự kiện của chúng tôi!",
   "SURVEY_NO_REWARDS_TITLE": "Cám ơn sự quan tâm của bạn. Chúng tôi xin lỗi, tất cả các địa điểm đã được thực hiện.",
-  "SURVEY_NO_REWARDS_TEXT": "Tuy nhiên, chúng tôi đã thêm bạn vào danh sách chờ sự kiện của chúng tôi và sẽ gọi cho bạn khi các địa điểm có sẵn vào ngày 07 tháng 10 năm 2019"
+  "SURVEY_NO_REWARDS_TEXT": "Tuy nhiên, chúng tôi đã thêm bạn vào danh sách chờ sự kiện của chúng tôi và sẽ gọi cho bạn khi các địa điểm có sẵn vào ngày 07 tháng 10 năm 2019",
+  "STAMP_CAMPAIGN": {
+    "STAMP_CARD": "Thẻ tem",
+    "OF": "của",
+    "NEW_STAMPS": "tem mới",
+    "NEW_STAMP": "tem mới",
+    "VIEW_WALLET": "Xem ví",
+    "YOU_GOT_A_NEW_STAMP": "Bạn có một con tem mới!",
+    "THANK_YOU_FOR_PLAYING": "Cảm ơn vì đã chơi! Bạn đã nhận được số lượng tem tối đa. Đừng quên đổi phần thưởng đã kiếm được của bạn!",
+    "REWARD_POPUP_TITLE": "Xin chúc mừng!",
+    "REWARD_POPUP_TEXT": "Đây là một phần thưởng cho bạn.",
+    "REWARD_POPUP_BUTTON_TEXT": "Xem phần thưởng",
+    "NO_REWARD_POPUP_TITLE": "Không nhận được phần thưởng",
+    "NO_REWARD_POPUP_TEXT": "Thử lại lần sau",
+    "NO_REWARD_POPUP_BUTTON_TEXT": "Đóng",
+    "ERROR_TITLE": "Đã xảy ra sự cố với máy chủ của chúng tôi",
+    "ERROR_TEXT": "Chúng tôi đã thông báo cho nhóm của chúng tôi. Xin lỗi vì sự bất tiện."
+  },
+  "FAVOURITES_PAGE": {
+    "TITLE": "Favourite Rewards"
+  },
+  "PUZZLE": {
+    "PUZZLE": "Câu đố",
+    "PLAY_NOW": "Bắt đầu chơi!",
+    "NEW_PIECES": "Miếng mới",
+    "NEW_STAMPS": " tem mới"
+  },
+  "ERRORS": {
+    "GENERIC": "Sorry, something went wrong",
+    "REWARDS_RUN_OUT": "Sorry, rewards have run out",
+    "NO_UNUSED_MOVES": "Sorry, you do not have any more moves available"
+  }
 }

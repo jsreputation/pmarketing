@@ -19,10 +19,17 @@ import {
   SettingsService,
   IRssFeeds,
   IRssFeedsData,
+  IFlags,
+  IConfig,
+  ConfigService,
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
-import { map, switchMap } from 'rxjs/operators';
+import {
+  catchError,
+  map,
+  switchMap
+} from 'rxjs/operators';
 
 const REQ_PAGE_SIZE: number = 10;
 @Component({
@@ -36,11 +43,19 @@ export class WalletComponent implements OnInit, OnDestroy {
   public vouchers$: Observable<Voucher[]>;
   public filter: string[];
   public rewardsHeadline: string;
-  public expiryLabelFn: ((v: Voucher) => string) | undefined;
+  public expiryLabelFn: ((v: Voucher) => Observable<string>) | undefined;
   public newsFeedItems: Observable<FeedItem[] | undefined>;
-
+  public showVoucherStatusLabels: boolean = false;
+  public statusLabelMappings: Record<string, string> = {
+      issued: 'Approved',
+      redeemed: 'Redeemed',
+      expired: 'Expired',
+      reserved: 'Pending',
+      released: 'Declined',
+  };
   public currentPage: number = 0;
   public completed: boolean = false;
+  public sourceType: string | undefined = undefined;
 
   constructor(
     private router: Router,
@@ -48,20 +63,45 @@ export class WalletComponent implements OnInit, OnDestroy {
     private datePipe: DatePipe,
     private translate: TranslateService,
     private feedService: FeedReaderService,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private configService: ConfigService
   ) { }
 
   public ngOnInit(): void {
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig<void>) => {
+        this.sourceType = config.sourceType ? config.sourceType.toString() : undefined;
+      });
+    this.translate.get('LANDING.STATUS_LABELS').subscribe(statusLabelsTranslated => {
+      Object.entries(this.statusLabelMappings).forEach(
+        ([key, value]) => {
+          if (
+            statusLabelsTranslated[key.toUpperCase()] &&
+            statusLabelsTranslated[key.toUpperCase()] !== value
+          ) {
+            this.statusLabelMappings[key] = statusLabelsTranslated[key.toUpperCase()];
+          }
+        }
+      );
+    });
+
     this.translate.get('WALLET.MY_WALLET').subscribe(text => this.rewardsHeadline = text);
     this.vouchers$ = of([]);
     this.onScroll();
-    this.filter = [VoucherState.issued, VoucherState.released];
+    this.filter = [ VoucherState.issued, VoucherState.released, VoucherState.reserved ];
+    this.settingsService.getRemoteFlagsSettings().subscribe(
+      (flags: IFlags) => {
+        if (flags.showVoucherStatusLabels) {
+          this.showVoucherStatusLabels = flags.showVoucherStatusLabels;
+        }
+      }
+    );
     this.initRssItems();
     this.translate.get('WALLET.REWARD_STATUS_EXPIRY')
       .subscribe((text: string) => {
         this.expiryLabelFn = (v: Voucher) => {
           const dateStr = this.datePipe.transform(v.expiry, 'shortDate');
-          return text.replace('{{date}}', dateStr || '~');
+          return of(text.replace('{{date}}', dateStr || '~'));
         };
       });
   }
@@ -82,7 +122,7 @@ export class WalletComponent implements OnInit, OnDestroy {
     }
     forkJoin(
       this.vouchers$,
-      this.vouchersService.getFromPage(this.currentPage, { type: 'active' })
+      this.vouchersService.getFromPage(this.currentPage, { type: 'active', sourceType: this.sourceType })
     ).subscribe((val) => {
       if (!val[1].length && val[1].length < REQ_PAGE_SIZE) {
         this.completed = true;
@@ -99,7 +139,8 @@ export class WalletComponent implements OnInit, OnDestroy {
           return of([] as FeedItem[]);
         }
         return this.feedService.getFromUrl(feedData.url);
-      })
+      }),
+      catchError(() => of([] as FeedItem[]))
     );
   }
 }

@@ -16,6 +16,12 @@
       <mat-error *ngIf="cardNumber && cardNumber.hasError('required')">
         Card number is <strong>required</strong>
       </mat-error>
+      <mat-error *ngIf="cardNumber && cardNumber.hasError('maxlength')">
+        Card number is too <strong>long</strong>
+      </mat-error>
+      <mat-error *ngIf="cardNumber && cardNumber.hasError('pattern')">
+        <strong>Numbers</strong> only
+      </mat-error>
     </mat-form-field>
     <button
       mat-flat-button

@@ -109,6 +109,7 @@
     "HISTORY_TITLE": "My History",
     "REWARD_STATUS_EXPIRY": "Expires on [date]",
     "REWARD_STATUS_REDEEMED": "Redeemed",
+    "REWARD_STATUS_REDEEMED_ON": "Redeemed on {{date}}",
     "REWARD_STATUS_EXPIRED": "Expired",
     "CTA_TXT": "Redeem"
   },
@@ -136,6 +137,7 @@
     "REFER_FRIEND": "Refer a friend",
     "LIFE_TALK": "LIFE Talk",
     "TNC": "Terms and Conditions",
+    "DISCLAIMER": "Disclaimer",
     "PRIVACY_POLICY": "Terms and Conditions",
     "LOGOUT": "Log Out"
   },

@@ -6,11 +6,11 @@ import {
   NotificationService,
   PuzzleCollectReward,
   IStamp,
-  StampState
+  StampState, ThemesService, ITheme
 } from '@perxtech/core';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { filter, switchMap, takeUntil, map, tap, pairwise } from 'rxjs/operators';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, of, forkJoin } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { oc } from 'ts-optchain';
 
@@ -30,6 +30,7 @@ export interface PopUpClosedCallBack {
 })
 
 export class StampCardComponent implements OnInit, OnDestroy {
+  public buttonStyle: { [key: string]: string } = {};
   public title: string; // = 'Scratch & Win!'
   public subTitle?: string; //  = 'Collect all 10 stickers and win a reward!'
   public background: string | undefined | null;
@@ -37,17 +38,10 @@ export class StampCardComponent implements OnInit, OnDestroy {
   public isEnabled: boolean = false;
   public stamps: IStamp[] | undefined;
   public stampCard: IStampCard | null;
+  public buttonText: Observable<string>;
   public newStampsLabelFn: () => Observable<string>;
   private idN: number;
   private destroy$: Subject<void> = new Subject();
-  private rewardSuccessPopUp: IPopupConfig = {
-    title: 'STAMP_SUCCESS_TITLE',
-    buttonTxt: 'VIEW_REWARD'
-  };
-  private errorPopUp: IPopupConfig = {
-    title: 'STAMP_ERROR_TITLE',
-    buttonTxt: 'TRY_AGAIN'
-  };
 
   public v4Rewards(card: IStampCard): PuzzleCollectReward[] {
     if (!card || !card.displayProperties.rewardPositions) {
@@ -61,27 +55,21 @@ export class StampCardComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private notificationService: NotificationService,
+    private themesService: ThemesService,
     private translate: TranslateService
   ) {
   }
 
   private initTranslate(): void {
-    if (this.rewardSuccessPopUp.title) {
-      this.translate.get(this.rewardSuccessPopUp.title).subscribe((text) => this.rewardSuccessPopUp.title = text);
-    }
-    if (this.errorPopUp.title) {
-      this.translate.get(this.errorPopUp.title).subscribe((text) => this.errorPopUp.title = text);
-    }
-    if (this.rewardSuccessPopUp.buttonTxt) {
-      this.translate.get(this.rewardSuccessPopUp.buttonTxt).subscribe((text) => this.rewardSuccessPopUp.buttonTxt = text);
-    }
-    if (this.errorPopUp.buttonTxt) {
-      this.translate.get(this.errorPopUp.buttonTxt).subscribe((text) => this.errorPopUp.buttonTxt = text);
-    }
     this.newStampsLabelFn = () => this.translate.get('GAME_PAGE.STAMPS_LABEL_TXT');
   }
 
   public ngOnInit(): void {
+    this.themesService.getThemeSetting().subscribe((theme: ITheme) => {
+      this.buttonStyle['background-color'] = theme.properties['--button_background_color'] || '';
+      this.buttonStyle.color = theme.properties['--button_text_color'] || '';
+      this.buttonStyle.visibility = 'visible';
+    });
     this.initTranslate();
     this.route.paramMap
       .pipe(
@@ -101,20 +89,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
               oc(stampCard).displayProperties.cardImage.value.imageUrl('')
             );
             this.cardBackground = stampCard.displayProperties.cardBgImage || '';
-            const successOutcome = stampCard.results.outcome;
-            const noOutcome = stampCard.results.noOutcome;
-            if (noOutcome) {
-              this.errorPopUp.title = noOutcome.title;
-              this.errorPopUp.text = noOutcome.subTitle;
-              this.errorPopUp.imageUrl = noOutcome.image || this.errorPopUp.imageUrl;
-              this.errorPopUp.buttonTxt = noOutcome.button || this.errorPopUp.buttonTxt;
-            }
-            if (successOutcome) {
-              this.rewardSuccessPopUp.title = successOutcome.title;
-              this.rewardSuccessPopUp.text = successOutcome.subTitle;
-              this.rewardSuccessPopUp.imageUrl = successOutcome.image || this.rewardSuccessPopUp.imageUrl;
-              this.rewardSuccessPopUp.buttonTxt = successOutcome.button || this.rewardSuccessPopUp.buttonTxt;
-            }
+            this.buttonText = stampCard.buttonText ? of(stampCard.buttonText) : this.translate.get('STAMP_CAMPAIGN.VIEW_WALLET');
           }
         }),
         switchMap(() => this.stampService.stampsChangedForStampCard(this.idN)
@@ -128,7 +103,8 @@ export class StampCardComponent implements OnInit, OnDestroy {
           (prevStamps && prevStamps.stamps) &&
           prevStamps.stamps.length < currStamps.stamps.length) {
           this.stampCard = currStamps;
-          this.notificationService.addSnack('You got a new stamp!');
+          this.translate.get('STAMP_CAMPAIGN.YOU_GOT_A_NEW_STAMP')
+            .subscribe(translation => this.notificationService.addSnack(translation));
         }
       }, () => this.router.navigate(['/wallet']));
   }
@@ -180,25 +156,33 @@ export class StampCardComponent implements OnInit, OnDestroy {
 
             if (this.stampCard.displayProperties.displayCampaignAs === 'stamp_card'
               && redeemedTransactionsCount === (this.stampCard.campaignConfig && this.stampCard.campaignConfig.totalSlots)) {
-              this.notificationService.addPopup({
-                // tslint:disable-next-line: max-line-length
-                text: 'Thank you for playing! You have already received the maximum number of stamps. Don\'t forget to redeem your earned rewards!'
-              });
+
+              this.translate.get('STAMP_CAMPAIGN.THANK_YOU_FOR_PLAYING')
+                .subscribe(translation => this.notificationService.addPopup({
+                  text: translation
+                }));
             }
 
             if (stamp.vouchers && stamp.vouchers.length > 0) {
               const voucherId = stamp.vouchers[0].id;
-              const data: IRewardPopupConfig = {
-                title: 'Congratulations!',
-                text: 'Here is a reward for you.',
-                imageUrl: 'assets/prize.png',
-                disableOverlayClose: true,
-                ctaButtonClass: 'ga_game_completion',
-                url: `/voucher/${voucherId}`,
-                afterClosedCallBackRedirect: this,
-                buttonTxt: 'View Reward',
-              };
-              this.notificationService.addPopup(data);
+              forkJoin([
+                this.translate.get('STAMP_CAMPAIGN.REWARD_POPUP_TITLE'),
+                this.translate.get('STAMP_CAMPAIGN.REWARD_POPUP_TEXT'),
+                this.translate.get('STAMP_CAMPAIGN.REWARD_POPUP_BUTTON_TEXT')
+              ]).subscribe(translations => {
+                const [title, text, buttonTxt] = translations;
+                const data: IRewardPopupConfig = {
+                  title,
+                  text,
+                  imageUrl: 'assets/prize.png',
+                  disableOverlayClose: true,
+                  ctaButtonClass: 'ga_game_completion',
+                  url: `/voucher/${voucherId}`,
+                  afterClosedCallBackRedirect: this,
+                  buttonTxt
+                };
+                this.notificationService.addPopup(data);
+              });
             }
 
           } else {
@@ -208,25 +192,38 @@ export class StampCardComponent implements OnInit, OnDestroy {
 
             const issuedLeft = this.stampCard.stamps.filter(s => s.state === StampState.issued);
             if (issuedLeft.length === 0) {
-              // all redeemed but no voucher
-              const data: IPopupConfig = {
-                title: 'No Reward Received',
-                text: 'Try again next time',
-                disableOverlayClose: true,
-                afterClosedCallBack: this,
-                buttonTxt: 'Close',
-              };
-              this.notificationService.addPopup(data);
+              forkJoin([
+                this.translate.get('STAMP_CAMPAIGN.NO_REWARD_POPUP_TITLE'),
+                this.translate.get('STAMP_CAMPAIGN.NO_REWARD_POPUP_TEXT'),
+                this.translate.get('STAMP_CAMPAIGN.NO_REWARD_POPUP_BUTTON_TEXT')
+              ]).subscribe(translations => {
+                const [title, text, buttonTxt] = translations;
+                // all redeemed but no voucher
+                const data: IPopupConfig = {
+                  title,
+                  text,
+                  disableOverlayClose: true,
+                  afterClosedCallBack: this,
+                  buttonTxt
+                };
+                this.notificationService.addPopup(data);
+              });
             }
           }
         })
       .catch(
         () => {
-          this.notificationService.addPopup({
-            title: 'Something went wrong, with our server',
-            text: 'We notified our team. Sorry about the inconvenience.'
+          forkJoin([
+            this.translate.get('STAMP_CAMPAIGN.ERROR_TITLE'),
+            this.translate.get('STAMP_CAMPAIGN.ERROR_TEXT')
+          ]).subscribe(translations => {
+            const [title, text] = translations;
+            this.notificationService.addPopup({
+              title,
+              text
+            });
+            this.router.navigateByUrl('/home');
           });
-          this.router.navigateByUrl('/home');
         }
       );
   }

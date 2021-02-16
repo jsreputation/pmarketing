@@ -2,9 +2,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import {
   HTTP_INTERCEPTORS,
+  HttpBackend,
   HttpClient,
-  HttpClientModule, HttpEvent, HttpHandler,
-  HttpInterceptor, HttpRequest
+  HttpClientModule,
+  HttpEvent,
+  HttpHandler,
+  HttpInterceptor,
+  HttpRequest
 } from '@angular/common/http';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
@@ -24,7 +28,8 @@ import {
   MatRippleModule,
   MatSnackBarModule,
   MatToolbarModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatListModule
 } from '@angular/material';
 
 import { QRCodeModule } from 'angularx-qrcode';
@@ -68,7 +73,6 @@ import { VoucherComponent } from './voucher/voucher.component';
 import { RedemptionComponent } from './redemption/redemption.component';
 import { CategorySelectComponent } from './category/category-select/category-select.component';
 import { CategorySortComponent } from './category/category-sort/category-sort.component';
-import { RewardsSortPipe } from './category/rewards-sort.pipe';
 import { LocationShortFormatComponent } from './location-short-format/location-short-format.component';
 import { RewardDetailComponent } from './reward/reward-detail/reward-detail.component';
 import { StampCardComponent } from './stamp/stamp-card.component';
@@ -105,7 +109,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
 
 @Injectable()
 export class SentryErrorHandler implements ErrorHandler {
-  public handleError(error: any): void {
+    public handleError(error: any): void {
     // const eventId =
     Sentry.captureException(error.originalError || error);
     if (!environment.production) {
@@ -151,7 +155,6 @@ export const appInit =
     RedemptionComponent,
     CategorySelectComponent,
     CategorySortComponent,
-    RewardsSortPipe,
     LocationShortFormatComponent,
     RewardDetailComponent,
     StampCardComponent,
@@ -197,10 +200,11 @@ export const appInit =
     LoyaltyModule.forRoot(),
     GhostsModule,
     MatProgressSpinnerModule,
+    MatListModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        deps: [HttpClient, ConfigService, TokenStorage],
+        deps: [HttpClient, HttpBackend, ConfigService, TokenStorage],
         useClass: LanguageService
       }
     })

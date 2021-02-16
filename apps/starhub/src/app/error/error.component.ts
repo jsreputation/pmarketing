@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AnalyticsService, PageType } from '../analytics.service';
 
 @Component({
@@ -7,7 +8,16 @@ import { AnalyticsService, PageType } from '../analytics.service';
   styleUrls: ['./error.component.scss']
 })
 export class ErrorComponent implements OnInit {
-  constructor(private analytics: AnalyticsService) {
+
+  public errorType: string;
+
+  constructor(private analytics: AnalyticsService,
+              private router: Router) {
+        const navigation = this.router.getCurrentNavigation();
+        if (navigation) {
+          const state = navigation.extras.state as { errorType: string };
+          this.errorType = state.errorType;
+        }
   }
 
   public ngOnInit(): void {

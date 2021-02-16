@@ -1,21 +1,34 @@
+<!-- tentatively position here until confirmed -->
 <ng-container *ngIf="profile$ | async; else ghostBlock">
   <div class="page-container" *ngIf="theme | async as th"
     [ngStyle]="{'background-color': th?.properties['--account_background_color']}">
-    <div *ngIf="appConfig | async as aConfig">
+    <div *ngIf="appConfig$ | async as aConfig">
       <div *ngIf="aConfig.showUserInfoOnAccountsPage">
-        <perx-core-profile-summary
-          [profile$]="profile$"
-          [loyalty$]="loyalty$"
-        ></perx-core-profile-summary>
+        <perx-core-micro-profile *ngIf="aConfig.app === 'abenson' else fullProfileComp" [profile$]="profile$"></perx-core-micro-profile>
+        <ng-template #fullProfileComp>
+          <perx-core-profile-summary
+            [profile$]="profile$"
+            [loyalty$]="loyalty$"
+            [memberFn]="memberFn"
+          ></perx-core-profile-summary>
+        </ng-template>
       </div>
       <div class="section profile">
         <mat-nav-list>
-          <mat-list-item routerLink="/profile">
+          <mat-list-item *ngIf="aConfig.showUserInfoOnAccountsPage" routerLink="/profile">
             {{'ACCOUNT_PAGE.PROFILE' | translate}}
           </mat-list-item>
-          <mat-list-item *ngIf="aConfig.showReferralOnAccountsPage" routerLink="/referral">
+          <mat-list-item *ngIf="aConfig.showReferralDetails" routerLink="/referral">
             {{'ACCOUNT_PAGE.REFER_FRIEND' | translate}}
           </mat-list-item>
+          <mat-list-item *ngIf="remoteFlags?.showRewardFavButton" routerLink="/favorite-rewards">
+            <mat-icon>favorite</mat-icon>&nbsp;&nbsp;{{'ACCOUNT_PAGE.FAVORITE_REWARD' | translate}}
+          </mat-list-item>
+          <ng-container *ngIf="aConfig.app === 'abenson'">
+            <mat-list-item [routerLink]="[ 'change-password' ]">Change PIN code</mat-list-item>
+            <mat-list-item [routerLink]="[ '/profile', 'edit-mobile' ]">Change Mobile Number</mat-list-item>
+            <mat-list-item [routerLink]="[ 'support' ]">Customer Support</mat-list-item>
+          </ng-container>
         </mat-nav-list>
       </div>
 
@@ -25,7 +38,7 @@
             {{'ACCOUNT_PAGE.TRANSACTION_HISTORY' | translate}}
           </mat-list-item>
           <mat-list-item (click)="goToPage(page)" *ngFor="let page of pages">
-            {{page.title | translate}}
+            {{'ACCOUNT_PAGE.' + page.title | translate}}
           </mat-list-item>
         </mat-nav-list>
       </div>

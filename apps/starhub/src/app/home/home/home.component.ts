@@ -1,10 +1,16 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import {
   AuthenticationService,
   CampaignType,
   ConfigService,
   ICampaign,
   ICampaignService,
+  IConfig,
   IGame,
   ILoyalty,
   InstantOutcomeService,
@@ -14,13 +20,33 @@ import {
   RewardPopupComponent
 } from '@perxtech/core';
 import { NoRenewaleInNamePipe } from '../no-renewale-in-name.pipe';
-import { MatDialog, MatToolbar } from '@angular/material';
-import { catchError, switchMap } from 'rxjs/operators';
+import {
+  MatDialog,
+  MatToolbar
+} from '@angular/material';
+import {
+  catchError,
+  map,
+  switchMap,
+  tap
+} from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { combineLatest, of } from 'rxjs';
+import {
+  combineLatest,
+  iif,
+  of
+} from 'rxjs';
 import { IdataLayerSH } from '../../app.component';
 
 declare var dataLayerSH: IdataLayerSH; // eslint-disable-line
+
+export interface IStarhubConfig {
+  hubclubCR: boolean;
+  showAllSnappingSaturdayItems: boolean;
+  mobileIdCR: boolean;
+}
+
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -39,6 +65,10 @@ export class HomeComponent implements OnInit {
   private firstComefirstServeCampaign: ICampaign;
   private token: string;
   public game?: IGame;
+  public hubclubCR: boolean;
+  public hubClubDisplay: string = '';
+  public appConfig: IConfig<IStarhubConfig>;
+
   constructor(
     private noRenewalePipe: NoRenewaleInNamePipe,
     private loyaltyService: LoyaltyService,
@@ -52,25 +82,47 @@ export class HomeComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.configService.readAppConfig().subscribe(() => {
-      this.loyaltyService
-        .getLoyalty()
-        .subscribe((loyalty: ILoyalty) => (this.loyalty = loyalty));
-      this.profileService
-        .whoAmI()
-        .subscribe((p: IProfile) => (this.profile = p));
-      this.getAccessToken();
-    });
-  }
-
-  private getAccessToken(): void {
-    this.authenticationService.getAccessToken().subscribe((token: string) => {
-      this.token = token;
-      if (this.token) {
-        this.checkAuth();
+    this.configService.readAppConfig<IStarhubConfig>().pipe(
+      tap((config: IConfig<IStarhubConfig>) => {
+        this.hubclubCR = config.custom ? config.custom.hubclubCR : false;
+        this.appConfig = config;
+      }),
+      switchMap(() => this.authenticationService.getAccessToken()),
+      tap((token: string) => {
+        this.token = token;
+        this.data.perxID = this.token;
+      }),
+      switchMap((token: string) => iif(() => token !== null, this.authenticationService.isAuthorized(), of(false))),
+      map((isAuth: boolean) => {
+        if (isAuth && !this.configService.readAppStarted()) {
+          this.configService.setAppStarted();
+          if (this.appConfig.showPopupCampaign) {
+            this.fetchPopupCampaigns();
+          }
+        }
+      })
+    ).subscribe(
+      () => {
+        this.loyaltyService
+          .getLoyalty()
+          .subscribe((loyalty: ILoyalty) => (this.loyalty = loyalty));
+        if (this.hubclubCR) {
+          this.profileService
+            .whoAmI()
+            .subscribe((p: IProfile) => {
+              this.profile = p;
+              const customProperties = p.customProperties;
+              if (customProperties) {
+                this.hubClubDisplay = customProperties.sub_membership_type &&
+                  customProperties.sub_membership_type.toString().toLowerCase() === 'nominee' &&
+                  customProperties.membership &&
+                  customProperties.membership.toString().toLowerCase() !== 'hubclub' ?
+                  customProperties.sub_membership_display.toString() : customProperties.membership_display.toString();
+              }
+            });
+        }
       }
-      this.data.perxID = this.token;
-    });
+    );
   }
 
   private get data(): Partial<IdataLayerSH> {
@@ -110,14 +162,6 @@ export class HomeComponent implements OnInit {
         this.top = this.top + delta;
       }
       this.toolBar._elementRef.nativeElement.style.transform = `translateY(${this.top}px)`;
-    });
-  }
-
-  private checkAuth(): void {
-    this.authenticationService.isAuthorized().subscribe((isAuth: boolean) => {
-      if (isAuth) {
-        this.fetchPopupCampaigns();
-      }
     });
   }
 
@@ -185,6 +229,15 @@ export class HomeComponent implements OnInit {
             );
           }
         );
+    }
+  }
+
+  public membershipClicked(): void {
+    const userCustomProps = this.profile.customProperties;
+    if (userCustomProps) {
+      const membershipType = userCustomProps.membership ? userCustomProps.membership : '';
+      const subMembershipType = userCustomProps.sub_membership_type ? userCustomProps.sub_membership_type : '';
+      document.location.href = `https://membershipclicked/?Membership=${membershipType}&SubMembershipType=${subMembershipType}`;
     }
   }
 }

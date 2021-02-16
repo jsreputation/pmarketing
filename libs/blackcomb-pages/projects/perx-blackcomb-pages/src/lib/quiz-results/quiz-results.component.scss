@@ -8,29 +8,38 @@
 .survey-page {
   @include quizPage();
 
+  align-items: start;
+  color: white;
+  //color: var(--font_color, white);
+
   .survey-card {
     @include quizCard();
-
-    padding: 0;
 
     perx-core-results {
       width: 100%;
     }
   }
 
-  h1 {
-    font-size: 2rem;
-    color: var(--font_color, white);
-    font-style: normal;
-    font-weight: 500;
-    margin-top: 2.2rem;
-  }
+  .results-text-container {
+    width: 34rem;
+    margin: 2rem auto;
 
-  h2 {
-    font-size: 1.6rem;
-    color: var(--font_color, white);
-    font-style: normal;
-    font-weight: normal;
+    h1 {
+      margin-block-end: 0;
+      font-size: 2rem;
+      font-style: normal;
+      font-weight: 300;
+      width: 50%;
+      margin: 0 auto;
+    }
+
+    h2 {
+      margin-block-start: 1.5rem;
+      font-size: 1.6rem;
+      font-style: normal;
+      font-weight: normal;
+      text-align: center;
+    }
   }
 }
 

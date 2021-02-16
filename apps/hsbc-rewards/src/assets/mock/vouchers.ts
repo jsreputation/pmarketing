@@ -21,6 +21,7 @@ export const voucher: Voucher[] = [{
     howToRedeem: '',
     categoryTags: [],
     inventory: undefined,
+    loyalty: []
   },
   state: VoucherState.issued,
   redemptionType: RedemptionType.none,
@@ -46,6 +47,7 @@ export const voucher: Voucher[] = [{
     howToRedeem: '',
     categoryTags: [],
     inventory: undefined,
+    loyalty: []
   },
   state: VoucherState.expired,
   redemptionType: RedemptionType.none,
@@ -71,6 +73,7 @@ export const voucher: Voucher[] = [{
     howToRedeem: '',
     categoryTags: [],
     inventory: undefined,
+    loyalty: []
   },
   state: VoucherState.redeemed,
   redemptionType: RedemptionType.none,

@@ -1,0 +1,19 @@
+<div class="overview-container" *ngIf="showPerformanceOverview; else comingSoonTemplate">
+    <div class="loyalty-block">
+        <perx-core-loyalty-summary [showLoyaltyProgress]="true" class="loyalty-item" [subTitleFn]="subTitleFn"
+            [titleFn]="titleFn" [summaryExpiringFn]="summaryExpiringFn" [pointToFn]="pointToFn" [memberFn]="memberFn"
+            [membershipExpiryFn]="membershipExpiryFn" [showLoyaltyNextTierPointsDiff]="false"
+            [showReferralProgress]="showReferralProgressBar" [topScoreMessageFn]="topScoreMessageFn" [topScoreUnitFn]="topScoreUnitFn"
+            [topScoreValueFn]="topScoreValueFn"></perx-core-loyalty-summary>
+    </div>
+    <div class="overview-page">
+        <perx-statistic-card [data]="inviteStatistics"></perx-statistic-card>
+        <perx-statistic-card [data]="performanceStatistics"></perx-statistic-card>
+    </div>
+</div>
+<ng-template #comingSoonTemplate>
+    <div class="coming-soon-container">
+        <div>=D</div>
+        <div><i>Insights coming soon...</i></div>
+    </div>
+</ng-template>

@@ -1,11 +1,12 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
-import { IReward, RewardsService, IProfile, ILoyalty, ITabConfigExtended } from '@perxtech/core';
-import { Observable, of, Subject, forkJoin } from 'rxjs';
+import { IReward, RewardsService, IProfile, ILoyalty, ITabConfigExtended, IPrice } from '@perxtech/core';
+import { Observable, of, Subject, forkJoin, iif } from 'rxjs';
 import { Router } from '@angular/router';
-import { flatMap, map, tap } from 'rxjs/operators';
+import { flatMap, map, tap, mergeMap, finalize } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { MatTabChangeEvent } from '@angular/material';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'mc-home',
@@ -13,38 +14,35 @@ import { MatTabChangeEvent } from '@angular/material';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, PageAppearence {
-  public titleFn: (profile: IProfile) => string;
   public rewards: Observable<IReward[]>;
   public tabs: Subject<ITabConfigExtended[]> = new Subject<ITabConfigExtended[]>();
   public staticTab: ITabConfigExtended[];
-  public subTitleFn: (loyalty: ILoyalty) => string;
+  public displayPriceFn: (rewardPrice: IPrice) => Observable<string>;
+  public subTitleFn: (loyalty: ILoyalty) => Observable<string>;
+  public titleFn: (profile: IProfile) => Observable<string>;
+  public summaryExpiringFn: (loyalty: ILoyalty) => Observable<string>;
+  public pointToFn: () => Observable<string>;
+  public memberFn: (membershipTierName: string) => Observable<string>;
+  public membershipExpiryFn: (loyalty: ILoyalty) => Observable<string>;
   public currentTabIndex: number = 0;
   private pageSize: number = 10;
+  public favDisabled: boolean  = false;
   public constructor(
     private rewardsService: RewardsService,
     private router: Router,
     private cd: ChangeDetectorRef,
+    private datePipe: DatePipe,
     private translate: TranslateService
   ) {
   }
 
   public ngOnInit(): void {
-    this.translate.get('WELCOME').subscribe(
-      (msg) => this.titleFn = (profile) => {
-        let returnString = msg;
-        if (profile && profile.firstName && profile.firstName !== '') {
-          returnString = `${returnString}, ${profile.firstName}`;
-        } else if (profile && profile.lastName && profile.lastName !== '') {
-          returnString = `${returnString}, ${profile.lastName}`;
-        }
-        return returnString;
-      }
-    );
+
     this.rewardsService
       .getAllRewards()
       .subscribe((rewards) => this.rewards = of(rewards));
     this.getRewards();
-    this.translate.get('TOTAL_POINTS').subscribe((msg) => this.subTitleFn = () => msg);
+    this.initTranslate();
   }
 
   private getRewards(): void {
@@ -113,4 +111,78 @@ export class HomeComponent implements OnInit, PageAppearence {
       stTab.tabName !== 'All' ? [stTab.tabName] : undefined), stTab.rewardsList
     ).subscribe((val) => stTab.rewardsList = of([...val[1], ...val[0]]));
   }
+
+  private initTranslate(): void {
+    this.subTitleFn = () => this.translate.get('HOME.TOTAL_POINTS');
+    this.titleFn = (profile: IProfile) => this.translate.get('HOME.WELCOME').pipe(
+      map(msg => {
+        let returnString = msg;
+        if (profile && profile.firstName && profile.firstName !== '') {
+          returnString = `${returnString}, ${profile.firstName}`;
+        } else if (profile && profile.lastName && profile.lastName !== '') {
+          returnString = `${returnString}, ${profile.lastName}`;
+        }
+        return returnString;
+      })
+    );
+    this.summaryExpiringFn = (loyalty: ILoyalty) =>
+      this.translate.get('HOME.POINTS_EXPIRING').pipe(
+        map(res => loyalty && loyalty.expiringPoints && loyalty.expiringPoints.length && loyalty.expiringPoints[0].points &&
+          loyalty.expiringPoints[0].points !== 0 ?
+          res
+            .replace('{{points}}', (loyalty.expiringPoints[0].points ? loyalty.expiringPoints[0].points : 0).toString())
+            .replace('{{date}}', loyalty.expiringPoints[0].expireDate ?
+              this.datePipe.transform(loyalty.expiringPoints[0].expireDate, 'd MMM y') : '')
+          : '')
+      );
+    this.pointToFn = () => this.translate.get('HOME.POINT_TO');
+    this.memberFn = (membershipTierName: string) => this.translate.get('HOME.MEMBER').pipe(
+      map(res => `${membershipTierName}${res}`)
+    );
+    this.membershipExpiryFn = (loyalty: ILoyalty) => loyalty && loyalty.membershipExpiry ?
+      this.translate.get('HOME.ACCOUNT_EXPIRE').pipe(
+        map(res => `${res}: ${this.datePipe.transform(loyalty.membershipExpiry, 'mediumDate')}`)
+      ) : of('');
+
+    this.displayPriceFn = (rewardPrice: IPrice) => this.translate.get('REWARD.POINT').pipe(
+      mergeMap(text => {
+        if (rewardPrice.price && parseFloat(rewardPrice.price) > 0) {
+          return of(`${rewardPrice.currencyCode} ${Math.floor(parseFloat(rewardPrice.price))}`);
+        }
+
+        if (rewardPrice.points && rewardPrice.points > 0) {
+          return of(`${rewardPrice.points}${text}`);
+        }
+        return of(''); // is actually 0 or invalid value default
+      })
+    );
+  }
+
+  public rewardFavoriteHandler(rewardToggled: IReward): void {
+    if (this.favDisabled) {
+      return;
+    }
+
+    this.favDisabled = true;
+
+    iif(() => (rewardToggled && (rewardToggled.favorite || false)),
+    this.rewardsService.unfavoriteReward(rewardToggled.id),
+    this.rewardsService.favoriteReward(rewardToggled.id)).pipe(
+      tap(
+        rewardChanged => {
+          this.rewards = this.rewards.pipe(
+            map(rewards => {
+              const foundIndex = rewards.findIndex(reward => reward.id === rewardToggled.id);
+              rewards[foundIndex] = rewardChanged;
+              return rewards;
+            })
+          );
+        }
+      ),
+      finalize(() => setTimeout(() => {
+        this.favDisabled = false;
+      }, 500))
+    ).subscribe();
+  }
+
 }

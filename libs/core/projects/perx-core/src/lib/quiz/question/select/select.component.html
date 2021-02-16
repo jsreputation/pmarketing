@@ -1,28 +1,33 @@
-<div class="date-wrapper" *ngIf="payload">
+<div class="select-wrapper" *ngIf="payload">
     <ng-container *ngIf="payload.multiple; else elseBlock">
         <div class="choice-container">
-            <div class="choice-content" *ngFor="let choice of payload?.choices; let i = index">
-                <mat-checkbox [(ngModel)]="selectedChoices[choice.id]" (change)="emitValue()">
-                    {{choice.title}}
-                </mat-checkbox>
-            </div>
+            <mat-checkbox
+              color="primary"
+              class="choice-box"
+              *ngFor="let choice of payload?.choices; let i = index"
+              [(ngModel)]="selectedChoices[choice.id]"
+              (change)="emitValue()">
+              <span class="span-text">
+                {{choice?.title?.text}}
+              </span>
+            </mat-checkbox>
         </div>
     </ng-container>
     <ng-template #elseBlock>
         <div class="choice-container">
-            <mat-radio-group
-                [color]="'primary'"
-                class="selection-radio-group"
-                aria-labelledby="single-selection"
-                [(ngModel)]="selectedChoice"
-                (change)="emitValue()">
-                <mat-radio-button
-                    class="selection-radio-button"
-                    *ngFor="let choice of payload?.choices"
-                    [value]="choice.id">
-                    {{choice.title}}
-                </mat-radio-button>
-            </mat-radio-group>
+          <mat-radio-group
+            [color]="'primary'"
+            class="selection-radio-group"
+            aria-labelledby="single-selection"
+            [(ngModel)]="selectedChoice"
+            (change)="emitValue()">
+            <mat-radio-button
+              class="selection-radio-button choice-box selected"
+              *ngFor="let choice of payload?.choices"
+              [value]="choice.id">
+              {{choice?.title?.text}}
+            </mat-radio-button>
+          </mat-radio-group>
         </div>
     </ng-template>
 </div>

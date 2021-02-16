@@ -13,6 +13,8 @@ import {
 import {
   HttpClientModule,
   HttpClient,
+  HTTP_INTERCEPTORS,
+  HttpBackend,
 } from '@angular/common/http';
 import {
   MatDialogModule,
@@ -66,7 +68,8 @@ import {
   AuthenticationService,
   ThemesService,
   IConfig,
-  LoyaltyModule
+  LoyaltyModule,
+  LanguageInterceptor
 } from '@perxtech/core';
 
 import * as Hammer from 'hammerjs';
@@ -78,6 +81,7 @@ import { AppComponent } from './app.component';
 import { SignUpModule } from './sign-up/sign-up.module';
 import { environment } from '../environments/environment';
 import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
+import { ErrorComponent } from './error/error.component';
 
 // https://medium.com/angular-in-depth/gestures-in-an-angular-application-dde71804c0d0
 // to override default settings
@@ -124,6 +128,8 @@ export const setLanguage = (
   () => new Promise((resolve) => {
     configService.readAppConfig().pipe(
       tap((config: IConfig<void>) => translateService.setDefaultLang(config.defaultLang || 'en')),
+      // for currentLang registering to determine lang ver of url navigation on content.component
+      tap(() => translateService.use(translateService.getBrowserLang())),
       switchMap(() => authService.getAppToken()),
       switchMap(() => themesService.getThemeSetting())
     ).toPromise().then(() => resolve());
@@ -131,11 +137,13 @@ export const setLanguage = (
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ErrorComponent
   ],
   imports: [
     ConfigModule.forRoot({ ...environment }),
     SettingsModule.forRoot({ ...environment }),
+    AuthenticationModule,
     PerxSvcGameModule.forRoot(),
     PerxGameModule,
     BrowserModule,
@@ -143,7 +151,6 @@ export const setLanguage = (
     PerxCoreModule,
     VouchersModule,
     OutcomeModule,
-    AuthenticationModule,
     SignUpModule,
     BrowserAnimationsModule,
     PerxMerchantsModule.forRoot(),
@@ -162,7 +169,7 @@ export const setLanguage = (
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        deps: [HttpClient, ConfigService, TokenStorage],
+        deps: [HttpClient, HttpBackend, ConfigService, TokenStorage],
         useClass: LanguageService
       }
     }),
@@ -182,6 +189,7 @@ export const setLanguage = (
       deps: [TokenStorage],
       useFactory: LocaleIdFactory
     },
+    { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true },
     { provide: ErrorHandler, useClass: SentryErrorHandler },
     {
       provide: HAMMER_GESTURE_CONFIG,

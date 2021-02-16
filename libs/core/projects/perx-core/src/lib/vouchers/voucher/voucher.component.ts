@@ -1,8 +1,9 @@
 import { Component, Output, EventEmitter, Input, OnChanges, SimpleChanges, OnInit } from '@angular/core';
 import { IVoucherService } from '../ivoucher.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { IVoucher, StatusLabelMapping } from '../models/voucher.model';
 import { DatePipe } from '@angular/common';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-core-voucher',
@@ -37,23 +38,29 @@ export class VoucherComponent implements OnChanges, OnInit {
   public mapping?: StatusLabelMapping;
 
   @Input()
-  public redeemLabelFn: () => string;
+  public redeemLabelFn: () => Observable<string>;
 
   @Input()
-  public expiryFn: (v: IVoucher) => string;
+  public expiryFn: (v: IVoucher) => Observable<string>;
 
   @Input()
-  public descriptionLabel: string = 'Description';
+  public descriptionLabel: Observable<string> = of('Description');
 
   @Input()
-  public tncLabel: string = 'Terms and Conditions';
+  public tncLabel: Observable<string> = of('Terms and Conditions');
 
   constructor(private vouchersService: IVoucherService, private datePipe: DatePipe) {
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes.voucherId) {
-      this.voucher$ = this.vouchersService.get(this.voucherId);
+      this.voucher$ = this.vouchersService.get(this.voucherId).pipe(
+        map((voucher: IVoucher) => {
+          const tncWithOlPadding = voucher && voucher.reward && voucher.reward.termsAndConditions.replace(/(ol>)/, 'ol' +
+            ' style="padding-inline-start:' +
+            ' 1em;">');
+          return {...voucher, reward: {...voucher.reward, termsAndConditions: tncWithOlPadding }} as IVoucher;
+        }));
     }
   }
 
@@ -63,11 +70,11 @@ export class VoucherComponent implements OnChanges, OnInit {
 
   public ngOnInit(): void {
     if (!this.redeemLabelFn) {
-      this.redeemLabelFn = () => 'REDEEM NOW';
+      this.redeemLabelFn = () => of('REDEEM NOW');
     }
 
     if (!this.expiryFn) {
-      this.expiryFn = (v: IVoucher) => `Expires on ${this.datePipe.transform(v.expiry, 'shortDate')}`;
+      this.expiryFn = (v: IVoucher) => of(`Expires on ${this.datePipe.transform(v.expiry, 'shortDate')}`);
     }
   }
 }

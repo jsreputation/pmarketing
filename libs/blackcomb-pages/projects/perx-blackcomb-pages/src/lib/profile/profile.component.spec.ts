@@ -1,3 +1,4 @@
+import { TranslateModule } from '@ngx-translate/core';
 import {
   async,
   ComponentFixture,
@@ -6,7 +7,9 @@ import {
 import {
   ILoyalty,
   LoyaltyService,
-  ProfileService
+  NotificationService,
+  ProfileService,
+  SettingsService
 } from '@perxtech/core';
 import { ProfileComponent } from './profile.component';
 import {
@@ -19,6 +22,7 @@ import {
 } from '@angular/material';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DatePipe } from '@angular/common';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 const profileServiceStub: Partial<ProfileService> = {
   whoAmI: () => of()
@@ -27,6 +31,14 @@ const profileServiceStub: Partial<ProfileService> = {
 const loyaltyServiceStub: Partial<LoyaltyService> = {
   getLoyalties: (): Observable<ILoyalty[]> => of([]),
   getLoyalty: (): Observable<ILoyalty> => of()
+};
+
+const settingsServiceStub: Partial<SettingsService> = {
+  getRemoteFlagsSettings: () => of()
+};
+
+const notificationServiceStub: Partial<NotificationService> = {
+  addSnack: () => { }
 };
 
 describe('ProfileComponent', () => {
@@ -39,12 +51,16 @@ describe('ProfileComponent', () => {
       imports: [
         MatListModule,
         MatIconModule,
-        RouterTestingModule
+        RouterTestingModule,
+        MatCheckboxModule,
+        TranslateModule
       ],
       providers: [
         DatePipe,
         { provide: ProfileService, useValue: profileServiceStub },
-        { provide: LoyaltyService, useValue: loyaltyServiceStub }
+        { provide: LoyaltyService, useValue: loyaltyServiceStub },
+        { provide: SettingsService, useValue: settingsServiceStub },
+        { provide: NotificationService, useValue: notificationServiceStub }
       ]
     })
       .compileComponents();

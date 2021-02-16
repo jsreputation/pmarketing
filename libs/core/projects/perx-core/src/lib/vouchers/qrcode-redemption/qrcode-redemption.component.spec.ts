@@ -17,6 +17,7 @@ describe('QrcodeRedemptionComponent', () => {
     id: 1,
     reward: {
       id: 1,
+      favorite: false,
       name: 'reward name',
       description: 'reward description',
       subtitle: 'sub title',
@@ -33,6 +34,7 @@ describe('QrcodeRedemptionComponent', () => {
       termsAndConditions: '',
       howToRedeem: '',
       categoryTags: [],
+      loyalty: []
     },
     state: VoucherState.issued,
     redemptionType: RedemptionType.none,

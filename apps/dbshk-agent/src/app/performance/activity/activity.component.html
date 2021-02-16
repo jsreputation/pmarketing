@@ -1,0 +1,23 @@
+<div class="activity-container" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50"
+     (scrolled)="onScroll()" [scrollWindow]="false">
+     <div *ngIf="referralCampaigns">
+          <mat-form-field appearance="fill" class="full-width__input">
+               <mat-select [value]="defaultFilterValue" placeholder="Click to filter by campaign"
+                    (selectionChange)="onFilterChange($event.value)">
+                    <mat-option value="all">All campaigns</mat-option>
+                    <ng-container *ngFor="let campaign of referralCampaigns">
+                         <mat-option [value]="campaign.value">{{campaign.name}}</mat-option>
+                    </ng-container>
+               </mat-select>
+          </mat-form-field>
+     </div>
+     <div class="event-list" *ngIf="invites">
+          <mat-list role="list">
+               <mat-list-item class="list-item" *ngFor="let invite of invites" role="listitem">
+                    <div class="time-stamp">{{invite.created_at | date:'MMM d'}}</div>
+                    <h3 matLine>Invited {{invite.invitee_name}}</h3>
+                    <p matLine class="campaign-name">{{invite.campaignName}}</p>
+               </mat-list-item>
+          </mat-list>
+     </div>
+</div>

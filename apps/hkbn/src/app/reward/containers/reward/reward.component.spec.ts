@@ -14,7 +14,7 @@ import {
   VoucherState,
   IVoucherService,
   RewardsService,
-  RedemptionType
+  RedemptionType, ThemesService, TokenStorage
 } from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
@@ -25,6 +25,13 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 describe('RewardComponent', () => {
   let component: RewardComponent;
   let fixture: ComponentFixture<RewardComponent>;
+  const themesServiceStub: Partial<ThemesService> = {
+    getThemeSetting: () => of()
+  };
+  const tokenStorageStub = {
+    getAppInfoProperty: () => null,
+    setAppInfoProperty: () => { }
+  };
 
   const mockReward: IReward = {
     id: 1,
@@ -37,7 +44,8 @@ describe('RewardComponent', () => {
     rewardBanner: 'banner',
     merchantImg: 'image',
     termsAndConditions: 'terms and conditions',
-    howToRedeem: 'string'
+    howToRedeem: 'string',
+    loyalty: []
   };
 
   const mockVoucher: Voucher = {
@@ -61,6 +69,7 @@ describe('RewardComponent', () => {
       howToRedeem: '',
       categoryTags: [],
       inventory: null,
+      loyalty: []
     },
     state: VoucherState.issued,
     redemptionType: RedemptionType.none,
@@ -109,7 +118,9 @@ describe('RewardComponent', () => {
         },
         { provide: IVoucherService, useValue: vouchersServiceStub },
         { provide: RewardsService, useValue: rewardsServiceStub },
-        { provide: LoyaltyService, useValue: loyaltyServiceStub }
+        { provide: LoyaltyService, useValue: loyaltyServiceStub },
+        { provide: ThemesService, useValue: themesServiceStub },
+        { provide: TokenStorage, useValue: tokenStorageStub }
       ],
       declarations: [RewardComponent],
     })

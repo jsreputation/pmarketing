@@ -1,9 +1,9 @@
 <div class="container">
   <div class="enlarged-qr">
-    <h2 class="enlarged-qr-title">{{"MY_QR" | translate}}</h2>
+    <h2 class="enlarged-qr-title">{{"HOME.MY_QR" | translate}}</h2>
     <qrcode *ngIf="loyalty" [qrdata]="loyalty.membershipIdentifier" [size]="250"></qrcode>
   </div>
   <div class="button-container">
-    <button mat-raised-button color="primary" routerLink="/" class="carry-out">{{"CLOSE" | translate}}</button>
+    <button mat-raised-button color="primary" routerLink="/" class="carry-out">{{"HOME.CLOSE" | translate}}</button>
   </div>
 </div>

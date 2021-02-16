@@ -13,6 +13,8 @@ import { RewardsService } from '../../rewards/rewards.service';
 import { By } from '@angular/platform-browser';
 import { DatePipe } from '@angular/common';
 import { RedemptionType } from '../../perx-core.models';
+import { TranslateModule } from '@ngx-translate/core';
+import { IReward } from '../../rewards/models/reward.model';
 
 describe('VouchersComponent', () => {
   let component: VouchersComponent;
@@ -25,30 +27,34 @@ describe('VouchersComponent', () => {
     getMerchant: () => of()
   };
 
+  const mockReward: IReward = {
+    id: 21,
+    name: '',
+    favorite: false,
+    description: '',
+    subtitle: '',
+    validFrom: new Date(),
+    validTo: new Date(),
+    sellingFrom: new Date(),
+    rewardThumbnail: '',
+    rewardBanner: '',
+    merchantImg: '',
+    rewardPrice: [],
+    merchantId: 1,
+    merchantName: '',
+    merchantWebsite: '',
+    termsAndConditions: '',
+    howToRedeem: '',
+    categoryTags: [],
+    loyalty: []
+  };
+
   const mockRedeemedVoucherDetail: IVoucher = {
     id: 21,
     expiry: null,
     state: VoucherState.redeemed,
     redemptionType: RedemptionType.txtCode,
-    reward: {
-      id: 21,
-      name: '',
-      description: '',
-      subtitle: '',
-      validFrom: new Date(),
-      validTo: new Date(),
-      sellingFrom: new Date(),
-      rewardThumbnail: '',
-      rewardBanner: '',
-      merchantImg: '',
-      rewardPrice: [],
-      merchantId: 1,
-      merchantName: '',
-      merchantWebsite: '',
-      termsAndConditions: '',
-      howToRedeem: '',
-      categoryTags: [],
-    },
+    reward: mockReward,
   };
 
   const mockIssuedVoucherDetail: IVoucher = {
@@ -56,25 +62,7 @@ describe('VouchersComponent', () => {
     expiry: null,
     state: VoucherState.issued,
     redemptionType: RedemptionType.txtCode,
-    reward: {
-      id: 21,
-      name: '',
-      description: '',
-      subtitle: '',
-      validFrom: new Date(),
-      validTo: new Date(),
-      sellingFrom: new Date(),
-      rewardThumbnail: '',
-      rewardBanner: '',
-      merchantImg: '',
-      rewardPrice: [],
-      merchantId: 1,
-      merchantName: '',
-      merchantWebsite: '',
-      termsAndConditions: '',
-      howToRedeem: '',
-      categoryTags: [],
-    },
+    reward: mockReward,
   };
 
   const voucherServiceStub: Partial<IVoucherService> = {
@@ -89,7 +77,8 @@ describe('VouchersComponent', () => {
         MatRippleModule,
         RouterTestingModule,
         VouchersModule,
-        ConfigModule.forRoot({})
+        ConfigModule.forRoot({}),
+        TranslateModule.forRoot()
       ],
       providers: [
         DatePipe,
@@ -113,7 +102,7 @@ describe('VouchersComponent', () => {
 
   it('should remain if voucher is redeemed', () => {
     // tslint:disable-next-line: deprecation
-    jest.spyOn(component.route, 'emit').mockImplementation(() => {});
+    jest.spyOn(component.route, 'emit').mockImplementation(() => { });
     component.onClick(mockRedeemedVoucherDetail);
     // tslint:disable-next-line: deprecation
     expect(component.route.emit).not.toHaveBeenCalled();
@@ -121,7 +110,7 @@ describe('VouchersComponent', () => {
 
   it('should emit with voucher id if voucher is issued', () => {
     // tslint:disable-next-line: deprecation
-    jest.spyOn(component.route, 'emit').mockImplementation(() => {});
+    jest.spyOn(component.route, 'emit').mockImplementation(() => { });
     component.onClick(mockIssuedVoucherDetail);
     // tslint:disable-next-line: deprecation
     expect(component.route.emit).toHaveBeenCalledWith(21);
@@ -134,53 +123,17 @@ describe('VouchersComponent', () => {
         expiry: null,
         state: VoucherState.redeemed,
         redemptionType: RedemptionType.txtCode,
-        reward: {
-          id: 1,
-          name: '',
-          description: '',
-          subtitle: '',
-          validFrom: new Date(),
-          validTo: new Date(),
-          sellingFrom: new Date(),
-          rewardThumbnail: '',
-          rewardBanner: '',
-          merchantImg: '',
-          rewardPrice: [],
-          merchantId: 1,
-          merchantName: '',
-          merchantWebsite: '',
-          termsAndConditions: '',
-          howToRedeem: '',
-          categoryTags: [],
-        }
+        reward: { ...mockReward, id: 1 }
       },
       {
         id: 2,
         expiry: null,
         state: VoucherState.redeemed,
         redemptionType: RedemptionType.txtCode,
-        reward: {
-          id: 2,
-          name: '',
-          description: '',
-          subtitle: '',
-          validFrom: new Date(),
-          validTo: new Date(),
-          sellingFrom: new Date(),
-          rewardThumbnail: '',
-          rewardBanner: '',
-          merchantImg: '',
-          rewardPrice: [],
-          merchantId: 1,
-          merchantName: '',
-          merchantWebsite: '',
-          termsAndConditions: '',
-          howToRedeem: '',
-          categoryTags: [],
-        }
+        reward: { ...mockReward, id: 2 }
       }
     ];
-    component.vouchers$ = of(vouchers);
+    component.vouchers = vouchers;
     fixture.detectChanges();
     const voucher = fixture.debugElement.queryAll(By.css('.voucher-content'));
     expect(voucher.length).toBe(2);
@@ -193,53 +146,17 @@ describe('VouchersComponent', () => {
         expiry: null,
         state: VoucherState.redeemed,
         redemptionType: RedemptionType.none,
-        reward: {
-          id: 1,
-          name: 'First Voucher',
-          description: '',
-          subtitle: '',
-          validFrom: new Date(),
-          validTo: new Date(),
-          sellingFrom: new Date(),
-          rewardThumbnail: '',
-          rewardBanner: '',
-          merchantImg: '',
-          rewardPrice: [],
-          merchantId: 1,
-          merchantName: '',
-          merchantWebsite: '',
-          termsAndConditions: '',
-          howToRedeem: '',
-          categoryTags: [],
-        }
+        reward: { ...mockReward, id: 1, name: 'First Voucher' }
       },
       {
         id: 2,
         expiry: null,
         state: VoucherState.redeemed,
         redemptionType: RedemptionType.none,
-        reward: {
-          id: 2,
-          name: 'Second Voucher',
-          description: '',
-          subtitle: '',
-          validFrom: new Date(),
-          validTo: new Date(),
-          sellingFrom: new Date(),
-          rewardThumbnail: '',
-          rewardBanner: '',
-          merchantImg: '',
-          rewardPrice: [],
-          merchantId: 1,
-          merchantName: '',
-          merchantWebsite: '',
-          termsAndConditions: '',
-          howToRedeem: '',
-          categoryTags: [],
-        }
+        reward: { ...mockReward, id: 2, name: 'Second Voucher' }
       }
     ];
-    component.vouchers$ = of(vouchers);
+    component.vouchers = vouchers;
     fixture.detectChanges();
     const voucher = fixture.debugElement.queryAll(By.css('.voucher-details'))[0];
     expect(voucher.query(By.css('h1')).nativeElement.textContent.trim()).toBe('First Voucher');
@@ -252,53 +169,17 @@ describe('VouchersComponent', () => {
         expiry: null,
         state: VoucherState.redeemed,
         redemptionType: RedemptionType.none,
-        reward: {
-          id: 1,
-          name: 'First voucher',
-          description: '',
-          subtitle: '',
-          validFrom: new Date(),
-          validTo: new Date(),
-          sellingFrom: new Date(),
-          rewardThumbnail: '',
-          rewardBanner: '',
-          merchantImg: '',
-          rewardPrice: [],
-          merchantId: 1,
-          merchantName: 'Perx',
-          merchantWebsite: '',
-          termsAndConditions: '',
-          howToRedeem: '',
-          categoryTags: [],
-        }
+        reward: { ...mockReward, id: 1, name: 'First Voucher', merchantName: 'Perx' }
       },
       {
         id: 2,
         expiry: null,
         state: VoucherState.redeemed,
         redemptionType: RedemptionType.none,
-        reward: {
-          id: 2,
-          name: 'Second Voucher',
-          description: '',
-          subtitle: '',
-          validFrom: new Date(),
-          validTo: new Date(),
-          sellingFrom: new Date(),
-          rewardThumbnail: '',
-          rewardBanner: '',
-          merchantImg: '',
-          rewardPrice: [],
-          merchantId: 1,
-          merchantName: '',
-          merchantWebsite: '',
-          termsAndConditions: '',
-          howToRedeem: '',
-          categoryTags: [],
-        }
+        reward: { ...mockReward, id: 2, name: 'Second Voucher' }
       }
     ];
-    component.vouchers$ = of(vouchers);
+    component.vouchers = vouchers;
     fixture.detectChanges();
     const voucher = fixture.debugElement.queryAll(By.css('.voucher-details'))[0];
     expect(voucher.queryAll(By.css('p'))[0].nativeElement.textContent.trim()).toBe('Perx');
@@ -311,50 +192,14 @@ describe('VouchersComponent', () => {
         expiry: null,
         state: VoucherState.redeemed,
         redemptionType: RedemptionType.none,
-        reward: {
-          id: 1,
-          name: 'First voucher',
-          description: 'Test description',
-          subtitle: '',
-          validFrom: new Date(),
-          validTo: new Date(),
-          sellingFrom: new Date(),
-          rewardThumbnail: '',
-          rewardBanner: '',
-          merchantImg: '',
-          rewardPrice: [],
-          merchantId: 1,
-          merchantName: '',
-          merchantWebsite: '',
-          termsAndConditions: '',
-          howToRedeem: '',
-          categoryTags: [],
-        }
+        reward: { ...mockReward, id: 1, name: 'First Voucher', description: 'Test description' }
       },
       {
         id: 2,
         expiry: null,
         state: VoucherState.redeemed,
         redemptionType: RedemptionType.none,
-        reward: {
-          id: 2,
-          name: 'Second Voucher',
-          description: '',
-          subtitle: '',
-          validFrom: new Date(),
-          validTo: new Date(),
-          sellingFrom: new Date(),
-          rewardThumbnail: '',
-          rewardBanner: '',
-          merchantImg: '',
-          rewardPrice: [],
-          merchantId: 1,
-          merchantName: '',
-          merchantWebsite: '',
-          termsAndConditions: '',
-          howToRedeem: '',
-          categoryTags: [],
-        }
+        reward: { ...mockReward, id: 2, name: 'Second Voucher' }
       }
     ];
     component.vouchers$ = of(vouchersMock);
@@ -375,53 +220,17 @@ describe('VouchersComponent', () => {
         expiry: null,
         state: VoucherState.redeemed,
         redemptionType: RedemptionType.none,
-        reward: {
-          id: 1,
-          name: 'First voucher',
-          description: 'Test description',
-          subtitle: '',
-          validFrom: new Date(),
-          validTo: new Date(),
-          sellingFrom: new Date(),
-          rewardThumbnail: '',
-          rewardBanner: '',
-          merchantImg: '',
-          rewardPrice: [],
-          merchantId: 1,
-          merchantName: '',
-          merchantWebsite: '',
-          termsAndConditions: '',
-          howToRedeem: '',
-          categoryTags: [],
-        }
+        reward: { ...mockReward, id: 1, name: 'First Voucher', description: 'Test description' }
       },
       {
         id: 2,
         expiry: null,
         state: VoucherState.issued,
         redemptionType: RedemptionType.none,
-        reward: {
-          id: 2,
-          name: 'Second Voucher',
-          description: '',
-          subtitle: '',
-          validFrom: new Date(),
-          validTo: new Date(),
-          sellingFrom: new Date(),
-          rewardThumbnail: '',
-          rewardBanner: '',
-          merchantImg: '',
-          rewardPrice: [],
-          merchantId: 1,
-          merchantName: '',
-          merchantWebsite: '',
-          termsAndConditions: '',
-          howToRedeem: '',
-          categoryTags: [],
-        }
+        reward: { ...mockReward, id: 2, name: 'Second Voucher' }
       }
     ];
-    component.vouchers$ = of(vouchers);
+    component.vouchers = vouchers;
     component.mapping = {
       issued: 'Approved',
       redeemed: 'Redeemed',
@@ -445,53 +254,17 @@ describe('VouchersComponent', () => {
         expiry: null,
         state: VoucherState.redeemed,
         redemptionType: RedemptionType.none,
-        reward: {
-          id: 1,
-          name: 'First voucher',
-          description: 'Test description',
-          subtitle: '',
-          validFrom: new Date(),
-          validTo: new Date(),
-          sellingFrom: new Date(),
-          rewardThumbnail: '',
-          rewardBanner: '',
-          merchantImg: '',
-          rewardPrice: [],
-          merchantId: 1,
-          merchantName: '',
-          merchantWebsite: '',
-          termsAndConditions: '',
-          howToRedeem: '',
-          categoryTags: [],
-        }
+        reward: { ...mockReward, id: 1, name: 'First Voucher', description: 'Test description' }
       },
       {
         id: 2,
         expiry: null,
         state: VoucherState.issued,
         redemptionType: RedemptionType.none,
-        reward: {
-          id: 2,
-          name: 'Second Voucher',
-          description: '',
-          subtitle: '',
-          validFrom: new Date(),
-          validTo: new Date(),
-          sellingFrom: new Date(),
-          rewardThumbnail: '',
-          rewardBanner: '',
-          merchantImg: '',
-          rewardPrice: [],
-          merchantId: 1,
-          merchantName: '',
-          merchantWebsite: '',
-          termsAndConditions: '',
-          howToRedeem: '',
-          categoryTags: [],
-        }
+        reward: { ...mockReward, id: 2, name: 'Second Voucher' }
       }
     ];
-    component.vouchers$ = of(vouchers);
+    component.vouchers = vouchers;
     component.mapping = {
       issued: 'Approved',
       redeemed: 'Redeemed',

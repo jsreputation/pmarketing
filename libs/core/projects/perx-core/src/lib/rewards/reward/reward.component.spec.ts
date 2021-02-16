@@ -3,6 +3,8 @@ import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core
 import { RewardComponent } from './reward.component';
 import { IReward } from '../models/reward.model';
 import { of } from 'rxjs';
+import { UtilsModule } from '../../utils/utils.module';
+import { MatIconModule } from '@angular/material';
 
 describe('RewardComponent', () => {
   let component: RewardComponent;
@@ -11,6 +13,7 @@ describe('RewardComponent', () => {
   const mockReward: IReward = {
     id: 1,
     name: 'Get a Free Coke',
+    favorite: false,
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
     subtitle: 'string',
     validFrom: new Date('2018-12-16T03:24:00'),
@@ -22,12 +25,17 @@ describe('RewardComponent', () => {
     merchantName: 'Pizza Hut',
     termsAndConditions: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
     howToRedeem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    merchantId: 2
+    merchantId: 2,
+    loyalty: []
   };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RewardComponent]
+      declarations: [RewardComponent],
+      imports: [
+        UtilsModule,
+        MatIconModule
+      ],
     })
       .compileComponents();
   }));
@@ -35,6 +43,7 @@ describe('RewardComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RewardComponent);
     component = fixture.componentInstance;
+    component.rewardInitial$ = of(mockReward);
     fixture.detectChanges();
   });
 
@@ -43,7 +52,6 @@ describe('RewardComponent', () => {
   });
 
   it('reward name should be displayed', fakeAsync(() => {
-    component.reward$ = of(mockReward);
     component.ngOnInit();
     fixture.detectChanges();
     tick();

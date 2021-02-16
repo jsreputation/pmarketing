@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ListComponent } from './list.component';
 import { VouchersModule, IVoucherService } from '@perxtech/core';
 import { of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('ListComponent', () => {
   let component: ListComponent;
@@ -15,7 +16,8 @@ describe('ListComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ListComponent],
       imports: [
-        VouchersModule
+        VouchersModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: IVoucherService, useValue: vouchersServiceStub }

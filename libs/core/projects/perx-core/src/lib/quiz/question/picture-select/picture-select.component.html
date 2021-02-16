@@ -1,13 +1,46 @@
 <div class="choice-container">
-    <div class="choice-content" *ngFor="let choice of payload?.choices; let i = index">
-        <div 
-            class="choice-image"
-            [ngClass]="isSelected(i) ? 'selected' : ''"
-            (click)="onSelect(i)">
-            <img class="image" [src]="choice?.img_url" [alt]="choice?.text">
-        </div>
-        <div class="choice-label">
-            {{ choice?.text }}
-        </div>
+  <ng-container *ngIf="payload && payload.multiple; else elseBlock">
+    <div class="choice-content"
+         [ngClass]="isSelected(choice.answer_id) ? 'selected' : ''"
+         *ngFor="let choice of payload?.choices; let i = index">
+      <mat-checkbox
+        [ngClass]="choice?.answer?.en?.image?.value?.image_url ? 'choice-image' : 'choice-box'"
+        [color]="'primary'"
+        (click)="onSelect(choice.answer_id)">
+        <img
+          *ngIf="choice?.answer?.en?.image?.value?.image_url else textLabel"
+          class="image" [src]="choice?.answer?.en?.image?.value?.image_url" [alt]="choice?.answer?.en?.text">
+        <ng-template #textLabel>
+          <div class="span-text-pic">
+            {{ choice?.answer?.en?.text }}
+          </div>
+        </ng-template>
+      </mat-checkbox>
+      <div class="choice-label" *ngIf="choice?.answer?.en?.image?.value?.image_url">
+          {{ choice?.answer?.en?.text }}
+      </div>
     </div>
+  </ng-container>
+  <ng-template #elseBlock>
+    <div class="choice-content"
+         [ngClass]="isSelected(choice.answer_id) ? 'selected' : ''"
+         *ngFor="let choice of payload?.choices; let i = index">
+      <mat-radio-button
+        [ngClass]="choice?.answer?.en?.image?.value?.image_url ? 'choice-image' : 'choice-box'"
+        [color]="'primary'"
+        [labelPosition]="'before'"
+        (click)="onSelect(choice.answer_id)">
+        <img *ngIf="choice?.answer?.en?.image?.value?.image_url; else textLabel"
+             class="image" [src]="choice?.answer?.en?.image?.value?.image_url"
+             [alt]="choice?.answer?.en?.text">
+        <ng-template #textLabel>
+          {{ choice?.answer?.en?.text }}
+        </ng-template>
+      </mat-radio-button>
+      <div class="choice-label" *ngIf="choice?.answer?.en?.image?.value?.image_url">
+        {{ choice?.answer?.en?.text }}
+      </div>
+    </div>
+  </ng-template>
 </div>
+

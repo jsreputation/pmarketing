@@ -7,6 +7,7 @@ import {
   GameModule,
   IGameService,
   GameType,
+  ICampaignService,
   NotificationService,
   IPlayOutcome,
   IGame,
@@ -54,6 +55,9 @@ const configServiceStub: Partial<ConfigService> = {
     baseHref: ''
   })
 };
+const campaignServiceStub: Partial<ICampaignService> = {
+  getCampaign: () => of()
+};
 describe('GameComponent', () => {
   let component: GameComponent;
   let fixture: ComponentFixture<GameComponent>;
@@ -80,6 +84,7 @@ describe('GameComponent', () => {
         { provide: Location, useValue: locationStub },
         { provide: NotificationService, useValue: notificationServiceStub },
         { provide: ConfigService, useValue: configServiceStub },
+        { provide: ICampaignService, useValue: campaignServiceStub },
       ]
     })
       .compileComponents();
@@ -109,10 +114,10 @@ describe('GameComponent', () => {
   }));
 
   it('should go back on dialogClosed', () => {
-    const location = TestBed.get<Location>(Location as Type<Location>);
-    const locationSpy = spyOn(location, 'back');
+    const router: Router = fixture.debugElement.injector.get(Router);
+    spyOn(router, 'navigate').and.callThrough();
     component.dialogClosed();
-    expect(locationSpy).toHaveBeenCalled();
+    expect(router.navigate).toHaveBeenCalledWith(['/home']);
   });
 
   it('should call play on game completed', fakeAsync(() => {

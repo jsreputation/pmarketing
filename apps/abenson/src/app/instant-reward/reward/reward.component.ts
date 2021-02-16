@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { iif, Observable } from 'rxjs';
 import { RewardsService, IReward, PopupComponent } from '@perxtech/core';
 import { MatDialog } from '@angular/material';
+import { tap, finalize, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-reward',
@@ -11,6 +12,7 @@ import { MatDialog } from '@angular/material';
 export class RewardComponent implements OnInit {
   public title: string = 'Headline';
   public subTitle: string = 'Sub-Headline';
+  public favDisabled: boolean  = false;
 
   public rewards$: Observable<IReward[]>;
 
@@ -35,5 +37,32 @@ export class RewardComponent implements OnInit {
         `Reward Name: ${reward.name}`,
     };
     this.dialog.open(PopupComponent, { data });
+  }
+
+  public rewardFavoriteHandler(rewardToggled: IReward): void {
+    if (this.favDisabled) {
+      return;
+    }
+
+    this.favDisabled = true;
+
+    iif(() => (rewardToggled && (rewardToggled.favorite || false)),
+    this.rewardsService.unfavoriteReward(rewardToggled.id),
+    this.rewardsService.favoriteReward(rewardToggled.id)).pipe(
+      tap(
+        rewardChanged => {
+          this.rewards$ = this.rewards$.pipe(
+            map(rewards => {
+              const foundIndex = rewards.findIndex(reward => reward.id === rewardToggled.id);
+              rewards[foundIndex] = rewardChanged;
+              return rewards;
+            })
+          );
+        }
+      ),
+      finalize(() => setTimeout(() => {
+        this.favDisabled = false;
+      }, 500))
+    ).subscribe();
   }
 }

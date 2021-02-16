@@ -2,40 +2,40 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IReward, ILoyalty, LoyaltyService, RewardsService, IProfile, ITabConfigExtended } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable, of, forkJoin, BehaviorSubject } from 'rxjs';
-import { map, flatMap, finalize } from 'rxjs/operators';
+import { Observable, of, forkJoin, BehaviorSubject, iif } from 'rxjs';
+import { map, flatMap, finalize, tap } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 
 const stubTabs: ITabConfigExtended[] = [
   {
     filterKey: null,
     filterValue: null,
-    tabName: 'ALL',
+    tabName: 'HOME.ALL',
     rewardsList: null,
     rewardsType: null
   }
   , {
     filterKey: null,
     filterValue: null,
-    tabName: 'HOME+',
+    tabName: 'HOME.HOME+',
     rewardsList: null,
     rewardsType: 'Home+'
   }, {
     filterKey: null,
     filterValue: null,
-    tabName: 'HKBN',
+    tabName: 'HOME.HKBN',
     rewardsList: null,
     rewardsType: 'HKBN'
   }, {
     filterKey: null,
     filterValue: null,
-    tabName: 'HUNG_FOOK_TONG',
+    tabName: 'HOME.HUNG_FOOK_TONG',
     rewardsList: null,
     rewardsType: 'Hung Fook Tong'
   }, {
     filterKey: null,
     filterValue: null,
-    tabName: 'BIG_BIG_SHOP',
+    tabName: 'HOME.BIG_BIG_SHOP',
     rewardsList: null,
     rewardsType: 'big big shop'
   }
@@ -48,13 +48,17 @@ const stubTabs: ITabConfigExtended[] = [
 })
 export class HomeComponent implements OnInit {
   public loyalty: ILoyalty;
-  public subTitleFn: (loyalty: ILoyalty) => string;
-  public titleFn: (profile: IProfile) => string;
-  public summaryExpiringFn: (loyalty: ILoyalty) => string;
+  public subTitleFn: (loyalty: ILoyalty) => Observable<string>;
+  public titleFn: (profile: IProfile) => Observable<string>;
+  public summaryExpiringFn: (loyalty: ILoyalty) => Observable<string>;
+  public pointToFn: () => Observable<string>;
+  public memberFn: (membershipTierName: string) => Observable<string>;
+  public membershipExpiryFn: (loyalty: ILoyalty) => Observable<string>;
   public rewards$: Observable<IReward[]>;
 
   public tabs$: BehaviorSubject<ITabConfigExtended[]> = new BehaviorSubject<ITabConfigExtended[]>([]);
   public staticTab: ITabConfigExtended[];
+  public favDisabled: boolean  = false;
   constructor(
     private router: Router,
     private loyaltyService: LoyaltyService,
@@ -76,18 +80,7 @@ export class HomeComponent implements OnInit {
         (loyalty: ILoyalty) => {
           this.loyalty = loyalty;
         });
-    this.translate.get(['YOU_HAVE', 'HELLO', 'POINTS_EXPITING'])
-      .subscribe((res: any) => {
-        this.subTitleFn = () => res.YOU_HAVE;
-        this.titleFn = (profile: IProfile) => `${res.HELLO} ${profile.lastName},`;
-        this.summaryExpiringFn = (loyalty: ILoyalty) =>
-          loyalty && loyalty.expiringPoints && loyalty.expiringPoints.length && loyalty.expiringPoints[0].points &&
-            loyalty.expiringPoints[0].points !== 0 ? res.POINTS_EXPITING
-              .replace('{{points}}', (loyalty.expiringPoints[0].points ? loyalty.expiringPoints[0].points : 0)
-                .toString())
-              .replace('{{date}}', loyalty.expiringPoints[0].expireDate ?
-                this.datePipe.transform(loyalty.expiringPoints[0].expireDate, 'd MMM y') : '') : '';
-      });
+    this.initTranslate();
 
   }
 
@@ -116,5 +109,57 @@ export class HomeComponent implements OnInit {
         )
       )
     ).subscribe(() => this.tabs$.next(this.staticTab));
+  }
+
+  private initTranslate(): void {
+    this.subTitleFn = () => this.translate.get('HOME.YOU_HAVE');
+    this.titleFn = (profile: IProfile) => this.translate.get('HOME.HELLO').pipe(
+      map(res => `${res}${profile.lastName},`)
+    );
+    this.summaryExpiringFn = (loyalty: ILoyalty) =>
+      this.translate.get('HOME.POINTS_EXPIRING').pipe(
+        map(res => loyalty && loyalty.expiringPoints && loyalty.expiringPoints.length && loyalty.expiringPoints[0].points &&
+          loyalty.expiringPoints[0].points !== 0 ?
+          res
+            .replace('{{points}}', (loyalty.expiringPoints[0].points ? loyalty.expiringPoints[0].points : 0).toString())
+            .replace('{{date}}', loyalty.expiringPoints[0].expireDate ?
+              this.datePipe.transform(loyalty.expiringPoints[0].expireDate, 'd MMM y') : '')
+          : '')
+      );
+    this.pointToFn = () => this.translate.get('HOME.POINT_TO');
+    this.memberFn = (membershipTierName: string) => this.translate.get([membershipTierName, 'HOME.MEMBER']).pipe(
+      map(res => `${res[membershipTierName]}${res['HOME.MEMBER']}`)
+    );
+    this.membershipExpiryFn = (loyalty: ILoyalty) => loyalty && loyalty.membershipExpiry ?
+      this.translate.get('HOME.ACCOUNT_EXPIRE').pipe(
+        map(res => `${res}: ${this.datePipe.transform(loyalty.membershipExpiry, 'mediumDate')}`)
+      ) : of('');
+  }
+
+  public rewardFavoriteHandler(rewardToggled: IReward): void {
+    if (this.favDisabled) {
+      return;
+    }
+
+    this.favDisabled = true;
+
+    iif(() => (rewardToggled && (rewardToggled.favorite || false)),
+    this.rewardsService.unfavoriteReward(rewardToggled.id),
+    this.rewardsService.favoriteReward(rewardToggled.id)).pipe(
+      tap(
+        rewardChanged => {
+          this.rewards$ = this.rewards$.pipe(
+            map(rewards => {
+              const foundIndex = rewards.findIndex(reward => reward.id === rewardToggled.id);
+              rewards[foundIndex] = rewardChanged;
+              return rewards;
+            })
+          );
+        }
+      ),
+      finalize(() => setTimeout(() => {
+        this.favDisabled = false;
+      }, 500))
+    ).subscribe();
   }
 }

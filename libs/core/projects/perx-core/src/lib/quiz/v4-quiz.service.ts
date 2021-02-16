@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
-  Observable,
+  Observable, of,
   ReplaySubject,
   Subject
 } from 'rxjs';
 import {
+  catchError,
   map,
   switchMap
 } from 'rxjs/operators';
@@ -13,14 +14,16 @@ import { oc } from 'ts-optchain';
 import { Asset } from '../game/v4-game.service';
 import {
   IQAnswer,
-  IQQuestion,
   IQuiz,
   IQuizOutcome,
+  ITimeConfig,
   QuizMode,
-  QuizQuestionType
+  QuizQuestionType,
+  TimerType
 } from './models/quiz.model';
 import {
   IAnswerResult,
+  IQQuestion,
   QuizService
 } from './quiz.service';
 import { ConfigService } from '../config/config.service';
@@ -37,31 +40,40 @@ const enum V4QuizMode {
 export interface QuizDisplayProperties {
   title: string;
   questions: {
-    question: { [k: string]: string };
-    description: { [k: string]: string };
+    question: { [k: string]: { text: string } };
+    description: { [k: string]: { text: string } };
     id: string;
     required: boolean;
     payload: any;
   }[];
   landing_page: {
-    body: string;
+    body: { en: { text: string } };
     media?: { youtube?: string; };
-    heading: string;
-    button_text: string;
-    sub_heading: string;
+    button_text: { en: { text: string } };
   };
   background_image?: Asset;
   card_image?: Asset;
   quiz_interaction: V4QuizMode;
   header?: {
     value?: {
-      title?: string;
-      description?: string;
+      title?: { [k: string]: { text: string } };
+      description?: { [k: string]: { text: string } };
     };
   };
-  headline_text?: string;
-  body_text?: string;
-  button_text?: string;
+  timer_count: number;
+  timer_enabled: boolean;
+  timer_type: TimerType;
+  nooutcome?: {
+    title?: string;
+    description?: string;
+    button_text?: string;
+  };
+  outcome?: {
+    title?: string;
+    description?: string;
+    button_text?: string;
+    outcome_image: Asset;
+  };
 }
 
 interface V4NextMoveResponse {
@@ -141,19 +153,19 @@ interface V4GamesResponse {
 })
 export class V4QuizService implements QuizService {
   private baseUrl$: Subject<string> = new ReplaySubject(1);
+  private lang: string;
 
   constructor(
     private http: HttpClient,
     configService: ConfigService
   ) {
     configService.readAppConfig().subscribe(
-      (config: IConfig<void>) => {
-        this.baseUrl$.next(config.apiHost);
-      });
+      (config: IConfig<any>) => this.baseUrl$.next(config.apiHost));
   }
 
   @Cacheable({})
   public getQuizFromCampaign(campaignId: number, lang: string = 'en'): Observable<IQuiz> {
+    lang = this.lang ? this.lang : lang;
     return this.baseUrl$.pipe(
       switchMap(baseUrl => this.http.get<V4GamesResponse>(`${baseUrl}/v4/campaigns/${campaignId}/games`)),
       map((res) => res.data),
@@ -189,28 +201,54 @@ export class V4QuizService implements QuizService {
           };
         });
         let outcome: IQuizOutcome | undefined;
-        if (oc(game).display_properties.headline_text() ||
-          oc(game).display_properties.body_text() ||
-          oc(game).display_properties.button_text()) {
+        if (oc(game).display_properties.outcome.title() ||
+          oc(game).display_properties.outcome.description() ||
+          oc(game).display_properties.outcome.button_text() ||
+          oc(game).display_properties.outcome.outcome_image.value.image_url()) {
           outcome = {
-            title: oc(game).display_properties.headline_text(''),
-            subTitle: oc(game).display_properties.body_text(''),
-            button: oc(game).display_properties.button_text('')
+            title: oc(game).display_properties.outcome.title(''),
+            subTitle: oc(game).display_properties.outcome.description(''),
+            button: oc(game).display_properties.outcome.button_text(''),
+            image: oc(game).display_properties.outcome.outcome_image.value.image_url('')
           };
+        }
+        let noOutcome: IQuizOutcome | undefined;
+        if (oc(game).display_properties.nooutcome.title() ||
+          oc(game).display_properties.nooutcome.description() ||
+          oc(game).display_properties.nooutcome.button_text()) {
+          noOutcome = {
+            title: oc(game).display_properties.nooutcome.title(''),
+            subTitle: oc(game).display_properties.nooutcome.description(''),
+            button: oc(game).display_properties.nooutcome.button_text('')
+          };
+        }
+        const timeConfig: ITimeConfig = {};
+        if (oc(game).display_properties.timer_enabled()) {
+          // set defaults if timer_enabled and for some case cant fetch the type and count property (unlikely)
+          timeConfig.timerType = oc(game).display_properties.timer_type(TimerType.countDown);
+          timeConfig.timerCountSeconds = oc(game).display_properties.timer_count(120);
         }
         return {
           id: game.id,
           campaignId: game.campaign_id,
-          title: oc(game).display_properties.header.value.title(''),
-          subTitle: oc(game).display_properties.header.value.description(),
+          // need to typecast directly because library return TSOC type, will resolve and be clean when update angular w/
+          // TS optional chaining
+          title: (oc(game).display_properties.header.value.title() ?
+            oc(game).display_properties.header.value.title[lang]() :
+            oc(game).display_properties.header.value.title.en()) as { text: string },
+          subTitle: (oc(game).display_properties.header.value.description() ?
+            oc(game).display_properties.header.value.description[lang]() :
+            oc(game).display_properties.header.value.description.en()) as { text: string },
           results: {
-            outcome
+            outcome,
+            noOutcome
           },
           questions,
           mode,
           backgroundImgUrl: patchUrl(oc(game).display_properties.background_image.value.image_url('')),
           cardBackgroundImgUrl: patchUrl(oc(game).display_properties.card_image.value.image_url('')),
-          remainingNumberOfTries: game.number_of_tries
+          remainingNumberOfTries: game.number_of_tries,
+          timeConfig
         };
       })
     );
@@ -223,6 +261,21 @@ export class V4QuizService implements QuizService {
     );
   }
 
+  public postFinalQuizAnswer(moveId: number): Observable<any> {
+    // idk what thing is returned yet, i will see and then maybe map it into IAnswerResult
+    // dk what is returned bcz keep fail
+    return this.baseUrl$.pipe(
+      switchMap(baseUrl => this.http.put<V4QuizAnswerResponse>(`${baseUrl}/v4/game_transactions/${moveId}/finish`, {})),
+      map((answerResponse: V4QuizAnswerResponse) => {
+        if (answerResponse.data.outcomes && answerResponse.data.outcomes.length) {
+          return { rewardAcquired: true };
+        }
+        return { rewardAcquired: false };
+      }),
+      catchError(_ => of({ rewardAcquired: false }))
+    );
+  }
+
   public postQuizAnswer(answer: IQAnswer, moveId: number): Observable<IAnswerResult> {
     const payload: V4QuizAnswerRequest = {
       answer: {
@@ -232,7 +285,7 @@ export class V4QuizService implements QuizService {
       }
     };
     return this.baseUrl$.pipe(
-      switchMap(baseUrl => this.http.put<V4QuizAnswerResponse>(`${baseUrl}/v4/game_transactions/${moveId}/answer_quiz`, payload)),
+      switchMap(baseUrl => this.http.put<V4QuizAnswerResponse>(`${baseUrl}/v4/game_transactions/${moveId}/answer`, payload)),
       map(res => {
         const result: V4AnswerResponse | undefined = res.data.answers.find(ans => answer.questionId === ans.question_id);
         const points: number = oc(result).score(oc(result).is_correct() ? 1 : 0) || 0;

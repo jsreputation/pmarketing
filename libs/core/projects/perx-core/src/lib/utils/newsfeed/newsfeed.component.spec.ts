@@ -1,8 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule, MatCardModule, MatDialogModule, MatDialog } from '@angular/material';
 import { NewsfeedComponent } from './newsfeed.component';
-import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 import { TranslateModule } from '@ngx-translate/core';
+import { SettingsService } from '../../settings/settings.service';
+import { of } from 'rxjs';
+import {
+  SafeHtmlPipe,
+  StripHtmlPipe
+} from '@perxtech/core';
+
+
+const settingsServiceStub: Partial<SettingsService> = {
+  getRssFeeds: () => of(),
+  getRemoteFlagsSettings: () => of()
+};
 
 describe('NewsfeedComponent', () => {
   let component: NewsfeedComponent;
@@ -30,13 +41,19 @@ describe('NewsfeedComponent', () => {
   ];
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [NewsfeedComponent],
+      declarations: [
+        NewsfeedComponent,
+        SafeHtmlPipe,
+        StripHtmlPipe
+      ],
       imports: [
         MatCardModule,
         MatButtonModule,
-        NgxMultiLineEllipsisModule,
         MatDialogModule,
         TranslateModule.forRoot()
+      ],
+      providers: [
+        { provide: SettingsService, useValue: settingsServiceStub },
       ]
     })
       .compileComponents();
@@ -57,25 +74,5 @@ describe('NewsfeedComponent', () => {
     const openSpy = spyOn(dialog, 'open');
     component.readMore(items[0]);
     expect(openSpy).toHaveBeenCalled();
-  });
-
-  describe('getFirstLineShortTxt', () => {
-    it('should return empty if string is empty', done => {
-      const text: string = '';
-      const firstLine = component.getFirstLineShortTxt(text);
-      firstLine.subscribe(txt => {
-        expect(txt).toBe('');
-        done();
-      });
-    });
-
-    it('should return the first line if there is a new line', done => {
-      const text: string = 'Lorem ipsum dolor sit amet \n consectetur adipiscing elit';
-      const firstLine = component.getFirstLineShortTxt(text);
-      firstLine.subscribe(txt => {
-        expect(txt).toBe('Lorem ipsum dolor sit amet ');
-        done();
-      });
-    });
   });
 });

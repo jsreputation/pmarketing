@@ -1,4 +1,4 @@
-<div [class]=" rewards$ ? 'card-collection-container' : 'card-collection-container loading'">
+<drag-scroll [class]=" rewards$ ? 'card-collection-container' : 'card-collection-container loading'">
   <ng-container *ngIf="rewards$ | async as rewards; else elseBlock">
     <mat-card matRipple *ngFor="let reward of rewards" (click)="rewardClickedHandler(reward)">
       <img mat-card-image *ngIf="reward.rewardThumbnail || defaultImg" [class.no-image]="!reward.rewardThumbnail"
@@ -12,20 +12,21 @@
         </svg>
       </div>
       <mat-card-content>
-        <div class="subtitle-1" ngxEllipsis [lines]="1">{{reward.name}}</div>
+        <div class="subtitle-1 include-heart"><div class="ellipsis-1-line">{{reward.name}}</div>
+          <mat-icon *ngIf="showRewardFavButton" class="show-pointer" (click)="rewardFavoriteHandler(reward)">
+            {{reward?.favorite ? 'favorite' : 'favorite_border'}}</mat-icon></div>
+        <!-- favorited property not added to reward yet but will look for this property to decide which icon to use-->
         <!--
         have to repeat div declaration because the directive reads the
         dom to insert ellipsis and will otherwise render angular logic code
         -->
-        <div class="description mat-caption"
-          ngxEllipsis
-          [lines]="2"
+        <div class="description mat-caption ellipsis-2-lines"
           *ngIf="reward.merchantName; else showDescription">
           {{reward.merchantName}}
         </div>
         <ng-template #showDescription>
           <div *ngIf="reward.description">
-            <div class="description mat-caption ellipse-2-lines">
+            <div class="description mat-caption ellipsis-2-lines">
               {{ reward.description | striphtml}}
             </div>
           </div>
@@ -35,7 +36,7 @@
           class="points overline"
           [ngStyle]="{'color': themeFontColor ? themeFontColor : colorPrimary}">
           <div *ngFor="let rewardPrice of reward.rewardPrice">
-            {{displayPriceFn(rewardPrice)}}</div>
+            {{displayPriceFn(rewardPrice) | async}}</div>
         </div>
       </mat-card-content>
     </mat-card>
@@ -50,4 +51,4 @@
       </mat-card-content>
     </mat-card>
   </ng-template>
-</div>
+</drag-scroll>

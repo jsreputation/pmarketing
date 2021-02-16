@@ -10,7 +10,10 @@ import {
   GeneralStaticDataService,
   ICountryCode,
   LoyaltyService,
-  NotificationService
+  NotificationService,
+  ITheme,
+  ThemesService,
+  IConfig
 } from '@perxtech/core';
 import { Observable, Subject } from 'rxjs';
 import { filter, map, mergeMap, switchMap, takeUntil, tap } from 'rxjs/operators';
@@ -47,16 +50,19 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
   private otp: string;
   public identifier: string;
   private destroy$: Subject<void> = new Subject<void>();
+  public theme: Observable<ITheme>;
+  public appConfig: IConfig<void>;
 
   constructor(
-    private authenticationService: AuthenticationService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private notificationService: NotificationService,
-    private generalStaticDataService: GeneralStaticDataService,
-    private configService: ConfigService,
-    private translate: TranslateService,
-    private loyaltyService: LoyaltyService,
+    protected authenticationService: AuthenticationService,
+    protected router: Router,
+    protected route: ActivatedRoute,
+    protected notificationService: NotificationService,
+    protected generalStaticDataService: GeneralStaticDataService,
+    protected configService: ConfigService,
+    protected translate: TranslateService,
+    protected loyaltyService: LoyaltyService,
+    protected themesService: ThemesService
   ) {
   }
 
@@ -92,6 +98,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     )();
 
     this.configService.readAppConfig<void>().subscribe((conf) => {
+      this.appConfig = conf;
       if (conf.countryCodePrefix) {
         this.countryCodePrefix = conf.countryCodePrefix;
         this.phoneStepForm.controls.countryCode.patchValue(conf.countryCodePrefix);
@@ -102,6 +109,8 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
       switchMap((countryList) => matchRouteCountry$(countryList)),
       filter(([phoneNumber, countryCode]) => phoneNumber !== undefined && countryCode !== undefined)
     ).subscribe(([phoneNumber, countryCode]) => this.phoneStepForm.patchValue({ countryCode, phoneNumber }));
+
+    this.theme = this.themesService.getThemeSetting();
   }
 
   public compareCtryFn(c1: ICountryCode, c2: ICountryCode): boolean {
@@ -184,6 +193,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
           this.router.navigate(['/']);
         } else {
           this.loading = false;
+          this.authenticationService.logout();
           this.notificationService.addPopup({
             title: 'Membership required',
             text: 'Please purchase a valid membership before logging in',
@@ -195,7 +205,7 @@ export class ForgotPasswordComponent implements OnInit, OnDestroy {
     }
   }
 
-  private handleError(err: any): void {
+  public handleError(err: any): void {
     if (err instanceof HttpErrorResponse) {
       if (err.status === 0) {
         this.translate.get('FORGET_PW_PAGE.SERVER_ERROR_TXT').subscribe(text =>

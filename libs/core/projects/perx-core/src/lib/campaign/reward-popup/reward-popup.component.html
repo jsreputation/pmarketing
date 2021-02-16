@@ -1,3 +1,8 @@
+<div class="close-btn-container">
+	<button mat-icon-button class="close-btn" (click)="onClose()" tabindex="-1">
+		<mat-icon>close</mat-icon>
+	</button>
+</div>
 <div class="content">
 	<perx-core-expire-timer [timerEndDate]="validTo" (hasExpired)="onTimerExpired()" (isExpiring)="onExpiring()">
 	</perx-core-expire-timer>

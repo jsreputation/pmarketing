@@ -1,3 +1,4 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { Observable, forkJoin, of } from 'rxjs';
@@ -6,16 +7,11 @@ import {
   LoyaltyService,
   ILoyaltyTransactionHistory,
   IRewardTransactionHistory,
-  // IPurchaseTransactionHistory,
-  TransactionPipe,
-  CashbackTransactionPipe,
   SettingsService,
   IFlags,
-  // ITransactionProperties
 } from '@perxtech/core';
 import { oc } from 'ts-optchain';
-
-// import { ShowTitleInHeader } from '../layout/layout.component';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-blackcomb-pages-transaction-history',
@@ -24,20 +20,19 @@ import { oc } from 'ts-optchain';
 })
 export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader */ {
   public transactions: Observable<ILoyaltyTransactionHistory[]>;
-  public purchasesTitleFn: (tr: ILoyaltyTransactionHistory) => string;
-  public redemptionsTitleFn: (tr: ILoyaltyTransactionHistory) => string;
-  public descFn: (tr: ILoyaltyTransactionHistory) => string;
-  public subTitleFn: (tr: ILoyaltyTransactionHistory) => string;
-  public priceLabelFn: (tr: ILoyaltyTransactionHistory) => string;
+  public purchasesTitleFn: (tr: ILoyaltyTransactionHistory) => Observable<string>;
+  public redemptionsTitleFn: (tr: ILoyaltyTransactionHistory) => Observable<string>;
+  public descFn: (tr: ILoyaltyTransactionHistory) => Observable<string>;
+  public subTitleFn: (tr: ILoyaltyTransactionHistory) => Observable<string>;
+  public priceLabelFn: (tr: ILoyaltyTransactionHistory) => Observable<string>;
 
   private pageNumber: number = 2;
   private pageSize: number = 10;
   private complitePagination: boolean = false;
   constructor(
     private loyaltyService: LoyaltyService,
+    private translate: TranslateService,
     private settingsService: SettingsService,
-    private transactionPipe: TransactionPipe,
-    private cashbackTransactionPipe: CashbackTransactionPipe,
     private datePipe: DatePipe
   ) { }
 
@@ -45,14 +40,23 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
     this.transactions = this.loyaltyService.getTransactionHistory(this.pageNumber - 1, this.pageSize);
     this.settingsService.getRemoteFlagsSettings().subscribe((flags: IFlags) => {
       if (flags.rebateDemoFlow) {
-        this.priceLabelFn = (tr: ILoyaltyTransactionHistory) => `${this.cashbackTransactionPipe.transform(tr.pointsAmount || 0)}`;
+        this.priceLabelFn = (tr: ILoyaltyTransactionHistory) =>
+          this.translate.get(['WALLET.CASHBACK_EARNED', 'WALLET.CASHBACK_SPENT']).pipe(
+            map(res => {
+              const cashbackSpentTxt = res['WALLET.CASHBACK_SPENT'];
+              const cashbackEarnedTxt = res['WALLET.CASHBACK_EARNED'];
+              const value = tr.pointsAmount || 0;
+              const absVal = String(Math.abs(value));
+              return value < 0 ? cashbackSpentTxt.replace('{points}', absVal) : cashbackEarnedTxt.replace('{points}', absVal);
+            })
+          );
         this.descFn = (tr: ILoyaltyTransactionHistory) => {
           let text = '';
           const properties = oc(tr).transactionDetails.data.properties();
           if (properties) {
             text = properties.storeName ? `${properties.storeName}` : '';
           }
-          return text;
+          return of(text);
         };
         this.purchasesTitleFn = (tr: ILoyaltyTransactionHistory) => {
           let text = '';
@@ -60,17 +64,25 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
           if (properties) {
             text = properties.storeCode ? properties.storeCode : '';
           }
-          return text;
+          return of(text);
         };
       } else {
-        this.priceLabelFn = (tr: ILoyaltyTransactionHistory) => `${this.transactionPipe.transform(tr.pointsAmount || 0)}`;
+        this.priceLabelFn = (tr: ILoyaltyTransactionHistory) => this.translate.get(['WALLET.POINT_EARNED', 'WALLET.POINT_SPENT']).pipe(
+          map(res => {
+            const pointSpentTxt = res['WALLET.POINT_SPENT'];
+            const pointEarnedTxt = res['WALLET.POINT_EARNED'];
+            const value = tr.pointsAmount || 0;
+            const absVal = String(Math.abs(value));
+            return value < 0 ? pointSpentTxt.replace('{points}', absVal) : pointEarnedTxt.replace('{points}', absVal);
+          })
+        );
         this.descFn = (tr: ILoyaltyTransactionHistory) => {
           let text = '';
           const properties = oc(tr).transactionDetails.data.properties();
           if (properties) {
             text = properties.storeName ? properties.storeName : '';
           }
-          return text;
+          return of(text);
         };
         this.purchasesTitleFn = (tr: ILoyaltyTransactionHistory) => {
           let text = '';
@@ -78,16 +90,16 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
           if (properties) {
             text = properties.productName ? properties.productName : '';
           }
-          return text;
+          return of(text);
         };
       }
     });
 
     this.redemptionsTitleFn = (tr: ILoyaltyTransactionHistory) =>
-      `${(tr.transactionDetails && tr.transactionDetails.data) ?
-        (tr.transactionDetails.data as IRewardTransactionHistory).rewardName : ''}`;
+      of(`${(tr.transactionDetails && tr.transactionDetails.data) ?
+        (tr.transactionDetails.data as IRewardTransactionHistory).rewardName : ''}`);
 
-    this.subTitleFn = (tr: ILoyaltyTransactionHistory) => `${this.datePipe.transform(tr.transactedAt, 'dd/MM/yyyy')}`;
+    this.subTitleFn = (tr: ILoyaltyTransactionHistory) => of(`${this.datePipe.transform(tr.transactedAt, 'dd/MM/yyyy')}`);
   }
 
   public onScroll(): void {
@@ -103,8 +115,4 @@ export class TransactionHistoryComponent implements OnInit/*, ShowTitleInHeader 
       });
     this.pageNumber++;
   }
-
-  // public getTitle(): string {
-  //   return 'Transaction History';
-  // }
 }

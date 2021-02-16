@@ -1,0 +1,64 @@
+.relative-container {
+  position: relative;
+  min-height: 40px;
+  width: 100%;
+  align-items: center;
+  display: flex;
+  margin: 0 auto;
+  padding-top: 6px;
+}
+
+.progress-bar-container {
+  display: grid;
+  // 2*36px where 36px is size of stamp
+  // minus 1 to balance out look
+  width: -webkit-calc(100% - 71px);
+  width:    -moz-calc(100% - 71px);
+  width:         calc(100% - 71px);
+  margin-left: 35px;
+}
+
+.in-progress, .to-progress {
+  line-height: 1.1rem;
+  // border-radius: 5rem;
+  grid-column: 1;
+  grid-row: 1;
+
+  /* Hide the text. */
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.in-progress {
+  background: #44D62C;
+  z-index: 100;
+}
+
+.to-progress {
+  background: #D6D6D6;
+}
+
+#stepProgressBar {
+  position: absolute;
+  display: flex;
+  width: 100%;
+  z-index: 100;
+  justify-content: space-between;
+
+  .stamp-img {
+    //position: absolute;
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    background-size: contain;
+    line-height: 7rem;
+    border-radius: 50%;
+  }
+
+  .stamp-label {
+    margin-top: 1.4rem;
+    color: #666666;
+  }
+}

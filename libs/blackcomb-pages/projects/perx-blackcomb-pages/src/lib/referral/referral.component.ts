@@ -3,24 +3,18 @@ import {
   CampaignType,
   ICampaign,
   ICampaignService,
-  NotificationService
+  NotificationService,
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  map,
-  switchMap,
-  takeLast,
-  tap
-} from 'rxjs/operators';
+import { map, switchMap, takeLast, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'perx-blackcomb-pages-referral',
   templateUrl: './referral.component.html',
-  styleUrls: ['./referral.component.scss']
+  styleUrls: ['./referral.component.scss'],
 })
 export class ReferralComponent {
-  // todo to be replaced with the proper content when api is available
-  public tnc: string;
+  public campaignDescription: string = '';
   // todo to be replaced with the proper content when api is available
   public code: string = '';
   // todo to be replaced with the proper content when api is available
@@ -28,7 +22,7 @@ export class ReferralComponent {
   // todo to be replaced with the proper content when api is available
   public shareTitle: string;
   // todo to be replaced with the proper content when api is available
-  public shareUrl: string = 'https://retailbank.hsbc.com.hk/ins/';
+  public shareUrl: string = `${window.location.protocol}//${window.location.host}`;
   public copyToClipboardTxt: string;
   public clipboardErrorTxt: string;
 
@@ -38,18 +32,26 @@ export class ReferralComponent {
     private translate: TranslateService
   ) {
     this.initTranslate();
-    this.campaignService.getCampaigns({ type: CampaignType.invite })
+    this.campaignService
+      .getCampaigns({ type: CampaignType.invite })
       .pipe(
         map((campaigns: ICampaign[]) => campaigns[0].id),
         switchMap((cid: number) => this.campaignService.getCampaign(cid)),
         tap((campaign: ICampaign) => {
           if (campaign) {
-            this.code = campaign.referralCodes ? campaign.referralCodes[0] : this.code;
+            if (campaign.referralCodes) {
+              // first code is supposedly a configurable code, and the second code onwards is campaign generated
+              const [ configuredReferralCode, generatedReferralCode ] = campaign.referralCodes;
+              this.code = configuredReferralCode ? configuredReferralCode : generatedReferralCode;
+            }
             this.shareText = this.shareText.replace('{{code}}', this.code);
+            // set to campaign or do nothing
+            this.campaignDescription = campaign.description ? campaign.description : this.campaignDescription;
           }
         }),
         takeLast(1)
-      ).subscribe();
+      )
+      .subscribe();
   }
 
   public share(): void {
@@ -58,11 +60,12 @@ export class ReferralComponent {
       const data = {
         url: this.shareUrl,
         text: this.shareText,
-        title: this.shareTitle
+        title: this.shareTitle,
       };
       // @ts-ignore
-      navigator.share(data)
-        .then(() => { })
+      (navigator as any)
+        .share(data)
+        .then(() => {})
         .catch(() => {
           console.log('failed to use share, falling back to clipboard');
           this.copy();
@@ -74,24 +77,28 @@ export class ReferralComponent {
   }
 
   public copy(): void {
-    navigator.clipboard.writeText(this.shareText)
+    navigator.clipboard
+      .writeText(this.shareText)
       .then(() => this.notificationService.addSnack(this.copyToClipboardTxt))
       .catch(() => this.notificationService.addSnack(this.clipboardErrorTxt));
   }
 
   private initTranslate(): void {
-    this.translate.get([
-      'REFERRAL.SHARE_COPY_TITLE',
-      'REFERRAL.CONTENT',
-      'REFERRAL.SHARE_COPY_TXT',
-      'REFERRAL.COPY_TO_CLIPBOARD',
-      'REFERRAL.CLIPBOARD_ERROR_TXT'
-    ]).subscribe((res: any) => {
-      this.tnc = res['REFERRAL.CONTENT'];
-      this.shareTitle = res['REFERRAL.SHARE_COPY_TITLE'];
-      this.shareText = res['REFERRAL.SHARE_COPY_TXT'].replace('[URL]', this.shareUrl);
-      this.copyToClipboardTxt = res['REFERRAL.COPY_TO_CLIPBOARD'];
-      this.clipboardErrorTxt = res['REFERRAL.CLIPBOARD_ERROR_TXT'];
-    });
+    this.translate
+      .get([
+        'REFERRAL.SHARE_COPY_TITLE',
+        'REFERRAL.SHARE_COPY_TXT',
+        'REFERRAL.COPY_TO_CLIPBOARD',
+        'REFERRAL.CLIPBOARD_ERROR_TXT',
+      ])
+      .subscribe((res: any) => {
+        this.shareTitle = res['REFERRAL.SHARE_COPY_TITLE'];
+        this.shareText = res['REFERRAL.SHARE_COPY_TXT'].replace(
+          '{{url}}',
+          this.shareUrl
+        );
+        this.copyToClipboardTxt = res['REFERRAL.COPY_TO_CLIPBOARD'];
+        this.clipboardErrorTxt = res['REFERRAL.CLIPBOARD_ERROR_TXT'];
+      });
   }
 }

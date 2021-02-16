@@ -4,5 +4,7 @@ export const BACK_ARROW_URLS: string[] = [
   '/tnc',
   '/contact-us',
   '/reward-detail',
-  '/c'
+  '/c',
+  '/invite',
+  '/profile'
 ];

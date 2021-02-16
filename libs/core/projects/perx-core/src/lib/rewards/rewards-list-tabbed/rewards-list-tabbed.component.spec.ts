@@ -4,12 +4,8 @@ import {
   TestBed,
 } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-
 import { of } from 'rxjs';
-import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
-
 import { RewardsListTabbedComponent } from './rewards-list-tabbed.component';
-
 import { RewardsListComponent } from '../rewards-list/rewards-list.component';
 import { MaterialModule } from '../../shared/material.module';
 import { UtilsModule } from '../../utils/utils.module';
@@ -32,8 +28,7 @@ describe('RewardsListTabbedComponent', () => {
       imports: [
         NoopAnimationsModule,
         MaterialModule,
-        UtilsModule,
-        NgxMultiLineEllipsisModule
+        UtilsModule
       ],
       providers: [
         {

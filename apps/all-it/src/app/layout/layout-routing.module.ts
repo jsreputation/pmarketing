@@ -10,6 +10,14 @@ const routes: Routes = [
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'home' },
       { path: 'home', loadChildren: () => import('../home/home.module').then((mod) => mod.HomeModule) },
+      {
+        path: 'rewards', loadChildren: () => import('../rewards/rewards.module').then(mod => mod.RewardsModule),
+      },
+      {
+        path: 'catalogs',
+        loadChildren: () => import('../catalog/catalog.module')
+          .then(mod => mod.CatalogModule)
+      },
       { path: 'wallet', loadChildren: () => import('../wallet/wallet.module').then((mod) => mod.WalletModule), canActivate: [WalletGuard] },
       {
         path: 'voucher-detail/:id',
@@ -72,6 +80,24 @@ const routes: Routes = [
       {
         path: 'booking/:id',
         loadChildren: () => import('../rewards-booking/rewards-booking.module').then((mod) => mod.RewardsBookingModule)
+      },
+      {
+        path: 'favorite-rewards',
+        loadChildren: () => import('../favorite-rewards/favorite-rewards.module').then((mod) => mod.FavoriteRewardsModule)
+      },
+      {
+        path: 'referral',
+        loadChildren: () => import('../referral/referral.module').then(mod => mod.ReferralModule)
+      },
+      {
+        path: 'campaign-welcome/:cid',
+        loadChildren: () => import('../campaign-landing/campaign-landing.module').then(mod => mod.CampaignLandingModule)
+      },
+      { path: 'quiz/:cid',
+        loadChildren: () => import('../quiz/quiz.module').then(m => m.QuizModule)
+      },
+      { path: 'quiz-results',
+        loadChildren: () => import('../quiz-result/quiz-result.module').then(m => m.QuizResultModule)
       },
     ]
   }

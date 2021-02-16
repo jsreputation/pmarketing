@@ -1,4 +1,8 @@
 mat-list {
+  height: 100%;
+  display: block;
+  overflow-x: auto;
+
   p {
     color: #1b1b25;
     font-size: 1.4rem;
@@ -19,4 +23,23 @@ mat-list {
   .mat-icon {
     font-size: 1.8rem;
   }
+
+  .checkbox-container {
+    width: 100%;
+    display: flex;
+
+    p {
+      flex-grow: 1;
+    }
+
+    .mat-checkbox {
+      flex: 0;
+      align-self: center;
+      justify-self: end;
+    }
+  }
+}
+
+.capitalize {
+  text-transform: capitalize;
 }

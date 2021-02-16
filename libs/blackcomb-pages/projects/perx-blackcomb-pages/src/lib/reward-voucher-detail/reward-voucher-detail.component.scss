@@ -1,0 +1,82 @@
+.prize-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+
+  .reward-container {
+    height: 100%;
+    flex: 1;
+    overflow-y: auto;
+    background-color: var(--background);
+
+    .redeem-code {
+      padding: 2rem;
+      margin-top: 1.6rem;
+      position: relative;
+      font-size: 1.6rem;
+
+      &-headline {
+        position: relative;
+        margin: 0 auto 1rem;
+      }
+
+      &-wrapper {
+        position: relative;
+        margin: 0 auto 1rem;
+
+        .redeem-tag {
+          margin-bottom: 1rem;
+        }
+      }
+    }
+
+    .bcode {
+      width: 100%;
+      background: #fff;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      border-radius: 2px;
+      text-align: center;
+      font-size: 1.6rem;
+      min-height: 4.5rem;
+      justify-content: center;
+      padding-top: 1.5rem;
+      resize: none; /* remove the resize handle on the bottom right */
+    }
+
+    .copy-span {
+      cursor: pointer;
+      position: absolute;
+      bottom: 15px;
+      right: 5%;
+    }
+  }
+
+  .actions-container {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 1.2rem 1.5rem;
+    box-shadow: 0 0.1rem 0.3rem rgba(0, 0, 0, 0.2), 0 0.2rem 2rem rgba(0, 0, 0, 0.12), 0 0 2rem rgba(0, 0, 0, 0.14);
+    background: var(--surface_colour);
+
+    button {
+      width: 100%;
+
+      .loading-spin {
+        display: inline-block;
+        margin: auto;
+      }
+
+      .card-redirect {
+        color: white;
+        text-decoration: none;
+      }
+    }
+
+    button:disabled {
+      background: #ebebeb !important;
+      color: #989797;
+    }
+  }
+}

@@ -9,17 +9,38 @@ import {
   AuthenticationService,
   NotificationService,
   IPrePlayStateData,
+  IPointsOutcome,
+  ICampaignService,
+  ICampaign,
+  ErrorMessageService,
 } from '@perxtech/core';
-import { map, tap, first, filter, switchMap, bufferCount, catchError, takeUntil } from 'rxjs/operators';
-import { Observable, interval, throwError, Subject, combineLatest } from 'rxjs';
+import {
+  map,
+  tap,
+  first,
+  filter,
+  switchMap,
+  bufferCount,
+  catchError,
+  takeUntil,
+} from 'rxjs/operators';
+import {
+  Observable,
+  interval,
+  throwError,
+  Subject,
+  combineLatest,
+  EMPTY,
+} from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { IPlayOutcome } from '@perxtech/core';
+import { globalCacheBusterNotifier } from 'ngx-cacheable';
 
 @Component({
   selector: 'perx-blackcomb-pages-game',
   templateUrl: './game.component.html',
-  styleUrls: ['./game.component.scss']
+  styleUrls: ['./game.component.scss'],
 })
 export class GameComponent implements OnInit, OnDestroy {
   public gameData$: Observable<IGame>;
@@ -33,28 +54,43 @@ export class GameComponent implements OnInit, OnDestroy {
   private isAnonymousUser: boolean;
   private informationCollectionSetting: string;
   private rewardCount: string;
+  private points: IPointsOutcome;
+  private isEmbedded: boolean;
   public willWin: boolean = false;
   public successPopUp: IPopupConfig = {
-    title: 'GAME_SUCCESS_TITLE',
-    text: 'GAME_SUCCESS_TEXT',
-    buttonTxt: 'VIEW_REWARD',
+    title: 'GAME_PAGE.GAME_SUCCESS_TITLE',
+    text: 'GAME_PAGE.GAME_SUCCESS_TEXT',
+    buttonTxt: 'GAME_PAGE.VIEW_REWARD',
     imageUrl: 'assets/congrats_image.png',
-    ctaButtonClass: 'ga_game_completion'
+    ctaButtonClass: 'ga_game_completion',
   };
 
   public noRewardsPopUp: IPopupConfig = {
-    title: 'GAME_NO_REWARDS_TITLE',
-    text: 'GAME_NO_REWARDS_TEXT',
-    buttonTxt: 'BACK_TO_WALLET',
+    title: 'GAME_PAGE.GAME_NO_REWARDS_TITLE',
+    text: 'GAME_PAGE.GAME_NO_REWARDS_TEXT',
+    buttonTxt: 'GAME_PAGE.BACK_TO_WALLET',
     imageUrl: '',
+    disableOverlayClose: true,
   };
 
   public gameNotAvailablePopUp: IPopupConfig = {
-    title: 'GAME_NOT_VALID',
-    text: 'GAME_NOT_VALID_TEXT',
-    buttonTxt: 'BACK_TO_WALLET',
+    title: 'GAME_PAGE.GAME_NOT_VALID',
+    text: 'GAME_PAGE.GAME_NOT_VALID_TEXT',
+    buttonTxt: 'GAME_PAGE.BACK_TO_WALLET',
     imageUrl: '',
+    disableOverlayClose: true,
   };
+
+  public outOfTriesPopup: IPopupConfig = {
+    title: 'GAME_PAGE.OUT_OF_TRIES_TITLE',
+    text: 'GAME_PAGE.OUT_OF_TRIES_TEXT',
+    buttonTxt: this.isEmbedded ? null : 'GAME_PAGE.OUT_OF_TRIES_CTA',
+    afterClosedCallBack: this,
+    disableOverlayClose: true,
+  };
+
+  public rewardsTxt: string;
+  public startGameAnimation: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -63,39 +99,74 @@ export class GameComponent implements OnInit, OnDestroy {
     private notificationService: NotificationService,
     private auth: AuthenticationService,
     private translate: TranslateService,
-  ) {
-  }
+    private campaignService: ICampaignService,
+    private errorMessageService: ErrorMessageService
+  ) { }
 
   public ngOnInit(): void {
     this.initTranslate();
 
     this.isAnonymousUser = this.auth.getAnonymous();
+    this.route.queryParams.subscribe((params: Params) => {
+      const paramArr: string[] = params.flags && params.flags.split(',');
+      this.isEmbedded = paramArr && paramArr.includes('nonav');
+    });
+    this.popupData = this.noRewardsPopUp; // must pass data to notif,
+    // see path to '[/wallet]' notif svc no popupData
+
+    // @ts-ignore observable too long, linter cannot compute
     this.gameData$ = this.route.params.pipe(
       filter((params: Params) => params.id),
       map((params: Params) => params.id),
       map((id: string) => Number.parseInt(id, 10)),
-      tap((id: number) => this.campaignId = id),
-      switchMap((id: number) => this.gameService.getGamesFromCampaign(id).pipe(
-        catchError((err: HttpErrorResponse) => {
-          if (err.status === 403 || err.status === 404) {
-            this.popupData = this.gameNotAvailablePopUp;
-            this.redirectUrlAndPopUp();
-          }
-          throw err;
-        }))
+      tap((id: number) => (this.campaignId = id)),
+      switchMap((id: number) =>
+        this.campaignService.getCampaign(id).pipe(
+          catchError((err: HttpErrorResponse) => {
+            if (err.status === 403 || err.status === 404) {
+              this.popupData = this.gameNotAvailablePopUp;
+              this.redirectUrlAndPopUp();
+            }
+            throw err;
+          })
+        )
+      ),
+      switchMap((campaign: ICampaign) =>
+        this.gameService.getGamesFromCampaign(campaign).pipe(
+          catchError((err: HttpErrorResponse) => {
+            if (err.status === 403 || err.status === 404) {
+              this.popupData = this.gameNotAvailablePopUp;
+              this.redirectUrlAndPopUp();
+            }
+            throw err;
+          })
+        )
       ),
       first(),
-      tap((games: IGame[]) => !games || !games.length && this.router.navigate(['/wallet'])),
+      map((games: IGame[]) => {
+        if (!games || !games.length) {
+          this.popupData = this.gameNotAvailablePopUp;
+          this.redirectUrlAndPopUp();
+          return EMPTY;
+        }
+        return games;
+      }),
       map((games: IGame[]) => games[0]),
       tap((game: IGame) => {
         if (game) {
           if (!game.texts.button) {
-            this.translate.get('START_PLAYING').subscribe((text) => game.texts.button = text);
+            this.translate
+              .get('START_PLAYING')
+              .subscribe((text) => (game.texts.button = text));
           }
           const { displayProperties } = game;
           this.gameId = game.id;
-          if (displayProperties && displayProperties.informationCollectionSetting) {
-            this.informationCollectionSetting = displayProperties.informationCollectionSetting;
+          if (
+            displayProperties &&
+            displayProperties.informationCollectionSetting
+          ) {
+            this.informationCollectionSetting =
+              displayProperties.informationCollectionSetting;
           }
 
           const successOutcome = game.results.outcome;
@@ -103,23 +174,29 @@ export class GameComponent implements OnInit, OnDestroy {
           if (noOutcome) {
             this.noRewardsPopUp.title = noOutcome.title;
             this.noRewardsPopUp.text = noOutcome.subTitle;
-            this.noRewardsPopUp.imageUrl = noOutcome.image || this.noRewardsPopUp.imageUrl;
-            this.noRewardsPopUp.buttonTxt = noOutcome.button || this.noRewardsPopUp.buttonTxt;
+            this.noRewardsPopUp.imageUrl =
+              noOutcome.image || this.noRewardsPopUp.imageUrl;
+            this.noRewardsPopUp.buttonTxt = this.isEmbedded
+              ? null
+              : noOutcome.button || this.noRewardsPopUp.buttonTxt;
           }
           if (successOutcome) {
             this.successPopUp.title = successOutcome.title;
             this.successPopUp.text = successOutcome.subTitle;
-            this.successPopUp.imageUrl = successOutcome.image || this.successPopUp.imageUrl;
-            this.successPopUp.buttonTxt = successOutcome.button || this.successPopUp.buttonTxt;
+            this.successPopUp.imageUrl =
+              successOutcome.image || this.successPopUp.imageUrl;
+            this.successPopUp.buttonTxt = this.isEmbedded
+              ? null
+              : successOutcome.button || this.successPopUp.buttonTxt;
           }
-          if (game.remainingNumberOfTries <= 0 && game.remainingNumberOfTries !== null) { // null is recognised as infinite from dashboard
-            this.notificationService.addPopup({
-              title: 'No more tries',
-              text: 'Come back when you\'ve earned more tries!',
-              buttonTxt: 'Close',
-              afterClosedCallBack: this,
-              disableOverlayClose: true
-            });
+          if (
+            // GLOB-29: Let scratch card tries error be handled by the game service
+            game.type !== GameType.scratch &&
+            game.remainingNumberOfTries <= 0 &&
+            game.remainingNumberOfTries !== null
+          ) {
+            // null is recognised as infinite from dashboard
+            this.notificationService.addPopup(this.outOfTriesPopup);
           }
         }
       })
@@ -127,55 +204,73 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   public loadPreplay(): void {
-    this.gameData$.pipe(
-      switchMap(
-        (game: IGame) => this.gameService.prePlay(game.id, this.campaignId)
-      ),
-      catchError(err => throwError(err)),
-      takeUntil(this.destroy$)
-    ).subscribe(
-      (gameTransaction: IEngagementTransaction) => {
-        this.transactionId = gameTransaction.id;
-        if (gameTransaction.voucherIds && gameTransaction.voucherIds.length > 0) {
-          // set this as a property
-          this.rewardCount = gameTransaction.voucherIds.length.toString();
-          this.fillSuccess(this.rewardCount);
-        } else {
-          this.fillFailure();
+    this.gameData$
+      .pipe(
+        switchMap((game: IGame) =>
+          this.gameService.prePlay(game.id, this.campaignId)
+        ),
+        catchError((err) => throwError(err)),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(
+        (gameTransaction: IEngagementTransaction) => {
+          this.transactionId = gameTransaction.id;
+          if (
+            gameTransaction.voucherIds &&
+            gameTransaction.voucherIds.length > 0
+          ) {
+            // set this as a property
+            this.rewardCount = gameTransaction.voucherIds.length.toString();
+          }
+          if (gameTransaction.points) {
+            this.points = gameTransaction.points[0];
+          }
+          this.checkFailureOrSuccess();
+        },
+        (err: { errorState: string } | HttpErrorResponse) => {
+          if (!(err instanceof HttpErrorResponse) && err.errorState) {
+            this.popupData = {
+              title: 'Sorry!',
+              text: err.errorState,
+              buttonTxt: this.isEmbedded ? null : this.gameNotAvailablePopUp.buttonTxt,
+              imageUrl: '',
+            };
+          } else if (
+            err instanceof HttpErrorResponse &&
+            err.error &&
+            err.error.code === 4103
+          ) {
+            console.log(`Error ${err.error.code}: ${err.error.message}`);
+            this.popupData = {
+              title: `Error ${err.error.code}`,
+              text: this.noRewardsPopUp.title,
+              buttonTxt: this.isEmbedded ? null : this.noRewardsPopUp.buttonTxt,
+              imageUrl: '',
+            };
+          } else {
+            this.popupData = this.noRewardsPopUp;
+          }
+          this.redirectUrlAndPopUp(); // wont call preplayConfirm direct away if preplay fail
         }
-      },
-      (err: { errorState: string } | HttpErrorResponse) => {
-        if (!(err instanceof HttpErrorResponse) && err.errorState) {
-          this.popupData = {
-            title: err.errorState,
-            text: '',
-            buttonTxt: 'BACK_TO_WALLET',
-            imageUrl: '',
-          };
-        } else {
-          this.popupData = this.noRewardsPopUp;
-        }
-        this.redirectUrlAndPopUp(); // wont call preplayConfirm direct away if preplay fail
-      }
-    );
+      );
   }
 
   public loadPlay(): void {
-    this.gameService.play(
-      this.gameId
-    ).subscribe(
+    this.gameService.play(this.gameId).subscribe(
       (gameOutcome: IPlayOutcome) => {
-        if (gameOutcome.vouchers.length > 0) {
+        this.startGameAnimation = true;
+        if (gameOutcome.vouchers && gameOutcome.vouchers.length > 0) {
           // set this as a property
           this.rewardCount = gameOutcome.vouchers.length.toString();
-          this.fillSuccess(this.rewardCount);
-        } else {
-          this.fillFailure();
         }
+        if (gameOutcome && gameOutcome.points && gameOutcome.points.length) {
+          this.points = gameOutcome.points[0];
+        }
+        this.checkFailureOrSuccess();
       },
-      () => {
-        this.popupData = this.noRewardsPopUp;
-        this.redirectUrlAndPopUp(); // wont call preplayConfirm direct away if preplay fail
+      (response: HttpErrorResponse) => {
+        this.errorMessageService.getErrorMessageByErrorCode(response.error.code)
+          .subscribe(this.notificationService.addSnack);
       }
     );
   }
@@ -183,12 +278,11 @@ export class GameComponent implements OnInit, OnDestroy {
   public gameCompletedLoad(): void {
     const delay = 3000;
     const nbSteps = 60;
-    const processBar$ = interval(delay / nbSteps)
-      .pipe(
-        tap(v => this.progressValue = v * 100 / nbSteps),
-        bufferCount(nbSteps),
-        first()
-      );
+    const processBar$ = interval(delay / nbSteps).pipe(
+      tap((v) => (this.progressValue = (v * 100) / nbSteps)),
+      bufferCount(nbSteps),
+      first()
+    );
     processBar$.subscribe(
       () => this.redirectUrlAndPopUp(),
       () => this.redirectUrlAndPopUp()
@@ -201,11 +295,41 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   // mutates willWin property, succespopup text and popup data
-  private fillSuccess(rewardCount: string): void {
+  // @ts-ignore
+  private fillSuccess(rewardCount?: string, pointsOutcome?: IPointsOutcome): void {
     this.willWin = true;
-    this.successPopUp.text =
-      this.successPopUp.text ? this.successPopUp.text.replace('{{rewards}}', rewardCount) : `You earned ${rewardCount} rewards`;
+
+    // if win and popup data is not changed, popup will wrongly show game lost
     this.popupData = this.successPopUp;
+    /*  todo:
+     *    1. block is commented out because popup content is managed by dashboard.
+     */
+    // if (rewardCount && parseInt(rewardCount, 10) > 0) {
+    //   this.successPopUp.text += this.rewardsTxt.replace(
+    //     '{{rewards}}',
+    //     rewardCount
+    //   );
+    // }
+    // if (pointsOutcome) {
+    //   if (pointsOutcome.points === 1) {
+    //     this.translate
+    //       .get('GAME_PAGE.GAME_SUCCESS_TEXT_POINT')
+    //       .subscribe((text) => {
+    //         this.successPopUp.text += `\n ${text}`;
+    //         this.popupData = this.successPopUp;
+    //       });
+    //   } else {
+    //     this.translate
+    //       .get('GAME_PAGE.GAME_SUCCESS_TEXT_POINTS')
+    //       .subscribe((text) => {
+    //         this.successPopUp.text += `\n ${text.replace(
+    //           '{{points}}',
+    //           pointsOutcome.points.toString()
+    //         )}`;
+    //         this.popupData = this.successPopUp;
+    //       });
+    //   }
+    // }
   }
 
   private fillFailure(): void {
@@ -213,18 +337,25 @@ export class GameComponent implements OnInit, OnDestroy {
     this.popupData = this.noRewardsPopUp;
   }
 
+  private checkFailureOrSuccess(): void {
+    if (this.rewardCount || this.points) {
+      this.fillSuccess(this.rewardCount, this.points);
+    } else {
+      this.fillFailure();
+    }
+  }
+
   public gameCompleted(): void {
-    const gameOutcome$ = this.gameService.play(
-      this.gameId
-    ).pipe(
+    const gameOutcome$ = this.gameService.play(this.gameId).pipe(
       tap((gameOutcome: IPlayOutcome) => {
-        if (gameOutcome.vouchers.length > 0) {
+        if (gameOutcome && gameOutcome.vouchers && gameOutcome.vouchers.length > 0) {
           // set this as a property
           this.rewardCount = gameOutcome.vouchers.length.toString();
-          this.fillSuccess(this.rewardCount);
-        } else {
-          this.fillFailure();
         }
+        if (gameOutcome && gameOutcome.points && gameOutcome.points.length) {
+          this.points = gameOutcome.points[0];
+        }
+        this.checkFailureOrSuccess();
       }),
       catchError((err: HttpErrorResponse) => {
         this.popupData = this.noRewardsPopUp;
@@ -234,12 +365,11 @@ export class GameComponent implements OnInit, OnDestroy {
     // display a loader before redirecting to next page
     const delay = 3000;
     const nbSteps = 60;
-    const processBar$ = interval(delay / nbSteps)
-      .pipe(
-        tap(v => this.progressValue = v * 100 / nbSteps),
-        bufferCount(nbSteps),
-        first()
-      );
+    const processBar$ = interval(delay / nbSteps).pipe(
+      tap((v) => (this.progressValue = (v * 100) / nbSteps)),
+      bufferCount(nbSteps),
+      first()
+    );
     combineLatest(processBar$, gameOutcome$).subscribe(
       () => this.redirectUrlAndPopUp(),
       () => this.redirectUrlAndPopUp()
@@ -247,25 +377,31 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   public preplayGameCompleted(): void {
-    const userAction$: Observable<IEngagementTransaction | IPlayOutcome> = this
-      .gameService.prePlayConfirm(this.transactionId, this.informationCollectionSetting).pipe(
+    const userAction$: Observable<
+      IEngagementTransaction | IPlayOutcome
+    > = this.gameService
+      .prePlayConfirm(this.transactionId, this.informationCollectionSetting)
+      .pipe(
         tap((response: IEngagementTransaction | IPlayOutcome) => {
           if (this.isIEngagementTrascation(response)) {
             const gameTransaction = response as IEngagementTransaction;
-            if (gameTransaction.voucherIds && gameTransaction.voucherIds.length > 0) {
+            if (
+              gameTransaction.voucherIds &&
+              gameTransaction.voucherIds.length > 0
+            ) {
               // set this as a property
               this.rewardCount = gameTransaction.voucherIds.length.toString();
-              this.fillSuccess(this.rewardCount);
-            } else {
-              this.fillFailure();
+            }
+            if (gameTransaction.points) {
+              this.points = gameTransaction.points[0];
             }
           } else if (this.isIPlayOutcome(response)) {
             const vouchers = response.vouchers;
-            if (vouchers.length > 0) {
+            if (vouchers && vouchers.length > 0) {
               this.rewardCount = vouchers.length.toString();
-              this.fillSuccess(this.rewardCount);
-            } else {
-              this.fillFailure();
+            }
+            if (response.points) {
+              this.points = response.points[0];
             }
           }
         }),
@@ -278,19 +414,20 @@ export class GameComponent implements OnInit, OnDestroy {
     // display a loader before redirecting to next page
     const delay = 2000;
     const nbSteps = 60;
-    const processBar$ = interval(delay / nbSteps)
-      .pipe(
-        tap(v => this.progressValue = v * 100 / nbSteps),
-        bufferCount(nbSteps),
-        first()
-      );
+    const processBar$ = interval(delay / nbSteps).pipe(
+      tap((v) => (this.progressValue = (v * 100) / nbSteps)),
+      bufferCount(nbSteps),
+      first()
+    );
     combineLatest(processBar$, userAction$).subscribe(
       () => this.redirectUrlAndPopUp(),
       () => this.redirectUrlAndPopUp()
     );
   }
 
-  private isIEngagementTrascation(object: any): object is IEngagementTransaction {
+  private isIEngagementTrascation(
+    object: any
+  ): object is IEngagementTransaction {
     return 'voucherIds' in object;
   }
   private isIPlayOutcome(object: any): object is IPlayOutcome {
@@ -298,41 +435,102 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   private redirectUrlAndPopUp(): void {
+    globalCacheBusterNotifier.next();
     const state: IPrePlayStateData = {
       popupData: this.popupData,
       engagementType: 'game',
       transactionId: this.transactionId,
-      collectInfo: true
+      collectInfo: true,
     };
-
-    if (this.isAnonymousUser && this.informationCollectionSetting === 'pi_required') {
-      this.router.navigate(['/pi'], { state });
-    } else if (this.isAnonymousUser && this.informationCollectionSetting === 'signup_required') {
-      this.router.navigate(['/signup'], { state });
+    if (!this.isEmbedded) {
+      if (
+        this.isAnonymousUser &&
+        this.informationCollectionSetting === 'pi_required'
+      ) {
+        this.router.navigate(['/pi'], { state });
+      } else if (
+        this.isAnonymousUser &&
+        this.informationCollectionSetting === 'signup_required'
+      ) {
+        this.router.navigate(['/signup'], { state });
+      } else {
+        this.router.navigate(['/wallet']);
+        this.notificationService.addPopup(this.popupData);
+      }
     } else {
-      this.router.navigate(['/wallet']);
       this.notificationService.addPopup(this.popupData);
     }
   }
 
   private initTranslate(): void {
     if (this.successPopUp.title) {
-      this.translate.get(this.successPopUp.title).subscribe((text) => this.successPopUp.title = text);
+      this.translate
+        .get(this.successPopUp.title)
+        .subscribe((text) => (this.successPopUp.title = text));
     }
     if (this.successPopUp.text) {
-      this.translate.get(this.successPopUp.text).subscribe((text) => this.successPopUp.text = text);
+      this.translate
+        .get(this.successPopUp.text)
+        .subscribe((text) => (this.successPopUp.text = text));
     }
     if (this.successPopUp.buttonTxt) {
-      this.translate.get(this.successPopUp.buttonTxt).subscribe((text) => this.successPopUp.buttonTxt = text);
+      this.translate
+        .get(this.successPopUp.buttonTxt)
+        .subscribe((text) => (this.successPopUp.buttonTxt = text));
     }
     if (this.noRewardsPopUp.title) {
-      this.translate.get(this.noRewardsPopUp.title).subscribe((text) => this.noRewardsPopUp.title = text);
+      this.translate
+        .get(this.noRewardsPopUp.title)
+        .subscribe((text) => (this.noRewardsPopUp.title = text));
     }
     if (this.noRewardsPopUp.text) {
-      this.translate.get(this.noRewardsPopUp.text).subscribe((text) => this.noRewardsPopUp.text = text);
+      this.translate
+        .get(this.noRewardsPopUp.text)
+        .subscribe((text) => (this.noRewardsPopUp.text = text));
     }
     if (this.noRewardsPopUp.buttonTxt) {
-      this.translate.get(this.noRewardsPopUp.buttonTxt).subscribe((text) => this.noRewardsPopUp.buttonTxt = text);
+      this.translate
+        .get(this.noRewardsPopUp.buttonTxt)
+        .subscribe((text) => (this.noRewardsPopUp.buttonTxt = text));
+    }
+    if (this.gameNotAvailablePopUp.title) {
+      this.translate
+        .get(this.gameNotAvailablePopUp.title)
+        .subscribe((text) => (this.gameNotAvailablePopUp.title = text));
+    }
+    if (this.gameNotAvailablePopUp.text) {
+      this.translate
+        .get(this.gameNotAvailablePopUp.text)
+        .subscribe((text) => (this.gameNotAvailablePopUp.text = text));
+    }
+    if (this.gameNotAvailablePopUp.buttonTxt) {
+      this.translate
+        .get(this.gameNotAvailablePopUp.buttonTxt)
+        .subscribe((text) => (this.gameNotAvailablePopUp.buttonTxt = text));
+    }
+    if (this.outOfTriesPopup.title) {
+      this.translate
+        .get(this.outOfTriesPopup.title)
+        .subscribe((text) => (this.outOfTriesPopup.title = text));
+    }
+    if (this.outOfTriesPopup.text) {
+      this.translate
+        .get(this.outOfTriesPopup.text)
+        .subscribe((text) => (this.outOfTriesPopup.text = text));
+    }
+    if (this.outOfTriesPopup.buttonTxt) {
+      this.translate
+        .get(this.outOfTriesPopup.buttonTxt)
+        .subscribe((text) => (this.outOfTriesPopup.buttonTxt = text));
+    }
+
+    this.translate
+      .get('GAME_PAGE.GAME_SUCCESS_TEXT_REWARDS')
+      .subscribe((text) => (this.rewardsTxt = text));
+
+    if (this.isEmbedded) {
+      this.successPopUp.buttonTxt = null;
+      this.noRewardsPopUp.buttonTxt = null;
     }
   }
 

@@ -1,6 +1,5 @@
 <div class="container">
-  <h1 class="merchant-text">Capture the Merchant’s QR Code
-    in the frame below</h1>
+  <h1 class="merchant-text">{{merchantTextFn() | async}}</h1>
   <div class="scanner">
     <zxing-scanner
       (scanSuccess)="scanSuccessHandler($event)"

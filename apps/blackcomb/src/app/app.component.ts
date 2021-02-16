@@ -11,15 +11,19 @@ import {
   Router,
   NavigationEnd,
   Event,
+  ActivatedRoute,
 } from '@angular/router';
 import { Location } from '@angular/common';
 
 import {
+  catchError,
   filter,
   map,
   switchMap,
+  tap,
 } from 'rxjs/operators';
-import { TranslateService } from '@ngx-translate/core';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import * as Sentry from '@sentry/browser';
 
 import {
   PopupComponent,
@@ -27,16 +31,30 @@ import {
   IPopupConfig,
   ConfigService,
   IConfig,
+  ITheme,
+  ThemesService,
+  TokenStorage,
 } from '@perxtech/core';
 import {
   HomeComponent,
   HistoryComponent,
   AccountComponent,
   SignIn2Component,
-  WalletComponent
+  WalletComponent,
+  WalletHistoryComponent,
+  ProfileComponent,
+  CampaignStampsComponent,
+  LeaderboardPageComponent,
+  FindLocationComponent,
+  TransactionHistoryComponent,
+  RebatesWalletComponent,
+  RewardsPageComponent,
+  NearmeComponent
 } from '@perxtech/blackcomb-pages';
 
 import { BACK_ARROW_URLS } from './app.constants';
+import { Title } from '@angular/platform-browser';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -49,6 +67,7 @@ export class AppComponent implements OnInit {
   public backArrowIcon: string = '';
   public preAuth: boolean;
   public translationLoaded: boolean = false;
+  public navigateToLoading: boolean = false;
 
   private initBackArrow(url: string): void {
     this.backArrowIcon = BACK_ARROW_URLS.some(test => url.startsWith(test)) ? 'arrow_backward' : '';
@@ -62,16 +81,60 @@ export class AppComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private snack: MatSnackBar,
     private config: ConfigService,
-    private translate: TranslateService
+    private route: ActivatedRoute,
+    private translate: TranslateService,
+    private themesService: ThemesService,
+    private titleService: Title,
+    private storage: TokenStorage
   ) {
   }
 
   public ngOnInit(): void {
-    this.config.readAppConfig()
-      .pipe(switchMap((conf) => this.translate.getTranslation(conf.defaultLang as string)))
-      .subscribe((config: IConfig<void>) => {
-        this.translationLoaded = true;
-        this.preAuth = config.preAuth as boolean;
+    // to store so that it works with interceptor
+    this.translate.onLangChange.pipe(
+      // tap((change: LangChangeEvent) => console.info(change, 'a lang change occured')),
+      tap((change: LangChangeEvent) => this.storage.setAppInfoProperty(change.lang, 'lang')),
+    ).subscribe();
+    this.config.readAppConfig<ITheme>()
+      .pipe(
+        // temporary tracking to validate if there are users on HSBCPH for low GA triggers using a 3rd party service
+        switchMap((config: IConfig<ITheme>) => of(config).pipe(
+          tap((conf: IConfig<ITheme>) => {
+            if (conf.app === 'hsbcph') {
+              Sentry.captureException(new Error('HSBCPH app is running'));
+            }
+          }),
+          catchError(_ => of(config))
+        )),
+        tap((config: IConfig<ITheme>) => {
+          if (config.appVersion) {
+            (window as any).PERX_APP_VERSION = config.appVersion;
+          }
+        }),
+        tap((conf) => {
+          if (conf.homeAsProgressPage) {
+            this.navigateToLoading = conf.homeAsProgressPage;
+          }
+          this.storage.setAppInfoProperty(conf.defaultLang, 'lang');
+        }),
+        // any avail languages needs to be 'gotten' first for lang toggle after to be responsive
+        switchMap(() =>
+          // getTranslation fetches the translation and registers the language
+          // for when default lang is not 'en'
+          // only after fetching the translations do you .use() it
+          this.translate.getTranslation('en')
+        ),
+        tap((config: IConfig<ITheme>) => {
+          // this.translate.getLangs() to get langs avail, in future pass array of langs
+          // loop thru each lang string and .getTranslation it
+          this.translationLoaded = true;
+          this.preAuth = config.preAuth as boolean;
+        }),
+        switchMap((config: IConfig<ITheme>) => this.themesService.getThemeSetting(config))
+      )
+      .subscribe((res: ITheme) => {
+        const title: string = res.properties['--title'] ? res.properties['--title'] : '\u00A0';
+        this.titleService.setTitle(title);
       });
 
     this.notificationService.$popup
@@ -83,7 +146,7 @@ export class AppComponent implements OnInit {
       .subscribe(
         (msg: string) => {
           if (msg === 'LOGIN_SESSION_EXPIRED') {
-            this.router.navigate(['/login']);
+            this.router.navigate([this.navigateToLoading ? '/loading' : '/login']);
             this.translate.get('LOGIN_SESSION_EXPIRED').subscribe(txt => this.snack.open(txt, 'x', { duration: 2000 }));
           } else {
             this.snack.open(msg, 'x', { duration: 2000 });
@@ -102,11 +165,23 @@ export class AppComponent implements OnInit {
   }
 
   public onActivate(ref: any): void {
-    this.showHeader = !(ref instanceof SignIn2Component);
+    this.route.queryParams.subscribe((params) => {
+      const paramArr: string[] = params.flags && params.flags.split(',');
+      this.showHeader = paramArr && paramArr.includes('chromeless') ? false : !(ref instanceof SignIn2Component);
+    });
     this.showToolbar = ref instanceof HomeComponent ||
       ref instanceof HistoryComponent ||
       ref instanceof AccountComponent ||
-      ref instanceof WalletComponent;
+      ref instanceof WalletComponent ||
+      ref instanceof WalletHistoryComponent ||
+      ref instanceof ProfileComponent ||
+      ref instanceof CampaignStampsComponent ||
+      ref instanceof LeaderboardPageComponent ||
+      ref instanceof FindLocationComponent ||
+      ref instanceof TransactionHistoryComponent ||
+      ref instanceof RebatesWalletComponent ||
+      ref instanceof RewardsPageComponent ||
+      ref instanceof NearmeComponent;
     this.cd.detectChanges();
   }
 

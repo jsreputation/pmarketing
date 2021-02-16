@@ -21,6 +21,7 @@ export const mockVoucher: Voucher = {
     howToRedeem: '',
     categoryTags: [],
     inventory: null,
+    loyalty: []
   },
   state: VoucherState.issued,
   redemptionType: RedemptionType.none,

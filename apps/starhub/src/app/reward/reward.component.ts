@@ -23,6 +23,7 @@ export class RewardComponent implements OnInit {
   public loadingSubmit: boolean = false;
   public isRewardsDetailsFetched: boolean = false;
   public macaron: IMacaron | null;
+
   constructor(
     private location: Location,
     private router: Router,
@@ -68,6 +69,10 @@ export class RewardComponent implements OnInit {
           this.isButtonEnable = this.macaron.isButtonEnabled;
         }
 
+        if (reward.loyalty && reward.loyalty.length) {
+          this.isButtonEnable = reward.loyalty.some(tier => tier.attained && !tier.sneakPeek);
+        }
+
         if (
           reward.inventory &&
           reward.inventory.rewardLimitPerUserBalance === 0
@@ -86,10 +91,13 @@ export class RewardComponent implements OnInit {
     this.loadingSubmit = true;
     this.vouchersService.issueReward(this.reward.id).subscribe(
       () => this.router.navigate(['/home/vouchers']),
-      () => {
+      (error) => {
         this.isButtonEnable = true; // change button back to enable which it originally is, before save is triggered
         this.loadingSubmit = false;
         this.notificationService.addSnack('Sorry! Could not save reward.');
+        if (error.status === 401) {
+          this.router.navigate(['/error']);
+        }
       }
     );
   }

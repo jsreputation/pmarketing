@@ -1,7 +1,7 @@
 import { ProtectedGuard } from 'ngx-auth';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LayoutComponent } from '@perxtech/blackcomb-pages';
+import { LayoutComponent } from './layout.component';
 
 const routes: Routes = [
   {
@@ -11,10 +11,6 @@ const routes: Routes = [
       { path: '', pathMatch: 'full', redirectTo: 'home' },
       {
         path: 'home', loadChildren: () => import('../home/home.module').then(mod => mod.HomeModule),
-        canActivate: [ProtectedGuard]
-      },
-      {
-        path: 'wallet', loadChildren: () => import('../wallet/wallet.module').then(mod => mod.WalletModule),
         canActivate: [ProtectedGuard]
       },
       {
@@ -131,6 +127,16 @@ const routes: Routes = [
         loadChildren: () => import('../locations/locations.module')
           .then(mod => mod.LocationsModule),
         canActivate: [ProtectedGuard]
+      },
+      {
+        path: 'performance',
+        loadChildren: () => import('../performance/performance.module')
+          .then(mod => mod.PerformanceModule),
+        canActivate: [ProtectedGuard]
+      },
+      {
+        path: 'invite/:id',
+        loadChildren: () => import('../campaign-referrals/referral.module').then(mod => mod.ReferralModule)
       }
     ]
   }

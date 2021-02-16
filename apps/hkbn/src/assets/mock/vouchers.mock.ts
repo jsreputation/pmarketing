@@ -22,6 +22,7 @@ export const vouchers: Voucher[] = [
       howToRedeem: '',
       categoryTags: [],
       inventory: null,
+      loyalty: []
     },
     state: VoucherState.issued,
     redemptionType: RedemptionType.none,
@@ -49,6 +50,7 @@ export const vouchers: Voucher[] = [
       howToRedeem: '',
       categoryTags: [],
       inventory: null,
+      loyalty: []
     },
     state: VoucherState.issued,
     redemptionType: RedemptionType.none,
@@ -75,6 +77,7 @@ export const vouchers: Voucher[] = [
       howToRedeem: '',
       categoryTags: [],
       inventory: null,
+      loyalty: []
     },
     state: VoucherState.issued,
     redemptionType: RedemptionType.none,
@@ -102,6 +105,7 @@ export const vouchers: Voucher[] = [
       howToRedeem: '',
       categoryTags: [],
       inventory: null,
+      loyalty: []
     },
     state: VoucherState.issued,
     redemptionType: RedemptionType.none,
@@ -128,6 +132,7 @@ export const vouchers: Voucher[] = [
       howToRedeem: '',
       categoryTags: [],
       inventory: null,
+      loyalty: []
     },
     state: VoucherState.expired,
     redemptionType: RedemptionType.none,
@@ -154,6 +159,7 @@ export const vouchers: Voucher[] = [
       howToRedeem: '',
       categoryTags: [],
       inventory: null,
+      loyalty: []
     },
     state: VoucherState.redeemed,
     redemptionType: RedemptionType.none,

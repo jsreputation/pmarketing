@@ -19,7 +19,8 @@ import {
   ThemesService,
   IOutcome,
   UtilsModule,
-  SettingsService
+  SettingsService,
+  TokenStorage
 } from '@perxtech/core';
 import { WInformationCollectionSettingType } from '@perxtech/whistler';
 import { RewardComponent } from './reward.component';
@@ -58,7 +59,8 @@ describe('RewardComponent', () => {
   };
 
   const rewardsServiceStub: Partial<RewardsService> = {
-    getAllRewards: () => of(),
+    nearMe: () => of(),
+    getAllFavoriteRewards: () => of([])
   };
 
   const instantOutStub: Partial<InstantOutcomeService> = {
@@ -76,7 +78,13 @@ describe('RewardComponent', () => {
   };
 
   const settingsServiceStub: Partial<SettingsService> = {
-    getRssFeeds: () => of()
+    getRssFeeds: () => of(),
+    getRemoteFlagsSettings: () => of()
+  };
+
+  const tokenStorageStub = {
+    getAppInfoProperty: () => null,
+    setAppInfoProperty: () => { }
   };
 
   beforeEach(async(() => {
@@ -115,7 +123,8 @@ describe('RewardComponent', () => {
           provide: ThemesService,
           useValue: themesServiceStub,
         },
-        { provide: SettingsService, useValue: settingsServiceStub }
+        { provide: SettingsService, useValue: settingsServiceStub },
+        { provide: TokenStorage, useValue: tokenStorageStub }
       ]
     })
       .compileComponents();

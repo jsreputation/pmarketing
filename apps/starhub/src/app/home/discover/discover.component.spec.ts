@@ -16,7 +16,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { of } from 'rxjs';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 
 import {
   GameModule,
@@ -40,6 +39,8 @@ import { CampaignsComponent } from '../campaigns/campaigns.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { GhostCardComponent } from '../../ghosts/card-ghost.component';
 import { StampCardsComponent } from '../stamp-cards/stamp-cards.component';
+import { QuizSurveyCampaignsComponent } from '../quiz-campaigns/quiz-survey-campaigns.component';
+import { TaggedItemsComponent } from '../tagged-items/tagged-items.component';
 
 describe('DiscoverComponent', () => {
   let component: DiscoverComponent;
@@ -89,14 +90,15 @@ describe('DiscoverComponent', () => {
         CatalogsComponent,
         CampaignsComponent,
         StampCardsComponent,
-        GhostCardComponent
+        GhostCardComponent,
+        QuizSurveyCampaignsComponent,
+        TaggedItemsComponent
       ],
       imports: [
         MatCardModule,
         MatIconModule,
         MatDialogModule,
         RouterTestingModule,
-        NgxMultiLineEllipsisModule,
         ScrollingModule,
         GameModule,
         InfiniteScrollModule,
@@ -160,6 +162,7 @@ describe('DiscoverComponent', () => {
       howToRedeem: '',
       categoryTags: [],
       inventory: undefined,
+      loyalty: []
     };
     component.rewardSelected(reward);
     expect(routerSpy).toHaveBeenCalledWith(['/reward'], { queryParams: { id: 1 } });

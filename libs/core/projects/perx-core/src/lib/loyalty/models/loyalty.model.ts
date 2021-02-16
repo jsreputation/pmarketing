@@ -3,7 +3,8 @@ import { ITransactionProperties } from '../../transactions/models/transactions.m
 
 export const enum TransactionDetailType {
   'transaction' = 'Transaction',
-  'reward' = 'Reward::Transaction'
+  'reward' = 'Reward::Transaction',
+  'game' =  'GameTransaction'
 }
 
 export interface IExpiringPoints {
@@ -51,6 +52,7 @@ export interface ILoyalty {
   tiers?: LoyaltyTiers[];
   membershipState?: 'active' | 'pending' | 'inactive' | 'expire';
   images?: LoyaltyImages;
+  tierPoints?: number;
 }
 
 export interface ILoyaltyTransaction {
@@ -88,6 +90,12 @@ export interface IPurchaseTransactionHistory {
   properties?: ITransactionProperties;
 }
 
+export interface IGameTransactionHistory {
+  id: number;
+  gameName: string;
+  properties?: ITransactionProperties;
+}
+
 export interface ILoyaltyTransactionHistory {
   id: number;
   name?: string;
@@ -97,7 +105,7 @@ export interface ILoyaltyTransactionHistory {
   properties?: ICustomProperties;
   transactionDetails?: {
     type?: TransactionDetailType,
-    data?: IPurchaseTransactionHistory | IRewardTransactionHistory
+    data?: IPurchaseTransactionHistory | IRewardTransactionHistory | IGameTransactionHistory
   };
 }
 

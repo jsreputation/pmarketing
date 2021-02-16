@@ -31,12 +31,12 @@ const displayProperties = `"displayProperties": {
       "pages": [
           {
               "key": "contact-us",
-              "title": "Contact Us",
-              "content_url": "${process.env.CONTACTUSURL ? process.env.CONTACTUSURL : ''}"
+              "title": "CONTACT_US",
+              "content_url": "${process.env.CONTACTUSURL ? process.env.CONTACTUSURL : '/contact-us'}"
           },
           {
               "key": "tnc",
-              "title": "Terms and Conditions",
+              "title": "TNC",
               "content_url": "${process.env.TNCURL ? process.env.TNCURL : ''}"
           }
       ]
@@ -56,6 +56,7 @@ const envConfigFile = `export const environment = {
 
 const appConfigFile = `{
   "app": "allit",
+  "appVersion": "${process.env.PERX_APP_VERSION ? process.env.PERX_APP_VERSION : 'dev-build'}",
   "apiHost": "${process.env.APIHOST ? process.env.APIHOST : 'https://api.perxtech.io'}",
   "production": ${process.env.PRODUCTION ? process.env.PRODUCTION : false},
   "preAuth": ${process.env.PREAUTH ? process.env.PREAUTH : false},
@@ -76,9 +77,11 @@ const appConfigFile = `{
   "showLoyaltyProgress": ${process.env.SHOW_LOYALTY_PROGRESS ? process.env.SHOW_LOYALTY_PROGRESS : false},
   "showCatalogOnHomePage": ${process.env.SHOW_CATALOG_ON_HOMEPAGE ? process.env.SHOW_CATALOG_ON_HOMEPAGE : false},
   "showQuizOnHomePage" : ${process.env.SHOW_QUIZ_ON_HOMEPAGE ? process.env.SHOW_QUIZ_ON_HOMEPAGE : false},
+  "showSurveyOnHomePage" : ${process.env.SHOW_SURVEY_ON_HOMEPAGE ? process.env.SHOW_SURVEY_ON_HOMEPAGE : false},
   "showCampaignRewardsCounterOnHomepage": ${process.env.SHOW_CAMPAIGN_REWARDS_COUNTER_ON_HOMEPAGE ? process.env.SHOW_CAMPAIGN_REWARDS_COUNTER_ON_HOMEPAGE : false},
   "showRewardsOnHomepage": ${process.env.SHOW_REWARDS_ON_HOMEPAGE ? process.env.SHOW_REWARDS_ON_HOMEPAGE : true},
   "showCampaignLandingPage": ${process.env.SHOW_CAMPAIGN_LANDING_PAGE ? process.env.SHOW_CAMPAIGN_LANDING_PAGE : false},
+  "showPopupCampaign": ${process.env.SHOW_POPUP_HOMEPAGE ? process.env.SHOW_POPUP_HOMEPAGE : false},
 
   "showQrPageSubtitle": ${process.env.SHOW_QRPAGE_SUBTITLE ? process.env.SHOW_QRPAGE_SUBTITLE : true},
   "showUserQR": ${process.env.SHOW_USER_QR ? process.env.SHOW_USER_QR : true},
@@ -86,10 +89,13 @@ const appConfigFile = `{
   "showExpiryOnRewardDetail": ${process.env.SHOW_EXPIRY_REWARD_DETAIL ? process.env.SHOW_EXPIRY_REWARD_DETAIL : false},
   "showUserInfoOnAccountsPage": ${process.env.SHOW_USERINFO_ACCOUNTS ? process.env.SHOW_USERINFO_ACCOUNTS : true},
   "showTransactionHistoryOnAccountsPage": ${process.env.SHOW_TRANSANCTION_HISTORY_ACCOUNTS ? process.env.SHOW_TRANSANCTION_HISTORY_ACCOUNTS : true},
+  "showReferralDetails": ${process.env.SHOW_REFERRAL_DETAILS ? process.env.SHOW_REFERRAL_DETAILS : false},
   "showVoucherBookingFromRewardsPage":  ${process.env.SHOW_VOUCHER_BOOKING_FROM_REWARDS ? process.env.SHOW_VOUCHER_BOOKING_FROM_REWARDS : true},
+  "showStampCampaignsOnHomePage" : ${process.env.SHOW_STAMP_CAMPAIGNS_ON_HOMEPAGE ? process.env.SHOW_STAMP_CAMPAIGNS_ON_HOMEPAGE : true},
   "custom": {
     "stampsType": "${process.env.STAMPS_TYPE ? process.env.STAMPS_TYPE : 'stamp_card'}",
-    "redirectAfterLogin": "${process.env.REDIRECT_AFTER_LOGIN ? process.env.REDIRECT_AFTER_LOGIN : '/home'}"
+    "redirectAfterLogin": "${process.env.REDIRECT_AFTER_LOGIN ? process.env.REDIRECT_AFTER_LOGIN : '/home'}",
+    "loginMethod": "${process.env.LOGIN_METHOD ? process.env.LOGIN_METHOD : 'phone'}"
   },
   ${displayProperties}
 }

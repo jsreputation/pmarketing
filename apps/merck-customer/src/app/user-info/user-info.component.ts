@@ -25,7 +25,7 @@ export class UserInfoComponent implements PageAppearence, OnInit {
   }
 
   public ngOnInit(): void {
-    this.translate.get('CONDITION_SAVED').subscribe((text) => this.conditionMessage = text);
+    this.translate.get('PROFILE.CONDITION_SAVED').subscribe((text) => this.conditionMessage = text);
   }
 
   private initForm(): void {

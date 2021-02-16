@@ -10,11 +10,11 @@ export interface CampaignDisplayProperties {
 }
 
 export interface CampaignLandingPage {
-  body?: string;
+  body?: { text: string };
   media?: { youtube?: string; };
-  heading?: string;
-  buttonText?: string;
-  subHeading?: string;
+  heading?: { text: string };
+  buttonText?: { text: string };
+  subHeading?: { text: string };
   backgroundUrl?: string;
 }
 
@@ -31,6 +31,15 @@ export enum CampaignState {
   active = 'active',
   inactive = 'inactive',
   draft = 'draft'
+}
+
+export interface ProgressBarFields {
+  stages: number;
+  current: number;
+  stageLabels: string|number[];
+  lightStage?: number;
+  // for pay and spend include pending and processed
+  totalCurrent?: number;
 }
 
 export interface ICampaign {
@@ -51,6 +60,9 @@ export interface ICampaign {
   rawPayload?: any;
   displayProperties?: CampaignDisplayProperties;
   referralCodes?: string[];
+  refersAttained?: number;
+  progress?: ProgressBarFields;
+  customFields?: any;
 }
 
 export enum CommChannel {
@@ -61,4 +73,9 @@ export enum CommChannel {
 export interface IReferral {
   // no empty interface rule
   success?: string;
+}
+
+export interface ITaggedItem {
+  itemType: string;
+  itemVal: ICampaign | IReward | number;
 }

@@ -13,7 +13,11 @@ import {
   ISignUpData,
   IProfile,
   ICountryCode,
-  GeneralStaticDataService
+  GeneralStaticDataService,
+  ThemesService,
+  ITheme,
+  ConfigService,
+  IConfig
 } from '@perxtech/core';
 import {
   map,
@@ -36,21 +40,31 @@ export class SignupComponent implements OnInit {
   public signupForm: FormGroup;
   public errorMessage: string | null;
   public appAccessTokenFetched: boolean = false;
-
+  public theme: Observable<ITheme>;
   public countriesList$: Observable<ICountryCode[]>;
   private destroy$: Subject<void> = new Subject();
+  public maxDobDate: Date = new Date(); // today
+  public appConfig: IConfig<void>;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
     private authService: AuthenticationService,
+    private configService: ConfigService,
     private notificationService: NotificationService,
     public generalStaticDataService: GeneralStaticDataService,
-    private dateAdapter: DateAdapter<Date>
+    private dateAdapter: DateAdapter<Date>,
+    private themesService: ThemesService,
   ) {}
 
   public ngOnInit(): void {
+    this.configService.readAppConfig().subscribe(
+      (config: IConfig<void>) => {
+        this.appConfig = config;
+      }
+    );
+    this.theme = this.themesService.getThemeSetting();
     this.countriesList$ = this.route.data.pipe(
       map((dataObj) => dataObj.countryList),
       switchMap((countriesList) => this.generalStaticDataService.getCountriesList(countriesList)),
@@ -79,15 +93,28 @@ export class SignupComponent implements OnInit {
       title: ['', Validators.required],
       name: ['', Validators.required],
       dob: ['', Validators.required],
-      postcode: ['', Validators.required],
+      gender: ['', Validators.required],
+      // postcode: ['', Validators.required],
       countryCode: ['60', Validators.required],
-      mobileNo: ['', Validators.required],
+      mobileNo: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
       email: ['', Validators.email],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required, Validators.minLength(6)]],
-      accept_terms: [false, Validators.required],
+      confirmPassword: ['', Validators.required],
+      referralCode: [''],
+      accept_terms: [false, Validators.requiredTrue],
       accept_marketing: [false, Validators.required]
-    });
+    }, {validator: this.matchingPasswords('password', 'confirmPassword')});
+  }
+
+  public matchingPasswords(passwordKey: string, passwordConfirmationKey: string): (group: FormGroup) => void {
+    return (group: FormGroup) => {
+        const password = group.controls[passwordKey];
+        const passwordConfirmation = group.controls[passwordConfirmationKey];
+        if (password.value !== passwordConfirmation.value) {
+            return passwordConfirmation.setErrors({mismatchedPasswords: true});
+        }
+        passwordConfirmation.setErrors(null);
+    };
   }
 
   public onSubmit(): void {
@@ -98,22 +125,20 @@ export class SignupComponent implements OnInit {
 
     const passwordString = this.signupForm.get('password').value;
     const confirmPassword = this.signupForm.get('confirmPassword').value;
-    if (passwordString !== confirmPassword) {
-      this.errorMessage = 'Passwords do not match';
-      return;
-    }
-
     const name = this.signupForm.value.name;
     const dob = this.signupForm.value.dob;
 
-    const mobileNumber = this.signupForm.value.mobileNo;
+    // converting to Number will strip leading 0s
+    const mobileNumber: number = Number(this.signupForm.value.mobileNo);
     const countryCode = this.signupForm.value.countryCode;
     const codeAndMobile = countryCode + mobileNumber;
 
     const emailValue = this.signupForm.value.email;
 
     const titleString = this.signupForm.value.title;
-    const postcodeString = this.signupForm.value.postcode;
+    const genderString = this.signupForm.value.gender;
+    // const postcodeString = this.signupForm.value.postcode;
+    const referralCode = this.signupForm.value.referralCode;
 
     const signUpData: ISignUpData = {
       lastName: name,
@@ -124,8 +149,15 @@ export class SignupComponent implements OnInit {
       passwordConfirmation: confirmPassword,
       email: emailValue,
       title: titleString,
-      postcode: postcodeString
+      gender: genderString,
+      // postcode: postcodeString
     };
+
+    if (referralCode.length > 0 && this.appConfig.showReferralDetails) {
+      signUpData.customProperties = {
+        referralCode
+      };
+    }
 
     this.authService.signup(signUpData)
       .subscribe(
@@ -134,7 +166,7 @@ export class SignupComponent implements OnInit {
             return;
           }
 
-          this.router.navigateByUrl('otp/register', { state: { mobileNo: codeAndMobile } });
+          this.router.navigateByUrl('otp/register', { state: { mobileNo: codeAndMobile }, skipLocationChange: true});
         },
         err => {
           this.notificationService.addSnack(err.error.message);

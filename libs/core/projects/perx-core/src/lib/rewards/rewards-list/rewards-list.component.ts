@@ -36,7 +36,7 @@ export class RewardsListComponent implements OnInit {
   public defaultImg: string;
 
   @Input()
-  public displayPriceFn: (rewardPrice: IPrice) => string;
+  public displayPriceFn: (rewardPrice: IPrice) => Observable<string>;
 
   @Output()
   public tapped: EventEmitter<IReward> = new EventEmitter<IReward>();
@@ -62,17 +62,18 @@ export class RewardsListComponent implements OnInit {
       this.displayPriceFn = (rewardPrice: IPrice) => {
         if (rewardPrice.price && parseFloat(rewardPrice.price) > 0) {
           if (rewardPrice.points && rewardPrice.points > 0) {
-            return `${rewardPrice.currencyCode} ${rewardPrice.price} and ${rewardPrice.points} points`;
+            return of(`${rewardPrice.currencyCode} ${rewardPrice.price} and ${rewardPrice.points} points`);
           }
-          return `${rewardPrice.currencyCode} ${rewardPrice.price}`;
+          return of(`${rewardPrice.currencyCode} ${rewardPrice.price}`);
         }
 
         if (rewardPrice.points && rewardPrice.points > 0) {
-          return `${rewardPrice.points} points`;
+          return of(`${rewardPrice.points} points`);
         }
-        return ''; // is actually 0 or invalid value default
+        return of(''); // is actually 0 or invalid value default
       };
     }
+
     of(true).pipe(delay(2000)).subscribe(
       () => this.ghostTimeOut = true
     );

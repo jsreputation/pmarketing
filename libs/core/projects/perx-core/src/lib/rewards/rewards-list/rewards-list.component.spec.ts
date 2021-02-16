@@ -4,10 +4,7 @@ import {
   TestBed,
 } from '@angular/core/testing';
 import { MatCardModule } from '@angular/material';
-
 import { of } from 'rxjs';
-import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
-
 import { RewardsListComponent } from './rewards-list.component';
 import { UtilsModule } from '../../utils/utils.module';
 import { ThemesService } from '../../utils/themes/themes.service';
@@ -22,11 +19,12 @@ describe('RewardsListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RewardsListComponent],
+      declarations: [
+        RewardsListComponent
+      ],
       imports: [
         MatCardModule,
-        UtilsModule,
-        NgxMultiLineEllipsisModule
+        UtilsModule
       ],
       providers: [
         { provide: ThemesService, useValue: themesServiceStub },

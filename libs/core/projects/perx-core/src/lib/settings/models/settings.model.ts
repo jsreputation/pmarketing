@@ -15,6 +15,14 @@ export interface IFlags {
   gatekeeperApi?: GatekeeperApis;
   showStampCampaigns?: boolean;
   showLoyaltyBlockOnHomePage?: boolean;
+  gatekeeperUrl?: string;
+  showRewardFavButton?: boolean;
+  showRSSfeedCTA?: boolean;
+  showNearMePage?: boolean;
+  showProgressCampaignsNavButton?: boolean;
+  showVoucherStatusLabels?: boolean;
+  voucherDistributionType?: VoucherDistributionTypes;
+  systemSetsPassword?: boolean;
 }
 
 export interface IRssFeeds {
@@ -46,4 +54,9 @@ export enum RssFeedsPages {
 export enum GatekeeperApis {
   AWS = 'aws',
   PERX = 'perx'
+}
+
+export enum VoucherDistributionTypes {
+  issue = 'issue',
+  reserve = 'reserve'
 }

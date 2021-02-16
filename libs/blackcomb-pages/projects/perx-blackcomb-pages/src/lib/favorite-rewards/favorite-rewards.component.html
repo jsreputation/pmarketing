@@ -1,0 +1,6 @@
+<h1>{{'FAVOURITES_PAGE.TITLE' | translate}}</h1>
+<perx-core-rewards-list
+  [rewardsList]="rewardsList$"
+  [displayPriceFn]="displayPriceFn"
+  (tapped)="goToReward($event)">
+</perx-core-rewards-list>

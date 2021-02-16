@@ -1,0 +1,34 @@
+<div *ngIf="(itemsSnapping$ | async) as itemsSnapping" class="main-container">
+    <h1 *ngIf="ghostItems.length || itemsSnapping.length">Spinning Saturday</h1>
+    <div [@fadeIn]="itemsSnapping.length" *ngIf="itemsSnapping.length > 0"
+    infiniteScroll
+    [infiniteScrollDistance]="3"
+    [infiniteScrollThrottle]="500"
+    [horizontal]="true"
+    (scrolled)="onTaggedItemsScroll()"
+    [alwaysCallback]="true"
+    [scrollWindow]="false"
+    class="cards">
+      <mat-card
+        *ngFor="let itemSnapping of itemsSnapping"
+        matRipple [matRippleDisabled]="itemSnapping?.macaron?.class === 'coming-soon'" (click)="selected(itemSnapping)">
+        <div class="featured-image" >
+          <img mat-card-image [src]="itemSnapping.rewardBanner ? itemSnapping.rewardBanner : (itemSnapping.thumbnailUrl ? itemSnapping.thumbnailUrl: '')">      
+          <div *ngIf="itemSnapping?.macaron as macaron" class="macaron-container">
+            <span [ngClass]="macaron.class">{{macaron.label}}</span>
+          </div>
+        </div>      
+        <mat-card-content>
+          <div class="card-description">
+            <h1>{{itemSnapping.name}}</h1>
+            <h2 *ngIf="itemSnapping.merchantName">{{itemSnapping.merchantName}}</h2>
+          </div>
+          <div class="icon">
+            <img src="assets/forward-arrow.svg" alt="">
+          </div>
+        </mat-card-content>
+        <mat-card-footer></mat-card-footer>
+      </mat-card>
+    </div>
+  <ghost-cards class="cards" [@fadeOut]="!ghostItems.length" [ghosts]="ghostItems"></ghost-cards>
+  </div>

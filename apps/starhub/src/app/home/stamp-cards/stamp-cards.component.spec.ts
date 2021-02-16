@@ -53,7 +53,7 @@ describe('StampCardsComponent', () => {
       providers: [
         { provide: ICampaignService, useValue: campaignServiceStub },
         { provide: ConfigService, useValue: configServiceStub },
-        { provide: StampService, useValue: stampServiceStub },
+        { provide: StampService, useValue: stampServiceStub }
       ]
     })
       .compileComponents();
@@ -111,6 +111,7 @@ describe('StampCardsComponent', () => {
               howToRedeem: '',
               categoryTags: [],
               inventory: undefined,
+              loyalty: []
             }
           ],
           thumbnailUrl: '',

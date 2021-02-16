@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="headers">
+	  <button mat-button class="search-button" (click)="searchThisArea()">Search this area</button>
+    <div class="filter-area">
+      <button mat-button (click)="openDialog()">
+        <img src="assets/funnel.png" alt="">
+      </button>
+    </div>
+  </div>
+  <div #gmap class="map"></div>
+  <div class="loc-card-container">
+      <div *ngIf="current && currentPrice" class="loc-card mat-elevation-z8">
+        <div class="card-content">
+          <div *ngIf="merchantImg" class="logo"><img [attr.src]="current.merchantImg"></div>
+          <div class="merchant include-heart">
+            <p>{{current.merchantName}}</p>
+            <mat-icon class="show-pointer"
+                      *ngIf="showRewardFavButton"
+                      (click)="rewardFavoriteHandler(current)">
+              {{current?.favorite ? 'favorite' : 'favorite_border'}}</mat-icon>
+          </div>
+          <div class="reward">
+            <h1>{{current.name}}</h1>
+            <div *ngIf="upcoming" class="macaron-container">
+              <span class="macaron">Upcoming</span>
+            </div>
+          </div>
+          <span><p class="price">{{currentPrice.points}}<p> <p class="points"> points </p><p>or </p><p class="price">${{currentPrice.price}}</p><p> | Valid till {{current.validTo | date : 'shortDate'}}</p></span>
+        </div>
+        </div>
+  </div>
+</div>

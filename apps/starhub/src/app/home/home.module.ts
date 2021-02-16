@@ -12,7 +12,6 @@ import {
 } from '@angular/material';
 
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
 
 import {
   CampaignModule,
@@ -38,6 +37,8 @@ import { CampaignsComponent } from './campaigns/campaigns.component';
 import { NoRenewaleInNamePipe } from './no-renewale-in-name.pipe';
 import { GhostsModule } from '../ghosts/ghosts.module';
 import { StampCardsComponent } from './stamp-cards/stamp-cards.component';
+import { QuizSurveyCampaignsComponent } from './quiz-campaigns/quiz-survey-campaigns.component';
+import { TaggedItemsComponent } from './tagged-items/tagged-items.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,9 @@ import { StampCardsComponent } from './stamp-cards/stamp-cards.component';
     CatalogsComponent,
     CampaignsComponent,
     StampCardsComponent,
-    NoRenewaleInNamePipe
+    NoRenewaleInNamePipe,
+    QuizSurveyCampaignsComponent,
+    TaggedItemsComponent,
   ],
   imports: [
     ConfigModule.forChild(),
@@ -63,7 +66,6 @@ import { StampCardsComponent } from './stamp-cards/stamp-cards.component';
     MatRippleModule,
     MatDialogModule,
     HomeRoutingModule,
-    NgxMultiLineEllipsisModule,
     UtilsModule,
     ScrollingModule,
     LoyaltyModule,

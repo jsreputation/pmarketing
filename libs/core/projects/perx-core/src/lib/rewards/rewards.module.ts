@@ -7,21 +7,29 @@ import { RewardsListComponent } from './rewards-list/rewards-list.component';
 import { RewardsListTabbedComponent } from './rewards-list-tabbed/rewards-list-tabbed.component';
 import { MaterialModule } from '../shared/material.module';
 import { RewardComponent } from './reward/reward.component';
-import { NgxMultiLineEllipsisModule } from 'ngx-multi-line-ellipsis';
-import { EllipsisModule } from 'ngx-ellipsis';
 import { UtilsModule } from '../utils/utils.module';
 import { HttpClient } from '@angular/common/http';
 import { Config } from '../config/config';
 import { WhistlerRewardsService } from './whistler-rewards.service';
 import { StampsCardsListComponent } from '../stamp/stamps-cards-list/stamps-cards-list.component';
 import { ConfigService } from '../config/config.service';
+import { DragScrollModule } from 'ngx-drag-scroll';
+import { RewardsLargeListComponent } from './rewards-large-list/rewards-large-list.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { RewardVoucherComponent } from './reward-voucher/reward-voucher.component';
+import { MatListModule } from '@angular/material/list';
+import { ProgressBarModule } from '../progress-bar/progress-bar.module';
+import { ProgressRequirePipe } from './rewards-large-list/reward-requirement.pipe';
 
 const components = [
   RewardsCollectionComponent,
   RewardsListComponent,
   RewardsListTabbedComponent,
   RewardComponent,
-  StampsCardsListComponent
+  RewardsLargeListComponent,
+  RewardVoucherComponent,
+  StampsCardsListComponent,
+  ProgressRequirePipe
 ];
 
 export function rewardsServiceFactory(http: HttpClient, config: Config, configService: ConfigService): RewardsService {
@@ -37,11 +45,14 @@ export function rewardsServiceFactory(http: HttpClient, config: Config, configSe
     ...components,
   ],
   imports: [
+    DragScrollModule,
     CommonModule,
     MaterialModule,
-    NgxMultiLineEllipsisModule,
-    EllipsisModule,
-    UtilsModule
+    UtilsModule,
+    TranslateModule.forChild(),
+    MatListModule,
+    ProgressBarModule,
+    TranslateModule.forChild()
   ],
   exports: [
     ...components,

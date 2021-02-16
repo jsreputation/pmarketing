@@ -35,6 +35,8 @@ import {
   VoucherDetailComponent
 } from '@perxtech/blackcomb-pages';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { UtilsModule } from '@perxtech/core';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -69,7 +71,9 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     ReactiveFormsModule,
     FormsModule,
     PuzzlesModule,
-    SurveyModule
+    SurveyModule,
+    UtilsModule,
+    MatButtonModule
   ]
 })
 export class PagesModule { }

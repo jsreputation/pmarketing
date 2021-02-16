@@ -6,7 +6,7 @@ import {
   Output,
 } from '@angular/core';
 
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import {
   IPrice,
@@ -28,18 +28,27 @@ export class RewardsCollectionComponent implements OnInit {
   public repeatGhostCount: number = 10;
   public colorPrimary: Colors = Colors.Primary;
   public theme: ITheme | null = null;
+  public favoriteRewards: IReward[] = [];
+  // to debounce fav button
+  public favDisabled: boolean  = false;
 
   @Input('rewardsList')
   public rewards$: Observable<IReward[]>;
 
   @Input()
+  public showRewardFavButton?: boolean;
+
+  @Input()
   public defaultImg: string;
 
   @Input()
-  public displayPriceFn: (rewardPrice: IPrice) => string;
+  public displayPriceFn: (rewardPrice: IPrice) => Observable<string>;
 
   @Output()
   public tapped: EventEmitter<IReward> = new EventEmitter<IReward>();
+
+  @Output()
+  public favoriteRewardEvent: EventEmitter<IReward> = new EventEmitter<IReward>();
 
   public get themeFontColor(): string | null {
     return this.theme ? this.theme.properties['--font_color'] : null;
@@ -61,13 +70,16 @@ export class RewardsCollectionComponent implements OnInit {
     if (!this.displayPriceFn) {
       this.displayPriceFn = (rewardPrice: IPrice) => {
         if (rewardPrice.price && parseFloat(rewardPrice.price) > 0) {
-          return `${rewardPrice.currencyCode} ${rewardPrice.price}`;
+          if (rewardPrice.points && rewardPrice.points > 0) {
+            return of(`${rewardPrice.currencyCode} ${rewardPrice.price} and ${rewardPrice.points} points`);
+          }
+          return of(`${rewardPrice.currencyCode} ${rewardPrice.price}`);
         }
 
         if (rewardPrice.points && rewardPrice.points > 0) {
-          return `${rewardPrice.points} points`;
+          return of(`${rewardPrice.points} points`);
         }
-        return ''; // is actually 0 or invalid value default
+        return of(''); // is actually 0 or invalid value default
       };
     }
   }
@@ -75,4 +87,9 @@ export class RewardsCollectionComponent implements OnInit {
   public rewardClickedHandler(reward: IReward): void {
     this.tapped.emit(reward);
   }
+
+  public rewardFavoriteHandler(rewardToggled: IReward): void {
+    this.favoriteRewardEvent.emit(rewardToggled);
+  }
+
 }

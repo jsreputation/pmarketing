@@ -23,7 +23,8 @@ import {
   IRewardTransactionHistory,
   ILoyaltyTransaction,
   ILoyaltyTransactionHistory,
-  TransactionDetailType
+  TransactionDetailType,
+  IGameTransactionHistory
 } from './models/loyalty.model';
 
 import {
@@ -38,6 +39,7 @@ import {
   V4TenantTransactionProperties,
   V4TransactionsService
 } from '../transactions/transaction-service/v4-transactions.service';
+import { IV4Campaign } from '../campaign/v4-campaign.service';
 
 const DEFAULT_PAGE_COUNT: number = 10;
 
@@ -92,6 +94,7 @@ interface IV4Loyalty {
   membership_expiry: Date;
   membership_state?: 'active' | 'pending' | 'inactive' | 'expire';
   images?: IV4Image[];
+  tier_points?: number;
 }
 
 interface IV4GetLoyaltiesResponse {
@@ -149,6 +152,11 @@ interface IV4PurchaseTransactionHistory {
   transaction_reference: string;
 }
 
+interface IV4GameTransactionHistory {
+  id: number;
+  campaign: IV4Campaign;
+}
+
 interface IV4LoyaltyTransactionPropertiesHistory {
   id: number;
   name: string;
@@ -159,7 +167,7 @@ interface IV4LoyaltyTransactionPropertiesHistory {
   properties: ICustomProperties | V4TenantTransactionProperties;
   transaction_details: {
     type: TransactionDetailType;
-    data: IV4PurchaseTransactionHistory | IV4RewardTransactionHistory;
+    data: IV4PurchaseTransactionHistory | IV4RewardTransactionHistory | IV4GameTransactionHistory;
   };
 }
 
@@ -218,6 +226,7 @@ export class V4LoyaltyService extends LoyaltyService {
       nextTierPoints: nextTier ? nextTier.points_requirement : 0,
       nextTierPointsDiff: nextTier ? nextTier.points_difference : 0,
       nextTierName: nextTier ? nextTier.name : '',
+      tierPoints: loyalty.tier_points,
       highestTier,
       expiringPoints: loyalty.aging_points && loyalty.aging_points.map(aging => ({
         expireDate: aging.expiring_on_date,
@@ -259,7 +268,7 @@ export class V4LoyaltyService extends LoyaltyService {
     transactionHistory: IV4LoyaltyTransactionPropertiesHistory
   ): ILoyaltyTransactionHistory {
     const transactionDetails = oc(transactionHistory).transaction_details.data();
-    let data: IPurchaseTransactionHistory | IRewardTransactionHistory | undefined;
+    let data: IPurchaseTransactionHistory | IRewardTransactionHistory | IGameTransactionHistory | undefined;
 
     if (transactionDetails) {
       switch (transactionHistory.transaction_details.type) {
@@ -294,6 +303,13 @@ export class V4LoyaltyService extends LoyaltyService {
           };
           data.properties = V4TransactionsService.v4TransactionPropertiesToTransactionProperties(pthProps as V4TenantTransactionProperties);
           break;
+        case TransactionDetailType.game:
+         const gameDetails = transactionDetails as IV4GameTransactionHistory;
+         data = {
+            id: transactionDetails.id,
+            gameName: gameDetails.campaign.name
+          };
+         break;
       }
     // } else if (transactionHistory.name === 'POS Update') { // hard-coded reason code from backend for POS transactions
     } else if (Object.keys(transactionHistory.properties).length > 0) {

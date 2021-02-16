@@ -1,0 +1,41 @@
+<div class="select-wrapper">
+  <ng-container *ngIf="to.multiple; else elseBlock">
+    <div *ngFor="let option of to.options | formlySelectOptions: field | async; let i = index">
+      <mat-checkbox
+        class="choice-box"
+        [id]="id + '_' + i"
+        [formlyAttributes]="field"
+        [tabindex]="to.tabindex"
+        [color]="'primary'"
+        [labelPosition]="to.labelPosition"
+        [checked]="isChecked(option)"
+        [disabled]="formControl.disabled"
+        (change)="onChange(i + '. ' + option.value, $event.checked)">
+        {{option.label}}
+      </mat-checkbox>
+    </div>
+  </ng-container>
+  <ng-template #elseBlock>
+    <div class="choice-container">
+      <mat-radio-group
+        [color]="'primary'"
+        class="selection-radio-group"
+        [formControl]="formControl"
+        [formlyAttributes]="field"
+        [required]="to.required"
+        [tabindex]="to.tabindex"
+      >
+        <div class="single-divider"
+             *ngFor="let option of to.options | formlySelectOptions: field | async; let i = index">
+          <mat-radio-button
+            class="selection-radio-button choice-box selected"
+            [id]="id + '_' + i"
+            [color]="'primary'"
+            [value]="option.value">
+            {{option.label}}
+          </mat-radio-button>
+        </div>
+      </mat-radio-group>
+    </div>
+  </ng-template>
+</div>
