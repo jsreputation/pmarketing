@@ -74,8 +74,8 @@ export class ReferralComponent {
           this.campaignId = campaign.id;
 
           this.shareText = campaign.customFields.shareContent ? `${(campaign.customFields.shareContent as string)
-            .replace(/\\n/g,'\u000A')
-            .replace(/<br[\ ]?[/]?>/g,'\u000A')
+            .replace(/\\n/g, '\u000A')
+            .replace(/<br[\ ]?[/]?>/g, '\u000A')
             // match possible <br> permutations for both html and xhtml styles
           }` : '';
           this.shareTitle = campaign.customFields.shareHeader;
