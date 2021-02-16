@@ -279,6 +279,7 @@
     "ACCOUNT_EXPIRE": "Account Expiry",
     "POINT_PRETEXT": "You've earned",
     "POINT_TO": "Points to {nextTierName}",
+    "GAME_TRIES_LEFT": "tries left",
     "POINT_DENOMINATION": "DBS$ / COMPASS Dollars",
     "ALL": "All",
     "HUNG_FOOK_TONG": "Hung Fook Tong",

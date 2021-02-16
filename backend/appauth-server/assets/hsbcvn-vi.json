@@ -227,6 +227,7 @@
     "POINT_EXPIRE": "{điểm} điểm sẽ hết hạn vào {date}",
     "ACCOUNT_EXPIRE": "Hết hạn tài khoản",
     "POINT_TO": "Trỏ tới {nextTierName}",
+    "GAME_TRIES_LEFT": "tries left",
     "ALL": "Tất cả",
     "HUNG_FOOK_TONG": "",
     "BIG_BIG_SHOP": "",

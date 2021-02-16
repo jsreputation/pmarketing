@@ -21,6 +21,32 @@ mat-card {
 
 .card-content {
   padding: 16px;
+
+  .title-row {
+    display: flex;
+    flex-direction: row;
+
+    .left-content {
+      flex: 1 1 90%;
+    }
+
+    .right-content {
+      flex: 0 0 10%;
+      display: flex;
+
+      span {
+        font-size: 1.2rem;
+        color: #666666;
+        white-space: nowrap;
+        flex: 0;
+        align-self: center;
+
+        &.game-tries-count {
+          color: var(--font_color);
+        }
+      }
+    }
+  }
 }
 
 .main-reward-title {
