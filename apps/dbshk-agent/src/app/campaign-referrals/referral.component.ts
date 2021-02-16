@@ -73,7 +73,11 @@ export class ReferralComponent {
           this.campaignEndsAt = campaign.endsAt ? campaign.endsAt : null;
           this.campaignId = campaign.id;
 
-          this.shareText = campaign.customFields.shareContent;
+          this.shareText = `${(campaign.customFields.shareContent as string)
+            .replace(/\\n/g,'\u000A')
+            .replace(/<br[\ ]?[/]?>/g,'\u000A')
+            // match possible <br> permutations for both html and xhtml styles
+          }`;
           this.shareTitle = campaign.customFields.shareHeader;
           this.shareUrl = campaign.customFields.shareUrl;
           // if (this.campaign.customFields.campaignType) {
