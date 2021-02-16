@@ -116,5 +116,4 @@ describe('V4MerchantsService', () => {
   it('should validate outlet data', () => {
     expect(V4MerchantsService.v4OutletsToOutlets([ mockOutlet ])).not.toBe(null);
   });
-
 });
