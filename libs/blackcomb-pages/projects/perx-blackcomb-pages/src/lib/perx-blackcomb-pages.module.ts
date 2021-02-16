@@ -91,6 +91,7 @@ import { RewardVoucherDetailModule } from './reward-voucher-detail/reward-vouche
 import { RazAdaptedCampaignsCollectionModule } from './raz-adapted-campaigns-collection/raz-adapted-campaigns-collection.module';
 import { FilterDialogComponent } from './nearme/filter-dialog/filter-dialog.component';
 import { QuestModule } from './quest/quest.module';
+import { LargeVouchersModule } from './large-vouchers/large-vouchers.module';
 
 const comps: any[] = [
   RewardComponent,
@@ -183,7 +184,8 @@ const comps: any[] = [
     RewardVoucherDetailModule,
     ProgressBarModule,
     RazAdaptedCampaignsCollectionModule,
-    QuestModule
+    QuestModule,
+    LargeVouchersModule,
   ],
   entryComponents: [FilterDialogComponent],
   exports: [...comps],

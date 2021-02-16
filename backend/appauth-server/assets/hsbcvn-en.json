@@ -86,9 +86,9 @@
     "USERNAME_REQUIRED_TXT": "Please enter your player code",
     "OTP_SEND_TO": "OTP send to ",
     "CHECK_YOUR_SMS": "Check your sms",
-    "PASSWORD_FIELD": "Card last 4 digits",
+    "PASSWORD_FIELD": "Password",
     "PASSWORD_INVALID_TXT": "Card not found",
-    "PASSWORD_REQUIRED_TXT": "Please provide the card last 4 digits",
+    "PASSWORD_REQUIRED_TXT": "Please provide a password",
     "FORGET_PASSWORD_TXT": "Forgot password?",
     "POPUP_TITLE": "We could not reach the server",
     "POPUP_TXT": "Please try again soon",
@@ -257,6 +257,7 @@
     "POINT_EXPIRE": "{points} points will expire on {date}",
     "ACCOUNT_EXPIRE": "Account Expiry",
     "POINT_TO": "Points to {nextTierName}",
+    "GAME_TRIES_LEFT": "tries left",
     "ALL": "All",
     "HUNG_FOOK_TONG": "Hung Fook Tong",
     "BIG_BIG_SHOP": "big big shop",
@@ -371,7 +372,7 @@
   },
   "PUZZLE": {
     "PUZZLE": "Puzzle",
-    "PLAY_NOW": "Play now!",
+    "PLAY_NOW": "View now!",
     "NEW_PIECES": "New pieces",
     "NEW_STAMPS": " new stamps"
   },

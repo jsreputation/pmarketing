@@ -4,6 +4,10 @@ import { NewsfeedComponent } from './newsfeed.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { SettingsService } from '../../settings/settings.service';
 import { of } from 'rxjs';
+import {
+  SafeHtmlPipe,
+  StripHtmlPipe
+} from '@perxtech/core';
 
 
 const settingsServiceStub: Partial<SettingsService> = {
@@ -37,7 +41,11 @@ describe('NewsfeedComponent', () => {
   ];
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [NewsfeedComponent],
+      declarations: [
+        NewsfeedComponent,
+        SafeHtmlPipe,
+        StripHtmlPipe
+      ],
       imports: [
         MatCardModule,
         MatButtonModule,

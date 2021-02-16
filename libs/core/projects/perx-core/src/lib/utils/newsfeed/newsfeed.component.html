@@ -4,7 +4,7 @@
       <img mat-card-image [src]="item.image" *ngIf="item.image">
       <mat-card-content>
         <p class="description ellipsis-2-lines"
-        [innerHTML]="item.description"
+        [innerHTML]="item.description | striphtml | safeHtml"
         ></p>
       </mat-card-content>
       <mat-card-actions>

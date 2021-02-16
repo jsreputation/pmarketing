@@ -248,6 +248,12 @@ const routes: Routes = [
         path: 'quest/:id',
         loadChildren: () =>
           import('../quest/quest.module').then((mod) => mod.QuestModule),
+          canActivate: [ProtectedGuard],
+      },
+      {
+        path: 'large-vouchers',
+        loadChildren: () =>
+          import('../large-vouchers/large-vouchers.module').then((mod) => mod.LargeVouchersModule),
         canActivate: [ProtectedGuard],
       },
     ],

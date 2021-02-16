@@ -34,7 +34,7 @@
           <span translate>NAVIGATION.STAMPS</span>
         </div>
       </a>
-      <a matRipple [routerLink]="[ '/rewards' ]" routerLinkActive="active" *ngIf="tenant !== 'all-it' && appRemoteFlags?.showRewardFavButton">
+      <a matRipple [routerLink]="[ '/rewards' ]" routerLinkActive="active" *ngIf="tenant !== 'all-it' && appConfig.showRewardNavButton">
         <div class="nav-item">
           <mat-icon aria-hidden="false">card_giftcard</mat-icon>
           <span translate>NAVIGATION.REWARDS</span>

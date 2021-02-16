@@ -227,6 +227,7 @@
     "POINT_EXPIRE": "{điểm} điểm sẽ hết hạn vào {date}",
     "ACCOUNT_EXPIRE": "Hết hạn tài khoản",
     "POINT_TO": "Trỏ tới {nextTierName}",
+    "GAME_TRIES_LEFT": "tries left",
     "ALL": "Tất cả",
     "HUNG_FOOK_TONG": "",
     "BIG_BIG_SHOP": "",
@@ -254,7 +255,7 @@
     "POINT": "Điểm"
   },
   "GAME_PAGE": {
-    "STAMPS_LABEL_TXT": "tem đã tích lũy",
+    "STAMPS_LABEL_TXT": "tem mới",
     "GAME_NO_REWARDS_TITLE": "Cảm ơn đã chơi cùng",
     "GAME_NO_REWARDS_TEXT": "Thật không may, bạn đã không giành được bất cứ điều gì lần này",
     "GAME_SUCCESS_TITLE": "Xin chúc mừng!",
@@ -267,7 +268,6 @@
     "GAME_NOT_VALID_TEXT": "Trò chơi này không có sẵn cho bạn vào lúc này.",
     "VIEW_REWARD": "Xem phần thưởng",
     "CONTENT_PAGE": "Không tìm thấy nội dung",
-    "LOGIN_SESSION_EXPIRED": "Phiên đăng nhập đã hết hạn",
     "Contact Us": "Liên hệ chúng tôi",
     "Terms and Conditions": "Các điều khoản và điều kiện",
     "TRY_AGAIN": "Thử lại",
@@ -286,7 +286,7 @@
     "VIEW_LOCATION": "Xem vị trí"
   },
   "STAMP_CAMPAIGN": {
-    "STAMP_CARD": "Tem đã tích lũy",
+    "STAMP_CARD": "Tem tích lũy",
     "OF": "/",
     "NEW_STAMPS": "tem mới được tích lũy",
     "NEW_STAMP": "tem mới được tích lũy",
@@ -307,7 +307,7 @@
   },
   "PUZZLE": {
     "PUZZLE": "Câu đố",
-    "PLAY_NOW": "",
+    "PLAY_NOW": "Xem ngay!",
     "NEW_PIECES": "Miếng mới",
     "NEW_STAMPS": " tem mới được tích lũy"
   },
@@ -318,5 +318,6 @@
   },
   "CONTENT_PAGE": "Không tìm thấy nội dung",
   "Terms and Conditions": "Điều kiện & Điều khoản",
+  "LOGIN_SESSION_EXPIRED": "Phiên đăng nhập đã hết hạn",
   "DESCRIPTION": "Miêu tả"
 }

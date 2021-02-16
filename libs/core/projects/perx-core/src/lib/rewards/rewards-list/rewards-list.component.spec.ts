@@ -19,7 +19,9 @@ describe('RewardsListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RewardsListComponent],
+      declarations: [
+        RewardsListComponent
+      ],
       imports: [
         MatCardModule,
         UtilsModule

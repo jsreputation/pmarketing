@@ -12,14 +12,40 @@ import {
   MatInputModule
 } from '@angular/material';
 import { Type } from '@angular/core';
-import { Router } from '@angular/router';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-
-import { of } from 'rxjs';
-
-import { AuthenticationService } from '@perxtech/core';
-
+import { Router, ActivatedRoute, Data, Params } from '@angular/router';
 import { ForgotPinComponent } from './forgot-pin.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { Observable, of } from 'rxjs';
+import { AuthenticationService, UtilsModule, ConfigService, LoyaltyService, ILoyalty, ThemesService } from '@perxtech/core';
+import { TranslateModule } from '@ngx-translate/core';
+import { MatProgressSpinnerModule } from '@angular/material';
+
+class ActivatedRouteMock implements Partial<ActivatedRoute> {
+  public get queryParams(): Observable<Params> {
+    return of();
+  }
+  public data: Observable<Data> = of();
+}
+
+const configServiceStub: Partial<ConfigService> = {
+  readAppConfig: () => of({
+    redirectAfterLogin: '/home',
+    apiHost: 'string',
+    production: true,
+    preAuth: true,
+    isWhistler: true,
+    baseHref: ''
+  })
+};
+
+const loyaltyServiceStub: Partial<LoyaltyService> = {
+  getLoyalty: (): Observable<ILoyalty> => of(),
+  getLoyalties: (): Observable<ILoyalty[]> => of([])
+};
+
+const themeServiceStub: Partial<ThemesService> = {
+  getThemeSetting: () => of()
+};
 
 describe('ForgotPinComponent', () => {
   let component: ForgotPinComponent;
@@ -43,10 +69,17 @@ describe('ForgotPinComponent', () => {
         MatFormFieldModule,
         MatInputModule,
         NoopAnimationsModule,
+        UtilsModule,
+        MatProgressSpinnerModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: Router, useValue: router },
-        { provide: AuthenticationService, useValue: authenticationServiceStub }
+        { provide: AuthenticationService, useValue: authenticationServiceStub },
+        { provide: ActivatedRoute, useClass: ActivatedRouteMock },
+        { provide: ConfigService, useValue: configServiceStub },
+        { provide: LoyaltyService, useValue: loyaltyServiceStub },
+        { provide: ThemesService, useValue: themeServiceStub },
       ],
     })
       .compileComponents();

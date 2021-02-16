@@ -62,7 +62,8 @@ export class ContentComponent implements OnInit, OnDestroy {
         map(([k, settings]: [string, PagesObject]) => settings.pages.find(s => s.key === k)),
         map((page: AccountPageObject) => page.content_url),
         map((url: string) => currentLang === 'en' ? url : url.replace('.html', `-${currentLang}.html`)),
-        switchMap((url) => this.http.get(`https://cors-proxy.perxtech.io/?url=${url}`, { responseType: 'text' })),
+        // if we require a cors proxy we need to build it in the express server to avoid any CSP whitelist issues
+        switchMap((url) => this.http.get(url, { responseType: 'text' })),
         catchError(() => {
           this.error$.next(true);
           return of(void 0);

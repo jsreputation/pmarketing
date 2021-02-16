@@ -10,7 +10,7 @@
     </div>
     <mat-card-content *ngIf="!withRewardsCounter" class="card-content">
       <p class="main-reward-title ellipsis-1-line">{{campaign.name}}</p>
-      <span class="reward-subtitle ellipsis-2-line" [innerHtml]="campaign.description | safeHtml"></span>
+      <span class="reward-subtitle ellipsis-2-line" [innerHtml]="campaign.description | striphtml | safeHtml"></span>
     </mat-card-content>
     <mat-card-content *ngIf="withRewardsCounter" class="card-content reward">
 <!--      campaign name will be filled with reward name instead when api ready-->

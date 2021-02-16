@@ -1,4 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
 import { Router } from '@angular/router';
 import {
   BehaviorSubject,
@@ -35,9 +39,12 @@ import {
   ICampaignService,
   ICatalog,
   IConfig,
+  IFlags,
   IGame,
   IGameService,
+  ILoyalty,
   InstantOutcomeService,
+  IPrice,
   IProfile,
   IReward,
   IRssFeeds,
@@ -50,15 +57,18 @@ import {
   RssFeedsPages,
   SettingsService,
   ThemesService,
-  ILoyalty,
-  IFlags,
-  IPrice,
   TokenStorage,
   IQuestService
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
-import { MatDialog, MatTabChangeEvent } from '@angular/material';
-import { CurrencyPipe, DatePipe } from '@angular/common';
+import {
+  MatDialog,
+  MatTabChangeEvent
+} from '@angular/material';
+import {
+  CurrencyPipe,
+  DatePipe
+} from '@angular/common';
 import { Title } from '@angular/platform-browser';
 
 @Component({
@@ -148,7 +158,9 @@ export class HomeComponent implements OnInit, OnDestroy {
                     );
                   return;
                 }
-                this.fetchPopupCampaigns();
+                if (config.showPopupCampaign) {
+                  this.fetchPopupCampaigns();
+                }
               }
             });
           }

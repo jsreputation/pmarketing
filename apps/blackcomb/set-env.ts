@@ -161,6 +161,11 @@ const appConfigFile = `{
       ? process.env.SHOW_REWARDS_ON_HOMEPAGE
       : true
   },
+  "showRewardNavButton": ${
+    process.env.SHOW_REWARDS_NAV_BUTTON
+      ? process.env.SHOW_REWARDS_NAV_BUTTON
+      : false
+  },
   "showMacaronOnRewardDetails": ${
     process.env.SHOW_MACARON_ON_REWARD_DETAILS
       ? process.env.SHOW_MACARON_ON_REWARD_DETAILS
@@ -170,6 +175,9 @@ const appConfigFile = `{
     process.env.SHOW_CAMPAIGN_LANDING_PAGE
       ? process.env.SHOW_CAMPAIGN_LANDING_PAGE
       : false
+  },
+  "showPopupCampaign": ${
+    process.env.SHOW_POPUP_HOMEPAGE ? process.env.SHOW_POPUP_HOMEPAGE : false
   },
 
   "showQrPageSubtitle": ${
@@ -237,9 +245,12 @@ const appConfigFile = `{
   "showLogo":  ${
     process.env.SHOW_LOGO ? process.env.SHOW_LOGO : false
   },
-  "showQuestCampaignsOnHomePage" : ${process.env.SHOW_QUEST_CAMPAIGNS_ON_HOMEPAGE
-    ? process.env.SHOW_QUEST_CAMPAIGNS_ON_HOMEPAGE
-    : false}
+  "showQuestCampaignsOnHomePage" : ${process.env.SHOW_QUEST_CAMPAIGNS_ON_HOMEPAGE ? process.env.SHOW_QUEST_CAMPAIGNS_ON_HOMEPAGE
+    : false
+  },
+  "showGameTriesOnCampaignCard": ${
+    process.env.SHOW_GAME_TRIES_ON_CAMPAIGN_CARD ? process.env.SHOW_GAME_TRIES_ON_CAMPAIGN_CARD : false
+  }
 }
 `;
 

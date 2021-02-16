@@ -40,8 +40,8 @@ const enum V4QuizMode {
 export interface QuizDisplayProperties {
   title: string;
   questions: {
-    question: { [k: string]: {text: string} };
-    description: { [k: string]: {text: string} };
+    question: { [k: string]: { text: string } };
+    description: { [k: string]: { text: string } };
     id: string;
     required: boolean;
     payload: any;
@@ -49,22 +49,17 @@ export interface QuizDisplayProperties {
   landing_page: {
     body: { en: { text: string } };
     media?: { youtube?: string; };
-    heading: { en: { text: string } };
     button_text: { en: { text: string } };
-    sub_heading: { en: { text: string }};
   };
   background_image?: Asset;
   card_image?: Asset;
   quiz_interaction: V4QuizMode;
   header?: {
     value?: {
-      title?: { [k: string]: {text: string} };
-      description?: { [k: string]: {text: string} };
+      title?: { [k: string]: { text: string } };
+      description?: { [k: string]: { text: string } };
     };
   };
-  headline_text?: string;
-  body_text?: string;
-  button_text?: string;
   timer_count: number;
   timer_enabled: boolean;
   timer_type: TimerType;
@@ -72,6 +67,12 @@ export interface QuizDisplayProperties {
     title?: string;
     description?: string;
     button_text?: string;
+  };
+  outcome?: {
+    title?: string;
+    description?: string;
+    button_text?: string;
+    outcome_image: Asset;
   };
 }
 
@@ -200,13 +201,15 @@ export class V4QuizService implements QuizService {
           };
         });
         let outcome: IQuizOutcome | undefined;
-        if (oc(game).display_properties.headline_text() ||
-          oc(game).display_properties.body_text() ||
-          oc(game).display_properties.button_text()) {
+        if (oc(game).display_properties.outcome.title() ||
+          oc(game).display_properties.outcome.description() ||
+          oc(game).display_properties.outcome.button_text() ||
+          oc(game).display_properties.outcome.outcome_image.value.image_url()) {
           outcome = {
-            title: oc(game).display_properties.headline_text(''),
-            subTitle: oc(game).display_properties.body_text(''),
-            button: oc(game).display_properties.button_text('')
+            title: oc(game).display_properties.outcome.title(''),
+            subTitle: oc(game).display_properties.outcome.description(''),
+            button: oc(game).display_properties.outcome.button_text(''),
+            image: oc(game).display_properties.outcome.outcome_image.value.image_url('')
           };
         }
         let noOutcome: IQuizOutcome | undefined;
@@ -230,11 +233,12 @@ export class V4QuizService implements QuizService {
           campaignId: game.campaign_id,
           // need to typecast directly because library return TSOC type, will resolve and be clean when update angular w/
           // TS optional chaining
-          title: (oc(game).display_properties.header.value.title ?
-            oc(game).display_properties.header.value.title[lang]() : oc(game).display_properties.header.value.title.en()) as {text: string},
+          title: (oc(game).display_properties.header.value.title() ?
+            oc(game).display_properties.header.value.title[lang]() :
+            oc(game).display_properties.header.value.title.en()) as { text: string },
           subTitle: (oc(game).display_properties.header.value.description() ?
             oc(game).display_properties.header.value.description[lang]() :
-            oc(game).display_properties.header.value.description.en()) as {text: string},
+            oc(game).display_properties.header.value.description.en()) as { text: string },
           results: {
             outcome,
             noOutcome

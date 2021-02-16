@@ -1,12 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
+import {
+  ActivatedRoute,
+  Params,
+  Router
+} from '@angular/router';
 import {
   ConfigService,
+  GameType,
+  ICampaign,
+  ICampaignService,
   IEngagementTransaction,
   IGame,
   IGameService,
-  ICampaignService,
-  ICampaign,
   IPlayOutcome,
   NotificationService,
   Voucher
@@ -19,9 +27,18 @@ import {
   takeUntil,
   tap
 } from 'rxjs/operators';
-import { AnalyticsService, PageType } from '../analytics.service';
+import {
+  AnalyticsService,
+  PageType
+} from '../analytics.service';
 import { GameOutcomeService } from '../congrats/game-outcome/game-outcome.service';
-import { Observable, Subject, throwError } from 'rxjs';
+import {
+  iif,
+  Observable,
+  of,
+  Subject,
+  throwError
+} from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorMessageService } from '../utils/error-message/error-message.service';
 
@@ -40,6 +57,7 @@ export class GameComponent implements OnInit {
   public willWin: boolean = false;
   private hasNoRewardsPopup: boolean = false;
   public startGameAnimation: boolean = false;
+  private isGameTransactionSet: Observable<boolean> = of(false);
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -84,6 +102,8 @@ export class GameComponent implements OnInit {
           this.numberOfTaps = game.config && game.config.nbTaps;
         }
         if (
+          // GLOB-29: Let scratch card tries error be handled by the game service
+          game.type !== GameType.scratch &&
           game.remainingNumberOfTries !== null &&
           game.remainingNumberOfTries <= 0
         ) {
@@ -120,7 +140,7 @@ export class GameComponent implements OnInit {
 
   private showErrorPopup(): void {
     this.notificationService.addPopup({
-      title: 'Oooops!',
+      title: 'Sorry!',
       text: 'Something is wrong, game cannot be played at the moment!',
       disableOverlayClose: true,
       panelClass: 'custom-class'
@@ -142,6 +162,7 @@ export class GameComponent implements OnInit {
         .subscribe(
           (gameTransaction: IEngagementTransaction) => {
             this.gameTransaction = gameTransaction;
+            this.isGameTransactionSet = of(true);
             if (
               gameTransaction.voucherIds &&
               gameTransaction.voucherIds.length > 0
@@ -175,6 +196,16 @@ export class GameComponent implements OnInit {
   }
 
   public preplayGameCompleted(): void {
+    // STAR-446: sometimes preplayGameCompleted is called before gameTransaction is set
+    // check if gameTransaction is available
+    iif(() => this.gameTransaction && this.gameTransaction.id !== null,
+      of({}),
+      this.isGameTransactionSet
+        .pipe(takeUntil(this.destroy$)) // if gameTransaction is unavailable, start wating for it to be set
+    ).subscribe(() => this.confirmPrePlay());
+  }
+
+  private confirmPrePlay(): void {
     this.gameService
       .prePlayConfirm(this.gameTransaction.id)
       .pipe(map((game: IPlayOutcome) => game.vouchers))
@@ -209,7 +240,7 @@ export class GameComponent implements OnInit {
         campaign_id: this.game.campaignId
       });
     }
-    if (vouchs.length === 0) {
+    if (!vouchs || vouchs.length === 0) {
       // This params is specially for spin the wheel, load play first process
       this.hasNoRewardsPopup = true;
       if (withRedirectAndPopup) {
@@ -233,7 +264,7 @@ export class GameComponent implements OnInit {
       ).subscribe(
         (vouchs: Voucher[]) => {
           this.startGameAnimation = true;
-          if (vouchs.length > 0) {
+          if (vouchs && vouchs.length > 0) {
             this.hasNoRewardsPopup = false;
             this.willWin = true;
             this.gameCompletedHandler(vouchs, false);
@@ -255,10 +286,6 @@ export class GameComponent implements OnInit {
                 panelClass: 'custom-class'
               });
             });
-        },
-        () => {
-          this.willWin = false;
-          this.hasNoRewardsPopup = true;
         }
       );
   }

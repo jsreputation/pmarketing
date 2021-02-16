@@ -132,6 +132,7 @@
     "SEE_LESS": "See less",
     "ACCOUNT_EXPIRE": "Account Expiry",
     "REWARDS_LEFT": "{{rewardsCount}} Rewards Left",
+    "GAME_TRIES_LEFT": "tries left",
     "READ_MORE": "Read More"
   },
   "SIGN_UP_PAGE": {
