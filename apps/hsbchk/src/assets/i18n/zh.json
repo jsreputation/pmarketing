@@ -125,12 +125,7 @@
     "CTA_TXT": "取消"
   },
   "LEADER_BOARD": {
-    "TITLE": "歡迎{nickname}",
-    "SCORE": "您的總分",
-    "LABEL_TXT": "排行榜",
-    "LABEL_RANK": "排名",
-    "LABEL_NICKNAME": "用戶",
-    "LABEL_SCORE": "得分"
+    "CTA_BUTTON_TEXT": "排行榜"
   },
   "ACCOUNT_PAGE": {
     "PROFILE": "我的資料",

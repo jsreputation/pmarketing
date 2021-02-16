@@ -39,6 +39,7 @@ import { ProgressInfoPipe } from './progress-info/progress-info.pipe';
 import { GettingStartedPipe } from './getting-started/getting-started.pipe';
 import { StatisticCardComponent } from './statistic-card/statistic-card.component';
 import { GettingStartedNearPicPipe } from './getting-started-near-pic/getting-started-near-pic.pipe';
+import { LeaderboardCTAComponent } from './leaderboard-cta/leaderboard-cta.component';
 
 export function themesServiceFactory(
   handler: HttpBackend,
@@ -66,7 +67,8 @@ const components = [
   FeedItemPopupComponent,
   TimerComponent,
   LocationFilterPopupComponent,
-  StatisticCardComponent
+  StatisticCardComponent,
+  LeaderboardCTAComponent
 ];
 
 const pipes = [
@@ -114,6 +116,8 @@ export function notificationServiceFactory(): NotificationService {
     MatToolbarModule,
     MatCheckboxModule,
     ScrollingModule,
+    MatToolbarModule,
+    MatIconModule,
     TranslateModule.forChild()
   ],
   exports: [

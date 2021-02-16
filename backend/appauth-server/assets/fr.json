@@ -161,13 +161,8 @@
     "DESCRIPTION": "",
     "CTA_TXT": ""
   },
-  "LEADER_BOARD":{
-    "TITLE": "",
-    "SCORE": "",
-    "LABEL_TXT": "",
-    "LABEL_RANK": "",
-    "LABEL_NICKNAME": "",
-    "LABEL_SCORE": ""
+  "LEADER_BOARD": {
+    "CTA_BUTTON_TEXT": ""
   },
   "ACCOUNT_PAGE": {
     "LUCKY_DRAW_INFO": "",

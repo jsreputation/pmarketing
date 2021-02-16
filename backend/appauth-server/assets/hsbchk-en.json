@@ -178,12 +178,7 @@
     "CTA_TXT": "Cancel"
   },
   "LEADER_BOARD": {
-    "TITLE": "Welcome {{profile.customProperties.nickname}}",
-    "SCORE": "Your total score",
-    "LABEL_TXT": "Leaderboard",
-    "LABEL_RANK": "Rank",
-    "LABEL_NICKNAME": "Nickname",
-    "LABEL_SCORE": "Score"
+    "CTA_BUTTON_TEXT": "LEADERBOARD"
   },
   "ACCOUNT_PAGE": {
     "LUCKY_DRAW_INFO": "Lucky Draw Info",
