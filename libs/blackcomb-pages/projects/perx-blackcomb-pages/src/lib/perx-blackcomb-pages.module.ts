@@ -90,6 +90,7 @@ import { ProgressCampaignModule } from './progress-campaign/progress-campaign.mo
 import { RewardVoucherDetailModule } from './reward-voucher-detail/reward-voucher-detail.module';
 import { RazAdaptedCampaignsCollectionModule } from './raz-adapted-campaigns-collection/raz-adapted-campaigns-collection.module';
 import { FilterDialogComponent } from './nearme/filter-dialog/filter-dialog.component';
+import { QuestModule } from './quest/quest.module';
 
 const comps: any[] = [
   RewardComponent,
@@ -182,6 +183,7 @@ const comps: any[] = [
     RewardVoucherDetailModule,
     ProgressBarModule,
     RazAdaptedCampaignsCollectionModule,
+    QuestModule
   ],
   entryComponents: [FilterDialogComponent],
   exports: [...comps],

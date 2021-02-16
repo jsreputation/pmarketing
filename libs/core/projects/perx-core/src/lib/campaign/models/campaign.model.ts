@@ -24,7 +24,8 @@ export enum CampaignType {
   stamp = 'stamp', // loyalty
   game = 'game',
   survey = 'survey',
-  invite = 'invite'
+  invite = 'invite',
+  quest = 'quest'
 }
 
 export enum CampaignState {

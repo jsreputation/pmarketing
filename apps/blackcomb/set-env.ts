@@ -236,7 +236,10 @@ const appConfigFile = `{
   },
   "showLogo":  ${
     process.env.SHOW_LOGO ? process.env.SHOW_LOGO : false
-  }
+  },
+  "showQuestCampaignsOnHomePage" : ${process.env.SHOW_QUEST_CAMPAIGNS_ON_HOMEPAGE
+    ? process.env.SHOW_QUEST_CAMPAIGNS_ON_HOMEPAGE
+    : false}
 }
 `;
 

@@ -54,6 +54,7 @@ import {
   IFlags,
   IPrice,
   TokenStorage,
+  IQuestService
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialog, MatTabChangeEvent } from '@angular/material';
@@ -76,6 +77,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public rewards$: Observable<IReward[]>;
   public games$: Observable<IGame[]>;
   public stampCampaigns$: Observable<ICampaign[]>;
+  public questCampaigns$: Observable<ICampaign[]>;
   public tabs$: BehaviorSubject<ITabConfigExtended[]> = new BehaviorSubject<
     ITabConfigExtended[]
   >([]);
@@ -118,7 +120,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     protected profileService: ProfileService,
     protected currencyPipe: CurrencyPipe,
     protected tokenService: TokenStorage,
-    protected datePipe: DatePipe
+    protected datePipe: DatePipe,
+    protected questService: IQuestService
   ) { }
 
   public ngOnInit(): void {
@@ -251,6 +254,12 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.router.navigate([`survey/${campaign.id}`]);
       return;
     }
+
+    if (campaign.type === 'quest') {
+      this.router.navigate([`quest/${campaign.id}`]);
+      return;
+    }
+
     this.router.navigate([`${campaign.type}/${campaign.id}`]);
   }
 
@@ -404,6 +413,18 @@ export class HomeComponent implements OnInit, OnDestroy {
         ),
         takeLast(1)
       );
+
+    /*  this.questCampaigns$ = this.campaignService
+      .getCampaigns({ type: CampaignType.quest })
+      .pipe(
+        switchMap((campaigns: ICampaign[]) =>
+          of(campaigns).pipe(catchError((err) => of(err)))
+        ),
+        takeLast(1)
+      );*/
+
+    this.questCampaigns$ = this.questService.getQuestCampaigns();
+
 
     this.newsFeedItems = this.settingsService.getRssFeeds().pipe(
       map((res: IRssFeeds) =>

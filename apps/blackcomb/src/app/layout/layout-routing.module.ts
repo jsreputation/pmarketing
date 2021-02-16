@@ -244,6 +244,12 @@ const routes: Routes = [
         import('../favorite-rewards/favorite-rewards.module').then((mod) => mod.FavoriteRewardsModule),
         canActivate: [ProtectedGuard],
       },
+      {
+        path: 'quest/:id',
+        loadChildren: () =>
+          import('../quest/quest.module').then((mod) => mod.QuestModule),
+        canActivate: [ProtectedGuard],
+      },
     ],
   },
 ];
