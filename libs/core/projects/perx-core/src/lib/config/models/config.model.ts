@@ -48,6 +48,7 @@ export interface IConfig<T> {
   showUserQR?: boolean;
   showHistoryPage?: boolean;
   showNearMePage?: boolean;
+  showLeaderBoard? : boolean;
 
   /* Login page */
   showSubtitleLogin?: boolean;

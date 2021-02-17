@@ -213,6 +213,9 @@ const appConfigFile = `{
   "showNearMePage": ${
     process.env.SHOW_NEAR_ME_PAGE ? process.env.SHOW_NEAR_ME_PAGE : false
   },
+  "showLeaderBoard": ${
+    process.env.SHOW_LEADER_BOARD ? process.env.SHOW_LEADER_BOARD : false
+  },
   "custom": {
     "stampsType": "${
       process.env.STAMPS_TYPE ? process.env.STAMPS_TYPE : 'stamp_card'

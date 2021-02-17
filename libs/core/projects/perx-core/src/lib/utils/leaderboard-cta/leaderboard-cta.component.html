@@ -1,9 +1,9 @@
-<mat-toolbar class="leaderboard-cta">
+<mat-toolbar *ngIf="showLeaderBoardCTA" class="leaderboard-cta">
   <span>
     <img src="assets/leaderboard_icon.svg">
   </span>
   <span>{{buttonText | async}}</span>
-  <span>
+  <span class="icon">
     <mat-icon>keyboard_arrow_right</mat-icon>
   </span>
 </mat-toolbar>
