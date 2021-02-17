@@ -18,13 +18,13 @@ import { oc } from 'ts-optchain';
 
 import { LoyaltyService } from './loyalty.service';
 import {
+  IGameTransactionHistory,
   ILoyalty,
-  IPurchaseTransactionHistory,
-  IRewardTransactionHistory,
   ILoyaltyTransaction,
   ILoyaltyTransactionHistory,
-  TransactionDetailType,
-  IGameTransactionHistory
+  IPurchaseTransactionHistory,
+  IRewardTransactionHistory,
+  TransactionDetailType
 } from './models/loyalty.model';
 
 import {
@@ -88,7 +88,8 @@ interface IV4Loyalty {
   points_balance_converted_to_currency: number;
   points_currency: string;
   points_to_currency_rate: number;
-  aging_points?: IV4AgingPoints[];
+  aging_points?: IV4AgingPoints[]; // todo: deprecated in favour of points_expiry
+  points_expiry?: IV4AgingPoints;
   tiers: IV4LoyaltyTiers[]; // will do proper mapping later on
   points_history?: IV4PointHistory[];
   membership_expiry: Date;
@@ -228,10 +229,15 @@ export class V4LoyaltyService extends LoyaltyService {
       nextTierName: nextTier ? nextTier.name : '',
       tierPoints: loyalty.tier_points,
       highestTier,
-      expiringPoints: loyalty.aging_points && loyalty.aging_points.map(aging => ({
-        expireDate: aging.expiring_on_date,
-        points: aging.points_expiring
-      })),
+      expiringPoints: loyalty.aging_points ?
+        loyalty.aging_points.map(aging => ({
+          expireDate: aging.expiring_on_date,
+          points: aging.points_expiring
+        })) : loyalty.points_expiry ?
+          [ {
+            expireDate: loyalty.points_expiry.expiring_on_date,
+            points: loyalty.points_expiry.points_expiring
+          } ] : undefined,
       membershipExpiry: loyalty.membership_expiry,
       tiers: loyalty.tiers ? loyalty.tiers.map(tier => ({
         id: tier.id,
