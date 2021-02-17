@@ -42,13 +42,14 @@ export interface IConfig<T> {
   showRewardNavButton?: boolean;
   showGameTriesOnCampaignCard?: boolean;
   showSurveyFirstOnHomePageCampaignList?: boolean;
+  showQuestCampaignsOnHomePage?: boolean;
 
   /* Misc */
   showQrPageSubtitle?: boolean;
   showUserQR?: boolean;
   showHistoryPage?: boolean;
   showNearMePage?: boolean;
-  showLeaderBoard? : boolean;
+  showLeaderBoard?: boolean;
 
   /* Login page */
   showSubtitleLogin?: boolean;
