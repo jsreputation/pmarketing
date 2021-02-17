@@ -241,7 +241,7 @@ const routes: Routes = [
       {
         path: 'favorite-rewards',
         loadChildren: () =>
-        import('../favorite-rewards/favorite-rewards.module').then((mod) => mod.FavoriteRewardsModule),
+          import('../favorite-rewards/favorite-rewards.module').then((mod) => mod.FavoriteRewardsModule),
         canActivate: [ProtectedGuard],
       },
       {
@@ -256,6 +256,10 @@ const routes: Routes = [
           import('../large-vouchers/large-vouchers.module').then((mod) => mod.LargeVouchersModule),
         canActivate: [ProtectedGuard],
       },
+      {
+        path: 'invite/:id',
+        loadChildren: () => import('../referral/referral.module').then(mod => mod.ReferralModule)
+      }
     ],
   },
 ];
@@ -264,4 +268,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class LayoutRoutingModule {}
+export class LayoutRoutingModule { }
