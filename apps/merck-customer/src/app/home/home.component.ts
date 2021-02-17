@@ -1,9 +1,36 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
-import { IReward, RewardsService, IProfile, ILoyalty, ITabConfigExtended, IPrice } from '@perxtech/core';
-import { Observable, of, Subject, forkJoin, iif } from 'rxjs';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnInit
+} from '@angular/core';
+import {
+  BarSelectedItem,
+  PageAppearence,
+  PageProperties
+} from '../page-properties';
+import {
+  ILoyalty,
+  IPrice,
+  IProfile,
+  IReward,
+  ITabConfigExtended,
+  RewardsService
+} from '@perxtech/core';
+import {
+  forkJoin,
+  iif,
+  Observable,
+  of,
+  Subject
+} from 'rxjs';
 import { Router } from '@angular/router';
-import { flatMap, map, tap, mergeMap, finalize } from 'rxjs/operators';
+import {
+  finalize,
+  flatMap,
+  map,
+  mergeMap,
+  tap
+} from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { MatTabChangeEvent } from '@angular/material';
 import { DatePipe } from '@angular/common';
@@ -37,9 +64,8 @@ export class HomeComponent implements OnInit, PageAppearence {
   }
 
   public ngOnInit(): void {
-
     this.rewardsService
-      .getAllRewards()
+      .getAllRewards(undefined, undefined, this.translate.currentLang)
       .subscribe((rewards) => this.rewards = of(rewards));
     this.getRewards();
     this.initTranslate();
@@ -48,7 +74,8 @@ export class HomeComponent implements OnInit, PageAppearence {
   private getRewards(): void {
     this.getTags().pipe(flatMap((tags: ITabConfigExtended[]) => {
       this.tabs.next(tags);
-      return forkJoin(tags.map((tab) => this.rewardsService.getAllRewards(undefined, [tab.tabName])
+      return forkJoin(tags.map((tab) =>
+        this.rewardsService.getAllRewards(undefined, [tab.tabName], this.translate.currentLang)
         .pipe(map((result: IReward[]) => ({ key: tab.tabName, value: result })))));
     })).subscribe((result) => {
       result.forEach((rewards) => {

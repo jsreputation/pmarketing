@@ -1,9 +1,26 @@
-import { Component, OnInit } from '@angular/core';
-import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
+import {
+  BarSelectedItem,
+  PageAppearence,
+  PageProperties
+} from '../page-properties';
 
-import { Router, ActivatedRoute } from '@angular/router';
-import { IReward, RewardsService, IPrice } from '@perxtech/core';
-import { Observable, of } from 'rxjs';
+import {
+  ActivatedRoute,
+  Router
+} from '@angular/router';
+import {
+  IPrice,
+  IReward,
+  RewardsService
+} from '@perxtech/core';
+import {
+  Observable,
+  of
+} from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { mergeMap } from 'rxjs/operators';
 
@@ -40,7 +57,7 @@ export class RewardDetailComponent implements OnInit, PageAppearence {
   }
 
   private getReward(): void {
-    this.reward = this.rewardService.getReward(this.rewardId);
+    this.reward = this.rewardService.getReward(this.rewardId, undefined, this.translate.currentLang);
   }
 
   public onClick(): void {
