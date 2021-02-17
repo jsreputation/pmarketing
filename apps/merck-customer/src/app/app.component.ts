@@ -1,21 +1,31 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import {
-  NotificationService,
-  IConfig,
+  Component,
+  Inject,
+  OnInit,
+  PLATFORM_ID
+} from '@angular/core';
+import {
   ConfigService,
+  IConfig,
+  NotificationService,
   TokenStorage,
 } from '@perxtech/core';
 import {
-  PageProperties,
   BarSelectedItem,
-  PageAppearence
+  PageAppearence,
+  PageProperties
 } from './page-properties';
-import { isPlatformBrowser } from '@angular/common';
+import {
+  isPlatformBrowser,
+  Location
+} from '@angular/common';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
-import { Location } from '@angular/common';
-import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
+import {
+  LangChangeEvent,
+  TranslateService
+} from '@ngx-translate/core';
 
 @Component({
   selector: 'mc-root',
@@ -77,6 +87,7 @@ export class AppComponent implements OnInit {
     this.translateService.use(lang);
     this.translateService.onLangChange.subscribe((change: LangChangeEvent) => {
       this.store.setAppInfoProperty(change.lang, 'merck-customer');
+      this.translateService.getTranslation(change.lang);
     });
     this.configService.readAppConfig().subscribe(
       (config: IConfig<void>) => {
