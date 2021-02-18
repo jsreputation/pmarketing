@@ -148,51 +148,45 @@ export class GameComponent implements OnInit {
   }
 
   public loadPreplay(): void {
-    if (
-      this.game &&
-      (this.game.remainingNumberOfTries > 0 ||
-        this.game.remainingNumberOfTries === null)
-    ) {
-      this.gameData$
-        .pipe(
-          switchMap((game) => this.gameService.prePlay(game.id)),
-          catchError((err) => throwError(err)),
-          takeUntil(this.destroy$)
-        )
-        .subscribe(
-          (gameTransaction: IEngagementTransaction) => {
-            this.gameTransaction = gameTransaction;
-            this.isGameTransactionSet = of(true);
-            if (
-              gameTransaction.voucherIds &&
-              gameTransaction.voucherIds.length > 0
-            ) {
-              // set this as a property
-              if (this.game.results && this.game.results.outcome) {
-                this.gameOutcomeService.setOutcome(this.game.results.outcome);
-                this.willWin = true;
-              }
-            } else {
-              this.willWin = false;
+    this.gameData$
+      .pipe(
+        switchMap((game) => this.gameService.prePlay(game.id)),
+        catchError((err) => throwError(err)),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(
+        (gameTransaction: IEngagementTransaction) => {
+          this.gameTransaction = gameTransaction;
+          this.isGameTransactionSet = of(true);
+          if (
+            gameTransaction.voucherIds &&
+            gameTransaction.voucherIds.length > 0
+          ) {
+            // set this as a property
+            if (this.game.results && this.game.results.outcome) {
+              this.gameOutcomeService.setOutcome(this.game.results.outcome);
+              this.willWin = true;
             }
-          },
-          (err: { errorState: string } | HttpErrorResponse) => {
-            if (err instanceof HttpErrorResponse) {
-              this.errorMessageServce.getErrorMessageByErrorCode(err.error.code)
-                .subscribe((message) => {
-                  this.notificationService.addPopup({
-                    title: 'Sorry!',
-                    text: message,
-                    disableOverlayClose: true,
-                    panelClass: 'custom-class'
-                  });
-                });
-            } else {
-              this.showErrorPopup();
-            }
+          } else {
+            this.willWin = false;
           }
-        );
-    }
+        },
+        (err: { errorState: string } | HttpErrorResponse) => {
+          if (err instanceof HttpErrorResponse) {
+            this.errorMessageServce.getErrorMessageByErrorCode(err.error.code)
+              .subscribe((message) => {
+                this.notificationService.addPopup({
+                  title: 'Sorry!',
+                  text: message,
+                  disableOverlayClose: true,
+                  panelClass: 'custom-class'
+                });
+              });
+          } else {
+            this.showErrorPopup();
+          }
+        }
+      );
   }
 
   public preplayGameCompleted(): void {
