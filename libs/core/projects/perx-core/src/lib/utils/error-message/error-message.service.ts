@@ -55,7 +55,7 @@ export class ErrorMessageService {
         - 'A voucher code could not be assigned for this transaction'
     */
 
-    public getErrorMessageByErrorCode(errorCode: number): Observable<string> {
+    public getErrorMessageByErrorCode(errorCode: number, errMessage?: string): Observable<string> {
         let errorKey = '';
         switch (errorCode) {
             case 4103:
@@ -66,6 +66,13 @@ export class ErrorMessageService {
                 // API error: 'No remaining unused moves'
                 errorKey = 'ERRORS.NO_UNUSED_MOVES';
                 break;
+            case 40:
+              // General API error
+              if (errMessage && errMessage.match(/move/i)) {
+                errorKey = 'ERRORS.NO_UNUSED_MOVES';
+              } else if (errMessage && errMessage.match(/balance/i)) {
+                errorKey = 'ERRORS.NOT_ENOUGH_POINTS';
+              }
             default:
                 // Sorry, something went wrong
                 errorKey = 'ERRORS.GENERIC';
