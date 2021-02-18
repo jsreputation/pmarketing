@@ -9,7 +9,7 @@ import { ConfigService } from '../../lib/config/config.service';
 
 const questServiceStub: Partial<IQuestService> = {
   getQuestCampaigns: () => of(),
-  getQuestsFromCampaign: () => of()
+  getQuestFromCampaign: () => of()
 };
 const configServiceStub: Partial<ConfigService> = {
   readAppConfig: () => of()
