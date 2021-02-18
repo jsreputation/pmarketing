@@ -76,7 +76,7 @@ export class ErrorMessageService {
               }
               break;
             default:
-                errorMessage = 'Sorry, something went wrong';
+                errorMessage = 'Something went wrong';
                 break;
         }
         return of(errorMessage);
