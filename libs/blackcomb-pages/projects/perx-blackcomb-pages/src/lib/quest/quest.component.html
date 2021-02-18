@@ -1,0 +1,54 @@
+<div class="quest-container" *ngIf="quest$ | async as quest">
+    <div class="quest-content-container">  
+        <img [src]="quest.campaignBannerUrl">
+        <div class="quest-content">   
+            <div class="progress-bar-container" *ngIf="quest.enrolled || isEnrolled">
+                <p>{{ taskCompletedLen === taskTotalLen && taskTotalLen !== 0 ? 'QUEST COMPLETED: ' : 'YOUR PROGRESS: ' }}: {{taskCompletedLen}} OF {{taskTotalLen}}</p>
+                <mat-progress-bar mode="determinate" [value]="taskProgress"></mat-progress-bar>
+            </div> 
+            <div class="header">
+                <p class="title">{{quest?.campaignName}}</p>
+                <p class="expiry-date">Ends on {{quest.endsAt | date: 'dd.MM.yyyy'}}</p>
+                <p class="description">{{quest?.campaignDescription}}</p>
+            </div>  
+            <div class="task-card-container">
+                <div class="task-card" *ngFor="let task of quest.tasks">
+                    <div class="task-img-section">
+                        <div class="task-img-container">
+                            <mat-icon aria-hidden="false" *ngIf="task.state == 'completed'">check_circle</mat-icon>
+                            <img [src]="task.state == 'completed' ? quest.questDisplayProperties?.questCompletedImgUrl : task?.displayProperties?.imageUrl">
+                        </div>
+                    </div>
+                    <div class="task-content">
+                        <p>
+                            {{task.name}}
+                        </p>
+                        <p class="task-subtitle">
+                            {{task.description}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="reward-container">
+                <p>{{ taskCompletedLen === taskTotalLen && taskTotalLen !== 0 ? 'YOUR EARNED PRIZES:' : 'PRIZES:' }} </p>
+                <mat-list>
+                    <mat-list-item *ngFor="let reward of quest.rewards"> <a [routerLink]="['/reward-detail',reward.id]">{{reward.name}} </a></mat-list-item>          
+                </mat-list>
+            </div>
+            <h4 *ngIf="quest.termsAndCondtions">Terms and conditions</h4>
+            <div class="tnc" [innerHtml]="quest.termsAndCondtions"></div>
+        </div>
+    </div>
+    <mat-toolbar class="bottom-toolbar mat-elevation-z2" *ngIf="!quest.enrolled && !isEnrolled; else viewWalletTemplate">
+        <button color="primary" (click)="startQuest()" mat-flat-button>
+            {{ 'QUEST_CAMPAIGN.CTA_NEXT_TXT' | translate }}  
+        </button>
+    </mat-toolbar>
+    <ng-template #viewWalletTemplate>
+        <mat-toolbar class="bottom-toolbar mat-elevation-z2" *ngIf="taskCompletedLen == taskTotalLen && taskTotalLen != 0">
+            <button color="primary" [routerLink]="['/wallet']"  mat-flat-button>
+                {{ 'QUEST_CAMPAIGN.VIEW_WALLET' | translate }}  
+            </button>
+        </mat-toolbar>
+    </ng-template>
+</div>

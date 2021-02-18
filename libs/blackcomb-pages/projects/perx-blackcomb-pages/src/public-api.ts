@@ -95,5 +95,7 @@ export { CampaignsDetailModule } from './lib/campaigns-detail/campaigns-detail.m
 export { ReferralModule } from './lib/referral/referral.module';
 export { LanguageComponent } from './lib/language/language.component';
 export { LanguageModule } from './lib/language/language.module';
+export { QuestComponent } from './lib/quest/quest.component';
+export { QuestModule } from './lib/quest/quest.module';
 export { LargeVouchersComponent } from './lib/large-vouchers/large-vouchers.component';
 export { LargeVouchersModule } from './lib/large-vouchers/large-vouchers.module';

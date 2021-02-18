@@ -256,7 +256,8 @@
     "GAME_TRIES_LEFT": "tries left",
     "ALL": "所有",
     "CLOSE": "完成",
-    "REWARDS": "獎勵"
+    "REWARDS": "獎勵",
+    "QUEST_CAMPAIGNS": "Quests"
   },
   "NEWS_FEED": {
     "BTN_1": "開始遊戲",
@@ -373,6 +374,10 @@
     "GENERIC": "Sorry, something went wrong",
     "REWARDS_RUN_OUT": "Sorry, rewards have run out",
     "NO_UNUSED_MOVES": "Sorry, you do not have any more moves available"
+  },
+  "QUEST_CAMPAIGN": {
+    "CTA_NEXT_TXT": "START",
+    "VIEW_WALLET": "View Wallet"
   },
   "Gold": "黃金",
   "Silver": "銀卡",

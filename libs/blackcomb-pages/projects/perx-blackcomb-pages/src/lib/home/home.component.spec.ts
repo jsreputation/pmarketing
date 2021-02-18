@@ -19,7 +19,8 @@ import {
   IReward,
   AuthenticationService,
   TokenStorage,
-  SettingsService
+  SettingsService,
+  IQuestService
 } from '@perxtech/core';
 import { of } from 'rxjs';
 import { MatCardModule, MatDialogModule } from '@angular/material';
@@ -56,6 +57,10 @@ const loyaltyServiceStub: Partial<LoyaltyService> = {
 
 const gameSvcStub: Partial<IGameService> = {
   getActiveGames: () => of([])
+};
+
+const questServiceStub: Partial<IQuestService> = {
+  getQuestCampaigns: () => of([])
 };
 
 const themesServiceStub: Partial<ThemesService> = { getThemeSetting: () => of() };
@@ -132,6 +137,7 @@ describe('HomeComponent', () => {
           useValue: authServiceStub
         },
         { provide: TokenStorage, useValue: tokenStorageStub },
+        { provide: IQuestService, useValue: questServiceStub },
       ]
     })
       .compileComponents();

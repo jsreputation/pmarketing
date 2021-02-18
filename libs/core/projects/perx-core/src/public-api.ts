@@ -80,6 +80,12 @@ export {
 export { ExpireTimerComponent } from './lib/campaign/reward-popup/expire-timer/expire-timer.component';
 export { RewardPopupComponent } from './lib/campaign/reward-popup/reward-popup.component';
 /**
+ * Quests
+ */
+export { QuestModule } from './lib/quest/quest.service.module';
+export { IQuest } from './lib/quest/quest.model';
+export { IQuestService } from './lib/quest/quest.service';
+/**
  * Stamps
  */
 export { StampModule } from './lib/stamp/stamp.module';

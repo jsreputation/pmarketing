@@ -63,6 +63,7 @@ export interface IV4Campaign {
   campaign_referral_type?: string;
   campaign_config?: CampaignConfig;
   referral_code: string;
+  terms_and_conditions?: string;
 }
 
 type CountObject = {
@@ -162,6 +163,8 @@ export class V4CampaignService implements ICampaignService {
       state: campaign.state,
       endsAt: campaign.ends_at ? new Date(campaign.ends_at) : null,
       beginsAt: campaign.begins_at ? new Date(campaign.begins_at) : null,
+      enrolled: campaign.enrolled,
+      termsAndConditions: campaign.terms_and_conditions,
       referralCodes,
       refersAttained,
       rewards,

@@ -20,6 +20,7 @@ import {
   SettingsService,
   ThemesService,
   TokenStorage,
+  IQuestService
 } from '@perxtech/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -68,7 +69,8 @@ export class HomeComponent extends BCHomeComponent implements OnInit {
     tokenService: TokenStorage,
     datePipe: DatePipe,
 
-    private loyaltyService: LoyaltyService
+    private loyaltyService: LoyaltyService,
+    questService: IQuestService
   ) {
     super(
       rewardsService,
@@ -87,7 +89,8 @@ export class HomeComponent extends BCHomeComponent implements OnInit {
       profileService,
       currencyPipe,
       tokenService,
-      datePipe
+      datePipe,
+      questService
     );
   }
 

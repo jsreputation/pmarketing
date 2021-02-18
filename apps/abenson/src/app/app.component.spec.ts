@@ -28,6 +28,7 @@ import {
   FeedReaderService,
   SettingsService,
   TokenStorage,
+  IQuestService
 } from '@perxtech/core';
 import { HomeComponent } from '@perxtech/blackcomb-pages';
 import { TermsAndConditionComponent } from './account/profile-additions/containers/terms-and-condition/terms-and-condition.component';
@@ -84,6 +85,7 @@ describe('AppComponent', () => {
   let feedService: FeedReaderService;
   let settingsService: SettingsService;
   let profileService: ProfileService;
+  let questService: IQuestService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -113,6 +115,7 @@ describe('AppComponent', () => {
         { provide: InstantOutcomeService, useValue: {} },
         { provide: FeedReaderService, useValue: {} },
         { provide: SettingsService, useValue: {} },
+        { provide: IQuestService, useValue: {} },
       ],
     }).compileComponents();
   }));
@@ -158,6 +161,9 @@ describe('AppComponent', () => {
     );
     configService = TestBed.get<ConfigService>(
       ConfigService as Type<ConfigService>
+    );
+    questService = TestBed.get<IQuestService>(
+      IQuestService as Type<IQuestService>
     );
 
     app.ngOnInit();
@@ -213,7 +219,8 @@ describe('AppComponent', () => {
         profileService,
         currencyPipe,
         tokenService,
-        datePipe
+        datePipe,
+        questService
       )
     );
     expect(app.showToolbar).toBeTruthy();

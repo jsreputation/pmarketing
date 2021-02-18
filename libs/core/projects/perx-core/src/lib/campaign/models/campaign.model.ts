@@ -24,7 +24,8 @@ export enum CampaignType {
   stamp = 'stamp', // loyalty
   game = 'game',
   survey = 'survey',
-  invite = 'invite'
+  invite = 'invite',
+  quest = 'quest'
 }
 
 export enum CampaignState {
@@ -63,6 +64,8 @@ export interface ICampaign {
   refersAttained?: number;
   progress?: ProgressBarFields;
   customFields?: any;
+  enrolled?: boolean;
+  termsAndConditions?: string;
 }
 
 export enum CommChannel {
