@@ -19,7 +19,8 @@ import {
   IReward,
   AuthenticationService,
   TokenStorage,
-  SettingsService
+  SettingsService,
+  IQuestService
 } from '@perxtech/core';
 import {
   CampaignsCollectionComponent,
@@ -70,6 +71,10 @@ const configServiceStub: Partial<ConfigService> = {
 const settingsServiceStub: Partial<SettingsService> = {
   getRssFeeds: () => of(),
   getRemoteFlagsSettings: () => of()
+};
+
+const questServiceStub: Partial<IQuestService> = {
+  getQuestCampaigns: () => of([])
 };
 
 const reward: IReward = {
@@ -134,6 +139,7 @@ describe('HomeComponent', () => {
           useValue: authServiceStub
         },
         { provide: TokenStorage, useValue: tokenStorageStub },
+        { provide: IQuestService, useValue: questServiceStub },
       ]
     })
       .compileComponents();
