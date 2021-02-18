@@ -118,7 +118,6 @@
     "test:bpi": "nx test bpi -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
     "test:components-demo": "nx test components-demo -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
     "test:dbshk-agent": "nx test dbshk-agent -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
-    "test:globeone": "nx test globeone -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
     "test:hkbn": "echo 'skipping hkbn tests'",
     "test:hsbc": "echo 'skipping old-hsbc tests'",
     "test:hsbc-rewards": "nx test hsbc-rewards -- --no-watch --no-progress --browsers=ChromeHeadlessCI",
