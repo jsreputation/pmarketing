@@ -173,7 +173,7 @@ export class GameComponent implements OnInit {
         },
         (err: { errorState: string } | HttpErrorResponse) => {
           if (err instanceof HttpErrorResponse) {
-            this.errorMessageServce.getErrorMessageByErrorCode(err.error.code)
+            this.errorMessageServce.getErrorMessageByErrorCode(err.error.code, err.error.message)
               .subscribe((message) => {
                 this.notificationService.addPopup({
                   title: 'Sorry!',
@@ -269,7 +269,7 @@ export class GameComponent implements OnInit {
           }
         },
         (response: HttpErrorResponse) => {
-          this.errorMessageServce.getErrorMessageByErrorCode(response.error.code)
+          this.errorMessageServce.getErrorMessageByErrorCode(response.error.code, response.error.message)
             .subscribe((message) => {
               this.notificationService.addPopup({
                 title: 'Sorry!',

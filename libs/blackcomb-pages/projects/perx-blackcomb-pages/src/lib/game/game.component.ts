@@ -269,7 +269,7 @@ export class GameComponent implements OnInit, OnDestroy {
         this.checkFailureOrSuccess();
       },
       (response: HttpErrorResponse) => {
-        this.errorMessageService.getErrorMessageByErrorCode(response.error.code)
+        this.errorMessageService.getErrorMessageByErrorCode(response.error.code, response.error.message)
           .subscribe(this.notificationService.addSnack);
       }
     );
