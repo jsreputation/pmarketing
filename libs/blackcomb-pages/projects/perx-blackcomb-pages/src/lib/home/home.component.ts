@@ -131,7 +131,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     protected currencyPipe: CurrencyPipe,
     protected tokenService: TokenStorage,
     protected datePipe: DatePipe,
-    protected questService: IQuestService
+    protected questService?: IQuestService
   ) { }
 
   public ngOnInit(): void {
