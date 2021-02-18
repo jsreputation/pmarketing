@@ -16,7 +16,6 @@ export class MacaronService {
   public balanceTxt = '';
 
   constructor(private translateService: TranslateService) {
-    this.translateService.get('')
     combineLatest([
       this.translateService.get('MACARON.BALANCE'),
       this.translateService.get('MACARON.COMING_SOON'),
@@ -41,7 +40,7 @@ export class MacaronService {
     const nowTime: number = (new Date()).getTime();
     if (sellingFrom && sellingFrom.getTime() > nowTime) {
       return {
-        label: 'Coming Soon',
+        label: this.comingSoonTxt,
         class: 'coming-soon',
         isButtonEnabled: false
       };
@@ -58,7 +57,7 @@ export class MacaronService {
 
     if (rewardTotalRatio !== null && rewardTotalRatio <= 0) {
       return {
-        label: 'Fully redeemed',
+        label: this.fullyRedeemedTxt,
         class: 'fully-redeemed',
         isButtonEnabled: false
       };
@@ -67,7 +66,7 @@ export class MacaronService {
     if (validToDate && validToDate.getTime() < nowTime) {
       // console.log(validToDate, validToDate.getTime(), nowTime);
       return {
-        label: 'Expired',
+        label: this.expiredTxt,
         class: 'expired',
         isButtonEnabled: true
       };
@@ -99,14 +98,14 @@ export class MacaronService {
 
       if (lowestBalance === 0) {
         return {
-          label: 'Fully redeemed',
+          label: this.fullyRedeemedTxt,
           class: 'fully-redeemed',
           isButtonEnabled: false
         };
       }
 
       return {
-        label: `${lowestBalance} left`,
+        label: `${this.balanceTxt.replace('{{amount}}', lowestBalance.toString(10))}`,
         class: 'balance',
         isButtonEnabled: true
       };
@@ -116,7 +115,7 @@ export class MacaronService {
     const thirtySixHours = 36 * 60 * 60 * 1000;
     if (validToDate && (validToDate.getTime() - nowTime) < thirtySixHours) {
       return {
-        label: 'Expiring Soon',
+        label: this.expiringTxt,
         class: 'expiring',
         isButtonEnabled: true
       };
@@ -139,7 +138,7 @@ export class MacaronService {
     const isComingSoon = campaign.beginsAt && campaign.beginsAt.getTime() > currentDate.getTime();
     if (isComingSoon) {
       return {
-        label: 'Coming Soon',
+        label: this.comingSoonTxt,
         class: 'coming-soon',
         isButtonEnabled: false
       };
