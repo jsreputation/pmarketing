@@ -98,6 +98,7 @@ jobs:
             [ $APP == 'oracle-demo' ] || \
             [ $APP == 'feature-demo' ] || \
             [ $APP == 'globeathome' ] || \
+            [ $APP == 'globeone' ] || \
             [ $APP == 'all-it' ] || \
             [ $APP == 'partners-demo' ] || \
             [ $APP == 'perx-demo' ] || \
@@ -130,6 +131,7 @@ jobs:
           [ $APP == 'daiichi-dlvn' ] || \
           [ $APP == 'feature-demo' ] || \
           [ $APP == 'globeathome' ] || \
+          [ $APP == 'globeone' ] || \
           [ $APP == 'hoolah' ] || \
           [ $APP == 'partners-demo' ] || \
           [ $APP == 'perx-demo' ] || \
