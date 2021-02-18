@@ -3,12 +3,13 @@ import { MatProgressBarModule, MatIconModule, MatListModule, MatToolbarModule } 
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { QuestComponent } from './quest.component';
-import { IQuestService } from '@perxtech/core';
+import { IQuestService, NotificationService } from '@perxtech/core';
 import { of } from 'rxjs';
 
 const questServiceStub: Partial<IQuestService> = {
   getQuestCampaigns: () => of([])
 };
+const notificationServiceStub: Partial<NotificationService> = {};
 
 describe('QuestComponent', () => {
   let component: QuestComponent;
@@ -25,6 +26,7 @@ describe('QuestComponent', () => {
          MatListModule ],
          providers: [
           { provide: IQuestService, useValue: questServiceStub },
+          { provide: NotificationService, useValue: notificationServiceStub }
          ]
     })
     .compileComponents();

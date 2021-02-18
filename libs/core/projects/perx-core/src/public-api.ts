@@ -83,7 +83,7 @@ export { RewardPopupComponent } from './lib/campaign/reward-popup/reward-popup.c
  * Quests
  */
 export { QuestModule } from './lib/quest/quest.service.module';
-export { IQuestCampaign } from './lib/quest/quest.model';
+export { IQuest } from './lib/quest/quest.model';
 export { IQuestService } from './lib/quest/quest.service';
 /**
  * Stamps

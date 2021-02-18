@@ -1,10 +1,11 @@
 
 import { Observable } from 'rxjs';
-import { IQuestCampaign } from './quest.model';
+import { IQuest } from './quest.model';
+import { ICampaign } from '../campaign/models/campaign.model';
 
 export abstract class IQuestService {
-    public abstract getQuestCampaigns(): Observable<IQuestCampaign[]>;
-    public abstract getQuestsFromCampaign(campaignId: number): Observable<IQuestCampaign>;
-    public abstract postEnrollQuest(campaignId: number): void;
-    public abstract get(questId: number): Observable<IQuestCampaign>;
+    public abstract getQuestCampaigns(): Observable<ICampaign[]>;
+    public abstract getQuestCampaign(campainId: number): Observable<ICampaign>;
+    public abstract getQuestFromCampaign(campaign: ICampaign): Observable<IQuest>;
+    public abstract postEnrollQuest(campaignId: number): Observable<any>;
 }

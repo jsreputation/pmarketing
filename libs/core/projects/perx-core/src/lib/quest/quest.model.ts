@@ -1,19 +1,27 @@
+import { IReward } from '../rewards/models/reward.model';
 
-import { ICampaign } from '../campaign/models/campaign.model';
-
-export interface IQuestCampaign extends ICampaign {
-    enrolled?: boolean;
+export interface IQuest  {
+    id: number;
+    campaignId: number;
+    campaignName: string;
+    campaignDescription?: string;
+    campaignBannerUrl?: string;
+    enrolled: boolean;
+    termsAndCondtions?: string;
+    beginsAt?: Date;
+    endsAt?: Date;
     tasks?: IQuestTask[];
     questDisplayProperties?: {
       questCompletedImgUrl: string;
     };
+    rewards?: IReward[];
   }
 export interface IQuestTask {
+        id: number;
         name: string;
         description: string;
         displayProperties: {
-            position: number;
             imageUrl: string;
         };
-        completedAt: Date | undefined;
+        state: string;
 }

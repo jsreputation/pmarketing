@@ -64,6 +64,8 @@ export interface ICampaign {
   refersAttained?: number;
   progress?: ProgressBarFields;
   customFields?: any;
+  enrolled?: boolean;
+  termsAndConditions?: string;
 }
 
 export enum CommChannel {
