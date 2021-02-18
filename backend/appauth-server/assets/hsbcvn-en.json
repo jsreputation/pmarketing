@@ -381,6 +381,13 @@
     "REWARDS_RUN_OUT": "Sorry, rewards have run out",
     "NO_UNUSED_MOVES": "Sorry, you do not have any more moves available"
   },
+  "MACARON": {
+    "BALANCE": "{{amount}} left",
+    "COMING_SOON": "Coming Soon",
+    "EXPIRED": "Expired",
+    "EXPIRING": "Expiring Soon",
+    "FULLY_REDEEMED": "Fully redeemed"
+  },
   "Gold": "Gold",
   "Silver": "Silver",
   "Green": "Green",
