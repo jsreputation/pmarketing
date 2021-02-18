@@ -259,7 +259,12 @@ const routes: Routes = [
       {
         path: 'invite/:id',
         loadChildren: () => import('../referral/referral.module').then(mod => mod.ReferralModule)
-      }
+      },
+      { path: 'leaderboard',
+      loadChildren: () => import('../leaderboard/leaderboard.module')
+        .then(m => m.LeaderboardModule),
+      canActivate: [ProtectedGuard]
+    }
     ],
   },
 ];

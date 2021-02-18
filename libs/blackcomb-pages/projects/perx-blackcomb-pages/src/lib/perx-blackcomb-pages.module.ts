@@ -76,6 +76,7 @@ import { LuckyDrawDetailsComponent } from './lucky-draw-details/lucky-draw-detai
 import { CampaignLandingPageModule } from './campaign-landing-page/campaign-landing-page.module';
 import { LandingPageModule } from './landing-page/landing-page.module';
 import { LeaderboardPageComponent } from './leaderboard-page/leaderboard-page.component';
+import { LeaderboardListComponent } from './leaderboard-list/leaderboard-list.component';
 import { ForgotPasswordModule } from './forgot-password/forgot-password.module';
 import { SignIn2Module } from './sign-in-2/sign-in-2.module';
 import { ProfileModule as BCPProfileModule } from './profile/profile.module';
@@ -103,6 +104,7 @@ const comps: any[] = [
   RewardsBookingComponent,
   LuckyDrawDetailsComponent,
   LeaderboardPageComponent,
+  LeaderboardListComponent,
   NearmeComponent,
   RewardsPageComponent,
   FavoriteRewardsComponent,

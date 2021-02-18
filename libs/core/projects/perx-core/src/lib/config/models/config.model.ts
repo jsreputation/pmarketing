@@ -34,7 +34,7 @@ export interface IConfig<T> {
   showCampaignRewardsCounterOnHomepage?: boolean;
   showRewardsOnHomepage?: boolean;
   showCampaignLandingPage?: boolean;
-  showLeaderboardPage?: boolean;
+  showLeaderboardLinkOnHomePage?: boolean;
   showPopupCampaign?: boolean;
   showReferralCampaignsOnHomePage?: boolean;
   showStampCampaignsOnHomePage?: boolean;
@@ -49,7 +49,7 @@ export interface IConfig<T> {
   showUserQR?: boolean;
   showHistoryPage?: boolean;
   showNearMePage?: boolean;
-  showLeaderBoard?: boolean;
+  enableLeaderBoard? : boolean;
 
   /* Login page */
   showSubtitleLogin?: boolean;

@@ -24,7 +24,7 @@ export class LeaderboardCTAComponent implements OnInit {
     public ngOnInit(): void {
         this.configService.readAppConfig().subscribe(
             (config: IConfig<void>) => {
-                this.showLeaderBoardCTA = config.showLeaderBoard || false;
+                this.showLeaderBoardCTA = config.enableLeaderBoard || false;
                 if (this.showLeaderBoardCTA) {
                     this.buttonText = this.translate.get('LEADER_BOARD.CTA_BUTTON_TEXT');
                 }
