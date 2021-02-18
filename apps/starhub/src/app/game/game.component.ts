@@ -17,6 +17,7 @@ import {
   IGameService,
   IPlayOutcome,
   NotificationService,
+  PopUpClosedCallBack,
   Voucher
 } from '@perxtech/core';
 import {
@@ -47,7 +48,7 @@ import { ErrorMessageService } from '../utils/error-message/error-message.servic
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss']
 })
-export class GameComponent implements OnInit {
+export class GameComponent implements OnInit, PopUpClosedCallBack {
   public numberOfTaps: number | null;
   public title: string;
   public gameData$: Observable<IGame>;
@@ -179,7 +180,8 @@ export class GameComponent implements OnInit {
                   title: 'Sorry!',
                   text: message,
                   disableOverlayClose: true,
-                  panelClass: 'custom-class'
+                  panelClass: 'custom-class',
+                  afterClosedCallBack: this
                 });
               });
           } else {
@@ -212,6 +214,10 @@ export class GameComponent implements OnInit {
   }
 
   public dialogClosed(): void {
+    this.router.navigate(['/home']);
+  }
+
+  public closeAndRedirect(): void {
     this.router.navigate(['/home']);
   }
 
