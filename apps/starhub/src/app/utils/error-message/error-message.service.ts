@@ -74,6 +74,7 @@ export class ErrorMessageService {
               } else if (errMessage && errMessage.match(/balance/i)) {
                 errorMessage = 'Not enough points balance';
               }
+              break;
             default:
                 errorMessage = 'Sorry, something went wrong';
                 break;
