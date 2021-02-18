@@ -52,7 +52,8 @@ export class ErrorMessageService {
         - 'A voucher code could not be assigned for this transaction'
     */
 
-    public getErrorMessageByErrorCode(errorCode: number): Observable<string> {
+    // include the err message as a optional to support err 40 decisions
+    public getErrorMessageByErrorCode(errorCode: number, errMessage?: string): Observable<string> {
         let errorMessage = '';
         switch (errorCode) {
             case 4103:
