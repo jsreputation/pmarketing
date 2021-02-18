@@ -2,11 +2,37 @@ import { Injectable } from '@angular/core';
 import { IMacaron } from './models/macaron.model';
 import { IReward } from '../rewards/models/reward.model';
 import { ICampaign } from '../campaign/models/campaign.model';
+import { TranslateService } from '@ngx-translate/core';
+import { combineLatest } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MacaronService {
+  public comingSoonTxt = '';
+  public fullyRedeemedTxt = '';
+  public expiredTxt = '';
+  public expiringTxt = '';
+  public balanceTxt = '';
+
+  constructor(private translateService: TranslateService) {
+    this.translateService.get('')
+    combineLatest([
+      this.translateService.get('MACARON.BALANCE'),
+      this.translateService.get('MACARON.COMING_SOON'),
+      this.translateService.get('MACARON.EXPIRED'),
+      this.translateService.get('MACARON.EXPIRING'),
+      this.translateService.get('MACARON.FULLY_REDEEMED')])
+      .subscribe(
+        ([balance, comingSoon, expired, expiring, fullyRedeemed]) => {
+          this.balanceTxt = balance;
+          this.comingSoonTxt = comingSoon;
+          this.expiredTxt = expired;
+          this.expiringTxt = expiring;
+          this.fullyRedeemedTxt = fullyRedeemed;
+        }
+      );
+  }
 
   public getMacaron(reward: IReward): IMacaron | null {
     const sellingFrom = reward.sellingFrom;
