@@ -1,0 +1,10 @@
+.leaderboard-list-container {
+    padding: 0 1.6rem;
+    height: 100%;
+    overflow-y: auto;
+    box-sizing: border-box;
+
+    > h1:first-child {
+        padding-top: 2rem;
+    }
+}

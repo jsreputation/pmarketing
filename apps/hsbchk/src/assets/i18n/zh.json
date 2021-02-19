@@ -125,7 +125,8 @@
     "CTA_TXT": "取消"
   },
   "LEADER_BOARD": {
-    "CTA_BUTTON_TEXT": "排行榜"
+    "CTA_BUTTON_TEXT": "排行榜",
+    "LIST_TITLE": ""
   },
   "ACCOUNT_PAGE": {
     "PROFILE": "我的資料",

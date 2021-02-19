@@ -1,0 +1,17 @@
+<div class="leaderboard-list-container" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="500"
+  (scrolled)="onScroll()" [scrollWindow]="false">
+  <h1 translate>LEADER_BOARD.LIST_TITLE</h1>
+  <!-- <perx-core-vouchers
+        [filter]="filter"
+        [showRedeemedIcon]="true"
+        [mapping]="mapping"
+        [data]="vouchers$"
+        [expiryLabelFn]="expiryLabelFn"
+        [redeemedOnLabelFn]="redeemedOnLabelFn">
+    </perx-core-vouchers> -->
+    {{ $leaderboards | async | json}}
+</div>
+
+
+
+

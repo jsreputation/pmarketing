@@ -162,7 +162,8 @@
     "CTA_TXT": ""
   },
   "LEADER_BOARD": {
-    "CTA_BUTTON_TEXT": ""
+    "CTA_BUTTON_TEXT": "",
+    "LIST_TITLE": ""
   },
   "ACCOUNT_PAGE": {
     "LUCKY_DRAW_INFO": "",

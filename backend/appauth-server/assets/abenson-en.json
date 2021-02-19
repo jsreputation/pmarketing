@@ -181,7 +181,8 @@
     "CTA_TXT": "Cancel"
   },
   "LEADER_BOARD": {
-    "CTA_BUTTON_TEXT": "LEADERBOARD"
+    "CTA_BUTTON_TEXT": "LEADERBOARD",
+    "LIST_TITLE": "Leaderboards"
   },
   "ACCOUNT_PAGE": {
     "LUCKY_DRAW_INFO": "Lucky Draw Info",

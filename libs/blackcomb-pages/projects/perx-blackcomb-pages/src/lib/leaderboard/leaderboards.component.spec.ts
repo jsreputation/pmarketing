@@ -1,13 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LeaderboardListComponent } from './leaderboard-list.component';
+import { LeaderboardsComponent } from './leaderboards.component';
 import {ConfigModule, ConfigService, ProfileService, RankModule} from '@perxtech/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import {of} from 'rxjs';
 
-describe('LeaderboardListComponent', () => {
-  let component: LeaderboardListComponent;
-  let fixture: ComponentFixture<LeaderboardListComponent>;
+describe('LeaderboardsComponent', () => {
+  let component: LeaderboardsComponent;
+  let fixture: ComponentFixture<LeaderboardsComponent>;
 
   const profileServiceStub: Partial<ProfileService> = {
     whoAmI: () => of({ email: 'email@e.mail' })
@@ -19,7 +19,7 @@ describe('LeaderboardListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LeaderboardListComponent ],
+      declarations: [ LeaderboardsComponent ],
       imports: [
         RankModule,
         HttpClientTestingModule,
@@ -37,7 +37,7 @@ describe('LeaderboardListComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LeaderboardListComponent);
+    fixture = TestBed.createComponent(LeaderboardsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

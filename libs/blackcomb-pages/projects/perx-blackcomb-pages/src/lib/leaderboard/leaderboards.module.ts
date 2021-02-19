@@ -2,11 +2,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { RankModule } from '@perxtech/core';
-import { LeaderboardListComponent } from './leaderboard-list.component';
+import { LeaderboardsComponent } from './leaderboards.component';
 import { ProfileModule } from '@perxtech/core';
 
 @NgModule({
-  declarations: [LeaderboardListComponent],
+  declarations: [LeaderboardsComponent],
   exports: [],
   imports: [
     TranslateModule.forChild(),
@@ -15,4 +15,4 @@ import { ProfileModule } from '@perxtech/core';
     RankModule
   ]
 })
-export class LeaderboardListModule { }
+export class LeaderboardsModule { }
