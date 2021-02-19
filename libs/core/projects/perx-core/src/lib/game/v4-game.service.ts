@@ -1,25 +1,37 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable, of, combineLatest, throwError, EMPTY, Subject } from 'rxjs';
+import {
+  HttpClient,
+  HttpErrorResponse
+} from '@angular/common/http';
+import {
+  combineLatest,
+  EMPTY,
+  Observable,
+  of,
+  Subject,
+  throwError
+} from 'rxjs';
 import { IGameService } from './igame.service';
 import {
-  IGame,
   GameType as TYPE,
-  IPlayOutcome,
   IEngagementTransaction,
-  Error400States,
+  IGame,
+  IPlayOutcome,
   IPointsOutcome,
 } from './game.model';
 import {
   catchError,
-  map,
-  switchMap,
-  tap,
   expand,
-  reduce
+  map,
+  reduce,
+  switchMap,
+  tap
 } from 'rxjs/operators';
 import { oc } from 'ts-optchain';
-import { IV4Voucher, V4VouchersService } from '../vouchers/v4-vouchers.service';
+import {
+  IV4Voucher,
+  V4VouchersService
+} from '../vouchers/v4-vouchers.service';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
 import { Cacheable } from 'ngx-cacheable';
@@ -295,19 +307,20 @@ export class V4GameService implements IGameService {
             points: points.map(p => V4GameService.v4PointsToPoints(p))
           };
         }),
-        catchError((err: HttpErrorResponse) => {
-          let errorStateObj: { errorState: string };
-          if (err.error && err.error.message && err.error.code && err.error.code === 40) {
-            errorStateObj = { errorState: err.error.mesage };
-            if (err.error.message.match(/move/i)) {
-              errorStateObj = { errorState: Error400States.move };
-            } else if (err.error.message.match(/balance/i)) {
-              errorStateObj = { errorState: Error400States.balance };
-            }
-            return throwError(errorStateObj);
-          }
-          return throwError(err);
-        })
+        catchError((err: HttpErrorResponse) => throwError(err))
+          // {
+          // let errorStateObj: { errorState: string };
+          // if (err.error && err.error.message && err.error.code && err.error.code === 40) {
+          //   errorStateObj = { errorState: err.error.mesage };
+          //   if (err.error.message.match(/move/i)) {
+          //     errorStateObj = { errorState: Error400States.move };
+          //   } else if (err.error.message.match(/balance/i)) {
+          //     errorStateObj = { errorState: Error400States.balance };
+          //   }
+          //   return throwError(errorStateObj);
+          // }
+          // return throwError(err);
+          // })
       );
   }
 

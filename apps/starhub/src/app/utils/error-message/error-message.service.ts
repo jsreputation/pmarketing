@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import {
+  Observable,
+  of
+} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -52,7 +55,8 @@ export class ErrorMessageService {
         - 'A voucher code could not be assigned for this transaction'
     */
 
-    public getErrorMessageByErrorCode(errorCode: number): Observable<string> {
+    // include the err message as a optional to support err 40 decisions
+    public getErrorMessageByErrorCode(errorCode: number, errMessage?: string): Observable<string> {
         let errorMessage = '';
         switch (errorCode) {
             case 4103:
@@ -63,8 +67,16 @@ export class ErrorMessageService {
                 // API error: 'No remaining unused moves'
                 errorMessage = 'Sorry, you do not have any more moves available';
                 break;
+            case 40:
+              // General API error
+              if (errMessage && errMessage.match(/move/i)) {
+                errorMessage = 'Move limit has reached';
+              } else if (errMessage && errMessage.match(/balance/i)) {
+                errorMessage = 'Not enough points balance';
+              }
+              break;
             default:
-                errorMessage = 'Sorry, something went wrong';
+                errorMessage = 'Something went wrong';
                 break;
         }
         return of(errorMessage);

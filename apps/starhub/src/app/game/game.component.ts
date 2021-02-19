@@ -17,6 +17,7 @@ import {
   IGameService,
   IPlayOutcome,
   NotificationService,
+  PopUpClosedCallBack,
   Voucher
 } from '@perxtech/core';
 import {
@@ -47,7 +48,7 @@ import { ErrorMessageService } from '../utils/error-message/error-message.servic
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss']
 })
-export class GameComponent implements OnInit {
+export class GameComponent implements OnInit, PopUpClosedCallBack {
   public numberOfTaps: number | null;
   public title: string;
   public gameData$: Observable<IGame>;
@@ -148,51 +149,46 @@ export class GameComponent implements OnInit {
   }
 
   public loadPreplay(): void {
-    if (
-      this.game &&
-      (this.game.remainingNumberOfTries > 0 ||
-        this.game.remainingNumberOfTries === null)
-    ) {
-      this.gameData$
-        .pipe(
-          switchMap((game) => this.gameService.prePlay(game.id)),
-          catchError((err) => throwError(err)),
-          takeUntil(this.destroy$)
-        )
-        .subscribe(
-          (gameTransaction: IEngagementTransaction) => {
-            this.gameTransaction = gameTransaction;
-            this.isGameTransactionSet = of(true);
-            if (
-              gameTransaction.voucherIds &&
-              gameTransaction.voucherIds.length > 0
-            ) {
-              // set this as a property
-              if (this.game.results && this.game.results.outcome) {
-                this.gameOutcomeService.setOutcome(this.game.results.outcome);
-                this.willWin = true;
-              }
-            } else {
-              this.willWin = false;
+    this.gameData$
+      .pipe(
+        switchMap((game) => this.gameService.prePlay(game.id)),
+        catchError((err) => throwError(err)),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(
+        (gameTransaction: IEngagementTransaction) => {
+          this.gameTransaction = gameTransaction;
+          this.isGameTransactionSet = of(true);
+          if (
+            gameTransaction.voucherIds &&
+            gameTransaction.voucherIds.length > 0
+          ) {
+            // set this as a property
+            if (this.game.results && this.game.results.outcome) {
+              this.gameOutcomeService.setOutcome(this.game.results.outcome);
+              this.willWin = true;
             }
-          },
-          (err: { errorState: string } | HttpErrorResponse) => {
-            if (err instanceof HttpErrorResponse) {
-              this.errorMessageServce.getErrorMessageByErrorCode(err.error.code)
-                .subscribe((message) => {
-                  this.notificationService.addPopup({
-                    title: 'Sorry!',
-                    text: message,
-                    disableOverlayClose: true,
-                    panelClass: 'custom-class'
-                  });
-                });
-            } else {
-              this.showErrorPopup();
-            }
+          } else {
+            this.willWin = false;
           }
-        );
-    }
+        },
+        (err: { errorState: string } | HttpErrorResponse) => {
+          if (err instanceof HttpErrorResponse) {
+            this.errorMessageServce.getErrorMessageByErrorCode(err.error.code, err.error.message)
+              .subscribe((message) => {
+                this.notificationService.addPopup({
+                  title: 'Sorry!',
+                  text: message,
+                  disableOverlayClose: true,
+                  panelClass: 'custom-class',
+                  afterClosedCallBack: this
+                });
+              });
+          } else {
+            this.showErrorPopup();
+          }
+        }
+      );
   }
 
   public preplayGameCompleted(): void {
@@ -218,6 +214,10 @@ export class GameComponent implements OnInit {
   }
 
   public dialogClosed(): void {
+    this.router.navigate(['/home']);
+  }
+
+  public closeAndRedirect(): void {
     this.router.navigate(['/home']);
   }
 
@@ -275,7 +275,7 @@ export class GameComponent implements OnInit {
           }
         },
         (response: HttpErrorResponse) => {
-          this.errorMessageServce.getErrorMessageByErrorCode(response.error.code)
+          this.errorMessageServce.getErrorMessageByErrorCode(response.error.code, response.error.message)
             .subscribe((message) => {
               this.notificationService.addPopup({
                 title: 'Sorry!',
