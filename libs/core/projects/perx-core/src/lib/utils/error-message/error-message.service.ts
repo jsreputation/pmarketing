@@ -73,6 +73,7 @@ export class ErrorMessageService {
               } else if (errMessage && errMessage.match(/balance/i)) {
                 errorKey = 'ERRORS.NOT_ENOUGH_POINTS';
               }
+              break;
             default:
                 // Sorry, something went wrong
                 errorKey = 'ERRORS.GENERIC';
