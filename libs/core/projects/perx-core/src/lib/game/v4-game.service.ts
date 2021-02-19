@@ -307,7 +307,8 @@ export class V4GameService implements IGameService {
             points: points.map(p => V4GameService.v4PointsToPoints(p))
           };
         }),
-        catchError((err: HttpErrorResponse) => {
+        catchError((err: HttpErrorResponse) => throwError(err))
+          // {
           // let errorStateObj: { errorState: string };
           // if (err.error && err.error.message && err.error.code && err.error.code === 40) {
           //   errorStateObj = { errorState: err.error.mesage };
@@ -318,8 +319,8 @@ export class V4GameService implements IGameService {
           //   }
           //   return throwError(errorStateObj);
           // }
-          return throwError(err);
-        })
+          // return throwError(err);
+          // })
       );
   }
 
