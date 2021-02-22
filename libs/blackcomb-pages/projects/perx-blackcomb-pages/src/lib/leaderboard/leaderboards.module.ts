@@ -3,7 +3,6 @@ import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { RankModule } from '@perxtech/core';
 import { LeaderboardsComponent } from './leaderboards.component';
-import { ProfileModule } from '@perxtech/core';
 
 @NgModule({
   declarations: [LeaderboardsComponent],
@@ -11,7 +10,6 @@ import { ProfileModule } from '@perxtech/core';
   imports: [
     TranslateModule.forChild(),
     RouterModule,
-    ProfileModule,
     RankModule
   ]
 })

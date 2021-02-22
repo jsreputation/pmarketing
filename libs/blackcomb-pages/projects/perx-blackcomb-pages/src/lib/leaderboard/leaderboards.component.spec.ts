@@ -1,9 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LeaderboardsComponent } from './leaderboards.component';
-import {ConfigModule, ConfigService, ProfileService, RankModule} from '@perxtech/core';
+import {ConfigModule, ConfigService, IRankService, ProfileService, RankModule} from '@perxtech/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import {of} from 'rxjs';
+import { V4RankService } from 'libs/core/projects/perx-core/src/lib/rank/v4-rank.service';
 
 describe('LeaderboardsComponent', () => {
   let component: LeaderboardsComponent;
@@ -13,8 +14,8 @@ describe('LeaderboardsComponent', () => {
     whoAmI: () => of({ email: 'email@e.mail' })
   };
 
-  const configServiceStub: Partial<ConfigService> = {
-    readAppConfig: () => of()
+  const rankServiceStub: Partial<V4RankService> = {
+    getLeaderBoards: () => of()
   };
 
   beforeEach(async(() => {
@@ -30,7 +31,7 @@ describe('LeaderboardsComponent', () => {
           provide: ProfileService,
           useValue: profileServiceStub
         },
-        { provide: ConfigService, useValue: configServiceStub }
+        { provide: IRankService, useValue: rankServiceStub }
       ]
     })
       .compileComponents();
