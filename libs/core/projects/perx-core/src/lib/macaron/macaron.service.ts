@@ -2,11 +2,36 @@ import { Injectable } from '@angular/core';
 import { IMacaron } from './models/macaron.model';
 import { IReward } from '../rewards/models/reward.model';
 import { ICampaign } from '../campaign/models/campaign.model';
+import { TranslateService } from '@ngx-translate/core';
+import { combineLatest } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MacaronService {
+  public comingSoonTxt: string = '';
+  public fullyRedeemedTxt: string = '';
+  public expiredTxt: string = '';
+  public expiringTxt: string = '';
+  public balanceTxt: string = '';
+
+  constructor(private translateService: TranslateService) {
+    combineLatest([
+      this.translateService.get('MACARON.BALANCE'),
+      this.translateService.get('MACARON.COMING_SOON'),
+      this.translateService.get('MACARON.EXPIRED'),
+      this.translateService.get('MACARON.EXPIRING'),
+      this.translateService.get('MACARON.FULLY_REDEEMED')])
+      .subscribe(
+        ([balance, comingSoon, expired, expiring, fullyRedeemed]) => {
+          this.balanceTxt = balance;
+          this.comingSoonTxt = comingSoon;
+          this.expiredTxt = expired;
+          this.expiringTxt = expiring;
+          this.fullyRedeemedTxt = fullyRedeemed;
+        }
+      );
+  }
 
   public getMacaron(reward: IReward): IMacaron | null {
     const sellingFrom = reward.sellingFrom;
@@ -15,7 +40,7 @@ export class MacaronService {
     const nowTime: number = (new Date()).getTime();
     if (sellingFrom && sellingFrom.getTime() > nowTime) {
       return {
-        label: 'Coming Soon',
+        label: this.comingSoonTxt,
         class: 'coming-soon',
         isButtonEnabled: false
       };
@@ -32,7 +57,7 @@ export class MacaronService {
 
     if (rewardTotalRatio !== null && rewardTotalRatio <= 0) {
       return {
-        label: 'Fully redeemed',
+        label: this.fullyRedeemedTxt,
         class: 'fully-redeemed',
         isButtonEnabled: false
       };
@@ -41,7 +66,7 @@ export class MacaronService {
     if (validToDate && validToDate.getTime() < nowTime) {
       // console.log(validToDate, validToDate.getTime(), nowTime);
       return {
-        label: 'Expired',
+        label: this.expiredTxt,
         class: 'expired',
         isButtonEnabled: true
       };
@@ -73,14 +98,14 @@ export class MacaronService {
 
       if (lowestBalance === 0) {
         return {
-          label: 'Fully redeemed',
+          label: this.fullyRedeemedTxt,
           class: 'fully-redeemed',
           isButtonEnabled: false
         };
       }
 
       return {
-        label: `${lowestBalance} left`,
+        label: `${this.balanceTxt.replace('{{amount}}', lowestBalance.toString(10))}`,
         class: 'balance',
         isButtonEnabled: true
       };
@@ -90,7 +115,7 @@ export class MacaronService {
     const thirtySixHours = 36 * 60 * 60 * 1000;
     if (validToDate && (validToDate.getTime() - nowTime) < thirtySixHours) {
       return {
-        label: 'Expiring Soon',
+        label: this.expiringTxt,
         class: 'expiring',
         isButtonEnabled: true
       };
@@ -113,7 +138,7 @@ export class MacaronService {
     const isComingSoon = campaign.beginsAt && campaign.beginsAt.getTime() > currentDate.getTime();
     if (isComingSoon) {
       return {
-        label: 'Coming Soon',
+        label: this.comingSoonTxt,
         class: 'coming-soon',
         isButtonEnabled: false
       };

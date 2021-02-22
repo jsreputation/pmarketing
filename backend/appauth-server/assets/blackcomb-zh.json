@@ -379,6 +379,13 @@
     "CTA_NEXT_TXT": "START",
     "VIEW_WALLET": "View Wallet"
   },
+  "MACARON": {
+    "BALANCE": "{{amount}} left",
+    "COMING_SOON": "Coming Soon",
+    "EXPIRED": "Expired",
+    "EXPIRING": "Expiring Soon",
+    "FULLY_REDEEMED": "Fully redeemed"
+  },
   "Gold": "黃金",
   "Silver": "銀卡",
   "Green": "綠色",

@@ -316,6 +316,13 @@
     "REWARDS_RUN_OUT": "Sorry, rewards have run out",
     "NO_UNUSED_MOVES": "Sorry, you do not have any more moves available"
   },
+  "MACARON": {
+    "BALANCE": "{{amount}} left",
+    "COMING_SOON": "Coming Soon",
+    "EXPIRED": "Expired",
+    "EXPIRING": "Expiring Soon",
+    "FULLY_REDEEMED": "Fully redeemed"
+  },
   "CONTENT_PAGE": "Không tìm thấy nội dung",
   "Terms and Conditions": "Điều kiện & Điều khoản",
   "LOGIN_SESSION_EXPIRED": "Phiên đăng nhập đã hết hạn",

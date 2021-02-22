@@ -401,6 +401,13 @@
     "CTA_NEXT_TXT": "START",
     "VIEW_WALLET": "View Wallet"
   },
+  "MACARON": {
+    "BALANCE": "{{amount}} left",
+    "COMING_SOON": "Coming Soon",
+    "EXPIRED": "Expired",
+    "EXPIRING": "Expiring Soon",
+    "FULLY_REDEEMED": "Fully redeemed"
+  },
   "Gold": "Gold",
   "Silver": "Silver",
   "Green": "Green",
