@@ -9,11 +9,11 @@ import { combineLatest } from 'rxjs';
   providedIn: 'root'
 })
 export class MacaronService {
-  public comingSoonTxt = '';
-  public fullyRedeemedTxt = '';
-  public expiredTxt = '';
-  public expiringTxt = '';
-  public balanceTxt = '';
+  public comingSoonTxt: string = '';
+  public fullyRedeemedTxt: string = '';
+  public expiredTxt: string = '';
+  public expiringTxt: string = '';
+  public balanceTxt: string = '';
 
   constructor(private translateService: TranslateService) {
     combineLatest([
