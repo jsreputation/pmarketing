@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Observable } from 'rxjs';
-import { IVoucher } from '../../vouchers/models/voucher.model';
+import { LeaderBoard } from '../models/rank.model';
 
 @Component({
   selector: 'perx-core-leaderboard-list',
@@ -9,8 +8,12 @@ import { IVoucher } from '../../vouchers/models/voucher.model';
 })
 export class LeaderboardListComponent {
 
-  @Input('data') public vouchers$: Observable<IVoucher[]>;
+  @Input() public leaderboards: LeaderBoard[];
+  public ghostTimeOut: boolean;
 
   constructor() { }
 
+  public onClick(voucher: LeaderBoard): void {
+    console.log(voucher, 'was clicked');
+  }
 }

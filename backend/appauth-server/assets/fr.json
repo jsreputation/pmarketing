@@ -163,7 +163,8 @@
   },
   "LEADER_BOARD": {
     "CTA_BUTTON_TEXT": "",
-    "LIST_TITLE": ""
+    "LIST_TITLE": "",
+    "NO_LEADER_BOARDS": ""
   },
   "ACCOUNT_PAGE": {
     "LUCKY_DRAW_INFO": "",

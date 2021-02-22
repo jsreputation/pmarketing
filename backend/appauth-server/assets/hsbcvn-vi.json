@@ -107,7 +107,8 @@
   },
   "LEADER_BOARD": {
     "CTA_BUTTON_TEXT": "Bảng xếp hạng",
-    "LIST_TITLE": ""
+    "LIST_TITLE": "",
+    "NO_LEADER_BOARDS": ""
   },
   "QUIZ_TEMPLATE": {
     "CTA_START_TXT": "Lấy bài kiểm tra",

@@ -184,7 +184,8 @@
   },
   "LEADER_BOARD": {
     "CTA_BUTTON_TEXT": "LEADERBOARD",
-    "LIST_TITLE": "Leaderboards"
+    "LIST_TITLE": "Leaderboards",
+    "NO_LEADER_BOARDS": "No leader boards here yet!"
   },
   "ACCOUNT_PAGE": {
     "LUCKY_DRAW_INFO": "Lucky Draw Info",

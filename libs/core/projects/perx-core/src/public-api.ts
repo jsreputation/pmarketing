@@ -324,6 +324,7 @@ export { MiniRankComponent } from './lib/rank/mini-rank/mini-rank.component';
 export { LeaderboardComponent } from './lib/rank/leaderboard/leaderboard.component';
 export { IRankService } from './lib/rank/irank.service';
 export { LeaderBoard, UserRanking } from './lib/rank/models/rank.model';
+export { LeaderboardListComponent } from './lib/rank/leaderboard-list/leaderboard-list.component';
 /**
  * Rebates
  */

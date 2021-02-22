@@ -8,7 +8,9 @@ import {
   MiniRankComponent
 } from './mini-rank/mini-rank.component';
 import {
+  MatCardModule,
   MatDividerModule,
+  MatRippleModule,
   MatTableModule
 } from '@angular/material';
 import { CommonModule } from '@angular/common';
@@ -16,6 +18,8 @@ import { HttpClient } from '@angular/common/http';
 import { V4RankService } from './v4-rank.service';
 import { ConfigService } from '../config/config.service';
 import { IRankService } from './irank.service';
+import { LeaderboardListComponent } from './leaderboard-list/leaderboard-list.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 export function rankServiceFactory(http: HttpClient, configService: ConfigService): V4RankService {
   // Make decision on what to instantiate base on config
@@ -24,6 +28,7 @@ export function rankServiceFactory(http: HttpClient, configService: ConfigServic
 
 const componentsAndPipes = [
   LeaderboardComponent,
+  LeaderboardListComponent,
   MiniRankComponent
 ];
 
@@ -33,7 +38,10 @@ const componentsAndPipes = [
   imports: [
     CommonModule,
     MatTableModule,
-    MatDividerModule
+    MatDividerModule,
+    MatRippleModule,
+    MatCardModule,
+    TranslateModule
   ],
   providers: [
     {

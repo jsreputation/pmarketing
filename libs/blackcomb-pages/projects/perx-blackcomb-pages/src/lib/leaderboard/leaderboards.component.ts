@@ -3,7 +3,6 @@ import {
   IRankService,
   LeaderBoard
 } from '@perxtech/core';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'perx-blackcomb-pages-leaderboards',
@@ -14,14 +13,14 @@ import { Observable } from 'rxjs';
 
 export class LeaderboardsComponent implements OnInit {
 
-  public leaderboards$: Observable<LeaderBoard[]>;
+  public leaderboards: LeaderBoard[];
   public repeatGhostCount: number = 10;
   public ghostTimeOut: boolean;
 
   public constructor(
     private rankService: IRankService) {
     // this.rankService.getLeaderBoards().subscribe(console.log);
-    this.leaderboards$ = this.rankService.getLeaderBoards();
+    this.rankService.getLeaderBoards().subscribe((leaderboards) => this.leaderboards = leaderboards);
   }
   public ngOnInit(): void {
     // this.leaderboards$ = this.rankService.getLeaderBoards();
