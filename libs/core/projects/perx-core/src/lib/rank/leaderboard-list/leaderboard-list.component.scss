@@ -66,7 +66,7 @@ mat-icon {
 
   h1 {
     font-size: 1.4rem;
-    color: #37474f;
+    color: var(--font_color);
     line-height: 1.6rem;
     font-weight: 500;
     margin: 4px 0;
@@ -76,7 +76,7 @@ mat-icon {
   p {
     font-size: 1.1rem;
     line-height: 1.3rem;
-    color: #858585;
+    color: var(--disabled_text_color);
     margin: 4px 0;
     padding: 0;
   }
@@ -99,78 +99,5 @@ mat-icon {
 }
 
 .voucher-expiry {
-  color: #858585;
-}
-
-.ribbon {
-  position: absolute;
-  font-size: 1rem;
-  font-style: normal;
-  font-weight: normal;
-  min-width: 5.2rem;
-  padding: 0 0.5rem;
-  bottom: 1.2rem;
-  right: 1.6rem;
-  text-align: center;
-  line-height: 1.6rem;
-  letter-spacing: 0.02rem;
-  white-space: nowrap;
-
-  &.redeemed {
-    background: #bbe5b3;
-    color: #173630;
-  }
-
-  &.expired {
-    background: #919eab;
-    color: #212121;
-  }
-
-  &.issued {
-    background: #bbe5b3;
-    color: #173630;
-  }
-
-  &.reserved {
-    background: #ffc58b;
-    color: #4a1504;
-  }
-
-  &.released {
-    background: #fead9a;
-    color: #330101;
-  }
-}
-
-.card-list-container.loading {
-  overflow: hidden;
-
-  .ghost {
-    overflow: hidden;
-  }
-
-  .voucher-content {
-    .voucher-img__wrapper {
-      .img-placeholder {
-        height: 100%;
-        width: 100%;
-      }
-    }
-
-    .voucher-details {
-      .voucher-name {
-        height: 1.6rem;
-        margin: 0.4rem 0;
-      }
-
-      .voucher-merchantName {
-        height: 1.6rem;
-        margin: 0.4rem 0;
-      }
-
-      .voucher-date-details {
-        height: 1.6rem;
-      }
-    }
-  }
+  color: var(--disabled_text_color);
 }

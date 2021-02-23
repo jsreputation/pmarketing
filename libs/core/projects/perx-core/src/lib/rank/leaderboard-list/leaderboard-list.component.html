@@ -1,7 +1,7 @@
 <ng-container>
   <div class="card-list-container" *ngIf="leaderboards">
-    <div *ngIf="leaderboards.length > 0; then hasVouchersBlock else noLeaderboardsBlock"></div>
-    <ng-template #hasVouchersBlock>
+    <div *ngIf="leaderboards.length > 0; then hasLeaderboardssBlock else noLeaderboardsBlock"></div>
+    <ng-template #hasLeaderboardssBlock>
       <ng-container *ngFor="let leaderboard of leaderboards">
         <mat-card mat-ripple class="ga_view_voucher" (click)="onClick(leaderboard)">
           <div [ngClass]="'voucher-content ' + imageSize">

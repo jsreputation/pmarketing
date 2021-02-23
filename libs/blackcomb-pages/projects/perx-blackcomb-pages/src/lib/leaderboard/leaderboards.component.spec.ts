@@ -3,14 +3,13 @@ import { LeaderboardsComponent } from './leaderboards.component';
 import { ConfigModule, IRankService, RankModule } from '@perxtech/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
-import { V4RankService } from 'libs/core/projects/perx-core/src/lib/rank/v4-rank.service';
 import { Router } from '@angular/router';
 
 describe('LeaderboardsComponent', () => {
   let component: LeaderboardsComponent;
   let fixture: ComponentFixture<LeaderboardsComponent>;
 
-  const rankServiceStub: Partial<V4RankService> = {
+  const rankServiceStub: Partial<IRankService> = {
     getLeaderBoards: () => of()
   };
 

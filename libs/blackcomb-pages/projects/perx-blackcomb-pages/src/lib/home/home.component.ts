@@ -103,7 +103,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   public showCampaigns: boolean = false;
   private firstComefirstServeCampaign: ICampaign;
   public quizCampaigns$: Observable<ICampaign[]>;
-  public refferalCampaigns$: Observable<ICampaign[]>;
   public gameType: typeof GameType = GameType;
 
   public catalogsBvrSbjt: BehaviorSubject<ICatalog[]> = new BehaviorSubject<
@@ -427,17 +426,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (this.appConfig.showQuizOnHomePage) {
       this.quizCampaigns$ = this.campaignService
         .getCampaigns({ gameType: GameType.quiz })
-        .pipe(
-          switchMap((campaigns: ICampaign[]) =>
-            of(campaigns).pipe(catchError((err) => of(err)))
-          ),
-          takeLast(1)
-        );
-    }
-
-    if (this.appConfig.showReferralCampaignsOnHomePage) {
-      this.refferalCampaigns$ = this.campaignService
-        .getCampaigns({ type: CampaignType.invite })
         .pipe(
           switchMap((campaigns: ICampaign[]) =>
             of(campaigns).pipe(catchError((err) => of(err)))

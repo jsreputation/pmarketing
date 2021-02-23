@@ -257,10 +257,6 @@ const routes: Routes = [
         canActivate: [ProtectedGuard],
       },
       {
-        path: 'invite/:id',
-        loadChildren: () => import('../referral/referral.module').then(mod => mod.ReferralModule)
-      },
-      {
         path: 'leaderboards',
         loadChildren: () => import('../leaderboards/leaderboards.module').then(m => m.LeaderboardsModule),
         canActivate: [ProtectedGuard]

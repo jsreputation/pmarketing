@@ -107,8 +107,8 @@
   },
   "LEADER_BOARD": {
     "CTA_BUTTON_TEXT": "Bảng xếp hạng",
-    "LIST_TITLE": "",
-    "NO_LEADER_BOARDS": ""
+    "LIST_TITLE": "Leaderboards",
+    "NO_LEADER_BOARDS": "No leader boards here yet!"
   },
   "QUIZ_TEMPLATE": {
     "CTA_START_TXT": "Lấy bài kiểm tra",
