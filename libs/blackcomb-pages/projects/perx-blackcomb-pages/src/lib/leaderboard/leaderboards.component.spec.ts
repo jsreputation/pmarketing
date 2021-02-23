@@ -1,21 +1,21 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { LeaderboardsComponent } from './leaderboards.component';
-import { ConfigModule, IRankService, ProfileService, RankModule } from '@perxtech/core';
+import { ConfigModule, IRankService, RankModule } from '@perxtech/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
 import { V4RankService } from 'libs/core/projects/perx-core/src/lib/rank/v4-rank.service';
+import { Router } from '@angular/router';
 
 describe('LeaderboardsComponent', () => {
   let component: LeaderboardsComponent;
   let fixture: ComponentFixture<LeaderboardsComponent>;
 
-  const profileServiceStub: Partial<ProfileService> = {
-    whoAmI: () => of({ email: 'email@e.mail' })
-  };
-
   const rankServiceStub: Partial<V4RankService> = {
     getLeaderBoards: () => of()
+  };
+
+  const router = {
+    navigate: jest.fn()
   };
 
   beforeEach(async(() => {
@@ -27,11 +27,8 @@ describe('LeaderboardsComponent', () => {
         ConfigModule
       ],
       providers: [
-        {
-          provide: ProfileService,
-          useValue: profileServiceStub
-        },
-        { provide: IRankService, useValue: rankServiceStub }
+        { provide: IRankService, useValue: rankServiceStub },
+        { provide: Router, useValue: router }
       ]
     })
       .compileComponents();
