@@ -94,17 +94,18 @@ jobs:
           echo "SOURCE_TYPE=${SOURCE_TYPE}" >> "${GITHUB_ENV}"
       - name: Set env REDIRECT_AFTER_LOGIN
         run: |
-          if [ $APP == 'petron-demo' ] || \
-            [ $APP == 'oracle-demo' ] || \
+          if [ $APP == 'all-it' ] || \
+            [ $APP == 'bdo' ] || \
             [ $APP == 'feature-demo' ] || \
             [ $APP == 'globeathome' ] || \
             [ $APP == 'globeone' ] || \
-            [ $APP == 'all-it' ] || \
             [ $APP == 'partners-demo' ] || \
             [ $APP == 'perx-demo' ] || \
             [ $APP == 'perx-demo2' ] || \
             [ $APP == 'perx-demo3' ] || \
-            [ $APP == 'perx-demo4' ]
+            [ $APP == 'perx-demo4' ] || \
+            [ $APP == 'petron-demo' ] || \
+            [ $APP == 'oracle-demo' ]
           then
             REDIRECT_AFTER_LOGIN="/home"
           elif [ $APP == 'blackcomb' ]
@@ -126,19 +127,20 @@ jobs:
           echo "APP=${APP}" >> "${GITHUB_ENV}"
       - name: Set env APP_BASE
         run: |
-          if [ $APP == 'petron-demo' ] || \
-          [ $APP == 'oracle-demo' ] || \
+          if [ $APP == 'bdo' ] || \
           [ $APP == 'daiichi-dlvn' ] || \
           [ $APP == 'feature-demo' ] || \
           [ $APP == 'globeathome' ] || \
           [ $APP == 'globeone' ] || \
+          [ $APP == 'hsbcph-blackcomb' ] || \
+          [ $APP == 'hsbcvn' ] || \
           [ $APP == 'hoolah' ] || \
+          [ $APP == 'oracle-demo' ] || \
           [ $APP == 'partners-demo' ] || \
           [ $APP == 'perx-demo' ] || \
-          [ $APP == 'zeal' ] || \
+          [ $APP == 'petron-demo' ] || \
           [ $APP == 'razer' ] || \
-          [ $APP == 'hsbcph-blackcomb' ] || \
-          [ $APP == 'hsbcvn' ]
+          [ $APP == 'zeal' ]
           then
             APP_BASE="blackcomb"
           else
