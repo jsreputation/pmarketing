@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LeaderboardsComponent } from './leaderboards.component';
-import {ConfigModule, ConfigService, IRankService, ProfileService, RankModule} from '@perxtech/core';
+import { ConfigModule, IRankService, ProfileService, RankModule } from '@perxtech/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import {of} from 'rxjs';
+import { of } from 'rxjs';
 import { V4RankService } from 'libs/core/projects/perx-core/src/lib/rank/v4-rank.service';
 
 describe('LeaderboardsComponent', () => {
@@ -20,7 +20,7 @@ describe('LeaderboardsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LeaderboardsComponent ],
+      declarations: [LeaderboardsComponent],
       imports: [
         RankModule,
         HttpClientTestingModule,
