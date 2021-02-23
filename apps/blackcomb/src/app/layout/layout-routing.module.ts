@@ -248,7 +248,7 @@ const routes: Routes = [
         path: 'quest/:id',
         loadChildren: () =>
           import('../quest/quest.module').then((mod) => mod.QuestModule),
-          canActivate: [ProtectedGuard],
+        canActivate: [ProtectedGuard],
       },
       {
         path: 'large-vouchers',
@@ -260,11 +260,16 @@ const routes: Routes = [
         path: 'invite/:id',
         loadChildren: () => import('../referral/referral.module').then(mod => mod.ReferralModule)
       },
-      { path: 'leaderboard',
-      loadChildren: () => import('../leaderboard/leaderboard.module')
-        .then(m => m.LeaderboardModule),
-      canActivate: [ProtectedGuard]
-    }
+      {
+        path: 'leaderboards',
+        loadChildren: () => import('../leaderboards/leaderboards.module').then(m => m.LeaderboardsModule),
+        canActivate: [ProtectedGuard]
+      },
+      {
+        path: 'leaderboard/:id',
+        loadChildren: () => import('../leaderboard/leaderboard.module').then(m => m.LeaderboardModule),
+        canActivate: [ProtectedGuard]
+      }
     ],
   },
 ];

@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { LeaderBoard } from '../models/rank.model';
 
 @Component({
@@ -11,9 +12,9 @@ export class LeaderboardListComponent {
   @Input() public leaderboards: LeaderBoard[];
   public ghostTimeOut: boolean;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
-  public onClick(voucher: LeaderBoard): void {
-    console.log(voucher, 'was clicked');
+  public onClick(leaderboard: LeaderBoard): void {
+    this.router.navigate([`leaderboard/${leaderboard.id}`]);
   }
 }
