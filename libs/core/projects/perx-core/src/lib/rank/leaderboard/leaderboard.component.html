@@ -12,8 +12,8 @@
     <td mat-cell *matCellDef="let user"> {{user.displayName || user.id}} </td>
   </ng-container>
   <ng-container matColumnDef="value">
-    <th mat-header-cell *matHeaderCellDef> {{metric | uppercase}} </th>
-    <td mat-cell *matCellDef="let user"> {{user.value}} </td>
+    <th class="score-value" mat-header-cell *matHeaderCellDef> {{metric | uppercase}} </th>
+    <td class="score-value" mat-cell *matCellDef="let user"> {{user.value}} </td>
   </ng-container>
   <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
   <tr mat-row *matRowDef="let user; columns: columnsToDisplay"></tr>

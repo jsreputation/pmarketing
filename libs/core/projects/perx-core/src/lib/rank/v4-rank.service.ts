@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {map, shareReplay} from 'rxjs/operators';
+import { map, shareReplay } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { ConfigService } from '../config/config.service';
 import {
@@ -68,6 +68,14 @@ export class V4RankService {
 
   public getLeaderBoard(id: number): Observable<LeaderBoard> {
     return this.http.get(`${this.baseUrl}/v4/leaderboards/${id}`)
+      .pipe(
+        map((res: ApiWrap<V4LeaderBoard>) => res.data),
+        map((data: V4LeaderBoard) => objectKeysPascalize(camelToPascalCase, data) as LeaderBoard)
+      );
+  }
+
+  public getLeaderBoardByCampaignID(campaignId: number): Observable<LeaderBoard> {
+    return this.http.get(`${this.baseUrl}/v4/leaderboards/campaign/${campaignId}`)
       .pipe(
         map((res: ApiWrap<V4LeaderBoard>) => res.data),
         map((data: V4LeaderBoard) => objectKeysPascalize(camelToPascalCase, data) as LeaderBoard)

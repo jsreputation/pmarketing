@@ -1,6 +1,7 @@
 import { Observable, of } from 'rxjs';
 import { Component, Input, OnInit } from '@angular/core';
 import { UserRanking } from '../models/rank.model';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'perx-core-leaderboard',
@@ -14,19 +15,20 @@ export class LeaderboardComponent implements OnInit {
     'https://cdn.perxtech.io/content/hsbc-hk/images/thirdplace.png'
   ];
   @Input()
-  public metric: string = 'score';
+  public metric: string;
   public columnsToDisplay: ['rank', 'displayName', 'value'] = ['rank', 'displayName', 'value'];
   @Input() public dataArray: UserRanking[];
-  @Input()
-  public nickNameTxtFn: () => Observable<string>;
-  // @Input() public dataNumberToDisplay: number = 10;
+  @Input() public nickNameTxtFn: () => Observable<string>;
+
+  constructor(private translate: TranslateService) { }
 
   public ngOnInit(): void {
-    // if (this.dataArray.length > this.dataNumberToDisplay) {
-    //   this.dataArray = this.dataArray.slice(0, this.dataNumberToDisplay);
-    // }
     if (!this.nickNameTxtFn) {
       this.nickNameTxtFn = () => of('NICKNAME');
+    }
+
+    if (!this.metric) {
+      this.translate.get('LEADER_BOARD.POINT_TITLE').subscribe(metric => this.metric = metric);
     }
   }
 }

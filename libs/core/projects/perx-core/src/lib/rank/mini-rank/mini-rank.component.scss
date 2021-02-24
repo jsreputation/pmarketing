@@ -1,29 +1,35 @@
 * {
   line-height: 0;
-  background-color: white;
+  background-color: var(--background);
 }
 
 .rank-wrapper {
   border-radius: 15px;
-  border: 1px solid #D3D3D3;
+  border: 1px solid #d3d3d3;
   padding: 15px;
+  margin: 2rem;
 }
 
 .rank-title {
-  text-align: center;
+  color: var(--disabled_text_color);
 }
 
 .point-and-rank-box {
-  margin-top: 3rem;
+  margin-top: 2.8rem;
   display: flex;
-  justify-content: space-evenly;
-  text-align: center;
 
-  p, h1 {
+  p,
+  h1 {
     display: inline-block;
   }
-}
 
-mat-divider {
-  border: 1px solid #D3D3D3;
+  .point-box,
+  .rank-box {
+    width: 50%;
+
+    h3 {
+      font-weight: normal;
+      color: var(--disabled_text_color);
+    }
+  }
 }

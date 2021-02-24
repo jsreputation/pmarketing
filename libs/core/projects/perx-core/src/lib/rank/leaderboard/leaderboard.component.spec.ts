@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LeaderboardComponent } from './leaderboard.component';
-import {MatTableModule} from '@angular/material';
+import { MatTableModule } from '@angular/material';
+import { TranslateService } from '@ngx-translate/core';
+import { of } from 'rxjs';
 
 describe('LeaderboardComponent', () => {
   let component: LeaderboardComponent;
@@ -8,8 +10,14 @@ describe('LeaderboardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LeaderboardComponent ],
-      imports: [ MatTableModule ]
+      declarations: [LeaderboardComponent],
+      imports: [MatTableModule],
+      providers: [{
+        provide: TranslateService,
+        useValue: {
+          get: () => of()
+        }
+      }]
     })
       .compileComponents();
   }));

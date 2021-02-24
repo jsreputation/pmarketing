@@ -178,7 +178,12 @@
   "LEADER_BOARD": {
     "CTA_BUTTON_TEXT": "排行榜",
     "LIST_TITLE": "Leaderboards",
-    "NO_LEADER_BOARDS": "No leader boards here yet!"
+    "NO_LEADER_BOARDS": "No leader boards here yet!",
+    "RANKING_TAB_TITLE": "Ranking",
+    "ABOUT_TAB_TITLE": "About",
+    "POSITION": "Position",
+    "POINT_TITLE": "Score",
+    "POINT_UNIT": "Points"
   },
   "ACCOUNT_PAGE": {
     "LUCKY_DRAW_INFO": "幸運抽獎信息",

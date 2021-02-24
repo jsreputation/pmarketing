@@ -1,5 +1,5 @@
 table {
-  background-color: white;
+  background-color: var(--background);
   width: 90%;
   margin: 0 auto;
 
@@ -7,15 +7,15 @@ table {
     margin-left: -1rem;
   }
 
-  mat-header-cell {
-    font-size: 1.5rem;
-  }
-
   tr[mat-header-row] {
     text-transform: uppercase;
   }
 
-  th:first-child {
-    font-size: 2.3rem;
+  th {
+    font-size: 1rem;
+    color: var(--disabled_text_color);
+  }
+  .score-value {
+    text-align: right;
   }
 }
