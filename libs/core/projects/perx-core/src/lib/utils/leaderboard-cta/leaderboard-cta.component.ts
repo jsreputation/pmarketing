@@ -1,7 +1,9 @@
 import {
     Component,
+    Input,
     OnInit
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { ConfigService } from '../../config/config.service';
@@ -13,12 +15,14 @@ import { IConfig } from '../../config/models/config.model';
     styleUrls: ['./leaderboard-cta.component.scss']
 })
 export class LeaderboardCTAComponent implements OnInit {
+    @Input() public campaignId: number;
     public buttonText: Observable<string>;
     public showLeaderBoardCTA: boolean = false;
 
     constructor(
         private translate: TranslateService,
-        private configService: ConfigService
+        private configService: ConfigService,
+        private router: Router
     ) { }
 
     public ngOnInit(): void {
@@ -30,5 +34,11 @@ export class LeaderboardCTAComponent implements OnInit {
                 }
             }
         );
+    }
+
+    public ctaClicked(): void {
+        if (this.campaignId) {
+            this.router.navigate([`/leaderboards/${this.campaignId}`]);
+        }
     }
 }

@@ -262,6 +262,11 @@ const routes: Routes = [
         canActivate: [ProtectedGuard]
       },
       {
+        path: 'leaderboards/:id',
+        loadChildren: () => import('../leaderboards/leaderboards.module').then(m => m.LeaderboardsModule),
+        canActivate: [ProtectedGuard]
+      },
+      {
         path: 'leaderboard/:id',
         loadChildren: () => import('../leaderboard/leaderboard.module').then(m => m.LeaderboardModule),
         canActivate: [ProtectedGuard]

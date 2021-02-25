@@ -74,11 +74,12 @@ export class V4RankService {
       );
   }
 
-  public getLeaderBoardByCampaignID(campaignId: number): Observable<LeaderBoard> {
-    return this.http.get(`${this.baseUrl}/v4/leaderboards/campaign/${campaignId}`)
+  public getLeaderBoardsByCampaignID(campaignId: number): Observable<LeaderBoard[]> {
+    return this.http.get(`${this.baseUrl}/v4/leaderboards?campaign_id=${campaignId}`)
       .pipe(
-        map((res: ApiWrap<V4LeaderBoard>) => res.data),
-        map((data: V4LeaderBoard) => objectKeysPascalize(camelToPascalCase, data) as LeaderBoard)
+        map((res: ApiWrap<V4LeaderBoard[]>) => res.data),
+        map((dataArr: V4LeaderBoard[]) => dataArr.map(data => objectKeysPascalize(camelToPascalCase, data) as LeaderBoard)),
+        shareReplay(1)
       );
   }
 

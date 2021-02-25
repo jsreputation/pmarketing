@@ -1,4 +1,4 @@
-<perx-core-leaderboard-cta></perx-core-leaderboard-cta>
+<perx-core-leaderboard-cta [campaignId]="campaignId"></perx-core-leaderboard-cta>
 <div class="referral-main-container">
   <div class="referral-page">
     <h1 translate>REFERRAL.TITLE</h1>
@@ -10,11 +10,7 @@
     <img src="assets/referral/referral.png">
   </div>
   <mat-toolbar class="bottom-nav-container mat-elevation-z2">
-    <button
-      mat-flat-button
-      color="primary"
-      (click)="share()"
-      >
+    <button mat-flat-button color="primary" (click)="share()">
       {{'REFERRAL.CTA_BUTTON' | translate}}</button>
   </mat-toolbar>
 </div>

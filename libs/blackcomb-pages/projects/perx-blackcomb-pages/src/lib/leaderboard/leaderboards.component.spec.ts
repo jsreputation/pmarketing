@@ -3,18 +3,29 @@ import { LeaderboardsComponent } from './leaderboards.component';
 import { ConfigModule, IRankService, RankModule } from '@perxtech/core';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 describe('LeaderboardsComponent', () => {
   let component: LeaderboardsComponent;
   let fixture: ComponentFixture<LeaderboardsComponent>;
 
   const rankServiceStub: Partial<IRankService> = {
-    getLeaderBoards: () => of()
+    getLeaderBoards: () => of(),
+    getLeaderBoardsByCampaignID: () => of()
   };
 
   const router = {
     navigate: jest.fn()
+  };
+
+  const activatedRouteStub = {
+    snapshot: {
+      paramMap: {
+        get(): number {
+          return 1;
+        }
+      }
+    }
   };
 
   beforeEach(async(() => {
@@ -27,7 +38,8 @@ describe('LeaderboardsComponent', () => {
       ],
       providers: [
         { provide: IRankService, useValue: rankServiceStub },
-        { provide: Router, useValue: router }
+        { provide: Router, useValue: router },
+        { provide: ActivatedRoute, useValue: activatedRouteStub },
       ]
     })
       .compileComponents();

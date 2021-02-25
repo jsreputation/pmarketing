@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatIconModule, MatToolbarModule } from '@angular/material';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfigService } from '@perxtech/core';
 import { of } from 'rxjs';
@@ -17,6 +18,9 @@ describe('LeaderboardCTAComponent', () => {
             baseHref: '',
         })
     };
+    const router = {
+        navigate: jest.fn()
+    };
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -27,7 +31,8 @@ describe('LeaderboardCTAComponent', () => {
             ],
             providers: [
                 { provide: ConfigService, useValue: configServiceStub },
-                { provide: TranslateService, useValue: { get: () => of() } }
+                { provide: TranslateService, useValue: { get: () => of() } },
+                { provide: Router, useValue: router }
             ]
         })
             .compileComponents();

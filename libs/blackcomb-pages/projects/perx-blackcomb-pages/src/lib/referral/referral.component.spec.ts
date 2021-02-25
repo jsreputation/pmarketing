@@ -5,6 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ConfigService, ICampaignService, LeaderboardCTAComponent } from '@perxtech/core';
 import { of } from 'rxjs';
 import { MatIconModule } from '@angular/material';
+import { Router } from '@angular/router';
 
 const campaignServiceStub: Partial<ICampaignService> = {
   getCampaigns: () => of([])
@@ -18,6 +19,10 @@ const configServiceStub: Partial<ConfigService> = {
     isWhistler: false,
     baseHref: '',
   })
+};
+
+const router = {
+  navigate: jest.fn()
 };
 
 describe('ReferralComponent', () => {
@@ -34,7 +39,8 @@ describe('ReferralComponent', () => {
       ],
       providers: [
         { provide: ConfigService, useValue: configServiceStub },
-        { provide: ICampaignService, useValue: campaignServiceStub }
+        { provide: ICampaignService, useValue: campaignServiceStub },
+        { provide: Router, useValue: router },
       ]
     })
       .compileComponents();

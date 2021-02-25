@@ -14,6 +14,7 @@ import { map, switchMap, takeLast, tap } from 'rxjs/operators';
   styleUrls: ['./referral.component.scss'],
 })
 export class ReferralComponent {
+  public campaignId: number;
   public campaignDescription: string = '';
   // todo to be replaced with the proper content when api is available
   public code: string = '';
@@ -41,11 +42,12 @@ export class ReferralComponent {
           if (campaign) {
             if (campaign.referralCodes) {
               // first code is supposedly a configurable code, and the second code onwards is campaign generated
-              const [ configuredReferralCode, generatedReferralCode ] = campaign.referralCodes;
+              const [configuredReferralCode, generatedReferralCode] = campaign.referralCodes;
               this.code = configuredReferralCode ? configuredReferralCode : generatedReferralCode;
             }
             this.shareText = this.shareText.replace('{{code}}', this.code);
             // set to campaign or do nothing
+            this.campaignId = campaign.id;
             this.campaignDescription = campaign.description ? campaign.description : this.campaignDescription;
           }
         }),
@@ -65,7 +67,7 @@ export class ReferralComponent {
       // @ts-ignore
       (navigator as any)
         .share(data)
-        .then(() => {})
+        .then(() => { })
         .catch(() => {
           console.log('failed to use share, falling back to clipboard');
           this.copy();

@@ -20,6 +20,7 @@ export class CampaignStampsComponent implements OnInit {
 
   public stampCards$: Observable<IStampCard[]>;
   public title: string;
+  public campaignId: number;
   public subTitle: string;
   public config: CampaignLandingPage | undefined;
   public filter: string[];
@@ -81,6 +82,7 @@ export class CampaignStampsComponent implements OnInit {
     ).subscribe(
       ([stampCards, campaign]: [IStampCard[], ICampaign]) => {
         this.title = campaign.name || 'Stamp cards';
+        this.campaignId = campaign.id;
         this.subTitle = campaign.description || '';
         this.config = oc(campaign).displayProperties.landingPage();
         this.stampCards$ = of(stampCards);
