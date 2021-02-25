@@ -20,6 +20,7 @@ import { ConfigService } from '../config/config.service';
 import { IRankService } from './irank.service';
 import { LeaderboardListComponent } from './leaderboard-list/leaderboard-list.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { LeaderboardAboutComponent } from './leaderboard-about/leaderboard-about.component';
 
 export function rankServiceFactory(http: HttpClient, configService: ConfigService): V4RankService {
   // Make decision on what to instantiate base on config
@@ -29,6 +30,7 @@ export function rankServiceFactory(http: HttpClient, configService: ConfigServic
 const componentsAndPipes = [
   LeaderboardComponent,
   LeaderboardListComponent,
+  LeaderboardAboutComponent,
   MiniRankComponent
 ];
 
