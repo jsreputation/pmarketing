@@ -144,6 +144,12 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
           this.bookingForm.controls.location.setValidators([Validators.required]);
           this.bookingForm.controls.location.updateValueAndValidity();
         }
+
+        if (!this.prices || this.prices.length === 0) {
+          // remove validator if free
+          this.bookingForm.controls.priceId.clearValidators();
+          this.bookingForm.controls.priceId.updateValueAndValidity();
+        }
       },
       (err) => {
         console.error(err);
