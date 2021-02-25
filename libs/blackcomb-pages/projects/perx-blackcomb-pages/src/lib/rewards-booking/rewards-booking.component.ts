@@ -213,8 +213,10 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
       return;
     }
     this.loading = true;
-    const currentPrice = this.prices.find((price) => price.id === this.bookingForm.value.priceId) || 0;
-    // allow free rewards to go through
+    // allow free rewards to go through by setting a default price obj
+    const currentPrice = this.prices.find((price) => price.id === this.bookingForm.value.priceId) || { points: 0 };
+
+    // if there's somehow a error...?
     if (!currentPrice || currentPrice.points === undefined || null) {
       this.loading =  false;
       return;
