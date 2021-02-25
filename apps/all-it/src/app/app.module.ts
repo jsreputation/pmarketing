@@ -1,39 +1,44 @@
 import { BrowserModule } from '@angular/platform-browser';
 import {
-  NgModule,
   APP_INITIALIZER,
-  Injectable,
   ErrorHandler,
-  LOCALE_ID
+  Injectable,
+  LOCALE_ID,
+  NgModule
 } from '@angular/core';
-import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
+import {
+  TranslateLoader,
+  TranslateModule,
+  TranslateService
+} from '@ngx-translate/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  PerxCoreModule,
   AuthenticationModule,
-  UtilsModule,
-  ConfigModule,
-  MerchantsModule as PerxMerchantsModule,
-  CampaignModule as PerxCampaignModule,
-  StampModule as PerxStampModule,
-  CampaignServiceModule as PerxCampaignServiceModule,
-  VouchersModule,
-  OutcomeModule,
-  ProfileModule,
-  ProfileServiceModule,
-  RewardsModule,
-  TokenStorage,
-  LanguageService,
-  ConfigService,
   AuthenticationService,
-  ThemesService,
-  IConfig,
-  SettingsModule,
+  CampaignModule as PerxCampaignModule,
+  CampaignServiceModule as PerxCampaignServiceModule,
+  ConfigModule,
+  ConfigService,
   GameModule as PerxGameModule,
   GameServiceModule,
-  LoyaltyModule,
-  TransactionsServiceModule as PerxTransactionsServiceModule,
+  IConfig,
   LanguageInterceptor,
+  LanguageService,
+  LoyaltyModule,
+  MerchantsModule as PerxMerchantsModule,
+  OutcomeModule,
+  PerxCoreModule,
+  ProfileModule,
+  ProfileServiceModule,
+  QuestModule as PerxQuestModule,
+  RewardsModule,
+  SettingsModule,
+  StampModule as PerxStampModule,
+  ThemesService,
+  TokenStorage,
+  TransactionsServiceModule as PerxTransactionsServiceModule,
+  UtilsModule,
+  VouchersModule,
 } from '@perxtech/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -41,13 +46,19 @@ import { environment } from '../environments/environment';
 
 // import { ServiceWorkerModule } from '@angular/service-worker';
 import {
-  HttpClientModule,
-  HttpClient,
   HTTP_INTERCEPTORS,
-  HttpBackend
+  HttpBackend,
+  HttpClient,
+  HttpClientModule
 } from '@angular/common/http';
-import { MatDialogModule, MatSnackBarModule } from '@angular/material';
-import { tap, switchMap } from 'rxjs/operators';
+import {
+  MatDialogModule,
+  MatSnackBarModule
+} from '@angular/material';
+import {
+  switchMap,
+  tap
+} from 'rxjs/operators';
 import { MatButtonModule } from '@angular/material/button';
 import { SignupModule } from './signup/signup.module';
 import * as Sentry from '@sentry/browser';
@@ -110,6 +121,7 @@ registerLocaleData(localeENMY);
     MatDialogModule,
     MatButtonModule,
     MatSnackBarModule,
+    PerxQuestModule.forRoot(),
     LoyaltyModule.forRoot(),
     PerxTransactionsServiceModule.forRoot(),
     RewardsModule.forRoot(),
