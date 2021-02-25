@@ -44,6 +44,7 @@ import { FindLocationComponent } from '../find-location/find-location.component'
 import { RebatesWalletComponent } from '../rebates/rebates-wallet/rebates-wallet.component';
 import { NearmeComponent } from '../nearme/nearme.component';
 import { RewardsPageComponent } from '../rewards-page/rewards-page.component';
+import { LeaderboardsComponent } from '../leaderboard/leaderboards.component';
 
 export interface ShowTitleInHeader {
   getTitle(): string;
@@ -120,9 +121,9 @@ export class LayoutComponent implements OnInit {
       const chromelessFlag: boolean = paramArr && paramArr.includes('chromeless');
 
       if (chromelessFlag) {
-          this.flagLocalStorageService.setFlagInLocalStorage('chromeless', 'true');
+        this.flagLocalStorageService.setFlagInLocalStorage('chromeless', 'true');
       } else if (params && params.flags === '') {
-          this.flagLocalStorageService.resetFlagInLocalStorage('chromeless');
+        this.flagLocalStorageService.resetFlagInLocalStorage('chromeless');
       }
     });
   }
@@ -140,6 +141,7 @@ export class LayoutComponent implements OnInit {
       ref instanceof ProfileComponent ||
       ref instanceof CampaignStampsComponent ||
       ref instanceof LeaderboardPageComponent ||
+      ref instanceof LeaderboardsComponent ||
       ref instanceof FindLocationComponent ||
       ref instanceof TransactionHistoryComponent ||
       ref instanceof RebatesWalletComponent ||
