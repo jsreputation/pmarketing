@@ -73,9 +73,7 @@ const settingsServiceStub: Partial<SettingsService> = {
   getRemoteFlagsSettings: () => of()
 };
 
-const questServiceStub: Partial<IQuestService> = {
-  getQuestCampaigns: () => of([])
-};
+const questServiceStub: Partial<IQuestService> = {};
 
 const reward: IReward = {
   id: 1,

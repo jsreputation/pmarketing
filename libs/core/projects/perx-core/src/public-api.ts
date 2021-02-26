@@ -75,7 +75,8 @@ export {
   CampaignLandingPage,
   IReferral,
   ProgressBarFields,
-  ITaggedItem
+  ITaggedItem,
+  QuestProperties
 } from './lib/campaign/models/campaign.model';
 export { ExpireTimerComponent } from './lib/campaign/reward-popup/expire-timer/expire-timer.component';
 export { RewardPopupComponent } from './lib/campaign/reward-popup/reward-popup.component';
@@ -83,7 +84,7 @@ export { RewardPopupComponent } from './lib/campaign/reward-popup/reward-popup.c
  * Quests
  */
 export { QuestModule } from './lib/quest/quest.service.module';
-export { IQuest } from './lib/quest/quest.model';
+export { IQuest , IQuestTask, QuestState } from './lib/quest/quest.model';
 export { IQuestService } from './lib/quest/quest.service';
 /**
  * Stamps

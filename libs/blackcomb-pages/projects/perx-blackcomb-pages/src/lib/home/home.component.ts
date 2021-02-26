@@ -426,17 +426,14 @@ export class HomeComponent implements OnInit, OnDestroy {
         takeLast(1)
       );
 
-    /*  this.questCampaigns$ = this.campaignService
-      .getCampaigns({ type: CampaignType.quest })
-      .pipe(
-        switchMap((campaigns: ICampaign[]) =>
-          of(campaigns).pipe(catchError((err) => of(err)))
-        ),
-        takeLast(1)
-      );*/
-
-    this.questCampaigns$ = this.questService.getQuestCampaigns();
-
+    this.questCampaigns$ = this.campaignService
+    .getCampaigns({ type: CampaignType.quest })
+    .pipe(
+      switchMap((campaigns: ICampaign[]) =>
+        of(campaigns).pipe(catchError((err) => of(err)))
+      ),
+      takeLast(1)
+    );
 
     this.newsFeedItems = this.settingsService.getRssFeeds().pipe(
       map((res: IRssFeeds) =>
