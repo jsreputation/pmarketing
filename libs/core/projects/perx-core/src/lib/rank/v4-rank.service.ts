@@ -70,7 +70,8 @@ export class V4RankService {
     return this.http.get(`${this.baseUrl}/v4/leaderboards/${id}`)
       .pipe(
         map((res: ApiWrap<V4LeaderBoard>) => res.data),
-        map((data: V4LeaderBoard) => objectKeysPascalize(camelToPascalCase, data) as LeaderBoard)
+        map((data: V4LeaderBoard) => objectKeysPascalize(camelToPascalCase, data) as LeaderBoard),
+        shareReplay()
       );
   }
 

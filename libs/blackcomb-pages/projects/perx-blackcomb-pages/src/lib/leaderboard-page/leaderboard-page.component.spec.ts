@@ -8,6 +8,7 @@ import { DefaultLangChangeEvent, LangChangeEvent, TranslateModule, TranslateServ
 import { MatTabsModule } from '@angular/material';
 import { EventEmitter } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ActivatedRoute } from '@angular/router';
 
 describe('LeaderboardPageComponent', () => {
   let component: LeaderboardPageComponent;
@@ -27,6 +28,20 @@ describe('LeaderboardPageComponent', () => {
     onTranslationChange: new EventEmitter<TranslationChangeEvent>(),
     onDefaultLangChange: new EventEmitter<DefaultLangChangeEvent>()
   };
+
+  const activatedRouteStub = {
+    snapshot: {
+      paramMap: {
+        get(): number {
+          return 1;
+        },
+        has(): boolean {
+          return true;
+        }
+      }
+    }
+  };
+
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -49,7 +64,8 @@ describe('LeaderboardPageComponent', () => {
           useValue: { getLeaderBoards: of(), getLeaderBoardRanks: of() }
         },
         { provide: ConfigService, useValue: configServiceStub },
-        { provide: TranslateService, useValue: translateServiceStub }
+        { provide: TranslateService, useValue: translateServiceStub },
+        { provide: ActivatedRoute, useValue: activatedRouteStub },
       ]
     })
       .compileComponents();
