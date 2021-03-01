@@ -161,4 +161,7 @@ export class WhistlerCampaignService implements ICampaignService {
   public applyReferral(referralCode: string): Observable<IReferral> {
     return of({success: referralCode});
   }
+
+  public clearCampaignCache(): void {
+  }
 }

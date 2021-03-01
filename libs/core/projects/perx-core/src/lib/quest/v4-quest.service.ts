@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { IQuestService } from './quest.service';
-import { V4CampaignService } from '../campaign/v4-campaign.service';
 import { IQuest, IQuestTask } from './quest.model';
 import { HttpClient, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { IConfig } from '../config/models/config.model';
 import { ConfigService } from '../config/config.service';
 import { Observable, throwError, of } from 'rxjs';
-import { map, catchError, tap } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -57,10 +56,6 @@ export class V4QuestService implements IQuestService {
 
   public  postEnrollQuest(campaignId: number): Observable<boolean> {
     return this.http.post(`${this.hostName}/v4/campaigns/${campaignId}/enrol`, null, {observe : 'response'} ).pipe(
-      tap((response: HttpResponse<any>) => {
-        if (response.status === 200) {
-          V4CampaignService.clearCampaignCache();
-        }}),
       map((response: HttpResponse<any>) => response.status === 200 ? true : false ) ,
       catchError((error: HttpErrorResponse) => error.status === 404 ? of(false) : throwError(error)));
   }

@@ -241,7 +241,7 @@ export class V4CampaignService implements ICampaignService {
   }
 
   // if need be call method here to clear campaignsCache
-  public static clearCampaignCache(): void {
+  public clearCampaignCache(): void {
     campaignsCacheBuster.next(true);
   }
 
