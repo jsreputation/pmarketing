@@ -27,12 +27,12 @@ mat-card {
     .leaderboard-title {
       font-size: 1.4rem;
       line-height: 2rem;
-      color: #212121;
+      color: var(--font_color);
       margin: 0;
     }
 
     .leaderboard-subtitle {
-      color: #666666;
+      color: var(--disabled_text_color);
       font-size: 1rem;
       line-height: 1.6rem;
       margin: 0;
