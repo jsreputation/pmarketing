@@ -1,34 +1,31 @@
-<ng-container>
-  <div class="card-list-container" *ngIf="leaderboards">
-    <div *ngIf="leaderboards.length > 0; then hasLeaderboardssBlock else noLeaderboardsBlock"></div>
-    <ng-template #hasLeaderboardssBlock>
-      <ng-container *ngFor="let leaderboard of leaderboards">
-        <mat-card mat-ripple class="ga_view_voucher" (click)="onClick(leaderboard)">
-          <div [ngClass]="'voucher-content ' + imageSize">
-            <div class="voucher-img__wrapper" *ngIf="leaderboard?.image?.value?.image_url">
-              <img class="voucher-thumbnail" src="{{leaderboard?.image?.value?.image_url}}" [alt]="leaderboard?.name">
-            </div>
-            <div class="voucher-details">
-              <h1>
-                {{leaderboard?.title}}
-              </h1>
-              <p>
-                {{leaderboard?.desrcription}}
-              </p>
-            </div>
-          </div>
-        </mat-card>
-      </ng-container>
-    </ng-template>
-    <ng-template #noLeaderboardsBlock>
-      <div class="vouchers-content">
-        <div class="no-vouchers">
-          <h3>{{'LEADER_BOARD.NO_LEADER_BOARDS' | translate}}</h3>
-          <div class="img-container">
-            <img src="assets/empty_list.svg" />
-          </div>
+<div *ngIf="leaderboards">
+  <div *ngIf="leaderboards.length > 0; then hasLeaderboardssBlock else noLeaderboardsBlock"></div>
+  <ng-template #hasLeaderboardssBlock>
+    <ng-container *ngFor="let leaderboard of leaderboards">
+      <mat-card class="leaderboard-card" mat-ripple (click)="onClick(leaderboard)">
+        <!-- <div *ngIf="leaderboard?.image?.value?.image_url" class="img-wrapper">
+          <img src="{{leaderboard?.image?.value?.image_url}}" alt="leaderboard image">
+        </div> -->
+        <div class="img-wrapper">
+          <img src="https://via.placeholder.com/150" alt="leaderboard image">
         </div>
+        <mat-card-content class="card-content">
+          <p class="leaderboard-title ellipsis-1-line">{{leaderboard?.title}}</p>
+          <span class="leaderboard-subtitle ellipsis-2-line">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+            ea commodo consequat
+          </span>
+        </mat-card-content>
+      </mat-card>
+    </ng-container>
+  </ng-template>
+  <ng-template #noLeaderboardsBlock>
+    <div class="no-leaderboards">
+      <h3>{{'LEADER_BOARD.NO_LEADER_BOARDS' | translate}}</h3>
+      <div class="img-container">
+        <img src="assets/empty_list.svg" />
       </div>
-    </ng-template>
-  </div>
-</ng-container>
+    </div>
+  </ng-template>
+</div>

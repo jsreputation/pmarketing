@@ -1,43 +1,50 @@
+@import "../../mixins/mixins";
+
 mat-card {
-  margin: 1.2rem 0;
   display: flex;
-  align-items: center;
-  padding: 0;
-  flex: 0 0 10.5rem;
-  height: 10.5rem;
-  justify-content: space-between;
+  flex-direction: column;
+  padding: 0 !important;
 }
 
-mat-icon {
-  color: #b2b2b2;
-  font-size: 3.6rem;
-  height: 3.6rem;
-  flex: 0 0 3.6rem;
+.leaderboard-card {
+  margin: 0.8rem 1.6rem;
+
+  .img-wrapper {
+    width: 100%;
+    height: 10rem;
+
+    img {
+      bottom: 15rem;
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .card-content {
+    padding: 16px;
+
+    .leaderboard-title {
+      font-size: 1.4rem;
+      line-height: 2rem;
+      color: #212121;
+      margin: 0;
+    }
+
+    .leaderboard-subtitle {
+      color: #666666;
+      font-size: 1rem;
+      line-height: 1.6rem;
+      margin: 0;
+
+      ::ng-deep p {
+        margin: 0;
+      }
+    }
+  }
 }
 
-.voucher-content {
-  display: flex;
-  flex-basis: auto;
-  flex-grow: 1;
-  justify-content: flex-start;
-}
-
-.voucher-img__wrapper {
-  // flex: 0 0 10.5rem;
-  height: 10.5rem;
-  width: 10.5rem;
-  // display: flex;
-  // justify-content: center;
-}
-
-.voucher-thumbnail {
-  // margin: auto;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.no-vouchers {
+.no-leaderboards {
   display: flex;
   height: 100%;
   flex-direction: column;
@@ -56,48 +63,10 @@ mat-icon {
   }
 }
 
-.voucher-details {
-  padding: 0 1.6rem;
-  font-size: 1.4rem;
-  display: flex;
-  flex-direction: column;
-  margin: auto 0;
-  flex: 1;
-
-  h1 {
-    font-size: 1.4rem;
-    color: var(--font_color);
-    line-height: 1.6rem;
-    font-weight: 500;
-    margin: 4px 0;
-    padding: 0;
-  }
-
-  p {
-    font-size: 1.1rem;
-    line-height: 1.3rem;
-    color: var(--disabled_text_color);
-    margin: 4px 0;
-    padding: 0;
-  }
+.ellipsis-1-line {
+  @include ellipse-lines(1);
 }
 
-.voucher-details:nth-child(1) {
-  margin-top: 0;
-}
-
-.small {
-  .voucher-img,
-  .voucher-thumbnail {
-    max-height: 6rem;
-    max-width: 6rem;
-  }
-
-  .voucher-details {
-    padding-left: 0;
-  }
-}
-
-.voucher-expiry {
-  color: var(--disabled_text_color);
+.ellipsis-2-line {
+  @include ellipse-lines(2);
 }
