@@ -1,27 +1,23 @@
-import { IReward } from '../rewards/models/reward.model';
 
 export interface IQuest  {
     id: number;
     campaignId: number;
-    campaignName: string;
-    campaignDescription?: string;
-    campaignBannerUrl?: string;
-    enrolled: boolean;
-    termsAndCondtions?: string;
-    beginsAt?: Date;
-    endsAt?: Date;
-    tasks?: IQuestTask[];
-    questDisplayProperties?: {
-      questCompletedImgUrl: string;
-    };
-    rewards?: IReward[];
+    userAccountId: number;
+    state?: string;
+    completedAt?: Date;
+    completedTasks?: IQuestTask[];
   }
 export interface IQuestTask {
-        id: number;
-        name: string;
-        description: string;
-        displayProperties: {
-            imageUrl: string;
-        };
-        state: string;
+  id: number;
+  campaignId?: number;
+  ordering?: number;
+  state?: string;
+  title?: string;
+  description?: string;
+  imageUrl?: string;
+}
+
+export enum QuestState {
+  inProgress = 'in_progress',
+  completed = 'completed'
 }

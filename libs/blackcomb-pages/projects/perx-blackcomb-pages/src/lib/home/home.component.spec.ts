@@ -60,7 +60,6 @@ const gameSvcStub: Partial<IGameService> = {
 };
 
 const questServiceStub: Partial<IQuestService> = {
-  getQuestCampaigns: () => of([])
 };
 
 const themesServiceStub: Partial<ThemesService> = { getThemeSetting: () => of() };

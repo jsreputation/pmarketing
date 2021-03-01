@@ -41,6 +41,9 @@
         .mat-progress-bar {
             border-radius: .4rem;
             height: .6rem !important;
+            .mat-progress-bar-fill::after {
+                background-color: #2664ED;
+            }
         }
         .mat-progress-bar-buffer {
             background-color: #E1E1E1;
@@ -58,14 +61,12 @@
         }
         .task-img-container {
             position: relative;
-            mat-icon {
+            .success-icon {
                 position: absolute;
-                bottom: 0.5rem;
-                right: 1.2rem;
+                bottom: .4rem;
+                right: -.4rem;
                 width: 1.8rem;
                 height: 1.8rem;
-                color: #147dd3;
-                font-size: 1.8rem;
             }
         }
         img {
@@ -86,7 +87,8 @@
             }
         }
     }
-    .reward-container{
+    .reward-container {
+        margin: 2.5rem 0;
         p {
             color: rgba(0, 0, 0, 0.38);
             margin-bottom: 0;

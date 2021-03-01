@@ -7,6 +7,7 @@ export interface CampaignDisplayProperties {
   weblink?: boolean;
   noRewardsPopUp?: IWProperties;
   successPopUp?: IWProperties;
+  questDetails?: QuestProperties;
 }
 
 export interface CampaignLandingPage {
@@ -16,6 +17,14 @@ export interface CampaignLandingPage {
   buttonText?: { text: string };
   subHeading?: { text: string };
   backgroundUrl?: string;
+}
+
+export interface QuestProperties {
+  title?: string;
+  description?: string;
+  body?: string;
+  imageUrl?: string;
+  successImageUrl?: string;
 }
 
 export enum CampaignType {
