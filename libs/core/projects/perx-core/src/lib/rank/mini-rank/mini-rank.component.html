@@ -1,7 +1,7 @@
 <div class="rank-wrapper">
   <div>
     <div class="rank-title">
-      <h2>Your Results</h2>
+      <h2>{{yourResultsText | async}}</h2>
     </div>
     <div class="point-and-rank-box">
       <div class="rank-box">
@@ -10,7 +10,9 @@
       </div>
       <div class="point-box">
         <h3>{{metric | titlecase}} </h3>
-        <span><h1>{{userGameInfo?.value}}</h1>&nbsp;{{pointTextFn() | async}}</span>
+        <span>
+          <h1>{{userGameInfo?.value}}</h1>&nbsp;{{pointTextFn() | async}}
+        </span>
       </div>
     </div>
   </div>

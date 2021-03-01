@@ -17,10 +17,12 @@ export class MiniRankComponent implements OnInit {
   public rantTextFn: () => Observable<string>;
   @Input()
   public pointTextFn: () => Observable<string>;
+  public yourResultsText: Observable<string>;
 
   constructor(private translate: TranslateService) { }
 
   public ngOnInit(): void {
+    this.yourResultsText = this.translate.get('LEADER_BOARD.YOUR_RESULTS');
     if (!this.rantTextFn) {
       this.rantTextFn = () => this.translate.get('LEADER_BOARD.POSITION');
     }
