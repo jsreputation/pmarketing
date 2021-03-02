@@ -242,9 +242,9 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
           this.ctx.translate(stampInnerRadius, -stampSize / 2);
 
           // rotate the stamp image clockwise by 90 degrees
-          this.ctx.translate(stampInnerRadius/2 ,stampSize / 2);
-          this.ctx.rotate(90 * Math.PI/180);
-          this.ctx.translate(-stampInnerRadius/2 ,-stampSize / 2);
+          this.ctx.translate(stampInnerRadius / 2, stampSize / 2);
+          this.ctx.rotate(90 * Math.PI / 180);
+          this.ctx.translate(-stampInnerRadius / 2, -stampSize / 2);
 
           this.ctx.fillStyle = currentPattern.pattern;
           this.ctx.beginPath();
