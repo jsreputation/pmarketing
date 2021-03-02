@@ -85,6 +85,7 @@ export class QuestComponent implements OnInit, OnDestroy {
       switchMap((isEnrolled: boolean) => {
         if (isEnrolled) {
           this.isEnrolled = true;
+          this.campaignService.clearCampaignCache();
           return this.questService.getQuestFromCampaign(campaignId);
         }
         return of(EMPTY);
