@@ -1,4 +1,14 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import { ISlice } from '../game.model';
 import { loadImage } from '../../utils/load-image.function';
 
@@ -230,6 +240,11 @@ export class SpinTheWheelComponent implements AfterViewInit, OnChanges {
           const stampInnerRadius = stampSize * .5 / Math.tan(this.arcRad / 2);
 
           this.ctx.translate(stampInnerRadius, -stampSize / 2);
+
+          // rotate the stamp image clockwise by 90 degrees
+          this.ctx.translate(stampInnerRadius/2 ,stampSize / 2);
+          this.ctx.rotate(90 * Math.PI/180);
+          this.ctx.translate(-stampInnerRadius/2 ,-stampSize / 2);
 
           this.ctx.fillStyle = currentPattern.pattern;
           this.ctx.beginPath();
