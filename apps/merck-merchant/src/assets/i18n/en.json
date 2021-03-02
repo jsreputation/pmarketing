@@ -12,7 +12,9 @@
     "LOGIN": "Login"
   },
   "SALES_CONTACT": {
-    "SALES_CONTACT": "Sales Contact"
+    "SALES_CONTACT": "Sales Contact",
+    "PERSONNEL_1": "Chan Hon Sing",
+    "PERSONNEL_2": "Ho Siu Kee"
   },
   "HOME": {
     "SALES_SCAN": "Sales Scan",
