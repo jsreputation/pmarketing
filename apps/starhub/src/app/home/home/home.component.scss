@@ -1,3 +1,5 @@
+@import "../../../theme/variables.scss";
+
 .app {
   width: 100%;
   height: 100%;
@@ -45,7 +47,7 @@ mat-toolbar {
 
         .subtitle {
           font-size: 1.2rem;
-          color: #73c20e;
+          color: $dark-electric-green;
           display: flex;
           flex-direction: row;
           align-content: center;
@@ -59,7 +61,7 @@ mat-toolbar {
 
       .subtitle {
         font-size: 1.2rem;
-        color: #73c20e;
+        color: $dark-electric-green;
       }
     }
   }

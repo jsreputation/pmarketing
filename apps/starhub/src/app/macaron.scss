@@ -1,3 +1,5 @@
+@import "../theme/variables.scss";
+
 @mixin macaron($backgroundColor, $fontColor) {
   border-radius: 5rem;
   padding: 0.5rem 1rem;
@@ -7,15 +9,18 @@
 }
 
 @mixin macaronStyles {
-  .just-added, .coming-soon {
-    @include macaron(#73c20e, #ffffff);
+  .just-added,
+  .coming-soon {
+    @include macaron($electric-green, $white);
   }
 
-  .expiring, .running-out {
-    @include macaron(#FFDB1B, #4d4d4c);
+  .expiring,
+  .running-out {
+    @include macaron(#ffdb1b, $dark-grey);
   }
 
-  .expired, .fully-redeemed {
-    @include macaron(#ffffff, #4d4d4c);
+  .expired,
+  .fully-redeemed {
+    @include macaron($white, $dark-grey);
   }
 }

@@ -1,4 +1,6 @@
-@mixin icon($diameter: 3.2rem, $background: #eef9e4, $color: #6dc00e) {
+@import "../theme/variables.scss";
+
+@mixin icon($diameter: 3.2rem, $background: $tint-electric-green, $color: $dark-electric-green) {
   display: flex;
   align-items: center;
   justify-content: center;
