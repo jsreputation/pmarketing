@@ -12,7 +12,9 @@
     "LOGIN": "登入"
   },
   "SALES_CONTACT": {
-    "SALES_CONTACT": "營業代表聯絡"
+    "SALES_CONTACT": "營業代表聯絡",
+    "PERSONNEL_1": "陳漢陞",
+    "PERSONNEL_2": "何紹基"
   },
   "HOME": {
     "SALES_SCAN": "營業代表掃瞄",
