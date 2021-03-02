@@ -23,6 +23,7 @@ import {
   TokenStorage,
   UtilsModule,
   VouchersModule,
+  QuestModule,
 } from '@perxtech/core';
 import {
   MatButtonModule,
@@ -168,6 +169,7 @@ export const setLanguage = (
       },
     }),
     WalletHistoryModule,
+    QuestModule.forRoot(),
   ],
   providers: [
     {
