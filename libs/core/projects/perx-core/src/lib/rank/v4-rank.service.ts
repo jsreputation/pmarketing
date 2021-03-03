@@ -34,6 +34,7 @@ interface V4UserRanking {
   id: number;
   rank: number;
   value: number;
+  is_current_user: boolean;
 }
 
 // whistler jsonApiWrap is different

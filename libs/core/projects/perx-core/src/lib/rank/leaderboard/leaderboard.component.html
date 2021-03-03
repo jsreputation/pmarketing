@@ -8,7 +8,8 @@
   </ng-container>
   <ng-container matColumnDef="displayName">
     <th mat-header-cell *matHeaderCellDef>{{nickNameTxtFn() | async}}</th>
-    <td mat-cell *matCellDef="let user"> {{user.displayName || user.id}} </td>
+    <td mat-cell *matCellDef="let user"> {{user.displayName || user.id}} <span *ngIf="user.isCurrentUser">(you)</span>
+    </td>
   </ng-container>
   <ng-container matColumnDef="value">
     <th class="score-value" mat-header-cell *matHeaderCellDef> {{metric | uppercase}} </th>
