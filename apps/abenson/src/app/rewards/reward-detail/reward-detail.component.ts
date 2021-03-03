@@ -3,7 +3,7 @@ import {
   ActivatedRoute,
   Router
 } from '@angular/router';
-import { Observable, of, iif } from 'rxjs';
+import { Observable, of, iif, EMPTY } from 'rxjs';
 import {
   RewardsService,
   IReward,
@@ -66,7 +66,7 @@ export class RewardDetailComponent implements OnInit {
     };
     return this.dialog.open(RewardConfirmComponent, { width: '30rem', data }).afterClosed()
       .pipe(
-        switchMap((result) => result ? this.exchangePoints() : of(null))
+        switchMap((result) => result ? this.exchangePoints() : EMPTY)
       )
       .subscribe(
         () => {
