@@ -10,10 +10,10 @@
               <img class="voucher-thumbnail" src="{{voucher?.reward?.rewardThumbnail}}" [alt]="voucher?.reward?.name">
             </div>
             <div class="voucher-details">
-              <h1 *ngIf="showTitle">
+              <h1 *ngIf="showTitle" class="ellipsis-1-line">
                 {{voucher?.reward?.name}}
               </h1>
-              <p *ngIf="showMerchant">
+              <p *ngIf="showMerchant" class="ellipsis-2-line">
                 {{voucher?.reward?.merchantName}}
               </p>
               <p *ngIf="showExpireDate && voucher.expiry && voucher.expiry !== null">

@@ -21,8 +21,8 @@
               </div>
             </div>
             <div class="reward-preview-details">
-              <h1>{{ reward.name }}</h1>
-              <div class="description" *ngIf="reward.merchantName; else showDescription">
+              <h1 class="ellipsis-1-line">{{ reward.name }}</h1>
+              <div class="description ellipse-2-lines" *ngIf="reward.merchantName; else showDescription">
                 {{reward.merchantName}}
               </div>
               <ng-template #showDescription>
