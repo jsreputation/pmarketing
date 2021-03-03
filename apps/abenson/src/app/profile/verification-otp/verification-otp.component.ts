@@ -64,13 +64,13 @@ export class VerificationOtpComponent implements OnInit {
     switch (this.type) {
       case 'phone':
         this.auth.changePhone(this.data as IChangePhoneData).subscribe(() => {
-          this.ntfcService.addPopup({ title: 'Success', text: 'You phone was update' });
+          this.ntfcService.addPopup({ title: 'Success', text: 'Your phone was updated' });
           this.router.navigate(['account']);
         });
         break;
       case 'password':
         this.auth.changePassword(this.data as IChangePasswordData).subscribe(() => {
-          this.ntfcService.addPopup({ title: 'Success', text: 'You password was update' });
+          this.ntfcService.addPopup({ title: 'Success', text: 'Your password was updated' });
           this.router.navigate(['account']);
         },
         (err) => {
