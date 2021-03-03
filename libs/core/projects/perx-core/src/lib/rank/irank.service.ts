@@ -11,5 +11,5 @@ export abstract class IRankService {
   public abstract getLeaderBoard(id: number): Observable<LeaderBoard>;
   public abstract getLeaderBoardsByCampaignID(id: number): Observable<LeaderBoard[]>;
   public abstract getLeaderBoardRanks(id: number): Observable<UserRanking[]>;
-  public abstract getLeaderBoardUserRank(id: number, userId: number): Observable<UserRanking>;
+  public abstract getLeaderBoardUserRank(id: number): Observable<UserRanking>;
 }

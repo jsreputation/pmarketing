@@ -61,7 +61,7 @@ export class LeaderboardPageComponent {
               rank: 0 || 'NA',
               value: 0
             };
-            return this.rankService.getLeaderBoardUserRank(leaderboard.id, profile.id)
+            return this.rankService.getLeaderBoardUserRank(leaderboard.id)
               .pipe(
                 catchError(_ => of(defaultMiniRank))
               );
