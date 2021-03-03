@@ -3,10 +3,6 @@ table {
   width: 90%;
   margin: 0 auto;
 
-  img {
-    margin-left: -1rem;
-  }
-
   tr[mat-header-row] {
     text-transform: uppercase;
   }
@@ -15,6 +11,22 @@ table {
     font-size: 1rem;
     color: var(--disabled_text_color);
   }
+
+  td.ranking {
+    display: flex;
+   
+    span,
+    img {
+      display: flex;
+      align-self: center;
+      padding: 0.8rem 0;
+    }
+
+    img {
+      margin-left: 1rem;
+    }
+  }
+
   .score-value {
     text-align: right;
   }

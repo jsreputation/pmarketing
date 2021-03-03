@@ -19,7 +19,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class LeaderboardPageComponent {
   public leaderboardRanks: UserRanking[];
-  public userMiniRankData: UserRanking = ({
+  public userRankData: UserRanking = ({
     displayName: '[No Name]',
     id: 0,
     rank: 0 || 'NA',
@@ -70,7 +70,7 @@ export class LeaderboardPageComponent {
         })
       ).subscribe((miniRank: UserRanking | undefined) => {
         if (miniRank) {
-          this.userMiniRankData = miniRank;
+          this.userRankData = miniRank;
         }
       });
     }

@@ -1,12 +1,11 @@
 <table mat-table [dataSource]="dataArray">
   <ng-container matColumnDef="rank">
     <th mat-header-cell *matHeaderCellDef> # </th>
-    <td mat-cell *matCellDef="let user">
-      <img *ngIf="user.rank <= 3"
-      src="{{rank1to3Images[user.rank - 1]}}">
-      <span *ngIf="user.rank > 3">{{user.rank}}</span>
+    <td mat-cell *matCellDef="let user" class="ranking">
+      <span>{{user.rank}}</span>
+      <img src="{{rank1to3Images[user.rank - 1]}}">
     </td>
-  </ng-container>3
+  </ng-container>
   <ng-container matColumnDef="displayName">
     <th mat-header-cell *matHeaderCellDef>{{nickNameTxtFn() | async}}</th>
     <td mat-cell *matCellDef="let user"> {{user.displayName || user.id}} </td>

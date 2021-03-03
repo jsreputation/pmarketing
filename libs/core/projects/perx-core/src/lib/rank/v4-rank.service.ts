@@ -88,6 +88,8 @@ export class V4RankService {
     return this.http.get(`${this.baseUrl}/v4/leaderboards/${id}/top_users`)
       .pipe(
         map((res: ApiWrap<V4UserRanking[]>) => res.data),
+        map((ranking: V4UserRanking[]) =>
+          ranking.map((rank, index) => ({ ...rank, rank: index + 1 }))), // top_users response is sorted by rank
         map((dataArr: V4UserRanking[]) => dataArr.map(data => objectKeysPascalize(camelToPascalCase, data) as UserRanking))
       );
   }
