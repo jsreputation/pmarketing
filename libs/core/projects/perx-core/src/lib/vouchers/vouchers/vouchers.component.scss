@@ -24,11 +24,16 @@ mat-icon {
 }
 
 .voucher-img__wrapper {
-  // flex: 0 0 10.5rem;
+  flex: 0 0 10.5rem;
   height: 10.5rem;
   width: 10.5rem;
-  // display: flex;
-  // justify-content: center;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  svg {
+    height: 100%;
+    background: #4E4E4E;
+  }
 }
 
 .voucher-thumbnail {
