@@ -228,14 +228,14 @@ describe('AppComponent', () => {
     expect(app.headerTitle).toBe('Terms & Conditions');
     app.onActivate(new ProfileComponent(profile));
     expect(app.headerTitle).toBe('Profile');
-    app.onActivate(new ChangeBarangayComponent(form, profile, locationTest));
+    app.onActivate(new ChangeBarangayComponent(form, profile, locationTest, ntfs));
     expect(app.headerTitle).toBe('Change Barangay');
-    app.onActivate(new ChangeEmailComponent(form, profile, router));
+    app.onActivate(new ChangeEmailComponent(form, profile, locationTest, ntfs));
     expect(app.headerTitle).toBe('Change Email');
-    app.onActivate(new ChangeCityComponent(form, profile, locationTest));
+    app.onActivate(new ChangeCityComponent(form, profile, ntfs, locationTest));
     expect(app.headerTitle).toBe('Change City/Municipality');
     app.onActivate(
-      new ChangeStreetAddressComponent(form, profile, locationTest)
+      new ChangeStreetAddressComponent(form, profile, locationTest, ntfs)
     );
     expect(app.headerTitle).toBe('Change Street Address');
     app.onActivate(new FaqComponent());
