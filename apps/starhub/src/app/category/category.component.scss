@@ -14,7 +14,7 @@ mat-toolbar {
     left: 0;
     right: 0;
     text-align: center;
-    color: #666666;
+    color: $dark-grey;
   }
 }
 
@@ -46,9 +46,7 @@ mat-toolbar {
   }
 
   h1.catergory-title {
-    color: #666666;
-    font-size: 3rem;
-    margin: 1rem 0;
+    color: $dark-grey;
   }
 
   .mat-card {
@@ -64,6 +62,7 @@ mat-toolbar {
 
       .details {
         flex: 1;
+        color: $dark-grey;
       }
 
       .icon {
@@ -83,7 +82,7 @@ mat-toolbar {
   .badge {
     max-width: 8rem;
     height: 4.8rem;
-    background-color: #ffffff;
+    background-color: $white;
     border-radius: 0.5rem 0.5rem 0 0;
     position: absolute;
     left: 0;

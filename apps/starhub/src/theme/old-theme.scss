@@ -1,0 +1,83 @@
+html body:not(.electric-green) {
+    // app.component.scss
+    .holding-container .content .text-block {
+        h1 {
+            font-size: 1.8rem;
+            color: #6dc00e !important; //ffs specificty
+        }
+
+        h2 {
+            font-size: 1.6rem;
+        }
+    }
+
+    // sheet.scss
+    .cdk-overlay-container .cdk-overlay-pane {
+        app-category-select,
+        app-category-sort {
+            .main-container {
+                .popup-header {
+                    h1 {
+                        color: #6dc00e;
+                        font-size: 1.2rem;
+                        font-weight: 600;
+                    }
+                }
+                label {
+                    color: #666666;
+                    border: 1px solid #f1f2f4;
+                }
+
+                .label-selected {
+                    color: #6dc00e;
+                    background: #eef9e4;
+                }
+            }
+        }
+    }
+
+    .app {
+        //category.component.scss
+        app-category {
+            mat-toolbar {
+                .toolbar-title {
+                    color: #666666;
+                }
+            }
+
+            .content {
+                background-color: #f2f2f2;
+
+                h1.catergory-title {
+                    color: #666666;
+                    font-size: 3rem;
+                    margin: 1rem 0;
+                }
+
+                .mat-card {
+                    mat-card-content {
+                        .details {
+                            color: #666666;
+                            h1 {
+                                font-size: 1.6rem;
+                                font-weight: bold;
+                                margin: 0;
+                            }
+
+                            h2 {
+                                font-size: 1.2rem;
+                                font-weight: normal;
+                                margin: 0.2rem 0 0 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        //error.component.scss
+        app-error .main p {
+            color: #7b7b7c;
+        }
+    }
+}

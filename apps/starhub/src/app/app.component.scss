@@ -37,17 +37,3 @@
     }
   }
 }
-
-::ng-deep body:not(.electric-green) {
-  .holding-container .content .text-block {
-
-    h1 {
-      font-size: 1.8rem;
-      color: #6dc00e !important;
-    }
-
-    h2 {
-      font-size: 1.6rem;
-    }
-  }
-}

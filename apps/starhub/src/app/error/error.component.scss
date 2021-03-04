@@ -2,7 +2,6 @@
 
 .main {
   height: 100%;
-  background-color: $canvas-grey;
   display: flex;
   align-items: center;
   flex-direction: row;
@@ -11,7 +10,7 @@
   justify-content: center;
 
   p {
-    color: #7b7b7c;
+    color: $medium-grey;
     font-size: 2rem;
   }
 }
