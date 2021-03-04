@@ -1,27 +1,27 @@
-h1 {
-  font-size: 30px;
-  letter-spacing: 0.3px;
-  line-height: 37px;
-}
-
-h2 {
-  font-size: 24px;
-  letter-spacing: 0;
-  line-height: 26px;
-}
-
-h3 {
-  font-size: 20px;
-  letter-spacing: 0;
-  line-height: 19px;
-}
-
-body {
+body.electric-green {
   font-size: 16px;
   letter-spacing: 0.2px;
   line-height: 21px;
 
   .semi-bold {
     letter-spacing: 0.1px;
+  }
+
+  h1 {
+    font-size: 30px;
+    letter-spacing: 0.3px;
+    line-height: 37px;
+  }
+
+  h2 {
+    font-size: 24px;
+    letter-spacing: 0;
+    line-height: 26px;
+  }
+
+  h3 {
+    font-size: 20px;
+    letter-spacing: 0;
+    line-height: 19px;
   }
 }

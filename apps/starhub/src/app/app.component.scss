@@ -1,3 +1,5 @@
+@import "../theme/variables.scss";
+
 :host,
 .app {
   width: 100%;
@@ -23,10 +25,29 @@
       flex-direction: column;
       justify-content: center;
       margin: 2rem;
+      text-align: center;
+
+      h1 {
+        color: $dark-electric-green;
+      }
     }
 
     .mat-progress-spinner {
       align-self: center;
+    }
+  }
+}
+
+::ng-deep body:not(.electric-green) {
+  .holding-container .content .text-block {
+
+    h1 {
+      font-size: 1.8rem;
+      color: #6dc00e !important;
+    }
+
+    h2 {
+      font-size: 1.6rem;
     }
   }
 }

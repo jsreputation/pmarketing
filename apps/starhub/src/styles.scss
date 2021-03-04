@@ -11,7 +11,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: starhub, Roboto, Arial, Helvetica, sans-serif;
-  background: $canvas-grey;
+  background: #f6f7f9;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -28,7 +28,7 @@ body {
     &::before {
       content: "";
       height: 0.2rem;
-      background-color: $electric-green;
+      background-color: #6dc00e;
       display: block;
       margin: 0 auto;
     }
@@ -65,7 +65,7 @@ cdk-virtual-scroll-viewport {
 }
 
 .mat-bottom-sheet-container {
-  background-color: $canvas-grey;
+  background-color: #f6f7f9;
 }
 
 ol,
@@ -73,6 +73,7 @@ ul {
   margin-top: 0;
 }
 
+// TODO: verify game popup & remove
 .custom-class {
   width: 35.5rem;
 
@@ -90,7 +91,7 @@ ul {
   .mat-dialog-content {
     overflow: initial;
     font-size: 1.8rem;
-    color: $medium-grey;
+    color: #777776;
     line-height: 2.3rem;
   }
 
@@ -107,5 +108,27 @@ ul {
 }
 
 .mat-card:not([class*="mat-elevation-z"]) {
-  box-shadow: 0 0.4rem 0.4rem $medium-grey;
+  box-shadow: 0 0.4rem 0.4rem #d2d8e2;
+}
+
+body.electric-green {
+  background: $canvas-grey;
+  .app {
+    mat-ink-bar {
+      &::before {
+        background-color: $electric-green;
+      }
+    }
+    .mat-bottom-sheet-container {
+      background-color: $canvas-grey;
+    }
+    .mat-card:not([class*="mat-elevation-z"]) {
+      box-shadow: 0 0.4rem 0.4rem $medium-grey;
+    }
+  }
+  .custom-class {
+    .mat-dialog-content {
+      color: $medium-grey;
+    }
+  }
 }
