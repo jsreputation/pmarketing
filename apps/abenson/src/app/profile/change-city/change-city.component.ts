@@ -13,6 +13,7 @@ import { Location } from '@angular/common';
 import {
   ICustomProperties,
   ProfileService,
+  NotificationService,
 } from '@perxtech/core';
 
 @Component({
@@ -31,7 +32,8 @@ export class ChangeCityComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private profileService: ProfileService,
-    private location: Location
+    private ntfcService: NotificationService,
+    private location: Location,
   ) { }
 
   public ngOnInit(): void {
@@ -42,6 +44,9 @@ export class ChangeCityComponent implements OnInit {
     this.cityChangeForm = this.fb.group({
       newCity: ['', Validators.required]
     });
+    this.profileService.whoAmI()
+      .subscribe((profile) => this.cityChangeForm.setValue({ newCity: (profile.customProperties
+        ? profile.customProperties.city : '')}));
   }
 
   public onSubmit(): void {
@@ -50,9 +55,18 @@ export class ChangeCityComponent implements OnInit {
     };
 
     if (this.customProperties.city) {
-      this.profileService.setCustomProperties(this.customProperties).subscribe(() =>
-        this.location.back(),
-      (err) => { console.log(err); });
+      this.profileService.setCustomProperties(this.customProperties).subscribe(() => {
+        this.location.back();
+        setTimeout(() => {
+          this.ntfcService.addPopup({ title: 'Success', text: 'Your city/municipality was updated' });
+        }, 50);
+      },
+      (err) => {
+        if (err.error && err.error.message) {
+          this.ntfcService.addSnack(err.error.message);
+        }
+        console.log(err);
+      });
     }
     return;
   }

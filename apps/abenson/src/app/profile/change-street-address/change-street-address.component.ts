@@ -13,6 +13,7 @@ import { Location } from '@angular/common';
 import {
   ICustomProperties,
   ProfileService,
+  NotificationService
 } from '@perxtech/core';
 
 @Component({
@@ -32,6 +33,7 @@ export class ChangeStreetAddressComponent implements OnInit {
     private fb: FormBuilder,
     private profileService: ProfileService,
     private location: Location,
+    private ntfcService: NotificationService,
   ) {
   }
 
@@ -43,6 +45,9 @@ export class ChangeStreetAddressComponent implements OnInit {
     this.streetAddressChangeForm = this.fb.group({
       newStreetAddress: ['', Validators.required],
     });
+    this.profileService.whoAmI()
+      .subscribe((profile) => this.streetAddressChangeForm.setValue({ newStreetAddress: (profile.customProperties
+         ? profile.customProperties.addr1 : '')}));
   }
 
   public onSubmit(): void {
@@ -53,8 +58,16 @@ export class ChangeStreetAddressComponent implements OnInit {
     if (this.customProperties.addr1) {
       this.profileService.setCustomProperties(this.customProperties).subscribe(() => {
         this.location.back();
+        setTimeout(() => {
+          this.ntfcService.addPopup({ title: 'Success', text: 'Your street address was updated' });
+        }, 50);
       },
-      (err) => { console.log(err); });
+      (err) => {
+        if (err.error && err.error.message) {
+          this.ntfcService.addSnack(err.error.message);
+        }
+        console.log(err);
+        });
     }
     return;
   }

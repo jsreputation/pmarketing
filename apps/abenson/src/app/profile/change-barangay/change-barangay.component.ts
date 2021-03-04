@@ -9,10 +9,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { Location } from '@angular/common';
-
 import {
   ICustomProperties,
   ProfileService,
+  NotificationService
 } from '@perxtech/core';
 
 @Component({
@@ -31,7 +31,8 @@ export class ChangeBarangayComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private profileService: ProfileService,
-    private location: Location
+    private location: Location,
+    private ntfcService: NotificationService,
   ) { }
 
   public ngOnInit(): void {
@@ -42,6 +43,9 @@ export class ChangeBarangayComponent implements OnInit {
     this.barangayChangeForm = this.fb.group({
       newBarangay: ['', Validators.required],
     });
+    this.profileService.whoAmI()
+      .subscribe((profile) => this.barangayChangeForm.setValue({ newBarangay: (profile.customProperties
+         ? profile.customProperties.barangay : '')}));
   }
 
   public onSubmit(): void {
@@ -52,8 +56,16 @@ export class ChangeBarangayComponent implements OnInit {
     if (this.customProperties.barangay) {
       this.profileService.setCustomProperties(this.customProperties).subscribe(() => {
         this.location.back();
+        setTimeout(() => {
+          this.ntfcService.addPopup({ title: 'Success', text: 'Your barangay was updated' });
+        }, 50);
       },
-      (err) => { console.error(err); });
+      (err) => {
+        if (err.error && err.error.message) {
+          this.ntfcService.addSnack(err.error.message);
+        }
+        console.error(err);
+        });
     }
     return;
   }

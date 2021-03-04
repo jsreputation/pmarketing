@@ -63,7 +63,7 @@ describe('ChangeEmailComponent', () => {
     const routerSpy = spyOn(router, 'navigate');
     component.onSubmit();
     router.navigate(['account']);
-    tick();
+    tick(50);
     expect(routerSpy).toHaveBeenCalledWith(['account']);
   }));
 });
