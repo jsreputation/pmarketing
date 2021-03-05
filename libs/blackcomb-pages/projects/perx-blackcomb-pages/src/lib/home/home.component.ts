@@ -111,7 +111,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   public catalogs$: Observable<ICatalog[]>;
   public catalogsEnded: boolean = false;
   public surveyCampaigns$: Observable<ICampaign[]>;
-  public favDisabled: boolean  = false;
+  public favDisabled: boolean = false;
+  public hideRewardsTitle: boolean = false;
 
   public constructor(
     protected rewardsService: RewardsService,
@@ -230,6 +231,8 @@ export class HomeComponent implements OnInit, OnDestroy {
                 .pipe(
                   map((reward) => {
                     tab.currentPage = 1;
+                    // hide list if none of the tabs have rewards
+                    this.hideRewardsTitle = this.hideRewardsTitle || reward.length > 0;
                     tab.rewardsList = of(reward);
                     this.tabs$.next(this.staticTab);
                     return tab;
@@ -427,13 +430,13 @@ export class HomeComponent implements OnInit, OnDestroy {
       );
 
     this.questCampaigns$ = this.campaignService
-    .getCampaigns({ type: CampaignType.quest })
-    .pipe(
-      switchMap((campaigns: ICampaign[]) =>
-        of(campaigns).pipe(catchError((err) => of(err)))
-      ),
-      takeLast(1)
-    );
+      .getCampaigns({ type: CampaignType.quest })
+      .pipe(
+        switchMap((campaigns: ICampaign[]) =>
+          of(campaigns).pipe(catchError((err) => of(err)))
+        ),
+        takeLast(1)
+      );
 
     this.newsFeedItems = this.settingsService.getRssFeeds().pipe(
       map((res: IRssFeeds) =>
@@ -579,22 +582,22 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.favDisabled = true;
 
     iif(() => (rewardToggled && (rewardToggled.favorite || false)),
-    this.rewardsService.unfavoriteReward(rewardToggled.id),
-    this.rewardsService.favoriteReward(rewardToggled.id)).pipe(
-      tap(
-        rewardChanged => {
-          this.rewards$ = this.rewards$.pipe(
-            map(rewards => {
-              const foundIndex = rewards.findIndex(reward => reward.id === rewardToggled.id);
-              rewards[foundIndex] = rewardChanged;
-              return rewards;
-            })
-          );
-        }
-      ),
-      finalize(() => setTimeout(() => {
-        this.favDisabled = false;
-      }, 500))
-    ).subscribe();
+      this.rewardsService.unfavoriteReward(rewardToggled.id),
+      this.rewardsService.favoriteReward(rewardToggled.id)).pipe(
+        tap(
+          rewardChanged => {
+            this.rewards$ = this.rewards$.pipe(
+              map(rewards => {
+                const foundIndex = rewards.findIndex(reward => reward.id === rewardToggled.id);
+                rewards[foundIndex] = rewardChanged;
+                return rewards;
+              })
+            );
+          }
+        ),
+        finalize(() => setTimeout(() => {
+          this.favDisabled = false;
+        }, 500))
+      ).subscribe();
   }
 }

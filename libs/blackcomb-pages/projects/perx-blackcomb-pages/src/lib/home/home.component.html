@@ -69,7 +69,7 @@
     <perx-blackcomb-pages-catalogs [catalogs]="catalogs$" [catalogsEnded]="catalogsEnded"
       (tapped)="catalogSelected($event)" (loadCatalogs)="loadCatalogs($event)"></perx-blackcomb-pages-catalogs>
   </div>
-  <div class="rewards-collection" *ngIf="appConfig.showRewardsOnHomepage && (rewards$ | async)?.length">
+  <div class="rewards-collection" *ngIf="appConfig.showRewardsOnHomepage && hideRewardsTitle">
     <div class="title" translate>HOME.REWARDS</div>
     <perx-core-rewards-list-tabbed [tabs$]="tabs$" [displayPriceFn]="displayPriceFn" (tapped)="goToReward($event)"
       (tabChanged)="tabChanged($event)">
