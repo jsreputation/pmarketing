@@ -51,7 +51,7 @@
     <!-- Survey campaigns -->
     <div class="campaigns" [ngClass]="{'prioritise': appConfig.custom.showSurveyFirstOnHomePageCampaignList === 'true'}"
       *ngIf="appConfig.showSurveyOnHomePage">
-      <div *ngIf="(surveyCampaigns$ | async)?.length > 0" class="title">Surveys</div>
+      <div *ngIf="(surveyCampaigns$ | async)?.length > 0" class="title" translate>HOME.SURVEYS</div>
       <perx-blackcomb-pages-campaigns-collection [gameType]="gameType.survey" [campaigns]="surveyCampaigns$"
         (selected)="goToCampaignPage($event)">
       </perx-blackcomb-pages-campaigns-collection>

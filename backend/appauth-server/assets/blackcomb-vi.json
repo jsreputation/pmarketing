@@ -260,7 +260,8 @@
     "HKBN": "HKBN",
     "CLOSE": "Close",
     "REWARDS": "Rewards",
-    "QUEST_CAMPAIGNS": "Quests"
+    "QUEST_CAMPAIGNS": "Quests",
+    "SURVEYS": "Surveys"
   },
   "NEWS_FEED": {
     "BTN_1": "Play now",
