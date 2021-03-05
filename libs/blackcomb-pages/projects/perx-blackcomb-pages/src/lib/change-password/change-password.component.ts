@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
@@ -34,6 +34,7 @@ export class ChangePasswordComponent {
     private authService: AuthenticationService,
     private translate: TranslateService,
     private profileService: ProfileService,
+    private cd: ChangeDetectorRef,
   ) {
     this.profileService.whoAmI().subscribe((res) => {
       this.profile = res;
@@ -91,6 +92,7 @@ export class ChangePasswordComponent {
             oldPWControl.setErrors({incorrect: true});
             this.changePasswordForm.updateValueAndValidity();
           }
+          this.cd.detectChanges();
         }
       );
   }
