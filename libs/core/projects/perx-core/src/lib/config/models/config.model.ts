@@ -41,6 +41,7 @@ export interface IConfig<T> {
   showExtraLoyaltyOnHomePage?: boolean;
   showRewardNavButton?: boolean;
   showGameTriesOnCampaignCard?: boolean;
+  showSurveyFirstOnHomePageCampaignList?: boolean;
 
   /* Misc */
   showQrPageSubtitle?: boolean;
