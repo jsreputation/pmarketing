@@ -231,7 +231,10 @@ const appConfigFile = `{
     }",
     "languageOptions": [
       "en", "${process.env.EXTRA_LANGUAGE}"
-    ]
+    ],
+    "showSurveyFirstOnHomePageCampaignList": "${
+      process.env.SHOW_SURVEY_FIRST_ON_HOMEPAGE_CAMPAIGN_LIST ? process.env.SHOW_SURVEY_FIRST_ON_HOMEPAGE_CAMPAIGN_LIST : false
+    }"
   },
   "homeAsProgressPage": ${
     process.env.PROGRESS_PAGE_HOME ? process.env.PROGRESS_PAGE_HOME : false

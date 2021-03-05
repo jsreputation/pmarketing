@@ -20,9 +20,15 @@
   height: 100%;
 }
 
-.games, .campaigns {
+.campaign-list {
   display: flex;
   flex-direction: column;
+  .campaigns {
+    order: 1;
+    &.prioritise {
+      order: 0;
+    }
+  }
 }
 
 .title {
