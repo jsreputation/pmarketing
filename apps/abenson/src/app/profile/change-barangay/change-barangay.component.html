@@ -2,7 +2,7 @@
   <form [formGroup]="barangayChangeForm" class="form" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="fill" class="full-width__input">
       <mat-label>Enter new barangay</mat-label>
-      <input matInput placeholder="Enter new barangay" formControlName="newBarangay">
+      <input matInput formControlName="newBarangay">
       <mat-error *ngIf="newBarangay && newBarangay.hasError('required')">
         New barangay is <strong>required</strong>
       </mat-error>

@@ -2,7 +2,7 @@
   <form [formGroup]="phoneForm" (ngSubmit)="requestOtp()">
     <mat-form-field appearance="fill" class="full-width__input">
       <mat-label>Enter new number</mat-label>
-      <input matInput placeholder="Enter new number" formControlName="phone">
+      <input matInput formControlName="phone">
       <mat-error *ngIf="
         phoneForm.get('phone').hasError('required') ||
         phoneForm.get('phone').hasError('pattern')">
