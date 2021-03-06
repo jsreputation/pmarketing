@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { IConfig } from '../config/models/config.model';
 import { ConfigService } from '../config/config.service';
-import { IAnswer,  ISurvey, SurveyQuestionType } from './models/survey.model';
+import { IAnswer, ISurvey, SurveyQuestionType } from './models/survey.model';
 import { SurveyService } from './survey.service';
 import { Observable, of, ReplaySubject, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Cacheable } from 'ngx-cacheable';
-import { map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { IV4Campaign, IV4CampaignResponse } from '../campaign/v4-campaign.service';
 import { IV4SurveyDisplayProperties, IV4SurveyOutcome, IV4SurveyQuestion } from './models/v4-survey.model';
 import { oc } from 'ts-optchain';
@@ -69,36 +69,37 @@ export class V4SurveyService implements SurveyService {
   }
 
   private makeFormlyConfig(questionSurvey: IV4SurveyQuestion, lang: string = 'en'): FormlyFieldConfig {
-   const { payload, question, required, description, id } = questionSurvey;
-   const formlyCustomFieldType = this.mapQuestionTypeToFormlyType(payload.type);
-   return {
-    templateOptions: {
-      label: question[lang].text,
-      description: description[lang].text,
-      bannerImage: oc(question[lang]).image.value.image_url(''),
-      required
-    },
-    fieldGroup: [{
-      key: id,
-      type: formlyCustomFieldType,
+    const { payload, question, required, description, id } = questionSurvey;
+    const formlyCustomFieldType = this.mapQuestionTypeToFormlyType(payload.type);
+    return {
       templateOptions: {
-        type: payload.multiple ? 'array' : 'string',
-        multiple: payload.multiple,
-        // comes a point i should conditionally have options field or not for example input,
-        // need more info on how alternative question choices are going to look like,
-        // https://github.com/PerxTech/perx-api/blob/develop/app/schemas/questions/long-text.json will work on it later, when dashboard
-        // is configurable
-        options: payload.choices.map((choice) =>
+        label: question[lang].text,
+        description: description[lang].text,
+        bannerImage: oc(question[lang]).image.value.image_url(''),
+        required
+      },
+      fieldGroup: [{
+        key: id,
+        type: formlyCustomFieldType,
+        templateOptions: {
+          type: payload.multiple ? 'array' : 'string',
+          multiple: payload.multiple,
+          // comes a point i should conditionally have options field or not for example input,
+          // need more info on how alternative question choices are going to look like,
+          // https://github.com/PerxTech/perx-api/blob/develop/app/schemas/questions/long-text.json will work on it later, when dashboard
+          // is configurable
+          options: payload.choices.map((choice) =>
           ({
             label: (formlyCustomFieldType === 'pic-survey-select') ? (
               choice.answer[lang].image ? choice.answer[lang].image.value.image_url : '')
               : choice.answer[lang].text,
             value: choice.answer[lang].text
           })
-        ),
-        required
-      }
-    }]};
+          ),
+          required
+        }
+      }]
+    };
   }
 
   @Cacheable({})
@@ -125,10 +126,10 @@ export class V4SurveyService implements SurveyService {
           /* eslint-disable */
           title: (oc(dp).header.value.title ?
             oc(dp).header.value.title[lang]() :
-            oc(dp).header.value.title['en']()) as {text: string},
+            oc(dp).header.value.title['en']()) as { text: string },
           subTitle: (oc(dp).header.value.description() ?
             oc(dp).header.value.description[lang]() :
-            oc(dp).header.value.description['en']()) as {text: string},
+            oc(dp).header.value.description['en']()) as { text: string },
           /* eslint-enable */
           results: {
             outcome
@@ -154,12 +155,12 @@ export class V4SurveyService implements SurveyService {
     return this.baseUrl$.pipe(
       switchMap(baseUrl => this.http.put<V4NextMoveResponse>(`${baseUrl}/v4/game_transactions/${moveId}/answer`, payload)),
       map(res => ({
-          hasOutcomes: res.data.outcomes.length > 0,
-          answers: res.data.answers.map(answer => ({
-            questionId: answer.question_id,
-            content: answer.content
-          }))
-        })
+        hasOutcomes: res.data.outcomes.length > 0,
+        answers: res.data.answers.map(answer => ({
+          questionId: answer.question_id,
+          content: answer.content
+        }))
+      })
       )
     );
   }
@@ -169,8 +170,21 @@ export class V4SurveyService implements SurveyService {
       return of();
     }
     return this.baseUrl$.pipe(
-      switchMap(baseUrl => this.http.post<{data: {id: number}}>(`${baseUrl}/v4/games/${gameId}/next_move`, null)),
+      switchMap(baseUrl => this.http.post<{ data: { id: number } }>(`${baseUrl}/v4/games/${gameId}/next_move`, null)),
       map((api) => api.data.id)
+    );
+  }
+
+  public postFinalSurveyAnswer(moveId: number): Observable<any> {
+    return this.baseUrl$.pipe(
+      switchMap(baseUrl => this.http.put(`${baseUrl}/v4/game_transactions/${moveId}/finish`, {})),
+      map((answerResponse: any) => {
+        if (answerResponse.data.outcomes && answerResponse.data.outcomes.length) {
+          return { rewardAcquired: true };
+        }
+        return { rewardAcquired: false };
+      }),
+      catchError(_ => of({ rewardAcquired: false }))
     );
   }
 
