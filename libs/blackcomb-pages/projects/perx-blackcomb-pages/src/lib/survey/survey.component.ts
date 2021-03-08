@@ -13,7 +13,7 @@ import {
   AuthenticationService
 } from '@perxtech/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -160,37 +160,34 @@ export class SurveyComponent implements OnInit, OnDestroy {
       this.informationCollectionSetting === 'pi_required' ||
       this.informationCollectionSetting === 'signup_required'
     );
-    const userAction$: Observable<{ hasOutcomes: boolean }> =
-      !surveyId || (this.isAnonymousUser && isCollectDataRequired)
-        ? of({ hasOutcomes: true })
-        : this.surveyService
-          .postSurveyAnswer(
-            finalAnswer,
-            this.moveId
-          )
-          .pipe(
-            tap((res: {
-              hasOutcomes: boolean,
-              answers: IAnswer[]
-            }) => this.answers = res.answers),
-            catchError((err: HttpErrorResponse) => {
-              this.popupData = this.noRewardsPopUp;
-              throw err;
-            })
-          );
 
-    userAction$.subscribe(
-      res => {
-        this.popupData = res.hasOutcomes
-          ? this.successPopUp
-          : this.noRewardsPopUp;
-        this.redirectUrlAndPopUp();
-      },
-      () => {
-        this.popupData = this.noRewardsPopUp;
-        this.redirectUrlAndPopUp();
-      }
-    );
+    if (!surveyId || (this.isAnonymousUser && isCollectDataRequired)) {
+      this.popupData = this.successPopUp;
+      this.redirectUrlAndPopUp();
+    } else {
+      // post final answer
+      this.surveyService
+        .postSurveyAnswer(finalAnswer, this.moveId)
+        .pipe(
+          tap((res: { hasOutcomes: boolean, answers: IAnswer[] }) => { this.answers = res.answers; }),
+          catchError((err: HttpErrorResponse) => {
+            this.popupData = this.noRewardsPopUp;
+            throw err;
+          }));
+      // MEG-12: check API if reward acquired
+      this.surveyService.postFinalSurveyAnswer(this.moveId).subscribe(
+        res => {
+          this.popupData = res.rewardAcquired
+            ? this.successPopUp
+            : this.noRewardsPopUp;
+          this.redirectUrlAndPopUp();
+        },
+        () => {
+          this.popupData = this.noRewardsPopUp;
+          this.redirectUrlAndPopUp();
+        }
+      );
+    }
   }
 
   private redirectUrlAndPopUp(): void {

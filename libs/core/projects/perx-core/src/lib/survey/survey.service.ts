@@ -10,4 +10,5 @@ export abstract class SurveyService {
     answers: IAnswer[]
   }>;
   public abstract getMoveId(gameId?: number): Observable<number>;
+  public abstract postFinalSurveyAnswer(moveId: number): Observable<any>;
 }
