@@ -200,7 +200,9 @@
     "POSITION": "Position",
     "POINT_TITLE": "Score",
     "POINT_UNIT": "Points",
-    "YOUR_RESULTS": "Your Results"
+    "YOUR_RESULTS": "Your Results",
+    "ENDS_ON": "Ends on",
+    "CURRENT_USER": "(you)"
   },
   "ACCOUNT_PAGE": {
     "LUCKY_DRAW_INFO": "Lucky Draw Info",

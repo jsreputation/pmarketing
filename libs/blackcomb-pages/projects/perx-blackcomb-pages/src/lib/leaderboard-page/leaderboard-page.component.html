@@ -1,7 +1,8 @@
 <div class="leaderboard-container">
   <div class="detail-container">
     <h1>{{leaderBoardSettings?.title}}</h1>
-    <!-- <h4>Ends on 12.12.2021</h4> -->
+    <h4 *ngIf="leaderBoardSettings && leaderBoardSettings.endsOn">{{'LEADER_BOARD.ENDS_ON' | translate}}
+      {{leaderBoardSettings.endsOn}}</h4>
   </div>
   <mat-tab-group mat-stretch-tabs>
     <mat-tab [label]="'LEADER_BOARD.RANKING_TAB_TITLE' | translate">

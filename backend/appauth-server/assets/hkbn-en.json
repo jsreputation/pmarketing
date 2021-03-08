@@ -49,7 +49,9 @@
     "POSITION": "Position",
     "POINT_TITLE": "Score",
     "POINT_UNIT": "Points",
-    "YOUR_RESULTS": "Your Results"
+    "YOUR_RESULTS": "Your Results",
+    "ENDS_ON": "Ends on",
+    "CURRENT_USER": "(you)"
   },
   "LOGIN": "Login",
   "REGISTER_FOR_AN_ACCOUNT": "Register for an account",
