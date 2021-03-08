@@ -85,7 +85,7 @@ describe('ChangeStreetAddressComponent', () => {
   }));
 
   it('should handle error', fakeAsync(() => {
-    const spyLog = jest.spyOn(console, 'log');
+    const spyLog = jest.spyOn(console, 'error');
     component.streetAddressChangeForm.setValue({ newStreetAddress: 'street' });
     profileSpy.mockReturnValue(throwError('error'));
     component.onSubmit();

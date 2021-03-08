@@ -71,7 +71,7 @@ describe('ChangeCityComponent', () => {
   it('should handle error data', fakeAsync(() => {
     const newCity = 'Paris';
     component.cityChangeForm.setValue({ newCity });
-    const spyLog = jest.spyOn(console, 'log');
+    const spyLog = jest.spyOn(console, 'error');
     spyOnProfile.mockReturnValue(throwError('message'));
     component.onSubmit();
     tick(50);

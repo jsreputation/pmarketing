@@ -65,7 +65,7 @@ export class ChangeCityComponent implements OnInit {
         if (err.error && err.error.message) {
           this.ntfcService.addSnack(err.error.message);
         }
-        console.log(err);
+        console.error(err);
       });
     }
     return;
