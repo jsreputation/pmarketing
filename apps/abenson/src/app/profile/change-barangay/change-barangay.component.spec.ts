@@ -16,7 +16,8 @@ describe('ChangeBarangayComponent', () => {
   let location: Location;
   let profileService: ProfileService;
   const profileServiceStub: Partial<ProfileService> = {
-    setCustomProperties: () => of(void 0)
+    setCustomProperties: () => of(void 0),
+    whoAmI: () => of()
   };
 
   beforeEach(async(() => {
@@ -58,7 +59,7 @@ describe('ChangeBarangayComponent', () => {
     component.barangayChangeForm.setValue({ newBarangay: 'test' });
     component.onSubmit();
     expect(component.customProperties).toEqual({ barangay: 'test' });
-    tick();
+    tick(50);
     expect(locationSpy).toHaveBeenCalled();
   }));
 
@@ -67,7 +68,7 @@ describe('ChangeBarangayComponent', () => {
     const spyLog = spyOn(console, 'error');
     component.barangayChangeForm.setValue({ newBarangay: 'test' });
     component.onSubmit();
-    tick();
+    tick(50);
     expect(spyLog).toHaveBeenCalled();
   }));
 
@@ -75,7 +76,7 @@ describe('ChangeBarangayComponent', () => {
     const spyProfile = spyOn(profileService, 'setCustomProperties');
     component.barangayChangeForm.setValue({ newBarangay: null });
     component.onSubmit();
-    tick();
+    tick(50);
     expect(spyProfile).not.toHaveBeenCalled();
   }));
 });

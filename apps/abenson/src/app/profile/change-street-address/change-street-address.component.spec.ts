@@ -30,7 +30,8 @@ describe('ChangeStreetAddressComponent', () => {
   let profileSpy;
   let location: Location;
   const profileServiceStub: Partial<ProfileService> = {
-    setCustomProperties: () => of()
+    setCustomProperties: () => of(),
+    whoAmI: () => of()
   };
 
   beforeEach(async(() => {
@@ -72,23 +73,23 @@ describe('ChangeStreetAddressComponent', () => {
     component.streetAddressChangeForm.setValue({ newStreetAddress: 'street' });
     profileSpy.mockReturnValue(of(null));
     component.onSubmit();
-    tick();
+    tick(50);
     expect(locationSpy).toHaveBeenCalled();
   }));
 
   it('should not call setCustomProperties if we have void street', fakeAsync(() => {
     component.streetAddressChangeForm.setValue({ newStreetAddress: null });
     component.onSubmit();
-    tick();
+    tick(50);
     expect(profileSpy).not.toHaveBeenCalled();
   }));
 
   it('should handle error', fakeAsync(() => {
-    const spyLog = jest.spyOn(console, 'log');
+    const spyLog = jest.spyOn(console, 'error');
     component.streetAddressChangeForm.setValue({ newStreetAddress: 'street' });
     profileSpy.mockReturnValue(throwError('error'));
     component.onSubmit();
-    tick();
+    tick(50);
     expect(spyLog).toHaveBeenCalled();
   }));
 });

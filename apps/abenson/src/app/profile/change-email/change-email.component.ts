@@ -8,8 +8,11 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { ProfileService } from '@perxtech/core';
-import { Router } from '@angular/router';
+import {
+  ProfileService,
+  NotificationService
+} from '@perxtech/core';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-change-email',
@@ -26,7 +29,8 @@ export class ChangeEmailComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private profileService: ProfileService,
-    private router: Router
+    private location: Location,
+    private ntfcService: NotificationService,
   ) { }
 
   public ngOnInit(): void {
@@ -44,6 +48,16 @@ export class ChangeEmailComponent implements OnInit {
 
   public onSubmit(): void {
     this.profileService.updateUserInfo(this.emailChangeForm.value)
-      .subscribe(() => this.router.navigate(['account']));
+      .subscribe(() => {
+        this.location.back();
+        setTimeout(() => {
+          this.ntfcService.addPopup({ title: 'Success', text: 'Your email address was updated' });
+        }, 50);
+      },
+      (err) => {
+        if (err.error && err.error.message) {
+          this.ntfcService.addSnack(err.error.message);
+        }
+      });
   }
 }

@@ -16,7 +16,8 @@ import { Location } from '@angular/common';
 import { Type } from '@angular/core';
 
 const profileServiceStub: Partial<ProfileService> = {
-  setCustomProperties: () => of()
+  setCustomProperties: () => of(),
+  whoAmI: () => of()
 };
 describe('ChangeCityComponent', () => {
   let component: ChangeCityComponent;
@@ -61,7 +62,7 @@ describe('ChangeCityComponent', () => {
     component.cityChangeForm.setValue({ newCity });
     spyOnProfile.mockReturnValue(of(null));
     component.onSubmit();
-    tick();
+    tick(50);
     fixture.detectChanges();
     expect(component.customProperties.city).toBe(newCity);
     expect(spyLocation).toHaveBeenCalled();
@@ -70,10 +71,10 @@ describe('ChangeCityComponent', () => {
   it('should handle error data', fakeAsync(() => {
     const newCity = 'Paris';
     component.cityChangeForm.setValue({ newCity });
-    const spyLog = jest.spyOn(console, 'log');
+    const spyLog = jest.spyOn(console, 'error');
     spyOnProfile.mockReturnValue(throwError('message'));
     component.onSubmit();
-    tick();
+    tick(50);
     fixture.detectChanges();
     expect(spyLog).toHaveBeenCalled();
   }));
@@ -81,7 +82,7 @@ describe('ChangeCityComponent', () => {
   it('should leave profileSerive', fakeAsync(() => {
     component.cityChangeForm.setValue({ newCity: null });
     component.onSubmit();
-    tick();
+    tick(50);
     expect(spyOnProfile).not.toHaveBeenCalled();
   }));
 });
