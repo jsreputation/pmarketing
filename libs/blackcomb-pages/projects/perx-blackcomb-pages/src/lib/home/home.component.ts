@@ -145,19 +145,6 @@ export class HomeComponent implements OnInit, OnDestroy {
             this.authService.isAuthorized().subscribe((isAuth: boolean) => {
               if (isAuth && !this.configService.readAppStarted()) {
                 this.configService.setAppStarted();
-                if (config.app === 'abenson') {
-                  this.subTitleFn = (loyalty: ILoyalty) =>
-                    of(
-                      `Equivalent to ${this.currencyPipe.transform(
-                        loyalty.currencyBalance,
-                        loyalty.currency,
-                        'symbol-narrow',
-                        '1.0-0',
-                        'en-PH'
-                      )} e-Cash`
-                    );
-                  return;
-                }
                 if (config.showPopupCampaign) {
                   this.fetchPopupCampaigns();
                 }
@@ -497,6 +484,20 @@ export class HomeComponent implements OnInit, OnDestroy {
           return returnString;
         })
       );
+    if (this.appConfig.app === 'abenson') {
+        this.subTitleFn = (loyalty: ILoyalty) =>
+          this.translate
+          .get('HOME.CASH_EQUIVALENT')
+          .pipe(
+            map((res) =>
+                  res.replace( '{{amount}}', this.currencyPipe.transform(
+                  loyalty.currencyBalance, loyalty.currency,
+                  'symbol-narrow',
+                  '1.0-0',
+                  'en-PH'))
+            ));
+      }
+
     this.summaryExpiringFn = (loyalty: ILoyalty) =>
       this.translate
         .get('HOME.POINTS_EXPIRING')
