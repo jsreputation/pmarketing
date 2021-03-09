@@ -20,6 +20,8 @@ import {
   isEmptyArray,
 } from '@perxtech/core';
 
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-existing-card',
   templateUrl: './existing-card.component.html',
@@ -39,6 +41,7 @@ export class ExistingCardComponent implements OnInit {
     private loyaltyService: LoyaltyService,
     private profileService: ProfileService,
     private notificationService: NotificationService,
+    private router: Router
   ) { }
 
   public ngOnInit(): void {
@@ -79,6 +82,8 @@ export class ExistingCardComponent implements OnInit {
     try {
       this.profileService.setCardNumber(cardNumberData as ICardNumber).subscribe(
         () => {
+          this.notificationService.addPopup({ title: 'Success', text: 'Your card has been successfully linked' });
+          this.router.navigate(['card']);
           // this.router.navigate(['enter-pin'], { state: { mobileNumber } });
         },
         err => {
