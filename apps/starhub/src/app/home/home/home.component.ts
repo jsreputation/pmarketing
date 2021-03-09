@@ -44,6 +44,7 @@ export interface IStarhubConfig {
   hubclubCR: boolean;
   showAllSnappingSaturdayItems: boolean;
   mobileIdCR: boolean;
+  UXCR: boolean;
 }
 
 

@@ -57,7 +57,8 @@ const appConfigFile = `{
   "custom": {
     "hubclubCR": ${process.env.HUBCLUB_CR ? process.env.HUBCLUB_CR : false},
     "showAllSnappingSaturdayItems": ${process.env.SHOW_ALL_SNAPPING_SATURDAY_ITEMS ? process.env.SHOW_ALL_SNAPPING_SATURDAY_ITEMS : false},
-    "mobileIdCR": ${process.env.MOBILE_ID_CR ? process.env.MOBILE_ID_CR : false}
+    "mobileIdCR": ${process.env.MOBILE_ID_CR ? process.env.MOBILE_ID_CR : false},
+    "UXCR": ${process.env.UX_CR ? process.env.UX_CR : false}
   }
 }
 `;
