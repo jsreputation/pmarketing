@@ -37,7 +37,7 @@ html body:not(.electric-green) {
     }
 
     .app {
-        //category.component.scss
+        // category.component.scss
         app-category {
             mat-toolbar {
                 .toolbar-title {
@@ -75,9 +75,59 @@ html body:not(.electric-green) {
             }
         }
 
-        //error.component.scss
+        // error.component.scss
         app-error .main p {
             color: #7b7b7c;
         }
+
+        // home.component.scss
+        app-home .app {
+            mat-toolbar {
+                background-color: white;
+                color: #666666;
+                border-bottom: 1px solid #979797;
+
+                .top-row {
+                    .reward {
+                        h2 {
+                            font-size: 2rem;
+                        }
+
+                        .membership-link {
+                            .subtitle {
+                                color: #73c20e;
+                            }
+                        }
+
+                        .subtitle {
+                            color: #73c20e;
+                        }
+                    }
+                }
+
+                .mat-tab-nav-bar {
+                    a {
+                        color: #666666;
+                    }
+                }
+            }
+        }
+    }
+
+    // mixins with old default values
+
+    // override with old mixin for old theme
+    // important to get past specificity
+    @mixin icon($diameter: 3.2rem, $background: #eef9e4, $color: #6dc00e) {
+        width: $diameter !important;
+        height: $diameter !important;
+        background: $background !important;
+        color: $color !important;
+        min-width: $diameter !important;
+    }
+
+    // use old mixin globally for old theme
+    .icon {
+        @include icon;
     }
 }

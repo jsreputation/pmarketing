@@ -10,10 +10,10 @@
 mat-toolbar {
   position: absolute;
   z-index: 100;
-  background-color: white;
+  background-color: $white;
   width: 100%;
-  color: #666666;
-  border-bottom: 1px solid #979797;
+  color: $dark-grey;
+  border-bottom: 1px solid $light-grey;
 
   .top-row {
     height: 10rem;
@@ -33,16 +33,12 @@ mat-toolbar {
       overflow: hidden;
       text-overflow: ellipsis;
 
-      h2 {
-        font-size: 2rem;
-      }
-
       span.tier {
         font-size: 3rem;
         font-weight: bold;
       }
 
-      .membership-link{
+      .membership-link {
         cursor: pointer;
 
         .subtitle {
@@ -91,7 +87,7 @@ mat-toolbar {
     line-height: 0.89;
     letter-spacing: normal;
     text-align: center;
-    color: #666666;
+    color: $dark-grey;
     align-items: center;
     justify-content: center;
     padding: 2.4rem 1rem;
