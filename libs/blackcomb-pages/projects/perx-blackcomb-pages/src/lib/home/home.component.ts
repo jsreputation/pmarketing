@@ -484,7 +484,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           return returnString;
         })
       );
-    if (this.appConfig.app === 'abenson') {
+    if (this.appConfig && this.appConfig.app === 'abenson') {
         this.subTitleFn = (loyalty: ILoyalty) =>
           this.translate
           .get('HOME.CASH_EQUIVALENT')
