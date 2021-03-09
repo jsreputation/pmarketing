@@ -1,4 +1,16 @@
 html body:not(.electric-green) {
+    // mixins with old defaults
+
+    // override with old mixin for old theme
+    // important to get past specificity
+    @mixin icon($diameter: 3.2rem, $background: #eef9e4, $color: #6dc00e) {
+        width: $diameter !important;
+        height: $diameter !important;
+        background: $background !important;
+        color: $color !important;
+        min-width: $diameter !important;
+    }
+
     // app.component.scss
     .holding-container .content .text-block {
         h1 {
@@ -37,6 +49,49 @@ html body:not(.electric-green) {
     }
 
     .app {
+        // cards.scss
+        mat-card {
+            &.mat-card {
+                mat-card-actions {
+                    a {
+                        color: #6dc00e;
+                    }
+                }
+                mat-card-content {
+                    div {
+                        h1 {
+                            font-size: 1.6rem;
+                            color: #666666;
+                            margin: 0;
+                        }
+
+                        h2 {
+                            font-size: 1.6rem;
+                            text-overflow: ellipsis;
+                            color: #666666;
+                            font-weight: normal;
+                            margin: 0.2rem 0 0 0;
+                        }
+
+                        h3 {
+                            margin-top: 0;
+                            font-weight: normal;
+                            color: #666666;
+                            font-size: 1.2rem;
+                            margin-bottom: 0;
+                        }
+                    }
+                }
+            }
+        }
+
+        // categories.component.scss
+        app-categories {
+            .category-title {
+                color: #666666;
+            }
+        }
+
         // category.component.scss
         app-category {
             mat-toolbar {
@@ -112,18 +167,69 @@ html body:not(.electric-green) {
                 }
             }
         }
-    }
 
-    // mixins with old default values
+        // vouchers.component.scss
+        app-vouchers .rewards-container {
+            .disabled-icon {
+                @include icon(3.2rem, #d4d4d4, white);
+            }
 
-    // override with old mixin for old theme
-    // important to get past specificity
-    @mixin icon($diameter: 3.2rem, $background: #eef9e4, $color: #6dc00e) {
-        width: $diameter !important;
-        height: $diameter !important;
-        background: $background !important;
-        color: $color !important;
-        min-width: $diameter !important;
+            button {
+                background: rgba(255, 255, 255, 0);
+                border: 1px solid #6dc00e;
+                box-sizing: border-box;
+                border-radius: 5px;
+                text-transform: uppercase;
+                font-size: 1.8rem;
+                height: 5rem;
+                width: 100%;
+                color: #666666;
+            }
+
+            h1 {
+                color: #666666;
+                font-size: 2.5rem;
+            }
+
+            .mat-card-header {
+                .mat-card-title {
+                    color: #666666;
+                }
+
+                .mat-card-subtitle.less-three-days {
+                    color: #d8127d;
+                }
+
+                .mat-card-subtitle.greater-three-days {
+                    color: #666666;
+                }
+            }
+
+            .empty-wallet {
+                h1 {
+                    font-size: 2.5rem;
+                }
+
+                p {
+                    font-size: 1.6rem;
+                    text-align: center;
+                    color: #666666;
+                }
+            }
+
+            .no-rewards {
+                p.title {
+                    color: #666666;
+                    font-size: 2.5rem;
+                    margin-top: 0;
+                }
+
+                p.sub-title {
+                    color: #666666;
+                    font-size: 1.6rem;
+                }
+            }
+        }
     }
 
     // use old mixin globally for old theme
