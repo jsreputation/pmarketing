@@ -76,7 +76,7 @@ export class RedemptionComponent implements OnInit {
     );
     this.activeRoute.queryParams
       .pipe(
-        filter((params: Params) => params.id ? true : false),
+        filter((params: Params) => !!params.id),
         map((params: Params) => params.id),
         switchMap((id: number) => this.vouchersService.get(id)),
         tap((voucher: Voucher) => {
