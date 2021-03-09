@@ -41,7 +41,8 @@ export class V4QuestService implements IQuestService {
     return this.http.get<IV4QuestTaskResponse>(`${this.hostName}/v4/campaigns/${campaignId}/quest_tasks?state=active`)
       .pipe(
         map(res => res.data),
-        map((tasks: IV4QuestTask[]) => tasks.map(task => V4QuestService.v4QuestTaskToQuestTask(task))));
+        map((tasks: IV4QuestTask[]) => tasks.map(task => V4QuestService.v4QuestTaskToQuestTask(task))),
+        map((tasks: IV4QuestTask[]) => tasks.sort((t1, t2) => (!t1.ordering || !t2.ordering) ? 0 : (t1.ordering - t2.ordering))));
   }
 
   public  getQuestProgress(questId: number): Observable<IQuest> {
