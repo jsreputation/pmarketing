@@ -6,7 +6,7 @@
 
 .span-text {
   display: block;
-  width: 29rem;
+  // width: 29rem;
   white-space: normal;
   margin-left: 8px;
   padding-right: 8px;
@@ -36,7 +36,7 @@
   }
 
   ::ng-deep .mat-radio-label-content {
-    width: 29rem;
+    width: 85%;
     word-wrap: break-word;
     white-space: normal;
   }
