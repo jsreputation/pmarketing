@@ -1,19 +1,37 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
 import {
-  Voucher,
-  VoucherState,
-  IVoucherService,
-  PinInputComponent,
-  NotificationService,
+  Component,
+  OnInit,
+  ViewChild
+} from '@angular/core';
+import {
   ICategoryTags,
   IReward,
   isEmptyArray,
+  IVoucherService,
+  PinInputComponent,
+  Voucher,
+  VoucherState,
 } from '@perxtech/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { filter, map, switchMap, tap } from 'rxjs/operators';
+import {
+  ActivatedRoute,
+  Params,
+  Router
+} from '@angular/router';
+import {
+  filter,
+  map,
+  switchMap,
+  tap
+} from 'rxjs/operators';
 import { Location } from '@angular/common';
-import { AnalyticsService, PageType } from '../analytics.service';
-import { MacaronService, IMacaron } from '../services/macaron.service';
+import {
+  AnalyticsService,
+  PageType
+} from '../analytics.service';
+import {
+  IMacaron,
+  MacaronService
+} from '../services/macaron.service';
 
 @Component({
   selector: 'app-redemption',
@@ -36,7 +54,7 @@ export class RedemptionComponent implements OnInit {
     private activeRoute: ActivatedRoute,
     private location: Location,
     private router: Router,
-    private notficationService: NotificationService,
+    // private notficationService: NotificationService,
     private analytics: AnalyticsService,
     private macaronService: MacaronService
   ) {
@@ -85,7 +103,7 @@ export class RedemptionComponent implements OnInit {
         () => this.voucher.state = VoucherState.redeemed,
         () => {
           this.pinInputError = true;
-          this.notficationService.addSnack('Sorry! Voucher redemption failed.');
+          // this.notficationService.addSnack('Sorry! Voucher redemption failed.');
         }
       );
   }
