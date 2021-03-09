@@ -13,6 +13,7 @@ import {
   MatListModule
 } from '@angular/material';
 import {
+  ConfigService,
   IVoucherService,
   NotificationService,
   RedemptionType,
@@ -96,6 +97,10 @@ describe('RedemptionComponent', () => {
     addSnack: () => { }
   };
 
+  const configServiceStub: Partial<ConfigService> = {
+    readAppConfig: () => of()
+  };
+
   let params: Subject<Params>;
 
   const routerStub: Partial<Router> = { navigateByUrl: () => Promise.resolve(true) };
@@ -128,7 +133,8 @@ describe('RedemptionComponent', () => {
         { provide: Location, useValue: locationStub },
         { provide: Router, useValue: routerStub },
         { provide: RewardsService, useValue: rewardsServiceStub },
-        { provide: NotificationService, useValue: notificationServiceStub }
+        { provide: NotificationService, useValue: notificationServiceStub },
+        { provide: ConfigService, useValue: configServiceStub }
       ]
     })
       .compileComponents();
