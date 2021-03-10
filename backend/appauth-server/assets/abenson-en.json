@@ -266,7 +266,8 @@
     "HOME+": "Home+",
     "HKBN": "HKBN",
     "CLOSE": "Close",
-    "REWARDS": "Rewards"
+    "REWARDS": "Rewards",
+    "CASH_EQUIVALENT": "Equivalent to {{amount}} e-Cash"
   },
   "NEWS_FEED": {
     "BTN_1": "Play now",
