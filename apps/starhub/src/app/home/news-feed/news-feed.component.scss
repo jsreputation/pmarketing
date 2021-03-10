@@ -1,3 +1,5 @@
+@import "../../../theme/variables.scss";
+
 $hero-height: 22.5rem;
 $gradient-text-height: 4.5rem;
 $base-color: rgba(221, 221, 221, 0.863);
@@ -15,7 +17,8 @@ $gradient-offset: 52 + 16;
     background-position: -100px + $gradient-offset;
   }
 
-  40%, 100% {
+  40%,
+  100% {
     background-position: 440px + $gradient-offset;
   }
 }
@@ -67,7 +70,7 @@ $gradient-offset: 52 + 16;
         padding-inline-start: 1.6rem;
         font-size: 1.6rem;
         font-weight: bold;
-        color: #FFFFFF;
+        color: $white;
       }
 
       .description-ghost {
@@ -95,12 +98,12 @@ $gradient-offset: 52 + 16;
 
       &.gray-dot {
         width: 1rem;
-        background-color: #d2d8e2;
+        background-color: $medium-grey;
       }
 
       &.green-bar {
         width: 2.8rem;
-        background-color: #6dc00e;
+        background-color: $electric-green;
       }
     }
   }
