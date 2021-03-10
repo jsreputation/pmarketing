@@ -1,19 +1,42 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
 import {
-  Voucher,
-  VoucherState,
-  IVoucherService,
-  PinInputComponent,
-  NotificationService,
+  Component,
+  OnInit,
+  ViewChild
+} from '@angular/core';
+import {
+  ConfigService,
   ICategoryTags,
+  IConfig,
   IReward,
   isEmptyArray,
+  IVoucherService,
+  NotificationService,
+  PinInputComponent,
+  Voucher,
+  VoucherState,
 } from '@perxtech/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { filter, map, switchMap, tap } from 'rxjs/operators';
+import {
+  ActivatedRoute,
+  Params,
+  Router
+} from '@angular/router';
+import {
+  filter,
+  map,
+  switchMap,
+  tap
+} from 'rxjs/operators';
 import { Location } from '@angular/common';
-import { AnalyticsService, PageType } from '../analytics.service';
-import { MacaronService, IMacaron } from '../services/macaron.service';
+import {
+  AnalyticsService,
+  PageType
+} from '../analytics.service';
+import {
+  IMacaron,
+  MacaronService
+} from '../services/macaron.service';
+import { IStarhubConfig } from '../home/home/home.component';
+import { oc } from 'ts-optchain';
 
 @Component({
   selector: 'app-redemption',
@@ -31,21 +54,29 @@ export class RedemptionComponent implements OnInit {
   @ViewChild('pinInput', { static: false })
   private pinInputComponent: PinInputComponent;
 
+  private appConfig: IConfig<IStarhubConfig>;
+
   constructor(
     private vouchersService: IVoucherService,
     private activeRoute: ActivatedRoute,
     private location: Location,
     private router: Router,
     private notficationService: NotificationService,
+    private configService: ConfigService,
     private analytics: AnalyticsService,
     private macaronService: MacaronService
   ) {
   }
 
   public ngOnInit(): void {
+    this.configService.readAppConfig<IStarhubConfig>().subscribe(
+      (appConfig: IConfig<IStarhubConfig>) => {
+        this.appConfig = appConfig;
+      }
+    );
     this.activeRoute.queryParams
       .pipe(
-        filter((params: Params) => params.id ? true : false),
+        filter((params: Params) => !!params.id),
         map((params: Params) => params.id),
         switchMap((id: number) => this.vouchersService.get(id)),
         tap((voucher: Voucher) => {
@@ -85,7 +116,10 @@ export class RedemptionComponent implements OnInit {
         () => this.voucher.state = VoucherState.redeemed,
         () => {
           this.pinInputError = true;
-          this.notficationService.addSnack('Sorry! Voucher redemption failed.');
+          // hide the snackbar if the CR is active
+          if (!oc(this.appConfig).custom.UXCR(false)) {
+            this.notficationService.addSnack('Sorry! Voucher redemption failed.');
+          }
         }
       );
   }
