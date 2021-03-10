@@ -11,6 +11,28 @@ html body:not(.electric-green) {
         min-width: $diameter !important;
     }
 
+    @mixin macaron($backgroundColor, $fontColor) {
+        background-color: $backgroundColor !important;
+        color: $fontColor !important;
+    }
+
+    @mixin macaronStyles {
+        .just-added,
+        .coming-soon {
+            @include macaron(#73c20e, #ffffff);
+        }
+
+        .expiring,
+        .running-out {
+            @include macaron(#ffdb1b, #4d4d4c);
+        }
+
+        .expired,
+        .fully-redeemed {
+            @include macaron(#ffffff, #4d4d4c);
+        }
+    }
+
     // styles.scss
     font-family: starhub, Roboto, Arial, Helvetica, sans-serif;
     background: #f6f7f9;
@@ -663,4 +685,6 @@ html body:not(.electric-green) {
     .icon {
         @include icon;
     }
+
+    @include macaronStyles();
 }

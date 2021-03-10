@@ -1,5 +1,5 @@
 @import "../cards";
-@import "../../macaron.scss";
+@import "../../../theme/mixins/macaron.scss";
 
 .main-container {
   margin-left: 0.5rem;
@@ -37,7 +37,7 @@
     }
   }
 
-  @include macaronStyles();
+   @include macaronStyles();
 }
 
 .card-description {

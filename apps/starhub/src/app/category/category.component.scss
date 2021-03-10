@@ -1,5 +1,5 @@
 @import "../toolbar.scss";
-@import "../macaron.scss";
+@import "../../theme/mixins/macaron.scss";
 
 mat-toolbar {
   @include toolbar;
