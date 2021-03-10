@@ -1,47 +1,15 @@
-.selection-radio-group {
-  display: flex;
-  flex-direction: column;
-  margin: 15px 0;
-}
-
-.span-text {
-  display: block;
-  width: 29rem;
-  white-space: normal;
-  margin-left: 8px;
-  padding-right: 8px;
-  word-wrap: break-word;
-}
-
-.selection-radio-button {
-  margin: 5px;
-}
-
-.choice-box {
-  display: block;
-  background: white;
-
-  &:not(:last-child) {
-    margin-bottom: 2rem;
-  }
-}
-
 .select-wrapper {
-  ::ng-deep .mat-checkbox-layout,
-  ::ng-deep .mat-radio-label {
-    width: 100%;
-    height: 100%;
-    color: #212121 !important;
-    padding: 1.4rem !important;
+  .single-divider {
+    background-color: var(--background);
+    padding: 1rem;
+    margin: 2rem 0;
   }
 
   ::ng-deep .mat-radio-label-content {
-    width: 29rem;
-    word-wrap: break-word;
     white-space: normal;
   }
 
-  ::ng-deep .mat-checkbox-inner-container {
-    margin-top: 5px; // for alignment with text
+  ::ng-deep .mat-checkbox-layout {
+    white-space: normal;
   }
 }
