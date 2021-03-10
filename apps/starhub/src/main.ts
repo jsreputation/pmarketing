@@ -8,7 +8,7 @@ if (environment.production) {
   enableProdMode();
 }
 
-if (environment.newTheme) {
+if (environment.UXCR) {
   document.body.classList.add('electric-green');
 }
 
