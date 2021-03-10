@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import {
   AuthenticationService,
   equalityValidator,
@@ -24,6 +24,8 @@ export class ChangePasswordComponent {
   public invalidPWText: string;
   public loading: boolean = false;
   public invalidOldPW: boolean;
+  public passwordMinLen: number;
+
   private initTranslate(): void {
     this.translate.get('LOGIN_PAGE.PASSWORD_INVALID_TXT').subscribe((text) => this.invalidPWText = text);
   }
@@ -35,15 +37,28 @@ export class ChangePasswordComponent {
     private translate: TranslateService,
     private profileService: ProfileService,
     private cd: ChangeDetectorRef,
+    private route: ActivatedRoute,
   ) {
     this.profileService.whoAmI().subscribe((res) => {
       this.profile = res;
     });
     this.initTranslate();
     this.initForm();
+    this.route.data.subscribe(
+      (dataObj) => {
+        if (dataObj.minLen) {
+          this.passwordMinLen = dataObj.minLen;
+          if (this.passwordMinLen) {
+            this.changePasswordForm.controls.newPassword.setValidators([Validators.minLength(this.passwordMinLen)]);
+            this.changePasswordForm.controls.newPassword.updateValueAndValidity();
+          }
+        }
+      }
+    );
   }
 
   private initForm(): void {
+
     this.changePasswordForm = this.fb.group({
       oldPassword: ['', Validators.required],
       newPassword: ['', Validators.required],
@@ -51,7 +66,7 @@ export class ChangePasswordComponent {
     }, {
       validators: [
         equalityValidator('newPassword', 'confirmPassword'),
-        inequalityValidator('oldPassword', 'newPassword'),
+        inequalityValidator('oldPassword', 'newPassword')
       ]
     });
   }

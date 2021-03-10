@@ -5,7 +5,7 @@ export function equalityValidator(firstFieldPath: string, secondFieldPath: strin
   const validator = function (control: AbstractControl): ValidationErrors | null {
     const firstField = control.get(firstFieldPath);
     const secondField = control.get(secondFieldPath);
-    if (firstField === null || secondField === null) {
+    if (firstField === null || secondField === null || !firstField.value || !secondField.value) {
       return null;
     }
     const firstValue = firstField.value;
@@ -26,7 +26,7 @@ export function inequalityValidator(firstFieldPath: string, secondFieldPath: str
   const validator = function (control: AbstractControl): ValidationErrors | null {
     const firstField = control.get(firstFieldPath);
     const secondField = control.get(secondFieldPath);
-    if (firstField === null || secondField === null) {
+    if (firstField === null || secondField === null || !firstField.value || !secondField.value) {
       return null;
     }
     const firstValue = firstField.value;
