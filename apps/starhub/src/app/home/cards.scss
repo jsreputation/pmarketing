@@ -33,4 +33,19 @@ mat-card-content {
   .icon {
     @include icon;
   }
+
+  div {
+    h1 {
+      margin: 0;
+    }
+    h2 {
+      text-overflow: ellipsis;
+      margin: 0.2rem 0 0 0;
+    }
+
+    h3 {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
 }

@@ -18,7 +18,6 @@ html body:not(.electric-green) {
     .custom-class {
         h1 {
             font-weight: bold;
-            margin-bottom: 2.4rem;
             line-height: 3.1rem;
         }
 
@@ -120,23 +119,17 @@ html body:not(.electric-green) {
                         h1 {
                             font-size: 1.6rem;
                             color: #666666;
-                            margin: 0;
                         }
 
                         h2 {
                             font-size: 1.6rem;
-                            text-overflow: ellipsis;
                             color: #666666;
                             font-weight: normal;
-                            margin: 0.2rem 0 0 0;
                         }
 
                         h3 {
-                            margin-top: 0;
                             font-weight: normal;
                             color: #666666;
-                            font-size: 1.2rem;
-                            margin-bottom: 0;
                         }
                     }
                 }
@@ -164,7 +157,6 @@ html body:not(.electric-green) {
                 h1.catergory-title {
                     color: #666666;
                     font-size: 3rem;
-                    margin: 1rem 0;
                 }
 
                 .mat-card {
@@ -174,13 +166,11 @@ html body:not(.electric-green) {
                             h1 {
                                 font-size: 1.6rem;
                                 font-weight: bold;
-                                margin: 0;
                             }
 
                             h2 {
                                 font-size: 1.2rem;
                                 font-weight: normal;
-                                margin: 0.2rem 0 0 0;
                             }
                         }
                     }
@@ -231,7 +221,6 @@ html body:not(.electric-green) {
                     h2 {
                         font-size: 1.6rem;
                         font-weight: normal;
-                        margin: 0;
                     }
                 }
 
@@ -242,14 +231,12 @@ html body:not(.electric-green) {
                                 font-weight: normal;
                                 font-size: 1.6rem;
                                 color: #666666;
-                                margin: 0;
                             }
 
                             h2 {
                                 font-weight: normal;
                                 font-size: 1.2rem;
                                 color: #666666;
-                                margin: 0;
                             }
                         }
                     }
@@ -312,12 +299,7 @@ html body:not(.electric-green) {
         app-locations {
             .content {
                 .loc {
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                    padding: 0 1.5rem;
                     color: #666666;
-                    margin-bottom: 2rem;
 
                     h1 {
                         font-size: 1.6rem;
@@ -403,7 +385,6 @@ html body:not(.electric-green) {
                             font-style: normal;
                             font-weight: normal;
                             font-size: 1.2rem;
-                            text-align: start;
                             color: #666666;
                         }
                     }
@@ -449,7 +430,6 @@ html body:not(.electric-green) {
                 h1 {
                     font-size: 2.5rem;
                     color: #666666;
-                    margin: 1rem;
                 }
             }
         }
@@ -549,12 +529,10 @@ html body:not(.electric-green) {
                     font-size: 1.6rem;
                     color: #3a3a3a;
                     font-weight: normal;
-                    margin-bottom: 0;
                 }
 
                 p {
                     color: #666666;
-                    line-height: 2rem;
                 }
 
                 .about {
@@ -632,7 +610,6 @@ html body:not(.electric-green) {
                 p.title {
                     color: #666666;
                     font-size: 2.5rem;
-                    margin-top: 0;
                 }
 
                 p.sub-title {

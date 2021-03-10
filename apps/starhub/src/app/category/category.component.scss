@@ -47,6 +47,7 @@ mat-toolbar {
 
   h1.catergory-title {
     color: $dark-grey;
+    margin: 1rem 0;
   }
 
   .mat-card {
@@ -63,6 +64,13 @@ mat-toolbar {
       .details {
         flex: 1;
         color: $dark-grey;
+        h1 {
+          margin: 0;
+        }
+
+        h2 {
+          margin: 0.2rem 0 0 0;
+        }
       }
 
       .icon {
