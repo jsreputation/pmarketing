@@ -106,12 +106,6 @@
   align-items: center;
   justify-content: center;
 
-  h1,
-  p {
-    font-size: 2rem;
-    color: $dark-grey;
-  }
-
   .code {
     background: $tint-electric-green;
     border-radius: 0.5rem;
@@ -150,7 +144,7 @@
 
   .incorrect-pin {
     text-align: center;
-    color:$error-text;
+    color: $error-text;
     font-size: 1.6rem;
   }
 }
@@ -158,16 +152,6 @@
 .action {
   display: flex;
   flex-direction: column;
-
-  button {
-    text-transform: uppercase;
-    border-radius: 0;
-    padding: 1rem;
-  }
-
-  button.mat-flat-button {
-    color: $white;
-  }
 }
 
 // out of time to find something better at this stage
@@ -185,7 +169,7 @@
 }
 
 ::ng-deep .error :focus {
-  outline-color:$error-text;
+  outline-color: $error-text;
 }
 
 :host ::ng-deep .activation-code {

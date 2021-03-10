@@ -11,6 +11,33 @@ html body:not(.electric-green) {
         min-width: $diameter !important;
     }
 
+    // styles.scss
+    font-family: starhub, Roboto, Arial, Helvetica, sans-serif;
+    background: #f6f7f9;
+    // TODO: verify game popup & remove
+    .custom-class {
+        h1 {
+            font-weight: bold;
+            margin-bottom: 2.4rem;
+            line-height: 3.1rem;
+        }
+
+        .mat-dialog-content {
+            font-size: 1.8rem;
+            color: #777776;
+            line-height: 2.3rem;
+        }
+
+        .button-group {
+            button {
+                height: 6rem;
+                text-transform: capitalize;
+                font-size: 1.6rem;
+                border-radius: 0.5rem;
+            }
+        }
+    }
+
     // app.component.scss
     .holding-container .content .text-block {
         h1 {
@@ -49,6 +76,25 @@ html body:not(.electric-green) {
     }
 
     .app {
+        // styles.scss
+        mat-ink-bar {
+            &::before {
+                background-color: #6dc00e;
+            }
+        }
+
+        .mat-flat-button.mat-primary {
+            color: $white;
+        }
+
+        .mat-bottom-sheet-container {
+            background-color: #f6f7f9;
+        }
+
+        .mat-card:not([class*="mat-elevation-z"]) {
+            box-shadow: 0 0.4rem 0.4rem #d2d8e2;
+        }
+
         // cards.scss
         mat-card {
             &.mat-card {
@@ -163,6 +209,117 @@ html body:not(.electric-green) {
                 .mat-tab-nav-bar {
                     a {
                         color: #666666;
+                    }
+                }
+            }
+        }
+
+        // redemption.component.scss
+        app-redemption .main {
+            .detail {
+                color: #666666;
+            }
+
+            .code-redemption {
+                h1,
+                p {
+                    font-size: 2rem;
+                    color: #666666;
+                }
+
+                .code {
+                    background: #eef9e4;
+                    border-color: #eef9e4;
+                    color: #666666;
+                }
+            }
+            .code-redemption.unavailable {
+                .code {
+                    background-color: #e3e7ee;
+                }
+            }
+
+            .pin-input-container {
+                .incorrect-pin {
+                    color: #d8127d;
+                }
+            }
+
+            .action {
+                button {
+                    text-transform: uppercase;
+                    border-radius: 0;
+                    padding: 1rem;
+                }
+
+                button.mat-flat-button {
+                    color: $white;
+                }
+            }
+
+            ::ng-deep input {
+                background: #eef9e4;
+            }
+
+            ::ng-deep.error input {
+                border-color: #eb202f;
+                background: #fff3f9;
+            }
+
+            ::ng-deep .error :focus {
+                outline-color: #eb202f;
+            }
+
+            :host ::ng-deep .activation-code {
+                .activation-code__inputs input {
+                    color: #666666;
+                }
+
+                .activation-code__inputs input:focus {
+                    outline-color: #73c20e;
+                }
+
+                .error-label {
+                    color: #d8127d;
+                }
+            }
+        }
+
+        // reward.scss
+        app-reward,
+        app-reward-detail,
+        app-voucher {
+            .reward-merchant {
+                h1 {
+                    color: #3a3a3a;
+                }
+
+                h2 {
+                    font-weight: normal;
+                    color: #666666;
+                }
+            }
+
+            .reward-balance {
+                color: #666666;
+            }
+
+            .container {
+                h1 {
+                    font-size: 1.6rem;
+                    color: #3a3a3a;
+                    font-weight: normal;
+                    margin-bottom: 0;
+                }
+
+                p {
+                    color: #666666;
+                    line-height: 2rem;
+                }
+
+                .about {
+                    a {
+                        color: #7e8494;
                     }
                 }
             }

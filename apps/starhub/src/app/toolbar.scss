@@ -1,7 +1,7 @@
 @import "../theme/mixins/icon.scss";
 
 @mixin toolbar {
-  background: white;
+  background: $white;
   display: flex;
   flex-direction: row;
 

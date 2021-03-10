@@ -12,7 +12,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: starhub, Roboto, Arial, Helvetica, sans-serif;
-  background: #f6f7f9;
+  background: $canvas-grey;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -29,15 +29,11 @@ body {
     &::before {
       content: "";
       height: 0.2rem;
-      background-color: #6dc00e;
+      background-color: $electric-green;
       display: block;
       margin: 0 auto;
     }
   }
-}
-
-.mat-flat-button.mat-primary {
-  color: $white;
 }
 
 cdk-virtual-scroll-viewport {
@@ -66,7 +62,7 @@ cdk-virtual-scroll-viewport {
 }
 
 .mat-bottom-sheet-container {
-  background-color: #f6f7f9;
+  background-color: $canvas-grey;
 }
 
 ol,
@@ -83,53 +79,15 @@ ul {
     border-radius: 0.9rem;
   }
 
-  h1 {
-    font-weight: bold;
-    line-height: 3.1rem;
-    margin-bottom: 2.4rem;
-  }
-
   .mat-dialog-content {
     overflow: initial;
-    font-size: 1.8rem;
-    color: #777776;
-    line-height: 2.3rem;
   }
 
   .button-group {
     margin-top: 3.2rem;
-
-    button {
-      height: 6rem;
-      text-transform: capitalize;
-      font-size: 1.6rem;
-      border-radius: 0.5rem;
-    }
   }
 }
 
 .mat-card:not([class*="mat-elevation-z"]) {
-  box-shadow: 0 0.4rem 0.4rem #d2d8e2;
-}
-
-body.electric-green {
-  background: $canvas-grey;
-  .app {
-    mat-ink-bar {
-      &::before {
-        background-color: $electric-green;
-      }
-    }
-    .mat-bottom-sheet-container {
-      background-color: $canvas-grey;
-    }
-    .mat-card:not([class*="mat-elevation-z"]) {
-      box-shadow: 0 0.4rem 0.4rem $medium-grey;
-    }
-  }
-  .custom-class {
-    .mat-dialog-content {
-      color: $medium-grey;
-    }
-  }
+  box-shadow: 0 0.4rem 0.4rem $medium-grey;
 }
