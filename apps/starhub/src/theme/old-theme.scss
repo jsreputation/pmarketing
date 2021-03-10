@@ -424,6 +424,25 @@ html body:not(.electric-green) {
             }
         }
 
+        // quiz-results.component.scss
+        app-quiz-results {
+            .survey-page {
+                .results-text-container {
+                    h1 {
+                        font-size: 3.4rem;
+                        font-style: normal;
+                        font-weight: 300;
+                    }
+
+                    h2 {
+                        font-size: 1.6rem;
+                        font-style: normal;
+                        font-weight: normal;
+                    }
+                }
+            }
+        }
+
         // quiz-survey-campaigns.component.scss
         app-quiz-survey-campaigns {
             .main-container {
@@ -540,6 +559,26 @@ html body:not(.electric-green) {
                         color: #7e8494;
                     }
                 }
+            }
+        }
+
+        // reward-detail.component.scss
+        app-reward-detail {
+            .reward-merchant {
+                h1 {
+                    font-size: 2rem;
+                    font-weight: bold;
+                }
+
+                h2 {
+                    font-size: 1.6rem;
+                }
+            }
+
+            .description,
+            .address,
+            .terms-conditions {
+                color: #666666;
             }
         }
 

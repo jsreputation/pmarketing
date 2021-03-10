@@ -1,3 +1,5 @@
+@import "../../theme/variables.scss";
+
 .main-puzzle-container {
   box-sizing: border-box;
   flex: 2;
@@ -34,7 +36,7 @@
   width: 100%;
   padding: 1.6rem;
   border-radius: 0.8rem;
-  background-color: var(--surface_colour);
+  background-color: $canvas-grey;
   box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
 }
 
@@ -45,7 +47,6 @@
   padding: 1rem 0;
 
   button {
-    font-family: Roboto, sans-serif;
     font-weight: 500;
     font-size: 1.4rem;
     padding-left: 1.6rem;
