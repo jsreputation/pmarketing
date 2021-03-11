@@ -173,20 +173,21 @@ export class SurveyComponent implements OnInit, OnDestroy {
           catchError((err: HttpErrorResponse) => {
             this.popupData = this.noRewardsPopUp;
             throw err;
-          }));
-      // MEG-12: check API if reward acquired
-      this.surveyService.postFinalSurveyAnswer(this.moveId).subscribe(
-        res => {
-          this.popupData = res.rewardAcquired
-            ? this.successPopUp
-            : this.noRewardsPopUp;
-          this.redirectUrlAndPopUp();
-        },
-        () => {
-          this.popupData = this.noRewardsPopUp;
-          this.redirectUrlAndPopUp();
-        }
-      );
+          })).subscribe(() => {
+            // MEG-12: check API if reward acquired
+            this.surveyService.postFinalSurveyAnswer(this.moveId).subscribe(
+              res => {
+                this.popupData = res.rewardAcquired
+                  ? this.successPopUp
+                  : this.noRewardsPopUp;
+                this.redirectUrlAndPopUp();
+              },
+              () => {
+                this.popupData = this.noRewardsPopUp;
+                this.redirectUrlAndPopUp();
+              }
+            );
+          });
     }
   }
 
