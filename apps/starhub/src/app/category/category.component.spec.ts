@@ -103,11 +103,6 @@ describe('CategoryComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('onInit', () => {
-    it('should get category name', fakeAsync(() => {
-      expect(component.selectedCategory).toBe('All');
-    }));
-  });
 
   it('should select reward and navigate', () => {
     const reward = {
