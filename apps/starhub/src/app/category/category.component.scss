@@ -60,7 +60,7 @@ mat-toolbar {
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-      margin: 1.4rem 0 1.9rem 0;
+      margin: 3rem 0 1.9rem 0;
 
       .details {
         flex: 1;
@@ -101,7 +101,7 @@ mat-toolbar {
     border-radius: 0.5rem 0.5rem 0 0;
     position: absolute;
     left: 0;
-    bottom: 0;
+    bottom: -2.4rem; // cannot use transform as it is affected by parent animation
     width: 100%;
     text-align: center;
 
