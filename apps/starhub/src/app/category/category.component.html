@@ -16,14 +16,14 @@
       matRipple>
       <div class="featured-image">
         <img mat-card-image [src]="reward.rewardBanner">
-        <div *ngIf="reward.merchantImg" class="badge">
+        <div *ngIf="reward.merchantImg" [class]="this.uxcr ? 'ux-cr badge': 'badge'">
           <img [src]="reward.merchantImg">
         </div>
         <div *ngIf="getMacaron(reward) as macaron" class="macaron-container">
           <span [ngClass]="macaron.class">{{macaron.label}}</span>
         </div>
       </div>
-      <mat-card-content>
+      <mat-card-content [class]="this.uxcr ? 'ux-cr': ''">
         <div class="details">
           <h1>{{reward.name}}</h1>
           <h2>{{reward.merchantName}}</h2>
