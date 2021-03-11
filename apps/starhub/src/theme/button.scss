@@ -8,6 +8,7 @@ body.electric-green {
         border: 1px solid $electric-green;
         color: $dark-electric-green;
         font-weight: bold;
+        text-transform: none;
         // Button states
         &:active {
             background-color: $electric-green;
