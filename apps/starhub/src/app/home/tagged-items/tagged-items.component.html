@@ -13,11 +13,11 @@
         *ngFor="let itemSnapping of itemsSnapping"
         matRipple [matRippleDisabled]="itemSnapping?.macaron?.class === 'coming-soon'" (click)="selected(itemSnapping)">
         <div class="featured-image" >
-          <img mat-card-image [src]="itemSnapping.rewardBanner ? itemSnapping.rewardBanner : (itemSnapping.thumbnailUrl ? itemSnapping.thumbnailUrl: '')">      
+          <img mat-card-image [src]="itemSnapping.rewardBanner ? itemSnapping.rewardBanner : (itemSnapping.thumbnailUrl ? itemSnapping.thumbnailUrl: '')">
           <div *ngIf="itemSnapping?.macaron as macaron" class="macaron-container">
             <span [ngClass]="macaron.class">{{macaron.label}}</span>
           </div>
-        </div>      
+        </div>
         <mat-card-content>
           <div class="card-description">
             <h1>{{itemSnapping.name}}</h1>
@@ -29,6 +29,7 @@
         </mat-card-content>
         <mat-card-footer></mat-card-footer>
       </mat-card>
+      <div class="end-spacer"></div>
     </div>
   <ghost-cards class="cards" [@fadeOut]="!ghostItems.length" [ghosts]="ghostItems"></ghost-cards>
   </div>
