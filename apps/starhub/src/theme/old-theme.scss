@@ -1,3 +1,22 @@
+// Define font family using old font
+@font-face {
+    font-family: "starhub";
+    src: url(assets/DINPro-Regular.otf);
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: "starhub";
+    src: url(assets/DINPro-Bold.otf);
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: "starhub";
+    src: url(assets/DINPro-Medium.otf);
+    font-weight: 600;
+}
+
 html body:not(.electric-green) {
     // mixins with old defaults
 
@@ -32,6 +51,15 @@ html body:not(.electric-green) {
             @include macaron(#ffffff, #4d4d4c);
         }
     }
+
+    $old-typography: mat-typography-config(
+        $font-family: "starhub, Roboto, Helvetica, Arial, sans-serif",
+    );
+
+    // Override typography CSS classes (e.g., mat-h1, mat-display-1, mat-typography, etc.).
+    @include mat-base-typography($old-typography);
+    // Override typography for all Angular Material, including mat-base-typography and all components.
+    @include mat-core($old-typography);
 
     // styles.scss
     font-family: starhub, Roboto, Arial, Helvetica, sans-serif;

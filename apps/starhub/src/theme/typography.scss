@@ -1,28 +1,58 @@
+@mixin black {
+  font-weight: 900;
+  font-style: normal;
+}
+
+@mixin bold {
+  font-weight: bold;
+  font-style: normal;
+}
+
+@mixin semi-bold {
+  font-weight: 600;
+  font-style: normal;
+}
+
+@mixin regular {
+  font-weight: normal;
+  font-style: normal;
+}
+
+@mixin medium {
+  font-weight: 500;
+  font-style: normal;
+}
+
 body.electric-green {
   font-size: 16px;
   letter-spacing: 0.2px;
   line-height: 21px;
+  @include regular;
 
   .semi-bold {
     letter-spacing: 0.1px;
+    @include semi-bold;
   }
 
   h1 {
     font-size: 30px;
     letter-spacing: 0.3px;
     line-height: 37px;
+    @include black;
   }
 
   h2 {
     font-size: 24px;
     letter-spacing: 0;
     line-height: 26px;
+    @include black;
   }
 
   h3 {
     font-size: 20px;
     letter-spacing: 0;
     line-height: 19px;
+    @include bold;
   }
 
   a {
