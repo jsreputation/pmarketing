@@ -4,7 +4,8 @@ import { ChangePasswordComponent } from '@perxtech/blackcomb-pages';
 
 const routes: Routes = [{
   path: '',
-  component: ChangePasswordComponent
+  component: ChangePasswordComponent,
+  data: { minLen: 4 }
 }];
 
 @NgModule({
