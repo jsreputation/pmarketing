@@ -39,7 +39,7 @@
   .badge {
     max-width: 7rem;
     height: 4.8rem;
-    background-color: #ffffff;
+    background-color: $white;
     border-radius: 0.5rem;
     position: absolute;
     width: 100%;
@@ -61,20 +61,11 @@
 .reward-merchant {
   margin-top: 4rem;
   text-align: center;
-
-  h1 {
-    color: #3a3a3a;
-  }
-
-  h2 {
-    font-weight: normal;
-    color: #666666;
-  }
 }
 
 .reward-balance {
   font-size: 1.6rem;
-  color: #666666;
+  color: $dark-grey;
 }
 
 .voucher {
@@ -96,14 +87,11 @@
   margin-bottom: 5rem;
 
   h1 {
-    font-size: 1.6rem;
-    color: #3A3A3A;
-    font-weight: normal;
+    color: $dark-grey;
     margin-bottom: 0;
   }
 
   p {
-    color: #666666;
     line-height: 2rem;
   }
 
@@ -120,7 +108,6 @@
       display: inline-flex;
       vertical-align: middle;
       align-items: center;
-      color: #7E8494;
       margin-bottom: 1.5rem;
 
       .icon {
@@ -134,12 +121,11 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  background-color: #ffffff;
+  background-color: $white;
   min-height: 3.6rem;
   padding: 1rem 0;
 
   button.full-width {
     width: 70%;
-    color: #ffffff;
   }
 }

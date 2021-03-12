@@ -1,5 +1,5 @@
-@import "../../reward.scss";
-@import "../../macaron.scss";
+@import "../../../theme/mixins/reward.scss";
+@import "../../../theme/mixins/macaron.scss";
 
 .macaron-container {
   text-align: center;
@@ -27,22 +27,11 @@ app-expire-timer,
   display: none;
 }
 
-.reward-merchant {
-  h1 {
-    font-size: 2rem;
-    font-weight: bold;
-  }
-
-  h2 {
-    font-size: 1.6rem;
-  }
-}
-
 .description,
 .address,
 .terms-conditions {
   font-size: 1.6rem;
-  color: #666666;
+  color: $dark-grey;
   white-space: inherit;
   line-height: 2.5rem;
 }

@@ -1,0 +1,60 @@
+body.electric-green {
+    button,
+    .button {
+        // Secondary buttons (default button)
+        height: 40px;
+        border-radius: 4px;
+        font-size: 16px;
+        border: 1px solid $electric-green;
+        color: $dark-electric-green;
+        font-weight: bold;
+        text-transform: none;
+        // Button states
+        &:active {
+            background-color: $electric-green;
+        }
+        &:hover {
+            background-color: $green-nova;
+            color: $dark-electric-green;
+        }
+        &:disabled,
+        &.disabled {
+            border-color: $light-grey;
+            background-color: $light-grey;
+            color: $medium-grey;
+        }
+        // Primary buttons
+        &.primary,
+        &.mat-primary {
+            border: none;
+            background-color: $electric-green;
+            // Button states
+            &:hover {
+                background-color: $green-nova;
+            }
+            &:disabled,
+            &.disabled {
+                background-color: $light-grey;
+                color: $medium-grey;
+                &:hover {
+                    background-color: $light-grey;
+                }
+            }
+        }
+        // Tertiary/Link buttons
+        &.link {
+            border: none;
+            background-color: transparent;
+            // Button states
+            &:hover {
+                color: $electric-green;
+                background-color: transparent;
+            }
+            &:disabled,
+            &.disabled {
+                color: $medium-grey;
+                background-color: transparent;
+            }
+        }
+    }
+}

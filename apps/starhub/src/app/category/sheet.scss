@@ -1,4 +1,4 @@
-@import '../icon.scss';
+@import "../../theme/mixins/icon.scss";
 
 .main-container {
   .icon {
@@ -12,16 +12,12 @@
     align-items: center;
 
     h1 {
-      color: #6DC00E;
-      font-size: 1.2rem;
-      font-weight: 600;
+      color: $dark-electric-green;
     }
   }
 
   button {
     width: 100%;
-    height: 6rem;
-    color: white;
     margin: 1rem 0;
   }
 
@@ -29,9 +25,8 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    color: #666666;
     padding: 1.5rem;
-    border: 1px solid #F1F2F4;
+    border: 1px solid $light-grey;
     border-radius: 0.5rem;
     margin: 0.5rem;
 
@@ -45,7 +40,7 @@
   }
 
   .label-selected {
-    color: #6DC00E;
-    background: #EEF9E4;
+    color: $electric-green;
+    background: $tint-electric-green;
   }
 }

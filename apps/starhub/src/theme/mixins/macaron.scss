@@ -1,0 +1,24 @@
+@mixin macaron($backgroundColor, $fontColor) {
+  border-radius: 5rem;
+  padding: 0.5rem 1rem;
+  font-size: 1.2rem;
+  background-color: $backgroundColor;
+  color: $fontColor;
+}
+
+@mixin macaronStyles {
+  .just-added,
+  .coming-soon {
+    @include macaron($electric-green, $white);
+  }
+
+  .expiring,
+  .running-out {
+    @include macaron($lime-eclipse, $dark-grey);
+  }
+
+  .expired,
+  .fully-redeemed {
+    @include macaron($white, $dark-grey);
+  }
+}

@@ -1,4 +1,4 @@
-@import "../icon.scss";
+@import "../../theme/mixins/icon.scss";
 
 .icon {
   @include icon;
@@ -50,7 +50,7 @@
 
 .upper-section {
   border-radius: 1rem 1rem 0 0;
-  background-color: #ffffff;
+  background-color: $white;
 }
 
 .middle-section {
@@ -66,7 +66,7 @@
 
 .lower-section {
   border-radius: 0 0 1rem 1rem;
-  background-color: #ffffff;
+  background-color: $white;
   overflow: hidden;
   margin-bottom: 4rem;
 }
@@ -79,7 +79,7 @@
 .detail {
   padding: 1rem 1.5rem;
   text-align: center;
-  color: #666666;
+  color: $dark-grey;
 }
 
 .inner {
@@ -105,19 +105,13 @@
   align-items: center;
   justify-content: center;
 
-  h1,
-  p {
-    font-size: 2rem;
-    color: #666666;
-  }
-
   .code {
-    background: #eef9e4;
+    background: $tint-electric-green;
     border-radius: 0.5rem;
-    border-color: #eef9e4;
+    border-color: $tint-electric-green;
     border-style: solid;
     text-align: center;
-    color: #666666;
+    color: $dark-grey;
     padding: 1.5rem 3.5rem;
     font-size: 1.8rem;
     outline: none;
@@ -127,7 +121,7 @@
 .code-redemption.unavailable {
   .code {
     text-transform: uppercase;
-    background-color: #e3e7ee;
+    background-color: $light-grey;
   }
 }
 
@@ -138,7 +132,7 @@
 }
 
 .enter-pin {
-  color: #ffffff;
+  color: $white;
   padding: 0.5rem 3rem;
 }
 
@@ -149,7 +143,7 @@
 
   .incorrect-pin {
     text-align: center;
-    color: #d8127d;
+    color: $error-text;
     font-size: 1.6rem;
   }
 }
@@ -157,21 +151,11 @@
 .action {
   display: flex;
   flex-direction: column;
-
-  button {
-    text-transform: uppercase;
-    border-radius: 0;
-    padding: 1rem;
-  }
-
-  button.mat-flat-button {
-    color: #ffffff;
-  }
 }
 
 // out of time to find something better at this stage
 ::ng-deep input {
-  background: #eef9e4;
+  background: $tint-electric-green;
   border: 0 !important;
   font-size: 1.8rem !important;
   height: 6rem !important;
@@ -179,26 +163,25 @@
 }
 
 ::ng-deep.error input {
-  border-color: #eb202f;
-  background: #fff3f9;
+  border-color: $error-text;
+  background: $light-grey;
 }
 
 ::ng-deep .error :focus {
-  outline-color: #eb202f;
+  outline-color: $error-text;
 }
 
 :host ::ng-deep .activation-code {
   .activation-code__inputs input {
-    color: #666666;
+    color: $dark-grey;
   }
 
   .activation-code__inputs input:focus {
-    outline-color: #73c20e;
+    outline-color: $electric-green;
   }
 
   .error-label {
-    color: #D8127D;
-    font-family: DINPro, Roboto, sans-serif;
+    color: $error-text;
     font-size: 16px;
     line-height: 21px;
   }

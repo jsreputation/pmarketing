@@ -1,0 +1,762 @@
+// Define font family using old font
+@font-face {
+    font-family: "starhub";
+    src: url(assets/DINPro-Regular.otf);
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: "starhub";
+    src: url(assets/DINPro-Bold.otf);
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: "starhub";
+    src: url(assets/DINPro-Medium.otf);
+    font-weight: 600;
+}
+
+html body:not(.electric-green) {
+    // mixins with old defaults
+
+    // override with old mixin for old theme
+    // important to get past specificity
+    @mixin icon($diameter: 3.2rem, $background: #eef9e4, $color: #6dc00e) {
+        width: $diameter !important;
+        height: $diameter !important;
+        background: $background !important;
+        color: $color !important;
+        min-width: $diameter !important;
+    }
+
+    @mixin macaron($backgroundColor, $fontColor) {
+        background-color: $backgroundColor !important;
+        color: $fontColor !important;
+    }
+
+    @mixin macaronStyles {
+        .just-added,
+        .coming-soon {
+            @include macaron(#73c20e, #ffffff);
+        }
+
+        .expiring,
+        .running-out {
+            @include macaron(#ffdb1b, #4d4d4c);
+        }
+
+        .expired,
+        .fully-redeemed {
+            @include macaron(#ffffff, #4d4d4c);
+        }
+    }
+
+    $old-typography: mat-typography-config(
+        $font-family: "starhub, Roboto, Helvetica, Arial, sans-serif",
+    );
+
+    // Override typography CSS classes (e.g., mat-h1, mat-display-1, mat-typography, etc.).
+    @include mat-base-typography($old-typography);
+    // Override typography for all Angular Material, including mat-base-typography and all components.
+    @include mat-core($old-typography);
+
+    $custom-green: map-merge(
+        $mat-green,
+        (
+            500: #6dc00e,
+        )
+    );
+
+    $starhub-app-primary: mat-palette($custom-green);
+    $starhub-app-accent: mat-palette($mat-lime, A200, A100, A400);
+
+    // The warn palette is optional (defaults to red).
+    $starhub-app-warn: mat-palette($mat-red);
+
+    // Create the theme object (a Sass map containing all of the palettes).
+    $starhub-app-theme: mat-light-theme($starhub-app-primary, $starhub-app-accent, $starhub-app-warn);
+
+    // Include theme styles for core and each component used in your app.
+    // Alternatively, you can import and @include the theme mixins for each component
+    // that you are using.
+    @include angular-material-theme($starhub-app-theme);
+
+    // styles.scss
+    font-family: starhub, Roboto, Arial, Helvetica, sans-serif;
+    background: #f6f7f9;
+    // TODO: verify game popup & remove
+    .custom-class {
+        h1 {
+            font-weight: bold;
+            line-height: 3.1rem;
+        }
+
+        .mat-dialog-content {
+            font-size: 1.8rem;
+            color: #777776;
+            line-height: 2.3rem;
+        }
+
+        .button-group {
+            button {
+                height: 6rem;
+                text-transform: capitalize;
+                font-size: 1.6rem;
+                border-radius: 0.5rem;
+            }
+        }
+    }
+
+    // app.component.scss
+    .holding-container .content .text-block {
+        h1 {
+            font-size: 1.8rem;
+            color: #6dc00e !important; //ffs specificty
+        }
+
+        h2 {
+            font-size: 1.6rem;
+        }
+    }
+
+    // components with overlays
+    .cdk-overlay-container .cdk-overlay-pane {
+        // sheet.scss
+        app-category-select,
+        app-category-sort {
+            .main-container {
+                .popup-header {
+                    h1 {
+                        color: #6dc00e;
+                        font-size: 1.2rem;
+                        font-weight: 600;
+                    }
+                }
+                label {
+                    color: #666666;
+                    border: 1px solid #f1f2f4;
+                }
+
+                .label-selected {
+                    color: #6dc00e;
+                    background: #eef9e4;
+                }
+
+                button {
+                    width: 100%;
+                    height: 6rem;
+                    color: $white;
+                }
+            }
+        }
+
+        // feed-item-popup.component.scss
+        perx-core--feed-item-popup {
+            .mat-dialog-actions {
+                .dialog-button {
+                    padding: 0.5rem;
+                    color: #6dc00e;
+                }
+            }
+        }
+
+        .mat-bottom-sheet-container {
+            background-color: #f6f7f9;
+        }
+    }
+
+    .app {
+        // styles.scss
+        mat-ink-bar {
+            &::before {
+                background-color: #6dc00e;
+            }
+        }
+
+        .mat-flat-button.mat-primary {
+            color: $white;
+        }
+
+        .mat-card:not([class*="mat-elevation-z"]) {
+            box-shadow: 0 0.4rem 0.4rem #d2d8e2;
+        }
+
+        // campaigns.component.scss
+        // catalogs.component.scss
+        app-campaigns,
+        app-catalogs {
+            .main-container {
+                h1 {
+                    font-size: 2.5rem;
+                    color: #666666;
+                }
+            }
+        }
+
+        // cards.scss
+        mat-card {
+            &.mat-card {
+                mat-card-actions {
+                    a {
+                        color: #6dc00e;
+                    }
+                }
+                mat-card-content {
+                    div {
+                        h1 {
+                            font-size: 1.6rem;
+                            color: #666666;
+                        }
+
+                        h2 {
+                            font-size: 1.6rem;
+                            color: #666666;
+                            font-weight: normal;
+                        }
+
+                        h3 {
+                            font-weight: normal;
+                            color: #666666;
+                        }
+                    }
+                }
+            }
+        }
+
+        // categories.component.scss
+        app-categories {
+            .category-title {
+                color: #666666;
+            }
+        }
+
+        // category.component.scss
+        app-category {
+            mat-toolbar {
+                .toolbar-title {
+                    color: #666666;
+                }
+            }
+
+            .content {
+                background-color: #f2f2f2;
+
+                h1.catergory-title {
+                    color: #666666;
+                    font-size: 3rem;
+                }
+
+                .mat-card {
+                    mat-card-content {
+                        .details {
+                            color: #666666;
+                            h1 {
+                                font-size: 1.6rem;
+                                font-weight: bold;
+                            }
+
+                            h2 {
+                                font-size: 1.2rem;
+                                font-weight: normal;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // category-sort.component.scss
+        app-category-sort {
+            .mat-elevation-z2 label,
+            .mat-flat-button {
+                font-weight: 600;
+            }
+        }
+
+        // congrats.component.scss
+        app-congrats {
+            h1 {
+                color: #666666;
+            }
+
+            h2 {
+                color: #666666;
+            }
+            mat-toolbar {
+                h1 {
+                    font-size: 2.5rem;
+                    color: #6dc00e;
+                    font-weight: bold;
+                }
+
+                h2 {
+                    font-size: 1.6rem;
+                    color: #666666;
+                }
+            }
+            .main {
+                a {
+                    text-decoration: none;
+                }
+
+                .single-voucher {
+                    h1 {
+                        font-size: 2rem;
+                        font-weight: normal;
+                    }
+
+                    h2 {
+                        font-size: 1.6rem;
+                        font-weight: normal;
+                    }
+                }
+
+                .multiple-vouchers {
+                    mat-card {
+                        mat-card-content {
+                            h1 {
+                                font-weight: normal;
+                                font-size: 1.6rem;
+                                color: #666666;
+                            }
+
+                            h2 {
+                                font-weight: normal;
+                                font-size: 1.2rem;
+                                color: #666666;
+                            }
+                        }
+                    }
+                }
+            }
+            .actions {
+                a {
+                    font-size: 1.8rem;
+                }
+            }
+        }
+
+        // discover.component.scss
+        app-discover {
+            h1 {
+                font-size: 25px;
+                color: #666666;
+            }
+        }
+
+        // error.component.scss
+        app-error .main p {
+            color: #7b7b7c;
+        }
+
+        // home.component.scss
+        app-home .app {
+            mat-toolbar {
+                background-color: white;
+                color: #666666;
+                border-bottom: 1px solid #979797;
+
+                .top-row {
+                    .reward {
+                        h2 {
+                            font-size: 2rem;
+                        }
+
+                        .membership-link {
+                            .subtitle {
+                                color: #73c20e;
+                            }
+                        }
+
+                        .subtitle {
+                            color: #73c20e;
+                        }
+                    }
+                }
+
+                .mat-tab-nav-bar {
+                    a {
+                        color: #666666;
+                    }
+                }
+            }
+        }
+
+        // locations.component.scss
+        app-locations {
+            .content {
+                .loc {
+                    color: #666666;
+
+                    h1 {
+                        font-size: 1.6rem;
+                        font-weight: normal;
+                    }
+
+                    p {
+                        font-size: 1.4rem;
+                    }
+                }
+            }
+        }
+
+        // location-short-format.component.scss
+        app-location-short-format {
+            .main-container {
+                .loc {
+                    color: #666666;
+
+                    h1 {
+                        font-size: 1.4rem;
+                        font-weight: normal;
+                    }
+
+                    .title {
+                        font-size: 1.6rem;
+                        color: #3a3a3a;
+                        font-weight: normal;
+                    }
+
+                    p {
+                        font-size: 1.2rem;
+                    }
+                }
+
+                .mat-button {
+                    padding: 0;
+                    font-size: 1.6rem;
+                }
+            }
+        }
+
+        // news-feed.component.scss
+        app-news-feed {
+            .dots {
+                .container {
+                    span {
+                        &.gray-dot {
+                            background-color: #d2d8e2 !important;
+                        }
+
+                        &.green-bar {
+                            background-color: #6dc00e !important;
+                        }
+                    }
+                }
+            }
+        }
+
+        // quiz.component.scss
+        app-quiz {
+            .quiz-main-container {
+                background-color: #f6f7f9;
+
+                .quiz-page {
+                    .progress-container {
+                        background: $white;
+                    }
+
+                    .timer {
+                        color: #b00020;
+                    }
+
+                    .quiz-card {
+                        h1 {
+                            font-style: normal;
+                            font-weight: 500;
+                            font-size: 1.6rem;
+                            color: $white;
+                        }
+
+                        h2 {
+                            font-style: normal;
+                            font-weight: normal;
+                            font-size: 1.2rem;
+                            color: #666666;
+                        }
+                    }
+
+                    .quiz-no-card {
+                        color: $white;
+
+                        ::ng-deep .question {
+                            color: $white;
+                        }
+
+                        ::ng-deep .description {
+                            color: $white;
+                        }
+
+                        // customize look and feel of swipe component
+                        ::ng-deep .swipe-blackcomb {
+                            .ngstd-list-item {
+                                .ngstd-item-container {
+                                    background-color: gray;
+                                    color: $white;
+
+                                    .title {
+                                        color: $white;
+                                    }
+
+                                    .ngstd-icon {
+                                        background-color: black;
+                                        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+                                        color: $white;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // quiz-results.component.scss
+        app-quiz-results {
+            .survey-page {
+                .results-text-container {
+                    h1 {
+                        font-size: 3.4rem;
+                        font-style: normal;
+                        font-weight: 300;
+                    }
+
+                    h2 {
+                        font-size: 1.6rem;
+                        font-style: normal;
+                        font-weight: normal;
+                    }
+                }
+            }
+        }
+
+        // quiz-survey-campaigns.component.scss
+        app-quiz-survey-campaigns {
+            .main-container {
+                h1 {
+                    font-size: 2.5rem;
+                    color: #666666;
+                }
+            }
+        }
+
+        // redemption.component.scss
+        app-redemption .main {
+            .detail {
+                color: #666666;
+            }
+
+            .code-redemption {
+                h1,
+                p {
+                    font-size: 2rem;
+                    color: #666666;
+                }
+
+                .code {
+                    background: #eef9e4;
+                    border-color: #eef9e4;
+                    color: #666666;
+                }
+            }
+            .code-redemption.unavailable {
+                .code {
+                    background-color: #e3e7ee;
+                }
+            }
+
+            .pin-input-container {
+                .incorrect-pin {
+                    color: #d8127d;
+                }
+            }
+
+            .action {
+                button {
+                    text-transform: uppercase;
+                    border-radius: 0;
+                    padding: 1rem;
+                }
+
+                button.mat-flat-button {
+                    color: $white;
+                }
+            }
+
+            ::ng-deep input {
+                background: #eef9e4;
+            }
+
+            ::ng-deep.error input {
+                border-color: #eb202f;
+                background: #fff3f9;
+            }
+
+            ::ng-deep .error :focus {
+                outline-color: #eb202f;
+            }
+
+            :host ::ng-deep .activation-code {
+                .activation-code__inputs input {
+                    color: #666666;
+                }
+
+                .activation-code__inputs input:focus {
+                    outline-color: #73c20e;
+                }
+
+                .error-label {
+                    color: #d8127d;
+                }
+            }
+        }
+
+        // reward.scss
+        app-reward,
+        app-reward-detail,
+        app-voucher {
+            .reward-merchant {
+                h1 {
+                    color: #3a3a3a;
+                }
+
+                h2 {
+                    font-weight: normal;
+                    color: #666666;
+                }
+            }
+
+            .reward-balance {
+                color: #666666;
+            }
+
+            .container {
+                h1 {
+                    font-size: 1.6rem;
+                    color: #3a3a3a;
+                    font-weight: normal;
+                }
+
+                p {
+                    color: #666666;
+                }
+
+                .about {
+                    a {
+                        color: #7e8494;
+                    }
+                }
+            }
+
+            .button-area {
+                button.full-width {
+                    color: $white;
+                }
+            }
+        }
+
+        // reward-detail.component.scss
+        app-reward-detail {
+            .reward-merchant {
+                h1 {
+                    font-size: 2rem;
+                    font-weight: bold;
+                }
+
+                h2 {
+                    font-size: 1.6rem;
+                }
+            }
+
+            .description,
+            .address,
+            .terms-conditions {
+                color: #666666;
+            }
+        }
+
+        // rewards-cards.component.scss
+        // stamp-cards.component.scss
+        // tagged-items.component.scss
+        app-rewards-cards,
+        app-stamp-cards,
+        app-tagged-items {
+            .main-container {
+                h1 {
+                    font-size: 2.5rem;
+                    color: #666666;
+                }
+            }
+        }
+
+        // vouchers.component.scss
+        app-vouchers .rewards-container {
+            .disabled-icon {
+                @include icon(3.2rem, #d4d4d4, white);
+            }
+
+            button {
+                background: rgba(255, 255, 255, 0);
+                border: 1px solid #6dc00e;
+                box-sizing: border-box;
+                border-radius: 5px;
+                text-transform: uppercase;
+                font-size: 1.8rem;
+                height: 5rem;
+                width: 100%;
+                color: #666666;
+            }
+
+            h1 {
+                color: #666666;
+                font-size: 2.5rem;
+            }
+
+            .mat-card-header {
+                .mat-card-title {
+                    color: #666666;
+                }
+
+                .mat-card-subtitle.less-three-days {
+                    color: #d8127d;
+                }
+
+                .mat-card-subtitle.greater-three-days {
+                    color: #666666;
+                }
+            }
+
+            .empty-wallet {
+                h1 {
+                    font-size: 2.5rem;
+                }
+
+                p {
+                    font-size: 1.6rem;
+                    text-align: center;
+                    color: #666666;
+                }
+            }
+
+            .no-rewards {
+                p.title {
+                    color: #666666;
+                    font-size: 2.5rem;
+                }
+
+                p.sub-title {
+                    color: #666666;
+                    font-size: 1.6rem;
+                }
+            }
+        }
+    }
+
+    // use old mixin globally for old theme
+    .icon {
+        @include icon;
+    }
+
+    @include macaronStyles();
+}

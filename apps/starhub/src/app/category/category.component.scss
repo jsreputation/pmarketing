@@ -1,5 +1,6 @@
-@import "../toolbar.scss";
-@import "../macaron.scss";
+@import "../../theme/theme.scss";
+@import "../../theme/mixins/macaron.scss";
+@import "../../theme/mixins/toolbar.scss";
 
 mat-toolbar {
   @include toolbar;
@@ -14,7 +15,7 @@ mat-toolbar {
     left: 0;
     right: 0;
     text-align: center;
-    color: #666666;
+    color: $dark-grey;
   }
 }
 
@@ -28,7 +29,7 @@ mat-toolbar {
 .content {
   height: 100%;
   overflow-y: scroll;
-  background-color: #f2f2f2;
+  background-color: $canvas-grey;
   padding: 0 1.5rem;
 
   .scroll-content {
@@ -46,8 +47,7 @@ mat-toolbar {
   }
 
   h1.catergory-title {
-    color: #666666;
-    font-size: 3rem;
+    color: $dark-grey;
     margin: 1rem 0;
   }
 
@@ -68,19 +68,13 @@ mat-toolbar {
 
       .details {
         flex: 1;
-
+        color: $dark-grey;
         h1 {
-          font-size: 1.6rem;
-          color: #666666;
-          font-weight: bold;
           margin: 0;
         }
 
         h2 {
-          font-size: 1.2rem;
-          font-weight: normal;
           margin: 0.2rem 0 0 0;
-          color: #666666;
         }
       }
 
@@ -101,7 +95,7 @@ mat-toolbar {
   .badge {
     max-width: 8rem;
     height: 4.8rem;
-    background-color: #ffffff;
+    background-color: $white;
     border-radius: 0.5rem 0.5rem 0 0;
     position: absolute;
     left: 0;

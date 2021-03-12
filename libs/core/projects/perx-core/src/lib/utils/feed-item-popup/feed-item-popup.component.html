@@ -13,7 +13,7 @@
             mat-button
             mat-dialog-close
             (click)="goToItemLink()"
-            *ngIf="showButton" color="primary">
+            *ngIf="showButton && item.title">
       {{item.title}}
     </button>
   </div>

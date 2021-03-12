@@ -1,4 +1,4 @@
-@import "../toolbar.scss";
+@import "../../theme/mixins/toolbar.scss";
 
 mat-toolbar {
   @include toolbar;
@@ -28,20 +28,14 @@ mat-toolbar {
   align-items: center;
   justify-content: space-between;
   padding: 0 1.5rem;
-  color: #666666;
+  color: $dark-grey;
   margin-bottom: 2rem;
 
   address {
     flex: 1;
   }
 
-  h1 {
-    font-size: 1.6rem;
-    font-weight: normal;
-  }
-
   p {
-    font-size: 1.4rem;
     margin: 0;
   }
 }

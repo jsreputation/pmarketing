@@ -1,12 +1,10 @@
 @import "../cards";
-@import "../../macaron.scss";
+@import "../../../theme/mixins/macaron.scss";
 
 .main-container {
   margin-left: 0.5rem;
 
   h1 {
-    font-size: 2.5rem;
-    color: #666666;
     margin: 1rem;
   }
 
@@ -49,7 +47,8 @@
 .card-description {
   width: 85%;
 
-  h1, h2 {
+  h1,
+  h2 {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

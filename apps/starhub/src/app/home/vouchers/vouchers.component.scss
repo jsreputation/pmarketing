@@ -1,28 +1,11 @@
-@import '../../icon.scss';
-
-button {
-  background: rgba(255, 255, 255, 0);
-  border: 1px solid #6dc00e;
-  box-sizing: border-box;
-  border-radius: 5px;
-  text-transform: uppercase;
-  font-size: 1.8rem;
-  height: 5rem;
-  width: 100%;
-  color: #666666;
-}
+@import "../../../theme/mixins/icon.scss";
 
 .icon {
   @include icon(3.2rem);
 }
 
 .disabled-icon {
-  @include icon(3.2rem, #D4D4D4, white);
-}
-
-h1 {
-  color: #666666;
-  font-size: 2.5rem;
+  @include icon(3.2rem, $light-grey, $white);
 }
 
 .mat-card {
@@ -41,7 +24,7 @@ h1 {
   .mat-card-title {
     font-size: 1.6rem;
     font-weight: bold;
-    color: #666666;
+    color: $dark-grey;
   }
 
   .mat-card-subtitle {
@@ -50,11 +33,11 @@ h1 {
   }
 
   .mat-card-subtitle.less-three-days {
-    color: #D8127D;
+    color: $error-text;
   }
 
   .mat-card-subtitle.greater-three-days {
-    color: #666666;
+    color: $dark-grey;
   }
 }
 
@@ -71,14 +54,8 @@ h1 {
     align-items: center;
     margin-top: 7rem;
 
-    h1 {
-      font-size: 2.5rem;
-    }
-
     p {
-      font-size: 1.6rem;
       text-align: center;
-      color: #666666;
     }
   }
 }
@@ -93,14 +70,7 @@ h1 {
   margin-top: 4rem;
 
   p.title {
-    color: #666666;
-    font-size: 2.5rem;
     margin-top: 0;
-  }
-
-  p.sub-title {
-    color: #666666;
-    font-size: 1.6rem;
   }
 }
 
