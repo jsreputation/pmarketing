@@ -10,7 +10,7 @@
     <mat-radio-group [color]="'primary'" [formControl]="formControl" [formlyAttributes]="field" [required]="to.required"
       [tabindex]="to.tabindex">
       <div class="single-divider" *ngFor="let option of to.options | formlySelectOptions: field | async; let i = index">
-        <mat-radio-button [id]="id + '_' + i" [color]="'primary'" [value]="option.value">
+        <mat-radio-button [id]="id + '_' + i" [color]="'primary'" [value]="i + '. ' + option.value">
           {{option.label}}
         </mat-radio-button>
       </div>
