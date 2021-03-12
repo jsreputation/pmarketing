@@ -1,2 +1,3 @@
 LOGIN_METHOD=phone
 PRODUCTION=true
+PRIVACY_POLICY_URL="https://cdn.perxtech.net/content/merck/privacy-policy.html"

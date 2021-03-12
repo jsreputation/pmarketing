@@ -10,6 +10,18 @@ require('dotenv').config();
 const angularTargetPath = path.resolve(__dirname, './src/environments/environment.ts');
 const appConfigPath = path.resolve(__dirname, './src/assets/config/app-config.json');
 
+const displayProperties = `"displayProperties": {
+  "account": {
+      "pages": [
+          {
+              "key": "privacy-policy",
+              "title": "PRIVACY_POLICY",
+              "content_url": "${process.env.PRIVACY_POLICY_URL ? process.env.PRIVACY_POLICY_URL : ''}"
+          }
+      ]
+  }
+}`;
+
 // create environment folders
 ['./src/environments', './src/assets/config']
   .map(relativePath => path.resolve(__dirname, relativePath))
@@ -42,7 +54,8 @@ const appConfigFile = `{
   "custom": {
     "showConditions": ${process.env.SHOW_CONDITIONS ? process.env.SHOW_CONDITIONS : false},
     "loginMethod": "${process.env.LOGIN_METHOD ? process.env.LOGIN_METHOD : 'phone'}"
-  }
+  },
+  ${displayProperties}
 }
 `;
 

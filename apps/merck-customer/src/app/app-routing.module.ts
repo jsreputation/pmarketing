@@ -43,6 +43,10 @@ const routes: Routes = [
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'enter-pin/:type', component: EnterPinComponent},
+  {
+    path: 'c/:key',
+    loadChildren: () => import('./content/content.module').then(mod => mod.ContentModule)
+  },
   { path: '**', redirectTo: '/home' }
 ];
 @NgModule({
