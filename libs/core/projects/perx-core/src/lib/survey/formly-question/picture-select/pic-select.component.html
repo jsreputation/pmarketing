@@ -38,7 +38,7 @@
           [ngClass]="option.label ? 'choice-image' : 'choice-box'"
           [id]="id + '_' + i"
           [color]="'primary'"
-          [value]="option.value">
+          [value]="i + '. ' + option.value">
           <img *ngIf="option.label; else textLabel" class="image" [src]="option.label" [alt]="option.value">
           <ng-template #textLabel>
             {{ option.value }}
