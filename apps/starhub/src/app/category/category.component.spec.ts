@@ -1,13 +1,31 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick
+} from '@angular/core/testing';
 
 import { CategoryComponent } from './category.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatIconModule, MatToolbarModule, MatCardModule, MatBottomSheetModule, MatBottomSheet } from '@angular/material';
-import { RewardsService } from '@perxtech/core';
+import {
+  MatBottomSheet,
+  MatBottomSheetModule,
+  MatCardModule,
+  MatIconModule,
+  MatToolbarModule
+} from '@angular/material';
+import {
+  ConfigService,
+  RewardsService
+} from '@perxtech/core';
 import { of } from 'rxjs';
 import { rewards } from '../rewards.mock';
 import { catalogs } from '../catalogs.mock';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router
+} from '@angular/router';
 import { Type } from '@angular/core';
 import { SortingMode } from './category.model';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -39,6 +57,9 @@ describe('CategoryComponent', () => {
   const matBottomSheetStub = {
     open: () => { }
   };
+  const configServiceStub: Partial<ConfigService> = {
+    readAppConfig: () => of()
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -62,6 +83,7 @@ describe('CategoryComponent', () => {
         { provide: ActivatedRoute, useValue: activatedRouteStub },
         { provide: Router, useValue: routerStub },
         { provide: MatBottomSheet, useValue: matBottomSheetStub },
+        { provide: ConfigService, useValue: configServiceStub }
       ],
     })
       .overrideModule(BrowserDynamicTestingModule, {
@@ -81,11 +103,6 @@ describe('CategoryComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  describe('onInit', () => {
-    it('should get category name', fakeAsync(() => {
-      expect(component.selectedCategory).toBe('All');
-    }));
-  });
 
   it('should select reward and navigate', () => {
     const reward = {

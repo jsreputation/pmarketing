@@ -62,6 +62,10 @@ mat-toolbar {
       align-items: center;
       margin: 1.4rem 0 1.9rem 0;
 
+      &.ux-cr {
+        margin: 3rem 0 1.9rem 0;
+      }
+
       .details {
         flex: 1;
 
@@ -104,6 +108,10 @@ mat-toolbar {
     bottom: 0;
     width: 100%;
     text-align: center;
+
+    &.ux-cr {
+      bottom: -2.4rem; // cannot use transform as it is affected by parent animation
+    }
 
     img {
       max-width: 4rem;

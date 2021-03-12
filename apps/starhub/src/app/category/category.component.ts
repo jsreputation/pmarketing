@@ -1,34 +1,38 @@
 import {
-  Component,
-  OnInit,
-  NgZone,
-  ViewChild,
-  ElementRef,
   AfterViewInit,
-  Renderer2
+  Component,
+  ElementRef,
+  NgZone,
+  OnInit,
+  Renderer2,
+  ViewChild
 } from '@angular/core';
 
 import {
-  Router,
   ActivatedRoute,
+  Params,
+  Router,
 } from '@angular/router';
 import { MatBottomSheet } from '@angular/material';
 
 import {
-  finalize,
-  map
+  map,
+  switchMap,
+  tap
 } from 'rxjs/operators';
 
 import {
+  ConfigService,
+  ICatalog,
+  IConfig,
   IReward,
   RewardsService,
-  ICatalog,
   Sort,
 } from '@perxtech/core';
 
 import {
-  CategorySelectComponent,
   CategoryBottomSheetClosedCallBack,
+  CategorySelectComponent,
 } from './category-select/category-select.component';
 import {
   CategorySortComponent,
@@ -37,15 +41,26 @@ import {
 import { SortingMode } from './category.model';
 
 import {
-  MacaronService,
   IMacaron,
+  MacaronService,
 } from '../services/macaron.service';
 import {
   AnalyticsService,
   PageType,
 } from '../analytics.service';
 import { trigger } from '@angular/animations';
-import { fadeIn, fadeOut } from '../utils/fade-animations';
+import {
+  fadeIn,
+  fadeOut
+} from '../utils/fade-animations';
+import { IStarhubConfig } from '../home/home/home.component';
+import { oc } from 'ts-optchain';
+import {
+  EMPTY,
+  iif,
+  of
+} from 'rxjs';
+import { Observable } from 'rxjs/internal/Observable';
 
 const REQ_PAGE_SIZE: number = 10;
 
@@ -70,25 +85,34 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
   public selectedSortingCraeteria: SortingMode = SortingMode.ending_soon;
   public showToolbarTitle: boolean = false;
 
-  private fetchRewards(): void {
+  public uxcr: boolean = false;
+
+  private fetchRewards(): Observable<IReward[]> {
     const categories: string[] | null = this.selectedCategory === 'All' ? null : [this.selectedCategory];
     const orderBy = this.selectedSortingCraeteria === SortingMode.latest ? 'begins_at' : 'ends_at';
 
-    this.rewardsService.getRewards(this.rewardsPageId, REQ_PAGE_SIZE, null, categories, undefined, undefined, Sort.ascending, orderBy)
-      .subscribe((rewards: IReward[]) => {
-        if (!rewards) {
-          return;
+    return this.rewardsService.getRewards(
+      this.rewardsPageId, REQ_PAGE_SIZE,
+      null,
+      categories,
+      undefined,
+      undefined,
+      Sort.ascending,
+      orderBy
+    ).pipe(
+      map((rewards: IReward[]) => {
+        if (! rewards) {
+          return [];
         }
         // merge newly fetched rewards with the old list
-        this.rewardsList = [...this.rewardsList, ...rewards];
+        this.rewardsList = [ ...this.rewardsList, ...rewards ];
         if (rewards.length < REQ_PAGE_SIZE) {
           this.rewardsEnded = true;
           this.ghostRewards = [];
         }
-      },
-        (_) => {
-          this.ghostRewards = [];
-        });
+        return this.rewardsList;
+      })
+    );
   }
 
   constructor(
@@ -99,27 +123,71 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
     private zone: NgZone,
     private macaronService: MacaronService,
     private analytics: AnalyticsService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private configService: ConfigService
   ) { }
 
   public ngOnInit(): void {
-    const categoryName = this.activeRoute.snapshot.queryParamMap.get('category');
-    if (categoryName) {
-      this.selectedCategory = categoryName;
-      const pageName: string = `rewards:discover:${categoryName.toLowerCase()}`;
-      this.analytics.addEvent({
-        pageName,
-        pageType: PageType.sectionLanding,
-        siteSectionLevel2: 'rewards:discover',
-        siteSectionLevel3: pageName
+    // const categoryName = this.activeRoute.snapshot.queryParamMap.get('category');
+    // if (categoryName) {
+    //   this.selectedCategory = categoryName;
+    //   const pageName: string = `rewards:discover:${categoryName.toLowerCase()}`;
+    //   this.analytics.addEvent({
+    //     pageName,
+    //     pageType: PageType.sectionLanding,
+    //     siteSectionLevel2: 'rewards:discover',
+    //     siteSectionLevel3: pageName
+    //   });
+    //   this.fetchRewards();
+    // } else {
+    //   const catalogId = this.activeRoute.snapshot.queryParamMap.get('catalog');
+    //   if (!catalogId) {
+    //     return;
+    //   }
+    //   this.rewardsService.getCatalog(parseInt(catalogId, 10)).pipe(
+    //     map((catalog: ICatalog) => {
+    //       this.selectedCategory = catalog.name;
+    //       this.analytics.addEvent({
+    //         pageName: `rewards:discover:${catalog.name}`,
+    //         pageType: PageType.sectionLanding,
+    //         siteSectionLevel2: 'rewards:discover',
+    //         siteSectionLevel3: `rewards:discover:${catalog.name}`
+    //       });
+    //       return catalog.rewards || [];
+    //     }),
+    //     finalize(() => this.ghostRewards = [])
+    //   ).subscribe(rewards => this.rewardsList = rewards);
+    // }
+
+    this.configService.readAppConfig<IStarhubConfig>().pipe(
+      map((config: IConfig<IStarhubConfig>) => {
+        this.uxcr = oc(config).custom.UXCR(false);
+      }),
+      switchMap(() =>
+        iif(() => !! this.activeRoute.snapshot.queryParamMap.get('category'),
+          this.initCategory(),
+          this.initCatalog()
+        ))
+    ).subscribe(
+      (rewardsList: IReward[]) => {
+        this.rewardsList = rewardsList;
+        this.ghostRewards = [];
+      },
+      () => {
+        this.ghostRewards = [];
       });
-      this.fetchRewards();
-    } else {
-      const catalogId = this.activeRoute.snapshot.queryParamMap.get('catalog');
-      if (!catalogId) {
-        return;
-      }
-      this.rewardsService.getCatalog(parseInt(catalogId, 10)).pipe(
+  }
+
+  private initCatalog(): Observable<any> {
+    return this.activeRoute.queryParams
+      .pipe(
+        switchMap(
+          (params: Params) => iif(
+            () => params.catalog && params.catalog !== '',
+            this.rewardsService.getCatalog(parseInt(params.catalog, 10)),
+            of(EMPTY) // do nothing and terminate observable
+            )
+        ),
         map((catalog: ICatalog) => {
           this.selectedCategory = catalog.name;
           this.analytics.addEvent({
@@ -129,10 +197,28 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
             siteSectionLevel3: `rewards:discover:${catalog.name}`
           });
           return catalog.rewards || [];
+        })
+      );
+  }
+
+  private initCategory(): Observable<any> {
+    return this.activeRoute.queryParams
+      .pipe(
+        tap((params: Params) => {
+          if (params.category && params.category !== '') {
+            const categoryName = params.category;
+            this.selectedCategory = categoryName;
+            const pageName: string = `rewards:discover:${categoryName.toLowerCase()}`;
+            this.analytics.addEvent({
+              pageName,
+              pageType: PageType.sectionLanding,
+              siteSectionLevel2: 'rewards:discover',
+              siteSectionLevel3: pageName
+            });
+          }
         }),
-        finalize(() => this.ghostRewards = [])
-      ).subscribe(rewards => this.rewardsList = rewards);
-    }
+        switchMap((params: Params) => iif(() => (params.category && params.category !== ''), this.fetchRewards(), of([])))
+      );
   }
 
   private checkScrolledPosition(scrollValue: number): void {
@@ -166,7 +252,10 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
     this.rewardsList = [];
     this.rewardsEnded = false;
     this.ghostRewards = new Array(3);
-    this.fetchRewards();
+    this.fetchRewards().subscribe(() => {
+    }, () => {
+      this.ghostRewards = [];
+    });
   }
 
   public getCurrentSelectedCategory(): string {
@@ -185,7 +274,10 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
     this.rewardsList = [];
     this.rewardsEnded = false;
     this.ghostRewards = new Array(3);
-    this.fetchRewards();
+    this.fetchRewards().subscribe(() => {
+    }, () => {
+      this.ghostRewards = [];
+    });
   }
 
   public getCurrentSelectedOrder(): SortingMode {
@@ -198,7 +290,10 @@ export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallB
     }
 
     this.rewardsPageId++;
-    this.fetchRewards();
+    this.fetchRewards().subscribe(() => {
+    }, () => {
+      this.ghostRewards = [];
+    });
   }
 
   public ngAfterViewInit(): void {
