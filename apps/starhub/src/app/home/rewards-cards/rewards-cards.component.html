@@ -1,5 +1,5 @@
-<div *ngIf="(rewardsSnapping$ | async) as rewardsSnapping" class="main-container">
-  <h1 *ngIf="rewardsSnapping.length">Snapping Saturday</h1>
+<div *ngIf="!showAllSnappingSaturdayItems && (rewardsSnapping$ | async) as rewardsSnapping" class="main-container">
+  <h1 *ngIf="rewardsSnapping.length">Spinning Saturday</h1>
   <div [@fadeIn]="rewardsSnapping.length" *ngIf="rewardsSnapping.length > 0"
        infiniteScroll
        [infiniteScrollDistance]="3"
