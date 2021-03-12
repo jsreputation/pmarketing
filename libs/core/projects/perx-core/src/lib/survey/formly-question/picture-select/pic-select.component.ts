@@ -31,10 +31,4 @@ export class SurveyPictureSelectComponent extends FieldType {
     }
     super.onContainerClick(event);
   }
-
-  public isChecked(option: any): boolean {
-    const value = this.formControl.value;
-
-    return value && (this.to.type === 'array' ? value.indexOf(option.value) !== -1 : value[option.value]);
-  }
 }

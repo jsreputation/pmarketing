@@ -1,6 +1,5 @@
 <ng-container *ngIf="to.multiple; else elseBlock">
   <div class="choice-content single-divider"
-       [ngClass]="isChecked(option) ? 'selected' : ''"
        *ngFor="let option of to.options | formlySelectOptions: field | async; let i = index">
     <mat-checkbox
       [ngClass]="option.label ? 'choice-image' : 'choice-box'"
@@ -9,7 +8,6 @@
       [tabindex]="to.tabindex"
       [color]="'primary'"
       [labelPosition]="to.labelPosition"
-      [checked]="isChecked(option)"
       [disabled]="formControl.disabled"
       (change)="onChange(i + '. ' + option.value, $event.checked)">
       <img class="image"

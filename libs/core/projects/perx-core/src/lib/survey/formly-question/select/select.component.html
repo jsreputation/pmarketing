@@ -2,7 +2,7 @@
   <ng-container *ngIf="to.multiple; else elseBlock">
     <div class="single-divider" *ngFor="let option of to.options | formlySelectOptions: field | async; let i = index">
       <mat-checkbox [id]="id + '_' + i" [formlyAttributes]="field" [tabindex]="to.tabindex" [color]="'primary'"
-        [labelPosition]="to.labelPosition" [checked]="isChecked(option)" [disabled]="formControl.disabled"
+        [labelPosition]="to.labelPosition" [disabled]="formControl.disabled"
         (change)="onChange(i + '. ' + option.value, $event.checked)">{{option.label}}</mat-checkbox>
     </div>
   </ng-container>
