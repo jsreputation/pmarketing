@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import {
+  CommonModule,
+  DatePipe
+} from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
@@ -23,18 +26,23 @@ import { RewardsService } from '../rewards/rewards.service';
 import { ConfigService } from '../config/config.service';
 import { SafeHtmlPipe } from '../utils/safe-html.pipe';
 import { TranslateModule } from '@ngx-translate/core';
+import {
+  Platform,
+  PlatformModule
+} from '@angular/cdk/platform';
 
 export function vouchersServiceFactory(
   http: HttpClient,
   config: Config,
   configService: ConfigService,
   rewardsService: RewardsService,
+  platform: Platform
 ): IVoucherService {
   if (config.isWhistler) {
     return new WhistlerVouchersService(http, config, rewardsService);
   }
   // Make decision on what to instantiate base on config
-  return new V4VouchersService(http, configService);
+  return new V4VouchersService(http, configService, platform);
 }
 
 const components = [
@@ -58,6 +66,7 @@ const components = [
     MaterialModule,
     UtilsModule,
     TranslateModule.forChild(),
+    PlatformModule
   ],
   exports: [
     ...components
@@ -68,7 +77,7 @@ const components = [
     {
       provide: IVoucherService,
       useFactory: vouchersServiceFactory,
-      deps: [HttpClient, Config, ConfigService, RewardsService]
+      deps: [HttpClient, Config, ConfigService, RewardsService, Platform]
     }
   ]
 })
