@@ -1,18 +1,45 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpHeaders,
+  HttpParams
+} from '@angular/common/http';
 
 import { oc } from 'ts-optchain';
-import { interval, Observable, of } from 'rxjs';
-import { filter, flatMap, map, mergeAll, scan, switchMap, tap, mergeMap } from 'rxjs/operators';
+import {
+  interval,
+  Observable,
+  of
+} from 'rxjs';
+import {
+  filter,
+  flatMap,
+  map,
+  mergeAll,
+  mergeMap,
+  scan,
+  switchMap,
+  tap
+} from 'rxjs/operators';
 
 import { IVoucherService } from './ivoucher.service';
-import { IGetVoucherParams, IRedeemOptions, IVoucher, IVoucherLocation } from './models/voucher.model';
+import {
+  IGetVoucherParams,
+  IRedeemOptions,
+  IVoucher,
+  IVoucherLocation,
+  VoucherState
+} from './models/voucher.model';
 import { IRewardParams } from '../rewards/models/reward.model';
-import { IV4Reward, V4RewardsService } from '../rewards/v4-rewards.service';
+import {
+  IV4Reward,
+  V4RewardsService
+} from '../rewards/v4-rewards.service';
 import { RedemptionType } from '../perx-core.models';
 import { ConfigService } from '../config/config.service';
 import { IConfig } from '../config/models/config.model';
-import { VoucherState } from './models/voucher.model';
+
+import { Platform } from '@angular/cdk/platform';
 
 interface IV4Meta {
   count?: number;
@@ -123,7 +150,8 @@ export class V4VouchersService implements IVoucherService {
 
   constructor(
     private http: HttpClient,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private cdkplatform: Platform
   ) {
     this.configService.readAppConfig().subscribe(
       (config: IConfig<void>) => {
@@ -353,6 +381,9 @@ export class V4VouchersService implements IVoucherService {
     if (rewardParams && rewardParams.sourceType) {
       params = params.set('source_type', rewardParams.sourceType);
     }
+    if (this.cdkplatform.SAFARI) {
+      params = params.set('unique_call_rnd_counter', String(Math.random()));
+    }
     return this.http.post<IV4ReserveRewardResponse>(`${this.apiHost}/v4/rewards/${rewardId}/reserve`, null, { headers, params })
       .pipe(
         map((res: IV4ReserveRewardResponse) => res.data),
@@ -378,6 +409,9 @@ export class V4VouchersService implements IVoucherService {
     let params = new HttpParams();
     if (rewardParams && rewardParams.sourceType) {
       params = params.set('source_type', rewardParams.sourceType);
+    }
+    if (this.cdkplatform.SAFARI) {
+      params = params.set('unique_call_rnd_counter', String(Math.random()));
     }
 
     let bodyData = {};
