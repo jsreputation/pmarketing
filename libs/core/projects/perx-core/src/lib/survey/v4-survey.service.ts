@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
 import { IConfig } from '../config/models/config.model';
 import { ConfigService } from '../config/config.service';
-import { IAnswer, ISurvey, SurveyQuestionType } from './models/survey.model';
+import { IAnswer, ISurvey, ISurveyOutcome, SurveyQuestionType } from './models/survey.model';
 import { SurveyService } from './survey.service';
 import { Observable, of, ReplaySubject, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Cacheable } from 'ngx-cacheable';
 import { catchError, map, switchMap } from 'rxjs/operators';
-import { IV4Campaign, IV4CampaignResponse } from '../campaign/v4-campaign.service';
-import { IV4SurveyDisplayProperties, IV4SurveyOutcome, IV4SurveyQuestion } from './models/v4-survey.model';
 import { oc } from 'ts-optchain';
-import { patchUrl } from '../utils/patch-url.function';
 import { FormlyFieldConfig } from '@ngx-formly/core';
+import { patchUrl } from '../utils/patch-url.function';
+import { Asset } from '../game/v4-game.service';
 
 interface V4NextMoveResponse {
   data: {
@@ -40,6 +39,65 @@ export interface V4SurveyAnswer {
   content: (string | number)[] | string;
 }
 
+export interface IV4SurveyResponse {
+  data: {
+    display_properties: IV4SurveyDisplayProperties;
+  };
+}
+
+interface IV4Survey {
+  id?: number;
+  campaignId?: number;
+  title?: { text: string };
+  subTitle?: { text: string };
+  display_properties?: IV4SurveyDisplayProperties;
+}
+
+interface IV4SurveyDisplayProperties {
+  title: string;
+  questions: IV4SurveyQuestion[];
+  landing_page: {
+    body: string;
+    media?: { youtube?: string; };
+    heading: string;
+    button_text: string;
+    sub_heading: string;
+  };
+  background_image?: Asset;
+  card_image?: Asset;
+  header?: {
+    value?: {
+      title?: { [k: string]: { text: string } };
+      description?: { [k: string]: { text: string } };
+    };
+  };
+  headline_text?: string;
+  body_text?: string;
+  button_text?: string;
+  outcome?: IV4SurveyOutcome;
+  nooutcome?: IV4SurveyOutcome;
+}
+
+interface IV4SurveyOutcome {
+  title: { [k: string]: { text: string } };
+  button_text: { [k: string]: { text: string } };
+  description: { [k: string]: { text: string } };
+  outcome_image?: { value: { image_url: string } };
+}
+
+interface IV4SurveyQuestion {
+  question: { [k: string]: ({ text: string } & { image: { value: { image_url: string } } }) };
+  description: { [k: string]: { text: string } };
+  id: string;
+  required: boolean;
+  payload: any;
+}
+
+interface IV4SurveyResult {
+  outcome: ISurveyOutcome | undefined;
+  noOutcome: ISurveyOutcome | undefined;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -60,7 +118,6 @@ export class V4SurveyService implements SurveyService {
     switch (type) {
       case SurveyQuestionType.choice:
         return 'survey-select';
-        break;
       case SurveyQuestionType.pictureChoice:
         return 'pic-survey-select';
       default:
@@ -102,38 +159,49 @@ export class V4SurveyService implements SurveyService {
     };
   }
 
+  private buildOutcomes(displayProperties: IV4SurveyDisplayProperties | undefined, lang: string): IV4SurveyResult {
+    let outcome, noOutcome;
+    if (displayProperties) {
+      if (displayProperties.outcome) {
+        outcome = {
+          title: displayProperties.outcome.title[lang].text,
+          subTitle: displayProperties.outcome.description[lang].text,
+          button: displayProperties.outcome.button_text[lang].text,
+          image: displayProperties.outcome.outcome_image ? displayProperties.outcome.outcome_image.value.image_url : ''
+        };
+      }
+
+      if (displayProperties.nooutcome) {
+        noOutcome = {
+          title: displayProperties.nooutcome.title[lang].text,
+          subTitle: displayProperties.nooutcome.description[lang].text,
+          button: displayProperties.nooutcome.button_text[lang].text
+        };
+      }
+    }
+    return { outcome, noOutcome };
+  }
+
   @Cacheable({})
   public getSurveyFromCampaign(campaignId: number, lang: string = 'en'): Observable<ISurvey> {
     return this.baseUrl$.pipe(
-      switchMap(baseUrl => this.http.get<IV4CampaignResponse>(`${baseUrl}/v4/campaigns/${campaignId}/games`)),
+      switchMap(baseUrl => this.http.get<IV4SurveyResponse>(`${baseUrl}/v4/campaigns/${campaignId}/games`)),
       map((res) => res.data[0]),
-      map((surveyCampaign: IV4Campaign): ISurvey => {
-        const dp: IV4SurveyDisplayProperties = surveyCampaign.display_properties as IV4SurveyDisplayProperties;
-        const fields: FormlyFieldConfig[] = dp.questions.map((question) => this.makeFormlyConfig(question, lang));
-        let outcome: IV4SurveyOutcome | undefined;
-        if (oc(dp).headline_text() ||
-          oc(dp).body_text() ||
-          oc(dp).button_text()) {
-          outcome = {
-            title: oc(dp).headline_text(''),
-            subTitle: oc(dp).body_text(''),
-            button: oc(dp).button_text('')
-          };
-        }
-
+      map((surveyCampaign: IV4Survey): ISurvey => {
+        const dp = surveyCampaign.display_properties;
+        const fields: FormlyFieldConfig[] = dp ? dp.questions.map((question) => this.makeFormlyConfig(question, lang)) : [];
+        const outcomes = this.buildOutcomes(dp, lang);
         return {
           id: surveyCampaign.id,
           /* eslint-disable */
           title: (oc(dp).header.value.title ?
             oc(dp).header.value.title[lang]() :
-            oc(dp).header.value.title['en']()) as { text: string },
+            oc(dp).header.value.title[lang]()) as { text: string },
           subTitle: (oc(dp).header.value.description() ?
             oc(dp).header.value.description[lang]() :
-            oc(dp).header.value.description['en']()) as { text: string },
+            oc(dp).header.value.description[lang]()) as { text: string },
           /* eslint-enable */
-          results: {
-            outcome
-          },
+          results: { ...outcomes },
           fields,
           backgroundImgUrl: patchUrl(oc(dp).background_image.value.image_url('')),
           cardBackgroundImgUrl: patchUrl(oc(dp).card_image.value.image_url('')),
@@ -187,5 +255,4 @@ export class V4SurveyService implements SurveyService {
       catchError(_ => of({ rewardAcquired: false }))
     );
   }
-
 }
