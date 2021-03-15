@@ -382,7 +382,7 @@ export class V4VouchersService implements IVoucherService {
       params = params.set('source_type', rewardParams.sourceType);
     }
     if (this.cdkplatform.SAFARI) {
-      params = params.set('unique_call_rnd_counter', String(Math.random()))
+      params = params.set('unique_call_rnd_counter', String(Math.random()));
     }
     return this.http.post<IV4ReserveRewardResponse>(`${this.apiHost}/v4/rewards/${rewardId}/reserve`, null, { headers, params })
       .pipe(
@@ -411,7 +411,7 @@ export class V4VouchersService implements IVoucherService {
       params = params.set('source_type', rewardParams.sourceType);
     }
     if (this.cdkplatform.SAFARI) {
-      params = params.set('unique_call_rnd_counter', String(Math.random()))
+      params = params.set('unique_call_rnd_counter', String(Math.random()));
     }
 
     let bodyData = {};
