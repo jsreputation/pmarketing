@@ -15,14 +15,14 @@ body {
   font-family: Lato, Roboto, Arial, Helvetica, sans-serif;
   background: $canvas-grey;
   -webkit-overflow-scrolling: touch;
-}
 
-.app {
   // util class for hiding elements based on theme
   .hide-for-new-ux {
     display: none;
   }
+}
 
+.app {
   .mat-tab-links {
     width: 100%;
     align-items: center;
@@ -56,6 +56,15 @@ cdk-virtual-scroll-viewport {
   padding: 0;
   position: relative;
   border-radius: 1rem;
+
+  // override styles for feed-item-popup
+  .main-container {
+    color: $dark-grey !important;
+    font-size: 16px !important;
+    letter-spacing: 0.2px !important;
+    line-height: 21px !important;
+    @include regular;
+  }
 }
 
 .shake-tree-container .tree {
