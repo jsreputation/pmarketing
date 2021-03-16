@@ -5,15 +5,11 @@
         <img *ngIf="loyalty" [src]="getBadge(loyalty.membershipTierName)" [alt]="loyalty.membershipTierName">
       </a>
       <div *ngIf="loyalty" class="reward">
-        <div *ngIf="UXCR else oldUX">
-          <h3>{{loyalty.membershipTierName | noRenewaleInName | titlecase}} Member!</h3>
-          <span class="tier" *ngIf="loyalty">Explore your rewards</span>
-        </div>
-        <ng-template #oldUX>
-          <h2>Explore your rewards,</h2>
-          <span class="tier" *ngIf="loyalty">{{loyalty.membershipTierName | noRenewaleInName | titlecase}}
-            Member!</span>
-        </ng-template>
+        <h3 class="hide-for-old-ux">{{loyalty.membershipTierName | noRenewaleInName | titlecase}} Member!</h3>
+        <span class="hide-for-old-ux tier" *ngIf="loyalty">Explore your rewards</span>
+        <h2 class="hide-for-new-ux">Explore your rewards,</h2>
+        <span class="hide-for-new-ux tier" *ngIf="loyalty">{{loyalty.membershipTierName | noRenewaleInName | titlecase}}
+          Member!</span>
         <div *ngIf="!hubclubCR">
           <span class="subtitle"
             *ngIf="profile && profile.customProperties && profile.customProperties.membership === 'Hub Club'">+ Hub

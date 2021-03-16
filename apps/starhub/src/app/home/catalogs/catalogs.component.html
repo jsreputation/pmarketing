@@ -1,14 +1,9 @@
 <div *ngIf="(catalogs$ | async) as catalogs" class="main-container">
-  <h1>More to explore</h1>
-  <div
-    infiniteScroll
-    [infiniteScrollDistance]="2"
-    [infiniteScrollThrottle]="500"
-    (scrolled)="onScroll()"
-    [scrollWindow]="false"
-    [horizontal]="true"
-  >
-    <div class="cards" [@fadeIn]="catalogs.length" *ngIf="catalogs.length > 0" >
+  <h1 class="hide-for-new-ux">More to explore</h1>
+  <h2 class="hide-for-old-ux">More to explore</h2>
+  <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="500" (scrolled)="onScroll()"
+    [scrollWindow]="false" [horizontal]="true">
+    <div class="cards" [@fadeIn]="catalogs.length" *ngIf="catalogs.length > 0">
       <mat-card class="ga_catalog" *ngFor="let catalog of catalogs" (click)="selected(catalog)" matRipple>
         <img mat-card-image [src]="catalog.catalogBanner">
         <mat-card-content>
@@ -25,8 +20,6 @@
       </mat-card>
       <div class="end-spacer"></div>
     </div>
-
     <ghost-cards class="cards" [@fadeOut]="!ghostCatalogs.length" [ghosts]="ghostCatalogs"></ghost-cards>
-
   </div>
 </div>

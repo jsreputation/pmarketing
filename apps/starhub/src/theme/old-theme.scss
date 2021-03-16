@@ -167,6 +167,14 @@ html body:not(.electric-green) {
     }
 
     .app {
+        // util class for hiding elements based on theme
+        .hide-for-old-ux {
+            display: none;
+        }
+        .hide-for-new-ux {
+            display: block;
+        }
+
         // styles.scss
         .mat-flat-button.mat-primary {
             color: $white;

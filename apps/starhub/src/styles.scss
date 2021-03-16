@@ -18,6 +18,11 @@ body {
 }
 
 .app {
+  // util class for hiding elements based on theme
+  .hide-for-new-ux {
+    display: none;
+  }
+
   .mat-tab-links {
     width: 100%;
     align-items: center;

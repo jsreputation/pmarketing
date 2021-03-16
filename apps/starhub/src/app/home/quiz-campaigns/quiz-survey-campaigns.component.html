@@ -1,18 +1,13 @@
 <div *ngIf="(campaigns$ | async) as campaigns" class="main-container">
-  <h1 *ngIf="campaigns.length">{{ switchToSurvey ?
+  <h1 class="hide-for-new-ux" *ngIf="campaigns.length">{{ switchToSurvey ?
     'Surveys' : 'Quizzes' }}</h1>
-  <div class="ga_campaign cards"
-       *ngIf="campaigns.length > 0"
-       infiniteScroll
-       [infiniteScrollDistance]="2"
-       [infiniteScrollThrottle]="500"
-       (scrolled)="onScroll()"
-       [scrollWindow]="false"
-       [horizontal]="true"
-  >
+  <h2 class="hide-for-old-ux" *ngIf="campaigns.length">{{ switchToSurvey ?
+    'Surveys' : 'Quizzes' }}</h2>
+  <div class="ga_campaign cards" *ngIf="campaigns.length > 0" infiniteScroll [infiniteScrollDistance]="2"
+    [infiniteScrollThrottle]="500" (scrolled)="onScroll()" [scrollWindow]="false" [horizontal]="true">
     <mat-card [@fadeIn]="campaigns.length" *ngFor="let campaign of campaigns" (click)="selected(campaign)" matRipple>
       <div class="featured-image">
-        <img mat-card-image [src]="campaign.thumbnailUrl ? campaign.thumbnailUrl: ''" >
+        <img mat-card-image [src]="campaign.thumbnailUrl ? campaign.thumbnailUrl: ''">
       </div>
       <mat-card-content>
         <div>

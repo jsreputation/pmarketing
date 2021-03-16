@@ -69,7 +69,6 @@ export class HomeComponent implements OnInit {
   public hubclubCR: boolean;
   public hubClubDisplay: string = '';
   public appConfig: IConfig<IStarhubConfig>;
-  public UXCR: boolean;
 
   constructor(
     private noRenewalePipe: NoRenewaleInNamePipe,
@@ -87,7 +86,6 @@ export class HomeComponent implements OnInit {
     this.configService.readAppConfig<IStarhubConfig>().pipe(
       tap((config: IConfig<IStarhubConfig>) => {
         this.hubclubCR = config.custom ? config.custom.hubclubCR : false;
-        this.UXCR = config.custom ? config.custom.UXCR : false;
         this.appConfig = config;
       }),
       switchMap(() => this.authenticationService.getAccessToken()),
