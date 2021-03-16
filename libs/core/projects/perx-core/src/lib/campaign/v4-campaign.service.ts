@@ -19,7 +19,6 @@ import { QuizDisplayProperties } from '../quiz/v4-quiz.service';
 import { GameType } from '../game/game.model';
 import { patchUrl } from '../utils/patch-url.function';
 import { Cacheable } from 'ngx-cacheable';
-import { IV4SurveyDisplayProperties } from '../survey/models/v4-survey.model';
 import { QuestDisplayProperties } from '../quest/v4-quest.service';
 
 interface IV4Image {
@@ -32,7 +31,6 @@ type DisplayProperties = TreeDisplayProperties |
   PinataDisplayProperties |
   ScratchDisplayProperties |
   SpinDisplayProperties |
-  IV4SurveyDisplayProperties |
   QuizDisplayProperties |
   QuestDisplayProperties;
 /* eslint-enable @typescript-eslint/indent */
@@ -148,29 +146,29 @@ export class V4CampaignService implements ICampaignService {
     }
 
     if (dp && ((dp as QuestDisplayProperties).header || (dp as QuestDisplayProperties).body ||
-               (dp as QuestDisplayProperties).image || (dp as QuestDisplayProperties).quest_success_image)) {
+      (dp as QuestDisplayProperties).image || (dp as QuestDisplayProperties).quest_success_image)) {
       const qp = (dp as QuestDisplayProperties);
       displayProperties = {
         questDetails: {}
       };
       if (qp.header) {
         displayProperties.questDetails = {
-            title: qp.header.value.title,
-            description: qp.header.value.description
-          };
-        }
+          title: qp.header.value.title,
+          description: qp.header.value.description
+        };
+      }
       if (qp.body) {
         // @ts-ignore
         displayProperties.questDetails.body = qp.body;
       }
       if (qp.image) {
-         // @ts-ignore
+        // @ts-ignore
         displayProperties.questDetails.imageUrl = qp.image.value.image_url || qp.image.value.file;
       }
       if (qp.quest_success_image) {
         // @ts-ignore
         displayProperties.questDetails.successImageUrl = qp.quest_success_image.value.image_url || qp.quest_success_image.value.file;
-     }
+      }
     }
 
     let referralCodes, refersAttained;
