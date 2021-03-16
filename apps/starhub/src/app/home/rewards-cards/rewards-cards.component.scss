@@ -47,9 +47,11 @@
 
 .card-description {
   width: 85%;
+  color: $dark-grey;
 
   h1,
-  h2 {
+  h2,
+  div {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

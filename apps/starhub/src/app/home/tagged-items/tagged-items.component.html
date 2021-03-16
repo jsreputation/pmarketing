@@ -15,8 +15,10 @@
       </div>
       <mat-card-content>
         <div class="card-description">
-          <h1>{{itemSnapping.name}}</h1>
-          <h2 *ngIf="itemSnapping.merchantName">{{itemSnapping.merchantName}}</h2>
+          <h1 class="hide-for-new-ux">{{itemSnapping.name}}</h1>
+          <h2 class="hide-for-new-ux" *ngIf="itemSnapping.merchantName">{{itemSnapping.name}}</h2>
+          <div class="hide-for-old-ux">{{itemSnapping.name}}</div>
+          <div class="fine semi-bold hide-for-old-ux" *ngIf="itemSnapping.merchantName">{{itemSnapping.name}}</div>
         </div>
         <div class="icon">
           <img src="assets/forward-arrow.svg" alt="">

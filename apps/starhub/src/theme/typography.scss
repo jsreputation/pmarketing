@@ -34,6 +34,12 @@ body.electric-green {
     @include semi-bold;
   }
 
+  .fine {
+    font-size: 12px;
+    letter-spacing: 0.3px;
+    line-height: 18px;
+  }
+
   h1 {
     font-size: 30px;
     letter-spacing: 0.3px;
