@@ -8,6 +8,7 @@ import {
   ConfigService,
   IReward,
   RewardsService,
+  IConfig
 } from '@perxtech/core';
 import {
   forkJoin,
@@ -28,6 +29,7 @@ import {
   fadeIn,
   fadeOut
 } from '../../utils/fade-animations';
+import { IStarhubConfig } from '../home/home.component';
 
 const REQ_PAGE_SIZE: number = 20;
 
@@ -54,6 +56,7 @@ export class RewardsCardsComponent implements OnInit {
 
   @Output()
   public tapped: EventEmitter<IReward> = new EventEmitter<IReward>();
+  public showAllSnappingSaturdayItems: boolean;
 
   constructor(
     private rewardsService: RewardsService,
@@ -63,8 +66,10 @@ export class RewardsCardsComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.configService.readAppConfig().subscribe(() => {
-      this.initRewards();
+    this.configService.readAppConfig<IStarhubConfig>().subscribe(
+      (config: IConfig<IStarhubConfig>) => {
+        this.showAllSnappingSaturdayItems = config.custom ? config.custom.showAllSnappingSaturdayItems : false;
+        this.initRewards();
     });
   }
 
