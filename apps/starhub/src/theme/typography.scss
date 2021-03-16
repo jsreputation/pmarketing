@@ -40,6 +40,13 @@ body.electric-green {
     line-height: 18px;
   }
 
+  .label {
+    font-size: 13px;
+    letter-spacing: 0.1px;
+    line-height: 19px;
+    @include medium;
+  }
+
   h1 {
     font-size: 30px;
     letter-spacing: 0.3px;

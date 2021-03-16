@@ -686,6 +686,11 @@ html body:not(.electric-green) {
                     color: $white;
                 }
             }
+            .reward {
+                .badge {
+                    border-radius: 0.5rem;
+                }
+            }
         }
 
         // reward-detail.component.scss
@@ -705,6 +710,13 @@ html body:not(.electric-green) {
             .address,
             .terms-conditions {
                 color: #666666;
+            }
+
+            .tier-info {
+                font-size: 1.4rem;
+                .mat-list-base .mat-list-item {
+                    font-size: 1rem;
+                }
             }
         }
 
