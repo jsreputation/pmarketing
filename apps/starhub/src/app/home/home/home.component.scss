@@ -30,7 +30,7 @@ mat-toolbar {
     margin-top: 2rem;
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
 
     .badge {
       width: 7.1rem;
@@ -44,8 +44,7 @@ mat-toolbar {
       text-overflow: ellipsis;
 
       span.tier {
-        font-size: 3rem;
-        font-weight: bold;
+        font-size: 16px;
       }
 
       .membership-link {
@@ -80,15 +79,17 @@ mat-toolbar {
     a {
       height: 1.6rem;
       text-align: center;
-      color: $dark-grey;
+      color: $medium-grey;
       align-items: center;
       justify-content: center;
       padding: 2.4rem 1rem;
       flex: 1;
       text-decoration: none;
       font-size: 16px;
+      opacity: 1; // override material opcaticy since this messes with font color
 
       &.mat-tab-label-active {
+        color: $dark-grey;
         @include bold;
       }
     }

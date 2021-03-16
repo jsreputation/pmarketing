@@ -352,9 +352,16 @@ html body:not(.electric-green) {
                 border-bottom: 1px solid #979797;
 
                 .top-row {
+                    align-items: flex-start;
+
                     .reward {
                         h2 {
-                            font-size: 2rem;
+                            font-size: 2rem !important;
+                        }
+
+                        span.tier {
+                            font-size: 30px !important;
+                            font-weight: bold;
                         }
 
                         .membership-link {
