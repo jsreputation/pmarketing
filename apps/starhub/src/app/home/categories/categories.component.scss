@@ -1,4 +1,5 @@
 @import "../../../theme/mixins/icon.scss";
+@import "../../../theme/typography.scss";
 
 :host {
   display: flex;
@@ -30,7 +31,7 @@ mat-card {
 
   .category-title {
     color: $dark-grey;
-    font-size: 1.2rem;
+    @include semi-bold;
     width: 100%;
     margin-top: 0.8rem;
     text-align: center;

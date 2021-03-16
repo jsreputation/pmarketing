@@ -49,6 +49,7 @@ mat-toolbar {
 
       .membership-link {
         cursor: pointer;
+        text-decoration: none; // override anchor tag from typography.scss
 
         .subtitle {
           font-size: 1.2rem;
