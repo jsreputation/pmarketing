@@ -168,12 +168,6 @@ html body:not(.electric-green) {
 
     .app {
         // styles.scss
-        mat-ink-bar {
-            &::before {
-                background-color: #6dc00e;
-            }
-        }
-
         .mat-flat-button.mat-primary {
             color: $white;
         }
@@ -365,18 +359,28 @@ html body:not(.electric-green) {
 
                         .membership-link {
                             .subtitle {
-                                color: #73c20e;
+                                color: #73c20e !important;
                             }
                         }
 
                         .subtitle {
-                            color: #73c20e;
+                            color: #73c20e !important;
                         }
                     }
                 }
 
                 .mat-tab-nav-bar {
+                    mat-ink-bar {
+                        height: 0.2rem;
+                        background-color: #6dc00e;
+                    }
                     a {
+                        font-size: 1.8rem;
+                        font-weight: 500 !important;
+                        font-style: normal !important;
+                        font-stretch: normal;
+                        line-height: 0.89;
+                        letter-spacing: normal;
                         color: #666666;
                     }
                 }
