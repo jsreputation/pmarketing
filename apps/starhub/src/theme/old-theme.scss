@@ -443,6 +443,17 @@ html body:not(.electric-green) {
 
         // news-feed.component.scss
         app-news-feed {
+            .cards {
+                .hero-card {
+                    .gradient-cta-block {
+                        .description {
+                            font-size: 1.6rem;
+                            font-weight: bold;
+                        }
+                    }
+                }
+            }
+
             .dots {
                 .container {
                     span {
