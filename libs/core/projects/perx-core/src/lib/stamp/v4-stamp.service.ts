@@ -160,6 +160,8 @@ interface IV4StampCard {
       }
     };
     reward_positions?: number[];
+    button_Bg_colour?: string;
+    button_text_colour?: string;
   };
   stamps?: IV4Stamp[];
 }
@@ -272,7 +274,9 @@ export class V4StampService implements StampService {
         displayCampaignAs: oc(stampCard).display_properties.display_campaign_as('stamp_card'),
         backgroundImg,
         rewardPositions: stampCard.display_properties.reward_positions,
-        thumbnailImg: oc(stampCard).display_properties.thumbnail_image.value.file()
+        thumbnailImg: oc(stampCard).display_properties.thumbnail_image.value.file(),
+        buttonBgColour: stampCard.display_properties.button_Bg_colour,
+        buttonTextColour: stampCard.display_properties.button_text_colour
       },
       stamps: stampCard.stamps ? stampCard.stamps.map((stamp: IV4Stamp) => V4StampService.v4StampToStamp(stamp)) : undefined,
       buttonText: stampCard.display_properties.button_text

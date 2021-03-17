@@ -65,11 +65,7 @@ export class StampCardComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    this.themesService.getThemeSetting().subscribe((theme: ITheme) => {
-      this.buttonStyle['background-color'] = theme.properties['--button_background_color'] || '';
-      this.buttonStyle.color = theme.properties['--button_text_color'] || '';
-      this.buttonStyle.visibility = 'visible';
-    });
+
     this.initTranslate();
     this.route.paramMap
       .pipe(
@@ -77,9 +73,10 @@ export class StampCardComponent implements OnInit, OnDestroy {
         map((params: ParamMap) => params.get('id')),
         switchMap((id: string) => {
           this.idN = Number.parseInt(id, 10);
-          return this.stampService.getCurrentCard(this.idN);
+          return forkJoin( this.stampService.getCurrentCard(this.idN),
+                            this.themesService.getThemeSetting());
         }),
-        tap((stampCard: IStampCard) => {
+        tap(([stampCard, theme]: [IStampCard, ITheme]) => {
           if (stampCard) {
             this.stampCard = stampCard;
             this.stamps = stampCard.stamps;
@@ -90,6 +87,11 @@ export class StampCardComponent implements OnInit, OnDestroy {
             );
             this.cardBackground = stampCard.displayProperties.cardBgImage || '';
             this.buttonText = stampCard.buttonText ? of(stampCard.buttonText) : this.translate.get('STAMP_CAMPAIGN.VIEW_WALLET');
+            this.buttonStyle['background-color'] = stampCard.displayProperties.buttonBgColour ? stampCard.displayProperties.buttonBgColour :
+                            theme.properties['--button_background_color'] ? theme.properties['--button_background_color'] : '';
+            this.buttonStyle.color = stampCard.displayProperties.buttonTextColour ? stampCard.displayProperties.buttonTextColour :
+                            theme.properties['--button_text_color'] ? theme.properties['--button_text_color'] : '';
+            this.buttonStyle.visibility = 'visible';
           }
         }),
         switchMap(() => this.stampService.stampsChangedForStampCard(this.idN)
