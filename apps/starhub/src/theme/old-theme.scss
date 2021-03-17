@@ -35,7 +35,7 @@ html body:not(.electric-green) {
         background-color: $backgroundColor !important;
         color: $fontColor !important;
         font-weight: normal !important;
-        text-transform: none !important; 
+        text-transform: none !important;
     }
 
     @mixin macaronStyles {
@@ -619,6 +619,10 @@ html body:not(.electric-green) {
                 }
             }
 
+            .enter-pin {
+                padding: 0.5rem 3rem;
+            }
+
             ::ng-deep input {
                 background: #eef9e4;
             }
@@ -692,6 +696,7 @@ html body:not(.electric-green) {
             .reward {
                 .badge {
                     border-radius: 0.5rem;
+                    padding: 0;
                 }
             }
         }

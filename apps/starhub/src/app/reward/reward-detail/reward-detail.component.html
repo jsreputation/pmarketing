@@ -38,18 +38,20 @@
             </mat-list>
           </div>
         </div>
-        <ng-template #allTiers>Available to all loyalty tiers.</ng-template>
+        <ng-template #allTiers>
+          <p class="semi-bold">Available to all loyalty tiers.</p>
+        </ng-template>
       </div>
       <div class="content">
         <div class="description" [innerHtml]="reward.description"></div>
       </div>
       <app-location-short-format [merchantId]="reward.merchantId" [voucherId]="voucherId"></app-location-short-format>
       <div class="content">
-        <div class="label">Terms & Conditions</div>
+        <div class="action">Terms & Conditions</div>
         <div class="terms-conditions" [innerHtml]="reward.termsAndConditions"></div>
       </div>
       <div class="content about">
-        <div class="label">About {{reward.merchantName}}</div>
+        <div class="action">About {{reward.merchantName}}</div>
         <div class="phone-contact">
           <a>
             <span class="icon">
