@@ -136,7 +136,7 @@ registerLocaleData(localeENMY);
   ],
   bootstrap: [AppComponent],
   providers: [
-    { provide: LOCALE_ID, useValue: 'en-MY' },
+    { provide: LOCALE_ID, useValue: 'en-GB' },
     {
       provide: APP_INITIALIZER,
       useFactory: setLanguage,
