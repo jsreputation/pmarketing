@@ -6,11 +6,12 @@
         <img [src]="reward.merchantImg">
       </div>
     </div>
-
     <div class="container">
       <div *ngIf="reward" class="reward-merchant">
-        <h1>{{reward.name}}</h1>
-        <h2>{{reward.merchantName}}</h2>
+        <h3 class="hide-for-old-ux">{{reward.name}}</h3>
+        <div class="hide-for-old-ux">{{reward.merchantName}}</div>
+        <h1 class="hide-for-new-ux">{{reward.name}}</h1>
+        <h2 class="hide-for-new-ux">{{reward.merchantName}}</h2>
         <div *ngIf="showMacaron && macaron" class="macaron-container">
           <span [ngClass]="macaron.class">{{macaron.label}}</span>
         </div>
@@ -23,12 +24,12 @@
           class="reward-balance">{{macaron.rewardBalance}}
           left</span>
       </div>
-
       <div *ngIf="showLoyaltyTierInfo" class="content tier-info">
         <div *ngIf="reward.loyalty && reward.loyalty.length; else allTiers">
           <div *ngIf="reachedSneakPeakTiers.length" class="tier-list">Reached sneak peak tier:
             <mat-list role="list">
-              <mat-list-item role="listitem" *ngFor="let tier of reachedSneakPeakTiers">{{tier.loyaltyName}}</mat-list-item>
+              <mat-list-item role="listitem" *ngFor="let tier of reachedSneakPeakTiers">{{tier.loyaltyName}}
+              </mat-list-item>
             </mat-list>
           </div>
           <div *ngIf="unAttainedTiers.length" class="tier-list">Requires tier:
@@ -37,24 +38,20 @@
             </mat-list>
           </div>
         </div>
-        <ng-template #allTiers>Available to all loyalty tiers.</ng-template>
+        <ng-template #allTiers>
+          <p class="semi-bold">Available to all loyalty tiers.</p>
+        </ng-template>
       </div>
-
-
       <div class="content">
         <div class="description" [innerHtml]="reward.description"></div>
       </div>
-
       <app-location-short-format [merchantId]="reward.merchantId" [voucherId]="voucherId"></app-location-short-format>
-
       <div class="content">
-        <h1>Terms & Conditions</h1>
+        <div class="action">Terms & Conditions</div>
         <div class="terms-conditions" [innerHtml]="reward.termsAndConditions"></div>
       </div>
-
       <div class="content about">
-        <h1>About {{reward.merchantName}}</h1>
-
+        <div class="action">About {{reward.merchantName}}</div>
         <div class="phone-contact">
           <a>
             <span class="icon">
@@ -63,7 +60,6 @@
             Call to {{reward.merchantName}}
           </a>
         </div>
-
         <div class="email-contact">
           <a>
             <span class="icon">

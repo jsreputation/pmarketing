@@ -1,10 +1,20 @@
 @import "../../../theme/variables.scss";
+@import "../../../theme/typography.scss";
 
 .app {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
+
+  .content {
+    padding-top: 17rem;
+    flex: 1;
+    overflow-y: auto;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+  }
 }
 
 mat-toolbar {
@@ -20,7 +30,7 @@ mat-toolbar {
     margin-top: 2rem;
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: center;
 
     .badge {
       width: 7.1rem;
@@ -34,12 +44,12 @@ mat-toolbar {
       text-overflow: ellipsis;
 
       span.tier {
-        font-size: 3rem;
-        font-weight: bold;
+        font-size: 16px;
       }
 
       .membership-link {
         cursor: pointer;
+        text-decoration: none; // override anchor tag from typography.scss
 
         .subtitle {
           font-size: 1.2rem;
@@ -61,37 +71,28 @@ mat-toolbar {
       }
     }
   }
-}
 
-.content {
-  padding-top: 17rem;
-  flex: 1;
-  overflow-y: auto;
-  height: 100%;
-  width: 100%;
-  box-sizing: border-box;
-  // padding: 1.2rem;
-}
+  .mat-tab-nav-bar {
+    height: 4.9rem;
+    border-bottom: 0;
+    padding: 0;
 
-.mat-tab-nav-bar {
-  height: 4.9rem;
-  border-bottom: 0;
-  padding: 0;
+    a {
+      height: 1.6rem;
+      text-align: center;
+      color: $medium-grey;
+      align-items: center;
+      justify-content: center;
+      padding: 2.4rem 1rem;
+      flex: 1;
+      text-decoration: none;
+      font-size: 16px;
+      opacity: 1; // override material opcaticy since this messes with font color
 
-  a {
-    height: 1.6rem;
-    font-size: 1.8rem;
-    font-weight: 500;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: 0.89;
-    letter-spacing: normal;
-    text-align: center;
-    color: $dark-grey;
-    align-items: center;
-    justify-content: center;
-    padding: 2.4rem 1rem;
-    flex: 1;
-    text-decoration: none;
+      &.mat-tab-label-active {
+        color: $dark-grey;
+        @include bold;
+      }
+    }
   }
 }

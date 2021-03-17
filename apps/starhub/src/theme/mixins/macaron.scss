@@ -1,24 +1,29 @@
+@import "../typography.scss";
+
 @mixin macaron($backgroundColor, $fontColor) {
   border-radius: 5rem;
   padding: 0.5rem 1rem;
-  font-size: 1.2rem;
+  font-size: 13px;
   background-color: $backgroundColor;
   color: $fontColor;
+  text-transform: uppercase;
+  @include bold;
 }
 
 @mixin macaronStyles {
   .just-added,
   .coming-soon {
-    @include macaron($electric-green, $white);
+    @include macaron($tint-electric-green, $dark-electric-green);
   }
 
   .expiring,
   .running-out {
-    @include macaron($lime-eclipse, $dark-grey);
+    @include macaron(#fcebf3, #780060); //TODO: get designer to define color and refer from variables
+    // @include macaron($astra-pink, $ultraviolet);
   }
 
   .expired,
   .fully-redeemed {
-    @include macaron($white, $dark-grey);
+    @include macaron($light-grey, $dark-grey);
   }
 }

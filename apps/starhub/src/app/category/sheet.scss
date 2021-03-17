@@ -1,4 +1,5 @@
 @import "../../theme/mixins/icon.scss";
+@import "../../theme/typography.scss";
 
 .main-container {
   .icon {
@@ -12,6 +13,10 @@
     align-items: center;
 
     h1 {
+      color: $dark-electric-green;
+    }
+    .title {
+      @include black;
       color: $dark-electric-green;
     }
   }
@@ -40,7 +45,7 @@
   }
 
   .label-selected {
-    color: $electric-green;
+    color: $dark-electric-green;
     background: $tint-electric-green;
   }
 }

@@ -105,6 +105,10 @@
   align-items: center;
   justify-content: center;
 
+  .title {
+    color: $dark-grey;
+  }
+
   .code {
     background: $tint-electric-green;
     border-radius: 0.5rem;
@@ -129,11 +133,6 @@
   button {
     padding: 1rem;
   }
-}
-
-.enter-pin {
-  color: $white;
-  padding: 0.5rem 3rem;
 }
 
 .pin-input-container {

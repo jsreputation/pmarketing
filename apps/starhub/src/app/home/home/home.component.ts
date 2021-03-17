@@ -118,7 +118,8 @@ export class HomeComponent implements OnInit {
                   customProperties.sub_membership_type.toString().toLowerCase() === 'nominee' &&
                   customProperties.membership &&
                   customProperties.membership.toString().toLowerCase() !== 'hubclub' ?
-                  customProperties.sub_membership_display.toString() : customProperties.membership_display.toString();
+                  customProperties.sub_membership_display.toString() :
+                  customProperties.membership_display ? customProperties.membership_display.toString() : '';
               }
             });
         }

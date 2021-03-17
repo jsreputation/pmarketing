@@ -7,7 +7,7 @@
 :host,
 html,
 body {
-  font-size: 62.5%; // why do we have this?
+  font-size: 62.5%;
   width: 100%;
   height: 100%;
   margin: 0;
@@ -15,6 +15,11 @@ body {
   font-family: Lato, Roboto, Arial, Helvetica, sans-serif;
   background: $canvas-grey;
   -webkit-overflow-scrolling: touch;
+
+  // util class for hiding elements based on theme
+  .hide-for-new-ux {
+    display: none;
+  }
 }
 
 .app {
@@ -22,14 +27,10 @@ body {
     width: 100%;
     align-items: center;
     justify-content: center;
-  }
 
-  mat-ink-bar {
-    background-color: transparent !important;
-
-    &::before {
+    mat-ink-bar {
       content: "";
-      height: 0.2rem;
+      height: 4pt;
       background-color: $electric-green;
       display: block;
       margin: 0 auto;
@@ -55,6 +56,15 @@ cdk-virtual-scroll-viewport {
   padding: 0;
   position: relative;
   border-radius: 1rem;
+
+  // override styles for feed-item-popup
+  .main-container {
+    color: $dark-grey !important;
+    font-size: 16px !important;
+    letter-spacing: 0.2px !important;
+    line-height: 21px !important;
+    @include regular;
+  }
 }
 
 .shake-tree-container .tree {

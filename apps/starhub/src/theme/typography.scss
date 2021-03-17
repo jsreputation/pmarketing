@@ -29,9 +29,23 @@ body.electric-green {
   line-height: 21px;
   @include regular;
 
-  .semi-bold {
-    letter-spacing: 0.1px;
-    @include semi-bold;
+  a {
+    font-size: 16px;
+    text-decoration: underline;
+    color: $dark-electric-green;
+  }
+
+  .action {
+    font-size: 16px;
+    letter-spacing: 0.1;
+    line-height: 21px;
+    @include bold;
+  }
+
+  .fine {
+    font-size: 12px;
+    letter-spacing: 0.3px;
+    line-height: 18px;
   }
 
   h1 {
@@ -55,9 +69,16 @@ body.electric-green {
     @include bold;
   }
 
-  a {
-    font-size: 16px;
-    text-decoration: underline;
-    color: $dark-electric-green;
+  .label {
+    font-size: 13px;
+    letter-spacing: 0.1px;
+    line-height: 19px;
+    @include medium;
   }
+
+  .semi-bold {
+    letter-spacing: 0.1px;
+    @include semi-bold;
+  }
+
 }

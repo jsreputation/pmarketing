@@ -31,8 +31,11 @@ html body:not(.electric-green) {
     }
 
     @mixin macaron($backgroundColor, $fontColor) {
+        font-size: 1.2rem !important;
         background-color: $backgroundColor !important;
         color: $fontColor !important;
+        font-weight: normal !important;
+        text-transform: none !important;
     }
 
     @mixin macaronStyles {
@@ -167,13 +170,15 @@ html body:not(.electric-green) {
     }
 
     .app {
-        // styles.scss
-        mat-ink-bar {
-            &::before {
-                background-color: #6dc00e;
-            }
+        // util class for hiding elements based on theme
+        .hide-for-old-ux {
+            display: none;
+        }
+        .hide-for-new-ux {
+            display: block;
         }
 
+        // styles.scss
         .mat-flat-button.mat-primary {
             color: $white;
         }
@@ -228,6 +233,8 @@ html body:not(.electric-green) {
         app-categories {
             .category-title {
                 color: #666666;
+                font-size: 1.2rem;
+                font-weight: 400;
             }
         }
 
@@ -358,25 +365,42 @@ html body:not(.electric-green) {
                 border-bottom: 1px solid #979797;
 
                 .top-row {
+                    align-items: flex-start;
+
                     .reward {
                         h2 {
-                            font-size: 2rem;
+                            font-size: 2rem !important;
+                        }
+
+                        span.tier {
+                            font-size: 30px !important;
+                            font-weight: bold;
                         }
 
                         .membership-link {
                             .subtitle {
-                                color: #73c20e;
+                                color: #73c20e !important;
                             }
                         }
 
                         .subtitle {
-                            color: #73c20e;
+                            color: #73c20e !important;
                         }
                     }
                 }
 
                 .mat-tab-nav-bar {
+                    mat-ink-bar {
+                        height: 0.2rem;
+                        background-color: #6dc00e;
+                    }
                     a {
+                        font-size: 1.8rem;
+                        font-weight: 500 !important;
+                        font-style: normal !important;
+                        font-stretch: normal;
+                        line-height: 0.89;
+                        letter-spacing: normal;
                         color: #666666;
                     }
                 }
@@ -432,6 +456,17 @@ html body:not(.electric-green) {
 
         // news-feed.component.scss
         app-news-feed {
+            .cards {
+                .hero-card {
+                    .gradient-cta-block {
+                        .description {
+                            font-size: 1.6rem;
+                            font-weight: bold;
+                        }
+                    }
+                }
+            }
+
             .dots {
                 .container {
                     span {
@@ -584,6 +619,10 @@ html body:not(.electric-green) {
                 }
             }
 
+            .enter-pin {
+                padding: 0.5rem 3rem;
+            }
+
             ::ng-deep input {
                 background: #eef9e4;
             }
@@ -654,6 +693,12 @@ html body:not(.electric-green) {
                     color: $white;
                 }
             }
+            .reward {
+                .badge {
+                    border-radius: 0.5rem;
+                    padding: 0;
+                }
+            }
         }
 
         // reward-detail.component.scss
@@ -673,6 +718,13 @@ html body:not(.electric-green) {
             .address,
             .terms-conditions {
                 color: #666666;
+            }
+
+            .tier-info {
+                font-size: 1.4rem;
+                .mat-list-base .mat-list-item {
+                    font-size: 1rem;
+                }
             }
         }
 
@@ -713,17 +765,24 @@ html body:not(.electric-green) {
                 font-size: 2.5rem;
             }
 
-            .mat-card-header {
-                .mat-card-title {
-                    color: #666666;
-                }
+            .mat-card {
+                padding: 16px;
+                .mat-card-header {
+                    .mat-card-title {
+                        color: #666666;
+                    }
 
-                .mat-card-subtitle.less-three-days {
-                    color: #d8127d;
-                }
+                    .mat-card-subtitle {
+                        font-size: 1.2rem;
 
-                .mat-card-subtitle.greater-three-days {
-                    color: #666666;
+                        &.less-three-days {
+                            color: #d8127d;
+                        }
+
+                        &.greater-three-days {
+                            color: #666666;
+                        }
+                    }
                 }
             }
 
