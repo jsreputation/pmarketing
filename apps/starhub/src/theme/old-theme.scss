@@ -31,8 +31,11 @@ html body:not(.electric-green) {
     }
 
     @mixin macaron($backgroundColor, $fontColor) {
+        font-size: 1.2rem !important;
         background-color: $backgroundColor !important;
         color: $fontColor !important;
+        font-weight: normal !important;
+        text-transform: none !important; 
     }
 
     @mixin macaronStyles {
@@ -756,7 +759,7 @@ html body:not(.electric-green) {
                 color: #666666;
                 font-size: 2.5rem;
             }
-            
+
             .mat-card {
                 padding: 16px;
                 .mat-card-header {
