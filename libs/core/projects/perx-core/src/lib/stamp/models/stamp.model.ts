@@ -101,6 +101,8 @@ export interface IStampCard {
     thumbnailImg?: string;
     noRewardsPopUp?: IWProperties;
     successPopUp?: IWProperties;
+    buttonBgColour?: string;
+    buttonTextColour?: string;
   };
   stamps?: IStamp[];
 }
