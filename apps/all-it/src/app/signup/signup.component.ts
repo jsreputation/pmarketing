@@ -2,22 +2,26 @@ import {
   Component,
   OnInit
 } from '@angular/core';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators
+} from '@angular/forms';
 import {
   ActivatedRoute,
   Router
 } from '@angular/router';
 import {
   AuthenticationService,
-  NotificationService,
-  ISignUpData,
-  IProfile,
-  ICountryCode,
-  GeneralStaticDataService,
-  ThemesService,
-  ITheme,
   ConfigService,
-  IConfig
+  GeneralStaticDataService,
+  IConfig,
+  ICountryCode,
+  IProfile,
+  ISignUpData,
+  ITheme,
+  NotificationService,
+  ThemesService
 } from '@perxtech/core';
 import {
   map,
@@ -28,7 +32,7 @@ import {
   Observable,
   Subject
 } from 'rxjs';
-import { DateAdapter } from '@angular/material';
+import { Moment } from 'moment';
 
 @Component({
   selector: 'app-signup',
@@ -54,7 +58,6 @@ export class SignupComponent implements OnInit {
     private configService: ConfigService,
     private notificationService: NotificationService,
     public generalStaticDataService: GeneralStaticDataService,
-    private dateAdapter: DateAdapter<Date>,
     private themesService: ThemesService,
   ) {}
 
@@ -126,8 +129,7 @@ export class SignupComponent implements OnInit {
     const passwordString = this.signupForm.get('password').value;
     const confirmPassword = this.signupForm.get('confirmPassword').value;
     const name = this.signupForm.value.name;
-    const dob = this.signupForm.value.dob;
-
+    const dob = this.signupForm.value.dob as Moment;
     // converting to Number will strip leading 0s
     const mobileNumber: number = Number(this.signupForm.value.mobileNo);
     const countryCode = this.signupForm.value.countryCode;
@@ -142,8 +144,7 @@ export class SignupComponent implements OnInit {
 
     const signUpData: ISignUpData = {
       lastName: name,
-      birthDay: this.dateAdapter.format(dob, 'yyyy-MM-dd')
-        .replace(/\//g, '-') ,
+      birthDay: dob.format(), // convert moment to ISO
       phone: codeAndMobile,
       password: passwordString,
       passwordConfirmation: confirmPassword,
