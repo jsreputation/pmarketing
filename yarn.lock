@@ -454,6 +454,13 @@
   resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-8.0.3.tgz#25909e6a9ce5336768e489401bc9c3abb57b4304"
   integrity sha512-04XojOo9FJgEQE/rZafnaJQxPEU+//TSzTgpGoIVzCSMx+joCY/ZSSwJZPWxiHlOE57W/zX02ZY+TwcM81oTdw==
 
+"@angular/material-moment-adapter@^11.2.4":
+  version "11.2.4"
+  resolved "https://registry.npmjs.org/@angular/material-moment-adapter/-/material-moment-adapter-11.2.4.tgz#e698441122222ddba6fe4033063f83e82f9507a0"
+  integrity sha512-fJh6Zs+pK7LZN8LAWGR73vfoN+el00pIU/hx6tJKrJD4XyPMG80Z/eccsDPq3dMiRZeHhcO/tvtFZALYKVY/+w==
+  dependencies:
+    tslib "^2.0.0"
+
 "@angular/material@~8.0.1":
   version "8.0.2"
   resolved "https://registry.yarnpkg.com/@angular/material/-/material-8.0.2.tgz#c648e0f52d94b37e3dddfd879223202aa0d11587"
@@ -9099,6 +9106,11 @@ mkdirp@0.5.x, mkdirp@0.x, mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@^0.5.3, mkdirp@~0
   dependencies:
     minimist "^1.2.5"
 
+moment@^2.29.1:
+  version "2.29.1"
+  resolved "https://registry.npmjs.org/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
+  integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
+
 move-concurrently@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/move-concurrently/-/move-concurrently-1.0.1.tgz#be2c005fda32e0b29af1f05d7c4b33214c701f92"
@@ -12875,6 +12887,11 @@ tslib@^1.10.0, tslib@^1.7.1, tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0, tslib@^1.
   version "1.11.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.11.1.tgz#eb15d128827fbee2841549e171f45ed338ac7e35"
   integrity sha512-aZW88SY8kQbU7gpV19lN24LtXh/yD4ZZg6qieAJDDg+YBsJcSmLGK9QpnUjAKVG/xefmvJGd1WUmfpT/g6AJGA==
+
+tslib@^2.0.0:
+  version "2.1.0"
+  resolved "https://registry.npmjs.org/tslib/-/tslib-2.1.0.tgz#da60860f1c2ecaa5703ab7d39bc05b6bf988b97a"
+  integrity sha512-hcVC3wYEziELGGmEEXue7D75zbwIIVUMWAVbHItGPx0ziyXxrOMQx4rQEVEV45Ut/1IotuEvwqPopzIOkDMf0A==
 
 tslint-consistent-codestyle@^1.15.1:
   version "1.16.0"

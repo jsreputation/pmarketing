@@ -4,17 +4,30 @@ import { SignupComponent } from './signup.component';
 import { SignupRoutingModule } from './signup-routing.module';
 import {
   MatButtonModule,
+  MatCheckboxModule,
+  MatDatepickerModule,
   MatFormFieldModule,
+  MatIconModule,
   MatInputModule,
   MatSelectModule,
-  MatCheckboxModule,
-  MatIconModule,
-  MatNativeDateModule,
-  MatDatepickerModule,
 } from '@angular/material';
+import {
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+  MAT_MOMENT_DATE_FORMATS,
+  MatMomentDateModule,
+  MomentDateAdapter
+} from '@angular/material-moment-adapter';
 
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import {
+  FormsModule,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE
+} from '@angular/material/core';
 
 @NgModule({
   declarations: [SignupComponent],
@@ -27,13 +40,22 @@ import { TranslateModule } from '@ngx-translate/core';
     MatSelectModule,
     MatCheckboxModule,
     MatIconModule,
-    MatNativeDateModule,
+    MatMomentDateModule,
     MatDatepickerModule,
     ReactiveFormsModule,
     FormsModule,
     TranslateModule
   ],
   providers: [
+    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+    {
+      provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+      useValue: {
+        useUtc: true,
+        strict: true
+      }
+    }
   ]
 })
 export class SignupModule { }
