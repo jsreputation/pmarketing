@@ -8,6 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { ConfigService } from '../../config/config.service';
 import { IConfig } from '../../config/models/config.model';
+import { IRankService } from '../../rank/irank.service';
 
 @Component({
     selector: 'perx-core-leaderboard-cta',
@@ -22,7 +23,8 @@ export class LeaderboardCTAComponent implements OnInit {
     constructor(
         private translate: TranslateService,
         private configService: ConfigService,
-        private router: Router
+        private router: Router,
+        private rankService: IRankService
     ) { }
 
     public ngOnInit(): void {
@@ -30,7 +32,15 @@ export class LeaderboardCTAComponent implements OnInit {
             (config: IConfig<void>) => {
                 this.showLeaderBoardCTA = config.enableLeaderBoard || false;
                 if (this.showLeaderBoardCTA) {
-                    this.buttonText = this.translate.get('LEADER_BOARD.CTA_BUTTON_TEXT');
+                    // now check if current campaign has any leaderboards
+                    this.rankService.getLeaderBoardsByCampaignID(this.campaignId).subscribe((leaderboards) => {
+                        if (leaderboards.length > 0) {
+                            this.showLeaderBoardCTA = true;
+                            this.buttonText = this.translate.get('LEADER_BOARD.CTA_BUTTON_TEXT');
+                        } else {
+                            this.showLeaderBoardCTA = false;
+                        }
+                    });
                 }
             }
         );

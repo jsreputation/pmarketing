@@ -5,7 +5,7 @@ export type LeaderBoard = {
   id: number;
   metric: string;
   title: string;
-  endsOn: Date;
+  endDate: Date;
 };
 
 export type UserRanking = {
