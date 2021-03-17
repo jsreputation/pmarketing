@@ -8,6 +8,11 @@
   .detail-container {
     padding: 0 1.6rem;
     margin-bottom: 0.8rem;
+
+    h3 {
+      color: var(--disabled_text_color);
+      font-weight: normal;
+    }
   }
 
   .info-container {

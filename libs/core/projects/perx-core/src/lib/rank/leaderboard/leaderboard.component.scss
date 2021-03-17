@@ -1,7 +1,6 @@
 table {
   background-color: var(--background);
-  width: 90%;
-  margin: 0 auto;
+  width: 100%;
 
   tr[mat-header-row] {
     text-transform: uppercase;
@@ -14,7 +13,7 @@ table {
 
   td.ranking {
     display: flex;
-   
+    min-height: 50px;
     span,
     img {
       display: flex;
