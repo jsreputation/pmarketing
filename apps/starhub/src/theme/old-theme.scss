@@ -756,18 +756,25 @@ html body:not(.electric-green) {
                 color: #666666;
                 font-size: 2.5rem;
             }
+            
+            .mat-card {
+                padding: 16px;
+                .mat-card-header {
+                    .mat-card-title {
+                        color: #666666;
+                    }
 
-            .mat-card-header {
-                .mat-card-title {
-                    color: #666666;
-                }
+                    .mat-card-subtitle {
+                        font-size: 1.2rem;
 
-                .mat-card-subtitle.less-three-days {
-                    color: #d8127d;
-                }
+                        &.less-three-days {
+                            color: #d8127d;
+                        }
 
-                .mat-card-subtitle.greater-three-days {
-                    color: #666666;
+                        &.greater-three-days {
+                            color: #666666;
+                        }
+                    }
                 }
             }
 

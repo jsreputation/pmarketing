@@ -1,21 +1,19 @@
-<div class="rewards-container" 
-  infiniteScroll 
-  [infiniteScrollDistance]="3" 
-  [infiniteScrollThrottle]="500"
-  (scrolled)="onScroll()" 
-  [alwaysCallback]="true"
-  [scrollWindow]="false">
+<div class="rewards-container" infiniteScroll [infiniteScrollDistance]="3" [infiniteScrollThrottle]="500"
+  (scrolled)="onScroll()" [alwaysCallback]="true" [scrollWindow]="false">
   <div class="saved-rewards" *ngIf="(issuedVoucher | async) as vouchers">
-    <h1 *ngIf="vouchers.length > 0">Saved rewards</h1>
+    <h1 class="hide-for-new-ux" *ngIf="vouchers.length > 0">Saved rewards</h1>
+    <h2 class="hide-for-old-ux" *ngIf="vouchers.length > 0">Saved rewards</h2>
     <mat-card
       *ngFor="let voucher of ((hideSeeMore || (vouchers.length <= defaultNbVouchers)) ? vouchers : (vouchers | slice:0:defaultNbVouchers))"
       (click)="voucherSelected(voucher)" matRipple>
       <img mat-card-avatar [src]="voucher.reward.merchantImg" *ngIf="voucher.reward.merchantImg">
       <mat-card-header>
         <mat-card-title *ngIf="voucher.reward.name">
-          {{(voucher.reward.name.length > 35) ? (voucher.reward.name | slice:0:35)+'...' : (voucher.reward.name)}}
+          <span class="action">
+            {{(voucher.reward.name.length > 35) ? (voucher.reward.name | slice:0:35)+'...' : (voucher.reward.name)}}
+          </span>
         </mat-card-title>
-        <mat-card-subtitle [ngClass]="getTextColorClass(voucher)">{{getNumberOfDays(voucher)}}</mat-card-subtitle>
+        <mat-card-subtitle class="fine" [ngClass]="getTextColorClass(voucher)">{{getNumberOfDays(voucher)}}</mat-card-subtitle>
       </mat-card-header>
       <div class="accessory" *ngIf="voucher.accessoryImage">
         <img [src]="voucher.accessoryImage" alt="">
@@ -27,7 +25,8 @@
     <button *ngIf="!hideSeeMore && (vouchers.length > defaultNbVouchers)" (click)="seeMoreClicked()">See more</button>
   </div>
   <div class="past-rewards" *ngIf="(redeemedVouchers | async) as vouchers">
-    <h1 *ngIf="vouchers.length > 0">Past rewards</h1>
+    <h1 class="hide-for-new-ux" *ngIf="vouchers.length > 0">Past rewards</h1>
+    <h2 class="hide-for-old-ux" *ngIf="vouchers.length > 0">Past rewards</h2>
     <mat-card *ngFor="let voucher of vouchers" (click)="voucherSelected(voucher)" matRipple>
       <img mat-card-avatar [src]="voucher.reward.merchantImg" *ngIf="voucher.reward.merchantImg">
       <mat-card-header>
