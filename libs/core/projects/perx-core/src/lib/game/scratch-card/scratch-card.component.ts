@@ -196,6 +196,7 @@ export class ScratchCardComponent implements AfterViewInit, OnInit {
     if (this.isDrawing && filledInPixels > this.uncoverPortionToTrigger && cont.children.length > 1 && this.canvas) {
       this.isDrawing = false;
       this.completed.emit();
+      this.enabled = false;
     }
   }
 
