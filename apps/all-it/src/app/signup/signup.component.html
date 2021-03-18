@@ -28,8 +28,13 @@
                     <input matInput [matDatepicker]="picker" [max]='maxDobDate' placeholder="Date of Birth" formControlName="dob" required>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker color="primary" #picker></mat-datepicker>
-                    <mat-error *ngIf="signupForm.get('dob').hasError('required')">
+                    <mat-error
+                      *ngIf="signupForm.get('dob').hasError('required') &&
+                      !signupForm.get('dob').hasError('matDatepickerParse')">
                       <span>Date of Birth is </span><strong>REQUIRED</strong>
+                    </mat-error>
+                    <mat-error *ngIf="signupForm.get('dob').hasError('matDatepickerParse')">
+                      <span>Incorrect date format, use DD/MM/YYYY</span>
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="full-width__input">
