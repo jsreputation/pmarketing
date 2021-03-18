@@ -253,6 +253,9 @@ const appConfigFile = `{
   },
   "showGameTriesOnCampaignCard": ${
     process.env.SHOW_GAME_TRIES_ON_CAMPAIGN_CARD ? process.env.SHOW_GAME_TRIES_ON_CAMPAIGN_CARD : false
+  },
+  "showPasswordToggleOnSignUpPage": ${
+    process.env.SHOW_PASSWORD_TOGGLE_ON_SIGN_UP_PAGE ? process.env.SHOW_PASSWORD_TOGGLE_ON_SIGN_UP_PAGE : false
   }
 }
 `;

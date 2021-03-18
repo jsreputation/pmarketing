@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { MatFormFieldModule, MatSelectModule, MatSnackBarModule, MatProgressSpinnerModule, MatInputModule } from '@angular/material';
+import { MatFormFieldModule, MatSelectModule, MatSnackBarModule, MatProgressSpinnerModule, MatInputModule, MatIconModule } from '@angular/material';
 import { MatButtonModule } from '@angular/material/button';
 import { AuthenticationModule, GameModule, SurveyModule, UtilsModule, ConfigModule, SettingsModule } from '@perxtech/core';
 import { SignUpComponent } from './sign-up.component';
@@ -31,6 +31,7 @@ import { TranslateModule } from '@ngx-translate/core';
     MatInputModule,
     MatSelectModule,
     MatProgressSpinnerModule,
+    MatIconModule,
   ]
 })
 export class SignUpModule { }

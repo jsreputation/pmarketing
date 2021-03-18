@@ -54,11 +54,13 @@
 
       <mat-form-field floatLabel="always" appearance="standard" class="full-width__input">
         <mat-label translate>SIGN_UP_PAGE.PASSWORD_FIELD</mat-label>
-        <input matInput
+        <input matInput 
           formControlName="password"
-          type="password"
+          [type]="passwordHide ? 'password' : 'text'"
           autocomplete="off"
           required>
+        <mat-icon *ngIf="appConfig?.showPasswordToggleOnSignUpPage"  matSuffix (click)="passwordHide = !passwordHide">
+          {{passwordHide ? 'visibility_off' : 'visibility'}}</mat-icon>
         <mat-error *ngIf="signupForm?.get('password')!.hasError('required')">
           <span>Password is </span><strong>required</strong>
         </mat-error>
@@ -70,9 +72,11 @@
         <mat-label translate>SIGN_UP_PAGE.CONFIRM_PASSWORD_FIELD</mat-label>
         <input matInput
           formControlName="confirmPassword"
-          type="password"
+          [type]="confirmPasswordHide ? 'password' : 'text'"
           autocomplete="off"
           required>
+        <mat-icon *ngIf="appConfig?.showPasswordToggleOnSignUpPage" matSuffix (click)="confirmPasswordHide = !confirmPasswordHide">
+          {{confirmPasswordHide ? 'visibility_off' : 'visibility'}}</mat-icon>
         <mat-error *ngIf="signupForm?.get('confirmPassword')!.hasError('mismatchedPasswords')">
           <span>Passwords must match</span>
         </mat-error>
