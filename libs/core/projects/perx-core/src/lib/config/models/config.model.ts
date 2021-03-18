@@ -73,6 +73,7 @@ export interface IConfig<T> {
 
   /* Sign up page*/
   showLogo?: boolean;
+  showPasswordToggleOnSignUpPage?: boolean;
 
   /* Referral*/
   showReferralDetails?: boolean;
