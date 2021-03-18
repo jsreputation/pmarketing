@@ -247,7 +247,9 @@ export class V4SurveyService implements SurveyService {
     return this.baseUrl$.pipe(
       switchMap(baseUrl => this.http.put(`${baseUrl}/v4/game_transactions/${moveId}/finish`, {})),
       map((answerResponse: any) => {
-        if (answerResponse.data.outcomes && answerResponse.data.outcomes.length) {
+        if (answerResponse.data.outcomes &&
+          answerResponse.data.outcomes[0] &&
+          answerResponse.data.outcomes[0].outcome_type === 'reward') {
           return { rewardAcquired: true };
         }
         return { rewardAcquired: false };
