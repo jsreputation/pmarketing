@@ -1,10 +1,14 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {
+  RouterModule,
+  Routes
+} from '@angular/router';
 import { ChangeMobileComponent } from './change-mobile.component';
 
 const routes: Routes = [{
   path: '',
-  component: ChangeMobileComponent
+  component: ChangeMobileComponent,
+  data: { minLen: 10 }
 }];
 
 @NgModule({

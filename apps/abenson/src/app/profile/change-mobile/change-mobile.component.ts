@@ -1,10 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators
+} from '@angular/forms';
 import {
   AuthenticationService,
   NotificationService
 } from '@perxtech/core';
-import { Router } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router
+} from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -14,17 +24,33 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class ChangeMobileComponent implements OnInit {
   public phoneForm: FormGroup;
+  public passwordMinLen: number;
+
   constructor(
     private fb: FormBuilder,
     private auth: AuthenticationService,
     private router: Router,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private route: ActivatedRoute
   ) { }
 
   public ngOnInit(): void {
     this.phoneForm = this.fb.group({
-      phone: [ '', [ Validators.required, Validators.pattern('^[0-9]*$') ]]
+      phone: [ '', [ Validators.required, Validators.pattern('^[0-9]*$')]]
     });
+    this.route.data.subscribe(
+      (dataObj) => {
+        if (dataObj.minLen) {
+          this.passwordMinLen = dataObj.minLen;
+          if (this.passwordMinLen) {
+            this.phoneForm.controls.phone.setValidators(
+              [ Validators.required, Validators.pattern('^[0-9]*$'), Validators.minLength(this.passwordMinLen)]
+            );
+            this.phoneForm.controls.phone.updateValueAndValidity();
+          }
+        }
+      }
+    );
   }
 
   public requestOtp(): void {
