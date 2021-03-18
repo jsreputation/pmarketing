@@ -47,7 +47,8 @@
       </div>
       <app-location-short-format [merchantId]="reward.merchantId" [voucherId]="voucherId"></app-location-short-format>
       <div class="content">
-        <div class="action">Terms & Conditions</div>
+        <h1 class="hide-for-new-ux">Terms & Conditions</h1>
+        <div class="hide-for-old-ux action">Terms & Conditions</div>
         <div class="terms-conditions" [innerHtml]="reward.termsAndConditions"></div>
       </div>
       <div class="content about">

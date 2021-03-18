@@ -6,7 +6,8 @@ body.electric-green {
         border-radius: 4px;
         font-size: 16px;
         border: 1px solid $electric-green;
-        color: $dark-electric-green;
+        // important to override .mat-flat-button.mat-primary from material theme
+        color: $dark-electric-green !important;
         font-weight: bold;
         text-transform: none;
         // Button states

@@ -22,7 +22,7 @@
         <img src="assets/forward-arrow.svg" alt="">
       </div>
     </mat-card>
-    <button *ngIf="!hideSeeMore && (vouchers.length > defaultNbVouchers)" (click)="seeMoreClicked()">See more</button>
+    <button class="see-more" *ngIf="!hideSeeMore && (vouchers.length > defaultNbVouchers)" (click)="seeMoreClicked()">See more</button>
   </div>
   <div class="past-rewards" *ngIf="(redeemedVouchers | async) as vouchers">
     <h1 class="hide-for-new-ux" *ngIf="vouchers.length > 0">Past rewards</h1>
