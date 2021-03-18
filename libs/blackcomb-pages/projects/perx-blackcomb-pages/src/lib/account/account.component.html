@@ -4,14 +4,11 @@
     [ngStyle]="{'background-color': th?.properties['--account_background_color']}">
     <div *ngIf="appConfig$ | async as aConfig">
       <div *ngIf="aConfig.showUserInfoOnAccountsPage">
-        <perx-core-micro-profile *ngIf="aConfig.app === 'abenson' else fullProfileComp" [profile$]="profile$"></perx-core-micro-profile>
-        <ng-template #fullProfileComp>
-          <perx-core-profile-summary
-            [profile$]="profile$"
-            [loyalty$]="loyalty$"
-            [memberFn]="memberFn"
-          ></perx-core-profile-summary>
-        </ng-template>
+        <perx-core-profile-summary
+          [profile$]="profile$"
+          [loyalty$]="loyalty$"
+          [memberFn]="memberFn"
+        ></perx-core-profile-summary>
       </div>
       <div class="section profile">
         <mat-nav-list>
