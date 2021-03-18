@@ -8,6 +8,9 @@
         phoneForm.get('phone').hasError('pattern')">
         A number is <strong>required</strong>
       </mat-error>
+      <mat-error *ngIf="phoneForm.get('phone').hasError('minlength')">
+        <span>Phone number should be {{passwordMinLen}} digits long</span>
+      </mat-error>
     </mat-form-field>
     <button class="full-width__input" mat-flat-button>Save</button>
   </form>
