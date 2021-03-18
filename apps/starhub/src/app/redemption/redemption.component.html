@@ -26,7 +26,7 @@
               <div class="code-redemption">
                 <p class="hide-for-new-ux">Please ask cashier to scan QR code</p>
                 <h3 class="title hide-for-old-ux">Please ask cashier to scan QR code</h3>
-                <qrcode [qrdata]="voucher.code" [size]="100"></qrcode>
+                <qrcode [qrdata]="voucher.code" [width]="100"></qrcode>
               </div>
             </div>
             <div *ngIf="voucher.redemptionType === 'barcode'">
