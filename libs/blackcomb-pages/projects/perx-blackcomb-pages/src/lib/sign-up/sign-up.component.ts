@@ -74,6 +74,8 @@ export class SignUpComponent implements OnInit, OnDestroy {
   ) as FormGroup;
   public countriesList$: Observable<ICountryCode[]>;
   public moveId: number;
+  public passwordHide: boolean = true;
+  public confirmPasswordHide: boolean = true;
 
   constructor(
     protected fb: FormBuilder,
