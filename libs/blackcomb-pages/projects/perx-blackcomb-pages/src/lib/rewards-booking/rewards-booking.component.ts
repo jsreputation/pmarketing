@@ -29,6 +29,7 @@ import {
   catchError,
   flatMap,
   map,
+  mergeAll,
   switchMap,
   tap
 } from 'rxjs/operators';
@@ -38,6 +39,7 @@ import {
   iif,
   Observable,
   of,
+  range,
   throwError
 } from 'rxjs';
 import { oc } from 'ts-optchain';
@@ -238,33 +240,39 @@ export class RewardsBookingComponent implements OnInit, PopUpClosedCallBack {
     }
     let failedIssuesOrRewards = 0;
 
-    forkJoin([...new Array(parseInt(this.bookingForm.value.quantity, 10))].map(() =>
-      // there's currently only issue/reserve type so this simple iif will be sufficient
-      iif(() => this.distributionType === VoucherDistributionTypes.issue,
-        this.vouchersService.issueReward(this.rewardId,
-          {
-            priceId: this.bookingForm.value.priceId,
-            locationId: this.bookingForm.value.location,
-            sourceType: ''
-          }).pipe(
-            catchError(error => {
-              failedIssuesOrRewards += 1;
-              return of(error);
-            })
-          ),
-        this.vouchersService.reserveReward(this.rewardId,
-          {
-            priceId: this.bookingForm.value.priceId,
-            locationId: this.bookingForm.value.location,
-            sourceType: ''
-          }).pipe(
-            catchError(error => {
-              failedIssuesOrRewards += 1;
-              return of(error);
-            })
+    // todo: show a do not refresh popup
+    forkJoin(
+      range(0, parseInt(this.bookingForm.value.quantity, 10)).pipe(
+        map(() =>
+          // there's currently only issue/reserve type so this simple iif will be sufficient
+          iif(() => this.distributionType === VoucherDistributionTypes.issue,
+            this.vouchersService.issueReward(this.rewardId,
+              {
+                priceId: this.bookingForm.value.priceId,
+                locationId: this.bookingForm.value.location,
+                sourceType: ''
+              }).pipe(
+              catchError(error => {
+                failedIssuesOrRewards += 1;
+                return of(error);
+              })
+            ),
+            this.vouchersService.reserveReward(this.rewardId,
+              {
+                priceId: this.bookingForm.value.priceId,
+                locationId: this.bookingForm.value.location,
+                sourceType: ''
+              }).pipe(
+              catchError(error => {
+                failedIssuesOrRewards += 1;
+                return of(error);
+              })
+            )
           )
-        )
-    )).subscribe(() => {
+        ),
+        mergeAll(1) // do one concurrently therefore serially
+      )
+    ).subscribe(() => { // ignoring the x num of requests
       // update loyalty according to number of passes
       // console.info(result.find(res => res instanceof HttpErrorResponse), 'see fails');
       this.loyalty.pointsBalance -= (this.bookingForm.value.quantity - failedIssuesOrRewards) * (currentPrice.points as number);
