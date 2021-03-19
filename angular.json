@@ -98,7 +98,8 @@
             "jestConfig": "apps/dbshk-agent/jest.config.json",
             "tsConfig": "apps/dbshk-agent/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "apps/dbshk-agent/src/setup-jest.ts"
+            "setupFile": "apps/dbshk-agent/src/setup-jest.ts",
+            "codeCoverage": true
           }
         },
         "lint": {
@@ -227,7 +228,8 @@
             "jestConfig": "apps/philipssg/jest.config.json",
             "tsConfig": "apps/philipssg/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "apps/philipssg/src/setup-jest.ts"
+            "setupFile": "apps/philipssg/src/setup-jest.ts",
+            "codeCoverage": true
           }
         },
         "lint": {
@@ -346,7 +348,8 @@
             "jestConfig": "apps/starhub/jest.config.json",
             "tsConfig": "apps/starhub/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "apps/starhub/src/setup-jest.ts"
+            "setupFile": "apps/starhub/src/setup-jest.ts",
+            "codeCoverage": true
           }
         },
         "lint": {
@@ -447,7 +450,8 @@
             "jestConfig": "apps/prudential/jest.config.json",
             "tsConfig": "apps/prudential/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "apps/prudential/src/setup-jest.ts"
+            "setupFile": "apps/prudential/src/setup-jest.ts",
+            "codeCoverage": true
           }
         },
         "lint": {
@@ -548,7 +552,8 @@
             "jestConfig": "apps/oracle-pay/jest.config.json",
             "tsConfig": "apps/oracle-pay/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "apps/oracle-pay/src/setup-jest.ts"
+            "setupFile": "apps/oracle-pay/src/setup-jest.ts",
+            "codeCoverage": true
           }
         },
         "lint": {
@@ -649,7 +654,8 @@
             "jestConfig": "apps/merck-merchant/jest.config.json",
             "tsConfig": "apps/merck-merchant/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "apps/merck-merchant/src/setup-jest.ts"
+            "setupFile": "apps/merck-merchant/src/setup-jest.ts",
+            "codeCoverage": true
           }
         },
         "lint": {
@@ -762,7 +768,8 @@
             "jestConfig": "apps/merck-customer/jest.config.json",
             "tsConfig": "apps/merck-customer/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "apps/merck-customer/src/setup-jest.ts"
+            "setupFile": "apps/merck-customer/src/setup-jest.ts",
+            "codeCoverage": true
           }
         },
         "lint": {
@@ -900,7 +907,8 @@
             "jestConfig": "apps/hsbchk/jest.config.json",
             "tsConfig": "apps/hsbchk/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "apps/hsbchk/src/setup-jest.ts"
+            "setupFile": "apps/hsbchk/src/setup-jest.ts",
+            "codeCoverage": true
           }
         },
         "lint": {
@@ -1004,7 +1012,8 @@
             "jestConfig": "apps/hsbc-rewards/jest.config.json",
             "tsConfig": "apps/hsbc-rewards/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "apps/hsbc-rewards/src/setup-jest.ts"
+            "setupFile": "apps/hsbc-rewards/src/setup-jest.ts",
+            "codeCoverage": true
           }
         },
         "lint": {
@@ -1105,7 +1114,8 @@
             "jestConfig": "apps/hsbc/jest.config.json",
             "tsConfig": "apps/hsbc/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "apps/hsbc/src/setup-jest.ts"
+            "setupFile": "apps/hsbc/src/setup-jest.ts",
+            "codeCoverage": true
           }
         },
         "lint": {
@@ -1206,7 +1216,8 @@
             "jestConfig": "apps/hkbn/jest.config.json",
             "tsConfig": "apps/hkbn/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "apps/hkbn/src/setup-jest.ts"
+            "setupFile": "apps/hkbn/src/setup-jest.ts",
+            "codeCoverage": true
           }
         },
         "lint": {
@@ -1308,7 +1319,8 @@
             "jestConfig": "apps/components-demo/jest.config.json",
             "tsConfig": "apps/components-demo/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "apps/components-demo/src/setup-jest.ts"
+            "setupFile": "apps/components-demo/src/setup-jest.ts",
+            "codeCoverage": true
           }
         },
         "lint": {
@@ -1409,7 +1421,8 @@
             "jestConfig": "apps/bpi/jest.config.json",
             "tsConfig": "apps/bpi/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "apps/bpi/src/setup-jest.ts"
+            "setupFile": "apps/bpi/src/setup-jest.ts",
+            "codeCoverage": true
           }
         },
         "lint": {
@@ -1518,7 +1531,8 @@
             "jestConfig": "apps/blackcomb/jest.config.json",
             "tsConfig": "apps/blackcomb/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "apps/blackcomb/src/setup-jest.ts"
+            "setupFile": "apps/blackcomb/src/setup-jest.ts",
+            "codeCoverage": true
           }
         },
         "lint": {
@@ -1645,7 +1659,8 @@
             "jestConfig": "apps/all-it/jest.config.json",
             "tsConfig": "apps/all-it/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "apps/all-it/src/setup-jest.ts"
+            "setupFile": "apps/all-it/src/setup-jest.ts",
+            "codeCoverage": true
           }
         },
         "lint": {
@@ -1758,7 +1773,8 @@
             "jestConfig": "apps/abenson/jest.config.json",
             "tsConfig": "apps/abenson/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "apps/abenson/src/setup-jest.ts"
+            "setupFile": "apps/abenson/src/setup-jest.ts",
+            "codeCoverage": true
           }
         },
         "lint": {
@@ -1782,7 +1798,8 @@
           "options": {
             "jestConfig": "libs/whistler/jest.config.js",
             "tsConfig": "libs/whistler/projects/whistler/tsconfig.spec.json",
-            "passWithNoTests": true
+            "passWithNoTests": true,
+            "codeCoverage": true
           }
         },
         "lint": {
@@ -1807,7 +1824,8 @@
             "jestConfig": "libs/core/jest.config.json",
             "tsConfig": "libs/core/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "libs/core/projects/setup-jest.ts"
+            "setupFile": "libs/core/projects/setup-jest.ts",
+            "codeCoverage": true
           }
         },
         "lint": {
@@ -1832,7 +1850,8 @@
             "jestConfig": "libs/blackcomb-pages/jest.config.json",
             "tsConfig": "libs/blackcomb-pages/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "libs/blackcomb-pages/projects/setup-jest.ts"
+            "setupFile": "libs/blackcomb-pages/projects/setup-jest.ts",
+            "codeCoverage": true
           }
         },
         "lint": {
