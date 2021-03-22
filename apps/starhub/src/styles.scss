@@ -106,3 +106,15 @@ ul {
 .mat-card:not([class*="mat-elevation-z"]) {
   box-shadow: 0 0.4rem 0.4rem $medium-grey;
 }
+
+// core style overrides
+
+perx-core--feed-item-popup {
+  .main-container {
+    .header button.icon {
+      background: $tint-electric-green !important;
+      color: $electric-green !important;
+    }
+  }
+
+}
