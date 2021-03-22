@@ -3,6 +3,7 @@ import { ConfigService, IConfig, ILoyaltyTierInfo, IReward } from '@perxtech/cor
 import { Location } from '@angular/common';
 import { IMacaron } from '../../services/macaron.service';
 import { IStarhubConfig } from '../../home/home/home.component';
+import { oc } from 'ts-optchain';
 
 @Component({
   selector: 'app-reward-detail',
@@ -38,6 +39,7 @@ export class RewardDetailComponent implements OnChanges, OnInit {
   public reachedSneakPeakTiers: ILoyaltyTierInfo[] = [];
   public unAttainedTiers: ILoyaltyTierInfo[] = [];
   public showLoyaltyTierInfo: boolean = false;
+  public uxcr: boolean = false;
 
   constructor(
     private location: Location,
@@ -48,6 +50,7 @@ export class RewardDetailComponent implements OnChanges, OnInit {
     this.configService.readAppConfig<IStarhubConfig>().subscribe(
       (config: IConfig<IStarhubConfig>) => {
         this.showLoyaltyTierInfo = config.custom ? config.custom.mobileIdCR : false;
+        this.uxcr = oc(config).custom.UXCR(false);
       }
     );
   }
