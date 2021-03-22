@@ -49,7 +49,7 @@ export class ChangePasswordComponent {
         if (dataObj.minLen) {
           this.passwordMinLen = dataObj.minLen;
           if (this.passwordMinLen) {
-            this.changePasswordForm.controls.newPassword.setValidators([Validators.minLength(this.passwordMinLen)]);
+            this.changePasswordForm.controls.newPassword.setValidators([Validators.required, Validators.minLength(this.passwordMinLen)]);
             this.changePasswordForm.controls.newPassword.updateValueAndValidity();
           }
         }
