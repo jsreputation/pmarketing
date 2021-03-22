@@ -109,6 +109,16 @@ perx-core--feed-item-popup {
       font-size: 16px !important;
       color: $dark-grey !important;
     }
+
+    button.dialog-button {
+      height: 40px;
+      background: $electric-green;
+      font-weight: bold;
+      font-size: 16px;
+      border: none;
+      border-radius: 4px;
+      color: $dark-electric-green;
+    }
   }
 
 }
