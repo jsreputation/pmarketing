@@ -1,45 +1,29 @@
-<div class="leaderboard-about">
+<div *ngIf="data" class="leaderboard-about">
   <div class="leader-board-image">
     <img src="https://via.placeholder.com/350x150" />
   </div>
   <div class="leaderboard-details">
     <div class="leaderboard-subtitle">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-      magna
-      aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat
+      {{data.displayProperties.aboutText}}
     </div>
-    <div class="reward-detail">
+    <div *ngFor="let podium of data.podiums; let i = index" class="reward-detail">
       <div class="image-column">
         <img class="position-image" src="https://cdn.perxtech.io/content/hsbc-hk/images/firstplace.png" />
       </div>
       <div class="detail-column">
         <div class="rank-name">
-          First Place prizes:
+          {{getRankName(podium?.display_properties?.rank_name, i)}}
         </div>
         <div class="reward-list">
-          <div class="list-item">
-            $2 off Starbucks voucher
-          </div>
-          <div class="list-item">
-            $2 off Starbucks voucher
+          <div class="list-item" *ngFor="let outcome of podium.outcomes">
+            {{outcome.id}}
           </div>
         </div>
       </div>
     </div>
-    <div class="reward-detail">
-      <div class="image-column">
-        <img class="position-image" src="https://cdn.perxtech.io/content/hsbc-hk/images/secondplace.png" />
-      </div>
-      <div class="detail-column">
-        <div class="rank-name">
-          Second Place prizes:
-        </div>
-        <div class="reward-list">
-          <div class="list-item">
-            $2 off Starbucks voucher
-          </div>
-        </div>
-      </div>
+    <div *ngIf="data.termsAndConditions" class="terms-and-conditions">
+      <h3>{{tncTitle}}</h3>
+      <p [innerHTML]="data.termsAndConditions"></p>
     </div>
   </div>
 </div>

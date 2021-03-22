@@ -6,6 +6,9 @@ export type LeaderBoard = {
   metric: string;
   title: string;
   endDate: Date;
+  podiums: {
+    [key: string]: any;
+  }
 };
 
 export type UserRanking = {

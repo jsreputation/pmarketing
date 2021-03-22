@@ -61,6 +61,9 @@
     "POINT_UNIT": "Points",
     "YOUR_RESULTS": "Your Results",
     "ENDS_ON": "Ends on",
-    "CURRENT_USER": "(you)"
+    "CURRENT_USER": "(you)",
+    "PRIZES": "Prizes",
+    "RANK": "Rank",
+    "TERMS_AND_CONDITIONS": "Terms and Conditions"
   }
 }

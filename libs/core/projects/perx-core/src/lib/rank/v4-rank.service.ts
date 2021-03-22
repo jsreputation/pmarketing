@@ -12,12 +12,19 @@ const camelToPascalCase = (str: string) => str.replace(/\B_[a-z]/g, m => (
   m.charAt(1).toUpperCase()
 ));
 
-const objectKeysPascalize = (keyConvertFn, object: {}) => {
+const objectKeysPascalize = (keyConvertFn, object: {} | null) => {
   const resultObj = {};
-  Object.entries(object).forEach(([key, value]) => {
-    resultObj[keyConvertFn(key)] = value;
-  });
-  return resultObj;
+  if (object) {
+    Object.entries(object).forEach(([key, value]) => {
+      // if the valaue is an object, pascalize it's properties as well
+      if (typeof (value) === 'object' && !Array.isArray(value)) {
+        resultObj[keyConvertFn(key)] = objectKeysPascalize(keyConvertFn, value);
+      } else {
+        resultObj[keyConvertFn(key)] = value;
+      }
+    });
+    return resultObj;
+  }
 };
 
 interface V4LeaderBoard {

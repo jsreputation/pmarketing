@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { combineLatest } from 'rxjs';
+import { LeaderBoard } from '../models/rank.model';
 
 @Component({
   selector: 'perx-core-leaderboard-about',
@@ -6,26 +9,28 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./leaderboard-about.component.scss']
 })
 export class LeaderboardAboutComponent implements OnInit {
-  // @Input()
-  // public metric: string;
-  // @Input()
-  // public userGameInfo: UserRanking;
-  // @Input()
-  // public rantTextFn: () => Observable<string>;
-  // @Input()
-  // public pointTextFn: () => Observable<string>;
+  @Input() public data: LeaderBoard;
 
-  constructor() { }
+  constructor(private translateService: TranslateService) { }
+  public prizesTxt: string;
+  public rankTxt: string;
+  public tncTitle: string;
 
   public ngOnInit(): void {
-    // if (!this.rantTextFn) {
-    //   this.rantTextFn = () => this.translate.get('LEADER_BOARD.POSITION');
-    // }
-    // if (!this.pointTextFn) {
-    //   this.pointTextFn = () => this.translate.get('LEADER_BOARD.POINT_UNIT');
-    // }
-    // if (!this.metric) {
-    //   this.translate.get('LEADER_BOARD.POINT_TITLE').subscribe(metric => this.metric = metric);
-    // }
+    combineLatest([
+      this.translateService.get('LEADER_BOARD.PRIZES'),
+      this.translateService.get('LEADER_BOARD.RANK'),
+      this.translateService.get('LEADER_BOARD.TERMS_AND_CONDITIONS')])
+      .subscribe(
+        ([prizes, rank, tncTitle]) => {
+          this.prizesTxt = prizes;
+          this.rankTxt = rank;
+          this.tncTitle = tncTitle;
+        }
+      );
+  }
+
+  public getRankName(name: string, index: number): string {
+    return name ? `${name} ${this.prizesTxt}:` : `${this.rankTxt} ${index + 1} ${this.prizesTxt}:`;
   }
 }
