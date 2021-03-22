@@ -108,6 +108,7 @@ const appConfigFile = `{
   "showSubtitleLogin": ${
     process.env.SHOW_LOGIN_SUBTITLE ? process.env.SHOW_LOGIN_SUBTITLE : false
   },
+  "countryCodePrefix": "${process.env.COUNTRY_CODE_PREFIX ? process.env.COUNTRY_CODE_PREFIX : ''}",
   "showHomePage": ${
     process.env.SHOW_HOME_PAGE ? process.env.SHOW_HOME_PAGE : false
   },
