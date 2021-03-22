@@ -154,16 +154,6 @@ html body:not(.electric-green) {
             }
         }
 
-        // feed-item-popup.component.scss
-        perx-core--feed-item-popup {
-            .mat-dialog-actions {
-                .dialog-button {
-                    padding: 0.5rem;
-                    color: #6dc00e;
-                }
-            }
-        }
-
         .mat-bottom-sheet-container {
             background-color: #f6f7f9;
         }
@@ -812,36 +802,45 @@ html body:not(.electric-green) {
         }
     }
 
-
+  // feed-item-popup.component.scss
   .app-full-bleed-dialog .mat-dialog-container {
     padding: 0;
     position: relative;
     border-radius: 1rem !important;
 
     // override styles for feed-item-popup
-    .main-container {
-      color: $dark-grey !important;
-      font-size: 16px !important;
-      letter-spacing: 0.2px !important;
-      line-height: 21px !important;
-      @include regular;
+    perx-core--feed-item-popup{
+      .main-container {
+        color: $dark-grey !important;
+        font-size: 16px !important;
+        letter-spacing: 0.2px !important;
+        line-height: 21px !important;
+        @include regular;
 
-      p.dialog-body {
-        font-size: 1.6rem !important;
-        color: #666666 !important;
-      }
+        .header button.icon {
+          background: #e7fbef !important;
+          color: #6dc00e !important;
+        }
 
-      button.dialog-button {
-        height: unset;
-        background: transparent;
-        font-weight: normal;
-        font-size: 14px;
-        border: none;
-        border-radius: 4px;
-        color: #6dc00e;
+        p.dialog-body {
+          font-size: 1.6rem !important;
+          color: #666666 !important;
+        }
+
+        button.dialog-button {
+          height: unset;
+          background: transparent;
+          font-weight: normal;
+          font-size: 14px;
+          border: none;
+          border-radius: 4px;
+          color: #6dc00e;
+          padding: 0.5rem;
+        }
       }
     }
   }
+
 
   // use old mixin globally for old theme
     .icon {
