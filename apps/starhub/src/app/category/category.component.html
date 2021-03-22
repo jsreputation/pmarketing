@@ -2,10 +2,12 @@
   <div class="spacer"></div>
   <span *ngIf="showToolbarTitle" class="toolbar-title">{{selectedCategory}}</span>
   <button class="icon" (click)="selectCategory()">
-    <img src="assets/category.svg" alt="">
+    <img class="hide-for-old-ux" src="assets/category.svg" alt="">
+    <img class="hide-for-new-ux" src="assets/category_old.svg" alt="">
   </button>
   <button class="icon" (click)="selectSort()">
-    <img src="assets/sort.svg" alt="">
+    <img class="hide-for-old-ux" src="assets/sort.svg" alt="">
+    <img class="hide-for-new-ux" src="assets/sort_old.svg" alt="">
   </button>
 </mat-toolbar>
 <div class="content" #contentScroll infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="500"
@@ -31,7 +33,8 @@
           <h2 class="hide-for-new-ux">{{reward.merchantName}}</h2>
         </div>
         <div class="icon">
-          <img src="assets/forward-arrow.svg" alt="">
+          <img class="hide-for-old-ux" src="assets/forward-arrow.svg" alt="">
+          <img class="hide-for-new-ux" src="assets/forward-arrow_old.svg" alt="">
         </div>
       </mat-card-content>
       <mat-card-footer></mat-card-footer>
