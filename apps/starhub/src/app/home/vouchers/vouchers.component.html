@@ -19,7 +19,8 @@
         <img [src]="voucher.accessoryImage" alt="">
       </div>
       <div class="icon">
-        <img src="assets/forward-arrow.svg" alt="">
+        <img class="hide-for-old-ux" src="assets/forward-arrow.svg" alt="">
+        <img class="hide-for-new-ux" src="assets/forward-arrow_old.svg" alt="">
       </div>
     </mat-card>
     <button class="see-more" *ngIf="!hideSeeMore && (vouchers.length > defaultNbVouchers)" (click)="seeMoreClicked()">See more</button>
@@ -36,7 +37,8 @@
         <mat-card-subtitle>{{voucher.state | titlecase}}</mat-card-subtitle>
       </mat-card-header>
       <div class="disabled-icon">
-        <img src="assets/forward-disabled-arrow.svg" alt="">
+        <img class="hide-for-old-ux" src="assets/forward-disabled-arrow.svg" alt="">
+        <img class="hide-for-new-ux" src="assets/forward-disabled-arrow_old.svg" alt="">
       </div>
     </mat-card>
   </div>
