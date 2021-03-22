@@ -812,7 +812,23 @@ html body:not(.electric-green) {
         }
     }
 
-    // use old mixin globally for old theme
+
+  .app-full-bleed-dialog .mat-dialog-container {
+    padding: 0;
+    position: relative;
+    border-radius: 1rem !important;
+
+    // override styles for feed-item-popup
+    .main-container {
+      color: $dark-grey !important;
+      font-size: 16px !important;
+      letter-spacing: 0.2px !important;
+      line-height: 21px !important;
+      @include regular;
+    }
+  }
+
+  // use old mixin globally for old theme
     .icon {
         @include icon;
     }
