@@ -104,6 +104,11 @@ perx-core--feed-item-popup {
       background: $tint-electric-green !important;
       color: $electric-green !important;
     }
+
+    p.dialog-body {
+      font-size: 16px !important;
+      color: $dark-grey !important;
+    }
   }
 
 }

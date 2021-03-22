@@ -825,6 +825,11 @@ html body:not(.electric-green) {
       letter-spacing: 0.2px !important;
       line-height: 21px !important;
       @include regular;
+
+      p.dialog-body {
+        font-size: 1.6rem !important;
+        color: #666666 !important;
+      }
     }
   }
 
