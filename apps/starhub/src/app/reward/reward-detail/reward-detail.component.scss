@@ -45,3 +45,33 @@ app-expire-timer,
     font-size: 1rem;
   }
 }
+
+.description.ux-cr ::ng-deep ol {
+  counter-reset: section;
+  padding-left: 0;
+
+  li {
+   margin-bottom : .8rem;
+
+   &::before  {
+      content: counter(section, decimal);
+      counter-increment: section;
+      background-color: $green-nova !important;
+      color: $dark-electric-green !important;
+      font-size: 1.4rem;
+      line-height: 1.6rem;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      padding: .4rem;
+      margin-right: .8rem;
+      height: 1.6rem;
+      width: 1.6rem;
+    }
+
+    &::marker {
+      content: "";
+    }
+  }
+}
