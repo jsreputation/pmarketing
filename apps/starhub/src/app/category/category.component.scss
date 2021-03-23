@@ -89,8 +89,11 @@ mat-toolbar {
   position: relative;
 
   img {
-    height: 15rem; // consistent with cards.scss
     margin-bottom: 0;
+    &.mat-card-image {
+      height: 15rem; // consistent with cards.scss
+      object-fit: cover;
+    }
   }
 
   .badge {
