@@ -613,31 +613,31 @@ html body:not(.electric-green) {
                 padding: 0.5rem 3rem;
             }
 
-            ::ng-deep input {
-                background: #eef9e4;
-            }
-
-            ::ng-deep.error input {
-                border-color: #eb202f;
-                background: #fff3f9;
-            }
-
-            ::ng-deep .error :focus {
-                outline-color: #eb202f;
-            }
-
-            :host ::ng-deep .activation-code {
+            perx-core-pin-input {
+              .activation-code {
                 .activation-code__inputs input {
-                    color: #666666;
+                  color: #666666;
+                  background: #eef9e4;
                 }
 
                 .activation-code__inputs input:focus {
-                    outline-color: #73c20e;
+                  outline-color: #73c20e;
                 }
 
-                .error-label {
-                    color: #d8127d;
+                &.error {
+                  .activation-code__inputs input {
+                    border-color: #eb202f;
+                    background: #fff3f9;
+                  }
+
+                  .activation-code__inputs input:focus {
+                    outline-color: #eb202f;
+                  }
                 }
+                .error-label {
+                  color: #d8127d;
+                }
+              }
             }
         }
 
