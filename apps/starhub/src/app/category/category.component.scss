@@ -90,6 +90,10 @@ mat-toolbar {
 
   img {
     margin-bottom: 0;
+    &.mat-card-image {
+      height: 15rem; // consistent with cards.scss
+      object-fit: cover;
+    }
   }
 
   .badge {
