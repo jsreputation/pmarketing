@@ -156,9 +156,10 @@
 ::ng-deep input {
   background: $tint-electric-green;
   border: 0 !important;
-  font-size: 1.8rem !important;
+  font-size: 20px !important;
   height: 6rem !important;
   line-height: normal !important;
+  font-weight: bold;
 }
 
 ::ng-deep.error input {
