@@ -841,6 +841,17 @@ html body:not(.electric-green) {
     }
   }
 
+  perx-core-popup {
+    .mat-dialog-title {
+      font-size: 20px !important;
+      line-height: 31px !important;
+      color: rgba(0, 0, 0, 0.87) !important;
+    }
+    .mat-dialog-content {
+      color: #777776 !important;
+    }
+  }
+
   // use old mixin globally for old theme
     .icon {
         @include icon;
