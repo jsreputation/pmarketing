@@ -93,7 +93,7 @@ ul {
 }
 
 .mat-card:not([class*="mat-elevation-z"]) {
-  box-shadow: 0 0.4rem 0.4rem $medium-grey;
+  box-shadow: 0 0.4rem 0.4rem #d2d8e2; // $medium-grey;
 }
 
 // core style overrides
