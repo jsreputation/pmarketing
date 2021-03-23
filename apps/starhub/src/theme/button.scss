@@ -7,7 +7,7 @@ body.electric-green {
         font-size: 16px;
         border: 1px solid $electric-green;
         // important to override .mat-flat-button.mat-primary from material theme
-        color: $dark-electric-green !important;
+        color: $deep-electric-green !important;
         font-weight: bold;
         text-transform: none;
         // Button states
@@ -43,9 +43,10 @@ body.electric-green {
             }
         }
         // Tertiary/Link buttons
-        &.link {
+        &.mat-button {
             border: none;
             background-color: transparent;
+            color: $dark-electric-green !important;
             // Button states
             // &:hover {
             //     color: $electric-green;

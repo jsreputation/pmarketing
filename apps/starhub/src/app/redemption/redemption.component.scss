@@ -156,18 +156,19 @@
 ::ng-deep input {
   background: $tint-electric-green;
   border: 0 !important;
-  font-size: 1.8rem !important;
+  font-size: 20px !important;
   height: 6rem !important;
   line-height: normal !important;
+  font-weight: bold;
 }
 
 ::ng-deep.error input {
-  border-color: $error-text;
-  background: $light-grey;
+  border-color: $astra-pink;
+  background: $tint-astra-pink;
 }
 
 ::ng-deep .error :focus {
-  outline-color: $error-text;
+  outline-color: $astra-pink;
 }
 
 :host ::ng-deep .activation-code {
@@ -180,7 +181,7 @@
   }
 
   .error-label {
-    color: $error-text;
+    color: $dark-astra-pink;
     font-size: 16px;
     line-height: 21px;
   }

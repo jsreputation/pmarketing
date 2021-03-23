@@ -98,6 +98,34 @@ ul {
 
 // core style overrides
 
+// @todo parking this block as the base direction for ng-deep migration
+//perx-core-pin-input {
+//  .activation-code {
+//    .activation-code__inputs input {
+//      color: $dark-grey;
+//      background: $tint-electric-green;
+//    }
+//
+//    .activation-code__inputs input:focus {
+//      outline-color: $electric-green;
+//    }
+//
+//    &.error {
+//      .activation-code__inputs input {
+//        border-color: $astra-pink;
+//        background: $tint-astra-pink;
+//      }
+//
+//      .activation-code__inputs input:focus {
+//        outline-color: $astra-pink;
+//      }
+//    }
+//    .error-label {
+//      color: $dark-astra-pink;
+//    }
+//  }
+//}
+
 perx-core--feed-item-popup {
   .main-container {
     .header button.icon {
@@ -117,7 +145,7 @@ perx-core--feed-item-popup {
       font-size: 16px;
       border: none;
       border-radius: 4px;
-      color: $dark-electric-green;
+      color: $deep-electric-green;
     }
   }
 }
