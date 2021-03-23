@@ -8,7 +8,8 @@
         <div class="upper-section">
           <div class="code-redemption unavailable"
             *ngIf="voucher.state === 'redeemed' || voucher.state === 'expired'; else available">
-            <p>Your reward is</p>
+            <p class="hide-for-new-ux">Your reward is</p>
+            <h3 class="hide-for-old-ux title">Your reward is</h3>
             <span class="code">{{voucher.state}}</span>
           </div>
           <ng-template #available>
