@@ -21,6 +21,11 @@
                 display: inline-block;
                 vertical-align: top;
                 width: 15%;
+                .position-image {
+                    max-width: 40px;
+                    display: block;
+                    height: auto;
+                }
             }
 
             .detail-column {
