@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { combineLatest } from 'rxjs';
-import { LeaderBoard } from '../models/rank.model';
+import { RewardsService } from '../../rewards/rewards.service';
+import { LeaderBoard, LeaderboardOutcome } from '../models/rank.model';
 
 @Component({
   selector: 'perx-core-leaderboard-about',
@@ -11,26 +12,63 @@ import { LeaderBoard } from '../models/rank.model';
 export class LeaderboardAboutComponent implements OnInit {
   @Input() public data: LeaderBoard;
 
-  constructor(private translateService: TranslateService) { }
+  constructor(
+    private translateService: TranslateService,
+    private rewardService: RewardsService) { }
   public prizesTxt: string;
   public rankTxt: string;
   public tncTitle: string;
+  public loyaltyPoints: string;
 
   public ngOnInit(): void {
     combineLatest([
       this.translateService.get('LEADER_BOARD.PRIZES'),
       this.translateService.get('LEADER_BOARD.RANK'),
-      this.translateService.get('LEADER_BOARD.TERMS_AND_CONDITIONS')])
+      this.translateService.get('LEADER_BOARD.TERMS_AND_CONDITIONS'),
+      this.translateService.get('LEADER_BOARD.LOYALTY_POINTS')])
       .subscribe(
-        ([prizes, rank, tncTitle]) => {
+        ([prizes, rank, tncTitle, loyaltyPoints]) => {
           this.prizesTxt = prizes;
           this.rankTxt = rank;
           this.tncTitle = tncTitle;
+          this.loyaltyPoints = loyaltyPoints;
+          this.prepPodiums();
         }
       );
   }
 
-  public getRankName(name: string, index: number): string {
+  private getRankName(name: string | null, index: number): string {
     return name ? `${name} ${this.prizesTxt}:` : `${this.rankTxt} ${index + 1} ${this.prizesTxt}:`;
+  }
+
+  private prepPodiums(): void {
+    this.data.podiums.forEach((podium, index) => {
+      // build rank name
+      const rankName = podium && podium.displayProperties && podium.displayProperties.rankName ? podium.displayProperties.rankName : null;
+      this.data.podiums[index].displayProperties = {
+        ...this.data.podiums[index].displayProperties,
+        rankName: this.getRankName(rankName, index)
+      };
+
+      if (podium.outcomes && podium.outcomes.length) {
+        // for each outcome
+        podium.outcomes.forEach((outcome, outcomeIndex) => {
+
+          // dont query if points
+          if (outcome.pointsCount) {
+            podium.outcomes[outcomeIndex] = {
+              ...podium.outcomes[outcomeIndex],
+              name: `${outcome.pointsCount} ${this.loyaltyPoints}`
+            };
+          } else {
+            //  get reward name
+            this.rewardService.getReward(outcome.modularizableId).subscribe((reward) => {
+              podium.outcomes[outcomeIndex] = reward as LeaderboardOutcome;
+            });
+          }
+          this.data.podiums[index] = podium;
+        });
+      }
+    });
   }
 }

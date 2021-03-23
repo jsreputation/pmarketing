@@ -54,7 +54,8 @@
     "CURRENT_USER": "(you)",
     "PRIZES": "Prizes",
     "RANK": "Rank",
-    "TERMS_AND_CONDITIONS": "Terms and Conditions"
+    "TERMS_AND_CONDITIONS": "Terms and Conditions",
+    "LOYALTY_POINTS": "loyalty points"
   },
   "LOGIN": "登入",
   "REGISTER_FOR_AN_ACCOUNT": "立即登記會員賬戶",

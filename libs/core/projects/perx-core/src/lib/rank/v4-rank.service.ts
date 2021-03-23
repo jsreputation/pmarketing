@@ -17,8 +17,14 @@ const objectKeysPascalize = (keyConvertFn, object: {} | null) => {
   if (object) {
     Object.entries(object).forEach(([key, value]) => {
       // if the valaue is an object, pascalize it's properties as well
-      if (typeof (value) === 'object' && !Array.isArray(value)) {
-        resultObj[keyConvertFn(key)] = objectKeysPascalize(keyConvertFn, value);
+      if (typeof (value) === 'object') {
+        if (Array.isArray(value) && value.length) {
+          const arr: any[] = [];
+          value.forEach((arrayValue) => arr.push(objectKeysPascalize(keyConvertFn, arrayValue)));
+          resultObj[keyConvertFn(key)] = arr;
+        } else {
+          resultObj[keyConvertFn(key)] = objectKeysPascalize(keyConvertFn, value);
+        }
       } else {
         resultObj[keyConvertFn(key)] = value;
       }

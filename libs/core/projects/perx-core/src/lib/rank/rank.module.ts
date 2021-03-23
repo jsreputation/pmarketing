@@ -21,6 +21,7 @@ import { IRankService } from './irank.service';
 import { LeaderboardListComponent } from './leaderboard-list/leaderboard-list.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { LeaderboardAboutComponent } from './leaderboard-about/leaderboard-about.component';
+import { RouterModule } from '@angular/router';
 
 export function rankServiceFactory(http: HttpClient, configService: ConfigService): V4RankService {
   // Make decision on what to instantiate base on config
@@ -43,7 +44,8 @@ const componentsAndPipes = [
     MatDividerModule,
     MatRippleModule,
     MatCardModule,
-    TranslateModule
+    TranslateModule,
+    RouterModule
   ],
   providers: [
     {

@@ -1,3 +1,5 @@
+import { IReward } from '../../rewards/models/reward.model';
+
 export type LeaderBoard = {
   displayProperties: {
     [key: string]: any;
@@ -6,9 +8,7 @@ export type LeaderBoard = {
   metric: string;
   title: string;
   endDate: Date;
-  podiums: {
-    [key: string]: any;
-  }
+  podiums: Podium[];
 };
 
 export type UserRanking = {
@@ -17,3 +17,17 @@ export type UserRanking = {
   rank: number | string;
   value: number;
 };
+
+export type Podium = {
+  id: number;
+  outcomes: LeaderboardOutcome[];
+  displayProperties: {
+    rankName: string;
+  }
+};
+
+export interface LeaderboardOutcome extends IReward {
+  pointsCount?: number;
+  modularizableId: number;
+  modularizableType: string;
+}

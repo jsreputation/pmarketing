@@ -293,7 +293,8 @@
     "CURRENT_USER": "(you)",
     "PRIZES": "Prizes",
     "RANK": "Rank",
-    "TERMS_AND_CONDITIONS": "Terms and Conditions"
+    "TERMS_AND_CONDITIONS": "Terms and Conditions",
+    "LOYALTY_POINTS": "loyalty points"
   },
   "ACCOUNT_PAGE": {
     "PROFILE": "My Profile",
