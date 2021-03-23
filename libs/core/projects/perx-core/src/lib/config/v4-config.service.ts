@@ -69,7 +69,6 @@ export class V4ConfigService extends ConfigService {
             console.log(`${property} has been overridden with: ${value}.`);
           }
         }
-
       }
     }
   }
