@@ -3,8 +3,11 @@ import {
   OnInit
 } from '@angular/core';
 import {
+  AuthenticationService,
   ConfigService,
   ICampaign,
+  IConfig,
+  IFlags,
   IGame,
   IGameService,
   IPopupConfig,
@@ -16,10 +19,7 @@ import {
   ProfileService,
   RewardPopupComponent,
   SettingsService,
-  TokenStorage,
-  IFlags,
-  AuthenticationService,
-  IConfig
+  TokenStorage
 } from '@perxtech/core';
 import {
   MatDialog,
@@ -40,10 +40,12 @@ import {
 } from './analytics.service';
 import {
   EMPTY,
-  timer,
-  throwError
+  throwError,
+  timer
 } from 'rxjs';
 import { Router } from '@angular/router';
+import { IStarhubConfig } from './home/home/home.component';
+import { oc } from 'ts-optchain';
 
 export interface IdataLayerSH {
   pageName: string;
@@ -161,10 +163,13 @@ export class AppComponent implements OnInit {
     );
 
     // init holding
-    this.configService.readAppConfig().pipe(
-      tap((config: IConfig<void>) => {
+    this.configService.readAppConfig<IStarhubConfig>().pipe(
+      tap((config: IConfig<IStarhubConfig>) => {
         if (config.appVersion) {
           (window as any).PERX_APP_VERSION = config.appVersion;
+        }
+        if (oc(config).custom.UXCR()) {
+          document.body.classList.add('electric-green');
         }
       }),
       switchMap(() => this.settingsService.getRemoteFlagsSettings()),

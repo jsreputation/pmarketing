@@ -25,11 +25,11 @@ import {
   MatDialogModule,
   MatDividerModule,
   MatIconModule,
+  MatListModule,
+  MatProgressSpinnerModule,
   MatRippleModule,
   MatSnackBarModule,
-  MatToolbarModule,
-  MatProgressSpinnerModule,
-  MatListModule
+  MatToolbarModule
 } from '@angular/material';
 
 import { QRCodeModule } from 'angularx-qrcode';
@@ -52,15 +52,15 @@ import {
   MerchantsModule,
   ProfileModule,
   ProfileServiceModule as PerxProfileServiceModule,
+  PuzzlesModule,
   RewardPopupComponent,
   RewardsModule,
   SettingsModule,
+  StampModule,
   ThemesService,
   TokenStorage,
   UtilsModule,
-  VouchersModule,
-  PuzzlesModule,
-  StampModule
+  VouchersModule
 } from '@perxtech/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -82,10 +82,7 @@ import { ErrorComponent } from './error/error.component';
 
 import { environment } from '../environments/environment';
 import * as Sentry from '@sentry/browser';
-import {
-  // switchMap,
-  tap
-} from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import {
   TranslateLoader,
   TranslateModule,
@@ -137,6 +134,13 @@ export const appInit =
 
     configService.readAppConfig().pipe(
       tap((config: IConfig<void>) => translateService.setDefaultLang(config.defaultLang || 'en')),
+      tap(() => {
+        const uxcrParam = urlParams.get('uxcr');
+        if (uxcrParam) {
+          const uxcrOverride = uxcrParam === 'false' ? false : true; // typecast to boolean
+          configService.setOverrideFlag('UXCR', uxcrOverride);
+        }
+      }),
       // switchMap(() => authService.getAppToken()),
       // switchMap(() => themesService.getThemeSetting())
     ).toPromise().then(() => resolve());

@@ -2,17 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import {
-  of,
   Observable,
+  of,
 } from 'rxjs';
 import {
-  tap,
   shareReplay,
+  tap,
 } from 'rxjs/operators';
 
-import {
-  IConfig,
-} from './models/config.model';
+import { IConfig, } from './models/config.model';
 import { ConfigService } from './config.service';
 
 @Injectable({
@@ -51,5 +49,27 @@ export class V4ConfigService extends ConfigService {
 
   public readAppStarted(): boolean {
     return this.appStarted;
+  }
+
+  public setOverrideFlag(flag: string, value: any): void {
+    this.findPropAndSet(this.appConfig, flag, value);
+  }
+
+  // recursive, but meant to be used for config which is at most 2 levels deep so is fine.
+  private findPropAndSet(obj: IConfig<any> | undefined, id: string, value: any): void {
+    if (obj) {
+      for (const property in obj) {
+        // eslint: guard-for-in - if statement has to wrap the whole body of a for-in
+        if (obj.hasOwnProperty(property)) {
+          if (typeof obj[property] === 'object') {
+            this.findPropAndSet(obj[property], id, value);
+          }
+          if (property === id) {
+            obj[property] = value;
+            console.log(`${property} has been overridden with: ${value}.`);
+          }
+        }
+      }
+    }
   }
 }

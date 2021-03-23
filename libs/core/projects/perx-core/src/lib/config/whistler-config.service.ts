@@ -1,20 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+import { Observable, } from 'rxjs';
 import {
-  Observable,
-} from 'rxjs';
-import { map, share } from 'rxjs/operators';
+  map,
+  share
+} from 'rxjs/operators';
 
 import {
   IJsonApiListPayload,
-  IWTenant,
   IWSetting,
+  IWTenant,
 } from '@perxtech/whistler';
 
-import {
-  IConfig,
-} from './models/config.model';
+import { IConfig, } from './models/config.model';
 import { ConfigService } from './config.service';
 import { Config } from './config';
 
@@ -76,5 +75,10 @@ export class WhistlerConfigService extends ConfigService {
 
   public readAppStarted(): boolean {
     return false;
+  }
+
+  // @ts-ignore
+  public setOverrideFlag(flag: string, value: any): void {
+    console.log('not implemented');
   }
 }
