@@ -121,3 +121,13 @@ perx-core--feed-item-popup {
     }
   }
 }
+perx-core-popup {
+  .mat-dialog-title {
+    font-size: 24px !important;
+    line-height: 30px !important;
+    color: $dark-grey !important;
+  }
+  .mat-dialog-content {
+    color: $dark-grey !important;
+  }
+}
