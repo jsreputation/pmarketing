@@ -17,7 +17,7 @@ import { ConfigService } from './config.service';
   providedIn: 'root'
 })
 export class V4ConfigService extends ConfigService {
-  private appConfig: IConfig<any> | undefined;
+  private appConfig: IConfig<any>;
   private appStarted: boolean = false;
   public APP_STARTED: boolean = false;
 
@@ -55,15 +55,21 @@ export class V4ConfigService extends ConfigService {
     this.findPropAndSet(this.appConfig, flag, value);
   }
 
-  // recursive, but
-  private findPropAndSet(obj, id, value): void {
-    for (let property in obj) {
-      if( obj.hasOwnProperty(property) && typeof obj[property] === 'object' ) {
-        this.findPropAndSet(obj[property], id, value);
-      }
-      if (property === id) {
-        obj[property] = value;
-        console.log(`${property} has been overridden with: ${value}.`)
+  // recursive, but meant to be used for config which is at most 2 levels deep so is fine.
+  private findPropAndSet(obj: object, id: any, value: any): void {
+    if (obj) {
+      for (const property in obj) {
+        // eslint: guard-for-in - if statement has to wrap the whole body of a for-in
+        if (obj.hasOwnProperty(property)) {
+          if (typeof obj[property] === 'object') {
+            this.findPropAndSet(obj[property], id, value);
+          }
+          if (property === id) {
+            obj[property] = value;
+            console.log(`${property} has been overridden with: ${value}.`);
+          }
+        }
+
       }
     }
   }
