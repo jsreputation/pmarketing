@@ -43,9 +43,10 @@ body.electric-green {
             }
         }
         // Tertiary/Link buttons
-        &.link {
+        &.mat-button {
             border: none;
             background-color: transparent;
+            color: $dark-electric-green !important;
             // Button states
             // &:hover {
             //     color: $electric-green;
