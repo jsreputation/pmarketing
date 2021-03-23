@@ -112,8 +112,6 @@
   .code {
     background: $tint-electric-green;
     border-radius: 0.5rem;
-    border-color: $tint-electric-green;
-    border-style: solid;
     text-align: center;
     color: $dark-grey;
     padding: 1.5rem 3.5rem;
@@ -126,6 +124,7 @@
   .code {
     text-transform: uppercase;
     background-color: $light-grey;
+    color: $medium-grey;
   }
 }
 

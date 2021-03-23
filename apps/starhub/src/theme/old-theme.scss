@@ -583,6 +583,8 @@ html body:not(.electric-green) {
                     background: #eef9e4;
                     border-color: #eef9e4;
                     color: #666666;
+                    border-color: #eef9e4;
+                    border-style: solid;
                 }
             }
             .code-redemption.unavailable {
@@ -614,30 +616,30 @@ html body:not(.electric-green) {
             }
 
             perx-core-pin-input {
-              .activation-code {
-                .activation-code__inputs input {
-                  color: #666666;
-                  background: #eef9e4;
-                }
+                .activation-code {
+                    .activation-code__inputs input {
+                        color: #666666;
+                        background: #eef9e4;
+                    }
 
-                .activation-code__inputs input:focus {
-                  outline-color: #73c20e;
-                }
+                    .activation-code__inputs input:focus {
+                        outline-color: #73c20e;
+                    }
 
-                &.error {
-                  .activation-code__inputs input {
-                    border-color: #eb202f;
-                    background: #fff3f9;
-                  }
+                    &.error {
+                        .activation-code__inputs input {
+                            border-color: #eb202f;
+                            background: #fff3f9;
+                        }
 
-                  .activation-code__inputs input:focus {
-                    outline-color: #eb202f;
-                  }
+                        .activation-code__inputs input:focus {
+                            outline-color: #eb202f;
+                        }
+                    }
+                    .error-label {
+                        color: #d8127d;
+                    }
                 }
-                .error-label {
-                  color: #d8127d;
-                }
-              }
             }
         }
 
@@ -802,57 +804,57 @@ html body:not(.electric-green) {
         }
     }
 
-  // feed-item-popup.component.scss
-  .app-full-bleed-dialog .mat-dialog-container {
-    padding: 0;
-    position: relative;
-    border-radius: 1rem !important;
+    // feed-item-popup.component.scss
+    .app-full-bleed-dialog .mat-dialog-container {
+        padding: 0;
+        position: relative;
+        border-radius: 1rem !important;
 
-    // override styles for feed-item-popup
-    perx-core--feed-item-popup{
-      .main-container {
-        color: $dark-grey !important;
-        font-size: 16px !important;
-        letter-spacing: 0.2px !important;
-        line-height: 21px !important;
-        @include regular;
+        // override styles for feed-item-popup
+        perx-core--feed-item-popup {
+            .main-container {
+                color: $dark-grey !important;
+                font-size: 16px !important;
+                letter-spacing: 0.2px !important;
+                line-height: 21px !important;
+                @include regular;
 
-        .header button.icon {
-          background: #e7fbef !important;
-          color: #6dc00e !important;
+                .header button.icon {
+                    background: #e7fbef !important;
+                    color: #6dc00e !important;
+                }
+
+                p.dialog-body {
+                    font-size: 1.6rem !important;
+                    color: #666666 !important;
+                }
+
+                button.dialog-button {
+                    height: unset;
+                    background: transparent;
+                    font-weight: normal;
+                    font-size: 14px;
+                    border: none;
+                    border-radius: 4px;
+                    color: #6dc00e;
+                    padding: 0.5rem;
+                }
+            }
         }
+    }
 
-        p.dialog-body {
-          font-size: 1.6rem !important;
-          color: #666666 !important;
+    perx-core-popup {
+        .mat-dialog-title {
+            font-size: 20px !important;
+            line-height: 31px !important;
+            color: rgba(0, 0, 0, 0.87) !important;
         }
-
-        button.dialog-button {
-          height: unset;
-          background: transparent;
-          font-weight: normal;
-          font-size: 14px;
-          border: none;
-          border-radius: 4px;
-          color: #6dc00e;
-          padding: 0.5rem;
+        .mat-dialog-content {
+            color: #777776 !important;
         }
-      }
     }
-  }
 
-  perx-core-popup {
-    .mat-dialog-title {
-      font-size: 20px !important;
-      line-height: 31px !important;
-      color: rgba(0, 0, 0, 0.87) !important;
-    }
-    .mat-dialog-content {
-      color: #777776 !important;
-    }
-  }
-
-  // use old mixin globally for old theme
+    // use old mixin globally for old theme
     .icon {
         @include icon;
     }
