@@ -10,7 +10,7 @@
       <!-- <div class="image-column">
         <img class="position-image" src="https://cdn.perxtech.io/content/hsbc-hk/images/firstplace.png" />
       </div> -->
-      <div class="detail-column">
+      <div *ngIf="podium.outcomes.length > 0" class="detail-column">
         <div class="rank-name">
           {{podium?.displayProperties?.rankName}}
         </div>

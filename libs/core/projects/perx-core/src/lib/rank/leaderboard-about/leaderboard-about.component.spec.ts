@@ -5,6 +5,7 @@ import { MatDividerModule } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { RewardsService } from '@perxtech/core';
+import { RouterModule } from '@angular/router';
 
 describe('LeaderboardAboutComponent', () => {
   let component: LeaderboardAboutComponent;
@@ -18,7 +19,7 @@ describe('LeaderboardAboutComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [LeaderboardAboutComponent],
-      imports: [MatDividerModule],
+      imports: [MatDividerModule, RouterModule],
       providers: [{
         provide: TranslateService,
         useValue: {

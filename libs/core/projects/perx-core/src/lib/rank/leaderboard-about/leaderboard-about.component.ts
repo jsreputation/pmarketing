@@ -42,33 +42,35 @@ export class LeaderboardAboutComponent implements OnInit {
   }
 
   private prepPodiums(): void {
-    this.data.podiums.forEach((podium, index) => {
-      // build rank name
-      const rankName = podium && podium.displayProperties && podium.displayProperties.rankName ? podium.displayProperties.rankName : null;
-      this.data.podiums[index].displayProperties = {
-        ...this.data.podiums[index].displayProperties,
-        rankName: this.getRankName(rankName, index)
-      };
+    if (this.data.podiums.length) {
+      this.data.podiums.forEach((podium, index) => {
+        // build rank name
+        const rankName = podium && podium.displayProperties && podium.displayProperties.rankName ? podium.displayProperties.rankName : null;
+        this.data.podiums[index].displayProperties = {
+          ...this.data.podiums[index].displayProperties,
+          rankName: this.getRankName(rankName, index)
+        };
 
-      if (podium.outcomes && podium.outcomes.length) {
-        // for each outcome
-        podium.outcomes.forEach((outcome, outcomeIndex) => {
+        if (podium.outcomes && podium.outcomes.length) {
+          // for each outcome
+          podium.outcomes.forEach((outcome, outcomeIndex) => {
 
-          // dont query if points
-          if (outcome.pointsCount) {
-            podium.outcomes[outcomeIndex] = {
-              ...podium.outcomes[outcomeIndex],
-              name: `${outcome.pointsCount} ${this.loyaltyPoints}`
-            };
-          } else {
-            //  get reward name
-            this.rewardService.getReward(outcome.modularizableId).subscribe((reward) => {
-              podium.outcomes[outcomeIndex] = reward as LeaderboardOutcome;
-            });
-          }
-          this.data.podiums[index] = podium;
-        });
-      }
-    });
+            // dont query if points
+            if (outcome.pointsCount) {
+              podium.outcomes[outcomeIndex] = {
+                ...podium.outcomes[outcomeIndex],
+                name: `${outcome.pointsCount} ${this.loyaltyPoints}`
+              };
+            } else {
+              //  get reward name
+              this.rewardService.getReward(outcome.modularizableId).subscribe((reward) => {
+                podium.outcomes[outcomeIndex] = reward as LeaderboardOutcome;
+              });
+            }
+            this.data.podiums[index] = podium;
+          });
+        }
+      });
+    }
   }
 }
