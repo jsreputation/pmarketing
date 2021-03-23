@@ -17,7 +17,7 @@ import { ConfigService } from './config.service';
   providedIn: 'root'
 })
 export class V4ConfigService extends ConfigService {
-  private appConfig: IConfig<any>;
+  private appConfig: IConfig<any> | undefined;
   private appStarted: boolean = false;
   public APP_STARTED: boolean = false;
 
@@ -56,7 +56,7 @@ export class V4ConfigService extends ConfigService {
   }
 
   // recursive, but meant to be used for config which is at most 2 levels deep so is fine.
-  private findPropAndSet(obj: object, id: string, value: any): void {
+  private findPropAndSet(obj: IConfig<any> | undefined, id: string, value: any): void {
     if (obj) {
       for (const property in obj) {
         // eslint: guard-for-in - if statement has to wrap the whole body of a for-in
