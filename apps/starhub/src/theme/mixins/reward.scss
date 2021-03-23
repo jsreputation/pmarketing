@@ -20,7 +20,8 @@
 
   .contents {
     flex: 1 1 auto;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
   }
 }
 
