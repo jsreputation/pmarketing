@@ -10,7 +10,8 @@
             *ngIf="voucher.state === 'redeemed' || voucher.state === 'expired'; else available">
             <p class="hide-for-new-ux">Your reward is</p>
             <h3 class="hide-for-old-ux title">Your reward is</h3>
-            <span class="code">{{voucher.state}}</span>
+            <span class="hide-for-new-ux code">{{voucher.state}}</span>
+            <h3 class="hide-for-old-ux code">{{voucher.state}}</h3>
           </div>
           <ng-template #available>
             <div *ngIf="voucher.redemptionType === 'txtCode'">
