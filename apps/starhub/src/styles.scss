@@ -36,6 +36,13 @@ body {
       margin: 0 auto;
     }
   }
+
+  app-vouchers {
+    // STAR-483. Defined here to avoid using ng-deep
+    mat-card-header .mat-card-header-text {
+      margin: 0 12px;
+    }
+  }
 }
 
 cdk-virtual-scroll-viewport {
