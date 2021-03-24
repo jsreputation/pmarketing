@@ -9,6 +9,7 @@ export type LeaderBoard = {
   title: string;
   endDate: Date;
   podiums: Podium[];
+  termsAndConditions: string;
 };
 
 export type UserRanking = {

@@ -4,7 +4,7 @@ import { LeaderboardAboutComponent } from './leaderboard-about.component';
 import { MatDividerModule } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
-import { RewardsService } from '@perxtech/core';
+import { RewardsService, SafeHtmlPipe } from '@perxtech/core';
 import { RouterModule } from '@angular/router';
 
 describe('LeaderboardAboutComponent', () => {
@@ -18,7 +18,7 @@ describe('LeaderboardAboutComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [LeaderboardAboutComponent],
+      declarations: [LeaderboardAboutComponent, SafeHtmlPipe],
       imports: [MatDividerModule, RouterModule],
       providers: [{
         provide: TranslateService,

@@ -31,7 +31,7 @@
     </div>
     <div *ngIf="data.termsAndConditions" class="terms-and-conditions">
       <h3>{{tncTitle}}</h3>
-      <p [innerHTML]="data.termsAndConditions"></p>
+      <div [innerHTML]="data.termsAndConditions | safeHtml"></div>
     </div>
   </div>
 </div>

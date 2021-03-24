@@ -40,8 +40,6 @@ import { GettingStartedPipe } from './getting-started/getting-started.pipe';
 import { StatisticCardComponent } from './statistic-card/statistic-card.component';
 import { GettingStartedNearPicPipe } from './getting-started-near-pic/getting-started-near-pic.pipe';
 import { LeaderboardCTAComponent } from './leaderboard-cta/leaderboard-cta.component';
-import { IRankService } from '../rank/irank.service';
-import { rankServiceFactory } from '../rank/rank.module';
 
 export function themesServiceFactory(
   handler: HttpBackend,
@@ -135,11 +133,6 @@ export function notificationServiceFactory(): NotificationService {
       provide: ThemesService,
       useFactory: themesServiceFactory,
       deps: [HttpBackend, HttpClient, Config, ConfigService, TokenStorage]
-    },
-    {
-      provide: IRankService,
-      useFactory: rankServiceFactory,
-      deps: [HttpClient, ConfigService]
     }
   ]
 })
