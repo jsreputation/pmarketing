@@ -1,17 +1,17 @@
 {
-    "name": "Dark",
-    "properties": {
-      "--font": "Roboto",
-      "--logo": "assets/header_logo.png",
-      "--title": "starhub",
-      "--accent": "#0088D1",
-      "--primary": "#ffffff",
-      "--button_text_color": "#ffffff",
-      "--button_background_color": "#6dc00e",
-      "--header_color": "#000000",
-      "--background": "#ffffff",
-      "--font_color": "#212121",
-      "--login_background_colour": "#000",
-      "--account_background_color": "#EDEDED"
-    }
+  "name": "Dark",
+  "properties": {
+    "--font": "Lato",
+    "--logo": "assets/header_logo.png",
+    "--title": "Starhub",
+    "--accent": "#1ed760",
+    "--primary": "#ffffff",
+    "--button_text_color": "#09411d",
+    "--button_background_color": "#1ed760",
+    "--header_color": "#ffffff",
+    "--background": "#ffffff",
+    "--font_color": "#000000",
+    "--login_background_colour": "#000",
+    "--account_background_color": "#EDEDED"
+  }
 }
