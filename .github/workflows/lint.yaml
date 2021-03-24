@@ -70,7 +70,7 @@ jobs:
                 runAsUser: 0
                 runAsGroup: 0
               nodeSelector:
-                dedicated: build-high-cpu
+                dedicated: cpu-spot-pool
               tolerations:
                 - key: "dedicated"
                   value: "build"
@@ -96,6 +96,10 @@ jobs:
             sleep 20
             echo "Running for $(( SECONDS - start )) seconds"
           done
+          if [[ $(( SECONDS - start )) -gt 1200 ]]; then
+            echo ">>>> Timeout hit <<<<"
+            exit 1
+          fi
       - name: Display dashboard link
         if: always()
         run: |

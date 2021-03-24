@@ -23,8 +23,9 @@ spec:
         cpu: 3
         memory: "10Gi"
       requests:
-        cpu: 2
+        cpu: 1.5
         memory: '8Gi'
+        # ephemeral-storage: "1Gi"
   steps:
     - name: yarn-install
       workingDir: '/workspace/project'

@@ -101,7 +101,7 @@ jobs:
                 runAsUser: 0
                 runAsGroup: 0
               nodeSelector:
-                dedicated: build-high-mem
+                dedicated: mem-spot-pool
               tolerations:
                 - key: "dedicated"
                   value: "build"
@@ -159,6 +159,10 @@ jobs:
           done
           if [[ "${FAILED}" = "true" ]]; then
             echo "${FAILED_TASKS}"
+            exit 1
+          fi
+          if [[ "${#RUNNING_TASKS[@]}" -gt 0 ]]; then
+            echo ">>>> Timeout hit <<<<"
             exit 1
           fi
       - name: Display dashboard link ang generate error logs
