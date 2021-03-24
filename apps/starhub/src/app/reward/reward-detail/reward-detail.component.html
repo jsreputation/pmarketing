@@ -43,7 +43,7 @@
         </ng-template>
       </div>
       <div class="content">
-        <div [class]="this.uxcr && (location?.path()?.includes('reward') || location?.path()?.includes('voucher')) ? 'description ux-cr': 'description'" [innerHtml]="reward.description"></div>
+        <div [class]="this.uxcr ? 'description ux-cr': 'description'" [innerHtml]="reward.description"></div>
       </div>
       <app-location-short-format [merchantId]="reward.merchantId" [voucherId]="voucherId"></app-location-short-format>
       <div class="content">
