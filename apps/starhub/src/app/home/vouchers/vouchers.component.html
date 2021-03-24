@@ -34,7 +34,7 @@
         <mat-card-title *ngIf="voucher.reward.name">
           {{(voucher.reward.name.length > 35) ? (voucher.reward.name | slice:0:35)+'...' : (voucher.reward.name)}}
         </mat-card-title>
-        <mat-card-subtitle>{{voucher.state | titlecase}}</mat-card-subtitle>
+        <mat-card-subtitle class="fine">{{voucher.state | titlecase}}</mat-card-subtitle>
       </mat-card-header>
       <div class="disabled-icon">
         <img class="hide-for-old-ux" src="assets/forward-disabled-arrow.svg" alt="">
