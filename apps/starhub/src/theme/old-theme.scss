@@ -760,6 +760,10 @@ html body:not(.electric-green) {
             .mat-card {
                 padding: 16px;
                 .mat-card-header {
+                    .mat-card-header-text {
+                        margin: 0 16px;
+                    }
+
                     .mat-card-title {
                         color: #666666;
                     }
