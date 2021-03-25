@@ -15,8 +15,6 @@ export class MiniRankComponent implements OnInit {
   public userGameInfo: UserRanking;
   @Input()
   public rantTextFn: () => Observable<string>;
-  @Input()
-  public pointTextFn: () => Observable<string>;
   public yourResultsText: Observable<string>;
 
   constructor(private translate: TranslateService) { }
@@ -26,11 +24,12 @@ export class MiniRankComponent implements OnInit {
     if (!this.rantTextFn) {
       this.rantTextFn = () => this.translate.get('LEADER_BOARD.POSITION');
     }
-    if (!this.pointTextFn) {
-      this.pointTextFn = () => this.translate.get('LEADER_BOARD.POINT_UNIT');
-    }
-    if (!this.metric) {
-      this.translate.get('LEADER_BOARD.POINT_TITLE').subscribe(metric => this.metric = metric);
+
+    if (this.metric) {
+      // use metric key to display relavant translation
+      this.translate.get(`LEADER_BOARD.${this.metric.toUpperCase()}`).subscribe(metric => this.metric = metric);
+    } else {
+      this.translate.get('LEADER_BOARD.DEFAULT_METRIC_TITLE').subscribe(metric => this.metric = metric);
     }
   }
 }

@@ -168,15 +168,18 @@
     "RANKING_TAB_TITLE": "Ranking",
     "ABOUT_TAB_TITLE": "About",
     "POSITION": "Position",
-    "POINT_TITLE": "Score",
-    "POINT_UNIT": "Points",
     "YOUR_RESULTS": "Your Results",
     "ENDS_ON": "Ends on",
     "CURRENT_USER": "(you)",
     "PRIZES": "Prizes",
     "RANK": "Rank",
     "TERMS_AND_CONDITIONS": "Terms and Conditions",
-    "LOYALTY_POINTS": "loyalty points"
+    "LOYALTY_POINTS": "loyalty points",
+    "DEFAULT_METRIC_TITLE": "Score",
+    "STAMP_REDEEMED": "Stamps Redeemed",
+    "REFERRED_USER": "Users Referred",
+    "QUIZ_SCORE": "Score",
+    "LOYALTY_POINTS_EARNED": "Loyalty Points"
   },
   "ACCOUNT_PAGE": {
     "LUCKY_DRAW_INFO": "",
