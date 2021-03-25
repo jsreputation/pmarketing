@@ -99,7 +99,6 @@ jobs:
             [ $APP == 'feature-demo' ] || \
             [ $APP == 'globeathome' ] || \
             [ $APP == 'globeone' ] || \
-            [ $APP == 'johnsen360' ] || \
             [ $APP == 'megaworld' ] || \
             [ $APP == 'partners-demo' ] || \
             [ $APP == 'perx-demo' ] || \
@@ -137,6 +136,7 @@ jobs:
           [ $APP == 'hsbcph-blackcomb' ] || \
           [ $APP == 'hsbcvn' ] || \
           [ $APP == 'hoolah' ] || \
+          [ $APP == 'johnsen360' ] || \
           [ $APP == 'megaworld' ] || \
           [ $APP == 'oracle-demo' ] || \
           [ $APP == 'partners-demo' ] || \
