@@ -53,7 +53,7 @@ jobs:
         run: |
           EXISTING_TASKS=$(kubectl -n build get taskrun -l github.ref=${TEKTON_LABEL},tekton.dev/task=microsite-apps-ng-test -o=name)
           if [ ${#EXISTING_TASKS[@]} -ne 0 ]; then
-            parallel kubectl -n build delete {} ::: ${EXISTING_TASKS[@]}
+            parallel kubectl -n build delete --ignore-not-found{} ::: ${EXISTING_TASKS[@]}
           else
             echo "No existing taskruns"
           fi
