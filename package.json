@@ -107,6 +107,8 @@
     "build:starhub:staging": "env-cmd -f apps/starhub/env/starhub.staging ts-node --project tsconfig.node.json apps/starhub/set-env.ts && yarn nx build starhub -- --configuration staging ",
     "start:starhub:production": "env-cmd -f apps/starhub/env/starhub.production.dev ts-node --project tsconfig.node.json apps/starhub/set-env.ts && yarn nx serve starhub -- --prod ",
     "start:starhub:staging": "env-cmd -f apps/starhub/env/starhub.staging.dev ts-node --project tsconfig.node.json apps/starhub/set-env.ts && yarn nx serve starhub --",
+    "build:techfis:production": "env-cmd -f apps/blackcomb/env/techfis.production ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx build blackcomb -- --prod",
+    "start:techfis:production": "env-cmd -f apps/blackcomb/env/techfis.production.dev ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx serve blackcomb --",
     "build:zeal:production": "env-cmd -f apps/blackcomb/env/zeal.production ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx build blackcomb -- --prod",
     "build:zeal:staging": "env-cmd -f apps/blackcomb/env/zeal.staging ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx build blackcomb -- --prod",
     "start:zeal:staging": "env-cmd -f apps/blackcomb/env/zeal.staging.dev ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx serve blackcomb --",
