@@ -1,14 +1,16 @@
 .leaderboard-about {
     .leader-board-image {
-        margin-bottom: 2.4rem;
+        margin-bottom: 1rem;
 
         img {
             width: 100%;
+            display: block;
+            height: auto;
         }
     }
 
     .leaderboard-details {
-        padding: 0 1.6rem;
+        padding: 1.6rem;
 
         .leaderboard-subtitle {
             color: var(--font_color);

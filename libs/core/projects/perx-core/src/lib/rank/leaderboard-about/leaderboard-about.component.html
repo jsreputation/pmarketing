@@ -1,6 +1,6 @@
 <div *ngIf="data" class="leaderboard-about">
-  <div class="leader-board-image">
-    <img src="https://via.placeholder.com/350x150" />
+  <div *ngIf="data.displayProperties?.aboutImage" class="leader-board-image">
+    <img [src]="data.displayProperties.aboutImage" />
   </div>
   <div class="leaderboard-details">
     <div class="leaderboard-subtitle">
