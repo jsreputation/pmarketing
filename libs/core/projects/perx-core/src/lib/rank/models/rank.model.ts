@@ -2,7 +2,14 @@ import { IReward } from '../../rewards/models/reward.model';
 
 export type LeaderBoard = {
   displayProperties: {
-    [key: string]: any;
+    aboutImage: string;
+    aboutText: string;
+    listingThumbnailImage: string;
+    header: {
+      values: {
+        title: string;
+      }
+    }
   };
   id: number;
   metric: string;
