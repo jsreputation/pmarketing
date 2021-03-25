@@ -23,7 +23,7 @@ export class LeaderboardComponent implements OnInit {
       this.nickNameTxtFn = () => of('NICKNAME');
     }
 
-    if (this.leaderboard.metric) {
+    if (this.leaderboard && this.leaderboard.metric) {
       // use metric key to display relavant translation
       this.translate.get(`LEADER_BOARD.${this.leaderboard.metric.toUpperCase()}`).subscribe(metric => this.metric = metric);
     } else {
@@ -33,8 +33,10 @@ export class LeaderboardComponent implements OnInit {
   }
 
   private extractRankImages(): void {
-    const podiums = this.leaderboard.podiums;
-    this.rank1to3Images = podiums.map((podium) => podium.displayProperties && podium.displayProperties.rankIcon ?
-      podium.displayProperties.rankIcon.value.imageUrl : '');
+    if (this.leaderboard) {
+      const podiums = this.leaderboard.podiums;
+      this.rank1to3Images = podiums.map((podium) => podium.displayProperties && podium.displayProperties.rankIcon ?
+        podium.displayProperties.rankIcon.value.imageUrl : '');
+    }
   }
 }
