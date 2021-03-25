@@ -100,6 +100,7 @@ jobs:
             [ $APP == 'globeathome' ] || \
             [ $APP == 'globeone' ] || \
             [ $APP == 'megaworld' ] || \
+            [ $APP == 'johnsen360' ] || \
             [ $APP == 'partners-demo' ] || \
             [ $APP == 'perx-demo' ] || \
             [ $APP == 'perx-demo2' ] || \
