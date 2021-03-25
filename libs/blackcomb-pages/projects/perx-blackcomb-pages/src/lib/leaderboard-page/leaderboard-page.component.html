@@ -10,7 +10,7 @@
         <perx-core-mini-rank [metric]="leaderBoardSettings?.metric" [userGameInfo]="userRankData">
         </perx-core-mini-rank>
       </div>
-      <perx-core-leaderboard [dataArray]="leaderboardRanks" [metric]="leaderBoardSettings?.metric">
+      <perx-core-leaderboard [dataArray]="leaderboardRanks" [leaderboard]="leaderBoardSettings">
       </perx-core-leaderboard>
     </mat-tab>
     <mat-tab [label]="'LEADER_BOARD.ABOUT_TAB_TITLE' | translate">

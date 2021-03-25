@@ -1,6 +1,6 @@
 import { Observable, of } from 'rxjs';
 import { Component, Input, OnInit } from '@angular/core';
-import { UserRanking } from '../models/rank.model';
+import { LeaderBoard, UserRanking } from '../models/rank.model';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -9,16 +9,12 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./leaderboard.component.scss']
 })
 export class LeaderboardComponent implements OnInit {
-  @Input() public rank1to3Images: [string, string, string] = [
-    'https://cdn.perxtech.io/content/hsbc-hk/images/firstplace.png',
-    'https://cdn.perxtech.io/content/hsbc-hk/images/secondplace.png',
-    'https://cdn.perxtech.io/content/hsbc-hk/images/thirdplace.png'
-  ];
-  @Input()
-  public metric: string;
+  @Input() public leaderboard: LeaderBoard;
   public columnsToDisplay: ['rank', 'displayName', 'value'] = ['rank', 'displayName', 'value'];
   @Input() public dataArray: UserRanking[];
   @Input() public nickNameTxtFn: () => Observable<string>;
+  public metric: string;
+  public rank1to3Images: string[] = [];
 
   constructor(private translate: TranslateService) { }
 
@@ -27,11 +23,18 @@ export class LeaderboardComponent implements OnInit {
       this.nickNameTxtFn = () => of('NICKNAME');
     }
 
-    if (this.metric) {
+    if (this.leaderboard.metric) {
       // use metric key to display relavant translation
-      this.translate.get(`LEADER_BOARD.${this.metric.toUpperCase()}`).subscribe(metric => this.metric = metric);
+      this.translate.get(`LEADER_BOARD.${this.leaderboard.metric.toUpperCase()}`).subscribe(metric => this.metric = metric);
     } else {
       this.translate.get('LEADER_BOARD.DEFAULT_METRIC_TITLE').subscribe(metric => this.metric = metric);
     }
+    this.extractRankImages();
+  }
+
+  private extractRankImages(): void {
+    const podiums = this.leaderboard.podiums;
+    this.rank1to3Images = podiums.map((podium) => podium.displayProperties && podium.displayProperties.rankIcon ?
+      podium.displayProperties.rankIcon.value.imageUrl : '');
   }
 }

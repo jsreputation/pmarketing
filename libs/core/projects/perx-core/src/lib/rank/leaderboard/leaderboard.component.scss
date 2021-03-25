@@ -14,6 +14,8 @@ table {
   td.ranking {
     display: flex;
     min-height: 50px;
+    width: 3rem;
+
     span,
     img {
       display: flex;
@@ -21,8 +23,11 @@ table {
       padding: 0.8rem 0;
     }
 
-    img {
+    img.position-image {
       margin-left: 1rem;
+      max-width: 40px;
+      display: block;
+      height: auto;
     }
   }
 

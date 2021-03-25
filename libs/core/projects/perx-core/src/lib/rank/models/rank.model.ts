@@ -24,6 +24,11 @@ export type Podium = {
   outcomes: LeaderboardOutcome[];
   displayProperties: {
     rankName: string;
+    rankIcon: {
+      value: {
+        imageUrl: string;
+      }
+    };
   }
 };
 
