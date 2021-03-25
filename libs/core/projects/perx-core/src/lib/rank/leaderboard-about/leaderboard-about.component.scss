@@ -43,6 +43,10 @@
                 .reward-list {
                     .list-item {
                         margin-bottom: 3rem;
+                        a.reward-link {
+                            text-decoration: none;
+                            color: var(--font_color);
+                        }
                     }
                 }
             }
