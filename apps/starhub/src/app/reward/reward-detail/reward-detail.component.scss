@@ -56,7 +56,7 @@ app-expire-timer,
    &::before  {
       content: counter(section, decimal);
       counter-increment: section;
-      background-color: $green-nova !important;
+      background-color: $tint-electric-green !important;
       color: $dark-electric-green !important;
       font-size: 1.4rem;
       line-height: 1.6rem;
