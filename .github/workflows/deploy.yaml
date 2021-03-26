@@ -143,6 +143,7 @@ jobs:
           [ $APP == 'perx-demo' ] || \
           [ $APP == 'petron-demo' ] || \
           [ $APP == 'razer' ] || \
+          [ $APP == 'techfis' ] || \
           [ $APP == 'zeal' ]
           then
             APP_BASE="blackcomb"
