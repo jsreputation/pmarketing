@@ -97,7 +97,7 @@ mat-toolbar {
   }
 
   .badge {
-    max-width: 8rem;
+    max-width: 7.8rem;
     height: 4.8rem;
     background-color: $white;
     border-radius: 0.5rem 0.5rem 0 0;
@@ -107,13 +107,10 @@ mat-toolbar {
     width: 100%;
     text-align: center;
 
-    &.ux-cr {
-      bottom: -2.4rem; // cannot use transform as it is affected by parent animation
-    }
-
     img {
       max-width: 4rem;
       position: relative;
+      padding: 4px 16px;
     }
   }
 
