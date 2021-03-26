@@ -689,7 +689,10 @@ html body:not(.electric-green) {
             .reward {
                 .badge {
                     border-radius: 0.5rem;
-                    padding: 0;
+                    border: none;
+                    img {
+                        padding: 0 !important;
+                    }
                 }
             }
         }
@@ -718,6 +721,11 @@ html body:not(.electric-green) {
                 .mat-list-base .mat-list-item {
                     font-size: 1rem;
                 }
+            }
+ 
+            .reward h3,
+            div {
+                color: $dark-grey;
             }
         }
 

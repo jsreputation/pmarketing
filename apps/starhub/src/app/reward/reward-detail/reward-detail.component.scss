@@ -75,3 +75,23 @@ app-expire-timer,
     }
   }
 }
+
+.reward h3, 
+div {
+  color: $dark-grey;
+}
+
+.terms-conditions.ux-cr {
+  margin-top: 1rem;
+  &::ng-deep ul {
+    list-style-position: inside;
+    padding-left: 0;
+    li::before {
+      content: "\2022";
+      margin-right: .5rem;
+    }
+    li::marker {
+      content: "";
+    }
+  }
+}
