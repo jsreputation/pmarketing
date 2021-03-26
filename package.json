@@ -40,6 +40,8 @@
     "build:globeathome:staging": "env-cmd -f apps/blackcomb/env/globeathome.staging ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx build blackcomb -- --prod",
     "start:globeathome:production": "env-cmd -f apps/blackcomb/env/globeathome.production.dev ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx serve blackcomb --",
     "start:globeathome:staging": "env-cmd -f apps/blackcomb/env/globeathome.staging.dev ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx serve blackcomb --",
+    "build:johnsen360:production": "env-cmd -f apps/blackcomb/env/johnsen360.production ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx build blackcomb -- --prod",
+    "start:johnsen360:production": "env-cmd -f apps/blackcomb/env/johnsen360.production.dev ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx serve blackcomb --",
     "build:hkbn:production": "echo 'skipping hkbn build'",
     "build:hkbn:staging": "echo 'skipping hkbn build'",
     "start:hkbn:production": "env-cmd -f apps/hkbn/env/hkbn.production.dev ts-node --project tsconfig.node.json apps/hkbn/set-env.ts && yarn nx serve hkbn --",

@@ -136,6 +136,7 @@ jobs:
           [ $APP == 'hsbcph-blackcomb' ] || \
           [ $APP == 'hsbcvn' ] || \
           [ $APP == 'hoolah' ] || \
+          [ $APP == 'johnsen360' ] || \
           [ $APP == 'megaworld' ] || \
           [ $APP == 'oracle-demo' ] || \
           [ $APP == 'partners-demo' ] || \
