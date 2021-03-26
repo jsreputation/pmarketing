@@ -58,6 +58,7 @@ app-expire-timer,
         margin-bottom: .8rem;
         --olSize: 1.6rem;
         padding-left: calc(-1 * var(--olSize) - 10px);
+        list-style-type: none;
 
         &::before {
           content: counter(section, decimal);
@@ -85,7 +86,7 @@ app-expire-timer,
     }
   }
 }
-.reward h3, 
+.reward h3,
 div {
   color: $dark-grey;
 }
