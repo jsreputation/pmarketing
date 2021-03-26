@@ -17,6 +17,8 @@
     }
     .title {
       @include black;
+      text-transform: uppercase;
+      font-size: 10px;
       color: $dark-electric-green;
     }
   }
