@@ -53,6 +53,8 @@ app-expire-timer,
 
     li {
       margin-bottom: .8rem;
+      --olSize: 1.6rem;
+      padding-left: calc(-1 * var(--olSize) - 10px);
 
       &::before {
         content: counter(section, decimal);
@@ -60,15 +62,17 @@ app-expire-timer,
         background-color: $tint-electric-green !important;
         color: $dark-electric-green !important;
         font-size: 1.4rem;
-        line-height: 1.6rem;
         display: inline-flex;
         justify-content: center;
         align-items: center;
         border-radius: 50%;
         padding: .4rem;
         margin-right: .8rem;
-        height: 1.6rem;
-        width: 1.6rem;
+        left: calc(var(--olSize) + 2.8rem);
+        line-height: var(--olSize);
+        width: var(--olSize);
+        height: var(--olSize);
+        position: absolute;
       }
 
       &::marker {
