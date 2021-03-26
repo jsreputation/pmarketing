@@ -142,22 +142,22 @@ describe('HomeComponent', () => {
   describe('getBadge', () => {
     it('should return assets/green-badge.png when null parameter has been passed', () => {
       const badge = component.getBadge(null);
-      expect(badge).toBe('assets/green-icon.svg');
+      expect(badge).toBe(component.uxcr ? 'assets/green-icon.svg' : 'assets/green-icon_old.svg');
     });
 
     it('should return assets/green-badge.png when green parameter has been passed', () => {
       const badge = component.getBadge('green');
-      expect(badge).toBe('assets/green-icon.svg');
+      expect(badge).toBe(component.uxcr ? 'assets/green-icon.svg' : 'assets/green-icon_old.svg');
     });
 
     it('should return assets/gold-badge.png when gold parameter has been passed', () => {
       const badge = component.getBadge('gold');
-      expect(badge).toBe('assets/gold-icon.svg');
+      expect(badge).toBe(component.uxcr ? 'assets/gold-icon.svg' : 'assets/gold-icon_old.svg');
     });
 
     it('should return assets/platinum-badge.png when platinum parameter has been passed', () => {
       const badge = component.getBadge('platinum');
-      expect(badge).toBe('assets/plat-icon.svg');
+      expect(badge).toBe(component.uxcr ? 'assets/plat-icon.svg' : 'assets/plat-icon_old.svg');
     });
   });
   it('should handle scroll', fakeAsync(() => {

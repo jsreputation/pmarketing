@@ -274,7 +274,7 @@ export class V4StampService implements StampService {
         displayCampaignAs: oc(stampCard).display_properties.display_campaign_as('stamp_card'),
         backgroundImg,
         rewardPositions: stampCard.display_properties.reward_positions,
-        thumbnailImg: oc(stampCard).display_properties.thumbnail_image.value.file(),
+        thumbnailImg: oc(stampCard).display_properties.thumbnail_image.value.image_url(),
         buttonBgColour: stampCard.display_properties.button_Bg_colour,
         buttonTextColour: stampCard.display_properties.button_text_colour
       },

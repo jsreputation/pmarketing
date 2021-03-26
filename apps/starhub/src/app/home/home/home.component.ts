@@ -69,6 +69,7 @@ export class HomeComponent implements OnInit {
   public hubclubCR: boolean;
   public hubClubDisplay: string = '';
   public appConfig: IConfig<IStarhubConfig>;
+  public uxcr: boolean = false;
 
   constructor(
     private noRenewalePipe: NoRenewaleInNamePipe,
@@ -87,6 +88,7 @@ export class HomeComponent implements OnInit {
       tap((config: IConfig<IStarhubConfig>) => {
         this.hubclubCR = config.custom ? config.custom.hubclubCR : false;
         this.appConfig = config;
+        this.uxcr = config.custom ? config.custom.UXCR : false;
       }),
       switchMap(() => this.authenticationService.getAccessToken()),
       tap((token: string) => {
@@ -141,14 +143,14 @@ export class HomeComponent implements OnInit {
 
     switch (tier) {
       case 'gold':
-        return 'assets/gold-icon.svg';
+        return this.uxcr ? 'assets/gold-icon.svg' : 'assets/gold-icon_old.svg';
 
       case 'platinum':
-        return 'assets/plat-icon.svg';
+        return this.uxcr ? 'assets/plat-icon.svg' : 'assets/plat-icon_old.svg';
 
       case 'green':
       default:
-        return 'assets/green-icon.svg';
+        return this.uxcr ? 'assets/green-icon.svg' : 'assets/green-icon_old.svg';
     }
   }
   public onScrollCall(): void {

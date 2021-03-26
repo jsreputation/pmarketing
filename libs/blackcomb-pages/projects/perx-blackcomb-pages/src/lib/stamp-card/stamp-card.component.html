@@ -12,7 +12,8 @@
       [cardBgImage]="stampCard.displayProperties.cardBackgroundImage?.value.imageUrl" [showStampsCounter]="true"
       [title]="stampCard.title || 'Stamp Card'" [newStampsLabelFn]="newStampsLabelFn"
       [subTitle]="stampCard.subTitle || 'Tap the stamps to earn your reward!'"
-      (availableStampClicked)="handleStamp($event)">
+      (availableStampClicked)="handleStamp($event)"
+      [numberOfCols]="stampCard.displayProperties.numberOfCols">
     </perx-core-puzzle-collect-stamps>
   </div>
   <div class="game-footer">

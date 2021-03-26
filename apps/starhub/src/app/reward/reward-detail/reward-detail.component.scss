@@ -46,52 +46,46 @@ app-expire-timer,
   }
 }
 
-.description.ux-cr ::ng-deep ol {
-  counter-reset: section;
-  padding-left: 0;
+.description,
+.terms-conditions {
+  &.ux-cr {
+    margin-top: 16px;
 
-  li {
-   margin-bottom : .8rem;
+    ::ng-deep ol {
+      counter-reset: section;
 
-   &::before  {
-      content: counter(section, decimal);
-      counter-increment: section;
-      background-color: $green-nova !important;
-      color: $dark-electric-green !important;
-      font-size: 1.4rem;
-      line-height: 1.6rem;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 50%;
-      padding: .4rem;
-      margin-right: .8rem;
-      height: 1.6rem;
-      width: 1.6rem;
-    }
+      li {
+        margin-bottom: .8rem;
+        --olSize: 1.6rem;
+        padding-left: calc(-1 * var(--olSize) - 10px);
 
-    &::marker {
-      content: "";
+        &::before {
+          content: counter(section, decimal);
+          counter-increment: section;
+          background-color: $tint-electric-green !important;
+          color: $dark-electric-green !important;
+          font-size: 1.4rem;
+          display: inline-flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 50%;
+          padding: .4rem;
+          margin-right: .8rem;
+          left: calc(var(--olSize) + 2.8rem);
+          line-height: var(--olSize);
+          width: var(--olSize);
+          height: var(--olSize);
+          position: absolute;
+        }
+
+        &::marker {
+          content: "";
+        }
+      }
     }
   }
 }
-
 .reward h3, 
 div {
   color: $dark-grey;
-}
-
-.terms-conditions.ux-cr {
-  margin-top: 1rem;
-  &::ng-deep ul {
-    list-style-position: inside;
-    padding-left: 0;
-    li::before {
-      content: "\2022";
-      margin-right: .5rem;
-    }
-    li::marker {
-      content: "";
-    }
-  }
 }

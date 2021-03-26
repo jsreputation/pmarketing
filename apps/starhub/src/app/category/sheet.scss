@@ -17,6 +17,8 @@
     }
     .title {
       @include black;
+      text-transform: uppercase;
+      font-size: 10px;
       color: $dark-electric-green;
     }
   }
@@ -34,6 +36,8 @@
     border: 1px solid $light-grey;
     border-radius: 0.5rem;
     margin: 0.5rem;
+    font-size: 16px;
+    color: $dark-grey;
 
     mat-icon {
       display: flex;
@@ -47,5 +51,6 @@
   .label-selected {
     color: $dark-electric-green;
     background: $tint-electric-green;
+    border: 1px solid $electric-green;
   }
 }
