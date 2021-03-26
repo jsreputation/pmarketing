@@ -100,7 +100,7 @@ export class PuzzleCollectStampsComponent implements OnChanges, OnInit {
 
   private updateActiveOrientation(): void {
     if (this.nbSlots) {
-      this.numberOfCols = this.numberOfCols || 3;
+      this.numberOfCols = this.numberOfCols || 5;
       this.numberOfRows = this.numberOfRows || Math.ceil(this.nbSlots / this.numberOfCols);
 
       this.currentActiveOrientation = Array(this.numberOfRows - 1).fill(this.numberOfCols);
