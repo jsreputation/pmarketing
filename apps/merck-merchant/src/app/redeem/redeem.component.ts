@@ -5,6 +5,7 @@ import {
 import { IPayload } from '../order/order.component';
 import { Router } from '@angular/router';
 import {
+  ErrorMessageService,
   IMerchantAdminService,
   IReward,
   NotificationService,
@@ -40,6 +41,7 @@ export class RedeemComponent implements OnInit {
     private rewardsService: RewardsService,
     private merchantService: IMerchantAdminService,
     private translateService: TranslateService,
+    private errorMessageService: ErrorMessageService
   ) {
   }
 
@@ -79,7 +81,12 @@ export class RedeemComponent implements OnInit {
       )
       .subscribe(
         () => this.notificationService.addSnack(this.transactionCompleteTxt),
-        (err: IHttpResponseBase) => this.notificationService.addSnack(err.error.message)
+        (err: IHttpResponseBase) =>
+          this.errorMessageService.getErrorMessageByErrorCode(err.error.code, err.error.message)
+            .subscribe(
+              (errMessage: string) => {
+                this.notificationService.addSnack(errMessage);
+              })
       );
   }
 

@@ -54,5 +54,8 @@
   "REDEMPTION_TXT": "Redemption",
   "POPUP_CONTENT": {
     "TRANSACTION_COMPLETED": "Transaction completed"
+  },
+  "ERRORS": {
+    "NOT_ENOUGH_POINTS": "User does not have enough points balance"
   }
 }

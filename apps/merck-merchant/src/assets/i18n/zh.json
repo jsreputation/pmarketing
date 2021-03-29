@@ -54,5 +54,8 @@
   "REDEMPTION_TXT": "兌換記錄",
   "POPUP_CONTENT": {
     "TRANSACTION_COMPLETED": "交易完成"
+  },
+  "ERRORS": {
+    "NOT_ENOUGH_POINTS": "用戶積分不足"
   }
 }
