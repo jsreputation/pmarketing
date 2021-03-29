@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { combineLatest } from 'rxjs';
+import { LoyaltyService } from '../../loyalty/loyalty.service';
 import { RewardsService } from '../../rewards/rewards.service';
 import { LeaderBoard, LeaderboardOutcome } from '../models/rank.model';
 
@@ -14,7 +15,8 @@ export class LeaderboardAboutComponent implements OnInit {
 
   constructor(
     private translateService: TranslateService,
-    private rewardService: RewardsService) { }
+    private rewardService: RewardsService,
+    private loyaltyService: LoyaltyService) { }
   public prizesTxt: string;
   public rankTxt: string;
   public tncTitle: string;
@@ -54,13 +56,14 @@ export class LeaderboardAboutComponent implements OnInit {
         if (podium.outcomes && podium.outcomes.length) {
           // for each outcome
           podium.outcomes.forEach((outcome, outcomeIndex) => {
-
-            // dont query if points
             if (outcome.pointsCount) {
-              podium.outcomes[outcomeIndex] = {
-                ...podium.outcomes[outcomeIndex],
-                name: `${outcome.pointsCount} ${this.loyaltyPoints}`
-              };
+              // fetch loyalty detail to extract program name
+              this.loyaltyService.getLoyalty(outcome.modularizableId).subscribe((loyaltyProgram) => {
+                podium.outcomes[outcomeIndex] = {
+                  ...podium.outcomes[outcomeIndex],
+                  name: `${outcome.pointsCount} ${this.loyaltyPoints} - ${loyaltyProgram.name}`
+                };
+              });
             } else {
               //  get reward name
               this.rewardService.getReward(outcome.modularizableId).subscribe((reward) => {

@@ -4,7 +4,7 @@ import { LeaderboardAboutComponent } from './leaderboard-about.component';
 import { MatDividerModule } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
-import { RewardsService, SafeHtmlPipe } from '@perxtech/core';
+import { LoyaltyService, RewardsService, SafeHtmlPipe } from '@perxtech/core';
 import { RouterModule } from '@angular/router';
 
 describe('LeaderboardAboutComponent', () => {
@@ -27,6 +27,12 @@ describe('LeaderboardAboutComponent', () => {
         }
       },
       { provide: RewardsService, useValue: rewardsServiceStub },
+      {
+        provide: LoyaltyService,
+        useValue: {
+          getLoyalty: () => of()
+        }
+      }
       ]
     })
       .compileComponents();
