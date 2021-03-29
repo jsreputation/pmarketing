@@ -80,7 +80,7 @@ export class LeaderboardAboutComponent implements OnInit {
   }
 
   private setAboutSectionImage(): void {
-    const images = this.data.images;
+    const images = this.data && this.data.images ? this.data.images : null;
     if (images && images.length) {
       const banner = images.find((image) => image.section === 'about_banner');
       this.aboutImageUrl = banner ? banner.url : '';
