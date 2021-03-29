@@ -49,15 +49,15 @@ export class DiscoverComponent implements OnInit {
     this.router.navigate(['/category'], { queryParams: { catalog: catalog.id } });
   }
 
-  public campaignSelected(taggedItem: ICampaignItem): void {
+  public campaignSelected(campaignItem: ICampaignItem): void {
 
-    switch (taggedItem.itemType) {
+    switch (campaignItem.itemType) {
       case CampaignType.game: {
-        this.router.navigate(['/game'], { queryParams: { id: <number> taggedItem.itemId } });
+        this.router.navigate(['/game'], { queryParams: { id: <number> campaignItem.itemId } });
         break;
       }
       case GameType.quiz: {
-        this.sqCampaignSelected((<number> taggedItem.itemId));
+        this.sqCampaignSelected((<number> campaignItem.itemId));
         break;
       }
     }
