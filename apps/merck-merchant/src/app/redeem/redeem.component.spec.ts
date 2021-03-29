@@ -1,17 +1,27 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick
+} from '@angular/core/testing';
 
 import { RedeemComponent } from './redeem.component';
 import { HeaderComponent } from '../header/header.component';
-import { MatToolbarModule, MatIconModule } from '@angular/material';
+import {
+  MatIconModule,
+  MatToolbarModule
+} from '@angular/material';
 import { Router } from '@angular/router';
 import {
-  RewardsService,
-  NotificationService,
+  ErrorMessageService,
   IMerchantAdminService,
-  RedemptionType,
-  VoucherState,
   IReward,
-  Voucher
+  NotificationService,
+  RedemptionType,
+  RewardsService,
+  Voucher,
+  VoucherState
 } from '@perxtech/core';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
@@ -91,6 +101,11 @@ describe('RedeemComponent', () => {
           {
             addSnack: () => {
             }
+          }
+        },
+        {
+          provide: ErrorMessageService, useValue: {
+            getErrorMessageByErrorCode: () => of('')
           }
         }
       ]
