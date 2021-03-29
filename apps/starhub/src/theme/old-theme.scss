@@ -88,6 +88,15 @@ html body:not(.electric-green) {
     // styles.scss
     font-family: starhub, Roboto, Arial, Helvetica, sans-serif;
     background: #f6f7f9;
+
+    // util class for hiding elements based on theme
+    .hide-for-old-ux {
+      display: none;
+    }
+    .hide-for-new-ux {
+      display: block;
+    }
+
     // TODO: verify game popup & remove
     .custom-class {
         h1 {
@@ -161,13 +170,7 @@ html body:not(.electric-green) {
     }
 
     .app {
-        // util class for hiding elements based on theme
-        .hide-for-old-ux {
-            display: none;
-        }
-        .hide-for-new-ux {
-            display: block;
-        }
+
 
         // styles.scss
         .mat-flat-button.mat-primary {
@@ -726,7 +729,7 @@ html body:not(.electric-green) {
                     font-size: 1rem;
                 }
             }
- 
+
             .reward h3,
             div {
                 color: $dark-grey;
