@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ICategory } from '../../category.model';
 import { Router } from '@angular/router';
-import { IReward, ICatalog, SettingsService, IFlags, ICampaign, CampaignType, ITaggedItem, ConfigService, IConfig } from '@perxtech/core';
+import {
+  IReward, ICatalog, SettingsService, IFlags, ICampaign, CampaignType, ITaggedItem, ConfigService, IConfig, GameType, ICampaignItem
+} from '@perxtech/core';
 import { AnalyticsService, PageType } from '../../analytics.service';
 import { IStarhubConfig } from '../home/home.component';
 
@@ -47,8 +49,18 @@ export class DiscoverComponent implements OnInit {
     this.router.navigate(['/category'], { queryParams: { catalog: catalog.id } });
   }
 
-  public campaignSelected(gameId: number): void {
-    this.router.navigate(['/game'], { queryParams: { id: gameId } });
+  public campaignSelected(taggedItem: ICampaignItem): void {
+
+    switch (taggedItem.itemType) {
+      case CampaignType.game: {
+        this.router.navigate(['/game'], { queryParams: { id: <number> taggedItem.itemId } });
+        break;
+      }
+      case GameType.quiz: {
+        this.sqCampaignSelected((<number> taggedItem.itemId));
+        break;
+      }
+    }
   }
 
   public sqCampaignSelected(campaignId: number): void {
@@ -71,7 +83,7 @@ export class DiscoverComponent implements OnInit {
         break;
       }
       case CampaignType.game: {
-        this.campaignSelected(<number> taggedItem.itemVal);
+        this.router.navigate(['/game'], { queryParams: { id: <number> taggedItem.itemVal } });
         break;
       }
       case CampaignType.survey: {
