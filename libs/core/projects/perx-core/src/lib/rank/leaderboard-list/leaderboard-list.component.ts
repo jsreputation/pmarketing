@@ -17,4 +17,13 @@ export class LeaderboardListComponent {
   public onClick(leaderboard: LeaderBoard): void {
     this.router.navigate([`leaderboard/${leaderboard.id}`]);
   }
+
+  public getHeaderImage(leaderboard: LeaderBoard): string {
+    const images = leaderboard.images;
+    if (images && images.length) {
+      const banner = images.find((image) => image.section === 'banner_1' || image.section === 'banner_2');
+      return banner ? banner.url : '';
+    }
+    return '';
+  }
 }

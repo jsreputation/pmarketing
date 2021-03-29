@@ -1,6 +1,6 @@
 <div *ngIf="data" class="leaderboard-about">
-  <div *ngIf="data.displayProperties?.aboutImage" class="leader-board-image">
-    <img [src]="data.displayProperties.aboutImage" />
+  <div *ngIf="aboutImageUrl.length > 0" class="leader-board-image">
+    <img [src]="aboutImageUrl" />
   </div>
   <div class="leaderboard-details">
     <div class="leaderboard-subtitle">

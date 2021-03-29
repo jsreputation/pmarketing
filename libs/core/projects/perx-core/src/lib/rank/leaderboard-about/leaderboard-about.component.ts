@@ -21,6 +21,7 @@ export class LeaderboardAboutComponent implements OnInit {
   public rankTxt: string;
   public tncTitle: string;
   public loyaltyPoints: string;
+  public aboutImageUrl: string;
 
   public ngOnInit(): void {
     combineLatest([
@@ -37,6 +38,7 @@ export class LeaderboardAboutComponent implements OnInit {
           this.prepPodiums();
         }
       );
+    this.setAboutSectionImage();
   }
 
   private getRankName(name: string | null, index: number): string {
@@ -74,6 +76,16 @@ export class LeaderboardAboutComponent implements OnInit {
           });
         }
       });
+    }
+  }
+
+  private setAboutSectionImage(): void {
+    const images = this.data.images;
+    if (images && images.length) {
+      const banner = images.find((image) => image.section === 'about_banner');
+      this.aboutImageUrl = banner ? banner.url : '';
+    } else {
+      this.aboutImageUrl = '';
     }
   }
 }

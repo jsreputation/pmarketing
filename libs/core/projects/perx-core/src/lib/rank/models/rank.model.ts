@@ -2,9 +2,7 @@ import { IReward } from '../../rewards/models/reward.model';
 
 export type LeaderBoard = {
   displayProperties: {
-    aboutImage: string;
     aboutText: string;
-    listingThumbnailImage: string;
     header: {
       values: {
         title: string;
@@ -17,6 +15,13 @@ export type LeaderBoard = {
   endDate: Date;
   podiums: Podium[];
   termsAndConditions: string;
+  images: [
+    {
+      filename: string;
+      section: string;
+      url: string;
+    }
+  ]
 };
 
 export type UserRanking = {
