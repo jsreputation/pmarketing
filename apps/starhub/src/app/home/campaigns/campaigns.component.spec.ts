@@ -178,7 +178,7 @@ describe('CampaignsComponent', () => {
     component.games = game;
     spyOn(component.tapped, 'emit');
     component.selected(campaign);
-    expect(component.tapped.emit).toHaveBeenCalledWith(1);
+    expect(component.tapped.emit).toHaveBeenCalledWith({itemType : CampaignType.game, itemId: 1});
   });
 
   it('getCampaignMacaron', fakeAsync(() => {

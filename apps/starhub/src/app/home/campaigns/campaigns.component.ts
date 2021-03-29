@@ -5,7 +5,9 @@ import {
   ICampaignService,
   IGameService,
   IGame,
-  ConfigService
+  ConfigService,
+  GameType,
+  ICampaignItem
 } from '@perxtech/core';
 import { catchError, map, scan, switchMap, tap } from 'rxjs/operators';
 import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
@@ -28,12 +30,12 @@ export class CampaignsComponent implements OnInit {
   public campaigns$: Observable<ICampaignWithMacaron[]>;
   public ghostCampaigns: any[] = new Array(3);
   public campaignsSubj: BehaviorSubject<ICampaignWithMacaron[]> = new BehaviorSubject([]);
-  public games: IGame[];
+  public games: IGame[] = [];
   public campaignsPageId: number = 1;
   public campaignsEnded: boolean = false;
 
   @Output()
-  public tapped: EventEmitter<number> = new EventEmitter();
+  public tapped: EventEmitter<ICampaignItem> = new EventEmitter();
 
   constructor(
     private campaignService: ICampaignService,
@@ -80,7 +82,7 @@ export class CampaignsComponent implements OnInit {
       )
       .subscribe(
         (games: IGame[]) => {
-          this.games = games;
+          this.games.push(...games);
           const filteredAndMacoronedCampaigns = tempCampaigns
             .filter((campaign) => {
               const currentDate = new Date();
@@ -89,14 +91,15 @@ export class CampaignsComponent implements OnInit {
                 campaign.beginsAt.getTime() > currentDate.getTime();
               return (
                 isComingSoon ||
-                games.filter((game) => game.campaignId === campaign.id).length >
-                0
+                games.filter((game) => game.campaignId === campaign.id).length > 0 ||
+                campaign.subType === GameType.quiz
               );
             })
             .map((campaign) => {
               campaign.macaron = this.getCampaignMacaron(campaign);
               return campaign;
             });
+
           this.campaignsSubj.next(filteredAndMacoronedCampaigns);
           this.ghostCampaigns = [];
         },
@@ -122,8 +125,10 @@ export class CampaignsComponent implements OnInit {
       (game) => game.campaignId === campaign.id
     );
 
-    if (gameWithCampaign) {
-      this.tapped.emit(gameWithCampaign.id);
+    if (campaign.subType === GameType.quiz) {
+      this.tapped.emit({ itemType: GameType.quiz.toString(), itemId: campaign.id });
+    } else if (gameWithCampaign) {
+      this.tapped.emit({ itemType: CampaignType.game, itemId: gameWithCampaign.id });
     }
   }
 

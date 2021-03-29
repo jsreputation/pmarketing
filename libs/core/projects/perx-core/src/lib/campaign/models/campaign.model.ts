@@ -91,3 +91,8 @@ export interface ITaggedItem {
   itemType: string;
   itemVal: ICampaign | IReward | number;
 }
+
+export interface ICampaignItem {
+  itemId: number;
+  itemType: string;
+}

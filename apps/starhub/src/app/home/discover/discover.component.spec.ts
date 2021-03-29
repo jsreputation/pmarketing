@@ -24,7 +24,7 @@ import {
   FeedReaderService,
   IGameService,
   IReward,
-  ConfigService, SettingsService, StampService
+  ConfigService, SettingsService, StampService, CampaignType
 } from '@perxtech/core';
 
 import { rewards } from '../../rewards.mock';
@@ -187,7 +187,7 @@ describe('DiscoverComponent', () => {
   it('should go to game with queryParams campaign id', () => {
     const router: Router = fixture.debugElement.injector.get<Router>(Router as Type<Router>);
     const routerSpy = spyOn(router, 'navigate');
-    component.campaignSelected(17);
+    component.campaignSelected({itemType : CampaignType.game, itemId: 17});
     expect(routerSpy).toHaveBeenCalledWith(['/game'], { queryParams: { id: 17 } });
   });
 });
