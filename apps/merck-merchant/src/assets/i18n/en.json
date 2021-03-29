@@ -51,5 +51,8 @@
   },
   "LOGIN_SESSION_EXPIRED": "Login Session Expired",
   "SALES_TXT": "Sales",
-  "REDEMPTION_TXT": "Redemption"
+  "REDEMPTION_TXT": "Redemption",
+  "POPUP_CONTENT": {
+    "TRANSACTION_COMPLETED": "Transaction completed"
+  }
 }

@@ -1,11 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
 import { IPayload } from '../order/order.component';
 import { Router } from '@angular/router';
 import {
+  IMerchantAdminService,
+  IReward,
   NotificationService,
   RewardsService,
-  IReward,
-  IMerchantAdminService, Voucher
+  Voucher
 } from '@perxtech/core';
 import { flatMap } from 'rxjs/operators';
 import { HttpResponseBase } from '@angular/common/http';
@@ -28,6 +32,7 @@ export class RedeemComponent implements OnInit {
   public didProceed: boolean = false;
   public reward: IReward;
   public language: string;
+  private transactionCompleteTxt: string;
 
   constructor(
     private router: Router,
@@ -50,6 +55,12 @@ export class RedeemComponent implements OnInit {
       }
     }
     this.language = this.translateService.currentLang || this.translateService.defaultLang;
+
+    // init translations
+    this.translateService.get('POPUP_CONTENT.TRANSACTION_COMPLETED')
+      .subscribe((translationComplete: string) => {
+        this.transactionCompleteTxt = translationComplete;
+      })
   }
 
   public onClose(): void {
@@ -67,7 +78,7 @@ export class RedeemComponent implements OnInit {
         flatMap((res: Voucher) => this.merchantService.redeemVoucher(res.id))
       )
       .subscribe(
-        () => this.notificationService.addSnack('Transaction completed'),
+        () => this.notificationService.addSnack(this.transactionCompleteTxt),
         (err: IHttpResponseBase) => this.notificationService.addSnack(err.error.message)
       );
   }
