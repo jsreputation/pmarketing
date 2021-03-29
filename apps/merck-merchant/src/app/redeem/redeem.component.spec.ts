@@ -232,7 +232,7 @@ describe('RedeemComponent', () => {
     // expect(rewardsServiceSpy).toHaveBeenCalled();
     expect(merchantAdminServiceIssueVoucherSpy).toHaveBeenCalled();
     expect(merchantAdminServiceRedeemVoucherSpy).toHaveBeenCalled();
-    expect(notificationSpy).toHaveBeenCalledWith('Transaction completed');
+    expect(notificationSpy).toHaveBeenCalledWith('POPUP_CONTENT.TRANSACTION_COMPLETED');
   });
 
   it('should get reward price', () => {
