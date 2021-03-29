@@ -2,11 +2,27 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ReferralComponent } from './referral.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { ICampaignService } from '@perxtech/core';
-import {of} from 'rxjs';
+import { ConfigService, ICampaignService, LeaderboardCTAComponent } from '@perxtech/core';
+import { of } from 'rxjs';
+import { MatIconModule } from '@angular/material';
+import { Router } from '@angular/router';
 
 const campaignServiceStub: Partial<ICampaignService> = {
   getCampaigns: () => of([])
+};
+
+const configServiceStub: Partial<ConfigService> = {
+  readAppConfig: () => of({
+    apiHost: '',
+    production: false,
+    preAuth: false,
+    isWhistler: false,
+    baseHref: '',
+  })
+};
+
+const router = {
+  navigate: jest.fn()
 };
 
 describe('ReferralComponent', () => {
@@ -15,13 +31,16 @@ describe('ReferralComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ReferralComponent],
+      declarations: [ReferralComponent, LeaderboardCTAComponent],
       imports: [
         MatToolbarModule,
+        MatIconModule,
         TranslateModule.forRoot()
       ],
       providers: [
-        { provide: ICampaignService, useValue: campaignServiceStub }
+        { provide: ConfigService, useValue: configServiceStub },
+        { provide: ICampaignService, useValue: campaignServiceStub },
+        { provide: Router, useValue: router },
       ]
     })
       .compileComponents();

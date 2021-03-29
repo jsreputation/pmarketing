@@ -1,0 +1,57 @@
+.leaderboard-about {
+    .leader-board-image {
+        margin-bottom: 1rem;
+
+        img {
+            width: 100%;
+            display: block;
+            height: auto;
+        }
+    }
+
+    .leaderboard-details {
+        padding: 1.6rem;
+
+        .leaderboard-subtitle {
+            color: var(--font_color);
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+        }
+
+        .reward-detail {
+            .image-column {
+                display: inline-block;
+                vertical-align: top;
+                width: 15%;
+                .position-image {
+                    max-width: 40px;
+                    display: block;
+                    height: auto;
+                }
+            }
+
+            .detail-column {
+                display: inline-block;
+                width: 75%;
+
+                .rank-name {
+                    color: var(--disabled_text_color);
+                    text-transform: uppercase;
+                    font-size: 1.2rem;
+                    line-height: 4rem;
+                    margin-bottom: 1rem;
+                }
+
+                .reward-list {
+                    .list-item {
+                        margin-bottom: 3rem;
+                        a.reward-link {
+                            text-decoration: none;
+                            color: var(--font_color);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

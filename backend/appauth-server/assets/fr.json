@@ -161,13 +161,25 @@
     "DESCRIPTION": "",
     "CTA_TXT": ""
   },
-  "LEADER_BOARD":{
-    "TITLE": "",
-    "SCORE": "",
-    "LABEL_TXT": "",
-    "LABEL_RANK": "",
-    "LABEL_NICKNAME": "",
-    "LABEL_SCORE": ""
+  "LEADER_BOARD": {
+    "CTA_BUTTON_TEXT": "LEADERBOARD",
+    "LIST_TITLE": "Leaderboards",
+    "NO_LEADER_BOARDS": "No leader boards here yet!",
+    "RANKING_TAB_TITLE": "Ranking",
+    "ABOUT_TAB_TITLE": "About",
+    "POSITION": "Position",
+    "YOUR_RESULTS": "Your Results",
+    "ENDS_ON": "Ends on",
+    "CURRENT_USER": "(you)",
+    "PRIZES": "Prizes",
+    "RANK": "Rank",
+    "TERMS_AND_CONDITIONS": "Terms and Conditions",
+    "LOYALTY_POINTS": "loyalty points",
+    "DEFAULT_METRIC_TITLE": "Score",
+    "STAMP_REDEEMED": "Stamps Redeemed",
+    "REFERRED_USER": "Users Referred",
+    "QUIZ_SCORE": "Score",
+    "LOYALTY_POINTS_EARNED": "Loyalty Points"
   },
   "ACCOUNT_PAGE": {
     "LUCKY_DRAW_INFO": "",

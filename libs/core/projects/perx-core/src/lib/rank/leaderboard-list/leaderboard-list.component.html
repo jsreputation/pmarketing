@@ -1,0 +1,26 @@
+<div *ngIf="leaderboards">
+  <div *ngIf="leaderboards.length > 0; then hasLeaderboardssBlock else noLeaderboardsBlock"></div>
+  <ng-template #hasLeaderboardssBlock>
+    <ng-container *ngFor="let leaderboard of leaderboards">
+      <mat-card class="leaderboard-card" mat-ripple (click)="onClick(leaderboard)">
+        <div *ngIf="getHeaderImage(leaderboard)" class="img-wrapper">
+          <img [src]="getHeaderImage(leaderboard)" alt="leaderboard image">
+        </div>
+        <mat-card-content class="card-content">
+          <p class="leaderboard-title ellipsis-1-line">{{leaderboard?.name}}</p>
+          <span class="leaderboard-subtitle ellipsis-2-line">
+            {{leaderboard?.description}}
+          </span>
+        </mat-card-content>
+      </mat-card>
+    </ng-container>
+  </ng-template>
+  <ng-template #noLeaderboardsBlock>
+    <div class="no-leaderboards">
+      <h3>{{'LEADER_BOARD.NO_LEADER_BOARDS' | translate}}</h3>
+      <div class="img-container">
+        <img src="assets/empty_list.svg" />
+      </div>
+    </div>
+  </ng-template>
+</div>

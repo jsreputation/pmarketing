@@ -1,0 +1,72 @@
+@import "../../mixins/mixins";
+
+mat-card {
+  display: flex;
+  flex-direction: column;
+  padding: 0 !important;
+}
+
+.leaderboard-card {
+  margin: 0.8rem 0;
+
+  .img-wrapper {
+    width: 100%;
+    height: 10rem;
+
+    img {
+      bottom: 15rem;
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .card-content {
+    padding: 16px;
+
+    .leaderboard-title {
+      font-size: 1.4rem;
+      line-height: 2rem;
+      color: var(--font_color);
+      margin: 0;
+    }
+
+    .leaderboard-subtitle {
+      color: var(--disabled_text_color);
+      font-size: 1rem;
+      line-height: 1.6rem;
+      margin: 0;
+
+      ::ng-deep p {
+        margin: 0;
+      }
+    }
+  }
+}
+
+.no-leaderboards {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-content: center;
+  padding-top: 1rem;
+
+  .img-container {
+    display: flex;
+    justify-content: center;
+
+    img {
+      margin: 0 auto;
+      width: 70%;
+      max-height: 70vh;
+    }
+  }
+}
+
+.ellipsis-1-line {
+  @include ellipse-lines(1);
+}
+
+.ellipsis-2-line {
+  @include ellipse-lines(2);
+}

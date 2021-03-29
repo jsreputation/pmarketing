@@ -1,25 +1,25 @@
 .leaderboard-container {
-  background-color: white;
+  background-color: var(--background);
   height: 100%;
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
-}
 
-.banner-img {
-  max-height: 140px;
+  .detail-container {
+    padding: 0 1.6rem;
+    margin-bottom: 0.8rem;
 
-  img {
-    width: 100%;
-    object-fit: cover;
+    h3 {
+      color: var(--disabled_text_color);
+      font-weight: normal;
+    }
   }
-}
 
-.info-container {
-  display: flex;
-  flex-direction: column;
-  margin-top: -50px;
-  width: 96%;
-  margin-right: auto;
-  margin-left: auto;
+  .info-container {
+    display: flex;
+    flex-direction: column;
+    width: 96%;
+    margin-right: auto;
+    margin-left: auto;
+  }
 }

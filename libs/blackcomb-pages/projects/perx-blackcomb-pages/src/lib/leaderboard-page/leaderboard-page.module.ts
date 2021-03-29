@@ -15,4 +15,4 @@ import { ProfileModule } from '@perxtech/core';
     RankModule
   ]
 })
-export class ContentModule { }
+export class LeaderboardPageModule { }

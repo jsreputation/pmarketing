@@ -51,8 +51,7 @@ export function rewardsServiceFactory(http: HttpClient, config: Config, configSe
     UtilsModule,
     TranslateModule.forChild(),
     MatListModule,
-    ProgressBarModule,
-    TranslateModule.forChild()
+    ProgressBarModule
   ],
   exports: [
     ...components,

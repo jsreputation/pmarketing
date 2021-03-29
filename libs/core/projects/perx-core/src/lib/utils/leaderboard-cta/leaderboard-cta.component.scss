@@ -1,0 +1,12 @@
+.leaderboard-cta.mat-toolbar {
+  background-color: var(--background) !important;
+  font-size: 1.2rem;
+  font-weight: normal;
+  line-height: 1rem;
+  border-bottom: 1px solid #ccc;
+
+  .icon {
+    margin-left: auto;
+    order: 2;
+  }
+}

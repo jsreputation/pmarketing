@@ -72,6 +72,7 @@ export { LandingPageComponent } from './lib/landing-page/landing-page.component'
 export { LandingPageModule } from './lib/landing-page/landing-page.module';
 export { ReferralComponent } from './lib/referral/referral.component';
 export { LeaderboardPageComponent } from './lib/leaderboard-page/leaderboard-page.component';
+export { LeaderboardsComponent } from './lib/leaderboard/leaderboards.component';
 export { RebatesModule } from './lib/rebates/rebates.module';
 export { RebatesWalletComponent } from './lib/rebates/rebates-wallet/rebates-wallet.component';
 export { OverviewComponent } from './lib/rebates/overview/overview.component';

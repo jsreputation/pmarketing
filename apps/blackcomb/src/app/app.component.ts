@@ -43,6 +43,7 @@ import {
   ProfileComponent,
   CampaignStampsComponent,
   LeaderboardPageComponent,
+  LeaderboardsComponent,
   FindLocationComponent,
   TransactionHistoryComponent,
   RebatesWalletComponent,
@@ -165,6 +166,7 @@ export class AppComponent implements OnInit {
       ref instanceof ProfileComponent ||
       ref instanceof CampaignStampsComponent ||
       ref instanceof LeaderboardPageComponent ||
+      ref instanceof LeaderboardsComponent ||
       ref instanceof FindLocationComponent ||
       ref instanceof TransactionHistoryComponent ||
       ref instanceof RebatesWalletComponent ||

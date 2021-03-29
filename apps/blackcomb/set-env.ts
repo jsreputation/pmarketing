@@ -213,6 +213,9 @@ const appConfigFile = `{
   "showNearMePage": ${
     process.env.SHOW_NEAR_ME_PAGE ? process.env.SHOW_NEAR_ME_PAGE : false
   },
+  "enableLeaderBoard": ${
+    process.env.ENABLE_LEADER_BOARD ? process.env.ENABLE_LEADER_BOARD : false
+  },
   "custom": {
     "stampsType": "${
       process.env.STAMPS_TYPE ? process.env.STAMPS_TYPE : 'stamp_card'
@@ -242,6 +245,9 @@ const appConfigFile = `{
   },
   "showExtraLoyaltyOnHomePage": ${
     process.env.SHOW_EXTRA_LOYALTY_ON_HOMEPAGE ? process.env.SHOW_EXTRA_LOYALTY_ON_HOMEPAGE : true
+  },
+  "showLeaderboardLinkOnHomePage": ${
+    process.env.SHOW_LEADERBOARD_LINK_ON_HOME_PAGE ? process.env.SHOW_LEADERBOARD_LINK_ON_HOME_PAGE : false
   },
   "displayProperties" : ${
     process.env.APP === 'hsbcvn' ? displayPropertiesWithoutFaq : displayProperties

@@ -1,19 +1,23 @@
 <table mat-table [dataSource]="dataArray">
   <ng-container matColumnDef="rank">
     <th mat-header-cell *matHeaderCellDef> # </th>
-    <td mat-cell *matCellDef="let user">
-      <img *ngIf="user.rank <= 3"
-      src="{{rank1to3Images[user.rank - 1]}}">
-      <span *ngIf="user.rank > 3">{{user.rank}}</span>
+    <td mat-cell *matCellDef="let user" class="ranking">
+      <span>{{user.rank}}</span>
+      <img 
+        class="position-image"
+        *ngIf="rank1to3Images[user.rank - 1] && rank1to3Images[user.rank - 1].length > 1"
+        src="{{rank1to3Images[user.rank - 1]}}">
     </td>
-  </ng-container>3
+  </ng-container>
   <ng-container matColumnDef="displayName">
     <th mat-header-cell *matHeaderCellDef>{{nickNameTxtFn() | async}}</th>
-    <td mat-cell *matCellDef="let user"> {{user.displayName || user.id}} </td>
+    <td mat-cell *matCellDef="let user"> {{user.displayName || user.id}} <span
+        *ngIf="user.isCurrentUser">{{'LEADER_BOARD.CURRENT_USER' | translate}}</span>
+    </td>
   </ng-container>
   <ng-container matColumnDef="value">
-    <th mat-header-cell *matHeaderCellDef> {{metric | uppercase}} </th>
-    <td mat-cell *matCellDef="let user"> {{user.value}} </td>
+    <th class="score-value" mat-header-cell *matHeaderCellDef> {{metric | uppercase}} </th>
+    <td class="score-value" mat-cell *matCellDef="let user"> {{user.value}} </td>
   </ng-container>
   <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
   <tr mat-row *matRowDef="let user; columns: columnsToDisplay"></tr>

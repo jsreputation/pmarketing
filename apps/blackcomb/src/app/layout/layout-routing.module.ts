@@ -241,14 +241,14 @@ const routes: Routes = [
       {
         path: 'favorite-rewards',
         loadChildren: () =>
-        import('../favorite-rewards/favorite-rewards.module').then((mod) => mod.FavoriteRewardsModule),
+          import('../favorite-rewards/favorite-rewards.module').then((mod) => mod.FavoriteRewardsModule),
         canActivate: [ProtectedGuard],
       },
       {
         path: 'quest/:id',
         loadChildren: () =>
           import('../quest/quest.module').then((mod) => mod.QuestModule),
-          canActivate: [ProtectedGuard],
+        canActivate: [ProtectedGuard],
       },
       {
         path: 'large-vouchers',
@@ -256,6 +256,21 @@ const routes: Routes = [
           import('../large-vouchers/large-vouchers.module').then((mod) => mod.LargeVouchersModule),
         canActivate: [ProtectedGuard],
       },
+      {
+        path: 'leaderboards',
+        loadChildren: () => import('../leaderboards/leaderboards.module').then(m => m.LeaderboardsModule),
+        canActivate: [ProtectedGuard]
+      },
+      {
+        path: 'leaderboards/:id',
+        loadChildren: () => import('../leaderboards/leaderboards.module').then(m => m.LeaderboardsModule),
+        canActivate: [ProtectedGuard]
+      },
+      {
+        path: 'leaderboard/:id',
+        loadChildren: () => import('../leaderboard/leaderboard.module').then(m => m.LeaderboardModule),
+        canActivate: [ProtectedGuard]
+      }
     ],
   },
 ];
@@ -264,4 +279,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class LayoutRoutingModule {}
+export class LayoutRoutingModule { }

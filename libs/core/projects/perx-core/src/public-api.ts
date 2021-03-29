@@ -214,6 +214,7 @@ export { IStatisticCardConfig, StatisticCardComponent } from './lib/utils/statis
 export { FlagLocalStorageService } from './lib/utils/flags/flag-local-storage.service';
 export { GettingStartedNearPicPipe } from './lib/utils/getting-started-near-pic/getting-started-near-pic.pipe';
 export { ErrorMessageService } from './lib/utils/error-message/error-message.service';
+export { LeaderboardCTAComponent } from './lib/utils/leaderboard-cta/leaderboard-cta.component';
 
 /**
  * Puzzles
@@ -323,6 +324,7 @@ export { MiniRankComponent } from './lib/rank/mini-rank/mini-rank.component';
 export { LeaderboardComponent } from './lib/rank/leaderboard/leaderboard.component';
 export { IRankService } from './lib/rank/irank.service';
 export { LeaderBoard, UserRanking } from './lib/rank/models/rank.model';
+export { LeaderboardListComponent } from './lib/rank/leaderboard-list/leaderboard-list.component';
 /**
  * Rebates
  */

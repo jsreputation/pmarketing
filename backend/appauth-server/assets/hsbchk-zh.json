@@ -180,12 +180,24 @@
     "CTA_TXT": "取消"
   },
   "LEADER_BOARD": {
-    "TITLE": "歡迎{nickname}",
-    "SCORE": "您的總分",
-    "LABEL_TXT": "排行榜",
-    "LABEL_RANK": "排名",
-    "LABEL_NICKNAME": "用戶",
-    "LABEL_SCORE": "得分"
+    "CTA_BUTTON_TEXT": "排行榜",
+    "LIST_TITLE": "Leaderboards",
+    "NO_LEADER_BOARDS": "No leader boards here yet!",
+    "RANKING_TAB_TITLE": "Ranking",
+    "ABOUT_TAB_TITLE": "About",
+    "POSITION": "Position",
+    "YOUR_RESULTS": "Your Results",
+    "ENDS_ON": "Ends on",
+    "CURRENT_USER": "(you)",
+    "PRIZES": "Prizes",
+    "RANK": "Rank",
+    "TERMS_AND_CONDITIONS": "Terms and Conditions",
+    "LOYALTY_POINTS": "loyalty points",
+    "DEFAULT_METRIC_TITLE": "Score",
+    "STAMP_REDEEMED": "Stamps Redeemed",
+    "REFERRED_USER": "Users Referred",
+    "QUIZ_SCORE": "Score",
+    "LOYALTY_POINTS_EARNED": "Loyalty Points"
   },
   "ACCOUNT_PAGE": {
     "LUCKY_DRAW_INFO": "幸運抽獎信息",

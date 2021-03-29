@@ -385,45 +385,54 @@ export class HomeComponent implements OnInit, OnDestroy {
         takeLast(1)
       );
     }
-    this.stampCampaigns$ = this.campaignService
-      .getCampaigns({ type: CampaignType.stamp })
-      .pipe(
-        tap(
-          (campaigns: ICampaign[]) =>
-            (this.showCampaigns = campaigns.length > 0)
-        ),
-        switchMap((campaigns: ICampaign[]) =>
-          of(campaigns).pipe(catchError((err) => of(err)))
-        ),
-        takeLast(1)
-      );
 
-    this.surveyCampaigns$ = this.campaignService
-      .getCampaigns({ gameType: GameType.survey })
-      .pipe(
-        switchMap((campaigns: ICampaign[]) =>
-          of(campaigns).pipe(catchError((err) => of(err)))
-        ),
-        takeLast(1)
-      );
+    if (this.appConfig.showStampCampaignsOnHomePage) {
+      this.stampCampaigns$ = this.campaignService
+        .getCampaigns({ type: CampaignType.stamp })
+        .pipe(
+          tap(
+            (campaigns: ICampaign[]) =>
+              (this.showCampaigns = campaigns.length > 0)
+          ),
+          switchMap((campaigns: ICampaign[]) =>
+            of(campaigns).pipe(catchError((err) => of(err)))
+          ),
+          takeLast(1)
+        );
+    }
 
-    this.quizCampaigns$ = this.campaignService
-      .getCampaigns({ gameType: GameType.quiz })
-      .pipe(
-        switchMap((campaigns: ICampaign[]) =>
-          of(campaigns).pipe(catchError((err) => of(err)))
-        ),
-        takeLast(1)
-      );
+    if (this.appConfig.showSurveyOnHomePage) {
+      this.surveyCampaigns$ = this.campaignService
+        .getCampaigns({ gameType: GameType.survey })
+        .pipe(
+          switchMap((campaigns: ICampaign[]) =>
+            of(campaigns).pipe(catchError((err) => of(err)))
+          ),
+          takeLast(1)
+        );
+    }
 
-    this.questCampaigns$ = this.campaignService
-      .getCampaigns({ type: CampaignType.quest })
-      .pipe(
-        switchMap((campaigns: ICampaign[]) =>
-          of(campaigns).pipe(catchError((err) => of(err)))
-        ),
-        takeLast(1)
-      );
+    if (this.appConfig.showQuestCampaignsOnHomePage) {
+      this.questCampaigns$ = this.campaignService
+        .getCampaigns({ type: CampaignType.quest })
+        .pipe(
+          switchMap((campaigns: ICampaign[]) =>
+            of(campaigns).pipe(catchError((err) => of(err)))
+          ),
+          takeLast(1)
+        );
+    }
+
+    if (this.appConfig.showQuizOnHomePage) {
+      this.quizCampaigns$ = this.campaignService
+        .getCampaigns({ gameType: GameType.quiz })
+        .pipe(
+          switchMap((campaigns: ICampaign[]) =>
+            of(campaigns).pipe(catchError((err) => of(err)))
+          ),
+          takeLast(1)
+        );
+    }
 
     this.newsFeedItems = this.settingsService.getRssFeeds().pipe(
       map((res: IRssFeeds) =>

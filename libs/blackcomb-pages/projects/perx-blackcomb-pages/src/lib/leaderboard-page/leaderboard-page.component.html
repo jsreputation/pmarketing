@@ -1,12 +1,20 @@
 <div class="leaderboard-container">
-  <div class="banner-img">
-    <img src="https://cdn.perxtech.io/content/hsbc-hk/quiz-banner.png" alt="">
+  <div class="detail-container">
+    <h1>{{leaderBoardSettings?.displayProperties?.header?.values?.title}}</h1>
+    <h3 *ngIf="leaderBoardSettings && leaderBoardSettings.endDate">{{'LEADER_BOARD.ENDS_ON' | translate}}
+      {{leaderBoardSettings.endDate | date: 'dd.MM.yyyy'}}</h3>
   </div>
-  <div class="info-container">
-    <perx-core-mini-rank
-      [metric]="leaderBoardSettings?.metric" [userGameInfo]="userMiniRankData"></perx-core-mini-rank>
-  </div>
-  <perx-core-leaderboard
-    [dataArray]="leaderboardRanks"
-    [metric]="leaderBoardSettings?.metric"></perx-core-leaderboard>
+  <mat-tab-group *ngIf="leaderBoardSettings" mat-stretch-tabs>
+    <mat-tab [label]="'LEADER_BOARD.RANKING_TAB_TITLE' | translate">
+      <div class="info-container">
+        <perx-core-mini-rank [metric]="leaderBoardSettings?.metric" [userGameInfo]="userRankData">
+        </perx-core-mini-rank>
+      </div>
+      <perx-core-leaderboard [dataArray]="leaderboardRanks" [leaderboard]="leaderBoardSettings">
+      </perx-core-leaderboard>
+    </mat-tab>
+    <mat-tab [label]="'LEADER_BOARD.ABOUT_TAB_TITLE' | translate">
+      <perx-core-leaderboard-about [data]="leaderBoardSettings"></perx-core-leaderboard-about>
+    </mat-tab>
+  </mat-tab-group>
 </div>

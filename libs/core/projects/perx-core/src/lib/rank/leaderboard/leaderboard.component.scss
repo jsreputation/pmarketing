@@ -1,21 +1,37 @@
 table {
-  background-color: white;
-  width: 90%;
-  margin: 0 auto;
-
-  img {
-    margin-left: -1rem;
-  }
-
-  mat-header-cell {
-    font-size: 1.5rem;
-  }
+  background-color: var(--background);
+  width: 100%;
 
   tr[mat-header-row] {
     text-transform: uppercase;
   }
 
-  th:first-child {
-    font-size: 2.3rem;
+  th {
+    font-size: 1rem;
+    color: var(--disabled_text_color);
+  }
+
+  td.ranking {
+    display: flex;
+    min-height: 50px;
+    width: 3rem;
+
+    span,
+    img {
+      display: flex;
+      align-self: center;
+      padding: 0.8rem 0;
+    }
+
+    img.position-image {
+      margin-left: 1rem;
+      max-width: 40px;
+      display: block;
+      height: auto;
+    }
+  }
+
+  .score-value {
+    text-align: right;
   }
 }
