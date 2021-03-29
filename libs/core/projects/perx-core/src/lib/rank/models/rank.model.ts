@@ -38,7 +38,7 @@ export type Podium = {
     rankName: string;
     rankIcon: {
       value: {
-        imageUrl: string;
+        file: string;
       }
     };
   }
