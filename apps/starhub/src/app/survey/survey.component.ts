@@ -62,10 +62,10 @@ export class SurveyComponent implements OnInit {
         hasOutcomes: boolean,
         answers: IAnswer[]
       }) => this.answers = res.answers)
-    ).subscribe(
-      (res) => {
+    ).subscribe(() => {
+      this.surveyService.postFinalSurveyAnswer(this.moveId).subscribe((res) => {
         // reward guaranteed, need to clarified
-        if (res.hasOutcomes) {
+        if (res && res.rewardAcquired) {
           this.notificationService.addPopup({
             text: 'Here is a reward for you.',
             title: 'Thanks for completing the survey.',
@@ -79,6 +79,7 @@ export class SurveyComponent implements OnInit {
           });
         }
         this.router.navigate(['/']);
+      });
       }
     );
   }
