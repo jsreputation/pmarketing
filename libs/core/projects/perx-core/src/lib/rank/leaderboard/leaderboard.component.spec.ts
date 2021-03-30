@@ -1,8 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { LeaderboardComponent } from './leaderboard.component';
 import { MatTableModule } from '@angular/material';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('LeaderboardComponent', () => {
   let component: LeaderboardComponent;
@@ -14,13 +13,7 @@ describe('LeaderboardComponent', () => {
       imports: [
         MatTableModule,
         TranslateModule.forRoot()
-      ],
-      providers: [{
-        provide: TranslateService,
-        useValue: {
-          get: () => of()
-        }
-      }]
+      ]
     })
       .compileComponents();
   }));
