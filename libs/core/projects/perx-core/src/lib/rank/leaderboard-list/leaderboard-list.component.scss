@@ -19,6 +19,14 @@ mat-card {
       width: 100%;
       object-fit: cover;
     }
+
+    .fallback-image {
+      background-color: #4e4e4e;
+      height: 10rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 
   .card-content {

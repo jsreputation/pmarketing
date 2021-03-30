@@ -21,7 +21,9 @@ export type LeaderBoard = {
       section: string;
       url: string;
     }
-  ]
+  ],
+  aboutBanner?: string;
+  listBanner?: string;
 };
 
 export type UserRanking = {

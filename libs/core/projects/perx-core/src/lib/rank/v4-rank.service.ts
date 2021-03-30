@@ -76,6 +76,7 @@ export class V4RankService {
       .pipe(
         map((res: ApiWrap<V4LeaderBoard[]>) => res.data),
         map((dataArr: V4LeaderBoard[]) => dataArr.map(data => objectKeysPascalize(camelToPascalCase, data) as LeaderBoard)),
+        map((data: LeaderBoard[]) => data.map((leaderboard) => this.extractImages(leaderboard))),
         shareReplay(1)
       );
   }
@@ -85,8 +86,20 @@ export class V4RankService {
       .pipe(
         map((res: ApiWrap<V4LeaderBoard>) => res.data),
         map((data: V4LeaderBoard) => objectKeysPascalize(camelToPascalCase, data) as LeaderBoard),
+        map((data: LeaderBoard) => this.extractImages(data)),
         shareReplay()
       );
+  }
+
+  private extractImages(leaderboard: LeaderBoard): LeaderBoard {
+    const images = leaderboard.images;
+    if (images && images.length) {
+      const aboutBanner = images.find((image) => image.section === 'about_banner');
+      const listBanner = images.find((image) => image.section === 'banner_1' || image.section === 'banner_2');
+      leaderboard.aboutBanner = aboutBanner ? aboutBanner.url : '';
+      leaderboard.listBanner = listBanner ? listBanner.url : '';
+    }
+    return leaderboard;
   }
 
   public getLeaderBoardsByCampaignID(campaignId: number): Observable<LeaderBoard[]> {
