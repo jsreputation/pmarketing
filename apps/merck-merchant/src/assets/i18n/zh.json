@@ -51,5 +51,11 @@
   },
   "LOGIN_SESSION_EXPIRED": "登錄時間超時",
   "SALES_TXT": "銷售記錄",
-  "REDEMPTION_TXT": "兌換記錄"
+  "REDEMPTION_TXT": "兌換記錄",
+  "POPUP_CONTENT": {
+    "TRANSACTION_COMPLETED": "交易完成"
+  },
+  "ERRORS": {
+    "NOT_ENOUGH_POINTS": "用戶積分不足"
+  }
 }
