@@ -1,6 +1,15 @@
 <div *ngIf="data" class="leaderboard-about">
-  <div *ngIf="aboutImageUrl.length > 0" class="leader-board-image">
-    <img [src]="aboutImageUrl" />
+  <div class="leader-board-image">
+    <img [src]="data?.aboutBanner" *ngIf="data?.aboutBanner; else defaultImgTemplate" [alt]="data?.name">
+    <ng-template #defaultImgTemplate>
+      <div class="fallback-image">
+        <svg viewBox="140.267 100.871 39.997 22.67" width="39.997" height="22.67">
+          <path
+            d="M 162.665 101.681 L 156.765 109.541 L 161.265 115.541 C 161.925 116.421 161.745 117.681 160.865 118.341 C 159.985 119.001 158.725 118.841 158.065 117.941 C 155.965 115.141 153.445 111.801 151.865 109.661 C 151.065 108.601 149.465 108.601 148.665 109.661 L 140.665 120.321 C 139.685 121.661 140.625 123.541 142.265 123.541 L 178.265 123.541 C 179.905 123.541 180.845 121.661 179.865 120.341 L 165.865 101.681 C 165.065 100.601 163.465 100.601 162.665 101.681 Z"
+            fill="white"></path>
+        </svg>
+      </div>
+    </ng-template>
   </div>
   <div class="leaderboard-details">
     <div class="leaderboard-subtitle">

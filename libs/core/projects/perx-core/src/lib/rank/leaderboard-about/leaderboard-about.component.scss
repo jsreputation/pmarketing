@@ -7,6 +7,14 @@
             display: block;
             height: auto;
         }
+
+        .fallback-image {
+            background-color: #4e4e4e;
+            height: 20rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     }
 
     .leaderboard-details {
