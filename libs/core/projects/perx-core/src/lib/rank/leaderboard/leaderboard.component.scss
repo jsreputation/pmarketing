@@ -35,3 +35,23 @@ table {
     text-align: right;
   }
 }
+
+.no-leaderboards {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  align-content: center;
+  padding: 1rem;
+  text-align: center;
+
+  .img-container {
+    display: flex;
+    justify-content: center;
+
+    img {
+      margin: 0 auto;
+      width: 70%;
+      max-height: 70vh;
+    }
+  }
+}

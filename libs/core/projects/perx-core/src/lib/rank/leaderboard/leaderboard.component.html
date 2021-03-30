@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="dataArray">
+<table *ngIf="dataArray?.length > 0; else noRankInfoBlock" mat-table [dataSource]="dataArray">
   <ng-container matColumnDef="rank">
     <th mat-header-cell *matHeaderCellDef> # </th>
     <td mat-cell *matCellDef="let user" class="ranking">
@@ -22,3 +22,11 @@
   <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
   <tr mat-row *matRowDef="let user; columns: columnsToDisplay"></tr>
 </table>
+<ng-template #noRankInfoBlock>
+  <div class="no-leaderboards">
+    <h3>{{'LEADER_BOARD.NO_RANK_INFO' | translate}}</h3>
+    <div class="img-container">
+      <img src="assets/empty_list.svg" />
+    </div>
+  </div>
+</ng-template>
