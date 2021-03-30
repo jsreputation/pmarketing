@@ -3,6 +3,11 @@ import { IReward } from '../../rewards/models/reward.model';
 export type LeaderBoard = {
   displayProperties: {
     aboutText: string;
+    aboutImage: {
+      value: {
+        imageUrl: string;
+      }
+    }
     header: {
       values: {
         title: string;
@@ -40,7 +45,7 @@ export type Podium = {
     rankName: string;
     rankIcon: {
       value: {
-        file: string;
+        imageUrl: string;
       }
     };
   }

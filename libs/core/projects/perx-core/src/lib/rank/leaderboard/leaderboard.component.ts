@@ -36,7 +36,7 @@ export class LeaderboardComponent implements OnInit {
     if (this.leaderboard) {
       const podiums = this.leaderboard.podiums;
       this.rank1to3Images = podiums.map((podium) => podium.displayProperties && podium.displayProperties.rankIcon ?
-        podium.displayProperties.rankIcon.value.file : '');
+        podium.displayProperties.rankIcon.value.imageUrl : '');
     }
   }
 }

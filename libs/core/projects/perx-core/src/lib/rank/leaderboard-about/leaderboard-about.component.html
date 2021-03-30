@@ -18,8 +18,8 @@
     <div *ngFor="let podium of data.podiums; let i = index" class="reward-detail">
       <div *ngIf="podium.outcomes.length > 0">
         <div class="image-column">
-          <img *ngIf="podium?.displayProperties?.rankIcon?.value?.file" class="position-image"
-            [src]="podium.displayProperties.rankIcon.value.file" />
+          <img *ngIf="podium?.displayProperties?.rankIcon?.value?.imageUrl" class="position-image"
+            [src]="podium.displayProperties.rankIcon.value.imageUrl" />
         </div>
         <div class="detail-column">
           <div class="rank-name">
