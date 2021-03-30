@@ -62,7 +62,7 @@ export class RedeemComponent implements OnInit {
     this.translateService.get('POPUP_CONTENT.TRANSACTION_COMPLETED')
       .subscribe((translationComplete: string) => {
         this.transactionCompleteTxt = translationComplete;
-      })
+      });
   }
 
   public onClose(): void {
