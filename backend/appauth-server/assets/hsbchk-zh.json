@@ -198,7 +198,8 @@
     "STAMP_REDEEMED": "Stamps Redeemed",
     "REFERRED_USER": "Users Referred",
     "QUIZ_SCORE": "Score",
-    "LOYALTY_POINTS_EARNED": "Loyalty Points"
+    "LOYALTY_POINTS_EARNED": "Loyalty Points",
+    "NO_RANK": "NA"
   },
   "ACCOUNT_PAGE": {
     "LUCKY_DRAW_INFO": "幸運抽獎信息",
