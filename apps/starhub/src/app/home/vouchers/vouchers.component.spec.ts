@@ -96,7 +96,7 @@ describe('VouchersComponent', () => {
     const mockVoucher = vouchers[0];
     mockVoucher.expiry = tomorrow;
     const noOfDays = component.getNumberOfDays(mockVoucher);
-    expect(noOfDays).toBe('Expires in 1 days');
+    expect(noOfDays).toBe('Expires in 1 day');
   });
 
   it('should apply less-three-days with next day', () => {
