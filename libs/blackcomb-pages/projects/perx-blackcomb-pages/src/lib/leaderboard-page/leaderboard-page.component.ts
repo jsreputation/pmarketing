@@ -11,6 +11,7 @@ import {
 } from 'rxjs/operators';
 import { combineLatest, Observable, of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'perx-blackcomb-pages-leaderboard-page',
@@ -28,11 +29,13 @@ export class LeaderboardPageComponent {
 
   public leaderboard$: Observable<LeaderBoard>;
   public leaderBoardSettings: LeaderBoard;
+  private undefinedRankText: string;
 
   public constructor(
     private rankService: IRankService,
     private profileService: ProfileService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private translate: TranslateService
   ) {
     if (this.route.snapshot.paramMap.has('id')) {
       const IdN = Number.parseInt(this.route.snapshot.paramMap.get('id') as string, 10);
@@ -45,8 +48,11 @@ export class LeaderboardPageComponent {
         }
       });
 
-      combineLatest(this.profileService.whoAmI(), this.leaderboard$).pipe(
-        concatMap(([profile, leaderboard]) => {
+      combineLatest(this.profileService.whoAmI(),
+        this.leaderboard$,
+        this.translate.get('LEADER_BOARD.NO_RANK')
+      ).pipe(
+        concatMap(([profile, leaderboard, undefinedRankText]) => {
           if (leaderboard) {
             this.leaderBoardSettings = leaderboard;
           }
@@ -58,9 +64,10 @@ export class LeaderboardPageComponent {
                   || profile.identifier)
               ),
               id: 0,
-              rank: 0 || 'NA',
+              rank: 0 || undefinedRankText,
               value: 0
             };
+            this.undefinedRankText = undefinedRankText;
             return this.rankService.getLeaderBoardUserRank(leaderboard.id)
               .pipe(
                 catchError(_ => of(defaultMiniRank))
@@ -70,6 +77,7 @@ export class LeaderboardPageComponent {
         })
       ).subscribe((miniRank: UserRanking | undefined) => {
         if (miniRank) {
+          miniRank.rank = miniRank.rank ? miniRank.rank : this.undefinedRankText;
           this.userRankData = miniRank;
         }
       });

@@ -59,7 +59,8 @@
     "STAMP_REDEEMED": "Stamps Redeemed",
     "REFERRED_USER": "Users Referred",
     "QUIZ_SCORE": "Score",
-    "LOYALTY_POINTS_EARNED": "Loyalty Points"
+    "LOYALTY_POINTS_EARNED": "Loyalty Points",
+    "NO_RANK": "NA"
   },
   "LOGIN": "登入",
   "REGISTER_FOR_AN_ACCOUNT": "立即登記會員賬戶",

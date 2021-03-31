@@ -59,7 +59,8 @@
     "STAMP_REDEEMED": "Stamps Redeemed",
     "REFERRED_USER": "Users Referred",
     "QUIZ_SCORE": "Score",
-    "LOYALTY_POINTS_EARNED": "Loyalty Points"
+    "LOYALTY_POINTS_EARNED": "Loyalty Points",
+    "NO_RANK": "NA"
   },
   "LOGIN": "Login",
   "REGISTER_FOR_AN_ACCOUNT": "Register for an account",
