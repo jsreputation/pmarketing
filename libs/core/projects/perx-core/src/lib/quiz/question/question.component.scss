@@ -9,8 +9,17 @@
   max-width: 100%;
   justify-content: center;
 
+  pinch-zoom {
+    width: 100%;
+
+    // can override to allow initial fit to height and zoom to fill viewport width
+    //.question-image {
+    //  width: unset;
+    //}
+  }
+
   .question-image {
-    max-width: 100%;
+    width: 100%;
     height: auto;
     display: flex;
     align-self: flex-start; // https://stackoverflow.com/a/61196907/1179865
