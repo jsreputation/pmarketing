@@ -29,7 +29,8 @@
         justify-content: space-between;
 
         .progress-text {
-          letter-spacing: 0.4px;
+          letter-spacing: 1.5px;
+          font-size: 10px;
           text-align: left;
           font-style: normal;
           font-weight: normal;
@@ -47,6 +48,7 @@
       color: $error-text;
       display: flex;
       align-items: center;
+      font-size: 10px;
     }
 
     .quiz-card {
