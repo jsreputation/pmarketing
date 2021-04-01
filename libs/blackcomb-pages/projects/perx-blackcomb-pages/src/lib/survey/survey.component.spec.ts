@@ -182,8 +182,8 @@ describe('SurveyComponent', () => {
 
         const state = {
           popupData: {
-            title: 'SURVEY_SUCCESS_TITLE',
-            text: 'SURVEY_SUCCESS_TEXT',
+            title: 'SURVEY.SUCCESS_TITLE',
+            text: 'SURVEY.SUCCESS_TEXT',
             imageUrl: 'assets/congrats_image.png',
             buttonTxt: 'CLOSE'
           },
@@ -225,8 +225,8 @@ describe('SurveyComponent', () => {
 
         const state = {
           popupData: {
-            title: 'SURVEY_SUCCESS_TITLE',
-            text: 'SURVEY_SUCCESS_TEXT',
+            title: 'SURVEY.SUCCESS_TITLE',
+            text: 'SURVEY.SUCCESS_TEXT',
             imageUrl: 'assets/congrats_image.png',
             buttonTxt: 'CLOSE'
           },
