@@ -68,7 +68,7 @@ export class QuizResultsComponent implements OnInit {
         title: oc(outcome).title['en'].text(''),
         text: oc(outcome).subTitle['en'].text('A Reward is on your way!'),
         buttonTxt: oc(outcome).button['en'].text('NEXT'),
-        imageUrl: 'assets/reward.png',
+        imageUrl: oc(outcome).image() || 'assets/reward.png',
         ctaButtonClass: 'ga_game_completion'
         /* eslint-enable */
       };
