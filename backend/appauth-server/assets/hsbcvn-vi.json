@@ -345,6 +345,15 @@
     "EXPIRING": "Expiring Soon",
     "FULLY_REDEEMED": "Fully redeemed"
   },
+  "SURVEY": {
+    "SUCCESS_TITLE": "",
+    "SUCCESS_TEXT": "Thank you for answering!",
+    "NO_REWARDS_TITLE": "",
+    "NO_REWARDS_TEXT": "Thank you for answering!",
+    "NOT_AVAILABLE_TITLE": "Sorry!",
+    "NOT_AVAILABLE_CTA": "Close",
+    "NOT_AVAILABLE_TXT": "This survey is not available at the moment. Try again later."
+  },
   "CONTENT_PAGE": "Không tìm thấy nội dung",
   "Terms and Conditions": "Điều kiện & Điều khoản",
   "LOGIN_SESSION_EXPIRED": "Phiên đăng nhập đã hết hạn",

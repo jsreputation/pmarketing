@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NotificationService, ISurvey, SurveyService, IPopupConfig } from '@perxtech/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { Observable, throwError } from 'rxjs';
-import { filter, switchMap, tap } from 'rxjs/operators';
+import { EMPTY, Observable, throwError } from 'rxjs';
+import { catchError, filter, switchMap, tap } from 'rxjs/operators';
 
 interface IAnswer {
   questionId: string;
@@ -36,6 +36,12 @@ export class SurveyComponent implements OnInit {
     buttonTxt: 'Back To Home'
   };
 
+  private notAvailablePopUp: IPopupConfig = {
+    title: 'Sorry',
+    text: 'This survey is not available at the moment. Try again later.',
+    buttonTxt: 'Back To Home'
+  };
+
   constructor(
     private notificationService: NotificationService,
     private router: Router,
@@ -54,6 +60,12 @@ export class SurveyComponent implements OnInit {
           }
           const idN = Number.parseInt(id, 10);
           return this.surveyService.getSurveyFromCampaign(idN);
+        }),
+        catchError((err: Error) => {
+          console.error(err.name, err.message);
+          this.notificationService.addPopup(this.notAvailablePopUp);
+          this.router.navigate(['/home']);
+          return EMPTY;
         }),
         tap((survey: ISurvey) => {
           this.survey = survey;
@@ -104,7 +116,7 @@ export class SurveyComponent implements OnInit {
         }
         this.router.navigate(['/']);
       });
-      }
+    }
     );
   }
 }
