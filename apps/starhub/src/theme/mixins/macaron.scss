@@ -2,11 +2,13 @@
 
 @mixin macaron($backgroundColor, $fontColor) {
   border-radius: 5rem;
-  padding: 0.5rem 1rem;
+  padding: 0.2rem .8rem;
   font-size: 13px;
   background-color: $backgroundColor;
   color: $fontColor;
   text-transform: uppercase;
+  letter-spacing: 0.1px;
+  line-height: 19px;
   @include bold;
 }
 
