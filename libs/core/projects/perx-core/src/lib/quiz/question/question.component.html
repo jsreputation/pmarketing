@@ -1,4 +1,4 @@
-<div *ngIf="question?.question?.image">
+<div class="question-image-wrapper" *ngIf="question?.question?.image">
   <pinch-zoom *ngIf="allowPicZoom; else noPinchZoom">
     <img class="question-image" [src]="question?.question?.image?.value?.image_url" alt="question-img">
   </pinch-zoom>
