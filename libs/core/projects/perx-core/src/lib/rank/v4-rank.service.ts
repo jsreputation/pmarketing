@@ -93,10 +93,14 @@ export class V4RankService {
 
   private extractImages(leaderboard: LeaderBoard): LeaderBoard {
     const images = leaderboard.images;
+    let aboutBanner = '';
+    if (leaderboard.displayProperties.aboutImage &&
+      leaderboard.displayProperties.aboutImage.value) {
+      aboutBanner = leaderboard.displayProperties.aboutImage.value.imageUrl;
+      leaderboard.aboutBanner = aboutBanner ? aboutBanner : '';
+    }
     if (images && images.length) {
-      const aboutBanner = images.find((image) => image.section === 'about_banner');
       const listBanner = images.find((image) => image.section === 'banner_1' || image.section === 'banner_2');
-      leaderboard.aboutBanner = aboutBanner ? aboutBanner.url : '';
       leaderboard.listBanner = listBanner ? listBanner.url : '';
     }
     return leaderboard;

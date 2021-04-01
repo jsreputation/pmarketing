@@ -23,7 +23,7 @@
   },
   "SIGN_UP_PAGE": {
     "TITLE": "Sign Up",
-    "HAVE_AN_ACCOUNT": "Have an account",
+    "HAVE_AN_ACCOUNT": "Have an account?",
     "LOG_IN": "Log in",
     "COUNTRY_CODE_REQUIRED_TXT": "Please select a country",
     "MOBILE_FIELD": "Mobile",
@@ -58,7 +58,7 @@
     "HKID_DIGITS_INVALID_TXT": "Invalid id. It should be 4 alphanumeric digits",
     "CHECKBOX_LUCK_TXT": "I agree HSBC Life to save my personal information for the Lucky Draw and future direct marketing purpose. For details, please refer to the",
     "CHECKBOX_LUCK_POPUP_TXT": "If you do not agree with this term, you will not be eligible to join the LIFE Dojo lucky draw. Do you want to confirm?",
-    "BUTTON_SUBMIT": "Submit"
+    "BUTTON_SUBMIT": "SIGN UP"
   },
   "OTP_PAGE": {
     "TITLE": "Input OTP",
@@ -200,7 +200,8 @@
     "STAMP_REDEEMED": "Stamps Redeemed",
     "REFERRED_USER": "Users Referred",
     "QUIZ_SCORE": "Score",
-    "LOYALTY_POINTS_EARNED": "Loyalty Points"
+    "LOYALTY_POINTS_EARNED": "Loyalty Points",
+    "NO_RANK": "NA"
   },
   "ACCOUNT_PAGE": {
     "LUCKY_DRAW_INFO": "Lucky Draw Info",

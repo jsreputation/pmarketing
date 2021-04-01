@@ -18,11 +18,6 @@
   }
 }
 
-.question-overflow {
-  overflow-y: auto;
-  max-height: 47rem;
-}
-
 :host ::ng-deep .mat-horizontal-stepper-header-container {
   display: none;
 }
@@ -30,6 +25,7 @@
 :host ::ng-deep {
   .mat-horizontal-content-container {
     height: 100%;
+    overflow: auto;
     padding: 0 24px 0 24px;
   }
 }

@@ -78,7 +78,7 @@ export class VouchersComponent implements OnInit {
 
   public getNumberOfDays(voucher: Voucher): string {
     const daysDifference = Math.floor(this.getDifferenceWithCurrentInDays(voucher.expiry));
-    return daysDifference < 0 ? '' : `Expires in ${daysDifference} days`;
+    return daysDifference < 0 ? '' : `Expires in ${daysDifference} ${daysDifference > 1 ? 'days' : 'day'}`;
   }
 
   public daysSince(expiryDate: Date): boolean {
