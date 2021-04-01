@@ -1,12 +1,26 @@
-import { ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  NgZone,
+  OnDestroy,
+  OnInit,
+  ViewChild
+} from '@angular/core';
+import {
+  ActivatedRoute,
+  ParamMap,
+  Router
+} from '@angular/router';
 import {
   IAnswerResult,
   IPoints,
+  IPopupConfig,
   IQAnswer,
   IQuiz,
   ISwipePayload,
   ITracker,
+  LocaleIdFactory,
   NotificationService,
   QuizComponent as QuizCoreComponent,
   QuizMode,
@@ -14,12 +28,24 @@ import {
   QuizService,
   SwipeConfiguration,
   SwipeListType,
-  LocaleIdFactory,
   TokenStorage,
-  IPopupConfig,
 } from '@perxtech/core';
-import { BehaviorSubject, EMPTY, iif, Observable, Subject, throwError } from 'rxjs';
-import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import {
+  BehaviorSubject,
+  iif,
+  Observable,
+  of,
+  Subject,
+  throwError
+} from 'rxjs';
+import {
+  catchError,
+  filter,
+  map,
+  switchMap,
+  takeUntil,
+  tap
+} from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -59,6 +85,7 @@ export class QuizComponent implements OnInit, OnDestroy {
     buttonTxt: 'QUIZ_TEMPLATE.NOT_AVAILABLE_CTA'
   };
   private submitErrorTxt: string;
+  public disableNextButton: boolean = true;
 
   constructor(
     private router: Router,
@@ -165,6 +192,12 @@ export class QuizComponent implements OnInit, OnDestroy {
   public updateQuizStatus(answers: ITracker<IQAnswer>): void {
     // patch previous answer object
     this.answers = { ...this.answers, ...answers };
+
+    // validate for non skippable quizzes
+    const questionComponentsArr = this.coreComponent.questionComponents.toArray();
+    const questionPointer = this.questionPointer;
+    this.disableNextButton = !questionComponentsArr[questionPointer].questionValidation();
+
     if (this.quiz.mode !== QuizMode.basic) {
       this.nextWithoutValidation();
     }
@@ -194,7 +227,9 @@ export class QuizComponent implements OnInit, OnDestroy {
     if (questionComponentsArr[questionPointer].questionValidation()) {
       this.pushAnswer(questionPointer)
         .subscribe(
-          () => { },
+          () => {
+            this.disableNextButton = true;
+          },
           (err) => {
             console.log(err);
             this.notificationService.addSnack(this.submitErrorTxt);
@@ -217,7 +252,9 @@ export class QuizComponent implements OnInit, OnDestroy {
       this.complete = true;
       this.submit();
     } else {
-      this.pushAnswer(questionPointer).subscribe(() => { });
+      this.pushAnswer(questionPointer).subscribe(() => {
+        this.disableNextButton = true;
+      });
       this.questionPointer++;
       this.questionChanged();
       this.resetTimer();
@@ -248,7 +285,7 @@ export class QuizComponent implements OnInit, OnDestroy {
         () => iif(
           () => this.complete,
           this.quizService.postFinalQuizAnswer(this.moveId as number),
-          EMPTY
+          of({}) // let the observable complete
         )
       ),
       catchError(err => {

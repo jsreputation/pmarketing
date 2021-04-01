@@ -66,6 +66,7 @@
       color="primary"
       *ngIf="this.questionPointer !== this.totalLength - 1"
       (click)="next()"
+      [disabled]="disableNextButton"
       mat-flat-button>
       NEXT
     </button>
