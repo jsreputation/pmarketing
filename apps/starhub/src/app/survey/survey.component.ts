@@ -94,15 +94,16 @@ export class SurveyComponent implements OnInit {
         hasOutcomes: boolean,
         answers: IAnswer[]
       }) => this.answers = res.answers)
-    ).subscribe(
-      (res) => {
+    ).subscribe(() => {
+      this.surveyService.postFinalSurveyAnswer(this.moveId).subscribe((res) => {
         // reward guaranteed, need to clarified
-        if (res.hasOutcomes) {
+        if (res && res.rewardAcquired) {
           this.notificationService.addPopup(this.successPopUp);
         } else {
           this.notificationService.addPopup(this.noRewardsPopUp);
         }
         this.router.navigate(['/']);
+      });
       }
     );
   }
