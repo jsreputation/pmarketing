@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NotificationService, ISurvey, SurveyService } from '@perxtech/core';
+import { NotificationService, ISurvey, SurveyService, IPopupConfig } from '@perxtech/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
@@ -23,6 +23,19 @@ export class SurveyComponent implements OnInit {
   public moveId$: Observable<number>;
   private moveId: number;
 
+  public successPopUp: IPopupConfig = {
+    title: 'Thanks for completing the survey.',
+    text: 'Here is a reward for you.',
+    imageUrl: '',
+    buttonTxt: 'View Reward'
+  };
+
+  public noRewardsPopUp: IPopupConfig = {
+    title: 'Thanks for completing the survey.',
+    text: '',
+    buttonTxt: 'Back To Home'
+  };
+
   constructor(
     private notificationService: NotificationService,
     private router: Router,
@@ -42,7 +55,26 @@ export class SurveyComponent implements OnInit {
           const idN = Number.parseInt(id, 10);
           return this.surveyService.getSurveyFromCampaign(idN);
         }),
-        tap((survey: ISurvey) => this.survey = survey)
+        tap((survey: ISurvey) => {
+          this.survey = survey;
+          if (survey) {
+            const successOutcome = survey.results.outcome;
+            const noOutcome = survey.results.noOutcome;
+            if (noOutcome) {
+              this.noRewardsPopUp.title = noOutcome.title;
+              this.noRewardsPopUp.text = noOutcome.subTitle;
+              this.noRewardsPopUp.buttonTxt =
+                noOutcome.button || this.noRewardsPopUp.buttonTxt;
+            }
+            if (successOutcome) {
+              this.successPopUp.title = successOutcome.title;
+              this.successPopUp.text = successOutcome.subTitle;
+              this.successPopUp.imageUrl = successOutcome.image;
+              this.successPopUp.buttonTxt =
+                successOutcome.button || this.successPopUp.buttonTxt;
+            }
+          }
+        })
       );
 
     this.moveId$ = this.survey$.pipe(
@@ -66,17 +98,9 @@ export class SurveyComponent implements OnInit {
       (res) => {
         // reward guaranteed, need to clarified
         if (res.hasOutcomes) {
-          this.notificationService.addPopup({
-            text: 'Here is a reward for you.',
-            title: 'Thanks for completing the survey.',
-            buttonTxt: 'View Reward',
-            imageUrl: 'assets/congrats_image.png'
-          });
+          this.notificationService.addPopup(this.successPopUp);
         } else {
-          this.notificationService.addPopup({
-            title: 'Thanks for completing the survey.',
-            buttonTxt: 'Back To Home',
-          });
+          this.notificationService.addPopup(this.noRewardsPopUp);
         }
         this.router.navigate(['/']);
       }
