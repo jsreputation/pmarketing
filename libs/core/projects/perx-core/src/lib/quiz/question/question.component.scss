@@ -3,10 +3,27 @@
   display: block;
 }
 
-.question-image {
-  height: 145px;
-  object-fit: fill;
-  width: 100%;
+.question-image-wrapper {
+  display: flex;
+  min-height: 145px;
+  max-width: 100%;
+  justify-content: center;
+
+  pinch-zoom {
+    width: 100%;
+
+    // can override to allow initial fit to height and zoom to fill viewport width
+    //.question-image {
+    //  width: unset;
+    //}
+  }
+
+  .question-image {
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-self: flex-start; // https://stackoverflow.com/a/61196907/1179865
+  }
 }
 
 .question-container {
