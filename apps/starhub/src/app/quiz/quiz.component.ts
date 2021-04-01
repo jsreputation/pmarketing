@@ -8,23 +8,41 @@ import {
   ViewChild
 } from '@angular/core';
 import {
-  NotificationService,
-  IQuiz,
-  QuizMode,
-  QuizComponent as QuizCoreComponent,
-  ITracker,
-  IQAnswer,
+  IAnswerResult,
   IPoints,
-  SwipeConfiguration,
-  SwipeListType,
-  QuizService,
-  QuizQuestionType,
+  IQAnswer,
+  IQuiz,
   ISwipePayload,
-  IAnswerResult
+  ITracker,
+  NotificationService,
+  QuizComponent as QuizCoreComponent,
+  QuizMode,
+  QuizQuestionType,
+  QuizService,
+  SwipeConfiguration,
+  SwipeListType
 } from '@perxtech/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { BehaviorSubject, EMPTY, iif, Observable, Subject, throwError } from 'rxjs';
-import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import {
+  ActivatedRoute,
+  ParamMap,
+  Router
+} from '@angular/router';
+import {
+  BehaviorSubject,
+  iif,
+  Observable,
+  of,
+  Subject,
+  throwError
+} from 'rxjs';
+import {
+  catchError,
+  filter,
+  map,
+  switchMap,
+  takeUntil,
+  tap
+} from 'rxjs/operators';
 
 @Component({
   selector: 'app-quiz',
@@ -58,6 +76,7 @@ export class QuizComponent implements OnInit, OnDestroy {
     listType: SwipeListType.LISTWITHICON
   };
   private submitErrorTxt: string = 'Error Submitting Answer';
+  public disableNextButton: boolean = true;
 
   constructor(
     private router: Router,
@@ -162,6 +181,12 @@ export class QuizComponent implements OnInit, OnDestroy {
   public updateQuizStatus(answers: ITracker<IQAnswer>): void {
     // patch previous answer object
     this.answers = { ...this.answers, ...answers };
+
+    // validate for non skippable quizzes
+    const questionComponentsArr = this.coreComponent.questionComponents.toArray();
+    const questionPointer = this.questionPointer;
+    this.disableNextButton = !questionComponentsArr[questionPointer].questionValidation();
+
     if (this.quiz.mode !== QuizMode.basic) {
       this.nextWithoutValidation();
     }
@@ -191,7 +216,9 @@ export class QuizComponent implements OnInit, OnDestroy {
     if (questionComponentsArr[questionPointer].questionValidation()) {
       this.pushAnswer(questionPointer)
         .subscribe(
-          () => { },
+          () => {
+            this.disableNextButton = true;
+          },
           (err) => {
             console.error(err);
             this.notificationService.addSnack(this.submitErrorTxt);
@@ -214,7 +241,9 @@ export class QuizComponent implements OnInit, OnDestroy {
       this.complete = true;
       this.submit();
     } else {
-      this.pushAnswer(questionPointer).subscribe(() => { });
+      this.pushAnswer(questionPointer).subscribe(() => {
+        this.disableNextButton = true;
+      });
       this.questionPointer++;
       this.questionChanged();
       this.resetTimer();
@@ -245,7 +274,7 @@ export class QuizComponent implements OnInit, OnDestroy {
         () => iif(
           () => this.complete,
             this.quizService.postFinalQuizAnswer(this.moveId as number),
-            EMPTY
+            of({}) // let the observable complete
         )
       ),
       catchError(err => {

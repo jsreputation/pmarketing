@@ -64,6 +64,7 @@
       color="primary"
       *ngIf="this.questionPointer !== this.totalLength - 1"
       (click)="next()"
+      [disabled]="disableNextButton"
       mat-flat-button>
       <span translate>QUIZ_TEMPLATE.CTA_NEXT_TXT</span>
     </button>
