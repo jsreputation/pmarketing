@@ -1,28 +1,48 @@
 import {
+  AfterViewInit,
   Component,
-  OnInit,
   OnDestroy,
-  AfterViewInit
+  OnInit
 } from '@angular/core';
 import {
-  RewardsService,
-  IReward,
+  ConfigService,
+  ErrorMessageService,
+  IConfig,
+  IFlags,
+  ILoyalty,
+  IMacaron,
   IPrice,
+  IReward,
   IVoucherService,
   LoyaltyService,
-  ILoyalty,
-  Voucher,
-  ConfigService,
-  IConfig,
+  MacaronService,
+  NotificationService,
+  RewardsService,
   SettingsService,
-  IFlags,
-  IMacaron,
-  MacaronService
+  Voucher
 } from '@perxtech/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { filter, finalize, map, switchMap, takeUntil, tap, shareReplay } from 'rxjs/operators';
-import { iif, Observable, of, Subject } from 'rxjs';
+import {
+  ActivatedRoute,
+  Params,
+  Router
+} from '@angular/router';
+import {
+  filter,
+  finalize,
+  map,
+  shareReplay,
+  switchMap,
+  takeUntil,
+  tap
+} from 'rxjs/operators';
+import {
+  iif,
+  Observable,
+  of,
+  Subject
+} from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'perx-blackcomb-reward-details',
@@ -64,6 +84,8 @@ export class RewardDetailsComponent implements OnInit, OnDestroy, AfterViewInit 
     private configService: ConfigService,
     private settingsService: SettingsService,
     private macaronService: MacaronService,
+    private errorMessageService: ErrorMessageService,
+    private notificationService: NotificationService,
     private router: Router
   ) { }
 
@@ -114,7 +136,13 @@ export class RewardDetailsComponent implements OnInit, OnDestroy, AfterViewInit 
       this.vouchersService.issueReward(this.rewardData.id, undefined, undefined)
         .subscribe(
           (res: Voucher) => this.router.navigate([`/voucher-detail/${res.id}`]),
-          (_) => this.waitForSubmission = false // allow user to retry again, re-enable button
+          (err: HttpErrorResponse) => {
+            this.errorMessageService.getErrorMessageByErrorCode(err.error.code, err.error.message)
+              .subscribe((message) => {
+                this.notificationService.addSnack(message);
+              });
+            this.waitForSubmission = false; // allow user to retry again, re-enable button
+          }
         );
     }
   }

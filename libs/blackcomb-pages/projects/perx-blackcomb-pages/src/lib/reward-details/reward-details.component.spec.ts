@@ -1,25 +1,38 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  TestBed
+} from '@angular/core/testing';
 
 import { RewardDetailsComponent } from './reward-details.component';
 import {
-  RewardsModule,
-  RewardsService,
-  VouchersModule,
   ConfigService,
+  ErrorMessageService,
+  ILoyalty,
+  IReward,
   IVoucherService,
   LoyaltyService,
-  ILoyalty,
-  ThemesService,
-  IReward,
-  UtilsModule,
-  TokenStorage,
+  MacaronService,
+  NotificationService,
+  RewardsModule,
+  RewardsService,
   SettingsService,
-  MacaronService
+  ThemesService,
+  TokenStorage,
+  UtilsModule,
+  VouchersModule
 } from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { Observable, of } from 'rxjs';
-import {MatDialogModule, MatButtonModule, MatProgressSpinnerModule} from '@angular/material';
+import {
+  Observable,
+  of
+} from 'rxjs';
+import {
+  MatButtonModule,
+  MatDialogModule,
+  MatProgressSpinnerModule
+} from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
 
@@ -84,6 +97,14 @@ describe('RewardComponent', () => {
     getMacaron: () => null
   };
 
+  const notificationServiceStub: Partial<NotificationService> = {
+    addSnack: () => { }
+  };
+
+  const errorMessageServiceStub: Partial<ErrorMessageService> = {
+    getErrorMessageByErrorCode: () => of('')
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [RewardDetailsComponent],
@@ -108,6 +129,8 @@ describe('RewardComponent', () => {
         { provide: TokenStorage, useValue: tokenStorageStub },
         { provide: SettingsService, useValue: settingsServiceStub },
         { provide: MacaronService, useValue: macaronServiceStub },
+        { provide: ErrorMessageService, useValue: errorMessageServiceStub },
+        { provide: NotificationService, useValue: notificationServiceStub },
       ]
     })
       .compileComponents();
