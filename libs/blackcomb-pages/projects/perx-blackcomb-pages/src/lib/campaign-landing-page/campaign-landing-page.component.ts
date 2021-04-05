@@ -56,7 +56,6 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
           this.themesService.getThemeSetting(config)
         ),
         tap((theme: ITheme) => {
-          console.log(theme);
           this.buttonStyle['background-color'] = theme.properties[
             '--button_background_color'
           ]
