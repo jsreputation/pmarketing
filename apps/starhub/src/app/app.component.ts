@@ -19,6 +19,7 @@ import {
   ProfileService,
   RewardPopupComponent,
   SettingsService,
+  ThemesService,
   TokenStorage
 } from '@perxtech/core';
 import {
@@ -40,12 +41,14 @@ import {
 } from './analytics.service';
 import {
   EMPTY,
+  iif,
   throwError,
   timer
 } from 'rxjs';
 import { Router } from '@angular/router';
 import { IStarhubConfig } from './home/home/home.component';
 import { oc } from 'ts-optchain';
+import { Title } from '@angular/platform-browser';
 
 export interface IdataLayerSH {
   pageName: string;
@@ -93,6 +96,8 @@ export class AppComponent implements OnInit {
     private configService: ConfigService,
     private settingsService: SettingsService,
     private authenticationService: AuthenticationService,
+    private themesService: ThemesService,
+    private titleService: Title,
   ) {
     this.data.pageName = '';
     this.data.channel = 'msa';
@@ -113,6 +118,25 @@ export class AppComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    // init theme
+    this.configService.readAppConfig().pipe(
+      map(() => this.authenticationService.getAppAccessToken()),
+      switchMap((appToken: string) =>
+        iif(() => !!appToken && appToken.length > 0,
+          this.themesService.getThemeSetting(),
+          this.authenticationService.getAppToken().pipe(
+            switchMap(() => this.themesService.getThemeSetting())
+          )
+        )
+      )
+    ).subscribe(
+      (res: ITheme) => {
+        const title: string = res.properties['--title'] ? res.properties['--title'] : '\u00A0';
+        this.titleService.setTitle(title);
+      },
+      (err) => console.error(`Error ${err}`),
+    );
+
     this.authenticationService.isAuthorized().subscribe((isAuth: boolean) => {
       if (!isAuth) {
         this.loading = false;

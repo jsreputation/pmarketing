@@ -57,7 +57,6 @@ import {
   RewardsModule,
   SettingsModule,
   StampModule,
-  ThemesService,
   TokenStorage,
   UtilsModule,
   VouchersModule
@@ -122,7 +121,6 @@ export const appInit =
     translateService: TranslateService,
     configService: ConfigService,
     authService: AuthenticationService,
-    // themesService: ThemesService
   ) => () => new Promise((resolve) => {
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get('token');
@@ -142,7 +140,6 @@ export const appInit =
         }
       }),
       // switchMap(() => authService.getAppToken()),
-      // switchMap(() => themesService.getThemeSetting())
     ).toPromise().then(() => resolve());
     resolve();
   });
@@ -223,7 +220,7 @@ export const appInit =
     { provide: ErrorHandler, useClass: SentryErrorHandler },
     {
       provide: APP_INITIALIZER, useFactory: appInit,
-      deps: [TranslateService, ConfigService, AuthenticationService, ThemesService], multi: true
+      deps: [TranslateService, ConfigService, AuthenticationService], multi: true
     },
     { provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true }
   ],
