@@ -118,23 +118,22 @@ export class AppComponent implements OnInit {
 
   public ngOnInit(): void {
     // init theme
-    const appToken = this.authenticationService.getAppAccessToken();
-    if (appToken) {
-      this.themesService.getThemeSetting();
-    } else {
-      this.configService.readAppConfig()
-        .pipe(
-          switchMap(() => this.authenticationService.getAppToken()),
+    this.configService.readAppConfig().subscribe(() => {
+      const appToken = this.authenticationService.getAppAccessToken();
+      if (appToken) {
+        this.themesService.getThemeSetting();
+      } else {
+        this.authenticationService.getAppToken().pipe(
           switchMap(() => this.themesService.getThemeSetting())
-        )
-        .subscribe(
+        ).subscribe(
           (res: ITheme) => {
             const title: string = res.properties['--title'] ? res.properties['--title'] : '\u00A0';
             this.titleService.setTitle(title);
           },
           (err) => console.error(`Error ${err}`),
         );
-    }
+      }
+    });
 
     this.authenticationService.isAuthorized().subscribe((isAuth: boolean) => {
       if (!isAuth) {
