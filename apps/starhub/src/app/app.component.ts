@@ -41,6 +41,7 @@ import {
 } from './analytics.service';
 import {
   EMPTY,
+  iif,
   throwError,
   timer
 } from 'rxjs';
@@ -118,22 +119,23 @@ export class AppComponent implements OnInit {
 
   public ngOnInit(): void {
     // init theme
-    this.configService.readAppConfig().subscribe(() => {
-      const appToken = this.authenticationService.getAppAccessToken();
-      if (appToken) {
-        this.themesService.getThemeSetting();
-      } else {
-        this.authenticationService.getAppToken().pipe(
-          switchMap(() => this.themesService.getThemeSetting())
-        ).subscribe(
-          (res: ITheme) => {
-            const title: string = res.properties['--title'] ? res.properties['--title'] : '\u00A0';
-            this.titleService.setTitle(title);
-          },
-          (err) => console.error(`Error ${err}`),
-        );
-      }
-    });
+    this.configService.readAppConfig().pipe(
+      map(() => this.authenticationService.getAppAccessToken()),
+      switchMap((appToken: string) =>
+        iif(() => !!appToken && appToken.length > 0,
+          this.themesService.getThemeSetting(),
+          this.authenticationService.getAppToken().pipe(
+            switchMap(() => this.themesService.getThemeSetting())
+          )
+        )
+      )
+    ).subscribe(
+      (res: ITheme) => {
+        const title: string = res.properties['--title'] ? res.properties['--title'] : '\u00A0';
+        this.titleService.setTitle(title);
+      },
+      (err) => console.error(`Error ${err}`),
+    );
 
     this.authenticationService.isAuthorized().subscribe((isAuth: boolean) => {
       if (!isAuth) {
