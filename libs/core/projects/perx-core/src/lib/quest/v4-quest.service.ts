@@ -82,7 +82,7 @@ export class V4QuestService implements IQuestService {
       campaignId: task.campaign_id,
       ordering: task.ordering,
       state: task.state,
-      title: task.title ?  task.title : '',
+      title: task.title ?  task.title : (task.display_properties &&  task.display_properties.title || ''),
       description: task.display_properties ?  task.display_properties.description : '',
       imageUrl: (task.display_properties && task.display_properties.image) ?  task.display_properties.image.value.image_url
       || task.display_properties.image.value.file  : ''
@@ -147,6 +147,7 @@ export interface QuestDisplayProperties {
 }
 
 export interface QuestTaskDisplayProperties {
+  title?: string;
   description: string;
   image?: Asset;
 }
