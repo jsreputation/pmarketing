@@ -69,7 +69,10 @@ export class QuizComponent implements OnChanges, OnDestroy {
     this.answersTracker[answer.questionId] = answer;
     this.answers.emit(this.answersTracker);
     // console.log('validation', this.questionComponents.map(qc => qc.questionValidation()));
-    const done: boolean = !this.questionComponents.some((qc: QuizQuestionComponent) => !qc.questionValidation());
+
+    const questionComponentsArr = this.questionComponents.toArray();
+    const done: boolean = (this.questionComponents.length - 1 === this.questionPointer) &&
+            questionComponentsArr[this.questionPointer].questionValidation();
     // console.log('done?', done);
     if (done) {
       this.done.emit(this.answersTracker);
