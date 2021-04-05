@@ -116,7 +116,7 @@
     color: $dark-grey;
     padding: 1.5rem 3.5rem;
     outline: none;
-    font-family: "Lato";
+    font-family: var(--font);
   }
 
   .enter-pin {

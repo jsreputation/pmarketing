@@ -1,5 +1,13 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import {
+  Component,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
+import {
+  ActivatedRoute,
+  Params,
+  Router
+} from '@angular/router';
 import {
   CampaignLandingPage,
   ConfigService,
@@ -10,7 +18,13 @@ import {
   ThemesService,
 } from '@perxtech/core';
 import { Subject } from 'rxjs';
-import { filter, flatMap, map, switchMap, tap } from 'rxjs/operators';
+import {
+  filter,
+  flatMap,
+  map,
+  switchMap,
+  tap
+} from 'rxjs/operators';
 import { oc } from 'ts-optchain';
 
 @Component({
@@ -34,17 +48,7 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
   ) {}
 
   public ngOnInit(): void {
-    this.themesService.getThemeSetting().subscribe((theme: ITheme) => {
-      console.log(theme);
-      this.buttonStyle['background-color'] = theme.properties[
-        '--button_background_color'
-      ]
-        ? theme.properties['--button_background_color']
-        : '';
-      this.buttonStyle.color = theme.properties['--button_text_color']
-        ? theme.properties['--button_text_color']
-        : '';
-    });
+
     this.configService
       .readAppConfig<ITheme>()
       .pipe(
@@ -52,7 +56,6 @@ export class CampaignLandingPageComponent implements OnInit, OnDestroy {
           this.themesService.getThemeSetting(config)
         ),
         tap((theme: ITheme) => {
-          console.log(theme);
           this.buttonStyle['background-color'] = theme.properties[
             '--button_background_color'
           ]
