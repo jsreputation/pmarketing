@@ -11,7 +11,7 @@ body.electric-green {
         font-weight: bold;
         text-transform: none;
         background-color: transparent;
-        font-family: var(--font), Arial, Helvetica, sans-serif;
+        font-family: var(--font), Arial, Helvetica, sans-serif !important;
         // Button states
         // &:active {
         //     background-color: $electric-green;
