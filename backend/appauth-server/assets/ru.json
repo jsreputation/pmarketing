@@ -111,5 +111,14 @@
     "QUIZ_SCORE": "Score",
     "LOYALTY_POINTS_EARNED": "Loyalty Points",
     "NO_RANK": "NA"
+  },
+  "SURVEY": {
+    "SUCCESS_TITLE": "",
+    "SUCCESS_TEXT": "Thank you for answering!",
+    "NO_REWARDS_TITLE": "",
+    "NO_REWARDS_TEXT": "Thank you for answering!",
+    "NOT_AVAILABLE_TITLE": "Sorry!",
+    "NOT_AVAILABLE_CTA": "Close",
+    "NOT_AVAILABLE_TXT": "This survey is not available at the moment. Try again later."
   }
 }

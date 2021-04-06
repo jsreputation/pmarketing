@@ -341,6 +341,15 @@
     "REWARDS_RUN_OUT": "Sorry, rewards have run out",
     "NO_UNUSED_MOVES": "Sorry, you do not have any more moves available"
   },
+  "SURVEY": {
+    "SUCCESS_TITLE": "",
+    "SUCCESS_TEXT": "Thank you for answering!",
+    "NO_REWARDS_TITLE": "",
+    "NO_REWARDS_TEXT": "Thank you for answering!",
+    "NOT_AVAILABLE_TITLE": "Sorry!",
+    "NOT_AVAILABLE_CTA": "Close",
+    "NOT_AVAILABLE_TXT": "This survey is not available at the moment. Try again later."
+  },
   "CONTENT_PAGE": "Content Not Found",
   "Gold": "Gold",
   "Silver": "Silver",

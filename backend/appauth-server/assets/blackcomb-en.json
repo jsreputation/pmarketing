@@ -2,10 +2,6 @@
   "BOOKING_PAGE": {
     "TNC": "I have read, understood the Voucher Terms & Conditions stated in the previous page and agree to all clauses stated therein"
   },
-  "SURVEY_SUCCESS_TITLE": "",
-  "SURVEY_SUCCESS_TEXT": "Thank you for answering!",
-  "SURVEY_NO_REWARDS_TITLE": "",
-  "SURVEY_NO_REWARDS_TEXT": "Thank you for answering!",
   "BACK_TO_WALLET": "Back to Wallet",
   "LANDING": {
     "CAMPAIGN_TITLE": "Weekly LIFE Dojo Winners Wanted! ",
@@ -421,6 +417,15 @@
     "EXPIRED": "Expired",
     "EXPIRING": "Expiring Soon",
     "FULLY_REDEEMED": "Fully redeemed"
+  },
+  "SURVEY": {
+    "SUCCESS_TITLE": "",
+    "SUCCESS_TEXT": "Thank you for answering!",
+    "NO_REWARDS_TITLE": "",
+    "NO_REWARDS_TEXT": "Thank you for answering!",
+    "NOT_AVAILABLE_TITLE": "Sorry!",
+    "NOT_AVAILABLE_CTA": "Close",
+    "NOT_AVAILABLE_TXT": "This survey is not available at the moment. Try again later."
   },
   "Gold": "Gold",
   "Silver": "Silver",

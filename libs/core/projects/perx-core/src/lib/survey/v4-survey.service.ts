@@ -188,6 +188,9 @@ export class V4SurveyService implements SurveyService {
       switchMap(baseUrl => this.http.get<IV4SurveyResponse>(`${baseUrl}/v4/campaigns/${campaignId}/games`)),
       map((res) => res.data[0]),
       map((surveyCampaign: IV4Survey): ISurvey => {
+        if (!surveyCampaign) {
+          throw new Error(`No available game for this campaign #${campaignId}`);
+        }
         const dp = surveyCampaign.display_properties;
         const fields: FormlyFieldConfig[] = dp ? dp.questions.map((question) => this.makeFormlyConfig(question, lang)) : [];
         const outcomes = this.buildOutcomes(dp, lang);

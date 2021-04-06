@@ -13,7 +13,7 @@ import {
   AuthenticationService
 } from '@perxtech/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
+import { EMPTY, Observable, Subject } from 'rxjs';
 import { catchError, filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -42,17 +42,23 @@ export class SurveyComponent implements OnInit, OnDestroy {
   public answers: IAnswer[];
 
   public successPopUp: IPopupConfig = {
-    title: 'SURVEY_SUCCESS_TITLE',
-    text: 'SURVEY_SUCCESS_TEXT',
+    title: 'SURVEY.SUCCESS_TITLE',
+    text: 'SURVEY.SUCCESS_TEXT',
     imageUrl: 'assets/congrats_image.png',
     buttonTxt: 'CLOSE'
   };
 
   public noRewardsPopUp: IPopupConfig = {
-    title: 'SURVEY_NO_REWARDS_TITLE',
-    text: 'SURVEY_NO_REWARDS_TEXT',
+    title: 'SURVEY.NO_REWARDS_TITLE',
+    text: 'SURVEY.NO_REWARDS_TEXT',
     imageUrl: '',
     buttonTxt: 'BACK_TO_WALLET'
+  };
+
+  private notAvailablePopUp: IPopupConfig = {
+    title: 'SURVEY.NOT_AVAILABLE_TITLE',
+    text: 'SURVEY.NOT_AVAILABLE_TXT',
+    buttonTxt: 'SURVEY.NOT_AVAILABLE_CTA'
   };
 
   private initTranslate(): void {
@@ -86,6 +92,21 @@ export class SurveyComponent implements OnInit, OnDestroy {
         .get(this.noRewardsPopUp.buttonTxt)
         .subscribe(text => (this.noRewardsPopUp.buttonTxt = text));
     }
+    if (this.notAvailablePopUp.title) {
+      this.translate
+        .get(this.notAvailablePopUp.title)
+        .subscribe(text => (this.notAvailablePopUp.title = text));
+    }
+    if (this.notAvailablePopUp.text) {
+      this.translate
+        .get(this.notAvailablePopUp.text)
+        .subscribe(text => (this.notAvailablePopUp.text = text));
+    }
+    if (this.notAvailablePopUp.buttonTxt) {
+      this.translate
+        .get(this.notAvailablePopUp.buttonTxt)
+        .subscribe(text => (this.notAvailablePopUp.buttonTxt = text));
+    }
   }
 
   constructor(
@@ -106,6 +127,12 @@ export class SurveyComponent implements OnInit, OnDestroy {
       switchMap((id: string) => {
         const idN = Number.parseInt(id, 10);
         return this.surveyService.getSurveyFromCampaign(idN);
+      }),
+      catchError((err: Error) => {
+        console.error(err.name, err.message);
+        this.notificationService.addPopup(this.notAvailablePopUp);
+        this.router.navigate(['/home']);
+        return EMPTY;
       }),
       takeUntil(this.destroy$)
     );
