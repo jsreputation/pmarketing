@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
   public campaigns: ICampaign[] | null;
   public campaignId: number | null | undefined;
   public selectedTab: number = 0;
-  private displayCampaignAs: string = 'puzzle';
+  public displayCampaignAs: string = 'puzzle';
   public puzzleTextFn: (puzzle: IStampCard) => string;
   public titleFn: (index?: number) => string;
   public sourceType: string | null = null;

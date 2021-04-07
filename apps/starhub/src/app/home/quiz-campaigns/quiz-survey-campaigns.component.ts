@@ -38,13 +38,14 @@ export class QuizSurveyCampaignsComponent implements OnInit {
 
   public loadCampaigns(): void {
     this.campaigns$ = this.campaignsSbjt$.asObservable().pipe(
-      scan((accCampaigns, currCampaigns) =>
+      scan((accCampaigns: ICampaign[], currCampaigns) =>
         accCampaigns.concat(currCampaigns), [])
     );
     this.campaignService
       .getCampaigns({
         gameType: this.switchToSurvey ? GameType.survey : GameType.quiz
-        , page: this.campaignsPageId })
+        , page: this.campaignsPageId
+      })
       .pipe(
         tap((campaigns) => {
           this.ghostCampaigns = [];
