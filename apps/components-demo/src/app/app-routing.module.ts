@@ -36,9 +36,9 @@ const routes: Routes = [
     path: 'survey', loadChildren: () => import('./survey/survey.module').then(mod => mod.SurveyModule)
   },
   { path: 'login', component: LoginComponent },
-  {
-    path: 'pages', loadChildren: () => import('./pages/pages.module').then(mod => mod.PagesModule)
-  },
+  // {
+  //   path: 'pages', loadChildren: () => import('./pages/pages.module').then(mod => mod.PagesModule)
+  // },
   { path: 'quiz', loadChildren: () => import('./quiz/quiz.module').then(m => m.QuizModule) }
 ];
 
