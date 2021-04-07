@@ -46,7 +46,7 @@ export function posServiceFactory(
 })
 
 export class PosModule {
-  public static forRoot(): ModuleWithProviders {
+  public static forRoot(): ModuleWithProviders<PosModule> {
     return {
       ngModule: PosModule,
       // providers: [

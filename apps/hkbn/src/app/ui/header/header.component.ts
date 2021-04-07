@@ -12,7 +12,7 @@ import { Location } from '@angular/common';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild(MatSidenavContainer, { static: false }) private navContainer: MatSidenavContainer;
+  @ViewChild(MatSidenavContainer) private navContainer: MatSidenavContainer;
   public routeData: any = null;
   public user: IProfile;
 

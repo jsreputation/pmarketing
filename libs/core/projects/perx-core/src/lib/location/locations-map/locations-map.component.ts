@@ -42,7 +42,7 @@ export class LocationsMapComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   public key: string | null = null;
 
-  @ViewChild('gmap', { static: false }) public gmapElement: ElementRef;
+  @ViewChild('gmap') public gmapElement: ElementRef;
   private map: google.maps.Map;
 
   public constructor(private geoLocationService: GeoLocationService) { }

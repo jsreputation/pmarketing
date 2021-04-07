@@ -74,7 +74,7 @@ const REQ_PAGE_SIZE: number = 10;
   ]
 })
 export class CategoryComponent implements OnInit, CategoryBottomSheetClosedCallBack, SortBottomSheetClosedCallBack, AfterViewInit {
-  @ViewChild('contentScroll', { static: false })
+  @ViewChild('contentScroll')
   public contentScroll: ElementRef;
   public rewardsList: IReward[] = [];
   public rewardsEnded: boolean = false;

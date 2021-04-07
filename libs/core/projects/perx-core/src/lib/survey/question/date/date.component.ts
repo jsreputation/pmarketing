@@ -14,11 +14,11 @@ export interface IDatePayload {
   styleUrls: ['./date.component.scss']
 })
 export class DateComponent implements OnChanges, OnInit {
-  @ViewChild('picker', { static: false }) private picker: MatDatepicker<Date>;
-  @ViewChild('pickerTo', { static: false }) private pickerTo: MatDatepicker<Date>;
-  @ViewChild('pickerInput', { static: false }) private pickerInput: ElementRef;
-  @ViewChild('pickerToInput', { static: false }) private pickerToInput: ElementRef;
-  @ViewChild('pickerFromInput', { static: false }) private pickerFromInput: ElementRef;
+  @ViewChild('picker') private picker: MatDatepicker<Date>;
+  @ViewChild('pickerTo') private pickerTo: MatDatepicker<Date>;
+  @ViewChild('pickerInput') private pickerInput: ElementRef;
+  @ViewChild('pickerToInput') private pickerToInput: ElementRef;
+  @ViewChild('pickerFromInput') private pickerFromInput: ElementRef;
 
   @Input()
   public payload: IDatePayload;

@@ -54,12 +54,12 @@ export interface IStarhubConfig {
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  @ViewChild(MatToolbar, { static: false })
+  @ViewChild(MatToolbar)
   private toolBar: MatToolbar;
   public top: number = 0;
   public previousDelta: number = 0;
   public lastOffset: number = 0;
-  @ViewChild('contentScrolled', { static: false })
+  @ViewChild('contentScrolled')
   public contentScrolled: ElementRef;
   public loyalty: ILoyalty;
   public profile: IProfile;

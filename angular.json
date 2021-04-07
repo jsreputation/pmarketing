@@ -21,7 +21,7 @@
             "main": "apps/dbshk-agent/src/main.ts",
             "polyfills": "apps/dbshk-agent/src/polyfills.ts",
             "tsConfig": "apps/dbshk-agent/tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "apps/dbshk-agent/src/favicon.ico",
               "apps/dbshk-agent/src/assets",
@@ -42,7 +42,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -55,6 +54,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ],
               "serviceWorker": true,
@@ -131,7 +134,7 @@
             "main": "apps/philipssg/src/main.ts",
             "polyfills": "apps/philipssg/src/polyfills.ts",
             "tsConfig": "apps/philipssg/tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "apps/philipssg/src/favicon.ico",
               "apps/philipssg/src/assets",
@@ -152,7 +155,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -165,6 +167,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ],
               "serviceWorker": true,
@@ -176,7 +182,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -185,6 +190,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ],
               "serviceWorker": true,
@@ -261,7 +270,7 @@
             "main": "apps/starhub/src/main.ts",
             "polyfills": "apps/starhub/src/polyfills.ts",
             "tsConfig": "apps/starhub/tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "apps/starhub/src/favicon.ico",
               "apps/starhub/src/assets",
@@ -277,7 +286,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": false,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": false,
@@ -286,6 +294,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ]
             },
@@ -295,7 +307,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": false,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": false,
@@ -308,6 +319,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ]
             }
@@ -376,6 +391,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist/prudential",
             "index": "apps/prudential/src/index.html",
             "main": "apps/prudential/src/main.ts",
@@ -410,6 +426,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ]
             }
@@ -483,7 +503,7 @@
             "main": "apps/oracle-pay/src/main.ts",
             "polyfills": "apps/oracle-pay/src/polyfills.ts",
             "tsConfig": "apps/oracle-pay/tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "apps/oracle-pay/src/favicon.ico",
               "apps/oracle-pay/src/assets",
@@ -499,7 +519,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": false,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": false,
@@ -512,6 +531,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ]
             }
@@ -585,7 +608,7 @@
             "main": "apps/merck-merchant/src/main.ts",
             "polyfills": "apps/merck-merchant/src/polyfills.ts",
             "tsConfig": "apps/merck-merchant/tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "apps/merck-merchant/src/favicon.ico",
               "apps/merck-merchant/src/assets",
@@ -601,7 +624,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": false,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": false,
@@ -614,6 +636,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ]
             }
@@ -669,6 +695,11 @@
       }
     },
     "merck-customer": {
+      "i18n": {
+        "locales": {
+          "zh": "src/locale/messages.zh.xlf"
+        }
+      },
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -687,7 +718,7 @@
             "main": "apps/merck-customer/src/main.ts",
             "polyfills": "apps/merck-customer/src/polyfills.ts",
             "tsConfig": "apps/merck-customer/tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "apps/merck-customer/src/favicon.ico",
               "apps/merck-customer/src/assets",
@@ -703,7 +734,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": false,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": false,
@@ -716,15 +746,22 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ]
             },
             "zh": {
-              "aot": true,
-              "baseHref": "/zh/",
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "outputPath": "dist/merck-customer-zh/",
               "i18nFile": "src/locale/messages.zh.xlf",
-              "i18nFormat": "xlf",
               "i18nLocale": "zh",
               "i18nMissingTranslation": "error"
             }
@@ -801,7 +838,7 @@
             "main": "apps/hsbchk/src/main.ts",
             "polyfills": "apps/hsbchk/src/polyfills.ts",
             "tsConfig": "apps/hsbchk/tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "apps/hsbchk/src/favicon.ico",
               "apps/hsbchk/src/assets",
@@ -822,7 +859,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -835,6 +871,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ]
             },
@@ -844,7 +884,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": false,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": false,
@@ -863,6 +902,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ]
             }
@@ -940,7 +983,7 @@
             "main": "apps/hsbc-rewards/src/main.ts",
             "polyfills": "apps/hsbc-rewards/src/polyfills.ts",
             "tsConfig": "apps/hsbc-rewards/tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "apps/hsbc-rewards/src/favicon.ico",
               "apps/hsbc-rewards/src/assets",
@@ -959,7 +1002,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": false,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": false,
@@ -972,6 +1014,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ]
             }
@@ -1045,7 +1091,7 @@
             "main": "apps/hsbc/src/main.ts",
             "polyfills": "apps/hsbc/src/polyfills.ts",
             "tsConfig": "apps/hsbc/tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "apps/hsbc/src/favicon.ico",
               "apps/hsbc/src/assets",
@@ -1061,7 +1107,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": false,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": false,
@@ -1074,6 +1119,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ]
             }
@@ -1147,7 +1196,7 @@
             "main": "apps/hkbn/src/main.ts",
             "polyfills": "apps/hkbn/src/polyfills.ts",
             "tsConfig": "apps/hkbn/tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "apps/hkbn/src/favicon.ico",
               "apps/hkbn/src/assets",
@@ -1163,7 +1212,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": false,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": false,
@@ -1176,6 +1224,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ]
             }
@@ -1249,7 +1301,7 @@
             "main": "apps/components-demo/src/main.ts",
             "polyfills": "apps/components-demo/src/polyfills.ts",
             "tsConfig": "apps/components-demo/tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "apps/components-demo/src/favicon.ico",
               "apps/components-demo/src/assets",
@@ -1265,7 +1317,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": false,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": false,
@@ -1278,6 +1329,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ]
             }
@@ -1352,7 +1407,7 @@
             "main": "apps/bpi/src/main.ts",
             "polyfills": "apps/bpi/src/polyfills.ts",
             "tsConfig": "apps/bpi/tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "apps/bpi/src/favicon.ico",
               "apps/bpi/src/assets",
@@ -1368,7 +1423,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": false,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": false,
@@ -1381,6 +1435,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ]
             }
@@ -1454,7 +1512,7 @@
             "main": "apps/blackcomb/src/main.ts",
             "polyfills": "apps/blackcomb/src/polyfills.ts",
             "tsConfig": "apps/blackcomb/tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "apps/blackcomb/src/favicon.ico",
               "apps/blackcomb/src/assets",
@@ -1475,7 +1533,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -1488,6 +1545,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ],
               "serviceWorker": true,
@@ -1585,7 +1646,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -1598,6 +1658,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ],
               "serviceWorker": true,
@@ -1674,7 +1738,7 @@
             "main": "apps/all-it/src/main.ts",
             "polyfills": "apps/all-it/src/polyfills.ts",
             "tsConfig": "apps/all-it/tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "apps/all-it/src/favicon.ico",
               "apps/all-it/src/assets",
@@ -1695,7 +1759,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": false,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": false,
@@ -1704,6 +1767,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ]
             },
@@ -1802,7 +1869,7 @@
             "main": "apps/abenson/src/main.ts",
             "polyfills": "apps/abenson/src/polyfills.ts",
             "tsConfig": "apps/abenson/tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "apps/abenson/src/favicon.ico",
               "apps/abenson/src/assets",
@@ -1821,7 +1888,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": false,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": false,
@@ -1840,6 +1906,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "6mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ]
             }
@@ -2012,7 +2082,7 @@
   },
   "schematics": {
     "@schematics/angular:component": {
-      "styleext": "scss"
+      "style": "scss"
     }
   }
 }

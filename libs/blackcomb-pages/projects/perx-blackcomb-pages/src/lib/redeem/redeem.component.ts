@@ -28,7 +28,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
   public status: VoucherState;
   public pinInputError: boolean = false;
-  @ViewChild('pinInput', { static: false })
+  @ViewChild('pinInput')
   private pinInputComponent: PinInputComponent;
 
   public voucher$: Subscription;

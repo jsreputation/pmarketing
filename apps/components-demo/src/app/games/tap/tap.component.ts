@@ -7,7 +7,7 @@ import { IGameComponent } from '@perxtech/core';
   styleUrls: ['./tap.component.scss']
 })
 export class TapComponent {
-  @ViewChild('tap', { static: false })
+  @ViewChild('tap')
   private shake: IGameComponent;
 
   public reset(): void {

@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
   public failedAuthSubscriber: Subscription;
   private soundToggleSubscription: Subscription | undefined;
   private sourceType: string;
-  @ViewChild('drawer', { static: false }) public drawer: MatSidenav;
+  @ViewChild('drawer') public drawer: MatSidenav;
 
   public onLeftActionClick: () => void = () => { };
   public onRightActionClick: () => void = () => { };

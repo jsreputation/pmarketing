@@ -58,7 +58,7 @@ export class FindPharmacyComponent implements OnInit, PageAppearence, OnDestroy 
   public filteredLocations: Observable<ILocation[]>;
   public headerFn: (location: ILocation) => Observable<string>;
   public viewLocationFn: () => Observable<string>;
-  @ViewChild('locationMap', { static: false }) public locationMap: LocationsMapComponent;
+  @ViewChild('locationMap') public locationMap: LocationsMapComponent;
 
   constructor(
     private locationsService: LocationsService,

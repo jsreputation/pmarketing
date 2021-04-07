@@ -31,7 +31,7 @@ export class PinRedemptionComponent implements OnInit {
   @Output()
   public pinFocused: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  @ViewChild('pinInput', { static: false })
+  @ViewChild('pinInput')
   private pinInputComponent: PinInputComponent;
 
   public error: boolean;

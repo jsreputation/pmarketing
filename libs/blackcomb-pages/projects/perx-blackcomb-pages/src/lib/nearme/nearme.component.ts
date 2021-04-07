@@ -47,7 +47,7 @@ export interface ICategories {
 })
 export class NearmeComponent implements OnInit, OnDestroy {
 
-  @ViewChild('gmap', { static: false }) public gmapElement: ElementRef;
+  @ViewChild('gmap') public gmapElement: ElementRef;
   public map: google.maps.Map;
   public key: string = 'AIzaSyDdNa7j6XYHHzYbzQDGTn52Rfj-wDw7X7w';
   public markersArray: google.maps.Marker[] = [];
