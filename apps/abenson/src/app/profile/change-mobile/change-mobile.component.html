@@ -4,11 +4,11 @@
       <mat-label>Enter new number</mat-label>
       <input matInput formControlName="phone">
       <mat-error *ngIf="
-        phoneForm.get('phone').hasError('required') ||
-        phoneForm.get('phone').hasError('pattern')">
+        phoneForm.get('phone')?.hasError('required') ||
+        phoneForm.get('phone')?.hasError('pattern')">
         A number is <strong>required</strong>
       </mat-error>
-      <mat-error *ngIf="phoneForm.get('phone').hasError('minlength')">
+      <mat-error *ngIf="phoneForm.get('phone')?.hasError('minlength')">
         <span>Phone number should be {{passwordMinLen}} digits long</span>
       </mat-error>
     </mat-form-field>

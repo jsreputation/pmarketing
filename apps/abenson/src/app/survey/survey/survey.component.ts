@@ -8,7 +8,6 @@ interface IAnswer {
   questionId: string;
   content: any;
 }
-
 @Component({
   selector: 'app-survey',
   templateUrl: './survey.component.html',
@@ -18,7 +17,7 @@ export class SurveyComponent implements OnInit {
   public answers: IAnswer[];
   public totalLength: number;
   public currentPointer: number;
-  private survey: ISurvey;
+  public survey: ISurvey;
 
   constructor(
     private notificationService: NotificationService,
