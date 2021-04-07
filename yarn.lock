@@ -470,12 +470,12 @@
     glob "7.1.2"
     yargs "^16.1.1"
 
-"@angular/material-moment-adapter@^11.2.4":
-  version "11.2.4"
-  resolved "https://registry.npmjs.org/@angular/material-moment-adapter/-/material-moment-adapter-11.2.4.tgz#e698441122222ddba6fe4033063f83e82f9507a0"
-  integrity sha512-fJh6Zs+pK7LZN8LAWGR73vfoN+el00pIU/hx6tJKrJD4XyPMG80Z/eccsDPq3dMiRZeHhcO/tvtFZALYKVY/+w==
+"@angular/material-moment-adapter@~8.0.1":
+  version "8.0.2"
+  resolved "https://registry.yarnpkg.com/@angular/material-moment-adapter/-/material-moment-adapter-8.0.2.tgz#c1b96c1a821fb7a1916cb77dc97d339130e0da57"
+  integrity sha512-90mFl4ZPRgj4NowspMcuIZeWOTpEHlRPG2CGuyZmc9fK8DVpYQl8a/omS+eL3XdkNeT+escCImMiPl2HSPC/nw==
   dependencies:
-    tslib "^2.0.0"
+    tslib "^1.7.1"
 
 "@angular/material@~8.0.1":
   version "8.0.2"
@@ -14953,11 +14953,6 @@ tslib@1.11.1, tslib@^1.10.0, tslib@^1.7.1, tslib@^1.8.0, tslib@^1.8.1, tslib@^1.
   version "1.11.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.11.1.tgz#eb15d128827fbee2841549e171f45ed338ac7e35"
   integrity sha512-aZW88SY8kQbU7gpV19lN24LtXh/yD4ZZg6qieAJDDg+YBsJcSmLGK9QpnUjAKVG/xefmvJGd1WUmfpT/g6AJGA==
-
-tslib@^2.0.0:
-  version "2.1.0"
-  resolved "https://registry.npmjs.org/tslib/-/tslib-2.1.0.tgz#da60860f1c2ecaa5703ab7d39bc05b6bf988b97a"
-  integrity sha512-hcVC3wYEziELGGmEEXue7D75zbwIIVUMWAVbHItGPx0ziyXxrOMQx4rQEVEV45Ut/1IotuEvwqPopzIOkDMf0A==
 
 tslint-consistent-codestyle@^1.15.1:
   version "1.16.0"
