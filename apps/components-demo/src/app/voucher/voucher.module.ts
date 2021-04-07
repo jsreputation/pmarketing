@@ -6,7 +6,7 @@ import { VoucherComponent } from './voucher/voucher.component';
 import { ListComponent } from './list/list.component';
 import { DetailComponent } from './detail/detail.component';
 import { VouchersModule as PerxVouchersModule } from '@perxtech/core';
-import { MatTabsModule } from '@angular/material';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [VoucherComponent, ListComponent, DetailComponent],

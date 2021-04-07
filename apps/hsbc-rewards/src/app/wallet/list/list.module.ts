@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatIconModule } from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
 import { ConfigModule, VouchersModule } from '@perxtech/core';
 
 import { SharedModule } from '../../shared/shared.module';

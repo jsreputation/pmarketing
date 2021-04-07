@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {GhostCardComponent} from './card-ghost.component';
-import {MatCardModule} from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
 import {CommonModule} from '@angular/common';
 
 @NgModule({

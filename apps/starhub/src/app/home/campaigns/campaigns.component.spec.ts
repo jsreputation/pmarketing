@@ -1,7 +1,9 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { CampaignsComponent } from './campaigns.component';
-import { MatCardModule, MatIconModule, MatRippleModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatRippleModule } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
 import { of } from 'rxjs';
 import {
   ICampaignService,

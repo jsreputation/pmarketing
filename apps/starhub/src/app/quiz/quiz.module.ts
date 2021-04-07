@@ -3,7 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { QuizComponent } from './quiz.component';
 import { CommonModule } from '@angular/common';
 import { QuizModule as PerxCoreQuizModule, UtilsModule } from '@perxtech/core';
-import { MatButtonModule, MatCardModule, MatProgressBarModule, MatToolbarModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 const routes: Routes = [{
   path: '',

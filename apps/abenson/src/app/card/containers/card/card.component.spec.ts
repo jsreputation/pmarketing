@@ -19,7 +19,7 @@ import {
 import { CardComponent } from './card.component';
 import { SharedModule } from '../../../shared/shared.module';
 import { loyalty } from '../../../mock/loyalty.mock';
-import { MatTabChangeEvent } from '@angular/material';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 import { Type } from '@angular/core';
 
 const transaction: ILoyaltyTransaction = {

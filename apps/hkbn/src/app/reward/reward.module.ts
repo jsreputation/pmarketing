@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RewardComponent } from './containers/reward/reward.component';
-import { MatButtonModule, MatDialogModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 import { RewardRoutingModule } from './reward-routing.module';
 import { RewardConfirmComponent } from './components/reward-confirm/reward-confirm.component';
 import { RewardsModule, VouchersModule, UtilsModule } from '@perxtech/core';

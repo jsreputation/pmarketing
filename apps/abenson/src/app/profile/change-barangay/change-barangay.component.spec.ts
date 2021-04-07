@@ -2,7 +2,8 @@ import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core
 
 import { ChangeBarangayComponent } from './change-barangay.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatIconModule, MatInputModule } from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ProfileService } from '@perxtech/core';

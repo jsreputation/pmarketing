@@ -18,7 +18,10 @@ import {
   StampCardState
 } from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatCardModule, MatIconModule, MatRippleModule, MatTabsModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatRippleModule } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { NavigateToolbarComponent } from '../navigate-toolbar/navigate-toolbar.component';

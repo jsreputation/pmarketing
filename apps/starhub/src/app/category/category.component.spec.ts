@@ -8,13 +8,10 @@ import {
 
 import { CategoryComponent } from './category.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import {
-  MatBottomSheet,
-  MatBottomSheetModule,
-  MatCardModule,
-  MatIconModule,
-  MatToolbarModule
-} from '@angular/material';
+import { MatBottomSheet, MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import {
   ConfigService,
   RewardsService

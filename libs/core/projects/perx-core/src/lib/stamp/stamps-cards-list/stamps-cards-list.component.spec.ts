@@ -1,4 +1,4 @@
-import { MatCardModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { StampsCardsListComponent } from './stamps-cards-list.component';

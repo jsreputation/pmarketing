@@ -8,11 +8,9 @@ import {
 } from '@angular/forms';
 import { ProfileModule, ProfileService } from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import {
-  MatButtonModule,
-  MatCheckboxModule,
-  MatRadioModule
-} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';

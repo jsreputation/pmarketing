@@ -19,7 +19,7 @@ import {
   convertToParamMap
 } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { MatIconModule } from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
 
 const rewardsServiceStub: Partial<RewardsService> = {
   getRewards: () => of()

@@ -1,7 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RewardsPageComponent } from './rewards-page.component';
-import { MatAutocompleteModule, MatIconModule, MatInputModule, MatTabsModule } from '@angular/material';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatTabsModule } from '@angular/material/tabs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RewardsModule, RewardsService } from '@perxtech/core';
 import { of } from 'rxjs';

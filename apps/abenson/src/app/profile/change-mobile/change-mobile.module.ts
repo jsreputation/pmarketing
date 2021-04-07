@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { ChangeMobileRoutingModule } from './change-mobile-routing.module';
 import { ChangeMobileComponent } from './change-mobile.component';
-import { MatInputModule, MatButtonModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({

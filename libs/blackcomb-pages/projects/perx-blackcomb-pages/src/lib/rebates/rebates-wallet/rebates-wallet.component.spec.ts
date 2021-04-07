@@ -14,10 +14,8 @@ import {
   UtilsModule,
   PointsToCashPipe,
 } from '@perxtech/core';
-import {
-  MatCardModule,
-  MatDialogModule
-} from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
 import { TranslateModule } from '@ngx-translate/core';
 import { RebatesWalletComponent } from './rebates-wallet.component';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';

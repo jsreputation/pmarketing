@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MiniRankComponent } from './mini-rank.component';
-import { MatDividerModule } from '@angular/material';
+import { MatDividerModule } from '@angular/material/divider';
 import { TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
 

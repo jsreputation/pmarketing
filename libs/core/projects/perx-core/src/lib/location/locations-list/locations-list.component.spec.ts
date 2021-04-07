@@ -1,7 +1,8 @@
 import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 
 import { LocationsListComponent } from './locations-list.component';
-import { MatListModule, MatDividerModule } from '@angular/material';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
 
 describe('LocationsListComponent', () => {
   let component: LocationsListComponent;

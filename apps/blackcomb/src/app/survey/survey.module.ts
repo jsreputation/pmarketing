@@ -8,15 +8,13 @@ import {
   AuthenticationModule,
 } from '@perxtech/core';
 
-import {
-  MatCardModule,
-  MatButtonModule,
-  MatProgressBarModule,
-  MatDatepickerModule,
-  MatRadioModule,
-  MatToolbarModule,
-  MatCheckboxModule
-} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import {
   SurveyComponent,
   PerxBlackcombPagesModule } from '@perxtech/blackcomb-pages';

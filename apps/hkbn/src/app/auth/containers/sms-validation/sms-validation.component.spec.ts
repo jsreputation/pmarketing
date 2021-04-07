@@ -8,7 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { Type } from '@angular/core';
 import { DataTransferService } from '../../../services/data-transfer.service';
-import { MatIconModule } from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
 
 describe('SmsValidationComponent', () => {
   let component: SmsValidationComponent;

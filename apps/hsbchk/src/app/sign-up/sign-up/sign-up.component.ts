@@ -9,7 +9,7 @@ import {
   ThemesService
 } from '@perxtech/core';
 import { ISignUpComponent } from './i-sign-up.component';
-import {MatDialog} from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-sign-up',

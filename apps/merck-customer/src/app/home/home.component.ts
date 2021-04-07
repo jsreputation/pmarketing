@@ -32,7 +32,7 @@ import {
   tap
 } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
-import { MatTabChangeEvent } from '@angular/material';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 import { DatePipe } from '@angular/common';
 
 @Component({

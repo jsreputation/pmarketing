@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { FeedItem, ITheme } from '@perxtech/core';
-import { MAT_DIALOG_DATA } from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-popup',

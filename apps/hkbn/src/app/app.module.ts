@@ -10,11 +10,9 @@ import {
   HttpClient,
   HttpClientModule,
 } from '@angular/common/http';
-import {
-  MatButtonModule,
-  MatDialogModule,
-  MatTabsModule,
-} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';

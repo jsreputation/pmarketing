@@ -20,10 +20,8 @@ import {
   RewardPopupComponent
 } from '@perxtech/core';
 import { NoRenewaleInNamePipe } from '../no-renewale-in-name.pipe';
-import {
-  MatDialog,
-  MatToolbar
-} from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatToolbar } from '@angular/material/toolbar';
 import {
   catchError,
   map,

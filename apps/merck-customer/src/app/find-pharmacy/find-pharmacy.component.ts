@@ -5,7 +5,8 @@ import {
   OnDestroy,
   ViewChild,
 } from '@angular/core';
-import { MatDialog, MatTabChangeEvent } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 import {
   Observable,

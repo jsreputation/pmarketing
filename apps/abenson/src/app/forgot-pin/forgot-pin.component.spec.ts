@@ -7,10 +7,8 @@ import {
   FormsModule,
   ReactiveFormsModule
 } from '@angular/forms';
-import {
-  MatFormFieldModule,
-  MatInputModule
-} from '@angular/material';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { Type } from '@angular/core';
 import { Router, ActivatedRoute, Data, Params } from '@angular/router';
 import { ForgotPinComponent } from './forgot-pin.component';
@@ -18,7 +16,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Observable, of } from 'rxjs';
 import { AuthenticationService, UtilsModule, ConfigService, LoyaltyService, ILoyalty, ThemesService } from '@perxtech/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { MatProgressSpinnerModule } from '@angular/material';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 class ActivatedRouteMock implements Partial<ActivatedRoute> {
   public get queryParams(): Observable<Params> {

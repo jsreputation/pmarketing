@@ -11,11 +11,9 @@ import {
 } from '@perxtech/core';
 
 import { of } from 'rxjs';
-import {
-  MatRadioModule,
-  MatCheckboxModule,
-  MatSelectModule,
-} from '@angular/material';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NoopAnimationsModule, BrowserAnimationsModule } from '@angular/platform-browser/animations';

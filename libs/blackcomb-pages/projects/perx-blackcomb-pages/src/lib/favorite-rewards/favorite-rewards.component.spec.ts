@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FavoriteRewardsComponent } from './favorite-rewards.component';
 import { RewardsListComponent, TokenStorage, UtilsModule, ThemesService, RewardsService } from '@perxtech/core';
-import { MatCardModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';

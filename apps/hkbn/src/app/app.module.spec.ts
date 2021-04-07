@@ -1,6 +1,7 @@
 import { async, TestBed, inject } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { MatDialogModule, MatSnackBarModule } from '@angular/material';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ApplicationInitStatus, APP_INITIALIZER } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { setLanguage } from './app.module';

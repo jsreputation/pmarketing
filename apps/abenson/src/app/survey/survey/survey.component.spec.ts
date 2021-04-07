@@ -2,7 +2,9 @@ import { SurveyModule as PerxSurveyModule, ICampaignService, ISurvey, SurveyServ
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SurveyComponent } from './survey.component';
-import { MatCardModule, MatButtonModule, MatProgressBarModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 

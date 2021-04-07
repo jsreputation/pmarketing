@@ -34,7 +34,9 @@ import { AccountComponent } from './account.component';
 import { profile } from '../mock/profile.mock';
 import { pagesObject } from '../mock/pages.mock';
 
-import { MatCardModule, MatIconModule, MatListModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 
 describe('AccountComponent', () => {
   const notificationServiceStub: Partial<NotificationService> = {};

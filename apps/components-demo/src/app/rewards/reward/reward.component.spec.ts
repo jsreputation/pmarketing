@@ -4,7 +4,7 @@ import { RewardComponent } from './reward.component';
 import {
   RewardsModule, RewardsService, IReward, ThemesService, TokenStorage
 } from '@perxtech/core';
-import { MatButtonModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
 import { of } from 'rxjs';
 
 describe('RewardComponent', () => {

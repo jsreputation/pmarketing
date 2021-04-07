@@ -1,15 +1,11 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { ConditionComponent } from './condition.component';
-import {
-  MatIconModule,
-  MatToolbarModule,
-  MatSlideToggleModule,
-  MatListModule,
-  MatRadioModule,
-  MatSlideToggle,
-  MatRadioButton
-} from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatRadioModule, MatRadioButton } from '@angular/material/radio';
+import { MatSlideToggleModule, MatSlideToggle } from '@angular/material/slide-toggle';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { Location } from '@angular/common';
 import { ProfileService, IProfile } from '@perxtech/core';
 import { of } from 'rxjs';

@@ -3,7 +3,7 @@ import {
   ComponentFixture,
   TestBed,
 } from '@angular/core/testing';
-import { MatCardModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
 import { of } from 'rxjs';
 import { RewardsListComponent } from './rewards-list.component';
 import { UtilsModule } from '../../utils/utils.module';

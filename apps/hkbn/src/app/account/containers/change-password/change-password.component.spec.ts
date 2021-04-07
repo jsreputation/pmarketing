@@ -3,7 +3,9 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { ChangePasswordComponent } from './change-password.component';
 import { ChangePasswordFormComponent } from '../../components/change-password-form/change-password-form.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthenticationService, ProfileService } from '@perxtech/core';

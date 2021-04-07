@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatTabsModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTabsModule } from '@angular/material/tabs';
 import { LoyaltyTransactionsListComponent } from './loyalty-transactions-list.component';
 import { LoyaltyModule as PerxLoyaltyModule, LoyaltyService } from '@perxtech/core';
 import { of } from 'rxjs';

@@ -28,7 +28,7 @@ import {
   iif
 } from 'rxjs';
 import { take, mergeMap, filter, tap, finalize } from 'rxjs/operators';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { FilterDialogComponent } from './filter-dialog/filter-dialog.component';
 
 export interface IData {

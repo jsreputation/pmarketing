@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LeaderboardAboutComponent } from './leaderboard-about.component';
-import { MatDividerModule } from '@angular/material';
+import { MatDividerModule } from '@angular/material/divider';
 import { TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { LoyaltyService, RewardsService, SafeHtmlPipe } from '@perxtech/core';

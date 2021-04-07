@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { QuizPictureSelectComponent } from './picture-select.component';
-import { MatCheckboxModule, MatRadioModule } from '@angular/material';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
 
 describe('PictureSelectComponent', () => {
   let component: QuizPictureSelectComponent;

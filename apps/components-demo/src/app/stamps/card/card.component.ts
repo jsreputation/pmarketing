@@ -3,10 +3,8 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import {
-  MatSlider,
-  MatCheckboxChange,
-} from '@angular/material';
+import { MatCheckboxChange } from '@angular/material/checkbox';
+import { MatSlider } from '@angular/material/slider';
 
 import { combineLatest } from 'rxjs';
 import { startWith } from 'rxjs/operators';

@@ -61,10 +61,8 @@ import {
   IQuestService
 } from '@perxtech/core';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  MatDialog,
-  MatTabChangeEvent
-} from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 import {
   CurrencyPipe,
   DatePipe

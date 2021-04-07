@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { HomeComponent } from './containers/home/home.component';
 import { LoyaltyModule } from '@perxtech/core';
 import { QRCodeModule } from 'angularx-qrcode';
-import { MatButtonModule, MatIconModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import {
   RewardsModule,
   VouchersModule

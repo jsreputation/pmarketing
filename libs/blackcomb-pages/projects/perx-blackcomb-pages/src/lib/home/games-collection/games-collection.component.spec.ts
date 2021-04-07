@@ -6,7 +6,7 @@ import {
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { GamesCollectionComponent } from './games-collection.component';
-import { MatCardModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   ConfigService,

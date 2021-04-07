@@ -1,5 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatButtonModule, MatCardModule, MatDialogModule, MatDialog } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { NewsfeedComponent } from './newsfeed.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { SettingsService } from '../../settings/settings.service';

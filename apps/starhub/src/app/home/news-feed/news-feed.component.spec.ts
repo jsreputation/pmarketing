@@ -1,7 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NewsFeedComponent } from './news-feed.component';
-import { MatCardModule, MatButtonModule, MatDialogModule, MatDialog } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import {
   SettingsService,
   FeedReaderService,

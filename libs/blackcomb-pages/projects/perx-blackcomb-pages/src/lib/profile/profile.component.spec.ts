@@ -16,10 +16,8 @@ import {
   Observable,
   of
 } from 'rxjs';
-import {
-  MatIconModule,
-  MatListModule
-} from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DatePipe } from '@angular/common';
 import { MatCheckboxModule } from '@angular/material/checkbox';

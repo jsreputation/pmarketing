@@ -2,7 +2,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { Component, OnInit } from '@angular/core';
 import { PageAppearence, PageProperties, BarSelectedItem } from '../../page-properties';
 import { ProfileService, IProfile, NotificationService } from '@perxtech/core';
-import { MatRadioChange, MatSlideToggleChange } from '@angular/material';
+import { MatRadioChange } from '@angular/material/radio';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'mc-condition',

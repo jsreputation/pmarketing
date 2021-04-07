@@ -2,11 +2,9 @@ import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { AuthenticationService, ConfigService, TokenStorage } from '@perxtech/core';
-import {
-  MatSnackBarModule,
-  MatIconModule,
-  MatToolbarModule
-} from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
 import { Router } from '@angular/router';

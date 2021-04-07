@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
-import { MatBottomSheetRef } from '@angular/material';
-import { MAT_BOTTOM_SHEET_DATA } from '@angular/material';
+import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
 import { SortingMode } from '../category.model';
 
 export interface SortBottomSheetClosedCallBack {

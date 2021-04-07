@@ -6,11 +6,9 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AuthenticationService, ProfileService, ConfigService } from '@perxtech/core';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
-import {
-  MatSelectModule,
-  MatFormFieldModule,
-  MatInputModule
-} from '@angular/material';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Type } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';

@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { MicroProfileComponent } from './micro-profile/micro-profile.component';
 import { ProfileSummaryComponent } from './profile-summary/profile-summary.component';
-import {MatCardModule, MatIconModule} from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   imports: [

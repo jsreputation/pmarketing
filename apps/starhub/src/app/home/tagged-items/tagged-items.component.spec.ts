@@ -13,7 +13,9 @@ import { of } from 'rxjs';
 import { game } from '../../game.mock';
 import { rewards } from '../../rewards.mock';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { MatCardModule, MatIconModule, MatRippleModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatRippleModule } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { GhostCardComponent } from '../../ghosts/card-ghost.component';
 

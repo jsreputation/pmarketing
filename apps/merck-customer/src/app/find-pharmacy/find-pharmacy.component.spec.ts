@@ -9,10 +9,8 @@ import {
   fakeAsync,
   tick,
 } from '@angular/core/testing';
-import {
-  MatTabsModule,
-  MatDialogModule,
-} from '@angular/material';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import {
   Observable,

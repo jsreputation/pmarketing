@@ -3,12 +3,10 @@ import {
   ComponentFixture,
   TestBed,
 } from '@angular/core/testing';
-import {
-  MatCardModule,
-  MatIconModule,
-  MatDialogModule,
-  MatRippleModule,
-} from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatRippleModule } from '@angular/material/core';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { Type } from '@angular/core';
 import { ScrollingModule } from '@angular/cdk/scrolling';

@@ -14,7 +14,7 @@ import {
   ActivatedRoute,
   Params
 } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ReferralPopupComponent } from './referral-popup/referral-popup.component';
 
 @Component({

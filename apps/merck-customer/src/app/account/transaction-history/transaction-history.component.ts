@@ -8,7 +8,7 @@ import {
   IPurchaseTransactionHistory
 } from '@perxtech/core';
 import { DatePipe } from '@angular/common';
-import { MatTabChangeEvent } from '@angular/material';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 import { TranslateService } from '@ngx-translate/core';
 import { map } from 'rxjs/operators';
 

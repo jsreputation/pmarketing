@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FeedItem, FeedReaderService } from '@perxtech/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { PopupComponent } from '../popup/popup.component';
 import { Observable } from 'rxjs';
 

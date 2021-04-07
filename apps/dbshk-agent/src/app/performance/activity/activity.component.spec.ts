@@ -1,7 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ActivityComponent } from './activity.component';
-import { MatFormFieldModule, MatSelectModule, MatListModule } from '@angular/material';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatListModule } from '@angular/material/list';
+import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ConfigService, ICampaignService } from '@perxtech/core';
 import { of } from 'rxjs';

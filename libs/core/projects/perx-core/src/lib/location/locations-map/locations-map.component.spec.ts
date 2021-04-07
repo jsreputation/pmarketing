@@ -1,7 +1,8 @@
 import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 
 import { LocationsMapComponent } from './locations-map.component';
-import { MatCardModule, MatIconModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 import { Subject, of } from 'rxjs';
 import { GeoLocationService } from '../geolocation.service';
 import { Type } from '@angular/core';

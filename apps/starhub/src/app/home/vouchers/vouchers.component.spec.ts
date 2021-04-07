@@ -7,7 +7,8 @@ import {
 } from '@angular/core/testing';
 
 import { VouchersComponent } from './vouchers.component';
-import { MatCardModule, MatIconModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 import { RouterTestingModule } from '@angular/router/testing';
 import { IVoucherService } from '@perxtech/core';
 import { of } from 'rxjs';

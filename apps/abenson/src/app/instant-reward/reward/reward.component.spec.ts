@@ -3,10 +3,7 @@ import {
   ComponentFixture,
   TestBed,
 } from '@angular/core/testing';
-import {
-  MatDialogModule,
-  MatDialogRef,
-} from '@angular/material';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { of } from 'rxjs';

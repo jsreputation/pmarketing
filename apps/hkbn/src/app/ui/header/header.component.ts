@@ -3,7 +3,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { filter, map, mapTo, startWith, switchMap, takeUntil } from 'rxjs/operators';
 import { AuthenticationService, IProfile, ProfileService } from '@perxtech/core';
-import { MatSidenavContainer } from '@angular/material';
+import { MatSidenavContainer } from '@angular/material/sidenav';
 import { Location } from '@angular/common';
 
 @Component({

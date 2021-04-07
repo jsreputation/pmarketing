@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, of, forkJoin } from 'rxjs';
 import { Voucher, IVoucherService, StatusLabelMapping } from '@perxtech/core';
 import { Router } from '@angular/router';
-import { MatTabChangeEvent } from '@angular/material';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 const REQ_PAGE_SIZE: number = 10;
 @Component({

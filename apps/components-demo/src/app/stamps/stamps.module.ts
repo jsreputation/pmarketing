@@ -5,7 +5,10 @@ import { StampsRoutingModule } from './stamps-routing.module';
 import { CardComponent } from './card/card.component';
 import { StampsComponent } from './stamps/stamps.component';
 import { PuzzlesModule, RewardsModule, CampaignModule, StampModule } from '@perxtech/core';
-import { MatSliderModule, MatCheckboxModule, MatTabsModule, MatIconModule } from '@angular/material';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [CardComponent, StampsComponent, StampsListComponent],

@@ -7,7 +7,7 @@ import {
   TemplateRef,
   ViewContainerRef
 } from '@angular/core';
-import { MatFormField } from '@angular/material';
+import { MatFormField } from '@angular/material/form-field';
 import { NgControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';

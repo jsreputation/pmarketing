@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { VoucherComponent } from './voucher.component';
 import { VouchersModule, CampaignModule, IVoucherService, Voucher, VoucherState, ConfigService, RedemptionType } from '@perxtech/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MatProgressBarModule } from '@angular/material';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { TranslateModule } from '@ngx-translate/core';

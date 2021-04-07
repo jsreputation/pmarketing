@@ -7,12 +7,10 @@ import {
 import {
   MiniRankComponent
 } from './mini-rank/mini-rank.component';
-import {
-  MatCardModule,
-  MatDividerModule,
-  MatRippleModule,
-  MatTableModule
-} from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatRippleModule } from '@angular/material/core';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { V4RankService } from './v4-rank.service';

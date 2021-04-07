@@ -2,7 +2,8 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 
 import { LanguageComponent } from './language.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { MatListModule, MatCardModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
+import { MatListModule } from '@angular/material/list';
 import { of } from 'rxjs';
 
 describe('LanguageComponent', () => {

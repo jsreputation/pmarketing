@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, ViewEncapsulation, OnInit } from '@angular
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IProfile, ProfileService, NotificationService } from '@perxtech/core';
-import { MatSlideToggleChange } from '@angular/material';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { DataTransferService } from '../../../services/data-transfer.service';
 
 @Component({

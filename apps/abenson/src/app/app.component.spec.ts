@@ -7,14 +7,10 @@ import {
 } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import {
-  MatDialogModule,
-  MatToolbarModule,
-  MatIconModule,
-  MatSnackBarModule,
-  MatDialog,
-  MatSnackBar,
-} from '@angular/material';
+import { MatDialogModule, MatDialog } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import {
   NotificationService,
   AuthenticationService,

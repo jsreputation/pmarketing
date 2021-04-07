@@ -5,7 +5,8 @@ import { LoyaltyRoutingModule } from './loyalty-routing.module';
 import { LoyaltyComponent } from './loyalty.component';
 import { LoyaltySummaryComponent } from './loyalty-summary/loyalty-summary.component';
 import { LoyaltyTransactionsListComponent } from './loyalty-transactions-list/loyalty-transactions-list.component';
-import { MatTabsModule, MatButtonModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTabsModule } from '@angular/material/tabs';
 import {
   AuthenticationModule,
   ProfileModule,

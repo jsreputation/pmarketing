@@ -10,7 +10,9 @@ import { TranslateModule } from '@ngx-translate/core';
 import { OverviewComponent } from './overview/overview.component';
 import { ActivityComponent } from './activity/activity.component';
 import { LoyaltyModule, UtilsModule } from '@perxtech/core';
-import { MatFormFieldModule, MatListModule, MatSelectModule } from '@angular/material';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatListModule } from '@angular/material/list';
+import { MatSelectModule } from '@angular/material/select';
 import { HttpClientModule } from '@angular/common/http';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 

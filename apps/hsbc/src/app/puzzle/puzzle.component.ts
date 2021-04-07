@@ -40,7 +40,7 @@ import {
 } from '@perxtech/core';
 
 import { SoundService } from '../sound/sound.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 export interface IRewardPopupConfig extends IPopupConfig {
   afterClosedCallBackRedirect?: PopUpClosedCallBack;

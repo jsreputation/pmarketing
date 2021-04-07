@@ -16,11 +16,9 @@ import {
   HTTP_INTERCEPTORS,
   HttpBackend,
 } from '@angular/common/http';
-import {
-  MatDialogModule,
-  MatInputModule,
-  MatSnackBarModule
-} from '@angular/material';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
 // import { ServiceWorkerModule } from '@angular/service-worker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';

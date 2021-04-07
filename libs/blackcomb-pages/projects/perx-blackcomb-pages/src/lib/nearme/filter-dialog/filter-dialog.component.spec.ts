@@ -1,14 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FilterDialogComponent } from './filter-dialog.component';
-import {
-  MatDialogModule,
-  MatIconModule,
-  MatToolbarModule,
-  MatCheckboxModule,
-  MAT_DIALOG_DATA,
-  MatDialogRef
-} from '@angular/material';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { TranslateModule } from '@ngx-translate/core';
 

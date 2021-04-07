@@ -10,7 +10,7 @@ import {
   combineLatest,
   of
 } from 'rxjs';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import {
   IProfile,
   LoyaltyService,

@@ -9,7 +9,8 @@ import { TransactionPipe } from './loyalty-transactions-list/transaction.pipe';
 import { Config } from '../config/config';
 import { HttpClient } from '@angular/common/http';
 import { WhistlerLoyaltyService } from './whistler-loyalty.service';
-import {MatProgressBarModule, MatProgressSpinnerModule} from '@angular/material';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ConfigService } from '../config/config.service';
 import { CashbackTransactionPipe } from './loyalty-transactions-list/cashback-transaction.pipe';
 

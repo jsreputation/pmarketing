@@ -1,7 +1,8 @@
 import { TranslateService } from '@ngx-translate/core';
 import { Component, OnInit } from '@angular/core';
 import { NotificationService, PopupComponent } from '@perxtech/core';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackbarComponent } from './ui/snackbar/snackbar.component';
 import { Router } from '@angular/router';
 
