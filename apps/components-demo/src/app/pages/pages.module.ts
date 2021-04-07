@@ -44,7 +44,7 @@ import { MatButtonModule } from '@angular/material/button';
     AccountComponent,
     GameComponent,
     ShakeComponent,
-    TapComponent,
+    // TapComponent,
     HistoryComponent,
     ContentComponent,
     HomeComponent,
