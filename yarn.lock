@@ -388,13 +388,6 @@
     universal-analytics "0.4.20"
     uuid "7.0.2"
 
-"@angular/common@>= 8.0.0 < 9.0.0":
-  version "8.2.14"
-  resolved "https://registry.yarnpkg.com/@angular/common/-/common-8.2.14.tgz#027e52b2951c14082d6e3af1a4ffa1356220e439"
-  integrity sha512-Qmt+aX2quUW54kaNT7QH7WGXnFxr/cC2C6sf5SW5SdkZfDQSiz8IaItvieZfXVQUbBOQKFRJ7TlSkt0jI/yjvw==
-  dependencies:
-    tslib "^1.9.0"
-
 "@angular/common@~9.1.13":
   version "9.1.13"
   resolved "https://registry.yarnpkg.com/@angular/common/-/common-9.1.13.tgz#5201212a6964d0596c89c45806d792bc2a1f4bf3"
@@ -3755,14 +3748,12 @@ angular2-text-mask@^9.0.0:
   dependencies:
     text-mask-core "^5.0.0"
 
-angularx-qrcode@~2.1.4:
-  version "2.1.4"
-  resolved "https://registry.npmjs.org/angularx-qrcode/-/angularx-qrcode-2.1.4.tgz#2aa1d44dac27409ea73aab134df720b90895a739"
-  integrity sha512-Szun1RVl5l/S87y+hFl3qSTn1Xafi8QsP4brIa1OluU2TwXwRvC3bb7WWIFT9+KKfFxA3AqYjYbB2MjNEHDQzA==
+angularx-qrcode@~2.3.5:
+  version "2.3.5"
+  resolved "https://registry.yarnpkg.com/angularx-qrcode/-/angularx-qrcode-2.3.5.tgz#7fe30773d08642d9360f65510d5585dcec8ff6f1"
+  integrity sha512-peuuYwZG+a1spZ8XrkgNvfepJYVe32LDf965KnJsLMeAC0YZLw8ryYXFs3BQw3hwKoQcbGEXfDbF4AAF/9Cp0A==
   dependencies:
-    "@angular/common" ">= 8.0.0 < 9.0.0"
     qrcode "1.4.2"
-    tslib "^1.9.0"
 
 ansi-align@^3.0.0:
   version "3.0.0"

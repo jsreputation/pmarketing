@@ -245,7 +245,7 @@
     "@sentry/node": "5.10.2",
     "@zxing/ngx-scanner": "^2.0.0",
     "angular2-text-mask": "^9.0.0",
-    "angularx-qrcode": "~2.1.4",
+    "angularx-qrcode": "~2.3.5",
     "axios": "^0.21.1",
     "cache-manager": "^2.10.0",
     "colors": "~1.0.3",
