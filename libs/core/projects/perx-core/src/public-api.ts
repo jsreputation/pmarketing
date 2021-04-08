@@ -85,7 +85,7 @@ export { RewardPopupComponent } from './lib/campaign/reward-popup/reward-popup.c
  * Quests
  */
 export { QuestModule } from './lib/quest/quest.service.module';
-export { IQuest , IQuestTask, QuestState } from './lib/quest/quest.model';
+export { IQuest, IQuestTask, QuestState } from './lib/quest/quest.model';
 export { IQuestService } from './lib/quest/quest.service';
 /**
  * Stamps
@@ -326,6 +326,7 @@ export { LeaderboardComponent } from './lib/rank/leaderboard/leaderboard.compone
 export { IRankService } from './lib/rank/irank.service';
 export { LeaderBoard, UserRanking } from './lib/rank/models/rank.model';
 export { LeaderboardListComponent } from './lib/rank/leaderboard-list/leaderboard-list.component';
+export { rankServiceFactory } from './lib/rank/rank.module';
 /**
  * Rebates
  */
