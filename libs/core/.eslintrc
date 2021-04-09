@@ -1,13 +1,9 @@
 {
-  "extends": [
-    "../../.eslintrc"
-  ],
+  "extends": ["../../.eslintrc"],
   "rules": {},
   "overrides": [
     {
-      "files": [
-        "**/*.ts?(x)"
-      ],
+      "files": ["**/*.ts?(x)"],
       "excludedFiles": [
         "**/*.service.spec.ts",
         "**/*.service.ts",
@@ -22,5 +18,6 @@
         ]
       }
     }
-  ]
+  ],
+  "ignorePatterns": ["!**/*"]
 }

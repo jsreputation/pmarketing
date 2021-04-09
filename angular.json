@@ -109,7 +109,6 @@
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "config": "apps/dbshk-agent/.eslintrc",
             "files": ["apps/dbshk-agent/src/**/*.ts"]
           }
         }
@@ -245,7 +244,6 @@
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "config": "apps/philipssg/.eslintrc",
             "files": ["apps/philipssg/src/**/*.ts"]
           }
         }
@@ -371,7 +369,6 @@
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "config": "apps/starhub/.eslintrc",
             "files": ["apps/starhub/src/**/*.ts"]
           }
         }
@@ -478,7 +475,6 @@
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "config": "apps/prudential/.eslintrc",
             "files": ["apps/prudential/src/**/*.ts"]
           }
         }
@@ -583,7 +579,6 @@
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "config": "apps/oracle-pay/.eslintrc",
             "files": ["apps/oracle-pay/src/**/*.ts"]
           }
         }
@@ -688,7 +683,6 @@
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "config": "apps/merck-merchant/.eslintrc",
             "files": ["apps/merck-merchant/src/**/*.ts"]
           }
         }
@@ -813,7 +807,6 @@
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "config": "apps/merck-customer/.eslintrc",
             "files": ["apps/merck-customer/src/**/*.ts"]
           }
         }
@@ -958,7 +951,6 @@
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "config": "apps/hsbchk/.eslintrc",
             "files": ["apps/hsbchk/src/**/*.ts"]
           }
         }
@@ -1066,7 +1058,6 @@
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "config": "apps/hsbc-rewards/.eslintrc",
             "files": ["apps/hsbc-rewards/src/**/*.ts"]
           }
         }
@@ -1171,7 +1162,6 @@
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "config": "apps/hsbc/.eslintrc",
             "files": ["apps/hsbc/src/**/*.ts"]
           }
         }
@@ -1276,7 +1266,6 @@
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "config": "apps/hkbn/.eslintrc",
             "files": ["apps/hkbn/src/**/*.ts"]
           }
         }
@@ -1382,7 +1371,6 @@
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "config": "apps/components-demo/.eslintrc",
             "files": ["apps/components-demo/src/**/*.ts"]
           }
         }
@@ -1487,7 +1475,6 @@
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "config": "apps/bpi/.eslintrc",
             "files": ["apps/bpi/src/**/*.ts"]
           }
         }
@@ -1600,7 +1587,6 @@
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "config": "apps/blackcomb/.eslintrc",
             "files": ["apps/blackcomb/src/**/*.ts"]
           }
         }
@@ -1844,7 +1830,6 @@
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "config": "apps/all-it/.eslintrc",
             "files": ["apps/all-it/src/**/*.ts"]
           }
         }
@@ -1961,7 +1946,6 @@
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "config": "apps/abenson/.eslintrc",
             "files": ["apps/abenson/src/**/*.ts"]
           }
         }
@@ -1986,7 +1970,6 @@
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "config": "libs/whistler/.eslintrc",
             "files": ["libs/whistler/projects/**/*.ts"]
           }
         }
@@ -2012,7 +1995,6 @@
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "config": "libs/core/.eslintrc",
             "files": ["libs/core/projects/**/*.ts"]
           }
         }
@@ -2038,7 +2020,6 @@
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "config": "libs/blackcomb-pages/.eslintrc",
             "files": ["libs/blackcomb-pages/projects/**/*.ts"]
           }
         }
@@ -2060,7 +2041,8 @@
               "backend/appauth-server/assets",
               "backend/appauth-server/config.json"
             ],
-            "externalDependencies": "none"
+            "externalDependencies": "none",
+            "buildLibsFromSource": true
           },
           "configurations": {
             "production": {

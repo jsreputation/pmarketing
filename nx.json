@@ -2,9 +2,9 @@
   "npmScope": "perxtech",
   "tasksRunnerOptions": {
     "default": {
-      "runner": "@nrwl/workspace/src/tasks-runner/tasks-runner-v2",
+      "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "test", "lint"]
+        "cacheableOperations": ["build", "test", "lint", "e2e"]
       }
     }
   },
