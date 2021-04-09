@@ -102,7 +102,7 @@ export class HomeComponent implements OnInit, PageAppearence {
   }
 
   public myQrClicked(): void {
-    this.router.navigateByUrl('redeem');
+    this.router.navigateByUrl('qr');
   }
 
   public rewardClicked(reward: IReward): void {
