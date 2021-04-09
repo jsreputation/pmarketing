@@ -126,9 +126,9 @@
         "HOW_TO_REDEEM": "如何兌換",
         "CODE": "代碼"
     },
-    "QR": {
-        "QR_TO_MERCHANT": "請提供二維碼給藥房職員以完成您的交易",
-        "CTA": "取消"
+    "REDEEM": {
+        "PRESENT_QR": "請提供二維碼給藥房職員以完成您的交易",
+        "CANCEL": "取消"
     },
     "ACCOUNT": {
         "PROFILE": "個人資料",
@@ -153,6 +153,10 @@
     "TRANSACTION_HISTORY": {
         "POINT_EARNED": "獲得積分{points}",
         "POINT_SPENT": "使用積分{points}"
+    },
+    "QR": {
+        "QR_TO_MERCHANT": "請提供二維碼給藥房職員以完成您的交易",
+        "CTA": "取消"
     },
     "Hong Kong Island": "香港島",
     "New Territories": "新界",

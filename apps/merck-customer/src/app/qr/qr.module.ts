@@ -2,13 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { QRComponent, QRModule as BCPQRModule } from '@perxtech/blackcomb-pages';
 
-const routes: Routes = [
-  {
+const routes: Routes = [{
     path: '',
-    component: QRComponent
-  },
-  {
-    path: ':rewardId',
     component: QRComponent
   }];
 
@@ -18,4 +13,4 @@ const routes: Routes = [
     RouterModule.forChild(routes),
   ]
 })
-export class RedeemModule { }
+export class QRModule { }

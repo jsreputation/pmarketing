@@ -125,9 +125,9 @@
     "HOW_TO_REDEEM": "How to redeem",
     "CODE": "Code"
   },
-  "QR": {
-    "QR_TO_MERCHANT": "Present this QR code to the cashier to complete your transaction",
-    "CTA": "Cancel"
+  "REDEEM": {
+    "PRESENT_QR": "Present this QR code to the cashier to complete your transaction",
+    "CANCEL": "Cancel"
   },
   "ACCOUNT": {
     "PROFILE": "Profile",
@@ -152,6 +152,10 @@
   "TRANSACTION_HISTORY": {
     "POINT_EARNED": "{points} Points earned",
     "POINT_SPENT": "{points} Points spent"
+  },
+  "QR": {
+    "QR_TO_MERCHANT": "Present this QR code to the cashier to complete your transaction",
+    "CTA": "Cancel"
   },
   "Hong Kong Island": "Hong Kong Island",
   "New Territories": "New Territories",

@@ -1,0 +1,9 @@
+<div class="main-container">
+	<div class="top-section" *ngIf="rewardDetails">
+		<qrcode [qrdata]="rewardDetails" [width]="150"></qrcode>
+		<h4 translate>REDEEM.PRESENT_QR</h4>
+	</div>
+	<button mat-stroked-button color="primary" class="redeem-btn" (click)="onCancel()">
+		{{'REDEEM.CANCEL' | translate }}
+	</button>
+</div>
