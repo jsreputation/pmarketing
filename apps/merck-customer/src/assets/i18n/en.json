@@ -125,9 +125,9 @@
     "HOW_TO_REDEEM": "How to redeem",
     "CODE": "Code"
   },
-  "REDEEM": {
-    "PRESENT_QR": "Present this QR code to the cashier to complete your transaction",
-    "CANCEL": "Cancel"
+  "QR": {
+    "QR_TO_MERCHANT": "Present this QR code to the cashier to complete your transaction",
+    "CTA": "Cancel"
   },
   "ACCOUNT": {
     "PROFILE": "Profile",

@@ -57,7 +57,6 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { CustomSnackbarComponent } from './custom-snackbar/custom-snackbar.component';
 import { RewardDetailComponent } from './reward-detail/reward-detail.component';
 import { QRCodeModule } from 'angularx-qrcode';
-import { RedeemComponent } from './redeem/redeem.component';
 import { AccountComponent } from './account/account.component';
 import { ProfileComponent } from './account/profile/profile.component';
 import { TransactionHistoryComponent } from './account/transaction-history/transaction-history.component';
@@ -104,7 +103,6 @@ export const setLanguage = (
     ResetPasswordComponent,
     CustomSnackbarComponent,
     RewardDetailComponent,
-    RedeemComponent,
     AccountComponent,
     ProfileComponent,
     TransactionHistoryComponent,

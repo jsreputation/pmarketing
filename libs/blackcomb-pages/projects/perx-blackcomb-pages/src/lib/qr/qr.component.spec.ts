@@ -87,7 +87,7 @@ describe('QrComponent', () => {
     tick();
     expect(profileSpy).toHaveBeenCalled();
     expect(component.rewardId).toBe(1);
-    expect(component.rewardDetails).toBe('{"id":1,"name":"Doe"}');
+    expect(component.rewardDetails).toBe('{"id":1,"name":"Doe","rewardId":1}');
   }));
 
   it('should go back onCancel', () => {

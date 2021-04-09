@@ -45,12 +45,22 @@ export class QRComponent implements OnInit {
 
     this.profileService.whoAmI().subscribe(
       (profile) => {
-        this.rewardDetails = JSON.stringify(
-          {
-            id: profile.id,
-            name: profile.lastName,
-            identifier: profile.identifier
-          });
+        if (this.rewardId) {
+          this.rewardDetails = JSON.stringify(
+            {
+              id: profile.id,
+              name: profile.lastName,
+              identifier: profile.identifier,
+              rewardId: this.rewardId
+            });
+        } else {
+          this.rewardDetails = JSON.stringify(
+            {
+              id: profile.id,
+              name: profile.lastName,
+              identifier: profile.identifier
+            });
+        }
       }
     );
   }

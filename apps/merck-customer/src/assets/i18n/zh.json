@@ -126,9 +126,9 @@
         "HOW_TO_REDEEM": "如何兌換",
         "CODE": "代碼"
     },
-    "REDEEM": {
-        "PRESENT_QR": "請提供二維碼給藥房職員以完成您的交易",
-        "CANCEL": "取消"
+    "QR": {
+        "QR_TO_MERCHANT": "請提供二維碼給藥房職員以完成您的交易",
+        "CTA": "取消"
     },
     "ACCOUNT": {
         "PROFILE": "個人資料",
