@@ -260,7 +260,7 @@
     "ng-mat-select-infinite-scroll": "^2.1.1",
     "ngx-auth": "^5.0.0",
     "ngx-cacheable": "^1.4.1",
-    "ngx-currency": "2.0.0",
+    "ngx-currency": "2.5.1",
     "ngx-drag-scroll": "^9.0.0-beta.4",
     "ngx-infinite-scroll": "^8.0.1",
     "ngx-pinch-zoom": "^2.4.4",

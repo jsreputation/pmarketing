@@ -9336,10 +9336,12 @@ ngx-cacheable@^1.4.1:
   resolved "https://registry.yarnpkg.com/ngx-cacheable/-/ngx-cacheable-1.4.3.tgz#5f63e6c24511e78c43f01890bf488af1ec6a1d21"
   integrity sha512-Vxe1t/I+d3TKg7XcO64Q7fSEhp8P86rCEI0i/8yKbDel91P9P/XiiJTRrNHo+v19z2DH+hbooB5C7hHRPBIpyQ==
 
-ngx-currency@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/ngx-currency/-/ngx-currency-2.0.0.tgz#8b6de97f65caa934562e272487049d0864ee1d65"
-  integrity sha512-B5oZLrkSgnGGQ271TT4MoNvsDb3ATMDKPKHuDKNKvfqA9QQXVXl7HCWjQ/0WOep/alh6mpJYJI8xQkCk6TCP5g==
+ngx-currency@2.5.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/ngx-currency/-/ngx-currency-2.5.1.tgz#0d24e13e03557ba1b0012e2bd103f4c3cedd0714"
+  integrity sha512-gvVpDeAk5qfRxenUrDwEWHTU81qmsV4rKMqk+1SbJJcJzPkYV/fza0GoyE/0Gszw0Un3dMT+4KEUP2QI5Nbdog==
+  dependencies:
+    tslib "^2.0.0"
 
 ngx-drag-scroll@^9.0.0-beta.4:
   version "9.0.0-beta.4"
