@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ConfigModule, PuzzlesModule, StampModule, UtilsModule } from '@perxtech/core';
+import { ConfigModule, ConfigService, IRankService, PuzzlesModule, rankServiceFactory, StampModule, UtilsModule } from '@perxtech/core';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { CampaignStampsComponent } from './campaign-stamps.component';
 
@@ -20,6 +21,13 @@ import { CampaignStampsComponent } from './campaign-stamps.component';
   ],
   exports: [
     CampaignStampsComponent
+  ],
+  providers: [
+    {
+      provide: IRankService,
+      useFactory: rankServiceFactory,
+      deps: [HttpClient, ConfigService]
+    }
   ]
 })
 export class CampaignStampsModule { }

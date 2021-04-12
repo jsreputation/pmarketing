@@ -37,3 +37,11 @@ body {
 .ghost {
   background: #EDEDED;
 }
+
+mat-tab-group {
+  mat-tab-header {
+    .mat-tab-label-container {
+      z-index: unset; // https://bugs.webkit.org/s1how_bug.cgi?id=160953
+    }
+  }
+}
