@@ -84,7 +84,7 @@ export class SignupComponent implements PageAppearence {
   private initForm(): void {
     this.signupForm = this.fb.group({
       name: ['', Validators.required],
-      mobileNo: ['', Validators.required],
+      mobileNo: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],
       accept_terms: [false, Validators.required],
