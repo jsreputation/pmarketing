@@ -109,7 +109,17 @@ export class AppComponent implements OnInit {
 
   public onActivate(ref: any): void {
     const activeComponent = ref as PageAppearence;
-    this.pageProperties = activeComponent.getPageProperties();
+
+    if ( typeof activeComponent.getPageProperties === 'function') {
+      this.pageProperties = activeComponent.getPageProperties();
+    } else {
+        this.pageProperties = {
+          header: true,
+          backButtonEnabled: true,
+          bottomSelectedItem: BarSelectedItem.NONE,
+          pageTitle: ''
+        };
+    }
     this.leftIconToShow = this.pageProperties.backButtonEnabled ? 'arrow_back_ios' : '';
   }
 
@@ -121,3 +131,4 @@ export class AppComponent implements OnInit {
     this.router.navigate([path]);
   }
 }
+

@@ -154,6 +154,10 @@
         "POINT_EARNED": "獲得積分{points}",
         "POINT_SPENT": "使用積分{points}"
     },
+    "QR": {
+        "QR_TO_MERCHANT": "請提供二維碼給藥房職員以完成您的交易",
+        "CTA": "取消"
+    },
     "Hong Kong Island": "香港島",
     "New Territories": "新界",
     "Kowloon": "九龍區",
