@@ -66,6 +66,7 @@
         "MOBILE_NO": "手機號碼",
         "MOBILE": "手機號碼",
         "MOBILE_NO_IS": "請輸入手機號碼",
+        "MOBILE_NO_INVALID": "請輸入有效手機號碼",
         "PASSWORD": "密碼",
         "PASSWORD_IS": "請輸入密碼",
         "PASSWORD_SIX_CHARS": "密碼至少含6個字符",

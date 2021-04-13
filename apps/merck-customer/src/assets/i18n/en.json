@@ -66,6 +66,7 @@
     "REQUIRED": "required",
     "MOBILE_NO": "Mobile No.",
     "MOBILE_NO_IS": "Mobile No. is required",
+    "MOBILE_NO_INVALID": "Please enter a valid mobile number",
     "PASSWORD": "Password",
     "PASSWORD_IS": "Password is required",
     "PASSWORD_SIX_CHARS": "Password should be at least 6 characters",
