@@ -27,6 +27,8 @@ export class ErrorMessageService {
         - 'User is not a enrolled loyalty member'
         - 'User does not have enough points balance'
         - 'Merchant location is not a part of the reward'
+    Unprocessable Error - 41
+        - 'User was not invited'
     UserMembershipExpired - 53
         - 'Points cannot be issued or deducted as user membership has expired'
     AccessForbidden - 44
@@ -74,6 +76,8 @@ export class ErrorMessageService {
                   errorKey = 'ERRORS.NOT_ENOUGH_POINTS';
                 }
                 break;
+            case 41:
+                console.log(errMessage);
             default:
                 // Sorry, something went wrong
                 errorKey = 'ERRORS.GENERIC';
