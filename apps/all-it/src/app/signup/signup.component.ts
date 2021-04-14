@@ -93,10 +93,8 @@ export class SignupComponent implements OnInit {
 
   private initForm(): void {
     this.signupForm = this.fb.group({
-      title: ['', Validators.required],
       name: ['', Validators.required],
       dob: ['', Validators.required],
-      gender: ['', Validators.required],
       // postcode: ['', Validators.required],
       countryCode: ['60', Validators.required],
       mobileNo: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
@@ -137,8 +135,6 @@ export class SignupComponent implements OnInit {
 
     const emailValue = this.signupForm.value.email;
 
-    const titleString = this.signupForm.value.title;
-    const genderString = this.signupForm.value.gender;
     // const postcodeString = this.signupForm.value.postcode;
     const referralCode = this.signupForm.value.referralCode;
 
@@ -149,8 +145,6 @@ export class SignupComponent implements OnInit {
       password: passwordString,
       passwordConfirmation: confirmPassword,
       email: emailValue,
-      title: titleString,
-      gender: genderString,
       // postcode: postcodeString
     };
 

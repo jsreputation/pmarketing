@@ -8,15 +8,6 @@
               </div>
             <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
                 <mat-form-field appearance="fill" class="full-width__input">
-                    <mat-label>Title</mat-label>
-                    <mat-select placeholder="Title" formControlName="title">
-                        <mat-option value="Mr">Mr</mat-option>
-                        <mat-option value="Ms">Ms</mat-option>
-                        <mat-option value="Mrs">Mrs</mat-option>
-                        <mat-option value="Dr">Dr</mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field appearance="fill" class="full-width__input">
                     <mat-label>Full Name (as per IC)</mat-label>
                     <input matInput placeholder="Name" formControlName="name" required>
                     <mat-error *ngIf="signupForm.get('name').hasError('required')">
@@ -35,16 +26,6 @@
                     </mat-error>
                     <mat-error *ngIf="signupForm.get('dob').hasError('matDatepickerParse')">
                       <span>Incorrect date format, use DD/MM/YYYY</span>
-                    </mat-error>
-                </mat-form-field>
-                <mat-form-field appearance="fill" class="full-width__input">
-                    <mat-label>Gender</mat-label>
-                    <mat-select placeholder="Gender" formControlName="gender">
-                        <mat-option value="Male">Male</mat-option>
-                        <mat-option value="Female">Female</mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="signupForm.get('gender').hasError('required')">
-                        <span>Gender is </span><strong>REQUIRED</strong>
                     </mat-error>
                 </mat-form-field>
 <!--                <mat-form-field appearance="fill" class="full-width__input">-->
