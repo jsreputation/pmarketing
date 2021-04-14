@@ -17,6 +17,8 @@ export type LeaderBoard = {
   id: number;
   metric: string;
   title: string;
+  name: string;
+  description: string;
   endDate: Date;
   podiums: Podium[];
   termsAndConditions: string;

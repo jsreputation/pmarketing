@@ -79,7 +79,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private currentTabIndex: number = 0;
   private destroy$: Subject<void> = new Subject();
   public theme: ITheme;
-  public appConfig: IConfig<void>;
+  public appConfig: IConfig<any>;
   public appRemoteFlags: IFlags;
   public newsFeedItems: Observable<FeedItem[] | undefined>;
   public rewards$: Observable<IReward[]>;

@@ -7,7 +7,7 @@
     <perx-core-loyalty-summary [showLoyaltyProgress]="appConfig.showLoyaltyProgress" class="loyalty-item"
       [subTitleFn]="subTitleFn" [titleFn]="titleFn" [summaryExpiringFn]="summaryExpiringFn" [pointToFn]="pointToFn"
       [memberFn]="memberFn" [membershipExpiryFn]="membershipExpiryFn"
-      [hideAdditionalLoyaltyInfo]="!appConfig.showExtraLoyaltyOnHomePage" (showRwdsList)="showRwdsList($event)">
+      [hideAdditionalLoyaltyInfo]="!appConfig.showExtraLoyaltyOnHomePage">
     </perx-core-loyalty-summary>
     <div class="loyalty-item loyalty-item-qr" *ngIf="appConfig.showUserQR">
       <a mat-raised-button class="enlarge home-qr-button" routerLink="/qr" translate
