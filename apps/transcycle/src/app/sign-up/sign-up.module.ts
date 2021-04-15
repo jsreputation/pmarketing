@@ -20,6 +20,7 @@ import {
 } from '@perxtech/core';
 import { MatButtonModule } from '@angular/material/button';
 import {
+  MatDatepickerModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
@@ -27,6 +28,17 @@ import {
   MatSelectModule,
   MatSnackBarModule
 } from '@angular/material';
+import {
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+  MAT_MOMENT_DATE_FORMATS,
+  MatMomentDateModule,
+  MomentDateAdapter
+} from '@angular/material-moment-adapter';
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE
+} from '@angular/material/core';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: SignUpComponent },
@@ -58,6 +70,19 @@ const routes: Routes = [
     MatSelectModule,
     MatProgressSpinnerModule,
     MatIconModule,
+    MatMomentDateModule,
+    MatDatepickerModule
+  ],
+  providers: [
+    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+    {
+      provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+      useValue: {
+        useUtc: true,
+        strict: true
+      }
+    }
   ]
 })
 export class SignUpModule { }
