@@ -111,6 +111,10 @@
     "start:starhub:staging": "env-cmd -f apps/starhub/env/starhub.staging.dev ts-node --project tsconfig.node.json apps/starhub/set-env.ts && yarn nx serve starhub --",
     "build:techfis:production": "env-cmd -f apps/blackcomb/env/techfis.production ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx build blackcomb -- --prod",
     "start:techfis:production": "env-cmd -f apps/blackcomb/env/techfis.production.dev ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx serve blackcomb --",
+    "build:transcycle:production": "env-cmd -f apps/transcycle/env/transcycle.production ts-node --project tsconfig.node.json apps/transcycle/set-env.ts && yarn nx build transcycle -- --prod",
+    "build:transcycle:staging": "env-cmd -f apps/transcycle/env/transcycle.staging ts-node --project tsconfig.node.json apps/transcycle/set-env.ts && yarn nx build transcycle -- --prod",
+    "start:transcycle:production": "env-cmd -f apps/transcycle/env/transcycle.production.dev ts-node --project tsconfig.node.json apps/transcycle/set-env.ts && yarn nx serve transcycle --",
+    "start:transcycle:staging": "env-cmd -f apps/transcycle/env/transcycle.staging.dev ts-node --project tsconfig.node.json apps/transcycle/set-env.ts && yarn nx serve transcycle --",
     "build:zeal:production": "env-cmd -f apps/blackcomb/env/zeal.production ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx build blackcomb -- --prod",
     "build:zeal:staging": "env-cmd -f apps/blackcomb/env/zeal.staging ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx build blackcomb -- --prod",
     "start:zeal:staging": "env-cmd -f apps/blackcomb/env/zeal.staging.dev ts-node --project tsconfig.node.json apps/blackcomb/set-env.ts && yarn nx serve blackcomb --",
@@ -145,6 +149,7 @@
     "test:blackcomb-pages": "nx test blackcomb-pages",
     "test:core": "nx test core",
     "test:whistler": "nx test whistler",
+    "test:transcycle": "nx test transcycle",
     "lint": "eslint --ext js,jsx src",
     "prettier": "prettier --write src/**/*.{ts,js,css,html}"
   },

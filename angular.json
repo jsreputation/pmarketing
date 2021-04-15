@@ -1545,6 +1545,116 @@
         }
       }
     },
+    "transcycle": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/transcycle",
+      "sourceRoot": "apps/transcycle/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/transcycle",
+            "index": "apps/transcycle/src/index.html",
+            "main": "apps/transcycle/src/main.ts",
+            "polyfills": "apps/transcycle/src/polyfills.ts",
+            "tsConfig": "apps/transcycle/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "apps/transcycle/src/favicon.ico",
+              "apps/transcycle/src/assets",
+              "apps/transcycle/src/static",
+              "apps/transcycle/src/manifest.webmanifest",
+              "apps/transcycle/src/robots.txt"
+            ],
+            "styles": [
+              "apps/transcycle/src/styles.scss",
+              "apps/transcycle/../../node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "index": {
+                "input": "apps/transcycle/src/index.prod.html",
+                "output": "index.html"
+              },
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ],
+              "serviceWorker": true,
+              "ngswConfigPath": "apps/transcycle/ngsw-config.json"
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "transcycle:build",
+            "port": 4201
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "transcycle:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "transcycle:build"
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "apps/transcycle/e2e/protractor.conf.js",
+            "devServerTarget": "transcycle:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "transcycle:serve:production"
+            }
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/transcycle/jest.config.json",
+            "tsConfig": "apps/transcycle/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "apps/transcycle/src/setup-jest.ts",
+            "codeCoverage": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "linter": "eslint",
+            "config": "apps/transcycle/.eslintrc",
+            "files": ["apps/transcycle/src/**/*.ts"]
+          }
+        }
+      }
+    },
     "all-it": {
       "projectType": "application",
       "schematics": {
