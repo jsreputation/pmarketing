@@ -6,5 +6,5 @@ SHOW_REFERRAL_DETAILS=false
 CONTACTUSURL=https://cdn.perxtech.net/content/all-it/contact-us.html
 TNCURL=https://cdn.perxtech.net/content/all-it/tnc.html
 PRODUCTION=true
-SHOW_QUIZ_ON_HOMEPAGE=false
+SHOW_QUIZ_ON_HOMEPAGE=true
 SHOW_CAMPAIGN_LANDING_PAGE=false
