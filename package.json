@@ -149,6 +149,7 @@
     "test:blackcomb-pages": "nx test blackcomb-pages",
     "test:core": "nx test core",
     "test:whistler": "nx test whistler",
+    "test:transcycle": "nx test transcycle",
     "lint": "eslint --ext js,jsx src",
     "prettier": "prettier --write src/**/*.{ts,js,css,html}"
   },
