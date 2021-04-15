@@ -93,7 +93,7 @@ export class SignUpComponent implements OnInit {
 
   private initForm(): void {
     this.signupForm = this.fb.group({
-      firstName: ['', Validators.required],
+      // firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       countryCode: ['', Validators.required],
       primary_identifier: ['', Validators.required],
