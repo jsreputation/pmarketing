@@ -120,7 +120,7 @@ export class SignupComponent implements OnInit {
 
   public onSubmit(): void {
     if (!this.appAccessTokenFetched) {
-      this.errorMessage = 'Unknown error occurerd.';
+      this.errorMessage = 'Unknown error occurred.';
       return;
     }
 
