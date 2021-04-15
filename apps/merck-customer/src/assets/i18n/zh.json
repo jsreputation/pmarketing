@@ -100,6 +100,7 @@
         "NEW_PASSWORD": "新密碼",
         "PASSWORD": "密碼",
         "PASSWORD_IS": "請輸入密碼",
+        "PASSWORD_SIX_CHARS": "密碼至少含6個字符",
         "CONFIRM_PASSWORD": "確認密碼",
         "CONFIRM_PASSWORD_IS": "請輸入確認密碼",
         "SERVER_NOT_AVAILABLE": "無法連接服務器",
