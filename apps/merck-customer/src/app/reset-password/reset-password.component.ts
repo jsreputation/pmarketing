@@ -51,7 +51,7 @@ export class ResetPasswordComponent implements OnInit, PageAppearence {
   private initForm(): void {
 
     this.resetPasswordForm = this.fb.group({
-      password: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],
     });
   }

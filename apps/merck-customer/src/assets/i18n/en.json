@@ -99,6 +99,7 @@
     "NEW_PASSWORD": "New password",
     "PASSWORD": "Password",
     "PASSWORD_IS": "Password is required",
+    "PASSWORD_SIX_CHARS": "Password should be at least 6 characters",
     "CONFIRM_PASSWORD": "Confirm password",
     "CONFIRM_PASSWORD_IS": "Confirm Password is required",
     "SERVER_NOT_AVAILABLE": "We could not reach the server",
