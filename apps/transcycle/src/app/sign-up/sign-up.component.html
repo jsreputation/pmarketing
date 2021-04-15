@@ -76,7 +76,7 @@
 
       <mat-form-field appearance="standard" class="full-width__input">
         <mat-label translate>SIGN_UP_PAGE.PASSWORD_FIELD</mat-label>
-        <input matInput 
+        <input matInput
           formControlName="password"
           [type]="passwordHide ? 'password' : 'text'"
           autocomplete="off"
@@ -103,9 +103,12 @@
           <span>Passwords must match</span>
         </mat-error>
       </mat-form-field>
-      <mat-form-field appearance="standard" class="full-width__input" *ngIf="appConfig.showReferralDetails">
-        <mat-label translate>SIGN_UP_PAGE.REFERRAL_FIELD</mat-label>
-        <input matInput formControlName="referralCode">
+      <mat-form-field appearance="standard" class="full-width__input">
+        <mat-label translate>SIGN_UP_PAGE.ENGINE_NUMBER</mat-label>
+        <input matInput formControlName="engineNumber">
+        <mat-error *ngIf="signupForm?.get('engineNumber')!.hasError('required')">
+          <span>Engine number is <strong>required</strong></span>
+        </mat-error>
       </mat-form-field>
     </form>
     <button

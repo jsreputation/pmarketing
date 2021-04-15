@@ -101,7 +101,7 @@ export class SignUpComponent implements OnInit {
       primary_identifier: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],
-      referralCode: [''],
+      engineNumber: ['', Validators.required],
     }, {validator: this.matchingPasswords('password', 'confirmPassword')});
   }
 
