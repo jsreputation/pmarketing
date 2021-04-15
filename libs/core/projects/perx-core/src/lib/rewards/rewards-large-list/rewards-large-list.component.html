@@ -3,62 +3,57 @@
   <ng-template #thenBlock>
     <div class="reward-content">
       <ng-container *ngIf="rewards$ | async as rewards">
-      <div *ngIf="rewards.length > 0; then hasRewardsBlock else noRewardsBlock"></div>
-      <ng-template #hasRewardsBlock>
-        <mat-card matRipple class="ga_view_reward"
-          *ngFor="let reward of rewards" (click)="rewardClickedHandler(reward)">
-          <div class="reward-img__wrapper">
-            <img class="ga_view_reward thumbnail-img"*ngIf="reward.rewardThumbnail || defaultImg"
-                 [class.no-image]="!reward.rewardThumbnail"
-                 [src]="reward.rewardThumbnail || defaultImg"
-                 [alt]="reward.name" />
-            <div *ngIf="!reward.rewardThumbnail && !defaultImg">
-              <svg width="455" height="250" viewBox="0 0 375 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0 0H375V200H0V0Z" fill="#4E4E4E" />
-                <path
-                  d="M190.4 90.1401L184.5 98.0001L189 104C189.66 104.88 189.48 106.14 188.6 106.8C187.72 107.46 186.46 107.3 185.8 106.4C183.7 103.6 181.18 100.26 179.6 98.1201C178.8 97.0601 177.2 97.0601 176.4 98.1201L168.4 108.78C167.42 110.12 168.36 112 170 112H206C207.64 112 208.58 110.12 207.6 108.8L193.6 90.1401C192.8 89.0601 191.2 89.0601 190.4 90.1401Z"
-                  fill="white" />
-              </svg>
-            </div>
-          </div>
-          <div class="reward-preview-details">
-            <mat-card-content class="top-content">
-              <h1 class="main-reward-title ellipsis-1-line">{{reward.name}} {{reward?.subtitle && '(' + reward?.subtitle + ')'}}</h1>
-              <!-- todo: progress bar goes here -->
-            </mat-card-content>
-            <mat-card-content class="bottom-content">
-              <div class="spacer"></div>
-              <perx-progress-bar
-                [accurateProg]="true"
-                [stages]="reward?.progress?.stages"
-                [current]="reward?.progress?.current"
-                [stageLabels]="reward?.progress?.stageLabels"
-                [actualProcessedProg]="reward?.progress?.lightStage"
-                [showProgressLabels]="false"></perx-progress-bar>
-              <div class="counter" *ngIf="reward?.progress?.stageLabels?.length">
-                <div>
-                  {{ useRewardDescription ?
-                  (reward?.customFields?.requirementDescription | getStartNear) : (reward.progress.stageLabels[reward.progress.stageLabels.length - 1]  | progressRequire: rewardMode)}}
-                </div>
-<!--                <div>-->
-<!--                  {{reward?.progress.current}}/{{reward.progress.stageLabels[reward.progress.stageLabels.length - 1]}} {{rewardType}}-->
-<!--                </div>-->
+        <div *ngIf="rewards.length > 0; then hasRewardsBlock else noRewardsBlock"></div>
+        <ng-template #hasRewardsBlock>
+          <mat-card matRipple class="ga_view_reward" *ngFor="let reward of rewards"
+            (click)="rewardClickedHandler(reward)">
+            <div class="reward-img__wrapper">
+              <img class="ga_view_reward thumbnail-img" *ngIf="reward.rewardThumbnail || defaultImg"
+                [class.no-image]="!reward.rewardThumbnail" [src]="reward.rewardThumbnail || defaultImg"
+                [alt]="reward.name" />
+              <div *ngIf="!reward.rewardThumbnail && !defaultImg">
+                <svg width="455" height="250" viewBox="0 0 375 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M0 0H375V200H0V0Z" fill="#4E4E4E" />
+                  <path
+                    d="M190.4 90.1401L184.5 98.0001L189 104C189.66 104.88 189.48 106.14 188.6 106.8C187.72 107.46 186.46 107.3 185.8 106.4C183.7 103.6 181.18 100.26 179.6 98.1201C178.8 97.0601 177.2 97.0601 176.4 98.1201L168.4 108.78C167.42 110.12 168.36 112 170 112H206C207.64 112 208.58 110.12 207.6 108.8L193.6 90.1401C192.8 89.0601 191.2 89.0601 190.4 90.1401Z"
+                    fill="white" />
+                </svg>
               </div>
-            </mat-card-content>
-          </div>
-        </mat-card>
-      </ng-template>
-      <ng-template #noRewardsBlock>
-        <div class="reward-content">
-          <div class="no-rewards">
-            <h3>No rewards</h3>
-            <div class="img-container">
-              <img src="assets/empty_list.svg" />
+            </div>
+            <div class="reward-preview-details">
+              <mat-card-content class="top-content">
+                <h1 class="main-reward-title ellipsis-1-line">{{reward.name}} {{reward?.subtitle && '(' +
+                  reward?.subtitle + ')'}}</h1>
+                <!-- todo: progress bar goes here -->
+              </mat-card-content>
+              <mat-card-content class="bottom-content">
+                <div class="spacer"></div>
+                <perx-progress-bar [accurateProg]="true" [stages]="reward?.progress?.stages"
+                  [current]="reward?.progress?.current" [stageLabels]="reward?.progress?.stageLabels"
+                  [actualProcessedProg]="reward?.progress?.lightStage" [showProgressLabels]="false"></perx-progress-bar>
+                <div class="counter" *ngIf="reward?.progress?.stageLabels?.length">
+                  <div>
+                    {{ useRewardDescription ?
+                    (reward?.customFields?.requirementDescription | getStartNear) :
+                    (reward.progress.stageLabels[reward.progress.stageLabels.length - 1] | progressRequire:
+                    rewardMode)}}
+                  </div>
+                </div>
+              </mat-card-content>
+            </div>
+          </mat-card>
+        </ng-template>
+        <ng-template #noRewardsBlock>
+          <div class="reward-content">
+            <div class="no-rewards">
+              <h3>No rewards</h3>
+              <div class="img-container">
+                <img src="assets/empty_list.svg" />
+              </div>
             </div>
           </div>
-        </div>
-      </ng-template>
-    </ng-container>
+        </ng-template>
+      </ng-container>
     </div>
   </ng-template>
   <ng-template #elseBlock>

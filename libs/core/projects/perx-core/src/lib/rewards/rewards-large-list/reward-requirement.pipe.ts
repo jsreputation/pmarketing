@@ -6,7 +6,7 @@ import { CampaignRewardMode } from './rewards-large-list.component';
   pure: true
 })
 export class ProgressRequirePipe implements PipeTransform {
-  public transform(value: number, rewardMode: string): any {
+  public transform(value: number, rewardMode: string | undefined): any {
     switch (rewardMode) {
       case CampaignRewardMode.TransactionQuantity:
         return `${value} transaction${value > 1 ? 's' : ''}`;

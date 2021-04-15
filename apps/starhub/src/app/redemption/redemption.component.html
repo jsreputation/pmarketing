@@ -1,7 +1,7 @@
 <div class="main" *ngIf="voucher">
   <div class="contents">
     <div class="app-header">
-      <img [src]="voucher.reward.rewardBanner" class="banner">
+      <img [src]="voucher.reward?.rewardBanner" class="banner">
     </div>
     <div class="redeem-block">
       <div [ngClass]="(voucher.redemptionType === 'txtCode' && !voucher.code)?'inner no-code':'inner'">

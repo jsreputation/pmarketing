@@ -135,9 +135,9 @@ export class HomeComponent implements OnInit {
     return dataLayerSH;
   }
 
-  public getBadge(tier: string | null): string {
+  public getBadge(tier: string | undefined): string {
     tier =
-      tier !== null ? this.noRenewalePipe.transform(tier.toLowerCase()) : null;
+      tier ? this.noRenewalePipe.transform(tier.toLowerCase()) : undefined;
 
     switch (tier) {
       case 'gold':
