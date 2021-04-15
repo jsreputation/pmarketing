@@ -1,13 +1,22 @@
 import { TranslateService } from '@ngx-translate/core';
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { AuthenticationService, NotificationService } from '@perxtech/core';
-import { PageAppearence, PageProperties, BarSelectedItem } from '../page-properties';
-
-export enum PinMode {
-  password = 'password',
-  register = 'register'
-}
+import {
+  Component,
+  OnInit
+} from '@angular/core';
+import {
+  ActivatedRoute,
+  Router
+} from '@angular/router';
+import {
+  AuthenticationService,
+  NotificationService,
+  PinMode
+} from '@perxtech/core';
+import {
+  BarSelectedItem,
+  PageAppearence,
+  PageProperties
+} from '../page-properties';
 
 @Component({
   selector: 'mc-enter-pin',

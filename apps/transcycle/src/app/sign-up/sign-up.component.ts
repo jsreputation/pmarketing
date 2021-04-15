@@ -16,6 +16,7 @@ import {
   ISurvey,
   ITheme,
   NotificationService,
+  PinMode,
   SurveyService,
   ThemesService,
 } from '@perxtech/core';
@@ -43,7 +44,6 @@ import {
 } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { Location } from '@angular/common';
-import { PinMode } from '../enter-pin/enter-pin.component';
 import {
   FormBuilder,
   FormGroup,

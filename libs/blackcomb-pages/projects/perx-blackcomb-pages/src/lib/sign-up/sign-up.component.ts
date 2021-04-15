@@ -1,37 +1,54 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router
+} from '@angular/router';
 import {
   AuthenticationService,
+  ConfigService,
+  GeneralStaticDataService,
+  IAnswer,
+  IConfig,
+  ICountryCode,
   IGameService,
   InstantOutcomeService,
-  NotificationService,
   IPrePlayStateData,
   ISurvey,
-  IAnswer,
+  ITheme,
+  NotificationService,
+  PinMode,
   SurveyService,
   ThemesService,
-  ITheme,
-  ConfigService,
-  IConfig,
-  GeneralStaticDataService,
-  ICountryCode,
 } from '@perxtech/core';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, Subject, iif, of, throwError } from 'rxjs';
+import {
+  Component,
+  OnDestroy,
+  OnInit
+} from '@angular/core';
+import {
+  iif,
+  Observable,
+  of,
+  Subject,
+  throwError
+} from 'rxjs';
 import {
   catchError,
-  tap,
-  switchMap,
-  retryWhen,
   delay,
-  mergeMap,
   map,
+  mergeMap,
+  retryWhen,
+  switchMap,
   takeUntil,
+  tap,
 } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 import { Location } from '@angular/common';
-import { PinMode } from '../enter-pin/enter-pin.component';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators
+} from '@angular/forms';
 
 interface ISignupAttributes {
   [key: string]: any;
