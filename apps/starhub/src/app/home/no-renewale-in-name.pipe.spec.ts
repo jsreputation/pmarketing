@@ -8,7 +8,7 @@ describe('Pipe: Default', () => {
   });
 
   it('should return null on pipe transfor', () => {
-    const name = pipe.transform(null);
+    const name = pipe.transform(undefined);
     expect(name).toBe('');
   });
 

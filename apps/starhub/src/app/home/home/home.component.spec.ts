@@ -143,7 +143,7 @@ describe('HomeComponent', () => {
 
   describe('getBadge', () => {
     it('should return assets/green-badge.png when null parameter has been passed', () => {
-      const badge = component.getBadge(null);
+      const badge = component.getBadge(undefined);
       expect(badge).toBe(component.uxcr ? 'assets/green-icon.svg' : 'assets/green-icon_old.svg');
     });
 
