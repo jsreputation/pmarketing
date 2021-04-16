@@ -1,21 +1,30 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  TestBed
+} from '@angular/core/testing';
 
-import { EnterPinComponent, PinMode } from './enter-pin.component';
+import { EnterPinComponent } from './enter-pin.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  UtilsModule,
-  ProfileService,
   AuthenticationService,
+  ITheme,
   NotificationService,
+  PinMode,
+  ProfileService,
   ThemesService,
-  ITheme
+  UtilsModule
 } from '@perxtech/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { Type } from '@angular/core';
 import { MatToolbarModule } from '@angular/material';
-import { Router, ActivatedRoute, convertToParamMap } from '@angular/router';
+import {
+  ActivatedRoute,
+  convertToParamMap,
+  Router
+} from '@angular/router';
 
 const mockTheme: ITheme = {
   name: 'theme',
