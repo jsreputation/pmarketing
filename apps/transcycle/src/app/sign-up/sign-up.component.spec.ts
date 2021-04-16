@@ -72,20 +72,9 @@ const surveyServiceStub: Partial<SurveyService> = {
 };
 
 const authServiceStub: Partial<AuthenticationService> = {
-  getUserId: () => 1,
-  autoLogin: () => of(),
-  mergeUserById: () => of(void 0),
-  getPI: () => '',
-  getUserAccessToken: () => '',
-  getAnonymous: () => true,
   logout: () => { },
   getAppToken: () => of({} as IWAppAccessTokenResponse),
   getAppAccessToken: () => 'token',
-  createUserAndAutoLogin: () => of(),
-  saveUserId: () => void 0,
-  saveUserAccessToken: () => void 0,
-  savePI: () => void 0,
-  saveAnonymous: () => void 0,
   signup: () => of()
 };
 const themeServiceStub: Partial<ThemesService> = {
