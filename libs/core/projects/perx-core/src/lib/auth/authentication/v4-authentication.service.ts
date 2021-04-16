@@ -1,7 +1,18 @@
 import { AuthService } from 'ngx-auth';
 import { Injectable } from '@angular/core';
-import { catchError, map, mergeMap, switchMap, tap } from 'rxjs/operators';
-import { iif, Observable, of, throwError } from 'rxjs';
+import {
+  catchError,
+  map,
+  mergeMap,
+  switchMap,
+  tap
+} from 'rxjs/operators';
+import {
+  iif,
+  Observable,
+  of,
+  throwError
+} from 'rxjs';
 import {
   HttpBackend,
   HttpClient,
@@ -18,7 +29,10 @@ import {
   IResetPasswordData,
   ISignUpData,
 } from '../authentication/models/authentication.model';
-import { IWAppAccessTokenResponse, IWLoginResponse } from '@perxtech/whistler';
+import {
+  IWAppAccessTokenResponse,
+  IWLoginResponse
+} from '@perxtech/whistler';
 import { ProfileService } from '../../profile/profile.service';
 import {
   IV4ProfileResponse,
@@ -324,6 +338,11 @@ export class V4AuthenticationService
       phone: data.phone,
       ...conditionalIdentifier,
     };
+
+    // if explicitly passed in add the identifier without relying on conditions
+    if (data.identifier) {
+      result.identifier = data.identifier;
+    }
 
     if (data.email) {
       result.email = data.email;

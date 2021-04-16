@@ -1,33 +1,34 @@
 import { TranslateService } from '@ngx-translate/core';
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import {
-  ProfileService,
-  IProfile,
-  IChangePasswordData,
+  ActivatedRoute,
+  ParamMap,
+  Router
+} from '@angular/router';
+import {
   AuthenticationService,
-  NotificationService,
-  PopUpClosedCallBack,
-  ThemesService,
-  ITheme,
   GeneralStaticDataService,
+  IChangePasswordData,
   ICountryCode,
-  IPopupConfig
+  IPopupConfig,
+  IProfile,
+  ITheme,
+  NotificationService,
+  PinMode,
+  PopUpClosedCallBack,
+  ProfileService,
+  ThemesService
 } from '@perxtech/core';
 import {
   concatAll,
   filter,
   map,
-  tap} from 'rxjs/operators';
+  tap
+} from 'rxjs/operators';
 import {
   Observable,
   of
 } from 'rxjs';
-
-export enum PinMode {
-  password = 'password',
-  register = 'register'
-}
 
 @Component({
   selector: 'perx-blackcomb-pages-enter-pin',

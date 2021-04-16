@@ -1,0 +1,149 @@
+.content-container {
+  padding: 4rem 0;
+  // @include loginContentContainer
+  width: 100%;
+  height: 100%;
+  background-color: var(--login_background_colour);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  // @include multiLineFormFieldError
+  ::ng-deep .mat-form-field {
+    .mat-form-field-wrapper {
+      padding-bottom: 0;
+
+      .mat-form-field-underline {
+        position: initial !important;
+        display: block;
+        margin-top: -1px;
+      }
+
+      .mat-form-field-subscript-wrapper,
+      .mat-form-field-ripple {
+        position: initial !important;
+        display: table;
+      }
+
+      .mat-form-field-subscript-wrapper {
+        min-height: calc(1em + 1px);
+      }
+    }
+  }
+
+  ::ng-deep {
+    &[appearance="standard"],
+    &[appearance="legacy"] {
+      .mat-form-field-flex {
+        border-radius: 0 !important;
+        padding: 0.75em 0.75em 0 0.75em !important;
+        background-color: rgba(33, 33, 33, 0.03)!important;
+      }
+
+      .mat-form-field-flex > div {
+        padding-bottom: 0.75em;
+        top: -0.5em;
+
+        span.prefix-spacer {
+          width: 0.3em;
+          display: inline-block;
+        }
+      }
+    }
+  }
+}
+
+.sign-up {
+  // @include loginCard;
+  background-color: var(--surface_colour);
+  max-width: 35.4rem;
+  padding: 1.5rem;
+  margin: 1.5rem;
+  font-size: 1.6rem;
+  border-radius: 0.8rem;
+
+  h1 {
+    font-weight: 500;
+    font-size: 3.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .red-text {
+    color: red;
+  }
+
+  .error_msg {
+    padding-bottom: 1rem;
+
+    span {
+      //color: #eb202f;
+      font-size: 1.5rem;
+    }
+  }
+
+  button {
+    width: 100%;
+    box-sizing: border-box;
+    background: var(--button_background_color);
+    &:disabled {
+      opacity: 45%;
+    }
+  }
+
+  form {
+    .full-width__input {
+      width: 100%;
+      margin-top: 0;
+    }
+
+    .mobile-group {
+      display: flex;
+      flex-direction: row;
+
+      .country-code {
+        width: 10rem;
+        margin-right: 1rem;
+
+        .mat-form-field {
+          width: 100%;
+        }
+      }
+
+      .mobile-number {
+        width: 100%;
+
+        .mat-form-field {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .subtitle {
+    // @include form-subtitle;
+    font-weight: normal;
+    font-size: 1.4rem;
+    margin-bottom: 2.4rem;
+
+    .link {
+      color: var(--accent);
+      text-decoration: none;
+    }
+  }
+
+  .loading-spin {
+    display: inline-block;
+    margin: auto;
+  }
+}
+
+.login-image {
+  .logo {
+    width: 100%;
+    max-width: 30rem;
+    max-height: 10rem;
+    height: 100%;
+    object-fit: contain;
+  }
+}

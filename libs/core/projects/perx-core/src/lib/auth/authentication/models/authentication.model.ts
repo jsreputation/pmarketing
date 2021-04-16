@@ -13,6 +13,7 @@ export interface ISignUpData {
   password: string;
   passwordConfirmation: string;
   anonymous?: boolean;
+  identifier?: string;
   customProperties?: ICustomProperties;
 }
 
@@ -33,4 +34,9 @@ export interface IChangePasswordData {
 export interface IChangePhoneData {
   phone: string;
   otp: string;
+}
+
+export enum PinMode {
+  password = 'password',
+  register = 'register'
 }

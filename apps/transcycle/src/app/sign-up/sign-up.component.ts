@@ -36,10 +36,10 @@ import { Moment } from 'moment';
 
 @Component({
   selector: 'app-signup',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss']
+  templateUrl: './sign-up.component.html',
+  styleUrls: ['./sign-up.component.scss'],
 })
-export class SignupComponent implements OnInit {
+export class SignUpComponent implements OnInit {
 
   public signupForm: FormGroup;
   public errorMessage: string | null;
@@ -49,6 +49,9 @@ export class SignupComponent implements OnInit {
   private destroy$: Subject<void> = new Subject();
   public maxDobDate: Date = new Date(); // today
   public appConfig: IConfig<void>;
+  public loadingSubmit: boolean;
+  public confirmPasswordHide: boolean = true;
+  public passwordHide: boolean = true;
 
   constructor(
     private fb: FormBuilder,
@@ -93,32 +96,32 @@ export class SignupComponent implements OnInit {
 
   private initForm(): void {
     this.signupForm = this.fb.group({
-      name: ['', Validators.required],
+      // firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
       dob: ['', Validators.required],
-      // postcode: ['', Validators.required],
-      countryCode: ['60', Validators.required],
+      countryCode: ['', Validators.required],
+      // mobile number
       mobileNo: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
-      email: ['', Validators.email],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],
-      referralCode: [''],
-      accept_terms: [false, Validators.requiredTrue],
-      accept_marketing: [false, Validators.required]
+      engineNumber: ['', Validators.required],
     }, {validator: this.matchingPasswords('password', 'confirmPassword')});
   }
 
   public matchingPasswords(passwordKey: string, passwordConfirmationKey: string): (group: FormGroup) => void {
     return (group: FormGroup) => {
-        const password = group.controls[passwordKey];
-        const passwordConfirmation = group.controls[passwordConfirmationKey];
-        if (password.value !== passwordConfirmation.value) {
-            return passwordConfirmation.setErrors({mismatchedPasswords: true});
-        }
-        passwordConfirmation.setErrors(null);
+      const password = group.controls[passwordKey];
+      const passwordConfirmation = group.controls[passwordConfirmationKey];
+      if (password.value !== passwordConfirmation.value) {
+        return passwordConfirmation.setErrors({mismatchedPasswords: true});
+      }
+      passwordConfirmation.setErrors(null);
     };
   }
 
   public onSubmit(): void {
+    this.loadingSubmit = true;
+
     if (!this.appAccessTokenFetched) {
       this.errorMessage = 'Unknown error occurred.';
       return;
@@ -126,33 +129,27 @@ export class SignupComponent implements OnInit {
 
     const passwordString = this.signupForm.get('password').value;
     const confirmPassword = this.signupForm.get('confirmPassword').value;
-    const name = this.signupForm.value.name;
+    const lastName = this.signupForm.value.lastName;
     const dob = this.signupForm.value.dob as Moment;
     // converting to Number will strip leading 0s
     const mobileNumber: number = Number(this.signupForm.value.mobileNo);
     const countryCode = this.signupForm.value.countryCode;
-    const codeAndMobile = countryCode + mobileNumber;
+    const primaryIdentifier = countryCode + mobileNumber; // identifier for transcycle is also phone
 
-    const emailValue = this.signupForm.value.email;
-
-    // const postcodeString = this.signupForm.value.postcode;
-    const referralCode = this.signupForm.value.referralCode;
+    const engineNumber = this.signupForm.value.engineNumber;
 
     const signUpData: ISignUpData = {
-      lastName: name,
+      lastName,
       birthDay: dob.format(), // convert moment to ISO
-      phone: codeAndMobile,
+      identifier: primaryIdentifier, // identifier for transcycle is also phone
+      phone: primaryIdentifier,
       password: passwordString,
       passwordConfirmation: confirmPassword,
-      email: emailValue,
-      // postcode: postcodeString
+      customProperties : {
+        engine_number: engineNumber
+      }
     };
 
-    if (referralCode.length > 0 && this.appConfig.showReferralDetails) {
-      signUpData.customProperties = {
-        referralCode
-      };
-    }
 
     this.authService.signup(signUpData)
       .subscribe(
@@ -161,10 +158,11 @@ export class SignupComponent implements OnInit {
             return;
           }
 
-          this.router.navigateByUrl('otp/register', { state: { mobileNo: codeAndMobile }, skipLocationChange: true});
+          this.router.navigateByUrl('otp/register', { state: { mobileNo: primaryIdentifier }, skipLocationChange: true});
         },
         err => {
           this.notificationService.addSnack(err.error.message);
+          this.loadingSubmit = false;
         });
   }
 

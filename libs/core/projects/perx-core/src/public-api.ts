@@ -58,7 +58,7 @@ export { BarcodeRedemptionComponent } from './lib/vouchers/barcode-redemption/ba
 export { AuthenticationModule } from './lib/auth/authentication/authentication.module';
 export { AuthenticationService, RequiresOtpError } from './lib/auth/authentication/authentication.service';
 export { TokenStorage } from './lib/utils/storage/token-storage.service';
-export { IChangePasswordData, IChangePhoneData, ISignUpData } from './lib/auth/authentication/models/authentication.model';
+export { IChangePasswordData, IChangePhoneData, ISignUpData, PinMode } from './lib/auth/authentication/models/authentication.model';
 export { IFormsService } from './lib/auth/authentication/iforms.service';
 export { ProtectedGuard } from './lib/auth/authentication/protected.guard';
 
