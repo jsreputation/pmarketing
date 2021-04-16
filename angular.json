@@ -1611,7 +1611,7 @@
             "main": "apps/transcycle/src/main.ts",
             "polyfills": "apps/transcycle/src/polyfills.ts",
             "tsConfig": "apps/transcycle/tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "apps/transcycle/src/favicon.ico",
               "apps/transcycle/src/assets",
@@ -1699,7 +1699,6 @@
           "builder": "@nrwl/linter:lint",
           "options": {
             "linter": "eslint",
-            "config": "apps/transcycle/.eslintrc",
             "files": ["apps/transcycle/src/**/*.ts"]
           }
         }

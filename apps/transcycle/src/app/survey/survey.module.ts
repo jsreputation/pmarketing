@@ -7,16 +7,6 @@ import {
   ConfigModule,
   SurveyModule as PerxSurveyModule,
 } from '@perxtech/core';
-
-import {
-  MatButtonModule,
-  MatCardModule,
-  MatCheckboxModule,
-  MatDatepickerModule,
-  MatProgressBarModule,
-  MatRadioModule,
-  MatToolbarModule
-} from '@angular/material';
 import {
   PerxBlackcombPagesModule,
   SurveyComponent
@@ -25,6 +15,13 @@ import {
   RouterModule,
   Routes
 } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: SurveyComponent },
