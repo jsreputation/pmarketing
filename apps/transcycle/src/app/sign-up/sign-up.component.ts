@@ -49,6 +49,9 @@ export class SignUpComponent implements OnInit {
   private destroy$: Subject<void> = new Subject();
   public maxDobDate: Date = new Date(); // today
   public appConfig: IConfig<void>;
+  public loadingSubmit: boolean;
+  public confirmPasswordHide: boolean = true;
+  public passwordHide: boolean = true;
 
   constructor(
     private fb: FormBuilder,
@@ -117,6 +120,8 @@ export class SignUpComponent implements OnInit {
   }
 
   public onSubmit(): void {
+    this.loadingSubmit = true;
+
     if (!this.appAccessTokenFetched) {
       this.errorMessage = 'Unknown error occurred.';
       return;
@@ -157,6 +162,7 @@ export class SignUpComponent implements OnInit {
         },
         err => {
           this.notificationService.addSnack(err.error.message);
+          this.loadingSubmit = false;
         });
   }
 
