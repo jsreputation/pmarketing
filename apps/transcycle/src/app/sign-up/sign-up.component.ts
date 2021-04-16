@@ -98,7 +98,7 @@ export class SignUpComponent implements OnInit {
       dob: ['', Validators.required],
       countryCode: ['', Validators.required],
       // mobile number
-      primary_identifier: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      mobileNo: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],
       engineNumber: ['', Validators.required],
@@ -124,33 +124,27 @@ export class SignUpComponent implements OnInit {
 
     const passwordString = this.signupForm.get('password').value;
     const confirmPassword = this.signupForm.get('confirmPassword').value;
-    const name = this.signupForm.value.name;
+    const lastName = this.signupForm.value.lastName;
     const dob = this.signupForm.value.dob as Moment;
     // converting to Number will strip leading 0s
     const mobileNumber: number = Number(this.signupForm.value.mobileNo);
     const countryCode = this.signupForm.value.countryCode;
-    const codeAndMobile = countryCode + mobileNumber;
+    const primary_identifier = countryCode + mobileNumber;
 
-    const emailValue = this.signupForm.value.email;
-
-    // const postcodeString = this.signupForm.value.postcode;
-    const referralCode = this.signupForm.value.referralCode;
+    const engineNumber = this.signupForm.value.engineNumber;
 
     const signUpData: ISignUpData = {
-      lastName: name,
+      lastName: lastName,
       birthDay: dob.format(), // convert moment to ISO
-      phone: codeAndMobile,
+      identifier: primary_identifier, // identifier for transcycle is also phone
+      phone: primary_identifier,
       password: passwordString,
       passwordConfirmation: confirmPassword,
-      email: emailValue,
-      // postcode: postcodeString
+      customProperties : {
+        engine_number: engineNumber
+      }
     };
 
-    if (referralCode.length > 0 && this.appConfig.showReferralDetails) {
-      signUpData.customProperties = {
-        referralCode
-      };
-    }
 
     this.authService.signup(signUpData)
       .subscribe(

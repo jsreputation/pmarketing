@@ -13,6 +13,7 @@ export interface ISignUpData {
   password: string;
   passwordConfirmation: string;
   anonymous?: boolean;
+  identifier?: string;
   customProperties?: ICustomProperties;
 }
 

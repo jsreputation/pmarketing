@@ -64,10 +64,10 @@
             <mat-label translate>SIGN_UP_PAGE.MOBILE_FIELD</mat-label>
             <input matInput
               autocomplete="tel-local"
-              formControlName="primary_identifier"
+              formControlName="mobileNo"
               type="tel"
               required>
-            <mat-error *ngIf="signupForm.get('primary_identifier')!.hasError('required')">
+            <mat-error *ngIf="signupForm.get('mobileNo')!.hasError('required')">
               <span translate>SIGN_UP_PAGE.MOBILE_REQUIRED_TXT</span>
             </mat-error>
           </mat-form-field>
