@@ -85,7 +85,8 @@ const authServiceStub: Partial<AuthenticationService> = {
   saveUserId: () => void 0,
   saveUserAccessToken: () => void 0,
   savePI: () => void 0,
-  saveAnonymous: () => void 0
+  saveAnonymous: () => void 0,
+  signup: () => of()
 };
 const themeServiceStub: Partial<ThemesService> = {
   getThemeSetting: () => of()
@@ -185,6 +186,27 @@ describe('SignUpComponent', () => {
       expect(getAppAccessTokenSpy).toHaveBeenCalled();
       expect(getAppTokenSpy).toHaveBeenCalled();
       expect(component.appAccessTokenFetched).toBe(true);
+    }));
+
+    it('signup form should contain required fields', fakeAsync(() => {
+      /**
+       * as of this commit the required fields in BE are
+       * - last_name
+       * - birthday
+       * - personal_properties->engine_number
+       */
+      const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
+        AuthenticationService as Type<AuthenticationService>
+      );
+      const signupSpy = spyOn(authenticationService, 'signup').and.returnValue(of({}));
+
+      component.ngOnInit();
+      component.onSubmit();
+      tick();
+      expect(component.signupForm.contains('lastname')).toBe(true);
+      expect(component.signupForm.contains('dob')).toBe(true);
+      expect(component.signupForm.contains('engineNumber')).toBe(true);
+      expect(signupSpy).toBeCalled();
     }));
   });
 
