@@ -134,7 +134,7 @@ export class SignUpComponent implements OnInit {
     // converting to Number will strip leading 0s
     const mobileNumber: number = Number(this.signupForm.value.mobileNo);
     const countryCode = this.signupForm.value.countryCode;
-    const primary_identifier = countryCode + mobileNumber;
+    const primary_identifier = countryCode + mobileNumber; // identifier for transcycle is also phone
 
     const engineNumber = this.signupForm.value.engineNumber;
 
@@ -158,7 +158,7 @@ export class SignUpComponent implements OnInit {
             return;
           }
 
-          this.router.navigateByUrl('otp/register', { state: { mobileNo: codeAndMobile }, skipLocationChange: true});
+          this.router.navigateByUrl('otp/register', { state: { mobileNo: primary_identifier }, skipLocationChange: true});
         },
         err => {
           this.notificationService.addSnack(err.error.message);
