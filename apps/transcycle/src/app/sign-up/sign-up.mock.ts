@@ -10,4 +10,4 @@ export const transcycleSignUpDataMock: ISignUpData = {
   customProperties: {
     engine_number: '1ENG'
   }
-}
+};
