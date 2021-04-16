@@ -20,12 +20,13 @@ import {
 import { SignUpComponent } from './sign-up.component';
 import {
   Observable,
-  of,
-  throwError
+  of
 } from 'rxjs';
 import {
+  MatDatepickerModule,
   MatIconModule,
   MatInputModule,
+  MatNativeDateModule,
   MatProgressSpinnerModule,
   MatSelectModule,
   MatSnackBar
@@ -109,6 +110,8 @@ describe('SignUpComponent', () => {
         ReactiveFormsModule,
         MatSelectModule,
         NoopAnimationsModule,
+        MatNativeDateModule,
+        MatDatepickerModule,
         TranslateModule.forRoot(),
         RouterTestingModule.withRoutes([
           { path: 'wallet', redirectTo: '/' },
@@ -127,6 +130,7 @@ describe('SignUpComponent', () => {
         { provide: SurveyService, useValue: surveyServiceStub },
         { provide: ThemesService, useValue: themeServiceStub },
         { provide: ConfigService, useValue: configServiceStub },
+        { provide: MatDatepickerModule },
         { provide: ActivatedRoute, useValue: activatedRouteStub }
       ]
     })
