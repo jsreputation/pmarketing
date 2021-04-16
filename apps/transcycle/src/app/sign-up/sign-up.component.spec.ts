@@ -148,7 +148,7 @@ describe('SignUpComponent', () => {
   });
 
   describe('onInit', () => {
-    it('should call readAppConfig, getThemeSetting, getSignupForm, getPI, getUserAccessToken, getAnonymous, getAppAccessToken, getState and appAccessTokenFetched to be true', fakeAsync(() => {
+    it('should call readAppConfig, getThemeSetting, getAppAccessToken and appAccessTokenFetched to be true', fakeAsync(() => {
       const themesService: ThemesService = fixture.debugElement.injector.get<ThemesService>(
         ThemesService as Type<ThemesService>
       );
@@ -157,25 +157,13 @@ describe('SignUpComponent', () => {
       const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
         AuthenticationService as Type<AuthenticationService>
       );
-      const getPISpy = spyOn(authenticationService, 'getPI');
-      const getUserAccessTokenSpy = spyOn(authenticationService, 'getUserAccessToken');
-      const getAnonymousSpy = spyOn(authenticationService, 'getAnonymous');
       const getAppAccessTokenSpy = spyOn(authenticationService, 'getAppAccessToken').and.returnValue('token');
-
-      const location: Location = fixture.debugElement.injector.get<Location>(
-        Location as Type<Location>
-      );
-      const locationSpy = spyOn(location, 'getState');
 
       component.ngOnInit();
       tick();
       fixture.detectChanges();
       expect(themesServiceSpy).toHaveBeenCalled();
-      expect(getPISpy).toHaveBeenCalled();
-      expect(getUserAccessTokenSpy).toHaveBeenCalled();
-      expect(getAnonymousSpy).toHaveBeenCalled();
       expect(getAppAccessTokenSpy).toHaveBeenCalled();
-      expect(locationSpy).toHaveBeenCalled();
       expect(component.appAccessTokenFetched).toBe(true);
     }));
 
@@ -198,66 +186,6 @@ describe('SignUpComponent', () => {
       expect(getAppTokenSpy).toHaveBeenCalled();
       expect(component.appAccessTokenFetched).toBe(true);
     }));
-  });
-
-  it('should call createUserAndAutoLogin onSubmit', fakeAsync(() => {
-    const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
-      AuthenticationService as Type<AuthenticationService>
-    );
-
-    const authSpy = spyOn(authenticationService, 'createUserAndAutoLogin').and.returnValue(of(void 0));
-
-    component.signupForm.patchValue({primary_identifier: '8989892'});
-    component.onSubmit();
-    tick();
-    expect(authSpy).toHaveBeenCalled();
-  }));
-
-  it('should set error message', fakeAsync(() => {
-    component.updateErrorMessage('error');
-    expect(component.errorMessage).toBe('error');
-  }));
-
-  it('should call createUserAndAutoLogin onSubmit and throwError', fakeAsync(() => {
-    const location: Location = fixture.debugElement.injector.get<Location>(Location as Type<Location>);
-    const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
-      AuthenticationService as Type<AuthenticationService>
-    );
-    spyOn(location, 'getState').and.returnValue({ popupData: {}, engagementType: 'str', collectInfo: true });
-    const error = {
-      error: {
-        message: 'error'
-      }
-    };
-
-    const authSpy = spyOn(authenticationService, 'createUserAndAutoLogin').and.returnValue(throwError(error));
-    component.signupForm.patchValue({primary_identifier: '8989892'});
-    component.onSubmit();
-    tick();
-    expect(authSpy).toHaveBeenCalled();
-  }));
-
-  it('should call submitDataAndCollectInformation', () => {
-    const stateData = {
-      popupData: { title: 'test' },
-      engagementType: 'game',
-      collectInfo: true,
-    };
-    const location: Location = fixture.debugElement.injector.get<Location>(Location as Type<Location>);
-    spyOn(location, 'getState').and.returnValue(stateData);
-
-    component.signupForm.patchValue({primary_identifier: '8989892'});
-
-    const authenticationService: AuthenticationService = fixture.debugElement.injector.get<AuthenticationService>(
-      AuthenticationService as Type<AuthenticationService>
-    );
-    const authSpy = spyOn(authenticationService, 'createUserAndAutoLogin').and.returnValue(of(void 0));
-    spyOn(authenticationService, 'autoLogin').and.returnValue(throwError('error'));
-
-    component.ngOnInit();
-    component.onSubmit();
-
-    expect(authSpy).toHaveBeenCalled();
   });
 
 });
