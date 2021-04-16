@@ -134,15 +134,15 @@ export class SignUpComponent implements OnInit {
     // converting to Number will strip leading 0s
     const mobileNumber: number = Number(this.signupForm.value.mobileNo);
     const countryCode = this.signupForm.value.countryCode;
-    const primary_identifier = countryCode + mobileNumber; // identifier for transcycle is also phone
+    const primaryIdentifier = countryCode + mobileNumber; // identifier for transcycle is also phone
 
     const engineNumber = this.signupForm.value.engineNumber;
 
     const signUpData: ISignUpData = {
       lastName: lastName,
       birthDay: dob.format(), // convert moment to ISO
-      identifier: primary_identifier, // identifier for transcycle is also phone
-      phone: primary_identifier,
+      identifier: primaryIdentifier, // identifier for transcycle is also phone
+      phone: primaryIdentifier,
       password: passwordString,
       passwordConfirmation: confirmPassword,
       customProperties : {
@@ -158,7 +158,7 @@ export class SignUpComponent implements OnInit {
             return;
           }
 
-          this.router.navigateByUrl('otp/register', { state: { mobileNo: primary_identifier }, skipLocationChange: true});
+          this.router.navigateByUrl('otp/register', { state: { mobileNo: primaryIdentifier }, skipLocationChange: true});
         },
         err => {
           this.notificationService.addSnack(err.error.message);
