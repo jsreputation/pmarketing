@@ -139,7 +139,7 @@ export class SignUpComponent implements OnInit {
     const engineNumber = this.signupForm.value.engineNumber;
 
     const signUpData: ISignUpData = {
-      lastName: lastName,
+      lastName,
       birthDay: dob.format(), // convert moment to ISO
       identifier: primaryIdentifier, // identifier for transcycle is also phone
       phone: primaryIdentifier,
