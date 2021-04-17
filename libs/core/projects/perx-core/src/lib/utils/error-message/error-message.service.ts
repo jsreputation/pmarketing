@@ -77,7 +77,10 @@ export class ErrorMessageService {
                 }
                 break;
             case 41:
-                console.log(errMessage);
+                if (errMessage && errMessage.match(/invited/i)) {
+                  errorKey = 'ERRORS.NOT_INVITED';
+                }
+                break;
             default:
                 // Sorry, something went wrong
                 errorKey = 'ERRORS.GENERIC';
