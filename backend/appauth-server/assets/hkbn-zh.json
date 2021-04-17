@@ -38,7 +38,9 @@
   "ERRORS": {
     "GENERIC": "Sorry, something went wrong",
     "REWARDS_RUN_OUT": "Sorry, rewards have run out",
-    "NO_UNUSED_MOVES": "Sorry, you do not have any more moves available"
+    "NO_UNUSED_MOVES": "Sorry, you do not have any more moves available",
+    "NOT_ENOUGH_POINTS": "Not enough points balance",
+    "NOT_INVITED": "The user was not invited."
   },
   "LEADER_BOARD": {
     "CTA_BUTTON_TEXT": "LEADERBOARD",

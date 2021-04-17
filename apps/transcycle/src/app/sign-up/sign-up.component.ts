@@ -14,6 +14,7 @@ import {
 import {
   AuthenticationService,
   ConfigService,
+  ErrorMessageService,
   GeneralStaticDataService,
   IConfig,
   ICountryCode,
@@ -60,6 +61,7 @@ export class SignUpComponent implements OnInit {
     private authService: AuthenticationService,
     private configService: ConfigService,
     private notificationService: NotificationService,
+    private errorMessageService: ErrorMessageService,
     public generalStaticDataService: GeneralStaticDataService,
     private themesService: ThemesService,
   ) {}
@@ -161,8 +163,12 @@ export class SignUpComponent implements OnInit {
           this.router.navigateByUrl('otp/register', { state: { mobileNo: primaryIdentifier }, skipLocationChange: true});
         },
         err => {
-          this.notificationService.addSnack(err.error.message);
-          this.loadingSubmit = false;
+          this.errorMessageService.getErrorMessageByErrorCode(err.error.code, err.error.message).subscribe(
+            (errMessage: string) => {
+              this.notificationService.addSnack(errMessage);
+              this.loadingSubmit = false;
+            }
+          );
         });
   }
 

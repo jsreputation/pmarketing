@@ -27,6 +27,8 @@ export class ErrorMessageService {
         - 'User is not a enrolled loyalty member'
         - 'User does not have enough points balance'
         - 'Merchant location is not a part of the reward'
+    Unprocessable Error - 41
+        - 'User was not invited'
     UserMembershipExpired - 53
         - 'Points cannot be issued or deducted as user membership has expired'
     AccessForbidden - 44
@@ -72,6 +74,11 @@ export class ErrorMessageService {
                   errorKey = 'ERRORS.NO_UNUSED_MOVES';
                 } else if (errMessage && errMessage.match(/balance/i)) {
                   errorKey = 'ERRORS.NOT_ENOUGH_POINTS';
+                }
+                break;
+            case 41:
+                if (errMessage && errMessage.match(/invited/i)) {
+                  errorKey = 'ERRORS.NOT_INVITED';
                 }
                 break;
             default:
