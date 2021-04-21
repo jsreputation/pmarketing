@@ -65,6 +65,7 @@ interface IV4Flags {
     voucher_distribution_type: VoucherDistributionTypes;
     system_sets_password: boolean;
     show_reward_favourite_button: boolean;
+    show_leaderboard: boolean;
   };
 }
 
@@ -143,10 +144,10 @@ export class V4SettingsService extends SettingsService {
       showRewardFavButton: data.json_value.show_reward_favourite_button,
       showVoucherStatusLabels: data.json_value.show_voucher_status_labels,
       voucherDistributionType: data.json_value.voucher_distribution_type,
-      systemSetsPassword: data.json_value.system_sets_password
+      systemSetsPassword: data.json_value.system_sets_password,
+      showLeaderboard: data.json_value.show_leaderboard
     };
   }
-
 
   public static v4WordPressRssToRss(data: IV4WordPressRss): IRssFeeds {
     const newIRssFeeds: IRssFeeds = { data: [] };

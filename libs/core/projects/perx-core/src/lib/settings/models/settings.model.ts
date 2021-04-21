@@ -23,6 +23,7 @@ export interface IFlags {
   showVoucherStatusLabels?: boolean;
   voucherDistributionType?: VoucherDistributionTypes;
   systemSetsPassword?: boolean;
+  showLeaderboard?: boolean;
 }
 
 export interface IRssFeeds {
