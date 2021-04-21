@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatIconModule, MatToolbarModule } from '@angular/material';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { ConfigService, IRankService } from '@perxtech/core';
+import { ConfigService, IRankService, SettingsService } from '@perxtech/core';
 import { of } from 'rxjs';
 import { LeaderboardCTAComponent } from './leaderboard-cta.component';
 
@@ -27,6 +27,11 @@ describe('LeaderboardCTAComponent', () => {
         getLeaderBoardsByCampaignID: () => of()
     };
 
+    const settingsServiceStub: Partial<SettingsService> = {
+        getRssFeeds: () => of(),
+        getRemoteFlagsSettings: () => of()
+    };
+
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [LeaderboardCTAComponent],
@@ -39,6 +44,7 @@ describe('LeaderboardCTAComponent', () => {
                 { provide: TranslateService, useValue: { get: () => of() } },
                 { provide: Router, useValue: router },
                 { provide: IRankService, useValue: rankServiceStub },
+                { provide: SettingsService, useValue: settingsServiceStub },
             ]
         })
             .compileComponents();
