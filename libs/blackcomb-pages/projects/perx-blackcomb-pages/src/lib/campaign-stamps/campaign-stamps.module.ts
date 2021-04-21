@@ -2,7 +2,10 @@ import { CommonModule } from '@angular/common';
 import { HttpBackend, HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { AuthenticationService, Config, ConfigModule, ConfigService, IRankService, PuzzlesModule, rankServiceFactory, SettingsService, StampModule, UtilsModule } from '@perxtech/core';
+import {
+  AuthenticationService, Config, ConfigModule, ConfigService,
+  IRankService, PuzzlesModule, rankServiceFactory, SettingsService, StampModule, UtilsModule
+} from '@perxtech/core';
 import { settingsServiceFactory } from 'libs/core/projects/perx-core/src/lib/settings/settings.module';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { CampaignStampsComponent } from './campaign-stamps.component';
