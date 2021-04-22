@@ -325,7 +325,8 @@
     "LUCKY_DRAW_INFO": "Lucky Draw Info",
     "CONTACT_US": "Contact Us",
     "TRANSFER_POINTS": "Transfer Points",
-    "POINTS_TRANSFER_HISTORY": "Points Transfer History"
+    "POINTS_TRANSFER_HISTORY": "Points Transfer History",
+    "BADGES": "My Badges"
   },
   "STATUS_LABELS": {
     "ISSUED": "Approved",

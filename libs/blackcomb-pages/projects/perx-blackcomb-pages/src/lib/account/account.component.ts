@@ -38,6 +38,7 @@ export class AccountComponent implements OnInit {
   public appConfig$: Observable<IConfig<void>>;
   public memberFn: (membershipTierName: string) => Observable<string>;
   public remoteFlags: IFlags;
+  public acquiredBadges: Observable<number>;
 
   constructor(
     public config: Config,

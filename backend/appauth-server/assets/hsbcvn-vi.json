@@ -197,7 +197,8 @@
     "FAQs": "FAQs",
     "LOGOUT": "Đăng xuất",
     "TRANSFER_POINTS": "Transfer Points",
-    "POINTS_TRANSFER_HISTORY": "Points Transfer History"
+    "POINTS_TRANSFER_HISTORY": "Points Transfer History",
+    "BADGES": "My Badges"
   },
   "STATUS_LABELS": {
     "ISSUED": "Tán thành",

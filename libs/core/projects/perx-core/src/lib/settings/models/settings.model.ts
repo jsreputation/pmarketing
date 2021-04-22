@@ -26,10 +26,8 @@ export interface IFlags {
   showLeaderboard?: boolean;
   showQuest?: boolean;
   showHappyHourOperatingHours?: boolean;
-  showBadgesButton?: boolean;
   showPersonaliseRewards?: boolean;
   showPointTransfer?: boolean;
-
   // local flag
   showAccountsPage?: boolean;
   showCampaignLandingPage?: boolean;
@@ -63,6 +61,7 @@ export interface IFlags {
   showUserInfoOnAccountsPage?: boolean;
   showUserQR?: boolean;
   showVoucherBookingFromRewardsPage?: boolean;
+  showBadgesButton?: boolean;
 }
 
 export interface IRssFeeds {

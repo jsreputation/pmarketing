@@ -193,7 +193,8 @@
     "PRIVACY_POLICY": "Privacy Policy",
     "LOGOUT": "Log Out",
     "TRANSFER_POINTS": "Transfer Points",
-    "POINTS_TRANSFER_HISTORY": "Points Transfer History"
+    "POINTS_TRANSFER_HISTORY": "Points Transfer History",
+    "BADGES": "My Badges"
   },
   "PROFILE": {
     "TITLE": "Profile",
