@@ -11,13 +11,13 @@
   </div> 
   <div class="actions-container mat-elevation-z2">
     <ng-container *ngIf="isVoucherTypeUrl; else redeemBtnBlock">
-      <a [href]="voucherUrl | safeUrl" target="_blank">
-        <button mat-raised-button color="primary">
+      <a [href]="voucherUrl | safeUrl" target="_blank" [ngClass]="{'disabled' : !isRedeemable}">
+        <button mat-flat-button [color]="isRedeemable ? 'primary' : ''" [disabled]="!isRedeemable">
           {{'VOUCHER.URL_REDEEM' | translate}}
         </button>
       </a>
-      <button mat-stroked-button color="primary" class="instruction-btn" (click)="onRedeem()">
-        {{'VOUCHER.INSTRUCTIONS' | translate}}</button>
+      <button mat-stroked-button [color]="isRedeemable ? 'primary' : ''" [disabled]="!isRedeemable" class="instruction-btn" (click)="onRedeem()">
+        {{'VOUCHER.INSTRUCTIONS' | translate}} </button>
     </ng-container>
     <ng-template #redeemBtnBlock>
       <button class="ga_redeem_reward" mat-flat-button
