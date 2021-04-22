@@ -20,6 +20,8 @@
     box-shadow: 0 0.1rem 0.3rem rgba(0, 0, 0, 0.2), 0 0.2rem 2rem rgba(0, 0, 0, 0.12), 0 0 2rem rgba(0, 0, 0, 0.14);
     background: var(--surface_colour);
     position: relative;
+    display: flex;
+    flex-direction: column;
 
     button {
       width: 100%;
@@ -29,5 +31,10 @@
         background-color: rgba(0, 0, 0, 0.12) !important;
       }
     }
+    .instruction-btn {
+      margin-top: 1rem;
+      color: var(--button_background_color) !important;
+    }
+    
   }
 }

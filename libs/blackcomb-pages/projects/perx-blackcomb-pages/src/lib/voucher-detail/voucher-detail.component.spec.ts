@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { VoucherDetailComponent } from './voucher-detail.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { IVoucherService, VouchersModule, Voucher, VoucherState } from '@perxtech/core';
+import { IVoucherService, VouchersModule, Voucher, VoucherState, UtilsModule } from '@perxtech/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
@@ -45,7 +45,8 @@ describe('VoucherDetailComponent', () => {
         RouterTestingModule,
         VouchersModule,
         TranslateModule.forRoot(),
-        MatButtonModule
+        MatButtonModule,
+        UtilsModule
       ],
       providers: [
         DatePipe,

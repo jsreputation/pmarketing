@@ -51,6 +51,7 @@ export { PinRedemptionComponent } from './lib/vouchers/pin-redemption/pin-redemp
 export { BcodeRedemptionComponent } from './lib/vouchers/bcode-redemption/bcode-redemption.component';
 export { QrcodeRedemptionComponent } from './lib/vouchers/qrcode-redemption/qrcode-redemption.component';
 export { BarcodeRedemptionComponent } from './lib/vouchers/barcode-redemption/barcode-redemption.component';
+export { UrlRedemptionComponent } from './lib/vouchers/url-redemption/url-redemption.component';
 
 /**
  * Authentication

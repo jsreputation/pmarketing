@@ -3,6 +3,7 @@ export enum RedemptionType {
   txtCode = 'txtCode',
   qr = 'qrcode',
   barcode = 'barcode',
+  url = 'url',
   none = 'none',
   offline = 'offline'
 }

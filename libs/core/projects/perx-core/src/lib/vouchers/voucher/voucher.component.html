@@ -44,6 +44,15 @@
       <div class="section-content" *ngIf="voucher.reward.termsAndConditions">
         <div [innerHtml]="voucher.reward.termsAndConditions | safeHtml"></div>
       </div>
+      <div *ngIf="voucher.redemptionType === rt.url">
+        <div class="section-heading" *ngIf="voucher.code">
+          {{'REDEMPTION.URL_TITLE' | translate}}
+        </div>
+        <div class="url-container" *ngIf="voucher.code">
+            <span class="url-txt">{{voucher.code}}</span>
+            <mat-icon class="copy-icon" (click)="copy(voucher.code)">content_copy</mat-icon>
+        </div>
+      </div>
 <!--      <div class="section-heading" *ngIf="voucher.reward.howToRedeem">-->
 <!--        How to redeem-->
 <!--      </div>-->

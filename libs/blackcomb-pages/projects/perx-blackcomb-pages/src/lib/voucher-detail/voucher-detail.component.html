@@ -8,12 +8,23 @@
       [tncLabel]="tncLabel"
       [descriptionLabel]="descriptionLabel">
     </perx-core-voucher>
-  </div>
+  </div> 
   <div class="actions-container mat-elevation-z2">
-    <button class="ga_redeem_reward" mat-flat-button
-            [color]="isRedeemable ? 'primary' : ''"
-            [disabled]="!isRedeemable"
-            (click)="onRedeem()">{{'VOUCHER.REDEEM' | translate}}
-    </button>
+    <ng-container *ngIf="isVoucherTypeUrl; else redeemBtnBlock">
+      <a [href]="voucherUrl | safeUrl" target="_blank">
+        <button mat-raised-button color="primary">
+          {{'VOUCHER.URL_REDEEM' | translate}}
+        </button>
+      </a>
+      <button mat-stroked-button color="primary" class="instruction-btn" (click)="onRedeem()">
+        {{'VOUCHER.INSTRUCTIONS' | translate}}</button>
+    </ng-container>
+    <ng-template #redeemBtnBlock>
+      <button class="ga_redeem_reward" mat-flat-button
+              [color]="isRedeemable ? 'primary' : ''"
+              [disabled]="!isRedeemable"
+              (click)="onRedeem()" >{{ 'VOUCHER.REDEEM' | translate }}
+      </button>
+    </ng-template>
   </div>
 </div>

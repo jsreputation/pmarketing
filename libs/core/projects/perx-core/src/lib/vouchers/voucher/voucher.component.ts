@@ -4,6 +4,9 @@ import { Observable, of } from 'rxjs';
 import { IVoucher, StatusLabelMapping } from '../models/voucher.model';
 import { DatePipe } from '@angular/common';
 import { map } from 'rxjs/operators';
+import { NotificationService } from '../../utils/notification/notification.service';
+import { TranslateService } from '@ngx-translate/core';
+import { RedemptionType } from '../../perx-core.models';
 
 @Component({
   selector: 'perx-core-voucher',
@@ -49,7 +52,15 @@ export class VoucherComponent implements OnChanges, OnInit {
   @Input()
   public tncLabel: Observable<string> = of('Terms and Conditions');
 
-  constructor(private vouchersService: IVoucherService, private datePipe: DatePipe) {
+  public rt: typeof RedemptionType = RedemptionType;
+  private copyToClipboardTxt: string;
+  private clipboardErrorTxt: string;
+
+
+  constructor(private vouchersService: IVoucherService,
+              private datePipe: DatePipe,
+              private notificationService: NotificationService,
+              private translateService: TranslateService) {
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -69,6 +80,7 @@ export class VoucherComponent implements OnChanges, OnInit {
   }
 
   public ngOnInit(): void {
+    this.initTranslate();
     if (!this.redeemLabelFn) {
       this.redeemLabelFn = () => of('REDEEM NOW');
     }
@@ -76,5 +88,23 @@ export class VoucherComponent implements OnChanges, OnInit {
     if (!this.expiryFn) {
       this.expiryFn = (v: IVoucher) => of(`Expires on ${this.datePipe.transform(v.expiry, 'shortDate')}`);
     }
+  }
+  public copy(code: string): void {
+    navigator.clipboard
+      .writeText(code)
+      .then(() => this.notificationService.addSnack(this.copyToClipboardTxt))
+      .catch(() => this.notificationService.addSnack(this.clipboardErrorTxt));
+  }
+
+  private initTranslate(): void {
+    this.translateService
+      .get([
+        'REDEMPTION.COPY_TO_CLIPBOARD',
+        'REDEMPTION.CLIPBOARD_ERROR_TXT',
+      ])
+      .subscribe((res: any) => {
+        this.copyToClipboardTxt = res['REDEMPTION.COPY_TO_CLIPBOARD'];
+        this.clipboardErrorTxt = res['REDEMPTION.CLIPBOARD_ERROR_TXT'];
+      });
   }
 }

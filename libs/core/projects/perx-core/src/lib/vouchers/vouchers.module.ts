@@ -30,6 +30,7 @@ import {
   Platform,
   PlatformModule
 } from '@angular/cdk/platform';
+import { UrlRedemptionComponent } from './url-redemption/url-redemption.component';
 
 export function vouchersServiceFactory(
   http: HttpClient,
@@ -52,6 +53,7 @@ const components = [
   PinRedemptionComponent,
   QrcodeRedemptionComponent,
   BarcodeRedemptionComponent,
+  UrlRedemptionComponent
 ];
 
 @NgModule({

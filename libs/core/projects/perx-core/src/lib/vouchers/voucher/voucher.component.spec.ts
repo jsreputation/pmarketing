@@ -13,6 +13,7 @@ import { Type, SimpleChange } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { RedemptionType } from '../../perx-core.models';
 import { UtilsModule } from '../../utils/utils.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('VoucherComponent', () => {
   let component: VoucherComponent;
@@ -65,7 +66,8 @@ describe('VoucherComponent', () => {
         MatCardModule,
         VouchersModule,
         UtilsModule,
-        ConfigModule.forRoot({})
+        ConfigModule.forRoot({}),
+        TranslateModule.forRoot()
       ],
       providers: [
         DatePipe,

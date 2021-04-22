@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatButtonModule } from '@angular/material';
+import { MatButtonModule, MatIconModule } from '@angular/material';
 import { TranslateModule } from '@ngx-translate/core';
-import { VouchersModule } from '@perxtech/core';
+import { VouchersModule, UtilsModule } from '@perxtech/core';
 import { VoucherDetailComponent } from './voucher-detail.component';
 import { RouterModule } from '@angular/router';
 
@@ -14,7 +14,9 @@ import { RouterModule } from '@angular/router';
     VouchersModule,
     TranslateModule.forChild(),
     RouterModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule,
+    UtilsModule
   ]
 })
 export class VoucherDetailModule { }
