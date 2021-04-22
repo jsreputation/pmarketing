@@ -4,6 +4,7 @@ import { VouchersModule, IVoucherService, Voucher, VoucherState, RewardsService,
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('VoucherComponent', () => {
   let component: VoucherComponent;
@@ -53,7 +54,8 @@ describe('VoucherComponent', () => {
       declarations: [VoucherComponent],
       imports: [
         VouchersModule,
-        RouterTestingModule
+        RouterTestingModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: IVoucherService, useValue: vouchersServiceStub },

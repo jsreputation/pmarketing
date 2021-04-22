@@ -4,6 +4,7 @@ import { VouchersModule, IVoucherService } from '@perxtech/core';
 import { VoucherDetailComponent } from './voucher-detail.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DetailHeaderModule } from '../../details/detail-header/detail-header.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('VoucherDetailComponent', () => {
   let component: VoucherDetailComponent;
@@ -15,7 +16,8 @@ describe('VoucherDetailComponent', () => {
       imports: [
         VouchersModule,
         RouterTestingModule,
-        DetailHeaderModule
+        DetailHeaderModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: IVoucherService, useValue: voucherServiceStub }
