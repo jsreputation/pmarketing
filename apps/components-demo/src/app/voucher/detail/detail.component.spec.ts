@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DetailComponent } from './detail.component';
 import { VouchersModule, IVoucherService, Voucher, VoucherState, RedemptionType } from '@perxtech/core';
 import { of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('DetailComponent', () => {
   let component: DetailComponent;
@@ -42,7 +43,8 @@ describe('DetailComponent', () => {
     TestBed.configureTestingModule({
       declarations: [DetailComponent],
       imports: [
-        VouchersModule
+        VouchersModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: IVoucherService, useValue: vouchersServiceStub }
