@@ -11,7 +11,8 @@ import {
 import {
   IVoucherService,
   Voucher,
-  VoucherState
+  VoucherState,
+  RedemptionType
 } from '@perxtech/core';
 import {
   filter,
@@ -39,6 +40,8 @@ export class VoucherDetailComponent implements OnInit, OnDestroy {
   public tncLabel: Observable<string> = of('Terms and Conditions');
   public voucherId: number;
   public isRedeemable: boolean = false;
+  public isVoucherTypeUrl: boolean = false;
+  public voucherUrl: string;
 
   constructor(
     private router: Router,
@@ -62,6 +65,10 @@ export class VoucherDetailComponent implements OnInit, OnDestroy {
         }),
         tap((voucher: Voucher) => {
           this.isRedeemable = voucher.state === VoucherState.issued; // must be in issued state
+          this.isVoucherTypeUrl = voucher.redemptionType === RedemptionType.url;
+          if (this.isVoucherTypeUrl ) {
+            this.voucherUrl = voucher.code ? voucher.code : '';
+          }
         }),
         map((voucher: Voucher) => {
           const tncWithOlPadding = voucher && voucher.reward && voucher.reward.termsAndConditions.replace(/(ol>)/, 'ol' +
@@ -97,4 +104,5 @@ export class VoucherDetailComponent implements OnInit, OnDestroy {
   public onRedeem(): void {
     this.router.navigate(['redeem', this.voucherId]);
   }
+
 }

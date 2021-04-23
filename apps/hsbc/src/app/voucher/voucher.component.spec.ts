@@ -6,6 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MatProgressBarModule } from '@angular/material';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('VoucherComponent', () => {
   let component: VoucherComponent;
@@ -55,7 +56,8 @@ describe('VoucherComponent', () => {
         VouchersModule,
         RouterTestingModule,
         MatProgressBarModule,
-        NoopAnimationsModule
+        NoopAnimationsModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         { provide: IVoucherService, useValue: vouchersServiceStub },

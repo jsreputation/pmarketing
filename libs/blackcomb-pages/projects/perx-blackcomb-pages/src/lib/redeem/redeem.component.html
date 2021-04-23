@@ -35,5 +35,9 @@
       <perx-core-barcode-redemption
         [voucherId]="voucher.id"></perx-core-barcode-redemption>
     </div>
+    <div *ngIf="redemptionType === rt.url" class="code-container">
+      <perx-core-url-redemption [instructions]="codeInstructionsText"
+      [url]="voucher.code"></perx-core-url-redemption>
+    </div>
   </div>
 </div>

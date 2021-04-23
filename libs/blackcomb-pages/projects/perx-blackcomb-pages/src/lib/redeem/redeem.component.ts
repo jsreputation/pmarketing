@@ -111,6 +111,8 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
 
             if (voucher.reward.howToRedeem) {
               this.codeInstructionsText = voucher.reward.howToRedeem;
+            } else if (voucher.redemptionType === this.rt.url) {
+              this.codeInstructionsText = '';
             }
 
             if (voucher.reward.displayProperties && voucher.reward.displayProperties.rewardSuccessPopUp) {
@@ -138,7 +140,8 @@ export class RedeemComponent implements OnInit, OnDestroy, PopUpClosedCallBack {
         switchMap((voucher: Voucher) => {
           if (voucher.redemptionType === RedemptionType.txtCode && (voucher.code && voucher.code.length > 0) ||
             voucher.redemptionType === RedemptionType.qr ||
-            voucher.redemptionType === RedemptionType.barcode) {
+            voucher.redemptionType === RedemptionType.barcode ||
+            voucher.redemptionType === RedemptionType.url) {
             return this.vouchersService.stateChangedForVoucher(voucher.id, 1000);
           }
 

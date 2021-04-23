@@ -1,0 +1,22 @@
+<div class="url-redemption-container">
+    <div class="instruction-container">
+        <div class="instruction-title">{{'REDEMPTION.URL_INSTRUCTION_TITLE' | translate}}</div>
+        <div class="instructions" [innerHtml]="instructions | safeHtml"></div>
+        <div>
+            <div class="url-title">{{'REDEMPTION.URL_TITLE' | translate}}</div>
+            <div class="url-container">
+                <span class="url-txt">{{url}}</span>
+                <mat-icon class="copy-icon" (click)="copy(url)">content_copy</mat-icon>
+            </div>
+        </div>
+    </div>
+    <div class="actions-container mat-elevation-z2">
+        <a [href]="url | safeUrl" target="_blank">
+            <button mat-flat-button color="primary">
+                {{'REDEMPTION.URL_CTA_TXT' | translate}}
+            </button>
+        </a>
+        <button mat-stroked-button color="primary" class="back-btn" (click)="goBack()">
+            {{'REDEMPTION.BACK_TO_REWARD' | translate}} </button>
+    </div>
+</div>
